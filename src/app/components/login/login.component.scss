@@ -1,0 +1,58 @@
+@import '../../../styles/index.scss';
+
+.loginFormWrapper {
+  z-index: 2;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+
+  @media (max-width: 500px) {
+    width: 90%;
+  }
+}
+
+.loginForm {
+  width: 100%;
+  padding: 40px 30px;
+  background-color: $white;
+  box-shadow: 0 0 30px 2px rgba(0, 0, 0, 0.1);
+  text-align: start;
+
+  @media (max-width: 500px) {
+    width: 100%;
+  }
+
+  .smallText {
+    color: $title-color;
+    font-size: 12px;
+    line-height: 14px;
+    margin-bottom: 50px;
+    cursor: pointer;
+    transition: all .2s ease;
+  }
+  .smallText:hover {
+    color: darken(($title-color), 20%);
+  }
+
+  button {
+    width: 100%;
+    border-radius: 0;
+  }
+
+  input {
+    border-radius: 0;
+  }
+
+  .passwordWrapper {
+    position: relative;
+    img {
+      height: 2em;
+      position: absolute;
+      top: 10%;
+      right: 3%;
+      cursor: pointer
+    }
+  }
+}
