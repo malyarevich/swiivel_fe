@@ -6,7 +6,6 @@ import { AppRoutingModule }     from './app-routing.module';
 
 import { LoginModule } from './modules/login';
 import { InputContainerModule } from "./components/form-components";
-import { LayoutComponent } from './modules/layout/main-layout.component';
 import {StoreModule} from "@ngrx/store";
 import {EffectsModule} from "@ngrx/effects";
 import {AuthModule, AuthServiceConfig} from "./services/auth";
@@ -28,7 +27,6 @@ export const interceptorsConfig: InterceptorsConfig = {
 @NgModule({
   declarations: [
     AppComponent,
-    LayoutComponent
   ],
   imports: [
     BrowserModule,

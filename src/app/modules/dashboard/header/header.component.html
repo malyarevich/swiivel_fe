@@ -1,0 +1,17 @@
+<header class="header">
+    <section class="firstBlock flex">
+      <section class="menuSection">
+          <div class="burger" [class.isActive]="menu" (click)="toggleMenu()">
+              <img title="burger_menu" src="/assets/images/header/burger-menu.svg" alt="menu">
+          </div>
+    
+          <div class="appTitle" (click)="goToIndex()">
+            <h2>ABC School</h2>
+          </div>
+        </section>
+    </section>
+
+    <section class="secondBlock flex">
+      <button class="btn btn-secondary mr-3" (click)="logOut()">Logout</button>
+    </section>
+</header>

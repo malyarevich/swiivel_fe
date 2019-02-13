@@ -5,38 +5,35 @@ $border-color: #D5DFEC;
 $title-color: #2567CC;
 $sub-title-color: #263853;
 
-$header-background-color: #283A56;
-$subheader-background-color: #3676D7;
-$subheader-hover-background-color: #225FBA;
+$header-background-color: $white;
+$subheader-background-color: #A1A1A1;
+$subheader-hover-background-color: #626567;
 
 $header-border-color: #465873;
 $task-budget-color: #57CA8B;
 
 $label-color: #7B8AA1;
 $invalid-color: #E94F47;
-$case-background-color: #FF6149;
+//$case-background-color: #FF6149;
 
 $modal-header-background-color: #EEF1F6;
 $inactive-input-color: #D0DBEA;
-$user-header-border-color: #E7EBF2;
-
+//$user-header-border-color: #E7EBF2;
+//
 $filter-color: #C0CAD8;
+//
+//$grid-row-background: #F7F8FA;
+//$grid-row-selected-background: #E8F0FB;
+//$grid-row-selected-border: #6A9EEC;
+//$toggle-active-background: #ADCEFF;
+//$label-background-color: #E1E6EC;
+//
+//
+//$owl-td-calendar-cell-border: #E5E9F1;
+//
+//$button-hover-color: #153B76;
+//$table-border-color: #DCE2EC;
+//
+//$checkbox-bg: #E8ECF2;
+//$documents-table-checkbox-bg: #C0CAD8;
 
-$grid-row-background: #F7F8FA;
-$grid-row-selected-background: #E8F0FB; 
-$grid-row-selected-border: #6A9EEC;
-$toggle-active-background: #ADCEFF;
-$label-background-color: #E1E6EC;
-$doctor-border-color: #E4E9F1;
-
-$owl-td-calendar-cell-border: #E5E9F1;
-
-$button-hover-color: #153B76;
-$table-border-color: #DCE2EC;
-
-$checkbox-bg: #E8ECF2;
-$documents-table-checkbox-bg: #C0CAD8;
-
-$patient-detail-cases-table-row: #F5F6F7;
-$patient-detail-cases-table-cell-span: #E1E6EC;
-$patient-detail-cases-table-cell-span-text: #253651;

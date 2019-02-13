@@ -2,12 +2,12 @@
   <h3 class="text-center">Login</h3>
   <h5 class="text-center mt-5">Welcome to the ABC School</h5>
   <h6 class="text-center mb-5">Please login for starting</h6>
-  <app-input-container label="username">
+  <app-input-container label="Username">
     <input type="text" placeholder="Username" formControlName="username" class="formInput" autocomplete="new-password">
   </app-input-container>
 
   <section class="passwordWrapper">
-    <app-input-container label="password">
+    <app-input-container label="Password">
       <input [type]="shape === 'eye' ? 'password' : 'text'" placeholder="Password" formControlName="password"
              class="formInput" autocomplete="new-password">
     </app-input-container>
@@ -20,7 +20,7 @@
     Forgot password?
   </span>
 
-  <button [clrLoading]="submitBtnState" [disabled]="!form.valid" type="submit" class="btn btn-secondary">
+  <button [clrLoading]="submitBtnState" [disabled]="!form.valid" type="submit" class="btn btn-secondary mt-4">
     Log In
   </button>
 </form>
