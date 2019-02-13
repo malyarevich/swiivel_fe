@@ -1,0 +1,10 @@
+{
+  "status": "ok",
+  "message": "success",
+  "data": {
+    "id": 1,
+    "username": "Vasa",
+    "role": "school",
+    "token": "token"
+  }
+}
