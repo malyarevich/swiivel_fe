@@ -9,7 +9,7 @@ import { User } from '../../modules/login/rest';
 import { LocalStorageService } from '../local-storage';
 
 export interface AuthServiceConfig {
-    baseUrl: string;
+    // baseUrl: string;
     storageTokenKey: string;
     user: string;
 }
@@ -32,26 +32,46 @@ export class AuthService {
         return this.localStoreService.getItem(this.config.user);
     }
 
-    login(log: LoginData): Promise<User> {
-        this.logout();
-        return this.http.post<LoginDTO>('auth/login', log).toPromise().then((res: LoginDTO) => {
-            const {message, data} = res;
-            if (res.status === COMMON_STATUS.ERROR) {
-                throw message;
-            } else {
-                const {token, user} = data;
-                const {id, username, role} = user;
-                this.localStoreService.setItem(this.config.storageTokenKey, token);
-                this.localStoreService.setItem(this.config.user, id);
+    // login(log: LoginData): Promise<User> {
+    //     this.logout();
+    //     return this.http.post<LoginDTO>('auth/login', log).toPromise().then((res: LoginDTO) => {
+    //         const {message, data} = res;
+    //         if (res.status === COMMON_STATUS.ERROR) {
+    //             throw message;
+    //         } else {
+    //             const {token, user} = data;
+    //             const {id, username, role} = user;
+    //             this.localStoreService.setItem(this.config.storageTokenKey, token);
+    //             this.localStoreService.setItem(this.config.user, id);
+    //
+    //             return {
+    //                 id,
+    //                 username,
+    //                 role,
+    //             };
+    //         }
+    //     });
+    // }
 
-                return {
-                    id,
-                    username,
-                    role,
-                };
-            }
-        });
-    }
+// test
+  login(log: LoginData): Promise<User> {
+    this.logout();
+    return this.http.get('http://localhost:4200/assets/user.json').toPromise().then((res: LoginDTO) => {
+      const {message, data} = res;
+      if (res.status === COMMON_STATUS.ERROR) {
+        throw message;
+      } else {
+        const {id, username, role, token} = data;
+        this.localStoreService.setItem(this.config.storageTokenKey, token);
+        this.localStoreService.setItem(this.config.user, id);
+        return {
+          id: id,
+          username: username,
+          role: role
+        };
+      }
+    });
+  }
 
     logout() {
         this.localStoreService.removeItem(this.config.storageTokenKey);
