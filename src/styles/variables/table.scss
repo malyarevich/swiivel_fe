@@ -1,0 +1,75 @@
+.datagrid-table-wrapper{
+  background-color: white;
+}
+
+.datagrid .datagrid-head {
+  background-color: white;
+  border-color: #E4E9F1;
+  position: relative;
+  border-bottom: 1px solid #E4E9F1;
+}
+
+.datagrid .datagrid-column .datagrid-column-separator {
+  opacity: 0;
+}
+
+.datagrid {
+  border: none;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+}
+
+.datagrid-body {
+  height: 150px !important;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 10px #C0CAD8;
+    border-radius: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 6px;
+    background: #C0CAD8;
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+  }
+}
+
+.datagrid-overlay-wrapper{
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 10px #C0CAD8;
+    border-radius: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 6px;
+    background: #C0CAD8;
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+  }
+}
+
+.datagrid .datagrid-expandable-caret {
+  order: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  button {
+    outline: none;
+  }
+}
+
+.nav {
+  box-shadow: none;
+  margin: 0 10px;
+}

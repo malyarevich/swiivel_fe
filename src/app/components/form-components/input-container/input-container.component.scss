@@ -1,0 +1,51 @@
+@import "../../../../styles/index";
+
+:host {
+    @extend %flex;
+    margin: 10px 0;
+    width: 100%;
+}
+
+.formControl{
+    width: 100%;
+    position: relative;
+
+    .controlLabel{
+        color: $label-color;
+        font-size: 9px;
+        font-weight: bold;
+        letter-spacing: 0.31px;
+        line-height: 11px;
+        text-transform: uppercase;
+        padding-bottom: 10px;
+    }
+
+    .icon {
+        position: absolute;
+        top: calc(50% + 10px);
+        left: 0;
+        z-index: 1;
+        transform: translateY(-50%);
+
+        &.last {
+            top: 50%;
+            left: 92%;
+            transform: translate(-50%, -50%);
+        }
+    }
+}
+
+.inputCtrl{
+    @extend %flex;
+
+    justify-content: space-between;
+}
+
+.errorSubtext{
+    color: $invalid-color;
+    font-size: 9px;
+    font-weight: bold;
+    letter-spacing: 0.31px;
+    line-height: 11px;
+    text-transform: uppercase;
+}

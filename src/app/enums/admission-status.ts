@@ -1,0 +1,5 @@
+export enum ADMISSION_STATUS {
+    ADMITTED = '#57CA8B',
+    DECEASED = '#DD4C3E',
+    DISCHARGED = '#7B8AA1',
+}

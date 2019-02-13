@@ -1,0 +1,37 @@
+@import '../../../../../styles/index.scss';
+
+:host {
+    @extend %flex-all-center;
+
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+}
+
+h1{
+    color: $title-color;
+    font-size: 28px;
+    font-weight: bold;
+    line-height: 30px;
+    margin-bottom: 6vw;
+    text-align: center;
+}
+
+.loginFormWrapper {
+    z-index: 2;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 371px;
+
+    @media (max-width: 500px) {
+        width: 90%;
+    }
+
+    .formWrapper {
+        position: relative;
+        width: 371px;
+        min-height: 390px;
+    }
+}

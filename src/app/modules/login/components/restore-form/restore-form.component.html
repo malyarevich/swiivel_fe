@@ -1,0 +1,41 @@
+<form clrForm class="customForm" [formGroup]="form" novalidate>
+  <h2>Reset Password</h2>
+
+  <section class="sectionWrapper" [style.min-height]="isOpen ? '230px' : '300px'">
+      <section [@fadeInOut]="isOpen ? 'open' : 'close'" class="formBlock">
+          <div class="midText">
+              <span>Forgot your password?</span>
+              <span>Enter your email address below and we'll get you back on track</span>
+          </div>
+          
+            <app-input-container label="email">
+              <input type="text" placeholder="Email" formControlName="email" class="formInput" autocomplete="off">
+            </app-input-container>
+          
+            <section class="btnWrapper">
+              <button class="btn btn-outline outline" (click)="cancel()">Cancel</button>
+              <button [clrLoading]="submitBtnState" class="btn btn-primary main" [disabled]="!form.valid"
+                      (click)="restore()">
+                  Reset password
+              </button>
+            </section>
+      </section>
+    
+      <section [@fadeInOut]="isOpen ? 'close' : 'open'" class="formBlock">
+        <h3>{{form.get('email').value}}</h3>
+
+        <div class="midText">
+            <span>If this email address is associated with a login you will<br> receive an email with instructions to reset your password</span>
+        </div>
+
+        <div class="flex">
+          <span class="smallText">Send it again</span>
+          <span class="smallText" (click)="returnToMail()">Change email</span>
+        </div>
+
+        <section class="btnWrapper">
+            <button type="submit" class="btn btn-primary main" (click)="cancel()">Back to Login</button>
+        </section>
+      </section>
+  </section>
+</form>

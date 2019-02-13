@@ -1,0 +1,103 @@
+%common-btn {
+  appearance: none;
+  color: #FFFFFF;
+  font-size: 13px;
+  font-weight: 900;
+  line-height: 16px;
+  text-align: center;
+  height: 32px;
+  width: 100%;
+  max-width: none;
+  background-color: #2567CC;
+  border-color: #2567CC;
+  text-transform: none;
+  letter-spacing: 0.5px;
+  transition: all .2s ease;
+  border-radius: 4px;
+
+  &:hover {
+    background-color: darken((#2567CC), 20%);
+    border-color: darken((#2567CC), 20%);
+  }
+
+  &.disabled {
+    pointer-events: none;
+    opacity: 1;
+    width: 100% !important;
+    background-color: #ccc;
+    border-color: #ccc;
+    color: #565656;
+  }
+
+  &.outline {
+    color: #2567CC;
+    background-color: #FFFFFF;
+    border-color: #2567CC;
+  }
+
+  &.outline:hover {
+    color: darken((#2567CC), 20%);
+    border-color: darken((#2567CC), 20%);
+    background-color: lighten((#2567CC), 50%);
+  }
+
+  &.main {
+    color: #FFFFFF;
+    background-color: #2567CC;
+    border-color: #2567CC;
+  }
+
+  &.main:hover {
+    background-color: darken((#2567CC), 20%);
+    border-color: darken((#2567CC), 20%);
+  }
+}
+
+%form-input {
+  height: 30px;
+  appearance: none;
+  background: #FFFFFF;
+  background-image: none;
+  border: .05rem solid #D5DFEC;
+  border-radius: 4px;
+  display: block;
+  max-width: 100%;
+  outline: 0;
+  position: relative;
+  transition: all .2s ease;
+  width: 100%;
+  color: #263853;
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: 500;
+  text-indent: 7px;
+
+  &:focus {
+    border-color: darken((#D5DFEC), 20%);
+    box-shadow: 0 0 0 0.1rem darken((#D5DFEC), 10%);
+  }
+
+  &.ng-invalid.ng-dirty {
+    border-color: lighten((#E94F47), 20%);
+    box-shadow: 0 0 0 0.1rem lighten((#E94F47), 10%);
+  }
+
+  ::-webkit-input-placeholder {
+    color: #C0CAD8;
+  }
+  :-moz-placeholder {
+    color: #C0CAD8;
+  }
+  ::-moz-placeholder {
+    color: #C0CAD8;
+  }
+  :-ms-input-placeholder {
+    color: #C0CAD8;
+  }
+  ::-ms-input-placeholder {
+    color: #C0CAD8;
+  }
+  ::placeholder {
+    color: #C0CAD8;
+  }
+}

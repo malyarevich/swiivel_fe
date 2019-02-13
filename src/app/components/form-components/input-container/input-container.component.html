@@ -1,0 +1,13 @@
+<div class="formControl">
+    <section class="inputCtrl">
+        <label class="controlLabel" *ngIf="label">{{label}}</label>
+        <ng-container *ngIf="isActivelyInvalid && showErrors">
+          <span *ngFor="let error of errorKeys" class="errorSubtext">
+                {{error}}
+          </span>
+        </ng-container>
+    </section>
+    <img *ngIf="icon" [src]="'/assets/images/icons/' + icon + '.svg'" alt="icon" class="icon"
+         [ngClass]="{'last': !label}">
+    <ng-content select="[formControlName]"></ng-content>
+</div>
