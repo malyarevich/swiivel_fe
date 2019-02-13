@@ -7,6 +7,7 @@ import { LoginDTO } from './auth.dto';
 import { COMMON_STATUS } from '../../enums';
 import { User } from '../../modules/login/rest';
 import { LocalStorageService } from '../local-storage';
+import {environment} from "../../../environments/environment";
 
 export interface AuthServiceConfig {
     // baseUrl: string;
@@ -56,7 +57,10 @@ export class AuthService {
 // test
   login(log: LoginData): Promise<User> {
     this.logout();
-    return this.http.get('http://localhost:4200/assets/user.json').toPromise().then((res: LoginDTO) => {
+
+    let host = (environment.production) ? 'http://35.211.160.56' : 'http://localhost:4200';
+
+    return this.http.get(`${host}/assets/user.json`).toPromise().then((res: LoginDTO) => {
       const {message, data} = res;
       if (res.status === COMMON_STATUS.ERROR) {
         throw message;
