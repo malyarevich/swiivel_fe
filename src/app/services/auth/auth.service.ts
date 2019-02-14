@@ -66,7 +66,7 @@ export class AuthService {
       } else {
         const {id, username, role, token} = data;
         this.localStoreService.setItem(this.config.storageTokenKey, token);
-        this.localStoreService.setItem(this.config.user, id);
+        this.localStoreService.setItem(this.config.user, {id, username, role});
         return {
           id: id,
           username: username,
