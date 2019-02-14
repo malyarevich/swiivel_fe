@@ -3,9 +3,9 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { InputContainerComponent } from './input-container.component';
 import {
-    InputErrorDisplayStartegy,
+    InputErrorDisplayStrategy,
     INPUT_ERROR_DISPLAY_STRATEGY,
-    defaulInputErrorDisplayStartegy
+    defaultInputErrorDisplayStrategy
 } from './input-error-display-strategy';
 
 @NgModule({
@@ -14,13 +14,13 @@ import {
     exports: [InputContainerComponent]
 })
 export class InputContainerModule {
-    static forRoot(strategy?: InputErrorDisplayStartegy): ModuleWithProviders {
+    static forRoot(strategy?: InputErrorDisplayStrategy): ModuleWithProviders {
         return {
             ngModule: InputContainerModule,
             providers: [
                 {
                     provide: INPUT_ERROR_DISPLAY_STRATEGY,
-                    useValue: strategy || defaulInputErrorDisplayStartegy
+                    useValue: strategy || defaultInputErrorDisplayStrategy
                 }
             ]
         };
