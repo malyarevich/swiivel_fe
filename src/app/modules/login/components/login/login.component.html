@@ -1,6 +1,6 @@
 <section class="loginFormWrapper">
   <section class="formWrapper">
       <app-login-form (goToRestore)="openRestoreView($event)" [@fadeInOut]="isOpen ? 'open' : 'close'"></app-login-form>
-      <!--<app-restore-form (goToLogin)="openRestoreView($event)" [@fadeInOut]="isOpen ? 'close' : 'open'"></app-restore-form>-->
+      <app-restore-form (goToLogin)="openRestoreView($event)" [@fadeInOut]="isOpen ? 'close' : 'open'"></app-restore-form>
   </section>
 </section>

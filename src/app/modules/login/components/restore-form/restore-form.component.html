@@ -4,17 +4,17 @@
   <section class="sectionWrapper" [style.min-height]="isOpen ? '230px' : '300px'">
       <section [@fadeInOut]="isOpen ? 'open' : 'close'" class="formBlock">
           <div class="midText">
-              <span>Forgot your password?</span>
+              <span>Forgot your password?</span><br>
               <span>Enter your email address below and we'll get you back on track</span>
           </div>
           
-            <app-input-container label="email">
+            <app-input-container label="Email">
               <input type="text" placeholder="Email" formControlName="email" class="formInput" autocomplete="off">
             </app-input-container>
           
             <section class="btnWrapper">
               <button class="btn btn-outline outline" (click)="cancel()">Cancel</button>
-              <button [clrLoading]="submitBtnState" class="btn btn-primary main" [disabled]="!form.valid"
+              <button [clrLoading]="submitBtnState" class="btn btn-secondary main" [disabled]="!form.valid"
                       (click)="restore()">
                   Reset password
               </button>
@@ -34,7 +34,7 @@
         </div>
 
         <section class="btnWrapper">
-            <button type="submit" class="btn btn-primary main" (click)="cancel()">Back to Login</button>
+            <button type="submit" class="btn btn-secondary main" (click)="cancel()">Back to Login</button>
         </section>
       </section>
   </section>

@@ -4,7 +4,6 @@ import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { EMAIL_REGEXP } from '../../../../enums';
 import { ClrLoadingState } from '@clr/angular';
 import { Login, Effects } from '../../store';
 

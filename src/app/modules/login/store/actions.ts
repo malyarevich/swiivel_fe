@@ -73,4 +73,5 @@ export type UserAction =
     | Logout
     | RestorePassword
     | RestorePasswordSuccess
-    | RestorePasswordError;
+    | RestorePasswordError
+    | GetUserSuccess;

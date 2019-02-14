@@ -19,10 +19,6 @@ export class LoginService {
         return this.authService.login(obj);
     }
 
-    restorePassword(email: string): Observable<void> {
-        return this.authService.restorePassword(email);
-    }
-
     logout(): void {
         this.authService.logout();
     }

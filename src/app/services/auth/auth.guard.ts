@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanLoad, Route, CanActivate, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { AuthService } from './auth.service';
-// import { SessionStorageService } from './../session-storage/session-storage.service';
 import { Observable } from 'rxjs';
 
 export const ROUTE_NOT_AUTHENTICATED = 'ROUTE_NOT_AUTHENTICATED';
@@ -10,7 +9,6 @@ export const ROUTE_NOT_AUTHENTICATED = 'ROUTE_NOT_AUTHENTICATED';
 export class AuthGuard implements CanLoad, CanActivate {
     constructor(
         private readonly authService: AuthService,
-        // private readonly sessionStorage: SessionStorageService
     ) {}
 
     canActivate(route: ActivatedRouteSnapshot, routerState: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
@@ -18,22 +16,6 @@ export class AuthGuard implements CanLoad, CanActivate {
             throw makeCancelingError(new Error(ROUTE_NOT_AUTHENTICATED));
         } else {
             return true;
-
-            // const isChecked = this.sessionStorage.getItem('isChecked');
-            // if (isChecked) {
-            //     return true;
-            // } else {
-            //     return Observable.create((observer: any) => {
-            //         this.authService.checkToken(this.authService.token)
-            //         .then(() => {
-            //             observer.next(true);
-            //         }).catch(() => {
-            //             observer.next(makeCancelingError(new Error(ROUTE_NOT_AUTHENTICATED)));
-            //         }).then(() => {
-            //             observer.complete();
-            //         });
-            //     });
-            // }
         }
     }
 

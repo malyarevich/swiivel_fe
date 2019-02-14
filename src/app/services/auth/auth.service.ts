@@ -1,7 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable, InjectionToken } from '@angular/core';
-import { Observable, of } from 'rxjs';
-
 import { LoginData } from '../../modules/login/rest';
 import { LoginDTO } from './auth.dto';
 import { COMMON_STATUS } from '../../enums';
@@ -79,20 +77,5 @@ export class AuthService {
     logout() {
         this.localStoreService.removeItem(this.config.storageTokenKey);
         this.localStoreService.removeItem(this.config.user);
-    }
-
-    checkToken (param: any): Promise<any> {
-        return this.http.post<any>('auth/token/check', param).toPromise().then((res: any) => {
-            const {message} = res;
-            if (res.status === COMMON_STATUS.ERROR) {
-                throw message;
-            } else {
-                return true;
-            }
-        });
-    }
-
-    restorePassword(email: string): Observable<any> {
-        return of({});
     }
 }

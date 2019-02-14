@@ -1,16 +1,14 @@
 import { Component, OnInit, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ClrLoadingState } from '@clr/angular';
-
-// import { fadeInOutVoid } from '../../../../shared/utils';
-import { EMAIL_REGEXP } from '../../../../enums';
+import { fadeInOutVoid } from '../../../../utils';
 
 @Component({
   selector: 'app-restore-form',
   templateUrl: './restore-form.component.html',
   styleUrls: ['./restore-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  // animations: [fadeInOutVoid()]
+  animations: [fadeInOutVoid()]
 })
 export class RestoreFormComponent implements OnInit {
   public form: FormGroup;
@@ -23,7 +21,7 @@ export class RestoreFormComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
-        email: ['', [Validators.required,  Validators.pattern(EMAIL_REGEXP)]],
+        email: ['', [Validators.required]],
     });
   }
 
@@ -36,7 +34,7 @@ export class RestoreFormComponent implements OnInit {
     const {valid} = this.form;
     if (valid) {
       this.isOpen = !this.isOpen;
-      // this.submitBtnState = ClrLoadingState.LOADING;
+      this.submitBtnState = ClrLoadingState.LOADING;
     }
   }
 
