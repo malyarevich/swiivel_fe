@@ -13,6 +13,7 @@ import { InputContainerModule } from "./components/form-components";
 import {AuthModule, AuthServiceConfig} from "./services/auth";
 import {LocalStorageService} from "./services/local-storage";
 import {InterceptorsConfig, InterceptorsModule} from "./utils/interceptors/interceptors.module";
+import {environment} from "../environments/environment";
 
 const authConfig: AuthServiceConfig = {
   storageTokenKey: 'token',
@@ -39,7 +40,7 @@ export const interceptorsConfig: InterceptorsConfig = {
     InputContainerModule.forRoot(),
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
-    StoreDevtoolsModule.instrument(),
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
   ],
   providers: [
     LocalStorageService,
