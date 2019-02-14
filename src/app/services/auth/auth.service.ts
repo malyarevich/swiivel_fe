@@ -10,7 +10,6 @@ import { LocalStorageService } from '../local-storage';
 import {environment} from "../../../environments/environment";
 
 export interface AuthServiceConfig {
-    // baseUrl: string;
     storageTokenKey: string;
     user: string;
 }
@@ -58,7 +57,7 @@ export class AuthService {
   login(log: LoginData): Promise<User> {
     this.logout();
 
-    let host = (environment.production) ? 'http://35.211.160.56' : 'http://localhost:4200';
+    let host = (environment.production) ? 'http://red.dev.codeblue.ventures' : 'http://localhost:4200';
 
     return this.http.get(`${host}/assets/user.json`).toPromise().then((res: LoginDTO) => {
       const {message, data} = res;

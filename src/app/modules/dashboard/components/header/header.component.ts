@@ -3,7 +3,7 @@ import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 // import { Go } from '../../utils/store/router-store';
-// import { Logout } from '../../../modules/login/store';
+import { Logout } from '../../../login/store/index';
 
 @Component({
   selector: 'app-header',
@@ -36,6 +36,6 @@ export class HeaderComponent implements OnInit {
   }
 
   logOut (): void {
-      // this.store.dispatch(new Logout());
+      this.store.dispatch(new Logout());
   }
 }

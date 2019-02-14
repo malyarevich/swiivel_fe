@@ -2,9 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './components/dashboard.component';
 import {DashboardRoutingModule} from "./dashboard-routing.module";
-import {LayoutComponent} from "./layout/main-layout.component";
-import {HeaderComponent} from "./header";
-import {ClrButtonModule, ClrFormsModule, ClrIconModule, ClrLoadingModule, ClrDropdownModule} from "@clr/angular";
+import {LayoutComponent} from "./components/layout";
+import {HeaderComponent} from "./components/header";
 
 @NgModule({
   declarations: [
@@ -15,12 +14,6 @@ import {ClrButtonModule, ClrFormsModule, ClrIconModule, ClrLoadingModule, ClrDro
   imports: [
     CommonModule,
     DashboardRoutingModule,
-    ClrFormsModule,
-    // ClrFormsNextModule,
-    ClrIconModule,
-    ClrButtonModule,
-    ClrLoadingModule,
-    ClrDropdownModule
   ]
 })
 export class DashboardModule { }

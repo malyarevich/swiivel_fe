@@ -58,6 +58,14 @@ export class Logout implements Action {
     constructor() {}
 }
 
+export class GetUserSuccess implements Action {
+  static Type = '[User API] GetUserSuccess';
+
+  public type = GetUserSuccess.Type;
+
+  constructor(public user: User) {}
+}
+
 export type UserAction =
     | Login
     | LoginSuccess

@@ -1,7 +1,7 @@
 import { Component, Input, Optional, Inject, ContentChild } from '@angular/core';
 import { FormControlName } from '@angular/forms';
 import { COMMON_ERRORS } from '../../../enums';
-import { INPUT_ERROR_DISPLAY_STRATEGY, InputErrorDisplayStartegy } from './input-error-display-strategy';
+import { INPUT_ERROR_DISPLAY_STRATEGY, InputErrorDisplayStrategy } from './input-error-display-strategy';
 
 @Component({
     selector: 'app-input-container',
@@ -17,7 +17,7 @@ export class InputContainerComponent {
     constructor(
         @Optional()
         @Inject(INPUT_ERROR_DISPLAY_STRATEGY)
-        private readonly strategy: InputErrorDisplayStartegy
+        private readonly strategy: InputErrorDisplayStrategy
     ) {}
 
     get control() {
