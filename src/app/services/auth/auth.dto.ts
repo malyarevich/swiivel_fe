@@ -1,5 +1,5 @@
 export interface LoginDTO {
-    status?: string;
-    message?: any;
+    status?: number;
+    error?: any;
     data?: any;
 }

@@ -21,7 +21,7 @@ const authConfig: AuthServiceConfig = {
 };
 
 export const interceptorsConfig: InterceptorsConfig = {
-  baseUrl: 'http://test/api/v1/',
+  baseUrl: 'http://red.dev.codeblue.ventures/api/v1',
   storageTokenKey: 'token'
 };
 

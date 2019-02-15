@@ -4,8 +4,8 @@ export interface LoginData {
 }
 
 export interface User {
-    id?: number;
     username?: string;
-    role?: string;
-    token?: string;
+    email?: string,
+    full_name?: string,
+    role?: any,
 }

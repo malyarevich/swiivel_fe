@@ -1,11 +1,9 @@
-import { HttpClient } from '@angular/common/http';
-import { Inject, Injectable, InjectionToken } from '@angular/core';
-import { LoginData } from '../../modules/login/rest';
-import { LoginDTO } from './auth.dto';
-import { COMMON_STATUS } from '../../enums';
-import { User } from '../../modules/login/rest';
-import { LocalStorageService } from '../local-storage';
-import {environment} from "../../../environments/environment";
+import {HttpClient} from '@angular/common/http';
+import {Inject, Injectable, InjectionToken} from '@angular/core';
+import {LoginData} from '../../modules/login/rest';
+import {LoginDTO} from './auth.dto';
+import {User} from '../../modules/login/rest';
+import {LocalStorageService} from '../local-storage';
 
 export interface AuthServiceConfig {
     storageTokenKey: string;
@@ -20,7 +18,8 @@ export class AuthService {
         @Inject(AUTH_SERVICE_CONFIG) private readonly config: AuthServiceConfig,
         private readonly http: HttpClient,
         private readonly localStoreService: LocalStorageService
-    ) {}
+    ) {
+    }
 
     get token(): string | undefined {
         return this.localStoreService.getItem(this.config.storageTokenKey);
@@ -30,51 +29,29 @@ export class AuthService {
         return this.localStoreService.getItem(this.config.user);
     }
 
-    // login(log: LoginData): Promise<User> {
-    //     this.logout();
-    //     return this.http.post<LoginDTO>('auth/login', log).toPromise().then((res: LoginDTO) => {
-    //         const {message, data} = res;
-    //         if (res.status === COMMON_STATUS.ERROR) {
-    //             throw message;
-    //         } else {
-    //             const {token, user} = data;
-    //             const {id, username, role} = user;
-    //             this.localStoreService.setItem(this.config.storageTokenKey, token);
-    //             this.localStoreService.setItem(this.config.user, id);
-    //
-    //             return {
-    //                 id,
-    //                 username,
-    //                 role,
-    //             };
-    //         }
-    //     });
-    // }
+    login(log: LoginData): Promise<User> {
+        if (this.token) this.logout();
 
-// test
-  login(log: LoginData): Promise<User> {
-    this.logout();
-
-    let host = (environment.production) ? 'http://red.dev.codeblue.ventures' : 'http://localhost:4200';
-
-    return this.http.get(`${host}/assets/user.json`).toPromise().then((res: LoginDTO) => {
-      const {message, data} = res;
-      if (res.status === COMMON_STATUS.ERROR) {
-        throw message;
-      } else {
-        const {id, username, role, token} = data;
-        this.localStoreService.setItem(this.config.storageTokenKey, token);
-        this.localStoreService.setItem(this.config.user, {id, username, role});
-        return {
-          id: id,
-          username: username,
-          role: role
-        };
-      }
-    });
-  }
+        return this.http.post('/login', log).toPromise().then((res: LoginDTO | any) => {
+            if (!res.status) {
+                throw res.error;
+            } else {
+                const {username, email, full_name, role, access_token} = res.data;
+                this.localStoreService.setItem(this.config.storageTokenKey, access_token);
+                this.localStoreService.setItem(this.config.user, {username, email, full_name, role});
+                return {
+                    username: username,
+                    email: email,
+                    full_name: full_name,
+                    role: role,
+                };
+            }
+        });
+    }
 
     logout() {
+        this.http.get('/logout').toPromise().then((res) => {
+        });
         this.localStoreService.removeItem(this.config.storageTokenKey);
         this.localStoreService.removeItem(this.config.user);
     }
