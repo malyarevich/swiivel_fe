@@ -1,4 +1,31 @@
 <app-layout></app-layout>
-<p>
-  persons-list works!
-</p>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Title</th>
+        <th scope="col">First Name</th>
+        <th scope="col">Last Name</th>
+        <th scope="col">Date of birth</th>
+        <th scope="col">Contact Phone</th>
+        <th scope="col">Contact Email</th>
+        <th scope="col">Country</th>
+        <th scope="col">City</th>
+        <th scope="col">Address</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let person of persons | async; let i = index">
+        <th>{{ i + 1 }}</th>
+        <th scope="row">{{person.title || "No"}}</th>
+        <td>{{person.first_name || "No"}}</td>
+        <td>{{person.last_name || "No"}}</td>
+        <td>{{person.dob || "No"}}</td>
+        <td>{{person.contact_phone || "No"}}</td>
+        <td>{{person.contact_email || "No"}}</td>
+        <td>{{person.country || "No"}}</td>
+        <td>{{person.city || "No"}}</td>
+        <td>{{person.address || "No"}}</td>
+    </tr>
+    </tbody>
+</table>

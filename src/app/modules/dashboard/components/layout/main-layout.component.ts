@@ -21,7 +21,6 @@ export class LayoutComponent {
 
     openPage (path: string): void {
         this.toggleMenu();
-
         // setTimeout(() => {
             // this.store.dispatch(new Go([path]));
         // }, 400);

@@ -2,11 +2,11 @@
     <app-header [menu]="isMenuOpen" (toggleSideMenu)="toggleMenu()"></app-header>
     <div class="content-container">
         <section class="sideNav" [class.isOpen]="isMenuOpen">
-            <div class="menuItem" (click)="openPage('/')">
+            <div class="menuItem" routerLink="/dashboard" (click)="toggleMenu()">
                 <span>DASHBOARD</span>
             </div>
-            <div class="menuItem" routerLink="/dashboard/persons">
-                <span>PERSONS</span>
+            <div class="menuItem" routerLink="/dashboard/persons" (click)="toggleMenu()">
+                <span>PARENTS</span>
             </div>
         </section>
 
