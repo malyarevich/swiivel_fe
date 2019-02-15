@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AuthService } from '../../../services/auth';
 import { LoginData, User } from './auth.types';
-import { Observable } from 'rxjs';
 
 @Injectable()
 export class LoginService {

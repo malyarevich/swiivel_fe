@@ -10,7 +10,6 @@ import {
     LoginSuccess,
     Logout
 } from './actions';
-// import { GetUserSuccess } from '../../users/store';
 import { Store } from '@ngrx/store';
 
 @Injectable()
@@ -40,9 +39,7 @@ export class Effects {
     @Effect({ dispatch: false })
     loginSuccess$ = this.actions$.pipe(
         ofType<LoginSuccess>(LoginSuccess.Type),
-        tap((res) => {
-            const {user} = res;
-            // this.store.dispatch(new GetUserSuccess(user));
+        tap(() => {
             this.router.navigate(['/']);
         })
     );
