@@ -1,0 +1,41 @@
+<nav class="navbar navbar-default form-inline">
+  <div class=" form-inline">
+    <div class=" form-group col-md-2 ">
+      <!--<button (click)="cancel()" class="btn btn-default navbar-btn " routerLink="/generalinfo">-->
+      <button  class="btn btn-default navbar-btn " routerLink="/">
+        <span class="glyphicon glyphicon-menu-left">Return</span>
+      </button>
+    </div>
+    <div class="form-group col-md-2 col-md-offset-3">
+      <h3 class="">Form viewer</h3>
+    </div>
+    <div class=" form-group col-md-offset-4">
+      <button class="btn  btn-default navbar-btn " (click)="sendForm()" >Save form
+        <span class="glyphicon glyphicon-floppy-disk"></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+
+
+
+
+<div class="workplace col-md-7 col-lg-offset-3">
+  <h2>{{name}}</h2>
+  <form>
+    <div
+      class=" example-list container-fluid view-form">
+      <div *ngFor="let item of fields  " >
+        <div *ngIf="item.type==101">
+          <app-form-view-conteiner class="col-md-3"    [field]="item"></app-form-view-conteiner>
+        </div>
+        <div *ngIf="item.type!=101">
+          <app-form-view-conteiner class="col-md-6"  [field]="item"></app-form-view-conteiner>
+        </div>
+
+      </div>
+    </div>
+  </form>
+
+</div>
