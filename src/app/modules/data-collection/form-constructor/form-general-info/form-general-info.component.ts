@@ -3,12 +3,11 @@ import {FormService} from '../../form.service';
 import {Router} from '@angular/router';
 import {select, Store} from '@ngrx/store';
 import {selectAllForms, selectEditedForm} from '../../reducers/forms/form.selectors';
-import {Observable, pipe} from 'rxjs';
-import {map} from 'rxjs/operators';
 import {Form} from '../../reducers/forms/form.model';
 import {Update} from '@ngrx/entity';
 import {FormState} from '../../reducers/forms/form.reducer';
 import {UpdateForm} from '../../reducers/forms/form.actions';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-form-general-info',
@@ -20,7 +19,10 @@ export class FormGeneralInfoComponent{
 
   form:Form;
   name='';
-  constructor(private formService: FormService, private router: Router, private formStore$: Store<FormState>) {
+  constructor(private formService: FormService,
+              private router: Router,
+              private formStore$: Store<FormState>,
+              private location: Location) {
 
   this.formStore$
     .select(selectEditedForm)
@@ -41,6 +43,10 @@ export class FormGeneralInfoComponent{
       changes: {name: name}
     };
     this.formStore$.dispatch(new UpdateForm({form: updatedForm}));
+  }
+
+  goBack() {
+    this.location.back();
   }
 
 }

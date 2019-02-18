@@ -12,11 +12,7 @@ export const routes: Routes = [
         path: 'persons',
         component: PersonsListComponent
     },
-    {
-        path: 'data-collection',
-        loadChildren: '../data-collection/data-collection.module#DataCollectionModule',
-        data: { preload: true},
-    },
+
 ];
 
 @NgModule({

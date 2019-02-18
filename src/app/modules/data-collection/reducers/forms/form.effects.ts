@@ -56,7 +56,6 @@ sendForm$ = this.actions$
   .pipe(
     ofType<SendForm>(FormActionTypes.SendForm),
     withLatestFrom(this.store.pipe(select(selectEditedForm))),
- //   map(([id,formEdit])=>console.log(formEdit)),
     mergeMap(([id,formEdit])=> {
       return this.formService.sendForm(formEdit);
     }),

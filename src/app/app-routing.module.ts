@@ -13,14 +13,13 @@ const routes: Routes = [
     loadChildren: './modules/dashboard/dashboard.module#DashboardModule'
   },
   {
-    path: '',
-    redirectTo: '/dashboard',
-    pathMatch: 'full'
+    path: 'data-collection',
+    loadChildren: './modules/data-collection/data-collection.module#DataCollectionModule',
+    data: { preload: true}
   },
   {
     path: '**',
     redirectTo: '/dashboard',
-    pathMatch: 'full'
   }
 ];
 

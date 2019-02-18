@@ -4,8 +4,8 @@
       <h3>List of forms</h3>
     </div>
     <div class="form-group  col-md-offset-5 col-md-2 ">
-      <button type="button" class="btn navbar-btn  form-control" (click)="addForm()" routerLink="/generalinfo">
-         Create form <span class="glyphicon glyphicon-menu-right"></span>
+      <button type="button" class="btn navbar-btn  form-control" (click)="addForm()" routerLink="./generalinfo" routerLinkActive="active">
+         Create form <span>>></span>
       </button>
     </div>
 
@@ -32,9 +32,9 @@
     <td>Registrations</td>
     <td>
       <div class="btn-group" role="group" aria-label="...">
-        <button type="button"   class="btn btn-default" routerLink="viewform/{{item._id}}"><span class="pull-right glyphicon glyphicon-eye-open"></span></button>
-        <button type="button"  (click)="editForm(item._id)" class="btn btn-default" routerLink="/generalinfo"><span class="pull-right glyphicon glyphicon-pencil"></span></button>
-        <button type="button" (click)="removeForm(item._id)" class="btn btn-default "><span class="pull-right glyphicon glyphicon-remove"></span></button>
+        <button type="button"   class="btn btn-default" routerLink="viewform/{{item._id}}" routerLinkActive="active"><span>View</span></button>
+        <button type="button"  (click)="editForm(item._id)" class="btn btn-default" routerLink="generalinfo" routerLinkActive="active"><span>Edit</span></button>
+        <button type="button" (click)="removeForm(item._id)" class="btn btn-default "><span>Delete</span></button>
       </div>
     </td>
   </tr>
@@ -42,4 +42,4 @@
 </table>
 </div>
 
-
+<router-outlet></router-outlet>
