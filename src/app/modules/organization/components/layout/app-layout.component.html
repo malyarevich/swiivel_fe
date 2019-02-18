@@ -5,18 +5,20 @@
             <div class="menuItem" routerLink="/organization" (click)="toggleMenu()">
                 <span>DASHBOARD</span>
             </div>
+            <div class="menuItem" routerLink="/organization/persons" (click)="toggleMenu()">
+                <span>PERSONS</span>
+            </div>
             <div class="menuItem" routerLink="/organization/data-collection" (click)="toggleMenu()">
                 <span>DATA COLLECTIONS</span>
-            </div>
-            <div class="menuItem" routerLink="/organization/persons" (click)="toggleMenu()">
-                <span>PARENTS</span>
             </div>
         </section>
 
         <div class="background" [class.isFade]="isMenuOpen" (click)="toggleMenu()"></div>
 
         <div class="content-area">
-            <router-outlet></router-outlet>
+            <div class="container">
+                <router-outlet></router-outlet>
+            </div>
         </div>
     </div>
 </div>

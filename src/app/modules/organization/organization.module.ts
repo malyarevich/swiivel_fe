@@ -8,7 +8,7 @@ import {PersonsListComponent} from "./modules/person/components/persons-list/per
 import {StoreModule} from "@ngrx/store";
 import {EffectsModule} from "@ngrx/effects";
 import {Effects, reducer} from "./modules/person/store";
-import {PersonService} from "../../services/person/person.service";
+import {PersonService} from "./modules/person/services/person.service";
 
 @NgModule({
     declarations: [

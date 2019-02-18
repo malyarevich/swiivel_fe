@@ -1,11 +1,13 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
+import {DashboardComponent} from "./components/dashboard.component";
+
 
 export const routes: Routes = [
-    // {
-    //     path: '',
-    //     component: PersonsListComponent
-    // }
+    {
+        path: '',
+        component: DashboardComponent,
+    }
 ];
 
 @NgModule({
