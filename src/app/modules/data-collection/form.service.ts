@@ -34,6 +34,8 @@ export class FormService {
 
 
   sendForm(form:Form) {
+
+    console.log(form);
     if(form._id!=="0"){
       return this.http.post(this.SERVER_URL+'/form/'+form._id, form, {params: this.params})
         .pipe(
@@ -51,7 +53,10 @@ export class FormService {
   getFormsList(): Observable<any> {
     return this.http.get(this.SERVER_URL+'/form' ,{params: this.params})
       .pipe(
-        map((response) => response)
+        map((response) => {
+          console.log(response);
+          return response;
+        })
       );
   }
 

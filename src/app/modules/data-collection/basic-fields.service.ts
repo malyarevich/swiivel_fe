@@ -14,6 +14,7 @@ import {DateTimeFieldComponent} from './form-constructor/filds/date-time-field/d
 import {HebrewDateFieldComponent} from './form-constructor/filds/hebrew-date-field/hebrew-date-field.component';
 import {TimeFieldComponent} from './form-constructor/filds/time-field/time-field.component';
 import {PhoneNumberFieldComponent} from './form-constructor/filds/phone-number-field/phone-number-field.component';
+import {LabelFieldComponent} from './form-constructor/filds/label-field/label-field.component';
 
 @Injectable({
   providedIn: 'root'
@@ -37,7 +38,7 @@ export class BasicFieldsService {
      [108, EmailFieldComponent],
      [109, PhoneNumberFieldComponent],
      [110, HebrewDateFieldComponent],
-     [111, ShortTextFieldComponent],
+     [111, LabelFieldComponent],
      [112, ShortTextFieldComponent],
      [1,EmptyFieldsComponent]
      ]

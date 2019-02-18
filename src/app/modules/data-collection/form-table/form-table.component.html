@@ -18,6 +18,7 @@
 <thead>
   <tr>
     <th>Form name</th>
+    <th>Access</th>
     <th>Created</th>
     <th>Updated</th>
     <th>Type</th>
@@ -27,6 +28,8 @@
   <tbody *ngFor="let item of forms$ | async">
   <tr>
     <td>{{item.name}}</td>
+    <td *ngIf="item.personId">Person id: {{item?.personId}}</td>
+    <td *ngIf="!item.personId"></td>
     <td>{{item.created_at}}</td>
     <td>{{item.updated_at}}</td>
     <td>Registrations</td>

@@ -33,6 +33,7 @@ import * as fromField from './reducers/field/field.reducer';
 import { FormViewComponent } from './form-view/form-view.component';
 import { FormViewConteinerComponent } from './form-view/form-view-conteiner/form-view-conteiner.component';
 import { DataCollectionComponent } from './data-collection.component';
+import { LabelFieldComponent } from './form-constructor/filds/label-field/label-field.component';
 
 
 const formBuilderRoutes: Routes = [
@@ -74,7 +75,8 @@ const formBuilderRoutes: Routes = [
     FieldsSettingsComponent,
     FormViewComponent,
     FormViewConteinerComponent,
-    DataCollectionComponent
+    DataCollectionComponent,
+    LabelFieldComponent
   ],
   imports:[
     FormsModule,

@@ -9,6 +9,7 @@ import {DateTimeFieldComponent} from './form-constructor/filds/date-time-field/d
 import {HebrewDateFieldComponent} from './form-constructor/filds/hebrew-date-field/hebrew-date-field.component';
 import {TimeFieldComponent} from './form-constructor/filds/time-field/time-field.component';
 import {PhoneNumberFieldComponent} from './form-constructor/filds/phone-number-field/phone-number-field.component';
+import {LabelFieldComponent} from './form-constructor/filds/label-field/label-field.component';
 
 export const entryComponents = [
   ShortTextFieldComponent,
@@ -21,5 +22,6 @@ export const entryComponents = [
   DateTimeFieldComponent,
   HebrewDateFieldComponent,
   TimeFieldComponent,
-  PhoneNumberFieldComponent
+  PhoneNumberFieldComponent,
+  LabelFieldComponent
 ];

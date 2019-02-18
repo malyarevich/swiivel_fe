@@ -12,7 +12,8 @@ export const startedForm: Form = {
   name:'',
   updated_at:'',
   created_at:'',
-  api_token:'123'
+  api_token:'123',
+  link:''
 };
 
 export const adapter: EntityAdapter<Form> = createEntityAdapter<Form>({selectId: form=>form._id}

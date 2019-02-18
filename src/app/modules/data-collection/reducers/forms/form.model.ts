@@ -6,5 +6,7 @@ export interface Form {
   fields: Field[];
   updated_at: string,
   created_at: string,
-  api_token:string
+  api_token:string,
+  link: string,
+  personId?: number
 }
