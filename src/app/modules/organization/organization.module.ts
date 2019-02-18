@@ -1,19 +1,17 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {DashboardComponent} from './modules/dashboard/components/dashboard.component';
 import {OrganisationRoutingModule} from "./organisation-routing.module";
 import {LayoutComponent} from "./components/layout";
 import {HeaderComponent} from "./components/header";
-import {PersonsListComponent} from "./modules/person/components/persons-list/persons-list.component";
 import {StoreModule} from "@ngrx/store";
 import {EffectsModule} from "@ngrx/effects";
 import {Effects, reducer} from "./modules/person/store";
 import {PersonService} from "./modules/person/services/person.service";
+import {DashboardModule} from "./modules/dashboard";
+import {PersonModule} from "./modules/person";
 
 @NgModule({
     declarations: [
-        DashboardComponent,
-        PersonsListComponent,
         LayoutComponent,
         HeaderComponent
     ],
@@ -22,6 +20,8 @@ import {PersonService} from "./modules/person/services/person.service";
         OrganisationRoutingModule,
         StoreModule.forFeature('persons', reducer),
         EffectsModule.forFeature([Effects]),
+        DashboardModule,
+        PersonModule
     ],
     providers: [PersonService]
 })
