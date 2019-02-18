@@ -10,7 +10,7 @@ export const initialState: PersonsState = {
 
 export function reducer(state: PersonsState = initialState, action: PersonsAction) {
     if (action instanceof GetPersonsSuccess) {
-        const {persons} = action;
+        const {persons} = action.data;
         return {...state, persons};
     }
     return state;

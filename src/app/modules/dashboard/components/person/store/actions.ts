@@ -15,7 +15,7 @@ export class GetPersonsSuccess implements Action {
 
     public type = GetPersonsSuccess.Type;
 
-    constructor(public persons) {
+    constructor(public data) {
     }
 }
 

@@ -1,9 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {map} from 'rxjs/operators';
-import {Login} from "../../../../login/store";
-import {Store} from "@ngrx/store";
+import {Store, select} from "@ngrx/store";
 import {GetPersons} from '../store';
 
 @Component({
@@ -13,22 +11,16 @@ import {GetPersons} from '../store';
 })
 export class PersonsListComponent implements OnInit {
 
-    persons = {};
+    public persons$: Observable<any>;
 
     constructor(
         private readonly http: HttpClient,
-        private readonly store: Store<any>
+        private readonly store$: Store<any>
     ) {
     }
 
     ngOnInit() {
-        // this.getItems()
-        this.store.dispatch(new GetPersons());
+        this.store$.dispatch(new GetPersons());
+        this.persons$ = this.store$.pipe(select('persons'));
     }
-
-    // getItems() {
-    //     this.persons = this.http.get('/persons').pipe(
-    //         map((response) => response)
-    //     )
-    // }
 }
