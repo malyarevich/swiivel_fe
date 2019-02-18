@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Store, select} from "@ngrx/store";
-import {GetPersons} from '../store';
+import {GetPersons} from '../../store/index';
 
 @Component({
     selector: 'app-persons-list',

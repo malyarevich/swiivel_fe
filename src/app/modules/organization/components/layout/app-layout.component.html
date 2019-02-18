@@ -2,13 +2,13 @@
     <app-header [menu]="isMenuOpen" (toggleSideMenu)="toggleMenu()"></app-header>
     <div class="content-container">
         <section class="sideNav" [class.isOpen]="isMenuOpen">
-            <div class="menuItem" routerLink="/dashboard" (click)="toggleMenu()">
+            <div class="menuItem" routerLink="/organization" (click)="toggleMenu()">
                 <span>DASHBOARD</span>
             </div>
-            <div class="menuItem" routerLink="/dashboard/data-collection" (click)="toggleMenu()">
+            <div class="menuItem" routerLink="/organization/data-collection" (click)="toggleMenu()">
                 <span>DATA COLLECTIONS</span>
             </div>
-            <div class="menuItem" routerLink="/dashboard/persons" (click)="toggleMenu()">
+            <div class="menuItem" routerLink="/organization/persons" (click)="toggleMenu()">
                 <span>PARENTS</span>
             </div>
         </section>

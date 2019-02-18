@@ -1,7 +1,9 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
-import {DashboardComponent} from './components/dashboard.component';
-import {PersonsListComponent} from "./components/person/persons-list/persons-list.component";
+import {DashboardComponent} from './modules/dashboard/components/dashboard.component';
+import {LayoutComponent} from "./components/layout";
+import {PersonRoutingModule} from "./modules/person/person-routing.module";
+import { routes as personRoutes } from './modules/person/person-routing.module';
 
 export const routes: Routes = [
     {
@@ -10,7 +12,8 @@ export const routes: Routes = [
     },
     {
         path: 'persons',
-        component: PersonsListComponent
+        component: LayoutComponent,
+        children: personRoutes,
     },
     {
         path: 'data-collection',
