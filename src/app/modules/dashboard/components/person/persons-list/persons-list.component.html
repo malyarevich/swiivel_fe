@@ -5,7 +5,9 @@
         <th scope="col">#</th>
         <th scope="col">Title</th>
         <th scope="col">First Name</th>
+        <th scope="col">Middle Name</th>
         <th scope="col">Last Name</th>
+        <th scope="col">Gender</th>
         <th scope="col">Date of birth</th>
         <th scope="col">Contact Phone</th>
         <th scope="col">Contact Email</th>
@@ -15,17 +17,19 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let person of persons | async; let i = index">
+    <tr *ngFor="let data of (persons$ | async).persons; let i = index">
         <th>{{ i + 1 }}</th>
-        <th scope="row">{{person.title || "No"}}</th>
-        <td>{{person.first_name || "No"}}</td>
-        <td>{{person.last_name || "No"}}</td>
-        <td>{{person.dob || "No"}}</td>
-        <td>{{person.contact_phone || "No"}}</td>
-        <td>{{person.contact_email || "No"}}</td>
-        <td>{{person.country || "No"}}</td>
-        <td>{{person.city || "No"}}</td>
-        <td>{{person.address || "No"}}</td>
+        <th scope="row">{{data.title || "No"}}</th>
+        <td>{{data.first_name || "No"}}</td>
+        <td>{{data.middle_name || "No"}}</td>
+        <td>{{data.last_name || "No"}}</td>
+        <td>{{data.gender || "No"}}</td>
+        <td>{{data.dob || "No"}}</td>
+        <td>{{data.contact_phone || "No"}}</td>
+        <td>{{data.contact_email || "No"}}</td>
+        <td>{{data.country || "No"}}</td>
+        <td>{{data.city || "No"}}</td>
+        <td>{{data.address || "No"}}</td>
     </tr>
     </tbody>
 </table>
