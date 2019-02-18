@@ -8,18 +8,13 @@ import {filter} from "rxjs/operators";
 const routes: Routes = [
   ...loginRoutes,
   {
-    path: 'dashboard',
+    path: 'organization',
     canActivate: [AuthGuard],
-    loadChildren: './modules/dashboard/dashboard.module#DashboardModule'
-  },
-  {
-    path: '',
-    redirectTo: '/dashboard',
-    pathMatch: 'full'
+    loadChildren: './modules/organization/organization.module#OrganizationModule'
   },
   {
     path: '**',
-    redirectTo: '/dashboard',
+    redirectTo: '/organization',
     pathMatch: 'full'
   }
 ];

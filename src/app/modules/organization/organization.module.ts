@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {DashboardComponent} from './components/dashboard.component';
-import {DashboardRoutingModule} from "./dashboard-routing.module";
+import {OrganisationRoutingModule} from "./organisation-routing.module";
 import {LayoutComponent} from "./components/layout";
 import {HeaderComponent} from "./components/header";
 import {PersonsListComponent} from "./components/person/persons-list/persons-list.component";
@@ -19,11 +19,11 @@ import {PersonService} from "../../services/person/person.service";
     ],
     imports: [
         CommonModule,
-        DashboardRoutingModule,
+        OrganisationRoutingModule,
         StoreModule.forFeature('persons', reducer),
         EffectsModule.forFeature([Effects]),
     ],
     providers: [PersonService]
 })
-export class DashboardModule {
+export class OrganizationModule {
 }
