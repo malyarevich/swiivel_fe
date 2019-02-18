@@ -32,14 +32,26 @@ import {FormEffects} from './reducers/forms/form.effects';
 import * as fromField from './reducers/field/field.reducer';
 import { FormViewComponent } from './form-view/form-view.component';
 import { FormViewConteinerComponent } from './form-view/form-view-conteiner/form-view-conteiner.component';
+import { DataCollectionComponent } from './data-collection.component';
+import { LabelFieldComponent } from './form-constructor/filds/label-field/label-field.component';
 
 
 const formBuilderRoutes: Routes = [
-  { path: '', component: FormTableComponent },
-  { path: 'formbuilder', component: FormConstructorComponent },
-  { path: 'generalinfo', component: FormGeneralInfoComponent },
-  { path: 'viewform/:id', component: FormViewComponent },
-];
+  {
+    path: '',
+    component: DataCollectionComponent,
+    children: [
+      //   children: [
+      {path: '', component: FormTableComponent},
+      {path: 'generalinfo', component: FormGeneralInfoComponent},
+      {path: 'formbuilder', component: FormConstructorComponent},
+      {path: 'viewform/:id', component: FormViewComponent}
+    ]
+  }
+
+    ];
+
+
 
 
 @NgModule({
@@ -62,7 +74,9 @@ const formBuilderRoutes: Routes = [
     PhoneNumberFieldComponent,
     FieldsSettingsComponent,
     FormViewComponent,
-    FormViewConteinerComponent
+    FormViewConteinerComponent,
+    DataCollectionComponent,
+    LabelFieldComponent
   ],
   imports:[
     FormsModule,

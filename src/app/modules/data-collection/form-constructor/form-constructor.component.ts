@@ -25,6 +25,7 @@ import {FieldState} from '../reducers/field/field.reducer';
 import {selectAllField, selectEditedIdField} from '../reducers/field/field.selector';
 import {Field} from '../reducers/field/field.model';
 import {LoadFields, UpsertFields} from '../reducers/field/field.actions';
+import {Location} from '@angular/common';
 
 
 @Component({
@@ -42,7 +43,8 @@ export class FormConstructorComponent implements OnInit {
               private formService: FormService,
               private router: Router,
               private fieldStore$: Store<FieldState>,
-              private formStore$: Store<FormState>
+              private formStore$: Store<FormState>,
+              private location: Location,
               ) {
 
 
@@ -117,7 +119,7 @@ export class FormConstructorComponent implements OnInit {
     this.formStore$.dispatch(new UpdateForm({form: updatedForm}));
     this.formStore$.dispatch(new SendForm());
 
-       setTimeout(() => this.router.navigate(['']), 2000);
+       setTimeout(() => this.router.navigate(['data-collection']), 2000);
 
 
   }
@@ -135,4 +137,8 @@ export class FormConstructorComponent implements OnInit {
       .unsubscribe();
   }
 
+
+  goBack() {
+    this.location.back();
+  }
 }

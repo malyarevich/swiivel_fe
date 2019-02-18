@@ -56,7 +56,11 @@ export class FormViewComponent implements OnInit {
     this.formStore.dispatch(new UpdateForm({form: updatedForm}));
     this.formStore.dispatch(new SendForm());
 
-    setTimeout(() => this.router.navigate(['']), 2000);
+    setTimeout(() => this.router.navigate(['data-collection']), 2000);
 
+  }
+
+  goBack() {
+    this.location.back();
   }
 }

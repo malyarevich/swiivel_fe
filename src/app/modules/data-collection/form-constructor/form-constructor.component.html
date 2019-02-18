@@ -2,8 +2,8 @@
   <div class=" form-inline">
     <div class=" form-group col-md-2 ">
         <!--<button (click)="cancel()" class="btn btn-default navbar-btn " routerLink="/generalinfo">-->
-        <button  class="btn btn-default navbar-btn " routerLink="/generalinfo">
-          <span class="glyphicon glyphicon-menu-left">Return</span>
+        <button  class="btn btn-default navbar-btn " (click)="goBack()" >
+          <span >Return</span>
         </button>
     </div>
     <div class="form-group col-md-2 col-md-offset-3">
@@ -11,7 +11,7 @@
   </div>
     <div class=" form-group col-md-offset-4">
          <button class="btn  btn-default navbar-btn " (click)="sendForm()" >Save form
-           <span class="glyphicon glyphicon-floppy-disk"></span>
+           <span></span>
          </button>
     </div>
   </div>
@@ -92,23 +92,7 @@
 
 </div>
 
-  <!--<ul class="nav nav-tabs">-->
-    <!--<li class="active"><a data-toggle="tab" href="#panel1">Панель 1</a></li>-->
-    <!--<li><a data-toggle="tab" href="#panel2">Панель 2</a></li>-->
-  <!--</ul>-->
 
-  <!--<div class="tab-content">-->
-    <!--<div id="panel1" class="tab-pane fade in active">-->
-      <!--<h3>Панель 1</h3>-->
-      <!--<p>Содержимое 1 панели...</p>-->
-    <!--</div>-->
-    <!--<div id="panel2" class="tab-pane fade">-->
-      <!--<h3>Панель 2</h3>-->
-      <!--<p>Содержимое 2 панели...</p>-->
-    <!--</div>-->
-
-  <!--</div>-->
-<!--</div>-->
 
 
 
