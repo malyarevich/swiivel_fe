@@ -29,7 +29,7 @@
   <tr>
     <td>{{item.name}}</td>
     <td *ngIf="item.personId">Person id: {{item?.personId}}</td>
-    <td *ngIf="!item.personId"></td>
+    <td *ngIf="!item.personId">Admin</td>
     <td>{{item.created_at}}</td>
     <td>{{item.updated_at}}</td>
     <td>Registrations</td>
