@@ -7,4 +7,5 @@ export interface Field {
   name:string;
   mapped: string;
   title?:string;
+  value: string;
 }
