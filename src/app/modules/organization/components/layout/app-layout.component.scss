@@ -14,6 +14,11 @@
     flex: 1;
 }
 
+.content-area {
+    min-height: 100vh;
+    height: 100%;
+}
+
 .content {
     padding: 20px;
     background-color: $background-color-content;
