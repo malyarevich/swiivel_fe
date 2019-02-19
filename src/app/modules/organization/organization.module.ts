@@ -5,10 +5,11 @@ import {LayoutComponent} from "./components/layout";
 import {HeaderComponent} from "./components/header";
 import {StoreModule} from "@ngrx/store";
 import {EffectsModule} from "@ngrx/effects";
-import {Effects, reducer} from "./modules/person/store";
 import {PersonService} from "./modules/person/services/person.service";
 import {DashboardModule} from "./modules/dashboard";
 import {PersonModule} from "./modules/person";
+import * as fromPerson from './modules/person/person.reducer';
+import {PersonEffects} from './modules/person/person.effect';
 
 @NgModule({
     declarations: [
@@ -18,10 +19,10 @@ import {PersonModule} from "./modules/person";
     imports: [
         CommonModule,
         OrganisationRoutingModule,
-        StoreModule.forFeature('persons', reducer),
-        EffectsModule.forFeature([Effects]),
         DashboardModule,
-        PersonModule
+        PersonModule,
+        StoreModule.forFeature('person', fromPerson.reducer),
+      EffectsModule.forFeature([PersonEffects]),
     ],
     providers: [PersonService]
 })

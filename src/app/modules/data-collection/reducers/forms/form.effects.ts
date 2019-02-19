@@ -2,11 +2,11 @@ import {Injectable} from '@angular/core';
 import {Actions, Effect, ofType} from '@ngrx/effects';
 import {FormState} from './form.reducer';
 import {select, Store} from '@ngrx/store';
-import {FormActionTypes, LoadForms, RequestForm, DeleteForm, EditForm,  SendForm} from './form.actions';
+import {FormActionTypes, LoadForms, RequestForm, DeleteForm, EditForm, SendForm, FillForm} from './form.actions';
 import {map, mergeMap, withLatestFrom,  catchError,  switchMap} from 'rxjs/operators';
 import {FormService} from '../../form.service';
 import { throwError} from 'rxjs';
-import {selectEditedForm} from './form.selectors';
+import {selectEditedForm, selectFormById} from './form.selectors';
 import {FieldActionTypes, LoadFields, UpdateField, EditField} from '../field/field.actions';
 import {FieldState} from '../field/field.reducer';
 
@@ -59,6 +59,18 @@ sendForm$ = this.actions$
     mergeMap(([id,formEdit])=> {
       return this.formService.sendForm(formEdit);
     }),
+    map(res=> new RequestForm()),
+    catchError(err => {
+      console.log('error send form ', err);
+      return throwError(err);
+    }))
+;
+
+@Effect()
+fillForm$ = this.actions$
+  .pipe(
+    ofType<FillForm>(FormActionTypes.FillForm),
+switchMap(({form})=>this.formService.sendForm(form)),
     map(res=> new RequestForm()),
     catchError(err => {
       console.log('error send form ', err);

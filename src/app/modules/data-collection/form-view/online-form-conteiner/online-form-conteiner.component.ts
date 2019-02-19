@@ -11,10 +11,10 @@ import { v4 as uuid } from 'uuid';
 
 @Component({
   selector: 'app-form-view-conteiner',
-  templateUrl: './form-view-conteiner.component.html',
-  styleUrls: ['./form-view-conteiner.component.css']
+  templateUrl: './online-form-conteiner.component.html',
+  styleUrls: ['./online-form-conteiner.component.css']
 })
-export class FormViewConteinerComponent implements OnInit {
+export class OnlineFormConteinerComponent implements OnInit {
 
   @Input() field: Field;
 

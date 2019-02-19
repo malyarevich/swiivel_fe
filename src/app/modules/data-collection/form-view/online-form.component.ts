@@ -5,14 +5,13 @@ import {FormService} from '../form.service';
 import { Form } from '../reducers/forms/form.model';
 import {Store} from '@ngrx/store';
 import {FormState} from '../reducers/forms/form.reducer';
-import {EditForm, SendForm, UpdateForm} from '../reducers/forms/form.actions';
-import {Update} from '@ngrx/entity';
+import {EditForm, FillForm, SendForm, UpdateForm} from '../reducers/forms/form.actions';
 @Component({
   selector: 'app-form-view',
-  templateUrl: './form-view.component.html',
-  styleUrls: ['./form-view.component.css']
+  templateUrl: './online-form.component.html',
+  styleUrls: ['./online-form..component.css']
 })
-export class FormViewComponent implements OnInit {
+export class OnlineFormComponent implements OnInit {
   name ='';
 
   fields=[];
@@ -38,7 +37,6 @@ export class FormViewComponent implements OnInit {
         this.form = form;
         this.name=form.name;
         this.fields = form.fields;
-        this.formStore.dispatch(new EditForm({id:form._id}))
       }
     );
 
@@ -46,18 +44,11 @@ export class FormViewComponent implements OnInit {
 
 
   sendForm(){
-   // console.log(this.fields);
 
+this.form.fields=this.fields;
+    this.formStore.dispatch(new FillForm(this.form));
 
-    const updatedForm: Update<Form>={
-      id: this.form._id,
-      changes: {fields: this.fields}
-    };
-    this.formStore.dispatch(new UpdateForm({form: updatedForm}));
-    this.formStore.dispatch(new SendForm());
-
-    setTimeout(() => this.router.navigate(['data-collection']), 2000);
-
+    setTimeout(() =>this.goBack(), 2000);
   }
 
   goBack() {
