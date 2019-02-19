@@ -2,9 +2,12 @@
     <clr-tab>
         <button class="tabBtn" clrTabLink id="link1">GENERAL</button>
         <clr-tab-content id="content1" *clrIfActive="true">
-            <section class="innerTab">
-                <p>{{person$ | async | json}}</p>
-            </section>
+                <div *ngIf="(person$ | async) as data">
+                    <p><b>{{data.first_name}} {{ data.last_name}}</b> {{data.contact_phone}}</p>
+                    <p>{{data.address}}</p>
+                    <p>{{data.city}} {{data.state}} {{data.country}}</p>
+                    <p>{{data.contact_email}}</p>
+                </div>
         </clr-tab-content>
     </clr-tab>
     <clr-tab>
