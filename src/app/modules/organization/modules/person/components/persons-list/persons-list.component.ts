@@ -1,8 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
-import {Store, select} from "@ngrx/store";
-import {GetPersons} from '../../store/index';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {Store, select} from '@ngrx/store';
+import {Person} from 'src/app/models/person';
+import {PersonState} from '../../person.reducer';
+import {RequestPerson} from '../../person.actions';
+import {selectAllPersons, selectPersonById} from '../../person.selector';
 
 @Component({
     selector: 'app-persons-list',
@@ -11,16 +14,26 @@ import {GetPersons} from '../../store/index';
 })
 export class PersonsListComponent implements OnInit {
 
-    public persons$: Observable<any>;
+    public persons$: Observable<Person[]>;
+
+    person$: Observable<Person>;
 
     constructor(
         private readonly http: HttpClient,
-        private readonly store$: Store<any>
+        private  personStore$: Store<PersonState>
     ) {
     }
 
     ngOnInit() {
-        this.store$.dispatch(new GetPersons());
-        this.persons$ = this.store$.pipe(select('persons'));
+
+      this.personStore$.dispatch(new RequestPerson());
+      this.persons$ = this.personStore$.pipe(
+        select(selectAllPersons)
+      );
+
     }
+
+
+
+
 }

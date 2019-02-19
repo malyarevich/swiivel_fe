@@ -17,7 +17,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let data of (persons$ | async).persons; let i = index">
+    <tr *ngFor="let data of persons$ | async; let i = index">
         <th>{{ i + 1 }}</th>
         <th scope="row">{{data.title || "No"}}</th>
         <td>{{data.first_name || "No"}}</td>
@@ -33,3 +33,4 @@
     </tr>
     </tbody>
 </table>
+
