@@ -1,6 +1,6 @@
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { Form } from './form.model';
-import { FormActions, FormActionTypes } from './form.actions';
+import {ClearEditForm, FormActions, FormActionTypes} from './form.actions';
 
 export interface FormState extends EntityState<Form> {
   edited: string
@@ -45,11 +45,22 @@ export function reducer(
       return adapter.removeOne(action.payload.id, state);
     }
 
+    case FormActionTypes.FillForm: {
+      return state;
+    }
+
 
     case FormActionTypes.EditForm: {
       return {
         ...state,
         edited: action.payload.id
+      };
+    }
+
+    case FormActionTypes.ClearEditForm: {
+      return {
+        ...state,
+        edited: ''
       };
     }
 

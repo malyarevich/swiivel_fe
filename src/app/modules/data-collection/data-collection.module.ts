@@ -30,10 +30,11 @@ import * as fromForm from './reducers/forms/form.reducer';
 import {EffectsModule} from '@ngrx/effects';
 import {FormEffects} from './reducers/forms/form.effects';
 import * as fromField from './reducers/field/field.reducer';
-import { FormViewComponent } from './form-view/form-view.component';
-import { FormViewConteinerComponent } from './form-view/form-view-conteiner/form-view-conteiner.component';
+import { OnlineFormComponent } from './form-view/online-form.component';
+import { OnlineFormConteinerComponent } from './form-view/online-form-conteiner/online-form-conteiner.component';
 import { DataCollectionComponent } from './data-collection.component';
 import { LabelFieldComponent } from './form-constructor/filds/label-field/label-field.component';
+import {FormNavComponent} from './form-constructor/form-nav/form-nav.component';
 
 
 const formBuilderRoutes: Routes = [
@@ -45,7 +46,7 @@ const formBuilderRoutes: Routes = [
       {path: '', component: FormTableComponent},
       {path: 'generalinfo', component: FormGeneralInfoComponent},
       {path: 'formbuilder', component: FormConstructorComponent},
-      {path: 'viewform/:id', component: FormViewComponent}
+      {path: 'onlineform/:id', component: OnlineFormComponent}
     ]
   }
 
@@ -73,10 +74,11 @@ const formBuilderRoutes: Routes = [
     TimeFieldComponent,
     PhoneNumberFieldComponent,
     FieldsSettingsComponent,
-    FormViewComponent,
-    FormViewConteinerComponent,
+    OnlineFormComponent,
+    OnlineFormConteinerComponent,
     DataCollectionComponent,
-    LabelFieldComponent
+    LabelFieldComponent,
+    FormNavComponent
   ],
   imports:[
     FormsModule,

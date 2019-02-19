@@ -6,8 +6,10 @@ export enum FormActionTypes {
   RequestForm = '[Form] Reques Form List',
   LoadForms = '[Form] Load Forms',
   EditForm = '[Form] Edit Form',
+  ClearEditForm = '[Form] Clear Edit Form',
   AddForm = '[Form] Add Form',
   SendForm = '[Form] Send Form',
+  FillForm = '[Form] Fill Form',
   UpdateForm = '[Form] Update Form',
   DeleteForm = '[Form] Delete Form'
 }
@@ -48,10 +50,20 @@ export class EditForm implements Action {
   constructor(public payload: { id: string }) {
   }
 }
+export class ClearEditForm implements Action {
+  readonly type = FormActionTypes.ClearEditForm;
+
+}
 export class DeleteForm implements Action {
   readonly type = FormActionTypes.DeleteForm;
 
   constructor(public payload: { id: string }) {
+  }
+}
+export class FillForm implements Action {
+  readonly type = FormActionTypes.FillForm;
+
+  constructor(public  form: Form ) {
   }
 }
 
@@ -61,6 +73,8 @@ export type FormActions =
   | RequestForm
   | AddForm
   | SendForm
+  | FillForm
   | EditForm
+  | ClearEditForm
   | UpdateForm
   | DeleteForm;

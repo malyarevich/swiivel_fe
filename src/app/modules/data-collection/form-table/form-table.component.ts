@@ -3,7 +3,7 @@ import {Field} from '../model/field';
 import {FormService} from '../form.service';
 import {FormState} from '../reducers/forms/form.reducer';
 import {select, Store} from '@ngrx/store';
-import {AddForm, DeleteForm, EditForm, RequestForm} from '../reducers/forms/form.actions';
+import {AddForm, DeleteForm, EditForm, RequestForm, ClearEditForm} from '../reducers/forms/form.actions';
 import {Observable} from 'rxjs';
 import {Form} from '../reducers/forms/form.model';
 import {selectAllForms, selectFormById} from '../reducers/forms/form.selectors';
@@ -27,7 +27,7 @@ export class FormTableComponent implements OnInit {
     this.forms$ = this.formStore.pipe(
       select(selectAllForms)
     );
-  //  this.formStore.dispatch(new EditForm({id:''}));
+    this.formStore.dispatch(new ClearEditForm());
 
 
   }
