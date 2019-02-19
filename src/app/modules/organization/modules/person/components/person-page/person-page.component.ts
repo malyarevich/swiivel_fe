@@ -5,7 +5,7 @@ import {select, Store} from "@ngrx/store";
 import {map, filter, switchMap} from "rxjs/operators";
 import {Observable} from "rxjs";
 import {GetPersons} from "../../store";
-import {selectAllPersons} from "../../store/selectors";
+// import {selectAllPersons} from "../../store/selectors";
 
 @Component({
     selector: 'app-person-page',
@@ -24,14 +24,13 @@ export class PersonPageComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.store$.dispatch(new GetPersons());
         this.personId = this.route.snapshot.params['id'];
-        this.persons = this.store$.pipe(
-            select(selectAllPersons),
-            // map(person => person.persons.filter(person => person.id == this.personId)),
-            map(person => person.map((person) => console.log(person))),
-            // filter(person => person.id === 1)
-        );
+        // this.persons = this.store$.pipe(
+        //     select(selectAllPersons),
+        //     // map(person => person.persons.filter(person => person.id == this.personId)),
+        //     map(person => person.map((person) => console.log(person))),
+        //     // filter(person => person.id === 1)
+        // );
     }
 
 }

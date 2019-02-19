@@ -1,3 +1,19 @@
-<p>
-  person-page works!{{(persons | async) | json}}
-</p>
+<clr-tabs>
+    <clr-tab>
+        <button class="tabBtn" clrTabLink id="link1">SETTINGS</button>
+        <clr-tab-content id="content1" *clrIfActive="true">
+            <section class="innerTab">
+                kkkk
+            </section>
+        </clr-tab-content>
+    </clr-tab>
+    <clr-tab>
+        <button class="tabBtn" clrTabLink>PERMISSIONS</button>
+        <clr-tab-content *clrIfActive>
+            <section class="innerTab">
+               hhhh
+            </section>
+        </clr-tab-content>
+    </clr-tab>
+</clr-tabs>
+
