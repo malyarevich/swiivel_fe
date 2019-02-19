@@ -15,6 +15,17 @@ export const routes: Routes = [
         component: LayoutComponent,
         children: personRoutes,
     },
+    {
+        path: 'data-collection-test',
+        component: LayoutComponent,
+        children: [
+            {
+                path: '',
+                loadChildren: '../data-collection/data-collection.module#DataCollectionModule',
+                data: {preload: true}
+            }
+        ],
+    },
 ];
 
 @NgModule({

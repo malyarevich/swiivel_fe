@@ -8,7 +8,7 @@ import {filter} from "rxjs/operators";
 const routes: Routes = [
   ...loginRoutes,
   {
-    path: 'organization',
+    path: '',
     canActivate: [AuthGuard],
     loadChildren: './modules/organization/organization.module#OrganizationModule'
   },
@@ -19,7 +19,7 @@ const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: '/organization',
+    redirectTo: '',
   }
 ];
 
