@@ -1,14 +1,14 @@
 <clr-tabs>
     <clr-tab>
-        <button class="tabBtn" clrTabLink id="link1">SETTINGS</button>
+        <button class="tabBtn" clrTabLink id="link1">GENERAL</button>
         <clr-tab-content id="content1" *clrIfActive="true">
             <section class="innerTab">
-                kkkk
+                <p>{{person$ | async | json}}</p>
             </section>
         </clr-tab-content>
     </clr-tab>
     <clr-tab>
-        <button class="tabBtn" clrTabLink>PERMISSIONS</button>
+        <button class="tabBtn" clrTabLink>FORMS LINKS</button>
         <clr-tab-content *clrIfActive>
             <section class="innerTab">
                hhhh

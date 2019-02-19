@@ -16,8 +16,6 @@ export class PersonsListComponent implements OnInit {
 
     public persons$: Observable<Person[]>;
 
-    person$: Observable<Person>;
-
     constructor(
         private readonly http: HttpClient,
         private  personStore$: Store<PersonState>
@@ -30,7 +28,6 @@ export class PersonsListComponent implements OnInit {
       this.persons$ = this.personStore$.pipe(
         select(selectAllPersons)
       );
-
     }
 
 
