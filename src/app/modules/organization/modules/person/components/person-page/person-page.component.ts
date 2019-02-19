@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
-import {Person} from "../../../../../../models/person";
+import {Person} from "../../person.model";
 import {select, Store} from "@ngrx/store";
 import {map, filter, switchMap} from "rxjs/operators";
 import {Observable} from "rxjs";
-import {GetPersons} from "../../store";
+// import {GetPersons} from "../../store";
 // import {selectAllPersons} from "../../store/selectors";
 
 @Component({

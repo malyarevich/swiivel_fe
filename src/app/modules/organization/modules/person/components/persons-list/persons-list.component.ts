@@ -2,10 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Store, select} from '@ngrx/store';
-import {Person} from 'src/app/models/person';
-import {PersonState} from '../../person.reducer';
-import {RequestPerson} from '../../person.actions';
-import {selectAllPersons, selectPersonById} from '../../person.selector';
+import {Person} from "../../person.model";
+import {PersonState} from '../../store/person.reducer';
+import {RequestPerson} from '../../store/person.actions';
+import {selectAllPersons, selectPersonById} from '../../store/person.selector';
 
 @Component({
     selector: 'app-persons-list',

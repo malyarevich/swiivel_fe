@@ -5,7 +5,7 @@ import {Injectable} from '@angular/core';
 import {PersonState} from './person.reducer';
 import {Store} from '@ngrx/store';
 import {LoadPersons, PersonActionTypes, RequestPerson} from './person.actions';
-import {PersonService} from './services/person.service';
+import {PersonService} from '../services/person.service';
 
 
 @Injectable()

@@ -8,8 +8,8 @@ import {EffectsModule} from "@ngrx/effects";
 import {PersonService} from "./modules/person/services/person.service";
 import {DashboardModule} from "./modules/dashboard";
 import {PersonModule} from "./modules/person";
-import * as fromPerson from './modules/person/person.reducer';
-import {PersonEffects} from './modules/person/person.effect';
+import * as fromPerson from './modules/person/store/person.reducer';
+import {PersonEffects} from './modules/person/store/person.effect';
 
 @NgModule({
     declarations: [

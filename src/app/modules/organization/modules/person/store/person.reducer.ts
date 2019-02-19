@@ -1,5 +1,5 @@
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
-import { Person } from './person.model';
+import { Person } from '../person.model';
 import { PersonActions, PersonActionTypes } from './person.actions';
 
 export interface PersonState extends EntityState<Person> {
