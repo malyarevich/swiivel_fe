@@ -11,7 +11,28 @@
         <button class="tabBtn" clrTabLink>FORMS LINKS</button>
         <clr-tab-content *clrIfActive>
             <section class="innerTab">
-               hhhh
+              <table  class="table table-striped">
+                <thead>
+                <tr>
+                  <th>Form name</th>
+                  <th>Created</th>
+                  <th>Updated</th>
+                  <th>Type</th>
+                  <th>Link</th>
+                </tr>
+                </thead>
+                <tbody *ngFor="let item of formList$ | async">
+                <tr>
+                  <td>{{item.name}}</td>
+                  <td>{{item.created_at}}</td>
+                  <td>{{item.updated_at}}</td>
+                  <td>Registrations</td>
+                  <td>
+                    <button type="button" routerLink="/data-collection/{{item.link}}"  class="btn btn-default" >Link</button>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
             </section>
         </clr-tab-content>
     </clr-tab>

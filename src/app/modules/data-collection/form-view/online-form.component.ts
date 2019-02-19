@@ -5,7 +5,7 @@ import {FormService} from '../form.service';
 import { Form } from '../reducers/forms/form.model';
 import {Store} from '@ngrx/store';
 import {FormState} from '../reducers/forms/form.reducer';
-import {EditForm, FillForm, SendForm, UpdateForm} from '../reducers/forms/form.actions';
+import { FillForm} from '../reducers/forms/form.actions';
 @Component({
   selector: 'app-form-view',
   templateUrl: './online-form.component.html',
@@ -18,7 +18,6 @@ export class OnlineFormComponent implements OnInit {
 
   form: Form;
 
- // form: Form;
 
   constructor(    private route: ActivatedRoute,
                   private router: Router,
