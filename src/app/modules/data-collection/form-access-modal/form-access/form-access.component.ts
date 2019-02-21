@@ -48,6 +48,7 @@ export class FormAccessComponent implements OnInit, OnDestroy {
     }
 
     addUser() {
+        if (this.findUserToAcl(this.selectedUserId)) return;
         this.acl.push({
             'userId': this.selectedUserId,
             'view': false,
@@ -62,6 +63,14 @@ export class FormAccessComponent implements OnInit, OnDestroy {
         this.formService.sendForm(this.form)
             .subscribe(res => {
             });
+    }
+
+    deleteUserFromAcl(userId) {
+        this.acl = this.acl.filter((item) => item.userId != userId);
+    }
+
+    findUserToAcl(userId) {
+        return this.acl.filter((item) => item.userId == userId).length;
     }
 
     ngOnDestroy() {
