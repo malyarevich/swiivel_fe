@@ -1,7 +1,7 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {Form} from "../reducers/forms/form.model";
+import {Form} from "../../reducers/forms/form.model";
 import {ActivatedRoute} from "@angular/router";
-import {FormService} from "../form.service";
+import {FormService} from "../../form.service";
 import {HttpClient} from "@angular/common/http";
 
 @Component({
@@ -65,6 +65,5 @@ export class FormAccessComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        console.log('destroy');
     }
 }

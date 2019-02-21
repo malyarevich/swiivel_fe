@@ -35,9 +35,10 @@ import { OnlineFormConteinerComponent } from './form-view/online-form-conteiner/
 import { DataCollectionComponent } from './data-collection.component';
 import { LabelFieldComponent } from './form-constructor/filds/label-field/label-field.component';
 import {FormNavComponent} from './form-constructor/form-nav/form-nav.component';
-import {FormAccessComponent} from './form-access/form-access.component';
+import {FormAccessComponent} from './form-access-modal/form-access/form-access.component';
 import {InterceptorsModule} from "../../utils/interceptors/interceptors.module";
 import {interceptorsConfig} from "../../app.module";
+import { FormAccessModalComponent } from './form-access-modal/form-access-modal.component';
 
 
 const formBuilderRoutes: Routes = [
@@ -82,7 +83,8 @@ const formBuilderRoutes: Routes = [
     DataCollectionComponent,
     LabelFieldComponent,
     FormNavComponent,
-    FormAccessComponent
+    FormAccessComponent,
+    FormAccessModalComponent
   ],
   imports:[
     FormsModule,

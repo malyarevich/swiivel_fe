@@ -7,8 +7,7 @@ import {AddForm, DeleteForm, EditForm, RequestForm, ClearEditForm} from '../redu
 import {Observable} from 'rxjs';
 import {Form} from '../reducers/forms/form.model';
 import {selectAllForms, selectFormById} from '../reducers/forms/form.selectors';
-import {tap, first} from 'rxjs/operators';
-import {FormAccessComponent} from "../form-access/form-access.component";
+import {FormAccessModalComponent} from "../form-access-modal/form-access-modal.component";
 
 @Component({
   selector: 'app-form-table',
@@ -16,7 +15,7 @@ import {FormAccessComponent} from "../form-access/form-access.component";
   styleUrls: ['./form-table.component.css']
 })
 export class FormTableComponent implements OnInit {
-  @ViewChild(FormAccessComponent) formAccessComponent:FormAccessComponent;
+    @ViewChild(FormAccessModalComponent) formAccessModal : FormAccessModalComponent ;
   forms$: Observable<Form[]>;
   formSelected;
 
@@ -51,8 +50,7 @@ export class FormTableComponent implements OnInit {
     this.formStore.dispatch(new EditForm({id}));
   }
 
-    saveFormACL() {
-        this.formAccessComponent.saveFormACL();
-        this.formSelected=null
-    }
+  resetFormSelected() {
+      this.formSelected = null
+  }
 }
