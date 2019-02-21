@@ -1,30 +1,23 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {BasicFieldsService} from '../basic-fields.service';
-import {ShortTextFieldComponent} from './filds/short-text-field/short-text-field.component';
 import {
   CdkDragDrop,
   moveItemInArray,
-  transferArrayItem,
   copyArrayItem,
-  CdkDragEnter,
-  CdkDragMove,
-  CdkDrag
 } from '@angular/cdk/drag-drop';
-import {EmptyFieldsComponent} from './filds/empty-fields/empty-fields.component';
 import {FormService} from '../form.service';
 import {Router} from '@angular/router';
 import {Store, select} from '@ngrx/store';
 import {Observable, pipe} from 'rxjs';
-import {concatAll, first, map, mergeMap, switchMap, tap} from 'rxjs/operators';
 import {Update} from '@ngrx/entity';
 import {Form} from '../reducers/forms/form.model';
-import {FormState, getEdited} from '../reducers/forms/form.reducer';
-import {selectEditedForm, selectEditedIdForm} from '../reducers/forms/form.selectors';
+import {FormState} from '../reducers/forms/form.reducer';
+import { selectEditedIdForm} from '../reducers/forms/form.selectors';
 import {SendForm, UpdateForm} from '../reducers/forms/form.actions';
 import {FieldState} from '../reducers/field/field.reducer';
 import {selectAllField, selectEditedIdField} from '../reducers/field/field.selector';
 import {Field} from '../reducers/field/field.model';
-import {LoadFields, UpsertFields} from '../reducers/field/field.actions';
+import {LoadFields} from '../reducers/field/field.actions';
 import {Location} from '@angular/common';
 
 

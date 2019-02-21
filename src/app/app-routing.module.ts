@@ -18,6 +18,11 @@ const routes: Routes = [
     data: { preload: true}
   },
   {
+    path: 'vertical-data-collection',
+    loadChildren: './modules/vertical-data-collection/vertical-data-collection.module#VerticalDataCollectionModule',
+    data: { preload: true}
+  },
+  {
     path: '**',
     redirectTo: '',
   }

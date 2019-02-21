@@ -1,1 +1,9 @@
-<input type="email" class="form-control"  aria-describedby="basic-addon1" [(ngModel)]="data.value">
+<div class="form-group" [ngClass]="{'has-error': email.invalid && email.touched}">
+  <input         type="text"
+                 class="form-control"
+                 ngModel
+                 name="email"
+                 required
+                 email
+                 #email="ngModel"  aria-describedby="basic-addon1" [(ngModel)]="data.value">
+</div>
