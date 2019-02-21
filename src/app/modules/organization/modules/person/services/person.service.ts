@@ -21,7 +21,7 @@ export class PersonService {
     }
 
   getFormsList(personId:number): Observable<any> {
-    return this.http.get(this.SERVER_URL+'/form/person/'+personId ,{params: this.params})
+    return this.http.get(this.SERVER_URL+'/forms/person/'+personId ,{params: this.params})
       .pipe(
         map((response) => {
           console.log(response);
