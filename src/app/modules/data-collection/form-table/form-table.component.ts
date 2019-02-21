@@ -52,14 +52,7 @@ export class FormTableComponent implements OnInit {
   }
 
     saveFormACL() {
-    this.formAccessComponent.saveFormACL();
+        this.formAccessComponent.saveFormACL();
+        this.formSelected=null
     }
-
-    // destroyFormACL() {
-    //
-    //     if (this.formAccessComponent) {
-    //         this.formAccessComponent.();
-    //     }
-    // }
-
 }

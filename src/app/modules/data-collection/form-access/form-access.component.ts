@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Form} from "../reducers/forms/form.model";
 import {ActivatedRoute} from "@angular/router";
 import {FormService} from "../form.service";
@@ -9,7 +9,7 @@ import {HttpClient} from "@angular/common/http";
     templateUrl: './form-access.component.html',
     styleUrls: ['./form-access.component.css']
 })
-export class FormAccessComponent implements OnInit {
+export class FormAccessComponent implements OnInit, OnDestroy {
     @Input() formId: string;
     form: Form;
     users;
@@ -57,9 +57,14 @@ export class FormAccessComponent implements OnInit {
         });
     }
 
-    saveFormACL():void {
+    saveFormACL(): void {
         this.form.acl = this.acl;
         this.formService.sendForm(this.form)
-            .subscribe(res => console.log(res));
+            .subscribe(res => {
+            });
+    }
+
+    ngOnDestroy() {
+        console.log('destroy');
     }
 }
