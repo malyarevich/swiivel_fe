@@ -4,9 +4,7 @@
 
 export const environment = {
   production: false,
-//  api: 'http://form-builder.edminify-new.devurai.com/api/v1',
- api: 'http://34.73.126.99/api/v1',
-  //api2: 'http://34.73.126.99/api/v1',
+  api: 'http://34.73.126.99/api/v1',
   uploadApi: 'http://upload.edminify-new.devurai.com/api/v1',
   api_token: '123'
 };
