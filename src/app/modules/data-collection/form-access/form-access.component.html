@@ -1,0 +1,32 @@
+<section *ngIf="users">
+    <p>Add users</p>
+    <select [(ngModel)]="selectedUserId" (change)="addUser()">
+        <option *ngFor="let user of users.data" value="{{user.id}}">{{user.username}}</option>
+    </select>
+</section>
+<section *ngIf="acl.length">
+    <p>List of Users</p>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">User</th>
+            <th scope="col">Role</th>
+            <th scope="col">View</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
+            <th scope="col">Invite</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let permissions of acl">
+            <td>{{permissions.userId}} Name</td>
+            <td>Role</td>
+            <td><input type="checkbox" [(ngModel)]="permissions.view" (change)="onChangePerm()"></td>
+            <td><input type="checkbox" [(ngModel)]="permissions.edit" (change)="onChangePerm()"></td>
+            <td><input type="checkbox" [(ngModel)]="permissions.delete" (change)="onChangePerm()"></td>
+            <td><input type="checkbox" [(ngModel)]="permissions.invite" (change)="onChangePerm()"></td>
+        </tr>
+        </tbody>
+    </table>
+</section>

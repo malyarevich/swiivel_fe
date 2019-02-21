@@ -35,6 +35,9 @@ import { OnlineFormConteinerComponent } from './form-view/online-form-conteiner/
 import { DataCollectionComponent } from './data-collection.component';
 import { LabelFieldComponent } from './form-constructor/filds/label-field/label-field.component';
 import {FormNavComponent} from './form-constructor/form-nav/form-nav.component';
+import {FormAccessComponent} from './form-access/form-access.component';
+import {InterceptorsModule} from "../../utils/interceptors/interceptors.module";
+import {interceptorsConfig} from "../../app.module";
 
 
 const formBuilderRoutes: Routes = [
@@ -78,7 +81,8 @@ const formBuilderRoutes: Routes = [
     OnlineFormConteinerComponent,
     DataCollectionComponent,
     LabelFieldComponent,
-    FormNavComponent
+    FormNavComponent,
+    FormAccessComponent
   ],
   imports:[
     FormsModule,
@@ -86,6 +90,7 @@ const formBuilderRoutes: Routes = [
     NgbModule,
     HttpClientModule,
     CommonModule,
+      InterceptorsModule.forRoot(interceptorsConfig),
     RouterModule.forChild(formBuilderRoutes),
     StoreModule.forFeature('form', fromForm.reducer),
     EffectsModule.forFeature([FormEffects]),
