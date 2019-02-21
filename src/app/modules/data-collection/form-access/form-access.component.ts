@@ -2,7 +2,6 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Form} from "../reducers/forms/form.model";
 import {ActivatedRoute} from "@angular/router";
 import {FormService} from "../form.service";
-import {map} from "rxjs/operators";
 import {HttpClient} from "@angular/common/http";
 
 @Component({
@@ -12,9 +11,8 @@ import {HttpClient} from "@angular/common/http";
 })
 export class FormAccessComponent implements OnInit {
     @Input() formId: string;
-    form;
+    form: Form;
     users;
-    persons;
     selectedUserId;
     acl = [];
 
@@ -35,6 +33,7 @@ export class FormAccessComponent implements OnInit {
         this.formService.getOneForm(this.formId).subscribe(
             (form: Form) => {
                 this.form = form;
+                this.acl = this.form.acl ? this.form.acl : [];
             }
         );
     }
@@ -58,7 +57,9 @@ export class FormAccessComponent implements OnInit {
         });
     }
 
-    onChangePerm() {
-        console.log(this.acl)
+    saveFormACL():void {
+        this.form.acl = this.acl;
+        this.formService.sendForm(this.form)
+            .subscribe(res => console.log(res));
     }
 }

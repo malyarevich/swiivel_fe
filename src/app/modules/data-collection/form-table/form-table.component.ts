@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Field} from '../model/field';
 import {FormService} from '../form.service';
 import {FormState} from '../reducers/forms/form.reducer';
@@ -8,6 +8,7 @@ import {Observable} from 'rxjs';
 import {Form} from '../reducers/forms/form.model';
 import {selectAllForms, selectFormById} from '../reducers/forms/form.selectors';
 import {tap, first} from 'rxjs/operators';
+import {FormAccessComponent} from "../form-access/form-access.component";
 
 @Component({
   selector: 'app-form-table',
@@ -15,7 +16,7 @@ import {tap, first} from 'rxjs/operators';
   styleUrls: ['./form-table.component.css']
 })
 export class FormTableComponent implements OnInit {
-
+  @ViewChild(FormAccessComponent) formAccessComponent:FormAccessComponent;
   forms$: Observable<Form[]>;
   formSelected;
 
@@ -48,8 +49,17 @@ export class FormTableComponent implements OnInit {
     const id: string = '0';
     this.formStore.dispatch(new AddForm());
     this.formStore.dispatch(new EditForm({id}));
-
-
   }
+
+    saveFormACL() {
+    this.formAccessComponent.saveFormACL();
+    }
+
+    // destroyFormACL() {
+    //
+    //     if (this.formAccessComponent) {
+    //         this.formAccessComponent.();
+    //     }
+    // }
 
 }
