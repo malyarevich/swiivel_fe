@@ -1,4 +1,4 @@
-import {UserAction, LoginSuccess, Logout} from './actions';
+import {UserAction, LoginSuccess, Logout, ClearState} from './actions';
 import {User} from '../rest';
 
 export interface UserState {
@@ -16,6 +16,9 @@ export function reducer(state: UserState = initialState, action: UserAction) {
     }
     if (action instanceof Logout) {
         return {...state, user: null};
+    }
+    if (action instanceof ClearState) {
+        state = undefined;
     }
 
     return state;

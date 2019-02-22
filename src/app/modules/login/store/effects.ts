@@ -2,15 +2,17 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { merge, Observable } from 'rxjs';
-import { switchMap, tap } from 'rxjs/operators';
+import { switchMap, tap} from 'rxjs/operators';
 import { User, LoginService } from '../rest';
 import {
+    ClearState,
     Login,
     LoginError,
     LoginSuccess,
     Logout
 } from './actions';
 import { Store } from '@ngrx/store';
+import {RequestUserLogged} from "../../user-logged/store/user-logged.actions";
 
 @Injectable()
 export class Effects {
@@ -40,6 +42,7 @@ export class Effects {
     loginSuccess$ = this.actions$.pipe(
         ofType<LoginSuccess>(LoginSuccess.Type),
         tap(() => {
+            this.store.dispatch(new RequestUserLogged());
             this.router.navigate(['/']);
         })
     );
@@ -48,6 +51,7 @@ export class Effects {
     logout$ = this.actions$.pipe(
         ofType<Logout>(Logout.Type),
         tap(() => {
+            this.store.dispatch(new ClearState());
             this.userService.logout();
             this.router.navigate(['/login']);
         })

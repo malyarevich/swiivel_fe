@@ -58,6 +58,14 @@ export class Logout implements Action {
     constructor() {}
 }
 
+export class ClearState implements Action {
+    static Type = '[App] Clear State';
+
+    public type = ClearState.Type;
+
+    constructor() {}
+}
+
 export type UserAction =
     | Login
     | LoginSuccess
@@ -66,3 +74,4 @@ export type UserAction =
     | RestorePassword
     | RestorePasswordSuccess
     | RestorePasswordError
+    | ClearState
