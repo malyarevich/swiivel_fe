@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, ViewChild, ComponentFactoryResolver, Output, EventEmitter, Renderer, ElementRef} from '@angular/core';
+import {Component, OnInit, Input, ViewChild, ComponentFactoryResolver, Renderer, ElementRef} from '@angular/core';
 
 import {ContentDirective} from '../content.directive';
 import {BasicFieldsService} from '../../basic-fields.service';
@@ -6,13 +6,10 @@ import {FormService} from '../../form.service';
 import { v4 as uuid } from 'uuid';
 import {select, Store} from '@ngrx/store';
 import {FieldState} from '../../reducers/field/field.reducer';
-import {LoadFields, UpsertField, DeleteField, EditField} from '../../reducers/field/field.actions';
+import { UpsertField, DeleteField, EditField} from '../../reducers/field/field.actions';
 import {Field} from '../../reducers/field/field.model';
-import {EditForm} from '../../reducers/forms/form.actions';
-import {selectAllForms, selectEditedIdForm} from '../../reducers/forms/form.selectors';
 import {Observable} from 'rxjs';
 import {selectEditedIdField} from '../../reducers/field/field.selector';
-import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-form-conteiner',

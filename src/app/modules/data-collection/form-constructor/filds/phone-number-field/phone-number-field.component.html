@@ -1,2 +1,8 @@
-<input type="tel" class="form-control"  pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-       required aria-describedby="basic-addon1" [(ngModel)]="data.value">
+<div class="form-group" [ngClass]="{'has-error': phone.invalid && phone.touched}">
+<input
+  ngModel
+  name="phone"
+  #phone="ngModel"
+  class="form-control"  pattern="^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$"
+       aria-describedby="basic-addon1"  [(ngModel)]="data.value">
+</div>

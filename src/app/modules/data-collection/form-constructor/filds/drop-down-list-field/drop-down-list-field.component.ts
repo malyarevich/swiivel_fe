@@ -8,5 +8,5 @@ import {Component, Input, OnInit} from '@angular/core';
 export class DropDownListFieldComponent {
   @Input() data: any;
 
-  list: Array<string> = ["Options 1","Options 2","Options 3","Options 4","Options 5",];
+ // list: Array<string> = ["Options 1","Options 2","Options 3","Options 4","Options 5",];
 }

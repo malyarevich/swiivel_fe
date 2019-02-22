@@ -7,7 +7,6 @@ import {ShortTextFieldComponent} from './form-constructor/filds/short-text-field
 import {FormConteinerComponent} from './form-constructor/form-conteiner/form-conteiner.component';
 import {ContentDirective} from './form-constructor/content.directive';
 import {LongTextFieldComponent} from './form-constructor/filds/long-text-field/long-text-field.component';
-import {EmptyFieldsComponent} from './form-constructor/filds/empty-fields/empty-fields.component';
 import {FormTableComponent} from './form-table/form-table.component';
 import {FormGeneralInfoComponent} from './form-constructor/form-general-info/form-general-info.component';
 import {NumberTextFieldComponent} from './form-constructor/filds/number-text-field/number-text-field.component';
@@ -35,6 +34,7 @@ import { OnlineFormConteinerComponent } from './form-view/online-form-conteiner/
 import { DataCollectionComponent } from './data-collection.component';
 import { LabelFieldComponent } from './form-constructor/filds/label-field/label-field.component';
 import {FormNavComponent} from './form-constructor/form-nav/form-nav.component';
+import { EmptyLineFieldComponent } from './form-constructor/filds/empty-line-field/empty-line-field.component';
 import {FormAccessComponent} from './form-access-modal/form-access/form-access.component';
 import {InterceptorsModule} from "../../utils/interceptors/interceptors.module";
 import {interceptorsConfig} from "../../app.module";
@@ -46,7 +46,6 @@ const formBuilderRoutes: Routes = [
     path: '',
     component: DataCollectionComponent,
     children: [
-      //   children: [
       {path: '', component: FormTableComponent},
       {path: 'generalinfo', component: FormGeneralInfoComponent},
       {path: 'formbuilder', component: FormConstructorComponent},
@@ -66,7 +65,6 @@ const formBuilderRoutes: Routes = [
     FormConteinerComponent,
     ContentDirective,
     LongTextFieldComponent,
-    EmptyFieldsComponent,
     FormTableComponent,
     FormGeneralInfoComponent,
     NumberTextFieldComponent,
@@ -82,6 +80,8 @@ const formBuilderRoutes: Routes = [
     OnlineFormConteinerComponent,
     DataCollectionComponent,
     LabelFieldComponent,
+    FormNavComponent,
+    EmptyLineFieldComponent,
     FormNavComponent,
     FormAccessComponent,
     FormAccessModalComponent

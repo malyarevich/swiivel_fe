@@ -1,10 +1,8 @@
 import { Injectable, Type } from '@angular/core';
 import {ShortTextFieldComponent} from './form-constructor/filds/short-text-field/short-text-field.component';
-import {Field} from './model/field';
 import {LongTextFieldComponent} from './form-constructor/filds/long-text-field/long-text-field.component';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {HttpClient,  HttpParams} from '@angular/common/http';
 import {map} from 'rxjs/operators';
-import {EmptyFieldsComponent} from './form-constructor/filds/empty-fields/empty-fields.component';
 import {environment} from 'src/environments/environment';
 import {NumberTextFieldComponent} from './form-constructor/filds/number-text-field/number-text-field.component';
 import {MultipleOptionsFieldComponent} from './form-constructor/filds/multiple-options-field/multiple-options-field.component';
@@ -15,6 +13,7 @@ import {HebrewDateFieldComponent} from './form-constructor/filds/hebrew-date-fie
 import {TimeFieldComponent} from './form-constructor/filds/time-field/time-field.component';
 import {PhoneNumberFieldComponent} from './form-constructor/filds/phone-number-field/phone-number-field.component';
 import {LabelFieldComponent} from './form-constructor/filds/label-field/label-field.component';
+import {EmptyLineFieldComponent} from './form-constructor/filds/empty-line-field/empty-line-field.component';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +21,6 @@ import {LabelFieldComponent} from './form-constructor/filds/label-field/label-fi
 export class BasicFieldsService {
 
   SERVER_URL = environment.api;
-  SERVER_URL2 = environment.api2;
 
 
   params = new HttpParams().set('api_token', environment.api_token);
@@ -39,8 +37,7 @@ export class BasicFieldsService {
      [109, PhoneNumberFieldComponent],
      [110, HebrewDateFieldComponent],
      [111, LabelFieldComponent],
-     [112, ShortTextFieldComponent],
-     [1,EmptyFieldsComponent]
+     [112, EmptyLineFieldComponent]
      ]
    );
 
@@ -55,7 +52,7 @@ export class BasicFieldsService {
       );
   }
   getMappedList() {
-    return this.http.get(this.SERVER_URL2+'/mapped', {params: this.params})
+    return this.http.get(this.SERVER_URL+'/mapped', {params: this.params})
       .pipe(
         map((response) => {return response;})
       );

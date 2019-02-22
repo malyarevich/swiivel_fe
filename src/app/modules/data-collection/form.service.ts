@@ -1,9 +1,8 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {HttpClient,HttpParams} from '@angular/common/http';
 import {map} from 'rxjs/operators';
-import {Observable, BehaviorSubject} from 'rxjs';
+import {Observable} from 'rxjs';
 import {environment} from '../../../environments/environment';
-import {Field} from './reducers/field/field.model';
 import {Form} from './reducers/forms/form.model';
 @Injectable({
   providedIn: 'root'
@@ -14,12 +13,10 @@ export class FormService {
   emitSettings:EventEmitter<any> = new EventEmitter();
 
   params = new HttpParams().set('api_token', environment.api_token);
-  removeId = new BehaviorSubject('');
-  editeId = new BehaviorSubject('');
+
 
   SERVER_URL = environment.api;
   form: Form ;
-  formName: string = '';
 
 
   constructor(private http: HttpClient) {
@@ -27,21 +24,15 @@ export class FormService {
 
 
 
-
-  editField(id: string){
-    this.setEditeId(id);
-  }
-
-
   sendForm(form:Form) {
 
     if(form._id!=="0"){
-      return this.http.post(this.SERVER_URL+'/form/'+form._id, form, {params: this.params})
+      return this.http.post(this.SERVER_URL+'/forms/'+form._id, form, {params: this.params})
         .pipe(
           map((response) =>  response)
         );
     }
-      return this.http.put(this.SERVER_URL + '/form', form, {params: this.params})
+      return this.http.put(this.SERVER_URL + '/forms', form, {params: this.params})
         .pipe(
           map((response) => response)
         );
@@ -50,7 +41,7 @@ export class FormService {
 
 
   getFormsList(): Observable<any> {
-    return this.http.get(this.SERVER_URL+'/form' ,{params: this.params})
+    return this.http.get(this.SERVER_URL+'/forms' ,{params: this.params})
       .pipe(
         map((response) => {
           return response;
@@ -60,42 +51,16 @@ export class FormService {
 
 
   getOneForm(id): Observable<any> {
-    return this.http.get(this.SERVER_URL+'/form/'+id ,{params: this.params})
+    return this.http.get(this.SERVER_URL+'/forms/'+id ,{params: this.params})
       .pipe(
         map((response) => response)
       );
   }
   deleteForm(id: string) {
-   return this.http.delete(this.SERVER_URL+`/form/${id}`,  {params: this.params})
+   return this.http.delete(this.SERVER_URL+`/forms/${id}`,  {params: this.params})
        .pipe(
          map((response) => response)
        );
-  }
-
-
-
-
-  getRemoveId(): Observable<string> {
-    return this.removeId.asObservable();
-  }
-
-  setRemoveId(val: string) {
-    this.removeId.next(val);
-  }
-
-  getEditeId(): Observable<string> {
-    return this.editeId.asObservable();
-  }
-
-  setEditeId(val: string) {
-    this.editeId.next(val);
-  }
-  clearId(){
-    this.editeId.next('');
-  }
-
-  getField(id: string): Field{
-    return this.form.fields[id];
   }
 
 
