@@ -9,13 +9,15 @@ import {HttpClient} from "@angular/common/http";
     templateUrl: './form-access.component.html',
     styleUrls: ['./form-access.component.css']
 })
+
 export class FormAccessComponent implements OnInit, OnDestroy {
     @Input() formId: string;
     form: Form;
     users;
-    selectedUserId;
+    selectedUsers = [];
+    filteredUsers;
     acl = [];
-
+    error: string;
 
     constructor(
         private route: ActivatedRoute,
@@ -38,24 +40,27 @@ export class FormAccessComponent implements OnInit, OnDestroy {
         );
     }
 
+    //TODO Add users service and entity
     getUsers(): void {
         this.http.post('/users', {})
             .subscribe(
-                (users) => {
-                    this.users = users;
+                (res) => {
+                    this.users = res;
                 }
             );
     }
 
-    addUser() {
-        if (this.findUserToAcl(this.selectedUserId)) return;
-        this.acl.push({
-            'userId': this.selectedUserId,
-            'view': false,
-            'edit': false,
-            'delete': false,
-            'invite': false
+    addUsersToList() {
+        this.selectedUsers.map(user => {
+            this.acl.push({
+                'userId': user.id,
+                'view': false,
+                'edit': false,
+                'delete': false,
+                'invite': false
+            });
         });
+        this.resetSelectedUsers();
     }
 
     saveFormACL(): void {
@@ -70,9 +75,46 @@ export class FormAccessComponent implements OnInit, OnDestroy {
     }
 
     findUserToAcl(userId) {
-        return this.acl.filter((item) => item.userId == userId).length;
+        return this.acl.filter((item) => item.userId == userId);
     }
 
     ngOnDestroy() {
+    }
+
+    assignCopy(){
+        this.filteredUsers = Object.assign([], this.users.data);
+    }
+
+    filterUsers(value) {
+        if(!value){
+            this.assignCopy();
+        }
+        this.filteredUsers = Object.assign([], this.users.data).filter(
+            item => item.username.toLowerCase().indexOf(value.toLowerCase()) > -1
+        )
+    }
+
+    selectUsers(user) {
+        if (this.acl.find(item => item.userId == user.id)) {
+            this.error = "User " + user.username + " already exists in the list";
+            return;
+        }
+        if(this.selectedUsers.find(item => item.id == user.id)) {
+            this.error = "User " + user.username + " already selected";
+            return;
+        }
+        this.selectedUsers.push(user);
+    }
+
+    resetSelectedUsers() {
+        this.selectedUsers = [];
+    }
+
+    getUsername(userId) {
+        return this.users.data.find(item => item.id === userId).username;
+    }
+
+    getRole(userId) {
+        return this.users.data.find(item => item.id === userId).role;
     }
 }
