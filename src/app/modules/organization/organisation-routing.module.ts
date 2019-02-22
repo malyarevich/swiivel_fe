@@ -16,7 +16,7 @@ export const routes: Routes = [
         children: personRoutes,
     },
     {
-        path: 'data-collection-test',
+        path: 'data-collection',
         component: LayoutComponent,
         children: [
             {
