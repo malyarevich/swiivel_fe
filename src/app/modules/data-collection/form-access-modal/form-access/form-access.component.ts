@@ -17,6 +17,7 @@ export class FormAccessComponent implements OnInit, OnDestroy {
     selectedUsers = [];
     filteredUsers;
     acl = [];
+    showInvite: boolean;
     error: string;
 
     constructor(
