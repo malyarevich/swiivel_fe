@@ -8,6 +8,7 @@ import {Observable} from 'rxjs';
 import {Form} from '../reducers/forms/form.model';
 import {selectAllForms, selectFormById} from '../reducers/forms/form.selectors';
 import {FormAccessModalComponent} from "../form-access-modal/form-access-modal.component";
+import {PermissionService} from "../../../services/permission/permission.service";
 
 @Component({
   selector: 'app-form-table',
@@ -19,7 +20,10 @@ export class FormTableComponent implements OnInit {
   forms$: Observable<Form[]>;
   formSelected;
 
-  constructor(private formService: FormService, private formStore: Store<FormState>) {
+  constructor(
+      private formService: FormService,
+      private formStore: Store<FormState>,
+      public permissionService: PermissionService) {
   }
 
   ngOnInit() {

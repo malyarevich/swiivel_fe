@@ -25,7 +25,7 @@
   </tr>
 </thead>
   <tbody *ngFor="let item of forms$ | async">
-  <tr>
+  <tr *ngIf="permissionService.hasAccess('form', item._id, 'view')">
     <td>{{item.name}}</td>
     <td>{{item.created_at}}</td>
     <td>{{item.updated_at}}</td>
