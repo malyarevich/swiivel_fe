@@ -8,7 +8,7 @@
     <input #searchUsers [(ngModel)]="name" (focus)="filterUsers(searchUsers.value)"
            (input)="filterUsers(searchUsers.value)">
     <div *ngFor="let user of filteredUsers" (click)="selectUsers(user)">
-        {{user.username}} - {{user.role}}
+        {{user.username}}, {{user.role.role_name}}
     </div>
 </section>
 <br><br>
