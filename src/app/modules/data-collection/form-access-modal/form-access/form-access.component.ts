@@ -116,6 +116,6 @@ export class FormAccessComponent implements OnInit, OnDestroy {
     }
 
     getRole(userId) {
-        return this.users.data.find(item => item.id === userId).role;
+        return this.users.data.find(item => item.id === userId).role.role_name;
     }
 }
