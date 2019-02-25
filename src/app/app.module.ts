@@ -18,6 +18,7 @@ import {UserLoggedModule} from "./modules/user-logged/user-logged.module";
 import {UserLoggedInitFactory} from "./modules/user-logged/user-logged-init.service";
 import {UserLoggedEffects} from "./modules/user-logged/store/user-logged.effect";
 import {UserLoggedService} from "./modules/user-logged/user-logged.service";
+import {PermissionService} from "./services/permission/permission.service";
 
 const authConfig: AuthServiceConfig = {
     storageTokenKey: 'token',
@@ -48,6 +49,7 @@ export const interceptorsConfig: InterceptorsConfig = {
     providers: [
         LocalStorageService,
         UserLoggedService,
+        PermissionService,
         {
             provide: APP_INITIALIZER,
             useFactory: UserLoggedInitFactory,
