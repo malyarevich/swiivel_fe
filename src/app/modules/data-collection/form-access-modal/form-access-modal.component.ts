@@ -17,8 +17,8 @@ export class FormAccessModalComponent implements OnInit {
     ngOnInit() {
     }
 
-    saveFormACL() {
-        this.formAccessComponent.saveFormACL();
+    saveFormPermissions() {
+        this.formAccessComponent.saveFormPermissions();
         this.resetFormSelected()
     }
 

@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  apiCore: 'http://127.0.0.1:8000/api/v1',
   api: 'http://34.73.126.99/api/v1',
   uploadApi: 'http://upload.edminify-new.devurai.com/api/v1',
   api_token: '123'

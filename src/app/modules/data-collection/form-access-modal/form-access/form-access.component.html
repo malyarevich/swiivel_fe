@@ -1,10 +1,10 @@
-<p>List of Users ({{acl.length}})</p>
+<p>List of Users ({{permissions.length}})</p>
 <div *ngIf="error" class="alert alert-danger">{{error}}</div>
 <button class="btn btn-default" *ngIf="!showInvite" (click)="showInvite=true">Invite Users</button>
 <section *ngIf="showInvite">
     <button class="btn btn-default" (click)="resetSelectedUsers(); showInvite=false">Cancel</button>
     <button class="btn btn-default" (click)="addUsersToList(); showInvite=false">Add to list</button>
-    <div><span *ngFor="let user of selectedUsers">{{user.username}} - {{user.role}} </span></div>
+    <div><span *ngFor="let user of selectedUsers">{{user.username}} - {{user.role.role_name}} </span></div>
     <input #searchUsers [(ngModel)]="name" (focus)="filterUsers(searchUsers.value)"
            (input)="filterUsers(searchUsers.value)">
     <div *ngFor="let user of filteredUsers" (click)="selectUsers(user)">
@@ -12,7 +12,7 @@
     </div>
 </section>
 <br><br>
-<section *ngIf="acl.length && users">
+<section *ngIf="permissions.length && users">
     <table class="table table-striped">
         <thead>
         <tr>
@@ -26,15 +26,15 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let permissions of acl">
-            <td>{{getUsername(permissions.userId)}}</td>
-            <td>{{getRole(permissions.userId)}}</td>
-            <td><input type="checkbox" [(ngModel)]="permissions.view"></td>
-            <td><input type="checkbox" [(ngModel)]="permissions.edit"></td>
-            <td><input type="checkbox" [(ngModel)]="permissions.delete"></td>
-            <td><input type="checkbox" [(ngModel)]="permissions.invite"></td>
+        <tr *ngFor="let item of permissions">
+            <td>{{getUsername(item.user_id)}}</td>
+            <td>{{getRole(item.user_id)}}</td>
+            <td><input type="checkbox" [ngModel]="item.view" (ngModelChange) = "setPermission($event, item.user_id, 'view')"></td>
+            <td><input type="checkbox" [ngModel]="item.edit" (ngModelChange) = "setPermission($event, item.user_id, 'edit')"></td>
+            <td><input type="checkbox" [ngModel]="item.delete" (ngModelChange) = "setPermission($event, item.user_id, 'delete')"></td>
+            <td><input type="checkbox" [ngModel]="item.access" (ngModelChange) = "setPermission($event, item.user_id, 'access')"></td>
             <td>
-                <button class="btn btn-default btn-sm" (click)="deleteUserFromAcl(permissions.userId)">Delete</button>
+                <button class="btn btn-default btn-sm" (click)="deleteUserPermissions(item)">Delete</button>
             </td>
         </tr>
         </tbody>

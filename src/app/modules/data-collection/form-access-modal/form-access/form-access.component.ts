@@ -4,6 +4,11 @@ import {ActivatedRoute} from "@angular/router";
 import {FormService} from "../../form.service";
 import {HttpClient} from "@angular/common/http";
 
+export interface FormResponse {
+    data?,
+    status?
+}
+
 @Component({
     selector: 'app-form-access',
     templateUrl: './form-access.component.html',
@@ -12,11 +17,12 @@ import {HttpClient} from "@angular/common/http";
 
 export class FormAccessComponent implements OnInit, OnDestroy {
     @Input() formId: string;
-    form: Form;
+    // form: Form;
+    form;
+    permissions = [];
     users;
     selectedUsers = [];
     filteredUsers;
-    acl = [];
     showInvite: boolean;
     error: string;
 
@@ -33,12 +39,13 @@ export class FormAccessComponent implements OnInit, OnDestroy {
     }
 
     getForm(): void {
-        this.formService.getOneForm(this.formId).subscribe(
-            (form: Form) => {
-                this.form = form;
-                this.acl = this.form.acl ? this.form.acl : [];
-            }
-        );
+        this.http.get(`/forms/${this.formId}/permissions`)
+            .subscribe(
+                (res: FormResponse) => {
+                    this.form = res.data[0];
+                    this.permissions = this.form.permissions ? this.form.permissions : [];
+                }
+            );
     }
 
     //TODO Add users service and entity
@@ -51,60 +58,70 @@ export class FormAccessComponent implements OnInit, OnDestroy {
             );
     }
 
+    selectUsers(user) {
+        if (this.permissions.find(item => item.user_id === user.id)) {
+            this.error = "User " + user.username + " already exists in the list";
+            return;
+        }
+        if (this.selectedUsers.find(item => item.id == user.id)) {
+            this.error = "User " + user.username + " already selected";
+            return;
+        }
+        this.selectedUsers.push(user);
+    }
+
     addUsersToList() {
         this.selectedUsers.map(user => {
-            this.acl.push({
-                'userId': user.id,
-                'view': false,
-                'edit': false,
-                'delete': false,
-                'invite': false
+            this.permissions.push({
+                'user_id': user.id,
+                'entity': 'form',
+                'entity_id': this.form.id,
+                'view': 0,
+                'edit': 0,
+                'delete': 0,
+                'access': 0,
             });
         });
         this.resetSelectedUsers();
     }
 
-    saveFormACL(): void {
-        this.form.acl = this.acl;
-        this.formService.sendForm(this.form)
-            .subscribe(res => {
-            });
+    setPermission($event, user_id, permissionType) {
+        let permission = this.permissions.find(item => item.user_id === user_id);
+        permission[permissionType] = $event ? 1 : 0;
     }
 
-    deleteUserFromAcl(userId) {
-        this.acl = this.acl.filter((item) => item.userId != userId);
+    saveFormPermissions(): void {
+        this.http.post('/permissions', {permissions: this.permissions}).subscribe(
+            (res) => {}
+        )
     }
 
-    findUserToAcl(userId) {
-        return this.acl.filter((item) => item.userId == userId);
+    deleteUserPermissions(permissions) {
+        if (!permissions.id) {
+            this.permissions = this.permissions.filter((item) => item.user_id != permissions.user_id);
+            return;
+        }
+        this.http.delete(`/permissions/${permissions.id}`).subscribe(
+            () => {
+                this.permissions = this.permissions.filter((item) => item.user_id != permissions.user_id);
+            }
+        )
     }
 
     ngOnDestroy() {
     }
 
-    assignCopy(){
+    assignCopy() {
         this.filteredUsers = Object.assign([], this.users.data);
     }
 
     filterUsers(value) {
-        if(!value){
+        if (!value) {
             this.assignCopy();
         }
         this.filteredUsers = Object.assign([], this.users.data).filter(
             item => item.username.toLowerCase().indexOf(value.toLowerCase()) > -1
         )
-    }
-
-    selectUsers(user) {
-        if (this.acl.find(item => item.userId == user.id)) {
-            this.error = "User " + user.username + " already exists in the list";
-            return;
-        }
-        if(this.selectedUsers.find(item => item.id == user.id)) {
-            this.error = "User " + user.username + " already selected";
-            return;
-        }
-        this.selectedUsers.push(user);
     }
 
     resetSelectedUsers() {
