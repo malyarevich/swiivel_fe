@@ -29,15 +29,14 @@
         <tr *ngFor="let item of permissions">
             <td>{{getUsername(item.user_id)}}</td>
             <td>{{getRole(item.user_id)}}</td>
-            <td><input type="checkbox" [(ngModel)]="item.view"></td>
-            <td><input type="checkbox" [(ngModel)]="item.edit"></td>
-            <td><input type="checkbox" [(ngModel)]="item.delete"></td>
-            <td><input type="checkbox" [(ngModel)]="item.access"></td>
+            <td><input type="checkbox" [ngModel]="item.view" (ngModelChange) = "setPermission($event, item.user_id, 'view')"></td>
+            <td><input type="checkbox" [ngModel]="item.edit" (ngModelChange) = "setPermission($event, item.user_id, 'edit')"></td>
+            <td><input type="checkbox" [ngModel]="item.delete" (ngModelChange) = "setPermission($event, item.user_id, 'delete')"></td>
+            <td><input type="checkbox" [ngModel]="item.access" (ngModelChange) = "setPermission($event, item.user_id, 'access')"></td>
             <td>
-                <button class="btn btn-default btn-sm" (click)="deleteUserFromAcl(item.user_id)">Delete</button>
+                <button class="btn btn-default btn-sm" (click)="deleteUserPermissions(item)">Delete</button>
             </td>
         </tr>
         </tbody>
     </table>
-    <p>{{permissions | json}}</p>
 </section>

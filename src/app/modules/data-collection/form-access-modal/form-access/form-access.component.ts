@@ -4,6 +4,11 @@ import {ActivatedRoute} from "@angular/router";
 import {FormService} from "../../form.service";
 import {HttpClient} from "@angular/common/http";
 
+export interface FormResponse {
+    data?,
+    status?
+}
+
 @Component({
     selector: 'app-form-access',
     templateUrl: './form-access.component.html',
@@ -36,10 +41,9 @@ export class FormAccessComponent implements OnInit, OnDestroy {
     getForm(): void {
         this.http.get(`/forms/${this.formId}/permissions`)
             .subscribe(
-                (res) => {
+                (res: FormResponse) => {
                     this.form = res.data[0];
                     this.permissions = this.form.permissions ? this.form.permissions : [];
-                    console.log(this.permissions);
                 }
             );
     }
@@ -70,30 +74,38 @@ export class FormAccessComponent implements OnInit, OnDestroy {
         this.selectedUsers.map(user => {
             this.permissions.push({
                 'user_id': user.id,
-                'entity': user.entity,
-                'entity_id': user.entity_id,
-                'view': false,
-                'edit': false,
-                'delete': false,
-                'access': false
+                'entity': 'form',
+                'entity_id': this.form.id,
+                'view': 0,
+                'edit': 0,
+                'delete': 0,
+                'access': 0,
             });
         });
         this.resetSelectedUsers();
     }
 
-    saveFormACL(): void {
-        this.form.acl = this.acl;
-        this.formService.sendForm(this.form)
-            .subscribe(res => {
-            });
+    setPermission($event, user_id, permissionType) {
+        let permission = this.permissions.find(item => item.user_id === user_id);
+        permission[permissionType] = $event ? 1 : 0;
     }
 
-    deleteUserFromAcl(userId) {
-        this.acl = this.acl.filter((item) => item.userId != userId);
+    saveFormPermissions(): void {
+        this.http.post('/permissions', {permissions: this.permissions}).subscribe(
+            (res) => {}
+        )
     }
 
-    findUserToAcl(userId) {
-        return this.acl.filter((item) => item.userId == userId);
+    deleteUserPermissions(permissions) {
+        if (!permissions.id) {
+            this.permissions = this.permissions.filter((item) => item.user_id != permissions.user_id);
+            return;
+        }
+        this.http.delete(`/permissions/${permissions.id}`).subscribe(
+            () => {
+                this.permissions = this.permissions.filter((item) => item.user_id != permissions.user_id);
+            }
+        )
     }
 
     ngOnDestroy() {
