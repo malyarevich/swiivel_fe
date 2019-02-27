@@ -44,7 +44,7 @@ export class OnlineFormComponent implements OnInit {
 
   sendForm(){
 
-this.form.fields=this.fields;
+    this.form.fields=this.fields;
     this.formStore.dispatch(new FillForm(this.form));
 
     setTimeout(() =>this.goBack(), 2000);

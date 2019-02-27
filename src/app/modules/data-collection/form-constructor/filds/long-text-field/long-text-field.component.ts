@@ -1,4 +1,5 @@
 import {Component, Input} from '@angular/core';
+import {Field} from '../../../reducers/field/field.model';
 
 @Component({
   selector: 'app-long-text-field',
@@ -6,6 +7,6 @@ import {Component, Input} from '@angular/core';
   styleUrls: ['./long-text-field.component.css']
 })
 export class LongTextFieldComponent {
-  @Input() data: any;
+  @Input() data: Field;
   val: number;
 }

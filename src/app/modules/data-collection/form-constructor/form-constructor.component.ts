@@ -92,13 +92,13 @@ export class FormConstructorComponent implements OnInit {
 
 
   loadBasicFilds() {
-    this.baseFields.getFieldsList().subscribe((fields: Field[]) => {
+    this.baseFields.getCustomList().subscribe((fields: Field[]) => {
       this.basicFields = fields;
     });
   }
 
   loadMappedFilds() {
-    this.baseFields.getMappedList().subscribe((fields: Field[]) => {
+    this.baseFields.getExistingList().subscribe((fields: Field[]) => {
      this.mappedFields = fields;
     });
   }

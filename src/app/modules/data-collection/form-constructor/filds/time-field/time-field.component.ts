@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {Field} from '../../../reducers/field/field.model';
 
 @Component({
   selector: 'app-time-field',
@@ -6,7 +7,7 @@ import {Component, Input, OnInit} from '@angular/core';
   styleUrls: ['./time-field.component.css']
 })
 export class TimeFieldComponent implements OnInit {
-  @Input() data: any;
+  @Input() data: Field;
 
   constructor() { }
 

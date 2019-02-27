@@ -1,4 +1,5 @@
 import {Component, Input} from '@angular/core';
+import {Field} from '../../../reducers/field/field.model';
 
 @Component({
   selector: 'app-number-text-field',
@@ -7,5 +8,5 @@ import {Component, Input} from '@angular/core';
 })
 export class NumberTextFieldComponent  {
 
-  @Input() data: any;
+  @Input() data: Field;
 }

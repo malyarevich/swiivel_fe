@@ -1,4 +1,5 @@
 import {Component, Input} from '@angular/core';
+import {Field} from '../../../reducers/field/field.model';
 
 @Component({
   selector: 'app-email-field',
@@ -6,6 +7,6 @@ import {Component, Input} from '@angular/core';
   styleUrls: ['./email-field.component.css']
 })
 export class EmailFieldComponent  {
-  @Input() data: any;
+  @Input() data: Field;
 
 }

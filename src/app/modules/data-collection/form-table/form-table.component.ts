@@ -1,5 +1,4 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {Field} from '../model/field';
 import {FormService} from '../form.service';
 import {FormState} from '../reducers/forms/form.reducer';
 import {select, Store} from '@ngrx/store';

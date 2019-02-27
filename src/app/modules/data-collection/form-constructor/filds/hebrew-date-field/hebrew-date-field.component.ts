@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {
   NgbCalendar,
     NgbCalendarHebrew, NgbDate,
@@ -6,6 +6,7 @@ import {
     NgbDatepickerI18nHebrew,
     NgbDateStruct
 } from '@ng-bootstrap/ng-bootstrap';
+import {Field} from '../../../reducers/field/field.model';
 
 
 @Component({
@@ -20,6 +21,7 @@ import {
 export class HebrewDateFieldComponent  implements OnInit {
 
   model: NgbDateStruct;
+  @Input() data: Field;
 
   constructor(private calendar: NgbCalendar, public i18n: NgbDatepickerI18n) {
     this.dayTemplateData = this.dayTemplateData.bind(this);

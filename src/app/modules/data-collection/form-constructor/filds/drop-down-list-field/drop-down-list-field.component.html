@@ -1,3 +1,3 @@
-<select class="form-control" >
-  <option *ngFor="let item of data?.options.items" [selected]="data.value">{{item}}</option>
+<select class="form-control" [attr.readonly]="data.options.readonly"  [required]="data.options.required">
+  <option *ngFor="let item of data.options.items || list" [selected]="data.value" >{{item}}</option>
 </select>
