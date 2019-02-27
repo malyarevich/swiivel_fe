@@ -12,11 +12,12 @@ import {HttpClient} from "@angular/common/http";
 
 export class FormAccessComponent implements OnInit, OnDestroy {
     @Input() formId: string;
-    form: Form;
+    // form: Form;
+    form;
+    permissions = [];
     users;
     selectedUsers = [];
     filteredUsers;
-    acl = [];
     showInvite: boolean;
     error: string;
 
@@ -33,12 +34,14 @@ export class FormAccessComponent implements OnInit, OnDestroy {
     }
 
     getForm(): void {
-        this.formService.getOneForm(this.formId).subscribe(
-            (form: Form) => {
-                this.form = form;
-                this.acl = this.form.acl ? this.form.acl : [];
-            }
-        );
+        this.http.get(`/forms/${this.formId}/permissions`)
+            .subscribe(
+                (res) => {
+                    this.form = res.data[0];
+                    this.permissions = this.form.permissions ? this.form.permissions : [];
+                    console.log(this.permissions);
+                }
+            );
     }
 
     //TODO Add users service and entity
@@ -51,14 +54,28 @@ export class FormAccessComponent implements OnInit, OnDestroy {
             );
     }
 
+    selectUsers(user) {
+        if (this.permissions.find(item => item.user_id === user.id)) {
+            this.error = "User " + user.username + " already exists in the list";
+            return;
+        }
+        if (this.selectedUsers.find(item => item.id == user.id)) {
+            this.error = "User " + user.username + " already selected";
+            return;
+        }
+        this.selectedUsers.push(user);
+    }
+
     addUsersToList() {
         this.selectedUsers.map(user => {
-            this.acl.push({
-                'userId': user.id,
+            this.permissions.push({
+                'user_id': user.id,
+                'entity': user.entity,
+                'entity_id': user.entity_id,
                 'view': false,
                 'edit': false,
                 'delete': false,
-                'invite': false
+                'access': false
             });
         });
         this.resetSelectedUsers();
@@ -82,29 +99,17 @@ export class FormAccessComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
     }
 
-    assignCopy(){
+    assignCopy() {
         this.filteredUsers = Object.assign([], this.users.data);
     }
 
     filterUsers(value) {
-        if(!value){
+        if (!value) {
             this.assignCopy();
         }
         this.filteredUsers = Object.assign([], this.users.data).filter(
             item => item.username.toLowerCase().indexOf(value.toLowerCase()) > -1
         )
-    }
-
-    selectUsers(user) {
-        if (this.acl.find(item => item.userId == user.id)) {
-            this.error = "User " + user.username + " already exists in the list";
-            return;
-        }
-        if(this.selectedUsers.find(item => item.id == user.id)) {
-            this.error = "User " + user.username + " already selected";
-            return;
-        }
-        this.selectedUsers.push(user);
     }
 
     resetSelectedUsers() {
