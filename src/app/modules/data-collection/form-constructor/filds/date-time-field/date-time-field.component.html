@@ -1,6 +1,14 @@
 <div class="input-group">
-  <input class="form-control" placeholder="yyyy-mm-dd"
-         name="dp"  ngbDatepicker #d="ngbDatepicker" aria-describedby="basic-addon1" (ngModelChange)="blurChanges($event)"  [(ngModel)]="date">
+  <input class="form-control"
+         placeholder="yyyy-mm-dd"
+         name="dp"
+         ngbDatepicker
+         #d="ngbDatepicker"
+         aria-describedby="basic-addon1"
+         (ngModelChange)="blurChanges($event)"
+         [(ngModel)]="date"
+         [readonly]="data.options.readonly"
+         [required]="data.options.required">
          <!--(change)="logChanges($event)"-->
 
   <div class="input-group-addon">

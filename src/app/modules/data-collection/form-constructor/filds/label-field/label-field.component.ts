@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {Field} from '../../../reducers/field/field.model';
 
 @Component({
   selector: 'app-label-field',
@@ -6,6 +7,6 @@ import {Component, Input, OnInit} from '@angular/core';
   styleUrls: ['./label-field.component.scss']
 })
 export class LabelFieldComponent {
-  @Input() data: any;
+  @Input() data: Field;
 
 }

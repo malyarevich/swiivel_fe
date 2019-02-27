@@ -1,4 +1,5 @@
 import {Component, Input} from '@angular/core';
+import {Field} from '../../../reducers/field/field.model';
 
 @Component({
   selector: 'app-phone-number-field',
@@ -6,7 +7,7 @@ import {Component, Input} from '@angular/core';
   styleUrls: ['./phone-number-field.component.css']
 })
 export class PhoneNumberFieldComponent  {
-  @Input() data: any;
+  @Input() data: Field;
 
 
 

@@ -45,13 +45,13 @@ export class BasicFieldsService {
 
   constructor(private http: HttpClient) {}
 
-  getFieldsList() {
+  getCustomList() {
     return this.http.get(this.SERVER_URL+'/schema', {params: this.params})
       .pipe(
         map((response) => {return response;})
       );
   }
-  getMappedList() {
+  getExistingList() {
     return this.http.get(this.SERVER_URL+'/mapped', {params: this.params})
       .pipe(
         map((response) => {return response;})

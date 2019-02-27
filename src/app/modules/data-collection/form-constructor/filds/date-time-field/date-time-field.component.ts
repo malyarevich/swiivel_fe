@@ -1,5 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
+import {Field} from '../../../reducers/field/field.model';
 
 @Component({
   selector: 'app-date-time-field',
@@ -8,7 +9,7 @@ import {NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
 })
 export class DateTimeFieldComponent  {
 
-  @Input() data: any;
+  @Input() data: Field;
   date;
   constructor(private parserFormatter: NgbDateParserFormatter) {}
 

@@ -1,7 +1,7 @@
 export interface Field {
   _id: string;
   type: number;
-  option: any;
+  options: any;
   constraints: any;
   validators: any;
   name:string;
