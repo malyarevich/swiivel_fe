@@ -1,4 +1,5 @@
 import {Field} from '../field/field.model';
+import {Permissions} from "../../../../services/permission/permissions.model";
 
 export interface Form {
     _id: string;
@@ -10,4 +11,17 @@ export interface Form {
     link: string,
     personId?: number,
     acl?
+}
+
+export interface FormSql {
+    id: number,
+    mongo_id: string
+    name: string
+    link: string
+    owner_id: number,
+    permissions: Permissions[],
+    status: string
+    type: string
+    created_at: string,
+    updated_at: string,
 }

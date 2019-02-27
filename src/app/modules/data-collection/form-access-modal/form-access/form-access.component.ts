@@ -1,13 +1,12 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {Form} from "../../reducers/forms/form.model";
 import {ActivatedRoute} from "@angular/router";
 import {FormService} from "../../form.service";
 import {HttpClient} from "@angular/common/http";
-
-export interface FormResponse {
-    data?,
-    status?
-}
+import {ApiResponse} from "../../../../models/api-response";
+import {FormSql} from "../../reducers/forms/form.model";
+import {Permissions} from "../../../../services/permission/permissions.model";
+import {User} from "../../../login/rest";
+import {PermissionService} from "../../../../services/permission/permission.service";
 
 @Component({
     selector: 'app-form-access',
@@ -17,9 +16,8 @@ export interface FormResponse {
 
 export class FormAccessComponent implements OnInit, OnDestroy {
     @Input() formId: string;
-    // form: Form;
-    form;
-    permissions = [];
+    form: FormSql;
+    permissions: Permissions[] = [];
     users;
     selectedUsers = [];
     filteredUsers;
@@ -30,6 +28,7 @@ export class FormAccessComponent implements OnInit, OnDestroy {
         private route: ActivatedRoute,
         private formService: FormService,
         private http: HttpClient,
+        private permissionService: PermissionService
     ) {
     }
 
@@ -38,17 +37,18 @@ export class FormAccessComponent implements OnInit, OnDestroy {
         this.getUsers();
     }
 
+    //TODO Add to form service
     getForm(): void {
         this.http.get(`/forms/${this.formId}/permissions`)
             .subscribe(
-                (res: FormResponse) => {
+                (res: ApiResponse) => {
                     this.form = res.data[0];
                     this.permissions = this.form.permissions ? this.form.permissions : [];
                 }
             );
     }
 
-    //TODO Add users service and entity
+    //TODO Add to user service
     getUsers(): void {
         this.http.post('/users', {})
             .subscribe(
@@ -91,8 +91,9 @@ export class FormAccessComponent implements OnInit, OnDestroy {
     }
 
     saveFormPermissions(): void {
-        this.http.post('/permissions', {permissions: this.permissions}).subscribe(
-            (res) => {}
+        this.permissionService.savePermissions(this.permissions).subscribe(
+            (res) => {
+            }
         )
     }
 
@@ -101,7 +102,7 @@ export class FormAccessComponent implements OnInit, OnDestroy {
             this.permissions = this.permissions.filter((item) => item.user_id != permissions.user_id);
             return;
         }
-        this.http.delete(`/permissions/${permissions.id}`).subscribe(
+        this.permissionService.deletePermissions(permissions.id).subscribe(
             () => {
                 this.permissions = this.permissions.filter((item) => item.user_id != permissions.user_id);
             }

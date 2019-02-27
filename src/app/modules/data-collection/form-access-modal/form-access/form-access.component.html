@@ -1,4 +1,4 @@
-<p>List of Users ({{permissions.length}})</p>
+<p>List of Users ({{permissions.length || 0}})</p>
 <div *ngIf="error" class="alert alert-danger">{{error}}</div>
 <button class="btn btn-default" *ngIf="!showInvite" (click)="showInvite=true">Invite Users</button>
 <section *ngIf="showInvite">
