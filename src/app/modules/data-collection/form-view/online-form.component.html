@@ -27,13 +27,7 @@
     <div
       class=" example-list container-fluid view-form">
       <div *ngFor="let item of fields  " >
-        <div *ngIf="item.type==101">
-          <app-form-view-conteiner class="col-md-3"    [field]="item"></app-form-view-conteiner>
-        </div>
-        <div *ngIf="item.type!=101">
-          <app-form-view-conteiner class="col-md-6"  [field]="item"></app-form-view-conteiner>
-        </div>
-
+          <app-form-view-conteiner class="col-md-{{item.options.size}}"    [field]="item"></app-form-view-conteiner>
       </div>
     </div>
   </form>

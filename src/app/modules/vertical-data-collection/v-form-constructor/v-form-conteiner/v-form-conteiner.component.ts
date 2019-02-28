@@ -1,8 +1,7 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Field} from '../../../data-collection/reducers/field/field.model';
 import {VFormService} from '../../v-form.service';
-import { v4 as uuid } from 'uuid';
-
+import { range } from 'lodash'
 @Component({
   selector: 'app-v-form-conteiner',
   templateUrl: './v-form-conteiner.component.html',
@@ -15,6 +14,8 @@ export class VFormConteinerComponent implements OnInit {
   @Output() onChange = new EventEmitter<any>();
 
   customFields: Field[];
+
+  size = range(1  ,13);
 
   constructor(private formService: VFormService) {
 
@@ -37,6 +38,11 @@ export class VFormConteinerComponent implements OnInit {
   onFieldTypeChange(event): void {
 
     this.inputField.type = +event.target.value;
+
+  }
+  onFieldSizeChange(event): void {
+
+    this.inputField.options.size = +event.target.value;
 
   }
 

@@ -12,7 +12,6 @@ import {Location} from '@angular/common';
   selector: 'app-v-form-table',
   templateUrl: './v-form-constructor..html',
   styleUrls: ['./v-form-constructor..css'],
- // encapsulation: ViewEncapsulation.None
 })
 export class VFormConstructorComponent implements OnInit {
 

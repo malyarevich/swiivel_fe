@@ -79,13 +79,7 @@
       class=" example-list container-fluid"
       (cdkDropListDropped)="drop($event)">
       <div *ngFor="let item of workPlace  " cdkDrag>
-        <div *ngIf="item.type==101">
-          <app-form-conteiner class="col-md-3"    [field]="item"></app-form-conteiner>
-        </div>
-        <div *ngIf="item.type!=101">
-          <app-form-conteiner class="col-md-6"  [field]="item"></app-form-conteiner>
-        </div>
-
+          <app-form-conteiner class="col-md-{{item.options.size}}"    [field]="item"></app-form-conteiner>
       </div>
     </div>
   </form>
