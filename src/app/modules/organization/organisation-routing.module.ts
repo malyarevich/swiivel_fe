@@ -16,16 +16,27 @@ export const routes: Routes = [
         children: personRoutes,
     },
     {
-        path: 'data-collection-test',
+        path: 'data-collection',
         component: LayoutComponent,
         children: [
             {
                 path: '',
                 loadChildren: '../data-collection/data-collection.module#DataCollectionModule',
-                data: {preload: true}
+
             }
         ],
     },
+  {
+        path: 'vertical-data-collection',
+        component: LayoutComponent,
+        children: [
+            {
+                 path: '',
+                 loadChildren: '../vertical-data-collection/vertical-data-collection.module#VerticalDataCollectionModule',
+
+            }
+        ],
+    }
 ];
 
 @NgModule({

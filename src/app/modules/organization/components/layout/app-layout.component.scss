@@ -14,10 +14,10 @@
     flex: 1;
 }
 
-.content-area {
-    min-height: 100vh;
-    height: 100%;
-}
+//.content-area {
+//    min-height: 100vh;
+//    height: 100%;
+//}
 
 .content {
     padding: 20px;
@@ -55,10 +55,10 @@
         background: $filter-color;
         box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
     }
-
-    @media (max-width: 1170px) {
-        height: calc(100vh - 120px);
-    }
+    //
+    //@media (max-width: 1170px) {
+    //    height: calc(100vh - 120px);
+    //}
 }
 
 .sideNav.isOpen {
