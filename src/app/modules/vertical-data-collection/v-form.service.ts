@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {map} from 'rxjs/operators';
-import {environment} from '../../../environments/environment';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {Form} from '../data-collection/reducers/forms/form.model';
 import {Observable} from 'rxjs';
 
