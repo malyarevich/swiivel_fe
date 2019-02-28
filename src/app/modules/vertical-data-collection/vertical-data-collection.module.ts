@@ -7,14 +7,19 @@ import {ClarityModule} from '@clr/angular';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { VFormConteinerComponent } from './v-form-constructor/v-form-conteiner/v-form-conteiner.component';
 import {FormsModule} from '@angular/forms';
+import { VFormTableComponent } from './v-form-table/v-form-table.component';
 
 const routes: Routes = [
   {
     path: '',
+    component: VFormTableComponent,
+  },
+  {
+    path: 'v-form-constructor',
     component: VFormConstructorComponent,
   },
   {
-    path: ':id',
+    path: 'v-form-constructor/:id',
     component: VFormConstructorComponent,
   }
 
@@ -23,7 +28,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [VFormConstructorComponent, VFormConteinerComponent],
+  declarations: [VFormConstructorComponent, VFormConteinerComponent, VFormTableComponent],
   imports: [
     CommonModule,
     FormsModule,

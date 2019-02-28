@@ -1,9 +1,8 @@
-import {Injectable, OnInit, Type} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {map} from 'rxjs/operators';
 import {environment} from '../../../environments/environment';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Form} from '../data-collection/reducers/forms/form.model';
-import {Field} from '../data-collection/reducers/field/field.model';
 import {Observable} from 'rxjs';
 
 @Injectable()
@@ -54,6 +53,21 @@ export class VFormService{
       );
   }
 
+  getFormsList(): Observable<any> {
+    return this.http.get(this.SERVER_URL+'/forms' ,{params: this.params})
+      .pipe(
+        map((response) => {
+          return response;
+        })
+      );
+  }
+
+  deleteForm(id: string) {
+    return this.http.delete(this.SERVER_URL+`/forms/${id}`,  {params: this.params})
+      .pipe(
+        map((response) => response)
+      );
+  }
 
 
 }

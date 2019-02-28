@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import {Field} from '../../data-collection/reducers/field/field.model';
 import {VFormService} from '../v-form.service';
@@ -6,6 +6,7 @@ import {Form} from '../../data-collection/reducers/forms/form.model';
 import {ActivatedRoute, Router} from '@angular/router';
 import { v4 as uuid } from 'uuid';
 import { cloneDeep,isEmpty } from 'lodash';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-v-form-table',
@@ -24,7 +25,10 @@ warningString= 'Pay attention that there are unique Field with the same name or 
   customFields: Field[];
   existingFields: Field[];
 
-  constructor(private formService: VFormService, private router: Router,private route: ActivatedRoute) {
+  constructor(private formService: VFormService,
+              private router: Router,
+              private route: ActivatedRoute,
+              private location: Location) {
 
   }
 
@@ -64,7 +68,8 @@ warningString= 'Pay attention that there are unique Field with the same name or 
       name: this.formName
     };
 
-      this.formService.sendForm(form).subscribe(res => console.log(res));
+      this.formService.sendForm(form).subscribe(res => res);
+      this.goBack();
 
   }
 
@@ -83,7 +88,7 @@ warningString= 'Pay attention that there are unique Field with the same name or 
   }
 
 
-  trackByFn(index, item) {
+  trackByFn(index) {
     return index;
   }
 
@@ -119,6 +124,11 @@ warningString= 'Pay attention that there are unique Field with the same name or 
       );
     }
 
+  }
+
+
+  goBack() {
+    this.location.back();
   }
 }
 
