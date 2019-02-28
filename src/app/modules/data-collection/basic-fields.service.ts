@@ -1,9 +1,8 @@
 import { Injectable, Type } from '@angular/core';
 import {ShortTextFieldComponent} from './form-constructor/filds/short-text-field/short-text-field.component';
 import {LongTextFieldComponent} from './form-constructor/filds/long-text-field/long-text-field.component';
-import {HttpClient,  HttpParams} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
-import {environment} from 'src/environments/environment';
 import {NumberTextFieldComponent} from './form-constructor/filds/number-text-field/number-text-field.component';
 import {MultipleOptionsFieldComponent} from './form-constructor/filds/multiple-options-field/multiple-options-field.component';
 import {EmailFieldComponent} from './form-constructor/filds/email-field/email-field.component';
@@ -19,11 +18,6 @@ import {EmptyLineFieldComponent} from './form-constructor/filds/empty-line-field
   providedIn: 'root'
 })
 export class BasicFieldsService {
-
-  SERVER_URL = environment.api;
-
-
-  params = new HttpParams().set('api_token', environment.api_token);
 
    componentMap = new Map<number,Type<any>>([
      [101, ShortTextFieldComponent],
@@ -46,13 +40,13 @@ export class BasicFieldsService {
   constructor(private http: HttpClient) {}
 
   getCustomList() {
-    return this.http.get(this.SERVER_URL+'/schema', {params: this.params})
+    return this.http.get('/proxy/schema')
       .pipe(
         map((response) => {return response;})
       );
   }
   getExistingList() {
-    return this.http.get(this.SERVER_URL+'/mapped', {params: this.params})
+    return this.http.get('/proxy/mapped')
       .pipe(
         map((response) => {return response;})
       );

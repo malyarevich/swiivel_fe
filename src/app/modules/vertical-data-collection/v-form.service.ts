@@ -8,15 +8,10 @@ import {Observable} from 'rxjs';
 @Injectable()
 export class VFormService{
 
-  SERVER_URL = environment.api;
-
-
-  params = new HttpParams().set('api_token', environment.api_token);
-
   constructor(private http: HttpClient) {}
 
   getCustomList() {
-    return this.http.get(this.SERVER_URL+'/schema', {params: this.params})
+    return this.http.get('/proxy/schema')
       .pipe(
         map((response) => {
           return response;
@@ -25,7 +20,7 @@ export class VFormService{
   }
 
   getExistingList() {
-    return this.http.get(this.SERVER_URL+'/mapped', {params: this.params})
+    return this.http.get('/proxy/mapped')
       .pipe(
         map((response) => {return response;})
       );
@@ -34,12 +29,12 @@ export class VFormService{
   sendForm(form:Form) {
 
     if(form._id!=="0"){
-      return this.http.post(this.SERVER_URL+'/forms/'+form._id, form, {params: this.params})
+      return this.http.put(`/proxy/forms/${form._id}`, form)
         .pipe(
           map((response) =>  response)
         );
     }
-    return this.http.put(this.SERVER_URL + '/forms', form, {params: this.params})
+    return this.http.post('/proxy/forms', form)
       .pipe(
         map((response) => response)
       );
@@ -47,14 +42,14 @@ export class VFormService{
   }
 
   getOneForm(id): Observable<any> {
-    return this.http.get(this.SERVER_URL+'/forms/'+id ,{params: this.params})
+    return this.http.get(`/proxy/forms/${id}`)
       .pipe(
         map((response) => response)
       );
   }
 
   getFormsList(): Observable<any> {
-    return this.http.get(this.SERVER_URL+'/forms' ,{params: this.params})
+    return this.http.get('/proxy/forms')
       .pipe(
         map((response) => {
           return response;
@@ -63,11 +58,9 @@ export class VFormService{
   }
 
   deleteForm(id: string) {
-    return this.http.delete(this.SERVER_URL+`/forms/${id}`,  {params: this.params})
+    return this.http.delete(`/proxy/forms/${id}`)
       .pipe(
         map((response) => response)
       );
   }
-
-
 }
