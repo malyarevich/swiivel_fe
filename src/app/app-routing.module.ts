@@ -12,16 +12,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     loadChildren: './modules/organization/organization.module#OrganizationModule'
   },
-  {
-    path: 'data-collection',
-    loadChildren: './modules/data-collection/data-collection.module#DataCollectionModule',
-    data: { preload: true}
-  },
-  {
-    path: 'vertical-data-collection',
-    loadChildren: './modules/vertical-data-collection/vertical-data-collection.module#VerticalDataCollectionModule',
-    data: { preload: true}
-  },
+
   {
     path: '**',
     redirectTo: '',

@@ -2,14 +2,16 @@
 
 <nav class="navbar navbar-light bg-white d-flex justify-content-between ">
   <div class="form-inline">
-  <div class="col-3">
+
+  <div class="col-md-3">
+    <button  type="button" class="btn btn-outline-secondary text-uppercase pull-left" (click)="goBack()">Back</button>
     <span class="navbar-brand -light ">Form Builder</span>
   </div>
-  <div class="col-auto text-uppercase bg-light form-group col-md-offset-4">
-    <span class="form-group">general settings >></span>
-    <span class="form-group  border-bottom">build form >> </span>
-    <span class="form-group" >publish settings</span>
-  </div>
+  <!--<div class="col-auto text-uppercase bg-light form-group col-md-offset-4">-->
+    <!--<span class="form-group">general settings >></span>-->
+    <!--<span class="form-group  border-bottom">build form >> </span>-->
+    <!--<span class="form-group" >publish settings</span>-->
+  <!--</div>-->
   <div class=" justify-content-end">
     <button *ngIf="formName.length>3" type="button" class="btn btn-outline-secondary text-uppercase pull-right" (click)="saveForm()">Save</button>
   </div>
