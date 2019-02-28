@@ -27,12 +27,12 @@ export class FormService {
   sendForm(form:Form) {
 
     if(form._id!=="0"){
-      return this.http.post(this.SERVER_URL+'/forms/'+form._id, form, {params: this.params})
+      return this.http.put(`/proxy/forms/${form._id}`, form)
         .pipe(
           map((response) =>  response)
         );
     }
-      return this.http.put(this.SERVER_URL + '/forms', form, {params: this.params})
+      return this.http.post('/proxy/forms', form)
         .pipe(
           map((response) => response)
         );
@@ -41,7 +41,7 @@ export class FormService {
 
 
   getFormsList(): Observable<any> {
-    return this.http.get(this.SERVER_URL+'/forms' ,{params: this.params})
+    return this.http.get('/proxy/forms')
       .pipe(
         map((response) => {
           return response;
@@ -51,13 +51,13 @@ export class FormService {
 
 
   getOneForm(id): Observable<any> {
-    return this.http.get(this.SERVER_URL+'/forms/'+id ,{params: this.params})
+    return this.http.get(`/proxy/forms/${id}`)
       .pipe(
         map((response) => response)
       );
   }
   deleteForm(id: string) {
-   return this.http.delete(this.SERVER_URL+`/forms/${id}`,  {params: this.params})
+   return this.http.delete(`/proxy/forms/${id}`)
        .pipe(
          map((response) => response)
        );
