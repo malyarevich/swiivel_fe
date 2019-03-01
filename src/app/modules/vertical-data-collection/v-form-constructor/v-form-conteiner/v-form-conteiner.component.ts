@@ -10,27 +10,23 @@ import { range } from 'lodash'
 export class VFormConteinerComponent implements OnInit {
 
   @Input() inputField: Field;
+  @Input() customFields: Field[];
+
   @Output() onDelete = new EventEmitter<any>();
   @Output() onChange = new EventEmitter<any>();
 
-  customFields: Field[];
 
   size = range(1  ,13);
 
-  constructor(private formService: VFormService) {
+  constructor() {
 
   }
 
   ngOnInit() {
     this.doExistingFieldsIniq();
-    this.loadBasicFilds();
   }
 
-  loadBasicFilds() {
-    this.formService.getCustomList().subscribe((fields: Field[]) => {
-      this.customFields = fields;
-    });
-  }
+
 
   removeField(id: string){
     this.onDelete.emit(id);

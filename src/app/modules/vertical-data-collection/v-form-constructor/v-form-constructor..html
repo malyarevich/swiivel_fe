@@ -41,7 +41,7 @@
       <ul class="list-group" *ngFor="let existing of existingFields">
         <div class="input-group">
         <li class="list-group-item ">{{existing.name}}</li>
-        <span class="input-group-addon"><button (click)="addFiled(existing)">Add</button></span>
+        <span class="input-group-addon"><button (click)="addField(existing)">Add</button></span>
         </div>
       </ul>
     </div>
@@ -53,7 +53,7 @@
 
         <div class="input-group">
           <li class="list-group-item ">{{custom.name}}</li>
-          <span class="input-group-addon"><button (click)="addFiled(custom)">Add</button></span>
+          <span class="input-group-addon"><button (click)="addField(custom)">Add</button></span>
         </div>
       </ul>
     </div>
@@ -71,7 +71,7 @@
 
     <div cdkDropList  (cdkDropListDropped)="drop($event)">
       <ul class="list-group"  *ngFor="let field of fields; trackBy: trackByFn" cdkDrag>
-        <li class="list-group-item "><app-v-form-conteiner [inputField]="field" (onChange)="onChange($event, field)" (onDelete)="onDelete($event)"></app-v-form-conteiner></li>
+        <li class="list-group-item "><app-v-form-conteiner [customFields]="customFields" [inputField]="field" (onChange)="onChange($event, field)" (onDelete)="onDelete($event)"></app-v-form-conteiner></li>
 
       </ul>
     </div>

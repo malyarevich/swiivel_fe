@@ -32,8 +32,8 @@ warningString= 'Pay attention that there are unique Field with the same name or 
   }
 
   ngOnInit() {
-    this.loadBasicFilds();
-    this.loadMappedFilds();
+    this.loadBasicFields();
+    this.loadMappedFields();
     this.formInit();
   }
 
@@ -42,19 +42,19 @@ warningString= 'Pay attention that there are unique Field with the same name or 
   }
 
 
-  loadBasicFilds() {
+  loadBasicFields() {
     this.formService.getCustomList().subscribe((fields: Field[]) => {
       this.customFields = fields;
     });
   }
 
-  loadMappedFilds() {
+  loadMappedFields() {
     this.formService.getExistingList().subscribe((fields: Field[]) => {
       this.existingFields = fields;
     });
   }
 
-  addFiled(field: Field) {
+  addField(field: Field) {
     const newField = cloneDeep(field);
     newField._id = uuid();
     this.fields.push(newField);
@@ -63,16 +63,15 @@ warningString= 'Pay attention that there are unique Field with the same name or 
 
   saveForm() {
     if (this.checkBeforeSending(this.fields)) {
-
     const form: Form = {
       _id: this.formId,
       fields: this.fields,
       name: this.formName
     };
-
       this.formService.sendForm(form).subscribe(res => res);
       this.goBack();
-  }else {
+
+    }else {
       this.warningVisible = true;
     }
   }
