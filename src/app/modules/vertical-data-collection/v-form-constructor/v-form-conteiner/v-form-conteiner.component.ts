@@ -22,7 +22,7 @@ export class VFormConteinerComponent implements OnInit {
   }
 
   ngOnInit() {
-  //  this.doExistingFieldsIniq();
+    this.doExistingFieldsIniq();
     this.loadBasicFilds();
   }
 
