@@ -11,7 +11,7 @@
   <div class=" justify-content-end">
     <button *ngIf="formName.length>3" type="button" class="btn btn-outline-secondary text-uppercase pull-right" (click)="saveForm()">Save</button>
   </div>
-    <div *ngIf="warningVisible" class="alert alert-danger alert-dismissible col-md-3 col-md-offset-4">
+    <div *ngIf="warningVisible" class="alert alert-danger alert-dismissible col-md-4 col-md-offset-1">
       <a href="#" class="close" data-dismiss="alert" aria-label="close" (click)="disableWarning()" >&times;</a>
       <strong>Warning! </strong>{{warningString}}
     </div>

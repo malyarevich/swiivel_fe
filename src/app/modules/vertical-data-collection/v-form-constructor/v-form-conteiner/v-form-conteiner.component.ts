@@ -22,6 +22,7 @@ export class VFormConteinerComponent implements OnInit {
   }
 
   ngOnInit() {
+  //  this.doExistingFieldsIniq();
     this.loadBasicFilds();
   }
 
@@ -39,6 +40,12 @@ export class VFormConteinerComponent implements OnInit {
 
   uniqActivated(event){
     this.onChange.emit(event);
+  }
+
+  doExistingFieldsIniq(){
+    if(this.inputField.mapped!='string'){
+      this.inputField.options.unique = true;
+    }
   }
 
 

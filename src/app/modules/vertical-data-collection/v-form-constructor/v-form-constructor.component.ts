@@ -58,9 +58,12 @@ warningString= 'Pay attention that there are unique Field with the same name or 
     const newField = cloneDeep(field);
     newField._id = uuid();
     this.fields.push(newField);
+
   }
 
   saveForm() {
+    if (this.checkBeforeSending(this.fields)) {
+
     const form: Form = {
       _id: this.formId,
       fields: this.fields,
@@ -69,7 +72,9 @@ warningString= 'Pay attention that there are unique Field with the same name or 
 
       this.formService.sendForm(form).subscribe(res => res);
       this.goBack();
-
+  }else {
+      this.warningVisible = true;
+    }
   }
 
   onDelete(id: string) {
@@ -125,6 +130,19 @@ warningString= 'Pay attention that there are unique Field with the same name or 
 
   }
 
+  checkBeforeSending(fields: Field[]):boolean{
+    let result = true;
+    fields=fields.filter(field=>field.options.unique==true);
+    fields.forEach((field)=>{
+      result = !this.labelCheck(field.name);
+      if(field.mapped!='string'){
+        result = !this.mappedCheck(field.mapped);
+      }
+
+
+    });
+    return result;
+  }
 
   goBack() {
     this.location.back();
