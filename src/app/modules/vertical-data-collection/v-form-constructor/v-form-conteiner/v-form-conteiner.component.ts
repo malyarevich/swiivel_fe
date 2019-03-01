@@ -35,16 +35,7 @@ export class VFormConteinerComponent implements OnInit {
     this.onDelete.emit(id);
   }
 
-  onFieldTypeChange(event): void {
 
-    this.inputField.type = +event.target.value;
-
-  }
-  onFieldSizeChange(event): void {
-
-    this.inputField.options.size = +event.target.value;
-
-  }
 
   uniqActivated(event){
     this.onChange.emit(event);

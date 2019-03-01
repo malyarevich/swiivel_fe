@@ -7,7 +7,7 @@
          aria-describedby="basic-addon1"
          (ngModelChange)="blurChanges($event)"
          [(ngModel)]="date"
-         [readonly]="data.options.readonly"
+         [disabled]="data.options.readonly"
          [required]="data.options.required">
          <!--(change)="logChanges($event)"-->
 

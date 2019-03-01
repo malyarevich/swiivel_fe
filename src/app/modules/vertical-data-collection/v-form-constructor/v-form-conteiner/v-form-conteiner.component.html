@@ -8,8 +8,8 @@
 
   <div class="col-md-2">
   <label class="has-float-label">
-    <select class="form-control"  [disabled]="inputField.mapped!='string'" (change)="onFieldTypeChange($event)">
-      <option *ngFor="let item of customFields"  [value]="item.type" [selected]="inputField.type==item.type" >{{item.name}}</option>
+    <select class="form-control"  [disabled]="inputField.mapped!='string'" [(ngModel)]="inputField.type">
+      <option *ngFor="let item of customFields"  [ngValue]="item.type" [selected]="inputField.type==item.type" >{{item.name}}</option>
     </select>
     <span>Field Type</span>
   </label>
@@ -23,8 +23,8 @@
   </div>
   <div class="col-md-1">
     <label class="has-float-label">
-      <select class="form-control"   (change)="onFieldSizeChange($event)">
-        <option *ngFor="let width of size"  [value]="width" [selected]="inputField.options.size==width" >{{width}}</option>
+      <select class="form-control"  [(ngModel)]="inputField.options.size" >
+        <option *ngFor="let width of size"  [ngValue]="width" [selected]="inputField.options.size==width" >{{width}}</option>
       </select>
       <span>Field Width</span>
     </label>

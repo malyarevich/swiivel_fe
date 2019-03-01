@@ -1,2 +1,8 @@
- <input type="text" class="form-control"  aria-describedby="basic-addon2" [(ngModel)]="data.value" [readonly]="data.options.readonly"  [required]="data.options.required">
+ <input [(ngModel)]="data.value"
+        [readOnly]="data.options.readonly"
+        [required]="data.options.required"
+
+        aria-describedby="basic-addon2"
+        class="form-control"
+        type="text">
 
