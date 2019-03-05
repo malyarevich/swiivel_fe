@@ -8,4 +8,5 @@ export interface Field {
   mapped: string;
   title?:string;
   value: string;
+  isValid?: boolean;
 }

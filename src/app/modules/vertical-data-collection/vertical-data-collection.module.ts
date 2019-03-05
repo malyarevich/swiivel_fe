@@ -5,7 +5,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {VFormService} from './v-form.service';
 import {ClarityModule} from '@clr/angular';
 import {DragDropModule} from '@angular/cdk/drag-drop';
-import { VFormConteinerComponent } from './v-form-constructor/v-form-conteiner/v-form-conteiner.component';
+import { VFormContainerComponent } from './v-form-constructor/v-form-conteiner/v-form-container.component';
 import {FormsModule} from '@angular/forms';
 import { VFormTableComponent } from './v-form-table/v-form-table.component';
 
@@ -28,7 +28,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [VFormConstructorComponent, VFormConteinerComponent, VFormTableComponent],
+  declarations: [VFormConstructorComponent, VFormContainerComponent, VFormTableComponent],
   imports: [
     CommonModule,
     FormsModule,
