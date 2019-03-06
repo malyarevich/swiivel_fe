@@ -8,7 +8,7 @@ import {
 import {FormService} from '../form.service';
 import {Router} from '@angular/router';
 import {Store, select} from '@ngrx/store';
-import {Observable, pipe} from 'rxjs';
+import {Observable} from 'rxjs';
 import {Update} from '@ngrx/entity';
 import {Form} from '../reducers/forms/form.model';
 import {FormState} from '../reducers/forms/form.reducer';
@@ -74,8 +74,6 @@ export class FormConstructorComponent implements OnInit {
 
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
-      //TODO: remove debaging console
-      // console.log(event.previousIndex, event.currentIndex);
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
       this.updateFieldState(event.container.data);
     } else {
@@ -83,7 +81,7 @@ export class FormConstructorComponent implements OnInit {
         event.container.data,
         event.previousIndex,
         event.currentIndex);
-      };
+      }
 
       this.loadBasicFilds();
     }
@@ -134,4 +132,7 @@ export class FormConstructorComponent implements OnInit {
   goBack() {
     this.location.back();
   }
+
+
+
 }

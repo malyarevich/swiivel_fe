@@ -1,0 +1,68 @@
+<div class="row ">
+  <div class="col-md-1 ">
+    <span *ngIf="!inputField.isValid" class="glyphicon glyphicon-warning-sign" aria-hidden="true" [title]="warningTitle"></span>
+  </div>
+  <div class="col-md-2">
+  <label class="has-float-label">
+    <input (ngModelChange)="nameChange($event)" [ngModel]="inputField.name" >
+    <span class="spanForLabel">Field Label</span>
+  </label>
+  </div>
+
+  <div class="col-md-2">
+  <label class="has-float-label">
+    <select class="form-control"  [disabled]="inputField.mapped!=''" [(ngModel)]="inputField.type">
+      <option *ngFor="let item of customFields"  [ngValue]="item.type" [selected]="inputField.type==item.type" >{{item.name}}</option>
+    </select>
+    <span class="spanForLabel">Field Type</span>
+  </label>
+  </div>
+
+  <div class="col-md-2">
+    <label class="has-float-label">
+      <input [(ngModel)]="inputField.options.placeholder" >
+      <span class="spanForLabel">Placeholder</span>
+    </label>
+  </div>
+  <div class="col-md-1">
+    <label class="has-float-label">
+      <select class="form-control"  [(ngModel)]="inputField.options.size" >
+        <option *ngFor="let width of size"  [ngValue]="width" [selected]="inputField.options.size==width" >{{width}}</option>
+      </select>
+      <span class="spanForLabel">Field Width</span>
+    </label>
+  </div>
+  <div class="col-md-3">
+    <div class="row">
+      <div class=" col-md-6">
+      <div class="input-group">
+        <p class="list-group-item ">Required</p>
+        <span class="input-group-addon spanForLabel"> <input type="checkbox" [(ngModel)]="inputField.options.required"></span>
+      </div>
+      </div>
+      <div class=" col-md-6">
+      <div class="input-group" >
+        <p class="list-group-item ">Read-only</p>
+        <span class="input-group-addon spanForLabel"> <input type="checkbox"  [(ngModel)]="inputField.options.readonly"></span>
+      </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class=" col-md-6">
+      <div class="input-group " >
+        <p class="list-group-item ">Hide Label</p>
+        <span class="input-group-addon spanForLabel"> <input type="checkbox"  [(ngModel)]="inputField.options.hideLabel"></span>
+      </div>
+      </div>
+      <div class=" col-md-6">
+      <div class="input-group ">
+        <p class="list-group-item ">Unique</p>
+        <span class="input-group-addon spanForLabel"> <input type="checkbox" (ngModelChange)="uniqActivated($event)" [ngModel]="inputField.options.unique"></span>
+      </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-1">
+    <button class="btn-default pull-right" (click)="removeField(inputField._id)">X</button>
+  </div>
+</div>

@@ -1,7 +1,6 @@
 <nav class="navbar navbar-default form-inline">
   <div class=" form-inline">
     <div class=" form-group col-md-2 ">
-      <!--<button (click)="cancel()" class="btn btn-default navbar-btn " routerLink="/generalinfo">-->
       <button  class="btn btn-default navbar-btn " (click)="goBack()"><<
         <span>Return</span>
       </button>
@@ -27,13 +26,7 @@
     <div
       class=" example-list container-fluid view-form">
       <div *ngFor="let item of fields  " >
-        <div *ngIf="item.type==101">
-          <app-form-view-conteiner class="col-md-3"    [field]="item"></app-form-view-conteiner>
-        </div>
-        <div *ngIf="item.type!=101">
-          <app-form-view-conteiner class="col-md-6"  [field]="item"></app-form-view-conteiner>
-        </div>
-
+          <app-form-view-conteiner class="col-md-{{item.options.size}}"    [field]="item"></app-form-view-conteiner>
       </div>
     </div>
   </form>

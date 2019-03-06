@@ -12,13 +12,15 @@ import {Location} from '@angular/common';
   selector: 'app-v-form-table',
   templateUrl: './v-form-constructor..html',
   styleUrls: ['./v-form-constructor..css'],
- // encapsulation: ViewEncapsulation.None
 })
 export class VFormConstructorComponent implements OnInit {
 
 
 warningVisible: boolean = false;
-warningString= 'Pay attention that there are unique Field with the same name or mapped to the same field!';
+warningCheckUniqString= 'Pay attention that there are unique Field with the same name or mapped to the same field!';
+warningCheckExistingLabelString='Pay attention that we already have existing field with the same name';
+showWarningMessage: string;
+
   formId: string = '0';
   fields: Field[] = [];
   formName: string = '';
@@ -33,8 +35,8 @@ warningString= 'Pay attention that there are unique Field with the same name or 
   }
 
   ngOnInit() {
-    this.loadBasicFilds();
-    this.loadMappedFilds();
+    this.loadBasicFields();
+    this.loadMappedFields();
     this.formInit();
   }
 
@@ -43,50 +45,85 @@ warningString= 'Pay attention that there are unique Field with the same name or 
   }
 
 
-  loadBasicFilds() {
+  loadBasicFields() {
     this.formService.getCustomList().subscribe((fields: Field[]) => {
       this.customFields = fields;
     });
   }
 
-  loadMappedFilds() {
+  loadMappedFields() {
     this.formService.getExistingList().subscribe((fields: Field[]) => {
       this.existingFields = fields;
     });
   }
 
-  addFiled(field: Field) {
+  addField(field: Field) {
     const newField = cloneDeep(field);
     newField._id = uuid();
+    this.doExistingFieldsUniq(newField);
+    newField.isValid = false;
     this.fields.push(newField);
+    this.fieldsValidator();
+
   }
 
   saveForm() {
+    if (this.validCheckFields()) {
     const form: Form = {
       _id: this.formId,
       fields: this.fields,
       name: this.formName
     };
-
       this.formService.sendForm(form).subscribe(res => res);
       this.goBack();
+
+    }
 
   }
 
   onDelete(id: string) {
 
-    this.fields = this.fields.filter((field) => field._id != id)
+    this.fields = this.fields.filter((field) => field._id != id);
+    this.fieldsValidator();
   }
-
 
   onChange(uniqEvent, field){
-    if(uniqEvent){
-      this.warningVisible=this.labelCheck(field.name);
-    }else if(field.mapped!='string'){
-      this.warningVisible=this.mappedCheck(field.mapped);
-    }
+    this.fieldsValidator();
+    this.fieldNameValidator(field);
   }
 
+  fieldNameValidator(field: Field){
+    const result = this.checkExistingFieldsName(field.name);
+    if(!result){
+      this.showWarningMessage = this.warningCheckExistingLabelString;
+      field.isValid = false;
+      this.warningVisible = true;
+    }
+  return result;
+  }
+
+  fieldsValidator():boolean{
+
+    this.fields.map(field=>field.isValid=true);
+    let result = true;
+    const uniqFields=this.fields.filter(field=>{
+      return field.options.unique==true;
+    });
+    uniqFields.forEach((field)=>{
+      result = !this.labelCheck(field.name);
+    });
+    this.warningVisible=!result;
+    if(this.warningVisible){
+      this.showWarningMessage = this.warningCheckUniqString;
+    }
+    return result;
+  }
+
+
+  checkExistingFieldsName(name: string): boolean{
+    const arr = this.existingFields.filter((field=>field.name==name));
+    return isEmpty(arr);
+  }
 
   trackByFn(index) {
     return index;
@@ -94,15 +131,12 @@ warningString= 'Pay attention that there are unique Field with the same name or 
 
   labelCheck(name: string):boolean{
   const arr =  this.fields.filter((field)=>field.name==name);
-
+   if(arr.length>1){
+      arr.map(field=>field.isValid=false);
+    }
     return arr.length>1;
   }
 
-  mappedCheck(mapped: string):boolean{
-  const arr =  this.fields.filter((field)=>field.mapped==mapped);
-
-    return arr.length>1;
-  }
 
   disableWarning(){
     this.warningVisible=false;
@@ -118,6 +152,7 @@ warningString= 'Pay attention that there are unique Field with the same name or 
             this.formName = form.name;
             this.fields = form.fields;
             this.formId = form._id;
+            this.fieldsValidator();
           }
         },
         (error)=>console.log(error, 'error')
@@ -129,6 +164,19 @@ warningString= 'Pay attention that there are unique Field with the same name or 
 
   goBack() {
     this.location.back();
+  }
+
+
+  doExistingFieldsUniq(field: Field){
+    if(field.mapped){
+      field.options.unique = true;
+    }
+  }
+
+
+  validCheckFields(){
+    const result = this.fields.filter(field=>field.isValid==false);
+    return isEmpty(result);
   }
 }
 
