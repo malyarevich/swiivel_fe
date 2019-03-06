@@ -3,7 +3,7 @@ export interface UserLogged {
     full_name: string,
     username: string,
     admin?: number,
-    role: number | string,
+    role: Object,
     state?: string,
     city?: string,
     address?: string,
@@ -11,6 +11,7 @@ export interface UserLogged {
     phone?: string,
     status?: string,
     remember_token?: string,
+    permissions: {},
     created_at?: string,
     updated_at?: string
 }

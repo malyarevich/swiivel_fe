@@ -24,18 +24,45 @@
   </tr>
 </thead>
   <tbody *ngFor="let item of forms$ | async">
-  <tr *ngIf="permissionService.hasAccess('form', item._id, 'view')">
+  <tr *ngIf="permissionService.hasAccess('view', 'form', item.template_sql_link.id)">
     <td>{{item.name}}</td>
     <td>{{item.created_at}}</td>
     <td>{{item.updated_at}}</td>
     <td>Registrations</td>
     <td>
       <div class="btn-group" role="group" aria-label="...">
-        <button type="button"   class="btn btn-default" routerLink="onlineform/{{item._id}}" routerLinkActive="active"><span>View</span></button>
-        <button type="button"  (click)="editForm(item._id)" class="btn btn-default" routerLink="generalinfo" routerLinkActive="active"><span>Edit</span></button>
-        <button type="button" (click)="removeForm(item._id)" class="btn btn-default "><span>Delete</span></button>
-        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#flipFlop" (click)="formSelected = item._id"><span>Access</span></button>
-          <app-form-access-modal (resetFormSelectedEmitter)="resetFormSelected($event)" [formSelected] = "formSelected"></app-form-access-modal>
+        <button *ngIf="permissionService.hasAccess('view', 'form', item.template_sql_link.id)"
+                type="button"
+                class="btn btn-default"
+                routerLink="onlineform/{{item._id}}"
+                routerLinkActive="active">
+          <span>View</span>
+        </button>
+        <button
+                *ngIf="permissionService.hasAccess('edit', 'form', item.template_sql_link.id)"
+                type="button"
+                (click)="editForm(item._id)"
+                class="btn btn-default"
+                routerLink="generalinfo"
+                routerLinkActive="active">
+          <span>Edit</span>
+        </button>
+        <button *ngIf="permissionService.hasAccess('delete', 'form', item.template_sql_link.id)"
+                type="button"
+                (click)="removeForm(item._id)" class="btn btn-default ">
+          <span>Delete</span>
+        </button>
+        <button *ngIf="permissionService.hasAccess('access', 'form', item.template_sql_link.id)"
+                type="button"
+                class="btn btn-default"
+                data-toggle="modal"
+                data-target="#flipFlop"
+                (click)="formSelected = item._id">
+          <span>Access</span>
+        </button>
+          <app-form-access-modal (resetFormSelectedEmitter)="resetFormSelected($event)"
+                                 [formSelected] = "formSelected">
+          </app-form-access-modal>
       </div>
     </td>
   </tr>

@@ -11,3 +11,11 @@ export interface Permissions {
     created_at?: string,
     updated_at?: string,
 }
+
+export interface UserLoggedPermissions {
+    view?: number,
+    edit?: number,
+    delete?: number,
+    access?: number,
+    full?: number,
+}

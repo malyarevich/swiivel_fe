@@ -10,7 +10,7 @@ export interface Form {
     api_token?: string,
     link?: string,
     personId?: number,
-    acl?
+    template_sql_link?: {},
 }
 
 export interface FormSql {

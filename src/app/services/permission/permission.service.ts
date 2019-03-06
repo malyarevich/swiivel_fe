@@ -3,8 +3,9 @@ import {Store} from "@ngrx/store";
 import {UserLoggedState} from "../../modules/user-logged/store/user-logged.reducer";
 import {map} from "rxjs/operators";
 import {UserLogged} from "../../modules/user-logged/store/user-logged.model";
-import {Permissions} from "./permissions.model";
+import {Permissions, UserLoggedPermissions} from "./permissions.model";
 import {HttpClient} from "@angular/common/http";
+import {isArray} from "util";
 
 @Injectable({
     providedIn: 'root'
@@ -26,12 +27,22 @@ export class PermissionService {
     }
 
 
-    hasAccess(entityType: string, entityId: string | number, permission: string) {
-        // if (entityId === '5c6d15d78ffb0805c22e5000') {
-        //     return false;
-        // }
-        // console.log(this.userLogged);
-        if(this.userLogged) return true;
+    hasAccess(permission: string, entityType: string, entityId: string | number) {
+        //TODO delete below
+        if(this.userLogged.username == 'admin') return true;
+        //
+        // debugger;
+        if (isArray(this.userLogged.permissions) && !this.userLogged.permissions.length) return false;
+
+        let permissions: UserLoggedPermissions = this.getUserLoggedPermissions(entityType, entityId);
+        if (!permissions) return false;
+
+        if (permissions.full || permissions[permission]) return true;
+        return false;
+    }
+
+    getUserLoggedPermissions(entityType, entityId) {
+        return this.userLogged.permissions[entityType][entityId];
     }
 
     savePermissions(permissions: Permissions[]) {
