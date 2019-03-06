@@ -31,12 +31,9 @@ export class PermissionService {
         //TODO delete below
         if(this.userLogged.username == 'admin') return true;
         //
-        // debugger;
-        if (isArray(this.userLogged.permissions) && !this.userLogged.permissions.length) return false;
-
+        if (!this.userLogged.permissions) return false;
         let permissions: UserLoggedPermissions = this.getUserLoggedPermissions(entityType, entityId);
         if (!permissions) return false;
-
         if (permissions.full || permissions[permission]) return true;
         return false;
     }
