@@ -7,6 +7,7 @@ import {FormSql} from "../../reducers/forms/form.model";
 import {Permissions} from "../../../../services/permission/permissions.model";
 import {User} from "../../../login/rest";
 import {PermissionService} from "../../../../services/permission/permission.service";
+import {UserService} from "../../../../services/user/user.service";
 
 @Component({
     selector: 'app-form-access',
@@ -28,7 +29,8 @@ export class FormAccessComponent implements OnInit, OnDestroy {
         private route: ActivatedRoute,
         private formService: FormService,
         private http: HttpClient,
-        private permissionService: PermissionService
+        private permissionService: PermissionService,
+        private userService: UserService,
     ) {
     }
 
@@ -48,9 +50,8 @@ export class FormAccessComponent implements OnInit, OnDestroy {
             );
     }
 
-    //TODO Add to user service
     getUsers(): void {
-        this.http.post('/users', {})
+        this.userService.getAllUsers()
             .subscribe(
                 (res) => {
                     this.users = res;

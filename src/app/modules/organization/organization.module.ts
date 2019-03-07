@@ -10,6 +10,7 @@ import {DashboardModule} from "./modules/dashboard";
 import {PersonModule} from "./modules/person";
 import * as fromPerson from './modules/person/store/person.reducer';
 import {PersonEffects} from './modules/person/store/person.effect';
+import {UserService} from "../../services/user/user.service";
 
 @NgModule({
     declarations: [
@@ -24,7 +25,7 @@ import {PersonEffects} from './modules/person/store/person.effect';
         StoreModule.forFeature('person', fromPerson.reducer),
       EffectsModule.forFeature([PersonEffects]),
     ],
-    providers: [PersonService]
+    providers: [PersonService, UserService]
 })
 export class OrganizationModule {
 }
