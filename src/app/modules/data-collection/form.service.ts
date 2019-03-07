@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {Form} from './reducers/forms/form.model';
+import {ApiResponse} from "../../models/api-response";
 @Injectable({
   providedIn: 'root'
 })
@@ -51,6 +52,13 @@ export class FormService {
         map((response) => response)
       );
   }
+
+  getFormWithPermissions(formId: number | string) {
+      return this.http.get(`/forms/${formId}/permissions`).pipe(
+          map((res: ApiResponse) => res.data[0])
+      );
+  }
+
   deleteForm(id: string) {
    return this.http.delete(`/proxy/forms/${id}`)
        .pipe(
