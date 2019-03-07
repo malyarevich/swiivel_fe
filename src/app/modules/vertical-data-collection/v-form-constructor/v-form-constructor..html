@@ -66,12 +66,14 @@
 
     <div cdkDropList  (cdkDropListDropped)="drop($event)">
       <ul class="list-group"  *ngFor="let field of fields; trackBy: trackByFn" cdkDrag>
-        <li class="list-group-item" [ngClass]="!field.isValid?'list-group-item-warning':''">
+        <li class="list-group-item"
+            [ngClass]="!field.isValidName||!field.isValid?'list-group-item-warning':''"
+        >
           <app-v-form-container
             [customFields]="customFields"
-            [warningTitle]="showWarningMessage"
             [inputField]="field"
             (onChange)="onChange($event, field)"
+            (onUniq)="onUniq($event)"
             (onDelete)="onDelete($event)">
           </app-v-form-container>
         </li>

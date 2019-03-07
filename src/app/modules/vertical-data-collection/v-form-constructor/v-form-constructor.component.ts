@@ -17,9 +17,7 @@ export class VFormConstructorComponent implements OnInit {
 
 
 warningVisible: boolean = false;
-warningCheckUniqString= 'Pay attention that there are unique Field with the same name or mapped to the same field!';
-warningCheckExistingLabelString='Pay attention that we already have existing field with the same name';
-showWarningMessage: string;
+showWarningMessage: string = 'Please correct existing errors';
 
   formId: string = '0';
   fields: Field[] = [];
@@ -61,7 +59,12 @@ showWarningMessage: string;
     const newField = cloneDeep(field);
     newField._id = uuid();
     this.doExistingFieldsUniq(newField);
-    newField.isValid = false;
+    newField.isValid = true;
+    newField.isValidName = true;
+    if(newField.mapped==''){
+      newField.isValidName = this.checkExistingFieldsName(newField.name);
+
+    }
     this.fields.push(newField);
     this.fieldsValidator();
 
@@ -77,7 +80,7 @@ showWarningMessage: string;
       this.formService.sendForm(form).subscribe(res => res);
       this.goBack();
 
-    }
+     }
 
   }
 
@@ -88,35 +91,27 @@ showWarningMessage: string;
   }
 
   onChange(uniqEvent, field){
-    this.fieldsValidator();
-    this.fieldNameValidator(field);
-  }
-
-  fieldNameValidator(field: Field){
-    const result = this.checkExistingFieldsName(field.name);
-    if(!result){
-      this.showWarningMessage = this.warningCheckExistingLabelString;
-      field.isValid = false;
-      this.warningVisible = true;
+    if(field.mapped==''){
+      field.isValidName  = this.checkExistingFieldsName(field.name);
     }
-  return result;
   }
 
-  fieldsValidator():boolean{
+  onUniq(event){
+      this.fieldsValidator();
+
+  }
+
+
+  fieldsValidator(){
 
     this.fields.map(field=>field.isValid=true);
-    let result = true;
     const uniqFields=this.fields.filter(field=>{
       return field.options.unique==true;
     });
     uniqFields.forEach((field)=>{
-      result = !this.labelCheck(field.name);
+      this.labelCheck(field.name);
     });
-    this.warningVisible=!result;
-    if(this.warningVisible){
-      this.showWarningMessage = this.warningCheckUniqString;
-    }
-    return result;
+
   }
 
 
@@ -128,7 +123,7 @@ showWarningMessage: string;
   trackByFn(index) {
     return index;
   }
-
+  //
   labelCheck(name: string):boolean{
   const arr =  this.fields.filter((field)=>field.name==name);
    if(arr.length>1){
@@ -152,7 +147,7 @@ showWarningMessage: string;
             this.formName = form.name;
             this.fields = form.fields;
             this.formId = form._id;
-            this.fieldsValidator();
+           // this.fieldsValidator();
           }
         },
         (error)=>console.log(error, 'error')
@@ -175,7 +170,10 @@ showWarningMessage: string;
 
 
   validCheckFields(){
-    const result = this.fields.filter(field=>field.isValid==false);
+    const result = this.fields.filter(field=>field.isValid==false||field.isValidName==false);
+  if(!isEmpty(result)){
+    this.warningVisible = true;
+  }
     return isEmpty(result);
   }
 }

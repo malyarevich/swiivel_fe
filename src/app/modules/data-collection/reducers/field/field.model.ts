@@ -9,4 +9,5 @@ export interface Field {
   title?:string;
   value: string;
   isValid?: boolean;
+  isValidName?: boolean;
 }
