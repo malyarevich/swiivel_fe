@@ -1,8 +1,6 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {FormService} from "../../form.service";
-import {HttpClient} from "@angular/common/http";
-import {ApiResponse} from "../../../../models/api-response";
 import {FormSql} from "../../reducers/forms/form.model";
 import {Permissions} from "../../../../services/permission/permissions.model";
 import {User} from "../../../login/rest";
@@ -28,7 +26,6 @@ export class FormAccessComponent implements OnInit, OnDestroy {
     constructor(
         private route: ActivatedRoute,
         private formService: FormService,
-        private http: HttpClient,
         private permissionService: PermissionService,
         private userService: UserService,
     ) {
@@ -39,12 +36,11 @@ export class FormAccessComponent implements OnInit, OnDestroy {
         this.getUsers();
     }
 
-    //TODO Add to form service
     getForm(): void {
-        this.http.get(`/forms/${this.formId}/permissions`)
+        this.formService.getFormWithPermissions(this.formId)
             .subscribe(
-                (res: ApiResponse) => {
-                    this.form = res.data[0];
+                (res) => {
+                    this.form = res;
                     this.permissions = this.form.permissions ? this.form.permissions : [];
                 }
             );
@@ -114,14 +110,14 @@ export class FormAccessComponent implements OnInit, OnDestroy {
     }
 
     assignCopy() {
-        this.filteredUsers = Object.assign([], this.users.data);
+        this.filteredUsers = Object.assign([], this.users);
     }
 
     filterUsers(value) {
         if (!value) {
             this.assignCopy();
         }
-        this.filteredUsers = Object.assign([], this.users.data).filter(
+        this.filteredUsers = Object.assign([], this.users).filter(
             item => item.username.toLowerCase().indexOf(value.toLowerCase()) > -1
         )
     }
@@ -131,10 +127,10 @@ export class FormAccessComponent implements OnInit, OnDestroy {
     }
 
     getUsername(userId) {
-        return this.users.data.find(item => item.id === userId).username;
+        return this.users.find(item => item.id === userId).username;
     }
 
     getRole(userId) {
-        return this.users.data.find(item => item.id === userId).role.role_name;
+        return this.users.find(item => item.id === userId).role.role_name;
     }
 }
