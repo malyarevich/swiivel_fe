@@ -14,6 +14,9 @@ export class VFormContainerComponent {
 
   @Output() onDelete = new EventEmitter<any>();
   @Output() onChange = new EventEmitter<any>();
+  @Output() onUniq = new EventEmitter<any>();
+  warningCheckExistingLabelString='Pay attention that we already have existing field with the same name';
+  warningCheckUniqString= 'Pay attention that there are unique Field with the same name or mapped to the same field!';
 
 
   size = range(1  ,13);
@@ -32,7 +35,7 @@ export class VFormContainerComponent {
 
   uniqActivated(event){
     this.inputField.options.unique=!this.inputField.options.unique;
-    this.emitChanges(event);
+    this.onUniq.emit(event);
   }
 
 
@@ -40,12 +43,7 @@ export class VFormContainerComponent {
     event=event.trim();
 
     this.inputField.name=event;
-    this.emitChanges(event);
-  }
-
-
-
-  emitChanges(event){
     this.onChange.emit(event);
   }
+
 }

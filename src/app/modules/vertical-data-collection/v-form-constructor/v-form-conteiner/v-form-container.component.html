@@ -1,10 +1,11 @@
 <div class="row ">
   <div class="col-md-1 ">
-    <span *ngIf="!inputField.isValid" class="glyphicon glyphicon-warning-sign" aria-hidden="true" [title]="warningTitle"></span>
+    <span *ngIf="!inputField.isValidName" class="glyphicon glyphicon-alert" aria-hidden="true" [title]="warningCheckExistingLabelString"></span>
+    <span *ngIf="!inputField.isValid" class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" [title]="warningCheckUniqString"></span>
   </div>
   <div class="col-md-2">
   <label class="has-float-label">
-    <input (ngModelChange)="nameChange($event)" [ngModel]="inputField.name" >
+    <input (ngModelChange)="nameChange($event)" [disabled]="inputField.mapped!=''" [ngModel]="inputField.name" >
     <span class="spanForLabel">Field Label</span>
   </label>
   </div>
