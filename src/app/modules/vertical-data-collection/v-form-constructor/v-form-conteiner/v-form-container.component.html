@@ -35,30 +35,47 @@
   </div>
   <div class="col-md-3">
     <div class="row">
-      <div class=" col-md-6">
+      <div class=" col-6">
       <div class="input-group">
-        <p class="list-group-item input-group-prepend">Required</p>
-        <span class="input-group-append spanForLabel"> <input type="checkbox" class="form-check-input" [(ngModel)]="inputField.options.required"></span>
+        <div class="input-group-prepend">
+          <div class="input-group-text">
+            <input type="checkbox" [(ngModel)]="inputField.options.required" >
+          </div>
+        </div>
+        <p class="form-control">Required</p>
       </div>
       </div>
-      <div class=" col-md-6">
+      <div class=" col-6">
       <div class="input-group" >
-        <p class="list-group-item input-group-prepend">Read-only</p>
-        <span class="input-group-append spanForLabel"> <input type="checkbox" class="form-check-input"  [(ngModel)]="inputField.options.readonly"></span>
+        <div class="input-group-prepend">
+          <div class="input-group-text">
+            <input type="checkbox" [(ngModel)]="inputField.options.readonly" >
+          </div>
+        </div>
+        <p class="form-control">Read-only</p>
       </div>
       </div>
     </div>
+    <div class="w-100"></div>
     <div class="row">
-      <div class=" col-md-6">
+      <div class=" col-6">
       <div class="input-group " >
-        <p class="list-group-item input-group-prepend">Hide Label</p>
-        <span class="input-group-append spanForLabel"> <input type="checkbox" class="form-check-input" [(ngModel)]="inputField.options.hideLabel"></span>
+        <div class="input-group-prepend">
+          <div class="input-group-text">
+        <input type="checkbox" [(ngModel)]="inputField.options.hideLabel" >
       </div>
       </div>
-      <div class=" col-md-6">
+      <p class="form-control">Hide Label</p>
+      </div>
+      </div>
+      <div class=" col-6">
       <div class="input-group ">
-        <p class="list-group-item input-group-prepend">Unique</p>
-        <span class="input-group-append spanForLabel"> <input type="checkbox" class="form-check-input" (ngModelChange)="uniqActivated($event)" [ngModel]="inputField.options.unique"></span>
+        <div class="input-group-prepend">
+          <div class="input-group-text">
+            <input type="checkbox"  (ngModelChange)="uniqActivated($event)" [ngModel]="inputField.options.unique" >
+          </div>
+        </div>
+        <p class="form-control">Unique</p>
       </div>
       </div>
     </div>

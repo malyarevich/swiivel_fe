@@ -1,33 +1,31 @@
-<nav class="navbar navbar-default form-inline">
-  <div class=" form-inline">
-    <div class=" form-group col-md-2 ">
-      <button  class="btn btn-default navbar-btn " (click)="goBack()"><<
-        <span>Return</span>
-      </button>
+
+<nav class="navbar navbar-light bg-white">
+  <form class="form-inline">
+
+    <button  type="button" class="btn btn-secondary text-uppercase form-control" (click)="goBack()">Back </button>
+    <!--<span class="navbar-brand-light form-control "> Form Builder</span>-->
+    <div  class="justify-content-end">
+      <button  type="button" class="btn btn-success text-uppercase "  (click)="sendForm()" >Save form</button>
     </div>
-    <div class="form-group col-md-2 col-md-offset-3">
-      <h3 class="">Form viewer</h3>
-    </div>
-    <div class=" form-group col-md-offset-4">
-      <button class="btn  btn-default navbar-btn " (click)="sendForm()" >Save form
-        <span></span>
-      </button>
-    </div>
+  </form>
+  <div class="justify-content-center">
+    <h3 class="">Form viewer</h3>
   </div>
 </nav>
 
 
 
 
-
-<div class="workplace col-md-7 col-lg-offset-3">
-  <h2>{{name}}</h2>
+<div class="workplace container">
   <form>
     <div
       class=" example-list container-fluid view-form">
-      <div *ngFor="let item of fields  " >
-          <app-form-view-conteiner class="col-md-{{item.options.size}}"    [field]="item"></app-form-view-conteiner>
+      <h2>{{name}}</h2>
+      <div class="row">
+      <div *ngFor="let item of fields  " class="col-{{item.options.size}}" >
+          <app-form-view-conteiner    [field]="item"></app-form-view-conteiner>
       </div>
+    </div>
     </div>
   </form>
 
