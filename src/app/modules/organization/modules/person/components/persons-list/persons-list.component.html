@@ -1,3 +1,4 @@
+<div class="container">
 <h4 class="text-left"><b>Persons</b></h4>
 <table class="table table-responsive">
     <thead>
@@ -5,7 +6,6 @@
         <th scope="col"></th>
         <th scope="col">Title</th>
         <th scope="col">First Name</th>
-        <th scope="col">Middle Name</th>
         <th scope="col">Last Name</th>
         <th scope="col">Gender</th>
         <th scope="col">Date of birth</th>
@@ -22,7 +22,6 @@
         <th>{{ i + 1 }}</th>
         <th scope="row">{{data.title || "No"}}</th>
         <td>{{data.first_name || "No"}}</td>
-        <td>{{data.middle_name || "No"}}</td>
         <td>{{data.last_name || "No"}}</td>
         <td>{{data.gender || "No"}}</td>
         <td>{{data.dob || "No"}}</td>
@@ -31,8 +30,9 @@
         <td>{{data.country || "No"}}</td>
         <td>{{data.city || "No"}}</td>
         <td>{{data.address || "No"}}</td>
-        <td><a class="btn btn-default" target="_blank" [routerLink]="['/persons/id', data.id]">View</a></td>
+        <td><a class="btn btn-primary" target="_blank" [routerLink]="['/persons/id', data.id]">View</a></td>
     </tr>
     </tbody>
 </table>
+</div>
 
