@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Field} from '../../../data-collection/reducers/field/field.model';
 import { range } from 'lodash'
 @Component({
@@ -6,7 +6,7 @@ import { range } from 'lodash'
   templateUrl: './v-form-container.component.html',
   styleUrls: ['./v-form-container.component.css'],
 })
-export class VFormContainerComponent {
+export class VFormContainerComponent implements OnInit{
 
   @Input() inputField: Field;
   @Input() customFields: Field[];
@@ -44,6 +44,10 @@ export class VFormContainerComponent {
 
     this.inputField.name=event;
     this.onChange.emit(event);
+  }
+
+  ngOnInit(): void {
+   // console.log(this.inputField);
   }
 
 }

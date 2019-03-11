@@ -37,28 +37,28 @@
     <div class="row">
       <div class=" col-md-6">
       <div class="input-group">
-        <p class="list-group-item ">Required</p>
-        <span class="input-group-addon spanForLabel"> <input type="checkbox" [(ngModel)]="inputField.options.required"></span>
+        <p class="list-group-item input-group-prepend">Required</p>
+        <span class="input-group-append spanForLabel"> <input type="checkbox" class="form-check-input" [(ngModel)]="inputField.options.required"></span>
       </div>
       </div>
       <div class=" col-md-6">
       <div class="input-group" >
-        <p class="list-group-item ">Read-only</p>
-        <span class="input-group-addon spanForLabel"> <input type="checkbox"  [(ngModel)]="inputField.options.readonly"></span>
+        <p class="list-group-item input-group-prepend">Read-only</p>
+        <span class="input-group-append spanForLabel"> <input type="checkbox" class="form-check-input"  [(ngModel)]="inputField.options.readonly"></span>
       </div>
       </div>
     </div>
     <div class="row">
       <div class=" col-md-6">
       <div class="input-group " >
-        <p class="list-group-item ">Hide Label</p>
-        <span class="input-group-addon spanForLabel"> <input type="checkbox"  [(ngModel)]="inputField.options.hideLabel"></span>
+        <p class="list-group-item input-group-prepend">Hide Label</p>
+        <span class="input-group-append spanForLabel"> <input type="checkbox" class="form-check-input" [(ngModel)]="inputField.options.hideLabel"></span>
       </div>
       </div>
       <div class=" col-md-6">
       <div class="input-group ">
-        <p class="list-group-item ">Unique</p>
-        <span class="input-group-addon spanForLabel"> <input type="checkbox" (ngModelChange)="uniqActivated($event)" [ngModel]="inputField.options.unique"></span>
+        <p class="list-group-item input-group-prepend">Unique</p>
+        <span class="input-group-append spanForLabel"> <input type="checkbox" class="form-check-input" (ngModelChange)="uniqActivated($event)" [ngModel]="inputField.options.unique"></span>
       </div>
       </div>
     </div>

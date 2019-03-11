@@ -23,3 +23,7 @@
 body{
   background-color: #f4f4f4;
 }
+
+#workPlaceList{
+  height: 1000px;
+}

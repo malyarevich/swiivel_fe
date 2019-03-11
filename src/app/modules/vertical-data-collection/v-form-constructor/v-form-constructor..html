@@ -1,22 +1,22 @@
 
 
-<nav class="navbar navbar-light bg-white d-flex justify-content-between ">
-  <div class="form-inline">
+<nav class="navbar navbar-light bg-white">
+  <form class="form-inline">
 
-  <div class="col-md-3">
-    <button  type="button" class="btn btn-outline-secondary text-uppercase pull-left" (click)="goBack()">Back</button>
-    <span class="navbar-brand -light ">Form Builder</span>
-  </div>
+    <button  type="button" class="btn btn-outline-secondary text-uppercase form-control" (click)="goBack()">Back </button>
+    <!--<span class="navbar-brand-light form-control "> Form Builder</span>-->
+    <div *ngIf="formName.length>3" class="justify-content-end">
+      <button  type="button" class="btn btn-outline-secondary text-uppercase " (click)="saveForm()">Save</button>
+    </div>
+  </form>
 
-  <div class=" justify-content-end">
-    <button *ngIf="formName.length>3" type="button" class="btn btn-outline-secondary text-uppercase pull-right" (click)="saveForm()">Save</button>
-  </div>
+</nav>
+
+
     <div *ngIf="warningVisible" class="alert alert-warning alert-dismissible col-md-4 col-md-offset-1">
       <a href="#" class="close" data-dismiss="alert" aria-label="close" (click)="disableWarning()" >&times;</a>
       <strong>Warning! </strong>{{showWarningMessage}}
     </div>
-  </div>
-</nav>
 
 
 <div class="form-group col-md-4 col-center-block">
@@ -27,44 +27,51 @@
 
   <hr>
   <div class="row">
-    <div class="col-md-2" >
-
-      <ul class="nav nav-tabs">
-        <li class="active"><a data-toggle="tab" href="#existing">EXISTING FIELDS</a></li>
-        <li ><a data-toggle="tab" href="#instruments">NEW FIELDS</a></li>
-
-      </ul>
-      <div class="tab-content">
-
-    <div id="existing" class="tab-pane fade  in active" >
-      <div class="text-center" ><label>EXISTING FIELDS</label></div>
-
-      <ul class="list-group" *ngFor="let existing of existingFields">
-        <div class="input-group">
-        <li class="list-group-item ">{{existing.name}}</li>
-        <span class="input-group-addon"><button (click)="addField(existing)">Add</button></span>
-        </div>
-      </ul>
+    <div class="col-md-3" >
+    <ngb-tabset>
+      <ngb-tab title="EXISTING FIELDS">
+        <ng-template ngbTabContent>
+          <div
+          cdkDropList
+          id="ExistingFieldsList"
+          [cdkDropListData]="existingFields"
+          [cdkDropListConnectedTo]="['workPlaceList']">
+          <ul class="list-group" *ngFor="let existing of existingFields" cdkDrag>
+            <li class="list-group-item ">
+              <span class="input-group-text"> {{existing.name}}</span>
+            </li>
+          </ul>
+          </div>
+        </ng-template>
+      </ngb-tab>
+      <ngb-tab title="CUSTOM FIELDS">
+        <ng-template ngbTabContent>
+          <div
+          cdkDropList
+          [cdkDropListData]="customFields"
+          id="CustomFieldsList"
+          [cdkDropListConnectedTo]="['workPlaceList']">
+          <ul class="list-group" *ngFor="let custom of customFields" cdkDrag>
+            <li class="list-group-item ">
+              <span class="input-group-text"> {{custom.name}}</span>
+            </li>
+          </ul>
+          </div>
+        </ng-template>
+      </ngb-tab>
+    </ngb-tabset>
     </div>
-    <div class="example-list tab-pane fade"
-         id="instruments">
-      <div class="text-center"><label >CUSTOM FIELDS</label></div>
 
-      <ul class="list-group" *ngFor="let custom of customFields">
-
-        <div class="input-group">
-          <li class="list-group-item ">{{custom.name}}</li>
-          <span class="input-group-addon"><button (click)="addField(custom)">Add</button></span>
-        </div>
-      </ul>
-    </div>
-      </div>
-    </div>
   <div class="  col-md-9 " >
     <div class="text-center" *ngIf="fields.length>0">    <label >FORM FIELDS</label>
 </div>
 
-    <div cdkDropList  (cdkDropListDropped)="drop($event)">
+    <div
+      cdkDropList
+      id = "workPlaceList"
+      [cdkDropListData]="fields"
+      [cdkDropListConnectedTo]="['ExistingFieldsList', 'CustomFieldsList']"
+      (cdkDropListDropped)="drop($event)">
       <ul class="list-group"  *ngFor="let field of fields; trackBy: trackByFn" cdkDrag>
         <li class="list-group-item"
             [ngClass]="!field.isValidName||!field.isValid?'list-group-item-warning':''"

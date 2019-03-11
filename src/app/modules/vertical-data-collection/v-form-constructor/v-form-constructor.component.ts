@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
+import {CdkDragDrop, copyArrayItem, moveItemInArray} from '@angular/cdk/drag-drop';
 import {Field} from '../../data-collection/reducers/field/field.model';
 import {VFormService} from '../v-form.service';
 import {Form} from '../../data-collection/reducers/forms/form.model';
@@ -36,10 +36,30 @@ showWarningMessage: string = 'Please correct existing errors';
     this.loadBasicFields();
     this.loadMappedFields();
     this.formInit();
+
   }
 
+  // drop(event: CdkDragDrop<string[]>) {
+  //   moveItemInArray(this.fields, event.previousIndex, event.currentIndex);
+  // }
+
+
   drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.fields, event.previousIndex, event.currentIndex);
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      // console.log(
+      //   // event.previousContainer.data, 'event.previousContainer.data',
+      //   event,'event.container.data',
+      //   // event.previousIndex,'event.previousIndex',
+      //   // event.currentIndex,'event.currentIndex'
+      // );
+      copyArrayItem(event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex);
+      this.addField(this.fields[event.currentIndex]);
+    }
   }
 
 
@@ -56,16 +76,14 @@ showWarningMessage: string = 'Please correct existing errors';
   }
 
   addField(field: Field) {
-    const newField = cloneDeep(field);
-    newField._id = uuid();
-    this.doExistingFieldsUniq(newField);
-    newField.isValid = true;
-    newField.isValidName = true;
-    if(newField.mapped==''){
-      newField.isValidName = this.checkExistingFieldsName(newField.name);
+    field._id = uuid();
+    this.doExistingFieldsUniq(field);
+    field.isValid = true;
+    field.isValidName = true;
+    if(field.mapped==''){
+      field.isValidName = this.checkExistingFieldsName(field.name);
 
     }
-    this.fields.push(newField);
     this.fieldsValidator();
 
   }
