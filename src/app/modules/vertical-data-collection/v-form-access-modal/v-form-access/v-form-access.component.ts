@@ -25,7 +25,7 @@ export class VFormAccessComponent implements OnInit, OnDestroy {
 
     constructor(
         private route: ActivatedRoute,
-        private formService: VFormService,
+        private vFormService: VFormService,
         private permissionService: PermissionService,
         private userService: UserService,
     ) {
@@ -37,7 +37,7 @@ export class VFormAccessComponent implements OnInit, OnDestroy {
     }
 
     getForm(): void {
-        this.formService.getFormWithPermissions(this.formId)
+        this.vFormService.getFormWithPermissions(this.formId)
             .subscribe(
                 (res) => {
                     this.form = res;
