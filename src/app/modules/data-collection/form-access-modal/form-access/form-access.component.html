@@ -1,14 +1,22 @@
 <p>List of Users ({{permissions.length || 0}})</p>
 <div *ngIf="error" class="alert alert-danger">{{error}}</div>
-<button class="btn btn-default" *ngIf="!showInvite" (click)="showInvite=true">Invite Users</button>
+<button class="btn btn-primary btn-sm" *ngIf="!showInvite" (click)="showInvite=true">Invite Users</button>
 <section *ngIf="showInvite">
-    <button class="btn btn-default" (click)="resetSelectedUsers(); showInvite=false">Cancel</button>
-    <button class="btn btn-default" (click)="addUsersToList(); showInvite=false">Add to list</button>
-    <div><span *ngFor="let user of selectedUsers">{{user.username}} - {{user.role.role_name}} </span></div>
-    <input #searchUsers [(ngModel)]="name" (focus)="filterUsers(searchUsers.value)"
-           (input)="filterUsers(searchUsers.value)">
-    <div *ngFor="let user of filteredUsers" (click)="selectUsers(user)">
-        {{user.username}}, {{user.role.role_name}}
+    <div class="row">
+        <div class="col-sm-6">
+            <div><span *ngFor="let user of selectedUsers">{{user.username}} - {{user.role.role_name}} </span></div>
+            <input class="form-control" #searchUsers [(ngModel)]="name" (focus)="filterUsers(searchUsers.value)"
+                   (input)="filterUsers(searchUsers.value)">
+            <div *ngFor="let user of filteredUsers" (click)="selectUsers(user)">
+                <ul class="list-group">
+                    <li class="list-group-item">{{user.username}}, {{user.role.role_name}}</li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <button class="btn btn-outline-danger btn-sm" (click)="resetSelectedUsers(); showInvite=false">Cancel</button>
+            <button class="btn btn-success btn-sm ml-1" (click)="addUsersToList(); showInvite=false">Add to list</button>
+        </div>
     </div>
 </section>
 <br><br>

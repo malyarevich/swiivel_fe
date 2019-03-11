@@ -1,19 +1,19 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light ">
-  <div class=" form-inline">
-    <div class="form-group col-md-2 col-md-offset-2">
-      <h3>List of forms</h3>
-    </div>
-    <div class="form-group  col-md-offset-5 col-md-2 ">
-      <button type="button" class="btn navbar-btn  form-control" (click)="addForm()" routerLink="./generalinfo" routerLinkActive="active">
-         Create form <span>>></span>
-      </button>
-    </div>
-
+<div class="container">
+<div class="row py-3">
+  <div class="col-sm-6">
+    <span class="h5">FORMS</span>
   </div>
-</nav>
-<div *ngIf="(forms$ | async).length!=0" class="container">
-
-<table  class="table table-striped">
+  <div class="col-sm-6 text-right">
+        <button type="button"
+                class="btn btn-primary btn-sm"
+                (click)="addForm()"
+                routerLink="./generalinfo"
+                routerLinkActive="active">
+          Create New Form
+        </button>
+  </div>
+</div>
+<table  class="table table-striped" *ngIf="(forms$ | async).length!=0">
 <thead>
   <tr>
     <th>Form name</th>
@@ -23,7 +23,8 @@
     <th></th>
   </tr>
 </thead>
-  <tbody *ngFor="let item of forms$ | async">
+  <tbody>
+  <ng-container *ngFor="let item of forms$ | async">
   <tr *ngIf="permissionService.hasAccess('view', 'form', item.template_sql_link.id)">
     <td>{{item.name}}</td>
     <td>{{item.created_at}}</td>
@@ -33,7 +34,7 @@
       <div class="btn-group" role="group" aria-label="...">
         <button *ngIf="permissionService.hasAccess('view', 'form', item.template_sql_link.id)"
                 type="button"
-                class="btn btn-default"
+                class="btn btn-outline-primary btn-sm ml-1"
                 routerLink="onlineform/{{item._id}}"
                 routerLinkActive="active">
           <span>View</span>
@@ -42,19 +43,20 @@
                 *ngIf="permissionService.hasAccess('edit', 'form', item.template_sql_link.id)"
                 type="button"
                 (click)="editForm(item._id)"
-                class="btn btn-default"
+                class="btn btn-outline-primary btn-sm ml-1"
                 routerLink="generalinfo"
                 routerLinkActive="active">
           <span>Edit</span>
         </button>
         <button *ngIf="permissionService.hasAccess('delete', 'form', item.template_sql_link.id)"
                 type="button"
-                (click)="removeForm(item._id)" class="btn btn-default ">
+                class="btn btn-outline-danger btn-sm ml-1"
+                (click)="removeForm(item._id)">
           <span>Delete</span>
         </button>
         <button *ngIf="permissionService.hasAccess('access', 'form', item.template_sql_link.id)"
                 type="button"
-                class="btn btn-default"
+                class="btn btn-outline-warning btn-sm ml-1"
                 data-toggle="modal"
                 data-target="#flipFlop"
                 (click)="formSelected = item._id">
@@ -66,6 +68,7 @@
       </div>
     </td>
   </tr>
+  </ng-container>
   </tbody>
 </table>
 </div>
