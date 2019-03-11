@@ -20,6 +20,16 @@
         <div class="btn-group" role="group" aria-label="...">
           <button type="button"   class="btn btn-default" routerLink="v-form-constructor/{{item._id}}" routerLinkActive="active"><span>Edit</span></button>
           <button type="button" (click)="removeForm(item._id)" class="btn btn-default "><span>Delete</span></button>
+          <button type="button"
+                  class="btn btn-default"
+                  data-toggle="modal"
+                  data-target="#flipFlop"
+                  (click)="formSelected = item._id">
+            <span>Access</span>
+          </button>
+          <app-v-form-access-modal (resetFormSelectedEmitter)="resetFormSelected($event)"
+                                 [formSelected] = "formSelected">
+          </app-v-form-access-modal>
         </div>
       </td>
     </tr>

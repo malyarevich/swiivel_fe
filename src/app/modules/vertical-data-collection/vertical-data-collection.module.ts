@@ -10,6 +10,8 @@ import {FormsModule} from '@angular/forms';
 import { VFormTableComponent } from './v-form-table/v-form-table.component';
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import { VFormNavComponent } from './v-form-table/v-form-nav/v-form-nav.component';
+import {VFormAccessComponent} from "./v-form-access-modal/v-form-access/v-form-access.component";
+import {VFormAccessModalComponent} from "./v-form-access-modal/v-form-access-modal.component";
 
 const routes: Routes = [
   {
@@ -30,7 +32,14 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [VFormConstructorComponent, VFormContainerComponent, VFormTableComponent, VFormNavComponent],
+  declarations: [
+      VFormConstructorComponent,
+      VFormContainerComponent,
+      VFormTableComponent,
+      VFormNavComponent,
+      VFormAccessComponent,
+      VFormAccessModalComponent,
+  ],
   imports: [
     CommonModule,
     FormsModule,

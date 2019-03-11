@@ -3,6 +3,7 @@ import {map} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
 import {Form} from '../data-collection/reducers/forms/form.model';
 import {Observable} from 'rxjs';
+import {ApiResponse} from "../../models/api-response";
 
 @Injectable()
 export class VFormService{
@@ -55,6 +56,12 @@ export class VFormService{
         })
       );
   }
+
+    getFormWithPermissions(formId: number | string) {
+        return this.http.get(`/forms/${formId}/permissions`).pipe(
+            map((res: ApiResponse) => res.data[0])
+        );
+    }
 
   deleteForm(id: string) {
     return this.http.delete(`/proxy/forms/${id}`)
