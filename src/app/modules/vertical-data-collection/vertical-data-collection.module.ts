@@ -8,6 +8,8 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
 import { VFormContainerComponent } from './v-form-constructor/v-form-conteiner/v-form-container.component';
 import {FormsModule} from '@angular/forms';
 import { VFormTableComponent } from './v-form-table/v-form-table.component';
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import { VFormNavComponent } from './v-form-table/v-form-nav/v-form-nav.component';
 
 const routes: Routes = [
   {
@@ -28,13 +30,14 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [VFormConstructorComponent, VFormContainerComponent, VFormTableComponent],
+  declarations: [VFormConstructorComponent, VFormContainerComponent, VFormTableComponent, VFormNavComponent],
   imports: [
     CommonModule,
     FormsModule,
     RouterModule.forChild(routes),
     ClarityModule,
-    DragDropModule
+    DragDropModule,
+      NgbModule
 
   ],
   providers:[VFormService]
