@@ -6,6 +6,7 @@
     <tr>
       <th scope="col">FORM NAME</th>
       <th scope="col">TYPE</th>
+      <th scope="col">ACCESS</th>
       <th scope="col">CREATED BY</th>
       <th scope="col">UPDATED DATA</th>
       <th scope="col">STATUS</th>
@@ -16,6 +17,18 @@
     <tr *ngFor="let item of forms">
       <td>{{item.name}}</td>
       <td><span class="text-primary">{{item.template_sql_link.type | titlecase}}</span></td>
+      <td>
+          <button type="button"
+                  class="btn btn-outline-secondary btn-sm"
+                  data-toggle="modal"
+                  data-target="#flipFlop"
+                  (click)="formSelected = item._id">
+              <span  class="text-primary">+ Invite Users</span>
+          </button>
+          <app-v-form-access-modal (resetFormSelectedEmitter)="resetFormSelected($event)"
+                                   [formSelected] = "formSelected">
+          </app-v-form-access-modal>
+      </td>
       <td>{{item.template_sql_link.owner_id}}</td>
       <td>{{item.updated_at}}</td>
       <td>{{item.template_sql_link.status}}</td>
@@ -31,16 +44,6 @@
                   (click)="removeForm(item._id)">
             <span>Delete</span>
           </button>
-          <button type="button"
-                  class="btn btn-default"
-                  data-toggle="modal"
-                  data-target="#flipFlop"
-                  (click)="formSelected = item._id">
-            <span>Access</span>
-          </button>
-          <app-v-form-access-modal (resetFormSelectedEmitter)="resetFormSelected($event)"
-                                 [formSelected] = "formSelected">
-          </app-v-form-access-modal>
       </td>
     </tr>
     </tbody>
