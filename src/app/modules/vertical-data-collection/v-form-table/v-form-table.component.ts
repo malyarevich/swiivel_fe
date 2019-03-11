@@ -10,6 +10,7 @@ import {VFormService} from "../v-form.service";
 export class VFormTableComponent implements OnInit {
 
   forms: Form[];
+    formSelected;
 
   constructor(private vFormService: VFormService) { }
 
@@ -26,5 +27,9 @@ export class VFormTableComponent implements OnInit {
     this.vFormService.deleteForm(id).subscribe(res=>res);
     this.forms=this.forms.filter((form=>form._id!=id));
   }
+
+    resetFormSelected() {
+        this.formSelected = null
+    }
 
 }

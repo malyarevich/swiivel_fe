@@ -1,39 +1,50 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light ">
-      <h3 class="navbar-brand">List of vertical forms</h3>
-
-  <form class="form-inline">
-    <button type="button" class="btn btn-outline-success " routerLink="v-form-constructor" routerLinkActive="active">
-      Create form <span>>></span>
-    </button>
-  </form>
-
-</nav>
-<div *ngIf="forms?.length!=0" class="container">
-
-  <table  class="table table-striped">
+<div class="container">
+<app-v-form-nav></app-v-form-nav>
+  <div *ngIf="forms?.length!=0">
+  <table class="table table-striped">
     <thead>
     <tr>
-      <th>Form name</th>
-      <th>Created</th>
-      <th>Updated</th>
-      <th>Type</th>
-      <th></th>
+      <th scope="col">FORM NAME</th>
+      <th scope="col">TYPE</th>
+      <th scope="col">CREATED BY</th>
+      <th scope="col">UPDATED DATA</th>
+      <th scope="col">STATUS</th>
+      <th scope="col"></th>
     </tr>
     </thead>
-    <tbody *ngFor="let item of forms">
-    <tr>
+    <tbody>
+    <tr *ngFor="let item of forms">
       <td>{{item.name}}</td>
-      <td>{{item.created_at}}</td>
+      <td><span class="text-primary">{{item.template_sql_link.type | titlecase}}</span></td>
+      <td>{{item.template_sql_link.owner_id}}</td>
       <td>{{item.updated_at}}</td>
-      <td>Registrations</td>
+      <td>{{item.template_sql_link.status}}</td>
       <td>
-        <div class="btn-group" role="group" aria-label="...">
-          <button type="button"   class="btn btn-default" routerLink="v-form-constructor/{{item._id}}" routerLinkActive="active"><span>Edit</span></button>
-          <button type="button" (click)="removeForm(item._id)" class="btn btn-default "><span>Delete</span></button>
-        </div>
+          <button type="button"
+                  class="btn btn-primary btn-sm mr-1"
+                  routerLink="v-form-constructor/{{item._id}}"
+                  routerLinkActive="active">
+            <span>Edit</span>
+          </button>
+          <button type="button"
+                  class="btn btn-primary btn-sm "
+                  (click)="removeForm(item._id)">
+            <span>Delete</span>
+          </button>
+          <button type="button"
+                  class="btn btn-default"
+                  data-toggle="modal"
+                  data-target="#flipFlop"
+                  (click)="formSelected = item._id">
+            <span>Access</span>
+          </button>
+          <app-v-form-access-modal (resetFormSelectedEmitter)="resetFormSelected($event)"
+                                 [formSelected] = "formSelected">
+          </app-v-form-access-modal>
       </td>
     </tr>
     </tbody>
   </table>
+  </div>
 </div>
 
