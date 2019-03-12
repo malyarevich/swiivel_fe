@@ -14,7 +14,6 @@ import {VFormAccessComponent} from "./v-form-access-modal/v-form-access/v-form-a
 import {VFormAccessModalComponent} from "./v-form-access-modal/v-form-access-modal.component";
 import { VFormViewComponent } from './v-form-view/v-form-view.component';
 import { VFormViewContainerComponent } from './v-form-view/v-form-view-container/v-form-view-container.component';
-import {ContentDirective} from "../data-collection/form-constructor/content.directive";
 import {VFieldsService} from "./v-fields.service";
 import {TimeFieldComponent} from "./v-form-view/fileds/time-field/time-field.component";
 import {ShortTextFieldComponent} from "./v-form-view/fileds/short-text-field/short-text-field.component";
@@ -30,6 +29,7 @@ import {DropDownListFieldComponent} from "./v-form-view/fileds/drop-down-list-fi
 import {DateTimeFieldComponent} from "./v-form-view/fileds/date-time-field/date-time-field.component";
 import {entryComponents} from "./entryComponents";
 import { VDataCollectionComponent } from './v-data-collection.component';
+import {VContentDirective} from "./v-form-view/v-content.directive";
 
 const routes: Routes = [
   {
@@ -70,7 +70,7 @@ const routes: Routes = [
       VFormAccessModalComponent,
       VFormViewComponent,
       VFormViewContainerComponent,
-      ContentDirective,
+      VContentDirective,
       TimeFieldComponent,
       ShortTextFieldComponent,
       PhoneNumberFieldComponent,

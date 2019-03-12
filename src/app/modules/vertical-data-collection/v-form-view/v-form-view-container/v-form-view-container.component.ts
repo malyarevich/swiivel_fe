@@ -1,10 +1,10 @@
 import {Component, ComponentFactoryResolver, ElementRef, Input, OnInit, Renderer, ViewChild} from '@angular/core';
 import {Field} from "../../../data-collection/reducers/field/field.model";
-import {ContentDirective} from "../../../data-collection/form-constructor/content.directive";
 import {Store} from "@ngrx/store";
 import {FieldState} from "../../../data-collection/reducers/field/field.reducer";
 import { v4 as uuid } from 'uuid';
 import {VFieldsService} from "../../v-fields.service";
+import {VContentDirective} from "../v-content.directive";
 
 @Component({
   selector: 'app-v-form-view-container',
@@ -16,7 +16,7 @@ export class VFormViewContainerComponent implements OnInit {
   @Input() field: Field;
 
 
-  @ViewChild(ContentDirective) contentDirective: ContentDirective;
+  @ViewChild(VContentDirective) contentDirective: VContentDirective;
 
 
   constructor(private fieldStore$: Store<FieldState>,
