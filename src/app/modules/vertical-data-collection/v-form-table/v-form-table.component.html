@@ -37,12 +37,12 @@
                   class="btn btn-primary btn-sm mr-1"
                   routerLink="v-form-constructor/{{item._id}}"
                   routerLinkActive="active">
-            <span>Edit</span>
+            <span><i class="fas fa-pen"></i> Edit</span>
           </button>
           <button type="button"
-                  class="btn btn-primary btn-sm "
+                  class="btn btn-outline-danger btn-sm "
                   (click)="removeForm(item._id)">
-            <span>Delete</span>
+            <span><i class="fas fa-trash-alt"></i> Delete</span>
           </button>
       </td>
     </tr>
