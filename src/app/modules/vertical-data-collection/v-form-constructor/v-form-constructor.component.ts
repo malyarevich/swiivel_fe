@@ -7,6 +7,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import { v4 as uuid } from 'uuid';
 import { cloneDeep,isEmpty } from 'lodash';
 import {Location} from '@angular/common';
+import {VFieldsService} from "../v-fields.service";
 
 @Component({
   selector: 'app-v-form-table',
@@ -26,6 +27,7 @@ showWarningMessage: string = 'Please correct existing errors';
   existingFields: Field[];
 
   constructor(private formService: VFormService,
+              private fieldsService: VFieldsService,
               private router: Router,
               private route: ActivatedRoute,
               private location: Location) {
@@ -39,21 +41,10 @@ showWarningMessage: string = 'Please correct existing errors';
 
   }
 
-  // drop(event: CdkDragDrop<string[]>) {
-  //   moveItemInArray(this.fields, event.previousIndex, event.currentIndex);
-  // }
-
-
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
-      // console.log(
-      //   // event.previousContainer.data, 'event.previousContainer.data',
-      //   event,'event.container.data',
-      //   // event.previousIndex,'event.previousIndex',
-      //   // event.currentIndex,'event.currentIndex'
-      // );
       copyArrayItem(event.previousContainer.data,
         event.container.data,
         event.previousIndex,
@@ -64,13 +55,13 @@ showWarningMessage: string = 'Please correct existing errors';
 
 
   loadBasicFields() {
-    this.formService.getCustomList().subscribe((fields: Field[]) => {
+    this.fieldsService.getCustomList().subscribe((fields: Field[]) => {
       this.customFields = fields;
     });
   }
 
   loadMappedFields() {
-    this.formService.getExistingList().subscribe((fields: Field[]) => {
+    this.fieldsService.getExistingList().subscribe((fields: Field[]) => {
       this.existingFields = fields;
     });
   }
@@ -95,8 +86,8 @@ showWarningMessage: string = 'Please correct existing errors';
       fields: this.fields,
       name: this.formName
     };
-      this.formService.sendForm(form).subscribe(res => res);
-      this.goBack();
+      this.formService.sendForm(form).subscribe(res => this.goBack());
+
 
      }
 

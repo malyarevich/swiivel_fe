@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {map} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
-import {Form} from '../data-collection/reducers/forms/form.model';
+import {Form} from './model/form.model';
 import {Observable} from 'rxjs';
 import {ApiResponse} from "../../models/api-response";
 
@@ -10,21 +10,6 @@ export class VFormService{
 
   constructor(private http: HttpClient) {}
 
-  getCustomList() {
-    return this.http.get('/proxy/schema')
-      .pipe(
-        map((response) => {
-          return response;
-        })
-      );
-  }
-
-  getExistingList() {
-    return this.http.get('/proxy/mapped')
-      .pipe(
-        map((response) => {return response;})
-      );
-  }
 
   sendForm(form:Form) {
 

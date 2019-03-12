@@ -39,6 +39,12 @@
                   routerLinkActive="active">
             <span><i class="fas fa-pen"></i> Edit</span>
           </button>
+        <button type="button"
+                  class="btn btn-primary btn-sm mr-1"
+                  routerLink="onlineform/{{item._id}}"
+                  routerLinkActive="active">
+            <span><i class="far fa-eye"></i> View</span>
+          </button>
           <button type="button"
                   class="btn btn-outline-danger btn-sm "
                   (click)="removeForm(item._id)">

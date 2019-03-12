@@ -15,17 +15,17 @@ export const routes: Routes = [
         component: LayoutComponent,
         children: personRoutes,
     },
-    {
-        path: 'data-collection',
-        component: LayoutComponent,
-        children: [
-            {
-                path: '',
-                loadChildren: '../data-collection/data-collection.module#DataCollectionModule',
-
-            }
-        ],
-    },
+    // {
+    //     path: 'data-collection',
+    //     component: LayoutComponent,
+    //     children: [
+    //         {
+    //             path: '',
+    //             loadChildren: '../data-collection/data-collection.module#DataCollectionModule',
+    //
+    //         }
+    //     ],
+    // },
   {
         path: 'vertical-data-collection',
         component: LayoutComponent,

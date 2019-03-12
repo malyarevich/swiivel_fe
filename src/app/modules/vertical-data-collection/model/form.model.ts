@@ -1,5 +1,5 @@
-import {Field} from '../field/field.model';
-import {Permissions} from "../../../../services/permission/permissions.model";
+import {Field} from './field.model';
+import {Permissions} from "../../../services/permission/permissions.model";
 
 export interface Form {
     _id: string;

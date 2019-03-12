@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Form} from "../../data-collection/reducers/forms/form.model";
+import {Form} from "../model/form.model";
 import {VFormService} from "../v-form.service";
 
 @Component({

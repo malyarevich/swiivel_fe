@@ -12,20 +12,49 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import { VFormNavComponent } from './v-form-table/v-form-nav/v-form-nav.component';
 import {VFormAccessComponent} from "./v-form-access-modal/v-form-access/v-form-access.component";
 import {VFormAccessModalComponent} from "./v-form-access-modal/v-form-access-modal.component";
+import { VFormViewComponent } from './v-form-view/v-form-view.component';
+import { VFormViewContainerComponent } from './v-form-view/v-form-view-container/v-form-view-container.component';
+import {ContentDirective} from "../data-collection/form-constructor/content.directive";
+import {VFieldsService} from "./v-fields.service";
+import {TimeFieldComponent} from "./v-form-view/fileds/time-field/time-field.component";
+import {ShortTextFieldComponent} from "./v-form-view/fileds/short-text-field/short-text-field.component";
+import {PhoneNumberFieldComponent} from "./v-form-view/fileds/phone-number-field/phone-number-field.component";
+import {NumberTextFieldComponent} from "./v-form-view/fileds/number-text-field/number-text-field.component";
+import {MultipleOptionsFieldComponent} from "./v-form-view/fileds/multiple-options-field/multiple-options-field.component";
+import {LongTextFieldComponent} from "./v-form-view/fileds/long-text-field/long-text-field.component";
+import {LabelFieldComponent} from "./v-form-view/fileds/label-field/label-field.component";
+import {HebrewDateFieldComponent} from "./v-form-view/fileds/hebrew-date-field/hebrew-date-field.component";
+import {EmptyLineFieldComponent} from "./v-form-view/fileds/empty-line-field/empty-line-field.component";
+import {EmailFieldComponent} from "./v-form-view/fileds/email-field/email-field.component";
+import {DropDownListFieldComponent} from "./v-form-view/fileds/drop-down-list-field/drop-down-list-field.component";
+import {DateTimeFieldComponent} from "./v-form-view/fileds/date-time-field/date-time-field.component";
+import {entryComponents} from "./entryComponents";
+import { VDataCollectionComponent } from './v-data-collection.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: VFormTableComponent,
-  },
-  {
-    path: 'v-form-constructor',
-    component: VFormConstructorComponent,
-  },
-  {
-    path: 'v-form-constructor/:id',
-    component: VFormConstructorComponent,
+    component: VDataCollectionComponent,
+    children: [
+      {
+        path: '',
+        component: VFormTableComponent,
+      },
+      {
+        path: 'v-form-constructor',
+        component: VFormConstructorComponent,
+      },
+      {
+        path: 'v-form-constructor/:id',
+        component: VFormConstructorComponent,
+      },
+      {
+        path: 'onlineform/:id',
+        component: VFormViewComponent
+      }
+    ]
   }
+
 
 
 
@@ -39,6 +68,22 @@ const routes: Routes = [
       VFormNavComponent,
       VFormAccessComponent,
       VFormAccessModalComponent,
+      VFormViewComponent,
+      VFormViewContainerComponent,
+      ContentDirective,
+      TimeFieldComponent,
+      ShortTextFieldComponent,
+      PhoneNumberFieldComponent,
+      NumberTextFieldComponent,
+      MultipleOptionsFieldComponent,
+      LongTextFieldComponent,
+      LabelFieldComponent,
+      HebrewDateFieldComponent,
+      EmptyLineFieldComponent,
+      EmailFieldComponent,
+      DropDownListFieldComponent,
+      DateTimeFieldComponent,
+      VDataCollectionComponent
   ],
   imports: [
     NgbModule,
@@ -49,6 +94,7 @@ const routes: Routes = [
     DragDropModule
 
   ],
-  providers:[VFormService]
+  providers:[VFormService, VFieldsService],
+  entryComponents: [entryComponents]
 })
 export class VerticalDataCollectionModule { }
