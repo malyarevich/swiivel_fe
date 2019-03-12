@@ -1,7 +1,7 @@
 <div class="row ">
   <div class="col-md-1 ">
-    <span *ngIf="!inputField.isValidName" class="glyphicon glyphicon-alert" aria-hidden="true" [title]="warningCheckExistingLabelString"></span>
-    <span *ngIf="!inputField.isValid" class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" [title]="warningCheckUniqString"></span>
+    <span *ngIf="!inputField.isValidName" aria-hidden="true" [title]="warningCheckExistingLabelString"><i class="fas fa-exclamation-triangle"></i></span>
+    <span *ngIf="!inputField.isValid" aria-hidden="true" [title]="warningCheckUniqString"><i class="fas fa-exclamation-circle"></i></span>
   </div>
   <div class="col-md-2">
   <label class="has-float-label">

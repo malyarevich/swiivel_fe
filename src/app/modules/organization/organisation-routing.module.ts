@@ -15,6 +15,8 @@ export const routes: Routes = [
         component: LayoutComponent,
         children: personRoutes,
     },
+
+  //Depreciated
     // {
     //     path: 'data-collection',
     //     component: LayoutComponent,
