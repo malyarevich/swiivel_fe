@@ -20,7 +20,9 @@ export class VFormTableComponent implements OnInit {
 
 
   getAllForm():void{
-    this.vFormService.getFormsList().subscribe(forms=>this.forms=forms);
+    this.vFormService.getFormsList().subscribe(forms => {
+      this.forms=forms.data
+    });
   }
 
   removeForm(id: string): void{
