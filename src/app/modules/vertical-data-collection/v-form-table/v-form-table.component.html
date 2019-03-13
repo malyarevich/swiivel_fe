@@ -46,38 +46,38 @@
         <tbody>
         <tr *ngFor="let item of forms">
           <td>{{item.name}}</td>
-          <td><span class="text-primary">{{item.template_sql_link.type | titlecase}}</span></td>
+          <td><span class="text-primary">{{item.type | titlecase}}</span></td>
           <td>
             <button type="button"
                     class="btn btn-outline-secondary btn-sm"
                     data-toggle="modal"
                     data-target="#flipFlop"
-                    (click)="formSelected = item._id">
+                    (click)="formSelected = item.mongo_id">
               <span class="text-primary">+ Invite Users</span>
             </button>
             <app-v-form-access-modal (resetFormSelectedEmitter)="resetFormSelected($event)"
                                      [formSelected]="formSelected">
             </app-v-form-access-modal>
           </td>
-          <td>{{item.template_sql_link.owner_id}}</td>
+          <td>{{item.owner_id}}</td>
           <td>{{item.updated_at}}</td>
-          <td>{{item.template_sql_link.status}}</td>
+          <td>{{item.status}}</td>
           <td>
             <button type="button"
                     class="btn btn-secondary app-btn-primary app-btn-sml mr-1 "
-                    routerLink="v-form-constructor/{{item._id}}"
+                    routerLink="v-form-constructor/{{item.mongo_id}}"
                     routerLinkActive="active">
               <span><i class="fas fa-pen"></i> Edit</span>
             </button>
             <button type="button"
                     class="btn btn-secondary app-btn-primary app-btn-sml mr-1 "
-                    routerLink="onlineform/{{item._id}}"
+                    routerLink="onlineform/{{item.mongo_id}}"
                     routerLinkActive="active">
               <span><i class="far fa-eye"></i> View</span>
             </button>
             <button type="button"
                     class="btn btn-outline-danger app-btn-sml "
-                    (click)="removeForm(item._id)">
+                    (click)="removeForm(item.mongo_id)">
               <span><i class="fas fa-trash-alt"></i> Delete</span>
             </button>
           </td>
