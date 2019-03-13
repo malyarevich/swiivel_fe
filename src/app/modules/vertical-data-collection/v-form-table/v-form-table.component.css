@@ -22,7 +22,19 @@
     background-color: #4C35A8;
 }
 
+.app-invite-btn {
+    padding: 2px 2px;
+    font-size: 10px;
+    border-radius: 2px;
+    background-color: #EAEAFF;
+}
+
 .app-btn-outline-primary {
     color: #4C35A8;
     border-color: #4C35A8;
 }
+
+.app-text-primary {
+    color: #4C35A8;
+}
+
