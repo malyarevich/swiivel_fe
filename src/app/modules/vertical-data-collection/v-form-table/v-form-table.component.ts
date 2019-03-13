@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {Form} from "../model/form.model";
 import {VFormService} from "../v-form.service";
+import {FormSql} from "../../data-collection/reducers/forms/form.model";
 
 @Component({
   selector: 'app-v-form-table',
@@ -9,7 +9,7 @@ import {VFormService} from "../v-form.service";
 })
 export class VFormTableComponent implements OnInit {
 
-  forms: Form[];
+  forms: FormSql[];
     formSelected;
 
   constructor(private vFormService: VFormService) { }
@@ -27,7 +27,7 @@ export class VFormTableComponent implements OnInit {
 
   removeForm(id: string): void{
     this.vFormService.deleteForm(id).subscribe(res=>res);
-    this.forms=this.forms.filter((form=>form._id!=id));
+    this.forms=this.forms.filter((form=>form.mongo_id!=id));
   }
 
     resetFormSelected() {
