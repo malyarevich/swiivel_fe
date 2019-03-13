@@ -1,0 +1,40 @@
+.block-wrapper {
+    background-color: white;
+    border-radius: 5px;
+}
+
+.block-wrapper table {
+    font-size: 14px;
+}
+
+.block-wrapper table input {
+    max-height: 25px;
+    max-width: 150px;
+}
+
+.app-btn-sml {
+    padding: 2px 5px;
+    font-size: 12px;
+    border-radius: 2px;
+}
+
+.app-btn-primary {
+    background-color: #4C35A8;
+}
+
+.app-invite-btn {
+    padding: 2px 2px;
+    font-size: 10px;
+    border-radius: 2px;
+    background-color: #EAEAFF;
+}
+
+.app-btn-outline-primary {
+    color: #4C35A8;
+    border-color: #4C35A8;
+}
+
+.app-text-primary {
+    color: #4C35A8;
+}
+

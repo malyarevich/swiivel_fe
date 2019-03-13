@@ -8,16 +8,15 @@
     z-index: 1;
     padding: 0;
     background-color: $background-color;
-
     display: flex;
     flex-direction: column;
     flex: 1;
 }
 
-//.content-area {
-//    min-height: 100vh;
-//    height: 100%;
-//}
+.content-area {
+    min-height: 100vh;
+    height: 100%;
+}
 
 .content {
     padding: 20px;
