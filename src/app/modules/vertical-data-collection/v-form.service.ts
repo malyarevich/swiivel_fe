@@ -13,7 +13,7 @@ export class VFormService{
 
   sendForm(form:Form) {
 
-    if(form._id!=="0"){
+    if(form._id!==""){
       return this.http.put(`/proxy/forms/${form._id}`, form)
         .pipe(
           map((response) =>  response)

@@ -31,7 +31,7 @@ import {entryComponents} from "./entryComponents";
 import { VDataCollectionComponent } from './v-data-collection.component';
 import {VContentDirective} from "./v-form-view/v-content.directive";
 import { VFormNavigationBarComponent } from './v-form-constructor/v-form-navigation-bar/v-form-navigation-bar.component';
-import { VFormGeneralSettingsComponent } from './v-form-constructor/v-form-general-settings/v-form-general-settings.component';
+import { VFormGeneralInformationComponent } from './v-form-constructor/v-form-general-information/v-form-general-information.component';
 import { VFormSectionComponent } from './v-form-constructor/v-form-section/v-form-section.component';
 import { VFormPublishSettingsComponent } from './v-form-constructor/v-form-publish-settings/v-form-publish-settings.component';
 import { VFormAutomationComponent } from './v-form-constructor/v-form-automation/v-form-automation.component';
@@ -94,7 +94,7 @@ const routes: Routes = [
       DateTimeFieldComponent,
       VDataCollectionComponent,
       VFormNavigationBarComponent,
-      VFormGeneralSettingsComponent,
+      VFormGeneralInformationComponent,
       VFormSectionComponent,
       VFormPublishSettingsComponent,
       VFormAutomationComponent

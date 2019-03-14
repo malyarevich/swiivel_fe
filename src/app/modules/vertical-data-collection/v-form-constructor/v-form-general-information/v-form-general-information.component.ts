@@ -3,11 +3,11 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {FormUtils} from "../../utils/form.utils";
 
 @Component({
-  selector: 'app-v-form-general-settings',
-  templateUrl: './v-form-general-settings.component.html',
-  styleUrls: ['./v-form-general-settings.component.css']
+  selector: 'app-v-form-general-information',
+  templateUrl: './v-form-general-information.component.html',
+  styleUrls: ['./v-form-general-information.component.css']
 })
-export class VFormGeneralSettingsComponent implements OnInit {
+export class VFormGeneralInformationComponent implements OnInit {
   formId: string;
   constructor(private activatedRoute: ActivatedRoute,
               private router: Router,

@@ -17,7 +17,7 @@ import {FormUtils} from "../../utils/form.utils";
 })
 export class VFormBuilderComponent implements OnInit {
 
-  formId: string;
+  formId: string='';
 warningVisible: boolean = false;
 showWarningMessage: string = 'Please correct existing errors';
 
@@ -92,7 +92,9 @@ showWarningMessage: string = 'Please correct existing errors';
       fields: this.fields,
       name: this.formName
     };
-      this.formService.sendForm(form).subscribe(res => this.goBack());
+
+    console.log(form);
+     this.formService.sendForm(form).subscribe(res => this.goBack());
 
 
      }
