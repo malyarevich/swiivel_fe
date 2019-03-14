@@ -12,6 +12,10 @@
     max-width: 150px;
 }
 
+.checked-row {
+    background-color: #EAEAFF;
+}
+
 .app-btn-sml {
     padding: 2px 5px;
     font-size: 12px;

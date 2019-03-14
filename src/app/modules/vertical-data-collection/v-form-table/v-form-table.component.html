@@ -12,7 +12,7 @@
     </div>
   </div>
   <div class="col-sm-12 block-wrapper mt-3">
-    <app-v-form-nav></app-v-form-nav>
+    <app-v-form-nav (bulkActionEmitter)="doBulkAction($event)"></app-v-form-nav>
     <div *ngIf="forms?.length!=0">
       <table class="table">
         <thead>
@@ -56,9 +56,9 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let item of forms">
+        <tr *ngFor="let item of forms" (click)="addSelectedIds(item.id)" [ngClass]="{'checked-row': isCheckedRow(item.id)}">
           <td>{{item.name}}</td>
-          <td><span class="app-text-primary">{{item.type | titlecase}}</span></td>
+          <td><span class="app-text-primary">{{item.type}}</span></td>
           <td>
             <button type="button"
                     class="btn app-invite-btn"
@@ -71,7 +71,7 @@
                                      [formSelected]="formSelected">
             </app-v-form-access-modal>
           </td>
-          <td>{{item.owner_id}}</td>
+          <td>{{item.full_name}}</td>
           <td>{{item.updated_at}}</td>
           <td>{{item.status}}</td>
           <td>

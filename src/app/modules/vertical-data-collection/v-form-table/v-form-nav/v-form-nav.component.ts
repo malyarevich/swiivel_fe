@@ -7,10 +7,15 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 })
 export class VFormNavComponent implements OnInit {
 
+    @Output() bulkActionEmitter = new EventEmitter<string>();
+
     constructor() {
     }
 
     ngOnInit() {
     }
 
+    bulkAction(type: string) {
+        this.bulkActionEmitter.emit(type);
+    }
 }
