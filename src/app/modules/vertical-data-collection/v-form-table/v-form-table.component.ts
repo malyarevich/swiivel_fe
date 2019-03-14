@@ -49,4 +49,24 @@ export class VFormTableComponent implements OnInit {
     isCheckedRow(id) {
         return this.formsSelectedIds.find(item => item === id);
     }
+
+    doBulkAction(type) {
+        if(!this.formsSelectedIds.length) return;
+        if (type === 'delete') this.bulkDelete();
+        if (type === 'archive') this.bulkArchive();
+    }
+
+    bulkDelete() {
+        this.vFormService.bulkDeleteForms(this.formsSelectedIds).subscribe(res => {
+            this.getAllForm();
+            this.formsSelectedIds = [];
+        });
+    }
+
+    bulkArchive() {
+        this.vFormService.bulkArchiveForms(this.formsSelectedIds).subscribe(res => {
+            this.getAllForm();
+            this.formsSelectedIds = [];
+        });
+    }
 }

@@ -17,10 +17,10 @@
             Actions
           </button>
           <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-            <button ngbDropdownItem>Share</button>
-            <button ngbDropdownItem>Export PDF</button>
-            <button ngbDropdownItem>Archive</button>
-            <button ngbDropdownItem>Delete</button>
+            <button disabled ngbDropdownItem (click)="bulkAction('share')">Share</button>
+            <button disabled ngbDropdownItem (click)="bulkAction('pdfexport')">Export PDF</button>
+            <button ngbDropdownItem (click)="bulkAction('archive')">Archive</button>
+            <button ngbDropdownItem (click)="bulkAction('delete')">Delete</button>
           </div>
         </div>
       </div>

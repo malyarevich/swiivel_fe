@@ -1,46 +1,48 @@
 import {Injectable} from '@angular/core';
 import {map} from 'rxjs/operators';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Form} from './model/form.model';
 import {Observable} from 'rxjs';
 import {ApiResponse} from "../../models/api-response";
+import {TEMPLATE_STATUS} from "../../enums/template-status"
 
 @Injectable()
-export class VFormService{
+export class VFormService {
 
-  constructor(private http: HttpClient) {}
-
-
-  sendForm(form:Form) {
-
-    if(form._id!=="0"){
-      return this.http.put(`/proxy/forms/${form._id}`, form)
-        .pipe(
-          map((response) =>  response)
-        );
+    constructor(private http: HttpClient) {
     }
-    return this.http.post('/proxy/forms', form)
-      .pipe(
-        map((response) => response)
-      );
 
-  }
 
-  getOneForm(id): Observable<any> {
-    return this.http.get(`/proxy/forms/${id}`)
-      .pipe(
-        map((response) => response)
-      );
-  }
+    sendForm(form: Form) {
 
-  getFormsList(): Observable<any> {
-    return this.http.get('/proxy/forms')
-      .pipe(
-        map((response) => {
-          return response;
-        })
-      );
-  }
+        if (form._id !== "0") {
+            return this.http.put(`/proxy/forms/${form._id}`, form)
+                .pipe(
+                    map((response) => response)
+                );
+        }
+        return this.http.post('/proxy/forms', form)
+            .pipe(
+                map((response) => response)
+            );
+
+    }
+
+    getOneForm(id): Observable<any> {
+        return this.http.get(`/proxy/forms/${id}`)
+            .pipe(
+                map((response) => response)
+            );
+    }
+
+    getFormsList(): Observable<any> {
+        return this.http.get('/proxy/forms')
+            .pipe(
+                map((response) => {
+                    return response;
+                })
+            );
+    }
 
     getFormWithPermissions(formId: number | string) {
         return this.http.get(`/forms/${formId}/permissions`).pipe(
@@ -48,10 +50,36 @@ export class VFormService{
         );
     }
 
-  deleteForm(id: string) {
-    return this.http.delete(`/proxy/forms/${id}`)
-      .pipe(
-        map((response) => response)
-      );
-  }
+    deleteForm(id: string) {
+        return this.http.delete(`/proxy/forms/${id}`)
+            .pipe(
+                map((response) => response)
+            );
+    }
+
+    bulkDeleteForms(ids) {
+        const options = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+            }),
+            body: {
+                id: ids,
+            },
+        };
+        return this.http.delete(`/proxy/forms`, options)
+            .pipe(
+                map(response => response)
+            );
+    }
+
+    bulkArchiveForms(ids) {
+        console.log(TEMPLATE_STATUS['STATUS_ARCHIVED']);
+        return this.http.post(`/proxy/forms/status`, {
+            id: ids,
+            status: TEMPLATE_STATUS['STATUS_ARCHIVED'],
+        })
+            .pipe(
+                map(response => response)
+            );
+    }
 }

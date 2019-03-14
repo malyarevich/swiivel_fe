@@ -18,7 +18,7 @@ export interface FormSql {
     mongo_id: string
     name: string
     link: string
-    owner_id: number,
+    full_name: string,
     permissions: Permissions[],
     status: string
     type: string
