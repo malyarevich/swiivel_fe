@@ -1,26 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import {CdkDragDrop, copyArrayItem, moveItemInArray} from '@angular/cdk/drag-drop';
-import {Field} from '../../data-collection/reducers/field/field.model';
-import {VFormService} from '../v-form.service';
-import {Form} from '../../data-collection/reducers/forms/form.model';
+import {Field} from '../../../data-collection/reducers/field/field.model';
+import {VFormService} from '../../v-form.service';
+import {Form} from '../../../data-collection/reducers/forms/form.model';
 import {ActivatedRoute, Router} from '@angular/router';
 import { v4 as uuid } from 'uuid';
 import { cloneDeep,isEmpty } from 'lodash';
 import {Location} from '@angular/common';
-import {VFieldsService} from "../v-fields.service";
+import {VFieldsService} from "../../v-fields.service";
+import {FormUtils} from "../../utils/form.utils";
 
 @Component({
   selector: 'app-v-form-table',
-  templateUrl: './v-form-constructor..html',
-  styleUrls: ['./v-form-constructor..css'],
+  templateUrl: './v-form-builder..html',
+  styleUrls: ['./v-form-builder..css'],
 })
-export class VFormConstructorComponent implements OnInit {
+export class VFormBuilderComponent implements OnInit {
 
-
+  formId: string;
 warningVisible: boolean = false;
 showWarningMessage: string = 'Please correct existing errors';
 
-  formId: string = '0';
   fields: Field[] = [];
   formName: string = '';
   customFields: Field[];
@@ -35,6 +35,12 @@ showWarningMessage: string = 'Please correct existing errors';
   }
 
   ngOnInit() {
+    this.route.parent.url.subscribe((urlPath) => {
+      const url =  urlPath[urlPath.length - 1].path;
+      this.formId = url!='v-form-constructor'?url:'';
+    });
+
+
     this.loadBasicFields();
     this.loadMappedFields();
     this.formInit();
@@ -148,14 +154,18 @@ showWarningMessage: string = 'Please correct existing errors';
 
 
   formInit(): void{
-    const id = this.route.snapshot.paramMap.get('id');
-    if(id){
-      this.formService.getOneForm(id).subscribe(
+    //console.log(this.route.snapshot.paramMap.getAll());
+
+    // const id =  this.route
+    //   .queryParamMap
+    //   .pipe(map(params => params.get('id')));
+   // const id = this.route.snapshot.paramMap.get('id');
+    if(this.formId){
+      this.formService.getOneForm(this.formId).subscribe(
         (form: Form)=>{
           if(!isEmpty(form)){
             this.formName = form.name;
             this.fields = form.fields;
-            this.formId = form._id;
            // this.fieldsValidator();
           }
         },

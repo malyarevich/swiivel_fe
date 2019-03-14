@@ -1,0 +1,21 @@
+.body_test{
+  height: 2000px;
+  background-color: #F3F2F3;
+}
+
+.nav_text_custom{
+  color: #BAB8B8;
+  font-family:
+    "Co Text Corp",
+    Roboto,
+    Arial,
+    "Droid Sans",
+    sans-serif;
+}
+.border-bottom{
+  border-bottom-width: 5px!important;
+}
+
+.navbar{
+  padding: 0 1rem;
+}

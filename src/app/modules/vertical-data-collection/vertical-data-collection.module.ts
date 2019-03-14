@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { VFormConstructorComponent } from './v-form-constructor/v-form-constructor.component';
+import { VFormBuilderComponent } from './v-form-constructor/v-form-builder/v-form-builder.component';
 import {RouterModule, Routes} from '@angular/router';
 import {VFormService} from './v-form.service';
 import {ClarityModule} from '@clr/angular';
 import {DragDropModule} from '@angular/cdk/drag-drop';
-import { VFormContainerComponent } from './v-form-constructor/v-form-conteiner/v-form-container.component';
+import { VFormContainerComponent } from './v-form-constructor/v-form-builder/v-form-conteiner/v-form-container.component';
 import {FormsModule} from '@angular/forms';
 import { VFormTableComponent } from './v-form-table/v-form-table.component';
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
@@ -30,6 +30,13 @@ import {DateTimeFieldComponent} from "./v-form-view/fileds/date-time-field/date-
 import {entryComponents} from "./entryComponents";
 import { VDataCollectionComponent } from './v-data-collection.component';
 import {VContentDirective} from "./v-form-view/v-content.directive";
+import { VFormNavigationBarComponent } from './v-form-constructor/v-form-navigation-bar/v-form-navigation-bar.component';
+import { VFormGeneralSettingsComponent } from './v-form-constructor/v-form-general-settings/v-form-general-settings.component';
+import { VFormSectionComponent } from './v-form-constructor/v-form-section/v-form-section.component';
+import { VFormPublishSettingsComponent } from './v-form-constructor/v-form-publish-settings/v-form-publish-settings.component';
+import { VFormAutomationComponent } from './v-form-constructor/v-form-automation/v-form-automation.component';
+import {routes as constructorRoutes} from './v-form-constructor/constructor-routing.module'
+import {FormUtils} from './utils/form.utils';
 
 const routes: Routes = [
   {
@@ -42,11 +49,13 @@ const routes: Routes = [
       },
       {
         path: 'v-form-constructor',
-        component: VFormConstructorComponent,
+        component: VFormNavigationBarComponent,
+        children: constructorRoutes
       },
       {
         path: 'v-form-constructor/:id',
-        component: VFormConstructorComponent,
+        component: VFormNavigationBarComponent,
+        children: constructorRoutes
       },
       {
         path: 'onlineform/:id',
@@ -62,7 +71,7 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-      VFormConstructorComponent,
+      VFormBuilderComponent,
       VFormContainerComponent,
       VFormTableComponent,
       VFormNavComponent,
@@ -83,7 +92,12 @@ const routes: Routes = [
       EmailFieldComponent,
       DropDownListFieldComponent,
       DateTimeFieldComponent,
-      VDataCollectionComponent
+      VDataCollectionComponent,
+      VFormNavigationBarComponent,
+      VFormGeneralSettingsComponent,
+      VFormSectionComponent,
+      VFormPublishSettingsComponent,
+      VFormAutomationComponent
   ],
   imports: [
     NgbModule,
@@ -94,7 +108,7 @@ const routes: Routes = [
     DragDropModule
 
   ],
-  providers:[VFormService, VFieldsService],
+  providers:[VFormService, VFieldsService, FormUtils],
   entryComponents: [entryComponents]
 })
 export class VerticalDataCollectionModule { }
