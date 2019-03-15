@@ -15,7 +15,7 @@ export class VFormTableHeaderComponent implements OnInit {
     ngOnInit() {
     }
 
-    searchCtrl(data, col) {
-        this.searchDataEmitter.emit({...data, col})
+    searchCtrl(data, field) {
+        this.searchDataEmitter.emit({...data, field})
     }
 }

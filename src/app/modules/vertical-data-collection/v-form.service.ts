@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {map} from 'rxjs/operators';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Form} from './model/form.model';
 import {Observable} from 'rxjs';
 import {ApiResponse} from "../../models/api-response";
@@ -35,8 +35,14 @@ export class VFormService {
             );
     }
 
-    getFormsList(): Observable<any> {
-        return this.http.get('/proxy/forms')
+    getFormsList(params): Observable<any> {
+        const options = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+            }),
+            params: new HttpParams().set('params', JSON.stringify(params)),
+        };
+        return this.http.get('/proxy/forms', options)
             .pipe(
                 map((response) => {
                     return response;
@@ -73,7 +79,6 @@ export class VFormService {
     }
 
     bulkArchiveForms(ids) {
-        console.log(TEMPLATE_STATUS['STATUS_ARCHIVED']);
         return this.http.post(`/proxy/forms/status`, {
             id: ids,
             status: TEMPLATE_STATUS['STATUS_ARCHIVED'],

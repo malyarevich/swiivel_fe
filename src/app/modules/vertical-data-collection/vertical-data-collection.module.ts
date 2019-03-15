@@ -37,6 +37,10 @@ import { VFormPublishSettingsComponent } from './v-form-constructor/v-form-publi
 import { VFormAutomationComponent } from './v-form-constructor/v-form-automation/v-form-automation.component';
 import {routes as constructorRoutes} from './v-form-constructor/constructor-routing.module'
 import {FormUtils} from './utils/form.utils';
+import { VFormTableHeaderComponent } from './v-form-table/v-form-table-header/v-form-table-header.component';
+import { TableHeaderTitleComponent } from './v-form-table/v-form-table-header/table-header-title/table-header-title.component';
+import { TableHeaderFilterTextComponent } from './v-form-table/v-form-table-header/table-header-filter-text/table-header-filter-text.component';
+import { TableHeaderFilterDateComponent } from './v-form-table/v-form-table-header/table-header-filter-date/table-header-filter-date.component';
 
 const routes: Routes = [
   {
@@ -97,7 +101,11 @@ const routes: Routes = [
       VFormGeneralInformationComponent,
       VFormSectionComponent,
       VFormPublishSettingsComponent,
-      VFormAutomationComponent
+      VFormAutomationComponent,
+      VFormTableHeaderComponent,
+      TableHeaderTitleComponent,
+      TableHeaderFilterTextComponent,
+      TableHeaderFilterDateComponent
   ],
   imports: [
     NgbModule,

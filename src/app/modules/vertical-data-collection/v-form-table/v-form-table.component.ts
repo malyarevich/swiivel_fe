@@ -13,6 +13,51 @@ export class VFormTableComponent implements OnInit {
     forms: FormSql[];
     formSelected;
     formsSelectedIds = [];
+    params = {
+        page: 1,
+        limit: 20,
+        search: {},
+        sort: {},
+        conditions: {}
+    };
+    cols = [
+        {
+            id: 'name',
+            type: 'text',
+            title: 'FORM NAME',
+        },
+        {
+            id: 'type',
+            type: 'text',
+            title: 'TYPE',
+        },
+        {
+            id: 'access',
+            type: 'text',
+            title: 'ACCESS',
+        },
+
+        {
+            id: 'full_name',
+            type: 'text',
+            title: 'CREATED BY',
+        },
+        {
+            id: 'updated_at',
+            type: 'data',
+            title: 'UPDATED DATA',
+        },
+        {
+            id: 'status',
+            type: 'text',
+            title: 'STATUS',
+        },
+        {
+            id: '',
+            type: '',
+            title: '',
+        },
+    ];
 
     constructor(private vFormService: VFormService) {
     }
@@ -23,9 +68,17 @@ export class VFormTableComponent implements OnInit {
 
 
     getAllForm(): void {
-        this.vFormService.getFormsList().subscribe(forms => {
+        this.vFormService.getFormsList(this.params).subscribe(forms => {
             this.forms = forms.data
         });
+    }
+
+    setSearch(data) {
+        console.log(data);
+        const {field, order, value} = data;
+        this.params.sort = {field, order};
+        this.params.search[field] = value;
+        this.getAllForm()
     }
 
     removeForm(id: string): void {
@@ -51,7 +104,7 @@ export class VFormTableComponent implements OnInit {
     }
 
     doBulkAction(type) {
-        if(!this.formsSelectedIds.length) return;
+        if (!this.formsSelectedIds.length) return;
         if (type === 'delete') this.bulkDelete();
         if (type === 'archive') this.bulkArchive();
     }
