@@ -15,13 +15,14 @@ export interface Form {
 
 export interface FormSql {
     id: number,
-    mongo_id: string
-    name: string
-    link: string
+    mongo_id: string,
+    name: string,
+    link: string,
     full_name: string,
+    role_name: string,
     permissions: Permissions[],
-    status: string
-    type: string
+    status: number,
+    type: number,
     created_at: string,
     updated_at: string,
 }

@@ -8,6 +8,7 @@ import {SORT_ORDER} from "../../../../../enums/sort-order";
 })
 export class TableHeaderTitleComponent implements OnInit {
     @Input() title: string;
+    @Input() isSort: boolean;
     @Output() sortFilter: EventEmitter<any> = new EventEmitter<any>();
 
     public sort = SORT_ORDER;

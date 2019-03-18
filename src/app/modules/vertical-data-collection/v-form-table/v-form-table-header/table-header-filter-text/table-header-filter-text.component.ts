@@ -7,7 +7,7 @@ import {SORT_ORDER} from "../../../../../enums/sort-order";
     styleUrls: ['./table-header-filter-text.component.css']
 })
 export class TableHeaderFilterTextComponent implements OnInit {
-    @Input() title: string;
+    @Input() col;
     @Output() filterDataEmitter: EventEmitter<any> = new EventEmitter<any>();
 
     public sortOrder = SORT_ORDER.DESC;

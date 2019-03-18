@@ -25,37 +25,51 @@ export class VFormTableComponent implements OnInit {
             id: 'name',
             type: 'text',
             title: 'FORM NAME',
+            sort: true,
+            search: true,
         },
         {
             id: 'type',
             type: 'text',
             title: 'TYPE',
+            sort: true,
+            search: true,
         },
         {
             id: 'access',
             type: 'text',
             title: 'ACCESS',
+            sort: true,
+            search: true,
         },
 
         {
             id: 'full_name',
             type: 'text',
             title: 'CREATED BY',
+            sort: true,
+            search: true,
         },
         {
             id: 'updated_at',
             type: 'data',
             title: 'UPDATED DATA',
+            sort: true,
+            search: true,
         },
         {
             id: 'status',
             type: 'text',
             title: 'STATUS',
+            sort: true,
+            search: true,
         },
         {
             id: '',
             type: '',
             title: '',
+            sort: false,
+            search: false,
         },
     ];
 
@@ -74,7 +88,6 @@ export class VFormTableComponent implements OnInit {
     }
 
     setSearch(data) {
-        console.log(data);
         const {field, order, value} = data;
         this.params.sort = {field, order};
         this.params.search[field] = value;

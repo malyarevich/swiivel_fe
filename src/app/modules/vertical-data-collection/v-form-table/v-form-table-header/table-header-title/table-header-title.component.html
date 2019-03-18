@@ -1,5 +1,5 @@
 <span>{{title}}</span>
-<span (click)="changeSort()">
+<span *ngIf="isSort" (click)="changeSort()">
   <i class="fas fa-caret-up" *ngIf="!sortOrder || sortOrder === sort['ASC']"></i>
   <i class="fas fa-caret-down" *ngIf="!sortOrder || sortOrder === sort['DESC']"></i>
 </span>
