@@ -79,7 +79,8 @@
             [inputField]="field"
             (onChange)="onChange($event, field)"
             (onUniq)="onUniq($event)"
-            (onDelete)="onDelete($event)">
+            (onDelete)="onDelete($event)"
+            (onIsValidator)="onIsValidator($event, field)">
           </app-v-form-container>
         </li>
 

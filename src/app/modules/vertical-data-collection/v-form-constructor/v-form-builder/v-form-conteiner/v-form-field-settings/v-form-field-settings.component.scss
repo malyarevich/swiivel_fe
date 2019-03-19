@@ -1,0 +1,94 @@
+@import '../../../../../../../styles/variables/colors';
+
+.app-element-background {
+  background-color: $element-base-color;
+}
+
+.app-element-color {
+  color: $element-base-color;
+}
+
+.settings-wrapper {
+  background-color: #F6F6F6;
+}
+
+.app-border-right {
+  border-right: 1px solid #D6D6D6;
+}
+
+.nav-item .app-nav-link {
+  cursor: pointer;
+  color: #989898;
+  margin-right: 20px;
+}
+
+.nav-item .app-active {
+  color: $element-base-color;
+}
+
+/*Start switcher*/
+
+.app-switch {
+  position: relative;
+  display: inline-block;
+  top: 3px;
+  width: 30px;
+  height: 17px;
+}
+
+/* Hide default HTML checkbox */
+.app-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.app-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.app-slider:before {
+  position: absolute;
+  content: "";
+  height: 13px;
+  width: 13px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .app-slider {
+  background-color: $element-base-color;
+}
+
+input:focus + .app-slider {
+  box-shadow: 0 0 1px $element-base-color;
+}
+
+input:checked + .app-slider:before {
+  -webkit-transform: translateX(13px);
+  -ms-transform: translateX(13px);
+  transform: translateX(13px);
+}
+
+/* Rounded sliders */
+.app-slider.app-round {
+  border-radius: 34px;
+}
+
+.app-slider.app-round:before {
+  border-radius: 50%;
+}
+
+/*End switcher*/

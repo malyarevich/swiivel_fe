@@ -113,6 +113,11 @@ showWarningMessage: string = 'Please correct existing errors';
     }
   }
 
+    onIsValidator(value, field) {
+        let index = this.fields.findIndex((item => item._id == field._id));
+        this.fields[index].options.isValidator = value;
+    }
+
   onUniq(event){
       this.fieldsValidator();
 

@@ -1,3 +1,4 @@
+<div [ngClass]="{'field-checked': showSettings}">
 <div class="row ">
   <div class="col-md-1 ">
     <span *ngIf="!inputField.isValidName" aria-hidden="true" [title]="warningCheckExistingLabelString"><i class="fas fa-exclamation-triangle"></i></span>
@@ -81,6 +82,22 @@
     </div>
   </div>
   <div class="col-md-1">
-    <button class="btn-secondary pull-right" (click)="removeField(inputField._id)">X</button>
+    <div ngbDropdown class="d-inline-block ml-2" #dropdownField="ngbDropdown">
+      <button class="btn btn-sm" id="dropdown-field" ngbDropdownToggle>
+        <i class="fas fa-cog app-element-color"></i>
+      </button>
+      <div ngbDropdownMenu aria-labelledby="dropdown-field">
+        <button ngbDropdownItem (click)="removeField(inputField._id)">Remove</button>
+        <button ngbDropdownItem (click)="showSettings = !showSettings; dropdownField.close()">Settings</button>
+      </div>
+    </div>
   </div>
 </div>
+  <div [ngClass]="{'field-setting': showSettings}" *ngIf="showSettings">
+    <div class="float-right mr-1">
+      <span (click) = "showSettings = false"><i class="fas fa-chevron-up app-element-color"></i></span>
+    </div>
+    <app-v-form-field-settings [inputField] = "inputField" (changeIsValidatorEmitter)="isValidatorChanged($event)"></app-v-form-field-settings>
+  </div>
+</div>
+

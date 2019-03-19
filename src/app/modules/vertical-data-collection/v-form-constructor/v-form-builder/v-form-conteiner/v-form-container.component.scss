@@ -1,0 +1,15 @@
+@import '../../../../../../styles/variables/colors';
+.spanForLabel{
+  color: #BAB8B8;
+}
+.field-checked {
+  border: 1px solid #4C35A8;
+  padding-top: 10px;
+}
+.field-setting {
+  border-top: 1px solid #4C35A8;
+  margin-top: 20px;
+}
+.app-element-color {
+  color: $element-base-color;
+}

@@ -41,6 +41,7 @@ import { VFormTableHeaderComponent } from './v-form-table/v-form-table-header/v-
 import { TableHeaderTitleComponent } from './v-form-table/v-form-table-header/table-header-title/table-header-title.component';
 import { TableHeaderFilterTextComponent } from './v-form-table/v-form-table-header/table-header-filter-text/table-header-filter-text.component';
 import { TableHeaderFilterDateComponent } from './v-form-table/v-form-table-header/table-header-filter-date/table-header-filter-date.component';
+import { VFormFieldSettingsComponent } from './v-form-constructor/v-form-builder/v-form-conteiner/v-form-field-settings/v-form-field-settings.component';
 
 const routes: Routes = [
   {
@@ -105,7 +106,8 @@ const routes: Routes = [
       VFormTableHeaderComponent,
       TableHeaderTitleComponent,
       TableHeaderFilterTextComponent,
-      TableHeaderFilterDateComponent
+      TableHeaderFilterDateComponent,
+      VFormFieldSettingsComponent
   ],
   imports: [
     NgbModule,
