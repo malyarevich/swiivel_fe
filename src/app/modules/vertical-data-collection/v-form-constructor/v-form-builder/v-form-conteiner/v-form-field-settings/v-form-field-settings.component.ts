@@ -14,11 +14,11 @@ export class VFormFieldSettingsComponent implements OnInit {
         {name: 'Alphabetic', rule: 'alpha', min: true, max: true},
         {name: 'Alpha Numeric', rule: 'alpha_num', min: true, max: true},
         {name: 'Alpha Numeric Dash', rule: 'alpha_dash', min: true, max: true},
-        {name: 'Data', rule: 'data'},
-        {name: 'Email', rule: 'email'},
+        {name: 'Data', rule: 'data', min: false, max: false},
+        {name: 'Email', rule: 'email', min: false, max: false},
         {name: 'Numeric', rule: 'numeric', min: true, max: true},
         {name: 'String', rule: 'string', min: true, max: true},
-        {name: 'URL', rule: 'url'},
+        {name: 'URL', rule: 'url', min: false, max: false},
     ];
 
     rule: object;
