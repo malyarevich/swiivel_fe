@@ -21,6 +21,29 @@
     <div class="row" *ngIf="tab === 'settings'">
       <div class="col-sm-4 app-border-right">
         <small><b>FIELD SIZE & MASK</b></small>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <input [ngModel]="field.options.minFieldSize"
+                   (ngModelChange)=changeMinFieldSize($event)
+                   type="number"
+                   class="form-control"
+                   placeholder="Min Field Size">
+          </div>
+          <div class="form-group col-md-6">
+            <input [ngModel]="field.options.maxFieldSize"
+                   (ngModelChange)=changeMaxFieldSize($event)
+                   type="number"
+                   class="form-control"
+                   placeholder="Max Field Size">
+          </div>
+        </div>
+        <div class="form-group">
+          <input [ngModel]="field.options.inputMask"
+                 (ngModelChange)=changeInputMask($event)
+                 type="text"
+                 class="form-control"
+                 placeholder="Input Mask">
+        </div>
       </div>
       <div class="col-sm-4 app-border-right">
         <label class="app-switch mr-2">
@@ -32,7 +55,7 @@
         <div class="form-group">
           <label for="criteria">Validat. Criteria</label>
           <select [ngModel]="rule.rule"
-                  (ngModelChange)="addValidatorRule($event)"
+                  (ngModelChange)="changeValidatorRule($event)"
                   class="form-control"
                   id="criteria"
                   [disabled]="!field.options.isValidator">
@@ -43,15 +66,16 @@
             </option>
           </select>
         </div>
-        <div class="form-group">
-          <input type="text"
+        <div class="form-group" *ngIf="rule.param !== false">
+          <input [(ngModel)]="rule.param"
+                 (ngModelChange)="addValidatorRule()"
                  class="form-control"
                  placeholder="Text">
         </div>
         <div class="form-row">
           <div class="form-group col-md-6" *ngIf="rule.min !== false">
             <input [(ngModel)]="rule.min"
-                   (ngModelChange)="addMinMaxRule()"
+                   (ngModelChange)="addValidatorRule()"
                    type="number"
                    class="form-control"
                    placeholder="Min"
@@ -59,7 +83,7 @@
           </div>
           <div class="form-group col-md-6" *ngIf="rule.max !== false">
             <input [(ngModel)]="rule.max"
-                   (ngModelChange)="addMinMaxRule()"
+                   (ngModelChange)="addValidatorRule()"
                    type="number"
                    class="form-control"
                    placeholder="Max"
@@ -68,8 +92,8 @@
         </div>
         <small>If is Data isn't Valid, then</small>
         <div class="form-check">
-          <input [ngModel] = "field.options.isErrorMessage"
-                 (ngModelChange) = changeIsErrorMessage($event)
+          <input [ngModel]="field.options.isErrorMessage"
+                 (ngModelChange)=changeIsErrorMessage($event)
                  [disabled]="!field.options.isValidator"
                  class="form-check-input" type="checkbox" id="errorMessage">
           <label class="form-check-label" for="errorMessage">
@@ -77,8 +101,8 @@
           </label>
         </div>
         <div class="form-check">
-          <input [ngModel] = "field.options.isProhibitDataEntry"
-                 (ngModelChange) = changeIsProhibitDataEntry($event)
+          <input [ngModel]="field.options.isProhibitDataEntry"
+                 (ngModelChange)=changeIsProhibitDataEntry($event)
                  [disabled]="!field.options.isValidator"
                  class="form-check-input" type="checkbox" id="dataEntry">
           <label class="form-check-label" for="dataEntry">
@@ -86,8 +110,8 @@
           </label>
         </div>
         <div class="form-group" *ngIf="field.options.isErrorMessage">
-          <input [ngModel] = "field.options.errorText"
-                 (ngModelChange) = addErrorText($event)
+          <input [ngModel]="field.options.errorText"
+                 (ngModelChange)=addErrorText($event)
                  type="text"
                  class="form-control"
                  placeholder="Text">
