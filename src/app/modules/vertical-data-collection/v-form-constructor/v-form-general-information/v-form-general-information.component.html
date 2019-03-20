@@ -215,21 +215,25 @@
           <label class="form-check-label" for="newStudents">New Students</label>
         </div>
         <div class="form-group col-2 form-check">
-          <input type="checkbox" class="form-check-input" id="SpecificGrades">
+          <input type="checkbox"
+                 class="form-check-input"
+                 id="SpecificGrades"
+                 [(ngModel)]="specificGrades"
+                 [ngModelOptions]="{standalone: true}">
           <label class="form-check-label" for="SpecificGrades">Specific Grades</label>
         </div>
       </div>
 
       <div class="row justify-content-center">
         <div class="form-group col-4">
-          <input type="checkbox" class="form-check-input" id="moreDetailed" [(ngModel)]="moreDetailes"
-                 [ngModelOptions]="{standalone: true}">
+          <input type="checkbox" class="form-check-input" id="moreDetailed"
+                 >
           <label class="form-check-label" for="moreDetailed">I have more detailed requirements</label>
         </div>
       </div>
 
 
-      <div *ngIf="moreDetailes">
+      <div *ngIf="specificGrades">
         <div class="justify-content-md-center mb-3 text-center">
           <span class="pt-4"><h5>Who should be filling out this form?</h5></span>
         </div>

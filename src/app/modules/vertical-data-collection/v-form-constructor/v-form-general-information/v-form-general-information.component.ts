@@ -6,6 +6,7 @@ import { cloneDeep,isEmpty } from 'lodash';
 import {VFormService} from "../../v-form.service";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import { NgbDateParserFormatter} from "@ng-bootstrap/ng-bootstrap";
+import {Period} from "../../model/period.model";
 
 
 @Component({
@@ -19,7 +20,9 @@ export class VFormGeneralInformationComponent implements OnInit {
   fields = [];
   generalInfoForm: FormGroup;
 
-  moreDetailes: boolean;
+
+
+  specificGrades: boolean;
 
   formTypeCreation: string;
   constructor(private activatedRoute: ActivatedRoute,
