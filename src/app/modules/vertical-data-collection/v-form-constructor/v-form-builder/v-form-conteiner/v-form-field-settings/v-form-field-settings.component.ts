@@ -7,50 +7,54 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 })
 export class VFormFieldSettingsComponent implements OnInit {
     @Input() inputField;
-    @Output() changeIsValidatorEmitter = new EventEmitter<boolean>();
-    @Output() changeValidatorRulesEmitter = new EventEmitter<any>();
+    @Output() changeFieldEmitter = new EventEmitter<any>();
     tab: string = 'settings';
 
-    validationRule = {
-        'Alphabetic': 'alpha',
-        'Alpha Numeric': 'alpha_num',
-        'Alpha Numeric Dash': 'alpha_dash',
-        'Data': 'data',
-        'Email': 'email',
-        'Numeric': 'numeric',
-        'String': 'string',
-        'URL': 'url',
-    };
+    validationRules = [
+        {name: 'Alphabetic', rule: 'alpha', min: true, max: true},
+        {name: 'Alpha Numeric', rule: 'alpha_num', min: true, max: true},
+        {name: 'Alpha Numeric Dash', rule: 'alpha_dash', min: true, max: true},
+        {name: 'Data', rule: 'data'},
+        {name: 'Email', rule: 'email'},
+        {name: 'Numeric', rule: 'numeric', min: true, max: true},
+        {name: 'String', rule: 'string', min: true, max: true},
+        {name: 'URL', rule: 'url'},
+    ];
 
-    rule: string;
-    min: number;
-    max: number;
-
-    validators: [string];
+    rule: object;
+    field;
 
     constructor() {
     }
 
     ngOnInit() {
-        this.validators = this.inputField.validators;
-        this.rule = this.validators[0];
-        this.min = this.validators[1] ? +(this.validators[1].split(':'))[1] : null;
-        this.max = this.validators[2] ? +(this.validators[2].split(':'))[1] : null;
+        this.field = this.inputField;
+        this.rule = this.field.validators[0];
     }
 
-    isValidatorChanged(value) {
-        this.changeIsValidatorEmitter.emit(value)
+    isValidatorChanged(event) {
+        this.field.options.isValidator = event;
+        this.changeFieldEmitter.emit(this.field);
     }
 
-    addValidatorRule(value, index) {
-        let val = value;
-        if(!val) {
-            this.validators[index] = null;
-            return;
-        }
-        if(index === 1) val = `min:${value}`;
-        if(index === 2) val = `max:${value}`;
-        this.validators[index] = val;
-        this.changeValidatorRulesEmitter.emit(this.validators);
+    addValidatorRule(rule) {
+        this.rule = this.validationRules.find(elem => elem.rule == rule);
+        this.field.validators = [this.rule];
+        this.changeFieldEmitter.emit(this.field);
+    }
+
+    addMinMaxRule() {
+        this.field.validators = [this.rule];
+        this.changeFieldEmitter.emit(this.field);
+    }
+
+    changeIsErrorMessage(event) {
+        this.field.options.isErrorMessage = event;
+        this.changeFieldEmitter.emit(this.field);
+    }
+
+    changeIsProhibitDataEntry(event) {
+        this.field.options.isProhibitDataEntry = event;
+        this.changeFieldEmitter.emit(this.field);
     }
 }

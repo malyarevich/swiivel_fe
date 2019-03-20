@@ -16,7 +16,7 @@ export class VFormContainerComponent implements OnInit{
   @Output() onChange = new EventEmitter<any>();
   @Output() onUniq = new EventEmitter<any>();
   @Output() onIsValidator = new EventEmitter<boolean>();
-  @Output() onValidatorRules = new EventEmitter<boolean>();
+  @Output() onFieldChanged = new EventEmitter<boolean>();
   warningCheckExistingLabelString='Pay attention that we already have existing field with the same name';
   warningCheckUniqString= 'Pay attention that there are unique Field with the same name or mapped to the same field!';
 
@@ -49,12 +49,8 @@ export class VFormContainerComponent implements OnInit{
     this.onChange.emit(event);
   }
 
-    isValidatorChanged(event) {
-        this.onIsValidator.emit(event);
-    }
-
-    validatorRulesChanged(event) {
-        this.onValidatorRules.emit(event);
+    fieldChanged(event) {
+        this.onFieldChanged.emit(event);
     }
 
   ngOnInit(): void {

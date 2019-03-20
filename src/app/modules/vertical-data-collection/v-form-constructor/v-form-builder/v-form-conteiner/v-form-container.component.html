@@ -99,8 +99,7 @@
     </div>
     <app-v-form-field-settings
       [inputField] = "inputField"
-      (changeIsValidatorEmitter)="isValidatorChanged($event)"
-      (changeValidatorRulesEmitter)="validatorRulesChanged($event)"
+      (changeFieldEmitter)="fieldChanged($event)"
     ></app-v-form-field-settings>
   </div>
 </div>
