@@ -24,7 +24,7 @@ export class VFormGeneralInformationComponent implements OnInit {
 
   specificGrades: boolean;
 
-  formTypeCreation: string;
+  formTypeCreation: string = 'newForm';
   constructor(private activatedRoute: ActivatedRoute,
               private router: Router,
               private formUtils: FormUtils,

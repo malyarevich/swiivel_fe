@@ -30,3 +30,19 @@
 /*.btn:active{*/
   /*background-color: yellow!important;*/
 /*}*/
+.app-btn-primary {
+  background: #3552A7;
+  color: white;
+}
+/*.btn-primary:active{*/
+  /*background-color: yellow!important;*/
+/*}*/
+.btn-primary {
+  background: #E0E6FF;
+  border-color: white!important;
+  color: #4E67B4;
+}
+label.btn.btn-primary.active{
+  background: #FFB600;
+  color: #FFFFFF;
+}
