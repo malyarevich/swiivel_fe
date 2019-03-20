@@ -57,4 +57,9 @@ export class VFormFieldSettingsComponent implements OnInit {
         this.field.options.isProhibitDataEntry = event;
         this.changeFieldEmitter.emit(this.field);
     }
+
+    addErrorText(event) {
+        this.field.options.errorText = event;
+        this.changeFieldEmitter.emit(this.field);
+    }
 }
