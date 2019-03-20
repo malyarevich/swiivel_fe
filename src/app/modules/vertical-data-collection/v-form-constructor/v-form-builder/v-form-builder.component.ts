@@ -8,7 +8,6 @@ import { v4 as uuid } from 'uuid';
 import { cloneDeep,isEmpty } from 'lodash';
 import {Location} from '@angular/common';
 import {VFieldsService} from "../../v-fields.service";
-import {FormUtils} from "../../utils/form.utils";
 
 @Component({
   selector: 'app-v-form-table',
@@ -93,7 +92,6 @@ showWarningMessage: string = 'Please correct existing errors';
       name: this.formName
     };
 
-    console.log(form);
      this.formService.sendForm(form).subscribe(res => this.goBack());
 
 
@@ -165,19 +163,13 @@ showWarningMessage: string = 'Please correct existing errors';
 
 
   formInit(): void{
-    //console.log(this.route.snapshot.paramMap.getAll());
 
-    // const id =  this.route
-    //   .queryParamMap
-    //   .pipe(map(params => params.get('id')));
-   // const id = this.route.snapshot.paramMap.get('id');
     if(this.formId){
       this.formService.getOneForm(this.formId).subscribe(
         (form: Form)=>{
           if(!isEmpty(form)){
             this.formName = form.name;
             this.fields = form.fields;
-           // this.fieldsValidator();
           }
         },
         (error)=>console.log(error, 'error')
