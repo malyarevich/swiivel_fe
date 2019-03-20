@@ -6,7 +6,7 @@ import {VFormService} from './v-form.service';
 import {ClarityModule} from '@clr/angular';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { VFormContainerComponent } from './v-form-constructor/v-form-builder/v-form-conteiner/v-form-container.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { VFormTableComponent } from './v-form-table/v-form-table.component';
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import { VFormNavComponent } from './v-form-table/v-form-nav/v-form-nav.component';
@@ -31,7 +31,6 @@ import {entryComponents} from "./entryComponents";
 import { VDataCollectionComponent } from './v-data-collection.component';
 import {VContentDirective} from "./v-form-view/v-content.directive";
 import { VFormNavigationBarComponent } from './v-form-constructor/v-form-navigation-bar/v-form-navigation-bar.component';
-import { VFormGeneralInformationComponent } from './v-form-constructor/v-form-general-information/v-form-general-information.component';
 import { VFormSectionComponent } from './v-form-constructor/v-form-section/v-form-section.component';
 import { VFormPublishSettingsComponent } from './v-form-constructor/v-form-publish-settings/v-form-publish-settings.component';
 import { VFormAutomationComponent } from './v-form-constructor/v-form-automation/v-form-automation.component';
@@ -41,6 +40,7 @@ import { VFormTableHeaderComponent } from './v-form-table/v-form-table-header/v-
 import { TableHeaderTitleComponent } from './v-form-table/v-form-table-header/table-header-title/table-header-title.component';
 import { TableHeaderFilterTextComponent } from './v-form-table/v-form-table-header/table-header-filter-text/table-header-filter-text.component';
 import { TableHeaderFilterDateComponent } from './v-form-table/v-form-table-header/table-header-filter-date/table-header-filter-date.component';
+import {VFormGeneralInformationComponent} from "./v-form-constructor/v-form-general-information/v-form-general-information.component";
 
 const routes: Routes = [
   {
@@ -105,7 +105,8 @@ const routes: Routes = [
       VFormTableHeaderComponent,
       TableHeaderTitleComponent,
       TableHeaderFilterTextComponent,
-      TableHeaderFilterDateComponent
+      TableHeaderFilterDateComponent,
+    VFormGeneralInformationComponent
   ],
   imports: [
     NgbModule,
@@ -113,7 +114,8 @@ const routes: Routes = [
     FormsModule,
     RouterModule.forChild(routes),
     ClarityModule,
-    DragDropModule
+    DragDropModule,
+    ReactiveFormsModule
 
   ],
   providers:[VFormService, VFieldsService, FormUtils],
