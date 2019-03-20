@@ -5,10 +5,12 @@
         <a class="app-nav-link" [ngClass]="{'app-active': tab == 'general'}" (click)="tab = 'general'">General</a>
       </li>
       <li class="nav-item">
-        <span class="app-nav-link" [ngClass]="{'app-active': tab == 'settings'}" (click)="tab = 'settings'">Settings</span>
+        <span class="app-nav-link" [ngClass]="{'app-active': tab == 'settings'}"
+              (click)="tab = 'settings'">Settings</span>
       </li>
       <li class="nav-item">
-        <a class="app-nav-link" [ngClass]="{'app-active': tab == 'conditional'}" (click)="tab = 'conditional'">Conditional Logic</a>
+        <a class="app-nav-link" [ngClass]="{'app-active': tab == 'conditional'}" (click)="tab = 'conditional'">Conditional
+          Logic</a>
       </li>
       <li class="nav-item">
         <a class="app-nav-link" [ngClass]="{'app-active': tab == 'mapping'}" (click)="tab = 'mapping'">Mapping Logic</a>
@@ -22,30 +24,59 @@
       </div>
       <div class="col-sm-4 app-border-right">
         <label class="app-switch mr-2">
-          <input type="checkbox" [ngModel]= "inputField.options.isValidator" (ngModelChange)="isValidatorChanged($event)">
+          <input type="checkbox" [ngModel]="inputField.options.isValidator"
+                 (ngModelChange)="isValidatorChanged($event)">
           <span class="app-slider app-round"></span>
         </label>
         <small><b>VALIDATE</b></small>
         <div class="form-group">
-          <label for="criteria">Validate. Criteria</label>
-          <select [(ngModel)]="selectedRule" class="form-control" id="criteria">
-            <option *ngFor="let item of validationRule| keyvalue" value="item.">1</option>
+          <label for="criteria">Validat. Criteria</label>
+          <select [(ngModel)]="rule"
+                  (ngModelChange)="addValidatorRule($event, 0)"
+                  class="form-control"
+                  id="criteria"
+                  [disabled]="!inputField.options.isValidator">
+            <option *ngFor="let item of validationRule| keyvalue" [value]="item.value">{{item.key}}</option>
           </select>
         </div>
         <div class="form-group">
-          <input type="text" class="form-control" placeholder="Text">
+          <input type="text"
+                 class="form-control"
+                 placeholder="Text">
         </div>
         <div class="form-row">
           <div class="form-group col-md-6">
-            <input type="email" class="form-control" placeholder="Min">
+            <input [(ngModel)]="min"
+                   (ngModelChange)="addValidatorRule($event, 1)"
+                   type="number"
+                   class="form-control"
+                   placeholder="Min"
+                   [disabled]="!inputField.options.isValidator">
           </div>
           <div class="form-group col-md-6">
-            <input type="password" class="form-control" placeholder="Max">
+            <input [(ngModel)]="max"
+                   (ngModelChange)="addValidatorRule($event, 2)"
+                   type="number"
+                   class="form-control"
+                   placeholder="Max"
+                   [disabled]="!inputField.options.isValidator">
           </div>
+        </div>
+        <small>If is Data isn't Valid, then</small>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="errorMessage">
+          <label class="form-check-label" for="errorMessage">
+            Error Message
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="dataEntry">
+          <label class="form-check-label" for="dataEntry">
+            Prohibit of Data Entry
+          </label>
         </div>
       </div>
       <div class="col-sm-4">
-        {{inputField | json}}
       </div>
     </div>
   </div>

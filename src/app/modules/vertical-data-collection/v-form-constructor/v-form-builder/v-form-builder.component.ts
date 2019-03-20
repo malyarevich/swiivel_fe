@@ -114,8 +114,17 @@ showWarningMessage: string = 'Please correct existing errors';
   }
 
     onIsValidator(value, field) {
-        let index = this.fields.findIndex((item => item._id == field._id));
+        let index = this.getFieldIndex(field._id);
         this.fields[index].options.isValidator = value;
+    }
+
+    onValidatorRules(rules, field) {
+        let index = this.getFieldIndex(field._id);
+        this.fields[index].validators = [...rules];
+    }
+
+    getFieldIndex(id) {
+    return this.fields.findIndex((item => item._id == id));
     }
 
   onUniq(event){

@@ -8,6 +8,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 export class VFormFieldSettingsComponent implements OnInit {
     @Input() inputField;
     @Output() changeIsValidatorEmitter = new EventEmitter<boolean>();
+    @Output() changeValidatorRulesEmitter = new EventEmitter<any>();
     tab: string = 'settings';
 
     validationRule = {
@@ -21,15 +22,35 @@ export class VFormFieldSettingsComponent implements OnInit {
         'URL': 'url',
     };
 
-    selectedRule: string;
+    rule: string;
+    min: number;
+    max: number;
+
+    validators: [string];
 
     constructor() {
     }
 
     ngOnInit() {
+        this.validators = this.inputField.validators;
+        this.rule = this.validators[0];
+        this.min = this.validators[1] ? +(this.validators[1].split(':'))[1] : null;
+        this.max = this.validators[2] ? +(this.validators[2].split(':'))[1] : null;
     }
 
     isValidatorChanged(value) {
         this.changeIsValidatorEmitter.emit(value)
+    }
+
+    addValidatorRule(value, index) {
+        let val = value;
+        if(!val) {
+            this.validators[index] = null;
+            return;
+        }
+        if(index === 1) val = `min:${value}`;
+        if(index === 2) val = `max:${value}`;
+        this.validators[index] = val;
+        this.changeValidatorRulesEmitter.emit(this.validators);
     }
 }
