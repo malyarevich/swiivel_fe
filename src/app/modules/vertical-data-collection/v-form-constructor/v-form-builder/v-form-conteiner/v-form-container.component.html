@@ -1,6 +1,12 @@
 <div [ngClass]="{'field-checked': showSettings}">
 <div class="row ">
+
   <div class="col-md-1 ">
+    <div cdkDragHandle>
+      <span><i class="fas fa-ellipsis-v dragable-i"></i></span>
+      <span><i class="fas fa-ellipsis-v dragable-i"></i></span>
+    </div>
+
     <span *ngIf="!inputField.isValidName" aria-hidden="true" [title]="warningCheckExistingLabelString"><i class="fas fa-exclamation-triangle"></i></span>
     <span *ngIf="!inputField.isValid" aria-hidden="true" [title]="warningCheckUniqString"><i class="fas fa-exclamation-circle"></i></span>
   </div>
