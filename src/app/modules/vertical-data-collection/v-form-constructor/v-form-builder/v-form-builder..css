@@ -27,4 +27,12 @@ body{
 #workPlaceList{
   height: 1000px;
 }
-
+.list-group-item{
+  padding-left: 0;
+  padding-right: 0;
+}
+input {
+  padding: 0.2em;
+  box-sizing: border-box;
+  width: 100%
+}

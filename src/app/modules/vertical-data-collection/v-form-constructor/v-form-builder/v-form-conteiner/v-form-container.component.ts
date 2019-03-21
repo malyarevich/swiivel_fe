@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Field} from '../../../../data-collection/reducers/field/field.model';
 import { range } from 'lodash'
+import {NgbDropdownConfig} from "@ng-bootstrap/ng-bootstrap";
 @Component({
   selector: 'app-v-form-container',
   templateUrl: './v-form-container.component.html',
@@ -24,8 +25,8 @@ export class VFormContainerComponent implements OnInit{
 
   size = range(1  ,13);
 
-  constructor() {
-
+  constructor( config: NgbDropdownConfig) {
+    config.placement = 'bottom-right';
   }
 
 
@@ -54,7 +55,7 @@ export class VFormContainerComponent implements OnInit{
     }
 
   ngOnInit(): void {
-   // console.log(this.inputField);
+
   }
 
 }

@@ -25,7 +25,7 @@
 
   <hr>
   <div class="row">
-    <div class="col-md-3" >
+    <div class="col-3" >
     <ngb-tabset>
       <ngb-tab title="EXISTING FIELDS">
         <ng-template ngbTabContent>
@@ -50,7 +50,7 @@
           id="CustomFieldsList"
           [cdkDropListConnectedTo]="['workPlaceList']">
           <ul class="list-group" *ngFor="let custom of customFields" cdkDrag>
-            <li class="list-group-item ">
+            <li class="list-group-item pl-0 pr-0">
               <span class="input-group-text"> {{custom.name}}</span>
             </li>
           </ul>
@@ -60,7 +60,7 @@
     </ngb-tabset>
     </div>
 
-  <div class="  col-md-9 " >
+  <div class="  col-9 " >
     <div class="text-center" *ngIf="fields.length>0">    <label >FORM FIELDS</label>
 </div>
 
