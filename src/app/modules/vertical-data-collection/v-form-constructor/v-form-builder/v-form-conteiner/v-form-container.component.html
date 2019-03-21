@@ -111,14 +111,15 @@
         </div>
       </div>
     </div>
-    <div [ngClass]="{'field-setting': showSettings}" *ngIf="showSettings">
-      <div class="float-right mr-1">
-        <span (click) = "showSettings = false"><i class="fas fa-chevron-up app-element-color"></i></span>
-      </div>
-      <app-v-form-field-settings
-        [inputField] = "inputField"
-        (changeFieldEmitter)="fieldChanged($event)"
-      ></app-v-form-field-settings>
+
+  </div>
+  <div [ngClass]="{'field-setting': showSettings}" *ngIf="showSettings">
+    <div class="float-right mr-1">
+      <span (click) = "showSettings = false"><i class="fas fa-chevron-up app-element-color"></i></span>
     </div>
+    <app-v-form-field-settings
+      [inputField] = "inputField"
+      (changeFieldEmitter)="fieldChanged($event)"
+    ></app-v-form-field-settings>
   </div>
 </div>
