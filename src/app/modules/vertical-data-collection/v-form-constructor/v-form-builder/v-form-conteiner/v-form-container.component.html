@@ -92,10 +92,10 @@
         </div>
 
       </div>
-      <div class="col-1">
-        <div ngbDropdown class="d-inline-block ml-2" #dropdownField="ngbDropdown">
+      <div class="col-md-1">
+        <div ngbDropdown placement="bottom-right" class="d-inline-block ml-2" #dropdownField="ngbDropdown">
           <button class="btn btn-sm" id="dropdown-field" ngbDropdownToggle>
-            <i class="fas fa-cog dragable-i"></i>
+            <i class="fas fa-cog app-element-color"></i>
           </button>
           <div ngbDropdownMenu aria-labelledby="dropdown-field">
             <button ngbDropdownItem (click)="removeField(inputField._id)">Remove</button>
@@ -106,13 +106,12 @@
     </div>
     <div [ngClass]="{'field-setting': showSettings}" *ngIf="showSettings">
       <div class="float-right mr-1">
-        <span (click)="showSettings = false"><i class="fas fa-chevron-up app-element-color"></i></span>
+        <span (click) = "showSettings = false"><i class="fas fa-chevron-up app-element-color"></i></span>
       </div>
       <app-v-form-field-settings
-        [inputField]="inputField"
+        [inputField] = "inputField"
         (changeFieldEmitter)="fieldChanged($event)"
       ></app-v-form-field-settings>
     </div>
   </div>
-</div>
 
