@@ -5,17 +5,24 @@
       <div class="row align-items-center no-gutters ml-2">
         <div class="col-3">
           <div class="row align-items-center no-gutters">
-            <div cdkDragHandle>
+            <div *ngIf="inputField.isValidName" cdkDragHandle>
               <span><i class="fas fa-ellipsis-v dragable-i"></i></span>
               <span><i class="fas fa-ellipsis-v dragable-i"></i></span>
+               </div>
+            <div *ngIf="!inputField.isValidName">
+                   <span  aria-hidden="true" [title]="warningCheckExistingLabelString"><i
+                     class="fas fa-exclamation-triangle"></i></span>
             </div>
-            <div class=" rectangle"></div>
+
+            <div *ngIf="inputField.isValid" class=" rectangle"></div>
+            <div *ngIf="!inputField.isValid" class="ml-2">
+              <span aria-hidden="true" [title]="warningCheckUniqString"><i
+              class="fas fa-exclamation-circle"></i></span>
+            </div>
+
           </div>
         </div>
-        <span *ngIf="!inputField.isValidName" aria-hidden="true" [title]="warningCheckExistingLabelString"><i
-          class="fas fa-exclamation-triangle"></i></span>
-        <span *ngIf="!inputField.isValid" aria-hidden="true" [title]="warningCheckUniqString"><i
-          class="fas fa-exclamation-circle"></i></span>
+
         <div class="col-9">
           <label class="has-float-label">
             <input class="form-control " (ngModelChange)="nameChange($event)" [disabled]="inputField.mapped!=''"
@@ -114,4 +121,4 @@
       ></app-v-form-field-settings>
     </div>
   </div>
-
+</div>
