@@ -101,7 +101,8 @@ export class VFormTableComponent implements OnInit {
     }
 
     resetFormSelected() {
-        this.formSelected = null
+        this.formSelected = null;
+        this.getAllForm();
     }
 
     addSelectedIds(id) {
