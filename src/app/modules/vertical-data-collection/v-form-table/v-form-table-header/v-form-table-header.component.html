@@ -1,5 +1,5 @@
 <tr>
-  <th scope="col" *ngFor="let col of cols">
+  <th scope="col" *ngFor="let col of cols" [width]="col.width">
     <ng-container [ngSwitch]="col.type">
       <ng-template ngSwitchCase="text">
         <app-table-header-filter-text [col]="col" (filterDataEmitter)="searchCtrl($event, col.id)"></app-table-header-filter-text>
