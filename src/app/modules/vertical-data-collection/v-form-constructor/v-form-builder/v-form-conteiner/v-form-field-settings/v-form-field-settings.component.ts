@@ -1,4 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Field} from "../../../../model/field.model";
 
 @Component({
     selector: 'app-v-form-field-settings',
@@ -22,9 +23,9 @@ export class VFormFieldSettingsComponent implements OnInit {
         {name: 'IN', rule: 'in',  min: false, max: false, param: true}
     ];
 
+    rule: {name: string, rule: string, min: number | boolean, max: number | boolean, param: string | boolean};
     ruleDefault = {name: '', rule: '', min: false, max: false, param: false};
-    rule: object;
-    field;
+    field: Field;
 
     constructor() {
     }
@@ -59,8 +60,8 @@ export class VFormFieldSettingsComponent implements OnInit {
         this.changeFieldEmitter.emit(this.field);
     }
 
-    addErrorText(event) {
-        this.field.options.errorText = event;
+    addTextError(event) {
+        this.field.options.textError = event;
         this.changeFieldEmitter.emit(this.field);
     }
 
