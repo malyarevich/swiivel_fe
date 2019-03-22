@@ -1,41 +1,16 @@
-//.float-input-container {
-//  border: solid 1px #ccc;
-//  padding: 0 8px;
-//  position: relative;
-//}
-//.float-input-container input {
-//  border: none;
-//  font-size: 16px;
-//  margin: 16px 0 10px;
-//  outline: 0;
-//}
-//.float-input-container label {
-//  font-size: 16px;
-//  position: absolute;
-//  transform-origin: top left;
-//  transform: translate(0, 16px) scale(1);
-//  transition: all .1s ease-in-out;
-//}
-//.float-input-container.active label {
-//  transform: translate(0, 4px) scale(.75);
-//}
-
-body {
-  font-family: sans-serif;
-}
-.field {
+.app-input-container {
   position: relative;
-  max-width: 250px;
 }
-.field__label {
-  color: #919293;
+
+.app-input-label {
+  color: #535353;
   box-sizing: border-box;
   display: block;
-  font-size: .8125em;
+  font-size: 10px;
   line-height: 1;
   opacity: 0;
   overflow: hidden;
-  padding: .5em 1em;
+  padding: .5em 1.5em;
   pointer-events: none;
   position: absolute;
   text-overflow: ellipsis;
@@ -47,17 +22,20 @@ body {
   white-space: nowrap;
   width: 100%;
   z-index: 1;
-  .field--not-empty & {
+  .app-input-fill & {
     opacity: 1;
     transform: none;
   }
 }
-.field__input {
-  background-color: #f5f5f5;
-  border: 2px solid #e9e9e9;
-  color: #333;
-  font-size: 1.3125em;
-  padding: .4761904762em;
+
+.app-input {
+  border: 1px solid #B6B6B6;
+  border-radius: 3px;
+  color: #151515;
+  font-size: 1em;
+  padding: 0 0.8em;
+  min-height: 35px;
+  background-color: #FFF;
   transition: all .2s ease-out;
   width: 100%;
   &:hover, &:focus {
@@ -65,7 +43,7 @@ body {
     box-shadow: inset 0 0 10px 0 rgba(85, 85, 85, .1);
     outline: 0;
   }
-  .field--not-empty & {
+  .app-input-fill & {
     padding-bottom: 2px;
     padding-top: 18px;
   }
@@ -74,12 +52,43 @@ body {
 ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
   color: #919293;
 }
+
 ::-moz-placeholder { /* Firefox 19+ */
   color: #919293;
 }
+
 :-ms-input-placeholder { /* IE 10+ */
   color: #919293;
 }
+
 :-moz-placeholder { /* Firefox 18- */
   color: #919293;
 }
+
+
+//test
+//.float-container {
+//  border: solid 1px #ccc;
+//  padding: 0 8px;
+//  position: relative;
+//  background-color: white;
+//  height: 35px;
+//}
+//.float-container input {
+//  border: none;
+//  font-size: 14px;
+//  margin: 10px 0 0;
+//  outline: 0;
+//}
+//.float-container label {
+//  font-size: 14px;
+//  position: absolute;
+//  bottom: 10px;
+//  transform-origin: top left;
+//  transform: translate(0, 14px) scale(1);
+//  transition: all .1s ease-in-out;
+//}
+//.float-container.active label {
+//  bottom: 5px;
+//  transform: translate(0, 4px) scale(.70);
+//}
