@@ -13,70 +13,69 @@
   </div>
   <div class="col-sm-12 block-wrapper mt-3">
     <app-v-form-nav (bulkActionEmitter)="doBulkAction($event)"></app-v-form-nav>
-    <div *ngIf="forms?.length!=0">
-      <table class="table">
-        <thead app-v-form-table-header [cols]="cols" (searchDataEmitter) = "setSearch($event)"></thead>
-        <tbody>
-        <tr *ngFor="let item of forms" (click)="addSelectedIds(item.id)" [ngClass]="{'checked-row': isCheckedRow(item.id)}">
-          <td>{{item.name}}</td>
-          <td><span class="app-text-primary">{{item.type_name}}</span></td>
-          <td>
-            <ng-container *ngIf="item.permissions?.length">
-              <span *ngFor="let permission of item.permissions">{{permission.user.full_name}}  </span>
-            </ng-container>
-            <button type="button"
-                    class="btn app-invite-btn"
-                    data-toggle="modal"
-                    data-target="#flipFlop"
-                    (click)="formSelected = item.mongo_id">
-              <span class="app-text-primary">+ Invite Users</span>
-            </button>
-            <app-v-form-access-modal (resetFormSelectedEmitter)="resetFormSelected($event)"
-                                     [formSelected]="formSelected">
-            </app-v-form-access-modal>
-          </td>
-          <td>{{item.owner.full_name}} {{ item.owner.role.role_name}}</td>
-          <td>{{item.updated_at}}</td>
-          <td>{{item.status_name}}</td>
-          <td>
-            <button type="button"
-                    class="btn btn-secondary app-btn-primary app-btn-sml mr-2 "
-                    routerLink="v-form-constructor/{{item.mongo_id}}"
-                    routerLinkActive="active">
-              <span><i class="fas fa-pen"></i> Edit</span>
-            </button>
-            <button type="button"
-                    class="btn btn-secondary app-btn-primary app-btn-sml mr-2 "
-                    routerLink="onlineform/{{item.mongo_id}}"
-                    routerLinkActive="active">
-              <span><i class="far fa-eye"></i> View</span>
-            </button>
-            <button type="button"
-                    class="btn btn-outline-danger app-btn-sml mr-2 "
-                    (click)="removeForm(item.mongo_id)">
-              <span><i class="fas fa-trash-alt"></i> Delete</span>
-            </button>
-            <button
-              class="btn app-btn-sml mr-2 ">
-              <i class="fas fa-share-alt"></i>
-            </button>
-            <button
-              class="btn app-btn-sml mr-2 ">
-              <i class="fas fa-share"></i>
-            </button>
-            <button
-              class="btn app-btn-sml mr-2 ">
-              <i class="fas fa-copy"></i>
-            </button>
-            <button
-              class="btn app-btn-sml ">
-              <i class="fas fa-ellipsis-v"></i>
-            </button>
-          </td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
+    <table class="table">
+      <thead app-v-form-table-header [cols]="cols" (searchDataEmitter)="setSearch($event)"></thead>
+      <tbody *ngIf="forms?.length!=0">
+      <tr *ngFor="let item of forms" (click)="addSelectedIds(item.id)"
+          [ngClass]="{'checked-row': isCheckedRow(item.id)}">
+        <td>{{item.name}}</td>
+        <td><span class="app-text-primary">{{item.type}}</span></td>
+        <td>
+          <ng-container *ngIf="item.permissions?.length">
+            <span *ngFor="let permission of item.permissions">{{permission.user.full_name}}  </span>
+          </ng-container>
+          <button type="button"
+                  class="btn app-invite-btn"
+                  data-toggle="modal"
+                  data-target="#flipFlop"
+                  (click)="formSelected = item.mongo_id">
+            <span class="app-text-primary">+ Invite Users</span>
+          </button>
+          <app-v-form-access-modal (resetFormSelectedEmitter)="resetFormSelected($event)"
+                                   [formSelected]="formSelected">
+          </app-v-form-access-modal>
+        </td>
+        <td>{{item.owner.full_name}} {{ item.owner.role.role_name}}</td>
+        <td>{{item.updated_at}}</td>
+        <td>{{item.status}}</td>
+        <td>
+          <button type="button"
+                  class="btn btn-secondary app-btn-primary app-btn-sml mr-2 "
+                  routerLink="v-form-constructor/{{item.mongo_id}}"
+                  routerLinkActive="active">
+            <span><i class="fas fa-pen"></i> Edit</span>
+          </button>
+          <button type="button"
+                  class="btn btn-secondary app-btn-primary app-btn-sml mr-2 "
+                  routerLink="onlineform/{{item.mongo_id}}"
+                  routerLinkActive="active">
+            <span><i class="far fa-eye"></i> View</span>
+          </button>
+          <button type="button"
+                  class="btn btn-outline-danger app-btn-sml mr-2 "
+                  (click)="removeForm(item.mongo_id)">
+            <span><i class="fas fa-trash-alt"></i> Delete</span>
+          </button>
+          <button
+            class="btn app-btn-sml mr-2 ">
+            <i class="fas fa-share-alt"></i>
+          </button>
+          <button
+            class="btn app-btn-sml mr-2 ">
+            <i class="fas fa-share"></i>
+          </button>
+          <button
+            class="btn app-btn-sml mr-2 ">
+            <i class="fas fa-copy"></i>
+          </button>
+          <button
+            class="btn app-btn-sml ">
+            <i class="fas fa-ellipsis-v"></i>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
   </div>
 </div>
 

@@ -33,7 +33,7 @@ export class VFormTableComponent implements OnInit {
             type: 'text',
             title: 'TYPE',
             sort: true,
-            search: false,
+            search: true,
         },
         {
             id: 'access',
@@ -62,7 +62,7 @@ export class VFormTableComponent implements OnInit {
             type: 'text',
             title: 'STATUS',
             sort: true,
-            search: false,
+            search: true,
         },
         {
             id: '',

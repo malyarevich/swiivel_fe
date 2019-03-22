@@ -1,11 +1,9 @@
 <app-table-header-title [title]="col.title" [isSort]="col.sort"
                         (sortFilter)="changeSort($event)"></app-table-header-title>
-<section>
-  <span class="cancel-input" *ngIf="value" alt="cancel" (click)="cancelSearch()"><i
-    class="fas fa-times fa-xs"></i></span>
-  <input class="form-control form-control-sm"
-         type="text"
-         [(ngModel)]="value"
-         (input)="sendData()"
-         [disabled]="!col.search">
-</section>
+<span class="cancel-input" *ngIf="value" alt="cancel" (click)="cancelSearch()"><i
+  class="fas fa-times fa-xs"></i></span>
+<input class="form-control form-control-sm"
+       type="text"
+       [(ngModel)]="value"
+       (input)="sendData()"
+       [disabled]="!col.search">
