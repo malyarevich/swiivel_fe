@@ -4,18 +4,34 @@
 }
 
 .nav_text_custom{
-  color: #BAB8B8;
-  font-family:
-    "Co Text Corp",
-    Roboto,
-    Arial,
-    "Droid Sans",
-    sans-serif;
+  /*color: #BAB8B8;*/
+  /*font-family:*/
+    /*"Co Text Corp",*/
+    /*Roboto,*/
+    /*Arial,*/
+    /*"Droid Sans",*/
+    /*sans-serif;*/
+}
+.nav_text_brand{
+  height: 15px;
+  width: 182px;
+  color: #535353;
+  font-size: 15px;
+  letter-spacing: 0.2px;
+  line-height: 15px;
 }
 .border-bottom{
-  border-bottom-width: 5px!important;
+  border-bottom-width: 4px!important;
+  border-bottom-color: #4350A2!important;
 }
 
 .navbar{
   padding: 0 1rem;
+}
+.nav-link.active{
+  color: #4350A2!important;
+  font-weight: bold;
+}
+.nav-link{
+font-size: 12px;
 }

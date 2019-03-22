@@ -12,9 +12,10 @@ import {VFieldsService} from "../../v-fields.service";
 @Component({
   selector: 'app-v-form-table',
   templateUrl: './v-form-builder..html',
-  styleUrls: ['./v-form-builder..css'],
+  styleUrls: ['./v-form-builder.scss'],
 })
 export class VFormBuilderComponent implements OnInit {
+  isCollapsed = false;
 
   formId: string='';
 warningVisible: boolean = false;

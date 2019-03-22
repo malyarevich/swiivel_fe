@@ -1,32 +1,134 @@
 
 <br>
-  <form class="form-inline">
+  <!--<form class="form-inline">-->
 
-    <button  type="button" class="btn btn-outline-secondary text-uppercase form-control" (click)="goBack()">Back </button>
-    <!--<span class="navbar-brand-light form-control "> Form Builder</span>-->
-    <div *ngIf="formName.length>3" class="justify-content-end">
-      <button  type="button" class="btn btn-outline-secondary text-uppercase " (click)="saveForm()">Save</button>
-    </div>
-
-
-
-    <div *ngIf="warningVisible" class="alert alert-warning alert-dismissible col-md-4 col-md-offset-1">
-      <a href="#" class="close" data-dismiss="alert" aria-label="close" (click)="disableWarning()" >&times;</a>
-      <strong>Warning! </strong>{{showWarningMessage}}
-    </div>
-  </form>
+    <!--<button  type="button" class="btn btn-outline-secondary text-uppercase form-control" (click)="goBack()">Back </button>-->
+    <!--&lt;!&ndash;<div *ngIf="formName.length>3" class="justify-content-end">&ndash;&gt;-->
+    <!--<div  class="justify-content-end">-->
+      <!--<button  type="button" class="btn btn-outline-secondary text-uppercase " (click)="saveForm()">Save</button>-->
+    <!--</div>-->
 
 
-<div class="form-group col-md-4 col-center-block">
-  <div class="text-center"><label>Form Name</label></div>
-<input type="text" class="form-control" [(ngModel)]="formName">
 
-</div>
+    <!--<div *ngIf="warningVisible" class="alert alert-warning alert-dismissible col-md-4 col-md-offset-1">-->
+      <!--<a href="#" class="close" data-dismiss="alert" aria-label="close" (click)="disableWarning()" >&times;</a>-->
+      <!--<strong>Warning! </strong>{{showWarningMessage}}-->
+    <!--</div>-->
+  <!--</form>-->
 
-  <hr>
-  <div class="row">
+
+<!--<div class="form-group col-md-4 col-center-block">-->
+  <!--<div class="text-center"><label>Form Name</label></div>-->
+<!--<input type="text" class="form-control" [(ngModel)]="formName">-->
+
+<!--</div>-->
+
+  <!--<hr>-->
+
+  <div class="row ">
     <div class="col-3" >
-    <ngb-tabset>
+
+      <!--<div class="row justify-content-center pb-2">-->
+        <!--<div class="col-9 bg-white slider-item  row no-gutters align-items-center">-->
+          <!--<div class="col-9">-->
+            <!--<span class="slider-item-header ">FORM FIELDS</span>-->
+          <!--</div>-->
+          <!--<div class="col">-->
+            <!--<label class="app-switch mr-2">-->
+              <!--<input type="checkbox" [(ngModel)]="isCollapsed">-->
+              <!--<span class="app-slider app-round"></span>-->
+            <!--</label>-->
+          <!--</div>-->
+        <!--</div>-->
+
+      <!--</div>-->
+
+      <!--<div class="row justify-content-center pb-2">-->
+        <!--<div class="col-9 bg-white slider-item  row no-gutters align-items-center">-->
+          <!--<div class="col-9">-->
+            <!--<span class="slider-item-header ">EXTERNAL FORMS</span>-->
+          <!--</div>-->
+          <!--<div class="col">-->
+            <!--<label class="app-switch mr-2">-->
+              <!--<input type="checkbox">-->
+              <!--<span class="app-slider app-round"></span>-->
+            <!--</label>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+
+      <!--<div class="row justify-content-center pb-2">-->
+        <!--<div class="col-9 bg-white slider-item  row no-gutters align-items-center">-->
+          <!--<div class="col-9">-->
+            <!--<span class="slider-item-header ">TERMS AND CONSENT</span>-->
+          <!--</div>-->
+          <!--<div class="col">-->
+            <!--<label class="app-switch mr-2">-->
+              <!--<input type="checkbox">-->
+              <!--<span class="app-slider app-round"></span>-->
+            <!--</label>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+
+      <!--<div class="row justify-content-center pb-2">-->
+        <!--<div class="col-9 bg-white slider-item  row no-gutters align-items-center">-->
+          <!--<div class="col-9">-->
+            <!--<span class="slider-item-header ">TUITION CONTRACT</span>-->
+          <!--</div>-->
+          <!--<div class="col">-->
+            <!--<label class="app-switch mr-2">-->
+              <!--<input type="checkbox">-->
+              <!--<span class="app-slider app-round"></span>-->
+            <!--</label>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+
+      <!--<div class="row justify-content-center pb-2">-->
+        <!--<div class="col-9 bg-white slider-item  row no-gutters align-items-center">-->
+          <!--<div class="col-9">-->
+            <!--<span class="slider-item-header ">PAYMENT SETTINGS</span>-->
+          <!--</div>-->
+          <!--<div class="col">-->
+            <!--<label class="app-switch mr-2">-->
+              <!--<input type="checkbox">-->
+              <!--<span class="app-slider app-round"></span>-->
+            <!--</label>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+
+      <!--<div class="row justify-content-center pb-2">-->
+        <!--<div class="col-9 bg-white slider-item  row no-gutters align-items-center">-->
+          <!--<div class="col-9">-->
+            <!--<span class="slider-item-header ">FORM PAYMENT</span>-->
+          <!--</div>-->
+          <!--<div class="col">-->
+            <!--<label class="app-switch mr-2">-->
+              <!--<input type="checkbox">-->
+              <!--<span class="app-slider app-round"></span>-->
+            <!--</label>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+
+      <!--<div class="row justify-content-center pb-2">-->
+        <!--<div class="col-9 bg-white slider-item  row no-gutters align-items-center">-->
+          <!--<div class="col-9">-->
+            <!--<span class="slider-item-header ">EXTERNAL FORMS</span>-->
+          <!--</div>-->
+          <!--<div class="col">-->
+            <!--<label class="app-switch mr-2">-->
+              <!--<input type="checkbox">-->
+              <!--<span class="app-slider app-round"></span>-->
+            <!--</label>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+
+
+      <ngb-tabset>
       <ngb-tab title="EXISTING FIELDS">
         <ng-template ngbTabContent>
           <div
@@ -60,9 +162,9 @@
     </ngb-tabset>
     </div>
 
-  <div class="  col-9 " >
-    <div class="text-center" *ngIf="fields.length>0">    <label >FORM FIELDS</label>
-</div>
+  <div class="col-9 pr-5" >
+    <!--<div class="text-center" *ngIf="fields.length>0">    <label >FORM FIELDS</label>-->
+<!--</div>-->
 
     <div
       cdkDropList
@@ -70,8 +172,8 @@
       [cdkDropListData]="fields"
       [cdkDropListConnectedTo]="['ExistingFieldsList', 'CustomFieldsList']"
       (cdkDropListDropped)="drop($event)">
-      <ul class="list-group"  *ngFor="let field of fields; trackBy: trackByFn" cdkDrag>
-        <li class="list-group-item"
+      <ul class="list-group"  >
+        <li class="list-group-item" *ngFor="let field of fields; trackBy: trackByFn" cdkDrag
             [ngClass]="!field.isValidName||!field.isValid?'list-group-item-warning':''"
         >
           <app-v-form-container
