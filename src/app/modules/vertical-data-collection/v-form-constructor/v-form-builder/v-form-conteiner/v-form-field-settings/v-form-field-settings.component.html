@@ -124,24 +124,20 @@
           </div>
         </div>
         <small>If is Data isn't Valid, then</small>
-        <div class="form-check">
+        <label class="app-checkbox-container">Error Message
           <input [ngModel]="field.options.isErrorMessage"
                  (ngModelChange)=changeIsErrorMessage($event)
                  [disabled]="!field.options.isValidator"
-                 class="form-check-input" type="checkbox" id="errorMessage">
-          <label class="form-check-label" for="errorMessage">
-            Error Message
-          </label>
-        </div>
-        <div class="form-check">
+                 type="checkbox">
+          <span class="app-checkbox-checkmark"></span>
+        </label>
+        <label class="app-checkbox-container">Prohibit of Data Entry
           <input [ngModel]="field.options.isProhibitDataEntry"
                  (ngModelChange)=changeIsProhibitDataEntry($event)
                  [disabled]="!field.options.isValidator"
-                 class="form-check-input" type="checkbox" id="dataEntry">
-          <label class="form-check-label" for="dataEntry">
-            Prohibit of Data Entry
-          </label>
-        </div>
+                 type="checkbox">
+          <span class="app-checkbox-checkmark"></span>
+        </label>
         <div class="form-group app-input-container"
              *ngIf="field.options.isErrorMessage"
              [ngClass]="{'app-input-fill': textError.value}">
@@ -161,12 +157,6 @@
         <!--<label for="floatField">Text</label>-->
         <!--<input #test ngModel id="floatField" type="text">-->
         <!--</div>-->
-
-        <label class="app-checkbox-container">Error Message
-          <input type="checkbox">
-          <span class="app-checkbox-checkmark"></span>
-        </label>
-
       </div>
     </div>
   </div>
