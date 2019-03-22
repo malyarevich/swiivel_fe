@@ -20,7 +20,7 @@ export class VFormFieldSettingsComponent implements OnInit {
         {name: 'Numeric', rule: 'numeric', min: true, max: true, param: false},
         {name: 'String', rule: 'string', min: true, max: true, param: false},
         {name: 'URL', rule: 'url', min: false, max: false, param: false},
-        {name: 'IN', rule: 'in',  min: false, max: false, param: true}
+        {name: 'IN', rule: 'in',  min: false, max: false, param: ''}
     ];
 
     rule: {name: string, rule: string, min: number | boolean, max: number | boolean, param: string | boolean};

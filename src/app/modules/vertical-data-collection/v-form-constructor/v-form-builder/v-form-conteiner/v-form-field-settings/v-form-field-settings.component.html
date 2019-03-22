@@ -1,47 +1,64 @@
 <div class="p-3">
-  <div class="mb-2 mt-3">
-    <ul class="nav">
-      <li class="nav-item">
-        <a class="app-nav-link" [ngClass]="{'app-active': tab == 'general'}" (click)="tab = 'general'">General</a>
-      </li>
-      <li class="nav-item">
+  <div class="row mb-2 mt-3">
+    <div class="col-sm-6">
+      <ul class="nav">
+        <li class="nav-item">
+          <a class="app-nav-link" [ngClass]="{'app-active': tab == 'general'}" (click)="tab = 'general'">General</a>
+        </li>
+        <li class="nav-item">
         <span class="app-nav-link" [ngClass]="{'app-active': tab == 'settings'}"
               (click)="tab = 'settings'">Settings</span>
-      </li>
-      <li class="nav-item">
-        <a class="app-nav-link" [ngClass]="{'app-active': tab == 'conditional'}" (click)="tab = 'conditional'">Conditional
-          Logic</a>
-      </li>
-      <li class="nav-item">
-        <a class="app-nav-link" [ngClass]="{'app-active': tab == 'mapping'}" (click)="tab = 'mapping'">Mapping Logic</a>
-      </li>
-    </ul>
+        </li>
+        <li class="nav-item">
+          <a class="app-nav-link" [ngClass]="{'app-active': tab == 'conditional'}" (click)="tab = 'conditional'">Conditional
+            Logic</a>
+        </li>
+        <li class="nav-item">
+          <a class="app-nav-link" [ngClass]="{'app-active': tab == 'mapping'}" (click)="tab = 'mapping'">Mapping
+            Logic</a>
+        </li>
+      </ul>
+    </div>
+    <div class="col-sm-6 text-right">
+      <button class="btn app-btn-outline-primary">
+        Save field setting as a Preset
+      </button>
+    </div>
   </div>
   <div class="settings-wrapper p-3">
     <div class="row" *ngIf="tab === 'settings'">
       <div class="col-sm-4 app-border-right">
         <small><b>FIELD SIZE & MASK</b></small>
         <div class="form-row">
-          <div class="form-group col-md-6">
+          <div class="form-group col-md-6 app-input-container" [ngClass]="{'app-input-fill': minFieldSize.value}">
+            <label class="app-input-label" for="min-field-size">Min Field Size</label>
             <input [ngModel]="field.options.minFieldSize"
                    (ngModelChange)=changeMinFieldSize($event)
+                   #minFieldSize
+                   id="min-field-size"
                    type="number"
-                   class="form-control"
+                   class="app-input"
                    placeholder="Min Field Size">
           </div>
-          <div class="form-group col-md-6">
+          <div class="form-group col-md-6 app-input-container" [ngClass]="{'app-input-fill': maxFieldSize.value}">
+            <label class="app-input-label" for="max-field-size">Max Field Size</label>
             <input [ngModel]="field.options.maxFieldSize"
                    (ngModelChange)=changeMaxFieldSize($event)
+                   #maxFieldSize
+                   id="max-field-size"
                    type="number"
-                   class="form-control"
+                   class="app-input"
                    placeholder="Max Field Size">
           </div>
         </div>
-        <div class="form-group">
+        <div class="form-group app-input-container" [ngClass]="{'app-input-fill': inputMask.value}">
+          <label class="app-input-label" for="input-mask">Input Mask</label>
           <input [ngModel]="field.options.inputMask"
                  (ngModelChange)=changeInputMask($event)
+                 #inputMask
+                 id="input-mask"
                  type="text"
-                 class="form-control"
+                 class="app-input"
                  placeholder="Input Mask">
         </div>
       </div>
@@ -52,11 +69,12 @@
           <span class="app-slider app-round"></span>
         </label>
         <small><b>VALIDATE</b></small>
-        <div class="form-group">
-          <label for="criteria">Validat. Criteria</label>
+        <div class="form-group app-input-container" [ngClass]="{'app-input-fill': criteria.value}">
+          <label class="app-input-label" for="criteria">Validat. Criteria</label>
           <select [ngModel]="rule.rule"
                   (ngModelChange)="changeValidatorRule($event)"
-                  class="form-control"
+                  #criteria
+                  class="app-input"
                   id="criteria"
                   [disabled]="!field.options.isValidator">
             <option *ngFor="let item of validationRules"
@@ -66,58 +84,79 @@
             </option>
           </select>
         </div>
-        <div class="form-group" *ngIf="rule.param !== false">
+        <div class="form-group app-input-container"
+             *ngIf="rule.param !== false"
+             [ngClass]="{'app-input-fill': ruleParam.value}">
+          <label class="app-input-label" for="param-rule">Text</label>
           <input [(ngModel)]="rule.param"
                  (ngModelChange)="addValidatorRule()"
-                 class="form-control"
+                 #ruleParam
+                 id="param-rule"
+                 class="app-input"
                  placeholder="Text">
         </div>
         <div class="form-row">
-          <div class="form-group col-md-6" *ngIf="rule.min !== false">
+          <div class="form-group col-md-6 app-input-container"
+               *ngIf="rule.min !== false"
+               [ngClass]="{'app-input-fill': minRule.value}">
+            <label class="app-input-label" for="min-rule">Min</label>
             <input [(ngModel)]="rule.min"
                    (ngModelChange)="addValidatorRule()"
+                   #minRule
+                   id="min-rule"
                    type="number"
-                   class="form-control"
+                   class="app-input"
                    placeholder="Min"
                    [disabled]="!field.options.isValidator">
           </div>
-          <div class="form-group col-md-6" *ngIf="rule.max !== false">
+          <div class="form-group col-md-6 app-input-container"
+               *ngIf="rule.max !== false"
+               [ngClass]="{'app-input-fill': maxRule.value}">
+            <label class="app-input-label" for="max-rule">Max</label>
             <input [(ngModel)]="rule.max"
                    (ngModelChange)="addValidatorRule()"
+                   #maxRule
+                   id="max-rule"
                    type="number"
-                   class="form-control"
+                   class="app-input"
                    placeholder="Max"
                    [disabled]="!field.options.isValidator">
           </div>
         </div>
         <small>If is Data isn't Valid, then</small>
-        <div class="form-check">
+        <label class="app-checkbox-container">Error Message
           <input [ngModel]="field.options.isErrorMessage"
                  (ngModelChange)=changeIsErrorMessage($event)
                  [disabled]="!field.options.isValidator"
-                 class="form-check-input" type="checkbox" id="errorMessage">
-          <label class="form-check-label" for="errorMessage">
-            Error Message
-          </label>
-        </div>
-        <div class="form-check">
+                 type="checkbox">
+          <span class="app-checkbox-checkmark"></span>
+        </label>
+        <label class="app-checkbox-container">Prohibit of Data Entry
           <input [ngModel]="field.options.isProhibitDataEntry"
                  (ngModelChange)=changeIsProhibitDataEntry($event)
                  [disabled]="!field.options.isValidator"
-                 class="form-check-input" type="checkbox" id="dataEntry">
-          <label class="form-check-label" for="dataEntry">
-            Prohibit of Data Entry
-          </label>
-        </div>
-        <div class="form-group" *ngIf="field.options.isErrorMessage">
+                 type="checkbox">
+          <span class="app-checkbox-checkmark"></span>
+        </label>
+        <div class="form-group app-input-container"
+             *ngIf="field.options.isErrorMessage"
+             [ngClass]="{'app-input-fill': textError.value}">
+          <label class="app-input-label" for="text-error">Error Text</label>
           <input [ngModel]="field.options.textError"
                  (ngModelChange)=addTextError($event)
+                 #textError
+                 id="text-error"
                  type="text"
-                 class="form-control"
-                 placeholder="Text">
+                 class="app-input"
+                 placeholder="Error Text">
         </div>
       </div>
       <div class="col-sm-4">
+        <!--test-->
+        <!--<div id="floatContainer" class="float-container" [ngClass]="{'active': test.value}">-->
+        <!--<label for="floatField">Text</label>-->
+        <!--<input #test ngModel id="floatField" type="text">-->
+        <!--</div>-->
       </div>
     </div>
   </div>

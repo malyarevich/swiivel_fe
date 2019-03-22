@@ -1,0 +1,13 @@
+.app-btn-outline-primary {
+  color: #4350A2;
+  border: 1px solid #4350A2;
+}
+
+.app-btn-outline-primary {
+  &:hover, &:focus, &:active {
+    color: #FFFFFF;
+    background-color: #4350A2;
+    border: 1px solid #4350A2;
+  }
+}
+
