@@ -72,14 +72,17 @@ showWarningMessage: string = 'Please correct existing errors';
   }
 
   addField(field: Field) {
-    field._id = uuid();
-    this.doExistingFieldsUniq(field);
-    field.isValid = true;
-    field.isValidName = true;
-    if(field.mapped==''){
-      field.isValidName = this.checkExistingFieldsName(field.name);
+    let newField = cloneDeep(field);
+    newField._id = uuid();
+    this.doExistingFieldsUniq(newField);
+    newField.isValid = true;
+    newField.isValidName = true;
+    if(newField.mapped==''){
+      newField.isValidName = this.checkExistingFieldsName(newField.name);
 
     }
+    //replace cloned field that which copy to field array with object link by AM Drag&Drop native method
+    this.fields = this.fields.map(item => item._id==field._id?newField:item);
     this.fieldsValidator();
 
   }
