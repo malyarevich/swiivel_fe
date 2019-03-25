@@ -2,6 +2,7 @@ import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {VFormService} from "../v-form.service";
 import {FormSql} from "../../data-collection/reducers/forms/form.model";
 import {FormSearchParams} from "../../../models/form-search-params";
+import {TEMPLATE_STATUS} from "../../../enums/template-status";
 
 @Component({
     selector: 'app-v-form-table',
@@ -22,6 +23,7 @@ export class VFormTableComponent implements OnInit {
         sort: {},
         conditions: {}
     };
+    STATUS_REVIEW = TEMPLATE_STATUS.STATUS_REVIEW;
     cols = [
         {
             id: 'name',
@@ -144,5 +146,14 @@ export class VFormTableComponent implements OnInit {
             this.getAllForm();
             this.formsSelectedIds = [];
         });
+    }
+
+    getClassByStatus(status) {
+        return {
+           'app-btn-status-active': status === TEMPLATE_STATUS.STATUS_ACTIVE,
+           'app-btn-status-archived': status === TEMPLATE_STATUS.STATUS_ARCHIVED,
+           'app-btn-status-draft': status === TEMPLATE_STATUS.STATUS_DRAFT,
+           'app-btn-status-review': status === TEMPLATE_STATUS.STATUS_REVIEW,
+        }
     }
 }

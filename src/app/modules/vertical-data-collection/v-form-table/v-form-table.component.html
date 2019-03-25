@@ -12,7 +12,8 @@
     </div>
   </div>
   <div class="col-sm-12 block-wrapper mt-3">
-    <app-v-form-nav (bulkActionEmitter)="doBulkAction($event)" (searchValueEmitter)="setSearchValue($event)"></app-v-form-nav>
+    <app-v-form-nav (bulkActionEmitter)="doBulkAction($event)"
+                    (searchValueEmitter)="setSearchValue($event)"></app-v-form-nav>
     <table class="table">
       <thead app-v-form-table-header [cols]="cols" (searchDataEmitter)="setSearch($event)"></thead>
       <tbody *ngIf="forms?.length!=0">
@@ -37,7 +38,21 @@
         </td>
         <td>{{item.owner.full_name}} {{ item.owner.role.role_name}}</td>
         <td>{{item.updated_at}}</td>
-        <td>{{item.status}}</td>
+        <td>
+          <button type="button" class="btn app-btn-status app-btn-sml"
+                  [ngClass]="getClassByStatus(item.status)">
+            <ng-template [ngIf]="item.status === STATUS_REVIEW" [ngIfElse]="chevron">
+              <span>{{'In ' + item.status | titlecase}}
+                <i class="fas fa-hourglass-start"></i>
+              </span>
+            </ng-template>
+            <ng-template #chevron>
+              <span>{{item.status | titlecase}}
+                <i class="fas fa-chevron-down"></i>
+              </span>
+            </ng-template>
+          </button>
+        </td>
         <td>
           <button type="button"
                   class="btn btn-secondary app-btn-primary app-btn-sml mr-2 "

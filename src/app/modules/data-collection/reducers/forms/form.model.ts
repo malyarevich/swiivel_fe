@@ -21,10 +21,8 @@ export interface FormSql {
     link: string,
     owner: object,
     permissions: Permissions[],
-    status: number,
-    type: number,
-    status_name: string,
-    type_name: string,
+    status: string,
+    type: string,
     created_at: string,
     updated_at: string,
 }
