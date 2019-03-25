@@ -5,7 +5,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {VFormService} from './v-form.service';
 import {ClarityModule} from '@clr/angular';
 import {DragDropModule} from '@angular/cdk/drag-drop';
-import { VFormContainerComponent } from './v-form-constructor/v-form-builder/v-form-conteiner/v-form-container.component';
+import { VFieldContainerComponent } from './v-form-constructor/v-form-builder/v-field-conteiner/v-field-container.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { VFormTableComponent } from './v-form-table/v-form-table.component';
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
@@ -41,7 +41,7 @@ import { TableHeaderTitleComponent } from './v-form-table/v-form-table-header/ta
 import { TableHeaderFilterTextComponent } from './v-form-table/v-form-table-header/table-header-filter-text/table-header-filter-text.component';
 import { TableHeaderFilterDateComponent } from './v-form-table/v-form-table-header/table-header-filter-date/table-header-filter-date.component';
 import {VFormGeneralInformationComponent} from "./v-form-constructor/v-form-general-information/v-form-general-information.component";
-import { VFormFieldSettingsComponent } from './v-form-constructor/v-form-builder/v-form-conteiner/v-form-field-settings/v-form-field-settings.component';
+import { VFormFieldSettingsComponent } from './v-form-constructor/v-form-builder/v-field-conteiner/v-form-field-settings/v-form-field-settings.component';
 
 const routes: Routes = [
   {
@@ -77,7 +77,7 @@ const routes: Routes = [
 @NgModule({
   declarations: [
       VFormBuilderComponent,
-      VFormContainerComponent,
+      VFieldContainerComponent,
       VFormTableComponent,
       VFormNavComponent,
       VFormAccessComponent,
@@ -107,7 +107,7 @@ const routes: Routes = [
       TableHeaderTitleComponent,
       TableHeaderFilterTextComponent,
       TableHeaderFilterDateComponent,
-    VFormGeneralInformationComponent,
+      VFormGeneralInformationComponent,
       VFormFieldSettingsComponent,
   ],
   imports: [

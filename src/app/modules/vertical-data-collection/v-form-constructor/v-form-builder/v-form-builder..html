@@ -211,14 +211,14 @@
         <li class="list-group-item" *ngFor="let field of fields; trackBy: trackByFn" cdkDrag
             [ngClass]="!field.isValidName||!field.isValid?'list-group-item-warning':''"
         >
-          <app-v-form-container
+          <app-v-field-container
             [customFields]="customFields"
             [inputField]="field"
             (onChange)="onChange($event, field)"
             (onUniq)="onUniq($event)"
             (onDelete)="onDelete($event)"
             (onFieldChanged)="onFieldChanged($event)">
-          </app-v-form-container>
+          </app-v-field-container>
         </li>
 
       </ul>

@@ -3,11 +3,11 @@ import {Field} from '../../../../data-collection/reducers/field/field.model';
 import { range } from 'lodash'
 import {NgbDropdownConfig} from "@ng-bootstrap/ng-bootstrap";
 @Component({
-  selector: 'app-v-form-container',
-  templateUrl: './v-form-container.component.html',
-  styleUrls: ['./v-form-container.component.scss'],
+  selector: 'app-v-field-container',
+  templateUrl: './v-field-container.component.html',
+  styleUrls: ['./v-field-container.component.scss'],
 })
-export class VFormContainerComponent implements OnInit{
+export class VFieldContainerComponent implements OnInit{
 
   @Input() inputField: Field;
   @Input() customFields: Field[];
