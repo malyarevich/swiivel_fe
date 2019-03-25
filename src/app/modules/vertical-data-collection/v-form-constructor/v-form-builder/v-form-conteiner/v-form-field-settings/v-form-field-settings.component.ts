@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
 import {Field} from "../../../../model/field.model";
 
 @Component({
@@ -6,7 +6,7 @@ import {Field} from "../../../../model/field.model";
     templateUrl: './v-form-field-settings.component.html',
     styleUrls: ['./v-form-field-settings.component.scss']
 })
-export class VFormFieldSettingsComponent implements OnInit {
+export class VFormFieldSettingsComponent implements OnInit, OnChanges {
     @Input() inputField;
     @Output() changeFieldEmitter = new EventEmitter<any>();
     tab: string = 'settings';
@@ -31,6 +31,11 @@ export class VFormFieldSettingsComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.field = this.inputField;
+        this.rule = this.field.validators[0] ? this.field.validators[0] : this.ruleDefault;
+    }
+
+    ngOnChanges() {
         this.field = this.inputField;
         this.rule = this.field.validators[0] ? this.field.validators[0] : this.ruleDefault;
     }
