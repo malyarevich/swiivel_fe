@@ -1,6 +1,7 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {VFormService} from "../v-form.service";
 import {FormSql} from "../../data-collection/reducers/forms/form.model";
+import {FormSearchParams} from "../../../models/form-search-params";
 
 @Component({
     selector: 'app-v-form-table',
@@ -11,11 +12,12 @@ import {FormSql} from "../../data-collection/reducers/forms/form.model";
 export class VFormTableComponent implements OnInit {
 
     forms: FormSql[];
-    formSelected;
-    formsSelectedIds = [];
-    params = {
+    formSelected: number;
+    formsSelectedIds: number[] = [];
+    params: FormSearchParams = {
         page: 1,
         limit: 20,
+        value: '',
         search: {},
         sort: {},
         conditions: {}
@@ -93,6 +95,12 @@ export class VFormTableComponent implements OnInit {
         this.params.sort = {field, order};
         this.params.search[field] = value;
         this.getAllForm()
+    }
+
+    //Global search by all fields
+    setSearchValue(value) {
+        this.params.value = value;
+        this.getAllForm();
     }
 
     removeForm(id: string): void {

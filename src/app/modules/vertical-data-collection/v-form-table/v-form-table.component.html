@@ -12,7 +12,7 @@
     </div>
   </div>
   <div class="col-sm-12 block-wrapper mt-3">
-    <app-v-form-nav (bulkActionEmitter)="doBulkAction($event)"></app-v-form-nav>
+    <app-v-form-nav (bulkActionEmitter)="doBulkAction($event)" (searchValueEmitter)="setSearchValue($event)"></app-v-form-nav>
     <table class="table">
       <thead app-v-form-table-header [cols]="cols" (searchDataEmitter)="setSearch($event)"></thead>
       <tbody *ngIf="forms?.length!=0">

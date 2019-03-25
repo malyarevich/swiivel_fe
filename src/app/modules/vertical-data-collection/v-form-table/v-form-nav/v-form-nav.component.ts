@@ -8,6 +8,9 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 export class VFormNavComponent implements OnInit {
 
     @Output() bulkActionEmitter = new EventEmitter<string>();
+    @Output() searchValueEmitter = new EventEmitter<string>();
+
+    searchValue: string = '';
 
     constructor() {
     }
@@ -17,5 +20,9 @@ export class VFormNavComponent implements OnInit {
 
     bulkAction(type: string) {
         this.bulkActionEmitter.emit(type);
+    }
+
+    onSearchValue() {
+        this.searchValueEmitter.emit(this.searchValue);
     }
 }

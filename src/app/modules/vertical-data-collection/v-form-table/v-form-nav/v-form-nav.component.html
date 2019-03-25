@@ -26,7 +26,11 @@
       </div>
       <div class="col-sm-6">
         <div class="input-group">
-          <input class="form-control form-control-sm mr-2" type="search" placeholder="Search">
+          <input [(ngModel)]="searchValue" (ngModelChange)="onSearchValue()"
+            class="form-control
+            form-control-sm mr-2"
+            type="search"
+            placeholder="Search">
           <button type="button" class="btn btn-primary app-btn-primary btn-sm">
             <i class="fas fa-sliders-h"></i>
           </button>
