@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 import {PersonRoutingModule} from "./person-routing.module";
 import {PersonsListComponent} from "./components/persons-list/persons-list.component";
 import { PersonPageComponent } from './components/person-page/person-page.component';
-import {ClrTabsModule} from "@clr/angular";
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 @NgModule({
     declarations: [
@@ -13,7 +13,7 @@ import {ClrTabsModule} from "@clr/angular";
     imports: [
         CommonModule,
         PersonRoutingModule,
-        ClrTabsModule
+        NgbModule,
     ]
 })
 export class PersonModule {
