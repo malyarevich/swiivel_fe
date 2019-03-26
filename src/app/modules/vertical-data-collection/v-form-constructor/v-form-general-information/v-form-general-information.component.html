@@ -37,11 +37,10 @@
                  [ngClass]="{'app-input-fill': formLanguage.value}">
               <label for="formLanguage" class="app-input-label">Form Language</label>
               <select class="app-input"
-                      ngModel
-                      [ngModelOptions]="{standalone: true}"
+                      formControlName="language"
                       #formLanguage
                       id="formLanguage">
-                <option value=""></option>
+                <option value="" disabled [selected]="true">Form Language</option>
                 <option value="english">English</option>
                 <option value="hebrew">Hebrew</option>
               </select>
@@ -172,7 +171,9 @@
           <!--(change)="logChanges($event)"-->
 
           <div class="input-group-append">
-            <button class="btn btn-outline-secondary calendar" (click)="d1.toggle()" type="button"></button>
+            <button class="btn btn-outline-secondary calendar" (click)="d1.toggle()" type="button">
+              <i class="far fa-calendar"></i>
+            </button>
           </div>
           <div class="invalid-feedback">
             This field is required
@@ -193,7 +194,9 @@
           <!--(change)="logChanges($event)"-->
 
           <div class="input-group-append">
-            <button class="btn btn-outline-secondary calendar" (click)="d2.toggle()" type="button"></button>
+            <button class="btn btn-outline-secondary calendar" (click)="d2.toggle()" type="button">
+              <i class="far fa-calendar"></i>
+            </button>
           </div>
           <div class="invalid-feedback">
             This field is required
