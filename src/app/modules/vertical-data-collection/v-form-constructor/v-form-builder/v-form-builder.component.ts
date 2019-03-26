@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import {CdkDragDrop, copyArrayItem, moveItemInArray} from '@angular/cdk/drag-drop';
+import {CdkDragDrop, copyArrayItem, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import {Field} from '../../../data-collection/reducers/field/field.model';
 import {VFormService} from '../../v-form.service';
 import {Form} from '../../../data-collection/reducers/forms/form.model';
@@ -20,7 +20,7 @@ export class VFormBuilderComponent implements OnInit {
   formId: string='';
 warningVisible: boolean = false;
 showWarningMessage: string = 'Please correct existing errors';
-
+  searchText: string;
   fields: Field[] = [];
   formName: string = '';
   customFields: Field[];
@@ -47,10 +47,19 @@ showWarningMessage: string = 'Please correct existing errors';
 
   }
 
-  drop(event: CdkDragDrop<string[]>) {
+  drop(event: CdkDragDrop<Field[]>) {
+
+    console.log(event.previousContainer, 'event.previousContainer');
+    console.log(event.container, 'event.container');
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else {
+    } else if((event.previousContainer.id =='workPlaceList' && event.container.id=='6372c882-3d14-486f-9c1f-52ae8ab928ef') ||
+      (event.container.id =='workPlaceList' && event.previousContainer.id=='6372c882-3d14-486f-9c1f-52ae8ab928ef')) {
+      transferArrayItem(event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex);
+    }else {
       copyArrayItem(event.previousContainer.data,
         event.container.data,
         event.previousIndex,
