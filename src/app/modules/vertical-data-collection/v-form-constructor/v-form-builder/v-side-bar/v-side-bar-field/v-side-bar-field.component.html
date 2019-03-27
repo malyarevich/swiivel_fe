@@ -1,0 +1,17 @@
+<div class="  row no-gutters  align-items-center">
+  <div class="col-2 "> <label class="app-checkbox-container">
+    <input
+      type="checkbox" [ngModel]="existing.exist" (ngModelChange)="onBeingChange($event)">
+    <span class="app-checkbox-checkmark"></span>
+  </label>
+  </div>
+  <div class="col-10  row align-items-center no-gutters" [ngClass]="style?'side-bar-item-custom':'side-bar-item'">
+    <div class="col-1 ml-">
+      <span><i class="fas fa-ellipsis-v dragable-i"></i></span>
+      <span><i class="fas fa-ellipsis-v  dragable-i"></i></span>
+    </div>
+    <div class="col ml-1">
+      <span class="side-bar-item-font">{{existing.name}}</span>
+    </div>
+  </div>
+</div>

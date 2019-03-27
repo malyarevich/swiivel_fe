@@ -15,15 +15,8 @@
 </form>
 <br>
 
-<!--<div class="form-group col-md-4 col-center-block">-->
-<!--<div class="text-center"><label>Form Name</label></div>-->
-<!--<input type="text" class="form-control" [(ngModel)]="formName">-->
 
-<!--</div>-->
-
-<!--<hr>-->
-
-<div class="row ">
+<div class="row no-gutters">
   <div class="col-3 pl-5">
 
     <div class="row justify-content-center pb-2">
@@ -41,47 +34,78 @@
             </label>
           </div>
         </div>
-        <div [hidden]="!isCollapsed" class="bg-white rounded">
-          <input class="form-control mb-3 search-input" [(ngModel)]="searchText" placeholder="Search...">
-<!--          <div class="input-group">-->
-<!--            <input class="form-control mb-3 search-input" type="search" value="search" id="example-search-input">-->
-<!--            <span class=" input-group-append form-control">-->
-<!--                <div class="input-group-text bg-transparent "><i class="fa fa-search"></i></div>-->
-<!--            </span>-->
-<!--          </div>-->
-          <ngb-tabset>
-            <ngb-tab title="existing">
-              <ng-template ngbTabContent>
+        <div [hidden]="!isCollapsed" class="bg-white rounded mb-3">
+          <input class="form-control mb-3 search-input"  [(ngModel)]="searchText" placeholder="Search...">
 
-                <div
-                  cdkDropList
-                  id="ExistingFieldsList"
-                  [cdkDropListData]="existingFields"
-                  [cdkDropListConnectedTo]="['workPlaceList','6372c882-3d14-486f-9c1f-52ae8ab928ef']">
-                  <ul class="list-group" *ngFor="let existing of existingFields | filter : searchText" cdkDrag>
-                    <li class="list-group-item ">
-                      <span class="input-group-text"> {{existing.name}}</span>
-                    </li>
-                  </ul>
-                </div>
-              </ng-template>
-            </ngb-tab>
-            <ngb-tab title="custom">
-              <ng-template ngbTabContent>
-                <div
-                  cdkDropList
-                  [cdkDropListData]="customFields"
-                  id="CustomFieldsList"
-                  [cdkDropListConnectedTo]="['workPlaceList','6372c882-3d14-486f-9c1f-52ae8ab928ef']">
-                  <ul class="list-group" *ngFor="let custom of customFields | filter : searchText" cdkDrag>
-                    <li class="list-group-item pl-0 pr-0">
-                      <span class="input-group-text"> {{custom.name}}</span>
-                    </li>
-                  </ul>
-                </div>
-              </ng-template>
-            </ngb-tab>
-          </ngb-tabset>
+          <div class="mb-2  " *ngFor="let existing of existingFields | filter : searchText">
+            <app-v-side-bar-field
+              [existing]="existing"
+              [style]="existing.mapped==''"
+              (onChangeFieldBeing)="onChangeFieldBeing($event, existing)"
+            >
+            </app-v-side-bar-field>
+          </div>
+          <div>
+            <button
+              *ngIf="showAddButton"
+              type="button"
+              class="btn btn-outline-primary form-control p-0 text-left"
+              (click)="showAddButton=false">
+              &nbsp;&nbsp;+ Add New Field
+            </button>
+            <input
+              *ngIf="!showAddButton"
+              (keyup)="nameChange($event)"
+              [ngClass]="!validNewCustomFieldName?'is-invalid':''"
+              class="form-control add-input p-0"
+              #newField
+              (blur)="addNewCustomField(newField.value); newField.value=''"
+              (keyup.enter)="addNewCustomField(newField.value); newField.value=''">
+            <div class="invalid-feedback">
+              We have existing field with the same name!
+            </div>
+          </div>
+          <!--          <div class="input-group">-->
+          <!--            <input class="form-control mb-3 search-input" type="search" value="search" id="example-search-input">-->
+          <!--            <span class=" input-group-append form-control">-->
+          <!--                <div class="input-group-text bg-transparent "><i class="fa fa-search"></i></div>-->
+          <!--            </span>-->
+          <!--          </div>-->
+          <!--          <ngb-tabset>-->
+          <!--            <ngb-tab title="existing">-->
+          <!--              <ng-template ngbTabContent>-->
+
+          <!--                <div-->
+          <!--                  cdkDropList-->
+          <!--                  id="ExistingFieldsList"-->
+          <!--                  [cdkDropListData]="existingFields"-->
+          <!--                  [cdkDropListConnectedTo]="['workPlaceList','6372c882-3d14-486f-9c1f-52ae8ab928ef']">-->
+          <!--                  <ul class="list-group" *ngFor="let existing of existingFields | filter : searchText" cdkDrag>-->
+          <!--                    <li class="list-group-item ">-->
+          <!--                      <span class="input-group-text"> {{existing.name}}</span>-->
+          <!--                    </li>-->
+          <!--                  </ul>-->
+          <!--                </div>-->
+          <!--              </ng-template>-->
+          <!--            </ngb-tab>-->
+          <!--            <ngb-tab title="custom">-->
+          <!--              <ng-template ngbTabContent>-->
+          <!--                <div-->
+          <!--                  cdkDropList-->
+          <!--                  [cdkDropListData]="customFields"-->
+          <!--                  id="CustomFieldsList"-->
+          <!--                  [cdkDropListConnectedTo]="['workPlaceList','6372c882-3d14-486f-9c1f-52ae8ab928ef']">-->
+          <!--                  <ul class="list-group" *ngFor="let custom of customFields | filter : searchText" cdkDrag>-->
+          <!--                    <li class="list-group-item pl-0 pr-0">-->
+          <!--                      <span class="input-group-text"> {{custom.name}}</span>-->
+          <!--                    </li>-->
+          <!--                  </ul>-->
+          <!--                </div>-->
+          <!--              </ng-template>-->
+          <!--            </ngb-tab>-->
+          <!--          </ngb-tabset>-->
+
+
         </div>
 
       </div>
@@ -174,7 +198,7 @@
 
   </div>
 
-  <div class="col-9 pr-5" >
+  <div class="col-9 pr-5">
 
     <div
       cdkDropList
@@ -184,16 +208,15 @@
       (cdkDropListDropped)="drop($event)">
       <ul class="list-group">
         <li class="list-group-item mb-3" *ngFor="let field of fields; trackBy: trackByFn" cdkDrag cdkDragLockAxis="y"
-            [ngClass]="[!field.isValidName||!field.isValid?'list-group-item-warning':'', field.type==113?'app-list-group-item-info':'']"
-        >
+            [ngClass]="[!field.isValidName||!field.isValid?'list-group-item-warning':'', field.type==113?'app-list-group-item-info':'']">
           <app-v-group-container *ngIf="field.type==113" [inputGroup]="field"></app-v-group-container>
           <app-v-field-container *ngIf="field.type!=113"
-            [customFields]="customFields"
-            [inputField]="field"
-            (onChange)="onChange($event, field)"
-            (onUniq)="onUniq($event)"
-            (onDelete)="onDelete($event)"
-            (onFieldChanged)="onFieldChanged($event)">
+                                 [customFields]="customFields"
+                                 [inputField]="field"
+                                 (onChange)="onChange($event, field)"
+                                 (onUniq)="onUniq($event)"
+                                 (onDelete)="onDelete($event)"
+                                 (onFieldChanged)="onFieldChanged($event)">
           </app-v-field-container>
         </li>
 

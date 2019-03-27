@@ -42,7 +42,8 @@ import {TableHeaderFilterDateComponent} from './v-form-table/v-form-table-header
 import {VFormGeneralInformationComponent} from "./v-form-constructor/v-form-general-information/v-form-general-information.component";
 import {VFormFieldSettingsComponent} from './v-form-constructor/v-form-builder/v-field-conteiner/v-form-field-settings/v-form-field-settings.component';
 import {VGroupContainerComponent} from './v-form-constructor/v-form-builder/v-group-container/v-group-container.component';
-import {FilterPipe} from "./v-form-constructor/v-form-builder/filter.pipe";
+import {FilterPipe} from "./v-form-constructor/v-form-builder/v-side-bar/filter.pipe";
+import { VSideBarFieldComponent } from './v-form-constructor/v-form-builder/v-side-bar/v-side-bar-field/v-side-bar-field.component';
 
 const routes: Routes = [
   {
@@ -109,7 +110,8 @@ const routes: Routes = [
     VFormGeneralInformationComponent,
     VFormFieldSettingsComponent,
     VGroupContainerComponent,
-    FilterPipe
+    FilterPipe,
+    VSideBarFieldComponent
   ],
   imports: [
     NgbModule,
