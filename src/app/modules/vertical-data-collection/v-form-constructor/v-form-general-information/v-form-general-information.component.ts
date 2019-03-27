@@ -83,6 +83,7 @@ export class VFormGeneralInformationComponent implements OnInit {
             Validators.minLength(3),
             Validators.maxLength(50)
           ])}),
+        language: new FormControl(),
         endDate: new FormControl(new Date(1971, 10, 10), Validators.required),
         startDate: new FormControl(new Date(1971, 10, 10), Validators.required),
         // allParent: new FormControl('Y')
@@ -96,6 +97,7 @@ export class VFormGeneralInformationComponent implements OnInit {
             this.fields = form.fields;
             this.generalInfoForm.setValue({
               name: form.name,
+                language: 'english',
               endDate: this.parserFormatter.parse(form.formDates['endDate']),
               startDate: this.parserFormatter.parse(form.formDates['startDate']),
             })
@@ -108,6 +110,12 @@ export class VFormGeneralInformationComponent implements OnInit {
 
   }
 
-
+    getDayparting() {
+        let hrs = new Date().getHours();
+        if (hrs >= 6 && hrs < 11) return 'morning';
+        if (hrs >= 11 && hrs < 19) return 'afternoon';
+        if (hrs >= 19 && hrs <= 23) return 'evening';
+        return 'night';
+    }
 
 }

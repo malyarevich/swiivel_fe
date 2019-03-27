@@ -18,14 +18,8 @@
 
 }
 
-.text_custom{
-  color: #BAB8B8;
-  font-family:
-    "Co Text Corp",
-    Roboto,
-    Arial,
-    "Droid Sans",
-    sans-serif;
+.app-step-title{
+  color: #535353;
 }
 /*.btn:active{*/
   /*background-color: yellow!important;*/

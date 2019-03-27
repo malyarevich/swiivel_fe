@@ -33,7 +33,7 @@
   border-radius: 3px;
   color: #151515;
   font-size: 1em;
-  padding: 0 0.8em;
+  padding: 0 1em;
   min-height: 35px;
   background-color: #FFF;
   transition: all .2s ease-out;
@@ -44,7 +44,7 @@
     outline: 0;
   }
   .app-input-fill & {
-    padding-bottom: 2px;
+    padding-bottom: 4px;
     padding-top: 18px;
   }
 }

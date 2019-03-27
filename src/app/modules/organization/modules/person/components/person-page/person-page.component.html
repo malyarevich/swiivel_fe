@@ -1,45 +1,45 @@
 <div class="container">
-<clr-tabs>
-    <clr-tab>
-        <button class="tabBtn" clrTabLink id="link1">GENERAL</button>
-        <clr-tab-content id="content1" *clrIfActive="true">
-                <div *ngIf="(person$ | async) as data">
-                    <p><b>{{data.first_name}} {{ data.last_name}}</b> {{data.contact_phone}}</p>
-                    <p>{{data.address}}</p>
-                    <p>{{data.city}} {{data.state}} {{data.country}}</p>
-                    <p>{{data.contact_email}}</p>
-                </div>
-        </clr-tab-content>
-    </clr-tab>
-    <clr-tab>
-        <button class="tabBtn" clrTabLink>FORMS LINKS</button>
-        <clr-tab-content *clrIfActive>
-            <section class="innerTab">
-              <table  class="table table-striped">
-                <thead>
-                <tr>
-                  <th>Form name</th>
-                  <th>Created</th>
-                  <th>Updated</th>
-                  <th>Type</th>
-                  <th>Link</th>
-                </tr>
-                </thead>
-                <tbody *ngFor="let item of formList$ | async">
-                <tr>
-                  <td>{{item.name}}</td>
-                  <td>{{item.created_at}}</td>
-                  <td>{{item.updated_at}}</td>
-                  <td>Registrations</td>
-                  <td>
-                    <button type="button" routerLink="/vertical-data-collection/{{item.link}}"  class="btn btn-default" >Link</button>
-                  </td>
-                </tr>
-                </tbody>
-              </table>
-            </section>
-        </clr-tab-content>
-    </clr-tab>
-</clr-tabs>
+  <ngb-tabset>
+    <ngb-tab title="GENERAL">
+      <ng-template ngbTabContent>
+        <div *ngIf="(person$ | async) as data">
+          <p><b>{{data.first_name}} {{ data.last_name}}</b> {{data.contact_phone}}</p>
+          <p>{{data.address}}</p>
+          <p>{{data.city}} {{data.state}} {{data.country}}</p>
+          <p>{{data.contact_email}}</p>
+        </div>
+      </ng-template>
+    </ngb-tab>
+    <ngb-tab title="FORMS LINKS">
+      <ng-template ngbTabContent>
+        <section class="innerTab">
+          <table class="table table-striped">
+            <thead>
+            <tr>
+              <th>Form name</th>
+              <th>Created</th>
+              <th>Updated</th>
+              <th>Type</th>
+              <th>Link</th>
+            </tr>
+            </thead>
+            <tbody *ngFor="let item of formList$ | async">
+            <tr>
+              <td>{{item.name}}</td>
+              <td>{{item.created_at}}</td>
+              <td>{{item.updated_at}}</td>
+              <td>Registrations</td>
+              <td>
+                <button type="button" routerLink="/vertical-data-collection/{{item.link}}" class="btn btn-default">
+                  Link
+                </button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </section>
+      </ng-template>
+    </ngb-tab>
+  </ngb-tabset>
 </div>
 
