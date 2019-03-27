@@ -8,9 +8,10 @@ import {Field} from "../../../../model/field.model";
 })
 export class VSideBarFieldComponent implements OnInit {
 
-  @Input() existing: Field;
+  @Input() field: Field;
   @Input() style: boolean;
   @Output() onChangeFieldBeing = new EventEmitter<any>();
+  @Output() deleteCustom = new EventEmitter<any>();
   constructor() { }
 
   ngOnInit() {
@@ -18,8 +19,12 @@ export class VSideBarFieldComponent implements OnInit {
 
 
   onBeingChange(event){
-    this.existing.exist=!this.existing.exist;
+    this.field.exist=!this.field.exist;
     this.onChangeFieldBeing.emit(event);
+  }
+
+  deleteCustomField(name: string){
+    this.deleteCustom.emit(name);
   }
 }
 

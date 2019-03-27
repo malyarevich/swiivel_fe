@@ -98,7 +98,7 @@ export class VFormBuilderComponent implements OnInit {
     if(event){
       this.addExistingField(field);
     }else{
-      this.onDelete(field.mapped);
+      this.onDelete(field.name);
     }
   }
   addExistingField(field:Field){
@@ -120,6 +120,7 @@ export class VFormBuilderComponent implements OnInit {
     let newField: Field = cloneDeep(this.customFields[0]);
     newField.name = name;
     newField._id = uuid();
+    newField.exist=false;
     this.doExistingFieldsUniq(newField);
     newField.isValid = true;
     newField.isValidName = true;
@@ -171,9 +172,9 @@ export class VFormBuilderComponent implements OnInit {
   //   this.fields = this.fields.filter((field) => field._id != id);
   //   this.fieldsValidator();
   // }
-  onDelete(mapped: string) {
+  onDelete(name: string) {
 
-    this.fields = this.fields.filter((field) => field.mapped != mapped);
+    this.fields = this.fields.filter((field) => field.name != name);
     this.fieldsValidator();
   }
 
@@ -181,6 +182,11 @@ export class VFormBuilderComponent implements OnInit {
     if(field.mapped==''){
       field.isValidName  = this.checkExistingFieldsName(field.name);
     }
+  }
+  onDeleteCustom(name: string){
+    this.onDelete(name);
+    this.existingFields = this.existingFields.filter((field) => field.name != name);
+
   }
 
     onFieldChanged(field) {

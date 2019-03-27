@@ -39,8 +39,9 @@
 
           <div class="mb-2  " *ngFor="let existing of existingFields | filter : searchText">
             <app-v-side-bar-field
-              [existing]="existing"
+              [field] ="existing"
               [style]="existing.mapped==''"
+              (deleteCustom)="onDeleteCustom($event)"
               (onChangeFieldBeing)="onChangeFieldBeing($event, existing)"
             >
             </app-v-side-bar-field>
@@ -58,6 +59,7 @@
               (keyup)="nameChange($event)"
               [ngClass]="!validNewCustomFieldName?'is-invalid':''"
               class="form-control add-input p-0"
+              autofocus
               #newField
               (blur)="addNewCustomField(newField.value); newField.value=''"
               (keyup.enter)="addNewCustomField(newField.value); newField.value=''">

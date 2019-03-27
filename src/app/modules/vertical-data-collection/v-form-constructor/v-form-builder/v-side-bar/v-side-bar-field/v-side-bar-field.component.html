@@ -1,7 +1,7 @@
 <div class="  row no-gutters  align-items-center">
   <div class="col-2 "> <label class="app-checkbox-container">
     <input
-      type="checkbox" [ngModel]="existing.exist" (ngModelChange)="onBeingChange($event)">
+      type="checkbox" [ngModel]="field.exist" (ngModelChange)="onBeingChange($event)">
     <span class="app-checkbox-checkmark"></span>
   </label>
   </div>
@@ -11,7 +11,10 @@
       <span><i class="fas fa-ellipsis-v  dragable-i"></i></span>
     </div>
     <div class="col ml-1">
-      <span class="side-bar-item-font">{{existing.name}}</span>
+      <span class="side-bar-item-font" [title]="style?'Custom':'Existing'">{{field.name}}</span>
+    </div>
+    <div *ngIf="style" class="col-1 mr-1">
+      <span><i class="fas fa-trash dragable-i" (click)="deleteCustomField(field.name)"></i></span>
     </div>
   </div>
 </div>
