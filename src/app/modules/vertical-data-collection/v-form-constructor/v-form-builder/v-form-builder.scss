@@ -15,11 +15,38 @@
 .text_small{
   font-size: 80%;
 }
-
-
-.cdk-drag-animating {
-  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+.add-input.form-control{
+  height: 27px;
 }
+
+.btn.btn-outline-primary.form-control{
+  height: 27px;
+}
+
+.btn-outline-primary {
+  color: #4050A8;
+  border-color: #4050A8;
+}
+
+.btn-outline-primary:not(:disabled):not(.disabled):active:hover{
+  color: #4050A8;
+  background-color: #4050A8;
+  border-color: #4050A8
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.search-input{
+  background-color: #F6F6F6;
+  border-radius: 3px;
+}
+
+
+//.cdk-drag-animating {
+//  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+//}
 
 
 body{
@@ -113,3 +140,19 @@ input:checked + .app-slider:before {
 }
 
 /*End switcher*/
+
+.app-list-group-item-info{
+  background-color: #EBEEFF;
+
+}
+.list-group-item, .app-list-group-item-inf{
+  border-radius: 5px;
+}
+//.cdk-drop-list-dragging .cdk-drag {
+//  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+//}
+//
+///* Animate an item that has been dropped. */
+//.cdk-drag-animating {
+//  transition: transform 300ms cubic-bezier(0, 0, 0.2, 1);
+//}
