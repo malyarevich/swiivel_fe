@@ -110,6 +110,12 @@ export class VFormGeneralInformationComponent implements OnInit {
 
   }
 
-
+    getDayparting() {
+        let hrs = new Date().getHours();
+        if (hrs >= 6 && hrs < 11) return 'morning';
+        if (hrs >= 11 && hrs < 19) return 'afternoon';
+        if (hrs >= 19 && hrs <= 23) return 'evening';
+        return 'night';
+    }
 
 }
