@@ -5,11 +5,11 @@
 <div class="container-fluid">
   <div class="row mt-5">
     <div class="col-2 rounded ml-5 p-0">
-      <app-v-form-general-menu></app-v-form-general-menu>
+      <app-v-form-general-menu (scrollToEmitter)="onScrollTo($event)"></app-v-form-general-menu>
     </div>
     <div class=" col-6 offset-1">
       <form [formGroup]="generalInfoForm" (ngSubmit)="onSubmit()">
-        <div class="container bg-white rounded p-5" >
+        <div class="container bg-white rounded p-5" #basicInfo>
           <div class="justify-content-md-center mb-3 pt-3 text-center">
             <span class="pt-4 app-step-title">1. BASIC FORM INFORMATION</span>
           </div>
@@ -105,7 +105,7 @@
     </div>
 
 
-    <div class="mt-4 mb-4 p-5 container bg-white rounded">
+    <div class="mt-4 mb-4 p-5 container bg-white rounded" #period>
 
       <div class="justify-content-md-center mb-3 text-center">
         <span class="pt-4 app-step-title">2. PERIOD</span>
@@ -147,7 +147,7 @@
     </div>
 
 
-    <div class="mt-4 mb-4 mt-4 p-5 container bg-white rounded">
+    <div class="mt-4 mb-4 mt-4 p-5 container bg-white rounded" #formDates>
 
       <div class="justify-content-md-center mb-3 text-center">
         <span class="pt-4 app-step-title">3. FORM DATES</span>
@@ -206,7 +206,7 @@
 
     </div>
 
-    <div class="mt-4 mb-4 mt-4 p-5 container bg-white rounded">
+    <div class="mt-4 mb-4 mt-4 p-5 container bg-white rounded" #eligibleAccounts>
 
       <div class="justify-content-md-center mb-3 text-center">
         <span class="pt-4 app-step-title">4. ELIGIBLE ACCOUNTS</span>

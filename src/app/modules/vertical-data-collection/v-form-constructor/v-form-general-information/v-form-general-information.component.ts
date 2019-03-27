@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {FormUtils} from "../../utils/form.utils";
 import {Form} from "../../model/form.model";
@@ -15,6 +15,11 @@ import {Period} from "../../model/period.model";
   styleUrls: ['./v-form-general-information.component.css']
 })
 export class VFormGeneralInformationComponent implements OnInit {
+    @ViewChild('basicInfo') basicInfo: ElementRef;
+    @ViewChild('period') period: ElementRef;
+    @ViewChild('formDates') formDates: ElementRef;
+    @ViewChild('eligibleAccounts') eligibleAccounts: ElementRef;
+
   formId: string ='';
   startDate;
   fields = [];
@@ -116,6 +121,11 @@ export class VFormGeneralInformationComponent implements OnInit {
         if (hrs >= 11 && hrs < 19) return 'afternoon';
         if (hrs >= 19 && hrs <= 23) return 'evening';
         return 'night';
+    }
+
+    onScrollTo(target) {
+        console.log(this[target].nativeElement);
+        this[target].nativeElement.scrollIntoView({behavior:"smooth"});
     }
 
 }

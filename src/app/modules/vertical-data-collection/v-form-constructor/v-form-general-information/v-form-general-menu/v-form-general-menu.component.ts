@@ -17,10 +17,11 @@ import {
 export class VFormGeneralMenuComponent implements OnInit, AfterViewInit {
 
     @ViewChild('generalInfoMenu') menuElement: ElementRef;
-    // @Output() scrollToEmitter: EventEmitter = new EventEmitter;
+    @Output() scrollToEmitter = new EventEmitter<string>();
 
     sticky: boolean = false;
     elementPosition: any;
+    activeItem: string;
 
     menuItems = [
         {title: 'Basic Form Information', target: 'basicInfo'},
@@ -43,5 +44,10 @@ export class VFormGeneralMenuComponent implements OnInit, AfterViewInit {
     handleScroll() {
         const windowScroll = window.pageYOffset;
         this.sticky = (windowScroll >= this.elementPosition);
+    }
+
+    onScrollTo(target) {
+        this.activeItem = target;
+        this.scrollToEmitter.emit(target);
     }
 }

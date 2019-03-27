@@ -2,6 +2,16 @@
     position: fixed;
     top: 20px;
 }
+
 .absolute {
     position: absolute;
+}
+
+.app-form-general-menu-item {
+    cursor: pointer;
+}
+
+.app-form-general-menu-item-active {
+    color: #4350A2;
+    background-color: #EBEEFF;
 }
