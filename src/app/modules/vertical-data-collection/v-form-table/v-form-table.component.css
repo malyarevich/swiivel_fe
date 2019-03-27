@@ -4,12 +4,12 @@
 }
 
 .block-wrapper table {
-    font-size: 14px;
+    /*font-size: 14px;*/
 }
 
 .block-wrapper table input {
-    max-height: 25px;
-    max-width: 150px;
+    /*max-height: 25px;*/
+    /*max-width: 150px;*/
 }
 
 .checked-row {

@@ -2,8 +2,10 @@
                         (sortFilter)="changeSort($event)"></app-table-header-title>
 <span class="cancel-input" *ngIf="value" alt="cancel" (click)="cancelSearch()"><i
   class="fas fa-times fa-xs"></i></span>
-<input class="form-control form-control-sm"
-       type="date"
+<input class="form-control" placeholder="yyyy-mm-dd"
        [(ngModel)]="value"
-       (input)="sendData()"
-       [disabled]="!col.search">
+       ngbDatepicker
+       (ngModelChange)="sendData()"
+       #d="ngbDatepicker"
+       [disabled]="!col.search"
+       (click)="d.toggle()">
