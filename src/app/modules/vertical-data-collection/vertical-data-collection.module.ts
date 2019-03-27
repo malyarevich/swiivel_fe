@@ -40,12 +40,12 @@ import {TableHeaderTitleComponent} from './v-form-table/v-form-table-header/tabl
 import {TableHeaderFilterTextComponent} from './v-form-table/v-form-table-header/table-header-filter-text/table-header-filter-text.component';
 import {TableHeaderFilterDateComponent} from './v-form-table/v-form-table-header/table-header-filter-date/table-header-filter-date.component';
 import {VFormGeneralInformationComponent} from "./v-form-constructor/v-form-general-information/v-form-general-information.component";
-import {VFormFieldSettingsComponent} from './v-form-constructor/v-form-builder/v-field-conteiner/v-form-field-settings/v-form-field-settings.component';
 import {VGroupContainerComponent} from './v-form-constructor/v-form-builder/v-group-container/v-group-container.component';
 import {FilterPipe} from "./v-form-constructor/v-form-builder/v-side-bar/filter.pipe";
 import { VSideBarFieldComponent } from './v-form-constructor/v-form-builder/v-side-bar/v-side-bar-field/v-side-bar-field.component';
-import { VFormFieldSettingsComponent } from './v-form-constructor/v-form-builder/v-form-conteiner/v-form-field-settings/v-form-field-settings.component';
 import { VFormGeneralMenuComponent } from './v-form-constructor/v-form-general-information/v-form-general-menu/v-form-general-menu.component';
+import {ClarityModule} from "@clr/angular";
+import {VFormFieldSettingsComponent} from "./v-form-constructor/v-form-builder/v-field-conteiner/v-form-field-settings/v-form-field-settings.component";
 
 const routes: Routes = [
   {
@@ -113,7 +113,7 @@ const routes: Routes = [
     VFormFieldSettingsComponent,
     VGroupContainerComponent,
     FilterPipe,
-    VSideBarFieldComponent
+    VSideBarFieldComponent,
       VFormFieldSettingsComponent,
       VFormGeneralMenuComponent,
   ],
