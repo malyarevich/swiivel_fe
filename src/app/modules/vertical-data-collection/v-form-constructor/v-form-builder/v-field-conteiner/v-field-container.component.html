@@ -4,8 +4,8 @@
     <div class="col-3 ">
       <div class="row align-items-center no-gutters ml-2">
         <div class="col-3">
-          <div class="row align-items-center no-gutters">
-            <div *ngIf="inputField.isValidName" cdkDragHandle>
+          <div class="row align-items-center no-gutters" cdkDragHandle>
+            <div *ngIf="inputField.isValidName" >
               <span><i class="fas fa-ellipsis-v dragable-i"></i></span>
               <span><i class="fas fa-ellipsis-v dragable-i"></i></span>
                </div>
@@ -25,7 +25,7 @@
 
         <div class="col-9">
           <label class="has-float-label">
-            <input class="form-control " (ngModelChange)="nameChange($event)" [disabled]="inputField.mapped!=''"
+            <input class="form-control " (ngModelChange)="nameChange($event)" [disabled]="inputField.mapped!=''&& inputField.hasOwnProperty('mapped')"
                    [ngModel]="inputField.name">
             <span class="spanForLabel">Field Label</span>
           </label>
@@ -37,7 +37,7 @@
       <div class="row align-items-center ">
         <div class="col-5 offset-1 pl-0">
           <label class="has-float-label">
-            <select class="form-control" [disabled]="inputField.mapped!=''" [(ngModel)]="inputField.type">
+            <select class="form-control" [disabled]="inputField.mapped!='' && inputField.hasOwnProperty('mapped')" [(ngModel)]="inputField.type">
               <option *ngFor="let item of customFields" [ngValue]="item.type"
                       [selected]="inputField.type==item.type">{{item.name}}</option>
             </select>
@@ -62,6 +62,7 @@
       </div>
     </div>
     <div class="col-md-3 row align-items-center no-gutters">
+
       <div class="col-10 row align-items-center no-gutters ml-2">
         <div class="col ml-1 ">
           <label class="app-switch mr-2">
@@ -98,15 +99,11 @@
         </div>
 
       </div>
-      <div class="col-md-1">
-        <div ngbDropdown placement="bottom-right" autoClose="true" class="d-inline-block ml-2" #dropdownField="ngbDropdown">
-          <button class="btn btn-sm" id="dropdown-field" ngbDropdownToggle>
-            <i class="fas fa-cog app-element-color"></i>
+      <div class="col-1">
+        <div  class="d-inline-block ml-2" >
+          <button class="btn btn-sm" id="dropdown-field" (click)="showSettings=!showSettings">
+            <i class="fas fa-cog dragable-i"></i>
           </button>
-          <div ngbDropdownMenu aria-labelledby="dropdown-field">
-            <button ngbDropdownItem (click)="removeField(inputField._id)">Remove</button>
-            <button ngbDropdownItem (click)="showSettings = true; dropdownField.close()">Settings</button>
-          </div>
         </div>
       </div>
     </div>

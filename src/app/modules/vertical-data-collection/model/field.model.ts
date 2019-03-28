@@ -10,4 +10,5 @@ export interface Field {
   value: string;
   isValid?: boolean;
   isValidName?: boolean;
+  exist?:boolean;
 }

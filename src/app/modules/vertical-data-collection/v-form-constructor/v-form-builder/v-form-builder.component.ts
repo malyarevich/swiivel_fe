@@ -1,6 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import {CdkDragDrop, copyArrayItem, moveItemInArray} from '@angular/cdk/drag-drop';
-import {Field} from '../../../data-collection/reducers/field/field.model';
+import {Component, OnInit, Input, ViewChild, ElementRef} from '@angular/core';
+import {CdkDragDrop, copyArrayItem, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import {VFormService} from '../../v-form.service';
 import {Form} from '../../../data-collection/reducers/forms/form.model';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -8,23 +7,27 @@ import { v4 as uuid } from 'uuid';
 import { cloneDeep,isEmpty } from 'lodash';
 import {Location} from '@angular/common';
 import {VFieldsService} from "../../v-fields.service";
+import {Field} from "../../model/field.model";
 
 @Component({
   selector: 'app-v-form-table',
-  templateUrl: './v-form-builder..html',
+  templateUrl: './v-form-builder.html',
   styleUrls: ['./v-form-builder.scss'],
 })
 export class VFormBuilderComponent implements OnInit {
-  isCollapsed = false;
-
+  isCollapsed = true;
+  validNewCustomFieldName: boolean = true;
+  showAddButton = true;
   formId: string='';
-warningVisible: boolean = false;
-showWarningMessage: string = 'Please correct existing errors';
-
+  warningVisible: boolean = false;
+  showWarningMessage: string = 'Please correct existing errors';
+  searchText: string;
   fields: Field[] = [];
   formName: string = '';
   customFields: Field[];
   existingFields: Field[];
+
+  @ViewChild("addCustomFieldInput") addCustomFieldInput: ElementRef;
 
   constructor(private formService: VFormService,
               private fieldsService: VFieldsService,
@@ -43,20 +46,31 @@ showWarningMessage: string = 'Please correct existing errors';
 
     this.loadBasicFields();
     this.loadMappedFields();
-    this.formInit();
+
+
 
   }
 
-  drop(event: CdkDragDrop<string[]>) {
+
+
+  drop(event: CdkDragDrop<Field[]>) {
+
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else {
-      copyArrayItem(event.previousContainer.data,
+    } else if((event.previousContainer.id =='workPlaceList' && event.container.id=='6372c882-3d14-486f-9c1f-52ae8ab928ef') ||
+      (event.container.id =='workPlaceList' && event.previousContainer.id=='6372c882-3d14-486f-9c1f-52ae8ab928ef')) {
+      transferArrayItem(event.previousContainer.data,
         event.container.data,
         event.previousIndex,
         event.currentIndex);
-      this.addField(this.fields[event.currentIndex]);
     }
+    // else {
+    //   copyArrayItem(event.previousContainer.data,
+    //     event.container.data,
+    //     event.previousIndex,
+    //     event.currentIndex);
+    //   this.addField(this.fields[event.currentIndex]);
+    // }
   }
 
 
@@ -69,24 +83,74 @@ showWarningMessage: string = 'Please correct existing errors';
   loadMappedFields() {
     this.fieldsService.getExistingList().subscribe((fields: Field[]) => {
       this.existingFields = fields;
-    });
+      this.existingFields.forEach(field=>field.exist = false);
+
+    },(error)=>console.log(error, 'error'),
+      ()=>this.formInit()
+      );
+
   }
 
-  addField(field: Field) {
-    let newField = cloneDeep(field);
+
+
+
+  onChangeFieldBeing(event: boolean, field: Field){
+    if(event){
+      this.addExistingField(field);
+    }else{
+      this.onDelete(field.name);
+    }
+  }
+  addExistingField(field:Field){
+       let newField = cloneDeep(field);
+       newField._id = uuid();
+       this.doExistingFieldsUniq(newField);
+       newField.isValid = true;
+       newField.isValidName = true;
+       this.fields.push( newField);
+       this.fieldsValidator();
+
+  }
+
+  addNewCustomField(name: string){
+    if(name.length<3 || !this.validNewCustomFieldName){
+      this.showAddButton = true;
+      return;
+    }
+    let newField: Field = cloneDeep(this.customFields[0]);
+    newField.name = name;
     newField._id = uuid();
+    newField.exist=false;
     this.doExistingFieldsUniq(newField);
     newField.isValid = true;
     newField.isValidName = true;
-    if(newField.mapped==''){
-      newField.isValidName = this.checkExistingFieldsName(newField.name);
-
-    }
-    //replace cloned field that which copy to field array with object link by AM Drag&Drop native method
-    this.fields = this.fields.map(item => item._id==field._id?newField:item);
+    newField.isValidName = this.checkExistingFieldsName(newField.name);
+   // this.fields.push( newField);
+    this.existingFields.push(newField);
     this.fieldsValidator();
+    this.showAddButton = true;
 
   }
+  nameChange(event){
+    this.validNewCustomFieldName= this.checkExistingFieldsName(event.target.value.trim());
+  }
+
+  //
+  // addField(field: Field) {
+  //   let newField = cloneDeep(field);
+  //   newField._id = uuid();
+  //   this.doExistingFieldsUniq(newField);
+  //   newField.isValid = true;
+  //   newField.isValidName = true;
+  //   if(newField.mapped==''){
+  //     newField.isValidName = this.checkExistingFieldsName(newField.name);
+  //
+  //   }
+  //   //replace cloned field that which copy to field array with object link by AM Drag&Drop native method
+  //   this.fields = this.fields.map(item => item._id==field._id?newField:item);
+  //   this.fieldsValidator();
+  //
+  // }
 
   saveForm() {
     if (this.validCheckFields()) {
@@ -102,10 +166,15 @@ showWarningMessage: string = 'Please correct existing errors';
      }
 
   }
+  //
+  // onDelete(id: string) {
+  //
+  //   this.fields = this.fields.filter((field) => field._id != id);
+  //   this.fieldsValidator();
+  // }
+  onDelete(name: string) {
 
-  onDelete(id: string) {
-
-    this.fields = this.fields.filter((field) => field._id != id);
+    this.fields = this.fields.filter((field) => field.name != name);
     this.fieldsValidator();
   }
 
@@ -113,6 +182,11 @@ showWarningMessage: string = 'Please correct existing errors';
     if(field.mapped==''){
       field.isValidName  = this.checkExistingFieldsName(field.name);
     }
+  }
+  onDeleteCustom(name: string){
+    this.onDelete(name);
+    this.existingFields = this.existingFields.filter((field) => field.name != name);
+
   }
 
     onFieldChanged(field) {
@@ -130,6 +204,7 @@ showWarningMessage: string = 'Please correct existing errors';
   }
 
 
+
   fieldsValidator(){
 
     this.fields.map(field=>field.isValid=true);
@@ -144,7 +219,7 @@ showWarningMessage: string = 'Please correct existing errors';
 
 
   checkExistingFieldsName(name: string): boolean{
-    const arr = this.existingFields.filter((field=>field.name==name));
+    const arr = this.existingFields.filter((field=>field.name.toLowerCase()==name.toLowerCase()));
     return isEmpty(arr);
   }
 
@@ -174,9 +249,18 @@ showWarningMessage: string = 'Please correct existing errors';
           if(!isEmpty(form)){
             this.formName = form.name;
             this.fields = form.fields;
+
+            //TODO: rewrite this crunch
+
+           this.existingFields.forEach(existing=>{
+             return  this.fields.forEach(field=>   existing.mapped==field.mapped?existing.exist=true:existing)
+            });
           }
         },
-        (error)=>console.log(error, 'error')
+        (error)=>console.log(error, 'error'),
+        ()=> this.existingFields.forEach(existing=>{
+          return  this.fields.forEach(field=>   existing.mapped==field.mapped?existing.exist=true:existing)
+        })
       );
     }
 

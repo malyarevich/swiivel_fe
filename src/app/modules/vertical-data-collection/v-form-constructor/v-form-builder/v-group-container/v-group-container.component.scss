@@ -1,0 +1,21 @@
+@import '../../../../../../styles/variables/colors.scss';
+
+.app-element-color {
+  color: $element-base-color;
+}
+.dragable-i{
+  color: #9C9D9D;
+}
+.rectangle{
+  margin-left: 13px;
+  color: #4050A8  ;
+  height: 6px;
+  width: 15px;
+}
+.dropdown-toggle::after {
+  display:none;
+}
+.dragable-y{
+  font-size: 1.5rem;
+  color: #9C9D9D;
+}
