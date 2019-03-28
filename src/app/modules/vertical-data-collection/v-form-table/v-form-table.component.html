@@ -39,51 +39,68 @@
         <td>{{item.owner.full_name}} {{ item.owner.role.role_name}}</td>
         <td>{{item.updated_at}}</td>
         <td>
-          <button type="button" class="btn app-btn-status app-btn-sml"
-                  [ngClass]="getClassByStatus(item.status)">
-            <ng-template [ngIf]="item.status === STATUS_REVIEW" [ngIfElse]="chevron">
+
+          <div ngbDropdown class="d-inline-block">
+
+            <button type="button" class="btn app-btn-status app-btn-sml app-dropdown-toggle"
+                    [ngClass]="getClassByStatus(item.status)"
+                    id="dropdownBasic1"
+                    ngbDropdownToggle
+                    appClickStopPropagation>
+              <ng-template [ngIf]="item.status === STATUS_REVIEW" [ngIfElse]="chevron">
               <span>{{'In ' + item.status | titlecase}}
                 <i class="fas fa-hourglass-start"></i>
               </span>
-            </ng-template>
-            <ng-template #chevron>
+              </ng-template>
+              <ng-template #chevron>
               <span>{{item.status | titlecase}}
                 <i class="fas fa-chevron-down"></i>
               </span>
-            </ng-template>
-          </button>
+              </ng-template>
+            </button>
+
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+              <button ngbDropdownItem>Action - 1</button>
+              <button ngbDropdownItem>Another Action</button>
+              <button ngbDropdownItem>Something else is here</button>
+            </div>
+          </div>
+
         </td>
         <td nowrap>
           <button type="button"
                   class="btn btn-secondary app-btn-primary app-btn-sml mr-2 "
                   routerLink="v-form-constructor/{{item.mongo_id}}"
-                  routerLinkActive="active">
+                  routerLinkActive="active"
+                  appClickStopPropagation>
             <span><i class="fas fa-pen"></i> Edit</span>
           </button>
           <button type="button"
                   class="btn btn-secondary app-btn-primary app-btn-sml mr-2 "
                   routerLink="onlineform/{{item.mongo_id}}"
-                  routerLinkActive="active">
+                  routerLinkActive="active"
+                  appClickStopPropagation>
             <span><i class="far fa-eye"></i> View</span>
           </button>
           <button type="button"
                   class="btn btn-outline-danger app-btn-sml mr-2 "
-                  (click)="removeForm(item.mongo_id)">
+                  (click)="removeForm(item.mongo_id)"
+                  appClickStopPropagation>
             <span><i class="fas fa-trash-alt"></i> Delete</span>
           </button>
-          <button
+          <button appClickStopPropagation
             class="btn app-btn-sml mr-2 ">
             <i class="fas fa-share-alt"></i>
           </button>
-          <button
+          <button appClickStopPropagation
             class="btn app-btn-sml mr-2 ">
             <i class="fas fa-share"></i>
           </button>
-          <button
+          <button appClickStopPropagation
             class="btn app-btn-sml mr-2 ">
             <i class="fas fa-copy"></i>
           </button>
-          <button
+          <button appClickStopPropagation
             class="btn app-btn-sml ">
             <i class="fas fa-ellipsis-v"></i>
           </button>

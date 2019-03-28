@@ -43,6 +43,7 @@ import { TableHeaderFilterDateComponent } from './v-form-table/v-form-table-head
 import {VFormGeneralInformationComponent} from "./v-form-constructor/v-form-general-information/v-form-general-information.component";
 import { VFormFieldSettingsComponent } from './v-form-constructor/v-form-builder/v-form-conteiner/v-form-field-settings/v-form-field-settings.component';
 import { VFormGeneralMenuComponent } from './v-form-constructor/v-form-general-information/v-form-general-menu/v-form-general-menu.component';
+import {GeneralDirectivesModule} from "../../utils/directives/general-directives.module";
 
 const routes: Routes = [
   {
@@ -119,8 +120,8 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     ClarityModule,
     DragDropModule,
-    ReactiveFormsModule
-
+    ReactiveFormsModule,
+      GeneralDirectivesModule,
   ],
   providers:[VFormService, VFieldsService, FormUtils],
   entryComponents: [entryComponents]
