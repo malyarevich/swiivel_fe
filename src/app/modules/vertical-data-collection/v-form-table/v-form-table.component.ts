@@ -23,6 +23,12 @@ export class VFormTableComponent implements OnInit {
         sort: {},
         conditions: {}
     };
+    statuses = [
+        TEMPLATE_STATUS.STATUS_ACTIVE,
+        TEMPLATE_STATUS.STATUS_ARCHIVED,
+        TEMPLATE_STATUS.STATUS_DRAFT,
+        TEMPLATE_STATUS.STATUS_REVIEW
+    ];
     STATUS_REVIEW = TEMPLATE_STATUS.STATUS_REVIEW;
     cols = [
         {
@@ -142,9 +148,15 @@ export class VFormTableComponent implements OnInit {
     }
 
     bulkArchive() {
-        this.vFormService.bulkArchiveForms(this.formsSelectedIds).subscribe(res => {
+        this.vFormService.changeStatus(this.formsSelectedIds, TEMPLATE_STATUS.STATUS_ARCHIVED).subscribe(res => {
             this.getAllForm();
             this.formsSelectedIds = [];
+        });
+    }
+
+    changeStatus(id, status) {
+        this.vFormService.changeStatus(id, status).subscribe(res => {
+            this.getAllForm();
         });
     }
 

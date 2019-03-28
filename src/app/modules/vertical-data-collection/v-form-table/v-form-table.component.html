@@ -39,7 +39,6 @@
         <td>{{item.owner.full_name}} {{ item.owner.role.role_name}}</td>
         <td>{{item.updated_at}}</td>
         <td>
-
           <div ngbDropdown class="d-inline-block">
 
             <button type="button" class="btn app-btn-status app-btn-sml app-dropdown-toggle"
@@ -58,14 +57,15 @@
               </span>
               </ng-template>
             </button>
-
             <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-              <button ngbDropdownItem>Action - 1</button>
-              <button ngbDropdownItem>Another Action</button>
-              <button ngbDropdownItem>Something else is here</button>
+              <button *ngFor="let status of statuses"
+                      (click)="changeStatus(item.id, status)"
+                      ngbDropdownItem
+                      appClickStopPropagation>
+                {{status}}
+              </button>
             </div>
           </div>
-
         </td>
         <td nowrap>
           <button type="button"
@@ -89,19 +89,19 @@
             <span><i class="fas fa-trash-alt"></i> Delete</span>
           </button>
           <button appClickStopPropagation
-            class="btn app-btn-sml mr-2 ">
+                  class="btn app-btn-sml mr-2 ">
             <i class="fas fa-share-alt"></i>
           </button>
           <button appClickStopPropagation
-            class="btn app-btn-sml mr-2 ">
+                  class="btn app-btn-sml mr-2 ">
             <i class="fas fa-share"></i>
           </button>
           <button appClickStopPropagation
-            class="btn app-btn-sml mr-2 ">
+                  class="btn app-btn-sml mr-2 ">
             <i class="fas fa-copy"></i>
           </button>
           <button appClickStopPropagation
-            class="btn app-btn-sml ">
+                  class="btn app-btn-sml ">
             <i class="fas fa-ellipsis-v"></i>
           </button>
         </td>
