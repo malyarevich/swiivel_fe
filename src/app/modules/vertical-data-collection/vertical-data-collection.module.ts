@@ -46,6 +46,7 @@ import { VSideBarFieldComponent } from './v-form-constructor/v-form-builder/v-si
 import { VFormGeneralMenuComponent } from './v-form-constructor/v-form-general-information/v-form-general-menu/v-form-general-menu.component';
 import {ClarityModule} from "@clr/angular";
 import {VFormFieldSettingsComponent} from "./v-form-constructor/v-form-builder/v-field-conteiner/v-form-field-settings/v-form-field-settings.component";
+import {GeneralDirectivesModule} from "../../utils/directives/general-directives.module";
 
 const routes: Routes = [
   {
@@ -124,8 +125,8 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     ClarityModule,
     DragDropModule,
-    ReactiveFormsModule
-
+    ReactiveFormsModule,
+      GeneralDirectivesModule,
   ],
   providers: [VFormService, VFieldsService, FormUtils],
   entryComponents: [entryComponents]

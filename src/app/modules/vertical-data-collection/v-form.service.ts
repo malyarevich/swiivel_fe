@@ -4,7 +4,6 @@ import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Form} from './model/form.model';
 import {Observable} from 'rxjs';
 import {ApiResponse} from "../../models/api-response";
-import {TEMPLATE_STATUS} from "../../enums/template-status"
 
 @Injectable()
 export class VFormService {
@@ -78,10 +77,10 @@ export class VFormService {
             );
     }
 
-    bulkArchiveForms(ids) {
+    changeStatus(ids, status) {
         return this.http.post(`/proxy/forms/status`, {
             id: ids,
-            status: TEMPLATE_STATUS['STATUS_ARCHIVED'],
+            status: status,
         })
             .pipe(
                 map(response => response)

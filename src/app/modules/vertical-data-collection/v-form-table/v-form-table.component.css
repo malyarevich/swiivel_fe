@@ -64,3 +64,7 @@
     background-color: #F8BC45;
 }
 
+.app-dropdown-toggle::after {
+    display:none;
+}
+
