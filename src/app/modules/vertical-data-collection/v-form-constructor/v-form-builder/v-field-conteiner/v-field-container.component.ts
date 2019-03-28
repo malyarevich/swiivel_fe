@@ -1,13 +1,12 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Field} from '../../../../data-collection/reducers/field/field.model';
+import {Field} from '../../../model/field.model';
 import { range } from 'lodash'
-import {NgbDropdownConfig} from "@ng-bootstrap/ng-bootstrap";
 @Component({
-  selector: 'app-v-form-container',
-  templateUrl: './v-form-container.component.html',
-  styleUrls: ['./v-form-container.component.scss'],
+  selector: 'app-v-field-container',
+  templateUrl: './v-field-container.component.html',
+  styleUrls: ['./v-field-container.component.scss'],
 })
-export class VFormContainerComponent implements OnInit{
+export class VFieldContainerComponent implements OnInit{
 
   @Input() inputField: Field;
   @Input() customFields: Field[];
@@ -25,8 +24,7 @@ export class VFormContainerComponent implements OnInit{
 
   size = range(1  ,13);
 
-  constructor( config: NgbDropdownConfig) {
-    config.placement = 'bottom-right';
+  constructor() {
   }
 
 
@@ -55,7 +53,7 @@ export class VFormContainerComponent implements OnInit{
     }
 
   ngOnInit(): void {
-
+    //console.log(this.inputField.hasOwnProperty('mapped'));
   }
 
 }
