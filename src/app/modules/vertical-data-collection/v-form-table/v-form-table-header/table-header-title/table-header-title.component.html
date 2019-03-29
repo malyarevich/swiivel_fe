@@ -1,6 +1,9 @@
-<span>{{title}}</span>
-<span *ngIf="isSort" (click)="changeSort()">
-  <i class="fas fa-caret-up" *ngIf="!sortOrder || sortOrder === sort['ASC']"></i>
-  <i class="fas fa-caret-down" *ngIf="!sortOrder || sortOrder === sort['DESC']"></i>
-</span>
+<div (click)="changeSort()" class="app-table-header-title">
+  <span>{{title}}</span>
+  <span *ngIf="isSort" class="ml-3">
+  <i class="fas fa-sort" *ngIf="!sortOrder"></i>
+  <i class="fas fa-sort-up" *ngIf="sortOrder === sort['ASC']"></i>
+  <i class="fas fa-sort-down" *ngIf="sortOrder === sort['DESC']"></i>
+  </span>
+</div>
 

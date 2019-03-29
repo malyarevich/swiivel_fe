@@ -1,0 +1,9 @@
+.app-table-header-title {
+    font-weight: normal;
+    color: #444444;
+    cursor: pointer;
+}
+
+.app-table-header-title i {
+    color: #A3A3A3;
+}
