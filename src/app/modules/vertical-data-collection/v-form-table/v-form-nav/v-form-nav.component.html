@@ -1,6 +1,6 @@
-<div class="row py-3">
+<div class="row py-4">
   <div class="col-sm-6">
-    <span class="h5">FORMS</span>
+    <h5 class="font-weight-bold">FORMS</h5>
   </div>
   <div class="col-sm-6 text-right">
     <div class="row">
@@ -38,3 +38,52 @@
     </div>
   </div>
 </div>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-white p-0">
+  <div class="collapse justify-content-left navbar-collapse">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link app-nav-link"
+           [ngClass]="{'app-nav-link-active' : activeFilterTab=='all'}"
+           (click)="onCheckStatusTab('all')">
+          All
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link app-nav-link"
+           [ngClass]="{'app-nav-link-active' : activeFilterTab=='active'}"
+           (click)="onCheckStatusTab('active')">
+          Active
+        </a>
+      </li>
+      <li class="nav-item ">
+        <a class="nav-link app-nav-link"
+           [ngClass]="{'app-nav-link-active' : activeFilterTab=='draft'}"
+           (click)="onCheckStatusTab('draft')">
+          Drafts
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link app-nav-link"
+           [ngClass]="{'app-nav-link-active' : activeFilterTab=='review'}"
+           (click)="onCheckStatusTab('review')">
+          In Review
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link app-nav-link"
+           [ngClass]="{'app-nav-link-active' : activeFilterTab=='closed'}"
+           (click)="onCheckStatusTab('closed')">
+          Closed
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link app-nav-link"
+           [ngClass]="{'app-nav-link-active' : activeFilterTab=='archived'}"
+           (click)="onCheckStatusTab('archived')">
+          Archived
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>

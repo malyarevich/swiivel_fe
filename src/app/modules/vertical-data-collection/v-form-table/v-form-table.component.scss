@@ -1,3 +1,5 @@
+@import '../../../../styles/variables/colors';
+
 .block-wrapper {
     background-color: white;
     border-radius: 5px;
@@ -57,6 +59,7 @@
 }
 
 .app-btn-status-draft {
+    color: #000000;
     background-color: #F2F2F2;
 }
 
@@ -68,3 +71,11 @@
     display:none;
 }
 
+.app-nav-link {
+    cursor: pointer;
+}
+
+.app-nav-link-active {
+    color: $element-base-color !important;
+    border-bottom: 2px solid $element-base-color;
+}

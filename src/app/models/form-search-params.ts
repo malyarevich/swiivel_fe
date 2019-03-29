@@ -4,5 +4,6 @@ export interface FormSearchParams {
     value: string,
     search: object,
     sort: object,
+    filter: object,
     conditions: object,
 }

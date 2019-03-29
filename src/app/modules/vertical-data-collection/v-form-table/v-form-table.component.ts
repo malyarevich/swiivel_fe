@@ -7,7 +7,7 @@ import {TEMPLATE_STATUS} from "../../../enums/template-status";
 @Component({
     selector: 'app-v-form-table',
     templateUrl: './v-form-table.component.html',
-    styleUrls: ['./v-form-table.component.css'],
+    styleUrls: ['./v-form-table.component.scss'],
     encapsulation: ViewEncapsulation.None,
 })
 export class VFormTableComponent implements OnInit {
@@ -21,7 +21,8 @@ export class VFormTableComponent implements OnInit {
         value: '',
         search: {},
         sort: {},
-        conditions: {}
+        filter: {},
+        conditions: {},
     };
     statuses = [
         TEMPLATE_STATUS.STATUS_ACTIVE,
@@ -162,10 +163,21 @@ export class VFormTableComponent implements OnInit {
 
     getClassByStatus(status) {
         return {
-           'app-btn-status-active': status === TEMPLATE_STATUS.STATUS_ACTIVE,
-           'app-btn-status-archived': status === TEMPLATE_STATUS.STATUS_ARCHIVED,
-           'app-btn-status-draft': status === TEMPLATE_STATUS.STATUS_DRAFT,
-           'app-btn-status-review': status === TEMPLATE_STATUS.STATUS_REVIEW,
+            'app-btn-status-active': status === TEMPLATE_STATUS.STATUS_ACTIVE,
+            'app-btn-status-archived': status === TEMPLATE_STATUS.STATUS_ARCHIVED,
+            'app-btn-status-draft': status === TEMPLATE_STATUS.STATUS_DRAFT,
+            'app-btn-status-review': status === TEMPLATE_STATUS.STATUS_REVIEW,
+        }
+    }
+
+    filterStatus(value) {
+        if (value == TEMPLATE_STATUS.STATUS_ALL) {
+            this.params.filter = {};
+            this.getAllForm();
+        }
+        if (this.statuses.includes(value)) {
+            this.params.filter['status'] = value;
+            this.getAllForm();
         }
     }
 }
