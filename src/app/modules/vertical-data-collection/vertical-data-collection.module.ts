@@ -47,6 +47,9 @@ import { VFormGeneralMenuComponent } from './v-form-constructor/v-form-general-i
 import {ClarityModule} from "@clr/angular";
 import {VFormFieldSettingsComponent} from "./v-form-constructor/v-form-builder/v-field-conteiner/v-form-field-settings/v-form-field-settings.component";
 import {GeneralDirectivesModule} from "../../utils/directives/general-directives.module";
+import { VTuitionContractComponent } from './v-form-constructor/v-form-builder/v-tuition-contract/v-tuition-contract.component';
+import { VTuitionSplitFeeComponent } from './v-form-constructor/v-form-builder/v-tuition-contract/v-tuition-split-fee/v-tuition-split-fee.component';
+import { VTuitionSplitStudentComponent } from './v-form-constructor/v-form-builder/v-tuition-contract/v-tuition-split-student/v-tuition-split-student.component';
 
 const routes: Routes = [
   {
@@ -117,6 +120,9 @@ const routes: Routes = [
     VSideBarFieldComponent,
       VFormFieldSettingsComponent,
       VFormGeneralMenuComponent,
+      VTuitionContractComponent,
+      VTuitionSplitFeeComponent,
+      VTuitionSplitStudentComponent,
   ],
   imports: [
     NgbModule,
