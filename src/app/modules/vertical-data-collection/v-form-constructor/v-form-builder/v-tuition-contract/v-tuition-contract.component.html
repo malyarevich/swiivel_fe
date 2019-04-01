@@ -1,0 +1,33 @@
+<div class="p-3">
+  <p class="app-fb-section-title">
+    <span class="app-fb-section-icon">
+      <i class="fas fa-ellipsis-v"></i>
+      <i class="fas fa-ellipsis-v"></i>
+    </span>
+    Contract Table Preview
+  </p>
+</div>
+<div class="px-4 py-2">
+  <p class="font-weight-bold">FEES CONTRACT</p>
+  <div class="app-fb-tuition-table p-3">
+    <app-v-tuition-split-fee *ngIf="splitTuitionBy === 'fee'"
+                             [showFee]="showFee">
+    </app-v-tuition-split-fee>
+    <app-v-tuition-split-student *ngIf="splitTuitionBy === 'student'"
+                                 [showFee]="showFee"
+                                 [showFeeDiscounts]="showFeeDiscounts">
+    </app-v-tuition-split-student>
+  </div>
+  <p class="font-weight-bold mt-5">CONTRACT TEXT <span class="app-fb-tuition-info">(Text that will be displayed to the parents)</span>
+  </p>
+  <textarea class="app-fb-tuition-table w-100 pl-3" rows="8" placeholder="Text"></textarea>
+  <div class="row mt-5">
+    <div class="col">
+      <textarea class="app-fb-tuition-table w-100 pl-3" rows="2" placeholder="Father's Signature"></textarea>
+    </div>
+    <div class="col">
+      <textarea class="app-fb-tuition-table w-100 pl-3" rows="2" placeholder="Mother's Signature"></textarea>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,118 @@
+<table class="table">
+  <thead>
+  <tr class="app-tuition-table-header">
+    <th></th>
+    <th scope="col">
+      CHARLOTTE SIMON
+      <br><span class="font-weight-normal">1st grade</span>
+    </th>
+    <th scope="col">
+      LUELLA SIMON
+      <br><span class="font-weight-normal">1st grade</span>
+    </th>
+    <th scope="col">
+      KEITH SIMON
+      <br><span class="font-weight-normal">1st grade</span>
+    </th>
+    <th scope="col" class="app-th-align-reset">FEE TOTAL</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngIf="showFee.dormitory">
+    <td class="font-weight-bold">Bais Medrash Winter Dormitory Fee</td>
+    <td>$200<br>
+      <ng-container *ngIf="showFeeDiscounts.dormitory">
+        <span class="app-tuition-discount">$90 discount</span>
+      </ng-container>
+    </td>
+    <td>$200</td>
+    <td>$200</td>
+    <td>$600</td>
+  </tr>
+  <tr *ngIf="showFee.registration">
+    <td class="font-weight-bold">Registration</td>
+    <td>$180</td>
+    <td>$180<br>
+      <ng-container *ngIf="showFeeDiscounts.registration">
+        <span class="app-tuition-discount">$100 teacher discount</span><br>
+        <span class="app-tuition-discount">$100 teacher discount</span>
+      </ng-container>
+    </td>
+    <td>$180</td>
+    <td>$540</td>
+  </tr>
+  <tr *ngIf="showFee.activity">
+    <td class="font-weight-bold">Activity</td>
+    <td>$180</td>
+    <td>$180<br>
+      <ng-container *ngIf="showFeeDiscounts.activity">
+        <span class="app-tuition-discount">$100 discount</span>
+      </ng-container>
+    </td>
+    <td>$180</td>
+    <td>$540</td>
+  </tr>
+  <tr *ngIf="showFee.tuition">
+    <td class="font-weight-bold">Tuition</td>
+    <td>$1230</td>
+    <td>$1230</td>
+    <td>$1230<br>
+      <ng-container *ngIf="showFeeDiscounts.tuition">
+        <span class="app-tuition-discount">$100 discount</span>
+      </ng-container>
+    </td>
+    <td>$3690</td>
+  </tr>
+  <tr *ngIf="showFee.scholarship">
+    <td class="font-weight-bold">Scholarship</td>
+    <td>$1230</td>
+    <td>$1230<br>
+      <ng-container *ngIf="showFeeDiscounts.scholarship">
+        <span class="app-tuition-discount">$80 discount</span>
+      </ng-container>
+    </td>
+    <td>$1230</td>
+    <td>$3690</td>
+  </tr>
+  <tr *ngIf="showFee.lunch">
+    <td class="font-weight-bold">Lunch Fee</td>
+    <td>$400<br>
+      <ng-container *ngIf="showFeeDiscounts.lunch">
+        <span class="app-tuition-discount">$20 discount</span>
+      </ng-container>
+    </td>
+    <td>$400</td>
+    <td>$400</td>
+    <td>$1200</td>
+  </tr>
+  <tr class="app-tuition-table-total-2 font-weight-bold">
+    <td>TOTAL PER STUDENTS</td>
+    <td>$3240</td>
+    <td>$3240</td>
+    <td>$3240</td>
+    <td>$9720</td>
+  </tr>
+  <tr class="app-tuition-table-total font-weight-bold">
+    <td>BUILDING FEE</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>$1000</td>
+  </tr>
+  <tr class="app-tuition-table-total font-weight-bold">
+    <td>SECURITY FEE</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>$27,440</td>
+  </tr>
+  <tr class="app-tuition-table-total font-weight-bold">
+    <td>Tuition and Family Fees Total</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>$27,440</td>
+  </tr>
+  </tbody>
+</table>
+

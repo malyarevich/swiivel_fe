@@ -1,0 +1,11 @@
+.app-tuition-table-header {
+    background-color: #F2F2F2;
+}
+
+.app-tuition-table-header th {
+    border-top: none;
+}
+
+.app-tuition-table-total {
+    background-color: #EBEEFF;
+}

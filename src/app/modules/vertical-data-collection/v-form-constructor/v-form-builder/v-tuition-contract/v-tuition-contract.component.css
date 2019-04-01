@@ -1,0 +1,18 @@
+.app-fb-section-title {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.app-fb-section-icon {
+    color: #9E9E9E;
+}
+
+.app-fb-tuition-table {
+    border: 1px solid #D7D7D7;
+    border-radius: 5px;
+}
+
+.app-fb-tuition-info {
+    color: #797B88;
+    font-size: 0.8em;
+}

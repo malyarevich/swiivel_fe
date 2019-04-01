@@ -21,7 +21,7 @@
 
     <div class="row justify-content-center pb-2">
 
-      <div class="col-8 bg-white ">
+      <div class="col-10 bg-white ">
 
         <div class="  row no-gutters slider-item align-items-center">
           <div class="col-9">
@@ -29,17 +29,17 @@
           </div>
           <div class="col">
             <label class="app-switch mr-2">
-              <input type="checkbox" [(ngModel)]="isCollapsed">
+              <input type="checkbox" [(ngModel)]="isFormsFields">
               <span class="app-slider app-round"></span>
             </label>
           </div>
         </div>
-        <div [hidden]="!isCollapsed" class="bg-white rounded mb-3">
-          <input class="form-control mb-3 search-input"  [(ngModel)]="searchText" placeholder="Search...">
+        <div [hidden]="!isFormsFields" class="bg-white rounded mb-3">
+          <input class="form-control mb-3 search-input" [(ngModel)]="searchText" placeholder="Search...">
 
           <div class="mb-2  " *ngFor="let existing of existingFields | filter : searchText">
             <app-v-side-bar-field
-              [field] ="existing"
+              [field]="existing"
               [style]="existing.mapped==''"
               (deleteCustom)="onDeleteCustom($event)"
               (onChangeFieldBeing)="onChangeFieldBeing($event, existing)"
@@ -115,9 +115,9 @@
     </div>
 
     <div class="row justify-content-center pb-2">
-      <div class="col-8 bg-white slider-item  row no-gutters align-items-center">
+      <div class="col-10 bg-white slider-item  row no-gutters align-items-center">
         <div class="col-9">
-          <span class="slider-item-header ">EXTERNAL FORMS</span>
+          <span class="slider-item-header ">DOCUMENTS & FORMS</span>
         </div>
         <div class="col">
           <label class="app-switch mr-2">
@@ -129,9 +129,9 @@
     </div>
 
     <div class="row justify-content-center pb-2">
-      <div class="col-8 bg-white slider-item  row no-gutters align-items-center">
+      <div class="col-10 bg-white slider-item  row no-gutters align-items-center">
         <div class="col-9">
-          <span class="slider-item-header ">TERMS AND CONSENT</span>
+          <span class="slider-item-header ">CONSENT</span>
         </div>
         <div class="col">
           <label class="app-switch mr-2">
@@ -142,22 +142,189 @@
       </div>
     </div>
 
+    <!--TUITION CONTRACT-->
     <div class="row justify-content-center pb-2">
-      <div class="col-8 bg-white slider-item  row no-gutters align-items-center">
-        <div class="col-9">
-          <span class="slider-item-header ">TUITION CONTRACT</span>
+      <div class="col-10 bg-white ">
+        <div class="  row no-gutters slider-item align-items-center">
+          <div class="col-9">
+            <span class="slider-item-header ">TUITION CONTRACT</span>
+          </div>
+          <div class="col">
+            <label class="app-switch mr-2">
+              <input type="checkbox" [(ngModel)]="isTuitionContract">
+              <span class="app-slider app-round"></span>
+            </label>
+          </div>
         </div>
-        <div class="col">
-          <label class="app-switch mr-2">
-            <input type="checkbox">
-            <span class="app-slider app-round"></span>
-          </label>
+        <div [hidden]="!isTuitionContract" class="bg-white rounded mb-3">
+          <p class="mt-3 font-weight-bold">Table Structure</p>
+          <div class="row no-gutters">
+            <div class="col">
+              <label class="app-radio-container">Split by Student
+                <input type="radio" name="split" value="student" [(ngModel)]="splitTuitionBy">
+                <span class="app-radio-checkmark"></span>
+              </label>
+            </div>
+            <div class="col">
+              <label class="app-radio-container">Split by Fee
+                <input type="radio" name="split" value="fee" [(ngModel)]="splitTuitionBy">
+                <span class="app-radio-checkmark"></span>
+              </label>
+            </div>
+          </div>
+          <hr>
+          <p class="font-weight-bold">Show Fees</p>
+          <div class="row no-gutters">
+            <div class="col-6">
+              <label class="app-checkbox-container">
+                BAIS MEDRASH WINTER DORMITORY FEE
+                <input type="checkbox" [(ngModel)]="showFee.dormitory">
+                <span class="app-checkbox-checkmark"></span>
+              </label>
+            </div>
+            <div class="col" *ngIf="splitTuitionBy === 'student'">
+              <label class="app-switch app-switch-top-0 mr-1">
+                <input type="checkbox" [(ngModel)]="showFeeDiscounts.dormitory">
+                <span class="app-slider app-round"></span>
+              </label>
+              <span>Show Discounts</span>
+            </div>
+          </div>
+          <div class="row no-gutters">
+            <div class="col-6">
+              <label class="app-checkbox-container">
+                REGISTRATION
+                <input type="checkbox" [(ngModel)]="showFee.registration">
+                <span class="app-checkbox-checkmark"></span>
+              </label>
+            </div>
+            <div class="col" *ngIf="splitTuitionBy === 'student'">
+              <label class="app-switch app-switch-top-0 mr-1">
+                <input type="checkbox" [(ngModel)]="showFeeDiscounts.registration">
+                <span class="app-slider app-round"></span>
+              </label>
+              <span>Show Discounts</span>
+            </div>
+          </div>
+          <div class="row no-gutters">
+            <div class="col-6">
+              <label class="app-checkbox-container">
+                ACTIVITY
+                <input type="checkbox" [(ngModel)]="showFee.activity">
+                <span class="app-checkbox-checkmark"></span>
+              </label>
+            </div>
+            <div class="col" *ngIf="splitTuitionBy === 'student'">
+              <!--<label class="app-switch app-switch-top-0 mr-1">-->
+                <!--<input type="checkbox" [(ngModel)]="showFeeDiscounts.activity">-->
+                <!--<span class="app-slider app-round"></span>-->
+              <!--</label>-->
+              <!--<span>Show Discounts</span>-->
+            </div>
+          </div>
+          <div class="row no-gutters">
+            <div class="col-6">
+              <label class="app-checkbox-container">
+                TUITION
+                <input type="checkbox" [(ngModel)]="showFee.tuition">
+                <span class="app-checkbox-checkmark"></span>
+              </label>
+            </div>
+            <div class="col" *ngIf="splitTuitionBy === 'student'">
+              <label class="app-switch app-switch-top-0 mr-1">
+                <input type="checkbox" [(ngModel)]="showFeeDiscounts.tuition">
+                <span class="app-slider app-round"></span>
+              </label>
+              <span>Show Discounts</span>
+            </div>
+          </div>
+          <div class="row no-gutters">
+            <div class="col-6">
+              <label class="app-checkbox-container">
+                SCHOLARSHIP
+                <input type="checkbox"  [(ngModel)]="showFee.scholarship">
+                <span class="app-checkbox-checkmark"></span>
+              </label>
+            </div>
+            <div class="col" *ngIf="splitTuitionBy === 'student'">
+              <label class="app-switch app-switch-top-0 mr-1">
+                <input type="checkbox" [(ngModel)]="showFeeDiscounts.scholarship">
+                <span class="app-slider app-round"></span>
+              </label>
+              <span>Show Discounts</span>
+            </div>
+          </div>
+          <div class="row no-gutters">
+            <div class="col-6">
+              <label class="app-checkbox-container">
+                LUNCH FEE
+                <input type="checkbox" [(ngModel)]="showFee.lunch">
+                <span class="app-checkbox-checkmark"></span>
+              </label>
+            </div>
+            <div class="col" *ngIf="splitTuitionBy === 'student'">
+              <label class="app-switch app-switch-top-0 mr-1">
+                <input type="checkbox"  [(ngModel)]="showFeeDiscounts.lunch">
+                <span class="app-slider app-round"></span>
+              </label>
+              <span>Show Discounts</span>
+            </div>
+          </div>
+          <hr>
+          <div class="  row no-gutters slider-item align-items-center">
+            <div class="col">
+              <label class="app-switch mr-2">
+                <input type="checkbox" [(ngModel)]="isContractSignature">
+                <span class="app-slider app-round"></span>
+              </label>
+              <span class="font-weight-bold ">Contract Signature</span>
+            </div>
+          </div>
+          <ng-container *ngIf="isContractSignature">
+            <div class="row no-gutters">
+              <div class="btn-group btn-group-toggle w-100 mt-2"
+                   ngbRadioGroup
+                   name="radioSignature"
+                   ngModel
+                   [ngModelOptions]="{standalone: true}">
+                <label ngbButtonLabel class="btn app-btn-signature">
+                  <input ngbButton type="radio" value="eSign"> E-signature
+                </label>
+                <label ngbButtonLabel class="btn app-btn-signature">
+                  <input ngbButton type="radio" value="wetSign"> Wet Signature
+                </label>
+              </div>
+            </div>
+            <div class="row no-gutters app-tuition-signature px-3 pt-3">
+              <div class="col">
+                <label class="app-radio-container">System
+                  <input type="radio" name="signatureType" value="student">
+                  <span class="app-radio-checkmark"></span>
+                </label>
+              </div>
+              <div class="col">
+                <label class="app-radio-container">External
+                  <span class="pl-2"><i class="fas fa-cog app-gear"></i></span>
+                  <input type="radio" name="signatureType" value="fee">
+                  <span class="app-radio-checkmark"></span>
+                </label>
+              </div>
+            </div>
+            <div class="row px-3 pt-3">
+              <label class="app-checkbox-container">
+                Both Parents' Signature (when applicable)
+                <input type="checkbox" ngModel>
+                <span class="app-checkbox-checkmark"></span>
+              </label>
+            </div>
+          </ng-container>
         </div>
       </div>
     </div>
+    <!--END TUITION CONTRACT-->
 
     <div class="row justify-content-center pb-2">
-      <div class="col-8 bg-white slider-item  row no-gutters align-items-center">
+      <div class="col-10 bg-white slider-item  row no-gutters align-items-center">
         <div class="col-9">
           <span class="slider-item-header ">PAYMENT SETTINGS</span>
         </div>
@@ -171,7 +338,7 @@
     </div>
 
     <div class="row justify-content-center pb-2">
-      <div class="col-8 bg-white slider-item  row no-gutters align-items-center">
+      <div class="col-10 bg-white slider-item  row no-gutters align-items-center">
         <div class="col-9">
           <span class="slider-item-header ">FORM PAYMENT</span>
         </div>
@@ -183,21 +350,6 @@
         </div>
       </div>
     </div>
-
-    <div class="row justify-content-center pb-2">
-      <div class="col-8 bg-white slider-item  row no-gutters align-items-center">
-        <div class="col-9">
-          <span class="slider-item-header ">EXTERNAL FORMS</span>
-        </div>
-        <div class="col">
-          <label class="app-switch mr-2">
-            <input type="checkbox">
-            <span class="app-slider app-round"></span>
-          </label>
-        </div>
-      </div>
-    </div>
-
   </div>
 
   <div class="col-9 pr-5">
@@ -208,7 +360,7 @@
       [cdkDropListData]="fields"
       [cdkDropListConnectedTo]="['ExistingFieldsList', 'CustomFieldsList', '6372c882-3d14-486f-9c1f-52ae8ab928ef']"
       (cdkDropListDropped)="drop($event)">
-      <ul class="list-group">
+      <ul class="list-group" [hidden]="!isFormsFields">
         <li class="list-group-item mb-3" *ngFor="let field of fields; trackBy: trackByFn" cdkDrag cdkDragLockAxis="y"
             [ngClass]="[!field.isValidName||!field.isValid?'list-group-item-warning':'', field.type==113?'app-list-group-item-info':'']">
           <app-v-group-container *ngIf="field.type==113" [inputGroup]="field"></app-v-group-container>
@@ -223,6 +375,13 @@
         </li>
 
       </ul>
+      <div class="app-section-wrapper" [hidden]="!isTuitionContract">
+        <app-v-tuition-contract
+          [splitTuitionBy]="splitTuitionBy"
+          [showFee]="showFee"
+          [showFeeDiscounts]="showFeeDiscounts">
+        </app-v-tuition-contract>
+      </div>
     </div>
   </div>
 </div>
