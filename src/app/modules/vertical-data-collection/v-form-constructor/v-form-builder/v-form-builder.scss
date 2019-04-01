@@ -134,6 +134,10 @@ input:checked + .app-slider {
   background-color: $element-base-color;
 }
 
+input:disabled + .app-slider {
+  background-color: #ccc;
+}
+
 input:focus + .app-slider {
   box-shadow: 0 0 1px $element-base-color;
 }

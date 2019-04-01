@@ -184,7 +184,7 @@
             </div>
             <div class="col" *ngIf="splitTuitionBy === 'student'">
               <label class="app-switch app-switch-top-0 mr-1">
-                <input type="checkbox" [(ngModel)]="showFeeDiscounts.dormitory">
+                <input type="checkbox" [disabled]="!showFee.dormitory" [(ngModel)]="showFeeDiscounts.dormitory">
                 <span class="app-slider app-round"></span>
               </label>
               <span>Show Discounts</span>
@@ -200,7 +200,7 @@
             </div>
             <div class="col" *ngIf="splitTuitionBy === 'student'">
               <label class="app-switch app-switch-top-0 mr-1">
-                <input type="checkbox" [(ngModel)]="showFeeDiscounts.registration">
+                <input type="checkbox" [disabled]="!showFee.registration" [(ngModel)]="showFeeDiscounts.registration">
                 <span class="app-slider app-round"></span>
               </label>
               <span>Show Discounts</span>
@@ -216,7 +216,7 @@
             </div>
             <div class="col" *ngIf="splitTuitionBy === 'student'">
               <!--<label class="app-switch app-switch-top-0 mr-1">-->
-                <!--<input type="checkbox" [(ngModel)]="showFeeDiscounts.activity">-->
+                <!--<input type="checkbox" [disabled]="!showFee.activity" [(ngModel)]="showFeeDiscounts.activity">-->
                 <!--<span class="app-slider app-round"></span>-->
               <!--</label>-->
               <!--<span>Show Discounts</span>-->
@@ -232,7 +232,7 @@
             </div>
             <div class="col" *ngIf="splitTuitionBy === 'student'">
               <label class="app-switch app-switch-top-0 mr-1">
-                <input type="checkbox" [(ngModel)]="showFeeDiscounts.tuition">
+                <input type="checkbox" [disabled]="!showFee.tuition" [(ngModel)]="showFeeDiscounts.tuition">
                 <span class="app-slider app-round"></span>
               </label>
               <span>Show Discounts</span>
@@ -248,7 +248,7 @@
             </div>
             <div class="col" *ngIf="splitTuitionBy === 'student'">
               <label class="app-switch app-switch-top-0 mr-1">
-                <input type="checkbox" [(ngModel)]="showFeeDiscounts.scholarship">
+                <input type="checkbox" [disabled]="!showFee.scholarship" [(ngModel)]="showFeeDiscounts.scholarship">
                 <span class="app-slider app-round"></span>
               </label>
               <span>Show Discounts</span>
@@ -264,7 +264,7 @@
             </div>
             <div class="col" *ngIf="splitTuitionBy === 'student'">
               <label class="app-switch app-switch-top-0 mr-1">
-                <input type="checkbox"  [(ngModel)]="showFeeDiscounts.lunch">
+                <input type="checkbox"  [disabled]="!showFee.lunch" [(ngModel)]="showFeeDiscounts.lunch">
                 <span class="app-slider app-round"></span>
               </label>
               <span>Show Discounts</span>
