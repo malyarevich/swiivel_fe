@@ -6,7 +6,7 @@ import {Component, Input, OnInit} from '@angular/core';
   styleUrls: ['./v-tuition-contract.component.css']
 })
 export class VTuitionContractComponent implements OnInit {
-  @Input() splitTuitionBy: boolean;
+  @Input() splitTuitionBy: string;
   @Input() showFee: object;
   @Input() showFeeDiscounts: object;
 
