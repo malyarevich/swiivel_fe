@@ -35,18 +35,18 @@ header {
         
                 width: 60px;
                 height: 60px;
-                background-color: $subheader-background-color;
+                background-color: $header-logo-color;
                 transition: all .2s ease;
                 cursor: pointer;
             }
         
             .burger:hover {
-                background-color: $subheader-hover-background-color;
+                background-color: $header-logo-hover-color;
             }
         
             .burger:after {
                 content: '';
-                background-color: $subheader-hover-background-color;
+                background-color: $header-logo-hover-color;
                 position: absolute;
                 top: 20%;
                 right: 0;
@@ -55,26 +55,26 @@ header {
             }
         
             .burger.isActive {
-                background-color: $subheader-hover-background-color;
+                background-color: $header-logo-hover-color;
             }
         
-            .appTitle {
-                width: 230px;
-                background-color: $subheader-background-color;
-                cursor: pointer;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-        
-                h2 {
-                    margin: auto;
-                    color: $white;
-                    font-size: 18px;
-                    font-weight: 600;
-                    letter-spacing: 0.54px;
-                    line-height: 18px;
-                }
-            }
+            //.appTitle {
+            //    width: 230px;
+            //    background-color: $subheader-background-color;
+            //    cursor: pointer;
+            //    display: flex;
+            //    align-items: center;
+            //    justify-content: center;
+            //
+            //    h2 {
+            //        margin: auto;
+            //        color: $white;
+            //        font-size: 18px;
+            //        font-weight: 600;
+            //        letter-spacing: 0.54px;
+            //        line-height: 18px;
+            //    }
+            //}
         }
     }
 
