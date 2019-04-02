@@ -1,0 +1,28 @@
+.app-tuition-table-header {
+    background-color: #F2F2F2;
+}
+
+.app-tuition-table-header th {
+    border-top: none;
+}
+
+.app-tuition-table-header:last-child {
+    vertical-align: top !important;
+}
+
+.app-tuition-table-total {
+    background-color: #EBEEFF;
+}
+
+.app-tuition-table-total-2 {
+    background-color: rgba(60,164,118,0.08);
+}
+
+.app-th-align-reset {
+    vertical-align: unset;
+}
+
+.app-tuition-discount {
+    color: #797B88;
+    font-size: 0.8em;
+}

@@ -7,6 +7,7 @@ import {cloneDeep, isEmpty} from 'lodash';
 import {Location} from '@angular/common';
 import {VFieldsService} from "../../v-fields.service";
 import {Field} from "../../model/field.model";
+import {ShowFeeDiscountsModel, ShowFeeModel} from "./v-tuition-contract/models/show-fee.model";
 import {Form} from "../../model/form.model";
 
 @Component({
@@ -15,7 +16,6 @@ import {Form} from "../../model/form.model";
   styleUrls: ['./v-form-builder.scss'],
 })
 export class VFormBuilderComponent implements OnInit {
-  isCollapsed = true;
   validNewCustomFieldName: boolean = true;
   showAddButton = true;
   formId: string = '';
@@ -27,6 +27,29 @@ export class VFormBuilderComponent implements OnInit {
   customFields: Field[];
   existingFields: Field[];
   sideBarFields: Field[];
+
+  isFormsFields: boolean = false;
+  isTuitionContract: boolean = false;
+  isContractSignature: boolean = false;
+  splitTuitionBy: string = 'student';
+
+  showFee: ShowFeeModel = {
+    dormitory: true,
+    registration: true,
+    activity: false,
+    tuition: true,
+    scholarship: true,
+    lunch: true
+  };
+
+  showFeeDiscounts: ShowFeeDiscountsModel = {
+    dormitory: false,
+    registration: false,
+    activity: false,
+    tuition: false,
+    scholarship: false,
+    lunch: false
+  };
 
   @ViewChild("addCustomFieldInput") addCustomFieldInput: ElementRef;
 
@@ -125,12 +148,11 @@ export class VFormBuilderComponent implements OnInit {
   }
 
   drop(event: CdkDragDrop<Field[]>) {
-  // console.log(event.previousContainer.id,  event.container.id);
+
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else if ((event.previousContainer.id == 'workPlaceList' && event.container.id == '6372c882-3d14-486f-9c1f-52ae8ab928ef') ||
-      (event.container.id == 'workPlaceList' && event.previousContainer.id == '6372c882-3d14-486f-9c1f-52ae8ab928ef')) {
-      // console.log('transfer');
+    } else if((event.previousContainer.id =='workPlaceList' && event.container.id=='6372c882-3d14-486f-9c1f-52ae8ab928ef') ||
+      (event.container.id =='workPlaceList' && event.previousContainer.id=='6372c882-3d14-486f-9c1f-52ae8ab928ef')) {
       transferArrayItem(event.previousContainer.data,
         event.container.data,
         event.previousIndex,

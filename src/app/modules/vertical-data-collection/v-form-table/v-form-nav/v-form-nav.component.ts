@@ -9,8 +9,10 @@ export class VFormNavComponent implements OnInit {
 
     @Output() bulkActionEmitter = new EventEmitter<string>();
     @Output() searchValueEmitter = new EventEmitter<string>();
+    @Output() filterStatusEmitter = new EventEmitter<string>();
 
     searchValue: string = '';
+    activeFilterTab = 'all';
 
     constructor() {
     }
@@ -24,5 +26,10 @@ export class VFormNavComponent implements OnInit {
 
     onSearchValue() {
         this.searchValueEmitter.emit(this.searchValue);
+    }
+
+    onCheckStatusTab(value) {
+        this.activeFilterTab = value;
+        this.filterStatusEmitter.emit(this.activeFilterTab);
     }
 }

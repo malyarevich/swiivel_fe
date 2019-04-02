@@ -26,14 +26,14 @@ export class HeaderComponent implements OnInit {
     this.toggleSideMenu.emit(true);
   }
 
-  goToIndex (): void {
-      // this.store.dispatch(new Go(['/']));
-  }
+  // goToIndex (): void {
+  //     // this.store.dispatch(new Go(['/']));
+  // }
 
-  goToProfile (data: any): void {
-      const {user} = data;
-      // this.store.dispatch(new Go(['/users/id/', user.id]));
-  }
+  // goToProfile (data: any): void {
+  //     const {user} = data;
+  //     // this.store.dispatch(new Go(['/users/id/', user.id]));
+  // }
 
   logOut (): void {
       this.store.dispatch(new Logout());

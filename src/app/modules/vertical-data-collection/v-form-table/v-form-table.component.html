@@ -1,5 +1,5 @@
 <div class="container-fluid mt-3">
-  <h4><b>Form Builder</b></h4>
+  <h4 class="font-weight-bold">Form Builder</h4>
   <div class="row justify-content-between">
     <div class="col-sm-4">
       <img src="../../../../assets/images/temp/img1.png" width="100%">
@@ -13,17 +13,20 @@
   </div>
   <div class="col-sm-12 block-wrapper mt-3">
     <app-v-form-nav (bulkActionEmitter)="doBulkAction($event)"
-                    (searchValueEmitter)="setSearchValue($event)"></app-v-form-nav>
+                    (searchValueEmitter)="setSearchValue($event)"
+                    (filterStatusEmitter)="filterStatus($event)">
+    </app-v-form-nav>
+
     <table class="table">
       <thead app-v-form-table-header [cols]="cols" (searchDataEmitter)="setSearch($event)"></thead>
       <tbody *ngIf="forms?.length!=0">
       <tr *ngFor="let item of forms" (click)="addSelectedIds(item.id)"
           [ngClass]="{'checked-row': isCheckedRow(item.id)}">
-        <td>{{item.name}}</td>
-        <td><span class="app-text-primary">{{item.type}}</span></td>
+        <td><span class="font-weight-bold">{{item.name}}</span></td>
+        <td><span class="app-text-primary font-weight-bold">{{item.type | titlecase}}</span></td>
         <td>
           <ng-container *ngIf="item.permissions?.length">
-            <span *ngFor="let permission of item.permissions">{{permission.user.full_name}}  </span>
+            <span class="font-weight-bold" *ngFor="let permission of item.permissions">{{permission.user.full_name}}  </span>
           </ng-container>
           <button type="button"
                   class="btn app-invite-btn"
@@ -36,56 +39,78 @@
                                    [formSelected]="formSelected">
           </app-v-form-access-modal>
         </td>
-        <td>{{item.owner.full_name}} {{ item.owner.role.role_name}}</td>
-        <td>{{item.updated_at}}</td>
         <td>
-          <button type="button" class="btn app-btn-status app-btn-sml"
-                  [ngClass]="getClassByStatus(item.status)">
-            <ng-template [ngIf]="item.status === STATUS_REVIEW" [ngIfElse]="chevron">
+          <span class="font-weight-bold">{{item.owner.full_name}}</span>
+          <span class="app-form-table-second-color"> {{ item.owner.role.role_name}}</span>
+        </td>
+        <td>{{item.updated_at | date:'dd-mm-yyyy'}}
+          <span class="app-form-table-second-color"> {{item.updated_at | date:'shortTime'}}</span>
+        </td>
+        <td>
+          <div ngbDropdown class="d-inline-block">
+
+            <button type="button" class="btn app-btn-status app-btn-sml app-dropdown-toggle"
+                    [ngClass]="getClassByStatus(item.status)"
+                    id="dropdownBasic1"
+                    ngbDropdownToggle
+                    appClickStopPropagation>
+              <ng-template [ngIf]="item.status === STATUS_REVIEW" [ngIfElse]="chevron">
               <span>{{'In ' + item.status | titlecase}}
                 <i class="fas fa-hourglass-start"></i>
               </span>
-            </ng-template>
-            <ng-template #chevron>
+              </ng-template>
+              <ng-template #chevron>
               <span>{{item.status | titlecase}}
                 <i class="fas fa-chevron-down"></i>
               </span>
-            </ng-template>
-          </button>
+              </ng-template>
+            </button>
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+              <button *ngFor="let status of statuses"
+                      (click)="changeStatus(item.id, status)"
+                      ngbDropdownItem
+                      appClickStopPropagation>
+                {{status | titlecase}}
+              </button>
+            </div>
+          </div>
         </td>
         <td nowrap>
           <button type="button"
                   class="btn btn-secondary app-btn-primary app-btn-sml mr-2 "
                   routerLink="v-form-constructor/{{item.mongo_id}}"
-                  routerLinkActive="active">
+                  routerLinkActive="active"
+                  appClickStopPropagation>
             <span><i class="fas fa-pen"></i> Edit</span>
           </button>
           <button type="button"
                   class="btn btn-secondary app-btn-primary app-btn-sml mr-2 "
                   routerLink="onlineform/{{item.mongo_id}}"
-                  routerLinkActive="active">
+                  routerLinkActive="active"
+                  appClickStopPropagation>
             <span><i class="far fa-eye"></i> View</span>
           </button>
           <button type="button"
                   class="btn btn-outline-danger app-btn-sml mr-2 "
-                  (click)="removeForm(item.mongo_id)">
+                  (click)="removeForm(item.mongo_id)"
+                  appClickStopPropagation>
             <span><i class="fas fa-trash-alt"></i> Delete</span>
           </button>
-          <button
-            class="btn app-btn-sml mr-2 ">
-            <i class="fas fa-share-alt"></i>
+          <button appClickStopPropagation
+                  class="btn app-btn-sml mr-2 ">
+            <span class="app-form-table-icon"><i class="fas fa-share-alt"></i></span>
           </button>
-          <button
-            class="btn app-btn-sml mr-2 ">
-            <i class="fas fa-share"></i>
+          <button appClickStopPropagation
+                  class="btn app-btn-sml mr-2 ">
+            <span class="app-form-table-icon"><i class="fas fa-share"></i></span>
           </button>
-          <button
-            class="btn app-btn-sml mr-2 ">
-            <i class="fas fa-copy"></i>
+          <button appClickStopPropagation
+                  class="btn app-btn-sml mr-2 ">
+            <span class="app-form-table-icon"><i class="fas fa-copy"></i></span>
           </button>
-          <button
-            class="btn app-btn-sml ">
-            <i class="fas fa-ellipsis-v"></i>
+          <button appClickStopPropagation
+                  class="btn app-btn-sml ">
+            <span class="app-form-table-icon"><i class="fas fa-ellipsis-v"></i></span>
           </button>
         </td>
       </tr>

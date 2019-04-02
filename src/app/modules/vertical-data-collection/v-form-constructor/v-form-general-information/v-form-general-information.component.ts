@@ -124,7 +124,6 @@ export class VFormGeneralInformationComponent implements OnInit {
     }
 
     onScrollTo(target) {
-        console.log(this[target].nativeElement);
         this[target].nativeElement.scrollIntoView({behavior:"smooth"});
     }
 

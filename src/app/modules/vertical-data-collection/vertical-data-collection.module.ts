@@ -47,6 +47,10 @@ import { VFormGeneralMenuComponent } from './v-form-constructor/v-form-general-i
 import {ClarityModule} from "@clr/angular";
 import {VFormFieldSettingsComponent} from "./v-form-constructor/v-form-builder/v-field-conteiner/v-form-field-settings/v-form-field-settings.component";
 import { VSideBarGroupComponent } from './v-form-constructor/v-form-builder/v-side-bar/v-side-bar-group/v-side-bar-group.component';
+import {GeneralDirectivesModule} from "../../utils/directives/general-directives.module";
+import { VTuitionContractComponent } from './v-form-constructor/v-form-builder/v-tuition-contract/v-tuition-contract.component';
+import { VTuitionSplitFeeComponent } from './v-form-constructor/v-form-builder/v-tuition-contract/v-tuition-split-fee/v-tuition-split-fee.component';
+import { VTuitionSplitStudentComponent } from './v-form-constructor/v-form-builder/v-tuition-contract/v-tuition-split-student/v-tuition-split-student.component';
 
 const routes: Routes = [
   {
@@ -118,6 +122,9 @@ const routes: Routes = [
       VFormFieldSettingsComponent,
       VFormGeneralMenuComponent,
       VSideBarGroupComponent,
+      VTuitionContractComponent,
+      VTuitionSplitFeeComponent,
+      VTuitionSplitStudentComponent,
   ],
   imports: [
     NgbModule,
@@ -126,8 +133,8 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     ClarityModule,
     DragDropModule,
-    ReactiveFormsModule
-
+    ReactiveFormsModule,
+      GeneralDirectivesModule,
   ],
   providers: [VFormService, VFieldsService, FormUtils],
   entryComponents: [entryComponents]
