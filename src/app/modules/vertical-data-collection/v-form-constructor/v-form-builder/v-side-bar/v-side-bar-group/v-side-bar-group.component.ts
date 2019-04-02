@@ -16,8 +16,8 @@ export class VSideBarGroupComponent implements OnInit {
   @Output() onChangeGroupBeing = new EventEmitter<any>();
   @Output() onDeleteNested = new EventEmitter<any>();
   @Input() group: Field;
-  @Input() customFields: Field[]
-  @Input() existingFields: Field[]
+  @Input() customFields: Field[];
+  @Input() existingFields: Field[];
 
   constructor() { }
 
@@ -40,7 +40,8 @@ export class VSideBarGroupComponent implements OnInit {
 
 
   deleteCustomNestedField(event){
-    console.log(event)
+    this.onDeleteNested.emit(event);
+    this.group.fields = this.group.fields.filter((field) => field.name != event);
   }
   onBeingChangeNested(event, field){
     field.exist=!field.exist;
