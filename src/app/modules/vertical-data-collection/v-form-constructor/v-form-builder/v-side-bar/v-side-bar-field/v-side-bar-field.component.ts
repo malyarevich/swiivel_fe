@@ -20,7 +20,7 @@ export class VSideBarFieldComponent implements OnInit {
 
   onBeingChange(event){
     this.field.exist=!this.field.exist;
-    this.onChangeFieldBeing.emit(event);
+    this.onChangeFieldBeing.emit(this.field);
   }
 
   deleteCustomField(name: string){

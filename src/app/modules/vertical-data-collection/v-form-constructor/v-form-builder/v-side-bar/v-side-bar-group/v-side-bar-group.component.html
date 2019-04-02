@@ -1,0 +1,74 @@
+<div class="  row no-gutters  align-items-center">
+  <div class="col-2 ">
+    <label class="app-checkbox-container">
+    <input
+      type="checkbox" [ngModel]="group.exist" (ngModelChange)="onBeingChange($event)">
+    <span class="app-checkbox-checkmark"></span>
+  </label>
+  </div>
+  <div class="col-10 pb-1 row align-items-center no-gutters side-bar-item">
+    <div class="col-1 ml-">
+      <span><i class="fas fa-ellipsis-v dragable-i"></i></span>
+      <span><i class="fas fa-ellipsis-v  dragable-i"></i></span>
+    </div>
+    <div class="col ml-1">
+      <span class="side-bar-item-font" >{{group.name}}</span>
+    </div>
+    <div  class="col-1 mr-1">
+      <button class="btn btn-sm" (click)="showNested=!showNested">
+        <i *ngIf="showNested" class="fas  fa-caret-down dragable-i"></i>
+        <i *ngIf="!showNested" class="fas  fa-caret-up dragable-i"></i>
+      </button>
+    </div>
+
+  </div>
+  <div class="col-10 offset-2 side-bar-item-modal rounded pb-2" [hidden]="!showNested">
+    <div class="" *ngFor="let field of group.fields">
+<!--      <app-v-side-bar-field [field]="field"></app-v-side-bar-field>-->
+      <div class="  row no-gutters  align-items-center">
+        <div class="ml-2 mb-2 col-2 ">
+          <label class="app-checkbox-container ">
+          <input
+            type="checkbox" class=""[ngModel]="field.exist" (ngModelChange)="onBeingChangeNested($event, field)">
+          <span class="app-checkbox-checkmark just-white"></span>
+        </label>
+        </div>
+        <div class="col-9  mb-1 mt-2 row align-items-center no-gutters rounded " [ngClass]="field.mapped==''?'side-bar-item-group-custom':'side-bar-item-group'">
+          <div class="col-1">
+            <span><i class="fas fa-ellipsis-v dragable-i"></i></span>
+            <span><i class="fas fa-ellipsis-v  dragable-i"></i></span>
+          </div>
+          <div class="col">
+            <span class="side-bar-item-font" [title]="field.mapped==''?'Custom':'Existing'">{{field.name}}</span>
+          </div>
+          <div *ngIf="field.mapped==''" class="col-1">
+            <span><i class="fas fa-trash dragable-i" (click)="deleteCustomNestedField(field.name)"></i></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="p-2 ">
+      <button
+        *ngIf="showAddButton"
+        type="button"
+        class="btn btn-outline-primary form-control p-0 text-left"
+        (click)="showAddButton=false">
+        &nbsp;&nbsp;+ Add New Field
+      </button>
+      <input
+        *ngIf="!showAddButton"
+
+        class="form-control add-input p-0"
+        autofocus
+        #newField
+      (keyup)="nameChange($event)"
+      [ngClass]="!validNewCustomFieldName?'is-invalid':''"
+        (blur)="addNewCustomField(newField.value, group.fields); newField.value=''"
+        (keyup.enter)="addNewCustomField(newField.value, group.fields); newField.value=''">
+      <div class="invalid-feedback">
+        We have existing field with the same name!
+      </div>
+    </div>
+  </div>
+</div>
+

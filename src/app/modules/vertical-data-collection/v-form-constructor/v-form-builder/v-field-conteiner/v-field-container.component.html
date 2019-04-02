@@ -5,21 +5,25 @@
       <div class="row align-items-center no-gutters ml-2">
         <div class="col-3">
           <div class="row align-items-center no-gutters" cdkDragHandle>
-            <div *ngIf="inputField.isValidName" >
-              <span><i class="fas fa-ellipsis-v dragable-i"></i></span>
-              <span><i class="fas fa-ellipsis-v dragable-i"></i></span>
-               </div>
-            <div *ngIf="!inputField.isValidName">
-                   <span  aria-hidden="true" [title]="warningCheckExistingLabelString"><i
-                     class="fas fa-exclamation-triangle"></i></span>
-            </div>
+<!--            <div *ngIf="inputField.isValidName" >-->
+<!--              <span><i class="fas fa-ellipsis-v dragable-i"></i></span>-->
+<!--              <span><i class="fas fa-ellipsis-v dragable-i"></i></span>-->
+<!--               </div>-->
+<!--            <div *ngIf="!inputField.isValidName">-->
+<!--                   <span  aria-hidden="true" [title]="warningCheckExistingLabelString"><i-->
+<!--                     class="fas fa-exclamation-triangle"></i></span>-->
+<!--            </div>-->
 
-            <div *ngIf="inputField.isValid" class=" rectangle"></div>
-            <div *ngIf="!inputField.isValid" class="ml-2">
-              <span aria-hidden="true" [title]="warningCheckUniqString"><i
-              class="fas fa-exclamation-circle"></i></span>
-            </div>
-
+<!--            <div *ngIf="inputField.isValid" class=" rectangle"></div>-->
+<!--            <div *ngIf="!inputField.isValid" class="ml-2">-->
+<!--              <span aria-hidden="true" [title]="warningCheckUniqString"><i-->
+<!--              class="fas fa-exclamation-circle"></i></span>-->
+<!--            </div>-->
+            <div>
+                            <span><i class="fas fa-ellipsis-v dragable-i"></i></span>
+                            <span><i class="fas fa-ellipsis-v dragable-i"></i></span>
+                             </div>
+            <div  class=" rectangle"></div>
           </div>
         </div>
 
@@ -38,7 +42,7 @@
         <div class="col-5 offset-1 pl-0">
           <label class="has-float-label">
             <select class="form-control" [disabled]="inputField.mapped!='' && inputField.hasOwnProperty('mapped')" [(ngModel)]="inputField.type">
-              <option *ngFor="let item of customFields" [ngValue]="item.type"
+              <option *ngFor="let item of customFields" [value]="item.type"
                       [selected]="inputField.type==item.type">{{item.name}}</option>
             </select>
             <span class="spanForLabel">Field Type</span>
@@ -53,7 +57,7 @@
         <div class="col-3">
           <label class="has-float-label">
             <select class="form-control" [(ngModel)]="inputField.options.size">
-              <option *ngFor="let width of size" [ngValue]="width"
+              <option *ngFor="let width of size" [value]="width"
                       [selected]="inputField.options.size==width">{{width}}</option>
             </select>
             <span class="spanForLabel">Field Width</span>

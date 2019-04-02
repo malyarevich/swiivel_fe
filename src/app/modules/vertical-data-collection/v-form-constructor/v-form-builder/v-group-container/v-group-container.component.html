@@ -29,7 +29,7 @@
 
         <div class="col-9">
           <label class="has-float-label">
-            <input class="form-control "  [disabled]="inputGroup.mapped!=''&& inputGroup.hasOwnProperty('mapped')"
+            <input class="form-control "  [disabled]="(inputGroup.mapped!=''&& inputGroup.hasOwnProperty('mapped'))||inputGroup.type==113"
                    [ngModel]="inputGroup.name">
             <span class="spanForLabel">Group Label</span>
           </label>
@@ -52,7 +52,7 @@
         <div class="col-3">
           <label class="has-float-label">
             <select class="form-control" [(ngModel)]="inputGroup.options.size">
-              <option *ngFor="let width of size" [ngValue]="width"
+              <option *ngFor="let width of size" [value]="width"
                       [selected]="inputGroup.options.size==width">{{width}}</option>
             </select>
             <span class="spanForLabel">Field Width</span>
@@ -97,7 +97,8 @@
     <ul class="list-group">
       <li class="list-group-item ml-4 mb-3" *ngFor="let field of inputGroup.fields" cdkDrag >
         <app-v-field-container *ngIf="field.type!=113"
-                               [inputField]="field">
+                               [inputField]="field"
+                               [customFields]="customFields">
         </app-v-field-container>
       </li>
     </ul>

@@ -52,4 +52,13 @@ export class VFieldsService {
       );
   }
 
+  getExistingSideBarList() {
+    //TODO: temporarily
+    // return this.http.get('http://34.73.126.99/api/v1/mapped2?api_token=123')
+    return this.http.get('http://34.73.126.99/api/v1/sidebar?api_token=123')
+      .pipe(
+        map((response) => {return response;})
+      );
+  }
+
 }

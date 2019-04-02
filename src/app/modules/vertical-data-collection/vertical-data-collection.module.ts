@@ -46,6 +46,7 @@ import { VSideBarFieldComponent } from './v-form-constructor/v-form-builder/v-si
 import { VFormGeneralMenuComponent } from './v-form-constructor/v-form-general-information/v-form-general-menu/v-form-general-menu.component';
 import {ClarityModule} from "@clr/angular";
 import {VFormFieldSettingsComponent} from "./v-form-constructor/v-form-builder/v-field-conteiner/v-form-field-settings/v-form-field-settings.component";
+import { VSideBarGroupComponent } from './v-form-constructor/v-form-builder/v-side-bar/v-side-bar-group/v-side-bar-group.component';
 
 const routes: Routes = [
   {
@@ -116,6 +117,7 @@ const routes: Routes = [
     VSideBarFieldComponent,
       VFormFieldSettingsComponent,
       VFormGeneralMenuComponent,
+      VSideBarGroupComponent,
   ],
   imports: [
     NgbModule,

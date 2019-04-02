@@ -1,0 +1,50 @@
+.side-bar-item-font{
+  font-size: 12px;	font-weight: bold; line-height: 13px; color: #151515
+}
+.side-bar-item{
+  background-color: #EBEEFF;
+}
+
+.side-bar-item-group{
+  height: 27px;
+  border-radius: 3px;
+  background-color: #FFFFFF;
+  /*background-color: #F6F6F6;*/
+}
+.side-bar-item-group-custom{
+  height: 27px;
+  border-radius: 3px;
+  background-color: #E0F7ED;
+}
+.app-checkbox-container input:checked ~ .app-checkbox-checkmark {
+  background-color:#4050A8;
+}
+.dragable-i{
+  color: #9C9D9D;
+  height: 13px;
+  /*margin-left: 2px;*/
+}
+.side-bar-item-modal{
+  background-color: #EBEEFF;
+}
+
+.just-white{
+  background-color: #FFFFFF;
+}
+.add-input.form-control{
+  height: 27px;
+}
+.btn.btn-outline-primary.form-control{
+  height: 27px;
+}
+
+.btn-outline-primary {
+  color: #4050A8;
+  border-color: #4050A8;
+}
+
+.btn-outline-primary:not(:disabled):not(.disabled):active:hover{
+  color: #4050A8;
+  background-color: #4050A8;
+  border-color: #4050A8
+}

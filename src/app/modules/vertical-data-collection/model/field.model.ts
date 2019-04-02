@@ -11,4 +11,5 @@ export interface Field {
   isValid?: boolean;
   isValidName?: boolean;
   exist?:boolean;
+  fields?: Field[]
 }

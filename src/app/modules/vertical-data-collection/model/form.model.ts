@@ -11,7 +11,8 @@ export interface Form {
     link?: string,
     personId?: number,
     template_sql_link?: object,
-     formDates?:object
+     formDates?:object,
+  sidebar?: Field[]
 }
 
 export interface FormSql {

@@ -6,14 +6,14 @@
   </label>
   </div>
   <div class="col-10  row align-items-center no-gutters" [ngClass]="style?'side-bar-item-custom':'side-bar-item'">
-    <div class="col-1 ml-">
+    <div class="col-1">
       <span><i class="fas fa-ellipsis-v dragable-i"></i></span>
       <span><i class="fas fa-ellipsis-v  dragable-i"></i></span>
     </div>
-    <div class="col ml-1">
+    <div class="col">
       <span class="side-bar-item-font" [title]="style?'Custom':'Existing'">{{field.name}}</span>
     </div>
-    <div *ngIf="style" class="col-1 mr-1">
+    <div *ngIf="style" class="col-1">
       <span><i class="fas fa-trash dragable-i" (click)="deleteCustomField(field.name)"></i></span>
     </div>
   </div>

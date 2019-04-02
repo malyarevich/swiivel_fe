@@ -9,7 +9,7 @@ import {CdkDragDrop, moveItemInArray, transferArrayItem} from "@angular/cdk/drag
 })
 export class VGroupContainerComponent implements OnInit {
 
-
+  @Input() customFields: Field[];
   @Input() inputGroup;
   warningCheckExistingLabelString='Pay attention that we already have existing field with the same name';
   warningCheckUniqString= 'Pay attention that there are unique Field with the same name or mapped to the same field!';
