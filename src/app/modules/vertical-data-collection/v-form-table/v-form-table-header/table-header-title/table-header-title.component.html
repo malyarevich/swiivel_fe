@@ -1,9 +1,8 @@
-<div (click)="changeSort()" class="app-table-header-title">
-  <span>{{title}}</span>
+<span (click)="changeSort()" class="app-table-header-title">{{title}}
   <span *ngIf="isSort" class="ml-3">
   <i class="fas fa-sort" *ngIf="!sortOrder"></i>
   <i class="fas fa-sort-up" *ngIf="sortOrder === sort['ASC']"></i>
   <i class="fas fa-sort-down" *ngIf="sortOrder === sort['DESC']"></i>
   </span>
-</div>
+</span>
 

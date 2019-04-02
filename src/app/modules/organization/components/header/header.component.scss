@@ -44,15 +44,15 @@ header {
                 background-color: $header-logo-hover-color;
             }
         
-            .burger:after {
-                content: '';
-                background-color: $header-logo-hover-color;
-                position: absolute;
-                top: 20%;
-                right: 0;
-                width: 1.5px;
-                height: 60%;
-            }
+            //.burger:after {
+            //    content: '';
+            //    background-color: $header-logo-hover-color;
+            //    position: absolute;
+            //    top: 20%;
+            //    right: 0;
+            //    width: 1.5px;
+            //    height: 60%;
+            //}
         
             .burger.isActive {
                 background-color: $header-logo-hover-color;

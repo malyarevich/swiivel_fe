@@ -22,8 +22,8 @@
       <tbody *ngIf="forms?.length!=0">
       <tr *ngFor="let item of forms" (click)="addSelectedIds(item.id)"
           [ngClass]="{'checked-row': isCheckedRow(item.id)}">
-        <td>{{item.name}}</td>
-        <td><span class="app-text-primary">{{item.type}}</span></td>
+        <td><span class="font-weight-bold">{{item.name}}</span></td>
+        <td><span class="app-text-primary font-weight-bold">{{item.type | titlecase}}</span></td>
         <td>
           <ng-container *ngIf="item.permissions?.length">
             <span class="font-weight-bold" *ngFor="let permission of item.permissions">{{permission.user.full_name}}  </span>
@@ -41,9 +41,11 @@
         </td>
         <td>
           <span class="font-weight-bold">{{item.owner.full_name}}</span>
-          <span class="app-form-table-role">{{ item.owner.role.role_name}}</span>
+          <span class="app-form-table-second-color"> {{ item.owner.role.role_name}}</span>
         </td>
-        <td>{{item.updated_at}}</td>
+        <td>{{item.updated_at | date:'dd-mm-yyyy'}}
+          <span class="app-form-table-second-color"> {{item.updated_at | date:'shortTime'}}</span>
+        </td>
         <td>
           <div ngbDropdown class="d-inline-block">
 
@@ -96,19 +98,19 @@
           </button>
           <button appClickStopPropagation
                   class="btn app-btn-sml mr-2 ">
-            <i class="fas fa-share-alt"></i>
+            <span class="app-form-table-icon"><i class="fas fa-share-alt"></i></span>
           </button>
           <button appClickStopPropagation
                   class="btn app-btn-sml mr-2 ">
-            <i class="fas fa-share"></i>
+            <span class="app-form-table-icon"><i class="fas fa-share"></i></span>
           </button>
           <button appClickStopPropagation
                   class="btn app-btn-sml mr-2 ">
-            <i class="fas fa-copy"></i>
+            <span class="app-form-table-icon"><i class="fas fa-copy"></i></span>
           </button>
           <button appClickStopPropagation
                   class="btn app-btn-sml ">
-            <i class="fas fa-ellipsis-v"></i>
+            <span class="app-form-table-icon"><i class="fas fa-ellipsis-v"></i></span>
           </button>
         </td>
       </tr>
