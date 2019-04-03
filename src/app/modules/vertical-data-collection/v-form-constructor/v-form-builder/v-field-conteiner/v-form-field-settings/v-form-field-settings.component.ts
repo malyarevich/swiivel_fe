@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
+import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import {Field} from "../../../../model/field.model";
 
 @Component({
@@ -8,7 +8,7 @@ import {Field} from "../../../../model/field.model";
 })
 export class VFormFieldSettingsComponent implements OnInit, OnChanges {
     @Input() inputField;
-    @Output() changeFieldEmitter = new EventEmitter<any>();
+
     tab: string = 'settings';
 
     validationRules = [
@@ -42,7 +42,6 @@ export class VFormFieldSettingsComponent implements OnInit, OnChanges {
 
     isValidatorChanged(event) {
         this.field.options.isValidator = event;
-        this.changeFieldEmitter.emit(this.field);
     }
 
     changeValidatorRule(rule) {
@@ -52,36 +51,29 @@ export class VFormFieldSettingsComponent implements OnInit, OnChanges {
 
     addValidatorRule() {
         this.field.validators = [this.rule];
-        this.changeFieldEmitter.emit(this.field);
     }
 
     changeIsErrorMessage(event) {
         this.field.options.isErrorMessage = event;
-        this.changeFieldEmitter.emit(this.field);
     }
 
     changeIsProhibitDataEntry(event) {
         this.field.options.isProhibitDataEntry = event;
-        this.changeFieldEmitter.emit(this.field);
     }
 
     addTextError(event) {
         this.field.options.textError = event;
-        this.changeFieldEmitter.emit(this.field);
     }
 
     changeMinFieldSize(event) {
         this.field.options.minFieldSize = event;
-        this.changeFieldEmitter.emit(this.field);
     }
 
     changeMaxFieldSize(event) {
         this.field.options.maxFieldSize = event;
-        this.changeFieldEmitter.emit(this.field);
     }
 
     changeInputMask(event) {
         this.field.options.inputMask = event;
-        this.changeFieldEmitter.emit(this.field);
     }
 }

@@ -15,8 +15,6 @@ export class VFieldContainerComponent implements OnInit{
   @Output() onDelete = new EventEmitter<any>();
   @Output() onChange = new EventEmitter<any>();
   @Output() onUniq = new EventEmitter<any>();
-  @Output() onIsValidator = new EventEmitter<boolean>();
-  @Output() onFieldChanged = new EventEmitter<boolean>();
   warningCheckExistingLabelString='Pay attention that we already have existing field with the same name';
   warningCheckUniqString= 'Pay attention that there are unique Field with the same name or mapped to the same field!';
 
@@ -47,10 +45,6 @@ export class VFieldContainerComponent implements OnInit{
     this.inputField.name=event;
     this.onChange.emit(event);
   }
-
-    fieldChanged(event) {
-        this.onFieldChanged.emit(event);
-    }
 
   ngOnInit(): void {
     //console.log(this.inputField.hasOwnProperty('mapped'));
