@@ -1,4 +1,4 @@
-<div >
+<div>
   <div class="row align-items-center no-gutters">
 
     <div class="col-3 ">
@@ -12,11 +12,11 @@
               <span><i class="fas fa-ellipsis-v dragable-i"></i></span>
             </div>
             <div *ngIf="!inputGroup.isValidName">
-                   <span  aria-hidden="true" [title]="warningCheckExistingLabelString"><i
+                   <span aria-hidden="true" [title]="warningCheckExistingLabelString"><i
                      class="fas fa-exclamation-triangle"></i></span>
             </div>
 
-            <div *ngIf="inputGroup.isValid" >
+            <div *ngIf="inputGroup.isValid">
               <span class="rectangle"><i class="fas fa-clone"></i></span>
             </div>
             <div *ngIf="!inputGroup.isValid" class="ml-3">
@@ -29,7 +29,8 @@
 
         <div class="col-9">
           <label class="has-float-label">
-            <input class="form-control "  [disabled]="(inputGroup.mapped!=''&& inputGroup.hasOwnProperty('mapped'))||inputGroup.type==113"
+            <input class="form-control "
+                   [disabled]="(inputGroup.mapped!=''&& inputGroup.hasOwnProperty('mapped'))||inputGroup.type==113"
                    [ngModel]="inputGroup.name">
             <span class="spanForLabel">Group Label</span>
           </label>
@@ -41,8 +42,8 @@
       <div class="row align-items-center ">
         <div class="col-5 offset-1 pl-0">
           <label class="has-float-label">
-            <select class="form-control" disabled >
-              <option >{{inputGroup.name}}
+            <select class="form-control" disabled>
+              <option>{{inputGroup.name}}
               </option>
             </select>
             <span class="spanForLabel">Group Type</span>
@@ -53,7 +54,8 @@
           <label class="has-float-label">
             <select class="form-control" [(ngModel)]="inputGroup.options.size">
               <option *ngFor="let width of size" [value]="width"
-                      [selected]="inputGroup.options.size==width">{{width}}</option>
+                      [selected]="inputGroup.options.size==width">{{width}}
+              </option>
             </select>
             <span class="spanForLabel">Field Width</span>
           </label>
@@ -61,33 +63,19 @@
       </div>
     </div>
     <div class="col-md-3 row align-items-center no-gutters">
-
-    <!--<div class="col-1 offset-9">-->
-      <!--<div ngbDropdown placement="bottom-right" class="d-inline-block pl-3" #dropdownField="ngbDropdown">-->
-        <!--<button class="btn btn-sm" id="dropdown-field" ngbDropdownToggle>-->
-          <!--<i class="fas fa-cog dragable-i"></i>-->
-        <!--</button>-->
-        <!--<div ngbDropdownMenu aria-labelledby="dropdown-field">-->
-          <!--<button ngbDropdownItem (click)="removeField(inputGroup._id)">Remove</button>-->
-          <!--<button ngbDropdownItem (click)="showSettings = true; dropdownField.close()">Settings</button>-->
-        <!--</div>-->
-      <!--</div>-->
-    <!--</div>-->
-
-    <div class="col-1 offset-10">
-      <div  class="d-inline-block pl-3">
-        <button class="btn btn-sm" (click)="showNested=!showNested">
-          <i *ngIf="showNested" class="fas  fa-caret-down dragable-y"></i>
-          <i *ngIf="!showNested" class="fas  fa-caret-up dragable-y"></i>
-        </button>
+      <div class="col-2 offset-10">
+        <div class="d-inline-block">
+          <i (click)="showGroupSettings=!showGroupSettings; showNested = false" class="fas fa-cog dragable-i pr-2"></i>
+          <span (click)="showNested=!showNested; showGroupSettings=false">
+            <i *ngIf="showNested" class="fas  fa-caret-down dragable-y"></i>
+            <i *ngIf="!showNested" class="fas  fa-caret-up dragable-y"></i>
+          </span>
+        </div>
       </div>
     </div>
   </div>
 
-
-</div>
-
-  <div  [hidden]="!showNested"
+  <div [hidden]="!showNested"
        [cdkDropListConnectedTo]="['ExistingFieldsList', 'CustomFieldsList', 'workPlaceList']"
        [cdkDropListData]="inputGroup.fields"
        id="6372c882-3d14-486f-9c1f-52ae8ab928ef"
@@ -95,7 +83,7 @@
        class=""
        cdkDropList>
     <ul class="list-group">
-      <li class="list-group-item ml-4 mb-3" *ngFor="let field of inputGroup.fields" cdkDrag >
+      <li class="list-group-item ml-4 mb-3" *ngFor="let field of inputGroup.fields" cdkDrag>
         <app-v-field-container *ngIf="field.type!=113"
                                [inputField]="field"
                                [customFields]="customFields">
@@ -103,14 +91,10 @@
       </li>
     </ul>
   </div>
+
+  <div [ngClass]="{'group-setting': showGroupSettings}" *ngIf="showGroupSettings">
+    <app-v-group-settings [inputGroup] = "inputGroup"></app-v-group-settings>
   </div>
-  <!--<div [ngClass]="{'field-setting': showSettings}" *ngIf="showSettings">-->
-    <!--<div class="float-right mr-1">-->
-      <!--<span (click) = "showSettings = false"><i class="fas fa-chevron-up "></i></span>-->
-    <!--</div>-->
-    <!--<app-v-form-field-settings-->
-      <!--[inputGroup] = "inputGroup`"-->
-      <!--(changeFieldEmitter)="fieldChanged($event)"-->
-    <!--&gt;</app-v-form-field-settings>-->
-  <!--</div>-->
+
+</div>
 

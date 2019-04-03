@@ -51,6 +51,7 @@ import {GeneralDirectivesModule} from "../../utils/directives/general-directives
 import { VTuitionContractComponent } from './v-form-constructor/v-form-builder/v-tuition-contract/v-tuition-contract.component';
 import { VTuitionSplitFeeComponent } from './v-form-constructor/v-form-builder/v-tuition-contract/v-tuition-split-fee/v-tuition-split-fee.component';
 import { VTuitionSplitStudentComponent } from './v-form-constructor/v-form-builder/v-tuition-contract/v-tuition-split-student/v-tuition-split-student.component';
+import { VGroupSettingsComponent } from './v-form-constructor/v-form-builder/v-group-container/v-group-settings/v-group-settings.component';
 
 const routes: Routes = [
   {
@@ -125,6 +126,7 @@ const routes: Routes = [
     VTuitionContractComponent,
     VTuitionSplitFeeComponent,
     VTuitionSplitStudentComponent,
+    VGroupSettingsComponent,
   ],
   imports: [
     NgbModule,

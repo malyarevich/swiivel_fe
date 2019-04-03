@@ -14,6 +14,8 @@ export class VGroupContainerComponent implements OnInit {
   warningCheckExistingLabelString='Pay attention that we already have existing field with the same name';
   warningCheckUniqString= 'Pay attention that there are unique Field with the same name or mapped to the same field!';
 
+  showGroupSettings: boolean = false;
+
   size = range(1  ,13);
   constructor() { }
   showNested: boolean = true;

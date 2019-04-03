@@ -1,0 +1,32 @@
+@import '../../../../../../../styles/variables/colors';
+
+.app-group-settings-section {
+    background-color: white;
+    border-top: 1px solid $element-base-color;
+}
+.app-element-background {
+    background-color: $element-base-color;
+}
+
+.app-element-color {
+    color: $element-base-color;
+}
+
+.settings-wrapper {
+    background-color: #F6F6F6;
+}
+
+.app-border-right {
+    border-right: 1px solid #D6D6D6;
+}
+
+.nav-item .app-nav-link {
+    cursor: pointer;
+    color: #989898;
+    margin-right: 20px;
+}
+
+.nav-item .app-active {
+    color: $element-base-color;
+    border-bottom: 2px solid $element-base-color;
+}
