@@ -28,6 +28,7 @@
   height: 16px;
   width: 16px;
   background-color: #eee;
+  border: 1px solid $element-base-color;
   border-radius: 4px;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
@@ -52,8 +53,8 @@
 }
 
 .app-checkbox-container .app-checkbox-checkmark:after {
-  left: 6px;
-  top: 2px;
+  left: 5px;
+  top: 1px;
   width: 5px;
   height: 10px;
   border: solid white;
