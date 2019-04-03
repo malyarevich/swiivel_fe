@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Field} from "../../../../model/field.model";
+import {Field} from "../../../../../model/field.model";
 
 @Component({
   selector: 'app-v-side-bar-field',

@@ -19,6 +19,7 @@ import {UserLoggedInitFactory} from "./modules/user-logged/user-logged-init.serv
 import {UserLoggedEffects} from "./modules/user-logged/store/user-logged.effect";
 import {UserLoggedService} from "./modules/user-logged/user-logged.service";
 import {PermissionService} from "./services/permission/permission.service";
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 const authConfig: AuthServiceConfig = {
     storageTokenKey: 'token',
@@ -40,7 +41,8 @@ export const interceptorsConfig: InterceptorsConfig = {
         AppRoutingModule,
         LoginModule,
         UserLoggedModule,
-        AuthModule.forRoot(authConfig),
+      NgbModule,
+      AuthModule.forRoot(authConfig),
         InterceptorsModule.forRoot(interceptorsConfig),
         StoreModule.forRoot({}),
         EffectsModule.forRoot([UserLoggedEffects]),

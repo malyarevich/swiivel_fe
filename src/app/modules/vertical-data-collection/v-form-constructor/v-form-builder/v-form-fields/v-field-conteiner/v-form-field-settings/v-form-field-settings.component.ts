@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
-import {Field} from "../../../../model/field.model";
+import {Field} from "../../../../../model/field.model";
 
 @Component({
     selector: 'app-v-form-field-settings',
