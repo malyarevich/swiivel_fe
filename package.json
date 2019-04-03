@@ -26,6 +26,7 @@
     "@clr/ui": "^1.1.0",
     "@fortawesome/fontawesome-free": "^5.7.2",
     "@ng-bootstrap/ng-bootstrap": "^4.1.0",
+    "@ng-select/ng-select": "^2.16.2",
     "@ngrx/effects": "^7.2.0",
     "@ngrx/entity": "^7.2.0",
     "@ngrx/store": "^7.2.0",
