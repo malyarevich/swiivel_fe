@@ -8,6 +8,8 @@ import {FormPayment} from "./model/form-payment.model";
 })
 export class VFormPaymentComponent implements OnInit {
 
+  isBold: boolean = true;
+  isItalic: boolean = false;
   @Input() formPaymentSideBar: FormPayment[];
   constructor() { }
 

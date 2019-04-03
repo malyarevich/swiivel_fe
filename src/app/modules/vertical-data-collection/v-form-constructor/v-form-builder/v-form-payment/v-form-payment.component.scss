@@ -99,3 +99,26 @@ fieldset {
 .text-absent-text{
   height: 13px;	width: 79.8px;	color: #4350A2;		font-size: 12px;	font-weight: bold;	line-height: 13px;	text-align: center;
 }
+
+.app-fb-fp-table{
+  border: 1px solid #D7D7D7;
+  border-radius: 5px;
+}
+a{
+  cursor: pointer;
+}
+a.active{
+  	color: #4350A2;		font-weight: bold;
+
+}
+.bold-for-a{
+  font-weight: bold;
+}
+
+.italic-for-a{
+  font-style: italic;
+}
+
+.btn-pay{
+  height: 30px;	width: 117px;	border-radius: 3px;	background-color: #4350A2;
+}

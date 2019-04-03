@@ -7,19 +7,26 @@
     Form Fees
   </p>
 </div>
+
 <div class="px-4 py-2">
+  <div class="text-right">
+    <a [ngClass]="isBold?'active':''" (click)="isBold=!isBold"><small>Bold</small></a>
+    <span><small> | </small></span>
+    <a [ngClass]="isItalic?'active':''" (click)="isItalic=!isItalic"><small>Italic</small></a>
+  </div>
+  <textarea class="app-fb-fp-table w-100 pl-3" [ngClass]="[isBold?'bold-for-a':'',isItalic?'italic-for-a':'']" rows="2" placeholder="Text"></textarea>
   <div *ngFor="let item of formPaymentSideBar" [hidden]="!item.isActive" class="pt-3">
     <div class="pb-2">
       <span class="app-form-payment-span">{{item.name}}: </span><span>{{item.type.value}}</span>
     </div>
 
-    <div class="row no-gutters align-items-center app-form-payment-div py-3" ngbRadioGroup
+    <div class="row no-gutters align-items-center app-form-payment-div py-3" [name]="item.name" ngbRadioGroup
          [(ngModel)]="item.type.value">
       <div class="col-4 row no-gutters align-items-center">
 
         <div class="col-4 pl-4">
           <label class="app-radio-container" ngbButtonLabel>Fixed
-            <input type="radio" ngbButton name="split" [value]="0">
+            <input type="radio" ngbButton name="" [value]="0">
             <span class="app-radio-checkmark"></span>
           </label>
         </div>
@@ -34,7 +41,7 @@
 
         <div class="col-5 pl-4">
           <label class="app-radio-container" ngbButtonLabel>Percentage
-            <input type="radio" ngbButton name="split" [value]="1">
+            <input type="radio" ngbButton name="" [value]="1">
             <span class="app-radio-checkmark"></span>
           </label>
         </div>
@@ -45,7 +52,7 @@
       <div class="col-4 row no-gutters align-items-center">
         <div class="col-6">
           <label class="app-radio-container" ngbButtonLabel>Full Amount Due
-            <input type="radio" ngbButton name="split" [value]="2">
+            <input type="radio" ngbButton name="" [value]="2">
             <span class="app-radio-checkmark"></span>
           </label>
         </div>
@@ -119,6 +126,21 @@
         </div>
       </div>
     </div>
+    <div class="row no-gutters align-items-center pt-3">
+      <div class="col-2 mx-3 app-input-container app-input-fill">
+        <label class="app-input-label" for="amount">Amount to Pay</label>
+        <input id="amount"                   class="app-input"
+               placeholder="">
+      </div>
+
+    </div>
+    <div class="py-2 mx-3">
+      <span class="app-form-payment-span">$1200 Total Amount to Pay </span>
+    </div>
+    <div class="py-2 col-1">
+      <button class="btn btn-primary form-control btn-pay">Pay $200</button>
+    </div>
   </fieldset>
 
 </div>
+
