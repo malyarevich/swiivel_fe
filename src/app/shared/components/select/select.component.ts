@@ -14,6 +14,7 @@ export class SelectComponent implements OnInit {
   @Input() bindValue = 'value';
   @Input() searchable = false;
   @Input() showClearBtn = false;
+  @Input() id: number;
 
   constructor() { }
 
