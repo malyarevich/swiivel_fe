@@ -30,6 +30,7 @@ export class VFormBuilderComponent implements OnInit {
   sideBarFields: Field[];
 
   isFormsFields: boolean = false;
+  isConsent: boolean = false;
   isTuitionContract: boolean = false;
   isContractSignature: boolean = false;
   isFormPayment: boolean = false;
