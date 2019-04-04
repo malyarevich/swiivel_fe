@@ -341,15 +341,6 @@ export class VFormBuilderComponent implements OnInit {
 
   }
 
-  onFieldChanged(field) {
-    let index = this.getFieldIndex(field._id);
-    this.fields[index] = field;
-  }
-
-  getFieldIndex(id) {
-    return this.fields.findIndex((item => item._id == id));
-  }
-
   onUniq(event) {
     this.fieldsValidator();
 

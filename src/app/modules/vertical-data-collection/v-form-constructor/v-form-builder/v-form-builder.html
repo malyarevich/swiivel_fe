@@ -354,7 +354,7 @@
       [cdkDropListConnectedTo]="['ExistingFieldsList', 'CustomFieldsList', '6372c882-3d14-486f-9c1f-52ae8ab928ef']"
       (cdkDropListDropped)="drop($event)">
       <ul class="list-group" [hidden]="!isFormsFields">
-        <li class="list-group-item mb-3" *ngFor="let field of fields; trackBy: trackByFn" cdkDrag cdkDragLockAxis="y"
+        <li class="list-group-item mb-3 py-0" *ngFor="let field of fields; trackBy: trackByFn" cdkDrag cdkDragLockAxis="y"
             [ngClass]="[!field.isValidName||!field.isValid?'list-group-item-warning':'', field.type==113?'app-list-group-item-info':'']">
           <app-v-group-container *ngIf="field.type==113" [inputGroup]="field" [customFields]="customFields"></app-v-group-container>
           <app-v-field-container *ngIf="field.type!=113"
@@ -362,8 +362,7 @@
                                  [inputField]="field"
                                  (onChange)="onChange($event, field)"
                                  (onUniq)="onUniq($event)"
-                                 (onDelete)="onDelete($event)"
-                                 (onFieldChanged)="onFieldChanged($event)">
+                                 (onDelete)="onDelete($event)">
           </app-v-field-container>
         </li>
 
