@@ -25,9 +25,7 @@ export class VFormGeneralInformationComponent implements OnInit {
   fields = [];
   generalInfoForm: FormGroup;
 
-
-
-  specificGrades: boolean;
+  whoFilling: string;
 
   formTypeCreation: string = 'newForm';
   constructor(private activatedRoute: ActivatedRoute,

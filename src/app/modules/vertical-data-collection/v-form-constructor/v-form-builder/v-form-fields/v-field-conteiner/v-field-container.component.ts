@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Field} from '../../../model/field.model';
+import {Field} from '../../../../model/field.model';
 import { range } from 'lodash'
 @Component({
   selector: 'app-v-field-container',

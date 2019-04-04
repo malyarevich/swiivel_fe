@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Field} from '../../../model/field.model';
+import {Field} from '../../../../model/field.model';
 import { range } from 'lodash'
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from "@angular/cdk/drag-drop";
 @Component({

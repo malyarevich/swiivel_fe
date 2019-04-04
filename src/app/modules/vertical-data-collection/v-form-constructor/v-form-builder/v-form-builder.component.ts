@@ -9,6 +9,7 @@ import {VFieldsService} from "../../v-fields.service";
 import {Field} from "../../model/field.model";
 import {ShowFeeDiscountsModel, ShowFeeModel} from "./v-tuition-contract/models/show-fee.model";
 import {Form} from "../../model/form.model";
+import {FormPayment} from "./v-form-payment/model/form-payment.model";
 
 @Component({
   selector: 'app-v-form-table',
@@ -31,7 +32,82 @@ export class VFormBuilderComponent implements OnInit {
   isFormsFields: boolean = false;
   isTuitionContract: boolean = false;
   isContractSignature: boolean = false;
+  isFormPayment: boolean = false;
   splitTuitionBy: string = 'student';
+
+
+  formPaymentSideBar: FormPayment[] = [
+    {
+      name: 'TUITION', isActive: false,
+      type: {
+        value: 0, name:'fixed'
+      },
+      payMore: {
+        isActive: false,
+        isAllow: false
+      }
+    },
+    {
+      name: 'BAIS MEDRASH WINTER DORMITORY FEE', isActive: true,
+      type: {
+        value: 0, name:'fixed'
+      },
+      payMore: {
+        isActive: false,
+        isAllow: false
+      }
+    },
+    {
+      name: 'LUNCH FEE', isActive: false,
+      type: {
+        value: 0, name:'fixed'
+      },
+      payMore: {
+        isActive: false,
+        isAllow: false
+      }
+    },
+    {
+      name: 'BUSING/TRANSPORTATION', isActive: false,
+      type: {
+        value: 0, name:'fixed'
+      },
+      payMore: {
+        isActive: false,
+        isAllow: false
+      }
+    },
+    {
+      name: 'REGISTRATION', isActive: true,
+      type: {
+        value: 0, name:'fixed'
+      },
+      payMore: {
+        isActive: false,
+        isAllow: false
+      }
+    },
+    {
+      name: 'SUPPLIES', isActive: true,
+      type: {
+        value: 0, name:'fixed'
+      },
+      payMore: {
+        isActive: false,
+        isAllow: false
+      }
+    },
+    {
+      name: 'ACTIVITY FEE', isActive: false,
+      type: {
+        value: 0, name:'fixed'
+      },
+      payMore: {
+        isActive: false,
+        isAllow: false
+      }
+    }
+  ];
 
   showFee: ShowFeeModel = {
     dormitory: true,

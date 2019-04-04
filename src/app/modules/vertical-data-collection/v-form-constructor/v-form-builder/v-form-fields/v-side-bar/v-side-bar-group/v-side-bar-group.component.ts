@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Field} from "../../../../model/field.model";
+import {Field} from "../../../../../model/field.model";
 import {isEmpty, cloneDeep } from 'lodash';
 import {v4 as uuid} from 'uuid'
 

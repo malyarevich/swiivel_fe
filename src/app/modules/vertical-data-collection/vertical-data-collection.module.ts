@@ -4,7 +4,7 @@ import {VFormBuilderComponent} from './v-form-constructor/v-form-builder/v-form-
 import {RouterModule, Routes} from '@angular/router';
 import {VFormService} from './v-form.service';
 import {DragDropModule} from '@angular/cdk/drag-drop';
-import {VFieldContainerComponent} from './v-form-constructor/v-form-builder/v-field-conteiner/v-field-container.component';
+import {VFieldContainerComponent} from './v-form-constructor/v-form-builder/v-form-fields/v-field-conteiner/v-field-container.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {VFormTableComponent} from './v-form-table/v-form-table.component';
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
@@ -40,17 +40,18 @@ import {TableHeaderTitleComponent} from './v-form-table/v-form-table-header/tabl
 import {TableHeaderFilterTextComponent} from './v-form-table/v-form-table-header/table-header-filter-text/table-header-filter-text.component';
 import {TableHeaderFilterDateComponent} from './v-form-table/v-form-table-header/table-header-filter-date/table-header-filter-date.component';
 import {VFormGeneralInformationComponent} from "./v-form-constructor/v-form-general-information/v-form-general-information.component";
-import {VGroupContainerComponent} from './v-form-constructor/v-form-builder/v-group-container/v-group-container.component';
-import {FilterPipe} from "./v-form-constructor/v-form-builder/v-side-bar/filter.pipe";
-import { VSideBarFieldComponent } from './v-form-constructor/v-form-builder/v-side-bar/v-side-bar-field/v-side-bar-field.component';
+import {VGroupContainerComponent} from './v-form-constructor/v-form-builder/v-form-fields/v-group-container/v-group-container.component';
+import {FilterPipe} from "./v-form-constructor/v-form-builder/v-form-fields/v-side-bar/filter.pipe";
+import { VSideBarFieldComponent } from './v-form-constructor/v-form-builder/v-form-fields/v-side-bar/v-side-bar-field/v-side-bar-field.component';
 import { VFormGeneralMenuComponent } from './v-form-constructor/v-form-general-information/v-form-general-menu/v-form-general-menu.component';
 import {ClarityModule} from "@clr/angular";
-import {VFormFieldSettingsComponent} from "./v-form-constructor/v-form-builder/v-field-conteiner/v-form-field-settings/v-form-field-settings.component";
-import { VSideBarGroupComponent } from './v-form-constructor/v-form-builder/v-side-bar/v-side-bar-group/v-side-bar-group.component';
+import {VFormFieldSettingsComponent} from "./v-form-constructor/v-form-builder/v-form-fields/v-field-conteiner/v-form-field-settings/v-form-field-settings.component";
+import { VSideBarGroupComponent } from './v-form-constructor/v-form-builder/v-form-fields/v-side-bar/v-side-bar-group/v-side-bar-group.component';
 import {GeneralDirectivesModule} from "../../utils/directives/general-directives.module";
 import { VTuitionContractComponent } from './v-form-constructor/v-form-builder/v-tuition-contract/v-tuition-contract.component';
 import { VTuitionSplitFeeComponent } from './v-form-constructor/v-form-builder/v-tuition-contract/v-tuition-split-fee/v-tuition-split-fee.component';
 import { VTuitionSplitStudentComponent } from './v-form-constructor/v-form-builder/v-tuition-contract/v-tuition-split-student/v-tuition-split-student.component';
+import { VFormPaymentComponent } from './v-form-constructor/v-form-builder/v-form-payment/v-form-payment.component';
 import { VGroupSettingsComponent } from './v-form-constructor/v-form-builder/v-group-container/v-group-settings/v-group-settings.component';
 
 const routes: Routes = [
@@ -120,6 +121,13 @@ const routes: Routes = [
     VGroupContainerComponent,
     FilterPipe,
     VSideBarFieldComponent,
+      VFormFieldSettingsComponent,
+      VFormGeneralMenuComponent,
+      VSideBarGroupComponent,
+      VTuitionContractComponent,
+      VTuitionSplitFeeComponent,
+      VTuitionSplitStudentComponent,
+      VFormPaymentComponent,
     VFormFieldSettingsComponent,
     VFormGeneralMenuComponent,
     VSideBarGroupComponent,

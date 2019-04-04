@@ -75,13 +75,8 @@ input {
   border-radius: 5px;
 }
 
-.slider-item-header {
-  height: 15px;
-  width: 112px;
-  color: #535353;
-  font-size: 12px;
-  letter-spacing: 0.2px;
-  line-height: 15px;
+.slider-item-header{
+  height: 15px;	width: 97px;	color: #535353;		font-size: 12px;	letter-spacing: 0.2px;	line-height: 15px;
 }
 
 /*Start switcher*/
@@ -202,4 +197,11 @@ label.btn.app-btn-signature.active {
 
 .app-gear {
   color: #9C9D9D;
+}
+
+
+.form-payment-side-bar-text{
+  height: 15px;		color: #151515;	font-size: 9px;	line-height: 13px;
+  font-weight:bold;
+  //font-family: "Nunito Sans ExtraBold";
 }

@@ -310,20 +310,40 @@
       </div>
     </div>
 
+
+<!--    FORM PAYMENT-->
     <div class="row justify-content-center pb-2">
-      <div class="col-10 bg-white slider-item  row no-gutters align-items-center">
-        <div class="col-9">
-          <span class="slider-item-header ">FORM PAYMENT</span>
+      <div class="col-10 bg-white ">
+        <div class="  row no-gutters slider-item align-items-center">
+          <div class="col-9">
+            <span class="slider-item-header ">FORM PAYMENT</span>
+          </div>
+          <div class="col">
+            <label class="app-switch mr-2">
+              <input type="checkbox" [(ngModel)]="isFormPayment">
+              <span class="app-slider app-round"></span>
+            </label>
+          </div>
         </div>
-        <div class="col">
-          <label class="app-switch mr-2">
-            <input type="checkbox">
-            <span class="app-slider app-round"></span>
+        <div [hidden]="!isFormPayment" class="bg-white rounded mb-3 " >
+        <div class="row no-gutters pt-2 align-items-center" *ngFor="let item of formPaymentSideBar">
+          <div class="col-1">
+          <label class="app-checkbox-container">
+            <input
+              type="checkbox" [(ngModel)]="item.isActive">
+            <span class="app-checkbox-checkmark"></span>
           </label>
+          </div>
+          <div class="col ">
+            <span class="form-payment-side-bar-text">{{item.name}}</span>
+          </div>
         </div>
       </div>
     </div>
+    </div>
   </div>
+
+  <!--  END  FORM PAYMENT-->
 
   <div class="col-9 pr-5">
 
@@ -353,6 +373,12 @@
           [showFee]="showFee"
           [showFeeDiscounts]="showFeeDiscounts">
         </app-v-tuition-contract>
+      </div>
+      <div class="app-section-wrapper" [hidden]="!isFormPayment">
+      <app-v-form-payment [formPaymentSideBar]="formPaymentSideBar">
+<!--      <app-v-form-payment>-->
+
+      </app-v-form-payment>
       </div>
     </div>
   </div>
