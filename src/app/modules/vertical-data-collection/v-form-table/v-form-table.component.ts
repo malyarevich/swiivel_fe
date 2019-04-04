@@ -17,7 +17,7 @@ export class VFormTableComponent implements OnInit {
     formsSelectedIds: number[] = [];
     params: FormSearchParams = {
         page: 1,
-        limit: 20,
+        limit: 200,
         value: '',
         search: {},
         sort: {},
