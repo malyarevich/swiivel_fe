@@ -30,6 +30,7 @@ export class VFormBuilderComponent implements OnInit {
   sideBarFields: Field[];
 
   isFormsFields: boolean = false;
+  isDocumentsForms: boolean = false;
   isTuitionContract: boolean = false;
   isContractSignature: boolean = false;
   isFormPayment: boolean = false;
@@ -217,7 +218,8 @@ export class VFormBuilderComponent implements OnInit {
         _id: this.formId,
         fields: this.fields,
         name: this.formName,
-        sidebar: this.sideBarFields
+        sidebar: this.sideBarFields,
+        step: 1
       };
       this.formService.sendForm(form).subscribe(res => this.goBack());
     }

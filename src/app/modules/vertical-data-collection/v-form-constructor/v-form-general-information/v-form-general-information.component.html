@@ -14,7 +14,7 @@
             <span class="pt-4 app-step-title">1. BASIC FORM INFORMATION</span>
           </div>
           <h4 class="pt-3 text-center font-weight-bold">
-            Good {{getDayparting()}}, I am the Form Set­up Wizard [name].
+            Good {{getDayparting()}}, I am the Form Set­up Wizard.
             I will create your form with you in minutes
           </h4>
           <h4 class="pt-3 text-center font-weight-bold">What would you like to call this form and what language do you
@@ -55,48 +55,35 @@
 
 
                 <label ngbButtonLabel class="btn btn-primary mr-2 ">
-                  <input ngbButton type="radio" value="newForm"> Create New Form
+                  <input ngbButton type="radio" [value]="0"> Create New Form
                 </label>
 
                 <label ngbButtonLabel class="btn btn-primary  ml-2 mr-2">
-                  <input ngbButton type="radio" value="dublicate"> Duplicate Existing Form
+                  <input ngbButton type="radio" [value]="1"> Duplicate Existing Form
                 </label>
 
                 <label ngbButtonLabel class="btn btn-primary">
-                  <input ngbButton type="radio" value="template" disabled> Use Template
+                  <input ngbButton type="radio" [value]="2" disabled> Use Template
                 </label>
 
 
               </div>
             </div>
 
-            <!--<div class="col-3 form-check form-check-inline">-->
-            <!--<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"  [ngModel]="formTypeCreation.newForm">-->
-            <!--<label class="form-check-label" for="inlineRadio1">Create New Form</label>-->
-            <!--</div>-->
-            <!--<div class="col-3 form-check form-check-inline">-->
-            <!--<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" [ngModel]="formTypeCreation.dublicate">-->
-            <!--<label class="form-check-label" for="inlineRadio2">Duplicate Existing Form</label>-->
-            <!--</div>-->
-            <!--<div class="col-3 form-check form-check-inline">-->
-            <!--<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" [ngModel]="formTypeCreation.template">-->
-            <!--<label class="form-check-label" for="inlineRadio3">Use Template </label>-->
-            <!--</div>-->
 
-            <div *ngIf="formTypeCreation=='dublicate'" class=" pt-4 row">
+            <div *ngIf="formTypeCreation==1" class=" pt-4 row">
               <div class="col">
                 <label for="searchExistingForm">Search Existing Form</label>
                 <input type="text"
                        class="form-control"
                        id="searchExistingForm"
                        placeholder="">
-                <ul class="list-group mt-2">
-                  <li class="list-group-item list-group-item-secondary rounded mt-1 mb-2 ">Payment Form</li>
-                  <li class="list-group-item list-group-item-secondary rounded mt-1 mb-2 ">Busing Form</li>
-                  <li class="list-group-item list-group-item-secondary rounded mt-1 mb-2 ">Student Discount</li>
-                  <li class="list-group-item list-group-item-secondary rounded mt-1 mb-2">Parent Information</li>
-                  <li class="list-group-item list-group-item-secondary rounded mt-1 mb-2">Application Form</li>
-                  <li class="list-group-item list-group-item-secondary rounded mt-1 mb-2">Childrens Information</li>
+                <ul class="list-group mt-2" >
+                  <li *ngFor="let form of formsDublicate"
+                      class="list-group-item  rounded mt-1 mb-2 "
+                      (click)="useDublicate(form)"
+                      [ngClass]="form.mongo_id==formDublicateId?'list-group-item-primary':'list-group-item-secondary'"
+                  >{{form.name}}</li>
                 </ul>
               </div>
               <div class="col color-custom-grey rounded mb-2 mt-4 mr-3 ml-3 justify-content-center">

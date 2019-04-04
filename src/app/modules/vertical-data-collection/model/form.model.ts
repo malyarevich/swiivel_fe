@@ -11,8 +11,11 @@ export interface Form {
     link?: string,
     personId?: number,
     template_sql_link?: object,
-     formDates?:object,
-  sidebar?: Field[]
+    formDates?:object,
+    sidebar?: Field[],
+    step?: number;
+    chosen_way_to_create_new_form?: number;
+    example_form_id?: string;
 }
 
 export interface FormSql {

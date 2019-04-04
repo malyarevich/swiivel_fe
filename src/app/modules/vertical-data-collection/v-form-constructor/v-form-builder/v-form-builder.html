@@ -94,7 +94,7 @@
         </div>
         <div class="col">
           <label class="app-switch mr-2">
-            <input type="checkbox">
+            <input type="checkbox" [(ngModel)]="isDocumentsForms">
             <span class="app-slider app-round"></span>
           </label>
         </div>
@@ -368,6 +368,10 @@
         </li>
 
       </ul>
+      <div class="app-section-wrapper" [hidden]="!isDocumentsForms">
+        <app-v-documents-forms>
+        </app-v-documents-forms>
+      </div>
       <div class="app-section-wrapper" [hidden]="!isTuitionContract">
         <app-v-tuition-contract
           [splitTuitionBy]="splitTuitionBy"
@@ -377,8 +381,6 @@
       </div>
       <div class="app-section-wrapper" [hidden]="!isFormPayment">
       <app-v-form-payment [formPaymentSideBar]="formPaymentSideBar">
-<!--      <app-v-form-payment>-->
-
       </app-v-form-payment>
       </div>
     </div>
