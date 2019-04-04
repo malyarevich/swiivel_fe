@@ -224,19 +224,37 @@
           <div class="row justify-content-center">
             <div class="form-group col-3">
               <label class="app-checkbox-container" for="allParent">All Parents
-                <input type="checkbox" class="form-check-input" id="allParent">
+                <input type="radio"
+                       name="filling"
+                       value="allParents"
+                       class="form-check-input"
+                       id="allParent"
+                       [(ngModel)]="whoFilling"
+                       [ngModelOptions]="{standalone: true}">
                 <span class="app-checkbox-checkmark"></span>
               </label>
             </div>
             <div class="form-group col-3">
               <label class="app-checkbox-container" for="newFamilies">New Families
-                <input type="checkbox" class="form-check-input" id="newFamilies">
+                <input type="radio"
+                       name="filling"
+                       value="newFamilies"
+                       class="form-check-input"
+                       id="newFamilies"
+                       [(ngModel)]="whoFilling"
+                       [ngModelOptions]="{standalone: true}">
                 <span class="app-checkbox-checkmark"></span>
               </label>
             </div>
             <div class="form-group col-3">
               <label class="app-checkbox-container" for="newStudents">New Students
-                <input type="checkbox" class="form-check-input" id="newStudents">
+                <input type="radio"
+                       name="filling"
+                       value="newStudents"
+                       class="form-check-input"
+                       id="newStudents"
+                       [(ngModel)]="whoFilling"
+                       [ngModelOptions]="{standalone: true}">
                 <span class="app-checkbox-checkmark"></span>
               </label>
             </div>
@@ -245,28 +263,35 @@
           <div class="row justify-content-center">
             <div class="form-group col-3">
               <label class="app-checkbox-container" for="SpecificGrades">Specific Grades
-                <input type="checkbox"
+                <input type="radio"
+                       name="filling"
+                       value="specificGrades"
                        class="form-check-input"
                        id="SpecificGrades"
-                       [(ngModel)]="specificGrades"
+                       [(ngModel)]="whoFilling"
                        [ngModelOptions]="{standalone: true}">
                 <span class="app-checkbox-checkmark"></span>
               </label>
             </div>
             <div class="form-group col-6">
               <label class="app-checkbox-container" for="moreDetailed">I have more detailed requirements
-                <input type="checkbox" class="form-check-input" id="moreDetailed">
+                <input type="radio"
+                       name="filling"
+                       value="moreDetailed"
+                       class="form-check-input"
+                       id="moreDetailed"
+                       [(ngModel)]="whoFilling"
+                       [ngModelOptions]="{standalone: true}">
                 <span class="app-checkbox-checkmark"></span>
               </label>
             </div>
           </div>
 
-          <div class="row justify-content-center">
-
+          <div *ngIf="whoFilling === 'moreDetailed'" class="row justify-content-center">
+            <h4 class="pt-3 font-weight-bold">Coming Soon...</h4>
           </div>
 
-
-          <div *ngIf="specificGrades">
+          <div *ngIf="whoFilling === 'specificGrades'">
             <div class="justify-content-md-center mb-3 text-center">
               <h4 class="pt-3 text-center font-weight-bold">Who should be filling out this form?</h4>
             </div>
