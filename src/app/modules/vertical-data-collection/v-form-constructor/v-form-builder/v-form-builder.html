@@ -103,15 +103,82 @@
 
     <!--CONSENT-->
     <div class="row justify-content-center pb-2">
-      <div class="col-10 bg-white slider-item  row no-gutters align-items-center">
-        <div class="col-2">
-          <label class="app-switch">
-            <input type="checkbox" [(ngModel)]="isConsent">
-            <span class="app-slider app-round"></span>
-          </label>
+      <div class="col-10 bg-white">
+        <div class="  row no-gutters slider-item align-items-center">
+          <div class="col-2">
+            <label class="app-switch">
+              <input type="checkbox" [(ngModel)]="isConsent">
+              <span class="app-slider app-round"></span>
+            </label>
+          </div>
+          <div class="col">
+            <span class="font-weight-bold">CONSENT</span>
+          </div>
         </div>
-        <div class="col">
-          <span class="font-weight-bold">CONSENT</span>
+        <div [hidden]="!isConsent" class="bg-white rounded mb-3 ">
+          <div class="app-consent-item p-3 mt-3" *ngFor="let item of consentSideBar">
+            <div class="row no-gutters">
+              <div class="col-10">
+                <span class="app-consent-item-title">{{item.title}}</span>
+              </div>
+              <div class="col-2 text-right">
+                <span class="app-fb-trash mr-3"><i class="fas fa-trash"></i></span>
+                <span class="app-fb-caret-up"><i class="fas fa-caret-up"></i></span>
+              </div>
+            </div>
+
+            <div class="  row no-gutters slider-item align-items-center">
+              <div class="col-2">
+                <label class="app-switch">
+                  <input type="checkbox" [(ngModel)]="item.signature.isRequire">
+                  <span class="app-slider app-round"></span>
+                </label>
+              </div>
+              <div class="col">
+                <span class="font-weight-bold ">REQUIRE SIGNATURE</span>
+              </div>
+            </div>
+            <ng-container *ngIf="item.signature.isRequire">
+              <div class="row no-gutters">
+                <div class="btn-group btn-group-toggle w-100 mt-2"
+                     ngbRadioGroup
+                     name="radioSignature"
+                     ngModel
+                     [ngModelOptions]="{standalone: true}">
+                  <label ngbButtonLabel class="btn app-btn-signature">
+                    <input ngbButton type="radio" value="eSign"> E-signature
+                  </label>
+                  <label ngbButtonLabel class="btn app-btn-signature">
+                    <input ngbButton type="radio" value="wetSign"> Wet Signature
+                  </label>
+                </div>
+              </div>
+              <div class="row no-gutters app-tuition-signature px-3 pt-3">
+                <div class="col">
+                  <label class="app-radio-container">System
+                    <input type="radio" name="signatureType" value="student">
+                    <span class="app-radio-checkmark"></span>
+                  </label>
+                </div>
+                <div class="col">
+                  <label class="app-radio-container">External
+                    <span class="pl-2"><i class="fas fa-cog app-fb-gear"></i></span>
+                    <input type="radio" name="signatureType" value="fee">
+                    <span class="app-radio-checkmark"></span>
+                  </label>
+                </div>
+              </div>
+              <div class="row px-3 pt-3">
+                <label class="app-checkbox-container">
+                  Both Parents' Signature (when applicable)
+                  <input type="checkbox" ngModel>
+                  <span class="app-checkbox-checkmark"></span>
+                </label>
+              </div>
+            </ng-container>
+
+
+          </div>
         </div>
       </div>
     </div>
@@ -279,7 +346,7 @@
               </div>
               <div class="col">
                 <label class="app-radio-container">External
-                  <span class="pl-2"><i class="fas fa-cog app-gear"></i></span>
+                  <span class="pl-2"><i class="fas fa-cog app-fb-gear"></i></span>
                   <input type="radio" name="signatureType" value="fee">
                   <span class="app-radio-checkmark"></span>
                 </label>
