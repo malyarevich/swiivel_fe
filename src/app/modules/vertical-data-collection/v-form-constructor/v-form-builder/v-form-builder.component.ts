@@ -41,42 +41,70 @@ export class VFormBuilderComponent implements OnInit {
       name: 'TUITION', isActive: false,
       type: {
         value: 0, name:'fixed'
+      },
+      payMore: {
+        isActive: false,
+        isAllow: false
       }
     },
     {
       name: 'BAIS MEDRASH WINTER DORMITORY FEE', isActive: true,
       type: {
         value: 0, name:'fixed'
+      },
+      payMore: {
+        isActive: false,
+        isAllow: false
       }
     },
     {
       name: 'LUNCH FEE', isActive: false,
       type: {
         value: 0, name:'fixed'
+      },
+      payMore: {
+        isActive: false,
+        isAllow: false
       }
     },
     {
       name: 'BUSING/TRANSPORTATION', isActive: false,
       type: {
         value: 0, name:'fixed'
+      },
+      payMore: {
+        isActive: false,
+        isAllow: false
       }
     },
     {
       name: 'REGISTRATION', isActive: true,
       type: {
         value: 0, name:'fixed'
+      },
+      payMore: {
+        isActive: false,
+        isAllow: false
       }
     },
     {
       name: 'SUPPLIES', isActive: true,
       type: {
         value: 0, name:'fixed'
+      },
+      payMore: {
+        isActive: false,
+        isAllow: false
       }
     },
     {
       name: 'ACTIVITY FEE', isActive: false,
       type: {
         value: 0, name:'fixed'
+      },
+      payMore: {
+        isActive: false,
+        isAllow: false
       }
     }
   ];
