@@ -30,6 +30,7 @@ export class VFormBuilderComponent implements OnInit {
   sideBarFields: Field[];
 
   isFormsFields: boolean = false;
+  isConsent: boolean = false;
   isDocumentsForms: boolean = false;
   isTuitionContract: boolean = false;
   isContractSignature: boolean = false;
@@ -341,15 +342,6 @@ export class VFormBuilderComponent implements OnInit {
     this.onDelete(name);
     this.sideBarFields = this.sideBarFields.filter((field) => field.name != name);
 
-  }
-
-  onFieldChanged(field) {
-    let index = this.getFieldIndex(field._id);
-    this.fields[index] = field;
-  }
-
-  getFieldIndex(id) {
-    return this.fields.findIndex((item => item._id == id));
   }
 
   onUniq(event) {

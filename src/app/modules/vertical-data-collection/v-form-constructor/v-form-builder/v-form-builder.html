@@ -24,14 +24,14 @@
       <div class="col-10 bg-white ">
 
         <div class="  row no-gutters slider-item align-items-center">
-          <div class="col-9">
-            <span class="slider-item-header ">FORM FIELDS</span>
-          </div>
-          <div class="col">
-            <label class="app-switch mr-2">
+          <div class="col-2">
+            <label class="app-switch">
               <input type="checkbox" [(ngModel)]="isFormsFields">
               <span class="app-slider app-round"></span>
             </label>
+          </div>
+          <div class="col">
+            <span class="font-weight-bold ">FORM FIELDS</span>
           </div>
         </div>
         <div [hidden]="!isFormsFields" class="bg-white rounded mb-3">
@@ -89,44 +89,46 @@
 
     <div class="row justify-content-center pb-2">
       <div class="col-10 bg-white slider-item  row no-gutters align-items-center">
-        <div class="col-9">
-          <span class="slider-item-header ">DOCUMENTS & FORMS</span>
-        </div>
-        <div class="col">
-          <label class="app-switch mr-2">
-            <input type="checkbox" [(ngModel)]="isDocumentsForms">
-            <span class="app-slider app-round"></span>
-          </label>
-        </div>
-      </div>
-    </div>
-
-    <div class="row justify-content-center pb-2">
-      <div class="col-10 bg-white slider-item  row no-gutters align-items-center">
-        <div class="col-9">
-          <span class="slider-item-header ">CONSENT</span>
-        </div>
-        <div class="col">
-          <label class="app-switch mr-2">
+        <div class="col-2">
+          <label class="app-switch">
             <input type="checkbox">
             <span class="app-slider app-round"></span>
           </label>
         </div>
+        <div class="col">
+          <span class="font-weight-bold ">DOCUMENTS & FORMS</span>
+        </div>
       </div>
     </div>
+
+    <!--CONSENT-->
+    <div class="row justify-content-center pb-2">
+      <div class="col-10 bg-white slider-item  row no-gutters align-items-center">
+        <div class="col-2">
+          <label class="app-switch">
+            <input type="checkbox" [(ngModel)]="isConsent">
+            <span class="app-slider app-round"></span>
+          </label>
+        </div>
+        <div class="col">
+          <span class="font-weight-bold">CONSENT</span>
+        </div>
+      </div>
+    </div>
+    <!--END CONSENT-->
 
     <!--TUITION CONTRACT-->
     <div class="row justify-content-center pb-2">
       <div class="col-10 bg-white ">
         <div class="  row no-gutters slider-item align-items-center">
-          <div class="col-9">
-            <span class="slider-item-header ">TUITION CONTRACT</span>
-          </div>
-          <div class="col">
-            <label class="app-switch mr-2">
+          <div class="col-2">
+            <label class="app-switch">
               <input type="checkbox" [(ngModel)]="isTuitionContract">
               <span class="app-slider app-round"></span>
             </label>
+          </div>
+          <div class="col">
+            <span class="font-weight-bold ">TUITION CONTRACT</span>
           </div>
         </div>
         <div [hidden]="!isTuitionContract" class="bg-white rounded mb-3">
@@ -150,7 +152,7 @@
           <div class="row no-gutters">
             <div class="col-6">
               <label class="app-checkbox-container">
-                BAIS MEDRASH WINTER DORMITORY FEE
+                <span class="form-payment-side-bar-text">BAIS MEDRASH WINTER DORMITORY FEE</span>
                 <input type="checkbox" [(ngModel)]="showFee.dormitory">
                 <span class="app-checkbox-checkmark"></span>
               </label>
@@ -166,7 +168,7 @@
           <div class="row no-gutters">
             <div class="col-6">
               <label class="app-checkbox-container">
-                REGISTRATION
+                <span class="form-payment-side-bar-text">REGISTRATION</span>
                 <input type="checkbox" [(ngModel)]="showFee.registration">
                 <span class="app-checkbox-checkmark"></span>
               </label>
@@ -182,7 +184,7 @@
           <div class="row no-gutters">
             <div class="col-6">
               <label class="app-checkbox-container">
-                ACTIVITY
+                <span class="form-payment-side-bar-text">ACTIVITY</span>
                 <input type="checkbox" [(ngModel)]="showFee.activity">
                 <span class="app-checkbox-checkmark"></span>
               </label>
@@ -198,7 +200,7 @@
           <div class="row no-gutters">
             <div class="col-6">
               <label class="app-checkbox-container">
-                TUITION
+                <span class="form-payment-side-bar-text">TUITION</span>
                 <input type="checkbox" [(ngModel)]="showFee.tuition">
                 <span class="app-checkbox-checkmark"></span>
               </label>
@@ -214,7 +216,7 @@
           <div class="row no-gutters">
             <div class="col-6">
               <label class="app-checkbox-container">
-                SCHOLARSHIP
+                <span class="form-payment-side-bar-text">SCHOLARSHIP</span>
                 <input type="checkbox"  [(ngModel)]="showFee.scholarship">
                 <span class="app-checkbox-checkmark"></span>
               </label>
@@ -230,7 +232,7 @@
           <div class="row no-gutters">
             <div class="col-6">
               <label class="app-checkbox-container">
-                LUNCH FEE
+                <span class="form-payment-side-bar-text">LUNCH FEE</span>
                 <input type="checkbox" [(ngModel)]="showFee.lunch">
                 <span class="app-checkbox-checkmark"></span>
               </label>
@@ -298,14 +300,14 @@
 
     <div class="row justify-content-center pb-2">
       <div class="col-10 bg-white slider-item  row no-gutters align-items-center">
-        <div class="col-9">
-          <span class="slider-item-header ">PAYMENT SETTINGS</span>
-        </div>
-        <div class="col">
-          <label class="app-switch mr-2">
+        <div class="col-2">
+          <label class="app-switch">
             <input type="checkbox">
             <span class="app-slider app-round"></span>
           </label>
+        </div>
+        <div class="col">
+          <span class="font-weight-bold ">PAYMENT SETTINGS</span>
         </div>
       </div>
     </div>
@@ -315,14 +317,14 @@
     <div class="row justify-content-center pb-2">
       <div class="col-10 bg-white ">
         <div class="  row no-gutters slider-item align-items-center">
-          <div class="col-9">
-            <span class="slider-item-header ">FORM PAYMENT</span>
-          </div>
-          <div class="col">
-            <label class="app-switch mr-2">
+          <div class="col-2">
+            <label class="app-switch">
               <input type="checkbox" [(ngModel)]="isFormPayment">
               <span class="app-slider app-round"></span>
             </label>
+          </div>
+          <div class="col">
+            <span class="font-weight-bold ">FORM PAYMENT</span>
           </div>
         </div>
         <div [hidden]="!isFormPayment" class="bg-white rounded mb-3 " >
@@ -354,7 +356,7 @@
       [cdkDropListConnectedTo]="['ExistingFieldsList', 'CustomFieldsList', '6372c882-3d14-486f-9c1f-52ae8ab928ef']"
       (cdkDropListDropped)="drop($event)">
       <ul class="list-group" [hidden]="!isFormsFields">
-        <li class="list-group-item mb-3" *ngFor="let field of fields; trackBy: trackByFn" cdkDrag cdkDragLockAxis="y"
+        <li class="list-group-item mb-3 py-0" *ngFor="let field of fields; trackBy: trackByFn" cdkDrag cdkDragLockAxis="y"
             [ngClass]="[!field.isValidName||!field.isValid?'list-group-item-warning':'', field.type==113?'app-list-group-item-info':'']">
           <app-v-group-container *ngIf="field.type==113" [inputGroup]="field" [customFields]="customFields"></app-v-group-container>
           <app-v-field-container *ngIf="field.type!=113"
@@ -362,16 +364,11 @@
                                  [inputField]="field"
                                  (onChange)="onChange($event, field)"
                                  (onUniq)="onUniq($event)"
-                                 (onDelete)="onDelete($event)"
-                                 (onFieldChanged)="onFieldChanged($event)">
+                                 (onDelete)="onDelete($event)">
           </app-v-field-container>
         </li>
 
       </ul>
-      <div class="app-section-wrapper" [hidden]="!isDocumentsForms">
-        <app-v-documents-forms>
-        </app-v-documents-forms>
-      </div>
       <div class="app-section-wrapper" [hidden]="!isTuitionContract">
         <app-v-tuition-contract
           [splitTuitionBy]="splitTuitionBy"
@@ -381,6 +378,8 @@
       </div>
       <div class="app-section-wrapper" [hidden]="!isFormPayment">
       <app-v-form-payment [formPaymentSideBar]="formPaymentSideBar">
+<!--      <app-v-form-payment>-->
+
       </app-v-form-payment>
       </div>
     </div>
