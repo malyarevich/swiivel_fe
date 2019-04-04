@@ -32,7 +32,7 @@ export class VFormBuilderComponent implements OnInit {
   isFormsFields: boolean = false;
   isTuitionContract: boolean = false;
   isContractSignature: boolean = false;
-  isFormPayment: boolean = true;
+  isFormPayment: boolean = false;
   splitTuitionBy: string = 'student';
 
 
