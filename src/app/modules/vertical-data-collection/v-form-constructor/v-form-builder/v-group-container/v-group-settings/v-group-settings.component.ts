@@ -10,6 +10,10 @@ export class VGroupSettingsComponent implements OnInit {
 
   tab: string = 'settings';
 
+  groupPreset: string = 'Preset 1';
+  supportText: string = 'Actually Student\'s Address';
+  limitAmount: number = 10;
+
   constructor() {
   }
 

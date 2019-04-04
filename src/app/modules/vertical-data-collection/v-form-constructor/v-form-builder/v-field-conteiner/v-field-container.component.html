@@ -1,4 +1,4 @@
-<div [ngClass]="{'field-checked': showSettings}">
+<div class="py-3" [ngClass]="{'field-checked': showSettings}">
   <div class="row align-items-center no-gutters">
 
     <div class="col-3 ">
@@ -105,18 +105,13 @@
       </div>
       <div class="col-1">
         <div  class="d-inline-block ml-2" >
-          <button class="btn btn-sm" id="dropdown-field" (click)="showSettings=!showSettings">
-            <i class="fas fa-cog dragable-i"></i>
-          </button>
+            <i class="fas fa-cog dragable-i" (click)="showSettings=!showSettings"></i>
         </div>
       </div>
     </div>
 
   </div>
-  <div [ngClass]="{'field-setting': showSettings}" *ngIf="showSettings">
-    <div class="float-right mr-1">
-      <span (click) = "showSettings = false"><i class="fas fa-chevron-up "></i></span>
-    </div>
+  <div *ngIf="showSettings">
     <app-v-form-field-settings [inputField] = "inputField"></app-v-form-field-settings>
   </div>
 </div>

@@ -90,4 +90,14 @@ export class VGroupContainerComponent implements OnInit {
     }
   }
 
+  onShowGroupSettings() {
+    this.showGroupSettings = !this.showGroupSettings;
+    this.showNested = false;
+  }
+
+  onShowNested() {
+    this.showNested = !this.showNested;
+    this.showGroupSettings=false;
+  }
+
 }

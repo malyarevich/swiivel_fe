@@ -1,4 +1,4 @@
-<div>
+<div class="py-3" [ngClass]="{'app-setting-show': showGroupSettings}">
   <div class="row align-items-center no-gutters">
 
     <div class="col-3 ">
@@ -65,8 +65,8 @@
     <div class="col-md-3 row align-items-center no-gutters">
       <div class="col-2 offset-10">
         <div class="d-inline-block">
-          <i (click)="showGroupSettings=!showGroupSettings; showNested = false" class="fas fa-cog dragable-i pr-2"></i>
-          <span (click)="showNested=!showNested; showGroupSettings=false">
+          <i (click)="onShowGroupSettings()" class="fas fa-cog dragable-i pr-2"></i>
+          <span (click)="onShowNested()">
             <i *ngIf="showNested" class="fas  fa-caret-down dragable-y"></i>
             <i *ngIf="!showNested" class="fas  fa-caret-up dragable-y"></i>
           </span>
@@ -92,7 +92,7 @@
     </ul>
   </div>
 
-  <div [ngClass]="{'group-setting': showGroupSettings}" *ngIf="showGroupSettings">
+  <div *ngIf="showGroupSettings">
     <app-v-group-settings [inputGroup] = "inputGroup"></app-v-group-settings>
   </div>
 
