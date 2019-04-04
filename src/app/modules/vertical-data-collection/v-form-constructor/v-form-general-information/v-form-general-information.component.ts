@@ -2,11 +2,10 @@ import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {FormUtils} from "../../utils/form.utils";
 import {Form, FormSql} from "../../model/form.model";
-import { cloneDeep,isEmpty } from 'lodash';
+import { isEmpty } from 'lodash';
 import {VFormService} from "../../v-form.service";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import { NgbDateParserFormatter} from "@ng-bootstrap/ng-bootstrap";
-import {Period} from "../../model/period.model";
 
 
 @Component({

@@ -394,7 +394,7 @@ export class VFormBuilderComponent implements OnInit {
 
 
   goBack() {
-    this.location.back();
+    this.router.navigate([`/vertical-data-collection/`]);
   }
 
 
