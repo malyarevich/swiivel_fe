@@ -20,6 +20,7 @@ export class VFormGeneralInformationComponent implements OnInit {
     @ViewChild('formDates') formDates: ElementRef;
     @ViewChild('eligibleAccounts') eligibleAccounts: ElementRef;
 
+  searchText: string;
   formId: string = '';
   formDublicateId: string = '';
   startDate;
@@ -63,7 +64,6 @@ export class VFormGeneralInformationComponent implements OnInit {
 
   getAllForm(): void {
     this.formService.getFormsList().subscribe(forms => {
-      // console.log(forms);
       this.formsDublicate = forms.data;
     });
   }
@@ -87,6 +87,7 @@ export class VFormGeneralInformationComponent implements OnInit {
 
 
       ;
+
       this.formService.sendForm(form).subscribe((res:any) => {
         this.router.navigate([`/vertical-data-collection/v-form-constructor/${res.id}/form-builder`]);
 

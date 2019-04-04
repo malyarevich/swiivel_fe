@@ -140,6 +140,7 @@ export class VFormBuilderComponent implements OnInit {
   }
 
   ngOnInit() {
+    window.scrollTo(0, 0);
     this.route.parent.url.subscribe((urlPath) => {
       const url = urlPath[urlPath.length - 1].path;
       this.formId = url != 'v-form-constructor' ? url : '';
