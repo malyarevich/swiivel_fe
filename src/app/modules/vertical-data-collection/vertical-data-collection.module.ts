@@ -136,7 +136,7 @@ const routes: Routes = [
     ClarityModule,
     DragDropModule,
     ReactiveFormsModule,
-      GeneralDirectivesModule,
+    GeneralDirectivesModule,
   ],
   providers: [VFormService, VFieldsService, FormUtils],
   entryComponents: [entryComponents]
