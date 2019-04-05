@@ -52,6 +52,7 @@ import { VTuitionContractComponent } from './v-form-constructor/v-form-builder/v
 import { VTuitionSplitFeeComponent } from './v-form-constructor/v-form-builder/v-tuition-contract/v-tuition-split-fee/v-tuition-split-fee.component';
 import { VTuitionSplitStudentComponent } from './v-form-constructor/v-form-builder/v-tuition-contract/v-tuition-split-student/v-tuition-split-student.component';
 import { VFormPaymentComponent } from './v-form-constructor/v-form-builder/v-form-payment/v-form-payment.component';
+import { VDocumentsFormsComponent } from './v-form-constructor/v-form-builder/v-documents-forms/v-documents-forms.component';
 import { VGroupSettingsComponent } from './v-form-constructor/v-form-builder/v-group-container/v-group-settings/v-group-settings.component';
 
 const routes: Routes = [
@@ -128,6 +129,7 @@ const routes: Routes = [
       VTuitionSplitFeeComponent,
       VTuitionSplitStudentComponent,
       VFormPaymentComponent,
+      VDocumentsFormsComponent,
     VFormFieldSettingsComponent,
     VFormGeneralMenuComponent,
     VSideBarGroupComponent,

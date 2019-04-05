@@ -1,12 +1,11 @@
 import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {FormUtils} from "../../utils/form.utils";
-import {Form} from "../../model/form.model";
-import { cloneDeep,isEmpty } from 'lodash';
+import {Form, FormSql} from "../../model/form.model";
+import { isEmpty } from 'lodash';
 import {VFormService} from "../../v-form.service";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import { NgbDateParserFormatter} from "@ng-bootstrap/ng-bootstrap";
-import {Period} from "../../model/period.model";
 
 
 @Component({
@@ -20,14 +19,17 @@ export class VFormGeneralInformationComponent implements OnInit {
     @ViewChild('formDates') formDates: ElementRef;
     @ViewChild('eligibleAccounts') eligibleAccounts: ElementRef;
 
-  formId: string ='';
+  searchText: string;
+  formId: string = '';
+  formDublicateId: string = '';
   startDate;
   fields = [];
   generalInfoForm: FormGroup;
+  formsDublicate: FormSql[];
 
   whoFilling: string;
 
-  formTypeCreation: string = 'newForm';
+  formTypeCreation: number = 0;
   constructor(private activatedRoute: ActivatedRoute,
               private router: Router,
               private formUtils: FormUtils,
@@ -41,7 +43,7 @@ export class VFormGeneralInformationComponent implements OnInit {
       this.formId = url!='v-form-constructor'?url:'';
     });
     this.formInit();
-
+    this.getAllForm();
   }
   validateAllFormFields(formGroup: FormGroup) {
     Object.keys(formGroup.controls).forEach(field => {
@@ -51,6 +53,17 @@ export class VFormGeneralInformationComponent implements OnInit {
       } else if (control instanceof FormGroup) {
         this.validateAllFormFields(control);
       }
+    });
+  }
+
+  useDublicate(form: FormSql){
+    this.formDublicateId = form.mongo_id;
+  }
+
+
+  getAllForm(): void {
+    this.formService.getFormsList().subscribe(forms => {
+      this.formsDublicate = forms.data;
     });
   }
 
@@ -65,11 +78,15 @@ export class VFormGeneralInformationComponent implements OnInit {
         formDates: {
           startDate: this.parserFormatter.format(this.generalInfoForm.value.startDate),
           endDate: this.parserFormatter.format(this.generalInfoForm.value.endDate)
-        }
+        },
+        step: 0,
+          example_form_id: this.formDublicateId,
+          chosen_way_to_create_new_form: this.formTypeCreation
       }
 
 
       ;
+
       this.formService.sendForm(form).subscribe((res:any) => {
         this.router.navigate([`/vertical-data-collection/v-form-constructor/${res.id}/form-builder`]);
 

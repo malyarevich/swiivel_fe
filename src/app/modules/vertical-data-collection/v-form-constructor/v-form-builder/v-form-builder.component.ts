@@ -31,6 +31,7 @@ export class VFormBuilderComponent implements OnInit {
 
   isFormsFields: boolean = false;
   isConsent: boolean = false;
+  isDocumentsForms: boolean = false;
   isTuitionContract: boolean = false;
   isContractSignature: boolean = false;
   isFormPayment: boolean = false;
@@ -170,6 +171,7 @@ export class VFormBuilderComponent implements OnInit {
   }
 
   ngOnInit() {
+    window.scrollTo(0, 0);
     this.route.parent.url.subscribe((urlPath) => {
       const url = urlPath[urlPath.length - 1].path;
       this.formId = url != 'v-form-constructor' ? url : '';
@@ -248,7 +250,8 @@ export class VFormBuilderComponent implements OnInit {
         _id: this.formId,
         fields: this.fields,
         name: this.formName,
-        sidebar: this.sideBarFields
+        sidebar: this.sideBarFields,
+        step: 1
       };
       this.formService.sendForm(form).subscribe(res => this.goBack());
     }
@@ -409,7 +412,7 @@ export class VFormBuilderComponent implements OnInit {
 
 
   goBack() {
-    this.location.back();
+    this.router.navigate([`/vertical-data-collection/`]);
   }
 
 

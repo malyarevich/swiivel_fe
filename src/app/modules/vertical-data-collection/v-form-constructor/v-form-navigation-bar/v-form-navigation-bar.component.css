@@ -20,6 +20,7 @@
   font-size: 15px;
   letter-spacing: 0.2px;
   line-height: 15px;
+  cursor: w-resize;
 }
 .border-bottom{
   border-bottom-width: 4px!important;
