@@ -1,0 +1,146 @@
+<div class="app-section-wrapper app-consent-section mb-2 py-0">
+  <div class="row">
+    <div class="col-6">
+      <div class="px-3 pt-3 row no-gutters">
+        <div class="col-1 pt-3">
+          <span class="app-fb-section-icon-white">
+            <i class="fas fa-ellipsis-v"></i>
+            <i class="fas fa-ellipsis-v"></i>
+          </span>
+        </div>
+        <div class="col">
+          <div class="form-group app-input-container w-100" [ngClass]="{'app-input-fill': sectionName}">
+            <label class="app-input-label" for="section-name">Section Name</label>
+            <input [(ngModel)]="sectionName"
+                   id="section-name"
+                   type="text"
+                   class="app-input"
+                   placeholder="Section Name">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-2 pt-3">
+      <div class="form-group app-input-container app-input-fill">
+        <label class="app-input-label" for="fieldWidth">Field Width</label>
+        <select class="app-input" id="fieldWidth">
+          <option>"4 Columns"</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="col-4 text-right align-self-center">
+      <i class="fas fa-cog app-consent-icon pr-2"></i>
+      <span>
+        <!--<i *ngIf="showNested" class="fas  fa-caret-down dragable-y"></i>-->
+        <i class="fas  fa-caret-up app-consent-icon"></i>
+      </span>
+    </div>
+
+  </div>
+</div>
+
+<div class="app-section-wrapper mb-2" *ngFor="let item of consentInfo; let i = index">
+
+  <!--TITLE-->
+  <div class="row">
+    <div class="col-6">
+      <div class="px-3 pt-3 row no-gutters">
+        <div class="col-1 pt-3">
+          <span class="app-fb-section-icon">
+            <i class="fas fa-ellipsis-v"></i>
+            <i class="fas fa-ellipsis-v"></i>
+          </span>
+        </div>
+        <div class="col">
+          <div class="form-group app-input-container w-50" [ngClass]="{'app-input-fill': consentText.value}">
+            <label class="app-input-label" for="consent-text">Title</label>
+            <input #consentText
+                   [(ngModel)]="item.title"
+                   id="consent-text"
+                   type="text"
+                   class="app-input"
+                   placeholder="Title">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--TEXT-->
+  <div class="row">
+    <div class="col-12 app-consent-text">
+      <div class="text-right">
+        <a [ngClass]="item.text.isBold?'active':''" (click)="item.text.isBold=!item.text.isBold">
+          <small>Bold</small>
+        </a>
+        <span><small> | </small></span>
+        <a [ngClass]="item.text.isItalic?'active':''" (click)="item.text.isItalic=!item.text.isItalic">
+          <small>Italic</small>
+        </a>
+      </div>
+      <textarea class="app-consent-table w-100 pl-3"
+                [ngClass]="[item.text.isBold?'bold-for-a':'',item.text.isItalic?'italic-for-a':'']"
+                rows="4"
+                placeholder="Text">{{item.text.value}}</textarea>
+    </div>
+  </div>
+
+  <!--CHECKBOX-->
+  <div class="row" *ngIf="item.checkbox.isActive">
+    <div class="col-6">
+      <div class="px-3 pt-3 row no-gutters">
+        <div class="col-1 pt-3">
+          <label class="app-checkbox-container">
+            <input type="checkbox">
+            <span class="app-checkbox-checkmark"></span>
+          </label>
+        </div>
+        <div class="col">
+          <div class="form-group app-input-container" [ngClass]="{'app-input-fill': consentCheckboxText.value}">
+            <label class="app-input-label" for="consent-checkbox-text">Text</label>
+            <input #consentCheckboxText
+                   [(ngModel)]="item.checkbox.text"
+                   id="consent-checkbox-text"
+                   type="text"
+                   class="app-input"
+                   placeholder="Text">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--SIGNATURE-->
+  <div class="row pt-2" *ngIf="item.signature.isBothParents">
+    <div class="col-12 app-consent-text">
+      <textarea class="app-consent-table w-25 pl-3"
+                rows="2"
+                placeholder="Parent's Signature"></textarea>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="!item.signature.isBothParents">
+    <div class="col-12 app-consent-text">
+      <div class="row">
+        <div class="col-4">
+          <textarea class="app-consent-table w-100 pl-3"
+                    rows="2"
+                    placeholder="Father's Signature"></textarea>
+        </div>
+        <div class="col-4">
+          <textarea class="app-consent-table w-100 pl-3"
+                    rows="2"
+                    placeholder="Mother's Signature"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="py-2 pr-5 text-right">
+    <button class="btn btn-primary form-control app-btn-accept">Accept</button>
+  </div>
+
+</div>
+

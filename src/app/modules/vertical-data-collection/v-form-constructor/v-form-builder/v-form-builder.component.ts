@@ -10,6 +10,7 @@ import {Field} from "../../model/field.model";
 import {ShowFeeDiscountsModel, ShowFeeModel} from "./v-tuition-contract/models/show-fee.model";
 import {Form} from "../../model/form.model";
 import {FormPayment} from "./v-form-payment/model/form-payment.model";
+import {ConsentInfo} from "./v-consent/model/consent.model";
 
 @Component({
   selector: 'app-v-form-table',
@@ -111,10 +112,14 @@ export class VFormBuilderComponent implements OnInit {
     }
   ];
 
-  consentSideBar = [
+  consentInfo: ConsentInfo[] = [
     {
       title: 'Terms and Conditions 2',
-      text: '',
+      text: {
+        value: 'I allow my child to play in sport game',
+        isBold: false,
+        isItalic: false,
+      },
       checkbox: {
         isActive: false,
         text: '',
@@ -128,7 +133,11 @@ export class VFormBuilderComponent implements OnInit {
     },
     {
       title: 'Terms and Conditions 1',
-      text: '',
+      text: {
+        value: 'I allow my child to play in sport game',
+        isBold: false,
+        isItalic: false,
+      },
       checkbox: {
         isActive: true,
         text: 'I agree that I have read the terms and conditions',
