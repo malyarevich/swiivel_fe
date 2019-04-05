@@ -126,3 +126,9 @@ label.btn.app-btn-signature.active {
   font-size: 0.8em;
   font-family: "NunitoSans-ExtraBold";
 }
+.fa-plus-square, .fa-caret-up{
+  color: $element-base-color;
+}
+.fa-question-circle{
+  color: $icon-grey-color;
+}

@@ -88,18 +88,51 @@
     </div>
 
     <div class="row justify-content-center pb-2">
-      <div class="col-10 bg-white slider-item  row no-gutters align-items-center">
-        <div class="col-2">
-          <label class="app-switch">
-            <input type="checkbox">
-            <span class="app-slider app-round"></span>
-          </label>
+      <div class="col-10 bg-white ">
+        <div class="  row no-gutters slider-item align-items-center">
+          <div class="col-2">
+            <label class="app-switch">
+              <input type="checkbox" [(ngModel)]="isDocumentsForms">
+              <span class="app-slider app-round"></span>
+            </label>
+          </div>
+          <div class="col">
+            <span class="font-weight-bold ">DOCUMENTS & FORMS</span>
+          </div>
         </div>
-        <div class="col">
-          <span class="font-weight-bold ">DOCUMENTS & FORMS</span>
+        <div [hidden]="!isDocumentsForms" class="bg-white rounded mb-3 " >
+          <div class="row no-gutters pt-2 align-items-center">
+            <div class="col">
+              <span class="font-weight-bold">Documents</span>
+              <span><i class="fas fa-question-circle pl-1" title="test"></i></span>
+            </div>
+            <div class="col-1 align-self-end">
+              <span><i class="fas fa-plus-square"></i></span>
+            </div>
+            <div class="col-1 align-self-end">
+              <span><i class="fas fa-caret-up ml-2"></i></span>
+            </div>
+          </div>
+          <div class="row no-gutters pt-2 align-items-center">
+          </div>
+          <hr>
+          <div class="row no-gutters pt-2 align-items-center">
+            <div class="col">
+              <span class="font-weight-bold">Forms</span>
+              <span><i class="fas fa-question-circle pl-1" title="test"></i></span>
+            </div>
+            <div class="col-1 align-self-end">
+              <span><i class="fas fa-plus-square"></i></span>
+            </div>
+            <div class="col-1 align-self-end">
+              <span><i class="fas fa-caret-up ml-2"></i></span>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
+
 
     <!--CONSENT-->
     <div class="row justify-content-center pb-2">
@@ -369,6 +402,9 @@
         </li>
 
       </ul>
+      <div class="app-section-wrapper" [hidden]="!isDocumentsForms">
+        <app-v-documents-forms></app-v-documents-forms>
+      </div>
       <div class="app-section-wrapper" [hidden]="!isTuitionContract">
         <app-v-tuition-contract
           [splitTuitionBy]="splitTuitionBy"
@@ -378,8 +414,6 @@
       </div>
       <div class="app-section-wrapper" [hidden]="!isFormPayment">
       <app-v-form-payment [formPaymentSideBar]="formPaymentSideBar">
-<!--      <app-v-form-payment>-->
-
       </app-v-form-payment>
       </div>
     </div>

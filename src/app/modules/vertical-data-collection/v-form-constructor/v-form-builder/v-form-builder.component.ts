@@ -31,7 +31,7 @@ export class VFormBuilderComponent implements OnInit {
 
   isFormsFields: boolean = false;
   isConsent: boolean = false;
-  isDocumentsForms: boolean = false;
+  isDocumentsForms: boolean = true;
   isTuitionContract: boolean = false;
   isContractSignature: boolean = false;
   isFormPayment: boolean = false;
