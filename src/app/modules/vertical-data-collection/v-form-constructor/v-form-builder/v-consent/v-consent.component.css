@@ -1,0 +1,42 @@
+a {
+    cursor: pointer;
+}
+
+a.active {
+    color: #4350A2;
+    font-weight: bold;
+
+}
+
+.bold-for-a {
+    font-weight: bold;
+}
+
+.italic-for-a {
+    font-style: italic;
+}
+
+.app-consent-table {
+    border: 1px solid #B6B6B6;
+    border-radius: 5px;
+}
+
+.app-consent-text {
+    padding: 0 5.3em;
+}
+
+.app-btn-accept {
+    height: 30px;
+    width: 117px;
+    border-radius: 3px;
+    background-color: #4350A2;
+}
+
+.app-consent-section {
+    background-color: #9FA6CB;
+}
+
+.app-consent-icon {
+    color: white;
+    cursor: pointer;
+}

@@ -10,6 +10,7 @@ import {Field} from "../../model/field.model";
 import {ShowFeeDiscountsModel, ShowFeeModel} from "./v-tuition-contract/models/show-fee.model";
 import {Form} from "../../model/form.model";
 import {FormPayment} from "./v-form-payment/model/form-payment.model";
+import {ConsentInfo} from "./v-consent/model/consent.model";
 
 @Component({
   selector: 'app-v-form-table',
@@ -42,7 +43,7 @@ export class VFormBuilderComponent implements OnInit {
     {
       name: 'TUITION', isActive: false,
       type: {
-        value: 0, name:'fixed'
+        value: 0, name: 'fixed'
       },
       payMore: {
         isActive: false,
@@ -52,7 +53,7 @@ export class VFormBuilderComponent implements OnInit {
     {
       name: 'BAIS MEDRASH WINTER DORMITORY FEE', isActive: true,
       type: {
-        value: 0, name:'fixed'
+        value: 0, name: 'fixed'
       },
       payMore: {
         isActive: false,
@@ -62,7 +63,7 @@ export class VFormBuilderComponent implements OnInit {
     {
       name: 'LUNCH FEE', isActive: false,
       type: {
-        value: 0, name:'fixed'
+        value: 0, name: 'fixed'
       },
       payMore: {
         isActive: false,
@@ -72,7 +73,7 @@ export class VFormBuilderComponent implements OnInit {
     {
       name: 'BUSING/TRANSPORTATION', isActive: false,
       type: {
-        value: 0, name:'fixed'
+        value: 0, name: 'fixed'
       },
       payMore: {
         isActive: false,
@@ -82,7 +83,7 @@ export class VFormBuilderComponent implements OnInit {
     {
       name: 'REGISTRATION', isActive: true,
       type: {
-        value: 0, name:'fixed'
+        value: 0, name: 'fixed'
       },
       payMore: {
         isActive: false,
@@ -92,7 +93,7 @@ export class VFormBuilderComponent implements OnInit {
     {
       name: 'SUPPLIES', isActive: true,
       type: {
-        value: 0, name:'fixed'
+        value: 0, name: 'fixed'
       },
       payMore: {
         isActive: false,
@@ -102,11 +103,50 @@ export class VFormBuilderComponent implements OnInit {
     {
       name: 'ACTIVITY FEE', isActive: false,
       type: {
-        value: 0, name:'fixed'
+        value: 0, name: 'fixed'
       },
       payMore: {
         isActive: false,
         isAllow: false
+      }
+    }
+  ];
+
+  consentInfo: ConsentInfo[] = [
+    {
+      title: 'Terms and Conditions 2',
+      text: {
+        value: 'I allow my child to play in sport game',
+        isBold: false,
+        isItalic: false,
+      },
+      checkbox: {
+        isActive: false,
+        text: '',
+      },
+      signature: {
+        isRequire: true,
+        type: 'e', //e|wet
+        eType: 'external', //external|system
+        isBothParents: true,
+      }
+    },
+    {
+      title: 'Terms and Conditions 1',
+      text: {
+        value: 'I allow my child to play in sport game',
+        isBold: false,
+        isItalic: false,
+      },
+      checkbox: {
+        isActive: true,
+        text: 'I agree that I have read the terms and conditions',
+      },
+      signature: {
+        isRequire: true,
+        type: 'e', //e|wet
+        eType: 'external', //external|system
+        isBothParents: false,
       }
     }
   ];
@@ -168,12 +208,12 @@ export class VFormBuilderComponent implements OnInit {
 
   }
 
-  loadSideBar(){
+  loadSideBar() {
     this.fieldsService.getExistingSideBarList().subscribe((fields: Field[]) => {
         this.sideBarFields = fields;
         this.sideBarFields.forEach(field => {
-          if(field.type==113){
-            field.fields.forEach(f=>f.exist=false)
+          if (field.type == 113) {
+            field.fields.forEach(f => f.exist = false)
           }
           field.exist = false
         });
@@ -183,7 +223,6 @@ export class VFormBuilderComponent implements OnInit {
       () => this.formInit()
     );
   }
-
 
 
   formInit(): void {
@@ -197,17 +236,17 @@ export class VFormBuilderComponent implements OnInit {
           }
         },
         (error) => console.log(error, 'error'),
-        ()=>this.initFormFieldsToSideBar(this.sideBarFields, this.fields)
+        () => this.initFormFieldsToSideBar(this.sideBarFields, this.fields)
       );
     }
 
   }
 
-  initFormFieldsToSideBar(sideBar: Field[], workArea:Field[]){
-    sideBar.forEach(sideBarField=>{
+  initFormFieldsToSideBar(sideBar: Field[], workArea: Field[]) {
+    sideBar.forEach(sideBarField => {
       workArea.forEach(field => {
-        if(sideBarField.name == field.name){
-          if(field.type==113) this.initFormFieldsToSideBar(sideBarField.fields,field.fields);
+        if (sideBarField.name == field.name) {
+          if (field.type == 113) this.initFormFieldsToSideBar(sideBarField.fields, field.fields);
           sideBarField.exist = true
         }
       })
@@ -231,8 +270,8 @@ export class VFormBuilderComponent implements OnInit {
 
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else if((event.previousContainer.id =='workPlaceList' && event.container.id=='6372c882-3d14-486f-9c1f-52ae8ab928ef') ||
-      (event.container.id =='workPlaceList' && event.previousContainer.id=='6372c882-3d14-486f-9c1f-52ae8ab928ef')) {
+    } else if ((event.previousContainer.id == 'workPlaceList' && event.container.id == '6372c882-3d14-486f-9c1f-52ae8ab928ef') ||
+      (event.container.id == 'workPlaceList' && event.previousContainer.id == '6372c882-3d14-486f-9c1f-52ae8ab928ef')) {
       transferArrayItem(event.previousContainer.data,
         event.container.data,
         event.previousIndex,
@@ -246,9 +285,6 @@ export class VFormBuilderComponent implements OnInit {
     //   this.addField(this.fields[event.currentIndex]);
     // }
   }
-
-
-
 
 
   onChangeGroupBeing(field, group) {
@@ -310,10 +346,6 @@ export class VFormBuilderComponent implements OnInit {
   nameChange(event) {
     this.validNewCustomFieldName = this.checkExistingFieldsName(event.target.value.trim());
   }
-
-
-
-
 
 
   //find in main array or nester(group) filed and delete
@@ -386,11 +418,6 @@ export class VFormBuilderComponent implements OnInit {
   disableWarning() {
     this.warningVisible = false;
   }
-
-
-
-
-
 
 
   goBack() {

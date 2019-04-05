@@ -116,13 +116,39 @@ label.btn.app-btn-signature.active {
   background-color: #F6F6F6;
 }
 
-.app-gear {
-  color: #9C9D9D;
+.app-consent-signature {
+  background-color: #FFFFFF;
 }
 
+.app-fb-trash, .app-fb-gear{
+  color: #999999;
+}
+
+.app-fb-caret-up {
+  color: $element-base-color;
+}
 
 .form-payment-side-bar-text{
   color: #151515;
   font-size: 0.8em;
   font-family: "NunitoSans-ExtraBold";
 }
+
+//Consent
+.app-consent-item {
+  border-radius: 3px;
+  background-color: #F6F6F6;
+}
+
+.app-consent-item-title {
+  font-family: "NunitoSans-ExtraBold";
+  font-size: 1.2em;
+}
+
+.app-plus-i {
+  font-size: 1.3em;
+  color: $element-base-color;
+  cursor: pointer;
+}
+
+
