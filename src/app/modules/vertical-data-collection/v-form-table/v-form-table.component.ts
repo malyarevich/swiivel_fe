@@ -180,4 +180,8 @@ export class VFormTableComponent implements OnInit {
             this.getAllForm();
         }
     }
+
+  convertDate(date) {
+        return date.replace(/\s/g, "T");
+  }
 }
