@@ -36,12 +36,24 @@
           </label>
         </div>
 
-        <div class="col-3">
-          <input type="number"
-                 class="app-form-payment-input"
-                 #fixedValue="ngModel"
-                 [(ngModel)]="item.type.value" required>
-          <span *ngIf="fixedValue.invalid"> 'dddd'</span>
+        <div class="col-7">
+          <div class="row no-gutters align-items-center" *ngIf="item.type.name == 0">
+            <div class="col">
+              <!--<span *ngIf="fixedValue.errors?.customMin"> 'min'</span>-->
+              <input type="number"
+                     class="app-form-payment-input"
+                     [ngClass]="{'is-invalid': fixedValue.invalid}"
+                     #fixedValue="ngModel"
+                     [(ngModel)]="item.type.value" customMin="0">
+            </div>
+            <div class="col pt-3">
+              <label class="app-checkbox-container">
+                <small>Allow pay more</small>
+                <input type="checkbox" [(ngModel)]="item.payMore.isAllow">
+                <span class="app-checkbox-checkmark"></span>
+              </label>
+            </div>
+          </div>
         </div>
 
       </div>
@@ -54,12 +66,27 @@
             <span class="app-radio-checkmark"></span>
           </label>
         </div>
-        <div class="col-3">
-          <input class="app-form-payment-input">
+        <div class="col-7">
+          <div class="row no-gutters align-items-center" *ngIf="item.type.name == 1">
+            <div class="col">
+              <input type="number"
+                     class="app-form-payment-input"
+                     [ngClass]="{'is-invalid': percentageValue.invalid}"
+                     #percentageValue="ngModel"
+                     [(ngModel)]="item.type.value" customMin="0" customMax="100">
+            </div>
+            <div class="col pt-3">
+              <label class="app-checkbox-container">
+                <small>Allow pay more</small>
+                <input type="checkbox" [(ngModel)]="item.payMore.isAllow">
+                <span class="app-checkbox-checkmark"></span>
+              </label>
+            </div>
+          </div>
         </div>
       </div>
       <div class="col-4 row no-gutters align-items-center">
-        <div class="col-6">
+        <div class="col-6 pl-3">
           <label class="app-radio-container" ngbButtonLabel>Full Amount Due
             <input type="radio" ngbButton name="" [value]="2">
             <span class="app-radio-checkmark"></span>
