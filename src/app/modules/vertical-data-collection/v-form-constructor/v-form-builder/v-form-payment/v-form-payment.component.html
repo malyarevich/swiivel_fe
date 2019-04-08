@@ -26,7 +26,7 @@
     </div>
 
     <div class="row no-gutters align-items-center app-form-payment-div py-3" [name]="item.name" ngbRadioGroup
-         [(ngModel)]="item.type.value">
+         [(ngModel)]="item.type.name">
       <div class="col-4 row no-gutters align-items-center">
 
         <div class="col-4 pl-4">
@@ -37,7 +37,11 @@
         </div>
 
         <div class="col-3">
-          <input class="app-form-payment-input">
+          <input type="number"
+                 class="app-form-payment-input"
+                 #fixedValue="ngModel"
+                 [(ngModel)]="item.type.value" required>
+          <span *ngIf="fixedValue.invalid"> 'dddd'</span>
         </div>
 
       </div>

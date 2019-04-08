@@ -7,10 +7,16 @@ export interface FormPayment{
 
 interface FormPaymentType {
   value: number;
-  name: string
+  name: number;
 }
 
 interface PayMore {
   isAllow: boolean;
   isActive: boolean;
 }
+
+export const TYPE_NAME = {
+  fixed: 0,
+  percentage: 1,
+  full: 2,
+};

@@ -9,7 +9,7 @@ import {VFieldsService} from "../../v-fields.service";
 import {Field} from "../../model/field.model";
 import {ShowFeeDiscountsModel, ShowFeeModel} from "./v-tuition-contract/models/show-fee.model";
 import {Form} from "../../model/form.model";
-import {FormPayment} from "./v-form-payment/model/form-payment.model";
+import {FormPayment, TYPE_NAME} from "./v-form-payment/model/form-payment.model";
 import {ConsentInfo} from "./v-consent/model/consent.model";
 
 @Component({
@@ -43,7 +43,7 @@ export class VFormBuilderComponent implements OnInit {
     {
       name: 'TUITION', isActive: false,
       type: {
-        value: 0, name: 'fixed'
+        value: 0, name:  TYPE_NAME.fixed
       },
       payMore: {
         isActive: false,
@@ -53,7 +53,7 @@ export class VFormBuilderComponent implements OnInit {
     {
       name: 'BAIS MEDRASH WINTER DORMITORY FEE', isActive: true,
       type: {
-        value: 0, name: 'fixed'
+        value: 0, name:  TYPE_NAME.fixed
       },
       payMore: {
         isActive: false,
@@ -63,7 +63,7 @@ export class VFormBuilderComponent implements OnInit {
     {
       name: 'LUNCH FEE', isActive: false,
       type: {
-        value: 0, name: 'fixed'
+        value: 0, name: TYPE_NAME.fixed,
       },
       payMore: {
         isActive: false,
@@ -73,7 +73,7 @@ export class VFormBuilderComponent implements OnInit {
     {
       name: 'BUSING/TRANSPORTATION', isActive: false,
       type: {
-        value: 0, name: 'fixed'
+        value: 0, name: TYPE_NAME.fixed
       },
       payMore: {
         isActive: false,
@@ -83,7 +83,7 @@ export class VFormBuilderComponent implements OnInit {
     {
       name: 'REGISTRATION', isActive: true,
       type: {
-        value: 0, name: 'fixed'
+        value: 0, name:  TYPE_NAME.percentage,
       },
       payMore: {
         isActive: false,
@@ -93,7 +93,7 @@ export class VFormBuilderComponent implements OnInit {
     {
       name: 'SUPPLIES', isActive: true,
       type: {
-        value: 0, name: 'fixed'
+        value: 0, name: TYPE_NAME.full,
       },
       payMore: {
         isActive: false,
@@ -103,7 +103,7 @@ export class VFormBuilderComponent implements OnInit {
     {
       name: 'ACTIVITY FEE', isActive: false,
       type: {
-        value: 0, name: 'fixed'
+        value: 0, name: TYPE_NAME.fixed,
       },
       payMore: {
         isActive: false,
