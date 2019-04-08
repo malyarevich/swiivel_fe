@@ -1,30 +1,36 @@
 .app-select {
-  position: relative;
-
-  .app-select-label {
-    position: absolute;
-    z-index: 1002;
-    color: #999;
-    font-size: 11px;
-    top: 3px;
-    left: 10px;
-  }
 
   .ng-select::ng-deep {
 
     .ng-select-container {
 
       .ng-value-container {
+        overflow: visible;
+
+        .ng-placeholder {
+          position: absolute;
+          color: #909090;
+          transform-origin: 0 0;
+          transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),-webkit-transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
 
         .ng-value {
 
           .ng-value-label {
-            font-family: 'NunitoSans-Bold';
+            font-family: 'NunitoSans-Regular';
             font-size: 12px;
             position: absolute;
             bottom: 1px;
           }
         }
+      }
+    }
+
+    .ng-has-value {
+
+      .ng-placeholder {
+        display: block;
+        transform: translateY(-7px) scale(0.85) perspective(100px) translateZ(0.001px);
       }
     }
   }

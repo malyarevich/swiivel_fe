@@ -1,94 +1,94 @@
-.app-input-container {
-  position: relative;
-}
-
-.app-input-label {
-  color: #535353;
-  box-sizing: border-box;
-  display: block;
-  font-size: 10px;
-  line-height: 1;
-  opacity: 0;
-  overflow: hidden;
-  padding: .5em 1.5em;
-  pointer-events: none;
-  position: absolute;
-  text-overflow: ellipsis;
-  top: 0;
-  text-align: left;
-  transform: translateY(3px);
-  transition: all .2s ease-out;
-  user-select: none;
-  white-space: nowrap;
-  width: 100%;
-  z-index: 1;
-  .app-input-fill & {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-.app-input {
-  border: 1px solid #B6B6B6;
-  border-radius: 3px;
-  color: #151515;
-  font-size: 1em;
-  padding: 0 1em;
-  min-height: 40px;
-  background-color: #FFF;
-  transition: all .2s ease-out;
-  width: 100%;
-  &:hover, &:focus {
-    /* inset | offset-x | offset-y | blur-radius | spread-radius | color */
-    box-shadow: inset 0 0 10px 0 rgba(85, 85, 85, .1);
-    outline: 0;
-  }
-  .app-input-fill & {
-    padding-bottom: 4px;
-    padding-top: 14px;
-  }
-}
-
-::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-  color: #919293;
-}
-
-::-moz-placeholder { /* Firefox 19+ */
-  color: #919293;
-}
-
-:-ms-input-placeholder { /* IE 10+ */
-  color: #919293;
-}
-
-:-moz-placeholder { /* Firefox 18- */
-  color: #919293;
-}
-
-
-//test
-//.float-container {
-//  border: solid 1px #ccc;
-//  padding: 0 8px;
+//.app-input-container {
 //  position: relative;
-//  background-color: white;
-//  height: 35px;
 //}
-//.float-container input {
-//  border: none;
-//  font-size: 14px;
-//  margin: 10px 0 0;
-//  outline: 0;
-//}
-//.float-container label {
-//  font-size: 14px;
+//
+//.app-input-label {
+//  color: #535353;
+//  box-sizing: border-box;
+//  display: block;
+//  font-size: 10px;
+//  line-height: 1;
+//  opacity: 0;
+//  overflow: hidden;
+//  padding: .5em 1.5em;
+//  pointer-events: none;
 //  position: absolute;
-//  bottom: 10px;
-//  transform-origin: top left;
-//  transform: translate(0, 14px) scale(1);
-//  transition: all .1s ease-in-out;
+//  text-overflow: ellipsis;
+//  top: 0;
+//  text-align: left;
+//  transform: translateY(3px);
+//  transition: all .2s ease-out;
+//  user-select: none;
+//  white-space: nowrap;
+//  width: 100%;
+//  z-index: 1;
+//  .app-input-fill & {
+//    opacity: 1;
+//    transform: none;
+//  }
 //}
-//.float-container.active label {
-//  bottom: 5px;
-//  transform: translate(0, 4px) scale(.70);
+//
+//.app-input {
+//  border: 1px solid #B6B6B6;
+//  border-radius: 3px;
+//  color: #151515;
+//  font-size: 1em;
+//  padding: 0 1em;
+//  min-height: 40px;
+//  background-color: #FFF;
+//  transition: all .2s ease-out;
+//  width: 100%;
+//  &:hover, &:focus {
+//    /* inset | offset-x | offset-y | blur-radius | spread-radius | color */
+//    box-shadow: inset 0 0 10px 0 rgba(85, 85, 85, .1);
+//    outline: 0;
+//  }
+//  .app-input-fill & {
+//    padding-bottom: 4px;
+//    padding-top: 14px;
+//  }
 //}
+//
+//::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+//  color: #919293;
+//}
+//
+//::-moz-placeholder { /* Firefox 19+ */
+//  color: #919293;
+//}
+//
+//:-ms-input-placeholder { /* IE 10+ */
+//  color: #919293;
+//}
+//
+//:-moz-placeholder { /* Firefox 18- */
+//  color: #919293;
+//}
+//
+//
+////test
+////.float-container {
+////  border: solid 1px #ccc;
+////  padding: 0 8px;
+////  position: relative;
+////  background-color: white;
+////  height: 35px;
+////}
+////.float-container input {
+////  border: none;
+////  font-size: 14px;
+////  margin: 10px 0 0;
+////  outline: 0;
+////}
+////.float-container label {
+////  font-size: 14px;
+////  position: absolute;
+////  bottom: 10px;
+////  transform-origin: top left;
+////  transform: translate(0, 14px) scale(1);
+////  transition: all .1s ease-in-out;
+////}
+////.float-container.active label {
+////  bottom: 5px;
+////  transform: translate(0, 4px) scale(.70);
+////}
