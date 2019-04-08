@@ -41,5 +41,10 @@ label.btn.btn-primary.active{
   color: #FFFFFF;
 }
 
+.app-fb-scroll-container {
+  height: 37em;
+  overflow-y: auto;
+}
+
 
 
