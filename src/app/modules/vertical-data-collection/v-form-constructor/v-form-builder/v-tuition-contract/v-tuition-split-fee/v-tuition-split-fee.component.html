@@ -8,7 +8,7 @@
   <tbody>
   <ng-container *ngFor="let item of tuitionContract.showFees; let i = index">
     <tr *ngIf="item.isActive">
-      <td class="font-weight-bold">{{item.name}}</td>
+      <td class="font-weight-bold">{{item.title}}</td>
       <td>${{tempFees[i]}}</td>
     </tr>
   </ng-container>

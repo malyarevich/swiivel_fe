@@ -34,7 +34,7 @@
       <i class="fas fa-cog app-fb-section-icon-right pr-2"></i>
       <span>
         <!--<i *ngIf="showNested" class="fas  fa-caret-down dragable-y"></i>-->
-        <i class="fas  fa-caret-up app-fb-section-icon-rightn"></i>
+        <i class="fas  fa-caret-up app-fb-section-icon-right"></i>
       </span>
     </div>
 
@@ -64,7 +64,16 @@
     </div>
     <p class="font-weight-bold mt-5">CONTRACT TEXT <span class="app-fb-tuition-info">(Text that will be displayed to the parents)</span>
     </p>
-    <textarea class="app-fb-tuition-table w-100 pl-3" rows="8" placeholder="Text"
+    <div class="text-right">
+      <a class="tuition-text-a" [ngClass]="isBold?'active':''" (click)="isBold=!isBold">
+        <small>Bold</small>
+      </a>
+      <span><small> | </small></span>
+      <a class="tuition-text-a" [ngClass]="isItalic?'active':''" (click)="isItalic=!isItalic">
+        <small>Italic</small>
+      </a>
+    </div>
+    <textarea class="app-fb-tuition-table w-100 pl-3" [ngClass]="[isBold?'bold-for-a':'',isItalic?'italic-for-a':'']" rows="8" placeholder="Text"
               [(ngModel)]="tuitionContract.text"></textarea>
     <div class="row mt-5" *ngIf="tuitionContract.signature.isRequire">
       <ng-container *ngIf="!tuitionContract.signature.isBothParents">

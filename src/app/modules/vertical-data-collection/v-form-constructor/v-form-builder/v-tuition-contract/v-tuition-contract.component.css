@@ -7,3 +7,20 @@
     color: #797B88;
     font-size: 0.8em;
 }
+
+a.tuition-text-a {
+    cursor: pointer;
+}
+
+a.tuition-text-a.active {
+    color: #4350A2;
+    font-weight: bold;
+}
+
+.bold-for-a {
+    font-weight: bold;
+}
+
+.italic-for-a {
+    font-style: italic;
+}

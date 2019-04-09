@@ -9,7 +9,10 @@ import {TuitionContract} from "./models/tuition-contract.model";
 export class VTuitionContractComponent implements OnInit {
   @Input() tuitionContract: TuitionContract;
 
-  sectionName = 'Tuition Contract';
+  sectionName: string = 'Tuition Contract';
+  isBold: boolean;
+  isItalic: boolean;
+
   constructor() {
   }
 
