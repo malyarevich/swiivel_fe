@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import {DocumentsModel} from "./model/documents.model";
 
 @Component({
   selector: 'app-v-documents-forms',
@@ -7,6 +8,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class VDocumentsFormsComponent implements OnInit {
 
+  @Input() isDocumentsForms: DocumentsModel[];
+  @Input() documents: object;
   constructor() { }
 
   ngOnInit() {

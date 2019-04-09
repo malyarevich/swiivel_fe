@@ -1,0 +1,190 @@
+<!--Section-->
+<div class="app-section-wrapper app-consent-section mt-2 mb-2 row align-items-center no-gutters">
+
+  <div class="col-4 row align-items-center no-gutters">
+    <div class="col-1 row align-items-center no-gutters">
+          <span class="app-fb-section-icon-white">
+            <i class="fas fa-ellipsis-v"></i>
+            <i class="fas fa-ellipsis-v"></i>
+          </span>
+    </div>
+    <div class="col-10 ml-3" [ngClass]="{'app-input-fill': sectionName}">
+      <label class="app-input-label" for="section-name">Section Name</label>
+      <input
+        id="section-name"
+        type="text"
+        class="app-input"
+        [(ngModel)]="sectionName"
+        placeholder="Section Name">
+    </div>
+  </div>
+
+
+  <div class="col-2 pl-4 app-input-container w-100" [ngClass]="{'app-input-fill': width}">
+    <label class="app-input-label" for="section-width">Section Width</label>
+    <input
+      id="section-width"
+      type="text"
+      class="app-input"
+      [(ngModel)]="width"
+      placeholder="Section Name">
+  </div>
+
+
+  <div class="col-1 offset-5   row align-items-center no-gutters">
+    <div class="col">
+      <span class="app-fb-section-icon-white">
+        <i class="fas fa-cog dragable-i pr-2"></i>
+      </span>
+    </div>
+    <div class="col">
+        <span class="app-fb-section-icon-white">
+          <i class="fas  fa-caret-down dragable-y"></i>
+        </span>
+    </div>
+  </div>
+
+</div>
+<!--End Section-->
+
+
+<div class="app-section-wrapper mb-2" *ngFor="let document of documents">
+
+
+  <div class="row no-gutters align-items-center">
+    <div class="col-5 row no-gutters align-items-center">
+      <div class=" col-1 row align-items-center no-gutters">
+          <span class="app-fb-section-icon">
+            <i class="fas fa-ellipsis-v"></i>
+            <i class="fas fa-ellipsis-v"></i>
+          </span>
+      </div>
+
+
+      <div class="col-10 ml-1" [ngClass]="{'app-input-fill': width}">
+        <label class="app-input-label" for="document-name">Document Name</label>
+        <input
+          type="text"
+          class="app-input"
+          id="document-name"
+          [(ngModel)]="document.name"
+          placeholder="Document Name">
+      </div>
+    </div>
+    <div class="col-1 ">
+      <span *ngIf="document.isPerFamily" class="badge badge-pill badge-success ml-3">&nbsp;Family&nbsp;</span>
+      <span *ngIf="!document.isPerFamily" class="badge badge-pill badge-info ml-3">Student</span>
+    </div>
+    <div class="col-2 offset-4">
+      <button type="button" class="btn btn-outline-primary form-control">Add Specific Criteria</button>
+    </div>
+
+  </div>
+
+
+  <div class="row">
+    <div class="col-12 ">
+      <div class="text-right">
+        <a>
+          <small>Bold</small>
+        </a>
+        <span><small> | </small></span>
+        <a>
+          <small>Italic</small>
+        </a>
+      </div>
+    </div>
+    <div class="col ">
+          <textarea class="app-consent-table form-control float-right"
+                    rows="4"
+                    placeholder="Text"></textarea>
+    </div>
+  </div>
+
+
+  <div *ngIf="!document.isUpload" class="row no-gutters align-items-center mt-3">
+    <div class="col-7 offset-1 download-div  rounded row align-items-center no-gutters">
+      <div class="col pl-2">
+        <a [href]="document.data.link" [download]="document.data.name">{{document.data.name}}</a>
+      </div>
+      <div class="col-1 row no-gutters align-items-center">
+        <div class="col-4">
+          <span><i class="fas fa-eye fa-xs"></i></span>
+
+        </div>
+        <div class="col-4">
+          <span><i class="fas fa-trash fa-xs"></i></span>
+
+        </div>
+        <div class="col-4 download-paperclip-div rounded">
+          <a [href]="document.data.link" [download]="document.data.name" role="button">
+            <i class="fas fa-paperclip fa-xs pl-1"></i>
+          </a>
+        </div>
+
+      </div>
+      <!--      <div class="col-1">-->
+      <!--      </div>-->
+    </div>
+    <div class="col-2 offset-2">
+      <a [href]="document.data.link" [download]="document.data.name" type="button" class="btn d-u-button form-control">Download
+        Document</a>
+
+    </div>
+
+
+  </div>
+  <div *ngIf="document.isUpload" class="row no-gutters align-items-center mt-3">
+    <div class="col-3 offset-9 row no-gutters align-items-center">
+      <div class="col-8">
+        <button type="button" class="btn d-u-button form-control">Upload Document</button>
+      </div>
+      <div class="col-1 offset-3" ngbDropdown placement="bottom-right" autoClose="outside">
+        <span id="dropdownBasic1" ngbDropdownToggle><i class="fas fa-upload fa-lg"></i></span>
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+
+          <div class="row no-gutters align-items-center">
+
+            <div class="col-4 row no-gutters dropdown-div border-secondary border-right">
+              <div class="pl-2 col-3">
+                <label class="app-switch">
+                  <input type="checkbox">
+                  <span class="app-slider app-round"></span>
+                </label>
+              </div>
+              <div class="col">
+                <span class=" ">Documents</span>
+              </div>
+            </div>
+
+            <div class="col-4 row no-gutters dropdown-div border-secondary border-right">
+              <div class="pl-1 col-3">
+                <label class="app-switch">
+                  <input type="checkbox">
+                  <span class="app-slider app-round"></span>
+                </label>
+              </div>
+              <div class="col">
+                <span class=" ">Images</span>
+              </div>
+            </div>
+
+            <div class="col-4 row no-gutters dropdown-div">
+              <div class=" col-3 pl-1">
+                <label class="app-switch">
+                  <input type="checkbox">
+                  <span class="app-slider app-round"></span>
+                </label>
+              </div>
+              <div class="col">
+                <span class=" ">Audio/Video</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+

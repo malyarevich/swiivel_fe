@@ -1,3 +1,7 @@
-<p>
-  v-documents-forms works!
-</p>
+<div [hidden]="!isDocumentsForms.isDocuments">
+  <app-v-documents-container [documents]="documents"></app-v-documents-container>
+</div>
+
+<div [hidden]="!isDocumentsForms.isForms">
+<app-v-forms-container></app-v-forms-container>
+</div>

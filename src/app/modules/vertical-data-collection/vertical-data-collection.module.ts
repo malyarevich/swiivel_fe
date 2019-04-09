@@ -54,6 +54,9 @@ import { VTuitionSplitStudentComponent } from './v-form-constructor/v-form-build
 import { VFormPaymentComponent } from './v-form-constructor/v-form-builder/v-form-payment/v-form-payment.component';
 import { VDocumentsFormsComponent } from './v-form-constructor/v-form-builder/v-documents-forms/v-documents-forms.component';
 import { VGroupSettingsComponent } from './v-form-constructor/v-form-builder/v-group-container/v-group-settings/v-group-settings.component';
+import { VConsentComponent } from './v-form-constructor/v-form-builder/v-consent/v-consent.component';
+import { VDocumentsContainerComponent } from './v-form-constructor/v-form-builder/v-documents-forms/v-documents-container/v-documents-container.component';
+import { VFormsContainerComponent } from './v-form-constructor/v-form-builder/v-documents-forms/v-forms-container/v-forms-container.component';
 
 const routes: Routes = [
   {
@@ -137,6 +140,9 @@ const routes: Routes = [
     VTuitionSplitFeeComponent,
     VTuitionSplitStudentComponent,
     VGroupSettingsComponent,
+    VConsentComponent,
+    VDocumentsContainerComponent,
+    VFormsContainerComponent,
   ],
   imports: [
     NgbModule,
