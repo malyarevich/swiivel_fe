@@ -1,32 +1,87 @@
-<div class="p-3">
-  <p class="app-fb-section-title">
+<div class="app-section-wrapper app-section-header mb-2 py-0">
+  <div class="row">
+    <div class="col-6">
+      <div class="px-3 pt-3 row no-gutters">
+        <div class="col-1 pt-3">
+          <span class="app-fb-section-icon-white">
+            <i class="fas fa-ellipsis-v"></i>
+            <i class="fas fa-ellipsis-v"></i>
+          </span>
+        </div>
+        <div class="col">
+          <div class="form-group app-input-container w-100" [ngClass]="{'app-input-fill': sectionName}">
+            <label class="app-input-label" for="section-name">Section Name</label>
+            <input [(ngModel)]="sectionName"
+                   id="section-name"
+                   type="text"
+                   class="app-input"
+                   placeholder="Section Name">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-2 pt-3">
+      <div class="form-group app-input-container app-input-fill">
+        <label class="app-input-label" for="fieldWidth">Field Width</label>
+        <select class="app-input" id="fieldWidth">
+          <option>4 Columns</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="col-4 text-right align-self-center">
+      <i class="fas fa-cog app-fb-section-icon-right pr-2"></i>
+      <span>
+        <!--<i *ngIf="showNested" class="fas  fa-caret-down dragable-y"></i>-->
+        <i class="fas  fa-caret-up app-fb-section-icon-rightn"></i>
+      </span>
+    </div>
+
+  </div>
+</div>
+
+
+<div class="app-section-wrapper">
+  <div class="p-3">
+    <p class="app-fb-section-title">
     <span class="app-fb-section-icon">
       <i class="fas fa-ellipsis-v"></i>
       <i class="fas fa-ellipsis-v"></i>
     </span>
-    Contract Table Preview
-  </p>
-</div>
-<div class="px-4 py-2">
-  <p class="font-weight-bold">FEES CONTRACT</p>
-  <div class="app-fb-tuition-table p-3">
-    <app-v-tuition-split-fee *ngIf="splitTuitionBy === 'fee'"
-                             [showFee]="showFee">
-    </app-v-tuition-split-fee>
-    <app-v-tuition-split-student *ngIf="splitTuitionBy === 'student'"
-                                 [showFee]="showFee"
-                                 [showFeeDiscounts]="showFeeDiscounts">
-    </app-v-tuition-split-student>
+      Contract Table Preview
+    </p>
   </div>
-  <p class="font-weight-bold mt-5">CONTRACT TEXT <span class="app-fb-tuition-info">(Text that will be displayed to the parents)</span>
-  </p>
-  <textarea class="app-fb-tuition-table w-100 pl-3" rows="8" placeholder="Text"></textarea>
-  <div class="row mt-5">
-    <div class="col">
-      <textarea class="app-fb-tuition-table w-100 pl-3" rows="2" placeholder="Father's Signature"></textarea>
+  <div class="px-4 py-2">
+    <p class="font-weight-bold">FEES CONTRACT</p>
+    <div class="app-fb-tuition-table p-3">
+      <app-v-tuition-split-fee *ngIf="tuitionContract.splitBy === 'fee'"
+                               [tuitionContract]="tuitionContract">
+      </app-v-tuition-split-fee>
+      <app-v-tuition-split-student *ngIf="tuitionContract.splitBy === 'student'"
+                                   [tuitionContract]="tuitionContract">
+      </app-v-tuition-split-student>
     </div>
-    <div class="col">
-      <textarea class="app-fb-tuition-table w-100 pl-3" rows="2" placeholder="Mother's Signature"></textarea>
+    <p class="font-weight-bold mt-5">CONTRACT TEXT <span class="app-fb-tuition-info">(Text that will be displayed to the parents)</span>
+    </p>
+    <textarea class="app-fb-tuition-table w-100 pl-3" rows="8" placeholder="Text"
+              [(ngModel)]="tuitionContract.text"></textarea>
+    <div class="row mt-5" *ngIf="tuitionContract.signature.isRequire">
+      <ng-container *ngIf="!tuitionContract.signature.isBothParents">
+        <div class="col">
+          <textarea class="app-fb-tuition-table w-100 pl-3" rows="2" placeholder="Parent's Signature"></textarea>
+        </div>
+        <div class="col">
+        </div>
+      </ng-container>
+      <ng-container *ngIf="tuitionContract.signature.isBothParents">
+        <div class="col">
+          <textarea class="app-fb-tuition-table w-100 pl-3" rows="2" placeholder="Father's Signature"></textarea>
+        </div>
+        <div class="col">
+          <textarea class="app-fb-tuition-table w-100 pl-3" rows="2" placeholder="Mother's Signature"></textarea>
+        </div>
+      </ng-container>
     </div>
   </div>
 </div>

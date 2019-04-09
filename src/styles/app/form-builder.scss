@@ -11,9 +11,18 @@
   color: #ffffff;
 }
 
+.app-fb-section-icon-right {
+  color: white;
+  cursor: pointer;
+}
+
 .app-section-wrapper {
   background-color: #fff;
   border: 1px solid rgba(0, 0, 0, .125);
   padding: 1rem;
   border-radius: 5px;
+}
+
+.app-section-header {
+  background-color: #9FA6CB;
 }
