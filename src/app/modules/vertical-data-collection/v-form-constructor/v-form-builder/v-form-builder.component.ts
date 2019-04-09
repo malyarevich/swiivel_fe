@@ -14,6 +14,7 @@ import {
 import {Form} from "../../model/form.model";
 import {FormPayment, TYPE_NAME} from "./v-form-payment/model/form-payment.model";
 import {ConsentInfo} from "./v-consent/model/consent.model";
+import {DocumentSideBar, DocumentsModel} from "./v-documents-forms/model/documents.model";
 
 @Component({
   selector: 'app-v-form-table',
@@ -36,10 +37,31 @@ export class VFormBuilderComponent implements OnInit {
 
   isFormsFields: boolean = false;
   isConsent: boolean = false;
-  isDocumentsForms: boolean = false;
+  isDocumentsForms: DocumentSideBar = {
+    isActiveAll: false,
+    isDocuments: true,
+    isForms: true
+  };
   isTuitionContract: boolean = false;
   isFormPayment: boolean = false;
 
+
+  documents: DocumentsModel[] = [
+    {
+      name: "Elementary School Calendar",
+      isUpload: false,
+      isPerFamily: true,
+      data: {
+        name: "BBY Contract 1 Student.pdf",
+        link: "../../../../../assets/files/BBY Contract 1 Student.pdf"
+      }
+    },
+    {
+      name: "Proof of Address",
+      isUpload: true,
+      isPerFamily: false
+    }
+  ];
 
   formPaymentSideBar: FormPayment[] = [
     {
@@ -170,7 +192,6 @@ export class VFormBuilderComponent implements OnInit {
       this.formId = url != 'v-form-constructor' ? url : '';
     });
 
-
     this.loadBasicFields();
     this.loadSideBar();
     this.loadMappedFields();
@@ -210,7 +231,6 @@ export class VFormBuilderComponent implements OnInit {
 
 
   formInit(): void {
-
     if (this.formId) {
       this.formService.getOneForm(this.formId).subscribe(
         (form: Form) => {
@@ -221,7 +241,9 @@ export class VFormBuilderComponent implements OnInit {
           }
         },
         (error) => console.log(error, 'error'),
-        () => this.initFormFieldsToSideBar(this.sideBarFields, this.fields)
+        () => {if(!isEmpty(this.fields)){
+          this.initFormFieldsToSideBar(this.sideBarFields, this.fields);
+        }}
       );
     }
 

@@ -1,0 +1,90 @@
+@import '../../../../../../../styles/variables/colors';
+
+a, .fas {
+  cursor: pointer;
+}
+
+a.active {
+  color: #4350A2;
+  font-weight: bold;
+
+}
+
+.bold-for-a {
+  font-weight: bold;
+}
+
+.italic-for-a {
+  font-style: italic;
+}
+textarea.app-consent-table{
+  width: 96.3%;
+}
+.app-consent-table {
+  border: 1px solid #B6B6B6;
+  border-radius: 5px;
+}
+
+.app-consent-text {
+  padding: 0 5.3em;
+}
+
+.app-btn-accept {
+  height: 30px;
+  width: 117px;
+  border-radius: 3px;
+  background-color: #4350A2;
+}
+
+.app-consent-section {
+  background-color: #9FA6CB;
+  /*height: 60px;*/
+}
+
+.app-consent-icon {
+  color: white;
+  cursor: pointer;
+}
+.badge-success{
+  background-color: #3CA476;
+}
+.download-div{
+  background-color: #F2F2F2;
+  //height: 31px;
+}
+a{
+  color: #151515;
+  font-weight: bold;
+}
+.fa-trash,.fa-eye{
+  color: $icon-grey-color;
+}
+.fa-paperclip{
+  color: white;
+}
+.download-paperclip-div{
+  background-color: #4350A2;
+  //height: 31px;
+
+}
+.d-u-button{
+  background-color: $element-base-color;
+  color: white;
+}
+.fa-upload{
+  color: $element-base-color;
+}
+
+.dropdown-menu{
+    height: 156px;
+    width: 654px;
+    border: 1px solid #F6F6F6;
+    border-radius: 3px;
+}
+
+.dropdown-toggle::after {
+  display:none;
+}
+.dropdown-div{
+  height: 140px;
+}
