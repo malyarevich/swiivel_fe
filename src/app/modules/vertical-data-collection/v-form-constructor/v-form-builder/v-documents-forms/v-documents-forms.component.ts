@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import {DocumentsModel} from "./model/documents.model";
+import {DocumentSideBar, DocumentsModel} from "./model/documents.model";
 
 @Component({
   selector: 'app-v-documents-forms',
@@ -8,8 +8,8 @@ import {DocumentsModel} from "./model/documents.model";
 })
 export class VDocumentsFormsComponent implements OnInit {
 
-  @Input() isDocumentsForms: DocumentsModel[];
-  @Input() documents: object;
+  @Input() isDocumentsForms: DocumentSideBar;
+  @Input() documents: DocumentsModel[];
   constructor() { }
 
   ngOnInit() {

@@ -11,7 +11,7 @@ import {ShowFeeDiscountsModel, ShowFeeModel} from "./v-tuition-contract/models/s
 import {Form} from "../../model/form.model";
 import {FormPayment} from "./v-form-payment/model/form-payment.model";
 import {ConsentInfo} from "./v-consent/model/consent.model";
-import {DocumentsModel} from "./v-documents-forms/model/documents.model";
+import {DocumentSideBar, DocumentsModel} from "./v-documents-forms/model/documents.model";
 
 @Component({
   selector: 'app-v-form-table',
@@ -33,7 +33,7 @@ export class VFormBuilderComponent implements OnInit {
 
   isFormsFields: boolean = false;
   isConsent: boolean = false;
-  isDocumentsForms: object = {
+  isDocumentsForms: DocumentSideBar = {
     isActiveAll: false,
     isDocuments: true,
     isForms: true

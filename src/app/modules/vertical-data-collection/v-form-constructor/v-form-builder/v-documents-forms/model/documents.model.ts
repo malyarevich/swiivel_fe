@@ -6,3 +6,9 @@ export interface DocumentsModel {
   isPerFamily: boolean;
   data?:any;
 }
+
+export interface DocumentSideBar {
+  isActiveAll: boolean,
+  isDocuments: boolean,
+  isForms: boolean
+}
