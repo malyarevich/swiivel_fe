@@ -7,10 +7,14 @@ import {cloneDeep, isEmpty} from 'lodash';
 import {Location} from '@angular/common';
 import {VFieldsService} from "../../v-fields.service";
 import {Field} from "../../model/field.model";
-import {ShowFeeDiscountsModel, ShowFeeModel} from "./v-tuition-contract/models/show-fee.model";
+import {
+  TuitionContract,
+  tuitionContractDefault
+} from "./v-tuition-contract/models/tuition-contract.model";
 import {Form} from "../../model/form.model";
 import {FormPayment, TYPE_NAME} from "./v-form-payment/model/form-payment.model";
 import {ConsentInfo} from "./v-consent/model/consent.model";
+import {DocumentSideBar, DocumentsModel} from "./v-documents-forms/model/documents.model";
 
 @Component({
   selector: 'app-v-form-table',
@@ -29,15 +33,35 @@ export class VFormBuilderComponent implements OnInit {
   customFields: Field[];
   existingFields: Field[];
   sideBarFields: Field[];
+  tuitionContract: TuitionContract = tuitionContractDefault;
 
   isFormsFields: boolean = false;
   isConsent: boolean = false;
-  isDocumentsForms: boolean = false;
+  isDocumentsForms: DocumentSideBar = {
+    isActiveAll: false,
+    isDocuments: true,
+    isForms: true
+  };
   isTuitionContract: boolean = false;
-  isContractSignature: boolean = false;
   isFormPayment: boolean = false;
-  splitTuitionBy: string = 'student';
 
+
+  documents: DocumentsModel[] = [
+    {
+      name: "Elementary School Calendar",
+      isUpload: false,
+      isPerFamily: true,
+      data: {
+        name: "BBY Contract 1 Student.pdf",
+        link: "../../../../../assets/files/BBY Contract 1 Student.pdf"
+      }
+    },
+    {
+      name: "Proof of Address",
+      isUpload: true,
+      isPerFamily: false
+    }
+  ];
 
   formPaymentSideBar: FormPayment[] = [
     {
@@ -151,24 +175,6 @@ export class VFormBuilderComponent implements OnInit {
     }
   ];
 
-  showFee: ShowFeeModel = {
-    dormitory: true,
-    registration: true,
-    activity: false,
-    tuition: true,
-    scholarship: true,
-    lunch: true
-  };
-
-  showFeeDiscounts: ShowFeeDiscountsModel = {
-    dormitory: false,
-    registration: false,
-    activity: false,
-    tuition: false,
-    scholarship: false,
-    lunch: false
-  };
-
   @ViewChild("addCustomFieldInput") addCustomFieldInput: ElementRef;
 
   constructor(private formService: VFormService,
@@ -185,7 +191,6 @@ export class VFormBuilderComponent implements OnInit {
       const url = urlPath[urlPath.length - 1].path;
       this.formId = url != 'v-form-constructor' ? url : '';
     });
-
 
     this.loadBasicFields();
     this.loadSideBar();
@@ -226,17 +231,19 @@ export class VFormBuilderComponent implements OnInit {
 
 
   formInit(): void {
-
     if (this.formId) {
       this.formService.getOneForm(this.formId).subscribe(
         (form: Form) => {
           if (!isEmpty(form)) {
             this.formName = form.name;
             this.fields = form.fields;
+            this.tuitionContract = form.tuitionContract ? form.tuitionContract : tuitionContractDefault;
           }
         },
         (error) => console.log(error, 'error'),
-        () => this.initFormFieldsToSideBar(this.sideBarFields, this.fields)
+        () => {if(!isEmpty(this.fields)){
+          this.initFormFieldsToSideBar(this.sideBarFields, this.fields);
+        }}
       );
     }
 
@@ -260,6 +267,7 @@ export class VFormBuilderComponent implements OnInit {
         fields: this.fields,
         name: this.formName,
         sidebar: this.sideBarFields,
+        tuitionContract: this.tuitionContract,
         step: 1
       };
       this.formService.sendForm(form).subscribe(res => this.goBack());

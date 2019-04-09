@@ -1,5 +1,6 @@
 import {Field} from './field.model';
 import {Permissions} from "../../../services/permission/permissions.model";
+import {TuitionContract} from "../v-form-constructor/v-form-builder/v-tuition-contract/models/tuition-contract.model";
 
 export interface Form {
     _id: string;
@@ -14,6 +15,7 @@ export interface Form {
     formDates?:object,
     sidebar?: Field[],
     step?: number;
+    tuitionContract?: TuitionContract;
     chosen_way_to_create_new_form?: number;
     example_form_id?: string;
 }

@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {TuitionContract} from "./models/tuition-contract.model";
 
 @Component({
   selector: 'app-v-tuition-contract',
@@ -6,9 +7,11 @@ import {Component, Input, OnInit} from '@angular/core';
   styleUrls: ['./v-tuition-contract.component.css']
 })
 export class VTuitionContractComponent implements OnInit {
-  @Input() splitTuitionBy: string;
-  @Input() showFee: object;
-  @Input() showFeeDiscounts: object;
+  @Input() tuitionContract: TuitionContract;
+
+  sectionName: string = 'Tuition Contract';
+  isBold: boolean;
+  isItalic: boolean;
 
   constructor() {
   }
