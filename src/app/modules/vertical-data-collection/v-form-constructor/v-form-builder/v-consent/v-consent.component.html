@@ -113,15 +113,19 @@
   </div>
 
   <!--SIGNATURE-->
-  <div class="row pt-2" *ngIf="item.signature.isBothParents">
+  <div class="row" *ngIf="!item.signature.isBothParents">
     <div class="col-12 app-consent-text">
-      <textarea class="app-consent-table w-25 pl-3"
+      <div class="row">
+        <div class="col-4">
+      <textarea class="app-consent-table w-100 pl-3"
                 rows="2"
                 placeholder="Parent's Signature"></textarea>
+        </div>
+      </div>
     </div>
   </div>
 
-  <div class="row" *ngIf="!item.signature.isBothParents">
+  <div class="row" *ngIf="item.signature.isBothParents">
     <div class="col-12 app-consent-text">
       <div class="row">
         <div class="col-4">
