@@ -53,7 +53,7 @@ import { VTuitionSplitFeeComponent } from './v-form-constructor/v-form-builder/v
 import { VTuitionSplitStudentComponent } from './v-form-constructor/v-form-builder/v-tuition-contract/v-tuition-split-student/v-tuition-split-student.component';
 import { VFormPaymentComponent } from './v-form-constructor/v-form-builder/v-form-payment/v-form-payment.component';
 import { VDocumentsFormsComponent } from './v-form-constructor/v-form-builder/v-documents-forms/v-documents-forms.component';
-import { VGroupSettingsComponent } from './v-form-constructor/v-form-builder/v-group-container/v-group-settings/v-group-settings.component';
+import { VGroupSettingsComponent } from './v-form-constructor/v-form-builder/v-form-fields/v-group-container/v-group-settings/v-group-settings.component';
 import { VConsentComponent } from './v-form-constructor/v-form-builder/v-consent/v-consent.component';
 import { VDocumentsContainerComponent } from './v-form-constructor/v-form-builder/v-documents-forms/v-documents-container/v-documents-container.component';
 import { VFormsContainerComponent } from './v-form-constructor/v-form-builder/v-documents-forms/v-forms-container/v-forms-container.component';

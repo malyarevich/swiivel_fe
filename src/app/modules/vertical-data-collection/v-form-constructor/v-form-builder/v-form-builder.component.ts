@@ -7,7 +7,10 @@ import {cloneDeep, isEmpty} from 'lodash';
 import {Location} from '@angular/common';
 import {VFieldsService} from "../../v-fields.service";
 import {Field} from "../../model/field.model";
-import {ShowFeeDiscountsModel, ShowFeeModel} from "./v-tuition-contract/models/show-fee.model";
+import {
+  TuitionContract,
+  tuitionContractDefault
+} from "./v-tuition-contract/models/tuition-contract.model";
 import {Form} from "../../model/form.model";
 import {FormPayment, TYPE_NAME} from "./v-form-payment/model/form-payment.model";
 import {ConsentInfo} from "./v-consent/model/consent.model";
@@ -27,9 +30,11 @@ export class VFormBuilderComponent implements OnInit {
   searchText: string;
   fields: Field[] = [];
   formName: string = '';
-  customFields: Field[]=[];
-  existingFields: Field[]=[];
-  sideBarFields: Field[]=[];
+  customFields: Field[];
+  existingFields: Field[];
+  sideBarFields: Field[];
+  tuitionContract: TuitionContract = tuitionContractDefault;
+  eligible: string;
 
   isFormsFields: boolean = false;
   isConsent: boolean = false;
@@ -39,9 +44,7 @@ export class VFormBuilderComponent implements OnInit {
     isForms: true
   };
   isTuitionContract: boolean = false;
-  isContractSignature: boolean = false;
   isFormPayment: boolean = false;
-  splitTuitionBy: string = 'student';
 
 
   documents: DocumentsModel[] = [
@@ -173,24 +176,6 @@ export class VFormBuilderComponent implements OnInit {
     }
   ];
 
-  showFee: ShowFeeModel = {
-    dormitory: true,
-    registration: true,
-    activity: false,
-    tuition: true,
-    scholarship: true,
-    lunch: true
-  };
-
-  showFeeDiscounts: ShowFeeDiscountsModel = {
-    dormitory: false,
-    registration: false,
-    activity: false,
-    tuition: false,
-    scholarship: false,
-    lunch: false
-  };
-
   @ViewChild("addCustomFieldInput") addCustomFieldInput: ElementRef;
 
   constructor(private formService: VFormService,
@@ -252,7 +237,9 @@ export class VFormBuilderComponent implements OnInit {
         (form: Form) => {
           if (!isEmpty(form)) {
             this.formName = form.name;
-            this.fields = form.fields;
+            this.fields = form.fields || [];
+            this.tuitionContract = form.tuitionContract ? form.tuitionContract : tuitionContractDefault;
+            this.eligible = form.eligible;
           }
         },
         (error) => console.log(error, 'error'),
@@ -282,6 +269,8 @@ export class VFormBuilderComponent implements OnInit {
         fields: this.fields,
         name: this.formName,
         sidebar: this.sideBarFields,
+        tuitionContract: this.tuitionContract,
+        eligible: this.eligible,
         step: 1
       };
       this.formService.sendForm(form).subscribe(res => this.goBack());

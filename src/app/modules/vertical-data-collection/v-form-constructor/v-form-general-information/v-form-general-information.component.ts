@@ -6,6 +6,7 @@ import { isEmpty } from 'lodash';
 import {VFormService} from "../../v-form.service";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import { NgbDateParserFormatter} from "@ng-bootstrap/ng-bootstrap";
+import {requireCheckboxesToBeCheckedValidator} from "../../../../utils/validators/require-checkboxes-to-be-checked.validator";
 
 
 @Component({
@@ -26,8 +27,6 @@ export class VFormGeneralInformationComponent implements OnInit {
   fields = [];
   generalInfoForm: FormGroup;
   formsDublicate: FormSql[];
-
-  whoFilling: string;
 
   formTypeCreation: number = 0;
   constructor(private activatedRoute: ActivatedRoute,
@@ -51,6 +50,7 @@ export class VFormGeneralInformationComponent implements OnInit {
       if (control instanceof FormControl) {
         control.markAsTouched({ onlySelf: true });
       } else if (control instanceof FormGroup) {
+        control.markAsTouched({ onlySelf: true });
         this.validateAllFormFields(control);
       }
     });
@@ -79,13 +79,11 @@ export class VFormGeneralInformationComponent implements OnInit {
           startDate: this.parserFormatter.format(this.generalInfoForm.value.startDate),
           endDate: this.parserFormatter.format(this.generalInfoForm.value.endDate)
         },
+        eligible: this.generalInfoForm.value.eligible,
         step: 0,
-          example_form_id: this.formDublicateId,
-          chosen_way_to_create_new_form: this.formTypeCreation
-      }
-
-
-      ;
+        example_form_id: this.formDublicateId,
+        chosen_way_to_create_new_form: this.formTypeCreation
+      };
 
       this.formService.sendForm(form).subscribe((res:any) => {
         this.router.navigate([`/vertical-data-collection/v-form-constructor/${res.id}/form-builder`]);
@@ -106,6 +104,14 @@ export class VFormGeneralInformationComponent implements OnInit {
         language: new FormControl(),
         endDate: new FormControl(new Date(1971, 10, 10), Validators.required),
         startDate: new FormControl(new Date(1971, 10, 10), Validators.required),
+        periodCheckboxGroup: new FormGroup({
+          primary1: new FormControl(false),
+          primary2: new FormControl(false),
+          middle: new FormControl(false),
+          height: new FormControl(false),
+        }, requireCheckboxesToBeCheckedValidator()),
+        eligible: new FormControl('allParents', Validators.required),
+
         // allParent: new FormControl('Y')
       }
     );
@@ -115,12 +121,19 @@ export class VFormGeneralInformationComponent implements OnInit {
         (form: Form)=>{
           if(!isEmpty(form)){
             this.fields = form.fields;
-            this.generalInfoForm.setValue({
+            this.generalInfoForm.patchValue({
               name: form.name,
-                language: 'english',
+              language: 'english',
               endDate: this.parserFormatter.parse(form.formDates['endDate']),
               startDate: this.parserFormatter.parse(form.formDates['startDate']),
-            })
+              periodCheckboxGroup: {
+                primary1: true,
+                primary2: false,
+                middle: false,
+                height: false,
+              },
+              eligible: form.eligible
+            });
           }
         },
         (error)=>console.log(error, 'error')
@@ -141,5 +154,11 @@ export class VFormGeneralInformationComponent implements OnInit {
     onScrollTo(target) {
         this[target].nativeElement.scrollIntoView({behavior:"smooth"});
     }
+
+  isInvalidCheckboxGroup(groupName: string): boolean {
+    return this.generalInfoForm.controls[groupName].touched
+      && this.generalInfoForm.controls[groupName].errors
+      && this.generalInfoForm.controls[groupName].errors.requireOneCheckboxToBeChecked;
+  }
 
 }

@@ -119,134 +119,134 @@
           </div>
           <div [hidden]="!isDocumentsForms.isDocuments">
 
-          <div class="app-consent-item px-3 pt-3 pb-1 mt-3" *ngFor="let document of documents">
-            <div class="row no-gutters">
-              <div class="col-10">
-                <span class="font-weight-bold">{{document.name}}</span>
+            <div class="app-consent-item px-3 pt-3 pb-1 mt-3" *ngFor="let document of documents">
+              <div class="row no-gutters">
+                <div class="col-10">
+                  <span class="font-weight-bold">{{document.name}}</span>
+                </div>
+                <div class="col-2 text-right">
+                  <span class=" mr-3"><i class="fas fa-trash fa-xs"></i></span>
+                </div>
               </div>
-              <div class="col-2 text-right">
-                <span class=" mr-3"><i class="fas fa-trash fa-xs"></i></span>
-              </div>
-            </div>
-            <div class="row no-gutters">
-              <div class="btn-group btn-group-toggle w-100 mt-2"
-                   ngbRadioGroup [(ngModel)]="document.isUpload"
-                   name="isUpload"
-              >
-                <label ngbButtonLabel class="btn app-btn-signature">
-                  <input ngbButton type="radio" [value]="true"> Upload
-                </label>
-                <label ngbButtonLabel class="btn app-btn-signature">
-                  <input ngbButton type="radio" [value]="false"> Download
-                </label>
-              </div>
-            </div>
-            <div class="col mt-4 p-0 no-gutters align-items-center" ngbRadioGroup [(ngModel)]="document.isPerFamily" name="">
-            <div class="col-10">
-              <label ngbButtonLabel class="app-radio-container text-left">Needed per Family
-                <input type="radio"
-                       ngbButton
-                       [value]="true"
+              <div class="row no-gutters">
+                <div class="btn-group btn-group-toggle w-100 mt-2"
+                     ngbRadioGroup [(ngModel)]="document.isUpload"
+                     name="isUpload"
                 >
-                <span class="app-radio-checkmark mt-2"></span>
-              </label>
-            </div>
-              <div class="col-10">
+                  <label ngbButtonLabel class="btn app-btn-signature">
+                    <input ngbButton type="radio" [value]="true"> Upload
+                  </label>
+                  <label ngbButtonLabel class="btn app-btn-signature">
+                    <input ngbButton type="radio" [value]="false"> Download
+                  </label>
+                </div>
+              </div>
+              <div class="col mt-4 p-0 no-gutters align-items-center" ngbRadioGroup [(ngModel)]="document.isPerFamily"
+                   name="">
+                <div class="col-10">
+                  <label ngbButtonLabel class="app-radio-container text-left">Needed per Family
+                    <input type="radio"
+                           ngbButton
+                           [value]="true"
+                    >
+                    <span class="app-radio-checkmark mt-2"></span>
+                  </label>
+                </div>
+                <div class="col-10">
 
-              <label ngbButtonLabel class="app-radio-container text-left">Needed per Student
-                <input type="radio"
-                       ngbButton
-                       [value]="false"
-                >
-                <span class="app-radio-checkmark mt-2"></span>
-              </label>
+                  <label ngbButtonLabel class="app-radio-container text-left">Needed per Student
+                    <input type="radio"
+                           ngbButton
+                           [value]="false"
+                    >
+                    <span class="app-radio-checkmark mt-2"></span>
+                  </label>
+                </div>
               </div>
+
+            </div>
+
+
+            <hr>
+
+            <div class="row no-gutters pt-2 align-items-center">
+              <div class="col">
+                <span class="font-weight-bold">Forms</span>
+                <span><i class="fas fa-question-circle pl-1" title="test"></i></span>
+              </div>
+              <div class="col-1 align-self-end">
+                <span><i class="fas fa-plus-square"></i></span>
+              </div>
+              <div class="col-1 align-self-end" (click)="isDocumentsForms.isForms=!isDocumentsForms.isForms">
+                <span [hidden]="!isDocumentsForms.isForms"><i class="fas fa-caret-up ml-2"></i></span>
+                <span [hidden]="isDocumentsForms.isForms"><i class="fas fa-caret-down ml-2"></i></span>
+              </div>
+            </div>
+
+            <div [hidden]="!isDocumentsForms.isForms">
+
+              <div class="app-consent-item px-3 pt-3 pb-2 mt-3">
+
+                <div class="row no-gutters">
+                  <div class="col-10">
+                    <span class="font-weight-bold">Family Survey</span>
+                  </div>
+                  <div class="col-2 text-right">
+                    <span class=" mr-3"><i class="fas fa-trash fa-xs"></i></span>
+                  </div>
+                </div>
+
+                <div class="row no-gutters">
+                  <div class="btn-group btn-group-toggle w-100 mt-2"
+                       ngbRadioGroup
+                  >
+                    <label ngbButtonLabel class="btn app-btn-signature">
+                      <input ngbButton type="radio" value=""> Use Existing
+                    </label>
+                    <label ngbButtonLabel class="btn app-btn-signature">
+                      <input ngbButton type="radio" value=""> Use Existing
+                    </label>
+                  </div>
+                </div>
+                <div class="col mt-4">
+                  <label class="app-radio-container">Needed per Family
+                    <input type="radio"
+                           value=""
+                    >
+                    <span class="app-radio-checkmark"></span>
+                  </label>
+                </div>
+                <div class="col">
+                  <label class="app-radio-container">Needed per Student
+                    <input type="radio"
+                           value=""
+                    >
+                    <span class="app-radio-checkmark"></span>
+                  </label>
+                </div>
+
+                <div class="col mt-4">
+                  <label class="app-switch">
+                    <input type="checkbox">
+                    <span class="app-slider app-round"></span>
+                  </label>
+                  <span class="ml-1">Fillable Online</span>
+                </div>
+                <div class="col">
+                  <label class="app-switch">
+                    <input type="checkbox">
+                    <span class="app-slider app-round"></span>
+                  </label>
+                  <span class="ml-1">Allow Download/Upload</span>
+                </div>
+
+
+              </div>
+            </div>
+          </div>
         </div>
 
-          </div>
-
-
-
-          <hr>
-
-          <div class="row no-gutters pt-2 align-items-center">
-            <div class="col">
-              <span class="font-weight-bold">Forms</span>
-              <span><i class="fas fa-question-circle pl-1" title="test"></i></span>
-            </div>
-            <div class="col-1 align-self-end">
-              <span><i class="fas fa-plus-square"></i></span>
-            </div>
-            <div class="col-1 align-self-end" (click)="isDocumentsForms.isForms=!isDocumentsForms.isForms">
-              <span [hidden]="!isDocumentsForms.isForms"><i class="fas fa-caret-up ml-2"></i></span>
-              <span [hidden]="isDocumentsForms.isForms"><i class="fas fa-caret-down ml-2"></i></span>
-            </div>
-          </div>
-
-          <div [hidden]="!isDocumentsForms.isForms">
-
-          <div class="app-consent-item px-3 pt-3 pb-2 mt-3">
-
-            <div class="row no-gutters">
-              <div class="col-10">
-                <span class="font-weight-bold">Family Survey</span>
-              </div>
-              <div class="col-2 text-right">
-                <span class=" mr-3"><i class="fas fa-trash fa-xs"></i></span>
-              </div>
-            </div>
-
-            <div class="row no-gutters">
-              <div class="btn-group btn-group-toggle w-100 mt-2"
-                   ngbRadioGroup
-              >
-                <label ngbButtonLabel class="btn app-btn-signature">
-                  <input ngbButton type="radio" value=""> Use Existing
-                </label>
-                <label ngbButtonLabel class="btn app-btn-signature">
-                  <input ngbButton type="radio" value=""> Use Existing
-                </label>
-              </div>
-            </div>
-            <div class="col mt-4">
-              <label class="app-radio-container">Needed per Family
-                <input type="radio"
-                       value=""
-                >
-                <span class="app-radio-checkmark"></span>
-              </label>
-            </div>
-            <div class="col">
-              <label class="app-radio-container">Needed per Student
-                <input type="radio"
-                       value=""
-                >
-                <span class="app-radio-checkmark"></span>
-              </label>
-            </div>
-
-            <div class="col mt-4">
-              <label class="app-switch">
-                <input type="checkbox">
-                <span class="app-slider app-round"></span>
-              </label>
-              <span class="ml-1">Fillable Online</span>
-            </div>
-            <div class="col">
-              <label class="app-switch">
-                <input type="checkbox">
-                <span class="app-slider app-round"></span>
-              </label>
-              <span class="ml-1">Allow Download/Upload</span>
-            </div>
-
-
-          </div>
-        </div>
-        </div>
       </div>
-
-    </div>
     </div>
 
     <!--  END  DOCUMENTS & FORMS-->
@@ -378,110 +378,30 @@
           <div class="row no-gutters">
             <div class="col">
               <label class="app-radio-container">Split by Student
-                <input type="radio" name="split" value="student" [(ngModel)]="splitTuitionBy">
+                <input type="radio" name="split" value="student" [(ngModel)]="tuitionContract.splitBy">
                 <span class="app-radio-checkmark"></span>
               </label>
             </div>
             <div class="col">
               <label class="app-radio-container">Split by Fee
-                <input type="radio" name="split" value="fee" [(ngModel)]="splitTuitionBy">
+                <input type="radio" name="split" value="fee" [(ngModel)]="tuitionContract.splitBy">
                 <span class="app-radio-checkmark"></span>
               </label>
             </div>
           </div>
           <hr>
           <p class="font-weight-bold">Show Fees</p>
-          <div class="row no-gutters">
+          <div class="row no-gutters" *ngFor="let item of tuitionContract.showFees">
             <div class="col-6">
               <label class="app-checkbox-container">
-                <span class="form-payment-side-bar-text">BAIS MEDRASH WINTER DORMITORY FEE</span>
-                <input type="checkbox" [(ngModel)]="showFee.dormitory">
+                <span class="form-payment-side-bar-text">{{item.title | uppercase}}</span>
+                <input type="checkbox" [(ngModel)]="item.isActive">
                 <span class="app-checkbox-checkmark"></span>
               </label>
             </div>
-            <div class="col" *ngIf="splitTuitionBy === 'student'">
+            <div class="col" *ngIf="tuitionContract.splitBy === 'student' && item.discount.isAllow">
               <label class="app-switch app-switch-top-0 mr-1">
-                <input type="checkbox" [disabled]="!showFee.dormitory" [(ngModel)]="showFeeDiscounts.dormitory">
-                <span class="app-slider app-round"></span>
-              </label>
-              <span>Show Discounts</span>
-            </div>
-          </div>
-          <div class="row no-gutters">
-            <div class="col-6">
-              <label class="app-checkbox-container">
-                <span class="form-payment-side-bar-text">REGISTRATION</span>
-                <input type="checkbox" [(ngModel)]="showFee.registration">
-                <span class="app-checkbox-checkmark"></span>
-              </label>
-            </div>
-            <div class="col" *ngIf="splitTuitionBy === 'student'">
-              <label class="app-switch app-switch-top-0 mr-1">
-                <input type="checkbox" [disabled]="!showFee.registration" [(ngModel)]="showFeeDiscounts.registration">
-                <span class="app-slider app-round"></span>
-              </label>
-              <span>Show Discounts</span>
-            </div>
-          </div>
-          <div class="row no-gutters">
-            <div class="col-6">
-              <label class="app-checkbox-container">
-                <span class="form-payment-side-bar-text">ACTIVITY</span>
-                <input type="checkbox" [(ngModel)]="showFee.activity">
-                <span class="app-checkbox-checkmark"></span>
-              </label>
-            </div>
-            <div class="col" *ngIf="splitTuitionBy === 'student'">
-              <!--<label class="app-switch app-switch-top-0 mr-1">-->
-              <!--<input type="checkbox" [disabled]="!showFee.activity" [(ngModel)]="showFeeDiscounts.activity">-->
-              <!--<span class="app-slider app-round"></span>-->
-              <!--</label>-->
-              <!--<span>Show Discounts</span>-->
-            </div>
-          </div>
-          <div class="row no-gutters">
-            <div class="col-6">
-              <label class="app-checkbox-container">
-                <span class="form-payment-side-bar-text">TUITION</span>
-                <input type="checkbox" [(ngModel)]="showFee.tuition">
-                <span class="app-checkbox-checkmark"></span>
-              </label>
-            </div>
-            <div class="col" *ngIf="splitTuitionBy === 'student'">
-              <label class="app-switch app-switch-top-0 mr-1">
-                <input type="checkbox" [disabled]="!showFee.tuition" [(ngModel)]="showFeeDiscounts.tuition">
-                <span class="app-slider app-round"></span>
-              </label>
-              <span>Show Discounts</span>
-            </div>
-          </div>
-          <div class="row no-gutters">
-            <div class="col-6">
-              <label class="app-checkbox-container">
-                <span class="form-payment-side-bar-text">SCHOLARSHIP</span>
-                <input type="checkbox" [(ngModel)]="showFee.scholarship">
-                <span class="app-checkbox-checkmark"></span>
-              </label>
-            </div>
-            <div class="col" *ngIf="splitTuitionBy === 'student'">
-              <label class="app-switch app-switch-top-0 mr-1">
-                <input type="checkbox" [disabled]="!showFee.scholarship" [(ngModel)]="showFeeDiscounts.scholarship">
-                <span class="app-slider app-round"></span>
-              </label>
-              <span>Show Discounts</span>
-            </div>
-          </div>
-          <div class="row no-gutters">
-            <div class="col-6">
-              <label class="app-checkbox-container">
-                <span class="form-payment-side-bar-text">LUNCH FEE</span>
-                <input type="checkbox" [(ngModel)]="showFee.lunch">
-                <span class="app-checkbox-checkmark"></span>
-              </label>
-            </div>
-            <div class="col" *ngIf="splitTuitionBy === 'student'">
-              <label class="app-switch app-switch-top-0 mr-1">
-                <input type="checkbox" [disabled]="!showFee.lunch" [(ngModel)]="showFeeDiscounts.lunch">
+                <input type="checkbox" [disabled]="!item.isActive" [(ngModel)]="item.discount.isActive">
                 <span class="app-slider app-round"></span>
               </label>
               <span>Show Discounts</span>
@@ -491,38 +411,40 @@
           <div class="  row no-gutters slider-item align-items-center">
             <div class="col">
               <label class="app-switch mr-2">
-                <input type="checkbox" [(ngModel)]="isContractSignature">
+                <input type="checkbox" [(ngModel)]="tuitionContract.signature.isRequire">
                 <span class="app-slider app-round"></span>
               </label>
               <span class="font-weight-bold ">Contract Signature</span>
             </div>
           </div>
-          <ng-container *ngIf="isContractSignature">
+          <ng-container *ngIf="tuitionContract.signature.isRequire">
             <div class="row no-gutters">
               <div class="btn-group btn-group-toggle w-100 mt-2"
                    ngbRadioGroup
                    name="radioSignature"
-                   ngModel
+                   [(ngModel)]="tuitionContract.signature.type"
                    [ngModelOptions]="{standalone: true}">
                 <label ngbButtonLabel class="btn app-btn-signature">
-                  <input ngbButton type="radio" value="eSign"> E-signature
+                  <input ngbButton type="radio" value="e"> E-signature
                 </label>
                 <label ngbButtonLabel class="btn app-btn-signature">
-                  <input ngbButton type="radio" value="wetSign"> Wet Signature
+                  <input ngbButton type="radio" value="wet"> Wet Signature
                 </label>
               </div>
             </div>
-            <div class="row no-gutters app-tuition-signature px-3 pt-3">
+            <div class="row no-gutters app-tuition-signature px-3 pt-3" *ngIf="tuitionContract.signature.type==='e'">
               <div class="col">
                 <label class="app-radio-container">System
-                  <input type="radio" name="signatureType" value="system">
+                  <input type="radio" name="signatureType" value="system"
+                         [(ngModel)]="tuitionContract.signature.eType">
                   <span class="app-radio-checkmark"></span>
                 </label>
               </div>
               <div class="col">
                 <label class="app-radio-container">External
                   <span class="pl-2"><i class="fas fa-cog app-fb-gear"></i></span>
-                  <input type="radio" name="signatureType" value="external">
+                  <input type="radio" name="signatureType" value="external"
+                         [(ngModel)]="tuitionContract.signature.eType">
                   <span class="app-radio-checkmark"></span>
                 </label>
               </div>
@@ -530,7 +452,7 @@
             <div class="row px-3 pt-3">
               <label class="app-checkbox-container">
                 Both Parents' Signature (when applicable)
-                <input type="checkbox" ngModel>
+                <input type="checkbox" [(ngModel)]="tuitionContract.signature.isBothParents">
                 <span class="app-checkbox-checkmark"></span>
               </label>
             </div>
@@ -614,37 +536,32 @@
 
       </ul>
 
-<!--  documents-forms-->
-<!--      <div class="app-section-wrapper" [hidden]="!isDocumentsForms.isActiveAll">-->
-        <app-v-documents-forms
-          [hidden]="!isDocumentsForms.isActiveAll"
-          [isDocumentsForms]="isDocumentsForms"
-          [documents]="documents"
-        >
-        </app-v-documents-forms>
-<!--      </div>-->
-<!--  end  documents-forms-->
+      <!--  documents-forms-->
+      <!--      <div class="app-section-wrapper" [hidden]="!isDocumentsForms.isActiveAll">-->
+      <app-v-documents-forms
+        [hidden]="!isDocumentsForms.isActiveAll"
+        [isDocumentsForms]="isDocumentsForms"
+        [documents]="documents"
+      >
+      </app-v-documents-forms>
+      <!--      </div>-->
+      <!--  end  documents-forms-->
 
-<!--  consent-->
+      <!--  consent-->
       <app-v-consent [hidden]="!isConsent" [consentInfo]="consentInfo"></app-v-consent>
-<!--  end consent-->
+      <!--  end consent-->
 
-<!--  tuition-contract-->
-      <div class="app-section-wrapper" [hidden]="!isTuitionContract">
-        <app-v-tuition-contract
-          [splitTuitionBy]="splitTuitionBy"
-          [showFee]="showFee"
-          [showFeeDiscounts]="showFeeDiscounts">
-        </app-v-tuition-contract>
-      </div>
-<!--  end tuition-contract-->
+      <!--  tuition-contract-->
+      <app-v-tuition-contract [hidden]="!isTuitionContract"
+                              [tuitionContract]="tuitionContract"></app-v-tuition-contract>
+      <!--  end tuition-contract-->
 
-<!--  form-payment -->
+      <!--  form-payment -->
       <div class="app-section-wrapper" [hidden]="!isFormPayment">
         <app-v-form-payment [formPaymentSideBar]="formPaymentSideBar">
         </app-v-form-payment>
       </div>
-<!--  end form-payment-->
+      <!--  end form-payment-->
 
     </div>
   </div>

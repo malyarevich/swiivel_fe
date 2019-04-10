@@ -6,30 +6,12 @@
   </tr>
   </thead>
   <tbody>
-  <tr *ngIf="showFee.dormitory">
-    <td class="font-weight-bold">Bais Medrash Winter Dormitory Fee</td>
-    <td>$1,600</td>
-  </tr>
-  <tr *ngIf="showFee.registration">
-    <td class="font-weight-bold">Registration</td>
-    <td>$1,080</td>
-  </tr>
-  <tr *ngIf="showFee.activity">
-    <td class="font-weight-bold">Activity</td>
-    <td>$1,080</td>
-  </tr>
-  <tr *ngIf="showFee.tuition">
-    <td class="font-weight-bold">Tuition</td>
-    <td>$9,840</td>
-  </tr>
-  <tr *ngIf="showFee.scholarship">
-    <td class="font-weight-bold">Scholarship</td>
-    <td>$3200</td>
-  </tr>
-  <tr *ngIf="showFee.lunch">
-    <td class="font-weight-bold">Lunch Fee</td>
-    <td>$3200</td>
-  </tr>
+  <ng-container *ngFor="let item of tuitionContract.showFees; let i = index">
+    <tr *ngIf="item.isActive">
+      <td class="font-weight-bold">{{item.title}}</td>
+      <td>${{tempFees[i]}}</td>
+    </tr>
+  </ng-container>
   <tr class="app-tuition-table-total font-weight-bold">
     <td>BUILDING FEE</td>
     <td>$1000</td>
@@ -40,7 +22,7 @@
   </tr>
   <tr class="app-tuition-table-total font-weight-bold">
     <td>Tuition and Family Fees Total</td>
-    <td>$27,440</td>
+    <td>$21160</td>
   </tr>
   </tbody>
 </table>
