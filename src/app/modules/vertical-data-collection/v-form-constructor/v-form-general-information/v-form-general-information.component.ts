@@ -6,6 +6,7 @@ import { isEmpty } from 'lodash';
 import {VFormService} from "../../v-form.service";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import { NgbDateParserFormatter} from "@ng-bootstrap/ng-bootstrap";
+import {requireCheckboxesToBeCheckedValidator} from "../../../../utils/validators/require-checkboxes-to-be-checked.validator";
 
 
 @Component({
@@ -26,8 +27,6 @@ export class VFormGeneralInformationComponent implements OnInit {
   fields = [];
   generalInfoForm: FormGroup;
   formsDublicate: FormSql[];
-
-  whoFilling: string;
 
   formTypeCreation: number = 0;
   constructor(private activatedRoute: ActivatedRoute,
@@ -51,6 +50,7 @@ export class VFormGeneralInformationComponent implements OnInit {
       if (control instanceof FormControl) {
         control.markAsTouched({ onlySelf: true });
       } else if (control instanceof FormGroup) {
+        control.markAsTouched({ onlySelf: true });
         this.validateAllFormFields(control);
       }
     });
@@ -106,6 +106,14 @@ export class VFormGeneralInformationComponent implements OnInit {
         language: new FormControl(),
         endDate: new FormControl(new Date(1971, 10, 10), Validators.required),
         startDate: new FormControl(new Date(1971, 10, 10), Validators.required),
+        periodCheckboxGroup: new FormGroup({
+          primary1: new FormControl(false),
+          primary2: new FormControl(false),
+          middle: new FormControl(false),
+          height: new FormControl(false),
+        }, requireCheckboxesToBeCheckedValidator()),
+        filling: new FormControl('allParents', Validators.required),
+
         // allParent: new FormControl('Y')
       }
     );
@@ -141,5 +149,11 @@ export class VFormGeneralInformationComponent implements OnInit {
     onScrollTo(target) {
         this[target].nativeElement.scrollIntoView({behavior:"smooth"});
     }
+
+  isInvalidCheckboxGroup(groupName: string): boolean {
+    return this.generalInfoForm.controls[groupName].touched
+      && this.generalInfoForm.controls[groupName].errors
+      && this.generalInfoForm.controls[groupName].errors.requireOneCheckboxToBeChecked;
+  }
 
 }
