@@ -34,6 +34,7 @@ export class VFormBuilderComponent implements OnInit {
   existingFields: Field[];
   sideBarFields: Field[];
   tuitionContract: TuitionContract = tuitionContractDefault;
+  eligible: string;
 
   isFormsFields: boolean = false;
   isConsent: boolean = false;
@@ -236,8 +237,9 @@ export class VFormBuilderComponent implements OnInit {
         (form: Form) => {
           if (!isEmpty(form)) {
             this.formName = form.name;
-            this.fields = form.fields;
+            this.fields = form.fields || [];
             this.tuitionContract = form.tuitionContract ? form.tuitionContract : tuitionContractDefault;
+            this.eligible = form.eligible;
           }
         },
         (error) => console.log(error, 'error'),
@@ -268,6 +270,7 @@ export class VFormBuilderComponent implements OnInit {
         name: this.formName,
         sidebar: this.sideBarFields,
         tuitionContract: this.tuitionContract,
+        eligible: this.eligible,
         step: 1
       };
       this.formService.sendForm(form).subscribe(res => this.goBack());

@@ -17,6 +17,7 @@ export interface Form {
     step?: number;
     tuitionContract?: TuitionContract;
     chosen_way_to_create_new_form?: number;
+    eligible: string;
     example_form_id?: string;
 }
 

@@ -224,8 +224,8 @@
               <div class="form-group col-3">
                 <label class="app-checkbox-container" for="allParent">All Parents
                   <input type="radio"
-                         formControlName="filling"
-                         name="filling"
+                         formControlName="eligible"
+                         name="eligible"
                          value="allParents"
                          class="form-check-input"
                          id="allParent">
@@ -235,8 +235,8 @@
               <div class="form-group col-3">
                 <label class="app-checkbox-container" for="newFamilies">New Families
                   <input type="radio"
-                         formControlName="filling"
-                         name="filling"
+                         formControlName="eligible"
+                         name="eligible"
                          value="newFamilies"
                          class="form-check-input"
                          id="newFamilies">
@@ -246,8 +246,8 @@
               <div class="form-group col-3">
                 <label class="app-checkbox-container" for="newStudents">New Students
                   <input type="radio"
-                         formControlName="filling"
-                         name="filling"
+                         formControlName="eligible"
+                         name="eligible"
                          value="newStudents"
                          class="form-check-input"
                          id="newStudents">
@@ -260,8 +260,8 @@
               <div class="form-group col-3">
                 <label class="app-checkbox-container" for="SpecificGrades">Specific Grades
                   <input type="radio"
-                         formControlName="filling"
-                         name="filling"
+                         formControlName="eligible"
+                         name="eligible"
                          value="specificGrades"
                          class="form-check-input"
                          id="SpecificGrades">
@@ -271,23 +271,21 @@
               <div class="form-group col-6">
                 <label class="app-checkbox-container" for="moreDetailed">I have more detailed requirements
                   <input type="radio"
-                         formControlName="filling"
-                         name="filling"
+                         formControlName="eligible"
+                         name="eligible"
                          value="moreDetailed"
                          class="form-check-input"
                          id="moreDetailed">
-                  <!--[(ngModel)]="whoFilling"-->
-                  <!--[ngModelOptions]="{standalone: true}"-->
                   <span class="app-checkbox-checkmark"></span>
                 </label>
               </div>
             </div>
 
-          <div *ngIf="generalInfoForm.get('filling').value === 'moreDetailed'" class="row justify-content-center">
+          <div *ngIf="generalInfoForm.get('eligible').value === 'moreDetailed'" class="row justify-content-center">
             <h4 class="pt-3 font-weight-bold">Coming Soon...</h4>
           </div>
 
-          <div *ngIf="generalInfoForm.get('filling').value === 'specificGrades'">
+          <div *ngIf="generalInfoForm.get('eligible').value === 'specificGrades'">
             <div class="justify-content-md-center mb-3 text-center">
               <h4 class="pt-3 text-center font-weight-bold">Who should be filling out this form?</h4>
             </div>
