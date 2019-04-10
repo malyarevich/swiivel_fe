@@ -57,6 +57,7 @@ import { VGroupSettingsComponent } from './v-form-constructor/v-form-builder/v-g
 import { VConsentComponent } from './v-form-constructor/v-form-builder/v-consent/v-consent.component';
 import { VDocumentsContainerComponent } from './v-form-constructor/v-form-builder/v-documents-forms/v-documents-container/v-documents-container.component';
 import { VFormsContainerComponent } from './v-form-constructor/v-form-builder/v-documents-forms/v-forms-container/v-forms-container.component';
+import {PdfViewerModule} from "ng2-pdf-viewer";
 
 const routes: Routes = [
   {
@@ -153,6 +154,7 @@ const routes: Routes = [
     DragDropModule,
     ReactiveFormsModule,
     GeneralDirectivesModule,
+    PdfViewerModule
   ],
   providers: [VFormService, VFieldsService, FormUtils],
   entryComponents: [entryComponents]

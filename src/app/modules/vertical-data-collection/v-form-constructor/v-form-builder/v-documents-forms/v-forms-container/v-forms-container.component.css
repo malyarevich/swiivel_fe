@@ -1,0 +1,17 @@
+canvas {
+  cursor: crosshair;
+  border: 1px solid #000000;
+  width: 816px;
+  height: 1056px;
+}
+.canvas-wrap{
+  position:relative;
+  width: 816px;
+  height: 1056px;
+}
+.canvas-wrap canvas { position:absolute; top:0; left:0; z-index:0 }
+.test-c{
+  width: 816px;
+  height: 1056px;
+
+}

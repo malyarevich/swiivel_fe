@@ -27,15 +27,15 @@ export class VFormBuilderComponent implements OnInit {
   searchText: string;
   fields: Field[] = [];
   formName: string = '';
-  customFields: Field[];
-  existingFields: Field[];
-  sideBarFields: Field[];
+  customFields: Field[]=[];
+  existingFields: Field[]=[];
+  sideBarFields: Field[]=[];
 
   isFormsFields: boolean = false;
   isConsent: boolean = false;
   isDocumentsForms: DocumentSideBar = {
-    isActiveAll: false,
-    isDocuments: true,
+    isActiveAll: true,
+    isDocuments: false,
     isForms: true
   };
   isTuitionContract: boolean = false;
