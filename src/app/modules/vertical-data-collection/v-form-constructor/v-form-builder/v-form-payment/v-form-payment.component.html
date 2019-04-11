@@ -41,7 +41,7 @@
             <div class="col">
               <!--<span *ngIf="fixedValue.errors?.customMin"> 'min'</span>-->
               <input type="number"
-                     class="app-form-payment-input"
+                     class="app-form-payment-input pl-3"
                      [ngClass]="{'is-invalid': fixedValue.invalid}"
                      #fixedValue="ngModel"
                      [(ngModel)]="item.type.value" customMin="0">
@@ -70,7 +70,7 @@
           <div class="row no-gutters align-items-center" *ngIf="item.type.name == 1">
             <div class="col">
               <input type="number"
-                     class="app-form-payment-input"
+                     class="app-form-payment-input pl-3"
                      [ngClass]="{'is-invalid': percentageValue.invalid}"
                      #percentageValue="ngModel"
                      [(ngModel)]="item.type.value" customMin="0" customMax="100">
