@@ -22,3 +22,22 @@ interface ConsentInfoSignature {
   eType: string; //external|system
   isBothParents: boolean;
 }
+
+export const consentItemDefault = {
+  title: 'Consent Name',
+  text: {
+    value: '',
+    isBold: false,
+    isItalic: false,
+  },
+  checkbox: {
+    isActive: false,
+    text: '',
+  },
+  signature: {
+    isRequire: false,
+    type: 'e', //e|wet
+    eType: 'external', //external|system
+    isBothParents: false,
+  }
+};
