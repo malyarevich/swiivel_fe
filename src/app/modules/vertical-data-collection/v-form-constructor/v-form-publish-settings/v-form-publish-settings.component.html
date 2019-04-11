@@ -1,3 +1,17 @@
-<p>
-  v-form-publish-settings works!
-</p>
+<div class="mt-4 ml-5">
+  <button type="button" class="btn btn-outline-secondary " routerLink="/vertical-data-collection">CLOSE WIZARD</button>
+</div>
+
+<div class="container-fluid">
+  <div class="row mt-5">
+    <div class="col-2 rounded ml-5 p-0">
+      <app-v-publish-menu (activeMenuItemEmitter)="setActiveMenu($event)"></app-v-publish-menu>
+    </div>
+    <div class=" col-6 offset-1">
+      <app-v-conditions-review *ngIf="activeMenuItem === publishMenuItems.conditions"></app-v-conditions-review>
+      <app-v-publish-settings *ngIf="activeMenuItem === publishMenuItems.settings"></app-v-publish-settings>
+      <app-v-automation *ngIf="activeMenuItem === publishMenuItems.automation"></app-v-automation>
+      <app-v-redirect-pages *ngIf="activeMenuItem === publishMenuItems.redirect"></app-v-redirect-pages>
+    </div>
+  </div>
+</div>

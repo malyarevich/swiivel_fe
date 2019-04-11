@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {FormUtils} from "../../utils/form.utils";
+import {PublishMenuItems} from "./models/publish-menu-items";
 
 @Component({
   selector: 'app-v-form-publish-settings',
@@ -9,6 +10,9 @@ import {FormUtils} from "../../utils/form.utils";
 })
 export class VFormPublishSettingsComponent implements OnInit {
   @Input() formId: string;
+  activeMenuItem: string;
+  publishMenuItems = PublishMenuItems;
+
   constructor( private formUtils: FormUtils,private route: ActivatedRoute) { }
 
   ngOnInit() {
@@ -17,6 +21,10 @@ export class VFormPublishSettingsComponent implements OnInit {
       this.formId = url!='v-form-constructor'?url:'';
     });
 
+  }
+
+  setActiveMenu(value) {
+    this.activeMenuItem = value;
   }
 
 }
