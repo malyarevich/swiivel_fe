@@ -69,21 +69,89 @@
   </div>
 
   <!--TEXT-->
-  <div class="row">
-    <div class="col-12 app-consent-text">
-      <div class="text-right">
-        <a [ngClass]="item.text.isBold?'active':''" (click)="item.text.isBold=!item.text.isBold">
-          <small>Bold</small>
-        </a>
-        <span><small> | </small></span>
-        <a [ngClass]="item.text.isItalic?'active':''" (click)="item.text.isItalic=!item.text.isItalic">
-          <small>Italic</small>
-        </a>
+  <!--<div class="row">-->
+    <!--<div class="col-12 app-consent-text">-->
+      <!--<div class="text-right">-->
+        <!--<a [ngClass]="item.text.isBold?'active':''" (click)="item.text.isBold=!item.text.isBold">-->
+          <!--<small>Bold</small>-->
+        <!--</a>-->
+        <!--<span><small> | </small></span>-->
+        <!--<a [ngClass]="item.text.isItalic?'active':''" (click)="item.text.isItalic=!item.text.isItalic">-->
+          <!--<small>Italic</small>-->
+        <!--</a>-->
+      <!--</div>-->
+      <!--<textarea class="app-consent-table w-100 pl-3"-->
+                <!--[ngClass]="[item.text.isBold?'bold-for-a':'',item.text.isItalic?'italic-for-a':'']"-->
+                <!--rows="4"-->
+                <!--placeholder="Text">{{item.text.value}}</textarea>-->
+    <!--</div>-->
+  <!--</div>-->
+
+
+  <div class="row app-consent-text">
+    <div class="col-12 app-consent-table px-3 py-2">
+      <div class="row">
+        <div class="col">Text</div>
+        <div class="col text-right">
+          <div class="d-inline-block">
+            <a [ngClass]="item.text.isBold?'active':''" (click)="item.text.isBold=!item.text.isBold">
+              <small>Bold</small>
+            </a>
+            <span><small> | </small></span>
+            <a [ngClass]="item.text.isItalic?'active':''" (click)="item.text.isItalic=!item.text.isItalic">
+              <small>Italic</small>
+            </a>
+          </div>
+
+          <!--Var Dropdown-->
+          <div class="d-inline-block ml-3" ngbDropdown placement="bottom-right" autoClose="outside">
+
+            <span id="dropdownConsentVar" ngbDropdownToggle class="app-consent-dropdown-var">
+              <i class="fas fa-angle-left mr-1"></i><i class="fas fa-angle-right"></i>
+            </span>
+
+            <div class="p-3" ngbDropdownMenu aria-labelledby="dropdownConsentVar" style="min-width: 400px">
+
+              <div class="row no-gutters align-items-center">
+
+                <div class="col-4 p-1">
+                  <div class="app-consent-dropdown-var-item p-2">
+                    <span class="app-fb-section-icon mr-1">
+                      <i class="fas fa-ellipsis-v"></i>
+                      <i class="fas fa-ellipsis-v"></i>
+                    </span>Student’s Name
+                  </div>
+                </div>
+
+                <div class="col-4 p-1">
+                  <div class="app-consent-dropdown-var-item p-2">
+                    <span class="app-fb-section-icon mr-1">
+                      <i class="fas fa-ellipsis-v"></i>
+                      <i class="fas fa-ellipsis-v"></i>
+                    </span>Parent
+                  </div>
+                </div>
+
+                <div class="col-4 p-1">
+                  <div class="app-consent-dropdown-var-item p-2">
+                    <span class="app-fb-section-icon mr-1">
+                      <i class="fas fa-ellipsis-v"></i>
+                      <i class="fas fa-ellipsis-v"></i>
+                    </span>Date
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+          <!--End Var Dropdown-->
+
+        </div>
       </div>
-      <textarea class="app-consent-table w-100 pl-3"
-                [ngClass]="[item.text.isBold?'bold-for-a':'',item.text.isItalic?'italic-for-a':'']"
-                rows="4"
-                placeholder="Text">{{item.text.value}}</textarea>
+
+      <div [innerHTML]="text" class="mt-3 mb-2" contentEditable=true></div>
+
     </div>
   </div>
 

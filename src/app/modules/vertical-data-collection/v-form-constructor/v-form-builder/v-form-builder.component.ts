@@ -38,7 +38,7 @@ export class VFormBuilderComponent implements OnInit {
   eligible: string;
 
   isFormsFields: boolean = false;
-  isConsent: boolean = false;
+  isConsent: boolean = true;
   isDocumentsForms: DocumentSideBar = {
     isActiveAll: false,
     isDocuments: true,
