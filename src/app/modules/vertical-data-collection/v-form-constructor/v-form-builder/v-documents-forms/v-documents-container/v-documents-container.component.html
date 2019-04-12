@@ -85,19 +85,28 @@
   <div class="row">
     <div class="col-12 ">
       <div class="text-right">
-        <a>
+        <a
+          [ngClass]="document.accompanyingText.isBold?'active':''"
+          (click)="document.accompanyingText.isBold=!document.accompanyingText.isBold">
           <small>Bold</small>
         </a>
         <span><small> | </small></span>
-        <a>
+        <a
+          [ngClass]="document.accompanyingText.isItalic?'active':''"
+          (click)="document.accompanyingText.isItalic=!document.accompanyingText.isItalic">
           <small>Italic</small>
         </a>
       </div>
     </div>
     <div class="col ">
-          <textarea class="app-consent-table form-control float-right"
-                    rows="4"
-                    placeholder="Text" [(ngModel)]="document.accompanyingText.data"></textarea>
+          <textarea
+            class="app-consent-table form-control float-right"
+            [ngClass]="[document.accompanyingText.isBold?'bold-for-a':'',
+                        document.accompanyingText.isItalic?'italic-for-a':'']"
+            rows="4"
+            placeholder="Text"
+            [(ngModel)]="document.accompanyingText.data"
+          ></textarea>
     </div>
   </div>
 
