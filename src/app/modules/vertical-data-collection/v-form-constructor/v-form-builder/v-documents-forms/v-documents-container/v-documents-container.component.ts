@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {DataTypeAllowed, DocumentsModel, dataTypes, DataTypeItemAllowed} from "../model/documents.model";
 import {VFilesService} from "../../../../v-files.service";
 import {environment} from "../../../../../../../environments/environment";
+import {FormService} from "../../../../../data-collection/form.service";
 
 @Component({
   selector: 'app-v-documents-container',
@@ -13,37 +14,31 @@ export class VDocumentsContainerComponent implements OnInit {
   @Input() documents: DocumentsModel[];
   @Input() formId: string;
   @Input() attachments;
-  token = 'api_token='+environment.api_token;
-  fileName: string = ' ';
-   fileLink: string = ' ';
+  token = '?api_token='+environment.api_token;
+
   sectionName: string = "Documents for Parents";
   width: string = "4 Columns";
-  constructor(private fileService: VFilesService) { }
+  constructor(private fileService: VFilesService,
+              private formService: FormService) { }
 
   ngOnInit() {
-    console.log(this.attachments);
-    console.log(this.documents);
+
   }
 
-  log(document){
-    console.log(this.attachments[document.data]);
-  }
 
   fileChange(event, document){
     let fileList: FileList = event.target.files;
-    console.log(fileList);
     if(fileList.length > 0) {
       let file: File = fileList[0];
       let formData: FormData = new FormData();
       formData.append('attachment', file, file.name);
-     this.fileService.uploadFile(this.formId, formData)
+       this.fileService.uploadFile(this.formId, formData)
        .subscribe(result=>{
-         // document.data.link = res.link+'?api_token=123'
          document.data = result.hash;
-         this.fileLink = result.link;
-         this.fileName = result.name;
-         console.log(document);
-       });
+       },
+         error => console.log(error)
+       ,  ()=>this.updateAttachments()
+       );
     }
   }
 
@@ -59,8 +54,13 @@ export class VDocumentsContainerComponent implements OnInit {
 
   openForPreview(document: DocumentsModel){
     if(!document.data) return;
-    window.open(this.attachments[document.data].link+'?api_token='+environment.api_token, 'Image');
+      window.open(this.attachments[document.data].link+this.token);
   }
 
+  updateAttachments(){
+    this.formService.getOneForm(this.formId).subscribe(form=>this.attachments=form.attachments);
+  }
 }
+
+
 

@@ -13,7 +13,7 @@ import {
 } from "./v-tuition-contract/models/tuition-contract.model";
 import {Form} from "../../model/form.model";
 import {FormPayment, TYPE_NAME} from "./v-form-payment/model/form-payment.model";
-import {ConsentInfo} from "./v-consent/model/consent.model";
+import {ConsentInfo, consentItemDefault} from "./v-consent/model/consent.model";
 import {DocumentSideBar, DocumentsModel} from "./v-documents-forms/model/documents.model";
 
 @Component({
@@ -35,15 +35,16 @@ export class VFormBuilderComponent implements OnInit {
   existingFields: Field[];
   sideBarFields: Field[];
   tuitionContract: TuitionContract = tuitionContractDefault;
+  consentInfo: ConsentInfo[] = [];
   eligible: string;
 
   isFormsFields: boolean = false;
   isConsent: boolean = false;
   isDocumentsForms: DocumentSideBar = {
-    isActiveAll: true,
+    isActiveAll: false,
     isDocuments: true,
     isAddDocument: false,
-    isForms: true,
+    isForms: false,
     isAddForms: false
   };
   isTuitionContract: boolean = false;
@@ -139,69 +140,45 @@ export class VFormBuilderComponent implements OnInit {
       }
     }
   ];
+    // {
+    //   title: 'Terms and Conditions 2',
+    //   text: {
+    //     value: 'I allow my child to play in sport game',
+    //     isBold: false,
+    //     isItalic: false,
+    //   },
+    //   checkbox: {
+    //     isActive: false,
+    //     text: '',
+    //   },
+    //   signature: {
+    //     isRequire: true,
+    //     type: 'e', //e|wet
+    //     eType: 'external', //external|system
+    //     isBothParents: true,
+    //   }
+    // },
+    // {
+    //   title: 'Terms and Conditions 1',
+    //   text: {
+    //     value: 'I allow my child to play in sport game',
+    //     isBold: false,
+    //     isItalic: false,
+    //   },
+    //   checkbox: {
+    //     isActive: true,
+    //     text: 'I agree that I have read the terms and conditions',
+    //   },
+    //   signature: {
+    //     isRequire: true,
+    //     type: 'e', //e|wet
+    //     eType: 'external', //external|system
+    //     isBothParents: false,
+    //   }
+    // }
+  // ];
 
 
-  addNewDocument(name: string){
-    if(name.length<3) return;
-    const newDocument: DocumentsModel ={
-      id: uuid(),
-      name: name,
-      isUpload: true,
-      isPerFamily: true,
-      accompanyingText: {
-        data:'',
-        isBold: false,
-        isItalic: false
-      },
-      data: '',
-      dataTypeAllowed: []
-    };
-    this.documents.push(newDocument);
-    this.isDocumentsForms.isAddDocument=false;
-  }
-  removeDocument(index){
-   this.documents.splice(index, 1);
-  }
-
-
-  consentInfo: ConsentInfo[] = [
-    {
-      title: 'Terms and Conditions 2',
-      text: {
-        value: 'I allow my child to play in sport game',
-        isBold: false,
-        isItalic: false,
-      },
-      checkbox: {
-        isActive: false,
-        text: '',
-      },
-      signature: {
-        isRequire: true,
-        type: 'e', //e|wet
-        eType: 'external', //external|system
-        isBothParents: true,
-      }
-    },
-    {
-      title: 'Terms and Conditions 1',
-      text: {
-        value: 'I allow my child to play in sport game',
-        isBold: false,
-        isItalic: false,
-      },
-      checkbox: {
-        isActive: true,
-        text: 'I agree that I have read the terms and conditions',
-      },
-      signature: {
-        isRequire: true,
-        type: 'e', //e|wet
-        eType: 'external', //external|system
-        isBothParents: false,
-      }
-    }
-  ];
 
   @ViewChild("addCustomFieldInput") addCustomFieldInput: ElementRef;
 
@@ -226,6 +203,30 @@ export class VFormBuilderComponent implements OnInit {
 
 
   }
+
+
+  addNewDocument(name: string){
+    if(name.length<3) return;
+    const newDocument: DocumentsModel ={
+      id: uuid(),
+      name: name,
+      isUpload: true,
+      isPerFamily: true,
+      accompanyingText: {
+        data:'',
+        isBold: false,
+        isItalic: false
+      },
+      data: '',
+      dataTypeAllowed: []
+    };
+    this.documents.push(newDocument);
+    this.isDocumentsForms.isAddDocument=false;
+  }
+  removeDocument(id: string){
+    this.documents = this.documents.filter(document=>document.id!=id);
+  }
+
 
 
   loadBasicFields() {
@@ -266,6 +267,7 @@ export class VFormBuilderComponent implements OnInit {
             this.formName = form.name;
             this.fields = form.fields || [];
             this.tuitionContract = form.tuitionContract ? form.tuitionContract : tuitionContractDefault;
+            this.consentInfo = form.consentInfo || [];
             this.eligible = form.eligible;
             this.documents = form.documents || [];
             this.attachments = form.attachments || {};
@@ -300,6 +302,7 @@ export class VFormBuilderComponent implements OnInit {
         name: this.formName,
         sidebar: this.sideBarFields,
         tuitionContract: this.tuitionContract,
+        consentInfo: this.consentInfo,
         eligible: this.eligible,
         step: 1
       };
@@ -479,6 +482,15 @@ export class VFormBuilderComponent implements OnInit {
       this.warningVisible = true;
     }
     return isEmpty(result);
+  }
+
+  addConsentItem() {
+    let consentItem = cloneDeep(consentItemDefault);
+    this.consentInfo.push(consentItem);
+  }
+
+  removeConsentItem(i) {
+    this.consentInfo.splice(i, 1);
   }
 }
 

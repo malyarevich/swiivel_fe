@@ -26,7 +26,6 @@ export class VFilesService {
     return this.http.post(`${environment.apiFB}/forms/attach/${formId}`, file, {params: this.params})
       .pipe(
         map((response) => {
-          console.log(response);
           return response;
         })
       );

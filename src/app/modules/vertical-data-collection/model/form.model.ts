@@ -1,6 +1,7 @@
 import {Field} from './field.model';
 import {Permissions} from "../../../services/permission/permissions.model";
 import {TuitionContract} from "../v-form-constructor/v-form-builder/v-tuition-contract/models/tuition-contract.model";
+import {ConsentInfo} from "../v-form-constructor/v-form-builder/v-consent/model/consent.model";
 import {DocumentsModel} from "../v-form-constructor/v-form-builder/v-documents-forms/model/documents.model";
 
 export interface Form {
@@ -17,6 +18,7 @@ export interface Form {
     sidebar?: Field[],
     step?: number;
     tuitionContract?: TuitionContract;
+    consentInfo?: ConsentInfo[];
     chosen_way_to_create_new_form?: number;
     eligible: string;
     example_form_id?: string;

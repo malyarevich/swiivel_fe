@@ -105,7 +105,7 @@
   <div *ngIf="!document.isUpload" class="row no-gutters align-items-center mt-3">
     <div class="col-7 offset-1 download-div  rounded row align-items-center no-gutters">
       <div class="col pl-2">
-        <span>{{attachments[document.data]?.name || fileName}}</span>
+        <span>{{attachments[document.data]?.name }}</span>
       </div>
       <div class="col-1 row no-gutters align-items-center">
         <div class="col-4" (click)="openForPreview(document)">
@@ -126,18 +126,13 @@
               hidden
             >
           </label>
-          <!--          <a [href]="document.data.link" [download]="document.data.name" role="button">-->
-          <!--            <i class="fas fa-paperclip fa-xs pl-1"></i>-->
-          <!--          </a>-->
         </div>
 
       </div>
-      <!--      <div class="col-1">-->
-      <!--      </div>-->
+
     </div>
     <div class="col-2 offset-2">
-      <a [href]="attachments[document.data]?.link+'?'+token || fileLink+'?'+token" target="_blank" type="button" class="btn d-u-button form-control">Download
-        Document</a>
+      <button type="button" class="btn d-u-button form-control">Download Document</button>
 
     </div>
 
@@ -152,7 +147,7 @@
         <span id="dropdownBasic1" ngbDropdownToggle><i class="fas fa-upload fa-lg"></i></span>
         <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
 
-          <div class="row no-gutters align-items-center">
+          <div class="row no-gutters align-items-center border-for-dropdown">
 
             <div class="col-4  dropdown-div border-secondary border-right">
               <div class="row no-gutters align-items-center">
