@@ -22,7 +22,7 @@ export class VConsentComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.formatTextStringToHTML();
+    // this.formatTextStringToHTML();
   }
 
   formatTextStringToHTML() {

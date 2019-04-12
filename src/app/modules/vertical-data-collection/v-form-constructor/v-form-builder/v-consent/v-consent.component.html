@@ -150,7 +150,7 @@
         </div>
       </div>
 
-      <div [innerHTML]="text" class="mt-3 mb-2" contentEditable=true></div>
+      <div [textContent]="item.text.value" class="mt-3 mb-2" (input)="item.text.value = $event.target.textContent" contentEditable=true></div>
 
     </div>
   </div>
