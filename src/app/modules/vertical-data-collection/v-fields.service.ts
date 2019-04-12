@@ -13,12 +13,12 @@ import {HebrewDateFieldComponent} from "./v-form-view/fileds/hebrew-date-field/h
 import {LabelFieldComponent} from "./v-form-view/fileds/label-field/label-field.component";
 import {EmptyLineFieldComponent} from "./v-form-view/fileds/empty-line-field/empty-line-field.component";
 import {map} from "rxjs/operators";
+import {environment} from "../../../environments/environment";
 
 
 @Injectable()
 export class VFieldsService {
   constructor(private http: HttpClient) {}
-
 
   componentMap = new Map<number,Type<any>>([
       [101, ShortTextFieldComponent],
@@ -39,26 +39,23 @@ export class VFieldsService {
   getCustomList() {
     return this.http.get('/proxy/schema')
       .pipe(
-        map((response) => {
-          return response;
-        })
+        map(response => response)
       );
   }
 
   getExistingList() {
     return this.http.get('/proxy/mapped')
       .pipe(
-        map((response) => {return response;})
-      );
+        map(response => response)
+      )
   }
 
   getExistingSideBarList() {
     //TODO: temporarily
-    // return this.http.get('http://34.73.126.99/api/v1/mapped2?api_token=123')
-    return this.http.get('http://34.73.126.99/api/v1/sidebar?api_token=123')
+    return this.http.get(`${environment.apiFB}/sidebar?api_token=${environment.api_token}`)
       .pipe(
-        map((response) => {return response;})
-      );
+        map(response => response)
+      )
   }
 
 }

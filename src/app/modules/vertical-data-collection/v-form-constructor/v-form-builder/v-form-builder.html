@@ -109,7 +109,7 @@
               <span class="font-weight-bold">Documents</span>
               <span><i class="fas fa-question-circle pl-1" title="test"></i></span>
             </div>
-            <div class="col-1 align-self-end">
+            <div class="col-1 align-self-end" (click)="isDocumentsForms.isAddDocument=!isDocumentsForms.isAddDocument">
               <span><i class="fas fa-plus-square"></i></span>
             </div>
             <div class="col-1 align-self-end" (click)="isDocumentsForms.isDocuments=!isDocumentsForms.isDocuments">
@@ -117,14 +117,24 @@
               <span [hidden]="isDocumentsForms.isDocuments"><i class="fas fa-caret-down ml-2"></i></span>
             </div>
           </div>
+          <div *ngIf="isDocumentsForms.isAddDocument" class="mt-2">
+            <input
+              class="form-control"
+              autofocus
+              #newDocument
+              (blur)="addNewDocument(newDocument.value); newDocument.value=''"
+              (keyup.enter)="addNewDocument(newDocument.value); newDocument.value=''"
+            >
+          </div>
+
           <div [hidden]="!isDocumentsForms.isDocuments">
 
-            <div class="app-consent-item px-3 pt-3 pb-1 mt-3" *ngFor="let document of documents">
+            <div class="app-consent-item px-3 pt-3 pb-1 mt-3" *ngFor="let document of documents;  index as i; trackBy: trackByFn">
               <div class="row no-gutters">
                 <div class="col-10">
                   <span class="font-weight-bold">{{document.name}}</span>
                 </div>
-                <div class="col-2 text-right">
+                <div class="col-2 text-right" (click)="removeDocument(i)">
                   <span class=" mr-3"><i class="fas fa-trash fa-xs"></i></span>
                 </div>
               </div>
@@ -167,81 +177,83 @@
             </div>
 
 
-            <hr>
+          </div>
 
-            <div class="row no-gutters pt-2 align-items-center">
-              <div class="col">
-                <span class="font-weight-bold">Forms</span>
-                <span><i class="fas fa-question-circle pl-1" title="test"></i></span>
-              </div>
-              <div class="col-1 align-self-end">
-                <span><i class="fas fa-plus-square"></i></span>
-              </div>
-              <div class="col-1 align-self-end" (click)="isDocumentsForms.isForms=!isDocumentsForms.isForms">
-                <span [hidden]="!isDocumentsForms.isForms"><i class="fas fa-caret-up ml-2"></i></span>
-                <span [hidden]="isDocumentsForms.isForms"><i class="fas fa-caret-down ml-2"></i></span>
-              </div>
+
+          <hr>
+
+          <div class="row no-gutters pt-2 align-items-center">
+            <div class="col">
+              <span class="font-weight-bold">Forms</span>
+              <span><i class="fas fa-question-circle pl-1" title="test"></i></span>
             </div>
+            <div class="col-1 align-self-end">
+              <span><i class="fas fa-plus-square"></i></span>
+            </div>
+            <div class="col-1 align-self-end" (click)="isDocumentsForms.isForms=!isDocumentsForms.isForms">
+              <span [hidden]="!isDocumentsForms.isForms"><i class="fas fa-caret-up ml-2"></i></span>
+              <span [hidden]="isDocumentsForms.isForms"><i class="fas fa-caret-down ml-2"></i></span>
+            </div>
+          </div>
 
-            <div [hidden]="!isDocumentsForms.isForms">
+          <div [hidden]="!isDocumentsForms.isForms">
 
-              <div class="app-consent-item px-3 pt-3 pb-2 mt-3">
+            <div class="app-consent-item px-3 pt-3 pb-2 mt-3">
 
-                <div class="row no-gutters">
-                  <div class="col-10">
-                    <span class="font-weight-bold">Family Survey</span>
-                  </div>
-                  <div class="col-2 text-right">
-                    <span class=" mr-3"><i class="fas fa-trash fa-xs"></i></span>
-                  </div>
+              <div class="row no-gutters">
+                <div class="col-10">
+                  <span class="font-weight-bold">Family Survey</span>
                 </div>
-
-                <div class="row no-gutters">
-                  <div class="btn-group btn-group-toggle w-100 mt-2"
-                       ngbRadioGroup
-                  >
-                    <label ngbButtonLabel class="btn app-btn-signature">
-                      <input ngbButton type="radio" value=""> Use Existing
-                    </label>
-                    <label ngbButtonLabel class="btn app-btn-signature">
-                      <input ngbButton type="radio" value=""> Use Existing
-                    </label>
-                  </div>
+                <div class="col-2 text-right">
+                  <span class=" mr-3"><i class="fas fa-trash fa-xs"></i></span>
                 </div>
-                <div class="col mt-4">
-                  <label class="app-radio-container">Needed per Family
-                    <input type="radio"
-                           value=""
-                    >
-                    <span class="app-radio-checkmark"></span>
-                  </label>
-                </div>
-                <div class="col">
-                  <label class="app-radio-container">Needed per Student
-                    <input type="radio"
-                           value=""
-                    >
-                    <span class="app-radio-checkmark"></span>
-                  </label>
-                </div>
-
-                <div class="col mt-4">
-                  <label class="app-switch">
-                    <input type="checkbox">
-                    <span class="app-slider app-round"></span>
-                  </label>
-                  <span class="ml-1">Fillable Online</span>
-                </div>
-                <div class="col">
-                  <label class="app-switch">
-                    <input type="checkbox">
-                    <span class="app-slider app-round"></span>
-                  </label>
-                  <span class="ml-1">Allow Download/Upload</span>
-                </div>
-
-
               </div>
+
+              <div class="row no-gutters">
+                <div class="btn-group btn-group-toggle w-100 mt-2"
+                     ngbRadioGroup
+                >
+                  <label ngbButtonLabel class="btn app-btn-signature">
+                    <input ngbButton type="radio" value=""> Use Existing
+                  </label>
+                  <label ngbButtonLabel class="btn app-btn-signature">
+                    <input ngbButton type="radio" value=""> Create New
+                  </label>
+                </div>
+              </div>
+              <div class="col mt-4">
+                <label class="app-radio-container">Needed per Family
+                  <input type="radio"
+                         value=""
+                  >
+                  <span class="app-radio-checkmark"></span>
+                </label>
+              </div>
+              <div class="col">
+                <label class="app-radio-container">Needed per Student
+                  <input type="radio"
+                         value=""
+                  >
+                  <span class="app-radio-checkmark"></span>
+                </label>
+              </div>
+
+              <div class="col mt-4">
+                <label class="app-switch">
+                  <input type="checkbox">
+                  <span class="app-slider app-round"></span>
+                </label>
+                <span class="ml-1">Fillable Online</span>
+              </div>
+              <div class="col">
+                <label class="app-switch">
+                  <input type="checkbox">
+                  <span class="app-slider app-round"></span>
+                </label>
+                <span class="ml-1">Allow Download/Upload</span>
+              </div>
+
+
             </div>
           </div>
         </div>
@@ -542,6 +554,8 @@
         [hidden]="!isDocumentsForms.isActiveAll"
         [isDocumentsForms]="isDocumentsForms"
         [documents]="documents"
+        [attachments]="attachments"
+        [formId]="formId"
       >
       </app-v-documents-forms>
       <!--      </div>-->

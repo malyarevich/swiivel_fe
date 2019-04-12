@@ -30,6 +30,7 @@ export class VFormBuilderComponent implements OnInit {
   searchText: string;
   fields: Field[] = [];
   formName: string = '';
+  attachments;
   customFields: Field[];
   existingFields: Field[];
   sideBarFields: Field[];
@@ -39,29 +40,31 @@ export class VFormBuilderComponent implements OnInit {
   isFormsFields: boolean = false;
   isConsent: boolean = false;
   isDocumentsForms: DocumentSideBar = {
-    isActiveAll: false,
+    isActiveAll: true,
     isDocuments: true,
-    isForms: true
+    isAddDocument: false,
+    isForms: true,
+    isAddForms: false
   };
   isTuitionContract: boolean = false;
   isFormPayment: boolean = false;
 
 
   documents: DocumentsModel[] = [
-    {
-      name: "Elementary School Calendar",
-      isUpload: false,
-      isPerFamily: true,
-      data: {
-        name: "BBY Contract 1 Student.pdf",
-        link: "../../../../../assets/files/BBY Contract 1 Student.pdf"
-      }
-    },
-    {
-      name: "Proof of Address",
-      isUpload: true,
-      isPerFamily: false
-    }
+    // {
+    //   name: "Elementary School Calendar",
+    //   isUpload: false,
+    //   isPerFamily: true,
+    //   data: {
+    //     name: "BBY Contract 1 Student.pdf",
+    //     link: "../../../../../assets/files/BBY Contract 1 Student.pdf"
+    //   }
+    // },
+    // {
+    //   name: "Proof of Address",
+    //   isUpload: true,
+    //   isPerFamily: false
+    // }
   ];
 
   formPaymentSideBar: FormPayment[] = [
@@ -136,6 +139,30 @@ export class VFormBuilderComponent implements OnInit {
       }
     }
   ];
+
+
+  addNewDocument(name: string){
+    if(name.length<3) return;
+    const newDocument: DocumentsModel ={
+      id: uuid(),
+      name: name,
+      isUpload: true,
+      isPerFamily: true,
+      accompanyingText: {
+        data:'',
+        isBold: false,
+        isItalic: false
+      },
+      data: '',
+      dataTypeAllowed: []
+    };
+    this.documents.push(newDocument);
+    this.isDocumentsForms.isAddDocument=false;
+  }
+  removeDocument(index){
+   this.documents.splice(index, 1);
+  }
+
 
   consentInfo: ConsentInfo[] = [
     {
@@ -240,6 +267,9 @@ export class VFormBuilderComponent implements OnInit {
             this.fields = form.fields || [];
             this.tuitionContract = form.tuitionContract ? form.tuitionContract : tuitionContractDefault;
             this.eligible = form.eligible;
+            this.documents = form.documents || [];
+            this.attachments = form.attachments || {};
+
           }
         },
         (error) => console.log(error, 'error'),
@@ -248,7 +278,6 @@ export class VFormBuilderComponent implements OnInit {
         }}
       );
     }
-
   }
 
   initFormFieldsToSideBar(sideBar: Field[], workArea: Field[]) {
@@ -267,6 +296,7 @@ export class VFormBuilderComponent implements OnInit {
       const form: Form = {
         _id: this.formId,
         fields: this.fields,
+        documents: this.documents,
         name: this.formName,
         sidebar: this.sideBarFields,
         tuitionContract: this.tuitionContract,

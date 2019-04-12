@@ -97,7 +97,7 @@
     <div class="col ">
           <textarea class="app-consent-table form-control float-right"
                     rows="4"
-                    placeholder="Text"></textarea>
+                    placeholder="Text" [(ngModel)]="document.accompanyingText.data"></textarea>
     </div>
   </div>
 
@@ -105,21 +105,30 @@
   <div *ngIf="!document.isUpload" class="row no-gutters align-items-center mt-3">
     <div class="col-7 offset-1 download-div  rounded row align-items-center no-gutters">
       <div class="col pl-2">
-        <a [href]="document.data.link" [download]="document.data.name">{{document.data.name}}</a>
+        <span>{{attachments[document.data]?.name || fileName}}</span>
       </div>
       <div class="col-1 row no-gutters align-items-center">
-        <div class="col-4">
+        <div class="col-4" (click)="openForPreview(document)">
           <span><i class="fas fa-eye fa-xs"></i></span>
 
         </div>
-        <div class="col-4">
+        <div class="col-4" (click)="deleteAttachment(document)">
           <span><i class="fas fa-trash fa-xs"></i></span>
 
         </div>
         <div class="col-4 download-paperclip-div rounded">
-          <a [href]="document.data.link" [download]="document.data.name" role="button">
+          <label class="m-0">
             <i class="fas fa-paperclip fa-xs pl-1"></i>
-          </a>
+            <input
+              type="file"
+              accept=".pdf,.doc,.docx,.jpg"
+              (change)="fileChange($event, document)"
+              hidden
+            >
+          </label>
+          <!--          <a [href]="document.data.link" [download]="document.data.name" role="button">-->
+          <!--            <i class="fas fa-paperclip fa-xs pl-1"></i>-->
+          <!--          </a>-->
         </div>
 
       </div>
@@ -127,7 +136,7 @@
       <!--      </div>-->
     </div>
     <div class="col-2 offset-2">
-      <a [href]="document.data.link" [download]="document.data.name" type="button" class="btn d-u-button form-control">Download
+      <a [href]="attachments[document.data]?.link+'?'+token || fileLink+'?'+token" target="_blank" type="button" class="btn d-u-button form-control">Download
         Document</a>
 
     </div>
@@ -145,39 +154,72 @@
 
           <div class="row no-gutters align-items-center">
 
-            <div class="col-4 row no-gutters dropdown-div border-secondary border-right">
-              <div class="pl-2 col-3">
-                <label class="app-switch">
-                  <input type="checkbox">
-                  <span class="app-slider app-round"></span>
-                </label>
+            <div class="col-4  dropdown-div border-secondary border-right">
+              <div class="row no-gutters align-items-center">
+                <div class=" col-3 pl-1">
+                  <label class="app-switch">
+                    <input type="checkbox" [(ngModel)]="dataTypes.isDocuments" (ngModelChange)="dataSectionChange($event,dataTypes.documents )">
+                    <span class="app-slider app-round"></span>
+                  </label>
+                </div>
+                <div class="col ">
+                  <span class=" ">Documents</span>
+                </div>
               </div>
-              <div class="col">
-                <span class=" ">Documents</span>
+              <div class="row align-items-center pl-2 pt-4">
+                <div class="col-4" *ngFor="let checkbox of dataTypes.documents">
+                  <label class="app-checkbox-container">{{checkbox.name}}
+                    <input
+                      type="checkbox" [(ngModel)]="checkbox.isAllow" >
+                    <span class="app-checkbox-checkmark"></span>
+                  </label>
+                </div>
               </div>
             </div>
 
-            <div class="col-4 row no-gutters dropdown-div border-secondary border-right">
-              <div class="pl-1 col-3">
-                <label class="app-switch">
-                  <input type="checkbox">
-                  <span class="app-slider app-round"></span>
-                </label>
+            <div class="col-4  dropdown-div border-secondary border-right">
+              <div class="row no-gutters align-items-center">
+                <div class=" col-3 pl-1">
+                  <label class="app-switch">
+                    <input type="checkbox" [(ngModel)]="dataTypes.isImages" (ngModelChange)="dataSectionChange($event,dataTypes.images )">
+                    <span class="app-slider app-round"></span>
+                  </label>
+                </div>
+                <div class="col ">
+                  <span class=" ">Images</span>
+                </div>
               </div>
-              <div class="col">
-                <span class=" ">Images</span>
+              <div class="row align-items-center pl-2 pt-4">
+                <div class="col-4" *ngFor="let checkbox of dataTypes.images">
+                  <label class="app-checkbox-container">{{checkbox.name}}
+                    <input
+                      type="checkbox" [(ngModel)]="checkbox.isAllow" >
+                    <span class="app-checkbox-checkmark"></span>
+                  </label>
+                </div>
               </div>
             </div>
 
-            <div class="col-4 row no-gutters dropdown-div">
-              <div class=" col-3 pl-1">
-                <label class="app-switch">
-                  <input type="checkbox">
-                  <span class="app-slider app-round"></span>
-                </label>
+            <div class="col-4  dropdown-div">
+              <div class="row no-gutters align-items-center">
+                <div class=" col-3 pl-1">
+                  <label class="app-switch">
+                    <input type="checkbox" [(ngModel)]="dataTypes.isVideoAudio" (ngModelChange)="dataSectionChange($event,dataTypes.videoAudio )">
+                    <span class="app-slider app-round"></span>
+                  </label>
+                </div>
+                <div class="col ">
+                  <span class=" ">Audio/Video</span>
+                </div>
               </div>
-              <div class="col">
-                <span class=" ">Audio/Video</span>
+              <div class="row align-items-center pl-2 pt-4">
+                <div class="col-4" *ngFor="let checkbox of dataTypes.videoAudio">
+                  <label class="app-checkbox-container">{{checkbox.name}}
+                    <input
+                      type="checkbox" [(ngModel)]="checkbox.isAllow" >
+                    <span class="app-checkbox-checkmark"></span>
+                  </label>
+                </div>
               </div>
             </div>
           </div>
@@ -187,4 +229,5 @@
   </div>
 
 </div>
+
 

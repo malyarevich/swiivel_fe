@@ -154,7 +154,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     GeneralDirectivesModule,
   ],
-  providers: [VFormService, VFieldsService, FormUtils],
+  providers: [VFormService, VFieldsService, FormUtils, VFieldsService],
   entryComponents: [entryComponents]
 })
 export class VerticalDataCollectionModule {

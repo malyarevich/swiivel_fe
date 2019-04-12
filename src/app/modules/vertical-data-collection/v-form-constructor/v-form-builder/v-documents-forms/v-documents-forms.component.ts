@@ -7,8 +7,9 @@ import {DocumentSideBar, DocumentsModel} from "./model/documents.model";
   styleUrls: ['./v-documents-forms.component.css']
 })
 export class VDocumentsFormsComponent implements OnInit {
-
+  @Input() attachments;
   @Input() isDocumentsForms: DocumentSideBar;
+  @Input() formId: string;
   @Input() documents: DocumentsModel[];
   constructor() { }
 

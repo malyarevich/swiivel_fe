@@ -5,8 +5,8 @@
 export const environment = {
   production: false,
   apiCore: 'http://red.dev.codeblue.ventures/api/v1',
-  api: 'http://34.73.126.99/api/v1',
-  uploadApi: 'http://upload.edminify-new.devurai.com/api/v1',
+  apiFB: 'http://form-builder.red.dev.codeblue.ventures/api/v1',
+  uploadApi: 'http://upload.red.dev.codeblue.ventures/api/v1',
   api_token: '123'
 };
 
