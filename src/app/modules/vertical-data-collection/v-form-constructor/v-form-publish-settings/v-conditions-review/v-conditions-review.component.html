@@ -1,0 +1,137 @@
+<div class="app-section-wrapper p-5">
+  <p class="app-fb-section-title text-center">Conditional Logic</p>
+  <div class="app-fb-border mt-2">
+
+    <!--Family Information-->
+
+    <div class="row no-gutters app-fp-condition-section p-3" [ngClass]="{'app-fp-condition-section-selected' : isFamilyInfo}">
+      <div class="col-11">Family Information</div>
+      <div class="col-1 text-right" [ngClass]="isFamilyInfo ? 'app-fb-i-active' : 'app-fb-i'">
+        <span class="mr-3" *ngIf="isFamilyInfo">
+          <i class="fas fa-pen"></i>
+        </span>
+        <span class="mr-2" (click)="isFamilyInfo = !isFamilyInfo">
+          <i class="fas fa-caret-up" *ngIf="isFamilyInfo"></i>
+          <i class="fas fa-caret-down" *ngIf="!isFamilyInfo"></i>
+        </span>
+      </div>
+    </div>
+
+    <div class="row no-gutters app-fp-condition-info p-3" [hidden]="!isFamilyInfo">
+      Family Information
+    </div>
+
+    <!--End Family Information-->
+
+    <!--Parents’ Information-->
+
+    <div class="row no-gutters app-fp-condition-section p-3" [ngClass]="{'app-fp-condition-section-selected' : isParentInfo}">
+      <div class="col-11">Parents’ Information</div>
+      <div class="col-1 text-right" [ngClass]="isParentInfo ? 'app-fb-i-active' : 'app-fb-i'">
+        <span class="mr-3" *ngIf="isParentInfo">
+          <i class="fas fa-pen"></i>
+        </span>
+        <span class="mr-2" (click)="isParentInfo = !isParentInfo">
+          <i class="fas fa-caret-up" *ngIf="isParentInfo"></i>
+          <i class="fas fa-caret-down" *ngIf="!isParentInfo"></i>
+        </span>
+      </div>
+    </div>
+
+    <div class="row no-gutters app-fp-condition-info p-3" [hidden]="!isParentInfo">
+      Parents’ Information
+    </div>
+
+    <!--End Parents’ Information-->
+
+    <!--Student Information-->
+
+    <div class="row no-gutters app-fp-condition-section p-3" [ngClass]="{'app-fp-condition-section-selected' : isStudentInfo}">
+      <div class="col-11">Student Information</div>
+      <div class="col-1 text-right" [ngClass]="isStudentInfo ? 'app-fb-i-active' : 'app-fb-i'">
+        <span class="mr-3" *ngIf="isStudentInfo">
+          <i class="fas fa-pen"></i>
+        </span>
+        <span class="mr-2" (click)="isStudentInfo = !isStudentInfo">
+          <i class="fas fa-caret-up" *ngIf="isStudentInfo"></i>
+          <i class="fas fa-caret-down" *ngIf="!isStudentInfo"></i>
+        </span>
+      </div>
+    </div>
+
+    <div class="row no-gutters app-fp-condition-info p-3" [hidden]="!isStudentInfo">
+      Student Information
+    </div>
+
+    <!--End Student Information-->
+
+    <!--Family Medical Information-->
+
+    <div class="row no-gutters app-fp-condition-section p-3" [ngClass]="{'app-fp-condition-section-selected' : isMedicalInfo}">
+      <div class="col-11">Family Medical Informationn</div>
+      <div class="col-1 text-right" [ngClass]="isMedicalInfo ? 'app-fb-i-active' : 'app-fb-i'">
+        <span class="mr-3" *ngIf="isMedicalInfo">
+          <i class="fas fa-pen"></i>
+        </span>
+        <span class="mr-2" (click)="isMedicalInfo = !isMedicalInfo">
+          <i class="fas fa-caret-up" *ngIf="isMedicalInfo"></i>
+          <i class="fas fa-caret-down" *ngIf="!isMedicalInfo"></i>
+        </span>
+      </div>
+    </div>
+
+    <div class="row no-gutters app-fp-condition-info p-3" [hidden]="!isMedicalInfo">
+      Family Medical Information
+    </div>
+
+    <!--End Family Medical Information-->
+
+    <!--School Fees for Parents-->
+
+    <div class="row no-gutters app-fp-condition-section p-3" [ngClass]="{'app-fp-condition-section-selected' : isSchoolFeeInfo}">
+      <div class="col-11">School Fees for Parents</div>
+      <div class="col-1 text-right" [ngClass]="isSchoolFeeInfo ? 'app-fb-i-active' : 'app-fb-i'">
+        <span class="mr-3" *ngIf="isSchoolFeeInfo">
+          <i class="fas fa-pen"></i>
+        </span>
+        <span class="mr-2" (click)="isSchoolFeeInfo = !isSchoolFeeInfo">
+          <i class="fas fa-caret-up" *ngIf="isSchoolFeeInfo"></i>
+          <i class="fas fa-caret-down" *ngIf="!isSchoolFeeInfo"></i>
+        </span>
+      </div>
+    </div>
+
+    <div class="row no-gutters app-fp-condition-info p-3" [hidden]="!isSchoolFeeInfo">
+      School Fees for Parents
+    </div>
+
+    <!--End School Fees for Parents-->
+
+    <!--School Payment Information-->
+
+    <div class="row no-gutters app-fp-condition-section p-3" [ngClass]="{'app-fp-condition-section-selected' : isPaymentInfo}">
+      <div class="col-11">Payment Information</div>
+      <div class="col-1 text-right" [ngClass]="isPaymentInfo ? 'app-fb-i-active' : 'app-fb-i'">
+        <span class="mr-3" *ngIf="isPaymentInfo">
+          <i class="fas fa-pen"></i>
+        </span>
+        <span class="mr-2" (click)="isPaymentInfo = !isPaymentInfo">
+          <i class="fas fa-caret-up" *ngIf="isPaymentInfo"></i>
+          <i class="fas fa-caret-down" *ngIf="!isPaymentInfo"></i>
+        </span>
+      </div>
+    </div>
+
+    <div class="row no-gutters app-fp-condition-info p-3" [hidden]="!isPaymentInfo">
+      Payment Information
+    </div>
+
+    <!--End Payment Information-->
+
+  </div>
+</div>
+
+<div class="mt-5 text-center">
+  <button class="btn app-btn-outline-primary px-3 py-2 mr-4">Edit Conditional Logic</button>
+  <button class="btn app-btn-primary px-3 py-2">Save & Go Next Step</button>
+</div>

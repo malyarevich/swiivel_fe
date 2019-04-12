@@ -1,0 +1,11 @@
+@import '../../../../../../styles/variables/colors';
+.app-form-publish-menu-item {
+    cursor: pointer;
+    color: #909090;
+}
+
+.app-form-publish-menu-item-active {
+    color: $element-base-color;
+    background-color: #EBEEFF;
+    font-family: 'NunitoSans-ExtraBold';
+}

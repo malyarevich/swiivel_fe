@@ -152,6 +152,7 @@ label.btn.app-btn-signature.active {
 .app-consent-item-title {
   font-family: "NunitoSans-ExtraBold";
   font-size: 1.2em;
+  line-height: 2em;
 }
 
 .app-plus-i {
@@ -168,4 +169,8 @@ label.btn.app-btn-signature.active {
 }
 .fas{
   cursor: pointer;
+}
+
+.app-consent-name-input {
+  border-radius: 3px;
 }

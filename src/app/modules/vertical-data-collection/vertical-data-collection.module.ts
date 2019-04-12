@@ -57,6 +57,11 @@ import { VGroupSettingsComponent } from './v-form-constructor/v-form-builder/v-f
 import { VConsentComponent } from './v-form-constructor/v-form-builder/v-consent/v-consent.component';
 import { VDocumentsContainerComponent } from './v-form-constructor/v-form-builder/v-documents-forms/v-documents-container/v-documents-container.component';
 import { VFormsContainerComponent } from './v-form-constructor/v-form-builder/v-documents-forms/v-forms-container/v-forms-container.component';
+import { VConditionsReviewComponent } from './v-form-constructor/v-form-publish-settings/v-conditions-review/v-conditions-review.component';
+import { VPublishSettingsComponent } from './v-form-constructor/v-form-publish-settings/v-publish-settings/v-publish-settings.component';
+import { VAutomationComponent } from './v-form-constructor/v-form-publish-settings/v-automation/v-automation.component';
+import { VRedirectPagesComponent } from './v-form-constructor/v-form-publish-settings/v-redirect-pages/v-redirect-pages.component';
+import { VPublishMenuComponent } from './v-form-constructor/v-form-publish-settings/v-publish-menu/v-publish-menu.component';
 
 const routes: Routes = [
   {
@@ -143,6 +148,11 @@ const routes: Routes = [
     VConsentComponent,
     VDocumentsContainerComponent,
     VFormsContainerComponent,
+    VConditionsReviewComponent,
+    VPublishSettingsComponent,
+    VAutomationComponent,
+    VRedirectPagesComponent,
+    VPublishMenuComponent,
   ],
   imports: [
     NgbModule,

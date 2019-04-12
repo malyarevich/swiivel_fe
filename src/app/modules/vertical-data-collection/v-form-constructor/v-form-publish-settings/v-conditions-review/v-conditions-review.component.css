@@ -1,0 +1,24 @@
+.app-fp-condition-section {
+    border-bottom: 1px solid rgba(0, 0, 0, .125);
+    font-size: 1.2em;
+}
+
+.app-fp-condition-section-selected {
+    color: white;
+    background-color: #9FA6CB;
+}
+
+.app-fb-i-active {
+    color: white;
+    cursor: pointer;
+}
+
+.app-fb-i {
+    color: #909090;
+    cursor: pointer;
+}
+
+.app-fp-condition-info {
+    background-color: #F6F6F6;
+    border-bottom: 1px solid rgba(0, 0, 0, .125);
+}
