@@ -7,6 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class VConditionsReviewComponent implements OnInit {
 
+  isFamilyInfo: boolean = false;
+  isParentInfo: boolean = false;
+  isStudentInfo: boolean = false;
+  isMedicalInfo: boolean = false;
+  isSchoolFeeInfo: boolean = false;
+  isPaymentInfo: boolean = false;
+
   constructor() { }
 
   ngOnInit() {

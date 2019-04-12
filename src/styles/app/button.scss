@@ -1,13 +1,25 @@
+@import '../../styles/variables/colors';
+
 .app-btn-outline-primary {
-  color: #4350A2;
-  border: 1px solid #4350A2;
+  color: $element-base-color;
+  border: 1px solid $element-base-color;
+  border-radius: 3px;
 }
 
 .app-btn-outline-primary {
+  &:hover, &:active {
+    color: #FFFFFF;
+    background-color: $element-base-color;
+    border: 1px solid $element-base-color;
+  }
+}
+
+.app-btn-primary {
+  background-color: $element-base-color;
+  color: #ffffff;
+  border-radius: 3px;
   &:hover, &:focus, &:active {
     color: #FFFFFF;
-    background-color: #4350A2;
-    border: 1px solid #4350A2;
   }
 }
 
