@@ -35,6 +35,7 @@ export class VFormBuilderComponent implements OnInit {
   sideBarFields: Field[];
   tuitionContract: TuitionContract = tuitionContractDefault;
   consentInfo: ConsentInfo[] = [];
+  isEditConsentName: number | null = null;
   eligible: string;
 
   isFormsFields: boolean = false;

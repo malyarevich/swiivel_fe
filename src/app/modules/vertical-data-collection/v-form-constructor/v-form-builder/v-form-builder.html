@@ -267,13 +267,24 @@
           </div>
         </div>
         <div [hidden]="!isConsent" class="bg-white rounded mb-3 ">
+
           <div class="app-consent-item p-3 mt-3" *ngFor="let item of consentInfo; let i = index; ">
 
-            <div class="row no-gutters">
+            <div class="row no-gutters mb-2">
               <div class="col-10">
-                <span class="app-consent-item-title">{{item.title}}</span>
+                <span class="app-consent-item-title"
+                      *ngIf="isEditConsentName !== i"
+                      (click)="isEditConsentName = i">
+                  {{item.title}}
+                </span>
+                <input type="text"
+                       class="form-control app-consent-name-input"
+                       autofocus
+                       *ngIf="isEditConsentName === i"
+                       (blur)="isEditConsentName = null"
+                       [(ngModel)]="item.title">
               </div>
-              <div class="col-2 text-right">
+              <div class="col-2 text-right pt-2">
                 <span (click)="removeConsentItem(i)" class="app-fb-trash mr-3"><i class="fas fa-trash"></i></span>
                 <span class="app-fb-caret-up"><i class="fas fa-caret-up"></i></span>
               </div>
