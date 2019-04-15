@@ -4,7 +4,8 @@
 
     <!--Family Information-->
 
-    <div class="row no-gutters app-fp-condition-section p-3" [ngClass]="{'app-fp-condition-section-selected' : isFamilyInfo}">
+    <div class="row no-gutters app-fp-condition-section p-3"
+         [ngClass]="{'app-fp-condition-section-selected' : isFamilyInfo}">
       <div class="col-11">Family Information</div>
       <div class="col-1 text-right" [ngClass]="isFamilyInfo ? 'app-fb-i-active' : 'app-fb-i'">
         <span class="mr-3" *ngIf="isFamilyInfo">
@@ -25,7 +26,8 @@
 
     <!--Parents’ Information-->
 
-    <div class="row no-gutters app-fp-condition-section p-3" [ngClass]="{'app-fp-condition-section-selected' : isParentInfo}">
+    <div class="row no-gutters app-fp-condition-section p-3"
+         [ngClass]="{'app-fp-condition-section-selected' : isParentInfo}">
       <div class="col-11">Parents’ Information</div>
       <div class="col-1 text-right" [ngClass]="isParentInfo ? 'app-fb-i-active' : 'app-fb-i'">
         <span class="mr-3" *ngIf="isParentInfo">
@@ -46,7 +48,8 @@
 
     <!--Student Information-->
 
-    <div class="row no-gutters app-fp-condition-section p-3" [ngClass]="{'app-fp-condition-section-selected' : isStudentInfo}">
+    <div class="row no-gutters app-fp-condition-section p-3"
+         [ngClass]="{'app-fp-condition-section-selected' : isStudentInfo}">
       <div class="col-11">Student Information</div>
       <div class="col-1 text-right" [ngClass]="isStudentInfo ? 'app-fb-i-active' : 'app-fb-i'">
         <span class="mr-3" *ngIf="isStudentInfo">
@@ -59,15 +62,82 @@
       </div>
     </div>
 
-    <div class="row no-gutters app-fp-condition-info p-3" [hidden]="!isStudentInfo">
-      Student Information
+    <div class="row no-gutters app-fp-condition-info p-4" [hidden]="!isStudentInfo">
+      <div class="col-3 row no-gutters">
+        <div class="col-2">
+          <div class="app-rectangle mt-2"></div>
+        </div>
+        <div class="col">
+          <p class="font-weight-bold mb-0">First Name</p>
+          <small>Field</small>
+        </div>
+      </div>
+      <div class="col-9">
+
+        <div class="row no-gutters app-fp-field-logic-section p-3">
+          <div class="col-10 app-field-logic-title font-weight-bold pt-1">CONDITIONAL LOGIC (2)</div>
+          <div class="col-2 text-right">
+            <span class="mr-3 app-field-logic-edit-i">
+              <i class="fas fa-pen mr-3"></i>
+              <i class="fas fa-trash mr-3"></i>
+            </span>
+            <span class="mr-2 app-field-logic-arrow-i" (click)="isFieldLogic = !isFieldLogic">
+              <i class="fas fa-caret-up" *ngIf="isFieldLogic"></i>
+              <i class="fas fa-caret-down" *ngIf="!isFieldLogic"></i>
+            </span>
+          </div>
+        </div>
+
+        <div class="row no-gutters app-fp-field-logic-info p-4" [hidden]="!isFieldLogic">
+
+          <div class="col-12 p-2 mb-3">
+            <i class="fas fa-check-double app-base-element-color mr-1"></i>
+            <span class="app-base-element-color">HIDE</span> if <span class="app-base-element-color">ANY</span> of the
+            rules are matched:
+          </div>
+          <div class="col-12 app-fp-field-logic-item p-2 mb-2">
+            <div class="row no-gutters">
+              <div class="col-10">
+                <i class="fas fa-long-arrow-alt-right app-base-element-color"></i>
+                Family Info Section – Address Group – State <span class="app-base-element-color">STARTS WITH A</span>
+              </div>
+              <div class="col-2 text-right">
+                <span class="mr-3 app-field-logic-edit-i">
+                  <i class="fas fa-pen mr-3"></i>
+                  <i class="fas fa-trash mr-3"></i>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 app-fp-field-logic-item p-2 mb-2">
+            <i class="fas fa-long-arrow-alt-right app-base-element-color"></i>
+            Family Info Section – Address Group – State <span class="app-base-element-color">CONTAINS 345</span>
+          </div>
+
+          <div class="app-condition-line my-3"></div>
+
+          <div class="col-12 p-2 mb-3">
+            <i class="fas fa-check-double app-base-element-color mr-1"></i>
+            <span class="app-base-element-color">ADD ADDITIONAL ROW</span> if <span
+            class="app-base-element-color">ALL</span> of the rules are matched:
+          </div>
+          <div class="col-12 app-fp-field-logic-item p-2 mb-2">
+            <i class="fas fa-long-arrow-alt-right app-base-element-color"></i>
+            Family Info Section – Number of Students <span class="app-base-element-color">GREATER THAN 1</span>
+          </div>
+
+
+        </div>
+
+      </div>
     </div>
 
     <!--End Student Information-->
 
     <!--Family Medical Information-->
 
-    <div class="row no-gutters app-fp-condition-section p-3" [ngClass]="{'app-fp-condition-section-selected' : isMedicalInfo}">
+    <div class="row no-gutters app-fp-condition-section p-3"
+         [ngClass]="{'app-fp-condition-section-selected' : isMedicalInfo}">
       <div class="col-11">Family Medical Informationn</div>
       <div class="col-1 text-right" [ngClass]="isMedicalInfo ? 'app-fb-i-active' : 'app-fb-i'">
         <span class="mr-3" *ngIf="isMedicalInfo">
@@ -88,7 +158,8 @@
 
     <!--School Fees for Parents-->
 
-    <div class="row no-gutters app-fp-condition-section p-3" [ngClass]="{'app-fp-condition-section-selected' : isSchoolFeeInfo}">
+    <div class="row no-gutters app-fp-condition-section p-3"
+         [ngClass]="{'app-fp-condition-section-selected' : isSchoolFeeInfo}">
       <div class="col-11">School Fees for Parents</div>
       <div class="col-1 text-right" [ngClass]="isSchoolFeeInfo ? 'app-fb-i-active' : 'app-fb-i'">
         <span class="mr-3" *ngIf="isSchoolFeeInfo">
@@ -109,7 +180,8 @@
 
     <!--School Payment Information-->
 
-    <div class="row no-gutters app-fp-condition-section p-3" [ngClass]="{'app-fp-condition-section-selected' : isPaymentInfo}">
+    <div class="row no-gutters app-fp-condition-section p-3"
+         [ngClass]="{'app-fp-condition-section-selected' : isPaymentInfo}">
       <div class="col-11">Payment Information</div>
       <div class="col-1 text-right" [ngClass]="isPaymentInfo ? 'app-fb-i-active' : 'app-fb-i'">
         <span class="mr-3" *ngIf="isPaymentInfo">

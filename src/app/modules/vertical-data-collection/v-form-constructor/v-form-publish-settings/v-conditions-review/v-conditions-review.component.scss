@@ -1,0 +1,58 @@
+@import "../../../../../../styles/variables/colors";
+
+.app-fp-condition-section {
+  border-bottom: 1px solid rgba(0, 0, 0, .125);
+  font-size: 1.2em;
+}
+
+.app-fp-condition-section-selected {
+  color: white;
+  background-color: #9FA6CB;
+}
+
+.app-fb-i-active {
+  color: white;
+  cursor: pointer;
+}
+
+.app-fb-i {
+  color: #909090;
+  cursor: pointer;
+}
+
+.app-fp-condition-info {
+  background-color: #F6F6F6;
+  border-bottom: 1px solid rgba(0, 0, 0, .125);
+}
+
+.app-fp-field-logic-section {
+  background-color: #E4E7FF;
+  border-radius: 5px;
+}
+
+.app-fp-field-logic-info {
+  background-color: #ffffff;
+}
+
+.app-field-logic-title {
+  font-size: 0.8em;
+}
+
+.app-field-logic-edit-i {
+  color: #909090;
+}
+
+.app-field-logic-arrow-i {
+  color: $element-base-color;
+}
+
+.app-fp-field-logic-item {
+  background-color: #F6F6F6;
+  border-radius: 3px;
+}
+
+.app-condition-line {
+  height: 1px;
+  width: 100%;
+  border: 1px solid #D7D7D7;
+}
