@@ -63,7 +63,6 @@ import { VAutomationComponent } from './v-form-constructor/v-form-publish-settin
 import { VRedirectPagesComponent } from './v-form-constructor/v-form-publish-settings/v-redirect-pages/v-redirect-pages.component';
 import { VPublishMenuComponent } from './v-form-constructor/v-form-publish-settings/v-publish-menu/v-publish-menu.component';
 import {PdfViewerModule} from "ng2-pdf-viewer";
-import { DrawingBoardComponent } from './v-form-constructor/v-form-builder/v-documents-forms/drawing-board/drawing-board.component';
 
 const routes: Routes = [
   {
@@ -155,7 +154,6 @@ const routes: Routes = [
     VAutomationComponent,
     VRedirectPagesComponent,
     VPublishMenuComponent,
-    DrawingBoardComponent,
   ],
   imports: [
     NgbModule,

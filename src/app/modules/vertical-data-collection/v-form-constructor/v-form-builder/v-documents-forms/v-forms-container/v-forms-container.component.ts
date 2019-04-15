@@ -32,6 +32,7 @@ export class VFormsContainerComponent implements AfterViewInit {
     this.cx.lineWidth = 3;
     this.cx.lineCap = 'round';
     this.cx.strokeStyle = '#000';
+    this.cx.fillStyle = '#fff';
 
     // we'll implement this method to start capturing mouse events
     this.captureEvents(this.canvasEl);
@@ -48,7 +49,7 @@ export class VFormsContainerComponent implements AfterViewInit {
     this.finalPos ={
       x: e.clientX - rect.left,
       y: e.clientY - rect.top
-    }
+    };
     console.log('position:' , this.lastPos, this.finalPos);
   }
 
@@ -117,6 +118,7 @@ export class VFormsContainerComponent implements AfterViewInit {
       // draws a line from the start pos until the current position
       // this.cx.lineTo(currentPos.x, currentPos.y);
       this.cx.rect(this.lastPos.x, this.lastPos.y, currentPos.x-this.lastPos.x,currentPos.y-this.lastPos.y);
+      this.cx.fill();
       // strokes the current path with the styles we set earlier
       this.cx.stroke();
     }
