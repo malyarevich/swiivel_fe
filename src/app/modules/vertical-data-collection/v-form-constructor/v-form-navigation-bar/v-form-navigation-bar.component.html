@@ -20,13 +20,21 @@
         <!--</a>-->
       <!--</li>-->
       <li class="nav-item ">
-        <a class="nav-link" routerLink="form-builder"  routerLinkActive="active border-bottom">
+        <a class="nav-link" *ngIf="isGeneralInfoValid" routerLink="form-builder"  routerLinkActive="active border-bottom">
+          form builder
+          <i class="fa fa-chevron-right"></i>
+        </a>
+        <a class="nav-link" *ngIf="!isGeneralInfoValid"  routerLinkActive="active border-bottom">
           form builder
           <i class="fa fa-chevron-right"></i>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link " routerLink="publish-settings"  routerLinkActive="active border-bottom">
+        <a class="nav-link " *ngIf="isGeneralInfoValid" routerLink="publish-settings"  routerLinkActive="active border-bottom">
+          publish settings
+          <!--<i class="fa fa-chevron-right"></i>-->
+        </a>
+        <a class="nav-link " *ngIf="!isGeneralInfoValid"  routerLinkActive="active border-bottom">
           publish settings
           <!--<i class="fa fa-chevron-right"></i>-->
         </a>
