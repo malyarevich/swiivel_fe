@@ -1,24 +1,34 @@
-import {Component, OnInit, ViewChild, ElementRef, Input, AfterViewInit} from '@angular/core';
-import {fromEvent, Subscription} from "rxjs";
-import {pairwise, switchMap, takeUntil} from "rxjs/operators";
-import {PDFDocumentProxy} from 'ng2-pdf-viewer/src/app/pdf-viewer/pdf-viewer.module';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  Input,
+  OnDestroy,
+  ViewChild
+} from '@angular/core';
+import { fromEvent, Subscription } from 'rxjs';
+import { pairwise, switchMap, takeUntil, map } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-v-forms-container',
-  templateUrl: './v-forms-container.component.html',
-  styleUrls: ['./v-forms-container.component.css']
+  selector: 'app-drawing-board',
+  template: `<canvas #canvas (mousedown)="mouseDown($event)"></canvas>`,
+  styles: [
+    `
+      canvas {
+        border: 1px solid #000;
+      }
+    `
+  ]
 })
-export class VFormsContainerComponent implements AfterViewInit {
+export class DrawingBoardComponent implements AfterViewInit, OnDestroy {
   @Input() width = 816;
   @Input() height = 1056;
-  pdfSrc = "../../../../../../../assets/files/BBY Contract 1 Student.pdf";
   canvasEl: HTMLCanvasElement;
-  @ViewChild('viewer') canvas: ElementRef;
+  @ViewChild('canvas') canvas: ElementRef;
   cx: CanvasRenderingContext2D;
   drawingSubscription: Subscription;
   constructor() {}
   lastPos;
-  finalPos;
   ngAfterViewInit() {
     // get the context
     this.canvasEl = this.canvas.nativeElement;
@@ -38,25 +48,11 @@ export class VFormsContainerComponent implements AfterViewInit {
   }
   mouseDown(e){
     const rect = this.canvasEl.getBoundingClientRect();
-    this.lastPos ={
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top
-    }
+     this.lastPos ={
+       x: e.clientX - rect.left,
+       y: e.clientY - rect.top
+     }
   }
-  mouseUp(e){
-    const rect = this.canvasEl.getBoundingClientRect();
-    this.finalPos ={
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top
-    }
-    console.log('position:' , this.lastPos, this.finalPos);
-  }
-
-  loadComplete(pdf: PDFDocumentProxy){
-    // console.log(pdf);
-  }
-
-
 
   captureEvents(canvasEl: HTMLCanvasElement) {
     // this will capture all mousedown events from teh canvas element
@@ -79,7 +75,7 @@ export class VFormsContainerComponent implements AfterViewInit {
         })
       )
       .subscribe((res: [MouseEvent, MouseEvent]) => {
-        // console.log(res[0].type, res[1].type);
+       console.log(res[0].type, res[1].type);
         const rect = canvasEl.getBoundingClientRect();
 
         // previous and current position with the offset
@@ -106,17 +102,17 @@ export class VFormsContainerComponent implements AfterViewInit {
     if (!this.cx) {
       return;
     }
-    this.cx.clearRect(0,0,this.width, this.height)
+     this.cx.clearRect(0,0,this.width, this.height)
     // start our drawing path
     this.cx.beginPath();
 
     // we're drawing lines so we need a previous position
     if (prevPos) {
       // sets the start point
-      //  this.cx.moveTo(prevPos.x, prevPos.y); // from
+    //  this.cx.moveTo(prevPos.x, prevPos.y); // from
       // draws a line from the start pos until the current position
-      // this.cx.lineTo(currentPos.x, currentPos.y);
-      this.cx.rect(this.lastPos.x, this.lastPos.y, currentPos.x-this.lastPos.x,currentPos.y-this.lastPos.y);
+     // this.cx.lineTo(currentPos.x, currentPos.y);
+    this.cx.rect(this.lastPos.x, this.lastPos.y, currentPos.x-this.lastPos.x,currentPos.y-this.lastPos.y);
       // strokes the current path with the styles we set earlier
       this.cx.stroke();
     }

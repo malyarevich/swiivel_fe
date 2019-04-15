@@ -1,15 +1,17 @@
-<!--<div class="canvas-wrap">-->
+<div class="canvas-wrap">
 <!--<a [href]="pdfSrc" >Link</a>-->
-<!--  <canvas-->
-<!--    #viewer-->
-<!--    (mousedown)="mouseDown($event)"-->
+  <canvas
+    id="layer2"
+    #viewer
+    (mousedown)="mouseDown($event)"
+    (mouseup)="mouseUp($event)">
 <!--    (mouseup)="mouseUp($event)"-->
 <!--    (mousemove)="mouseMove($event)"-->
 <!--  >-->
-<!--  </canvas>-->
+  </canvas>
 <!--  <div class="test-c"></div>-->
 
-<!--<pdf-viewer [src]="pdfSrc"></pdf-viewer>-->
+<pdf-viewer id="layer1"[src]="pdfSrc" [render-text-mode]="0" (after-load-complete)="loadComplete($event)"></pdf-viewer>
 <!--<canvas #page1 id="page1"></canvas>-->
-<!--</div>-->
+</div>
 
