@@ -1,0 +1,20 @@
+<div
+  class="app-input"
+>
+  <label
+    for={{id}}
+    class="app-input-label"
+  >
+    Form Name
+  </label>
+  <input
+    type="text"
+    class="app-input form-control"
+    id={{id}}
+    placeholder="Form Name"
+    [ngModel]="value"
+  >
+  <div class="invalid-feedback">
+    Form name is required and contain min 3 and max 50 symbols
+  </div>
+</div>

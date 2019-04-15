@@ -1,0 +1,33 @@
+<div class="create-payer-account">
+  <div *ngIf="showModal">
+    <app-modal
+      title="Create Payer Account"
+      (closeModal)="onCloseModal($event)"
+    >
+      <div class="create-payer-account-members">
+        <app-select-multi-search
+          labelTitle="Members"
+          [items]="companies"
+          bindLabel="name"
+        >
+        </app-select-multi-search>
+      </div>
+      <div class="create-payer-account-label">
+        Account
+      </div>
+      <div class="app-form-row">
+        <div class="create-payer-account-account-name">
+          <app-input>
+
+          </app-input>
+        </div>
+        <app-select
+          class="create-payer-account-account-type"
+          labelTitle="Type"
+          [items]="types"
+        >
+        </app-select>
+      </div>
+    </app-modal>
+  </div>
+</div>
