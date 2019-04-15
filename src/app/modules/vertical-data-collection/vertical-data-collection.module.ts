@@ -62,6 +62,7 @@ import { VPublishSettingsComponent } from './v-form-constructor/v-form-publish-s
 import { VAutomationComponent } from './v-form-constructor/v-form-publish-settings/v-automation/v-automation.component';
 import { VRedirectPagesComponent } from './v-form-constructor/v-form-publish-settings/v-redirect-pages/v-redirect-pages.component';
 import { VPublishMenuComponent } from './v-form-constructor/v-form-publish-settings/v-publish-menu/v-publish-menu.component';
+import {PdfViewerModule} from "ng2-pdf-viewer";
 
 const routes: Routes = [
   {
@@ -163,6 +164,7 @@ const routes: Routes = [
     DragDropModule,
     ReactiveFormsModule,
     GeneralDirectivesModule,
+    PdfViewerModule
   ],
   providers: [VFormService, VFieldsService, FormUtils, VFieldsService],
   entryComponents: [entryComponents]
