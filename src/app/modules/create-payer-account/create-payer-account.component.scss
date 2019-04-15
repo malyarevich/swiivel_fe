@@ -1,0 +1,21 @@
+.create-payer-account {
+  .create-payer-account-members {
+    margin: 0 0 20px;
+  }
+
+  .create-payer-account-label {
+    color: #151515;
+    font: 800 12px/15px 'NunitoSans-Bold';
+    letter-spacing: 0.2px;
+    text-transform: uppercase;
+    margin: 0 0 12px;
+  }
+
+  .create-payer-account-account-name {
+    width: 100%;
+  }
+
+  .create-payer-account-account-type {
+    width: 70%;
+  }
+}

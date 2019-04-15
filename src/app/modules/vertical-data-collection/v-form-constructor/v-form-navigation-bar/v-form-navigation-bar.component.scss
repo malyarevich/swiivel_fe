@@ -1,3 +1,5 @@
+@import '../../../../../styles/variables/colors';
+
 .body_test{
   min-height: 100vh;
   background-color: #F3F2F3;
@@ -24,16 +26,20 @@
 }
 .border-bottom{
   border-bottom-width: 4px!important;
-  border-bottom-color: #4350A2!important;
+  border-bottom-color: $element-base-color!important;
 }
 
 .navbar{
   padding: 0 1rem;
 }
 .nav-link.active{
-  color: #4350A2!important;
+  color: $element-base-color!important;
   font-weight: bold;
 }
 .nav-link{
 font-size: 12px;
+}
+
+.app-general-info-valid {
+  color: #3CA476 !important;
 }

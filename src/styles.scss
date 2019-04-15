@@ -2,6 +2,7 @@
 @import "styles/float-label.min.css";
 @import "styles/app/index";
 @import "~@fortawesome/fontawesome-free/css/all.css";
+@import "styles/variables/colors";
 //Lato fonts
 @font-face {
   font-family: "latoregular";
@@ -81,8 +82,12 @@
 
 
 * {
-  font-family: "NunitoSans-Regular";
+  font-family: "NunitoSans-Regular", "Helvetica";
   font-size: 12px;
+}
+
+.app-base-element-color {
+  color: $element-base-color;
 }
 
 @media (min-width:1281px) {

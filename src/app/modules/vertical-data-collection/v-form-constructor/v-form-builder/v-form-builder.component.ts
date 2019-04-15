@@ -15,6 +15,7 @@ import {Form} from "../../model/form.model";
 import {FormPayment, TYPE_NAME} from "./v-form-payment/model/form-payment.model";
 import {ConsentInfo, consentItemDefault} from "./v-consent/model/consent.model";
 import {DocumentSideBar, DocumentsModel} from "./v-documents-forms/model/documents.model";
+import {GeneralInfoIsValidService} from "../../services/general-info-is-valid.service";
 
 @Component({
   selector: 'app-v-form-table',
@@ -187,7 +188,8 @@ export class VFormBuilderComponent implements OnInit {
               private fieldsService: VFieldsService,
               private router: Router,
               private route: ActivatedRoute,
-              private location: Location) {
+              private location: Location,
+              private generalInfoIsValidService: GeneralInfoIsValidService) {
 
   }
 
@@ -262,6 +264,7 @@ export class VFormBuilderComponent implements OnInit {
 
   formInit(): void {
     if (this.formId) {
+
       this.formService.getOneForm(this.formId).subscribe(
         (form: Form) => {
           if (!isEmpty(form)) {
@@ -276,9 +279,12 @@ export class VFormBuilderComponent implements OnInit {
           }
         },
         (error) => console.log(error, 'error'),
-        () => {if(!isEmpty(this.fields)){
-          this.initFormFieldsToSideBar(this.sideBarFields, this.fields);
-        }}
+        () => {
+          this.generalInfoIsValidService.setIsValid(true);
+          if (!isEmpty(this.fields)) {
+            this.initFormFieldsToSideBar(this.sideBarFields, this.fields);
+          }
+        }
       );
     }
   }

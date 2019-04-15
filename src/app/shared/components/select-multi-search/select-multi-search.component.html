@@ -1,0 +1,36 @@
+<div
+  class="app-select-multi-search"
+>
+  <label
+    class="app-select-multi-search-label"
+    [for]="id"
+  >
+    {{labelTitle}}
+  </label>
+  <ng-select
+    [ngClass]="{'app-select-multi-search-clear-btn': !showClearBtn}"
+    [items]="items"
+    labelForId={{id}}
+    bindLabel={{bindLabel}}
+    bindValue={{bindValue}}
+    [(ngModel)]="defaultItemIndex"
+    multiple="true"
+  >
+    <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+      <div class="ng-value" *ngFor="let item of items">
+        <span class="ng-value-label">
+          <div
+            class="ng-value-label-image-container"
+            [ngStyle]="{'background-image': item.avatar ? 'url(' + item.avatar + ')' : '' }">
+          </div>
+
+          {{item.name}}
+        </span>
+        <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
+      </div>
+      <!--<div class="ng-value" *ngIf="items.length > 2" >-->
+        <!--<span class="ng-value-label">{{items.length - 2}} more...</span>-->
+      <!--</div>-->
+    </ng-template>
+  </ng-select>
+</div>

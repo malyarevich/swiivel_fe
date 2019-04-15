@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {FormUtils} from "../../utils/form.utils";
 import {Form, FormSql} from "../../model/form.model";
@@ -7,6 +7,7 @@ import {VFormService} from "../../v-form.service";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import { NgbDateParserFormatter} from "@ng-bootstrap/ng-bootstrap";
 import {requireCheckboxesToBeCheckedValidator} from "../../../../utils/validators/require-checkboxes-to-be-checked.validator";
+import {GeneralInfoIsValidService} from "../../services/general-info-is-valid.service";
 
 
 @Component({
@@ -14,7 +15,8 @@ import {requireCheckboxesToBeCheckedValidator} from "../../../../utils/validator
   templateUrl: './v-form-general-information.component.html',
   styleUrls: ['./v-form-general-information.component.css']
 })
-export class VFormGeneralInformationComponent implements OnInit {
+export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
+    @ViewChild('generalInfo') generalInfo: ElementRef;
     @ViewChild('basicInfo') basicInfo: ElementRef;
     @ViewChild('period') period: ElementRef;
     @ViewChild('formDates') formDates: ElementRef;
@@ -34,7 +36,8 @@ export class VFormGeneralInformationComponent implements OnInit {
               private formUtils: FormUtils,
               private formService: VFormService,
               private fb: FormBuilder,
-              private parserFormatter: NgbDateParserFormatter) { }
+              private parserFormatter: NgbDateParserFormatter,
+              private generalInfoIsValidService: GeneralInfoIsValidService) { }
 
   ngOnInit() {
     this.activatedRoute.parent.url.subscribe((urlPath) => {
@@ -140,6 +143,7 @@ export class VFormGeneralInformationComponent implements OnInit {
       );
     }
 
+    this.onFormStatusChanges();
 
   }
 
@@ -159,6 +163,26 @@ export class VFormGeneralInformationComponent implements OnInit {
     return this.generalInfoForm.controls[groupName].touched
       && this.generalInfoForm.controls[groupName].errors
       && this.generalInfoForm.controls[groupName].errors.requireOneCheckboxToBeChecked;
+  }
+
+  onFormStatusChanges(): void {
+    this.generalInfoForm.statusChanges.subscribe(val => {
+      switch (val) {
+        case "VALID":
+          this.generalInfoIsValidService.setIsValid(true);
+          break;
+        case "INVALID":
+          this.generalInfoIsValidService.setIsValid(false);
+          break;
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.router.routerState.snapshot.url.indexOf('form-builder') > -1 ||
+      this.router.routerState.snapshot.url.indexOf('publish-settings') > -1) {
+      this.onSubmit();
+    }
   }
 
 }
