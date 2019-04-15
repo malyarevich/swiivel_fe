@@ -3,14 +3,14 @@
 >
   <label
     class="app-select-multi-search-label"
-    [for]="id"
+    [for]="idElement"
   >
     {{labelTitle}}
   </label>
   <ng-select
     [ngClass]="{'app-select-multi-search-clear-btn': !showClearBtn}"
     [items]="items"
-    labelForId={{id}}
+    labelForId={{idElement}}
     bindLabel={{bindLabel}}
     bindValue={{bindValue}}
     [(ngModel)]="defaultItemIndex"
