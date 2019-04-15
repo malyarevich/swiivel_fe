@@ -5,7 +5,7 @@ import {EventEmitter, Injectable} from '@angular/core';
 })
 export class GeneralInfoIsValidService {
 
-  private isValid:boolean = false;
+  private isValid:boolean;
   onIsValid: EventEmitter<boolean> = new EventEmitter();
 
   setIsValid(value: boolean) {

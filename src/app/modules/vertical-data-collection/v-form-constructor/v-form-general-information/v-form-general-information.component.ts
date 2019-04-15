@@ -143,7 +143,7 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
       );
     }
 
-    this.onChanges();
+    this.onFormStatusChanges();
 
   }
 
@@ -165,7 +165,7 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
       && this.generalInfoForm.controls[groupName].errors.requireOneCheckboxToBeChecked;
   }
 
-  onChanges(): void {
+  onFormStatusChanges(): void {
     this.generalInfoForm.statusChanges.subscribe(val => {
       switch (val) {
         case "VALID":
@@ -179,7 +179,10 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-
+    if (this.router.routerState.snapshot.url.indexOf('form-builder') > -1 ||
+      this.router.routerState.snapshot.url.indexOf('publish-settings') > -1) {
+      this.onSubmit();
+    }
   }
 
 }

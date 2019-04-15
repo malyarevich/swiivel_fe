@@ -9,7 +9,7 @@ import {GeneralInfoIsValidService} from "../../services/general-info-is-valid.se
 })
 export class VFormNavigationBarComponent implements OnInit {
 
-  isGeneralInfoValid: boolean = false;
+  isGeneralInfoValid: boolean;
 
   constructor(private generalInfoIsValidService: GeneralInfoIsValidService) {
     this.generalInfoIsValidService.onIsValid.subscribe(val => this.isGeneralInfoValid = val)
