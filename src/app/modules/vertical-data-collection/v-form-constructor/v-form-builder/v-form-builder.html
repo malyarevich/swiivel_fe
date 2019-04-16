@@ -562,7 +562,7 @@
       <!--  documents-forms-->
       <!--      <div class="app-section-wrapper" [hidden]="!isDocumentsForms.isActiveAll">-->
       <app-v-documents-forms
-        [hidden]="!isDocumentsForms.isActiveAll"
+        *ngIf="isDocumentsForms.isActiveAll"
         [isDocumentsForms]="isDocumentsForms"
         [documents]="documents"
         [attachments]="attachments"
