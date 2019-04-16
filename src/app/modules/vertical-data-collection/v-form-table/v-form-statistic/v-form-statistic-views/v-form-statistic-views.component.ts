@@ -1,6 +1,7 @@
 import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Chart} from 'chart.js';
 import {FormsStatsService} from "../../../services/forms-stats.service";
+import {FormsViewsRate} from "../../../model/forms-stats.models";
 
 @Component({
   selector: 'app-v-form-statistic-views',
@@ -14,17 +15,18 @@ export class VFormStatisticViewsComponent implements OnInit, AfterViewInit {
   chartTotal: Chart = {};
   chartMonth: Chart = {};
 
-  viewsRate;
+  viewsRate: FormsViewsRate;
 
   constructor(private formsStatsService: FormsStatsService) {
   }
 
   ngOnInit() {
-    this.formsStatsService.getViewsRate().subscribe(val => this.viewsRate = val)
+    this.formsStatsService.getViewsRate().subscribe((val: FormsViewsRate) => {
+      this.viewsRate = val;
+    })
   }
 
   ngAfterViewInit() {
-    console.log(this.viewsRate);
     this.chartTotalViewsInit();
     this.chartLastMonthInit();
   }
