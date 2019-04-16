@@ -1,0 +1,18 @@
+<div
+  class="app-modal-wrapper"
+>
+  <div class="app-modal">
+    <div
+      class="app-modal-close"
+      (click)="onClose()"
+    >
+      ×
+    </div>
+    <div class="app-modal-title">
+      {{title}}
+    </div>
+    <div>
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>

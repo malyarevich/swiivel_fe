@@ -1,0 +1,39 @@
+.app-modal-wrapper {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  opacity: 1;
+}
+
+.app-modal {
+  margin: 70px auto;
+  padding: 15px;
+  background: #fff;
+  border-radius: 5px;
+  width: 60%;
+  position: relative;
+}
+
+.app-modal-close {
+  cursor: pointer;
+  font-size: 27px;
+  line-height: 16px;
+  color: #000;
+  position: absolute;
+  right: 15px;
+  top: 15px;
+
+  &:hover {
+    color: #6c757d;
+  }
+}
+
+.app-modal-title {
+  color: #151515;
+  font: 17px/20px 'NunitoSans-Bold';
+  text-align: center;
+  margin: 0 0 15px;
+}

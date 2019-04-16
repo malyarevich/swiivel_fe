@@ -1,20 +1,15 @@
 <div
   class="app-select"
+  id={{id}}
 >
-  <label
-    class="app-select-label"
-    [for]="id"
-  >
-    {{labelTitle}}
-  </label>
   <ng-select
     [ngClass]="{'app-select-remove-clear-btn': !showClearBtn}"
     [items]="items"
-    labelForId={{id}}
     bindLabel={{bindLabel}}
     bindValue={{bindValue}}
     [(ngModel)]="defaultItemIndex"
     [searchable]="searchable"
+    placeholder={{labelTitle}}
   >
   </ng-select>
 </div>

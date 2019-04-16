@@ -46,7 +46,7 @@ export class VFormBuilderComponent implements OnInit {
     isActiveAll: false,
     isDocuments: true,
     isAddDocument: false,
-    isForms: false,
+    isForms: true,
     isAddForms: false
   };
   isTuitionContract: boolean = false;
