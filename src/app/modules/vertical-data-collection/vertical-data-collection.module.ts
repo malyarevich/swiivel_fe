@@ -65,6 +65,7 @@ import { VPublishMenuComponent } from './v-form-constructor/v-form-publish-setti
 import {PdfViewerModule} from "ng2-pdf-viewer";
 import { VFormStatisticComponent } from './v-form-table/v-form-statistic/v-form-statistic.component';
 import { VFormStatisticViewsComponent } from './v-form-table/v-form-statistic/v-form-statistic-views/v-form-statistic-views.component';
+import { VFormStatisticInvitesComponent } from './v-form-table/v-form-statistic/v-form-statistic-invites/v-form-statistic-invites.component';
 
 const routes: Routes = [
   {
@@ -158,6 +159,7 @@ const routes: Routes = [
     VPublishMenuComponent,
     VFormStatisticComponent,
     VFormStatisticViewsComponent,
+    VFormStatisticInvitesComponent,
   ],
   imports: [
     NgbModule,

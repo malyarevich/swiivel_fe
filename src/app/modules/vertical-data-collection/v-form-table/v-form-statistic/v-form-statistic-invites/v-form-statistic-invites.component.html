@@ -1,0 +1,25 @@
+<div class="app-statistic-section p-3 pb-4">
+
+  <div class="row no-gutters mb-1">
+    <div class="col">
+      <p class="font-weight-bold mb-0">INVITES / SENT ACCOUNT TO</p>
+    </div>
+    <div class="col text-right">
+
+      <div ngbDropdown placement="bottom-right" class="d-inline-block">
+        <button class="btn app-statistic-dropdown p-0" id="dropdownBasic1" ngbDropdownToggle>{{periodsName[period]}}</button>
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+          <button ngbDropdownItem (click)="setPeriod('month')">{{periodsName.month}}</button>
+          <button ngbDropdownItem (click)="setPeriod('week')">{{periodsName.week}}</button>
+        </div>
+      </div>
+      <i class="fas fa-ellipsis-v app-statistic-ellipsis ml-3"></i>
+    </div>
+  </div>
+
+  <div class="row no-gutters">
+
+
+  </div>
+
+</div>

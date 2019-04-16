@@ -1,4 +1,5 @@
 .app-statistic-section {
+  height: 100%;
   background-color: white;
 }
 
@@ -15,4 +16,9 @@
 .app-statistic-ellipsis {
   color: #B6B6B6;
   cursor: pointer;
+}
+
+.app-statistic-dropdown {
+  color: #B6B6B6!important;
+  font-size: 0.8em;
 }
