@@ -2,6 +2,7 @@ import {Component, OnInit, ViewChild, ElementRef, Input, AfterViewInit} from '@a
 import {fromEvent, Subscription} from "rxjs";
 import {pairwise, switchMap, takeUntil} from "rxjs/operators";
 import {PDFDocumentProxy} from 'ng2-pdf-viewer/src/app/pdf-viewer/pdf-viewer.module';
+import {FormsDivModel} from "../model/forms.model";
 
 @Component({
   selector: 'app-v-forms-container',
@@ -16,6 +17,15 @@ export class VFormsContainerComponent implements AfterViewInit {
   @ViewChild('viewer') canvas: ElementRef;
   cx: CanvasRenderingContext2D;
   drawingSubscription: Subscription;
+  divs: FormsDivModel[] = [
+    {
+      left: 42.75,
+      top: 476,
+      width: 320,
+      height: 23,
+      isEdit:true
+    }
+  ];
   constructor() {}
   lastPos;
   finalPos;
@@ -37,6 +47,15 @@ export class VFormsContainerComponent implements AfterViewInit {
     // we'll implement this method to start capturing mouse events
     this.captureEvents(this.canvasEl);
   }
+  styleObject(div:FormsDivModel){
+    return {
+      'top': div.top +'px',
+      'left': div.left +'px',
+      'width': div.width +'px',
+      'height': div.height +'px'
+    }
+  }
+
   mouseDown(e){
     const rect = this.canvasEl.getBoundingClientRect();
     this.lastPos ={
@@ -50,14 +69,24 @@ export class VFormsContainerComponent implements AfterViewInit {
       x: e.clientX - rect.left,
       y: e.clientY - rect.top
     };
-    console.log('position:' , this.lastPos, this.finalPos);
+    const div: FormsDivModel={
+      top: this.lastPos.y,
+      left: this.lastPos.x,
+      width: this.finalPos.x-this.lastPos.x,
+      height: this.finalPos.y-this.lastPos.y,
+      isEdit: true
+    };
+    this.divs.push(div);
+   // console.log('position:' , this.lastPos, this.finalPos);
   }
 
   loadComplete(pdf: PDFDocumentProxy){
     // console.log(pdf);
   }
 
-
+  pickDiv(){
+    console.log('I am here!')
+  }
 
   captureEvents(canvasEl: HTMLCanvasElement) {
     // this will capture all mousedown events from teh canvas element

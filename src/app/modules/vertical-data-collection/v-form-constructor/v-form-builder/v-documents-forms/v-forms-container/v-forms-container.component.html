@@ -1,17 +1,37 @@
 <div class="canvas-wrap">
-<!--<a [href]="pdfSrc" >Link</a>-->
-  <canvas
-    id="layer2"
-    #viewer
-    (mousedown)="mouseDown($event)"
-    (mouseup)="mouseUp($event)">
-<!--    (mouseup)="mouseUp($event)"-->
-<!--    (mousemove)="mouseMove($event)"-->
-<!--  >-->
-  </canvas>
-<!--  <div class="test-c"></div>-->
 
-<pdf-viewer id="layer1"[src]="pdfSrc" [render-text-mode]="0" (after-load-complete)="loadComplete($event)"></pdf-viewer>
-<!--<canvas #page1 id="page1"></canvas>-->
+  <div id="layer1">
+
+    <canvas
+      #viewer
+      (mousedown)="mouseDown($event)"
+      (mouseup)="mouseUp($event)">
+    </canvas>
+
+  </div>
+
+  <div class="test-c">
+  <div
+    [ngStyle]="styleObject(div)"
+    *ngFor="let div of divs"
+    (mouseover)="pickDiv()"
+  class="div-inside"
+  >
+
+  </div>
+  </div>
+
+  <div id="layer3">
+
+    <pdf-viewer
+
+      [src]="pdfSrc"
+      [render-text-mode]="0"
+      (after-load-complete)="loadComplete($event)"
+    >
+    </pdf-viewer>
+
+  </div>
+
 </div>
 
