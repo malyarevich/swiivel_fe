@@ -7,7 +7,8 @@
     <div class="col text-right">
 
       <div ngbDropdown placement="bottom-right" class="d-inline-block">
-        <button class="btn app-statistic-dropdown p-0" id="dropdownBasic1" ngbDropdownToggle>{{periodsName[period]}}</button>
+        <button class="btn app-statistic-dropdown p-0" id="dropdownBasic1" ngbDropdownToggle>{{periodsName[period]}}
+        </button>
         <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
           <button ngbDropdownItem (click)="setPeriod('month')">{{periodsName.month}}</button>
           <button ngbDropdownItem (click)="setPeriod('week')">{{periodsName.week}}</button>
@@ -17,9 +18,11 @@
     </div>
   </div>
 
-  <div class="row no-gutters">
-
-
+  <div class="row no-gutters mt-3">
+    <div class="col-12">
+      <p class="app-statistic-info-text mb-1">Invited</p>
+      <app-invites-progress-bar [value]="20" [backgroundColor]="'#F8BC45'"></app-invites-progress-bar>
+    </div>
   </div>
 
 </div>

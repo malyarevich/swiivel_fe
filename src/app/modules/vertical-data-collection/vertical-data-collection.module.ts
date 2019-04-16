@@ -66,6 +66,7 @@ import {PdfViewerModule} from "ng2-pdf-viewer";
 import { VFormStatisticComponent } from './v-form-table/v-form-statistic/v-form-statistic.component';
 import { VFormStatisticViewsComponent } from './v-form-table/v-form-statistic/v-form-statistic-views/v-form-statistic-views.component';
 import { VFormStatisticInvitesComponent } from './v-form-table/v-form-statistic/v-form-statistic-invites/v-form-statistic-invites.component';
+import { InvitesProgressBarComponent } from './v-form-table/v-form-statistic/v-form-statistic-invites/invites-progress-bar/invites-progress-bar.component';
 
 const routes: Routes = [
   {
@@ -160,6 +161,7 @@ const routes: Routes = [
     VFormStatisticComponent,
     VFormStatisticViewsComponent,
     VFormStatisticInvitesComponent,
+    InvitesProgressBarComponent,
   ],
   imports: [
     NgbModule,
