@@ -62,6 +62,8 @@ import { VPublishSettingsComponent } from './v-form-constructor/v-form-publish-s
 import { VAutomationComponent } from './v-form-constructor/v-form-publish-settings/v-automation/v-automation.component';
 import { VRedirectPagesComponent } from './v-form-constructor/v-form-publish-settings/v-redirect-pages/v-redirect-pages.component';
 import { VPublishMenuComponent } from './v-form-constructor/v-form-publish-settings/v-publish-menu/v-publish-menu.component';
+import { VFormStatisticComponent } from './v-form-table/v-form-statistic/v-form-statistic.component';
+import { VFormStatisticViewsComponent } from './v-form-table/v-form-statistic/v-form-statistic-views/v-form-statistic-views.component';
 
 const routes: Routes = [
   {
@@ -153,6 +155,8 @@ const routes: Routes = [
     VAutomationComponent,
     VRedirectPagesComponent,
     VPublishMenuComponent,
+    VFormStatisticComponent,
+    VFormStatisticViewsComponent,
   ],
   imports: [
     NgbModule,
