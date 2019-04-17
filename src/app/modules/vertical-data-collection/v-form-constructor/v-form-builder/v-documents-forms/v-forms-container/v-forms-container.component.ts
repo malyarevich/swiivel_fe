@@ -71,11 +71,14 @@ export class VFormsContainerComponent implements AfterViewInit, OnDestroy {
       x: e.clientX - rect.left,
       y: e.clientY - rect.top
     };
+    console.log(this.lastPos, this.finalPos);
     const div: FormsDivModel={
-      top: this.lastPos.y,
-      left: this.lastPos.x,
-      width: this.finalPos.x-this.lastPos.x,
-      height: this.finalPos.y-this.lastPos.y,
+      // top: this.lastPos.y<this.finalPos.y?this.lastPos.y:this.finalPos.y,
+      top: Math.min(this.lastPos.y,this.finalPos.y),
+      // left: this.lastPos.x<this.finalPos.x?this.lastPos.x:this.finalPos.x,
+      left: Math.min(this.lastPos.x,this.finalPos.x),
+      width: Math.abs(this.finalPos.x-this.lastPos.x),
+      height: Math.abs(this.finalPos.y-this.lastPos.y),
       isEdit: true
     };
     if(div.height>5&&div.width>5) this.divs.push(div);

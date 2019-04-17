@@ -44,8 +44,8 @@ export class VFormBuilderComponent implements OnInit {
   isFormsFields: boolean = false;
   isConsent: boolean = false;
   isDocumentsForms: DocumentSideBar = {
-    isActiveAll: false,
-    isDocuments: true,
+    isActiveAll: true,
+    isDocuments: false,
     isAddDocument: false,
     isForms: true,
     isAddForms: false
@@ -175,6 +175,8 @@ export class VFormBuilderComponent implements OnInit {
     this.isDocumentsForms.isAddDocument=false;
   }
   removeDocument(id: string):void{
+    this.documents = this.documents.filter(doc=>doc.id!=id);
+
   }
 
   addNewFormsPDF(name: string):void{
