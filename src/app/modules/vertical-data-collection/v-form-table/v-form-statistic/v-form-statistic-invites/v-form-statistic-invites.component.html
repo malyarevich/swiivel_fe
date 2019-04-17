@@ -12,6 +12,7 @@
         <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
           <button ngbDropdownItem (click)="setPeriod('month')">{{periodsName.month}}</button>
           <button ngbDropdownItem (click)="setPeriod('week')">{{periodsName.week}}</button>
+          <button ngbDropdownItem (click)="setPeriod('today')">{{periodsName.today}}</button>
         </div>
       </div>
       <i class="fas fa-ellipsis-v app-statistic-ellipsis ml-3"></i>
@@ -21,7 +22,14 @@
   <div class="row no-gutters mt-3">
     <div class="col-12">
       <p class="app-statistic-info-text mb-1">Invited</p>
-      <app-invites-progress-bar [value]="20" [backgroundColor]="'#F8BC45'"></app-invites-progress-bar>
+      <app-invites-progress-bar [value]="invitesValue" [total]="invitesRate?.invites.total" [backgroundColor]="'#F8BC45'"></app-invites-progress-bar>
+    </div>
+  </div>
+
+  <div class="row no-gutters mt-3">
+    <div class="col-12">
+      <p class="app-statistic-info-text mb-1">Sent Account To</p>
+      <app-invites-progress-bar [value]="submissionValue" [total]="invitesRate?.submissions.total" [backgroundColor]="'#4350A2'"></app-invites-progress-bar>
     </div>
   </div>
 

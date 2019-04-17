@@ -11,7 +11,7 @@ export class InvitesProgressBarComponent implements OnInit {
   @Input() backgroundColor: string = '';
 
   get progressWidth(): number {
-    return;
+    return (this.value * 100)/this.total;
   }
 
   constructor() { }

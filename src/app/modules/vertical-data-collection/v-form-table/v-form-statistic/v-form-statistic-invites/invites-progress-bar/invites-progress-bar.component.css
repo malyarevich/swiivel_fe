@@ -13,5 +13,6 @@
 .app-progress-bar-value {
     position: absolute;
     bottom: 70%;
-    font-size: 0.8em;
+    font-family: 'NunitoSans-ExtraBold';
+    font-size: 0.7em;
 }
