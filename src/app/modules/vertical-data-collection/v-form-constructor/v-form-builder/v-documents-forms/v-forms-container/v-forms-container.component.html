@@ -223,15 +223,17 @@
       </div>
 
       <div class="test-c">
-        <div *ngFor="let div of divs">
+        <div *ngFor="let div of divs" >
+          <p class="div-inside-wrap">sdasda</p>
           <div
             [ngStyle]="styleObject(div)"
-
-            class="div-inside"
+            [ngClass]="div.isEdit?'div-inside-active':'div-inside'"
+            class=""
             ngbDropdown
             placement="bottom-right"
             autoClose="outside"
             open="true"
+            (click)="div.isEdit=!div.isEdit"
           >
             <span id="dropdownBasic1" ngbDropdownToggle><i class="fas fa-pen fa-xs"></i></span>
             <div ngbDropdownMenu aria-labelledby="dropdownBasic1">

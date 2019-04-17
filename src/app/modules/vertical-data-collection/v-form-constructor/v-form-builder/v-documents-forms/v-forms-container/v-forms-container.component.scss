@@ -19,11 +19,23 @@ canvas {
   height: 1056px;
 
 }
+.div-inside-wrap{
+  z-index: 9999;
+  position: absolute;
+}
+
 .div-inside{
   background-color: white;
   position: absolute;
   z-index: 9999;
   font-size: 0.5rem!important;
+}
+.div-inside-active{
+  border: 2px solid #4350A2;
+  opacity: 0.8;
+  background-color: #EBEEFF;
+  position: absolute;
+  z-index: 9999;
 }
 
 .dropdown-toggle::after {
