@@ -69,6 +69,12 @@ import { VFormStatisticInvitesComponent } from './v-form-table/v-form-statistic/
 import { InvitesProgressBarComponent } from './v-form-table/v-form-statistic/v-form-statistic-invites/invites-progress-bar/invites-progress-bar.component';
 import { VFormStatisticSubmissionsComponent } from './v-form-table/v-form-statistic/v-form-statistic-submissions/v-form-statistic-submissions.component';
 import { VFormInfoComponent } from './v-form-info/v-form-info.component';
+import { VFormInfoHeaderComponent } from './v-form-info/v-form-info-header/v-form-info-header.component';
+import { VFormInfoStatsComponent } from './v-form-info/v-form-info-stats/v-form-info-stats.component';
+import { VFormInfoGeneralComponent } from './v-form-info/v-form-info-general/v-form-info-general.component';
+import { VFormInfoTableNavComponent } from './v-form-info/v-form-info-table-nav/v-form-info-table-nav.component';
+import { VFormInfoTableComponent } from './v-form-info/v-form-info-table/v-form-info-table.component';
+import { VFormInfoNavComponent } from './v-form-info/v-form-info-nav/v-form-info-nav.component';
 
 const routes: Routes = [
   {
@@ -170,6 +176,12 @@ const routes: Routes = [
     InvitesProgressBarComponent,
     VFormStatisticSubmissionsComponent,
     VFormInfoComponent,
+    VFormInfoHeaderComponent,
+    VFormInfoStatsComponent,
+    VFormInfoGeneralComponent,
+    VFormInfoTableNavComponent,
+    VFormInfoTableComponent,
+    VFormInfoNavComponent,
   ],
   imports: [
     NgbModule,
