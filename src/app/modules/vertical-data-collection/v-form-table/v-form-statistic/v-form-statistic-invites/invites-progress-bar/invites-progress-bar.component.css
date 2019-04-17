@@ -1,0 +1,18 @@
+.app-progress-bar-wrapper {
+    width: 100%;
+    height: 0.8em;
+    background-color: #F3F3F3;
+    border-radius: 8px;
+}
+.app-progress-bar {
+    position: relative;
+    height: 100%;
+    border-radius: 8px;
+}
+
+.app-progress-bar-value {
+    position: absolute;
+    bottom: 70%;
+    font-family: 'NunitoSans-ExtraBold';
+    font-size: 0.7em;
+}

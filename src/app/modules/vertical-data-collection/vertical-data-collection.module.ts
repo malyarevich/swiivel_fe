@@ -63,6 +63,11 @@ import { VAutomationComponent } from './v-form-constructor/v-form-publish-settin
 import { VRedirectPagesComponent } from './v-form-constructor/v-form-publish-settings/v-redirect-pages/v-redirect-pages.component';
 import { VPublishMenuComponent } from './v-form-constructor/v-form-publish-settings/v-publish-menu/v-publish-menu.component';
 import {PdfViewerModule} from "ng2-pdf-viewer";
+import { VFormStatisticComponent } from './v-form-table/v-form-statistic/v-form-statistic.component';
+import { VFormStatisticViewsComponent } from './v-form-table/v-form-statistic/v-form-statistic-views/v-form-statistic-views.component';
+import { VFormStatisticInvitesComponent } from './v-form-table/v-form-statistic/v-form-statistic-invites/v-form-statistic-invites.component';
+import { InvitesProgressBarComponent } from './v-form-table/v-form-statistic/v-form-statistic-invites/invites-progress-bar/invites-progress-bar.component';
+import { VFormStatisticSubmissionsComponent } from './v-form-table/v-form-statistic/v-form-statistic-submissions/v-form-statistic-submissions.component';
 
 const routes: Routes = [
   {
@@ -154,6 +159,11 @@ const routes: Routes = [
     VAutomationComponent,
     VRedirectPagesComponent,
     VPublishMenuComponent,
+    VFormStatisticComponent,
+    VFormStatisticViewsComponent,
+    VFormStatisticInvitesComponent,
+    InvitesProgressBarComponent,
+    VFormStatisticSubmissionsComponent,
   ],
   imports: [
     NgbModule,

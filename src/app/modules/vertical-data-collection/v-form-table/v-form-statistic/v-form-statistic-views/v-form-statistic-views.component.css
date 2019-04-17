@@ -1,0 +1,21 @@
+.app-chart-section {
+    position: relative;
+}
+
+.app-chart-total-percent {
+    position: absolute;
+    left: 29%;
+    top: 42%;
+    color: #FFB915;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.app-chart-month-percent {
+    position: absolute;
+    left: 29%;
+    top: 42%;
+    color: #4051A8;
+    font-size: 1.2em;
+    font-weight: bold;
+}
