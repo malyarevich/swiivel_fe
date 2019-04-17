@@ -68,6 +68,7 @@ import { VFormStatisticViewsComponent } from './v-form-table/v-form-statistic/v-
 import { VFormStatisticInvitesComponent } from './v-form-table/v-form-statistic/v-form-statistic-invites/v-form-statistic-invites.component';
 import { InvitesProgressBarComponent } from './v-form-table/v-form-statistic/v-form-statistic-invites/invites-progress-bar/invites-progress-bar.component';
 import { VFormStatisticSubmissionsComponent } from './v-form-table/v-form-statistic/v-form-statistic-submissions/v-form-statistic-submissions.component';
+import { VFormInfoComponent } from './v-form-info/v-form-info.component';
 
 const routes: Routes = [
   {
@@ -91,6 +92,10 @@ const routes: Routes = [
       {
         path: 'onlineform/:id',
         component: VFormViewComponent
+      },
+      {
+        path: 'v-form-info/:id',
+        component: VFormInfoComponent
       }
     ]
   }
@@ -164,6 +169,7 @@ const routes: Routes = [
     VFormStatisticInvitesComponent,
     InvitesProgressBarComponent,
     VFormStatisticSubmissionsComponent,
+    VFormInfoComponent,
   ],
   imports: [
     NgbModule,
