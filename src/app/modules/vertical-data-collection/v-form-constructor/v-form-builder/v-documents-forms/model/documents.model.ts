@@ -1,4 +1,3 @@
-import {FileModel} from "../../../../model/file.model";
 
 export interface DocumentsModel {
   id:string;

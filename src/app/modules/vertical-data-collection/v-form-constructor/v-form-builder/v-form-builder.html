@@ -187,7 +187,7 @@
               <span class="font-weight-bold">Forms</span>
               <span><i class="fas fa-question-circle pl-1" title="test"></i></span>
             </div>
-            <div class="col-1 align-self-end">
+            <div class="col-1 align-self-end" (click)="isDocumentsForms.isAddForms=!isDocumentsForms.isAddForms">
               <span><i class="fas fa-plus-square"></i></span>
             </div>
             <div class="col-1 align-self-end" (click)="isDocumentsForms.isForms=!isDocumentsForms.isForms">
@@ -196,58 +196,75 @@
             </div>
           </div>
 
+          <div *ngIf="isDocumentsForms.isAddForms" class="mt-2">
+            <input
+              class="form-control"
+              autofocus
+              #newForms
+              (blur)="addNewFormsPDF(newForms.value); newForms.value=''"
+              (keyup.enter)="addNewFormsPDF(newForms.value); newForms.value=''"
+            >
+          </div>
+
           <div [hidden]="!isDocumentsForms.isForms">
 
-            <div class="app-consent-item px-3 pt-3 pb-2 mt-3">
+            <div class="app-consent-item px-3 pt-3 pb-2 mt-3" *ngFor="let forms of formsPDF">
 
               <div class="row no-gutters">
                 <div class="col-10">
-                  <span class="font-weight-bold">Family Survey</span>
+                  <span class="font-weight-bold">{{forms.name}}</span>
                 </div>
-                <div class="col-2 text-right">
+                <div class="col-2 text-right" (click)="removeFormsPDF(forms.id)">
                   <span class=" mr-3"><i class="fas fa-trash fa-xs"></i></span>
                 </div>
               </div>
 
               <div class="row no-gutters">
                 <div class="btn-group btn-group-toggle w-100 mt-2"
-                     ngbRadioGroup
+                     ngbRadioGroup [(ngModel)]="forms.isNew"
+                     name="isNew"
                 >
                   <label ngbButtonLabel class="btn app-btn-signature">
-                    <input ngbButton type="radio" value=""> Use Existing
+                    <input ngbButton type="radio" [value]="false"> Use Existing
                   </label>
                   <label ngbButtonLabel class="btn app-btn-signature">
-                    <input ngbButton type="radio" value=""> Create New
+                    <input ngbButton type="radio" [value]="true"> Create New
                   </label>
                 </div>
               </div>
-              <div class="col mt-4">
-                <label class="app-radio-container">Needed per Family
-                  <input type="radio"
-                         value=""
-                  >
-                  <span class="app-radio-checkmark"></span>
-                </label>
-              </div>
-              <div class="col">
-                <label class="app-radio-container">Needed per Student
-                  <input type="radio"
-                         value=""
-                  >
-                  <span class="app-radio-checkmark"></span>
-                </label>
+              <div class="col mt-4 p-0 no-gutters align-items-center" ngbRadioGroup [(ngModel)]="forms.isPerFamily"
+                   name="">
+                <div class="col-10">
+                  <label ngbButtonLabel class="app-radio-container text-left">Needed per Family
+                    <input type="radio"
+                           ngbButton
+                           [value]="true"
+                    >
+                    <span class="app-radio-checkmark mt-2"></span>
+                  </label>
+                </div>
+                <div class="col-10">
+
+                  <label ngbButtonLabel class="app-radio-container text-left">Needed per Student
+                    <input type="radio"
+                           ngbButton
+                           [value]="false"
+                    >
+                    <span class="app-radio-checkmark mt-2"></span>
+                  </label>
+                </div>
               </div>
 
-              <div class="col mt-4">
+              <div class="col mt-4 p-0">
                 <label class="app-switch">
-                  <input type="checkbox">
+                  <input type="checkbox" [(ngModel)]="forms.isFillableOnline">
                   <span class="app-slider app-round"></span>
                 </label>
                 <span class="ml-1">Fillable Online</span>
               </div>
-              <div class="col">
+              <div class="col p-0">
                 <label class="app-switch">
-                  <input type="checkbox">
+                  <input type="checkbox" [(ngModel)]="forms.isAllowDownloadUpload">
                   <span class="app-slider app-round"></span>
                 </label>
                 <span class="ml-1">Allow Download/Upload</span>
@@ -255,6 +272,8 @@
 
 
             </div>
+
+
           </div>
         </div>
 
@@ -560,16 +579,16 @@
       </ul>
 
       <!--  documents-forms-->
-      <!--      <div class="app-section-wrapper" [hidden]="!isDocumentsForms.isActiveAll">-->
       <app-v-documents-forms
         *ngIf="isDocumentsForms.isActiveAll"
         [isDocumentsForms]="isDocumentsForms"
         [documents]="documents"
+        [formsPDF]="formsPDF"
         [attachments]="attachments"
         [formId]="formId"
+        [existingFields]="existingFields"
       >
       </app-v-documents-forms>
-      <!--      </div>-->
       <!--  end  documents-forms-->
 
       <!--  consent-->

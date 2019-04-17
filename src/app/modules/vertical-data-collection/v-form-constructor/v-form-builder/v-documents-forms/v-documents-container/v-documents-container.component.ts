@@ -17,7 +17,7 @@ export class VDocumentsContainerComponent implements OnInit {
   token = '?api_token='+environment.api_token;
 
   sectionName: string = "Documents for Parents";
-  width: string = "4 Columns";
+  sectionWidth: string = "4 Columns";
   constructor(private fileService: VFilesService,
               private formService: FormService) { }
 
