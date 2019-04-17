@@ -7,6 +7,9 @@ interface FormsRate {
 export interface FormsViewsRate extends FormsRate {
 }
 
+export interface FormsSubmissionsRate extends FormsRate {
+}
+
 export interface FormsInvitesRate {
   invites: FormsRate;
   submissions: FormsRate;

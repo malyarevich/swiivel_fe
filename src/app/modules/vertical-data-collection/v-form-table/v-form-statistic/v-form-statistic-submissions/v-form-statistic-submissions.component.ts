@@ -1,5 +1,7 @@
 import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Chart} from 'chart.js';
+import {FormsStatsService} from "../../../services/forms-stats.service";
+import {FormsSubmissionsRate, FormsViewsRate} from "../../../model/forms-stats.models";
 
 @Component({
   selector: 'app-v-form-statistic-submissions',
@@ -10,6 +12,7 @@ export class VFormStatisticSubmissionsComponent implements OnInit, AfterViewInit
 
   @ViewChild('chartSubmissionRef') chartSubmissionRef: ElementRef;
 
+  submissionsRate: FormsSubmissionsRate;
   chartSubmissions: Chart = {};
 
   period: string = 'week';
@@ -20,10 +23,13 @@ export class VFormStatisticSubmissionsComponent implements OnInit, AfterViewInit
     today: 'TODAY',
   };
 
-  constructor() {
+  constructor(private formsStatsService: FormsStatsService) {
   }
 
   ngOnInit() {
+    this.formsStatsService.getSubmissionsRate().subscribe((val: FormsSubmissionsRate) => {
+      this.submissionsRate = val;
+    })
   }
 
   ngAfterViewInit() {
