@@ -3,6 +3,7 @@ import {Permissions} from "../../../services/permission/permissions.model";
 import {TuitionContract} from "../v-form-constructor/v-form-builder/v-tuition-contract/models/tuition-contract.model";
 import {ConsentInfo} from "../v-form-constructor/v-form-builder/v-consent/model/consent.model";
 import {DocumentsModel} from "../v-form-constructor/v-form-builder/v-documents-forms/model/documents.model";
+import {FormsPDFModel} from "../v-form-constructor/v-form-builder/v-documents-forms/model/formsPDF.model";
 
 export interface Form {
     _id: string;
@@ -23,6 +24,7 @@ export interface Form {
     eligible: string;
     example_form_id?: string;
     documents?: DocumentsModel[];
+    forms?: FormsPDFModel[];
     attachments?: object;
 }
 
