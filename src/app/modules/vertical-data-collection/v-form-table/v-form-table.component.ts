@@ -180,7 +180,7 @@ export class VFormTableComponent implements OnInit {
             this.getAllForm();
         }
     }
-
+// TODO Create directive ConvertData for Safari browser
   convertDate(date) {
         return date.replace(/\s/g, "T");
   }

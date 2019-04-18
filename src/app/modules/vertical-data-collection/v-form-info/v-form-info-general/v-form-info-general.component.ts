@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {FormSql} from "../../model/form.model";
 
 @Component({
   selector: 'app-v-form-info-general',
@@ -6,10 +7,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./v-form-info-general.component.css']
 })
 export class VFormInfoGeneralComponent implements OnInit {
+  @Input() form: FormSql;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
+  }
+
+  // TODO Create directive ConvertData for Safari browser
+  convertDate(date) {
+    return date.replace(/\s/g, "T");
   }
 
 }
