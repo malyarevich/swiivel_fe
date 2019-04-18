@@ -21,7 +21,8 @@ export class VFormsContainerComponent implements AfterViewInit, OnDestroy {
   sectionWidth: string = "4 Columns";
 
 
-  pdfSrc = "../../../../../../../assets/files/BBY Contract 1 Student.pdf";
+  // pdfSrc = "../../../../../../../assets/files/BBY Contract 1 Student.pdf";
+  pdfSrc = "../../../../../../../assets/files/Var1.pdf";
   canvasEl: HTMLCanvasElement;
   cx: CanvasRenderingContext2D;
   drawingSubscription: Subscription;
@@ -83,7 +84,7 @@ export class VFormsContainerComponent implements AfterViewInit, OnDestroy {
   }
 
   loadComplete(pdf: PDFDocumentProxy){
-    // console.log(pdf);
+    console.log(pdf);
   }
 
 
