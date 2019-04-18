@@ -63,8 +63,8 @@ export class VFormTableComponent implements OnInit {
         },
         {
             id: 'updated_at',
-            type: 'data',
-            title: 'UPDATED DATA',
+            type: 'date',
+            title: 'UPDATED DATE',
             sort: true,
             search: true,
         },

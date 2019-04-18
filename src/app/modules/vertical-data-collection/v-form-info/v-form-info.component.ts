@@ -29,8 +29,19 @@ export class VFormInfoComponent implements OnInit {
     });
   }
 
+  // Form info table nav emitters
   setActiveTab(value) {
     this.activeTab = value;
   }
+
+  doBulkAction(type) {
+    // console.log(type);
+  }
+
+  setSearchValue(value) {
+    // console.log(value);
+  }
+  // End form info table nav emitters
+
 
 }
