@@ -2,3 +2,32 @@
   background-color: white;
   border-radius: 3px;
 }
+
+/*Status forms buttons*/
+.app-btn-status {
+  color: #ffffff;
+  font-size: 1em;
+  border-radius: 3px;
+}
+
+.app-btn-status-active {
+  background-color: #3CA476;
+}
+
+.app-btn-status-archived {
+  background-color: #B6B6B6;
+}
+
+.app-btn-status-draft {
+  color: #000000;
+  background-color: #F2F2F2;
+}
+
+.app-btn-status-review {
+  background-color: #F8BC45;
+}
+
+.app-dropdown-toggle::after {
+  display:none;
+}
+/*End Status forms buttons*/

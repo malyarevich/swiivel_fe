@@ -5,27 +5,8 @@
     border-radius: 5px;
 }
 
-.block-wrapper table {
-    /*font-size: 14px;*/
-}
-
-.block-wrapper table input {
-    /*max-height: 25px;*/
-    /*max-width: 150px;*/
-}
-
 .checked-row {
     background-color: #EAEAFF;
-}
-
-.app-btn-sml {
-    padding: 2px 5px;
-    font-size: 12px;
-    border-radius: 2px;
-}
-
-.app-btn-primary {
-    background-color: #4C35A8;
 }
 
 .app-invite-btn {
@@ -35,40 +16,8 @@
     background-color: #EAEAFF;
 }
 
-/*.app-btn-outline-primary {*/
-    /*color: #4C35A8;*/
-    /*border-color: #4C35A8;*/
-/*}*/
-
 .app-text-primary {
     color: #4C35A8;
-}
-
-/*Status forms buttons*/
-.app-btn-status {
-    color: #ffffff;
-    border-radius: 3px;
-}
-
-.app-btn-status-active {
-    background-color: #3CA476;
-}
-
-.app-btn-status-archived {
-    background-color: #B6B6B6;
-}
-
-.app-btn-status-draft {
-    color: #000000;
-    background-color: #F2F2F2;
-}
-
-.app-btn-status-review {
-    background-color: #F8BC45;
-}
-
-.app-dropdown-toggle::after {
-    display:none;
 }
 
 .app-nav-link {

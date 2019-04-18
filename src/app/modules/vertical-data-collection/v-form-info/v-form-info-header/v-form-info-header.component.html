@@ -1,1 +1,51 @@
-<h4 class="font-weight-bold">Student Registration Form 2019-2020</h4>
+<div class="row no-gutters py-4">
+
+  <div class="col">
+    <h4 class="font-weight-bold d-inline-block pr-3">{{form?.name | titlecase}}</h4>
+    <div ngbDropdown class="d-inline-block">
+      <button type="button" class="btn app-btn-status px-1 py-0 app-dropdown-toggle"
+              [ngClass]="getClassByStatus(form.status)"
+              id="dropdownBasic1"
+              ngbDropdownToggle
+              appClickStopPropagation>
+        <ng-template [ngIf]="form.status === STATUS_REVIEW" [ngIfElse]="chevron">
+              <span>{{'In ' + form.status | titlecase}}
+                <i class="fas fa-hourglass-start"></i>
+              </span>
+        </ng-template>
+        <ng-template #chevron>
+              <span>{{form.status | titlecase}}
+                <i class="fas fa-chevron-down"></i>
+              </span>
+        </ng-template>
+      </button>
+      <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+        <button *ngFor="let status of statuses"
+                (click)="changeStatus(form.id, status)"
+                ngbDropdownItem
+                appClickStopPropagation>
+          {{status | titlecase}}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="col text-right">
+
+    <span class="app-fi-header-action mr-3"><i class="fas fa-share-alt fa-sm app-fi-header-icon mr-2"></i>SHARE</span>
+    <span class="app-fi-header-action mr-3"><i class="fas fa-share fa-sm app-fi-header-icon mr-2"></i>EXPORT PDF</span>
+    <span class="app-fi-header-action mr-5"><i class="fas fa-plus fa-sm app-fi-header-icon mr-2"></i>INVITE ACCOUNTS</span>
+
+    <button type="button" class="btn app-btn-primary mr-3">
+      <i class="fas fa-align-center" data-fa-transform="rotate-180"></i>
+    </button>
+    <button class="btn app-btn-outline-primary mr-3">
+      Preview Form
+    </button>
+    <button class="btn app-btn-primary">
+      Edit Form
+    </button>
+
+  </div>
+
+</div>

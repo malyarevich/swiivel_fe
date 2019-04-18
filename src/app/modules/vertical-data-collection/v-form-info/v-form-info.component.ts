@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
+import {VFormService} from "../v-form.service";
+import {FormSql} from "../model/form.model";
 
 @Component({
   selector: 'app-v-form-info',
@@ -8,17 +10,21 @@ import {ActivatedRoute} from "@angular/router";
 })
 export class VFormInfoComponent implements OnInit {
 
-  formMongoId: string;
+  formId: string;
+  form: FormSql;
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private vFormService :VFormService) { }
 
   ngOnInit() {
-   this.setFormMongoId();
+   this.setFormId();
+   this.vFormService.getOneFormSql(this.formId).subscribe((res) => {
+     this.form = res;
+   })
   }
 
-  setFormMongoId() {
+  setFormId() {
     this.route.params.subscribe((params) => {
-      this.formMongoId = params['id'];
+      this.formId = params['id'];
     });
   }
 

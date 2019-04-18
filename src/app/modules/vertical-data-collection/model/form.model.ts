@@ -32,7 +32,8 @@ export interface FormSql {
     name: string
     link: string
     owner_id: number,
-    permissions: Permissions[],
+    owner?: {id: number, email: string, full_name: string},
+    permissions?: Permissions[],
     status: string
     type: string
     created_at: string,
