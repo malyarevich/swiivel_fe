@@ -232,10 +232,10 @@
             ngbDropdown
             placement="bottom-right"
             autoClose="outside"
-            open="true"
+            open="false"
             (click)="div.isEdit=!div.isEdit"
           >
-            <span id="dropdownBasic1" ngbDropdownToggle><i class="fas fa-pen fa-xs"></i></span>
+            <span id="dropdownBasic1" ngbDropdownToggle><i class="fas fa-pen fa-xs div-inside-wrap"></i></span>
             <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
               <ul class="list-group">
                 <li class="list-group-item mb-3 py-0" *ngFor="let field of existingFields">{{field.name}}</li>

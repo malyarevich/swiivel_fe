@@ -21,7 +21,12 @@ canvas {
 }
 .div-inside-wrap{
   z-index: 9999;
+  margin-top: -30px!important;
+
   position: absolute;
+}
+.list-group-item{
+  opacity: 1.2;
 }
 
 .div-inside{
