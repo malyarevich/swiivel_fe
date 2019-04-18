@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import {DocumentSideBar, DocumentsModel} from "./model/documents.model";
+import {Field} from "../../../model/field.model";
+import {FormsPDFModel} from "./model/formsPDF.model";
 
 @Component({
   selector: 'app-v-documents-forms',
@@ -9,8 +11,10 @@ import {DocumentSideBar, DocumentsModel} from "./model/documents.model";
 export class VDocumentsFormsComponent implements OnInit {
   @Input() attachments;
   @Input() isDocumentsForms: DocumentSideBar;
+  @Input() formsPDF: FormsPDFModel;
   @Input() formId: string;
   @Input() documents: DocumentsModel[];
+  @Input() existingFields: Field[];
   constructor() { }
 
   ngOnInit() {

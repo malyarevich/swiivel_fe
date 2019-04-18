@@ -16,6 +16,7 @@ import {FormPayment, TYPE_NAME} from "./v-form-payment/model/form-payment.model"
 import {ConsentInfo, consentItemDefault} from "./v-consent/model/consent.model";
 import {DocumentSideBar, DocumentsModel} from "./v-documents-forms/model/documents.model";
 import {GeneralInfoIsValidService} from "../../services/general-info-is-valid.service";
+import {FormsPDFModel} from "./v-documents-forms/model/formsPDF.model";
 
 @Component({
   selector: 'app-v-form-table',
@@ -53,22 +54,8 @@ export class VFormBuilderComponent implements OnInit {
   isFormPayment: boolean = false;
 
 
-  documents: DocumentsModel[] = [
-    // {
-    //   name: "Elementary School Calendar",
-    //   isUpload: false,
-    //   isPerFamily: true,
-    //   data: {
-    //     name: "BBY Contract 1 Student.pdf",
-    //     link: "../../../../../assets/files/BBY Contract 1 Student.pdf"
-    //   }
-    // },
-    // {
-    //   name: "Proof of Address",
-    //   isUpload: true,
-    //   isPerFamily: false
-    // }
-  ];
+  documents: DocumentsModel[] = [];
+  formsPDF: FormsPDFModel[] =[];
 
   formPaymentSideBar: FormPayment[] = [
     {
@@ -142,45 +129,6 @@ export class VFormBuilderComponent implements OnInit {
       }
     }
   ];
-    // {
-    //   title: 'Terms and Conditions 2',
-    //   text: {
-    //     value: 'I allow my child to play in sport game',
-    //     isBold: false,
-    //     isItalic: false,
-    //   },
-    //   checkbox: {
-    //     isActive: false,
-    //     text: '',
-    //   },
-    //   signature: {
-    //     isRequire: true,
-    //     type: 'e', //e|wet
-    //     eType: 'external', //external|system
-    //     isBothParents: true,
-    //   }
-    // },
-    // {
-    //   title: 'Terms and Conditions 1',
-    //   text: {
-    //     value: 'I allow my child to play in sport game',
-    //     isBold: false,
-    //     isItalic: false,
-    //   },
-    //   checkbox: {
-    //     isActive: true,
-    //     text: 'I agree that I have read the terms and conditions',
-    //   },
-    //   signature: {
-    //     isRequire: true,
-    //     type: 'e', //e|wet
-    //     eType: 'external', //external|system
-    //     isBothParents: false,
-    //   }
-    // }
-  // ];
-
-
 
   @ViewChild("addCustomFieldInput") addCustomFieldInput: ElementRef;
 
@@ -208,7 +156,7 @@ export class VFormBuilderComponent implements OnInit {
   }
 
 
-  addNewDocument(name: string){
+  addNewDocument(name: string):void{
     if(name.length<3) return;
     const newDocument: DocumentsModel ={
       id: uuid(),
@@ -226,10 +174,32 @@ export class VFormBuilderComponent implements OnInit {
     this.documents.push(newDocument);
     this.isDocumentsForms.isAddDocument=false;
   }
-  removeDocument(id: string){
-    this.documents = this.documents.filter(document=>document.id!=id);
+  removeDocument(id: string):void{
   }
 
+  addNewFormsPDF(name: string):void{
+    if(name.length<3) return;
+    const form: FormsPDFModel = {
+      id: uuid(),
+      name: name,
+      isNew: true,
+      isPerFamily: true,
+      isAllowDownloadUpload: false,
+      isFillableOnline: false,
+      accompanyingText: {
+        data:'',
+        isBold: false,
+        isItalic: false
+      },
+      form:{}
+    };
+    this.formsPDF.push(form);
+    this.isDocumentsForms.isAddForms=false;
+  }
+
+  removeFormsPDF(id: string){
+    this.formsPDF = this.formsPDF.filter(forms=>forms.id!=id);
+  }
 
 
   loadBasicFields() {
@@ -274,6 +244,7 @@ export class VFormBuilderComponent implements OnInit {
             this.consentInfo = form.consentInfo || [];
             this.eligible = form.eligible;
             this.documents = form.documents || [];
+            this.formsPDF = form.forms || [];
             this.attachments = form.attachments || {};
 
           }
@@ -306,6 +277,7 @@ export class VFormBuilderComponent implements OnInit {
         _id: this.formId,
         fields: this.fields,
         documents: this.documents,
+        forms: this.formsPDF,
         name: this.formName,
         sidebar: this.sideBarFields,
         tuitionContract: this.tuitionContract,

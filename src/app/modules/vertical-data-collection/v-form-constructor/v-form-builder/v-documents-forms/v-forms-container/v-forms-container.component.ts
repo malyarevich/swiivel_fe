@@ -1,34 +1,41 @@
-import {Component, OnInit, ViewChild, ElementRef, Input, AfterViewInit} from '@angular/core';
+import {Component, OnInit, ViewChild, ElementRef, Input, AfterViewInit, OnDestroy} from '@angular/core';
 import {fromEvent, Subscription} from "rxjs";
 import {pairwise, switchMap, takeUntil} from "rxjs/operators";
 import {PDFDocumentProxy} from 'ng2-pdf-viewer/src/app/pdf-viewer/pdf-viewer.module';
-import {FormsDivModel} from "../model/forms.model";
+import {FormsDivModel, FormsPDFModel} from "../model/formsPDF.model";
+import {Field} from "../../../../model/field.model";
 
 @Component({
   selector: 'app-v-forms-container',
   templateUrl: './v-forms-container.component.html',
-  styleUrls: ['./v-forms-container.component.css']
+  styleUrls: ['./v-forms-container.component.scss']
 })
-export class VFormsContainerComponent implements AfterViewInit {
+export class VFormsContainerComponent implements AfterViewInit, OnDestroy {
   @Input() width = 816;
   @Input() height = 1056;
+  @Input() existingFields: Field[];
+  @Input() formsPDF: FormsPDFModel[];
+  @ViewChild('viewer') canvas: ElementRef;
+
+  sectionName: string = "School Forms";
+  sectionWidth: string = "4 Columns";
+
+
   pdfSrc = "../../../../../../../assets/files/BBY Contract 1 Student.pdf";
   canvasEl: HTMLCanvasElement;
-  @ViewChild('viewer') canvas: ElementRef;
   cx: CanvasRenderingContext2D;
   drawingSubscription: Subscription;
-  divs: FormsDivModel[] = [
-    {
-      left: 42.75,
-      top: 476,
-      width: 320,
-      height: 23,
-      isEdit:true
-    }
-  ];
-  constructor() {}
   lastPos;
   finalPos;
+  divs: FormsDivModel[] = [];
+
+  constructor() {}
+
+
+
+
+
+
   ngAfterViewInit() {
     // get the context
     this.canvasEl = this.canvas.nativeElement;
@@ -47,14 +54,9 @@ export class VFormsContainerComponent implements AfterViewInit {
     // we'll implement this method to start capturing mouse events
     this.captureEvents(this.canvasEl);
   }
-  styleObject(div:FormsDivModel){
-    return {
-      'top': div.top +'px',
-      'left': div.left +'px',
-      'width': div.width +'px',
-      'height': div.height +'px'
-    }
-  }
+
+
+
 
   mouseDown(e){
     const rect = this.canvasEl.getBoundingClientRect();
@@ -76,17 +78,14 @@ export class VFormsContainerComponent implements AfterViewInit {
       height: this.finalPos.y-this.lastPos.y,
       isEdit: true
     };
-    this.divs.push(div);
-   // console.log('position:' , this.lastPos, this.finalPos);
+    if(div.height>5&&div.width>5) this.divs.push(div);
+
   }
 
   loadComplete(pdf: PDFDocumentProxy){
     // console.log(pdf);
   }
 
-  pickDiv(){
-    console.log('I am here!')
-  }
 
   captureEvents(canvasEl: HTMLCanvasElement) {
     // this will capture all mousedown events from teh canvas element
@@ -153,6 +152,14 @@ export class VFormsContainerComponent implements AfterViewInit {
     }
   }
 
+  styleObject(div:FormsDivModel){
+    return {
+      'top': div.top +'px',
+      'left': div.left +'px',
+      'width': div.width +'px',
+      'height': div.height +'px'
+    }
+  }
   ngOnDestroy() {
     // this will remove event lister when this component is destroyed
     this.drawingSubscription.unsubscribe();
