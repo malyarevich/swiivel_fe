@@ -1,3 +1,57 @@
-<p>
-  v-form-info-stats works!
-</p>
+<div class="row no-gutters">
+
+  <div class="col">
+    <div class="row no-gutters app-fi-border-r h-100">
+      <div class="col-4 app-stats-wrap-i d-flex align-items-center justify-content-center">
+          <i class="fas fa-file fa-4x app-text-primary"></i>
+      </div>
+      <div class="col pl-4 py-3">
+        <p class="app-text-second mb-1">TYPE</p>
+        <p class="app-text-primary font-weight-bold mb-1">{{form?.type | titlecase}}</p>
+        <p class="mb-0">Round 2 <span class="app-text-second">(Dec 10-15)</span></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="col pl-4 py-3">
+    <p class="app-text-second mb-0">FORM RATE</p>
+
+    <div class="row no-gutters">
+
+      <!--Total View Chart-->
+      <div class="col-6">
+        <div class="row no-gutters">
+          <div class="col-5 app-fi-chart-section">
+            <span class="app-fi-chart-total-percent">+27%</span>
+            <div *ngIf="chartTotal">
+              <canvas #chartTotalViews width="100%" height="90%">{{ chartTotal }}</canvas>
+            </div>
+          </div>
+          <div class="col pt-3 pl-1">
+            <p class="app-fi-stats-total-text mb-0">{{viewsRate?.total}}</p>
+            <p class="mb-0">Total Views</p>
+          </div>
+        </div>
+      </div>
+
+      <!--Last Month Chart -->
+      <div class="col-6">
+        <div class="row no-gutters">
+          <div class="col-5 app-fi-chart-section">
+            <span class="app-fi-chart-month-percent">+34%</span>
+            <div *ngIf="chartMonth">
+              <canvas #chartMonthViews width="100%" height="90%">{{ chartMonth }}</canvas>
+            </div>
+          </div>
+          <div class="col pt-3 pl-1">
+            <p class="app-fi-stats-total-text mb-0">{{viewsRate?.month}}</p>
+            <p class="mb-0">Last Month</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
