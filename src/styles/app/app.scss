@@ -1,0 +1,16 @@
+@import "../variables/colors";
+.app-text-primary {
+  color: $element-base-color;
+}
+
+.app-text-second {
+  color: #999999;
+}
+
+.app-text-small {
+  font-size: 0.8em;
+}
+
+.app-cursor-pointer {
+  cursor: pointer;
+}

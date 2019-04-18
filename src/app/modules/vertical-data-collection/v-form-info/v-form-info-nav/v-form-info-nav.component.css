@@ -1,0 +1,9 @@
+.app-form-info-nav {
+    color: #535353;
+    background-color: #FFFFFF;
+    border: 1px solid rgba(182,182,182,0.3);
+}
+
+.app-form-info-nav .back {
+    border-right: 1px solid rgba(182,182,182,0.3);
+}

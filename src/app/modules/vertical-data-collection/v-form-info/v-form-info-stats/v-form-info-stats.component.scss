@@ -1,0 +1,32 @@
+.app-stats-wrap-i {
+  background-color: #DBE5ED;
+}
+
+.app-fi-border-r {
+  border-right: 1px solid #F2F3F5;
+}
+
+.app-fi-stats-total-text {
+  font-size: 1.2em;
+  font-family: "NunitoSans-ExtraBold";
+}
+
+.app-fi-chart-section {
+  position: relative;
+}
+
+.app-fi-chart-total-percent {
+  position: absolute;
+  left: 27%;
+  top: 45%;
+  color: #FFB915;
+  font-weight: bold;
+}
+
+.app-fi-chart-month-percent {
+  position: absolute;
+  left: 27%;
+  top: 45%;
+  color: #4051A8;
+  font-weight: bold;
+}

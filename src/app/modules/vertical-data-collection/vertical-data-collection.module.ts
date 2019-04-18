@@ -68,6 +68,13 @@ import { VFormStatisticViewsComponent } from './v-form-table/v-form-statistic/v-
 import { VFormStatisticInvitesComponent } from './v-form-table/v-form-statistic/v-form-statistic-invites/v-form-statistic-invites.component';
 import { InvitesProgressBarComponent } from './v-form-table/v-form-statistic/v-form-statistic-invites/invites-progress-bar/invites-progress-bar.component';
 import { VFormStatisticSubmissionsComponent } from './v-form-table/v-form-statistic/v-form-statistic-submissions/v-form-statistic-submissions.component';
+import { VFormInfoComponent } from './v-form-info/v-form-info.component';
+import { VFormInfoHeaderComponent } from './v-form-info/v-form-info-header/v-form-info-header.component';
+import { VFormInfoStatsComponent } from './v-form-info/v-form-info-stats/v-form-info-stats.component';
+import { VFormInfoGeneralComponent } from './v-form-info/v-form-info-general/v-form-info-general.component';
+import { VFormInfoTableNavComponent } from './v-form-info/v-form-info-table-nav/v-form-info-table-nav.component';
+import { VFormInfoNavComponent } from './v-form-info/v-form-info-nav/v-form-info-nav.component';
+import { VFormInfoSubmissionsComponent } from './v-form-info/v-form-info-submissions/v-form-info-submissions.component';
 
 const routes: Routes = [
   {
@@ -91,6 +98,10 @@ const routes: Routes = [
       {
         path: 'onlineform/:id',
         component: VFormViewComponent
+      },
+      {
+        path: 'v-form-info/:id',
+        component: VFormInfoComponent
       }
     ]
   }
@@ -164,6 +175,13 @@ const routes: Routes = [
     VFormStatisticInvitesComponent,
     InvitesProgressBarComponent,
     VFormStatisticSubmissionsComponent,
+    VFormInfoComponent,
+    VFormInfoHeaderComponent,
+    VFormInfoStatsComponent,
+    VFormInfoGeneralComponent,
+    VFormInfoTableNavComponent,
+    VFormInfoNavComponent,
+    VFormInfoSubmissionsComponent,
   ],
   imports: [
     NgbModule,

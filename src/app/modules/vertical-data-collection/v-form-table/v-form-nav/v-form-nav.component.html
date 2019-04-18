@@ -6,7 +6,7 @@
     <div class="row">
       <div class="col-sm-6">
         <button type="button"
-                class="btn btn-primary app-btn-primary"
+                class="btn app-btn-primary"
                 routerLink="v-form-constructor"
                 routerLinkActive="active">
           Create New Form
@@ -30,7 +30,7 @@
             class="form-control mr-2"
             type="search"
             placeholder="Search">
-          <button type="button" class="btn btn-primary app-btn-primary">
+          <button type="button" class="btn app-btn-primary">
             <i class="fas fa-sliders-h"></i>
           </button>
         </div>
@@ -43,43 +43,43 @@
   <div class="collapse justify-content-left navbar-collapse">
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link app-nav-link"
-           [ngClass]="{'app-nav-link-active' : activeFilterTab=='all'}"
+        <a class="nav-link app-ft-nav-link"
+           [ngClass]="{'app-ft-nav-link-active' : activeFilterTab=='all'}"
            (click)="onCheckStatusTab('all')">
           All
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link app-nav-link"
-           [ngClass]="{'app-nav-link-active' : activeFilterTab=='active'}"
+        <a class="nav-link app-ft-nav-link"
+           [ngClass]="{'app-ft-nav-link-active' : activeFilterTab=='active'}"
            (click)="onCheckStatusTab('active')">
           Active
         </a>
       </li>
       <li class="nav-item ">
-        <a class="nav-link app-nav-link"
-           [ngClass]="{'app-nav-link-active' : activeFilterTab=='draft'}"
+        <a class="nav-link app-ft-nav-link"
+           [ngClass]="{'app-ft-nav-link-active' : activeFilterTab=='draft'}"
            (click)="onCheckStatusTab('draft')">
           Drafts
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link app-nav-link"
-           [ngClass]="{'app-nav-link-active' : activeFilterTab=='review'}"
+        <a class="nav-link app-ft-nav-link"
+           [ngClass]="{'app-ft-nav-link-active' : activeFilterTab=='review'}"
            (click)="onCheckStatusTab('review')">
           In Review
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link app-nav-link"
-           [ngClass]="{'app-nav-link-active' : activeFilterTab=='completed'}"
-           (click)="onCheckStatusTab('completed')">
-          Completed
+        <a class="nav-link app-ft-nav-link"
+           [ngClass]="{'app-ft-nav-link-active' : activeFilterTab=='closed'}"
+           (click)="onCheckStatusTab('closed')">
+          Closed
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link app-nav-link"
-           [ngClass]="{'app-nav-link-active' : activeFilterTab=='archived'}"
+        <a class="nav-link app-ft-nav-link"
+           [ngClass]="{'app-ft-nav-link-active' : activeFilterTab=='archived'}"
            (click)="onCheckStatusTab('archived')">
           Archived
         </a>

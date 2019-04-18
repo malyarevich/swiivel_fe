@@ -35,6 +35,13 @@ export class VFormService {
             );
     }
 
+  getOneFormSql(id): Observable<any> {
+    return this.http.get(`/proxy/templates/${id}`)
+      .pipe(
+        map((response) => response)
+      );
+  }
+
     getFormsList(params?: FormSearchParams): Observable<any> {
         const options = {
             headers: new HttpHeaders({
