@@ -7,20 +7,3 @@
 .app-form-info-nav .back {
     border-right: 1px solid rgba(182,182,182,0.3);
 }
-
-.input-search {
-    border: 1px solid #DEDEDE;
-    border-radius: 3px;
-    padding-left: 15%;
-}
-
-.input-search-container {
-    position: relative;
-}
-
-.input-search-icon {
-    position: absolute;
-    top: 30%;
-    left: 3%;
-    color: #BABABA;
-}

@@ -2,7 +2,7 @@
 
   <div class="col">
     <h4 class="font-weight-bold d-inline-block pr-3">{{form?.name | titlecase}}</h4>
-    <div ngbDropdown class="d-inline-block">
+    <div *ngIf="form?.status" ngbDropdown class="d-inline-block">
       <button type="button" class="btn app-btn-status px-1 py-0 app-dropdown-toggle"
               [ngClass]="getClassByStatus(form.status)"
               id="dropdownBasic1"

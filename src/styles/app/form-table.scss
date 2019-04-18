@@ -31,3 +31,13 @@
   display:none;
 }
 /*End Status forms buttons*/
+
+.app-ft-nav-link {
+  cursor: pointer;
+  color: #535353;
+}
+
+.app-ft-nav-link-active {
+  color: $element-base-color !important;
+  border-bottom: 2px solid $element-base-color;
+}

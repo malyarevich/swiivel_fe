@@ -73,8 +73,8 @@ import { VFormInfoHeaderComponent } from './v-form-info/v-form-info-header/v-for
 import { VFormInfoStatsComponent } from './v-form-info/v-form-info-stats/v-form-info-stats.component';
 import { VFormInfoGeneralComponent } from './v-form-info/v-form-info-general/v-form-info-general.component';
 import { VFormInfoTableNavComponent } from './v-form-info/v-form-info-table-nav/v-form-info-table-nav.component';
-import { VFormInfoTableComponent } from './v-form-info/v-form-info-table/v-form-info-table.component';
 import { VFormInfoNavComponent } from './v-form-info/v-form-info-nav/v-form-info-nav.component';
+import { VFormInfoSubmissionsComponent } from './v-form-info/v-form-info-submissions/v-form-info-submissions.component';
 
 const routes: Routes = [
   {
@@ -180,8 +180,8 @@ const routes: Routes = [
     VFormInfoStatsComponent,
     VFormInfoGeneralComponent,
     VFormInfoTableNavComponent,
-    VFormInfoTableComponent,
     VFormInfoNavComponent,
+    VFormInfoSubmissionsComponent,
   ],
   imports: [
     NgbModule,

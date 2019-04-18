@@ -12,6 +12,7 @@ export class VFormInfoComponent implements OnInit {
 
   formId: string;
   form: FormSql;
+  activeTab: string;
 
   constructor(private route: ActivatedRoute, private vFormService :VFormService) { }
 
@@ -26,6 +27,10 @@ export class VFormInfoComponent implements OnInit {
     this.route.params.subscribe((params) => {
       this.formId = params['id'];
     });
+  }
+
+  setActiveTab(value) {
+    this.activeTab = value;
   }
 
 }

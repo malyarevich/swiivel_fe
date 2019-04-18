@@ -92,3 +92,25 @@
 //  bottom: 5px;
 //  transform: translate(0, 4px) scale(.70);
 //}
+
+.app-input-search {
+  border: 1px solid #DEDEDE;
+  border-radius: 3px!important;
+  padding-left: 15%;
+}
+
+.app-input-search-grey {
+  background-color: #F2F3F5;
+}
+
+.app-input-search-container {
+  position: relative;
+}
+
+.app-input-search-icon {
+  z-index: 1000;
+  position: absolute;
+  top: 30%;
+  left: 3%;
+  color: #BABABA;
+}
