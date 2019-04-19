@@ -7,9 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class VInsideAccountCommunicationComponent implements OnInit {
 
+  activeTab: string = 'sms';
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  onActiveTab(value) {
+    this.activeTab = value;
   }
 
 }

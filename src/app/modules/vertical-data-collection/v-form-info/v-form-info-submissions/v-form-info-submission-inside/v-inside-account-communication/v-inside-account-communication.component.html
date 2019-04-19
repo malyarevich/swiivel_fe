@@ -1,3 +1,108 @@
-<p>
-  v-inside-account-communication works!
-</p>
+<div class="row no-gutters">
+  <div class="col d-flex align-items-end">
+    <p class="font-weight-bold mb-0">ACCOUNT COMMUNICATION</p>
+  </div>
+  <div class="col">
+    <div class="app-input-search-container">
+      <i class="fas fa-search app-input-search-icon"></i>
+      <input type="text" class="form-control app-input-search app-input-search-grey" placeholder="Search">
+    </div>
+  </div>
+</div>
+
+<div class="row no-gutters mt-3">
+  <div class="col">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white p-0">
+      <div class="collapse justify-content-left navbar-collapse">
+        <ul class="navbar-nav">
+          <li class="nav-item mr-4">
+            <a class="nav-link app-ft-nav-link"
+               [ngClass]="{'app-ft-nav-link-active' : activeTab=='all'}"
+               (click)="onActiveTab('all')">
+              All
+            </a>
+          </li>
+          <li class="nav-item mr-4">
+            <a class="nav-link app-ft-nav-link"
+               [ngClass]="{'app-ft-nav-link-active' : activeTab=='emails'}"
+               (click)="onActiveTab('emails')">
+              <i class="fas fa-envelope fa-xs mr-1"></i>Emails
+            </a>
+          </li>
+          <li class="nav-item mr-4">
+            <a class="nav-link app-ft-nav-link"
+               [ngClass]="{'app-ft-nav-link-active' : activeTab=='sms'}"
+               (click)="onActiveTab('sms')">
+              <i class="fas fa-mobile-alt fa-xs mr-1"></i>SMS
+            </a>
+          </li>
+          <li class="nav-item mr-4">
+            <a class="nav-link app-ft-nav-link"
+               [ngClass]="{'app-ft-nav-link-active' : activeTab=='notifications'}"
+               (click)="onActiveTab('notifications')">
+              <i class="fas fa-bell fa-xs mr-1"></i>Notifications
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+</div>
+
+<!--SMS-->
+<div *ngIf="activeTab=='sms'" class="row no-gutters border-top app-fi-inside-scroll">
+
+  <div class="col-12 border-bottom py-3 px-4">
+    <div class="d-flex justify-content-between pb-2">
+      <p class="mb-0">
+        <img class="img-responsive mr-1" src="assets/images/temp/person-foto-placeholder.png" width="2.5%">
+        <span class="font-weight-bold mr-2">Christine Hale</span>
+        <span class="app-text-second app-text-small">
+        <i class="fas fa-share fa-xs"></i>
+        Father, Nathan Alvarez, +1-202-555-0181
+      </span>
+      </p>
+      <p class="app-text-second text-nowrap mb-0">10/24/2018 12:40 pm</p>
+    </div>
+    <div class="d-flex justify-content-between align-items-center">
+      <p class="mb-0">
+        Please, Finish Registration Form Family Section has a missing fields. Please, click to this link a…
+      </p>
+      <p class="app-text-primary text-nowrap app-text-small mb-0">more</p>
+    </div>
+  </div>
+
+  <div class="col-12 border-bottom py-3 px-4">
+    <div class="d-flex justify-content-between pb-2">
+      <p class="mb-0">
+        <img class="img-responsive mr-1" src="assets/images/temp/person-foto-placeholder.png" width="2.5%">
+        <span class="font-weight-bold mr-2">Christine Hale</span>
+        <span class="app-text-second app-text-small">
+        <i class="fas fa-share fa-xs"></i>
+        Father, Nathan Alvarez, +1-202-555-0181
+      </span>
+      </p>
+      <p class="app-text-second text-nowrap mb-0">10/24/2018 12:40 pm</p>
+    </div>
+    <div class="d-flex justify-content-between align-items-center">
+      <p class="mb-0">
+        Please, Finish Registration Form Family Section has a missing fields. Please, click to this link a…
+      </p>
+      <p class="app-text-primary text-nowrap app-text-small mb-0">more</p>
+    </div>
+  </div>
+
+  <div class="row no-gutters mt-4 mb-3 w-100">
+    <p class="font-weight-bold app-text-primary">Father, Nathan Alvarez, +1-202-555-0181</p>
+
+    <div class="input-group">
+      <input class="form-control app-input-text app-input-search-grey mr-2" placeholder="Text Message..." type="search">
+      <button class="btn app-btn-primary" type="button">
+        <span class="font-weight-bold">Send SMS</span>
+      </button>
+    </div>
+
+  </div>
+
+</div>
+<!--End SMS-->

@@ -1,3 +1,17 @@
-<p>
-  v-inside-form-history works!
-</p>
+<div class="row no-gutters">
+  <div class="col d-flex align-items-end">
+    <p class="font-weight-bold mb-0">FORM HISTORY</p>
+  </div>
+  <div class="col">
+    <div class="app-input-search-container">
+      <i class="fas fa-search app-input-search-icon"></i>
+      <input type="text" class="form-control app-input-search app-input-search-grey" placeholder="Search">
+    </div>
+  </div>
+</div>
+<div class="row no-gutters mt-3 border-top app-fi-inside-scroll">
+  <div class="col-12 border-bottom p-2" *ngFor="let item of formHistory">
+    <p class="mb-0">{{item.action | titlecase }} by {{item.full_name | titlecase}} ({{item.role_name | titlecase}})</p>
+    <p class="app-text-second mb-0">{{item.date}}</p>
+  </div>
+</div>
