@@ -75,6 +75,13 @@ import { VFormInfoGeneralComponent } from './v-form-info/v-form-info-general/v-f
 import { VFormInfoTableNavComponent } from './v-form-info/v-form-info-table-nav/v-form-info-table-nav.component';
 import { VFormInfoNavComponent } from './v-form-info/v-form-info-nav/v-form-info-nav.component';
 import { VFormInfoSubmissionsComponent } from './v-form-info/v-form-info-submissions/v-form-info-submissions.component';
+import { VFormInfoSubmissionInsideComponent } from './v-form-info/v-form-info-submissions/v-form-info-submission-inside/v-form-info-submission-inside.component';
+import { VInsideFormDocumentsComponent } from './v-form-info/v-form-info-submissions/v-form-info-submission-inside/v-inside-form-documents/v-inside-form-documents.component';
+import { VInsideFormViewComponent } from './v-form-info/v-form-info-submissions/v-form-info-submission-inside/v-inside-form-documents/v-inside-form-view/v-inside-form-view.component';
+import { VInsideDocumentsViewComponent } from './v-form-info/v-form-info-submissions/v-form-info-submission-inside/v-inside-form-documents/v-inside-documents-view/v-inside-documents-view.component';
+import { VInsideAccountCommunicationComponent } from './v-form-info/v-form-info-submissions/v-form-info-submission-inside/v-inside-account-communication/v-inside-account-communication.component';
+import { VInsideMissingFieldsComponent } from './v-form-info/v-form-info-submissions/v-form-info-submission-inside/v-inside-missing-fields/v-inside-missing-fields.component';
+import { VInsideFormHistoryComponent } from './v-form-info/v-form-info-submissions/v-form-info-submission-inside/v-inside-form-history/v-inside-form-history.component';
 
 const routes: Routes = [
   {
@@ -182,6 +189,13 @@ const routes: Routes = [
     VFormInfoTableNavComponent,
     VFormInfoNavComponent,
     VFormInfoSubmissionsComponent,
+    VFormInfoSubmissionInsideComponent,
+    VInsideFormDocumentsComponent,
+    VInsideFormViewComponent,
+    VInsideDocumentsViewComponent,
+    VInsideAccountCommunicationComponent,
+    VInsideMissingFieldsComponent,
+    VInsideFormHistoryComponent,
   ],
   imports: [
     NgbModule,
