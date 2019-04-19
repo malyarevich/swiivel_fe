@@ -35,9 +35,13 @@
 
 
     <td nowrap class="align-middle">
-      <p>1. General Information</p>
-      <app-progress-bar [value]="25" [total]="100" [backgroundValue]="'#F8BC45'"></app-progress-bar>
-
+      <p class="mb-0">1. General Information</p>
+      <app-progress-bar [value]="30" [total]="100"
+                        [showValue]="false"
+                        [backgroundColor]="'#FAD793'"
+                        [backgroundValue]="'#F8BC45'"
+                        [height]="'0.5em'">
+      </app-progress-bar>
     </td>
 
 
@@ -58,7 +62,7 @@
       <p class="app-form-table-second-color mb-0">Rachel, David</p>
     </td>
 
-    <td  style="max-width: 250px" class="align-middle">
+    <td style="max-width: 250px" class="align-middle">
       <span class="pr-2">
         <img class="img-responsive mr-1" width="7%" src="assets/images/temp/person-foto-placeholder.png">
         David Fishman
@@ -73,7 +77,15 @@
       <span class="app-form-table-second-color"> {{convertDate('2019-04-11 10:50:52') | date:'shortTime'}}</span>
     </td>
 
-    <td class="align-middle">ff</td>
+    <td class="align-middle">
+      <p class="mb-0">2. Student(s)</p>
+      <app-progress-bar [value]="70" [total]="100"
+                        [showValue]="false"
+                        [backgroundColor]="'#FAD793'"
+                        [backgroundValue]="'#F8BC45'"
+                        [height]="'0.5em'">
+      </app-progress-bar>
+    </td>
 
     <td class="align-middle"><span class="text-danger">5 Missing Fields</span></td>
 
