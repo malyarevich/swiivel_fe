@@ -1,6 +1,6 @@
-<div class="app-progress-bar-wrapper">
-  <div *ngIf="value" [ngStyle]="{'width': progressWidth + '%', 'background-color' : backgroundColor}" class="app-progress-bar text-right pr-3">
-    <span [ngStyle]="{'color' : backgroundColor}" class="app-progress-bar-value pb-2">
+<div class="app-progress-bar-wrapper" [ngStyle]="{'background-color' : backgroundColor, 'height': height}">
+  <div *ngIf="value" [ngStyle]="{'width': progressWidth + '%', 'background-color' : backgroundValue}" class="app-progress-bar text-right pr-3">
+    <span *ngIf="showValue" [ngStyle]="{'color' : backgroundValue}" class="app-progress-bar-value pb-2">
       {{value}}
     </span>
   </div>

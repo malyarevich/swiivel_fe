@@ -8,7 +8,11 @@ import {Component, Input, OnInit} from '@angular/core';
 export class ProgressBarComponent implements OnInit {
   @Input() total: number = 0;
   @Input() value: number = 0;
-  @Input() backgroundColor: string = '';
+
+  @Input() height: string = '0.8em';
+  @Input() backgroundColor: string = '#F3F3F3';
+  @Input() backgroundValue: string = '';
+  @Input() showValue: boolean = true;
 
   get progressWidth(): number {
     return (this.value * 100)/this.total;
