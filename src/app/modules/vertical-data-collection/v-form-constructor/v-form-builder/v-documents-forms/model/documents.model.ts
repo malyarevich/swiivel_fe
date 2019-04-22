@@ -22,7 +22,7 @@ export interface AccompanyingText {
 }
 
 export interface DocumentSideBar {
-  isActiveAll: boolean,
+  // isActiveAll: boolean,
   isDocuments: boolean,
   isAddDocument: boolean,
   isForms: boolean,

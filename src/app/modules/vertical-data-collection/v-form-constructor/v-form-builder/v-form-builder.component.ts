@@ -42,18 +42,15 @@ export class VFormBuilderComponent implements OnInit {
   isEditConsentName: number | null = null;
   eligible: string;
 
-  isFormsFields: boolean = false;
-  isConsent: boolean = false;
+  activeSection: string = 'form_fields';
+
   isDocumentsForms: DocumentSideBar = {
-    isActiveAll: false,
+    // isActiveAll: false,
     isDocuments: true,
     isAddDocument: false,
     isForms: true,
     isAddForms: false
   };
-  isTuitionContract: boolean = false;
-  isFormPayment: boolean = false;
-
 
   documents: DocumentsModel[] = [];
   formsPDF: FormsPDFModel[] =[];
@@ -475,6 +472,10 @@ export class VFormBuilderComponent implements OnInit {
 
   removeConsentItem(i) {
     this.consentInfo.splice(i, 1);
+  }
+
+  scrollTop() {
+    window.scrollTo(0, 0);
   }
 }
 
