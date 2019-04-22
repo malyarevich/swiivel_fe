@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormSql} from "../../model/form.model";
 
 @Component({
@@ -8,11 +8,17 @@ import {FormSql} from "../../model/form.model";
 })
 export class VFormInfoGeneralComponent implements OnInit {
   @Input() form: FormSql;
+  @Output() updatedFormInfoEmitter = new EventEmitter();
 
   constructor() {
   }
 
   ngOnInit() {
+  }
+
+  resetFormSelected()
+  {
+    this.updatedFormInfoEmitter.emit();
   }
 
   // TODO Create directive ConvertData for Safari browser

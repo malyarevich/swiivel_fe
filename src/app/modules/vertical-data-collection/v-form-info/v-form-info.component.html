@@ -13,7 +13,9 @@
     </div>
     <div class="col-sm-6">
       <div class="app-form-table-block-wrapper h-100">
-        <app-v-form-info-general [form]="form"></app-v-form-info-general>
+        <app-v-form-info-general [form]="form"
+                                 (updatedFormInfoEmitter)="onUpdateFormInfo($event)">
+        </app-v-form-info-general>
       </div>
     </div>
   </div>
