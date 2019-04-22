@@ -1,6 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormSql} from "../../model/form.model";
 import {TEMPLATE_STATUS} from "../../../../enums/template-status";
+import {VFormService} from "../../v-form.service";
 
 @Component({
   selector: 'app-v-form-info-header',
@@ -9,6 +10,7 @@ import {TEMPLATE_STATUS} from "../../../../enums/template-status";
 })
 export class VFormInfoHeaderComponent implements OnInit {
   @Input() form: FormSql;
+  @Output() updatedFormInfoEmitter = new EventEmitter();
 
   statuses = [
     TEMPLATE_STATUS.STATUS_ACTIVE,
@@ -18,7 +20,7 @@ export class VFormInfoHeaderComponent implements OnInit {
   ];
   STATUS_REVIEW = TEMPLATE_STATUS.STATUS_REVIEW;
 
-  constructor() {
+  constructor(private vFormService: VFormService) {
   }
 
   ngOnInit() {
@@ -31,6 +33,12 @@ export class VFormInfoHeaderComponent implements OnInit {
       'app-btn-status-draft': status === TEMPLATE_STATUS.STATUS_DRAFT,
       'app-btn-status-review': status === TEMPLATE_STATUS.STATUS_REVIEW,
     }
+  }
+
+  changeStatus(id, status) {
+    this.vFormService.changeStatus(id, status).subscribe(res => {
+      this.updatedFormInfoEmitter.emit();
+    });
   }
 
 }

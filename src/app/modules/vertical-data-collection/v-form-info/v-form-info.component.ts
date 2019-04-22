@@ -18,15 +18,19 @@ export class VFormInfoComponent implements OnInit {
 
   ngOnInit() {
    this.setFormId();
-   this.vFormService.getOneFormSql(this.formId).subscribe((res) => {
-     this.form = res;
-   })
+   this.getFormInfo();
   }
 
   setFormId() {
     this.route.params.subscribe((params) => {
       this.formId = params['id'];
     });
+  }
+
+  getFormInfo() {
+    this.vFormService.getOneFormSql(this.formId).subscribe((res) => {
+      this.form = res;
+    })
   }
 
   // Form info table nav emitters
@@ -43,5 +47,7 @@ export class VFormInfoComponent implements OnInit {
   }
   // End form info table nav emitters
 
-
+  onUpdateFormInfo(event) {
+    this.getFormInfo();
+  }
 }
