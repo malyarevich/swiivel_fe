@@ -18,27 +18,34 @@
           </a>
         </td>
         <td><span class="app-text-primary font-weight-bold">{{item.type | titlecase}}</span></td>
-        <td>
+        <td style="max-width: 300px">
           <ng-container *ngIf="item.permissions?.length">
-            <span class="font-weight-bold"
-                  *ngFor="let permission of item.permissions">{{permission.user.full_name}}  </span>
+            <span class="mr-2" *ngFor="let permission of item.permissions">
+              <img class="img-responsive mr-1" width="7%" src="assets/images/temp/person-foto-placeholder.png">
+              <p class="app-text-small d-inline-block mb-0 font-weight-bold">{{permission.user.full_name}}</p>
+            </span>
           </ng-container>
           <button type="button"
-                  class="btn app-invite-btn"
+                  class="btn app-invite-btn app-text-small py-0 px-1"
                   data-toggle="modal"
                   data-target="#formAccess"
-                  (click)="formSelected = item.mongo_id">
-            <span class="app-text-primary">+ Invite Users</span>
+                  (click)="formSelected = item.id">
+            <span class="app-text-primary app-text-small font-weight-bold">+ Invite Users</span>
           </button>
           <app-v-form-access-modal (resetFormSelectedEmitter)="resetFormSelected($event)"
                                    [formSelected]="formSelected">
           </app-v-form-access-modal>
         </td>
-        <td>
-          <span class="font-weight-bold">{{item.owner.full_name}}</span>
-          <span class="app-form-table-second-color"> {{ item.owner.role.role_name}}</span>
+        <td style="max-width: 250px">
+          <p class="font-weight-bold app-text-small mb-0">
+            <img class="img-responsive mr-1" width="9%" src="assets/images/temp/person-foto-placeholder.png">
+            {{item.owner.full_name}}
+            <span class="app-text-second">
+            {{ item.owner.role.role_name}}
+          </span>
+          </p>
         </td>
-        <td>{{convertDate(item.updated_at) | date:'dd-MM-yyyy'}}
+        <td nowrap>{{convertDate(item.updated_at) | date:'dd-MM-yyyy'}}
           <span class="app-form-table-second-color"> {{convertDate(item.updated_at) | date:'shortTime'}}</span>
         </td>
         <td>
@@ -50,12 +57,12 @@
                     ngbDropdownToggle
                     appClickStopPropagation>
               <ng-template [ngIf]="item.status === STATUS_REVIEW" [ngIfElse]="chevron">
-              <span>{{'In ' + item.status | titlecase}}
+              <span class="font-weight-bold app-text-small">{{'In ' + item.status | titlecase}}
                 <i class="fas fa-hourglass-start"></i>
               </span>
               </ng-template>
               <ng-template #chevron>
-              <span>{{item.status | titlecase}}
+              <span class="font-weight-bold app-text-small">{{item.status | titlecase}}
                 <i class="fas fa-chevron-down"></i>
               </span>
               </ng-template>
@@ -72,24 +79,24 @@
         </td>
         <td nowrap>
           <button type="button"
-                  class="btn btn-secondary app-btn-primary app-btn-sml mr-2 "
+                  class="btn app-btn-primary py-0 px-1 mr-2 p"
                   routerLink="v-form-constructor/{{item.mongo_id}}"
                   routerLinkActive="active"
                   appClickStopPropagation>
-            <span><i class="fas fa-pen"></i> Edit</span>
+            <span class="app-text-small font-weight-bold"><i class="fas fa-pen"></i> Edit</span>
           </button>
           <button type="button"
-                  class="btn btn-secondary app-btn-primary app-btn-sml mr-2 "
+                  class="btn app-btn-primary py-0 px-1 mr-2 "
                   routerLink="onlineform/{{item.mongo_id}}"
                   routerLinkActive="active"
                   appClickStopPropagation>
-            <span><i class="far fa-eye"></i> View</span>
+            <span class="app-text-small font-weight-bold"><i class="far fa-eye"></i> View</span>
           </button>
           <button type="button"
-                  class="btn btn-outline-danger app-btn-sml mr-2 "
+                  class="btn btn-outline-danger py-0 px-1 mr-2 "
                   (click)="removeForm(item.mongo_id)"
                   appClickStopPropagation>
-            <span><i class="fas fa-trash-alt"></i> Delete</span>
+            <span class="app-text-small font-weight-bold"><i class="fas fa-trash-alt"></i> Delete</span>
           </button>
           <button appClickStopPropagation
                   class="btn app-btn-sml mr-2 ">
