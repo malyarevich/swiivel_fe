@@ -68,6 +68,7 @@ import { VFormStatisticViewsComponent } from './v-form-table/v-form-statistic/v-
 import { VFormStatisticInvitesComponent } from './v-form-table/v-form-statistic/v-form-statistic-invites/v-form-statistic-invites.component';
 import { ProgressBarComponent } from './common-components/progress-bar/progress-bar.component';
 import { VFormStatisticSubmissionsComponent } from './v-form-table/v-form-statistic/v-form-statistic-submissions/v-form-statistic-submissions.component';
+import { VFormDrawingComponent } from './v-form-constructor/v-form-builder/v-documents-forms/v-forms-container/v-form-drawing/v-form-drawing.component';
 import { VFormInfoComponent } from './v-form-info/v-form-info.component';
 import { VFormInfoHeaderComponent } from './v-form-info/v-form-info-header/v-form-info-header.component';
 import { VFormInfoStatsComponent } from './v-form-info/v-form-info-stats/v-form-info-stats.component';
@@ -182,6 +183,7 @@ const routes: Routes = [
     VFormStatisticInvitesComponent,
     ProgressBarComponent,
     VFormStatisticSubmissionsComponent,
+    VFormDrawingComponent,
     VFormInfoComponent,
     VFormInfoHeaderComponent,
     VFormInfoStatsComponent,

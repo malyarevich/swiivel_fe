@@ -16,7 +16,8 @@ import {FormPayment, TYPE_NAME} from "./v-form-payment/model/form-payment.model"
 import {ConsentInfo, consentItemDefault} from "./v-consent/model/consent.model";
 import {DocumentSideBar, DocumentsModel} from "./v-documents-forms/model/documents.model";
 import {GeneralInfoIsValidService} from "../../services/general-info-is-valid.service";
-import {FormsPDFModel} from "./v-documents-forms/model/formsPDF.model";
+import {FormPDFDownloadModel, FormsPDFModel} from "./v-documents-forms/model/formsPDF.model";
+import {VFilesService} from "../../v-files.service";
 
 @Component({
   selector: 'app-v-form-table',
@@ -44,8 +45,8 @@ export class VFormBuilderComponent implements OnInit {
   isFormsFields: boolean = false;
   isConsent: boolean = false;
   isDocumentsForms: DocumentSideBar = {
-    isActiveAll: false,
-    isDocuments: true,
+    isActiveAll: true,
+    isDocuments: false,
     isAddDocument: false,
     isForms: true,
     isAddForms: false
@@ -137,7 +138,8 @@ export class VFormBuilderComponent implements OnInit {
               private router: Router,
               private route: ActivatedRoute,
               private location: Location,
-              private generalInfoIsValidService: GeneralInfoIsValidService) {
+              private generalInfoIsValidService: GeneralInfoIsValidService,
+              private fileService: VFilesService) {
 
   }
 
@@ -175,6 +177,8 @@ export class VFormBuilderComponent implements OnInit {
     this.isDocumentsForms.isAddDocument=false;
   }
   removeDocument(id: string):void{
+    this.documents = this.documents.filter(doc=>doc.id!=id);
+
   }
 
   addNewFormsPDF(name: string):void{
@@ -191,7 +195,7 @@ export class VFormBuilderComponent implements OnInit {
         isBold: false,
         isItalic: false
       },
-      form:{}
+      form: null
     };
     this.formsPDF.push(form);
     this.isDocumentsForms.isAddForms=false;
@@ -200,6 +204,7 @@ export class VFormBuilderComponent implements OnInit {
   removeFormsPDF(id: string){
     this.formsPDF = this.formsPDF.filter(forms=>forms.id!=id);
   }
+
 
 
   loadBasicFields() {

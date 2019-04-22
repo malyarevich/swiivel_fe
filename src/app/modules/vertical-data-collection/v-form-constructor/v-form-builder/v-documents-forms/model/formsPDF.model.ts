@@ -1,13 +1,15 @@
 import {AccompanyingText} from "./documents.model";
+import {Field} from "../../../../model/field.model";
 
 export interface FormsDivModel {
+  id: string;
   top: number;
   left: number;
   width: number;
   height: number;
   isEdit: boolean;
+  linkedField?: Field | null
 }
-
 export interface FormsPDFModel {
   id:string;
   name: string;
@@ -22,5 +24,20 @@ export interface FormsPDFModel {
   //accompanyingText - should contain object with accompanying text and relative info
   accompanyingText?:AccompanyingText;
   //form - all info relative pdf form
-  form: any;
+  form?: FormPDFDownloadModel | null;
+}
+
+
+export interface FormPDFDownloadModel {
+  created_at: string,
+  filename: string,
+  formName: string,
+  hash: string,
+  link: string,
+  name: string,
+  type: string,
+  updated_at: string,
+  _id: string,
+  fieldsPdf?: FormsDivModel[],
+  numberOfPages?:number
 }
