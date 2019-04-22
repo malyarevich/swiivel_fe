@@ -30,4 +30,22 @@ export class VFilesService {
         })
       );
   }
+
+  getFormsPDFList():Observable<any>{
+    return this.http.get(`${environment.apiFB}/pdfForms?api_token=${environment.api_token}`)
+      .pipe(
+        map(response => response)
+      )
+  }
+
+  uploadFormPDF(file: any): Observable<any>{
+    let params = this.params.set('formName' , 'first form').set( 'type' ,'new form');
+    return this.http.post(`${environment.apiFB}/pdfForms`, file, {params: params})
+      .pipe(
+        map((response) => {
+          return response;
+        })
+      );
+  }
+
 }

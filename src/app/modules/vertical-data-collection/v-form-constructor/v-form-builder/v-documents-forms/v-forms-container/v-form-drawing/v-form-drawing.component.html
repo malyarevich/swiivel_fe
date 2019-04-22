@@ -1,0 +1,93 @@
+<div [hidden]="false" class="canvas-wrap ">
+
+  <div id="layer1">
+
+    <canvas
+      #viewer
+      (mousedown)="mouseDown($event)"
+      (mouseup)="mouseUp($event)">
+    </canvas>
+
+  </div>
+
+  <div class="test-c">
+    <div *ngFor="let div of formsPDF.form.fieldsPdf" >
+      <div
+        [ngStyle]="styleObject(div)"
+        [ngClass]="div.isEdit?'div-inside-active':'div-inside'"
+        class=""
+        ngbDropdown
+        placement="left"
+        autoClose="outside"
+        #myDrop="ngbDropdown"
+      >
+        <div *ngIf="div.isEdit" class="row no-gutters align-items-center div-inside-wrap">
+          <div class="col-3 row no-gutters align-items-center">
+            <div class="col justify-content-center">
+              <span id="dropdownBasic1" ngbDropdownToggle><i class="fas fa-pen fa-xs "></i></span>
+            </div>
+            <div class="col justify-content-center" (click)="removeDiv(div.id)" >
+              <span ><i class="fas fa-trash fa-xs "></i></span>
+            </div>
+
+
+          </div>
+
+        </div>
+        <div [ngStyle]="styleObject(div)" (click)="div.isEdit=!div.isEdit"></div>
+
+        <div class="div-list-field" ngbDropdownMenu aria-labelledby="dropdownBasic1">
+          <input class="form-control mb-3 search-input" [(ngModel)]="searchText" placeholder="Search...">
+          <div class="justify-content-center">
+          <ul class="list-group justify-content-center">
+            <li
+              [ngClass]="div.linkedField?.mapped==field.mapped?'active':'do-not-active'"
+              (click)="linkFieldToDiv(field, div)"
+              class="list-group-item  ml-2 mb-3 pl-2 py-0"
+              *ngFor="let field of existingFields | filter : searchText"
+            >
+              {{field.name}}
+            </li>
+          </ul>
+            <div class="row align-items-center row-button">
+              <div class="col-5 ml-2">
+                <button class="btn btn-outline-primary form-control" (click)="$event.stopPropagation(); myDrop.close();">Close</button>
+              </div>
+              <div class="col-5 pr-2">
+                <button class="btn btn-primary form-control" (click)="$event.stopPropagation(); myDrop.close();">Save</button>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="layer3">
+
+    <pdf-viewer
+      [original-size]="false"
+      [src]="{ url: formsPDF.form.link+token}"
+      [render-text-mode]="0"
+      [show-all]="false"
+      [page]="1"
+      (error)="onError($event)"
+      (on-progress)="onProgress($event)"
+      (after-load-complete)="loadComplete($event)"
+    >
+    </pdf-viewer>
+<!--    <pdf-viewer-->
+<!--      [original-size]="false"-->
+<!--      [src]="pdfSrc"-->
+<!--      [render-text-mode]="0"-->
+<!--      (error)="onError($event)"-->
+<!--      (on-progress)="onProgress($event)"-->
+<!--      (after-load-complete)="loadComplete($event)"-->
+<!--    >-->
+<!--    </pdf-viewer>-->
+
+  </div>
+
+</div>

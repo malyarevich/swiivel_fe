@@ -47,9 +47,9 @@
 </div>
 <!--End Section-->
 
-<div class="app-section-wrapper mb-2" *ngFor="let forms of formsPDF">
+<div  *ngFor="let forms of formsPDF">
 
-
+<div class="app-section-wrapper mb-2">
   <div class="row no-gutters align-items-center">
     <div class="col-5 row no-gutters align-items-center">
       <div class=" col-1 row align-items-center no-gutters">
@@ -110,15 +110,15 @@
 
   </div>
 
-  <div *ngIf="forms.isNew"  class="row  align-items-center mt-3 no-gutters ">
+  <div [hidden]="!forms.isNew"  class="row  align-items-center mt-3 no-gutters ">
 
     <div class="row  align-items-center col-7 pl-5">
 
       <div class="col-6  "
         [ngClass]="{'app-input-fill': true}">
-        <label for="formTypes" class="app-input-label">Form Type</label>
+        <label for="formTypesN" class="app-input-label">Form Type</label>
         <select class="app-input "
-                id="formTypes">
+                id="formTypesN">
           <option value="">New Form</option>
         </select>
       </div>
@@ -139,10 +139,24 @@
 
     <div  class="col-4 input-group pl-3">
       <div class="input-group-prepend form-control p-0">
-        <span class="input-group-text form-control" id="basic-addon1"></span>
+        <span class="input-group-text form-control" id="basic-addon1">{{forms.form?.name}}</span>
       </div>
         <div class="input-group-append">
-          <button class="btn btn-primary d-u-button" type="button" id="button-addon2">Upload</button>
+          <input
+            type="file"
+            #uploader
+            accept=".pdf,.doc,.docx,.jpg"
+            (change)="fileChange($event, forms)"
+            hidden
+          >
+          <button
+            class="btn btn-primary d-u-button"
+            type="button"
+            id="button-addon2"
+            (click)="uploader.click()"
+          >
+            Upload
+          </button>
         </div>
     </div>
 
@@ -157,7 +171,7 @@
 
 
 
-  <div *ngIf="!forms.isNew"  class="row  align-items-center mt-3 no-gutters ">
+  <div [hidden]="forms.isNew"  class="row  align-items-center mt-3 no-gutters ">
 
     <div class="row  align-items-center col-5">
 
@@ -166,7 +180,7 @@
         <label for="formTypes" class="app-input-label">Form Type</label>
         <select class="app-input "
                 id="formTypes">
-          <option value="">New Form</option>
+          <option value="">Existing Form</option>
         </select>
       </div>
 
@@ -175,14 +189,15 @@
 
     <div class="row  align-items-center col-6 no-gutters">
 
-    <div  class="col-9 pr-1"
+    <div class="col-9 pr-1"
          [ngClass]="{'app-input-fill': true}">
       <label for="formExisting" class="app-input-label">Form</label>
-      <select class="app-input font-weight-bold"
-              id="formExisting">
-        <option value="">Edminify Elementary School Busing Form for Parents. pdf</option>
-        <option value="">Edminify Elementary School Calendar (2018-2019).pdf</option>
-        <option value="">Edminify Elementary School Busing Form for Parents. pdf</option>
+      <select class="app-input font-weight-bold" [(ngModel)]="forms.form"
+              id="formExisting"
+              (ngModelChange)="testLog($event)"
+      >
+        <option *ngFor="let pdf of existingFormsPDF" [ngValue]="pdf"
+                [selected]="forms.form?._id===pdf._id">{{pdf.name}}</option>
       </select>
     </div>
       <div class="col-3  row no-gutters slider-item align-items-center">
@@ -208,56 +223,14 @@
 
 </div>
 
-<div class=" row justify-content-center my-3">
-  <div class="col-8  justify-content-center row app-section-wrapper">
-    <div [hidden]="false" class="canvas-wrap ">
-
-      <div id="layer1">
-
-        <canvas
-          #viewer
-          (mousedown)="mouseDown($event)"
-          (mouseup)="mouseUp($event)">
-        </canvas>
-
-      </div>
-
-      <div class="test-c">
-        <div *ngFor="let div of divs">
-          <div
-            [ngStyle]="styleObject(div)"
-
-            class="div-inside"
-            ngbDropdown
-            placement="bottom-right"
-            autoClose="outside"
-            open="true"
-          >
-            <span id="dropdownBasic1" ngbDropdownToggle><i class="fas fa-pen fa-xs"></i></span>
-            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-              <ul class="list-group">
-                <li class="list-group-item mb-3 py-0" *ngFor="let field of existingFields">{{field.name}}</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <div id="layer3">
-
-        <pdf-viewer
-
-          [src]="pdfSrc"
-          [render-text-mode]="0"
-          (after-load-complete)="loadComplete($event)"
-        >
-        </pdf-viewer>
-
-      </div>
+<!--  <div  class=" row justify-content-center my-3 pt-3">-->
+  <div *ngIf="forms.form"  class=" row justify-content-center my-3 pt-3">
+    <div  class="col-8  justify-content-center row app-section-wrapper">
+      <app-v-form-drawing [existingFields]="existingFields" [formsPDF]="forms"></app-v-form-drawing>
 
     </div>
 
   </div>
 
 </div>
+

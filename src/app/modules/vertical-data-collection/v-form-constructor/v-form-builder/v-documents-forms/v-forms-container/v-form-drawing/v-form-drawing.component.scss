@@ -1,4 +1,4 @@
-@import '../../../../../../../styles/variables/colors';
+@import '../../../../../../../../styles/variables/colors';
 canvas {
   cursor: crosshair;
   border: 1px solid #000000;
@@ -11,9 +11,9 @@ canvas {
   height: 1056px;
 
 }
- canvas { position:absolute;
-   top:0; left:0;
-   z-index:5}
+canvas { position:absolute;
+  top:0; left:0;
+  z-index:5}
 .test-c{
   position:absolute;
   top:0;
@@ -23,34 +23,38 @@ canvas {
 
 }
 .div-inside-wrap{
-  z-index: 9999;
+  z-index: 9900;
   margin-top: -30px!important;
 
-  position: absolute;
+  //position: absolute;
 }
 .list-group-item{
-  opacity: 1.2;
+  cursor: pointer;
+  z-index: 9999;
+  height: 27px;	width: 238px;
 }
 
 .div-inside{
+  border: 2px solid #000000;
   background-color: white;
   position: absolute;
-  z-index: 9999;
+  z-index: 9900;
   font-size: 0.5rem!important;
 }
 .div-inside-active{
   border: 2px solid #4350A2;
-  opacity: 0.8;
+  //opacity: 0.8;
   background-color: #EBEEFF;
   position: absolute;
-  z-index: 9999;
+  z-index: 9900;
 }
 
 .dropdown-toggle::after {
   display:none;
 }
-.fa-pen{
-  color: $icon-grey-color;
+.fa-pen, .fa-trash{
+  //color: $icon-grey-color;
+  color: black;
 
 }
 
@@ -108,4 +112,20 @@ a.active{
 .d-u-button{
   background-color: $element-base-color;
   color: white;
+}
+
+
+.do-not-active{
+  height: 27px;	width: 238px;
+  border-radius: 3px;	background-color: #F6F6F6;	box-shadow: 0 4px 8px 0 rgba(153,162,215,0.22);
+}
+
+
+.div-list-field{
+  height: 685px;	width: 280px;	border: 1px solid #F6F6F6;	border-radius: 3px;
+  overflow:auto;
+}
+
+.row-button{
+  width: 280px;
 }

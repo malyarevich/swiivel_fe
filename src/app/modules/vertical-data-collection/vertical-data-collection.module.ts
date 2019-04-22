@@ -68,6 +68,7 @@ import { VFormStatisticViewsComponent } from './v-form-table/v-form-statistic/v-
 import { VFormStatisticInvitesComponent } from './v-form-table/v-form-statistic/v-form-statistic-invites/v-form-statistic-invites.component';
 import { InvitesProgressBarComponent } from './v-form-table/v-form-statistic/v-form-statistic-invites/invites-progress-bar/invites-progress-bar.component';
 import { VFormStatisticSubmissionsComponent } from './v-form-table/v-form-statistic/v-form-statistic-submissions/v-form-statistic-submissions.component';
+import { VFormDrawingComponent } from './v-form-constructor/v-form-builder/v-documents-forms/v-forms-container/v-form-drawing/v-form-drawing.component';
 
 const routes: Routes = [
   {
@@ -164,6 +165,7 @@ const routes: Routes = [
     VFormStatisticInvitesComponent,
     InvitesProgressBarComponent,
     VFormStatisticSubmissionsComponent,
+    VFormDrawingComponent,
   ],
   imports: [
     NgbModule,
