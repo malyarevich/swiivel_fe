@@ -1,4 +1,4 @@
-<div class="row no-gutters py-4">
+<div class="row no-gutters py-4" *ngIf="form">
 
   <div class="col">
     <h4 class="font-weight-bold d-inline-block pr-3">{{form?.name | titlecase}}</h4>
@@ -42,10 +42,10 @@
     <button class="btn app-btn-outline-primary mr-3">
       Preview Form
     </button>
-    <button class="btn app-btn-primary">
+    <button class="btn app-btn-primary"
+            routerLink="/vertical-data-collection/v-form-constructor/{{form.mongo_id}}"
+            routerLinkActive="active">
       Edit Form
     </button>
-
   </div>
-
 </div>
