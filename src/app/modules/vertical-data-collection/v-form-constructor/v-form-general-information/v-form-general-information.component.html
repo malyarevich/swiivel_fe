@@ -3,11 +3,11 @@
 </div>
 
 <div class="container-fluid">
-  <div class="row mt-5">
-    <div class="col-2 rounded ml-5 p-0">
+  <div class="row mt-5 px-5">
+    <div class="col-2 rounded p-0">
       <app-v-form-general-menu (scrollToEmitter)="onScrollTo($event)"></app-v-form-general-menu>
     </div>
-    <div class=" col-6 offset-1">
+    <div class=" col-10">
       <form [formGroup]="generalInfoForm" (ngSubmit)="onSubmit()">
         <div class="container bg-white rounded p-5" #basicInfo>
           <div class="justify-content-md-center mb-3 pt-3 text-center">
