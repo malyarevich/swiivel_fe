@@ -50,12 +50,13 @@
     <td nowrap class="text-right align-middle">
       <i class="fas fa-user fa-lg app-form-table-icon mr-4"></i>
       <i class="fas fa-share fa-lg app-form-table-icon mr-4"></i>
-      <div class="d-inline-block">
-        <i class="fas fa-chevron-down fa-lg app-form-table-icon"></i>
-      </div>
+      <span (click)="showRowInfo = !showRowInfo">
+        <i *ngIf="!showRowInfo" class="fas fa-chevron-down fa-lg app-form-table-icon"></i>
+        <i *ngIf="showRowInfo" class="fas fa-chevron-up fa-lg app-form-table-icon"></i>
+      </span>
     </td>
   </tr>
-  <tr>
+  <tr *ngIf="showRowInfo">
     <td class="app-fi-submission-inside" colspan="6">
       <app-v-form-info-submission-inside></app-v-form-info-submission-inside>
     </td>

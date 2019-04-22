@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class VFormInfoSubmissionsComponent implements OnInit {
 
+  showRowInfo: boolean = true;
+
   cols = [
     {
       id: 'account',
