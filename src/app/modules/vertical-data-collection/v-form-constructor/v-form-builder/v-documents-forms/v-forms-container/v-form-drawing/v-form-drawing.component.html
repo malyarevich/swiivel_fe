@@ -37,6 +37,31 @@
         <div [ngStyle]="styleObject(div)" (click)="div.isEdit=!div.isEdit"></div>
 
         <div class="div-list-field" ngbDropdownMenu aria-labelledby="dropdownBasic1">
+          <div class="row mb-3 align-items-center row-button">
+            <div class="col-5 ml-2">
+              <button
+                class="btn btn-outline-primary form-control"
+                (click)="$event.stopPropagation();
+                 myDrop.close();
+                 searchText='';
+                 div.isEdit=!div.isEdit;"
+              >
+                Close
+              </button>
+            </div>
+            <div class="col-5 pr-2">
+              <button
+                class="btn btn-primary form-control"
+                (click)="$event.stopPropagation();
+                 myDrop.close();
+                 searchText='';
+                 div.isEdit=!div.isEdit;"
+              >
+                Save
+              </button>
+
+            </div>
+          </div>
           <input class="form-control mb-3 search-input" [(ngModel)]="searchText" placeholder="Search...">
           <div class="justify-content-center">
           <ul class="list-group justify-content-center">
@@ -49,15 +74,7 @@
               {{field.name}}
             </li>
           </ul>
-            <div class="row align-items-center row-button">
-              <div class="col-5 ml-2">
-                <button class="btn btn-outline-primary form-control" (click)="$event.stopPropagation(); myDrop.close();">Close</button>
-              </div>
-              <div class="col-5 pr-2">
-                <button class="btn btn-primary form-control" (click)="$event.stopPropagation(); myDrop.close();">Save</button>
 
-              </div>
-            </div>
           </div>
         </div>
       </div>
