@@ -67,6 +67,7 @@ export class VFormInfoSubmissionsComponent implements OnInit {
     // console.log(data);
   }
 
+  // TODO move to single directive
   convertDate(date) {
     return date.replace(/\s/g, "T");
   }
