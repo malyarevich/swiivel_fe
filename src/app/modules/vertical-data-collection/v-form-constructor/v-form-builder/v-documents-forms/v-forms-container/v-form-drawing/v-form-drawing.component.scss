@@ -11,6 +11,7 @@ canvas {
   height: 1056px;
 
 }
+
 canvas { position:absolute;
   top:0; left:0;
   z-index:5}
@@ -130,3 +131,12 @@ a.active{
 .row-button{
   width: 280px;
 }
+
+/deep/.pagination .page-link{
+  color: $element-base-color;
+}
+/deep/.pagination .page-item.active .page-link{
+  background-color: $element-base-color;
+  color: white;
+}
+
