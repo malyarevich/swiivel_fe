@@ -41,3 +41,18 @@ export interface FormPDFDownloadModel {
   fieldsPdf?: FormsDivModel[][] | null
   numberOfPages?:number
 }
+
+export const formPDFItemDefault: FormsPDFModel = {
+  id: '',
+  name: '',
+  isNew: true,
+  isPerFamily: true,
+  isAllowDownloadUpload: false,
+  isFillableOnline: false,
+  accompanyingText: {
+    data: '',
+    isBold: false,
+    isItalic: false
+  },
+  form: null
+};

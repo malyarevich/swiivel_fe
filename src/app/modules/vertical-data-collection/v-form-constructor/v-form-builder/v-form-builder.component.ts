@@ -14,9 +14,9 @@ import {
 import {Form} from "../../model/form.model";
 import {FormPayment, TYPE_NAME} from "./v-form-payment/model/form-payment.model";
 import {ConsentInfo, consentItemDefault} from "./v-consent/model/consent.model";
-import {DocumentSideBar, DocumentsModel} from "./v-documents-forms/model/documents.model";
+import {documentItemDefault, DocumentSideBar, DocumentsModel} from "./v-documents-forms/model/documents.model";
 import {GeneralInfoIsValidService} from "../../services/general-info-is-valid.service";
-import {FormPDFDownloadModel, FormsPDFModel} from "./v-documents-forms/model/formsPDF.model";
+import {FormPDFDownloadModel, formPDFItemDefault, FormsPDFModel} from "./v-documents-forms/model/formsPDF.model";
 import {VFilesService} from "../../v-files.service";
 import {FBSections, fbSections} from "./v-consent/fb-active-section.model";
 
@@ -40,15 +40,15 @@ export class VFormBuilderComponent implements OnInit {
   sideBarFields: Field[];
   tuitionContract: TuitionContract = tuitionContractDefault;
   consentInfo: ConsentInfo[];
-  isEditConsentName: number | null = null;
   eligible: string;
 
+  isEditConsentName: number | null = null;
+  isEditDocumentName: string | null = null;
+  isEditFormPDFName: string | null = null;
+
   isDocumentsForms: DocumentSideBar = {
-    // isActiveAll: false,
     isDocuments: true,
-    isAddDocument: false,
     isForms: true,
-    isAddForms: false
   };
 
   documents: DocumentsModel[] = [];
@@ -155,24 +155,10 @@ export class VFormBuilderComponent implements OnInit {
 
   }
 
-
-  addNewDocument(name: string): void {
-    if (name.length < 3) return;
-    const newDocument: DocumentsModel = {
-      id: uuid(),
-      name: name,
-      isUpload: true,
-      isPerFamily: true,
-      accompanyingText: {
-        data: '',
-        isBold: false,
-        isItalic: false
-      },
-      data: '',
-      dataTypeAllowed: []
-    };
-    this.documents.push(newDocument);
-    this.isDocumentsForms.isAddDocument = false;
+  addDocumentItem() {
+    let documentItem = cloneDeep(documentItemDefault);
+    documentItem.id = uuid();
+    this.documents.push(documentItem);
   }
 
   removeDocument(id: string): void {
@@ -180,24 +166,10 @@ export class VFormBuilderComponent implements OnInit {
 
   }
 
-  addNewFormsPDF(name: string): void {
-    if (name.length < 3) return;
-    const form: FormsPDFModel = {
-      id: uuid(),
-      name: name,
-      isNew: true,
-      isPerFamily: true,
-      isAllowDownloadUpload: false,
-      isFillableOnline: false,
-      accompanyingText: {
-        data: '',
-        isBold: false,
-        isItalic: false
-      },
-      form: null
-    };
-    this.formsPDF.push(form);
-    this.isDocumentsForms.isAddForms = false;
+  addFormPDF() {
+    let formPDFItem = cloneDeep(formPDFItemDefault);
+    formPDFItem.id = uuid();
+    this.formsPDF.push(formPDFItem);
   }
 
   removeFormsPDF(id: string) {

@@ -22,11 +22,8 @@ export interface AccompanyingText {
 }
 
 export interface DocumentSideBar {
-  // isActiveAll: boolean,
   isDocuments: boolean,
-  isAddDocument: boolean,
   isForms: boolean,
-  isAddForms
 }
 
 export interface DataTypeAllowed {
@@ -134,4 +131,18 @@ export const dataTypes: DataTypeAllowed = {
     }
   ],
   isImages: false
+};
+
+export const documentItemDefault: DocumentsModel = {
+  id: '',
+  name: '',
+  isUpload: true,
+  isPerFamily: true,
+  accompanyingText: {
+    data: '',
+    isBold: false,
+    isItalic: false
+  },
+  data: '',
+  dataTypeAllowed: []
 };
