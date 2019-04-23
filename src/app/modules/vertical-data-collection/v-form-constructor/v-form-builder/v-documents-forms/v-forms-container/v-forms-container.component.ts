@@ -19,8 +19,7 @@ export class VFormsContainerComponent implements OnInit, OnChanges{
   sectionName: string = "School Forms";
   sectionWidth: string = "4 Columns";
   existingFormsPDF:  FormPDFDownloadModel[] = [];
-
-
+  page = 1;
 
   constructor(private fileService: VFilesService){}
 

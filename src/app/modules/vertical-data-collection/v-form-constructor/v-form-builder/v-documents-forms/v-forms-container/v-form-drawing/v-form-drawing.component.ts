@@ -18,7 +18,7 @@ import {v4 as uuid} from 'uuid';
 import {VFilesService} from "../../../../../v-files.service";
 import {HttpParams} from "@angular/common/http";
 import {environment} from "../../../../../../../../environments/environment";
-
+import{range} from 'lodash';
 
 @Component({
   selector: 'app-v-form-drawing',
@@ -28,7 +28,7 @@ import {environment} from "../../../../../../../../environments/environment";
 export class VFormDrawingComponent implements AfterViewInit, OnDestroy, OnInit, OnChanges{
   searchText: string = '';
   @Input() width = 816;
-  // @Input() page: number;
+  @Input() pages: number;
   @Input() height = 1056;
   @Input() existingFields: Field[];
   @Input() formsPDF: FormsPDFModel;
@@ -36,7 +36,7 @@ export class VFormDrawingComponent implements AfterViewInit, OnDestroy, OnInit, 
 
   params = new HttpParams().set("api_token", environment.api_token);
 
-  pdfSrc = "../../../../../../../../assets/files/BBY Contract 1 Student.pdf";
+  pdfSrc = "../../ =1../../../../../../assets/files/BBY Contract 1 Student.pdf";
   // pdfSrc = "../../../../../../../../assets/files/Var1.pdf";
   // pdfSrc = "../../../../../../../../assets/files/pdf-test.pdf";
   canvasEl: HTMLCanvasElement;
@@ -44,6 +44,7 @@ export class VFormDrawingComponent implements AfterViewInit, OnDestroy, OnInit, 
   drawingSubscription: Subscription;
   lastPos;
   finalPos;
+  page =1;
   token=`?api_token=${environment.api_token}`;
 //  existingFormsPDF: FormPDFDownloadModel[] = [];
 
@@ -52,7 +53,8 @@ export class VFormDrawingComponent implements AfterViewInit, OnDestroy, OnInit, 
 
   ngOnInit(): void {
   //  this.getExistingsFormPDFList();
-    console.log(this.formsPDF);
+   // this.pages = range(1, this.formsPDF.form.numberOfPages+1);
+    console.log(this.formsPDF.form.numberOfPages, this.pages);
     // console.log(this.page)
   }
 
@@ -74,7 +76,7 @@ export class VFormDrawingComponent implements AfterViewInit, OnDestroy, OnInit, 
   }
 
   removeDiv(id: string):void{
-    this.formsPDF.form.fieldsPdf=this.formsPDF.form.fieldsPdf.filter(div=>div.id!=id);
+    this.formsPDF.form.fieldsPdf[this.page-1]=this.formsPDF.form.fieldsPdf[this.page-1].filter(div=>div.id!=id);
   }
 
 
@@ -131,7 +133,10 @@ export class VFormDrawingComponent implements AfterViewInit, OnDestroy, OnInit, 
       height: Math.abs(this.finalPos.y-this.lastPos.y),
       isEdit: false
     };
-    if(div.height>5&&div.width>5) this.formsPDF.form.fieldsPdf.push(div);
+    if(div.height>5&&div.width>5){
+      if(!this.formsPDF.form.fieldsPdf[this.page-1]) this.formsPDF.form.fieldsPdf[this.page-1]=[];
+      this.formsPDF.form.fieldsPdf[this.page-1].push(div);
+    }
     this.cx.clearRect(0,0,this.width, this.height);
 
 

@@ -1,5 +1,8 @@
-<div [hidden]="false" class="canvas-wrap ">
+<div *ngIf="pages>1"  class="d-flex justify-content-center">
+  <ngb-pagination [collectionSize]="pages * 10" [(page)]="page" aria-label="Default pagination"></ngb-pagination>
 
+</div>
+<div [hidden]="false" class="canvas-wrap ">
   <div id="layer1">
 
     <canvas
@@ -11,7 +14,7 @@
   </div>
 
   <div class="test-c">
-    <div *ngFor="let div of formsPDF.form.fieldsPdf" >
+    <div *ngFor="let div of formsPDF.form.fieldsPdf[page-1]" >
       <div
         [ngStyle]="styleObject(div)"
         [ngClass]="div.isEdit?'div-inside-active':'div-inside'"
@@ -85,11 +88,13 @@
   <div id="layer3">
 
     <pdf-viewer
-      [original-size]="true"
+      [original-size]="false"
       [src]="{ url: formsPDF.form.link+token}"
       [render-text-mode]="0"
+      [autoresize]="true"
       [show-all]="false"
-      [page]="1"
+      [page]="page"
+      style="display: block;"
       (error)="onError($event)"
       (on-progress)="onProgress($event)"
       (after-load-complete)="loadComplete($event)"
