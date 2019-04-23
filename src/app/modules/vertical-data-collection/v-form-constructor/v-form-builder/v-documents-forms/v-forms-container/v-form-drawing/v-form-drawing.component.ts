@@ -36,9 +36,6 @@ export class VFormDrawingComponent implements AfterViewInit, OnDestroy, OnInit, 
 
   params = new HttpParams().set("api_token", environment.api_token);
 
-  pdfSrc = "../../ =1../../../../../../assets/files/BBY Contract 1 Student.pdf";
-  // pdfSrc = "../../../../../../../../assets/files/Var1.pdf";
-  // pdfSrc = "../../../../../../../../assets/files/pdf-test.pdf";
   canvasEl: HTMLCanvasElement;
   cx: CanvasRenderingContext2D;
   drawingSubscription: Subscription;
@@ -47,16 +44,11 @@ export class VFormDrawingComponent implements AfterViewInit, OnDestroy, OnInit, 
   loading: boolean = false;
   page =1;
   token=`?api_token=${environment.api_token}`;
-//  existingFormsPDF: FormPDFDownloadModel[] = [];
 
   constructor(private fileService: VFilesService) {
   }
 
   ngOnInit(): void {
-  //  this.getExistingsFormPDFList();
-   // this.pages = range(1, this.formsPDF.form.numberOfPages+1);
-    console.log(this.formsPDF.form.numberOfPages, this.pages);
-    // console.log(this.page)
   }
 
 
@@ -88,7 +80,6 @@ export class VFormDrawingComponent implements AfterViewInit, OnDestroy, OnInit, 
 
 
   ngAfterViewInit() {
-    // console.log('this view init');
     // get the context
     this.canvasEl = this.canvas.nativeElement;
     this.cx = this.canvasEl.getContext('2d');
@@ -123,12 +114,9 @@ export class VFormDrawingComponent implements AfterViewInit, OnDestroy, OnInit, 
       x: e.clientX - rect.left,
       y: e.clientY - rect.top
     };
-    console.log(this.lastPos, this.finalPos);
     const div: FormsDivModel={
       id: uuid(),
-      // top: this.lastPos.y<this.finalPos.y?this.lastPos.y:this.finalPos.y,
       top: Math.min(this.lastPos.y,this.finalPos.y),
-      // left: this.lastPos.x<this.finalPos.x?this.lastPos.x:this.finalPos.x,
       left: Math.min(this.lastPos.x,this.finalPos.x),
       width: Math.abs(this.finalPos.x-this.lastPos.x),
       height: Math.abs(this.finalPos.y-this.lastPos.y),
@@ -144,7 +132,7 @@ export class VFormDrawingComponent implements AfterViewInit, OnDestroy, OnInit, 
   }
 
   loadComplete(pdf: PDFDocumentProxy){
-    // console.log(pdf);
+    this.page=1;
   }
 
 

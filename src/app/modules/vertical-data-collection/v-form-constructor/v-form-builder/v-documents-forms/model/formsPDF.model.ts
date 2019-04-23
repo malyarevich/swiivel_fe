@@ -8,7 +8,8 @@ export interface FormsDivModel {
   width: number;
   height: number;
   isEdit: boolean;
-  linkedField?: Field | null
+  linkedField?: Field | any;
+  type?: string;
 }
 export interface FormsPDFModel {
   id:string;

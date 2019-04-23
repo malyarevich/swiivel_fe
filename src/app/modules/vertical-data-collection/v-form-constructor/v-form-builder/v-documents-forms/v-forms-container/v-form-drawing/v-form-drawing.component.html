@@ -1,7 +1,26 @@
-<div *ngIf="pages>1"  class="d-flex justify-content-center">
-  <ngb-pagination [collectionSize]="pages * 10" [(page)]="page" aria-label="Default pagination"></ngb-pagination>
+<div class="d-flex justify-content-center pt-4">
+  <div class="draw-div bg-white row align-items-center">
+    <div class="col-2 text-center"><span>Draw</span></div>
+    <div class="col-10 row align-items-center">
+      <div class="col-3">
+        <button class="btn btn-outline-primary form-control  btn-sm">System Field</button>
+      </div>
+      <div class="col-3">
+        <button class="btn btn-outline-primary form-control btn-sm">Checkbox</button>
 
+      </div>
+      <div class="col-3">
+        <button class="btn btn-outline-primary form-control btn-sm">Signature</button>
+
+      </div>
+      <div class="col-3">
+        <button class="btn btn-outline-primary form-control btn-sm ">Temporary Field</button>
+
+      </div>
+    </div>
+  </div>
 </div>
+
 <div [hidden]="false" class="canvas-wrap ">
   <div id="layer1">
 
@@ -13,13 +32,13 @@
 
   </div>
 
-  <div *ngIf="!loading" class="test-c d-flex justify-content-center overlay pt-5">
+  <div [hidden]="loading" class="test-c d-flex justify-content-center overlay pt-5">
     <div class="spinner-border text-light" role="status">
       <span class="sr-only">Loading...</span>
     </div>
   </div>
-  <div *ngIf="loading" class="test-c">
-    <div *ngFor="let div of formsPDF.form.fieldsPdf[page-1]" >
+  <div [hidden]="!loading" class="test-c">
+    <div *ngFor="let div of formsPDF.form.fieldsPdf[page-1]">
       <div
         [ngStyle]="styleObject(div)"
         [ngClass]="div.isEdit?'div-inside-active':'div-inside'"
@@ -34,8 +53,8 @@
             <div class="col justify-content-center">
               <span id="dropdownBasic1" ngbDropdownToggle><i class="fas fa-pen fa-xs "></i></span>
             </div>
-            <div class="col justify-content-center" (click)="removeDiv(div.id)" >
-              <span ><i class="fas fa-trash fa-xs "></i></span>
+            <div class="col justify-content-center" (click)="removeDiv(div.id)">
+              <span><i class="fas fa-trash fa-xs "></i></span>
             </div>
 
 
@@ -72,16 +91,16 @@
           </div>
           <input class="form-control mb-3 search-input" [(ngModel)]="searchText" placeholder="Search...">
           <div class="justify-content-center div-list-field">
-          <ul class="list-group justify-content-center">
-            <li
-              [ngClass]="div.linkedField?.mapped==field.mapped?'active':'do-not-active'"
-              (click)="linkFieldToDiv(field, div)"
-              class="list-group-item  ml-2 mb-3 pl-2 py-0"
-              *ngFor="let field of existingFields | filter : searchText"
-            >
-              {{field.name}}
-            </li>
-          </ul>
+            <ul class="list-group justify-content-center">
+              <li
+                [ngClass]="div.linkedField?.mapped==field.mapped?'active':'do-not-active'"
+                (click)="linkFieldToDiv(field, div)"
+                class="list-group-item  ml-2 mb-3 pl-2 py-0"
+                *ngFor="let field of existingFields | filter : searchText"
+              >
+                {{field.name}}
+              </li>
+            </ul>
 
           </div>
         </div>
@@ -105,16 +124,20 @@
       (after-load-complete)="loadComplete($event)"
     >
     </pdf-viewer>
-<!--    <pdf-viewer-->
-<!--      [original-size]="false"-->
-<!--      [src]="pdfSrc"-->
-<!--      [render-text-mode]="0"-->
-<!--      (error)="onError($event)"-->
-<!--      (on-progress)="onProgress($event)"-->
-<!--      (after-load-complete)="loadComplete($event)"-->
-<!--    >-->
-<!--    </pdf-viewer>-->
+    <!--    <pdf-viewer-->
+    <!--      [original-size]="false"-->
+    <!--      [src]="pdfSrc"-->
+    <!--      [render-text-mode]="0"-->
+    <!--      (error)="onError($event)"-->
+    <!--      (on-progress)="onProgress($event)"-->
+    <!--      (after-load-complete)="loadComplete($event)"-->
+    <!--    >-->
+    <!--    </pdf-viewer>-->
 
   </div>
+
+</div>
+<div *ngIf="pages>1" class="d-flex justify-content-center pt-4">
+  <ngb-pagination [collectionSize]="pages * 10" [(page)]="page" aria-label="Default pagination"></ngb-pagination>
 
 </div>
