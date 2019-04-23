@@ -24,7 +24,7 @@ interface ConsentInfoSignature {
 }
 
 export const consentItemDefault = {
-  title: 'Consent Name',
+  title: '',
   text: {
     value: '',
     isBold: false,

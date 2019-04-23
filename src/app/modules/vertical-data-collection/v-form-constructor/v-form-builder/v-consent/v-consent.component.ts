@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
-import {ConsentInfo} from "./model/consent.model";
+import {ConsentInfo, consentItemDefault} from "./model/consent.model";
 import { replace } from 'lodash'
 
 @Component({
@@ -19,6 +19,7 @@ export class VConsentComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    if (!this.consentInfo.length) this.consentInfo.push(consentItemDefault);
   }
 
   ngAfterViewInit() {
