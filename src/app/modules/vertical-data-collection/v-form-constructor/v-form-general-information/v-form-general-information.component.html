@@ -4,12 +4,14 @@
 
 <div class="container-fluid">
   <div class="row mt-5 px-5">
-    <div class="col-2 rounded p-0">
-      <app-v-form-general-menu (scrollToEmitter)="onScrollTo($event)"></app-v-form-general-menu>
+    <div class="col-3 rounded p-0">
+      <app-v-form-general-menu (activeSectionEmitter)="setActiveSection($event)"></app-v-form-general-menu>
     </div>
-    <div class=" col-10">
+    <div class=" col-9">
       <form [formGroup]="generalInfoForm" (ngSubmit)="onSubmit()">
-        <div class="container bg-white rounded p-5" #basicInfo>
+
+        <!--Basic Info-->
+        <div class="container bg-white rounded p-5" *ngIf="activeSection === 1">
           <div class="justify-content-md-center mb-3 pt-3 text-center">
             <span class="pt-4 app-step-title">1. BASIC FORM INFORMATION</span>
           </div>
@@ -94,10 +96,15 @@
             </div>
           </ng-container>
 
+          <div class="row justify-content-center">
+            <button class="btn app-btn-primary" (click)="activeSection = 2">Next Step</button>
+          </div>
+
         </div>
+        <!--End Basic Info-->
 
-
-        <div class="mt-4 mb-4 p-5 container bg-white rounded" #period>
+        <!--Period-->
+        <div class="p-5 container bg-white rounded" *ngIf="activeSection === 2">
 
           <div class="justify-content-md-center mb-3 text-center">
             <span class="pt-4 app-step-title">2. PERIOD</span>
@@ -148,10 +155,15 @@
             </div>
           </div>
 
+          <div class="row justify-content-center">
+            <button class="btn app-btn-primary" (click)="activeSection = 3">Next Step</button>
+          </div>
+
         </div>
+        <!--End Period-->
 
-
-        <div class="mt-4 mb-4 mt-4 p-5 container bg-white rounded" #formDates>
+        <!--Form Dates-->
+        <div class="p-5 container bg-white rounded" *ngIf="activeSection === 3">
 
           <div class="justify-content-md-center mb-3 text-center">
             <span class="pt-4 app-step-title">3. FORM DATES</span>
@@ -160,7 +172,7 @@
             <h4 class="pt-3 text-center font-weight-bold">When would you like this form to be available for
               accounts?</h4>
           </div>
-          <div class="row justify-content-center mb-4">
+          <div class="row justify-content-center mb-5">
 
             <div class="input-group col-4">
               <!--<label for="d1"><span>Start Date</span></label>-->
@@ -209,9 +221,15 @@
             </div>
           </div>
 
-        </div>
+          <div class="row justify-content-center">
+            <button class="btn app-btn-primary" (click)="activeSection = 4">Next Step</button>
+          </div>
 
-        <div class="mt-4 mb-4 mt-4 p-5 container bg-white rounded" #eligibleAccounts>
+        </div>
+        <!--End Form Dates-->
+
+        <!--ELIGIBLE ACCOUNTS-->
+        <div class="p-5 container bg-white rounded" *ngIf="activeSection === 4">
 
           <div class="justify-content-md-center mb-3 text-center">
             <span class="pt-4 app-step-title">4. ELIGIBLE ACCOUNTS</span>
@@ -352,10 +370,10 @@
 
           </div>
 
-
         </div>
+        <!--End ELIGIBLE ACCOUNTS-->
 
-        <div class="row justify-content-center">
+        <div class="row justify-content-center mt-4" *ngIf="activeSection === 4">
           <button class=" btn  app-btn-primary" type="submit">Save & Go Next Step</button>
         </div>
       </form>
