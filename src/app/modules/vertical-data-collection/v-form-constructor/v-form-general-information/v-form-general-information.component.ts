@@ -31,6 +31,8 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
   formsDublicate: FormSql[];
   isOnSubmit: boolean = false;
 
+  activeSection: number = 1;
+
   formTypeCreation: number = 0;
   constructor(private activatedRoute: ActivatedRoute,
               private router: Router,
@@ -160,9 +162,13 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
         return 'night';
     }
 
-    onScrollTo(target) {
-        this[target].nativeElement.scrollIntoView({behavior:"smooth"});
-    }
+    // onScrollTo(target) {
+    //     this[target].nativeElement.scrollIntoView({behavior:"smooth"});
+    // }
+
+  setActiveSection(value) {
+    this.activeSection = value;
+  }
 
   isInvalidCheckboxGroup(groupName: string): boolean {
     return this.generalInfoForm.controls[groupName].touched

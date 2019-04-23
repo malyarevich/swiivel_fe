@@ -28,9 +28,9 @@
 
   <div class="col px-4 py-3">
     <p class="app-text-second">ACCESS</p>
-    <p class="mb-1">
+    <p class="mb-1" *ngIf="form.permissions.length">
       <img class="img-responsive mr-1" width="8%" src="assets/images/temp/person-foto-placeholder.png">
-      <span class="font-weight-bold mr-1">{{form.permissions[0].user.full_name}}</span>
+      <span class="font-weight-bold mr-1">{{form.permissions[0]?.user.full_name}}</span>
       <span class="app-text-primary">+{{form.permissions.length - 1}}</span>
     </p>
     <p class="app-text-primary app-cursor-pointer">

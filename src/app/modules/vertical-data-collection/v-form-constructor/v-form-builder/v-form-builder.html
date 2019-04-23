@@ -113,7 +113,7 @@
               <span class="font-weight-bold">Documents</span>
               <span><i class="fas fa-question-circle pl-1" title="test"></i></span>
             </div>
-            <div class="col-1 align-self-end" (click)="isDocumentsForms.isAddDocument=!isDocumentsForms.isAddDocument">
+            <div class="col-1 align-self-end" (click)="addDocumentItem()">
               <span><i class="fas fa-plus-square"></i></span>
             </div>
             <div class="col-1 align-self-end" (click)="isDocumentsForms.isDocuments=!isDocumentsForms.isDocuments">
@@ -121,22 +121,27 @@
               <span [hidden]="isDocumentsForms.isDocuments"><i class="fas fa-caret-down ml-2"></i></span>
             </div>
           </div>
-          <div *ngIf="isDocumentsForms.isAddDocument" class="mt-2">
-            <input
-              class="form-control"
-              autofocus
-              #newDocument
-              (blur)="addNewDocument(newDocument.value); newDocument.value=''"
-              (keyup.enter)="addNewDocument(newDocument.value); newDocument.value=''"
-            >
-          </div>
 
           <div [hidden]="!isDocumentsForms.isDocuments">
-
             <div class="app-consent-item px-3 pt-3 pb-1 mt-3" *ngFor="let document of documents;">
               <div class="row no-gutters">
                 <div class="col-10">
-                  <span class="font-weight-bold">{{document.name}}</span>
+                  <span class="font-weight-bold"
+                        *ngIf="isEditDocumentName !== document.id"
+                        (click)="isEditDocumentName = document.id">
+                  {{document.name}}
+                  </span>
+
+                  <input type="text"
+                         class="form-control app-consent-name-input"
+                         autofocus
+                         *ngIf="isEditDocumentName === document.id || !document.name"
+                         (input)="isEditDocumentName = document.id"
+                         (blur)="isEditDocumentName = null"
+                         (keyup.enter)="isEditDocumentName = null"
+                         [(ngModel)]="document.name"
+                         placeholder="Document Name">
+
                 </div>
                 <div class="col-2 text-right" (click)="removeDocument(document.id)">
                   <span class=" mr-3"><i class="fas fa-trash fa-xs"></i></span>
@@ -177,10 +182,7 @@
                   </label>
                 </div>
               </div>
-
             </div>
-
-
           </div>
 
 
@@ -191,7 +193,7 @@
               <span class="font-weight-bold">Forms</span>
               <span><i class="fas fa-question-circle pl-1" title="test"></i></span>
             </div>
-            <div class="col-1 align-self-end" (click)="isDocumentsForms.isAddForms=!isDocumentsForms.isAddForms">
+            <div class="col-1 align-self-end" (click)="addFormPDF()">
               <span><i class="fas fa-plus-square"></i></span>
             </div>
             <div class="col-1 align-self-end" (click)="isDocumentsForms.isForms=!isDocumentsForms.isForms">
@@ -200,23 +202,29 @@
             </div>
           </div>
 
-          <div *ngIf="isDocumentsForms.isAddForms" class="mt-2">
-            <input
-              class="form-control"
-              autofocus
-              #newForms
-              (blur)="addNewFormsPDF(newForms.value); newForms.value=''"
-              (keyup.enter)="addNewFormsPDF(newForms.value); newForms.value=''"
-            >
-          </div>
-
           <div [hidden]="!isDocumentsForms.isForms">
 
             <div class="app-consent-item px-3 pt-3 pb-2 mt-3" *ngFor="let forms of formsPDF">
 
               <div class="row no-gutters">
                 <div class="col-10">
-                  <span class="font-weight-bold">{{forms.name}}</span>
+
+                  <span class="font-weight-bold"
+                        *ngIf="isEditFormPDFName !== forms.id"
+                        (click)="isEditFormPDFName = forms.id">
+                  {{forms.name}}
+                  </span>
+
+                  <input type="text"
+                         class="form-control app-consent-name-input"
+                         autofocus
+                         *ngIf="isEditFormPDFName === forms.id || !forms.name"
+                         (input)="isEditFormPDFName = forms.id"
+                         (blur)="isEditFormPDFName = null"
+                         (keyup.enter)="isEditFormPDFName = null"
+                         [(ngModel)]="forms.name"
+                         placeholder="Form Name">
+
                 </div>
                 <div class="col-2 text-right" (click)="removeFormsPDF(forms.id)">
                   <span class=" mr-3"><i class="fas fa-trash fa-xs"></i></span>
