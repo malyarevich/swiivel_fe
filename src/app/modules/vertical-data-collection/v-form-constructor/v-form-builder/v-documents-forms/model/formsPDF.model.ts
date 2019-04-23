@@ -26,6 +26,7 @@ export interface FormsPDFModel {
   accompanyingText?:AccompanyingText;
   //form - all info relative pdf form
   form?: FormPDFDownloadModel | null;
+  isEdit?: boolean;
 }
 
 

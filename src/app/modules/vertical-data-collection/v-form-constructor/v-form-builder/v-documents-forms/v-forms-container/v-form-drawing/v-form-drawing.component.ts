@@ -34,7 +34,6 @@ export class VFormDrawingComponent implements AfterViewInit, OnDestroy, OnInit, 
   @Input() formsPDF: FormsPDFModel;
   @ViewChild('viewer') canvas: ElementRef;
 
-  params = new HttpParams().set("api_token", environment.api_token);
 
   canvasEl: HTMLCanvasElement;
   cx: CanvasRenderingContext2D;
@@ -44,14 +43,20 @@ export class VFormDrawingComponent implements AfterViewInit, OnDestroy, OnInit, 
   loading: boolean = false;
   page =1;
   token=`?api_token=${environment.api_token}`;
+  drawingType: string = "system";
 
-  constructor(private fileService: VFilesService) {
+  constructor() {
   }
 
   ngOnInit(): void {
   }
 
 
+
+  editDivChange(div:FormsDivModel){
+    if(!this.formsPDF.isEdit) return;
+    div.isEdit=!div.isEdit;
+  }
 
 
   linkFieldToDiv(field: Field, div: FormsDivModel):void{
@@ -77,7 +82,9 @@ export class VFormDrawingComponent implements AfterViewInit, OnDestroy, OnInit, 
     // do anything with progress data. For example progress indicator
     this.loading=progressData.loaded<=progressData.total;
   }
-
+  logType(){
+    console.log(this.drawingType);
+  }
 
   ngAfterViewInit() {
     // get the context
@@ -120,7 +127,8 @@ export class VFormDrawingComponent implements AfterViewInit, OnDestroy, OnInit, 
       left: Math.min(this.lastPos.x,this.finalPos.x),
       width: Math.abs(this.finalPos.x-this.lastPos.x),
       height: Math.abs(this.finalPos.y-this.lastPos.y),
-      isEdit: false
+      isEdit: false,
+      type: this.drawingType
     };
     if(div.height>5&&div.width>5){
       if(!this.formsPDF.form.fieldsPdf[this.page-1]) this.formsPDF.form.fieldsPdf[this.page-1]=[];
@@ -191,9 +199,7 @@ export class VFormDrawingComponent implements AfterViewInit, OnDestroy, OnInit, 
     // we're drawing lines so we need a previous position
     if (prevPos) {
       // sets the start point
-      //  this.cx.moveTo(prevPos.x, prevPos.y); // from
       // draws a line from the start pos until the current position
-      // this.cx.lineTo(currentPos.x, currentPos.y);
       this.cx.rect(this.lastPos.x, this.lastPos.y, currentPos.x-this.lastPos.x,currentPos.y-this.lastPos.y);
       this.cx.fill();
       // strokes the current path with the styles we set earlier

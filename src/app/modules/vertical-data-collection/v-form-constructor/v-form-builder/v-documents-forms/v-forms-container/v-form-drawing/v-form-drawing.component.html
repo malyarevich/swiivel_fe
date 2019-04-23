@@ -1,28 +1,27 @@
-<div class="d-flex justify-content-center pt-4">
+<div *ngIf="formsPDF.isEdit" class="d-flex justify-content-center pt-4">
   <div class="draw-div bg-white row align-items-center">
-    <div class="col-2 text-center"><span>Draw</span></div>
-    <div class="col-10 row align-items-center">
-      <div class="col-3">
-        <button class="btn btn-outline-primary form-control  btn-sm">System Field</button>
-      </div>
-      <div class="col-3">
-        <button class="btn btn-outline-primary form-control btn-sm">Checkbox</button>
-
-      </div>
-      <div class="col-3">
-        <button class="btn btn-outline-primary form-control btn-sm">Signature</button>
-
-      </div>
-      <div class="col-3">
-        <button class="btn btn-outline-primary form-control btn-sm ">Temporary Field</button>
-
-      </div>
+    <div class="col-2 text-center ">
+      <span>Draw</span>
+    </div>
+    <div class="col-10  justify-content-center btn-group btn-group-toggle" ngbRadioGroup name="radioDrawType" [(ngModel)]="drawingType" >
+        <label ngbButtonLabel class="btn  form-control  btn-sm mx-2 app-btn-outline-primary" (click)="logType()">
+          <input ngbButton type="radio" value="system"> System Fields
+        </label>
+        <label ngbButtonLabel class="btn app-btn-outline-primary form-control  btn-sm mx-2" (click)="logType()">
+          <input ngbButton type="radio" value="checkbox"> Checkbox
+        </label>
+        <label ngbButtonLabel class="btn app-btn-outline-primary form-control  btn-sm mx-2" (click)="logType()">
+          <input ngbButton type="radio" value="signature"> Signature
+        </label>
+        <label ngbButtonLabel class="btn app-btn-outline-primary form-control  btn-sm mx-2" (click)="logType()">
+          <input ngbButton type="radio" value="temporary"> Temporary Field
+        </label>
     </div>
   </div>
 </div>
 
-<div [hidden]="false" class="canvas-wrap ">
-  <div id="layer1">
+<div class="canvas-wrap ">
+  <div [hidden]="!formsPDF.isEdit" id="layer1">
 
     <canvas
       #viewer
@@ -61,9 +60,9 @@
           </div>
 
         </div>
-        <div [ngStyle]="styleObject(div)" (click)="div.isEdit=!div.isEdit"></div>
+        <div [ngStyle]="styleObject(div)" (click)="editDivChange(div)"></div>
 
-        <div class="" ngbDropdownMenu aria-labelledby="dropdownBasic1">
+        <div *ngIf="div.type=='system'" class="" ngbDropdownMenu aria-labelledby="dropdownBasic1">
           <div class="row mb-3 align-items-center row-button">
             <div class="col-5 ml-2">
               <button
@@ -124,15 +123,6 @@
       (after-load-complete)="loadComplete($event)"
     >
     </pdf-viewer>
-    <!--    <pdf-viewer-->
-    <!--      [original-size]="false"-->
-    <!--      [src]="pdfSrc"-->
-    <!--      [render-text-mode]="0"-->
-    <!--      (error)="onError($event)"-->
-    <!--      (on-progress)="onProgress($event)"-->
-    <!--      (after-load-complete)="loadComplete($event)"-->
-    <!--    >-->
-    <!--    </pdf-viewer>-->
 
   </div>
 
@@ -140,4 +130,17 @@
 <div *ngIf="pages>1" class="d-flex justify-content-center pt-4">
   <ngb-pagination [collectionSize]="pages * 10" [(page)]="page" aria-label="Default pagination"></ngb-pagination>
 
+</div>
+
+<div *ngIf="formsPDF.isEdit" class="d-flex justify-content-center pt-4 row align-items-center">
+  <div class="col-3">
+    <button class="btn app-btn-outline-primary form-control" (click)="formsPDF.isEdit=!formsPDF.isEdit">
+      Cancel
+    </button>
+  </div>
+  <div class="col-3">
+    <button class="btn app-btn-primary form-control" (click)="formsPDF.isEdit=!formsPDF.isEdit">
+      Apply Changes
+    </button>
+  </div>
 </div>

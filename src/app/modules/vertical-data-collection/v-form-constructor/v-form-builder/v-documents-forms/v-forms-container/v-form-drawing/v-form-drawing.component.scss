@@ -157,5 +157,12 @@ a.active{
 .btn-outline-primary {
   color: $element-base-color;
   border-color: $element-base-color
-&;
+
+}
+
+.app-btn-outline-primary.active {
+    color: #FFFFFF;
+    background-color: $element-base-color;
+    border: 1px solid $element-base-color;
+
 }
