@@ -18,6 +18,7 @@ import {DocumentSideBar, DocumentsModel} from "./v-documents-forms/model/documen
 import {GeneralInfoIsValidService} from "../../services/general-info-is-valid.service";
 import {FormPDFDownloadModel, FormsPDFModel} from "./v-documents-forms/model/formsPDF.model";
 import {VFilesService} from "../../v-files.service";
+import {FBSections, fbSections} from "./v-consent/fb-active-section.model";
 
 @Component({
   selector: 'app-v-form-table',
@@ -42,8 +43,6 @@ export class VFormBuilderComponent implements OnInit {
   isEditConsentName: number | null = null;
   eligible: string;
 
-  activeSection: string = '';
-
   isDocumentsForms: DocumentSideBar = {
     // isActiveAll: false,
     isDocuments: true,
@@ -53,13 +52,15 @@ export class VFormBuilderComponent implements OnInit {
   };
 
   documents: DocumentsModel[] = [];
-  formsPDF: FormsPDFModel[] =[];
+  formsPDF: FormsPDFModel[] = [];
+
+  sections: FBSections = fbSections;
 
   formPaymentSideBar: FormPayment[] = [
     {
       name: 'TUITION', isActive: false,
       type: {
-        value: 0, name:  TYPE_NAME.fixed
+        value: 0, name: TYPE_NAME.fixed
       },
       payMore: {
         isActive: false,
@@ -69,7 +70,7 @@ export class VFormBuilderComponent implements OnInit {
     {
       name: 'BAIS MEDRASH WINTER DORMITORY FEE', isActive: true,
       type: {
-        value: 0, name:  TYPE_NAME.fixed
+        value: 0, name: TYPE_NAME.fixed
       },
       payMore: {
         isActive: false,
@@ -99,7 +100,7 @@ export class VFormBuilderComponent implements OnInit {
     {
       name: 'REGISTRATION', isActive: true,
       type: {
-        value: 0, name:  TYPE_NAME.percentage,
+        value: 0, name: TYPE_NAME.percentage,
       },
       payMore: {
         isActive: false,
@@ -155,15 +156,15 @@ export class VFormBuilderComponent implements OnInit {
   }
 
 
-  addNewDocument(name: string):void{
-    if(name.length<3) return;
-    const newDocument: DocumentsModel ={
+  addNewDocument(name: string): void {
+    if (name.length < 3) return;
+    const newDocument: DocumentsModel = {
       id: uuid(),
       name: name,
       isUpload: true,
       isPerFamily: true,
       accompanyingText: {
-        data:'',
+        data: '',
         isBold: false,
         isItalic: false
       },
@@ -171,15 +172,16 @@ export class VFormBuilderComponent implements OnInit {
       dataTypeAllowed: []
     };
     this.documents.push(newDocument);
-    this.isDocumentsForms.isAddDocument=false;
+    this.isDocumentsForms.isAddDocument = false;
   }
-  removeDocument(id: string):void{
-    this.documents = this.documents.filter(doc=>doc.id!=id);
+
+  removeDocument(id: string): void {
+    this.documents = this.documents.filter(doc => doc.id != id);
 
   }
 
-  addNewFormsPDF(name: string):void{
-    if(name.length<3) return;
+  addNewFormsPDF(name: string): void {
+    if (name.length < 3) return;
     const form: FormsPDFModel = {
       id: uuid(),
       name: name,
@@ -188,20 +190,19 @@ export class VFormBuilderComponent implements OnInit {
       isAllowDownloadUpload: false,
       isFillableOnline: false,
       accompanyingText: {
-        data:'',
+        data: '',
         isBold: false,
         isItalic: false
       },
       form: null
     };
     this.formsPDF.push(form);
-    this.isDocumentsForms.isAddForms=false;
+    this.isDocumentsForms.isAddForms = false;
   }
 
-  removeFormsPDF(id: string){
-    this.formsPDF = this.formsPDF.filter(forms=>forms.id!=id);
+  removeFormsPDF(id: string) {
+    this.formsPDF = this.formsPDF.filter(forms => forms.id != id);
   }
-
 
 
   loadBasicFields() {
@@ -474,8 +475,11 @@ export class VFormBuilderComponent implements OnInit {
     this.consentInfo.splice(i, 1);
   }
 
-  scrollTop() {
-    window.scrollTo(0, 0);
+  setActiveSection(event, section) {
+    Object.keys(this.sections).map((key, index) => {
+      this.sections[key] = false;
+    });
+    this.sections[section] = event;
   }
 }
 
