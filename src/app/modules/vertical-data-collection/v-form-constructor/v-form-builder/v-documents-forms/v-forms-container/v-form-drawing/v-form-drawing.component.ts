@@ -44,6 +44,7 @@ export class VFormDrawingComponent implements AfterViewInit, OnDestroy, OnInit, 
   drawingSubscription: Subscription;
   lastPos;
   finalPos;
+  loading: boolean = false;
   page =1;
   token=`?api_token=${environment.api_token}`;
 //  existingFormsPDF: FormPDFDownloadModel[] = [];
@@ -81,8 +82,8 @@ export class VFormDrawingComponent implements AfterViewInit, OnDestroy, OnInit, 
 
 
   onProgress(progressData: PDFProgressData) {
-    // console.log(progressData, 'progress');
     // do anything with progress data. For example progress indicator
+    this.loading=progressData.loaded<=progressData.total;
   }
 
 
