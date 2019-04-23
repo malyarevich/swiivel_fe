@@ -38,6 +38,6 @@ export interface FormPDFDownloadModel {
   type: string,
   updated_at: string,
   _id: string,
-  fieldsPdf?: FormsDivModel[],
+  fieldsPdf?: FormsDivModel[][] | null
   numberOfPages?:number
 }
