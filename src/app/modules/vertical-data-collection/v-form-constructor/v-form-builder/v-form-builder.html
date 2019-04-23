@@ -300,7 +300,8 @@
           </div>
           <div class="col">
             <span class="font-weight-bold">CONSENT</span>
-            <i [hidden]="activeSection!=='consent'" (click)="addConsentItem()" class="fas fa-plus-square float-right app-plus-i"></i>
+            <i [hidden]="activeSection!=='consent'" (click)="addConsentItem()"
+               class="fas fa-plus-square float-right app-plus-i"></i>
           </div>
         </div>
         <div [hidden]="activeSection!=='consent'" class="bg-white rounded mb-3 ">
@@ -317,9 +318,12 @@
                 <input type="text"
                        class="form-control app-consent-name-input"
                        autofocus
-                       *ngIf="isEditConsentName === i"
+                       *ngIf="isEditConsentName === i || !item.title"
+                       (input)="isEditConsentName = i"
                        (blur)="isEditConsentName = null"
-                       [(ngModel)]="item.title">
+                       (keyup.enter)="isEditConsentName = null"
+                       [(ngModel)]="item.title"
+                       placeholder="Title">
               </div>
               <div class="col-2 text-right pt-2">
                 <span (click)="removeConsentItem(i)" class="app-fb-trash mr-3"><i class="fas fa-trash"></i></span>

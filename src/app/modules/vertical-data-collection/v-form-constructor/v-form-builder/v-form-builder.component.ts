@@ -42,7 +42,7 @@ export class VFormBuilderComponent implements OnInit {
   isEditConsentName: number | null = null;
   eligible: string;
 
-  activeSection: string = 'form_fields';
+  activeSection: string = '';
 
   isDocumentsForms: DocumentSideBar = {
     // isActiveAll: false,
