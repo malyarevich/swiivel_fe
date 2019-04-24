@@ -1,0 +1,21 @@
+@import "../../styles/variables/colors";
+
+.app-of-wrap {
+  background-color: #ffffff;
+  border: 1px solid #E7E9EF;
+  border-radius: 3px;
+}
+
+.app-of-nav-wrap {
+  background-color: #E9EDFF;
+  white-space: nowrap;
+  overflow: auto;
+}
+
+.app-of-nav-missing {
+
+}
+
+.app-of-nav-active-border {
+  border-bottom: 2px solid $element-base-color;
+}

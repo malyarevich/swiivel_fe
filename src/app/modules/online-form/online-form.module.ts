@@ -7,9 +7,10 @@ import { OnlineFormNavComponent } from './online-form-nav/online-form-nav.compon
 import { OnlineFormMenuComponent } from './online-form-menu/online-form-menu.component';
 import { OnlineFormGeneralInfoComponent } from './online-form-general-info/online-form-general-info.component';
 import {OnlineFormService} from "./online-form.service";
+import { GeneralInfoNavComponent } from './online-form-general-info/general-info-nav/general-info-nav.component';
 
 @NgModule({
-  declarations: [OnlineFormViewComponent, OnlineFormNavComponent, OnlineFormMenuComponent, OnlineFormGeneralInfoComponent],
+  declarations: [OnlineFormViewComponent, OnlineFormNavComponent, OnlineFormMenuComponent, OnlineFormGeneralInfoComponent, GeneralInfoNavComponent],
   imports: [
     CommonModule,
     OnlineFormRoutingModule

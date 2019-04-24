@@ -9,7 +9,7 @@ import {mainMenuNames} from "../models/main-menu-name.model";
 export class OnlineFormMenuComponent implements OnInit {
   @Output() activeMenuItemEmitter = new EventEmitter<string>();
 
-  activeMenuItem: string = '';
+  activeMenuItem: string = mainMenuNames.generalInfo;
   menuItems = [
     {name: mainMenuNames.generalInfo, title: 'General Information', time: 48},
     {name: mainMenuNames.documentsForms, title: 'Documents & Forms', time: 15},
@@ -23,6 +23,7 @@ export class OnlineFormMenuComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    this.activeMenuItemEmitter.emit(this.activeMenuItem);
   }
 
   setActiveMenuItem(menuItemName) {
