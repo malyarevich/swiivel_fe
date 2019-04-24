@@ -10,7 +10,7 @@ import {
   ViewChild
 } from '@angular/core';
 import {Field} from "../../../../../model/field.model";
-import {FormPDFDownloadModel, FormsDivModel, FormsPDFModel} from "../../model/formsPDF.model";
+import {FormPDFDownloadModel, FormPDFSignatureModel, FormsDivModel, FormsPDFModel} from "../../model/formsPDF.model";
 import {fromEvent, Subscription} from "rxjs";
 import {PDFDocumentProxy, PDFProgressData} from "pdfjs-dist";
 import {pairwise, switchMap, takeUntil} from "rxjs/operators";
@@ -54,8 +54,18 @@ export class VFormDrawingComponent implements AfterViewInit, OnDestroy, OnInit, 
 
 
   editDivChange(div:FormsDivModel){
-    if(!this.formsPDF.isEdit) return;
-    div.isEdit=!div.isEdit;
+    console.log(this.formsPDF.isEdit, div.type==this.drawingType);
+
+    if(this.formsPDF.isEdit && div.type==this.drawingType)     div.isEdit=!div.isEdit;
+
+  }
+
+  changeTypeDraw(e){
+    this.formsPDF.form.fieldsPdf.forEach( page=>{
+      page.forEach(div=>{
+        div.isEdit=false;
+      })
+    })
   }
 
 
@@ -121,6 +131,7 @@ export class VFormDrawingComponent implements AfterViewInit, OnDestroy, OnInit, 
       x: e.clientX - rect.left,
       y: e.clientY - rect.top
     };
+
     const div: FormsDivModel={
       id: uuid(),
       top: Math.min(this.lastPos.y,this.finalPos.y),
@@ -130,8 +141,16 @@ export class VFormDrawingComponent implements AfterViewInit, OnDestroy, OnInit, 
       isEdit: false,
       type: this.drawingType
     };
+    if(this.drawingType=='signature'){
+      div.linkedField = <FormPDFSignatureModel>{
+        isE: true,
+        isSystem: true,
+        isBothParents: false
+      }
+    }
     if(div.height>5&&div.width>5){
       if(!this.formsPDF.form.fieldsPdf[this.page-1]) this.formsPDF.form.fieldsPdf[this.page-1]=[];
+      console.log(div.type);
       this.formsPDF.form.fieldsPdf[this.page-1].push(div);
     }
     this.cx.clearRect(0,0,this.width, this.height);

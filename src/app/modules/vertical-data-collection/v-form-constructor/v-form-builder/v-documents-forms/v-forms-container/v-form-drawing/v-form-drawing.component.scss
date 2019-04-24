@@ -23,9 +23,39 @@ canvas { position:absolute;
   height: 1056px;
 
 }
+.app-signature {
+  background-color: #F6F6F6;
+}
+
+.signature-div{
+  height: auto;	width: 279px;	border: 1px solid #000000;	border-radius: 3px;
+}
+
+
+.app-btn-signature {
+  background: #E0E6FF;
+  border-color: white !important;
+  color: $element-base-color;
+  cursor: pointer;
+}
+
+label.btn.app-btn-signature.active {
+  background: #FFB915;
+  color: #FFFFFF;
+}
+
+//.app-btn-signature{
+//  border-color: $element-base-color!important;
+//}
 .div-inside-wrap{
   z-index: 9900;
   margin-top: -30px!important;
+
+  //position: absolute;
+}
+.div-inside-field-name{
+  z-index: 9900;
+  margin-bottom: -30px!important;
 
   //position: absolute;
 }
@@ -43,11 +73,15 @@ canvas { position:absolute;
   font-size: 0.5rem!important;
 }
 .div-inside-active{
-  border: 2px solid #4350A2;
+
   //opacity: 0.8;
   background-color: #EBEEFF;
   position: absolute;
   z-index: 9900;
+}
+
+.div-active-type, .div-inside-active{
+  border: 2px solid #4350A2;
 }
 
 .dropdown-toggle::after {
@@ -152,7 +186,8 @@ a.active{
 }
 .btn-sm{
   font-weight: bold;
-  font-size: .59rem;
+  font-size: .7rem;
+  vertical-align: middle;
 }
 .btn-outline-primary {
   color: $element-base-color;
@@ -161,6 +196,7 @@ a.active{
 }
 
 .app-btn-outline-primary.active {
+
     color: #FFFFFF;
     background-color: $element-base-color;
     border: 1px solid $element-base-color;

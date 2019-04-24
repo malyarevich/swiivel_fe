@@ -3,17 +3,23 @@
     <div class="col-2 text-center ">
       <span>Draw</span>
     </div>
-    <div class="col-10  justify-content-center btn-group btn-group-toggle" ngbRadioGroup name="radioDrawType" [(ngModel)]="drawingType" >
-        <label ngbButtonLabel class="btn  form-control  btn-sm mx-2 app-btn-outline-primary" (click)="logType()">
-          <input ngbButton type="radio" value="system"> System Fields
+    <div
+      class="col-10  justify-content-center btn-group btn-group-toggle"
+      ngbRadioGroup
+      name="radioDrawType"
+      (ngModelChange)="changeTypeDraw($event)"
+      [(ngModel)]="drawingType"
+    >
+        <label ngbButtonLabel class="btn  form-control pt-1 btn-sm mx-2 app-btn-outline-primary">
+          <input ngbButton type="radio" value="system">System Fields
         </label>
-        <label ngbButtonLabel class="btn app-btn-outline-primary form-control  btn-sm mx-2" (click)="logType()">
+        <label ngbButtonLabel class="btn app-btn-outline-primary pt-1 form-control   btn-sm mx-2">
           <input ngbButton type="radio" value="checkbox"> Checkbox
         </label>
-        <label ngbButtonLabel class="btn app-btn-outline-primary form-control  btn-sm mx-2" (click)="logType()">
+        <label ngbButtonLabel class="btn app-btn-outline-primary pt-1 form-control  btn-sm mx-2">
           <input ngbButton type="radio" value="signature"> Signature
         </label>
-        <label ngbButtonLabel class="btn app-btn-outline-primary form-control  btn-sm mx-2" (click)="logType()">
+        <label ngbButtonLabel class="btn app-btn-outline-primary pt-1 form-control  btn-sm mx-2">
           <input ngbButton type="radio" value="temporary"> Temporary Field
         </label>
     </div>
@@ -40,7 +46,10 @@
     <div *ngFor="let div of formsPDF.form.fieldsPdf[page-1]">
       <div
         [ngStyle]="styleObject(div)"
-        [ngClass]="div.isEdit?'div-inside-active':'div-inside'"
+        [ngClass]="[
+        div.isEdit?'div-inside-active':'div-inside',
+        div.type==drawingType&&formsPDF.isEdit?'div-active-type':''
+        ]"
         class=""
         ngbDropdown
         placement="left"
@@ -48,19 +57,15 @@
         #myDrop="ngbDropdown"
       >
         <div *ngIf="div.isEdit" class="row no-gutters align-items-center div-inside-wrap">
-          <div class="col-3 row no-gutters align-items-center">
-            <div class="col justify-content-center">
+          <div class="justify-content-center">
               <span id="dropdownBasic1" ngbDropdownToggle><i class="fas fa-pen fa-xs "></i></span>
-            </div>
-            <div class="col justify-content-center" (click)="removeDiv(div.id)">
-              <span><i class="fas fa-trash fa-xs "></i></span>
-            </div>
+              <span><i class="fas fa-trash fa-xs ml-2"></i></span>
 
 
           </div>
 
         </div>
-        <div [ngStyle]="styleObject(div)" (click)="editDivChange(div)"></div>
+        <div [ngStyle]="styleObject(div)" (click)="editDivChange(div)"><p>{{div.linkedField?.name}}</p></div>
 
         <div *ngIf="div.type=='system'" class="" ngbDropdownMenu aria-labelledby="dropdownBasic1">
           <div class="row mb-3 align-items-center row-button">
@@ -103,6 +108,56 @@
 
           </div>
         </div>
+
+        <div *ngIf="div.type=='signature'" class="signature-div px-2 py-2" ngbDropdownMenu aria-labelledby="dropdownBasic1">
+          <div class=" pl-1 font-weight-bold">
+            <span>Signature Settings</span>
+          </div>
+          <div class="row no-gutters">
+            <div class="btn-group btn-group-toggle w-100 mt-2"
+                 ngbRadioGroup
+                 name="radioSignature"
+                [(ngModel)]="div.linkedField.isE"
+                >
+              <label ngbButtonLabel class="btn app-btn-signature">
+                <input ngbButton type="radio" [value]="true"> E-signature
+              </label>
+              <label ngbButtonLabel class="btn app-btn-signature">
+                <input ngbButton type="radio" [value]="false"> Wet Signature
+              </label>
+            </div>
+          </div>
+
+          <div *ngIf="div.linkedField.isE" class="row no-gutters app-signature px-2" ngbRadioGroup [(ngModel)]="div.linkedField.isSystem"
+               name="">
+            <div class="col">
+              <label ngbButtonLabel class="app-radio-container text-left">System
+                <input type="radio"
+                       ngbButton
+                       [value]="true"
+                >
+                <span class="app-radio-checkmark mt-2"></span>
+              </label>
+            </div>
+            <div class="col">
+
+              <label ngbButtonLabel class="app-radio-container text-left">External
+                <input type="radio"
+                       ngbButton
+                       [value]="false"
+                >
+                <span class="app-radio-checkmark mt-2"></span>
+              </label>
+            </div>
+          </div>
+          <div class="row px-3 pt-3">
+            <label class="app-checkbox-container">
+              Both Parents' Signature (when applicable)
+              <input type="checkbox" [(ngModel)]="div.linkedField.isBothParents" >
+              <span class="app-checkbox-checkmark"></span>
+            </label>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -127,6 +182,7 @@
   </div>
 
 </div>
+
 <div *ngIf="pages>1" class="d-flex justify-content-center pt-4">
   <ngb-pagination [collectionSize]="pages * 10" [(page)]="page" aria-label="Default pagination"></ngb-pagination>
 
@@ -134,12 +190,12 @@
 
 <div *ngIf="formsPDF.isEdit" class="d-flex justify-content-center pt-4 row align-items-center">
   <div class="col-3">
-    <button class="btn app-btn-outline-primary form-control" (click)="formsPDF.isEdit=!formsPDF.isEdit">
+    <button class="btn app-btn-outline-primary form-control" (click)="formsPDF.isEdit=!formsPDF.isEdit; changeTypeDraw($event)">
       Cancel
     </button>
   </div>
   <div class="col-3">
-    <button class="btn app-btn-primary form-control" (click)="formsPDF.isEdit=!formsPDF.isEdit">
+    <button class="btn app-btn-primary form-control" (click)="formsPDF.isEdit=!formsPDF.isEdit; changeTypeDraw($event)">
       Apply Changes
     </button>
   </div>
