@@ -1,0 +1,10 @@
+<app-online-form-nav [formName]="form?.name"></app-online-form-nav>
+<div class="container-fluid row app-of-background py-4">
+<div class="col-3">
+  <app-online-form-menu (activeMenuItemEmitter)="onActiveMenuItem($event)"></app-online-form-menu>
+</div>
+<div class="col-9">
+  <app-online-form-general-info *ngIf="activeSection === mainMenuNames.generalInfo"></app-online-form-general-info>
+</div>
+</div>
+

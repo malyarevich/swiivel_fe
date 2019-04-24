@@ -46,7 +46,15 @@ export const routes: Routes = [
       {
         path: '',
         loadChildren: '../create-payer-account/create-payer-account.module#CreatePayerAccountModule',
-
+      }
+    ],
+  },
+  {
+    path: 'online-form/:id',
+    children: [
+      {
+        path: '',
+        loadChildren: '../online-form/online-form.module#OnlineFormModule',
       }
     ],
   }

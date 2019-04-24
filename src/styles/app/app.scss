@@ -1,4 +1,18 @@
 @import "../variables/colors";
+
+//TEXT
+.app-text-small {
+  font-size: 0.85em;
+}
+
+.app-text-large {
+  font-size: 1.2em;
+}
+
+.app-text-extra-large {
+  font-size: 1.5em;
+}
+
 .app-text-primary {
   color: $element-base-color;
 }
@@ -7,10 +21,19 @@
   color: #999999;
 }
 
-.app-text-small {
-  font-size: 0.85em;
+.app-text-danger {
+  color: #E65757;
 }
 
+.app-text-success {
+  color: #3CA476;
+}
+
+.app-text-extra-bold {
+  font-family: NunitoSans-ExtraBold;
+}
+
+//CURSOR
 .app-cursor-pointer {
   cursor: pointer;
 }
