@@ -8,8 +8,17 @@ export interface FormsDivModel {
   width: number;
   height: number;
   isEdit: boolean;
-  linkedField?: Field | null
+  linkedField?: Field | FormPDFSignatureModel| any;
+  type?: string;
 }
+export interface FormPDFSignatureModel{
+  //isE - E - true, Wet - false
+  isE: boolean;
+  //isSystem - System - true, External - false
+  isSystem: boolean;
+  isBothParents: boolean;
+}
+
 export interface FormsPDFModel {
   id:string;
   name: string;
@@ -25,6 +34,7 @@ export interface FormsPDFModel {
   accompanyingText?:AccompanyingText;
   //form - all info relative pdf form
   form?: FormPDFDownloadModel | null;
+  isEdit?: boolean;
 }
 
 

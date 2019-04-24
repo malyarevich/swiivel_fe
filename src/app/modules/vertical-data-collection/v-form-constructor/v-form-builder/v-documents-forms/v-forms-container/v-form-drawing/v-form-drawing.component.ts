@@ -10,7 +10,7 @@ import {
   ViewChild
 } from '@angular/core';
 import {Field} from "../../../../../model/field.model";
-import {FormPDFDownloadModel, FormsDivModel, FormsPDFModel} from "../../model/formsPDF.model";
+import {FormPDFDownloadModel, FormPDFSignatureModel, FormsDivModel, FormsPDFModel} from "../../model/formsPDF.model";
 import {fromEvent, Subscription} from "rxjs";
 import {PDFDocumentProxy, PDFProgressData} from "pdfjs-dist";
 import {pairwise, switchMap, takeUntil} from "rxjs/operators";
@@ -34,11 +34,7 @@ export class VFormDrawingComponent implements AfterViewInit, OnDestroy, OnInit, 
   @Input() formsPDF: FormsPDFModel;
   @ViewChild('viewer') canvas: ElementRef;
 
-  params = new HttpParams().set("api_token", environment.api_token);
 
-  pdfSrc = "../../ =1../../../../../../assets/files/BBY Contract 1 Student.pdf";
-  // pdfSrc = "../../../../../../../../assets/files/Var1.pdf";
-  // pdfSrc = "../../../../../../../../assets/files/pdf-test.pdf";
   canvasEl: HTMLCanvasElement;
   cx: CanvasRenderingContext2D;
   drawingSubscription: Subscription;
@@ -47,19 +43,30 @@ export class VFormDrawingComponent implements AfterViewInit, OnDestroy, OnInit, 
   loading: boolean = false;
   page =1;
   token=`?api_token=${environment.api_token}`;
-//  existingFormsPDF: FormPDFDownloadModel[] = [];
+  drawingType: string = "system";
 
-  constructor(private fileService: VFilesService) {
+  constructor() {
   }
 
   ngOnInit(): void {
-  //  this.getExistingsFormPDFList();
-   // this.pages = range(1, this.formsPDF.form.numberOfPages+1);
-    console.log(this.formsPDF.form.numberOfPages, this.pages);
-    // console.log(this.page)
   }
 
 
+
+  editDivChange(div:FormsDivModel){
+    console.log(this.formsPDF.isEdit, div.type==this.drawingType);
+
+    if(this.formsPDF.isEdit && div.type==this.drawingType)     div.isEdit=!div.isEdit;
+
+  }
+
+  changeTypeDraw(e){
+    this.formsPDF.form.fieldsPdf.forEach( page=>{
+      page.forEach(div=>{
+        div.isEdit=false;
+      })
+    })
+  }
 
 
   linkFieldToDiv(field: Field, div: FormsDivModel):void{
@@ -85,10 +92,11 @@ export class VFormDrawingComponent implements AfterViewInit, OnDestroy, OnInit, 
     // do anything with progress data. For example progress indicator
     this.loading=progressData.loaded<=progressData.total;
   }
-
+  logType(){
+    console.log(this.drawingType);
+  }
 
   ngAfterViewInit() {
-    // console.log('this view init');
     // get the context
     this.canvasEl = this.canvas.nativeElement;
     this.cx = this.canvasEl.getContext('2d');
@@ -123,19 +131,26 @@ export class VFormDrawingComponent implements AfterViewInit, OnDestroy, OnInit, 
       x: e.clientX - rect.left,
       y: e.clientY - rect.top
     };
-    console.log(this.lastPos, this.finalPos);
+
     const div: FormsDivModel={
       id: uuid(),
-      // top: this.lastPos.y<this.finalPos.y?this.lastPos.y:this.finalPos.y,
       top: Math.min(this.lastPos.y,this.finalPos.y),
-      // left: this.lastPos.x<this.finalPos.x?this.lastPos.x:this.finalPos.x,
       left: Math.min(this.lastPos.x,this.finalPos.x),
       width: Math.abs(this.finalPos.x-this.lastPos.x),
       height: Math.abs(this.finalPos.y-this.lastPos.y),
-      isEdit: false
+      isEdit: false,
+      type: this.drawingType
     };
+    if(this.drawingType=='signature'){
+      div.linkedField = <FormPDFSignatureModel>{
+        isE: true,
+        isSystem: true,
+        isBothParents: false
+      }
+    }
     if(div.height>5&&div.width>5){
       if(!this.formsPDF.form.fieldsPdf[this.page-1]) this.formsPDF.form.fieldsPdf[this.page-1]=[];
+      console.log(div.type);
       this.formsPDF.form.fieldsPdf[this.page-1].push(div);
     }
     this.cx.clearRect(0,0,this.width, this.height);
@@ -144,7 +159,7 @@ export class VFormDrawingComponent implements AfterViewInit, OnDestroy, OnInit, 
   }
 
   loadComplete(pdf: PDFDocumentProxy){
-    // console.log(pdf);
+    this.page=1;
   }
 
 
@@ -203,9 +218,7 @@ export class VFormDrawingComponent implements AfterViewInit, OnDestroy, OnInit, 
     // we're drawing lines so we need a previous position
     if (prevPos) {
       // sets the start point
-      //  this.cx.moveTo(prevPos.x, prevPos.y); // from
       // draws a line from the start pos until the current position
-      // this.cx.lineTo(currentPos.x, currentPos.y);
       this.cx.rect(this.lastPos.x, this.lastPos.y, currentPos.x-this.lastPos.x,currentPos.y-this.lastPos.y);
       this.cx.fill();
       // strokes the current path with the styles we set earlier
