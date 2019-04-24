@@ -10,7 +10,13 @@ import {
   ViewChild
 } from '@angular/core';
 import {Field} from "../../../../../model/field.model";
-import {FormPDFDownloadModel, FormPDFSignatureModel, FormsDivModel, FormsPDFModel} from "../../model/formsPDF.model";
+import {
+  FormPDFDownloadModel,
+  FormPDFSignatureModel,
+  FormPDFTemporaryField,
+  FormsDivModel,
+  FormsPDFModel
+} from "../../model/formsPDF.model";
 import {fromEvent, Subscription} from "rxjs";
 import {PDFDocumentProxy, PDFProgressData} from "pdfjs-dist";
 import {pairwise, switchMap, takeUntil} from "rxjs/operators";
@@ -34,7 +40,7 @@ export class VFormDrawingComponent implements AfterViewInit, OnDestroy, OnInit, 
   @Input() formsPDF: FormsPDFModel;
   @ViewChild('viewer') canvas: ElementRef;
 
-
+  showAddButtonTemporary: boolean = false;
   canvasEl: HTMLCanvasElement;
   cx: CanvasRenderingContext2D;
   drawingSubscription: Subscription;
@@ -44,6 +50,7 @@ export class VFormDrawingComponent implements AfterViewInit, OnDestroy, OnInit, 
   page =1;
   token=`?api_token=${environment.api_token}`;
   drawingType: string = "system";
+  temporaryField: FormPDFTemporaryField[] = [];
 
   constructor() {
   }
@@ -68,6 +75,12 @@ export class VFormDrawingComponent implements AfterViewInit, OnDestroy, OnInit, 
     })
   }
 
+
+  addTempField(name: string){
+  if(name.length<3) return;
+    this.temporaryField.push({name: name});
+    this.showAddButtonTemporary=false
+  }
 
   linkFieldToDiv(field: Field, div: FormsDivModel):void{
     if( div.linkedField == undefined ||

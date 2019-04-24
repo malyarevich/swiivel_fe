@@ -59,7 +59,7 @@
         <div *ngIf="div.isEdit" class="row no-gutters align-items-center div-inside-wrap">
           <div class="justify-content-center">
               <span id="dropdownBasic1" ngbDropdownToggle><i class="fas fa-pen fa-xs "></i></span>
-              <span><i class="fas fa-trash fa-xs ml-2"></i></span>
+              <span (click)="removeDiv(div.id)"><i class="fas fa-trash fa-xs ml-2"></i></span>
 
 
           </div>
@@ -158,6 +158,61 @@
             </label>
           </div>
         </div>
+
+        <div *ngIf="div.type=='temporary'" class="temporary-div" ngbDropdownMenu aria-labelledby="dropdownBasic1">
+          <div class="row mb-3 align-items-center row-button">
+            <div class="col-5 ml-2">
+              <button
+                class="btn btn-outline-primary form-control"
+                (click)="$event.stopPropagation();
+                 myDrop.close();
+                 searchText='';
+                 div.isEdit=!div.isEdit;"
+              >
+                Close
+              </button>
+            </div>
+            <div class="col-5 pr-2">
+              <button
+                class="btn btn-primary form-control"
+                (click)="$event.stopPropagation();
+                 myDrop.close();
+                 searchText='';
+                 div.isEdit=!div.isEdit;"
+              >
+                Save
+              </button>
+
+            </div>
+          </div>
+          <input class="form-control mb-3 search-input" [(ngModel)]="searchText" placeholder="Search...">
+          <a class="app-text-primary text-center my-1 pl-2"
+            *ngIf="!showAddButtonTemporary"
+            (click)="showAddButtonTemporary=true">
+            &nbsp;&nbsp; Add New Field Name
+          </a>
+          <input
+            *ngIf="showAddButtonTemporary"
+            class="form-control add-input p-0"
+            autofocus
+            #newField
+            (blur)="addTempField(newField.value); newField.value='';"
+            (keyup.enter)="addTempField(newField.value) ;newField.value='';">
+          <div class="justify-content-center div-list-field">
+            <ul class="list-group justify-content-center">
+              <li
+                [ngClass]="div.linkedField?.name==field.name?'active':'do-not-active'"
+                (click)="linkFieldToDiv(field, div)"
+                class="list-group-item  ml-2 mb-3 pl-2 py-0"
+                *ngFor="let field of temporaryField | filter : searchText"
+              >
+                {{field.name}}
+              </li>
+            </ul>
+
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -188,7 +243,8 @@
 
 </div>
 
-<div *ngIf="formsPDF.isEdit" class="d-flex justify-content-center pt-4 row align-items-center">
+<div *ngIf="formsPDF.isEdit" class="d-flex justify
+-content-center pt-4 row align-items-center">
   <div class="col-3">
     <button class="btn app-btn-outline-primary form-control" (click)="formsPDF.isEdit=!formsPDF.isEdit; changeTypeDraw($event)">
       Cancel

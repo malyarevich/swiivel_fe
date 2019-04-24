@@ -8,7 +8,7 @@ export interface FormsDivModel {
   width: number;
   height: number;
   isEdit: boolean;
-  linkedField?: Field | FormPDFSignatureModel| any;
+  linkedField?: Field | FormPDFSignatureModel | FormPDFTemporaryField |  any;
   type?: string;
 }
 export interface FormPDFSignatureModel{
@@ -17,6 +17,10 @@ export interface FormPDFSignatureModel{
   //isSystem - System - true, External - false
   isSystem: boolean;
   isBothParents: boolean;
+}
+
+export interface FormPDFTemporaryField {
+  name: string;
 }
 
 export interface FormsPDFModel {

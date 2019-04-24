@@ -164,7 +164,14 @@
 
 
     <div class="col-1 ml-4">
-      <button type="button" class="btn btn-primary d-u-button form-control">Edit Form</button>
+      <button
+        [hidden]="forms.isEdit"
+        type="button"
+        class="btn btn-primary d-u-button form-control"
+        (click)="forms.isEdit=true"
+      >
+        Edit Form
+      </button>
     </div>
 
   </div>
@@ -215,7 +222,14 @@
     </div>
 
     <div class="col ml-4 ">
-      <button [hidden]="forms.isEdit" type="button" class="btn btn-primary d-u-button form-control " (click)="forms.isEdit=true">Edit Form</button>
+      <button
+        [hidden]="forms.isEdit"
+        type="button"
+        class="btn btn-primary d-u-button form-control "
+        (click)="forms.isEdit=true"
+      >
+        Edit Form
+      </button>
     </div>
 
   </div>
