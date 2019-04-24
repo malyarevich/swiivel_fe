@@ -1,5 +1,3 @@
-import {publish} from "rxjs/operators";
-
 export interface GeneralSectionsNames {
   familyInfo: string,
   parentsInfo: string,

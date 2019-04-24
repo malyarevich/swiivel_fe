@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {generalSectionsNames} from "../models/general-info-section-name.model";
 
 @Component({
   selector: 'app-online-form-general-info',
@@ -7,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OnlineFormGeneralInfoComponent implements OnInit {
 
+  activeSection: string;
+
+  readonly generalSectionsNames = generalSectionsNames;
+
   constructor() { }
 
   ngOnInit() {
   }
 
+  onActiveSection(sectionName) {
+    this.activeSection = sectionName;
+  }
 }

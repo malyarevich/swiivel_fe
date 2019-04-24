@@ -6,13 +6,13 @@
 
   <div class="row no-gutters align-items-center">
     <div class="col-12 app-of-nav-wrap">
-      <app-general-info-nav></app-general-info-nav>
+      <app-general-info-nav (activeSectionEmitter)="onActiveSection($event)"></app-general-info-nav>
     </div>
   </div>
 
-  <div class="row no-gutters">
-    <div class="col">
-lll
+  <div class="row no-gutters p-4">
+    <div class="col-12">
+      <app-general-info-students *ngIf="activeSection === generalSectionsNames.studentsInfo"></app-general-info-students>
     </div>
   </div>
 
