@@ -8,7 +8,7 @@ export class FBSections {
 }
 export const fbSections: FBSections = {
   formFields: false,
-  documentsForms: true,
+  documentsForms: false,
   consent: false,
   tuition: false,
   paymentSettings: false,
