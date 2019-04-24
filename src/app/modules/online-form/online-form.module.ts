@@ -6,12 +6,14 @@ import { OnlineFormViewComponent } from './online-form-view/online-form-view.com
 import { OnlineFormNavComponent } from './online-form-nav/online-form-nav.component';
 import { OnlineFormMenuComponent } from './online-form-menu/online-form-menu.component';
 import { OnlineFormGeneralInfoComponent } from './online-form-general-info/online-form-general-info.component';
+import {OnlineFormService} from "./online-form.service";
 
 @NgModule({
   declarations: [OnlineFormViewComponent, OnlineFormNavComponent, OnlineFormMenuComponent, OnlineFormGeneralInfoComponent],
   imports: [
     CommonModule,
     OnlineFormRoutingModule
-  ]
+  ],
+  providers: [OnlineFormService]
 })
 export class OnlineFormModule { }

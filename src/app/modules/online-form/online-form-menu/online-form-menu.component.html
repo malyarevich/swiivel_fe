@@ -1,3 +1,27 @@
 <div class="app-of-menu-wrap">
-  online-form-menu works!
+  <ul class="list-group bg-white ">
+
+    <li class="list-group-item app-cursor-pointer"
+        [ngClass]="activeMenuItem === item.name ? 'app-of-menu-active' : ''"
+        *ngFor="let item of menuItems"
+        (click)="setActiveMenuItem(item.name)">
+      <div class="row no-gutters align-items-center py-1">
+        <div class="col-2">
+          <i class="fas fa-file-alt fa-lg app-of-menu-i"
+             [ngClass]="activeMenuItem === item.name ? 'app-text-primary' : 'app-text-second'"></i>
+        </div>
+        <div class="col">
+          <p class="mb-0 app-text-extra-bold app-text-large"
+             [ngClass]="activeMenuItem === item.name ? 'app-text-primary' : 'app-text-second'">
+            {{item.title}}
+          </p>
+          <p class="mb-0 app-text-second app-text-small">
+            <i class="far fa-clock fa-sm mr-1"></i>
+            ~{{item.time}} minutes
+          </p>
+        </div>
+      </div>
+    </li>
+
+  </ul>
 </div>

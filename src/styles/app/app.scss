@@ -1,4 +1,14 @@
 @import "../variables/colors";
+
+//TEXT
+.app-text-small {
+  font-size: 0.85em;
+}
+
+.app-text-large {
+  font-size: 1.2em;
+}
+
 .app-text-primary {
   color: $element-base-color;
 }
@@ -7,10 +17,11 @@
   color: #999999;
 }
 
-.app-text-small {
-  font-size: 0.85em;
+.app-text-extra-bold {
+  font-family: NunitoSans-ExtraBold;
 }
 
+//CURSOR
 .app-cursor-pointer {
   cursor: pointer;
 }

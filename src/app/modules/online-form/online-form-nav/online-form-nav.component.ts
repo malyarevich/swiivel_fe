@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-online-form-nav',
@@ -6,8 +6,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./online-form-nav.component.css']
 })
 export class OnlineFormNavComponent implements OnInit {
+  @Input() formName: string;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }
