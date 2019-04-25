@@ -14,6 +14,7 @@ import {PhoneNumberFieldComponent} from "./online-form-fields/fileds/phone-numbe
 import {HebrewDateFieldComponent} from "./online-form-fields/fileds/hebrew-date-field/hebrew-date-field.component";
 import {LabelFieldComponent} from "./online-form-fields/fileds/label-field/label-field.component";
 import {EmptyLineFieldComponent} from "./online-form-fields/fileds/empty-line-field/empty-line-field.component";
+import {Form} from "../vertical-data-collection/model/form.model";
 
 @Injectable()
 export class OnlineFormService {
@@ -41,6 +42,22 @@ export class OnlineFormService {
       .pipe(
         map((response) => response)
       );
+  }
+
+  sendForm(form: Form) {
+
+    if(form._id!==""){
+      form.step=1;
+      return this.http.put(`/proxy/forms/${form._id}`, form)
+        .pipe(
+          map((response) =>  response)
+        );
+    }
+    return this.http.post('/proxy/forms', form)
+      .pipe(
+        map((response) => response)
+      );
+
   }
 
 }

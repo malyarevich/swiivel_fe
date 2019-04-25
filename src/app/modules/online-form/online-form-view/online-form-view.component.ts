@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {Form} from "../../vertical-data-collection/model/form.model";
 import {OnlineFormService} from "../online-form.service";
 import {MainMenuNames, mainMenuNames} from "../model/main-menu-name.model";
+import {Location} from "@angular/common";
 
 @Component({
   selector: 'app-online-form-view',
@@ -15,7 +16,10 @@ export class OnlineFormViewComponent implements OnInit {
   activeSection: string;
   mainMenuNames: MainMenuNames = mainMenuNames;
 
-  constructor(private route: ActivatedRoute, private onlineFormService: OnlineFormService) { }
+  constructor(private route: ActivatedRoute,
+              private onlineFormService: OnlineFormService,
+              private location: Location) {
+  }
 
   ngOnInit() {
     this.getForm();
@@ -24,10 +28,27 @@ export class OnlineFormViewComponent implements OnInit {
   getForm(): void {
     const id = this.route.snapshot.paramMap.get('id');
     this.onlineFormService.getOneForm(id).subscribe(
-      (form: Form)=>{
+      (form: Form) => {
         this.form = form;
       }
     );
+  }
+
+  onAction(actionType) {
+    switch (actionType) {
+      case 'save':
+        this.saveForm();
+      case 'cancel':
+        this.goBack();
+    }
+  }
+
+  saveForm() {
+    this.onlineFormService.sendForm(this.form).subscribe(res => this.goBack());
+  }
+
+  goBack() {
+    this.location.back();
   }
 
   onActiveMenuItem(menuItemName) {
