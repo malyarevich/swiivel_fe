@@ -1,12 +1,8 @@
 import {Component, ComponentFactoryResolver, ElementRef, Input, OnInit, Renderer, ViewChild} from '@angular/core';
 import {Field} from "../model/field.model";
-import {VContentDirective} from "../../vertical-data-collection/v-form-view/v-content.directive";
-import {Store} from "@ngrx/store";
 import {v4 as uuid} from 'uuid';
 import {OnlineFormService} from "../online-form.service";
 import {FieldContentDirective} from "../directives/field-content.directive";
-// import {FieldState} from "../../data-collection/reducers/field/field.reducer";
-// import {VFieldsService} from "../../vertical-data-collection/v-fields.service";
 
 @Component({
   selector: 'app-online-form-fields',
@@ -21,14 +17,8 @@ export class OnlineFormFieldsComponent implements OnInit {
   @ViewChild(FieldContentDirective) contentDirective: FieldContentDirective;
 
 
-  constructor(
-    // private fieldStore$: Store<FieldState>,
-    private resolver: ComponentFactoryResolver,
-    private onlineFormService: OnlineFormService,
-    public renderer: Renderer,
-    // public elementRef: ElementRef
-  ) {
-
+  constructor(private resolver: ComponentFactoryResolver,
+              private onlineFormService: OnlineFormService) {
   }
 
   ngOnInit() {
