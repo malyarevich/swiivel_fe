@@ -170,6 +170,7 @@ export class VFormDrawingComponent implements AfterViewInit, OnDestroy, OnInit, 
   }
 
   loadComplete(pdf: PDFDocumentProxy){
+    this.temporaryField = [];
     this.formsPDF.form.fieldsPdf.forEach(page=>{
       page.forEach(field=>{
         if(field.type=='temporary'&&field.linkedField) this.temporaryField.push( field.linkedField);
