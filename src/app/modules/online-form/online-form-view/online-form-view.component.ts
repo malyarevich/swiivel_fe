@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {Form} from "../../vertical-data-collection/model/form.model";
 import {OnlineFormService} from "../online-form.service";
-import {MainMenuNames, mainMenuNames} from "../models/main-menu-name.model";
+import {MainMenuNames, mainMenuNames} from "../model/main-menu-name.model";
 
 @Component({
   selector: 'app-online-form-view',

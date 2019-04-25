@@ -1,5 +1,5 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {mainMenuNames} from "../models/main-menu-name.model";
+import {mainMenuNames} from "../model/main-menu-name.model";
 
 @Component({
   selector: 'app-online-form-menu',
