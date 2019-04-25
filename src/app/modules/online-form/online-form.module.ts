@@ -9,6 +9,24 @@ import { OnlineFormGeneralInfoComponent } from './online-form-general-info/onlin
 import {OnlineFormService} from "./online-form.service";
 import { GeneralInfoNavComponent } from './online-form-general-info/general-info-nav/general-info-nav.component';
 import { GeneralInfoStudentsComponent } from './online-form-general-info/general-info-students/general-info-students.component';
+import { GeneralInfoParentsComponent } from './online-form-general-info/general-info-parents/general-info-parents.component';
+import { OnlineFormFieldsComponent } from './online-form-fields/online-form-fields.component';
+import {TimeFieldComponent} from "./online-form-fields/fileds/time-field/time-field.component";
+import {ShortTextFieldComponent} from "./online-form-fields/fileds/short-text-field/short-text-field.component";
+import {PhoneNumberFieldComponent} from "./online-form-fields/fileds/phone-number-field/phone-number-field.component";
+import {NumberTextFieldComponent} from "./online-form-fields/fileds/number-text-field/number-text-field.component";
+import {MultipleOptionsFieldComponent} from "./online-form-fields/fileds/multiple-options-field/multiple-options-field.component";
+import {LongTextFieldComponent} from "./online-form-fields/fileds/long-text-field/long-text-field.component";
+import {LabelFieldComponent} from "./online-form-fields/fileds/label-field/label-field.component";
+import {HebrewDateFieldComponent} from "./online-form-fields/fileds/hebrew-date-field/hebrew-date-field.component";
+import {EmptyLineFieldComponent} from "./online-form-fields/fileds/empty-line-field/empty-line-field.component";
+import {EmailFieldComponent} from "./online-form-fields/fileds/email-field/email-field.component";
+import {DropDownListFieldComponent} from "./online-form-fields/fileds/drop-down-list-field/drop-down-list-field.component";
+import {DateTimeFieldComponent} from "./online-form-fields/fileds/date-time-field/date-time-field.component";
+import { FieldContentDirective } from './directives/field-content.directive';
+import {entryComponents} from "./online-form-fields/entryComponents";
+import {FormsModule} from "@angular/forms";
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 @NgModule({
   declarations: [
@@ -17,12 +35,30 @@ import { GeneralInfoStudentsComponent } from './online-form-general-info/general
     OnlineFormMenuComponent,
     OnlineFormGeneralInfoComponent,
     GeneralInfoNavComponent,
-    GeneralInfoStudentsComponent
+    GeneralInfoStudentsComponent,
+    GeneralInfoParentsComponent,
+    OnlineFormFieldsComponent,
+    TimeFieldComponent,
+    ShortTextFieldComponent,
+    PhoneNumberFieldComponent,
+    NumberTextFieldComponent,
+    MultipleOptionsFieldComponent,
+    LongTextFieldComponent,
+    LabelFieldComponent,
+    HebrewDateFieldComponent,
+    EmptyLineFieldComponent,
+    EmailFieldComponent,
+    DropDownListFieldComponent,
+    DateTimeFieldComponent,
+    FieldContentDirective,
   ],
   imports: [
     CommonModule,
+    FormsModule,
+    NgbModule,
     OnlineFormRoutingModule
   ],
-  providers: [OnlineFormService]
+  providers: [OnlineFormService],
+  entryComponents: [entryComponents],
 })
 export class OnlineFormModule { }

@@ -1,5 +1,5 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {generalSectionsNames} from "../../models/general-info-section-name.model";
+import {generalSectionsNames} from "../../model/general-info-section-name.model";
 
 @Component({
   selector: 'app-general-info-nav',
@@ -11,7 +11,7 @@ export class GeneralInfoNavComponent implements OnInit {
 
   readonly generalSectionsNames = generalSectionsNames;
 
-  activeSection: string = generalSectionsNames.studentsInfo;
+  activeSection: string = generalSectionsNames.parentsInfo;
 
   sectionNames = [
     {name: generalSectionsNames.familyInfo, title: 'Family General Info'},

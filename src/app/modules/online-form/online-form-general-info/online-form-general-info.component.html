@@ -12,8 +12,11 @@
 
   <div class="row no-gutters p-4">
     <div class="col-12">
-      <app-general-info-students *ngIf="activeSection === generalSectionsNames.studentsInfo"></app-general-info-students>
-    </div>
+      <app-general-info-students *ngIf="activeSection === generalSectionsNames.studentsInfo">
+      </app-general-info-students>
+      <app-general-info-parents *ngIf="activeSection === generalSectionsNames.parentsInfo"
+                                [form]="form">
+      </app-general-info-parents>
   </div>
 
 </div>

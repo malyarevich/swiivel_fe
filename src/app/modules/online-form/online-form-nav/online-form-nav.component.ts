@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'app-online-form-nav',
@@ -7,11 +7,16 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class OnlineFormNavComponent implements OnInit {
   @Input() formName: string;
+  @Output() actionEmitter = new EventEmitter<string>();
 
   constructor() {
   }
 
   ngOnInit() {
+  }
+
+  onAction(type: string) {
+    this.actionEmitter.emit(type);
   }
 
 }
