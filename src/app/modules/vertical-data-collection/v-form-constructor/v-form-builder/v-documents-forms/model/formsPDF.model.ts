@@ -12,6 +12,7 @@ export interface FormsDivModel {
   type?: string;
 }
 export interface FormPDFSignatureModel{
+  id: string;
   //isE - E - true, Wet - false
   isE: boolean;
   //isSystem - System - true, External - false
@@ -20,6 +21,7 @@ export interface FormPDFSignatureModel{
 }
 
 export interface FormPDFTemporaryField {
+  id: string;
   name: string;
 }
 

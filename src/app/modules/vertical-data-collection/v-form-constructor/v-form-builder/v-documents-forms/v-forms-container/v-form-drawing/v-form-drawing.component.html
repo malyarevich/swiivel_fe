@@ -1,25 +1,25 @@
 <div *ngIf="formsPDF.isEdit" class="d-flex justify-content-center pt-4">
   <div class="draw-div bg-white row align-items-center">
     <div class="col-2 text-center ">
-      <span>Draw</span>
+      <span class="app-text-extra-bold">Draw</span>
     </div>
     <div
-      class="col-10  justify-content-center btn-group btn-group-toggle"
+      class="col-10  align-items-center   btn-group btn-group-toggle"
       ngbRadioGroup
       name="radioDrawType"
       (ngModelChange)="changeTypeDraw($event)"
       [(ngModel)]="drawingType"
     >
-        <label ngbButtonLabel class="btn  form-control pt-1 btn-sm mx-2 app-btn-outline-primary">
+        <label ngbButtonLabel class="btn rounded  pt-1 btn-sm form-control-plaintext mx-2 app-btn-outline-primary">
           <input ngbButton type="radio" value="system">System Fields
         </label>
-        <label ngbButtonLabel class="btn app-btn-outline-primary pt-1 form-control   btn-sm mx-2">
+        <label ngbButtonLabel class="btn rounded  pt-1 btn-sm form-control-plaintext mx-2 app-btn-outline-primary">
           <input ngbButton type="radio" value="checkbox"> Checkbox
         </label>
-        <label ngbButtonLabel class="btn app-btn-outline-primary pt-1 form-control  btn-sm mx-2">
+        <label ngbButtonLabel class="btn rounded  pt-1 btn-sm form-control-plaintext mx-2 app-btn-outline-primary">
           <input ngbButton type="radio" value="signature"> Signature
         </label>
-        <label ngbButtonLabel class="btn app-btn-outline-primary pt-1 form-control  btn-sm mx-2">
+        <label ngbButtonLabel class="btn rounded  pt-1 btn-sm form-control-plaintext mx-2 app-btn-outline-primary">
           <input ngbButton type="radio" value="temporary"> Temporary Field
         </label>
     </div>
@@ -55,19 +55,27 @@
         placement="left"
         autoClose="outside"
         #myDrop="ngbDropdown"
+        (click)="editDivChange(div);"
       >
-        <div *ngIf="div.isEdit" class="row no-gutters align-items-center div-inside-wrap">
+        <div *ngIf="div.isEdit" class="row no-gutters align-items-center div-inside-wrap" (click)="$event.stopPropagation()">
           <div class="justify-content-center">
-              <span id="dropdownBasic1" ngbDropdownToggle><i class="fas fa-pen fa-xs "></i></span>
+              <span
+                *ngIf="div.type!='checkbox'"
+                id="dropdownBasic1"
+                ngbDropdownToggle
+
+              >
+                <i class="fas fa-pen fa-xs "></i>
+              </span>
               <span (click)="removeDiv(div.id)"><i class="fas fa-trash fa-xs ml-2"></i></span>
 
 
           </div>
 
         </div>
-        <div [ngStyle]="styleObject(div)" (click)="editDivChange(div)"><p>{{div.linkedField?.name}}</p></div>
+        <div [ngStyle]="styleObject(div)"><p>{{div.linkedField?.name}}</p></div>
 
-        <div *ngIf="div.type=='system'" class="" ngbDropdownMenu aria-labelledby="dropdownBasic1">
+        <div *ngIf="div.type=='system'" class="" ngbDropdownMenu aria-labelledby="dropdownBasic1" (click)="$event.stopPropagation()">
           <div class="row mb-3 align-items-center row-button">
             <div class="col-5 ml-2">
               <button
@@ -109,7 +117,7 @@
           </div>
         </div>
 
-        <div *ngIf="div.type=='signature'" class="signature-div px-2 py-2" ngbDropdownMenu aria-labelledby="dropdownBasic1">
+        <div *ngIf="div.type=='signature'" (click)="$event.stopPropagation()" class="signature-div px-2 py-2" ngbDropdownMenu aria-labelledby="dropdownBasic1">
           <div class=" pl-1 font-weight-bold">
             <span>Signature Settings</span>
           </div>
@@ -159,7 +167,7 @@
           </div>
         </div>
 
-        <div *ngIf="div.type=='temporary'" class="temporary-div" ngbDropdownMenu aria-labelledby="dropdownBasic1">
+        <div *ngIf="div.type=='temporary'" (click)="$event.stopPropagation()" class="temporary-div" ngbDropdownMenu aria-labelledby="dropdownBasic1">
           <div class="row mb-3 align-items-center row-button">
             <div class="col-5 ml-2">
               <button
@@ -198,7 +206,7 @@
             #newField
             (blur)="addTempField(newField.value); newField.value='';"
             (keyup.enter)="addTempField(newField.value) ;newField.value='';">
-          <div class="justify-content-center div-list-field">
+          <div class="justify-content-center div-list-field mt-2">
             <ul class="list-group justify-content-center">
               <li
                 [ngClass]="div.linkedField?.name==field.name?'active':'do-not-active'"
@@ -206,7 +214,7 @@
                 class="list-group-item  ml-2 mb-3 pl-2 py-0"
                 *ngFor="let field of temporaryField | filter : searchText"
               >
-                {{field.name}}
+                {{field?.name}}
               </li>
             </ul>
 
@@ -243,8 +251,7 @@
 
 </div>
 
-<div *ngIf="formsPDF.isEdit" class="d-flex justify
--content-center pt-4 row align-items-center">
+<div *ngIf="formsPDF.isEdit" class="d-flex justify-content-center pt-4 row align-items-center">
   <div class="col-3">
     <button class="btn app-btn-outline-primary form-control" (click)="formsPDF.isEdit=!formsPDF.isEdit; changeTypeDraw($event)">
       Cancel

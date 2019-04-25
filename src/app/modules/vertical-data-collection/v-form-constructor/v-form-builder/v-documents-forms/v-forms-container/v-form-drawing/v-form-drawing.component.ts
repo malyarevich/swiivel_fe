@@ -61,8 +61,6 @@ export class VFormDrawingComponent implements AfterViewInit, OnDestroy, OnInit, 
 
 
   editDivChange(div:FormsDivModel){
-    console.log(this.formsPDF.isEdit, div.type==this.drawingType);
-
     if(this.formsPDF.isEdit && div.type==this.drawingType)     div.isEdit=!div.isEdit;
 
   }
@@ -78,7 +76,7 @@ export class VFormDrawingComponent implements AfterViewInit, OnDestroy, OnInit, 
 
   addTempField(name: string){
   if(name.length<3) return;
-    this.temporaryField.push({name: name});
+    this.temporaryField.push({id: uuid(),name: name});
     this.showAddButtonTemporary=false
   }
 
@@ -156,6 +154,7 @@ export class VFormDrawingComponent implements AfterViewInit, OnDestroy, OnInit, 
     };
     if(this.drawingType=='signature'){
       div.linkedField = <FormPDFSignatureModel>{
+        id: uuid(),
         isE: true,
         isSystem: true,
         isBothParents: false
@@ -163,7 +162,6 @@ export class VFormDrawingComponent implements AfterViewInit, OnDestroy, OnInit, 
     }
     if(div.height>5&&div.width>5){
       if(!this.formsPDF.form.fieldsPdf[this.page-1]) this.formsPDF.form.fieldsPdf[this.page-1]=[];
-      console.log(div.type);
       this.formsPDF.form.fieldsPdf[this.page-1].push(div);
     }
     this.cx.clearRect(0,0,this.width, this.height);
@@ -172,6 +170,11 @@ export class VFormDrawingComponent implements AfterViewInit, OnDestroy, OnInit, 
   }
 
   loadComplete(pdf: PDFDocumentProxy){
+    this.formsPDF.form.fieldsPdf.forEach(page=>{
+      page.forEach(field=>{
+        if(field.type=='temporary'&&field.linkedField) this.temporaryField.push( field.linkedField);
+      })
+    });
     this.page=1;
   }
 
@@ -213,6 +216,7 @@ export class VFormDrawingComponent implements AfterViewInit, OnDestroy, OnInit, 
 
         // this method we'll implement soon to do the actual drawing
         this.drawOnCanvas(prevPos, currentPos);
+        // console.log(prevPos, currentPos);
       });
   }
 
@@ -253,7 +257,8 @@ export class VFormDrawingComponent implements AfterViewInit, OnDestroy, OnInit, 
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes)
+    // if(changes.formsPDF)
+      console.log(changes)
   }
 
 }
