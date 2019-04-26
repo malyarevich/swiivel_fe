@@ -1,17 +1,21 @@
-<div class="input-group">
-  <input class="form-control"
+<div class="input-group app-input-container"
+     [ngClass]="{'app-input-fill': formatDate.value && !data.options.hideLabel}">
+  <label *ngIf="!data.options.hideLabel" class="app-input-label">{{data.name | titlecase}}</label>
+  <input class="form-control app-input"
          placeholder="yyyy-mm-dd"
          name="dp"
          ngbDatepicker
          #d="ngbDatepicker"
-         aria-describedby="basic-addon1"
          (ngModelChange)="blurChanges($event)"
-         [(ngModel)]="date"
+         (click)="d.toggle()"
+         [ngModel]="formatDate"
          [disabled]="data.options.readonly"
          [required]="data.options.required">
-         <!--(change)="logChanges($event)"-->
 
   <div class="input-group-append">
-    <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+    <button class="btn app-btn-outline-primary calendar" (click)="d.toggle()" type="button">
+      <i class="far fa-calendar"></i>
+    </button>
   </div>
 </div>
+

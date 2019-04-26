@@ -1,19 +1,7 @@
-<!--<select class="form-control"-->
-        <!--[(ngModel)]="data.value"-->
-        <!--[required]="data.options.required"-->
-        <!--[disabled]="data.options.readonly"-->
-<!--&gt;-->
-
-
-  <!--<option *ngFor="let item of data.options.items || list" [selected]="data.value" [ngValue]="item">{{item}}</option>-->
-<!--</select>-->
-
-
 <div class="form-group app-input-container"
      [ngClass]="{'app-input-fill': data.value}">
-  <label for="dropDownList" class="app-input-label">{{data.name | titlecase}}</label>
+  <label class="app-input-label">{{data.name | titlecase}}</label>
   <select class="app-input form-control"
-          id="dropDownList"
           [(ngModel)]="data.value"
           [required]="data.options.required"
           [disabled]="data.options.readonly">

@@ -10,11 +10,11 @@ import {Field} from '../../../model/field.model';
 export class DateTimeFieldComponent  {
 
   @Input() data: Field;
-  date;
+  formatDate;
   constructor(private parserFormatter: NgbDateParserFormatter) {}
 
   ngOnInit(){
-  this.date= this.parserFormatter.parse(this.data.value);
+  this.formatDate = this.parserFormatter.parse(this.data.value);
   }
 
   blurChanges(event){
