@@ -25,7 +25,7 @@ import {DropDownListFieldComponent} from "./online-form-fields/fileds/drop-down-
 import {DateTimeFieldComponent} from "./online-form-fields/fileds/date-time-field/date-time-field.component";
 import { FieldContentDirective } from './directives/field-content.directive';
 import {entryComponents} from "./online-form-fields/entryComponents";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 @NgModule({
@@ -55,6 +55,7 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     NgbModule,
     OnlineFormRoutingModule
   ],
