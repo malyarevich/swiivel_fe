@@ -48,35 +48,47 @@
         <td nowrap>{{convertDate(item.updated_at) | date:'dd-MM-yyyy'}}
           <span class="app-form-table-second-color"> {{convertDate(item.updated_at) | date:'shortTime'}}</span>
         </td>
+
+        <!--Change status button-->
         <td>
           <div ngbDropdown class="d-inline-block">
 
             <button type="button" class="btn app-btn-status px-1 py-0 app-dropdown-toggle"
+                    *ngIf="item.status === templateStatuses.STATUS_CLOSED"
+                    [ngClass]="getClassByStatus(item.status)"
+                    appClickStopPropagation>
+              <span *ngIf="item.status !== templateStatuses.STATUS_REVIEW" class="font-weight-bold app-text-small">
+                {{item.status | titlecase}}
+              </span>
+            </button>
+
+            <button type="button" class="btn app-btn-status px-1 py-0 app-dropdown-toggle"
+                    *ngIf="item.status !== templateStatuses.STATUS_CLOSED"
                     [ngClass]="getClassByStatus(item.status)"
                     id="dropdownBasic1"
                     ngbDropdownToggle
                     appClickStopPropagation>
-              <ng-template [ngIf]="item.status === STATUS_REVIEW" [ngIfElse]="chevron">
-              <span class="font-weight-bold app-text-small">{{'In ' + item.status | titlecase}}
+              <span *ngIf="item.status === templateStatuses.STATUS_REVIEW" class="font-weight-bold app-text-small">{{'In ' + item.status | titlecase}}
                 <i class="fas fa-hourglass-start"></i>
               </span>
-              </ng-template>
-              <ng-template #chevron>
-              <span class="font-weight-bold app-text-small">{{item.status | titlecase}}
+              <span *ngIf="item.status !== templateStatuses.STATUS_REVIEW" class="font-weight-bold app-text-small">{{item.status | titlecase}}
                 <i class="fas fa-chevron-down"></i>
               </span>
-              </ng-template>
             </button>
+
             <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-              <button *ngFor="let status of statuses"
+              <button *ngFor="let status of changedStatuses"
                       (click)="changeStatus(item.id, status)"
                       ngbDropdownItem
                       appClickStopPropagation>
                 {{status | titlecase}}
               </button>
             </div>
+
           </div>
         </td>
+        <!--End Change status button-->
+
         <td nowrap>
           <button type="button"
                   class="btn app-btn-primary py-0 px-1 mr-2 p"

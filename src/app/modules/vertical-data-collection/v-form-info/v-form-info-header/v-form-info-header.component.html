@@ -2,32 +2,70 @@
 
   <div class="col">
     <h4 class="font-weight-bold d-inline-block pr-3">{{form?.name | titlecase}}</h4>
+
     <div *ngIf="form?.status" ngbDropdown class="d-inline-block">
+
       <button type="button" class="btn app-btn-status px-1 py-0 app-dropdown-toggle"
+              *ngIf="form.status === templateStatuses.STATUS_CLOSED"
+              [ngClass]="getClassByStatus(form.status)"
+              appClickStopPropagation>
+              <span *ngIf="form.status !== templateStatuses.STATUS_REVIEW" class="font-weight-bold app-text-small">
+                {{form.status | titlecase}}
+              </span>
+      </button>
+
+      <button type="button" class="btn app-btn-status px-1 py-0 app-dropdown-toggle"
+              *ngIf="form.status !== templateStatuses.STATUS_CLOSED"
               [ngClass]="getClassByStatus(form.status)"
               id="dropdownBasic1"
               ngbDropdownToggle
               appClickStopPropagation>
-        <ng-template [ngIf]="form.status === STATUS_REVIEW" [ngIfElse]="chevron">
-              <span>{{'In ' + form.status | titlecase}}
+              <span *ngIf="form.status === templateStatuses.STATUS_REVIEW" class="font-weight-bold app-text-small">{{'In ' + form.status | titlecase}}
                 <i class="fas fa-hourglass-start"></i>
               </span>
-        </ng-template>
-        <ng-template #chevron>
-              <span>{{form.status | titlecase}}
+        <span *ngIf="form.status !== templateStatuses.STATUS_REVIEW" class="font-weight-bold app-text-small">{{form.status | titlecase}}
                 <i class="fas fa-chevron-down"></i>
               </span>
-        </ng-template>
       </button>
-      <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-        <button *ngFor="let status of statuses"
+
+      <div *ngIf="form.status !== templateStatuses.STATUS_CLOSED" ngbDropdownMenu aria-labelledby="dropdownBasic1">
+        <button *ngFor="let status of changedStatuses"
                 (click)="changeStatus(form.id, status)"
                 ngbDropdownItem
                 appClickStopPropagation>
           {{status | titlecase}}
         </button>
       </div>
+
     </div>
+
+
+    <!--<div *ngIf="form?.status" ngbDropdown class="d-inline-block">-->
+      <!--<button type="button" class="btn app-btn-status px-1 py-0 app-dropdown-toggle"-->
+              <!--[ngClass]="getClassByStatus(form.status)"-->
+              <!--id="dropdownBasic1"-->
+              <!--ngbDropdownToggle-->
+              <!--appClickStopPropagation>-->
+        <!--<ng-template [ngIf]="form.status === STATUS_REVIEW" [ngIfElse]="chevron">-->
+              <!--<span>{{'In ' + form.status | titlecase}}-->
+                <!--<i class="fas fa-hourglass-start"></i>-->
+              <!--</span>-->
+        <!--</ng-template>-->
+        <!--<ng-template #chevron>-->
+              <!--<span>{{form.status | titlecase}}-->
+                <!--<i class="fas fa-chevron-down"></i>-->
+              <!--</span>-->
+        <!--</ng-template>-->
+      <!--</button>-->
+      <!--<div ngbDropdownMenu aria-labelledby="dropdownBasic1">-->
+        <!--<button *ngFor="let status of statuses"-->
+                <!--(click)="changeStatus(form.id, status)"-->
+                <!--ngbDropdownItem-->
+                <!--appClickStopPropagation>-->
+          <!--{{status | titlecase}}-->
+        <!--</button>-->
+      <!--</div>-->
+    <!--</div>-->
   </div>
 
   <div class="col text-right">
