@@ -30,8 +30,8 @@ export class OnlineFormFieldsComponent implements OnInit {
     if (!this.field._id) {
       this.field._id = uuid();
     }
-
-    let componentFactory = this.resolver.resolveComponentFactory(this.onlineFormService.componentFieldsMap.get(this.field.type));
+// TODO Remove '+' after fix return number field type of new existing field
+    let componentFactory = this.resolver.resolveComponentFactory(this.onlineFormService.componentFieldsMap.get(+this.field.type));
 
     let viewContainerRef = this.contentDirective.viewContainerRef;
     viewContainerRef.clear();

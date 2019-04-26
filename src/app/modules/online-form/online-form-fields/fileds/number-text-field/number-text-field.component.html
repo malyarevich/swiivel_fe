@@ -1,6 +1,10 @@
-<input type="number"
-       class="form-control"
-       aria-describedby="basic-addon2"
-       [(ngModel)]="data.value"
-       [readOnly]="data.options.readonly"
-       [required]="data.options.required">
+<div class="form-group app-input-container"
+     [ngClass]="{'app-input-fill': data.value && !data.options.hideLabel}">
+  <label *ngIf="!data.options.hideLabel" class="app-input-label">{{data.name | titlecase}}</label>
+  <input type="number"
+         class="app-input form-control"
+         [(ngModel)]="data.value"
+         [readOnly]="data.options.readonly"
+         [required]="data.options.required"
+         [placeholder]="data.name | titlecase">
+</div>
