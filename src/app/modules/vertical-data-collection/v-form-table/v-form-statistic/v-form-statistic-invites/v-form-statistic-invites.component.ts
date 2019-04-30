@@ -55,8 +55,8 @@ export class VFormStatisticInvitesComponent implements OnInit {
 
   ngOnInit() {
     this.formsStatsService.getInvitesRate().subscribe((val: FormsInvitesRate) => {
-      // this.invitesRate = val;
-      this.invitesRate = this.testInviteRate;
+      this.invitesRate = val;
+      // this.invitesRate = this.testInviteRate;
     })
   }
 
