@@ -44,7 +44,8 @@ export class OnlineFormViewComponent implements OnInit {
   }
 
   saveForm() {
-    this.onlineFormService.sendForm(this.form).subscribe(res => this.goBack());
+    // this.onlineFormService.sendForm(this.form).subscribe(res => this.goBack());
+    this.onlineFormService.sendFamilyForm(this.form).subscribe(res => this.goBack());
   }
 
   goBack() {

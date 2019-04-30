@@ -15,6 +15,7 @@ import {HebrewDateFieldComponent} from "./online-form-fields/fileds/hebrew-date-
 import {LabelFieldComponent} from "./online-form-fields/fileds/label-field/label-field.component";
 import {EmptyLineFieldComponent} from "./online-form-fields/fileds/empty-line-field/empty-line-field.component";
 import {Form} from "../vertical-data-collection/model/form.model";
+import {environment} from "../../../environments/environment";
 
 @Injectable()
 export class OnlineFormService {
@@ -58,6 +59,13 @@ export class OnlineFormService {
         map((response) => response)
       );
 
+  }
+
+  sendFamilyForm(form: Form) {
+    return this.http.put(`${environment.apiFB}/familyForm/${form._id}?api_token=123`, form)
+      .pipe(
+        map((response) =>  response)
+      );
   }
 
 }
