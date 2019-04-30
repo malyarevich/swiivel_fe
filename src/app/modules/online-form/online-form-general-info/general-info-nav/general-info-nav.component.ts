@@ -14,13 +14,13 @@ export class GeneralInfoNavComponent implements OnInit {
   activeSection: string = generalSectionsNames.parentsInfo;
 
   sectionNames = [
-    {name: generalSectionsNames.familyInfo, title: 'Family General Info'},
+    // {name: generalSectionsNames.familyInfo, title: 'Family General Info'},
     {name: generalSectionsNames.parentsInfo, title: 'Parents Info'},
-    {name: generalSectionsNames.paternalGrandparents, title: 'Paternal Grandparents'},
-    {name: generalSectionsNames.maternalGrandparents, title: 'Maternal Grandparents'},
-    {name: generalSectionsNames.studentsInfo, title: 'Student(s) Information'},
-    {name: generalSectionsNames.lunch, title: 'Lunch'},
-    {name: generalSectionsNames.transportation, title: 'Transportation'},
+    // {name: generalSectionsNames.paternalGrandparents, title: 'Paternal Grandparents'},
+    // {name: generalSectionsNames.maternalGrandparents, title: 'Maternal Grandparents'},
+    // {name: generalSectionsNames.studentsInfo, title: 'Student(s) Information'},
+    // {name: generalSectionsNames.lunch, title: 'Lunch'},
+    // {name: generalSectionsNames.transportation, title: 'Transportation'},
   ];
 
   constructor() {
