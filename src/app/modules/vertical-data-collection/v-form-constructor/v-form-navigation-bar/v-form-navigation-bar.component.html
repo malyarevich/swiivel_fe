@@ -3,14 +3,14 @@
   <div class="col-3">
   <span class="navbar-brand nav_text_brand" routerLink="/vertical-data-collection">NEW DATA COLLECTIONS FORM</span>
   </div>
-  <div class="collapse justify-content-center navbar-collapse nav_text_custom text-uppercase">
+  <div class="collapse justify-content-center navbar-collapse nav_text_custom ">
 
     <ul class="navbar-nav">
       <li class="nav-item " >
-        <a class="nav-link " routerLink="general-information" [ngClass]="{'app-general-info-valid': isGeneralInfoValid}" routerLinkActive="active border-bottom">
-          general settings
-          <!--<i class="far fa-check-circle"></i>-->
-          <i class="fa fa-chevron-right"></i>
+        <a class="nav-link app-text-extra-bold" routerLink="general-information" [ngClass]="{'app-general-info-valid': isGeneralInfoValid}" routerLinkActive="active border-bottom">
+          General Settings
+          <i *ngIf="isGeneralInfoValid" class="fas fa-check-circle fa-xs"></i>
+          <i class="fa fa-chevron-right pl-4"></i>
         </a>
       </li>
       <!--<li class="nav-item">-->
@@ -20,22 +20,22 @@
         <!--</a>-->
       <!--</li>-->
       <li class="nav-item ">
-        <a class="nav-link" *ngIf="isGeneralInfoValid" routerLink="form-builder"  routerLinkActive="active border-bottom">
-          form builder
-          <i class="fa fa-chevron-right"></i>
+        <a class="nav-link app-text-extra-bold" *ngIf="isGeneralInfoValid" routerLink="form-builder"  routerLinkActive="active border-bottom">
+          Form Builder
+          <i class="fa fa-chevron-right pl-4"></i>
         </a>
-        <a class="nav-link" *ngIf="!isGeneralInfoValid"  routerLinkActive="active border-bottom">
-          form builder
-          <i class="fa fa-chevron-right"></i>
+        <a class="nav-link app-text-extra-bold " *ngIf="!isGeneralInfoValid"  routerLinkActive="active border-bottom">
+          Form Builder
+          <i class="fa fa-chevron-right pl-4"></i>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link " *ngIf="isGeneralInfoValid" routerLink="publish-settings"  routerLinkActive="active border-bottom">
-          publish settings
+        <a class="nav-link app-text-extra-bold" *ngIf="isGeneralInfoValid" routerLink="publish-settings"  routerLinkActive="active border-bottom">
+          Publish Settings
           <!--<i class="fa fa-chevron-right"></i>-->
         </a>
-        <a class="nav-link " *ngIf="!isGeneralInfoValid"  routerLinkActive="active border-bottom">
-          publish settings
+        <a class="nav-link app-text-extra-bold" *ngIf="!isGeneralInfoValid"  routerLinkActive="active border-bottom">
+          Publish Settings
           <!--<i class="fa fa-chevron-right"></i>-->
         </a>
       </li>

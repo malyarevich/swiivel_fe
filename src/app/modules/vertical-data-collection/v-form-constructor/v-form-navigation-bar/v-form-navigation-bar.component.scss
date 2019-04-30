@@ -25,9 +25,14 @@
   cursor: w-resize;
 }
 .border-bottom{
-  border-bottom-width: 4px!important;
+  border-bottom-width: 2px!important;
   border-bottom-color: $element-base-color!important;
 }
+
+.app-text-extra-bold{
+  color: #151515!important;
+}
+
 
 .navbar{
   padding: 0 1rem;
