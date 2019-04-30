@@ -22,3 +22,13 @@
   }
 }
 
+.app-btn-warning {
+  font-weight: bold;
+  background-color: $element-warning-color;
+  color: #ffffff;
+  border-radius: 3px;
+  &:hover, &:focus, &:active {
+    color: #FFFFFF;
+  }
+}
+
