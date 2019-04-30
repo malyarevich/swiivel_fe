@@ -27,13 +27,13 @@
           <div class="col-2">
             <label class="app-switch">
               <input type="checkbox"
-                     [ngModel]="sections.formFields"
-                     (ngModelChange)="setActiveSection($event, 'formFields')">
+                     [ngModel]="sections.formFieldsWorkspace"
+                     (ngModelChange)="sections.formFields = sections.formFieldsWorkspace = $event">
               <span class="app-slider app-round"></span>
             </label>
           </div>
           <div class="col">
-            <span class="font-weight-bold ">FORM FIELDS</span>
+            <span class="font-weight-bold side-bar-toggle" (click)="sections.formFields=!sections.formFields">FORM FIELDS</span>
           </div>
         </div>
         <div *ngIf="sections.formFields" class="bg-white rounded mb-3">
@@ -98,13 +98,13 @@
           <div class="col-2">
             <label class="app-switch">
               <input type="checkbox"
-                     [ngModel]="sections.documentsForms"
-                     (ngModelChange)="setActiveSection($event, 'documentsForms')">
+                     [ngModel]="sections.documentsFormsWorkspace"
+                     (ngModelChange)="sections.documentsForms = sections.documentsFormsWorkspace = $event">
               <span class="app-slider app-round"></span>
             </label>
           </div>
           <div class="col">
-            <span class="font-weight-bold ">DOCUMENTS & FORMS</span>
+            <span class="font-weight-bold side-bar-toggle" (click)="sections.documentsForms=!sections.documentsForms">DOCUMENTS & FORMS</span>
           </div>
         </div>
         <div *ngIf="sections.documentsForms" class="bg-white rounded mb-3 ">
@@ -301,13 +301,13 @@
           <div class="col-2">
             <label class="app-switch">
               <input type="checkbox"
-                     [ngModel]="sections.consent"
-                     (ngModelChange)="setActiveSection($event, 'consent')">
+                     [ngModel]="sections.consentWorkspace"
+                     (ngModelChange)="sections.consent = sections.consentWorkspace = $event">
               <span class="app-slider app-round"></span>
             </label>
           </div>
           <div class="col">
-            <span class="font-weight-bold">CONSENT</span>
+            <span class="font-weight-bold side-bar-toggle" (click)="sections.consent=!sections.consent">CONSENT</span>
             <i *ngIf="sections.consent" (click)="addConsentItem()"
                class="fas fa-plus-square float-right app-plus-i"></i>
           </div>
@@ -426,13 +426,13 @@
           <div class="col-2">
             <label class="app-switch">
               <input type="checkbox"
-                     [ngModel]="sections.tuition"
-                     (ngModelChange)="setActiveSection($event, 'tuition')">
+                     [ngModel]="sections.tuitionWorkspace"
+                     (ngModelChange)="sections.tuition = sections.tuitionWorkspace = $event">
               <span class="app-slider app-round"></span>
             </label>
           </div>
           <div class="col">
-            <span class="font-weight-bold ">TUITION CONTRACT</span>
+            <span class="font-weight-bold side-bar-toggle" (click)="sections.tuition=!sections.tuition">TUITION CONTRACT</span>
           </div>
         </div>
         <div *ngIf="sections.tuition" class="bg-white rounded mb-3">
@@ -529,13 +529,13 @@
         <div class="col-2">
           <label class="app-switch">
             <input type="checkbox" name="formBuilder" value="payment_settings"
-                   [ngModel]="sections.paymentSettings"
-                   (ngModelChange)="setActiveSection($event, 'paymentSettings')">
+                   [ngModel]="sections.paymentSettingsWorkspace"
+                   (ngModelChange)="sections.paymentSettings = sections.paymentSettingsWorkspace = $event">
             <span class="app-slider app-round"></span>
           </label>
         </div>
         <div class="col">
-          <span class="font-weight-bold ">PAYMENT SETTINGS</span>
+          <span class="font-weight-bold side-bar-toggle" (click)="sections.paymentSettings=!sections.paymentSettings">PAYMENT SETTINGS</span>
         </div>
       </div>
     </div>
@@ -549,12 +549,12 @@
             <label class="app-switch">
               <input type="checkbox"
                      [ngModel]="sections.formPayment"
-                     (ngModelChange)="setActiveSection($event, 'formPayment')">
+                     (ngModelChange)="sections.formPayment = sections.formPaymentWorkspace = $event">
               <span class="app-slider app-round"></span>
             </label>
           </div>
           <div class="col">
-            <span class="font-weight-bold ">FORM PAYMENT</span>
+            <span class="font-weight-bold side-bar-toggle">FORM PAYMENT</span>
           </div>
         </div>
         <div *ngIf="sections.formPayment" class="bg-white rounded mb-3 ">
@@ -585,7 +585,7 @@
       [cdkDropListData]="fields"
       [cdkDropListConnectedTo]="['ExistingFieldsList', 'CustomFieldsList', '6372c882-3d14-486f-9c1f-52ae8ab928ef']"
       (cdkDropListDropped)="drop($event)">
-      <ul class="list-group" *ngIf="sections.formFields">
+      <ul class="list-group" *ngIf="sections.formFieldsWorkspace">
         <li class="list-group-item mb-3 py-0" *ngFor="let field of fields; trackBy: trackByFn" cdkDrag
             cdkDragLockAxis="y"
             [ngClass]="[!field.isValidName||!field.isValid?'list-group-item-warning':'', field.type==113?'app-list-group-item-info':'']">
@@ -604,7 +604,7 @@
 
       <!--  documents-forms-->
       <app-v-documents-forms
-        *ngIf="sections.documentsForms"
+        *ngIf="sections.documentsFormsWorkspace"
         [isDocumentsForms]="isDocumentsForms"
         [documents]="documents"
         [formsPDF]="formsPDF"
@@ -616,16 +616,16 @@
       <!--  end  documents-forms-->
 
       <!--  consent-->
-      <app-v-consent *ngIf="sections.consent" [consentInfo]="consentInfo"></app-v-consent>
+      <app-v-consent *ngIf="sections.consentWorkspace" [consentInfo]="consentInfo"></app-v-consent>
       <!--  end consent-->
 
       <!--  tuition-contract-->
-      <app-v-tuition-contract *ngIf="sections.tuition"
+      <app-v-tuition-contract *ngIf="sections.tuitionWorkspace"
                               [tuitionContract]="tuitionContract"></app-v-tuition-contract>
       <!--  end tuition-contract-->
 
       <!--  form-payment -->
-      <div class="app-section-wrapper" *ngIf="sections.formPayment">
+      <div class="app-section-wrapper" *ngIf="sections.formPaymentWorkspace">
         <app-v-form-payment [formPaymentSideBar]="formPaymentSideBar">
         </app-v-form-payment>
       </div>
