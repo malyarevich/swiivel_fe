@@ -1,6 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ClrLoadingState } from '@clr/angular';
 import { fadeInOutVoid } from '../../../../utils';
 
 @Component({
@@ -12,7 +11,6 @@ import { fadeInOutVoid } from '../../../../utils';
 })
 export class RestoreFormComponent implements OnInit {
   public form: FormGroup;
-  public submitBtnState: ClrLoadingState = ClrLoadingState.DEFAULT;
   public isOpen = true;
 
   @Output() goToLogin = new EventEmitter<boolean>();
@@ -34,7 +32,6 @@ export class RestoreFormComponent implements OnInit {
     const {valid} = this.form;
     if (valid) {
       this.isOpen = !this.isOpen;
-      this.submitBtnState = ClrLoadingState.LOADING;
     }
   }
 

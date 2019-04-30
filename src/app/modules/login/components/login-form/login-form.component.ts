@@ -12,7 +12,6 @@ import {Store} from '@ngrx/store';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 
-import {ClrLoadingState} from '@clr/angular';
 import {Login, Effects} from '../../store';
 
 @Component({
@@ -24,7 +23,6 @@ import {Login, Effects} from '../../store';
 export class LoginFormComponent implements OnInit, OnDestroy {
     public form: FormGroup;
     public shape = 'eye';
-    public submitBtnState: ClrLoadingState = ClrLoadingState.DEFAULT;
     public destroy$: Subject<boolean> = new Subject<boolean>();
 
     @Output() goToRestore = new EventEmitter<boolean>();
@@ -52,7 +50,6 @@ export class LoginFormComponent implements OnInit, OnDestroy {
                     this.form.controls[key].markAsTouched();
                 }
             });
-            this.submitBtnState = ClrLoadingState.DEFAULT;
 
             this.ch.markForCheck();
         });
@@ -69,7 +66,6 @@ export class LoginFormComponent implements OnInit, OnDestroy {
     logIn() {
         const {valid, value} = this.form;
         if (valid) {
-            this.submitBtnState = ClrLoadingState.LOADING;
             this.store.dispatch(new Login(value));
         }
     }

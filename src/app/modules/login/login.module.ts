@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ClrButtonModule, ClrFormsModule, ClrIconModule, ClrLoadingModule} from '@clr/angular';
 import { AuthModule } from '../../services/auth';
 import { LoginRoutingModule } from './login-routing.module';
 import { InputContainerModule } from '../../components/form-components/input-container';
@@ -19,7 +18,6 @@ import { LoginComponent, LoginFormComponent, RestoreFormComponent } from './comp
         CommonModule,
         LoginRoutingModule,
         ReactiveFormsModule,
-        ClrLoadingModule,
         AuthModule,
         InputContainerModule.forRoot(),
         StoreModule.forFeature('user', reducer),
