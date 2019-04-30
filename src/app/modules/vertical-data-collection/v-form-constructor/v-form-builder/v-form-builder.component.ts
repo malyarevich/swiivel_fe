@@ -447,11 +447,11 @@ export class VFormBuilderComponent implements OnInit {
     this.consentInfo.splice(i, 1);
   }
 
-  setActiveSection(event, section) {
-    Object.keys(this.sections).map((key, index) => {
-      this.sections[key] = false;
-    });
-    this.sections[section] = event;
-  }
+  // setActiveSection(event, section) {
+  //   Object.keys(this.sections).map((key, index) => {
+  //     this.sections[key] = false;
+  //   });
+  //   this.sections[section] = event;
+  // }
 }
 
