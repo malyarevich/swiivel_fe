@@ -7,8 +7,6 @@ export interface ConsentInfo {
 
 interface ConsentInfoText {
   value: string;
-  isBold: boolean;
-  isItalic: boolean;
 }
 
 interface ConsentInfoCheckbox {
@@ -27,8 +25,6 @@ export const consentItemDefault = {
   title: '',
   text: {
     value: '',
-    isBold: false,
-    isItalic: false,
   },
   checkbox: {
     isActive: false,
