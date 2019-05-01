@@ -1,3 +1,4 @@
+
 export interface ConsentInfo {
   isActive: boolean;
   showSideInfo: boolean;
@@ -6,6 +7,7 @@ export interface ConsentInfo {
 
 export interface ConsentItemInfo {
   title: string;
+  id: string;
   text: ConsentItemInfoText;
   checkbox: ConsentItemInfoCheckbox;
   signature: ConsentItemInfoSignature;
@@ -29,6 +31,7 @@ interface ConsentItemInfoSignature {
 
 export const consentItemDefault: ConsentItemInfo = {
   title: '',
+  id: '',
   text: {
     value: '',
   },

@@ -440,6 +440,7 @@ export class VFormBuilderComponent implements OnInit {
 
   addConsentItem() {
     let consentItem = cloneDeep(consentItemDefault);
+    consentItem.id = uuid();
     this.consentInfo.consents.push(consentItem);
   }
 

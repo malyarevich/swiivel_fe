@@ -1,6 +1,7 @@
 import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
-import {consentItemDefault, ConsentItemInfo} from "./model/consent.model";
-import { replace } from 'lodash'
+import {ConsentItemInfo} from "./model/consent.model";
+import {replace, cloneDeep} from 'lodash';
+import {uuid} from 'uuid';
 
 @Component({
   selector: 'app-v-consent',
@@ -20,7 +21,12 @@ export class VConsentComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     // this.formatTextStringToHTML();
-    if (!this.consents || !this.consents.length) this.consents.push(consentItemDefault);
+    // if (!this.consents || !this.consents.length) {
+    //   let consentItem = cloneDeep(consentItemDefault);
+    //   consentItem.id = uuid();
+    //   console.log(consentItem);
+    //   this.consents.push(consentItem);
+    // }
   }
 
   // formatTextStringToHTML() {

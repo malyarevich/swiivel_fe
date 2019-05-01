@@ -27,6 +27,8 @@ import { FieldContentDirective } from './directives/field-content.directive';
 import {entryComponents} from "./online-form-fields/entryComponents";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import { OnlineFormConsentComponent } from './online-form-consent/online-form-consent.component';
+import { ConsentNavComponent } from './online-form-consent/consent-nav/consent-nav.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +53,8 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
     DropDownListFieldComponent,
     DateTimeFieldComponent,
     FieldContentDirective,
+    OnlineFormConsentComponent,
+    ConsentNavComponent,
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,38 @@
+<p class="text-center app-text-extra-large app-text-extra-bold">
+  Consent
+</p>
+
+<div class="app-of-wrap">
+
+  <div class="row no-gutters align-items-center">
+    <div class="col-12 app-of-nav-wrap">
+      <app-consent-nav [consents]="consentInfo.consents"
+                       (activeConsentEmitter)="onActiveConsent($event)"></app-consent-nav>
+    </div>
+  </div>
+
+  <ng-container *ngFor="let item of consentInfo.consents">
+    <div *ngIf="item.id === activeConsentId">
+
+      <div  class="row no-gutters align-items-center p-4">
+        <div class="col-12 text-center">
+          <p class="app-text-extra-bold mb-0">
+            {{item.title | uppercase}}
+          </p>
+          <p class="app-text-second app-text-small mb-0">
+            <i class="far fa-clock fa-sm mr-1"></i>
+            ~15 minutes
+          </p>
+        </div>
+      </div>
+
+      <div  class="row no-gutters p-4">
+        <div class="col-2"></div>
+        <div class="col-8" [innerHTML]="item.text.value"></div>
+        <div class="col-2"></div>
+      </div>
+
+    </div>
+  </ng-container>
+
+</div>

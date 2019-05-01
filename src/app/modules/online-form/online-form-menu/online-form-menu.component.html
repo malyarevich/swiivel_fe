@@ -1,9 +1,10 @@
 <div class="app-of-menu-wrap">
   <ul class="list-group bg-white ">
 
+    <ng-container *ngFor="let item of menuItems">
     <li class="list-group-item app-cursor-pointer"
         [ngClass]="activeMenuItem === item.name ? 'app-of-menu-active' : ''"
-        *ngFor="let item of menuItems"
+        *ngIf="isShowMenuItem(item.name)"
         (click)="setActiveMenuItem(item.name)">
       <div class="row no-gutters align-items-center py-1">
         <div class="col-2">
@@ -22,6 +23,7 @@
         </div>
       </div>
     </li>
+    </ng-container>
 
   </ul>
 </div>
