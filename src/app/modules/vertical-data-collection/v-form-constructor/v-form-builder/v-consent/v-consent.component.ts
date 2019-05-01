@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
-import {ConsentInfo, consentItemDefault} from "./model/consent.model";
+import {consentItemDefault, ConsentItemInfo} from "./model/consent.model";
 import { replace } from 'lodash'
 
 @Component({
@@ -8,12 +8,9 @@ import { replace } from 'lodash'
   styleUrls: ['./v-consent.component.scss']
 })
 export class VConsentComponent implements OnInit, AfterViewInit {
-  @Input() consentInfo: ConsentInfo[];
+  @Input() consents: ConsentItemInfo[];
 
   sectionName: string = 'Parent Consent';
-
-  // text = '';
-  // textString = 'I {%parent%} allow my child {%student_name%} to play in sport game to {%date%}';
 
   constructor() {
   }
@@ -23,7 +20,7 @@ export class VConsentComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     // this.formatTextStringToHTML();
-    if (!this.consentInfo || !this.consentInfo.length) this.consentInfo.push(consentItemDefault);
+    if (!this.consents || !this.consents.length) this.consents.push(consentItemDefault);
   }
 
   // formatTextStringToHTML() {
