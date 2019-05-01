@@ -1,6 +1,6 @@
 <ng-container *ngIf="form">
   <app-online-form-nav [formName]="form?.name" (actionEmitter)="onAction($event)"></app-online-form-nav>
-  <div class="container-fluid app-of-background py-4">
+  <div class="container-fluid app-of-background min-vh-100 py-4">
     <div class="row">
       <div class="col-3">
         <app-online-form-menu [form]="form" (activeMenuItemEmitter)="onActiveMenuItem($event)"></app-online-form-menu>

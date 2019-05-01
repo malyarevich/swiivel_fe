@@ -14,7 +14,8 @@
   <ng-container *ngFor="let item of consentInfo.consents">
     <div *ngIf="item.id === activeConsentId">
 
-      <div  class="row no-gutters align-items-center p-4">
+      <!--Title-->
+      <div class="row no-gutters align-items-center pt-4">
         <div class="col-12 text-center">
           <p class="app-text-extra-bold mb-0">
             {{item.title | uppercase}}
@@ -26,10 +27,64 @@
         </div>
       </div>
 
-      <div  class="row no-gutters p-4">
+      <!--Text-->
+      <div class="row no-gutters pt-4">
         <div class="col-2"></div>
         <div class="col-8" [innerHTML]="item.text.value"></div>
         <div class="col-2"></div>
+      </div>
+
+      <!--Checkbox-->
+      <div *ngIf="item.checkbox.isActive" class="row no-gutters pt-4">
+        <div class="col-2"></div>
+        <div class="col-8">
+          <label class="app-checkbox-container"><span class="font-weight-bold">{{item.checkbox.text}}</span>
+            <input type="checkbox">
+            <span class="app-checkbox-checkmark"></span>
+          </label>
+        </div>
+        <div class="col-2"></div>
+      </div>
+
+      <!--Signature-->
+      <ng-container *ngIf="item.signature.isRequire">
+
+        <div class="row no-gutters pt-3" *ngIf="!item.signature.isBothParents">
+          <div class="col-2"></div>
+          <div class="col-8">
+            <div class="row">
+              <div class="col-6">
+                <textarea class="w-100 pl-3"
+                          rows="2"
+                          placeholder="Parent's Signature"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="col-2"></div>
+        </div>
+
+        <div class="row pt-3" *ngIf="item.signature.isBothParents">
+          <div class="col-2"></div>
+          <div class="col-8">
+            <div class="row">
+              <div class="col-6">
+          <textarea class="w-100 pl-3"
+                    rows="2"
+                    placeholder="Father's Signature"></textarea>
+              </div>
+              <div class="col-6">
+          <textarea class="w-100 pl-3"
+                    rows="2"
+                    placeholder="Mother's Signature"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="col-2"></div>
+        </div>
+      </ng-container>
+
+      <div class="py-2 pr-5 text-right">
+        <button class="btn app-btn-primary px-5 py-2 mr-3">Accept</button>
       </div>
 
     </div>
