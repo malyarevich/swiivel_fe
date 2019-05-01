@@ -9,9 +9,16 @@
 
 .app-form-general-menu-item {
     cursor: pointer;
+  font-weight: bold;
+
 }
 
 .app-form-general-menu-item-active {
     color: #4350A2;
     background-color: #EBEEFF;
+}
+
+.app-form-general-menu-item-disabled{
+  cursor: default;
+ 	color: #909090;;
 }

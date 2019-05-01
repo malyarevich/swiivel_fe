@@ -1,13 +1,14 @@
-import {Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
-import {FormUtils} from "../../utils/form.utils";
-import {Form, FormSql} from "../../model/form.model";
+import {AfterViewInit, Component, ElementRef, HostListener, Input, OnChanges, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {FormUtils} from '../../utils/form.utils';
+import {Form, FormSql} from '../../model/form.model';
 import { isEmpty } from 'lodash';
-import {VFormService} from "../../v-form.service";
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import { NgbDateParserFormatter} from "@ng-bootstrap/ng-bootstrap";
-import {requireCheckboxesToBeCheckedValidator} from "../../../../utils/validators/require-checkboxes-to-be-checked.validator";
-import {GeneralInfoIsValidService} from "../../services/general-info-is-valid.service";
+import {VFormService} from '../../v-form.service';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import { NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
+import {requireCheckboxesToBeCheckedValidator} from '../../../../utils/validators/require-checkboxes-to-be-checked.validator';
+import {GeneralInfoIsValidService} from '../../services/general-info-is-valid.service';
+import {menu, menuStarted} from './menu';
 
 
 @Component({
@@ -15,7 +16,10 @@ import {GeneralInfoIsValidService} from "../../services/general-info-is-valid.se
   templateUrl: './v-form-general-information.component.html',
   styleUrls: ['./v-form-general-information.component.css']
 })
-export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
+export class VFormGeneralInformationComponent implements OnInit, OnDestroy,AfterViewInit {
+  ngAfterViewInit(): void {
+   console.log('ngAfterViewInit');
+  }
     @ViewChild('generalInfo') generalInfo: ElementRef;
     @ViewChild('basicInfo') basicInfo: ElementRef;
     @ViewChild('period') period: ElementRef;
@@ -30,9 +34,10 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
   generalInfoForm: FormGroup;
   formsDublicate: FormSql[];
   isOnSubmit: boolean = false;
-
+  menu = menuStarted;
   activeSection: number = 1;
-
+  sticky: boolean = false;
+  elementPosition: any;
   formTypeCreation: number = 0;
   constructor(private activatedRoute: ActivatedRoute,
               private router: Router,
@@ -103,7 +108,6 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
 
 
   formInit(): void{
-
     this.generalInfoForm = new FormGroup({
         name: new FormControl('', {
           validators: Validators.compose([
@@ -144,6 +148,7 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
               },
               eligible: form.eligible
             });
+            this.menu = menu;
           }
         },
         (error)=>console.log(error, 'error')
@@ -162,12 +167,14 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
         return 'night';
     }
 
-    // onScrollTo(target) {
-    //     this[target].nativeElement.scrollIntoView({behavior:"smooth"});
-    // }
+    onScrollTo(target) {
+        this[target].nativeElement.scrollIntoView({behavior:'smooth'});
+        console.log(target);
+    }
 
   setActiveSection(value) {
-    this.activeSection = value;
+    this.activeSection = value.target;
+     this.onScrollTo(value.scrollTarget);
   }
 
   isInvalidCheckboxGroup(groupName: string): boolean {
@@ -179,10 +186,10 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
   onFormStatusChanges(): void {
     this.generalInfoForm.statusChanges.subscribe(val => {
       switch (val) {
-        case "VALID":
+        case 'VALID':
           this.generalInfoIsValidService.setIsValid(true);
           break;
-        case "INVALID":
+        case 'INVALID':
           this.generalInfoIsValidService.setIsValid(false);
           break;
       }
@@ -195,6 +202,17 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
       this.router.routerState.snapshot.url.indexOf('publish-settings') > -1) {
       this.onSubmit();
     }
+  }
+
+  nextStep(item){
+    console.log(item, 'before',this.generalInfoForm);
+    // this.validateAllFormFields(this.generalInfoForm);
+    // if (!this.generalInfoForm.valid) return;
+    // console.log(item, 'after',this.generalInfoForm);
+
+    item.isActive = true;
+    this.activeSection = item.target;
+    this.onScrollTo(item.scrollTarget);
   }
 
 }
