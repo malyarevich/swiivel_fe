@@ -1,0 +1,41 @@
+<div class="create-payer-account">
+  <div *ngIf="showModal">
+    <app-create-payer-account
+      (closeCreatePayerAccount)="onCloseCreatePayerAccount($event)"
+    >
+    </app-create-payer-account>
+  </div>
+
+  <button
+    (click)="onShowModal()"
+  >
+    Create account
+  </button>
+
+  <div class="container-fluid">
+    <h4 class="text-left">
+      <b>Payers</b>
+    </h4>
+    <table class="table table-responsive">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Members</th>
+          <th scope="col">Fees</th>
+          <th scope="col">Created</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let payer of payers">
+          <td>{{payer.name}}</td>
+          <td>{{payer.members}}</td>
+          <td>{{payer.fees}}</td>
+          <td>{{payer.created_at}}</td>
+          <td><a class="btn btn-primary" [routerLink]="['/payer-accounts/', payer.id]">View</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>

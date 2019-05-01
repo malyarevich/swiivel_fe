@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+// import {
+//   FormBuilder, FormGroup, Validators
+// } from '@angular/forms';
 
 @Component({
   selector: 'app-create-payer-account',
@@ -6,13 +9,20 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./create-payer-account.component.scss']
 })
 export class CreatePayerAccountComponent implements OnInit {
+  @Output() closeCreatePayerAccount: EventEmitter<any> = new EventEmitter<any>();
+
+  // private form: FormGroup;
+
   companies: any[] = [];
   companiesNames = ['Miškas', 'Žalias', 'Flexigen', 'Test1', 'Test2', 'Test3', 'Test4', 'Test5', 'Test6', 'Test7'];
   types: any[] = [];
-  typesNames = ['Payer', 'Buyer'];
-  showModal = true;
+  typesNames = ['Payer', 'Other'];
 
-  constructor() { }
+  constructor() {
+    // this.form = fb.group({
+    //   'name': [null, Validators.required],
+    // });
+  }
 
   ngOnInit() {
     this.companiesNames.forEach((c, i) => {
@@ -31,8 +41,11 @@ export class CreatePayerAccountComponent implements OnInit {
     });
   }
 
-  onCloseModal() {
-    this.showModal = false;
+  onCreatePayerAccount(param) {
+    console.log(param);
   }
 
+  onCloseCreatePayerAccount() {
+    this.closeCreatePayerAccount.emit(true);
+  }
 }
