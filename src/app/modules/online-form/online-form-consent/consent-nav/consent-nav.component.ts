@@ -16,8 +16,7 @@ export class ConsentNavComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.activeConsentId = this.consents[0].id;
-    this.activeConsentEmitter.emit(this.activeConsentId);
+    if(this.consents.length) this.setActiveConsentId(this.consents[0].id);
   }
 
   setActiveConsentId(id) {
