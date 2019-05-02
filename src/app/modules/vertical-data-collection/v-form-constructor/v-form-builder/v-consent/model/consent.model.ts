@@ -19,6 +19,7 @@ interface ConsentItemInfoText {
 
 interface ConsentItemInfoCheckbox {
   isActive: boolean;
+  checked: boolean;
   text: string;
 }
 
@@ -37,6 +38,7 @@ export const consentItemDefault: ConsentItemInfo = {
   },
   checkbox: {
     isActive: false,
+    checked: false,
     text: '',
   },
   signature: {
