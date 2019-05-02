@@ -41,7 +41,7 @@
   </div>
 </div>
 
-<div class="app-section-wrapper mb-2" *ngFor="let item of consentInfo; let i = index">
+<div class="app-section-wrapper mb-2" *ngFor="let item of consents; let i = index">
 
   <!--TITLE-->
   <div class="row">
@@ -94,19 +94,30 @@
         <div class="col">Text</div>
         <div class="col text-right">
           <div class="d-inline-block">
-            <a [ngClass]="item.text.isBold?'active':''" (click)="item.text.isBold=!item.text.isBold">
+            <a (click)="setCommand('bold')" (mousedown)="$event.preventDefault()">
               <small>Bold</small>
             </a>
             <span><small> | </small></span>
-            <a [ngClass]="item.text.isItalic?'active':''" (click)="item.text.isItalic=!item.text.isItalic">
+            <a  (click)="setCommand('italic')" (mousedown)="$event.preventDefault()">
               <small>Italic</small>
+            </a>
+            <span><small> | </small></span>
+            <a  (click)="setCommand('removeFormat')" (mousedown)="$event.preventDefault()">
+              <small>Remove Format</small>
             </a>
           </div>
 
           <!--Var Dropdown-->
-          <div class="d-inline-block ml-3" ngbDropdown placement="bottom-right" autoClose="outside">
+          <div class="d-inline-block ml-3"
+               #varDrop="ngbDropdown" ngbDropdown
+               placement="bottom-right"
+               autoClose="outside"
+               (mouseleave)="varDrop.close()">
 
-            <span id="dropdownConsentVar" ngbDropdownToggle class="app-consent-dropdown-var">
+            <span id="dropdownConsentVar"
+                  (mouseover)="varDrop.open()"
+                  ngbDropdownToggle
+                  class="app-consent-dropdown-var">
               <i class="fas fa-angle-left mr-1"></i><i class="fas fa-angle-right"></i>
             </span>
 
@@ -115,7 +126,9 @@
               <div class="row no-gutters align-items-center">
 
                 <div class="col-4 p-1">
-                  <div class="app-consent-dropdown-var-item p-2">
+                  <div class="app-consent-dropdown-var-item p-2"
+                       (click)="setCommand('insertText', false, '{%studentsName%}')"
+                       (mousedown)="$event.preventDefault()">
                     <span class="app-fb-section-icon mr-1">
                       <i class="fas fa-ellipsis-v"></i>
                       <i class="fas fa-ellipsis-v"></i>
@@ -124,7 +137,9 @@
                 </div>
 
                 <div class="col-4 p-1">
-                  <div class="app-consent-dropdown-var-item p-2">
+                  <div class="app-consent-dropdown-var-item p-2"
+                       (click)="setCommand('insertText', false, '{%parent%}')"
+                       (mousedown)="$event.preventDefault()">
                     <span class="app-fb-section-icon mr-1">
                       <i class="fas fa-ellipsis-v"></i>
                       <i class="fas fa-ellipsis-v"></i>
@@ -133,7 +148,9 @@
                 </div>
 
                 <div class="col-4 p-1">
-                  <div class="app-consent-dropdown-var-item p-2">
+                  <div class="app-consent-dropdown-var-item p-2"
+                       (click)="setCommand('insertText', false, '{%date%}')"
+                       (mousedown)="$event.preventDefault()">
                     <span class="app-fb-section-icon mr-1">
                       <i class="fas fa-ellipsis-v"></i>
                       <i class="fas fa-ellipsis-v"></i>
@@ -150,8 +167,12 @@
         </div>
       </div>
 
-      <div [textContent]="item.text.value" class="mt-3 mb-2" (input)="item.text.value = $event.target.textContent" contentEditable=true></div>
-
+      <div [innerHTML]="item.text.value"
+           #consentText
+           class="mt-3 mb-2"
+           (blur)="item.text.value = $event.target.innerHTML"
+           contentEditable=true>
+      </div>
     </div>
   </div>
 

@@ -301,20 +301,20 @@
           <div class="col-2">
             <label class="app-switch">
               <input type="checkbox"
-                     [ngModel]="sections.consentWorkspace"
-                     (ngModelChange)="sections.consent = sections.consentWorkspace = $event">
+                     [ngModel]="consentInfo.isActive"
+                     (ngModelChange)="consentInfo.showSideInfo = consentInfo.isActive = $event">
               <span class="app-slider app-round"></span>
             </label>
           </div>
           <div class="col">
-            <span class="font-weight-bold side-bar-toggle" (click)="sections.consent=!sections.consent">CONSENT</span>
-            <i *ngIf="sections.consent" (click)="addConsentItem()"
+            <span class="font-weight-bold side-bar-toggle" (click)="consentInfo.showSideInfo=!consentInfo.showSideInfo">CONSENT</span>
+            <i *ngIf="consentInfo.showSideInfo" (click)="addConsentItem()"
                class="fas fa-plus-square float-right app-plus-i"></i>
           </div>
         </div>
-        <div *ngIf="sections.consent" class="bg-white rounded mb-3 ">
+        <div *ngIf="consentInfo.showSideInfo" class="bg-white rounded mb-3 ">
 
-          <div class="app-consent-item p-3 mt-3" *ngFor="let item of consentInfo; let i = index; ">
+          <div class="app-consent-item p-3 mt-3" *ngFor="let item of consentInfo.consents; let i = index; ">
 
             <div class="row no-gutters mb-2">
               <div class="col-10">
@@ -616,7 +616,7 @@
       <!--  end  documents-forms-->
 
       <!--  consent-->
-      <app-v-consent *ngIf="sections.consentWorkspace" [consentInfo]="consentInfo"></app-v-consent>
+      <app-v-consent *ngIf="consentInfo.isActive" [consents]="consentInfo.consents"></app-v-consent>
       <!--  end consent-->
 
       <!--  tuition-contract-->

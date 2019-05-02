@@ -1,5 +1,6 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {mainMenuNames} from "../model/main-menu-name.model";
+import {Form} from "../../vertical-data-collection/model/form.model";
 
 @Component({
   selector: 'app-online-form-menu',
@@ -7,6 +8,7 @@ import {mainMenuNames} from "../model/main-menu-name.model";
   styleUrls: ['./online-form-menu.component.scss']
 })
 export class OnlineFormMenuComponent implements OnInit {
+  @Input() form: Form;
   @Output() activeMenuItemEmitter = new EventEmitter<string>();
 
   activeMenuItem: string = mainMenuNames.generalInfo;
@@ -29,6 +31,15 @@ export class OnlineFormMenuComponent implements OnInit {
   setActiveMenuItem(menuItemName) {
     this.activeMenuItem = menuItemName;
     this.activeMenuItemEmitter.emit(this.activeMenuItem);
+  }
+
+  isShowMenuItem(itemMenuName) {
+    switch (itemMenuName) {
+      case mainMenuNames.consent: {
+        return this.form.consentInfo.isActive
+      }
+      default: return true
+    }
   }
 
 }

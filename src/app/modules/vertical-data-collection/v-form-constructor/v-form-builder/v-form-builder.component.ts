@@ -13,7 +13,7 @@ import {
 } from "./v-tuition-contract/models/tuition-contract.model";
 import {Form} from "../../model/form.model";
 import {FormPayment, TYPE_NAME} from "./v-form-payment/model/form-payment.model";
-import {ConsentInfo, consentItemDefault} from "./v-consent/model/consent.model";
+import {ConsentInfo, consentInfoDefault, consentItemDefault} from "./v-consent/model/consent.model";
 import {documentItemDefault, DocumentSideBar, DocumentsModel} from "./v-documents-forms/model/documents.model";
 import {GeneralInfoIsValidService} from "../../services/general-info-is-valid.service";
 import {FormPDFDownloadModel, formPDFItemDefault, FormsPDFModel} from "./v-documents-forms/model/formsPDF.model";
@@ -39,7 +39,7 @@ export class VFormBuilderComponent implements OnInit {
   existingFields: Field[];
   sideBarFields: Field[];
   tuitionContract: TuitionContract = tuitionContractDefault;
-  consentInfo: ConsentInfo[];
+  consentInfo: ConsentInfo = consentInfoDefault;
   eligible: string;
 
   isEditConsentName: number | null = null;
@@ -216,7 +216,7 @@ export class VFormBuilderComponent implements OnInit {
             this.formName = form.name;
             this.fields = form.fields || [];
             this.tuitionContract = form.tuitionContract ? form.tuitionContract : tuitionContractDefault;
-            this.consentInfo = form.consentInfo || [];
+            this.consentInfo = form.consentInfo || consentInfoDefault;
             this.eligible = form.eligible;
             this.documents = form.documents || [];
             this.formsPDF = form.forms || [];
@@ -440,11 +440,12 @@ export class VFormBuilderComponent implements OnInit {
 
   addConsentItem() {
     let consentItem = cloneDeep(consentItemDefault);
-    this.consentInfo.push(consentItem);
+    consentItem.id = uuid();
+    this.consentInfo.consents.push(consentItem);
   }
 
   removeConsentItem(i) {
-    this.consentInfo.splice(i, 1);
+    this.consentInfo.consents.splice(i, 1);
   }
 
   // setActiveSection(event, section) {

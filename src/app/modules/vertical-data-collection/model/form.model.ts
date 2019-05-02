@@ -19,7 +19,7 @@ export interface Form {
   sidebar?: Field[],
   step?: number;
   tuitionContract?: TuitionContract;
-  consentInfo?: ConsentInfo[];
+  consentInfo?: ConsentInfo;
   chosen_way_to_create_new_form?: number;
   eligible: string;
   example_form_id?: string;

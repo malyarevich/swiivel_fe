@@ -1,34 +1,39 @@
+
 export interface ConsentInfo {
+  isActive: boolean;
+  showSideInfo: boolean;
+  consents: ConsentItemInfo[];
+}
+
+export interface ConsentItemInfo {
   title: string;
-  text: ConsentInfoText;
-  checkbox: ConsentInfoCheckbox;
-  signature: ConsentInfoSignature;
+  id: string;
+  text: ConsentItemInfoText;
+  checkbox: ConsentItemInfoCheckbox;
+  signature: ConsentItemInfoSignature;
 }
 
-interface ConsentInfoText {
+interface ConsentItemInfoText {
   value: string;
-  isBold: boolean;
-  isItalic: boolean;
 }
 
-interface ConsentInfoCheckbox {
+interface ConsentItemInfoCheckbox {
   isActive: boolean;
   text: string;
 }
 
-interface ConsentInfoSignature {
+interface ConsentItemInfoSignature {
   isRequire: boolean;
   type: string; //e|wet
   eType: string; //external|system
   isBothParents: boolean;
 }
 
-export const consentItemDefault = {
+export const consentItemDefault: ConsentItemInfo = {
   title: '',
+  id: '',
   text: {
     value: '',
-    isBold: false,
-    isItalic: false,
   },
   checkbox: {
     isActive: false,
@@ -40,4 +45,10 @@ export const consentItemDefault = {
     eType: 'external', //external|system
     isBothParents: false,
   }
+};
+
+export const consentInfoDefault: ConsentInfo = {
+  isActive: false,
+  showSideInfo: false,
+  consents: [],
 };
