@@ -104,7 +104,12 @@
         <!--End Basic Info-->
 
         <!--Period-->
-        <div class="p-5 mt-4 container bg-white rounded" [style.visibility]="menu.period.isActive ? 'visible' : 'hidden'" #period>
+        <div
+          class="p-5 mt-4 container bg-white rounded"
+          [ngClass]="!menu.period.isActive?'hidden-dev':''"
+          [style.visibility]="menu.period.isActive ? 'visible' : 'hidden'"
+          #period
+        >
 
           <div class="justify-content-md-center mb-3 text-center">
             <span class="pt-4 app-step-title">2. PERIOD</span>
@@ -163,7 +168,11 @@
         <!--End Period-->
 
         <!--Form Dates-->
-        <div class="p-5 mt-4 container bg-white rounded"  [style.visibility]="menu.dates.isActive ? 'visible' : 'hidden'" #formDates>
+        <div class="p-5 mt-4 container bg-white rounded"
+             [ngClass]="!menu.dates.isActive?'hidden-dev':''"
+             [style.visibility]="menu.dates.isActive ? 'visible' : 'hidden'"
+             #formDates
+        >
 
           <div class="justify-content-md-center mb-3 text-center">
             <span class="pt-4 app-step-title">3. FORM DATES</span>
@@ -229,7 +238,11 @@
         <!--End Form Dates-->
 
         <!--ELIGIBLE ACCOUNTS-->
-        <div class="p-5 mt-4 container bg-white rounded"  [style.visibility]="menu.eligible.isActive ? 'visible' : 'hidden'" #eligibleAccounts>
+        <div class="p-5 mt-4 container bg-white rounded"
+             [ngClass]="!menu.eligible.isActive?'hidden-dev':''"
+             [style.visibility]="menu.eligible.isActive ? 'visible' : 'hidden'"
+             #eligibleAccounts
+        >
 
           <div class="justify-content-md-center mb-3 text-center">
             <span class="pt-4 app-step-title">4. ELIGIBLE ACCOUNTS</span>
