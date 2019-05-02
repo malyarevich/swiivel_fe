@@ -3,7 +3,7 @@ import {
   Component,
   ElementRef,
   EventEmitter,
-  HostListener,
+  HostListener, Input,
   OnInit,
   Output,
   ViewChild
@@ -12,40 +12,42 @@ import {
 @Component({
   selector: 'app-v-form-general-menu',
   templateUrl: './v-form-general-menu.component.html',
-  styleUrls: ['./v-form-general-menu.component.css']
+  styleUrls: ['./v-form-general-menu.component.scss']
 })
 export class VFormGeneralMenuComponent implements OnInit {
 
   // @ViewChild('generalInfoMenu') menuElement: ElementRef;
-  // @Output() scrollToEmitter = new EventEmitter<string>();
+  @Output() scrollToEmitter = new EventEmitter<string>();
   @Output() activeSectionEmitter = new EventEmitter<string>();
-
-  // sticky: boolean = false;
-  // elementPosition: any;
+  objectKeys = Object.keys;
+  sticky: boolean = false;
+  elementPosition: any;
   activeItem: number = 1;
-
-  menuItems = [
-    {title: 'Basic Form Information', target: 1},
-    {title: 'Period', target: 2},
-    {title: 'Form Dates', target: 3},
-    {title: 'Eligible Accounts', target: 4},
-  ];
+  @Input() menu: any;
+  // menuItems = [
+  //   {title: 'Basic Form Information', target: 1},
+  //   {title: 'Period', target: 2},
+  //   {title: 'Form Dates', target: 3},
+  //   {title: 'Eligible Accounts', target: 4},
+  // ];
 
   constructor() {
   }
 
   ngOnInit() {
+    console.log(this.menu);
   }
 
-  // ngAfterViewInit() {
-  //     this.elementPosition = this.menuElement.nativeElement.offsetParent.offsetTop;
-  // }
+  ngAfterViewInit() {
+      // this.elementPosition = this.menuElement.nativeElement.offsetParent.offsetTop;
+  }
 
-  // @HostListener('window:scroll', ['$event'])
-  // handleScroll() {
-  //     const windowScroll = window.pageYOffset;
-  //     this.sticky = (windowScroll >= this.elementPosition);
-  // }
+  @HostListener('window:scroll', ['$event'])
+  handleScroll() {
+    console.log('dasdasd');
+      const windowScroll = window.pageYOffset;
+      this.sticky = (windowScroll >= this.elementPosition);
+  }
 
   // onScrollTo(target) {
   //     this.activeItem = target;
@@ -53,7 +55,8 @@ export class VFormGeneralMenuComponent implements OnInit {
   // }
 
   onSetSection(value) {
-    this.activeItem = value;
+    if(!value.isActive) return;
+    this.activeItem = value.target;
     this.activeSectionEmitter.emit(value);
   }
 

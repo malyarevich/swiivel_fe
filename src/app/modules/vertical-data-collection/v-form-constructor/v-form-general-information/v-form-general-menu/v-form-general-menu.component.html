@@ -2,10 +2,11 @@
 <!--<div #generalInfoMenu [class.sticky]="sticky" [class.absolute]="!sticky">-->
   <ul class="list-group bg-white ">
     <li class="list-group-item app-form-general-menu-item"
-        [ngClass]="{'app-form-general-menu-item-active': activeItem === item.target}"
-        *ngFor="let item of menuItems; let i = index"
-        (click)="onSetSection(item.target)">
-      {{i+1}}. {{item.title | uppercase}}
+        [ngClass]="{'app-form-general-menu-item-active': activeItem === menu[item].target,
+        'app-form-general-menu-item-disabled': !menu[item].isActive}"
+        *ngFor="let item of objectKeys(menu); let i = index"
+        (click)="onSetSection(menu[item])">
+      {{i+1}}. {{menu[item].title | uppercase}}
     </li>
   </ul>
 <!--</div>-->

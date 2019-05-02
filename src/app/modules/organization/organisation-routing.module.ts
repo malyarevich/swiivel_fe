@@ -40,12 +40,12 @@ export const routes: Routes = [
     ],
   },
   {
-    path: 'create-payer-account',
+    path: 'payer-accounts',
     component: LayoutComponent,
     children: [
       {
         path: '',
-        loadChildren: '../create-payer-account/create-payer-account.module#CreatePayerAccountModule',
+        loadChildren: '../payer-accounts/payer-accounts.module#PayerAccountsModule',
       }
     ],
   },
