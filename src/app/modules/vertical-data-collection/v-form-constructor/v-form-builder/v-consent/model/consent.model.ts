@@ -29,6 +29,7 @@ interface ConsentItemInfoSignature {
   type: string; //e|wet
   eType: string; //external|system
   isBothParents: boolean;
+  signed: {parents: boolean, fathers: boolean; mothers: boolean};
 }
 
 export const consentItemDefault: ConsentItemInfo = {
@@ -47,6 +48,7 @@ export const consentItemDefault: ConsentItemInfo = {
     type: SIGNATURE_TYPES.ESIGN,
     eType: E_SIGNATURE_TYPES.SYSTEM,
     isBothParents: false,
+    signed: {parents: false, fathers: false, mothers: false}
   }
 };
 

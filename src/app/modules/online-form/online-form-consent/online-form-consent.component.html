@@ -6,12 +6,12 @@
 
   <div class="row no-gutters align-items-center">
     <div class="col-12 app-of-nav-wrap">
-      <app-consent-nav [consents]="consentInfo.consents"
+      <app-consent-nav [consents]="form.consentInfo.consents"
                        (activeConsentEmitter)="onActiveConsent($event)"></app-consent-nav>
     </div>
   </div>
 
-  <ng-container *ngFor="let item of consentInfo.consents">
+  <ng-container *ngFor="let item of form.consentInfo.consents">
     <div *ngIf="item.id === activeConsentId">
 
       <!--Title-->
@@ -47,52 +47,184 @@
       </div>
 
       <!--Signature-->
-      <ng-container *ngIf="item.signature.isRequire">
+      <!--<ng-container *ngIf="item.signature.isRequire">-->
 
-        <div class="row no-gutters pt-3" *ngIf="!item.signature.isBothParents">
-          <div class="col-2"></div>
-          <div class="col-8">
-            <div class="row">
-              <div class="col-6">
-                <textarea class="w-100 pl-3"
-                          rows="2"
-                          placeholder="Parent's Signature"></textarea>
+      <!--<div class="row no-gutters pt-3" *ngIf="!item.signature.isBothParents">-->
+      <!--<div class="col-2"></div>-->
+      <!--<div class="col-8">-->
+      <!--<div class="row">-->
+      <!--<div class="col-6">-->
+      <!--<textarea class="w-100 pl-3"-->
+      <!--rows="2"-->
+      <!--placeholder="Parent's Signature"></textarea>-->
+      <!--</div>-->
+      <!--</div>-->
+      <!--</div>-->
+      <!--<div class="col-2"></div>-->
+      <!--</div>-->
+
+      <!--<div class="row no-gutters pt-3" *ngIf="item.signature.isBothParents">-->
+      <!--<div class="col-2"></div>-->
+      <!--<div class="col-8">-->
+      <!--<div class="row">-->
+      <!--<div class="col-6">-->
+      <!--<textarea class="w-100 pl-3"-->
+      <!--rows="2"-->
+      <!--placeholder="Father's Signature"></textarea>-->
+      <!--</div>-->
+      <!--<div class="col-6">-->
+      <!--<textarea class="w-100 pl-3"-->
+      <!--rows="2"-->
+      <!--placeholder="Mother's Signature"></textarea>-->
+      <!--</div>-->
+      <!--</div>-->
+      <!--</div>-->
+      <!--<div class="col-2"></div>-->
+      <!--</div>-->
+      <!--</ng-container>-->
+
+      <!--&lt;!&ndash;Accept button&ndash;&gt;-->
+      <!--<div class="row no-gutters p-4">-->
+      <!--<div class="col-12 text-right">-->
+      <!--<button class="btn app-btn-primary py-2 px-4">Accept</button>-->
+      <!--</div>-->
+      <!--</div>-->
+
+      <!--</div>-->
+      <!--</ng-container>-->
+
+      <!--SIGNATURE-->
+      <div *ngIf="item.signature.isRequire" class="mt-3">
+
+        <!--E-SIGN SIGNATURE-->
+        <ng-container *ngIf="item.signature.type === SIGNATURE_TYPES.ESIGN">
+
+          <!--EXTERNAL SIGNATURE-->
+          <ng-container *ngIf="item.signature.eType === E_SIGNATURE_TYPES.EXTERNAL">
+
+            <div class="row no-gutters pt-3" *ngIf="!item.signature.isBothParents">
+              <div class="col-2"></div>
+              <div class="col-8 app-consent-text">
+                <div class="row">
+                  <div class="col-6">
+                    <textarea class="app-consent-table w-100 pl-3"
+                              rows="2"
+                              placeholder="Parent's Signature"></textarea>
+                  </div>
+                </div>
               </div>
+              <div class="col-2"></div>
             </div>
-          </div>
-          <div class="col-2"></div>
-        </div>
 
-        <div class="row no-gutters pt-3" *ngIf="item.signature.isBothParents">
-          <div class="col-2"></div>
-          <div class="col-8">
-            <div class="row">
-              <div class="col-6">
-          <textarea class="w-100 pl-3"
+            <div class="row no-gutters pt-3" *ngIf="item.signature.isBothParents">
+              <div class="col-12 app-consent-text">
+                <div class="row">
+                  <div class="col-4">
+          <textarea class="app-consent-table w-100 pl-3"
                     rows="2"
                     placeholder="Father's Signature"></textarea>
-              </div>
-              <div class="col-6">
-          <textarea class="w-100 pl-3"
+                  </div>
+                  <div class="col-4">
+          <textarea class="app-consent-table w-100 pl-3"
                     rows="2"
                     placeholder="Mother's Signature"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </ng-container>
+
+          <!--SYSTEM SIGNATURE-->
+          <ng-container *ngIf="item.signature.eType === E_SIGNATURE_TYPES.SYSTEM">
+
+            <div class="row no-gutters pt-3" *ngIf="!item.signature.isBothParents">
+              <div class="col-2"></div>
+              <div class="col-8">
+                <div class="row">
+                  <div class="col-6">
+                    <label class="app-checkbox-container">Parent's Signature
+                      <input type="checkbox" [ngModel]="item.signature.signed?.parents"
+                             (click)="onSign($event, 'parents', 'consent', item.id)">
+                      <span class="app-checkbox-checkmark"></span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-2"></div>
+            </div>
+
+            <div class="row no-gutters pt-3" *ngIf="item.signature.isBothParents">
+              <div class="col-2"></div>
+              <div class="col-8">
+                <div class="row">
+                  <div class="col-6">
+                    <label class="app-checkbox-container">Father's Signature
+                      <input type="checkbox">
+                      <span class="app-checkbox-checkmark"></span>
+                    </label>
+                  </div>
+                  <div class="col-6">
+                    <label class="app-checkbox-container">Mother's Signature
+                      <input type="checkbox">
+                      <span class="app-checkbox-checkmark"></span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-2"></div>
+            </div>
+
+          </ng-container>
+
+        </ng-container>
+
+        <!--WET SIGNATURE-->
+        <ng-container *ngIf="item.signature.type === SIGNATURE_TYPES.WET">
+
+          <div class="row no-gutters pt-3" *ngIf="!item.signature.isBothParents">
+            <div class="col-12 app-consent-text">
+              <div class="row">
+                <div class="col-4">
+                  <textarea class="app-consent-table w-100 pl-3"
+                            rows="2"
+                            placeholder="Parent's Signature"></textarea>
+                </div>
               </div>
             </div>
           </div>
-          <div class="col-2"></div>
-        </div>
-      </ng-container>
 
-      <!--Accept button-->
-      <div class="row no-gutters p-4">
-        <div class="col-12 text-right">
-          <button class="btn app-btn-primary py-2 px-4">Accept</button>
+          <div class="row no-gutters pt-3" *ngIf="item.signature.isBothParents">
+            <div class="col-12 app-consent-text">
+              <div class="row">
+                <div class="col-4">
+                  <textarea class="app-consent-table w-100 pl-3"
+                            rows="2"
+                            placeholder="Father's Signature"></textarea>
+                </div>
+                <div class="col-4">
+                  <textarea class="app-consent-table w-100 pl-3"
+                            rows="2"
+                            placeholder="Mother's Signature"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </ng-container>
+
+        <div class="row no-gutters p-4">
+          <div class="col-12 text-right">
+            <button class="btn app-btn-primary py-2 px-4">Accept</button>
+          </div>
         </div>
+
+
       </div>
+      <!--END SIGNATURE-->
 
     </div>
   </ng-container>
-
 </div>
 
 <div class="row no-gutters mt-4">
