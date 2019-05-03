@@ -20,6 +20,8 @@ import {FormPDFDownloadModel, formPDFItemDefault, FormsPDFModel} from "./v-docum
 import {VFilesService} from "../../v-files.service";
 import {FBSections, fbSections} from "./v-consent/fb-active-section.model";
 
+import {E_SIGNATURE_TYPES, SIGNATURE_TYPES} from "../../../../enums";
+
 @Component({
   selector: 'app-v-form-table',
   templateUrl: './v-form-builder.html',
@@ -41,6 +43,9 @@ export class VFormBuilderComponent implements OnInit {
   tuitionContract: TuitionContract = tuitionContractDefault;
   consentInfo: ConsentInfo = consentInfoDefault;
   eligible: string;
+
+  SIGNATURE_TYPES = SIGNATURE_TYPES;
+  E_SIGNATURE_TYPES = E_SIGNATURE_TYPES;
 
   isEditConsentName: number | null = null;
   isEditDocumentName: string | null = null;

@@ -9,7 +9,7 @@
         <app-online-form-general-info *ngIf="activeSection === mainMenuNames.generalInfo"
                                       [form]="form">
         </app-online-form-general-info>
-        <app-online-form-consent [consentInfo]="form.consentInfo" *ngIf="activeSection === mainMenuNames.consent"></app-online-form-consent>
+        <app-online-form-consent [form]="form" *ngIf="activeSection === mainMenuNames.consent"></app-online-form-consent>
       </div>
     </div>
   </div>

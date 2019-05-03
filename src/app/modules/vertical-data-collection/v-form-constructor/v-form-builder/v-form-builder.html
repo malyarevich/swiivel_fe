@@ -372,20 +372,20 @@
                      [(ngModel)]="item.signature.type"
                      [ngModelOptions]="{standalone: true}">
                   <label ngbButtonLabel class="btn app-btn-signature">
-                    <input ngbButton type="radio" value="e"> E-signature
+                    <input ngbButton type="radio" [value]="SIGNATURE_TYPES.ESIGN"> E-signature
                   </label>
                   <label ngbButtonLabel class="btn app-btn-signature">
-                    <input ngbButton type="radio" value="wet"> Wet Signature
+                    <input ngbButton type="radio" [value]="SIGNATURE_TYPES.WET"> Wet Signature
                   </label>
                 </div>
               </div>
 
-              <div *ngIf="item.signature.type === 'e'" class="row no-gutters app-consent-signature px-3 py-3">
+              <div *ngIf="item.signature.type === SIGNATURE_TYPES.ESIGN" class="row no-gutters app-consent-signature px-3 py-3">
                 <div class="col">
                   <label class="app-radio-container">System
                     <input type="radio"
                            [name]="'eSignatureType' + i"
-                           value="system"
+                           [value]="E_SIGNATURE_TYPES.SYSTEM"
                            [(ngModel)]="item.signature.eType">
                     <span class="app-radio-checkmark"></span>
                   </label>
@@ -395,7 +395,7 @@
                     <span class="pl-2"><i class="fas fa-cog app-fb-gear"></i></span>
                     <input type="radio"
                            [name]="'eSignatureType' + i"
-                           value="external"
+                           [value]="E_SIGNATURE_TYPES.EXTERNAL"
                            [(ngModel)]="item.signature.eType">
                     <span class="app-radio-checkmark"></span>
                   </label>

@@ -1,3 +1,4 @@
+import {E_SIGNATURE_TYPES, SIGNATURE_TYPES} from "../../../../../../enums";
 
 export interface ConsentInfo {
   isActive: boolean;
@@ -28,6 +29,13 @@ interface ConsentItemInfoSignature {
   type: string; //e|wet
   eType: string; //external|system
   isBothParents: boolean;
+  signed: ConsentSignatureSigned;
+}
+
+export interface ConsentSignatureSigned {
+  parents: boolean;
+  fathers: boolean;
+  mothers: boolean;
 }
 
 export const consentItemDefault: ConsentItemInfo = {
@@ -43,9 +51,10 @@ export const consentItemDefault: ConsentItemInfo = {
   },
   signature: {
     isRequire: false,
-    type: 'e', //e|wet
-    eType: 'external', //external|system
+    type: SIGNATURE_TYPES.ESIGN,
+    eType: E_SIGNATURE_TYPES.SYSTEM,
     isBothParents: false,
+    signed: {parents: false, fathers: false, mothers: false}
   }
 };
 
