@@ -8,8 +8,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
 import {requireCheckboxesToBeCheckedValidator} from '../../../../utils/validators/require-checkboxes-to-be-checked.validator';
 import {GeneralInfoIsValidService} from '../../services/general-info-is-valid.service';
-import {menu, menuStarted} from './menu';
-
+import {menuItemModel } from './menu';
 
 @Component({
   selector: 'app-v-form-general-information',
@@ -32,11 +31,35 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
   generalInfoForm: FormGroup;
   formsDublicate: FormSql[];
   isOnSubmit: boolean = false;
-  menu = menuStarted;
   activeSection: number = 1;
-  sticky: boolean = false;
-  elementPosition: any;
   formTypeCreation: number = 0;
+  menu = {
+    basic:<menuItemModel>{
+      title: 'Basic Form Information',
+      target: 1,
+      isActive: true,
+      scrollTarget: 'basicInfo'
+    },
+    period:<menuItemModel>{
+      title: 'Period',
+      target: 2,
+      isActive: false,
+      scrollTarget: 'period'
+    },
+    dates:<menuItemModel>{
+      title: 'Form Dates',
+      target: 3,
+      isActive: false,
+      scrollTarget: 'formDates'
+    },
+    eligible:<menuItemModel>{
+      title: 'Eligible Accounts',
+      target: 4,
+      isActive: false,
+      scrollTarget: 'eligibleAccounts'
+    },
+
+  };
   constructor(private activatedRoute: ActivatedRoute,
               private router: Router,
               private formUtils: FormUtils,
@@ -146,7 +169,9 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
               },
               eligible: form.eligible
             });
-            this.menu = menu;
+            this.menu.dates.isActive =
+              this.menu.eligible.isActive =
+                this.menu.period.isActive = true;
           }
         },
         (error)=>console.log(error, 'error')
@@ -202,11 +227,6 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
   }
 
   nextStep(item){
-    console.log(item, 'before',this.generalInfoForm);
-    // this.validateAllFormFields(this.generalInfoForm);
-    // if (!this.generalInfoForm.valid) return;
-    // console.log(item, 'after',this.generalInfoForm);
-
     item.isActive = true;
     this.activeSection = item.target;
     this.onScrollTo(item.scrollTarget);
