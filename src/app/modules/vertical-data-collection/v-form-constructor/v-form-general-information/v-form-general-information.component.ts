@@ -16,10 +16,8 @@ import {menu, menuStarted} from './menu';
   templateUrl: './v-form-general-information.component.html',
   styleUrls: ['./v-form-general-information.component.css']
 })
-export class VFormGeneralInformationComponent implements OnInit, OnDestroy,AfterViewInit {
-  ngAfterViewInit(): void {
-   console.log('ngAfterViewInit');
-  }
+export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
+
     @ViewChild('generalInfo') generalInfo: ElementRef;
     @ViewChild('basicInfo') basicInfo: ElementRef;
     @ViewChild('period') period: ElementRef;
@@ -169,7 +167,6 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy,After
 
     onScrollTo(target) {
         this[target].nativeElement.scrollIntoView({behavior:'smooth'});
-        console.log(target);
     }
 
   setActiveSection(value) {
