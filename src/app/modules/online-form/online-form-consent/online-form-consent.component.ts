@@ -5,6 +5,10 @@ import {E_SIGNATURE_TYPES, SIGNATURE_TYPES} from "../../../enums";
 import {Form} from "../../vertical-data-collection/model/form.model";
 import {SystemSignatureService} from "../services/signatures/system-signature.service";
 
+interface SignatureCreateResponse {
+  created: boolean;
+}
+
 @Component({
   selector: 'app-online-form-consent',
   templateUrl: './online-form-consent.component.html',
@@ -41,7 +45,7 @@ export class OnlineFormConsentComponent implements OnInit {
   saveSystemSign(personsType, itemType, consentId) {
 
     this.systemSignatureService.sign(this.form._id, this.form.personId)
-      .subscribe((res) => {
+      .subscribe((res: SignatureCreateResponse) => {
         this.form.consentInfo.consents
           .find(item => item.id === consentId).signature.signed[personsType] = res.created;
       });
