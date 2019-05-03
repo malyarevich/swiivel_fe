@@ -11,7 +11,7 @@
     </div>
   </div>
 
-  <ng-container *ngFor="let item of form.consentInfo.consents">
+  <ng-container *ngFor="let item of consents">
     <div *ngIf="item.id === activeConsentId">
 
       <!--Title-->
@@ -133,6 +133,12 @@
               </div>
             </div>
 
+            <div class="row no-gutters p-4">
+              <div class="col-12 text-right">
+                <button class="btn app-btn-primary py-2 px-4">Accept</button>
+              </div>
+            </div>
+
           </ng-container>
 
           <!--SYSTEM SIGNATURE-->
@@ -144,8 +150,9 @@
                 <div class="row">
                   <div class="col-6">
                     <label class="app-checkbox-container">Parent's Signature
-                      <input type="checkbox" [ngModel]="item.signature.signed?.parents"
-                             (click)="onSign($event, 'parents', 'consent', item.id)">
+                      <input type="checkbox"
+                             [(ngModel)]="item.signature.signed.parents"
+                      [disabled]="isDisabledSign('parents', item.id)">
                       <span class="app-checkbox-checkmark"></span>
                     </label>
                   </div>
@@ -160,19 +167,31 @@
                 <div class="row">
                   <div class="col-6">
                     <label class="app-checkbox-container">Father's Signature
-                      <input type="checkbox">
+                      <input type="checkbox"
+                             [(ngModel)]="item.signature.signed.fathers"
+                             [disabled]="isDisabledSign('fathers', item.id)">
                       <span class="app-checkbox-checkmark"></span>
                     </label>
                   </div>
                   <div class="col-6">
                     <label class="app-checkbox-container">Mother's Signature
-                      <input type="checkbox">
+                      <input type="checkbox"
+                             [(ngModel)]="item.signature.signed.mothers"
+                             [disabled]="isDisabledSign('mothers', item.id)">
                       <span class="app-checkbox-checkmark"></span>
                     </label>
                   </div>
                 </div>
               </div>
               <div class="col-2"></div>
+            </div>
+
+            <div class="row no-gutters p-4">
+              <div class="col-12 text-right">
+                <button class="btn app-btn-primary py-2 px-4"
+                        (click)="onSystemSign(item.id)">Accept
+                </button>
+              </div>
             </div>
 
           </ng-container>
@@ -211,14 +230,13 @@
             </div>
           </div>
 
-        </ng-container>
-
-        <div class="row no-gutters p-4">
-          <div class="col-12 text-right">
-            <button class="btn app-btn-primary py-2 px-4">Accept</button>
+          <div class="row no-gutters p-4">
+            <div class="col-12 text-right">
+              <button class="btn app-btn-primary py-2 px-4">Accept</button>
+            </div>
           </div>
-        </div>
 
+        </ng-container>
 
       </div>
       <!--END SIGNATURE-->

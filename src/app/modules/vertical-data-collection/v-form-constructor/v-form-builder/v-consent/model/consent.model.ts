@@ -29,7 +29,13 @@ interface ConsentItemInfoSignature {
   type: string; //e|wet
   eType: string; //external|system
   isBothParents: boolean;
-  signed: {parents: boolean, fathers: boolean; mothers: boolean};
+  signed: ConsentSignatureSigned;
+}
+
+export interface ConsentSignatureSigned {
+  parents: boolean;
+  fathers: boolean;
+  mothers: boolean;
 }
 
 export const consentItemDefault: ConsentItemInfo = {
