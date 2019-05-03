@@ -117,20 +117,22 @@
             </div>
 
             <div class="row no-gutters pt-3" *ngIf="item.signature.isBothParents">
-              <div class="col-12 app-consent-text">
+              <div class="col-2"></div>
+              <div class="col-8 app-consent-text">
                 <div class="row">
-                  <div class="col-4">
+                  <div class="col-6">
           <textarea class="app-consent-table w-100 pl-3"
                     rows="2"
                     placeholder="Father's Signature"></textarea>
                   </div>
-                  <div class="col-4">
+                  <div class="col-6">
           <textarea class="app-consent-table w-100 pl-3"
                     rows="2"
                     placeholder="Mother's Signature"></textarea>
                   </div>
                 </div>
               </div>
+              <div class="col-2"></div>
             </div>
 
             <div class="row no-gutters p-4">
@@ -202,32 +204,36 @@
         <ng-container *ngIf="item.signature.type === SIGNATURE_TYPES.WET">
 
           <div class="row no-gutters pt-3" *ngIf="!item.signature.isBothParents">
-            <div class="col-12 app-consent-text">
+            <div class="col-2"></div>
+            <div class="col-8 app-consent-text">
               <div class="row">
-                <div class="col-4">
+                <div class="col-6">
                   <textarea class="app-consent-table w-100 pl-3"
                             rows="2"
                             placeholder="Parent's Signature"></textarea>
                 </div>
               </div>
             </div>
+            <div class="col-2"></div>
           </div>
 
           <div class="row no-gutters pt-3" *ngIf="item.signature.isBothParents">
-            <div class="col-12 app-consent-text">
+            <div class="col-2"></div>
+            <div class="col-8 app-consent-text">
               <div class="row">
-                <div class="col-4">
+                <div class="col-6">
                   <textarea class="app-consent-table w-100 pl-3"
                             rows="2"
                             placeholder="Father's Signature"></textarea>
                 </div>
-                <div class="col-4">
+                <div class="col-6">
                   <textarea class="app-consent-table w-100 pl-3"
                             rows="2"
                             placeholder="Mother's Signature"></textarea>
                 </div>
               </div>
             </div>
+            <div class="col-2"></div>
           </div>
 
           <div class="row no-gutters p-4">
