@@ -1,15 +1,17 @@
 <div
-  class="app-select"
+  class="app-select-field"
   id={{id}}
 >
   <ng-select
-    [ngClass]="{'app-select-remove-clear-btn': !showClearBtn}"
+    [ngClass]="{'app-select-field-remove-clear-btn': !showClearBtn}"
     [items]="items"
     bindLabel={{bindLabel}}
     bindValue={{bindValue}}
     [(ngModel)]="defaultItemIndex"
     [searchable]="searchable"
+    (change)="onChange($event)"
     placeholder={{labelTitle}}
+    (blur)="onTouched()"
   >
   </ng-select>
 </div>

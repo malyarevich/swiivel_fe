@@ -1,0 +1,29 @@
+<div
+  class="app-input-field"
+  [ngClass]="{'app-input-field-has-error': isInvalid}"
+>
+  <label
+    [for]="id"
+    class="app-input-field-label"
+    [ngClass]="{'app-input-field-label__value': value}"
+  >
+    {{label}}
+  </label>
+  <input
+    class="form-control"
+    [ngClass]="{'app-input-field__value': value}"
+    [id]="id"
+    [type]="type"
+    [value]="value"
+    [disabled]="disabled"
+    [(ngModel)]="value"
+    (input)="onChange($event.target.value)"
+    (blur)="onTouched()"
+  />
+  <div
+    *ngIf="isInvalid"
+    class="app-input-field-error-icon"
+  >
+    x
+  </div>
+</div>

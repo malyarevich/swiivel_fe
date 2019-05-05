@@ -3,6 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {LayoutComponent} from './components/layout';
 import {routes as personRoutes} from './modules/person';
 import {routes as dashboardRoutes} from './modules/dashboard';
+import {FamilyPageComponent} from "./components/family-page/family-page.component";
 
 export const routes: Routes = [
   {
@@ -14,6 +15,10 @@ export const routes: Routes = [
     path: 'persons',
     component: LayoutComponent,
     children: personRoutes,
+  },
+  {
+    path: 'families',
+    component: FamilyPageComponent,
   },
 
   // Depreciated

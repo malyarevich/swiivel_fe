@@ -6,7 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { SharedRedComponentsModule } from '../../shared/components/sharedRedComponents.module';
 
-import { CreatePayerAccountModule } from '../create-payer-account/create-payer-account.module';
+import { CreatePayerAccountModalModule } from '../create-payer-account-modal/create-payer-account-modal.module';
 import { PayerComponent } from './components/payer/payer.component';
 import { PayersComponent } from './components/payers/payers.component';
 
@@ -35,7 +35,7 @@ const routes: Routes = [
   ],
   imports: [
     CommonModule,
-    CreatePayerAccountModule,
+    CreatePayerAccountModalModule,
     FormsModule,
     HttpClientModule,
     RouterModule.forChild(routes),

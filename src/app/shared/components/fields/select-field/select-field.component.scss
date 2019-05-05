@@ -1,4 +1,4 @@
-.app-select {
+.app-select-field {
 
   .ng-select::ng-deep {
 
@@ -64,7 +64,7 @@
     }
   }
 
-  .app-select-remove-clear-btn.ng-select::ng-deep {
+  .app-select-field-remove-clear-btn.ng-select::ng-deep {
     .ng-clear-wrapper {
       display: none;
     }

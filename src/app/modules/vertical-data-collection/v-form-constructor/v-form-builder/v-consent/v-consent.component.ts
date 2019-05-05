@@ -1,7 +1,9 @@
 import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
-import {ConsentItemInfo} from "./model/consent.model";
 import {replace, cloneDeep} from 'lodash';
 import {uuid} from 'uuid';
+
+import {E_SIGNATURE_TYPES, SIGNATURE_TYPES} from "../../../../../enums";
+import {ConsentItemInfo} from "./model/consent.model";
 
 @Component({
   selector: 'app-v-consent',
@@ -12,6 +14,8 @@ export class VConsentComponent implements OnInit, AfterViewInit {
   @Input() consents: ConsentItemInfo[];
 
   sectionName: string = 'Parent Consent';
+  SIGNATURE_TYPES = SIGNATURE_TYPES;
+  E_SIGNATURE_TYPES = E_SIGNATURE_TYPES;
 
   constructor() {
   }

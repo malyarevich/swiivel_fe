@@ -4,11 +4,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { SharedRedComponentsModule } from '../../shared/components/sharedRedComponents.module';
 
-import { CreatePayerAccountComponent } from './create-payer-account.component';
+import { PersonService } from '../../services/person/person.service';
+
+import { CreatePayerAccountModalComponent } from './create-payer-account-modal.component';
 
 @NgModule({
   declarations: [
-    CreatePayerAccountComponent,
+    CreatePayerAccountModalComponent,
   ],
   imports: [
     CommonModule,
@@ -17,10 +19,12 @@ import { CreatePayerAccountComponent } from './create-payer-account.component';
     SharedRedComponentsModule,
   ],
   exports: [
-    CreatePayerAccountComponent,
+    CreatePayerAccountModalComponent,
   ],
-  providers: [],
+  providers: [
+    PersonService,
+  ],
   entryComponents: []
 })
 
-export class CreatePayerAccountModule {}
+export class CreatePayerAccountModalModule {}

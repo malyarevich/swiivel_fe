@@ -1,4 +1,8 @@
 .create-payer-account {
+  .create-payer-account-container {
+    position: relative;
+  }
+
   .create-payer-account-members {
     margin: 0 0 20px;
   }
@@ -12,10 +16,21 @@
   }
 
   .create-payer-account-account-name {
-    width: 100%;
+    width: 80%;
+    margin: 0 10px 0 0;
   }
 
   .create-payer-account-account-type {
-    width: 70%;
+    width: 60%;
+  }
+
+  .create-payer-account-submit {
+    text-align: right;
+  }
+
+  .create-payer-account-cancel {
+    bottom: 0;
+    position: absolute;
+    right: 100px;
   }
 }
