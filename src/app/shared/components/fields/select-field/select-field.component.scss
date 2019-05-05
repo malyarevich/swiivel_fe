@@ -1,4 +1,5 @@
 .app-select-field {
+  position: relative;
 
   .ng-select::ng-deep {
 
@@ -68,5 +69,42 @@
     .ng-clear-wrapper {
       display: none;
     }
+  }
+
+  &.app-select-field-has-error {
+    .ng-select::ng-deep {
+
+      .ng-select-container {
+        border-color: #e65757;
+
+        .ng-value-container {
+
+          .ng-placeholder {
+            color: #e65757;
+          }
+        }
+      }
+    }
+
+    .ng-select.ng-select-opened::ng-deep {
+
+      .ng-select-container {
+        border-color: #4350A2;
+      }
+    }
+  }
+
+  .app-select-field-error-icon {
+    color: #fff;
+    background: #e65757;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    text-align: center;
+    line-height: 7px;
+    position: absolute;
+    right: 11px;
+    top: 11px;
+    padding: 4px 0;
   }
 }

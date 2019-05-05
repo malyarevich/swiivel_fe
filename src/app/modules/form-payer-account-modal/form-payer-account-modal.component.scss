@@ -1,0 +1,34 @@
+.form-payer-account {
+  .form-payer-account-container {
+    position: relative;
+  }
+
+  .form-payer-account-members {
+    margin: 0 0 20px;
+  }
+
+  .form-payer-account-label {
+    color: #151515;
+    font: 800 12px/15px 'NunitoSans-Bold';
+    letter-spacing: 0.2px;
+    text-transform: uppercase;
+    margin: 0 0 12px;
+  }
+
+  .form-payer-account-account-name {
+    width: 80%;
+    margin: 0 10px 0 0;
+  }
+
+  .form-payer-account-type {
+    width: 60%;
+  }
+
+  .form-payer-account-submit {
+    text-align: right;
+  }
+
+  .form-payer-account-cancel {
+    margin: 0 10px;
+  }
+}

@@ -3,13 +3,13 @@ import { PayersService } from '../../services/payers.service';
 import { Payer } from '../../models/payer.model';
 
 @Component({
-  selector: 'app-payers',
-  templateUrl: 'payers.component.html',
-  styleUrls: ['./payers.component.scss']
+  selector: 'app-payer-accounts',
+  templateUrl: 'payer-accounts.component.html',
+  styleUrls: ['./payer-accounts.component.scss']
 })
-export class PayersComponent implements OnInit {
-  showModal = false;
-  // showModal = true;
+export class PayerAccountsComponent implements OnInit {
+  // showModal = false;
+  showModal = true;
   public payers: Payer[] = [];
 
   constructor(private payersService: PayersService) { }

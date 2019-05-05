@@ -6,11 +6,11 @@ import { SharedRedComponentsModule } from '../../shared/components/sharedRedComp
 
 import { PersonService } from '../../services/person/person.service';
 
-import { CreatePayerAccountModalComponent } from './create-payer-account-modal.component';
+import { FormPayerAccountModalComponent } from './form-payer-account-modal.component';
 
 @NgModule({
   declarations: [
-    CreatePayerAccountModalComponent,
+    FormPayerAccountModalComponent,
   ],
   imports: [
     CommonModule,
@@ -19,7 +19,7 @@ import { CreatePayerAccountModalComponent } from './create-payer-account-modal.c
     SharedRedComponentsModule,
   ],
   exports: [
-    CreatePayerAccountModalComponent,
+    FormPayerAccountModalComponent,
   ],
   providers: [
     PersonService,
@@ -27,4 +27,4 @@ import { CreatePayerAccountModalComponent } from './create-payer-account-modal.c
   entryComponents: []
 })
 
-export class CreatePayerAccountModalModule {}
+export class FormPayerAccountModalModule {}

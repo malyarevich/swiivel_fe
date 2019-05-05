@@ -16,13 +16,14 @@ export class SelectFieldComponent  implements OnInit, ControlValueAccessor {
   @Input() defaultItemIndex: number;
   @Input() disabled: boolean;
   @Input() labelTitle: string;
+  @Input() id: string;
   @Input() items: [any];
+  @Input() isInvalid = false;
   @Input() idElement: string;
   @Input() bindLabel = 'label';
   @Input() bindValue = 'value';
   @Input() searchable = false;
   @Input() showClearBtn = false;
-  @Input() id: string;
 
   value: any;
 

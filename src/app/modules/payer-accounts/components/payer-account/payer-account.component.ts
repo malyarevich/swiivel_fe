@@ -6,11 +6,11 @@ import { Payer } from '../../models/payer.model';
 import { PayersService } from '../../services/payers.service';
 
 @Component({
-  selector: 'app-payer',
-  templateUrl: 'payer.component.html',
-  styleUrls: ['./payer.component.scss']
+  selector: 'app-payer-account',
+  templateUrl: 'payer-account.component.html',
+  styleUrls: ['./payer-account.component.scss']
 })
-export class PayerComponent implements OnInit {
+export class PayerAccountComponent implements OnInit {
   public payer: Payer;
 
   constructor(
@@ -23,6 +23,5 @@ export class PayerComponent implements OnInit {
       .subscribe((res) => {
         this.payer = res.data;
       });
-    console.log();
   }
 }

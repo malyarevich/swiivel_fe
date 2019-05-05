@@ -16,7 +16,7 @@ export class InputFieldComponent implements OnInit, ControlValueAccessor {
   @Input() disabled: boolean;
   @Input() id: string;
   @Input() label: string = '';
-  @Input() isInvalid: false;
+  @Input() isInvalid = false;
   @Input() type: 'text' | 'email' | 'password' = 'text';
 
   value: any = '';

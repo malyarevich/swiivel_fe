@@ -1,21 +1,19 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {
-  FormBuilder, FormGroup, Validators
-} from '@angular/forms';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { PersonService } from '../../services/person/person.service';
 
 import { Person } from '../../models/person.model';
 
 @Component({
-  selector: 'app-create-payer-account-modal',
-  templateUrl: 'create-payer-account-modal.component.html',
-  styleUrls: ['./create-payer-account-modal.component.scss']
+  selector: 'app-form-payer-account-modal',
+  templateUrl: 'form-payer-account-modal.component.html',
+  styleUrls: ['./form-payer-account-modal.component.scss']
 })
-export class CreatePayerAccountModalComponent implements OnInit {
-  @Output() closeCreatePayerAccount: EventEmitter<any> = new EventEmitter<any>();
+export class FormPayerAccountModalComponent implements OnInit {
+  @Output() closeFormPayerAccount: EventEmitter<any> = new EventEmitter<any>();
 
-  private createPayerAccountForm: FormGroup;
+  private payerAccountForm: FormGroup;
 
   persons: any[] = [];
   types: any[] = [];
@@ -25,14 +23,14 @@ export class CreatePayerAccountModalComponent implements OnInit {
     private fb: FormBuilder,
     private personService: PersonService,
   ) {
-    this.createPayerAccountForm = fb.group({
+    this.payerAccountForm = fb.group({
       members: [null, Validators.required],
       name: [null, Validators.required],
       type: [null, Validators.required],
     });
 
-    this.createPayerAccountForm.controls['members'].valueChanges.subscribe(value => {
-      if (!this.createPayerAccountForm.controls['name'].touched) {
+    this.payerAccountForm.controls['members'].valueChanges.subscribe(value => {
+      if (!this.payerAccountForm.controls['name'].touched) {
         let nameValue = '';
         const membersLengt = value.length;
 
@@ -43,7 +41,7 @@ export class CreatePayerAccountModalComponent implements OnInit {
           }
         });
 
-        this.createPayerAccountForm.controls['name'].setValue(nameValue);
+        this.payerAccountForm.controls['name'].setValue(nameValue);
       }
     });
   }
@@ -70,10 +68,10 @@ export class CreatePayerAccountModalComponent implements OnInit {
   }
 
   onCreatePayerAccount() {
-    console.log(this.createPayerAccountForm.value);
+    console.log(this.payerAccountForm.value);
   }
 
-  onCloseCreatePayerAccount() {
-    this.closeCreatePayerAccount.emit(true);
+  onCloseFormPayerAccountModal() {
+    this.closeFormPayerAccount.emit(true);
   }
 }

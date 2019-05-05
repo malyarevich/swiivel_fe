@@ -6,9 +6,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { SharedRedComponentsModule } from '../../shared/components/sharedRedComponents.module';
 
-import { CreatePayerAccountModalModule } from '../create-payer-account-modal/create-payer-account-modal.module';
-import { PayerComponent } from './components/payer/payer.component';
-import { PayersComponent } from './components/payers/payers.component';
+import { FormPayerAccountModalModule } from '../form-payer-account-modal/form-payer-account-modal.module';
+import { PayerAccountComponent } from './components/payer-account/payer-account.component';
+import { PayerAccountsComponent } from './components/payer-accounts/payer-accounts.component';
 
 import { PayersService } from './services/payers.service';
 
@@ -18,11 +18,11 @@ const routes: Routes = [
     children:  [
       {
         path: '',
-        component: PayersComponent,
+        component: PayerAccountsComponent,
       },
       {
         path: ':id',
-        component: PayerComponent,
+        component: PayerAccountComponent,
       },
     ]
   }
@@ -30,12 +30,12 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    PayerComponent,
-    PayersComponent,
+    PayerAccountComponent,
+    PayerAccountsComponent,
   ],
   imports: [
     CommonModule,
-    CreatePayerAccountModalModule,
+    FormPayerAccountModalModule,
     FormsModule,
     HttpClientModule,
     RouterModule.forChild(routes),

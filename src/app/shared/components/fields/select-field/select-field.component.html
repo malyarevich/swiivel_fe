@@ -1,5 +1,6 @@
 <div
   class="app-select-field"
+  [ngClass]="{'app-select-field-has-error': isInvalid}"
   id={{id}}
 >
   <ng-select
@@ -14,4 +15,10 @@
     (blur)="onTouched()"
   >
   </ng-select>
+  <div
+    *ngIf="isInvalid"
+    class="app-select-field-error-icon"
+  >
+    x
+  </div>
 </div>
