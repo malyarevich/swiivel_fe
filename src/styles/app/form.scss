@@ -1,4 +1,12 @@
 .app-form-row {
   display: flex;
   align-items: center;
+  margin: 0 0 20px;
+}
+
+.field-has-error {
+  margin: 1px 0 0 2px;
+  position: absolute;
+  font-size: 12px;
+  color: #e65757;
 }

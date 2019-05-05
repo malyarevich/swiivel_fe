@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SelectMultiSearchComponent } from './select-multi-search.component';
+import { SelectMultiSearchFieldComponent } from './select-multi-search.component';
 
 describe('SelectMultiSearchComponent', () => {
-  let component: SelectMultiSearchComponent;
-  let fixture: ComponentFixture<SelectMultiSearchComponent>;
+  let component: SelectMultiSearchFieldComponent;
+  let fixture: ComponentFixture<SelectMultiSearchFieldComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SelectMultiSearchComponent ]
+      declarations: [ SelectMultiSearchFieldComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SelectMultiSearchComponent);
+    fixture = TestBed.createComponent(SelectMultiSearchFieldComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

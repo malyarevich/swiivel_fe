@@ -1,9 +1,9 @@
 <div class="create-payer-account">
   <div *ngIf="showModal">
-    <app-create-payer-account
+    <app-create-payer-account-modal
       (closeCreatePayerAccount)="onCloseCreatePayerAccount($event)"
     >
-    </app-create-payer-account>
+    </app-create-payer-account-modal>
   </div>
 
   <button

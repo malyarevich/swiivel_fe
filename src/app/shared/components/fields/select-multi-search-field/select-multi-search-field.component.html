@@ -1,8 +1,8 @@
 <div
-  class="app-select-multi-search"
+  class="app-select-multi-search-field"
 >
   <label
-    class="app-select-multi-search-label"
+    class="app-select-multi-search-field-label"
     [for]="idElement"
   >
     {{labelTitle}}
@@ -14,7 +14,9 @@
     bindLabel={{bindLabel}}
     bindValue={{bindValue}}
     [(ngModel)]="defaultItemIndex"
+    (change)="onChange($event)"
     multiple="true"
+    (blur)="onTouched()"
   >
     <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
       <div class="ng-value" *ngFor="let item of items">
@@ -28,9 +30,6 @@
         </span>
         <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
       </div>
-      <!--<div class="ng-value" *ngIf="items.length > 2" >-->
-        <!--<span class="ng-value-label">{{items.length - 2}} more...</span>-->
-      <!--</div>-->
     </ng-template>
   </ng-select>
 </div>

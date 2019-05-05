@@ -4,17 +4,17 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { NgSelectModule } from '@ng-select/ng-select';
 
-import { InputComponent } from './input/input.component';
+import { InputFieldComponent } from './fields/input-field/input-field.component';
 import { ModalComponent } from './modal/modal.component';
-import { SelectComponent } from './select/select.component';
-import { SelectMultiSearchComponent } from './select-multi-search/select-multi-search.component';
+import { SelectFieldComponent } from './fields/select-field/select-field.component';
+import { SelectMultiSearchFieldComponent } from './fields/select-multi-search-field/select-multi-search-field.component';
 
 @NgModule({
   declarations: [
-    InputComponent,
+    InputFieldComponent,
     ModalComponent,
-    SelectComponent,
-    SelectMultiSearchComponent,
+    SelectFieldComponent,
+    SelectMultiSearchFieldComponent,
   ],
   imports: [
     CommonModule,
@@ -25,12 +25,12 @@ import { SelectMultiSearchComponent } from './select-multi-search/select-multi-s
   exports: [
     CommonModule,
     FormsModule,
-    InputComponent,
+    InputFieldComponent,
     ModalComponent,
     NgSelectModule,
     ReactiveFormsModule,
-    SelectComponent,
-    SelectMultiSearchComponent,
+    SelectFieldComponent,
+    SelectMultiSearchFieldComponent,
   ],
 })
 
