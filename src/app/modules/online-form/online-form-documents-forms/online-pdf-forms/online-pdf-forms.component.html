@@ -1,0 +1,48 @@
+<ng-container *ngFor="let pdf of form.forms">
+  <!--Title-->
+  <div class="row no-gutters align-items-center pt-4">
+    <div class="col-12 text-center">
+      <p class="app-text-extra-bold mb-0">
+        {{pdf.name | uppercase}}
+      </p>
+      <p class="app-text-second app-text-small mb-0">
+        <i class="far fa-clock fa-sm mr-1"></i>
+        ~15 minutes
+      </p>
+    </div>
+  </div>
+
+  <!--Text-->
+  <div class="row no-gutters pt-4">
+    <div class="col-2"></div>
+    <div class="col-8 text-center" [innerHTML]="pdf.accompanyingText.data"></div>
+    <div class="col-2"></div>
+  </div>
+
+<div class="dotted-wrap mt-3 d-flex justify-content-center">
+  <div class="slice-wrap m-3">
+    <div>
+
+      <pdf-viewer
+        [original-size]="false"
+        [src]="{ url: pdf.form.link+token}"
+        [render-text-mode]="0"
+        [autoresize]="true"
+        [show-all]="false"
+        [page]="page"
+        style="display: block;"
+      >
+      </pdf-viewer>
+
+    </div>
+
+
+  </div>
+
+</div>
+
+  <div *ngIf="pdf.form.numberOfPages>1" class="d-flex justify-content-center pt-4">
+    <ngb-pagination [collectionSize]="pdf.form.numberOfPages * 10" [(page)]="page" aria-label="Default pagination"></ngb-pagination>
+
+  </div>
+</ng-container>

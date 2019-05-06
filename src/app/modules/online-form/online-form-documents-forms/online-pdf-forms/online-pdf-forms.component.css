@@ -1,0 +1,10 @@
+.slice-wrap{
+  position:relative;
+  width: 816px;
+  height: 1056px;
+
+}
+
+.dotted-wrap{
+  border: 3px dashed #D6D6D6;	border-radius: 3px;	background-color: #F6F6F6
+}

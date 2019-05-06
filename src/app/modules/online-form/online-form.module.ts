@@ -30,6 +30,10 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import { OnlineFormConsentComponent } from './online-form-consent/online-form-consent.component';
 import { ConsentNavComponent } from './online-form-consent/consent-nav/consent-nav.component';
 import {SystemSignatureService} from "./services/signatures/system-signature.service";
+import { OnlineFormDocumentsFormsComponent } from './online-form-documents-forms/online-form-documents-forms.component';
+import { OnlineDocumentsComponent } from './online-form-documents-forms/online-documents/online-documents.component';
+import { OnlinePdfFormsComponent } from './online-form-documents-forms/online-pdf-forms/online-pdf-forms.component';
+import {PdfViewerModule} from "ng2-pdf-viewer";
 
 @NgModule({
   declarations: [
@@ -56,13 +60,17 @@ import {SystemSignatureService} from "./services/signatures/system-signature.ser
     FieldContentDirective,
     OnlineFormConsentComponent,
     ConsentNavComponent,
+    OnlineFormDocumentsFormsComponent,
+    OnlineDocumentsComponent,
+    OnlinePdfFormsComponent,
   ],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     NgbModule,
-    OnlineFormRoutingModule
+    OnlineFormRoutingModule,
+    PdfViewerModule
   ],
   providers: [OnlineFormService, SystemSignatureService],
   entryComponents: [entryComponents],
