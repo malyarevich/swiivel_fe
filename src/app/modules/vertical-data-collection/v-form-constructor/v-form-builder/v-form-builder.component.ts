@@ -21,6 +21,11 @@ import {VFilesService} from "../../v-files.service";
 import {FBSections, fbSections} from "./v-consent/fb-active-section.model";
 
 import {E_SIGNATURE_TYPES, SIGNATURE_TYPES} from "../../../../enums";
+import {
+  TermsConditions,
+  termsConditionsDefault,
+  termsConditionsItemDefault
+} from "./v-terms-conditions/model/terms-conditions.model";
 
 @Component({
   selector: 'app-v-form-table',
@@ -42,6 +47,7 @@ export class VFormBuilderComponent implements OnInit {
   sideBarFields: Field[];
   tuitionContract: TuitionContract = tuitionContractDefault;
   consentInfo: ConsentInfo = consentInfoDefault;
+  termsConditions: TermsConditions = termsConditionsDefault;
   eligible: string;
 
   SIGNATURE_TYPES = SIGNATURE_TYPES;
@@ -50,6 +56,7 @@ export class VFormBuilderComponent implements OnInit {
   isEditConsentName: number | null = null;
   isEditDocumentName: string | null = null;
   isEditFormPDFName: string | null = null;
+  isEditTermsConditionsName: string | null = null;
 
   isDocumentsForms: DocumentSideBar = {
     isDocuments: true,
@@ -222,6 +229,7 @@ export class VFormBuilderComponent implements OnInit {
             this.fields = form.fields || [];
             this.tuitionContract = form.tuitionContract ? form.tuitionContract : tuitionContractDefault;
             this.consentInfo = form.consentInfo || consentInfoDefault;
+            this.termsConditions = form.termsConditions || termsConditionsDefault;
             this.eligible = form.eligible;
             this.documents = form.documents || [];
             this.formsPDF = form.forms || [];
@@ -262,6 +270,7 @@ export class VFormBuilderComponent implements OnInit {
         sidebar: this.sideBarFields,
         tuitionContract: this.tuitionContract,
         consentInfo: this.consentInfo,
+        termsConditions: this.termsConditions,
         eligible: this.eligible,
         step: 1
       };
@@ -451,6 +460,18 @@ export class VFormBuilderComponent implements OnInit {
 
   removeConsentItem(i) {
     this.consentInfo.consents.splice(i, 1);
+  }
+
+  addTermsConditionsItem() {
+    let termsConditionsItem = cloneDeep(termsConditionsItemDefault);
+    termsConditionsItem.id = uuid();
+    this.termsConditions.termsConditionsItems.push(termsConditionsItem);
+  }
+
+  removeTermsConditionsItem(id) {
+    this.termsConditions.termsConditionsItems = this.termsConditions.termsConditionsItems.filter(item => {
+      return item.id !== id;
+    });
   }
 
   // setActiveSection(event, section) {

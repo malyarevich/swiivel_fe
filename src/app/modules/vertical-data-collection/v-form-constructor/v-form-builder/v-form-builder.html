@@ -524,6 +524,7 @@
     </div>
     <!--END TUITION CONTRACT-->
 
+    <!--PAYMENT SETTINGS-->
     <div class="row justify-content-center pb-2">
       <div class="col-10 bg-white slider-item  row no-gutters align-items-center">
         <div class="col-2">
@@ -539,6 +540,136 @@
         </div>
       </div>
     </div>
+    <!--END PAYMENT SETTINGS-->
+
+    <!--TERMS AND CONDITIONS-->
+    <div class="row justify-content-center pb-2">
+      <div class="col-10 bg-white">
+        <div class="  row no-gutters slider-item align-items-center">
+          <div class="col-2">
+            <label class="app-switch">
+              <input type="checkbox"
+                     [ngModel]="termsConditions.isActive"
+                     (ngModelChange)="termsConditions.showSideInfo = termsConditions.isActive = $event">
+              <span class="app-slider app-round"></span>
+            </label>
+          </div>
+          <div class="col">
+            <span class="font-weight-bold side-bar-toggle"
+                  (click)="termsConditions.showSideInfo=!termsConditions.showSideInfo">TERMS AND CONDITIONS</span>
+            <i *ngIf="termsConditions.showSideInfo" (click)="addTermsConditionsItem()"
+               class="fas fa-plus-square float-right app-plus-i"></i>
+          </div>
+        </div>
+        <div *ngIf="termsConditions.showSideInfo" class="bg-white rounded mb-3 ">
+
+          <div class="app-consent-item p-3 mt-3" *ngFor="let item of termsConditions?.termsConditionsItems; let i = index; ">
+
+            {{item | json}}
+
+            <div class="row no-gutters mb-2">
+              <div class="col-10">
+                <span class="app-consent-item-title"
+                      *ngIf="isEditTermsConditionsName !== item.id"
+                      (click)="isEditTermsConditionsName = item.id">
+                  {{item.title}}
+                </span>
+                <input type="text"
+                       class="form-control app-consent-name-input"
+                       autofocus
+                       *ngIf="isEditTermsConditionsName === item.id || !item.title"
+                       (input)="isEditTermsConditionsName = item.id"
+                       (blur)="isEditTermsConditionsName = null"
+                       (keyup.enter)="isEditTermsConditionsName = null"
+                       [(ngModel)]="item.title"
+                       placeholder="Title">
+              </div>
+              <div class="col-2 text-right pt-2">
+                <span (click)="removeTermsConditionsItem(item.id)" class="app-fb-trash mr-3"><i class="fas fa-trash"></i></span>
+                <span class="app-fb-caret-up"><i class="fas fa-caret-up"></i></span>
+              </div>
+            </div>
+
+            <!--<div class="row no-gutters align-items-center pt-3">-->
+              <!--<div class="col-2">-->
+                <!--<label class="app-switch">-->
+                  <!--<input type="checkbox" [(ngModel)]="item.checkbox.isActive">-->
+                  <!--<span class="app-slider app-round"></span>-->
+                <!--</label>-->
+              <!--</div>-->
+              <!--<div class="col">-->
+                <!--<span class="font-weight-bold ">CHECKBOX</span>-->
+              <!--</div>-->
+            <!--</div>-->
+
+            <!--<div class="  row no-gutters align-items-center pt-3">-->
+              <!--<div class="col-2">-->
+                <!--<label class="app-switch">-->
+                  <!--<input type="checkbox" [(ngModel)]="item.signature.isRequire">-->
+                  <!--<span class="app-slider app-round"></span>-->
+                <!--</label>-->
+              <!--</div>-->
+              <!--<div class="col">-->
+                <!--<span class="font-weight-bold ">REQUIRE SIGNATURE</span>-->
+              <!--</div>-->
+            <!--</div>-->
+
+            <!--<ng-container *ngIf="item.signature.isRequire">-->
+
+              <!--<div class="row no-gutters">-->
+                <!--<div class="btn-group btn-group-toggle w-100 mt-2"-->
+                     <!--ngbRadioGroup-->
+                     <!--[name]="'consentSignature' + i"-->
+                     <!--[(ngModel)]="item.signature.type"-->
+                     <!--[ngModelOptions]="{standalone: true}">-->
+                  <!--<label ngbButtonLabel class="btn app-btn-signature">-->
+                    <!--<input ngbButton type="radio" [value]="SIGNATURE_TYPES.ESIGN"> E-signature-->
+                  <!--</label>-->
+                  <!--<label ngbButtonLabel class="btn app-btn-signature">-->
+                    <!--<input ngbButton type="radio" [value]="SIGNATURE_TYPES.WET"> Wet Signature-->
+                  <!--</label>-->
+                <!--</div>-->
+              <!--</div>-->
+
+              <!--<div *ngIf="item.signature.type === SIGNATURE_TYPES.ESIGN" class="row no-gutters app-consent-signature px-3 py-3">-->
+                <!--<div class="col">-->
+                  <!--<label class="app-radio-container">System-->
+                    <!--<input type="radio"-->
+                           <!--[name]="'eSignatureType' + i"-->
+                           <!--[value]="E_SIGNATURE_TYPES.SYSTEM"-->
+                           <!--[(ngModel)]="item.signature.eType">-->
+                    <!--<span class="app-radio-checkmark"></span>-->
+                  <!--</label>-->
+                <!--</div>-->
+                <!--<div class="col">-->
+                  <!--<label class="app-radio-container">External-->
+                    <!--<span class="pl-2"><i class="fas fa-cog app-fb-gear"></i></span>-->
+                    <!--<input type="radio"-->
+                           <!--[name]="'eSignatureType' + i"-->
+                           <!--[value]="E_SIGNATURE_TYPES.EXTERNAL"-->
+                           <!--[(ngModel)]="item.signature.eType">-->
+                    <!--<span class="app-radio-checkmark"></span>-->
+                  <!--</label>-->
+                <!--</div>-->
+              <!--</div>-->
+
+              <!--<div class="row px-4 pt-3">-->
+                <!--<label class="app-checkbox-container">-->
+                  <!--Both Parents' Signature (when applicable)-->
+                  <!--<input type="checkbox" [(ngModel)]="item.signature.isBothParents">-->
+                  <!--<span class="app-checkbox-checkmark"></span>-->
+                <!--</label>-->
+              <!--</div>-->
+
+            <!--</ng-container>-->
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!--END TERMS AND CONDITIONS-->
+
 
 
     <!--    FORM PAYMENT-->
@@ -623,6 +754,10 @@
       <app-v-tuition-contract *ngIf="sections.tuitionWorkspace"
                               [tuitionContract]="tuitionContract"></app-v-tuition-contract>
       <!--  end tuition-contract-->
+
+      <!--  terms and conditions-->
+      <app-v-terms-conditions *ngIf="termsConditions.isActive" [termsConditions]="termsConditions.termsConditionsItems"></app-v-terms-conditions>
+      <!--  end terms and conditions-->
 
       <!--  form-payment -->
       <div class="app-section-wrapper" *ngIf="sections.formPaymentWorkspace">
