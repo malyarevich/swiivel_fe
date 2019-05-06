@@ -13,7 +13,6 @@ import { ControlValueAccessor, NgControl } from '@angular/forms';
   styleUrls: ['select-field.component.scss'],
 })
 export class SelectFieldComponent  implements OnInit, ControlValueAccessor {
-  @Input() defaultItemIndex: number | string;
   @Input() disabled: boolean;
   @Input() labelTitle: string;
   @Input() id: string;
@@ -37,11 +36,7 @@ export class SelectFieldComponent  implements OnInit, ControlValueAccessor {
     }
   }
 
-  ngOnInit() {
-    if (this.defaultItemIndex) {
-      this.writeValue(this.defaultItemIndex);
-    }
-  }
+  ngOnInit() {}
 
   writeValue(value: any): void {
     this.value = value;

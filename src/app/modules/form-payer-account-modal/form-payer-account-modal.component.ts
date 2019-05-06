@@ -1,10 +1,12 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { PersonService } from '../../services/person/person.service';
-
 import { Person } from '../../models/person.model';
-import {PayersService} from '../payer-accounts/services/payers.service';
+import { Recipient } from '../../models/recipient.model';
+
+import { PersonService } from '../../services/person/person.service';
+import { PayersService } from '../payer-accounts/services/payers.service';
+import { RecipientService } from '../../services/recipient/recipient.service';
 
 @Component({
   selector: 'app-form-payer-account-modal',
@@ -16,18 +18,22 @@ export class FormPayerAccountModalComponent implements OnInit {
 
   private payerAccountForm: FormGroup;
 
+  errorMsg: string;
   persons: any[] = [];
+  students: any[] = [];
   types = ['Payer', 'Other'];
 
   constructor(
     private fb: FormBuilder,
     private personService: PersonService,
     private payersService: PayersService,
+    private recipientService: RecipientService,
   ) {
     this.payerAccountForm = fb.group({
       members: [null, Validators.required],
       name: [null, Validators.required],
-      type: [null, Validators.required],
+      type: [this.types[0], Validators.required],
+      fees: [null, Validators.required],
     });
 
     this.payerAccountForm.controls['members'].valueChanges.subscribe(value => {
@@ -59,9 +65,23 @@ export class FormPayerAccountModalComponent implements OnInit {
           });
         }
       });
+
+    this.recipientService.getAllStudents()
+      .subscribe((res) => {
+        if (res.data.total > 0) {
+          res.data.recipients.forEach((recispient: Recipient) => {
+            this.students.push({
+              id: recispient.id,
+              name: `${recispient.first_name} ${recispient.last_name}`,
+            });
+          });
+        }
+      });
   }
 
   onCreatePayerAccount() {
+    this.errorMsg = null;
+
     const data = {
       name: this.payerAccountForm.value.name,
       type: this.payerAccountForm.value.type,
@@ -74,7 +94,11 @@ export class FormPayerAccountModalComponent implements OnInit {
 
     this.payersService.addPayerAccount(data)
       .subscribe((res) => {
-        console.log(res);
+        this.closeFormPayerAccount.emit(true);
+      }, (err) => {
+        if (err.error && err.error.errors) {
+          this.errorMsg = err.error.errors;
+        }
       });
   }
 
