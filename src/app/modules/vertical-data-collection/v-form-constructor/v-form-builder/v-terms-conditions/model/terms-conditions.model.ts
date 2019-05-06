@@ -20,7 +20,7 @@ interface TermsConditionsItemCheckbox {
   text: string;
 }
 
-interface TermsConditionsSignature {
+export interface TermsConditionsSignature {
   isRequire: boolean;
   type: string; //e|wet
   eType: string; //external|system
