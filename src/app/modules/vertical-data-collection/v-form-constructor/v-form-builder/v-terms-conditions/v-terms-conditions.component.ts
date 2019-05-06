@@ -1,5 +1,4 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ConsentItemInfo} from "../v-consent/model/consent.model";
 import {TermsConditions} from "./model/terms-conditions.model";
 import {E_SIGNATURE_TYPES, SIGNATURE_TYPES} from "../../../../../enums";
 
@@ -12,6 +11,7 @@ export class VTermsConditionsComponent implements OnInit {
   @Input() termsConditions: TermsConditions;
 
   sectionName: string = 'Terms and Conditions';
+  sectionWidth: string = "4 Columns";
 
   SIGNATURE_TYPES = SIGNATURE_TYPES;
   E_SIGNATURE_TYPES = E_SIGNATURE_TYPES;

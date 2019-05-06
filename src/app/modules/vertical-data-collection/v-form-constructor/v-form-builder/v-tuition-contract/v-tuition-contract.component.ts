@@ -10,6 +10,8 @@ export class VTuitionContractComponent implements OnInit {
   @Input() tuitionContract: TuitionContract;
 
   sectionName: string = 'Tuition Contract';
+  sectionWidth: string = "4 Columns";
+
   isBold: boolean;
   isItalic: boolean;
 
