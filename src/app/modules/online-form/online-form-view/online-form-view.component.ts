@@ -44,6 +44,7 @@ export class OnlineFormViewComponent implements OnInit {
   }
 
   saveForm() {
+    console.log(this.form.forms[0].form.fieldsPdf);
     // this.onlineFormService.sendForm(this.form).subscribe(res => this.goBack());
     this.onlineFormService.sendFamilyForm(this.form).subscribe(res => this.goBack());
   }

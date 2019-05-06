@@ -15,4 +15,7 @@ export class OnlineFormDocumentsFormsComponent implements OnInit {
   ngOnInit() {
   }
 
+  logWhatIWant(){
+    console.log(this.form.forms[0].form);
+  }
 }
