@@ -1,10 +1,10 @@
 export interface MainMenuNames {
   generalInfo: string,
   documentsForms: string,
-  consent: string,
+  consentInfo: string,
   paymentSettings: string,
   tuitionContract: string,
-  termConditions: string,
+  termsConditions: string,
   payment: string,
 }
 
@@ -12,9 +12,9 @@ export interface MainMenuNames {
 export const mainMenuNames: MainMenuNames = {
   generalInfo: 'generalInfo',
   documentsForms: 'documentsForms',
-  consent: 'consent',
+  consentInfo: 'consentInfo',
   paymentSettings: 'paymentSettings',
   tuitionContract: 'tuitionContract',
-  termConditions: 'termConditions',
+  termsConditions: 'termsConditions',
   payment: 'payment',
 };

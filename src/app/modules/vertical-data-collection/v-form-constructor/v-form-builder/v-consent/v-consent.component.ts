@@ -14,6 +14,8 @@ export class VConsentComponent implements OnInit, AfterViewInit {
   @Input() consents: ConsentItemInfo[];
 
   sectionName: string = 'Parent Consent';
+  sectionWidth: string = "4 Columns";
+
   SIGNATURE_TYPES = SIGNATURE_TYPES;
   E_SIGNATURE_TYPES = E_SIGNATURE_TYPES;
 

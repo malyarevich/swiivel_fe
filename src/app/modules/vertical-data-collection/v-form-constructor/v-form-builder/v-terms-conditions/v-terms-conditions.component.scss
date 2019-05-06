@@ -1,0 +1,46 @@
+@import "../../../../../../styles/variables/colors";
+
+a {
+  cursor: pointer;
+}
+
+a.active {
+  color: #4350A2;
+  font-weight: bold;
+
+}
+
+.bold-for-a {
+  font-weight: bold;
+}
+
+.italic-for-a {
+  font-style: italic;
+}
+
+.app-terms-table {
+  border: 1px solid #B6B6B6;
+  border-radius: 5px;
+}
+
+.app-terms-text {
+  padding: 0 5.3em;
+}
+
+.app-terms-dropdown-var {
+  background-color: $element-base-color;
+  border-radius: 50%;
+  padding: 5px;
+  color: white;
+  cursor: pointer;
+}
+
+.app-terms-dropdown-var:after {
+  display: none;
+}
+
+.app-terms-dropdown-var-item {
+  border-radius: 3px;
+  background-color: #EBEEFF;
+  cursor: pointer;
+}

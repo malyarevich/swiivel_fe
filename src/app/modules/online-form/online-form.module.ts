@@ -34,6 +34,7 @@ import { OnlineFormDocumentsFormsComponent } from './online-form-documents-forms
 import { OnlineDocumentsComponent } from './online-form-documents-forms/online-documents/online-documents.component';
 import { OnlinePdfFormsComponent } from './online-form-documents-forms/online-pdf-forms/online-pdf-forms.component';
 import {PdfViewerModule} from "ng2-pdf-viewer";
+import { OnlineFormTermsConditionsComponent } from './online-form-terms-conditions/online-form-terms-conditions.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import {PdfViewerModule} from "ng2-pdf-viewer";
     OnlineFormDocumentsFormsComponent,
     OnlineDocumentsComponent,
     OnlinePdfFormsComponent,
+    OnlineFormTermsConditionsComponent,
   ],
   imports: [
     CommonModule,

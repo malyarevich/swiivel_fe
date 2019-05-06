@@ -83,6 +83,7 @@ import { VInsideDocumentsViewComponent } from './v-form-info/v-form-info-submiss
 import { VInsideAccountCommunicationComponent } from './v-form-info/v-form-info-submissions/v-form-info-submission-inside/v-inside-account-communication/v-inside-account-communication.component';
 import { VInsideMissingFieldsComponent } from './v-form-info/v-form-info-submissions/v-form-info-submission-inside/v-inside-missing-fields/v-inside-missing-fields.component';
 import { VInsideFormHistoryComponent } from './v-form-info/v-form-info-submissions/v-form-info-submission-inside/v-inside-form-history/v-inside-form-history.component';
+import { VTermsConditionsComponent } from './v-form-constructor/v-form-builder/v-terms-conditions/v-terms-conditions.component';
 
 const routes: Routes = [
   {
@@ -198,6 +199,7 @@ const routes: Routes = [
     VInsideAccountCommunicationComponent,
     VInsideMissingFieldsComponent,
     VInsideFormHistoryComponent,
+    VTermsConditionsComponent,
   ],
   imports: [
     NgbModule,

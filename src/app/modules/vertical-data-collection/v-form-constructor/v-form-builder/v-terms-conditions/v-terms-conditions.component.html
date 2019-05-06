@@ -47,7 +47,7 @@
 </div>
 <!--End Section Header-->
 
-<div class="app-section-wrapper pb-4 mb-2" *ngFor="let item of consents; let i = index">
+<div class="app-section-wrapper pb-4 mb-2" *ngFor="let item of termsConditions.termsConditionsItems">
 
   <!--TITLE-->
   <div class="row">
@@ -60,9 +60,9 @@
           </span>
         </div>
         <div class="col">
-          <div class="form-group app-input-container w-50" [ngClass]="{'app-input-fill': consentText.value}">
+          <div class="form-group app-input-container w-50" [ngClass]="{'app-input-fill': termsConditionsTitle.value}">
             <label class="app-input-label" for="consent-text">Title</label>
-            <input #consentText
+            <input #termsConditionsTitle
                    [(ngModel)]="item.title"
                    id="consent-text"
                    type="text"
@@ -74,8 +74,8 @@
     </div>
   </div>
 
-  <div class="row app-consent-text">
-    <div class="col-12 app-consent-table px-3 py-2">
+  <div class="row app-terms-text">
+    <div class="col-12 app-terms-table px-3 py-2">
       <div class="row">
         <div class="col">Text</div>
         <div class="col text-right">
@@ -103,7 +103,7 @@
             <span id="dropdownConsentVar"
                   (mouseover)="varDrop.open()"
                   ngbDropdownToggle
-                  class="app-consent-dropdown-var">
+                  class="app-terms-dropdown-var">
               <i class="fas fa-angle-left mr-1"></i><i class="fas fa-angle-right"></i>
             </span>
 
@@ -112,7 +112,7 @@
               <div class="row no-gutters align-items-center">
 
                 <div class="col-4 p-1">
-                  <div class="app-consent-dropdown-var-item p-2"
+                  <div class="app-terms-dropdown-var-item p-2"
                        (click)="setCommand('insertText', false, '{%studentsName%}')"
                        (mousedown)="$event.preventDefault()">
                     <span class="app-fb-section-icon mr-1">
@@ -123,7 +123,7 @@
                 </div>
 
                 <div class="col-4 p-1">
-                  <div class="app-consent-dropdown-var-item p-2"
+                  <div class="app-terms-dropdown-var-item p-2"
                        (click)="setCommand('insertText', false, '{%parent%}')"
                        (mousedown)="$event.preventDefault()">
                     <span class="app-fb-section-icon mr-1">
@@ -134,7 +134,7 @@
                 </div>
 
                 <div class="col-4 p-1">
-                  <div class="app-consent-dropdown-var-item p-2"
+                  <div class="app-terms-dropdown-var-item p-2"
                        (click)="setCommand('insertText', false, '{%date%}')"
                        (mousedown)="$event.preventDefault()">
                     <span class="app-fb-section-icon mr-1">
@@ -153,10 +153,10 @@
         </div>
       </div>
 
-      <div [innerHTML]="item.text.value"
+      <div [innerHTML]="item.text"
            #consentText
            class="mt-3 mb-2"
-           (blur)="item.text.value = $event.target.innerHTML"
+           (blur)="item.text = $event.target.innerHTML"
            contentEditable=true>
       </div>
     </div>
@@ -173,11 +173,10 @@
           </label>
         </div>
         <div class="col">
-          <div class="form-group app-input-container" [ngClass]="{'app-input-fill': consentCheckboxText.value}">
-            <label class="app-input-label" for="consent-checkbox-text">Text</label>
-            <input #consentCheckboxText
+          <div class="form-group app-input-container" [ngClass]="{'app-input-fill': termsConditionsCheckboxText.value}">
+            <label class="app-input-label">Text</label>
+            <input #termsConditionsCheckboxText
                    [(ngModel)]="item.checkbox.text"
-                   id="consent-checkbox-text"
                    type="text"
                    class="app-input"
                    placeholder="Text">
@@ -186,21 +185,22 @@
       </div>
     </div>
   </div>
+</div>
 
-  <!--SIGNATURE-->
-  <div *ngIf="item.signature.isRequire" class="mt-3">
+<!--SIGNATURE-->
+<div *ngIf="termsConditions.signature.isRequire" class="app-section-wrapper mb-2">
 
     <!--E-SIGN SIGNATURE-->
-    <ng-container *ngIf="item.signature.type === SIGNATURE_TYPES.ESIGN">
+    <ng-container *ngIf="termsConditions.signature.type === SIGNATURE_TYPES.ESIGN">
 
       <!--EXTERNAL SIGNATURE-->
-      <ng-container *ngIf="item.signature.eType === E_SIGNATURE_TYPES.EXTERNAL">
+      <ng-container *ngIf="termsConditions.signature.eType === E_SIGNATURE_TYPES.EXTERNAL">
 
-        <div class="row pt-3" *ngIf="!item.signature.isBothParents">
-          <div class="col-12 app-consent-text">
+        <div class="row pt-3" *ngIf="!termsConditions.signature.isBothParents">
+          <div class="col-12 app-terms-text">
             <div class="row">
               <div class="col-4">
-      <textarea class="app-consent-table w-100 pl-3"
+      <textarea class="app-terms-table w-100 pl-3"
                 rows="2"
                 placeholder="Parent's Signature"></textarea>
               </div>
@@ -208,16 +208,16 @@
           </div>
         </div>
 
-        <div class="row pt-3" *ngIf="item.signature.isBothParents">
-          <div class="col-12 app-consent-text">
+        <div class="row pt-3" *ngIf="termsConditions.signature.isBothParents">
+          <div class="col-12 app-terms-text">
             <div class="row">
               <div class="col-4">
-          <textarea class="app-consent-table w-100 pl-3"
+          <textarea class="app-terms-table w-100 pl-3"
                     rows="2"
                     placeholder="Father's Signature"></textarea>
               </div>
               <div class="col-4">
-          <textarea class="app-consent-table w-100 pl-3"
+          <textarea class="app-terms-table w-100 pl-3"
                     rows="2"
                     placeholder="Mother's Signature"></textarea>
               </div>
@@ -228,10 +228,10 @@
       </ng-container>
 
       <!--SYSTEM SIGNATURE-->
-      <ng-container *ngIf="item.signature.eType === E_SIGNATURE_TYPES.SYSTEM">
+      <ng-container *ngIf="termsConditions.signature.eType === E_SIGNATURE_TYPES.SYSTEM">
 
-        <div class="row pt-3" *ngIf="!item.signature.isBothParents">
-          <div class="col-12 app-consent-text">
+        <div class="row pt-3" *ngIf="!termsConditions.signature.isBothParents">
+          <div class="col-12 app-terms-text">
             <div class="row">
               <div class="col-4">
                 <label class="app-checkbox-container">Parent's Signature
@@ -243,8 +243,8 @@
           </div>
         </div>
 
-        <div class="row pt-3" *ngIf="item.signature.isBothParents">
-          <div class="col-12 app-consent-text">
+        <div class="row pt-3" *ngIf="termsConditions.signature.isBothParents">
+          <div class="col-12 app-terms-text">
             <div class="row">
               <div class="col-4">
                 <label class="app-checkbox-container">Father's Signature
@@ -267,13 +267,13 @@
     </ng-container>
 
     <!--WET SIGNATURE-->
-    <ng-container *ngIf="item.signature.type === SIGNATURE_TYPES.WET">
+    <ng-container *ngIf="termsConditions.signature.type === SIGNATURE_TYPES.WET">
 
-      <div class="row pt-3" *ngIf="!item.signature.isBothParents">
-        <div class="col-12 app-consent-text">
+      <div class="row pt-3" *ngIf="!termsConditions.signature.isBothParents">
+        <div class="col-12 app-terms-text">
           <div class="row">
             <div class="col-4">
-      <textarea class="app-consent-table w-100 pl-3"
+      <textarea class="app-terms-table w-100 pl-3"
                 rows="2"
                 placeholder="Parent's Signature"></textarea>
             </div>
@@ -281,16 +281,16 @@
         </div>
       </div>
 
-      <div class="row pt-3" *ngIf="item.signature.isBothParents">
-        <div class="col-12 app-consent-text">
+      <div class="row pt-3" *ngIf="termsConditions.signature.isBothParents">
+        <div class="col-12 app-terms-text">
           <div class="row">
             <div class="col-4">
-          <textarea class="app-consent-table w-100 pl-3"
+          <textarea class="app-terms-table w-100 pl-3"
                     rows="2"
                     placeholder="Father's Signature"></textarea>
             </div>
             <div class="col-4">
-          <textarea class="app-consent-table w-100 pl-3"
+          <textarea class="app-terms-table w-100 pl-3"
                     rows="2"
                     placeholder="Mother's Signature"></textarea>
             </div>
@@ -301,11 +301,9 @@
     </ng-container>
 
     <div class="py-2 pr-5 text-right">
-      <button class="btn app-btn-accept px-5 py-2 mr-3">Accept</button>
+      <button class="btn app-btn-primary px-5 py-2 mr-3">Accept</button>
     </div>
 
-  </div>
-  <!--END SIGNATURE-->
-
 </div>
+<!--END SIGNATURE-->
 

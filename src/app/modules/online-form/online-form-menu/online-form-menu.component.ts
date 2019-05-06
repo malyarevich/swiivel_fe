@@ -15,10 +15,10 @@ export class OnlineFormMenuComponent implements OnInit {
   menuItems = [
     {name: mainMenuNames.generalInfo, title: 'General Information', time: 48},
     {name: mainMenuNames.documentsForms, title: 'Documents & Forms', time: 15},
-    {name: mainMenuNames.consent, title: 'Consent', time: 12},
+    {name: mainMenuNames.consentInfo, title: 'Consent', time: 12},
     {name: mainMenuNames.paymentSettings, title: 'Payment Settings', time: 10},
     {name: mainMenuNames.tuitionContract, title: 'Tuition Contract', time: 6},
-    {name: mainMenuNames.termConditions, title: 'Term & Conditions', time: 14},
+    {name: mainMenuNames.termsConditions, title: 'Term & Conditions', time: 14},
     {name: mainMenuNames.payment, title: 'Payment', time: 18},
   ];
 
@@ -35,11 +35,17 @@ export class OnlineFormMenuComponent implements OnInit {
 
   isShowMenuItem(itemMenuName) {
     switch (itemMenuName) {
-      case mainMenuNames.consent: {
-        return this.form.consentInfo.isActive
-      }
-      default: return true
+      case mainMenuNames.consentInfo: return this.checkItemIsActive(mainMenuNames.consentInfo);
+      case mainMenuNames.termsConditions: return this.checkItemIsActive(mainMenuNames.termsConditions);
+      default: return true;
     }
+  }
+
+  checkItemIsActive(itemMenuName) {
+    if(this.form && this.form[itemMenuName]) {
+      return this.form[itemMenuName].isActive;
+    }
+    return false;
   }
 
 }
