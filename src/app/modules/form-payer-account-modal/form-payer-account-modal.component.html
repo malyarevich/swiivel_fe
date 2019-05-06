@@ -4,7 +4,7 @@
   (closeModal)="onCloseFormPayerAccountModal()"
 >
   <div
-    *ngIf="!persons.length"
+    *ngIf="!persons.length || !students.length"
     class="test-c d-flex justify-content-center overlay pt-5"
   >
     <div
@@ -17,7 +17,7 @@
     </div>
   </div>
   <div
-    *ngIf="persons.length"
+    *ngIf="persons.length && students.length"
     class="form-payer-account-container"
   >
     <form
@@ -35,8 +35,9 @@
           [items]="persons"
         >
         </app-select-multi-search-field>
-        <div class="field-has-error"
-             *ngIf="payerAccountForm.get('members').invalid && payerAccountForm.get('members').touched && payerAccountForm.get('members')['errors']['required']"
+        <div
+          class="field-has-error"
+          *ngIf="payerAccountForm.get('members').invalid && payerAccountForm.get('members').touched && payerAccountForm.get('members')['errors']['required']"
         >
           Members is required
         </div>
@@ -54,7 +55,8 @@
             [isInvalid]="payerAccountForm.get('name').invalid && payerAccountForm.get('name').touched"
           >
           </app-input-field>
-          <div class="field-has-error"
+          <div
+            class="field-has-error"
             *ngIf="payerAccountForm.get('name').invalid && payerAccountForm.get('name').touched && payerAccountForm.get('name')['errors']['required']"
           >
             Account name is required
@@ -62,19 +64,44 @@
         </div>
         <div class="form-payer-account-type">
           <app-select-field
+            defaultItemIndex="Payer"
             formControlName="type"
             labelTitle="Type"
             [isInvalid]="payerAccountForm.get('type').invalid && payerAccountForm.get('type').touched"
             [items]="types"
           >
           </app-select-field>
-          <div class="field-has-error"
-               *ngIf="payerAccountForm.get('type').invalid && payerAccountForm.get('type').touched && payerAccountForm.get('type')['errors']['required']"
+          <div
+            class="field-has-error"
+            *ngIf="payerAccountForm.get('type').invalid && payerAccountForm.get('type').touched && payerAccountForm.get('type')['errors']['required']"
           >
             Type is required
           </div>
         </div>
       </div>
+      <div
+        class="form-payer-account-members"
+      >
+        <app-select-multi-search-field
+          bindLabel="name"
+          formControlName="fees"
+          labelTitle="Include fees of:"
+          [isInvalid]="payerAccountForm.get('fees').invalid && payerAccountForm.get('fees').touched"
+          [items]="students"
+        >
+        </app-select-multi-search-field>
+        <div
+          class="field-has-error"
+          *ngIf="payerAccountForm.get('fees').invalid && payerAccountForm.get('fees').touched && payerAccountForm.get('fees')['errors']['required']"
+        >
+          Students is required
+        </div>
+      </div>
+      <p
+        class="form-payer-account-has-error"
+        [innerHTML]="this.errorMsg"
+      >
+      </p>
       <div
         class="form-payer-account-submit"
       >

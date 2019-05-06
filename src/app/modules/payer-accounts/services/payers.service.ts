@@ -34,7 +34,6 @@ export class PayersService {
   }
 
   addPayerAccount(data) {
-    console.log(data);
     return this.http.post(`${API_URL}/payers`, data, httpOptions)
       .pipe(
         map((response) => {
