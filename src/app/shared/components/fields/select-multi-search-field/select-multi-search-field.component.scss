@@ -115,6 +115,14 @@
     padding-right: 35px;
   }
 
+  &.app-select-multi-search-field-has-error {
+    .ng-select::ng-deep {
+
+      .ng-select-container {
+        border-bottom: 1px solid #e65757;
+      }
+    }
+  }
 }
 
 .app-select-multi-search-field-label {

@@ -28,12 +28,18 @@
         class="form-payer-account-members"
       >
         <app-select-multi-search-field
-          labelTitle="Members"
-          [items]="persons"
           bindLabel="name"
           formControlName="members"
+          labelTitle="Members"
+          [isInvalid]="payerAccountForm.get('members').invalid && payerAccountForm.get('members').touched"
+          [items]="persons"
         >
         </app-select-multi-search-field>
+        <div class="field-has-error"
+             *ngIf="payerAccountForm.get('members').invalid && payerAccountForm.get('members').touched && payerAccountForm.get('members')['errors']['required']"
+        >
+          Members is required
+        </div>
       </div>
       <div class="form-payer-account-label">
         Account

@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PersonService } from '../../services/person/person.service';
 
 import { Person } from '../../models/person.model';
+import {PayersService} from '../payer-accounts/services/payers.service';
 
 @Component({
   selector: 'app-form-payer-account-modal',
@@ -16,12 +17,12 @@ export class FormPayerAccountModalComponent implements OnInit {
   private payerAccountForm: FormGroup;
 
   persons: any[] = [];
-  types: any[] = [];
-  typesNames = ['Payer', 'Other'];
+  types = ['Payer', 'Other'];
 
   constructor(
     private fb: FormBuilder,
     private personService: PersonService,
+    private payersService: PayersService,
   ) {
     this.payerAccountForm = fb.group({
       members: [null, Validators.required],
@@ -58,17 +59,23 @@ export class FormPayerAccountModalComponent implements OnInit {
           });
         }
       });
-
-    this.typesNames.forEach((c, i) => {
-      this.types.push({
-        value: i,
-        label: c,
-      });
-    });
   }
 
   onCreatePayerAccount() {
-    console.log(this.payerAccountForm.value);
+    const data = {
+      name: this.payerAccountForm.value.name,
+      type: this.payerAccountForm.value.type,
+      persons: [],
+    };
+
+    this.payerAccountForm.value.members.forEach((member) => {
+      data.persons.push({ person_id: member.id });
+    });
+
+    this.payersService.addPayerAccount(data)
+      .subscribe((res) => {
+        console.log(res);
+      });
   }
 
   onCloseFormPayerAccountModal() {

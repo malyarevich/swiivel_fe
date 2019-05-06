@@ -16,8 +16,9 @@ export class SelectMultiSearchFieldComponent implements OnInit, ControlValueAcce
   @Input() defaultItemIndex: number;
   @Input() disabled: boolean;
   @Input() labelTitle: string;
-  @Input() items: [any];
   @Input() idElement: string;
+  @Input() isInvalid = false;
+  @Input() items: [any];
   @Input() bindLabel = 'label';
   @Input() bindValue = 'value';
   @Input() showClearBtn = false;
@@ -52,7 +53,7 @@ export class SelectMultiSearchFieldComponent implements OnInit, ControlValueAcce
     this.onTouched = fn;
   }
 
-  onChange(e) {
+  onChange(e ) {
     e.preventDefault();
   }
   onTouched() {}
