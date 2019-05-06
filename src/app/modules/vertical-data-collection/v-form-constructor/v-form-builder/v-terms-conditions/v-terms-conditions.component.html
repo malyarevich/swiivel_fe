@@ -181,127 +181,123 @@
   </div>
 </div>
 
-<!--<div class="app-section-wrapper mb-2">-->
+<!--SIGNATURE-->
+<div *ngIf="termsConditions.signature.isRequire" class="app-section-wrapper mb-2">
 
-  <!--&lt;!&ndash;SIGNATURE&ndash;&gt;-->
-  <!--<div *ngIf="item.signature.isRequire" class="mt-3">-->
+    <!--E-SIGN SIGNATURE-->
+    <ng-container *ngIf="termsConditions.signature.type === SIGNATURE_TYPES.ESIGN">
 
-    <!--&lt;!&ndash;E-SIGN SIGNATURE&ndash;&gt;-->
-    <!--<ng-container *ngIf="item.signature.type === SIGNATURE_TYPES.ESIGN">-->
+      <!--EXTERNAL SIGNATURE-->
+      <ng-container *ngIf="termsConditions.signature.eType === E_SIGNATURE_TYPES.EXTERNAL">
 
-      <!--&lt;!&ndash;EXTERNAL SIGNATURE&ndash;&gt;-->
-      <!--<ng-container *ngIf="item.signature.eType === E_SIGNATURE_TYPES.EXTERNAL">-->
+        <div class="row pt-3" *ngIf="!termsConditions.signature.isBothParents">
+          <div class="col-12 app-terms-text">
+            <div class="row">
+              <div class="col-4">
+      <textarea class="app-terms-table w-100 pl-3"
+                rows="2"
+                placeholder="Parent's Signature"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <!--<div class="row pt-3" *ngIf="!item.signature.isBothParents">-->
-          <!--<div class="col-12 app-terms-text">-->
-            <!--<div class="row">-->
-              <!--<div class="col-4">-->
-      <!--<textarea class="app-terms-table w-100 pl-3"-->
-                <!--rows="2"-->
-                <!--placeholder="Parent's Signature"></textarea>-->
-              <!--</div>-->
-            <!--</div>-->
-          <!--</div>-->
-        <!--</div>-->
+        <div class="row pt-3" *ngIf="termsConditions.signature.isBothParents">
+          <div class="col-12 app-terms-text">
+            <div class="row">
+              <div class="col-4">
+          <textarea class="app-terms-table w-100 pl-3"
+                    rows="2"
+                    placeholder="Father's Signature"></textarea>
+              </div>
+              <div class="col-4">
+          <textarea class="app-terms-table w-100 pl-3"
+                    rows="2"
+                    placeholder="Mother's Signature"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <!--<div class="row pt-3" *ngIf="item.signature.isBothParents">-->
-          <!--<div class="col-12 app-terms-text">-->
-            <!--<div class="row">-->
-              <!--<div class="col-4">-->
-          <!--<textarea class="app-terms-table w-100 pl-3"-->
-                    <!--rows="2"-->
-                    <!--placeholder="Father's Signature"></textarea>-->
-              <!--</div>-->
-              <!--<div class="col-4">-->
-          <!--<textarea class="app-terms-table w-100 pl-3"-->
-                    <!--rows="2"-->
-                    <!--placeholder="Mother's Signature"></textarea>-->
-              <!--</div>-->
-            <!--</div>-->
-          <!--</div>-->
-        <!--</div>-->
+      </ng-container>
 
-      <!--</ng-container>-->
+      <!--SYSTEM SIGNATURE-->
+      <ng-container *ngIf="termsConditions.signature.eType === E_SIGNATURE_TYPES.SYSTEM">
 
-      <!--&lt;!&ndash;SYSTEM SIGNATURE&ndash;&gt;-->
-      <!--<ng-container *ngIf="item.signature.eType === E_SIGNATURE_TYPES.SYSTEM">-->
+        <div class="row pt-3" *ngIf="!termsConditions.signature.isBothParents">
+          <div class="col-12 app-terms-text">
+            <div class="row">
+              <div class="col-4">
+                <label class="app-checkbox-container">Parent's Signature
+                  <input type="checkbox" disabled>
+                  <span class="app-checkbox-checkmark"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <!--<div class="row pt-3" *ngIf="!item.signature.isBothParents">-->
-          <!--<div class="col-12 app-terms-text">-->
-            <!--<div class="row">-->
-              <!--<div class="col-4">-->
-                <!--<label class="app-checkbox-container">Parent's Signature-->
-                  <!--<input type="checkbox" disabled>-->
-                  <!--<span class="app-checkbox-checkmark"></span>-->
-                <!--</label>-->
-              <!--</div>-->
-            <!--</div>-->
-          <!--</div>-->
-        <!--</div>-->
+        <div class="row pt-3" *ngIf="termsConditions.signature.isBothParents">
+          <div class="col-12 app-terms-text">
+            <div class="row">
+              <div class="col-4">
+                <label class="app-checkbox-container">Father's Signature
+                  <input type="checkbox" disabled>
+                  <span class="app-checkbox-checkmark"></span>
+                </label>
+              </div>
+              <div class="col-4">
+                <label class="app-checkbox-container">Mother's Signature
+                  <input type="checkbox" disabled>
+                  <span class="app-checkbox-checkmark"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <!--<div class="row pt-3" *ngIf="item.signature.isBothParents">-->
-          <!--<div class="col-12 app-terms-text">-->
-            <!--<div class="row">-->
-              <!--<div class="col-4">-->
-                <!--<label class="app-checkbox-container">Father's Signature-->
-                  <!--<input type="checkbox" disabled>-->
-                  <!--<span class="app-checkbox-checkmark"></span>-->
-                <!--</label>-->
-              <!--</div>-->
-              <!--<div class="col-4">-->
-                <!--<label class="app-checkbox-container">Mother's Signature-->
-                  <!--<input type="checkbox" disabled>-->
-                  <!--<span class="app-checkbox-checkmark"></span>-->
-                <!--</label>-->
-              <!--</div>-->
-            <!--</div>-->
-          <!--</div>-->
-        <!--</div>-->
+      </ng-container>
 
-      <!--</ng-container>-->
+    </ng-container>
 
-    <!--</ng-container>-->
+    <!--WET SIGNATURE-->
+    <ng-container *ngIf="termsConditions.signature.type === SIGNATURE_TYPES.WET">
 
-    <!--&lt;!&ndash;WET SIGNATURE&ndash;&gt;-->
-    <!--<ng-container *ngIf="item.signature.type === SIGNATURE_TYPES.WET">-->
+      <div class="row pt-3" *ngIf="!termsConditions.signature.isBothParents">
+        <div class="col-12 app-terms-text">
+          <div class="row">
+            <div class="col-4">
+      <textarea class="app-terms-table w-100 pl-3"
+                rows="2"
+                placeholder="Parent's Signature"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
 
-      <!--<div class="row pt-3" *ngIf="!item.signature.isBothParents">-->
-        <!--<div class="col-12 app-terms-text">-->
-          <!--<div class="row">-->
-            <!--<div class="col-4">-->
-      <!--<textarea class="app-terms-table w-100 pl-3"-->
-                <!--rows="2"-->
-                <!--placeholder="Parent's Signature"></textarea>-->
-            <!--</div>-->
-          <!--</div>-->
-        <!--</div>-->
-      <!--</div>-->
+      <div class="row pt-3" *ngIf="termsConditions.signature.isBothParents">
+        <div class="col-12 app-terms-text">
+          <div class="row">
+            <div class="col-4">
+          <textarea class="app-terms-table w-100 pl-3"
+                    rows="2"
+                    placeholder="Father's Signature"></textarea>
+            </div>
+            <div class="col-4">
+          <textarea class="app-terms-table w-100 pl-3"
+                    rows="2"
+                    placeholder="Mother's Signature"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
 
-      <!--<div class="row pt-3" *ngIf="item.signature.isBothParents">-->
-        <!--<div class="col-12 app-terms-text">-->
-          <!--<div class="row">-->
-            <!--<div class="col-4">-->
-          <!--<textarea class="app-terms-table w-100 pl-3"-->
-                    <!--rows="2"-->
-                    <!--placeholder="Father's Signature"></textarea>-->
-            <!--</div>-->
-            <!--<div class="col-4">-->
-          <!--<textarea class="app-terms-table w-100 pl-3"-->
-                    <!--rows="2"-->
-                    <!--placeholder="Mother's Signature"></textarea>-->
-            <!--</div>-->
-          <!--</div>-->
-        <!--</div>-->
-      <!--</div>-->
+    </ng-container>
 
-    <!--</ng-container>-->
+    <div class="py-2 pr-5 text-right">
+      <button class="btn app-btn-primary px-5 py-2 mr-3">Accept</button>
+    </div>
 
-  <!--</div>-->
-  <!--&lt;!&ndash;END SIGNATURE&ndash;&gt;-->
-
-  <!--<div class="py-2 pr-5 text-right">-->
-    <!--<button class="btn app-btn-accept px-5 py-2 mr-3">Accept</button>-->
-  <!--</div>-->
-
-<!--</div>-->
+</div>
+<!--END SIGNATURE-->
 
