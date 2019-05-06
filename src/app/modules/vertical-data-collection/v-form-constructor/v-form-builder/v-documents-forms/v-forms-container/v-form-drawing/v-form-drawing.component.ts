@@ -11,7 +11,6 @@ import {
 } from '@angular/core';
 import {Field} from "../../../../../model/field.model";
 import {
-  FormPDFDownloadModel,
   FormPDFSignatureModel,
   FormPDFTemporaryField,
   FormsDivModel,
@@ -21,10 +20,7 @@ import {fromEvent, Subscription} from "rxjs";
 import {PDFDocumentProxy, PDFProgressData} from "pdfjs-dist";
 import {pairwise, switchMap, takeUntil} from "rxjs/operators";
 import {v4 as uuid} from 'uuid';
-import {VFilesService} from "../../../../../v-files.service";
-import {HttpParams} from "@angular/common/http";
 import {environment} from "../../../../../../../../environments/environment";
-import{range} from 'lodash';
 
 @Component({
   selector: 'app-v-form-drawing',
@@ -104,7 +100,7 @@ export class VFormDrawingComponent implements AfterViewInit, OnDestroy, OnInit, 
     this.loading=progressData.loaded<=progressData.total;
   }
   logType(){
-    console.log(this.drawingType);
+    // console.log(this.drawingType);
   }
 
   ngAfterViewInit() {
@@ -258,8 +254,6 @@ export class VFormDrawingComponent implements AfterViewInit, OnDestroy, OnInit, 
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    // if(changes.formsPDF)
-      console.log(changes)
   }
 
 }
