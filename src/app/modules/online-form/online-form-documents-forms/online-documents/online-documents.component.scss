@@ -1,0 +1,13 @@
+@import '../../../../../styles/variables/colors';
+
+.document-cont-div{
+  border-radius: 3px;	background-color: #F6F6F6;
+}
+.app-btn-primary {
+  &:hover, &:focus, &:active {
+    color: $element-base-color;
+  }
+}
+.span-download{
+  color: #4350A2;		font-weight: bold; cursor: pointer;
+}
