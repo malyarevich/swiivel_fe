@@ -54,6 +54,10 @@
                    [(ngModel)]="div.linkedField.value"
                    [placeholder]="div.linkedField.name | titlecase">
           </div>
+          <div *ngIf="div.type==='signature'" class="form-group"
+               >
+            <span>Sign Here</span>
+          </div>
 
         </div>
       </div>
