@@ -41,7 +41,7 @@ export class OnlineFormConsentComponent implements OnInit {
 
   saveSystemSign(personsType, itemType, consentId) {
 
-    this.systemSignatureService.sign(this.form._id, this.form.personId)
+    this.systemSignatureService.sign(this.form._id, this.form.personId, itemType, consentId)
       .subscribe((res: SignatureCreateResponse) => {
         this.form.consentInfo.consents
           .find(item => item.id === consentId).signature.signed[personsType] = res.created;

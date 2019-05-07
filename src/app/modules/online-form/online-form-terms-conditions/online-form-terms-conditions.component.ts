@@ -34,7 +34,7 @@ export class OnlineFormTermsConditionsComponent implements OnInit {
 
   saveSystemSign(personsType, itemType) {
 
-    this.systemSignatureService.sign(this.form._id, this.form.personId)
+    this.systemSignatureService.sign(this.form._id, this.form.personId, itemType)
       .subscribe((res: SignatureCreateResponse) => {
         this.form.termsConditions.signature.signed[personsType] = res.created;
       });

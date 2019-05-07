@@ -9,12 +9,14 @@ export class SystemSignatureService {
   constructor(private http: HttpClient) {
   }
 
-  sign(formId, personId) {
+  sign(formId: string, personId: number, entity: string, entityId: string | number | null = null) {
 
     let data = {
       api_token: `${environment.api_token}`,
       formId,
       personId,
+      entity,
+      entityId
     };
 
     return this.http.post(`${environment.apiFB}/sign`, data)
