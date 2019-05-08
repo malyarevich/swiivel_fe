@@ -9,6 +9,8 @@ import {TuitionContract} from "../../../vertical-data-collection/v-form-construc
 export class TuitionContractByFeeComponent implements OnInit {
   @Input() tuitionContract: TuitionContract;
 
+  tempFees = [1600, 1080, 1080, 9840, 3200, 3200];
+
   constructor() { }
 
   ngOnInit() {

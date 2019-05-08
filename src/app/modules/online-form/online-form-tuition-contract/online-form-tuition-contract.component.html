@@ -13,14 +13,17 @@
   </div>
 
   <!--Table-->
-  <div class="app-fb-tuition-table p-3">
-    <app-tuition-contract-by-student *ngIf="tuitionContract.splitBy === TUITION_CONTRACT_SPLIT_TYPES.STUDENT"
-                                     [tuitionContract]="tuitionContract">
-    </app-tuition-contract-by-student>
-    <app-tuition-contract-by-fee *ngIf="tuitionContract.splitBy === TUITION_CONTRACT_SPLIT_TYPES.FEE"
-                                 [tuitionContract]="tuitionContract">
-    </app-tuition-contract-by-fee>
+  <div class="app-fb-tuition-table p-3" *ngIf="tuitionContract.splitBy === TUITION_CONTRACT_SPLIT_TYPES.STUDENT">
+    <app-tuition-contract-by-student [tuitionContract]="tuitionContract"></app-tuition-contract-by-student>
   </div>
+  <div class="row no-gutters" *ngIf="tuitionContract.splitBy === TUITION_CONTRACT_SPLIT_TYPES.FEE">
+    <div class="col-2"></div>
+    <div class="col-8">
+      <app-tuition-contract-by-fee [tuitionContract]="tuitionContract"></app-tuition-contract-by-fee>
+    </div>
+    <div class="col-2"></div>
+  </div>
+
 
   <!--Text-->
   <div class="row no-gutters mt-4">
