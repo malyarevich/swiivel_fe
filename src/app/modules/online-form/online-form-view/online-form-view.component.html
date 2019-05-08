@@ -10,7 +10,9 @@
                                       [form]="form">
         </app-online-form-general-info>
         <app-online-form-documents-forms [form]="form" *ngIf="activeSection === mainMenuNames.documentsForms"></app-online-form-documents-forms>
-        <app-online-form-consent [form]="form" *ngIf="activeSection === mainMenuNames.consent"></app-online-form-consent>
+        <app-online-form-consent [form]="form" *ngIf="activeSection === mainMenuNames.consentInfo"></app-online-form-consent>
+        <app-online-form-terms-conditions [form]="form" *ngIf="activeSection === mainMenuNames.termsConditions"></app-online-form-terms-conditions>
+        <app-online-form-tuition-contract [form]="form" *ngIf="activeSection === mainMenuNames.tuitionContract"></app-online-form-tuition-contract>
       </div>
     </div>
   </div>

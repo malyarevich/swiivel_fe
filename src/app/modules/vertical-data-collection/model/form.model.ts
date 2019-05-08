@@ -4,6 +4,7 @@ import {TuitionContract} from "../v-form-constructor/v-form-builder/v-tuition-co
 import {ConsentInfo} from "../v-form-constructor/v-form-builder/v-consent/model/consent.model";
 import {DocumentsModel} from "../v-form-constructor/v-form-builder/v-documents-forms/model/documents.model";
 import {FormsPDFModel} from "../v-form-constructor/v-form-builder/v-documents-forms/model/formsPDF.model";
+import {TermsConditions} from "../v-form-constructor/v-form-builder/v-terms-conditions/model/terms-conditions.model";
 
 export interface Form {
   _id: string;
@@ -20,6 +21,7 @@ export interface Form {
   step?: number;
   tuitionContract?: TuitionContract;
   consentInfo?: ConsentInfo;
+  termsConditions?: TermsConditions;
   chosen_way_to_create_new_form?: number;
   eligible: string;
   example_form_id?: string;

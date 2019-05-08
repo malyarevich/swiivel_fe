@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {TuitionContract} from "./models/tuition-contract.model";
+import {E_SIGNATURE_TYPES, SIGNATURE_TYPES, TUITION_CONTRACT_SPLIT_TYPES} from "../../../../../enums";
 
 @Component({
   selector: 'app-v-tuition-contract',
@@ -10,13 +11,20 @@ export class VTuitionContractComponent implements OnInit {
   @Input() tuitionContract: TuitionContract;
 
   sectionName: string = 'Tuition Contract';
-  isBold: boolean;
-  isItalic: boolean;
+  sectionWidth: string = "4 Columns";
+
+  TUITION_CONTRACT_SPLIT_TYPES = TUITION_CONTRACT_SPLIT_TYPES;
+  SIGNATURE_TYPES = SIGNATURE_TYPES;
+  E_SIGNATURE_TYPES = E_SIGNATURE_TYPES;
 
   constructor() {
   }
 
   ngOnInit() {
+  }
+
+  setCommand(name: string, showUi: boolean = false, value: string = null) {
+    document.execCommand(name, showUi, value);
   }
 
 }

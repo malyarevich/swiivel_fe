@@ -4,10 +4,7 @@ import {ConsentItemInfo} from "../../vertical-data-collection/v-form-constructor
 import {E_SIGNATURE_TYPES, SIGNATURE_TYPES} from "../../../enums";
 import {Form} from "../../vertical-data-collection/model/form.model";
 import {SystemSignatureService} from "../services/signatures/system-signature.service";
-
-interface SignatureCreateResponse {
-  created: boolean;
-}
+import {SignatureCreateResponse} from '../model/signature-create-response.model'
 
 @Component({
   selector: 'app-online-form-consent',
@@ -37,14 +34,14 @@ export class OnlineFormConsentComponent implements OnInit {
   onSystemSign(consentId) {
     let signed = this.consents.find(item => item.id === consentId).signature.signed;
     Object.keys(signed).map((item) => {
-      if (signed[item]) this.saveSystemSign(item, 'consent', consentId);
+      if (signed[item]) this.saveSystemSign(item, 'consentInfo', consentId);
     });
   }
 
 
   saveSystemSign(personsType, itemType, consentId) {
 
-    this.systemSignatureService.sign(this.form._id, this.form.personId)
+    this.systemSignatureService.sign(this.form._id, this.form.personId, itemType, consentId)
       .subscribe((res: SignatureCreateResponse) => {
         this.form.consentInfo.consents
           .find(item => item.id === consentId).signature.signed[personsType] = res.created;

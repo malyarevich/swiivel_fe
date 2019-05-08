@@ -166,6 +166,11 @@ export class VFormDrawingComponent implements AfterViewInit, OnDestroy, OnInit, 
   }
 
   loadComplete(pdf: PDFDocumentProxy){
+    let pages = pdf.numPages;
+    while (pages){
+      if(!this.formsPDF.form.fieldsPdf[pages-1]) this.formsPDF.form.fieldsPdf[pages-1]=[];
+      pages--;
+    }
     this.temporaryField = [];
     this.formsPDF.form.fieldsPdf.forEach(page=>{
       page.forEach(field=>{

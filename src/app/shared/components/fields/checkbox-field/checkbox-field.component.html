@@ -1,0 +1,20 @@
+<div
+  class="app-checkbox-field"
+  [ngClass]="{'app-checkbox-field-has-error': isInvalid}"
+>
+  <label
+    class="app-checkbox-field-label"
+    ([for])="id"
+  >
+    {{label}}
+    <input
+      type="checkbox"
+      ([id])="id"
+      [value]="isSelected"
+      [checked]="isSelected"
+      [disabled]="disabled"
+      (click)="toggleCheckbox()"
+    >
+    <span class="app-checkbox-checkmark"></span>
+  </label>
+</div>

@@ -8,3 +8,26 @@
 .dotted-wrap{
   border: 3px dashed #D6D6D6;	border-radius: 3px;	background-color: #F6F6F6
 }
+
+.overlay{
+  background-color: rgba(0,0,0,0.7);
+  position: absolute
+}
+.test-c{
+  position:absolute;
+  top:0;
+  left:0;
+  width: 816px;
+  height: 1056px;
+
+}
+.div-inside{
+  border: 2px solid #000000;
+  background-color: white;
+  position: absolute;
+  z-index: 9900;
+  /*font-size: 0.5rem!important;*/
+}
+.app-input{
+  min-height: 0;
+}

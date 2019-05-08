@@ -32,6 +32,7 @@ export class FormPayerAccountModalComponent implements OnInit {
     this.payerAccountForm = fb.group({
       members: [null, Validators.required],
       name: [null, Validators.required],
+      primary: [false],
       type: [this.types[0], Validators.required],
       fees: [null, Validators.required],
     });
@@ -86,6 +87,7 @@ export class FormPayerAccountModalComponent implements OnInit {
       name: this.payerAccountForm.value.name,
       type: this.payerAccountForm.value.type,
       persons: [],
+      primary: this.payerAccountForm.value.primary,
     };
 
     this.payerAccountForm.value.members.forEach((member) => {
