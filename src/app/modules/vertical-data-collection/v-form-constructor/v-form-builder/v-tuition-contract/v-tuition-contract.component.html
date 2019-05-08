@@ -72,41 +72,41 @@
     <!--TEXT-->
     <p class="font-weight-bold mt-5">CONTRACT TEXT <span class="app-fb-tuition-info">(Text that will be displayed to the parents)</span>
     </p>
-    <div class="text-right">
-      <a class="tuition-text-a" [ngClass]="isBold?'active':''" (click)="isBold=!isBold">
-        <small>Bold</small>
-      </a>
-      <span><small> | </small></span>
-      <a class="tuition-text-a" [ngClass]="isItalic?'active':''" (click)="isItalic=!isItalic">
-        <small>Italic</small>
-      </a>
+
+    <div class="row no-gutters">
+      <div class="col-12 app-editable-wrapper px-3 py-2">
+
+        <div class="row">
+          <div class="col">Text</div>
+          <div class="col text-right">
+            <div class="d-inline-block">
+              <a (click)="setCommand('bold')" (mousedown)="$event.preventDefault()" class="app-cursor-pointer">
+                <small>Bold</small>
+              </a>
+              <span><small> | </small></span>
+              <a (click)="setCommand('italic')" (mousedown)="$event.preventDefault()"  class="app-cursor-pointer">
+                <small>Italic</small>
+              </a>
+              <span><small> | </small></span>
+              <a (click)="setCommand('removeFormat')" (mousedown)="$event.preventDefault()"  class="app-cursor-pointer">
+                <small>Remove Format</small>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div [innerHTML]="tuitionContract.text"
+             #tuitionContractText
+             class="mt-3 mb-2"
+             (blur)="tuitionContract.text = $event.target.innerHTML"
+             contentEditable=true>
+        </div>
+      </div>
     </div>
-    <textarea class="app-fb-tuition-table w-100 pl-3" [ngClass]="[isBold?'bold-for-a':'',isItalic?'italic-for-a':'']" rows="8" placeholder="Text"
-              [(ngModel)]="tuitionContract.text"></textarea>
-    <!--TEXT-->
-
-
-    <!--<div class="row mt-5" *ngIf="tuitionContract.signature.isRequire">-->
-      <!--<ng-container *ngIf="!tuitionContract.signature.isBothParents">-->
-        <!--<div class="col">-->
-          <!--<textarea class="app-fb-tuition-table w-100 pl-3" rows="2" placeholder="Parent's Signature"></textarea>-->
-        <!--</div>-->
-        <!--<div class="col">-->
-        <!--</div>-->
-      <!--</ng-container>-->
-      <!--<ng-container *ngIf="tuitionContract.signature.isBothParents">-->
-        <!--<div class="col">-->
-          <!--<textarea class="app-fb-tuition-table w-100 pl-3" rows="2" placeholder="Father's Signature"></textarea>-->
-        <!--</div>-->
-        <!--<div class="col">-->
-          <!--<textarea class="app-fb-tuition-table w-100 pl-3" rows="2" placeholder="Mother's Signature"></textarea>-->
-        <!--</div>-->
-      <!--</ng-container>-->
-    <!--</div>-->
 
 
     <!--SIGNATURE-->
-    <div *ngIf="tuitionContract.signature.isRequire">
+    <div *ngIf="tuitionContract.signature.isRequire" class="mt-4">
 
       <!--E-SIGN SIGNATURE-->
       <ng-container *ngIf="tuitionContract.signature.type === SIGNATURE_TYPES.ESIGN">

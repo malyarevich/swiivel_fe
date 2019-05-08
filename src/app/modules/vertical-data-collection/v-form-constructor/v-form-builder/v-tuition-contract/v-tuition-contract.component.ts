@@ -17,13 +17,14 @@ export class VTuitionContractComponent implements OnInit {
   SIGNATURE_TYPES = SIGNATURE_TYPES;
   E_SIGNATURE_TYPES = E_SIGNATURE_TYPES;
 
-  isBold: boolean;
-  isItalic: boolean;
-
   constructor() {
   }
 
   ngOnInit() {
+  }
+
+  setCommand(name: string, showUi: boolean = false, value: string = null) {
+    document.execCommand(name, showUi, value);
   }
 
 }
