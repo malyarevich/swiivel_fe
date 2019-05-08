@@ -20,13 +20,6 @@ export interface TuitionContractFee {
   }
 }
 
-interface TuitionContractSignature {
-  isRequire: boolean;
-  type: string; //e|wet
-  eType: string; //external|system
-  isBothParents: boolean;
-}
-
 export interface TuitionContractSignature {
   isRequire: boolean;
   type: string;
