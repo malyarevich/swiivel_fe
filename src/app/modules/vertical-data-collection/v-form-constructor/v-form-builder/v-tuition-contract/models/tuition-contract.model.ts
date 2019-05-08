@@ -1,5 +1,9 @@
+import {TUITION_CONTRACT_SPLIT_TYPES} from "../../../../../../enums/tuition-contract-split-type";
+
 export interface TuitionContract {
-  splitBy: string; //student|fee
+  isActive: boolean,
+  showSideInfo: boolean,
+  splitBy: string;
   showFees: TuitionContractFee[];
   text: string;
   signature: TuitionContractSignature;
@@ -23,7 +27,9 @@ interface TuitionContractSignature {
 }
 
 export const tuitionContractDefault: TuitionContract = {
-  splitBy: 'student',
+  isActive: false,
+  showSideInfo: false,
+  splitBy: TUITION_CONTRACT_SPLIT_TYPES.STUDENT,
   showFees: [
     {name: 'dormitory', title: 'Bais Medrash Winter Dormitory Fee', isActive: true, discount: {isAllow: true, isActive: false}},
     {name: 'registration', title: 'Registration', isActive: true, discount: {isAllow: true, isActive: false}},

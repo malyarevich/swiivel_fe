@@ -426,16 +426,17 @@
           <div class="col-2">
             <label class="app-switch">
               <input type="checkbox"
-                     [ngModel]="sections.tuitionWorkspace"
-                     (ngModelChange)="sections.tuition = sections.tuitionWorkspace = $event">
+                     [ngModel]="tuitionContract.isActive"
+                     (ngModelChange)="tuitionContract.showSideInfo = tuitionContract.isActive = $event">
               <span class="app-slider app-round"></span>
             </label>
           </div>
           <div class="col">
-            <span class="font-weight-bold side-bar-toggle" (click)="sections.tuition=!sections.tuition">TUITION CONTRACT</span>
+            <span class="font-weight-bold side-bar-toggle"
+                  (click)="tuitionContract.showSideInfo=!tuitionContract.showSideInfo">TUITION CONTRACT</span>
           </div>
         </div>
-        <div *ngIf="sections.tuition" class="bg-white rounded mb-3">
+        <div *ngIf="tuitionContract.showSideInfo" class="bg-white rounded mb-3">
           <p class="mt-3 font-weight-bold">Table Structure</p>
           <div class="row no-gutters">
             <div class="col">
@@ -752,7 +753,7 @@
       <!--  end consent-->
 
       <!--  tuition-contract-->
-      <app-v-tuition-contract *ngIf="sections.tuitionWorkspace"
+      <app-v-tuition-contract *ngIf="tuitionContract.isActive"
                               [tuitionContract]="tuitionContract"></app-v-tuition-contract>
       <!--  end tuition-contract-->
 
@@ -766,7 +767,6 @@
         </app-v-form-payment>
       </div>
       <!--  end form-payment-->
-
     </div>
   </div>
 </div>

@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {TuitionContract} from "./models/tuition-contract.model";
+import {TUITION_CONTRACT_SPLIT_TYPES} from "../../../../../enums";
 
 @Component({
   selector: 'app-v-tuition-contract',
@@ -11,6 +12,8 @@ export class VTuitionContractComponent implements OnInit {
 
   sectionName: string = 'Tuition Contract';
   sectionWidth: string = "4 Columns";
+
+  TUITION_CONTRACT_SPLIT_TYPES = TUITION_CONTRACT_SPLIT_TYPES;
 
   isBold: boolean;
   isItalic: boolean;

@@ -61,10 +61,10 @@
   <div class="px-4 py-2">
     <p class="font-weight-bold">FEES CONTRACT</p>
     <div class="app-fb-tuition-table p-3">
-      <app-v-tuition-split-fee *ngIf="tuitionContract.splitBy === 'fee'"
+      <app-v-tuition-split-fee *ngIf="tuitionContract.splitBy === TUITION_CONTRACT_SPLIT_TYPES.FEE"
                                [tuitionContract]="tuitionContract">
       </app-v-tuition-split-fee>
-      <app-v-tuition-split-student *ngIf="tuitionContract.splitBy === 'student'"
+      <app-v-tuition-split-student *ngIf="tuitionContract.splitBy === TUITION_CONTRACT_SPLIT_TYPES.STUDENT"
                                    [tuitionContract]="tuitionContract">
       </app-v-tuition-split-student>
     </div>
