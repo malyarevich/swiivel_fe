@@ -22,8 +22,8 @@ interface TermsConditionsItemCheckbox {
 
 export interface TermsConditionsSignature {
   isRequire: boolean;
-  type: string; //e|wet
-  eType: string; //external|system
+  type: string;
+  eType: string;
   isBothParents: boolean;
   signed: TermsConditionsSigned;
 }

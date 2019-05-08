@@ -1,0 +1,72 @@
+@import '../../../../../styles/variables/colors';
+
+.app-checkbox-field {
+  display: inline-block;
+}
+
+.app-checkbox-field-label {
+  display: block;
+  position: relative;
+  padding: 0 0 0 20px;
+  margin: 0 0 20px;
+  cursor: pointer;
+  font-size: 12px;
+  user-select: none;
+}
+
+.app-checkbox-field-label input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.app-checkbox-checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 16px;
+  width: 16px;
+  background-color: #eee;
+  border: 1px solid $element-base-color;
+  border-radius: 4px;
+}
+
+.app-checkbox-field-label:hover input ~ .app-checkbox-checkmark {
+  background-color: #ccc;
+}
+
+.app-checkbox-field-label input:checked ~ .app-checkbox-checkmark {
+  background-color: $element-base-color;
+}
+
+.app-checkbox-checkmark:after {
+  content: '';
+  position: absolute;
+  display: none;
+}
+
+.app-checkbox-field-label input:checked ~ .app-checkbox-checkmark:after {
+  display: block;
+}
+
+.app-checkbox-field-label .app-checkbox-checkmark:after {
+  left: 5px;
+  top: 1px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.app-checkbox-field-has-error {
+  .app-checkbox-field-label {
+    color: #e65757;
+  }
+
+  .app-checkbox-checkmark {
+    border-color: #e65757;
+  }
+}

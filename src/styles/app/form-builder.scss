@@ -38,3 +38,50 @@
   height: 6px;
   width: 15px;
 }
+
+//Tuition Contract
+.app-fb-tuition-table {
+  border: 1px solid #D7D7D7;
+  border-radius: 5px;
+}
+
+.app-fb-tuition-info {
+  color: #797B88;
+  font-size: 0.8em;
+}
+
+.app-tuition-table-header {
+  background-color: #F2F2F2;
+}
+
+.app-tuition-table-header th {
+  border-top: none;
+}
+
+.app-tuition-table-header:last-child {
+  vertical-align: top !important;
+}
+
+.app-tuition-table-total {
+  background-color: #EBEEFF;
+}
+
+.app-tuition-table-total-2 {
+  background-color: rgba(60,164,118,0.08);
+}
+
+.app-th-align-reset {
+  vertical-align: unset;
+}
+
+.app-tuition-discount {
+  color: #797B88;
+  font-size: 0.8em;
+}
+//End Tuition Contract
+
+//Contenteditable div
+.app-editable-wrapper {
+  border: 1px solid #B6B6B6;
+  border-radius: 5px;
+}

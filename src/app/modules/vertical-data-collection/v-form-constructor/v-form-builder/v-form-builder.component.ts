@@ -227,7 +227,7 @@ export class VFormBuilderComponent implements OnInit {
           if (!isEmpty(form)) {
             this.formName = form.name;
             this.fields = form.fields || [];
-            this.tuitionContract = form.tuitionContract ? form.tuitionContract : tuitionContractDefault;
+            this.tuitionContract = form.tuitionContract || tuitionContractDefault;
             this.consentInfo = form.consentInfo || consentInfoDefault;
             this.termsConditions = form.termsConditions || termsConditionsDefault;
             this.eligible = form.eligible;

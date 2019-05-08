@@ -80,6 +80,17 @@
         </div>
       </div>
       <div
+        class="form-payer-account-primary"
+      >
+        <app-checkbox-field
+          label="Primary Payer Account"
+          id="primary-account"
+          formControlName="primary"
+          [isInvalid]="payerAccountForm.get('primary').invalid && payerAccountForm.get('primary').touched"
+        >
+        </app-checkbox-field>
+      </div>
+      <div
         class="form-payer-account-members"
       >
         <app-select-multi-search-field
@@ -121,5 +132,6 @@
         </button>
       </div>
     </form>
+    <pre><code>{{ payerAccountForm.value | json }}</code></pre>
   </div>
 </app-modal>
