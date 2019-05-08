@@ -1,4 +1,5 @@
 import {TUITION_CONTRACT_SPLIT_TYPES} from "../../../../../../enums/tuition-contract-split-type";
+import {E_SIGNATURE_TYPES, SIGNATURE_TYPES} from "../../../../../../enums";
 
 export interface TuitionContract {
   isActive: boolean,
@@ -26,6 +27,20 @@ interface TuitionContractSignature {
   isBothParents: boolean;
 }
 
+export interface TuitionContractSignature {
+  isRequire: boolean;
+  type: string;
+  eType: string;
+  isBothParents: boolean;
+  signed: TuitionContractSigned;
+}
+
+export interface TuitionContractSigned {
+  parents: boolean;
+  fathers: boolean;
+  mothers: boolean;
+}
+
 export const tuitionContractDefault: TuitionContract = {
   isActive: false,
   showSideInfo: false,
@@ -40,9 +55,10 @@ export const tuitionContractDefault: TuitionContract = {
   ],
   text: '',
   signature: {
-    isRequire: true,
-    type: 'e',
-    eType: 'external',
-    isBothParents: true,
+    isRequire: false,
+    type: SIGNATURE_TYPES.ESIGN,
+    eType: E_SIGNATURE_TYPES.SYSTEM,
+    isBothParents: false,
+    signed: {parents: false, fathers: false, mothers: false},
   }
 };
