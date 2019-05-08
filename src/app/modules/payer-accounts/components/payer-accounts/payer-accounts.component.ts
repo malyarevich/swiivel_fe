@@ -8,7 +8,7 @@ import { Payer } from '../../models/payer.model';
   styleUrls: ['./payer-accounts.component.scss']
 })
 export class PayerAccountsComponent implements OnInit {
-  showModal = falsegit;
+  showModal = false;
 
   public payers: Payer[] = [];
 
