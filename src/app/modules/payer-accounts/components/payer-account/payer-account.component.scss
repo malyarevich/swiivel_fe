@@ -1,0 +1,105 @@
+@import '../../../../../styles/variables/colors';
+
+.payer-account-page {
+  display: flex;
+  flex-wrap: wrap;
+
+  .payer-account-page-info {
+    background: #fff;
+    flex: 0 0 25%;
+    min-height: 100vh;
+    padding: 20px 15px;
+  }
+
+  .payer-account-page-info-title-block {
+    display: flex;
+    align-items: center;
+  }
+
+  .payer-account-page-info-title__name {
+    font: 17px 'NunitoSans-ExtraBold';
+  }
+
+  .payer-account-page-info-title__edit {
+    color: #909090;
+    flex: 1;
+    text-align: right;
+  }
+
+  .payer-account-page-info-title__edit-icon {
+    cursor: pointer;
+  }
+
+  .payer-account-page-info-title__member-status {
+    color: #909090;
+  }
+
+  .payer-account-page-info__fees-amount-table {
+    width: 100%;
+    text-align: center;
+    border:none;
+    border-collapse: collapse;
+
+    td {
+      border-left: 1px solid #909090;
+      border-right: 1px solid #909090;
+
+      &:first-child {
+        border-left: none;
+      }
+
+      &:last-child {
+        border-right: none;
+      }
+    }
+  }
+
+  .payer-account-page-info__fees-amount-table-number {
+    font: 14px 'NunitoSans-ExtraBold';
+  }
+
+  .payer-account-page-info__fees-amount-table-outstanding {
+    color: $red-color;
+  }
+
+  .payer-account-page-info-title {
+    text-transform: uppercase;
+    font: 12px 'NunitoSans-Bold';
+    margin: 16px 0;
+  }
+
+  .payer-account-page-info__members-member,
+  .payer-account-page-info__primary-payment-method {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .payer-account-page-info__members-member-status,
+  .payer-account-page-info__primary-payment-method-title {
+    color: #909090;
+    margin: 5px 0;
+  }
+
+  .payer-account-page-info__students {
+    margin: 0 -5px;
+  }
+
+
+
+
+
+
+
+
+
+
+
+  .payer-account-page-data {
+    flex: 0 0 75%;
+  }
+
+  hr {
+    border-color: #909090;
+  }
+}

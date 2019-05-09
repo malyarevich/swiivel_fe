@@ -1,22 +1,138 @@
-<div class="payer-account">
-  <div class="container-fluid">
-    <h4 class="text-left">
-      <b>Payer</b>
-    </h4>
-    <div *ngIf="payer">
-      <p>
-        Name: {{payer.name}}
-      </p>
-      <!--<p>-->
-        <!--Members: {{payer.members}}-->
-      <!--</p>-->
-      <!--<p>-->
-        <!--Fees: {{payer.fees}}-->
-      <!--</p>-->
-      <!--<p>-->
-        <!--Created: {{payer.created_at}}-->
-      <!--</p>-->
+<div class="payer-account-page">
+  <div
+    class="payer-account-page-info"
+    *ngIf="payer"
+  >
+    <div class="payer-account-page-info-title-block">
+      <div
+        class="payer-account-page-info-title__name"
+      >
+        {{payer.name}}
+      </div>
+      <app-tag
+        class="payer-account-page-info-title__tags"
+      >
+        Joint
+      </app-tag>
+      <div class="payer-account-page-info-title__edit">
+        <span class="payer-account-page-info-title__edit-icon">
+          <i class="fas fa-pen"></i>
+       </span>
+      </div>
+    </div>
+    <div>
+      <span class="payer-account-page-info-title__member-status">
+        Parents
+      </span>
+      <span>
+        100%
+      </span>
+      <span>
+        All Fees
+      </span>
+    </div>
+    <hr>
+    <table class="payer-account-page-info__fees-amount-table">
+      <tbody>
+        <tr>
+          <td>
+            <div class="payer-account-page-info__fees-amount-table-number">
+              {{payer.fees.length}}
+            </div>
+            <div>
+              Fees
+            </div>
+          </td>
+          <td>
+            <div class="payer-account-page-info__fees-amount-table-number">
+              {{ payer.paid | currency:'USD':true:'.0' }}
+            </div>
+            <div>
+              Total amount
+            </div>
+          </td>
+
+          <td>
+            <div class="payer-account-page-info__fees-amount-table-number payer-account-page-info__fees-amount-table-outstanding">
+              {{ payer.outstanding | currency:'USD':true:'.0' }}
+            </div>
+            <div>
+              Outstanding
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <hr>
+    <div class="payer-account-page-info-title">
+      Members
+    </div>
+    <div
+      class="payer-account-page-info__members-member"
+      *ngFor="let member of payer.members"
+    >
+      <div
+        class="payer-account-page-info__members-member-status"
+      >
+        Mother:
+      </div>
+      <div>
+        <app-person-show
+          [name]="member.full_name"
+          [avatar]="member.avatar"
+        >
+        </app-person-show>
+      </div>
+    </div>
+    <hr>
+    <div class="payer-account-page-info-title">
+      Students
+    </div>
+    <div class="payer-account-page-info__students">
+      <app-person-show
+        *ngFor="let recipient of payer.recipients"
+        [name]="recipient.full_name"
+        [avatar]="recipient.avatar"
+      >
+      </app-person-show>
+    </div>
+    <hr>
+    <div class="payer-account-page-info-title">
+      Primary Payment Method
+    </div>
+    <div
+      class="payer-account-page-info__primary-payment-method"
+    >
+      <div
+        class="payer-account-page-info__primary-payment-method-title"
+      >
+        Credit card:
+      </div>
+      <div>
+        **5674
+      </div>
+    </div>
+    <div
+      class="payer-account-page-info__primary-payment-method"
+    >
+      <div
+        class="payer-account-page-info__primary-payment-method-title"
+      >
+        Cardholder:
+      </div>
+      <div>
+        Rachel Fishman
+      </div>
+    </div>
+    <hr>
+    <div class="payer-account-page-info-title">
+      Communication
+    </div>
+    <div>
+      3 amount of payment attempt communications in the past 30 days <span style="color: #4350A2">more</span>
     </div>
   </div>
-
+  <div class="payer-account-page-data">
+    test
+  </div>
 </div>

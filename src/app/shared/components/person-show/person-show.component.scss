@@ -1,0 +1,21 @@
+.app-person-show {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px;
+  margin: 0;
+
+  .app-person-show-avatar {
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    position: relative;
+    overflow: hidden;
+    background: no-repeat center center #9c9d9d;
+    background-size: cover;
+    margin: 0 6px 0 0;
+  }
+
+  .app-person-show-name {
+    font: 12px 'NunitoSans-Bold';
+  }
+}

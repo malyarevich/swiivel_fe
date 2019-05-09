@@ -1,0 +1,9 @@
+@import '../../../../styles/variables/colors';
+
+.app-tag {
+  background: #e4e7ff;
+  color: $element-base-color;
+  padding: 2px 8px;
+  border-radius: 10px;
+  margin: 0 10px;
+}
