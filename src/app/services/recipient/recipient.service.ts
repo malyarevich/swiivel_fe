@@ -3,11 +3,12 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-// TODO: Заменмить тестовый сервер на реальный
-const API_URL = 'http://fin.red.dev.codeblue.ventures/api/v1';
+import { environment } from '../../../environments/environment';
+
+const API_URL = environment.apiFinanceCore;
 const headers = new HttpHeaders({
   'Content-Type':  'application/json',
-  'Authorization': 'Bearer 123'
+  Authorization: environment.apiFinanceToken,
 });
 
 @Injectable()
