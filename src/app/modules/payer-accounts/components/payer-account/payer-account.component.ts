@@ -22,6 +22,7 @@ export class PayerAccountComponent implements OnInit {
     this.payersService.getPayer(this.route.snapshot.params.id)
       .subscribe((res) => {
         this.payer = res.data;
+        console.log(res.data);
       });
   }
 }
