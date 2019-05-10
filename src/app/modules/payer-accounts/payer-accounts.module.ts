@@ -11,6 +11,7 @@ import { PayerAccountComponent } from './components/payer-account/payer-account.
 import { PayerAccountsComponent } from './components/payer-accounts/payer-accounts.component';
 
 import { PayersService } from './services/payers.service';
+import { PaymentMethodsService } from '../../services/payment-methods/payment-methods.service';
 
 const routes: Routes = [
   {
@@ -44,6 +45,7 @@ const routes: Routes = [
   ],
   providers: [
     PayersService,
+    PaymentMethodsService,
   ],
   entryComponents: []
 })

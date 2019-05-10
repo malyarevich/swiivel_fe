@@ -4,6 +4,7 @@
   display: flex;
   flex-wrap: wrap;
 
+  // Left block
   .payer-account-page-info {
     background: #fff;
     flex: 0 0 25%;
@@ -21,7 +22,7 @@
   }
 
   .payer-account-page-info-title__edit {
-    color: #909090;
+    color: $gray-color;
     flex: 1;
     text-align: right;
   }
@@ -30,8 +31,8 @@
     cursor: pointer;
   }
 
-  .payer-account-page-info-title__member-status {
-    color: #909090;
+  .payer-account-page-info-title__member-role {
+    color: $gray-color;
   }
 
   .payer-account-page-info__fees-amount-table {
@@ -41,8 +42,8 @@
     border-collapse: collapse;
 
     td {
-      border-left: 1px solid #909090;
-      border-right: 1px solid #909090;
+      border-left: 1px solid $gray-color;
+      border-right: 1px solid $gray-color;
 
       &:first-child {
         border-left: none;
@@ -75,9 +76,9 @@
     justify-content: space-between;
   }
 
-  .payer-account-page-info__members-member-status,
+  .payer-account-page-info__members-member-role,
   .payer-account-page-info__primary-payment-method-title {
-    color: #909090;
+    color: $gray-color;
     margin: 5px 0;
   }
 
@@ -85,21 +86,27 @@
     margin: 0 -5px;
   }
 
-
-
-
-
-
-
-
-
-
-
+  // Right block
   .payer-account-page-data {
     flex: 0 0 75%;
+    padding: 15px 15px 20px;
+  }
+
+  .payer-account-page-data-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .payer-account-page-data-top__tabs-general {
+    margin: 0 40px 0 0;
+  }
+
+  .payer-account-page-data-top__btn-add-fee {
+    margin: 0 10px;
   }
 
   hr {
-    border-color: #909090;
+    border-color: $gray-color;
   }
 }

@@ -1,29 +1,30 @@
-$element-base-color:  #4350A2;
-$element-warning-color:  #FFB915;
-$header-logo-color: #F8BC45;
+$element-base-color: #4350a2;
+$element-second-color: #9fa6cb;
+$element-warning-color: #ffb915;
+$header-logo-color: #f8bc45;
 $header-logo-hover-color: #dda538;
 
-$background-color: #F3F2F3;
-$background-color-content: #A1A1A1;
-$white: #FFFFFF;
+$background-color: #f3f2f3;
+$background-color-content: #a1a1a1;
+$white: #fff;
 
-$border-color: #D5DFEC;
+$border-color: #d5dfec;
 $title-color: #626567;
 $sub-title-color: #263853;
 
 $header-background-color: $white;
-$subheader-background-color: #A1A1A1;
+$subheader-background-color: $background-color-content;
 $subheader-hover-background-color: #626567;
 
 $header-border-color: #465873;
 
-$label-color: #7B8AA1;
-$invalid-color: #E94F47;
+$label-color: #7b8aa1;
+$invalid-color: #e94f47;
 $red-color: #fc6467;
 
-$modal-header-background-color: #EEF1F6;
-$inactive-input-color: #D0DBEA;
-$filter-color: #C0CAD8;
+$modal-header-background-color: #eef1f6;
+$inactive-input-color: #d0dbea;
+$filter-color: #c0cad8;
 
-$icon-grey-color:#9C9D9D;
-
+$icon-grey-color: #9c9d9d;
+$gray-color: #909090;

@@ -21,7 +21,7 @@
       </div>
     </div>
     <div>
-      <span class="payer-account-page-info-title__member-status">
+      <span class="payer-account-page-info-title__member-role">
         Parents
       </span>
       <span>
@@ -72,7 +72,7 @@
       *ngFor="let member of payer.members"
     >
       <div
-        class="payer-account-page-info__members-member-status"
+        class="payer-account-page-info__members-member-ro;e"
       >
         Mother:
       </div>
@@ -97,31 +97,33 @@
       </app-person-show>
     </div>
     <hr>
-    <div class="payer-account-page-info-title">
-      Primary Payment Method
-    </div>
-    <div
-      class="payer-account-page-info__primary-payment-method"
-    >
+    <div *ngIf="paymentMethods.length">
+      <div class="payer-account-page-info-title">
+        Primary Payment Method
+      </div>
       <div
-        class="payer-account-page-info__primary-payment-method-title"
+        class="payer-account-page-info__primary-payment-method"
       >
-        Credit card:
+        <div
+          class="payer-account-page-info__primary-payment-method-title"
+        >
+          Credit card:
+        </div>
+        <div>
+          **5674
+        </div>
       </div>
-      <div>
-        **5674
-      </div>
-    </div>
-    <div
-      class="payer-account-page-info__primary-payment-method"
-    >
       <div
-        class="payer-account-page-info__primary-payment-method-title"
+        class="payer-account-page-info__primary-payment-method"
       >
-        Cardholder:
-      </div>
-      <div>
-        Rachel Fishman
+        <div
+          class="payer-account-page-info__primary-payment-method-title"
+        >
+          Cardholder:
+        </div>
+        <div>
+          {{paymentMethods[0].name}}
+        </div>
       </div>
     </div>
     <hr>
@@ -129,10 +131,40 @@
       Communication
     </div>
     <div>
-      3 amount of payment attempt communications in the past 30 days <span style="color: #4350A2">more</span>
+      3 amount of payment attempt communications in the past 30 days <span style="color: #4350A2; cursor: pointer;">more</span>
     </div>
   </div>
+
   <div class="payer-account-page-data">
-    test
+    <div class="payer-account-page-data-top">
+      <div>
+        <button
+          class="btn app-btn-clear payer-account-page-data-top__tabs-general"
+          [ngClass]="{'activated': activeTab === 'general'}"
+        >
+          General
+        </button>
+        <button
+          class="btn app-btn-clear"
+          [ngClass]="{'activated': activeTab === 'wallet'}"
+        >
+          Wallet
+        </button>
+      </div>
+      <div>
+        <button
+          class="btn app-btn-outline-primary form-payer-account-cancel payer-account-page-data-top__btn-add-fee"
+        >
+          Add fee
+        </button>
+
+        <button
+          type="submit"
+          class="btn app-btn-primary"
+        >
+          Make payment
+        </button>
+      </div>
+    </div>
   </div>
 </div>
