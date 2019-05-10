@@ -89,13 +89,19 @@
   // Right block
   .payer-account-page-data {
     flex: 0 0 75%;
-    padding: 15px 15px 20px;
+    padding: 15px;
+  }
+
+  .payer-account-page-data-title {
+    text-transform: uppercase;
+    font: 12px 'NunitoSans-Bold';
   }
 
   .payer-account-page-data-top {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 0 0 20px;
   }
 
   .payer-account-page-data-top__tabs-general {
@@ -105,6 +111,31 @@
   .payer-account-page-data-top__btn-add-fee {
     margin: 0 10px;
   }
+
+  // Fees
+  .payer-account-page-data-tab-general__fees {
+    background: #fff;
+    border-radius: 3px;
+    padding: 15px;
+  }
+
+  .payer-account-page-data-tab-general__fees-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .payer-account-page-data-tab-general__fees-top--right-block {
+    display: flex;
+    align-items: center;
+  }
+
+  .payer-account-page-data-tab-general__fees-top--right-block-search {
+    margin: 0 10px;
+    width: 250px;
+  }
+
+
 
   hr {
     border-color: $gray-color;

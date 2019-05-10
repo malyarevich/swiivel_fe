@@ -34,4 +34,8 @@ export class PayerAccountComponent implements OnInit {
         this.paymentMethods = res.data;
       });
   }
+
+  onTab(tabValue) {
+    this.activeTab = tabValue;
+  }
 }

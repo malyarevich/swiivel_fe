@@ -1,0 +1,10 @@
+<button
+  class="btn app-btn-primary app-search-filter-btn"
+  (click)="onClick()"
+>
+  <img
+    src="/assets/images/icons/icon-filter.svg"
+    class="app-search-filter-btn-img"
+    [ngClass]="{'app-search-filter-btn__direction-asc': direction === 'asc', 'app-search-filter-btn__direction-desc': direction === 'desc'}"
+  />
+</button>

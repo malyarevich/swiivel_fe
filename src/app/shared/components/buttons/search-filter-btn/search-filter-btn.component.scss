@@ -1,0 +1,17 @@
+@import '../../../../../styles/variables/colors';
+
+.app-search-filter-btn {
+  padding: 5px 6px;
+
+  .app-search-filter-btn-img {
+    width: 16px;
+  }
+
+  .app-search-filter-btn__direction-asc {
+    transform: rotate(0);
+  }
+
+  .app-search-filter-btn__direction-desc {
+    transform: rotate(180deg);
+  }
+}

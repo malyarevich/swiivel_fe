@@ -1,0 +1,18 @@
+<div
+  class="app-search-field"
+  [ngClass]="{'app-search-field-has-error': isInvalid, 'app-search-field-gray': type === 'gray'}"
+>
+  <input
+    class="form-control"
+    type="search"
+    [ngClass]="{'app-search-field__value': value}"
+    [placeholder]="placeholder"
+    [id]="id"
+    [value]="value"
+    [disabled]="disabled"
+    [(ngModel)]="value"
+    (input)="onChange($event.target.value)"
+    (blur)="onTouched()"
+  />
+  <div class="app-search-field-icon"></div>
+</div>
