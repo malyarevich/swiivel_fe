@@ -42,6 +42,9 @@ export class VFormBuilderComponent implements OnInit {
   fields: Field[] = [];
   formName: string = '';
   attachments;
+
+  newSideBar;
+
   customFields: Field[];
   existingFields: Field[];
   sideBarFields: Field[];
@@ -162,6 +165,7 @@ export class VFormBuilderComponent implements OnInit {
 
     this.loadBasicFields();
     this.loadSideBar();
+    this.loadSideBarNew();
     this.loadMappedFields();
 
 
@@ -215,6 +219,14 @@ export class VFormBuilderComponent implements OnInit {
       },
       (error) => console.log(error, 'error'),
       () => this.formInit()
+    );
+  }
+
+  loadSideBarNew() {
+    this.fieldsService.getExistingSideBarList2().subscribe(data => {
+            this.newSideBar = data
+      },
+      (error) => console.log(error, 'error')
     );
   }
 

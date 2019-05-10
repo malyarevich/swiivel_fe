@@ -22,6 +22,7 @@ export class VSideBarGroupComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    this.group.exist = false;
   }
 
   onBeingChange(event){

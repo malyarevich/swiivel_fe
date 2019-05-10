@@ -15,7 +15,9 @@ export class VSideBarFieldComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    this.field.exist=false;
   }
+
 
 
   onBeingChange(event){

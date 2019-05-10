@@ -11,5 +11,7 @@ export interface Field {
   isValid?: boolean;
   isValidName?: boolean;
   exist?:boolean;
-  fields?: Field[]
+  fields?: Field[],
+  isActive?: boolean,
+  prefix?: string
 }
