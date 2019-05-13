@@ -5,30 +5,49 @@
   color: $element-base-color;
   border: 1px solid $element-base-color;
   border-radius: 3px;
+
   &:hover, &:active {
     color: #fff;
-    background-color: $element-base-color;
+    background: $element-base-color;
     border: 1px solid $element-base-color;
   }
 }
 
 .app-btn-primary {
   font-weight: bold;
-  background-color: $element-base-color;
+  background: $element-base-color;
   color: #fff;
   border-radius: 3px;
+
   &:hover, &:focus, &:active {
+    background: $element-second-color;
     color: #fff;
   }
 }
 
 .app-btn-warning {
   font-weight: bold;
-  background-color: $element-warning-color;
+  background: $element-warning-color;
   color: #fff;
   border-radius: 3px;
+
   &:hover, &:focus, &:active {
     color: #fff;
   }
 }
 
+.app-btn-clear {
+  color: $gray-color;
+  font: 14px  'NunitoSans-Bold';
+  border: none;
+  background: transparent;
+  padding: 4px;
+
+  &:hover, &:focus, &:active {
+    color: $element-base-color;
+  }
+
+  &.activated {
+    color: $element-base-color;
+  }
+}

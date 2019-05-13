@@ -6,7 +6,6 @@ import { map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 
 const API_URL = environment.apiFinanceCore;
-
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type':  'application/json',
@@ -15,11 +14,11 @@ const httpOptions = {
 };
 
 @Injectable()
-export class PersonService {
+export class PaymentMethodsService {
   constructor(private http: HttpClient) { }
 
-  getAllPersons(): Observable<any> {
-    return this.http.get(`${API_URL}/persons`, httpOptions)
+  getPaymentMethodsForPayerAccount(id: number): Observable<any> {
+    return this.http.get(`${API_URL}/payment-methods/${id}`, httpOptions)
       .pipe(
         map((response) => {
           return response;

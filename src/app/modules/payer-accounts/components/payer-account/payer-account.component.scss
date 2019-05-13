@@ -1,0 +1,143 @@
+@import '../../../../../styles/variables/colors';
+
+.payer-account-page {
+  display: flex;
+  flex-wrap: wrap;
+
+  // Left block
+  .payer-account-page-info {
+    background: #fff;
+    flex: 0 0 25%;
+    min-height: 100vh;
+    padding: 20px 15px;
+  }
+
+  .payer-account-page-info-title-block {
+    display: flex;
+    align-items: center;
+  }
+
+  .payer-account-page-info-title__name {
+    font: 17px 'NunitoSans-ExtraBold';
+  }
+
+  .payer-account-page-info-title__edit {
+    color: $gray-color;
+    flex: 1;
+    text-align: right;
+  }
+
+  .payer-account-page-info-title__edit-icon {
+    cursor: pointer;
+  }
+
+  .payer-account-page-info-title__member-role {
+    color: $gray-color;
+  }
+
+  .payer-account-page-info__fees-amount-table {
+    width: 100%;
+    text-align: center;
+    border:none;
+    border-collapse: collapse;
+
+    td {
+      border-left: 1px solid $gray-color;
+      border-right: 1px solid $gray-color;
+
+      &:first-child {
+        border-left: none;
+      }
+
+      &:last-child {
+        border-right: none;
+      }
+    }
+  }
+
+  .payer-account-page-info__fees-amount-table-number {
+    font: 14px 'NunitoSans-ExtraBold';
+  }
+
+  .payer-account-page-info__fees-amount-table-outstanding {
+    color: $red-color;
+  }
+
+  .payer-account-page-info-title {
+    text-transform: uppercase;
+    font: 12px 'NunitoSans-Bold';
+    margin: 16px 0;
+  }
+
+  .payer-account-page-info__members-member,
+  .payer-account-page-info__primary-payment-method {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .payer-account-page-info__members-member-role,
+  .payer-account-page-info__primary-payment-method-title {
+    color: $gray-color;
+    margin: 5px 0;
+  }
+
+  .payer-account-page-info__students {
+    margin: 0 -5px;
+  }
+
+  // Right block
+  .payer-account-page-data {
+    flex: 0 0 75%;
+    padding: 15px;
+  }
+
+  .payer-account-page-data-title {
+    text-transform: uppercase;
+    font: 12px 'NunitoSans-Bold';
+  }
+
+  .payer-account-page-data-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 0 20px;
+  }
+
+  .payer-account-page-data-top__tabs-general {
+    margin: 0 40px 0 0;
+  }
+
+  .payer-account-page-data-top__btn-add-fee {
+    margin: 0 10px;
+  }
+
+  // Fees
+  .payer-account-page-data-tab-general__fees {
+    background: #fff;
+    border-radius: 3px;
+    padding: 15px;
+  }
+
+  .payer-account-page-data-tab-general__fees-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .payer-account-page-data-tab-general__fees-top--right-block {
+    display: flex;
+    align-items: center;
+  }
+
+  .payer-account-page-data-tab-general__fees-top--right-block-search {
+    margin: 0 10px;
+    width: 250px;
+  }
+
+
+
+  hr {
+    border-color: $gray-color;
+  }
+}
