@@ -1,0 +1,83 @@
+<div class="payer-account-fees-table">
+  <div class="payer-account-fees-table__top">
+    <div class="payer-account-fees-table-title">
+      Fees
+    </div>
+    <div class="payer-account-fees-table__top--right-block">
+      <app-search-field
+        class="payer-account-fees-table__top--right-block-search"
+        type="gray"
+      ></app-search-field>
+      <app-search-filter-btn></app-search-filter-btn>
+    </div>
+  </div>
+  <table class="payer-account-fees-table__table">
+    <thead class="payer-account-fees-table__table-thead">
+      <tr>
+        <th *ngFor="let col of tableCols">
+          {{col.title}}&nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-sort"></i>
+          <app-search-field
+            placeholder=""
+          >
+          </app-search-field>
+        </th>
+        <th>
+        </th>
+      </tr>
+    </thead>
+    <tbody class="payer-account-fees-table__table-tbody">
+      <tr>
+        <td>
+          Tuition
+        </td>
+        <td class="payer-account-fees-table__table-tbody-regular-front">
+          2018-2019
+        </td>
+        <td>
+          <app-person-show
+            [name]="'David Fishman'"
+            [avatar]="null"
+          >
+          </app-person-show>
+        </td>
+        <td class="payer-account-fees-table__table-tbody-price">
+          $1,970
+        </td>
+        <td class="payer-account-fees-table__table-tbody-price">
+          $8,230
+        </td>
+        <td class="payer-account-fees-table__table-tbody-price payer-account-fees-table__table-tbody-price-total">
+          $10,200
+        </td>
+        <td>
+          <div class="payer-account-fees-table__table-tbody-actions">
+            <button class="btn app-btn-sml">
+              <span class="app-form-table-icon">
+                <i class="fas fa-user-plus"></i>
+              </span>
+            </button>
+            <button class="btn app-btn-sml">
+              <span class="app-form-table-icon">
+                <i class="fas fa-pencil-alt"></i>
+              </span>
+            </button>
+            <button class="btn app-btn-sml">
+              <span class="app-form-table-icon">
+                <i class="fas fa-trash"></i>
+              </span>
+            </button>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="5" class="payer-account-fees-table__table-tbody-total">
+          Total
+        </td>
+        <td class="payer-account-fees-table__table-tbody-price payer-account-fees-table__table-tbody-price-total">
+          $10,200
+        </td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

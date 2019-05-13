@@ -5,8 +5,8 @@
   margin: 0;
 
   .app-person-show-avatar {
-    width: 13px;
-    height: 13px;
+    min-width: 13px;
+    min-height: 13px;
     border-radius: 50%;
     position: relative;
     overflow: hidden;
