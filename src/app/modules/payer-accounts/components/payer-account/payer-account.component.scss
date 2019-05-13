@@ -92,11 +92,6 @@
     padding: 15px;
   }
 
-  .payer-account-page-data-title {
-    text-transform: uppercase;
-    font: 12px 'NunitoSans-Bold';
-  }
-
   .payer-account-page-data-top {
     display: flex;
     align-items: center;
@@ -118,24 +113,6 @@
     border-radius: 3px;
     padding: 15px;
   }
-
-  .payer-account-page-data-tab-general__fees-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .payer-account-page-data-tab-general__fees-top--right-block {
-    display: flex;
-    align-items: center;
-  }
-
-  .payer-account-page-data-tab-general__fees-top--right-block-search {
-    margin: 0 10px;
-    width: 250px;
-  }
-
-
 
   hr {
     border-color: $gray-color;

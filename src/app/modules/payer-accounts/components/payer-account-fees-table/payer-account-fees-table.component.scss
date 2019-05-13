@@ -1,0 +1,109 @@
+.payer-account-fees-table {
+  .payer-account-fees-table-title {
+    text-transform: uppercase;
+    font: 12px 'NunitoSans-Bold';
+  }
+
+  .payer-account-fees-table__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .payer-account-fees-table__top--right-block {
+    display: flex;
+    align-items: center;
+  }
+
+  .payer-account-fees-table__top--right-block-search {
+    margin: 0 10px;
+    width: 250px;
+  }
+
+  .payer-account-fees-table__table {
+    width: 100%;
+    color: #151515;
+    margin: 15px 0 0;
+    border-collapse: collapse;
+  }
+
+  .payer-account-fees-table__table-thead {
+    background: #f3f3f3;
+
+    tr {
+      border-bottom: 1px solid #e7e7e7;
+
+      th {
+        font-size: 9px;
+        padding: 10px 5px 10px;
+        vertical-align: bottom;
+
+        &:first-child {
+          padding-left: 15px;
+        }
+        &:last-child {
+          padding-right: 15px;
+        }
+
+        i {
+          color: #b6b6b6;
+        }
+      }
+
+    }
+  }
+
+  .payer-account-fees-table__table-tbody {
+    background: #fafafa;
+
+    tr {
+      border-bottom: 1px solid #e7e7e7;
+
+      td {
+        font: 12px 'NunitoSans-Bold';
+        padding: 15px 5px 10px;
+        vertical-align: middle;
+
+        &:first-child {
+          padding-left: 15px;
+        }
+        &:last-child {
+          padding-right: 15px;
+        }
+
+        i {
+          color: #b6b6b6;
+        }
+      }
+
+      .payer-account-fees-table__table-tbody-actions {
+        display: flex;
+      }
+
+      .payer-account-fees-table__table-tbody-regular-front {
+        font-family: 'NunitoSans-Regular';
+      }
+
+      .payer-account-fees-table__table-tbody-price {
+        text-align: right;
+      }
+
+      .payer-account-fees-table__table-tbody-price-total {
+        font-size: 14px;
+      }
+
+      .payer-account-fees-table__table-tbody-total {
+        color: #909090;
+      }
+
+      &:last-child {
+        background: #fff;
+        border: none;
+
+        td {
+          padding-bottom: 0;
+        }
+      }
+    }
+  }
+}
