@@ -1,4 +1,11 @@
+<app-family-page-header [titleHeader]="'FAMILIES LIST'"></app-family-page-header>
+
 <div class="container">
+  <div class="row mt-4">
+    <div class="col-12 text-right">
+      <button class="btn app-btn-primary" routerLink="profile">Create New</button>
+    </div>
+  </div>
   <div class="row mt-5">
     <div class="col-12">
       <table class="table table-striped">
@@ -9,6 +16,7 @@
           <th scope="col">Name</th>
           <th scope="col">Gender</th>
           <th scope="col">Relation</th>
+          <th></th>
         </tr>
         </thead>
         <tbody>
@@ -18,6 +26,9 @@
           <td>{{ item.person.first_name }}</td>
           <td>{{ item.person.gender }}</td>
           <td>{{ item.person_role }}</td>
+          <th>
+            <button class="btn app-btn-primary px-2 py-0"  [routerLink]="'profile/'+ item.family_id">Edit</button>
+          </th>
         </tr>
         </tbody>
       </table>

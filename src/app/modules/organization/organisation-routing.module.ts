@@ -3,7 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {LayoutComponent} from './components/layout';
 import {routes as personRoutes} from './modules/person';
 import {routes as dashboardRoutes} from './modules/dashboard';
-import {FamilyPageComponent} from "./components/family-page/family-page.component";
+import {routes as familyRoutes} from '../family';
 
 export const routes: Routes = [
   {
@@ -15,10 +15,6 @@ export const routes: Routes = [
     path: 'persons',
     component: LayoutComponent,
     children: personRoutes,
-  },
-  {
-    path: 'families',
-    component: FamilyPageComponent,
   },
 
   // Depreciated
@@ -62,7 +58,17 @@ export const routes: Routes = [
         loadChildren: '../online-form/online-form.module#OnlineFormModule',
       }
     ],
-  }
+  },
+  {
+    path: 'family',
+    component: LayoutComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: '../family/family.module#FamilyModule',
+      }
+    ],
+  },
 ];
 
 @NgModule({
