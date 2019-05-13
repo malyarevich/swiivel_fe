@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {Field} from '../../../../model/field.model';
 import { range } from 'lodash'
 @Component({
@@ -6,7 +6,8 @@ import { range } from 'lodash'
   templateUrl: './v-field-container.component.html',
   styleUrls: ['./v-field-container.component.scss'],
 })
-export class VFieldContainerComponent implements OnInit{
+export class VFieldContainerComponent implements OnInit, OnDestroy{
+
 
   @Input() inputField: Field;
   @Input() customFields: Field[];
@@ -47,7 +48,12 @@ export class VFieldContainerComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    this.inputField.exist = true;
     //console.log(this.inputField.hasOwnProperty('mapped'));
   }
 
+
+  ngOnDestroy(): void {
+    this.inputField.exist = false;
+  }
 }

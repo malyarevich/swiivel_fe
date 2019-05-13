@@ -1,3 +1,7 @@
 .crump{
   cursor: pointer;
 }
+.dragable-i{
+  color: #9C9D9D;
+  cursor: pointer;
+}

@@ -42,7 +42,7 @@ export class VFormBuilderComponent implements OnInit {
   fields: Field[] = [];
   formName: string = '';
   attachments;
-
+  form: Form;
   newSideBar;
 
   customFields: Field[];
@@ -237,8 +237,9 @@ export class VFormBuilderComponent implements OnInit {
       this.formService.getOneForm(this.formId).subscribe(
         (form: Form) => {
           if (!isEmpty(form)) {
+            this.form  = form;
             this.formName = form.name;
-            this.fields = form.fields || [];
+            this.fields =this.form.fields = form.fields || [];
             this.tuitionContract = form.tuitionContract || tuitionContractDefault;
             this.consentInfo = form.consentInfo || consentInfoDefault;
             this.termsConditions = form.termsConditions || termsConditionsDefault;
@@ -272,10 +273,11 @@ export class VFormBuilderComponent implements OnInit {
   }
 
   saveForm() {
-    if (this.validCheckFields()) {
+    // if (this.validCheckFields()) {
       const form: Form = {
         _id: this.formId,
-        fields: this.fields,
+        fields: this.form.fields,
+        // fields: this.fields,
         documents: this.documents,
         forms: this.formsPDF,
         name: this.formName,
@@ -287,7 +289,7 @@ export class VFormBuilderComponent implements OnInit {
         step: 1
       };
       this.formService.sendForm(form).subscribe(res => this.goBack());
-    }
+    // }
   }
 
   drop(event: CdkDragDrop<Field[]>) {

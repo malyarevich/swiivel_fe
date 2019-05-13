@@ -4,7 +4,7 @@
   <div class="col-1 pb-2">
     <label class="app-checkbox-container">
       <input
-        type="checkbox" >
+        type="checkbox" [ngModel]="section.exist" (ngModelChange)="onBeingChange($event)">
       <span class="app-checkbox-checkmark"></span>
     </label>
   </div>
@@ -23,12 +23,16 @@
   <app-v-side-bar-group
     *ngIf="field.type==113"
     [group]="field"
+    [form]="form"
+    [section]="section"
   >
 
   </app-v-side-bar-group>
   <app-v-side-bar-field
     *ngIf="field.type!=113"
     [field]="field"
+    [form]="form"
+    [section]="section"
     [style]="field.mapped==''"
   >
   </app-v-side-bar-field>

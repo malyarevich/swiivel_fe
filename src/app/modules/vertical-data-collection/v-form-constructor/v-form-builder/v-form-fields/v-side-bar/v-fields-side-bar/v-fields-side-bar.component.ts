@@ -1,6 +1,7 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {SideBarService} from "../side-bar.service";
 import { isEmpty } from 'lodash';
+import {Form} from "../../../../../model/form.model";
 @Component({
   selector: 'app-v-fields-side-bar',
   templateUrl: './v-fields-side-bar.component.html',
@@ -10,6 +11,7 @@ export class VFieldsSideBarComponent implements OnInit, OnDestroy {
 
 
   @Input() sideBar;
+  @Input() form: Form;
   isTree: boolean = true;
   sectionDetailed;
   searchText: string;

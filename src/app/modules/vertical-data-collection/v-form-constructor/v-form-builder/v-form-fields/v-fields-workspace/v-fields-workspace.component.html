@@ -1,0 +1,26 @@
+<!--<div>-->
+<!--&lt;!&ndash;  cdkDropList&ndash;&gt;-->
+<!--&lt;!&ndash;  id="workPlaceList"&ndash;&gt;-->
+<!--&lt;!&ndash;  [cdkDropListData]="fields"&ndash;&gt;-->
+<!--&lt;!&ndash;  [cdkDropListConnectedTo]="['ExistingFieldsList', 'CustomFieldsList', '6372c882-3d14-486f-9c1f-52ae8ab928ef']"&ndash;&gt;-->
+<!--&lt;!&ndash;  (cdkDropListDropped)="drop($event)">&ndash;&gt;-->
+<!--  <ul class="list-group" >-->
+<!--    <li class="list-group-item mb-3 py-0" *ngFor="let field of form.fields; " cdkDrag-->
+<!--        cdkDragLockAxis="y"-->
+<!--        [ngClass]="[!field.isValidName||!field.isValid?'list-group-item-warning':'', field.type==113?'app-list-group-item-info':'']">-->
+<!--      <app-v-group-container *ngIf="field.type==113" [inputGroup]="field"-->
+<!--                             [customFields]="customFields"></app-v-group-container>-->
+<!--      <app-v-field-container *ngIf="field.type!=113&&field.type==114"-->
+<!--                             [customFields]="customFields"-->
+<!--                             [inputField]="field">-->
+<!--&lt;!&ndash;                             (onChange)="onChange($event, field)"&ndash;&gt;-->
+<!--&lt;!&ndash;                             (onUniq)="onUniq($event)"&ndash;&gt;-->
+<!--&lt;!&ndash;                             (onDelete)="onDelete($event)">&ndash;&gt;-->
+<!--      </app-v-field-container>-->
+<!--    </li>-->
+
+<!--  </ul>-->
+<!--</div>-->
+<ng-container  *ngFor="let section of form?.fields;">
+  <app-v-section-conteiner *ngIf="section.type==114" [section]="section" [form]="form" [customFields]="customFields"></app-v-section-conteiner>
+</ng-container>

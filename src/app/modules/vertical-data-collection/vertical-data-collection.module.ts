@@ -87,6 +87,8 @@ import { VTermsConditionsComponent } from './v-form-constructor/v-form-builder/v
 import { VFieldsSideBarComponent } from './v-form-constructor/v-form-builder/v-form-fields/v-side-bar/v-fields-side-bar/v-fields-side-bar.component';
 import { VFieldsSideBarNodeComponent } from './v-form-constructor/v-form-builder/v-form-fields/v-side-bar/v-fields-side-bar/v-fields-side-bar-node/v-fields-side-bar-node.component';
 import { VFieldsSideBarDetailedComponent } from './v-form-constructor/v-form-builder/v-form-fields/v-side-bar/v-fields-side-bar/v-fields-side-bar-detailed/v-fields-side-bar-detailed.component';
+import { VFieldsWorkspaceComponent } from './v-form-constructor/v-form-builder/v-form-fields/v-fields-workspace/v-fields-workspace.component';
+import { VSectionConteinerComponent } from './v-form-constructor/v-form-builder/v-form-fields/v-section-conteiner/v-section-conteiner.component';
 
 const routes: Routes = [
   {
@@ -206,6 +208,8 @@ const routes: Routes = [
     VFieldsSideBarComponent,
     VFieldsSideBarNodeComponent,
     VFieldsSideBarDetailedComponent,
+    VFieldsWorkspaceComponent,
+    VSectionConteinerComponent,
   ],
   imports: [
     NgbModule,

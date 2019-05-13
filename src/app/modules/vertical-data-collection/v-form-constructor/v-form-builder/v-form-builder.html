@@ -38,7 +38,7 @@
         </div>
         <div *ngIf="sections.formFields" class="bg-white rounded mb-3">
 
-          <app-v-fields-side-bar [sideBar]="newSideBar"></app-v-fields-side-bar>
+          <app-v-fields-side-bar [sideBar]="newSideBar" [form]="form"></app-v-fields-side-bar>
 
 <!--          Old side bar-->
 <!--          <div class="mb-2  " *ngFor="let sideBar of sideBarFields | filter : searchText">-->
@@ -715,29 +715,29 @@
 
   <div class="col-9 pr-5">
 
-    <div
-      cdkDropList
-      id="workPlaceList"
-      [cdkDropListData]="fields"
-      [cdkDropListConnectedTo]="['ExistingFieldsList', 'CustomFieldsList', '6372c882-3d14-486f-9c1f-52ae8ab928ef']"
-      (cdkDropListDropped)="drop($event)">
-      <ul class="list-group" *ngIf="sections.formFieldsWorkspace">
-        <li class="list-group-item mb-3 py-0" *ngFor="let field of fields; trackBy: trackByFn" cdkDrag
-            cdkDragLockAxis="y"
-            [ngClass]="[!field.isValidName||!field.isValid?'list-group-item-warning':'', field.type==113?'app-list-group-item-info':'']">
-          <app-v-group-container *ngIf="field.type==113" [inputGroup]="field"
-                                 [customFields]="customFields"></app-v-group-container>
-          <app-v-field-container *ngIf="field.type!=113"
-                                 [customFields]="customFields"
-                                 [inputField]="field"
-                                 (onChange)="onChange($event, field)"
-                                 (onUniq)="onUniq($event)"
-                                 (onDelete)="onDelete($event)">
-          </app-v-field-container>
-        </li>
+    <div>
+<!--      cdkDropList-->
+<!--      id="workPlaceList"-->
+<!--      [cdkDropListData]="fields"-->
+<!--      [cdkDropListConnectedTo]="['ExistingFieldsList', 'CustomFieldsList', '6372c882-3d14-486f-9c1f-52ae8ab928ef']"-->
+<!--      (cdkDropListDropped)="drop($event)">-->
+<!--      <ul class="list-group" *ngIf="sections.formFieldsWorkspace">-->
+<!--        <li class="list-group-item mb-3 py-0" *ngFor="let field of fields; trackBy: trackByFn" cdkDrag-->
+<!--            cdkDragLockAxis="y"-->
+<!--            [ngClass]="[!field.isValidName||!field.isValid?'list-group-item-warning':'', field.type==113?'app-list-group-item-info':'']">-->
+<!--          <app-v-group-container *ngIf="field.type==113" [inputGroup]="field"-->
+<!--                                 [customFields]="customFields"></app-v-group-container>-->
+<!--          <app-v-field-container *ngIf="field.type!=113"-->
+<!--                                 [customFields]="customFields"-->
+<!--                                 [inputField]="field"-->
+<!--                                 (onChange)="onChange($event, field)"-->
+<!--                                 (onUniq)="onUniq($event)"-->
+<!--                                 (onDelete)="onDelete($event)">-->
+<!--          </app-v-field-container>-->
+<!--        </li>-->
 
-      </ul>
-
+<!--      </ul>-->
+      <app-v-fields-workspace *ngIf="sections.formFieldsWorkspace" [form]="form" [customFields]="customFields"></app-v-fields-workspace>
       <!--  documents-forms-->
       <app-v-documents-forms
         *ngIf="sections.documentsFormsWorkspace"

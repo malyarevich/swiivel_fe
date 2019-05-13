@@ -1,11 +1,13 @@
 <ng-container *ngIf="sideBar">
   <div class="ml-3" *ngFor="let node of sideBar">
 
-      <div class="row align-items-center">
-        <div class="col">        <span class="node-span" (click)="nodeAction(node)"> {{ node.name }} </span>
+      <div class="row align-items-center" (click)="nodeAction(node)">
+        <div class="col">        <span class="node-span" > {{ node.name }} </span>
+<!--        <div class="col">        <span class="node-span" (click)="nodeAction(node)"> {{ node.name }} </span>-->
         </div>
         <div  class="col-1 p-0">
-          <button class="btn btn-sm " (click)="nodeAction(node)">
+          <button class="btn btn-sm " >
+<!--          <button class="btn btn-sm " (click)="nodeAction(node)">-->
             <i *ngIf="!node.isActive" class="fas  fa-caret-down dragable-i"></i>
             <i *ngIf="node.isActive" class="fas  fa-caret-up dragable-i"></i>
           </button>

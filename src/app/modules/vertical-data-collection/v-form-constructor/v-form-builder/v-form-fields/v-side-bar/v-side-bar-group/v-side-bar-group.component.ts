@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Field} from "../../../../../model/field.model";
 import {isEmpty, cloneDeep } from 'lodash';
 import {v4 as uuid} from 'uuid'
+import {Form} from "../../../../../model/form.model";
 
 @Component({
   selector: 'app-v-side-bar-group',
@@ -16,6 +17,8 @@ export class VSideBarGroupComponent implements OnInit {
   @Output() onChangeGroupBeing = new EventEmitter<any>();
   @Output() onDeleteNested = new EventEmitter<any>();
   @Input() group: Field;
+  @Input() section: Field;
+  @Input() form: Form;
   @Input() customFields: Field[];
   @Input() existingFields: Field[];
 
