@@ -84,6 +84,7 @@ import { VInsideAccountCommunicationComponent } from './v-form-info/v-form-info-
 import { VInsideMissingFieldsComponent } from './v-form-info/v-form-info-submissions/v-form-info-submission-inside/v-inside-missing-fields/v-inside-missing-fields.component';
 import { VInsideFormHistoryComponent } from './v-form-info/v-form-info-submissions/v-form-info-submission-inside/v-inside-form-history/v-inside-form-history.component';
 import { VTermsConditionsComponent } from './v-form-constructor/v-form-builder/v-terms-conditions/v-terms-conditions.component';
+import {FinanceService} from "../../services/finance/finance.service";
 
 const routes: Routes = [
   {
@@ -216,7 +217,8 @@ const routes: Routes = [
     VFormService,
     VFieldsService,
     FormUtils,
-    VFieldsService],
+    VFieldsService,
+    FinanceService],
   entryComponents: [entryComponents]
 })
 export class VerticalDataCollectionModule {

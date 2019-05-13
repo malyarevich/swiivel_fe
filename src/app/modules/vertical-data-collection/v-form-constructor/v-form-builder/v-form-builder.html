@@ -454,17 +454,17 @@
           </div>
           <hr>
           <p class="font-weight-bold">Show Fees</p>
-          <div class="row no-gutters" *ngFor="let item of tuitionContract.showFees">
+          <div class="row no-gutters" *ngFor="let item of tuitionContract.fees">
             <div class="col-6">
               <label class="app-checkbox-container">
-                <span class="form-payment-side-bar-text">{{item.title | uppercase}}</span>
+                <span class="form-payment-side-bar-text">{{item.name | uppercase}}</span>
                 <input type="checkbox" [(ngModel)]="item.isActive">
                 <span class="app-checkbox-checkmark"></span>
               </label>
             </div>
-            <div class="col" *ngIf="tuitionContract.splitBy === 'student' && item.discount.isAllow">
+            <div class="col">
               <label class="app-switch app-switch-top-0 mr-1">
-                <input type="checkbox" [disabled]="!item.isActive" [(ngModel)]="item.discount.isActive">
+                <input type="checkbox" [disabled]="!item.isActive" [(ngModel)]="item.isActiveDiscount">
                 <span class="app-slider app-round"></span>
               </label>
               <span>Show Discounts</span>
