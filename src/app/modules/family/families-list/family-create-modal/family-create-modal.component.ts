@@ -40,7 +40,6 @@ export class FamilyCreateModalComponent implements OnInit {
 
   save() {
     this.familyService.createFamily(this.family).subscribe((res) => {
-      console.log(res);
       this.router.navigate([`/family/profile/${this.family._id}`]);
     })
   }
