@@ -5,19 +5,17 @@ export interface TuitionContract {
   isActive: boolean,
   showSideInfo: boolean,
   splitBy: string;
-  showFees: TuitionContractFee[];
+  fees: TuitionContractFee[];
   text: string;
   signature: TuitionContractSignature;
 }
 
 export interface TuitionContractFee {
+  id: number;
   name: string;
-  title: string;
+  description: string;
   isActive: boolean;
-  discount: {
-    isAllow: boolean;
-    isActive: boolean
-  }
+  isActiveDiscount: boolean;
 }
 
 export interface TuitionContractSignature {
@@ -38,13 +36,13 @@ export const tuitionContractDefault: TuitionContract = {
   isActive: false,
   showSideInfo: false,
   splitBy: TUITION_CONTRACT_SPLIT_TYPES.STUDENT,
-  showFees: [
-    {name: 'dormitory', title: 'Bais Medrash Winter Dormitory Fee', isActive: true, discount: {isAllow: true, isActive: false}},
-    {name: 'registration', title: 'Registration', isActive: true, discount: {isAllow: true, isActive: false}},
-    {name: 'activity', title: 'Activity', isActive: false, discount: {isAllow: false, isActive: false}},
-    {name: 'tuition', title: 'Tuition', isActive: true, discount: {isAllow: true, isActive: false}},
-    {name: 'scholarship', title: 'Scholarship', isActive: true, discount: {isAllow: true, isActive: false}},
-    {name: 'lunch', title: 'Lunch Fee', isActive: true, discount: {isAllow: true, isActive: false}},
+  fees: [
+    // {name: 'dormitory', title: 'Bais Medrash Winter Dormitory Fee', isActive: true, discount: {isAllow: true, isActive: false}},
+    // {name: 'registration', title: 'Registration', isActive: true, discount: {isAllow: true, isActive: false}},
+    // {name: 'activity', title: 'Activity', isActive: false, discount: {isAllow: false, isActive: false}},
+    // {name: 'tuition', title: 'Tuition', isActive: true, discount: {isAllow: true, isActive: false}},
+    // {name: 'scholarship', title: 'Scholarship', isActive: true, discount: {isAllow: true, isActive: false}},
+    // {name: 'lunch', title: 'Lunch Fee', isActive: true, discount: {isAllow: true, isActive: false}},
   ],
   text: '',
   signature: {

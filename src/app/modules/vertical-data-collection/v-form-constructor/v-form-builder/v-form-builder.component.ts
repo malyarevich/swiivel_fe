@@ -26,6 +26,8 @@ import {
   termsConditionsDefault,
   termsConditionsItemDefault
 } from "./v-terms-conditions/model/terms-conditions.model";
+import {FinanceService} from "../../../../services/finance/finance.service";
+import {FeeTemplate, FeeTemplatesData} from "../../../../models/fee-templates.model";
 
 @Component({
   selector: 'app-v-form-table',
@@ -40,6 +42,9 @@ export class VFormBuilderComponent implements OnInit {
   showWarningMessage: string = 'Please correct existing errors';
   searchText: string;
   fields: Field[] = [];
+
+  feeTemplates: FeeTemplate[] = [];
+
   formName: string = '';
   attachments;
   form: Form;
@@ -152,7 +157,8 @@ export class VFormBuilderComponent implements OnInit {
               private route: ActivatedRoute,
               private location: Location,
               private generalInfoIsValidService: GeneralInfoIsValidService,
-              private fileService: VFilesService) {
+              private fileService: VFilesService,
+              private readonly financeService: FinanceService) {
 
   }
 
@@ -162,7 +168,7 @@ export class VFormBuilderComponent implements OnInit {
       const url = urlPath[urlPath.length - 1].path;
       this.formId = url != 'v-form-constructor' ? url : '';
     });
-
+    this.loadFeeTemplates();
     this.loadBasicFields();
     this.loadSideBar();
     this.loadSideBarNew();
@@ -247,7 +253,6 @@ export class VFormBuilderComponent implements OnInit {
             this.documents = form.documents || [];
             this.formsPDF = form.forms || [];
             this.attachments = form.attachments || {};
-
           }
         },
         (error) => console.log(error, 'error'),
@@ -256,6 +261,11 @@ export class VFormBuilderComponent implements OnInit {
           if (!isEmpty(this.fields)) {
             this.initFormFieldsToSideBar(this.sideBarFields, this.fields);
           }
+
+          if (!isEmpty(this.feeTemplates)) {
+            this.initFeeToTuitionContract();
+          }
+
         }
       );
     }
@@ -494,5 +504,38 @@ export class VFormBuilderComponent implements OnInit {
   //   });
   //   this.sections[section] = event;
   // }
+
+  // Tuition Contract
+  loadFeeTemplates() {
+    this.financeService.getAllFeeTemplates().subscribe((res: FeeTemplatesData) => {
+      this.feeTemplates = res.fee_templates;
+    })
+  }
+
+  initFeeToTuitionContract() {
+   this.addFeeToTuitionContract();
+   // this.deleteFeeFromTuitionContract()
+  }
+
+  addFeeToTuitionContract() {
+    this.feeTemplates.map((feeTemplate: FeeTemplate) => {
+
+      let {id, name, description} = feeTemplate;
+      let template = {
+        id,
+        name,
+        description,
+        isActive: false,
+        isActiveDiscount: false
+      };
+
+      if(!this.existFeeToTuitionContract(feeTemplate.id)) this.tuitionContract.fees.push(template);
+    });
+  }
+
+  existFeeToTuitionContract(feeTemplateId) {
+    return this.tuitionContract.fees.findIndex(fee => fee.id === feeTemplateId) !== -1;
+  }
+  //End Tuition Contract
 }
 

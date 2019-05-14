@@ -89,6 +89,7 @@ import { VFieldsSideBarNodeComponent } from './v-form-constructor/v-form-builder
 import { VFieldsSideBarDetailedComponent } from './v-form-constructor/v-form-builder/v-form-fields/v-side-bar/v-fields-side-bar/v-fields-side-bar-detailed/v-fields-side-bar-detailed.component';
 import { VFieldsWorkspaceComponent } from './v-form-constructor/v-form-builder/v-form-fields/v-fields-workspace/v-fields-workspace.component';
 import { VSectionConteinerComponent } from './v-form-constructor/v-form-builder/v-form-fields/v-section-conteiner/v-section-conteiner.component';
+import {FinanceService} from "../../services/finance/finance.service";
 
 const routes: Routes = [
   {
@@ -226,7 +227,8 @@ const routes: Routes = [
     VFormService,
     VFieldsService,
     FormUtils,
-    VFieldsService],
+    VFieldsService,
+    FinanceService],
   entryComponents: [entryComponents]
 })
 export class VerticalDataCollectionModule {

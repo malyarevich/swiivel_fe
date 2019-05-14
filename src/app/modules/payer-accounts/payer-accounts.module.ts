@@ -9,8 +9,11 @@ import { SharedRedComponentsModule } from '../../shared/components/sharedRedComp
 import { FormPayerAccountModalModule } from '../form-payer-account-modal/form-payer-account-modal.module';
 import { PayerAccountComponent } from './components/payer-account/payer-account.component';
 import { PayerAccountsComponent } from './components/payer-accounts/payer-accounts.component';
+import { PayerAccountFeesTableComponent } from './components/payer-account-fees-table/payer-account-fees-table.component';
 
+import { FeeService } from '../../services/fee/fee.service';
 import { PayersService } from './services/payers.service';
+import { PaymentMethodsService } from '../../services/payment-methods/payment-methods.service';
 
 const routes: Routes = [
   {
@@ -32,6 +35,7 @@ const routes: Routes = [
   declarations: [
     PayerAccountComponent,
     PayerAccountsComponent,
+    PayerAccountFeesTableComponent,
   ],
   imports: [
     CommonModule,
@@ -43,7 +47,9 @@ const routes: Routes = [
     SharedRedComponentsModule,
   ],
   providers: [
+    FeeService,
     PayersService,
+    PaymentMethodsService,
   ],
   entryComponents: []
 })
