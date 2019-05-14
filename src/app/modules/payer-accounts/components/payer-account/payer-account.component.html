@@ -91,7 +91,7 @@
       <div class="payer-account-page-info__students">
         <app-person-show
           *ngFor="let recipient of payer.recipients"
-          [name]="recipient.full_name"
+          [name]="recipient.name"
           [avatar]="recipient.avatar"
         >
         </app-person-show>
@@ -177,18 +177,10 @@
       <div
         class="payer-account-page-data-tab-general__fees"
       >
-        <div class="payer-account-page-data-tab-general__fees-top">
-          <div class="payer-account-page-data-title">
-            Fees
-          </div>
-          <div class="payer-account-page-data-tab-general__fees-top--right-block">
-            <app-search-field
-              class="payer-account-page-data-tab-general__fees-top--right-block-search"
-              type="gray"
-            ></app-search-field>
-            <app-search-filter-btn></app-search-filter-btn>
-          </div>
-        </div>
+        <app-payer-account-fees-table
+          fees="fees"
+        >
+        </app-payer-account-fees-table>
       </div>
     </div>
 
