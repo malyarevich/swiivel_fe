@@ -9,9 +9,10 @@ import { FamilyProfileComponent } from './family-profile/family-profile.componen
 import { FamilyProfileInfoComponent } from './family-profile/family-profile-info/family-profile-info.component';
 import { FamilyViewComponent } from './family-profile/family-view/family-view.component';
 import { FamilyCreateModalComponent } from './families-list/family-create-modal/family-create-modal.component';
+import { FamilyViewNavComponent } from './family-profile/family-view/family-view-nav/family-view-nav.component';
 
 @NgModule({
-  declarations: [FamiliesListComponent, FamilyPageHeaderComponent, FamilyProfileComponent, FamilyProfileInfoComponent, FamilyViewComponent, FamilyCreateModalComponent],
+  declarations: [FamiliesListComponent, FamilyPageHeaderComponent, FamilyProfileComponent, FamilyProfileInfoComponent, FamilyViewComponent, FamilyCreateModalComponent, FamilyViewNavComponent],
   imports: [
     CommonModule,
     FormsModule,

@@ -1,3 +1,5 @@
+@import "../variables/colors";
+
 .app-family-page-header {
   color: #909090;
   background-color: #FBFBFB;
@@ -16,4 +18,13 @@
 .app-family-profile-input {
   top: auto;
   padding: .5em 1em;
+}
+
+.app-family-view-nav-link {
+  cursor: pointer;
+  color: #909090;
+}
+
+.app-family-view-nav-link-active {
+  color: $element-base-color !important;
 }

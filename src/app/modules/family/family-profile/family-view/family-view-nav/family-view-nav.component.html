@@ -1,0 +1,24 @@
+<div class="row">
+
+  <div class="col">
+    <nav class="navbar navbar-expand-lg navbar-light p-0">
+      <div class="justify-content-left">
+        <ul class="navbar-nav">
+          <li class="nav-item mr-4" *ngFor="let item of familyViewSections">
+            <a class="nav-link app-family-view-nav-link app-text-large font-weight-bold"
+               [ngClass]="{'app-family-view-nav-link-active' : activeSection===item.name}"
+               (click)="setActiveSection(item.name)">
+              {{item.name | titlecase}}
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+
+  <div class="col-sm-6 text-right">
+  </div>
+</div>
+
+
+
