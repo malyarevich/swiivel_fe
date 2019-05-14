@@ -6,9 +6,12 @@ import { FamiliesListComponent } from './families-list/families-list.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { FamilyPageHeaderComponent } from './family-page-header/family-page-header.component';
 import { FamilyProfileComponent } from './family-profile/family-profile.component';
+import { FamilyProfileInfoComponent } from './family-profile/family-profile-info/family-profile-info.component';
+import { FamilyViewComponent } from './family-profile/family-view/family-view.component';
+import { FamilyCreateModalComponent } from './families-list/family-create-modal/family-create-modal.component';
 
 @NgModule({
-  declarations: [FamiliesListComponent, FamilyPageHeaderComponent, FamilyProfileComponent],
+  declarations: [FamiliesListComponent, FamilyPageHeaderComponent, FamilyProfileComponent, FamilyProfileInfoComponent, FamilyViewComponent, FamilyCreateModalComponent],
   imports: [
     CommonModule,
     FormsModule,

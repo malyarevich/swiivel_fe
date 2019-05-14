@@ -1,0 +1,15 @@
+<button class="btn app-btn-primary" (click)="open(familyCreateModal)">Create New</button>
+<ng-template #familyCreateModal let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Add Family Name</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d(); dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <input [(ngModel)]="family.name">
+  </div>
+  <div class="modal-footer">
+    <button [disabled]="!family.name" type="button" class="btn btn-outline-dark" (click)="c(); save()">Save</button>
+  </div>
+</ng-template>
