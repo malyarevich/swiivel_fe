@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import {Fee} from '../../../../models/fee.model';
 
 @Component({
   selector: 'app-payer-account-fees-table',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./payer-account-fees-table.component.scss']
 })
 export class PayerAccountFeesTableComponent implements OnInit {
+  @Input() fees: Fee[];
+
   public tableCols = [
     {
       id: 'name',
@@ -14,6 +17,7 @@ export class PayerAccountFeesTableComponent implements OnInit {
       sort: true,
       search: true,
       disabled: false,
+      width: '17%',
     },
     {
       id: 'name',
@@ -22,6 +26,7 @@ export class PayerAccountFeesTableComponent implements OnInit {
       sort: true,
       search: true,
       disabled: false,
+      width: '17%',
     },
     {
       id: 'name',
@@ -30,6 +35,7 @@ export class PayerAccountFeesTableComponent implements OnInit {
       sort: true,
       search: true,
       disabled: false,
+      width: '24%',
     },
     {
       id: 'name',
@@ -38,6 +44,7 @@ export class PayerAccountFeesTableComponent implements OnInit {
       sort: true,
       search: true,
       disabled: false,
+      width: '14%',
     },
     {
       id: 'name',
@@ -46,6 +53,7 @@ export class PayerAccountFeesTableComponent implements OnInit {
       sort: true,
       search: true,
       disabled: false,
+      width: '14%',
     },
     {
       id: 'name',
@@ -54,6 +62,7 @@ export class PayerAccountFeesTableComponent implements OnInit {
       sort: true,
       search: true,
       disabled: false,
+      width: '14%',
     },
   ];
 

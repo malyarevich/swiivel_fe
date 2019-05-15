@@ -178,9 +178,15 @@
         class="payer-account-page-data-tab-general__fees"
       >
         <app-payer-account-fees-table
-          fees="fees"
+          [fees]="fees"
         >
         </app-payer-account-fees-table>
+      </div>
+      <div
+        class="payer-account-page-data-tab-general__fees"
+      >
+        <app-payer-account-transactions-table>
+        </app-payer-account-transactions-table>
       </div>
     </div>
 
