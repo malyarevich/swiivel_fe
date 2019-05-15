@@ -18,7 +18,8 @@
 }
 
 .app-text-second {
-  color: #999999;
+  //color: #999999;
+  color: #909090;
 }
 
 .app-text-danger {
@@ -29,6 +30,10 @@
   color: #3CA476;
 }
 
+.app-text-white {
+  color: #FFFFFF;
+}
+
 .app-text-extra-bold {
   font-family: NunitoSans-ExtraBold;
 }
@@ -36,4 +41,15 @@
 //CURSOR
 .app-cursor-pointer {
   cursor: pointer;
+}
+
+//Base Nav Link
+.app-nav-link {
+  cursor: pointer;
+  color: #535353;
+}
+
+.app-nav-link-active {
+  color: $element-base-color !important;
+  border-bottom: 2px solid $element-base-color;
 }

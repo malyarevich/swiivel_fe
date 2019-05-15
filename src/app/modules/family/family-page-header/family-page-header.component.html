@@ -1,0 +1,15 @@
+<div class="row no-gutters app-family-page-header pr-3">
+  <div class="col-10">
+    <div class="d-inline-block back p-3 mr-3 app-cursor-pointer" routerLink="/vertical-data-collection">
+      <i class="fas fa-chevron-left"></i>
+    </div>
+    <span>{{titleHeader}}</span>
+  </div>
+  <div class="col-2 pt-2">
+    <div class="app-input-search-container">
+      <i class="fas fa-search app-input-search-icon"></i>
+      <input type="text" class="form-control app-input-search" placeholder="Search"
+             [(ngModel)]="searchValue" (ngModelChange)="onSearchValue()">
+    </div>
+  </div>
+</div>
