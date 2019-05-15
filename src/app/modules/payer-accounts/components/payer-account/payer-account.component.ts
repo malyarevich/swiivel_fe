@@ -16,7 +16,7 @@ import { PayersService } from '../../services/payers.service';
 })
 export class PayerAccountComponent implements OnInit {
   public activeTab = 'general';
-  public fees: Fee[] = [];
+  public fees: Fee[];
   public payer: Payer;
   public paymentMethods: PaymentMethods[] = [];
 
@@ -40,9 +40,7 @@ export class PayerAccountComponent implements OnInit {
 
     this.feeService.getPayerFee(this.route.snapshot.params.id)
       .subscribe((res) => {
-        if (res.data.total > 0) {
-          this.fees = res.data.fees;
-        }
+        this.fees = res.data.fees;
       });
   }
 

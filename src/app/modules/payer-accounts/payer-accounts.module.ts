@@ -14,6 +14,7 @@ import { PayerAccountFeesTableComponent } from './components/payer-account-fees-
 import { FeeService } from '../../services/fee/fee.service';
 import { PayersService } from './services/payers.service';
 import { PaymentMethodsService } from '../../services/payment-methods/payment-methods.service';
+import { PayerAccountTransactionsTableComponent } from './components/payer-account-transactions-table/payer-account-transactions-table.component';
 
 const routes: Routes = [
   {
@@ -36,6 +37,7 @@ const routes: Routes = [
     PayerAccountComponent,
     PayerAccountsComponent,
     PayerAccountFeesTableComponent,
+    PayerAccountTransactionsTableComponent,
   ],
   imports: [
     CommonModule,

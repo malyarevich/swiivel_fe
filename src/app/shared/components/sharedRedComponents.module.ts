@@ -16,8 +16,10 @@ import { SelectMultiSearchFieldComponent } from './fields/select-multi-search-fi
 
 // components
 import { AddFeeComponent } from './add-fee/add-fee.component';
+import { BadgeComponent } from './badge/badge.component';
 import { ModalComponent } from './modal/modal.component';
 import { PersonShowComponent } from './person-show/person-show.component';
+import { SpinnerComponent } from './spinner/spinner.component';
 import { TagComponent } from './tag/tag.component';
 
 @NgModule({
@@ -32,8 +34,10 @@ import { TagComponent } from './tag/tag.component';
     SelectMultiSearchFieldComponent,
     // components
     AddFeeComponent,
+    BadgeComponent,
     ModalComponent,
     PersonShowComponent,
+    SpinnerComponent,
     TagComponent,
   ],
   imports: [
@@ -57,8 +61,10 @@ import { TagComponent } from './tag/tag.component';
     SelectMultiSearchFieldComponent,
     // components
     AddFeeComponent,
+    BadgeComponent,
     ModalComponent,
     PersonShowComponent,
+    SpinnerComponent,
     TagComponent,
   ],
 })

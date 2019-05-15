@@ -1,0 +1,20 @@
+@import '../../../../styles/variables/colors';
+
+.app-badge {
+  font: 10px 'NunitoSans-Regular';
+  border-radius: 3px;
+  color: $gray-color;
+  background: #f2f2f2;
+  padding: .25rem;
+  white-space: nowrap;
+
+  &.app-badge-success {
+    color: #00a772;
+    background: #d3ede2;
+  }
+
+  &.app-badge-danger {
+    color: #f94951;
+    background: #ffd3d4;
+  }
+}
