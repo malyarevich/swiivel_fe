@@ -3,7 +3,10 @@
     <div class="payer-account-fees-table-title">
       Fees
     </div>
-    <div class="payer-account-fees-table__top--right-block">
+    <div
+      *ngIf="fees && fees.length"
+      class="payer-account-fees-table__top--right-block"
+    >
       <app-search-field
         class="payer-account-fees-table__top--right-block-search"
         type="gray"
@@ -11,10 +14,26 @@
       <app-search-filter-btn></app-search-filter-btn>
     </div>
   </div>
-  <table class="payer-account-fees-table__table">
+
+  <app-spinner *ngIf="!fees"></app-spinner>
+
+  <div
+    *ngIf="fees && !fees.length"
+    class="payer-account-fees-table__clear"
+  >
+    Payer account don't have fees
+  </div>
+
+  <table
+    *ngIf="fees && fees.length"
+    class="payer-account-fees-table__table"
+  >
     <thead class="payer-account-fees-table__table-thead">
       <tr>
-        <th *ngFor="let col of tableCols">
+        <th
+          *ngFor="let col of tableCols"
+          [width]="col.width"
+        >
           {{col.title}}&nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-sort"></i>
           <app-search-field
             placeholder=""
@@ -26,28 +45,28 @@
       </tr>
     </thead>
     <tbody class="payer-account-fees-table__table-tbody">
-      <tr>
+      <tr *ngFor="let fee of fees">
         <td>
-          Tuition
+          {{fee.name}}
         </td>
         <td class="payer-account-fees-table__table-tbody-regular-front">
-          2018-2019
+          {{fee.period_name}}
         </td>
         <td>
           <app-person-show
-            [name]="'David Fishman'"
+            [name]="fee.recipient_name"
             [avatar]="null"
           >
           </app-person-show>
         </td>
         <td class="payer-account-fees-table__table-tbody-price">
-          $1,970
+          {{ 1970 | currency:'USD':true:'.0' }}
         </td>
         <td class="payer-account-fees-table__table-tbody-price">
-          $8,230
+          {{ 8230 | currency:'USD':true:'.0' }}
         </td>
         <td class="payer-account-fees-table__table-tbody-price payer-account-fees-table__table-tbody-price-total">
-          $10,200
+          {{ 10200 | currency:'USD':true:'.0' }}
         </td>
         <td>
           <div class="payer-account-fees-table__table-tbody-actions">
@@ -74,10 +93,13 @@
           Total
         </td>
         <td class="payer-account-fees-table__table-tbody-price payer-account-fees-table__table-tbody-price-total">
-          $10,200
+          {{ 10200 | currency:'USD':true:'.0' }}
         </td>
         <td></td>
       </tr>
     </tbody>
   </table>
+  <!--<pre>-->
+    <!--{{ fees | json }}-->
+  <!--</pre>-->
 </div>

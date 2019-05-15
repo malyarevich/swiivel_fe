@@ -1,0 +1,93 @@
+<div class="payer-account-transactions-table">
+  <div class="payer-account-transactions-table__top">
+    <div class="payer-account-transactions-table-title">
+      Transactions
+    </div>
+    <div class="payer-account-transactions-table__top--right-block">
+      <app-search-field
+        class="payer-account-transactions-table__top--right-block-search"
+        type="gray"
+      ></app-search-field>
+      <app-search-filter-btn></app-search-filter-btn>
+    </div>
+  </div>
+
+  <table class="payer-account-transactions-table__table">
+    <thead class="payer-account-transactions-table__table-thead">
+    <tr>
+      <th *ngFor="let col of tableCols">
+        {{col.title}}&nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-sort"></i>
+        <app-search-field
+          placeholder=""
+        >
+        </app-search-field>
+      </th>
+      <th>
+      </th>
+    </tr>
+    </thead>
+    <tbody class="payer-account-transactions-table__table-tbody">
+    <tr class="payer-account-transactions-table__table-tbody-previous-balance-row">
+      <td colspan="4">
+        Previous Balance
+      </td>
+      <td
+        class="payer-account-transactions-table__table-tbody-price payer-account-transactions-table__table-tbody-price-total"
+      >
+        {{ 10200 | currency:'USD':true:'.0' }}
+      </td>
+      <td
+        class="payer-account-transactions-table__table-tbody-price payer-account-transactions-table__table-tbody-price-total"
+      >
+        {{ 10200 | currency:'USD':true:'.0' }}
+      </td>
+      <td
+        class="payer-account-transactions-table__table-tbody-price payer-account-transactions-table__table-tbody-price-total"
+      >
+        {{ 10200 | currency:'USD':true:'.0' }}
+      </td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Sep
+      </td>
+      <td class="payer-account-transactions-table__table-tbody-regular-front">
+        01/09/2018
+      </td>
+      <td>
+        Tuition
+      </td>
+      <td>
+        <app-badge
+          [type]="'danger'"
+        >
+          <span style="font: 10px 'NunitoSans-Bold'">01/12/2018</span> $900 (ACH **9267)
+        </app-badge>
+      </td>
+      <td class="payer-account-transactions-table__table-tbody-price">
+        {{ 1970 | currency:'USD':true:'.0' }}
+      </td>
+      <td class="payer-account-transactions-table__table-tbody-price">
+        {{ 8230 | currency:'USD':true:'.0' }}
+      </td>
+      <td
+        class="payer-account-transactions-table__table-tbody-price">
+        {{ 10200 | currency:'USD':true:'.0' }}
+      </td>
+      <td
+        class="payer-account-transactions-table__table-tbody-price">
+        {{ 10200 | currency:'USD':true:'.0' }}
+      </td>
+      <td>
+       Paid
+      </td>
+      <td>
+
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
