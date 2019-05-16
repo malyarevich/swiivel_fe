@@ -12,82 +12,116 @@
     </div>
   </div>
 
-  <table class="payer-account-transactions-table__table">
-    <thead class="payer-account-transactions-table__table-thead">
-    <tr>
-      <th *ngFor="let col of tableCols">
-        {{col.title}}&nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-sort"></i>
-        <app-search-field
-          placeholder=""
-        >
-        </app-search-field>
-      </th>
-      <th>
-      </th>
-    </tr>
-    </thead>
-    <tbody class="payer-account-transactions-table__table-tbody">
-    <tr class="payer-account-transactions-table__table-tbody-previous-balance-row">
-      <td colspan="4">
-        Previous Balance
-      </td>
-      <td
-        class="payer-account-transactions-table__table-tbody-price payer-account-transactions-table__table-tbody-price-total"
-      >
-        {{ 10200 | currency:'USD':true:'.0' }}
-      </td>
-      <td
-        class="payer-account-transactions-table__table-tbody-price payer-account-transactions-table__table-tbody-price-total"
-      >
-        {{ 10200 | currency:'USD':true:'.0' }}
-      </td>
-      <td
-        class="payer-account-transactions-table__table-tbody-price payer-account-transactions-table__table-tbody-price-total"
-      >
-        {{ 10200 | currency:'USD':true:'.0' }}
-      </td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>
-        Sep
-      </td>
-      <td class="payer-account-transactions-table__table-tbody-regular-front">
-        01/09/2018
-      </td>
-      <td>
-        Tuition
-      </td>
-      <td>
-        <app-badge
-          [type]="'danger'"
-        >
-          <span style="font: 10px 'NunitoSans-Bold'">01/12/2018</span> $900 (ACH **9267)
-        </app-badge>
-      </td>
-      <td class="payer-account-transactions-table__table-tbody-price">
-        {{ 1970 | currency:'USD':true:'.0' }}
-      </td>
-      <td class="payer-account-transactions-table__table-tbody-price">
-        {{ 8230 | currency:'USD':true:'.0' }}
-      </td>
-      <td
-        class="payer-account-transactions-table__table-tbody-price">
-        {{ 10200 | currency:'USD':true:'.0' }}
-      </td>
-      <td
-        class="payer-account-transactions-table__table-tbody-price">
-        {{ 10200 | currency:'USD':true:'.0' }}
-      </td>
-      <td>
-       Paid
-      </td>
-      <td>
+  <div>
+    <button
+      class="btn app-btn-clear-secondary payer-account-transactions-table__tabs-split"
+      [ngClass]="{'activated': activeTab === 'groupedSplit'}"
+      (click)="onTab('groupedSplit')"
+    >
+      Grouped by Split
+    </button>
+    <button
+      class="btn app-btn-clear-secondary"
+      [ngClass]="{'activated': activeTab === 'groupedTransaction'}"
+      (click)="onTab('groupedTransaction')"
+    >
+      Grouped by Transaction
+    </button>
+  </div>
 
-      </td>
-    </tr>
-    </tbody>
-  </table>
+  <div
+    *ngIf="activeTab === 'groupedSplit'"
+    class="payer-account-transactions-table__tab-content"
+  >
+    <table class="payer-account-transactions-table__table">
+      <thead class="payer-account-transactions-table__table-thead">
+      <tr>
+        <th
+          *ngFor="let col of tableCols"
+        >
+          {{col.title}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-sort"></i>
+          <app-search-field
+            placeholder=""
+          >
+          </app-search-field>
+        </th>
+        <th>
+        </th>
+      </tr>
+      </thead>
+      <tbody class="payer-account-transactions-table__table-tbody">
+      <tr class="payer-account-transactions-table__table-tbody-previous-balance-row">
+        <td colspan="4">
+          Previous Balance
+        </td>
+        <td
+          class="payer-account-transactions-table__table-tbody-price payer-account-transactions-table__table-tbody-price-total"
+        >
+          {{ 10200 | currency:'USD':true:'.0' }}
+        </td>
+        <td
+          class="payer-account-transactions-table__table-tbody-price payer-account-transactions-table__table-tbody-price-total"
+        >
+          {{ 10200 | currency:'USD':true:'.0' }}
+        </td>
+        <td
+          class="payer-account-transactions-table__table-tbody-price payer-account-transactions-table__table-tbody-price-total"
+        >
+          {{ 10200 | currency:'USD':true:'.0' }}
+        </td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>
+          Sep
+        </td>
+        <td class="payer-account-transactions-table__table-tbody-regular-front">
+          01/09/2018
+        </td>
+        <td>
+          Tuition
+        </td>
+        <td>
+          <app-badge>
+            <span style="font-family: 'NunitoSans-Bold'">01/12/2018</span> $900 (ACH **9267)
+          </app-badge>
+        </td>
+        <td class="payer-account-transactions-table__table-tbody-price">
+          {{ 1970 | currency:'USD':true:'.0' }}
+        </td>
+        <td class="payer-account-transactions-table__table-tbody-price">
+          {{ 8230 | currency:'USD':true:'.0' }}
+        </td>
+        <td
+          class="payer-account-transactions-table__table-tbody-price">
+          {{ 10200 | currency:'USD':true:'.0' }}
+        </td>
+        <td
+          class="payer-account-transactions-table__table-tbody-price">
+          {{ 10200 | currency:'USD':true:'.0' }}
+        </td>
+        <td>
+          <app-badge-dropdown
+            [values]="statusValues"
+            [activeValue]="statusValue"
+            (changeValue)="onChangeStatusValue($event)"
+          ></app-badge-dropdown>
+        </td>
+        <td align="center">
+          <i class="fas fa-caret-down"></i>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div
+    *ngIf="activeTab === 'groupedTransaction'"
+    class="payer-account-transactions-table__tab-content"
+  >
+    Grouped by Transaction
+  </div>
+
 </div>
