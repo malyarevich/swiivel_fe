@@ -6,8 +6,7 @@ import {HttpClient} from "@angular/common/http";
 @Injectable()
 export class FamilyService {
 
-  public familyList: Observable<Family[]>;
-  private _familyList: BehaviorSubject<Family[]>;
+  private _familyList: BehaviorSubject<Family[]> = <BehaviorSubject<Family[]>> new BehaviorSubject([]);
 
   private dataStore: {
     familyList: Family[];
@@ -18,12 +17,14 @@ export class FamilyService {
     {id: '4523545424456', name: 'Test2'},
   ];
 
+  get familyList() {
+    return this._familyList.asObservable();
+  }
+
   constructor(private http: HttpClient) {
     this.dataStore = {
       familyList: []
     };
-    this._familyList = < BehaviorSubject<Family[]>> new BehaviorSubject([]);
-    this.familyList = this._familyList.asObservable();
   }
 
   getAll() {
@@ -33,7 +34,6 @@ export class FamilyService {
     // }, error => console.log('Could not load employee.'));
 
     this.dataStore.familyList = this.tempData;
-    // this._familyList.next(Object.assign({}, this.dataStore).familyList);
     this._familyList.next(this.dataStore.familyList);
   }
 
