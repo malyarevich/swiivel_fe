@@ -12,11 +12,14 @@ import { FamilyCreateModalComponent } from './families-list/family-create-modal/
 import { FamilyViewNavComponent } from './family-profile/family-view/family-view-nav/family-view-nav.component';
 import { FamilyViewGeneralComponent } from './family-profile/family-view/family-view-general/family-view-general.component';
 import { FamilyViewGeneralNavComponent } from './family-profile/family-view/family-view-general/family-view-general-nav/family-view-general-nav.component';
-import { FamilyPersonCardComponent } from './family-profile/family-view/family-view-general/family-person-card/family-person-card.component';
+import { FamilyParentsCardComponent } from './family-profile/family-view/family-view-general/family-parents-card/family-parents-card.component';
 import {FamilyService} from "./services/family.service";
+import { FamilyChildrenCardComponent } from './family-profile/family-view/family-view-general/family-children-card/family-children-card.component';
+import { FamilyStudentsCardComponent } from './family-profile/family-view/family-view-general/family-students-card/family-students-card.component';
+import { FamilyGrandparentsCardComponent } from './family-profile/family-view/family-view-general/family-grandparents-card/family-grandparents-card.component';
 
 @NgModule({
-  declarations: [FamiliesListComponent, FamilyPageHeaderComponent, FamilyProfileComponent, FamilyProfileInfoComponent, FamilyViewComponent, FamilyCreateModalComponent, FamilyViewNavComponent, FamilyViewGeneralComponent, FamilyViewGeneralNavComponent, FamilyPersonCardComponent],
+  declarations: [FamiliesListComponent, FamilyPageHeaderComponent, FamilyProfileComponent, FamilyProfileInfoComponent, FamilyViewComponent, FamilyCreateModalComponent, FamilyViewNavComponent, FamilyViewGeneralComponent, FamilyViewGeneralNavComponent, FamilyParentsCardComponent, FamilyChildrenCardComponent, FamilyStudentsCardComponent, FamilyGrandparentsCardComponent],
   imports: [
     CommonModule,
     FormsModule,
