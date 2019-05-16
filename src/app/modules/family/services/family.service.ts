@@ -12,9 +12,63 @@ export class FamilyService {
     familyList: Family[];
   };
 
+  // TODO delete
+  tempFamily = {
+    id: 1,
+    name: 'Test3',
+    family_id: 'sfferervr',
+    address: '',
+    city: '',
+    state: '',
+    zip: '',
+    preferred_contact: '',
+    preferred_contact_method: '',
+    home_phone_number: '',
+    language_spoken_at_home: '',
+    number_of_siblings: '',
+    children_at_home: '',
+    family_rabbi: '',
+    rabbi_phone_number: '',
+    family_shul: '',
+  };
+
   tempData = [
-    {id: '3493485093802', name: 'Test'},
-    {id: '4523545424456', name: 'Test2'},
+    {
+      id: 1,
+      name: 'Test',
+      family_id: 'fewf43rg4g2rg24',
+      address: '',
+      city: '',
+      state: '',
+      zip: '',
+      preferred_contact: '',
+      preferred_contact_method: '',
+      home_phone_number: '',
+      language_spoken_at_home: '',
+      number_of_siblings: '',
+      children_at_home: '',
+      family_rabbi: '',
+      rabbi_phone_number: '',
+      family_shul: '',
+    },
+    {
+      id: 2,
+      name: 'Test2',
+      family_id: 'fewf43rgdsdc4g2rg24',
+      address: '',
+      city: '',
+      state: '',
+      zip: '',
+      preferred_contact: '',
+      preferred_contact_method: '',
+      home_phone_number: '',
+      language_spoken_at_home: '',
+      number_of_siblings: '',
+      children_at_home: '',
+      family_rabbi: '',
+      rabbi_phone_number: '',
+      family_shul: '',
+    },
   ];
 
   get familyList() {
@@ -38,7 +92,10 @@ export class FamilyService {
   }
 
   addFamily(familyName) {
-    this.dataStore.familyList.push({id: '3234534535', name: familyName});
+
+    this.tempFamily.name = familyName;
+
+    this.dataStore.familyList.push(this.tempFamily);
     this._familyList.next(this.dataStore.familyList);
   }
 }
