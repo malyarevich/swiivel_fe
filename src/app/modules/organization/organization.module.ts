@@ -11,14 +11,12 @@ import {PersonModule} from "./modules/person";
 import * as fromPerson from './modules/person/store/person.reducer';
 import {PersonEffects} from './modules/person/store/person.effect';
 import {UserService} from "../../services/user/user.service";
-import { FamilyPageComponent } from './components/family-page/family-page.component';
 import {FamilyService} from "../../services/family/family.service";
 
 @NgModule({
     declarations: [
         LayoutComponent,
         HeaderComponent,
-        FamilyPageComponent
     ],
     imports: [
         CommonModule,

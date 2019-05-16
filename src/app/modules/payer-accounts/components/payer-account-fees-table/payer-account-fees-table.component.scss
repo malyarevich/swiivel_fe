@@ -1,3 +1,5 @@
+@import '../../../../../styles/variables/colors';
+
 .payer-account-fees-table {
   .payer-account-fees-table-title {
     text-transform: uppercase;
@@ -18,6 +20,11 @@
   .payer-account-fees-table__top--right-block-search {
     margin: 0 10px;
     width: 250px;
+  }
+
+  .payer-account-fees-table__clear {
+    margin: 10px;
+    text-align: center;
   }
 
   .payer-account-fees-table__table {
@@ -93,7 +100,7 @@
       }
 
       .payer-account-fees-table__table-tbody-total {
-        color: #909090;
+        color: $gray-color;
       }
 
       &:last-child {

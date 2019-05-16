@@ -1,0 +1,7 @@
+<div class="p-4">
+  <app-family-view-nav (activeViewSectionEmitter)="setActiveSection($event)"></app-family-view-nav>
+  <div class="app-family-info-wrap p-4">
+    <app-family-view-general *ngIf="activeSection === FAMILY_VIEW_SECTIONS.GENERAL"></app-family-view-general>
+  </div>
+</div>
+
