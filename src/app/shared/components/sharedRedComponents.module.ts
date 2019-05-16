@@ -17,6 +17,7 @@ import { SelectMultiSearchFieldComponent } from './fields/select-multi-search-fi
 // components
 import { AddFeeComponent } from './add-fee/add-fee.component';
 import { BadgeComponent } from './badge/badge.component';
+import { BadgeDropdownComponent } from './badge-dropdown/badge-dropdown.component';
 import { ModalComponent } from './modal/modal.component';
 import { PersonShowComponent } from './person-show/person-show.component';
 import { SpinnerComponent } from './spinner/spinner.component';
@@ -35,6 +36,7 @@ import { TagComponent } from './tag/tag.component';
     // components
     AddFeeComponent,
     BadgeComponent,
+    BadgeDropdownComponent,
     ModalComponent,
     PersonShowComponent,
     SpinnerComponent,
@@ -62,6 +64,7 @@ import { TagComponent } from './tag/tag.component';
     // components
     AddFeeComponent,
     BadgeComponent,
+    BadgeDropdownComponent,
     ModalComponent,
     PersonShowComponent,
     SpinnerComponent,

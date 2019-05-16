@@ -1,0 +1,30 @@
+<div
+  class="app-badge-dropdown"
+  (click)="onDropdown()"
+>
+  <div class="app-badge-dropdown__content">
+    {{activeValue}}
+  </div>
+  <div
+    class="app-badge-dropdown__arrow"
+    [ngClass]="{'app-badge-dropdown__arrow-down': !isOpenDropdown, 'app-badge-dropdown__arrow-up': isOpenDropdown}"
+  >
+    <i
+      class="fas"
+      [ngClass]="{'fa-sort-down': !isOpenDropdown, 'fa-sort-up': isOpenDropdown}"
+    ></i>
+  </div>
+</div>
+<nav
+  class="app-badge-dropdown__nav"
+  *ngIf="isOpenDropdown"
+>
+  <li
+    class="app-badge-dropdown__nav--li"
+    *ngFor="let value of values"
+    (click)="onChooseValue(value)"
+    [ngClass]="{'app-badge-dropdown__nav--li__activated': value === activeValue}"
+  >
+    {{value}}
+  </li>
+</nav>

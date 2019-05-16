@@ -1,0 +1,60 @@
+@import '../../../../styles/variables/colors';
+
+.app-badge-dropdown {
+  font: 10px 'NunitoSans-Regular';
+  border-radius: 3px;
+  color: #fff;
+  background: $element-base-color;
+  padding: .25rem .5rem;
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  cursor: pointer;
+  text-transform: capitalize;
+
+  &:hover {
+    background: $element-second-color;
+    color: #fff;
+  }
+
+  .app-badge-dropdown__content {
+    margin: 0 .75rem 0 0;
+  }
+
+  .app-badge-dropdown__arrow {
+    position: relative;
+  }
+
+  .app-badge-dropdown__arrow-down {
+    top: -1px;
+  }
+
+  .app-badge-dropdown__arrow-up {
+    top: 3px;
+  }
+}
+
+.app-badge-dropdown__nav {
+  margin: 5px 0 0 0;
+  border-radius: 3px;
+  background: #fff;
+  position: absolute;
+  box-shadow: 1px 1px 6px 1px rgba(0, 0, 0, 0.15);
+
+  .app-badge-dropdown__nav--li {
+    color: #151515;
+    padding: 10px;
+    list-style-type: none;
+    min-width: 90px;
+    cursor: pointer;
+    font: 11px 'NunitoSans-Regular';
+    text-transform: capitalize;
+
+    &:hover,
+    &.app-badge-dropdown__nav--li__activated {
+      color: $element-base-color;
+      background: #f4f5f7;
+      font: 11px 'NunitoSans-Bold';
+    }
+  }
+}
