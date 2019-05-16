@@ -1,17 +1,65 @@
-<header class="header">
-    <section class="firstBlock flex">
-      <section class="menuSection">
-          <div class="burger" [class.isActive]="menu" (click)="toggleMenu()">
-              <img title="burger_menu" src="/assets/images/header/burger-menu.svg" alt="menu">
-          </div>
-    
-          <!--<div class="appTitle" (click)="goToIndex()">-->
-            <!--<h2>ABC School</h2>-->
-          <!--</div>-->
-        </section>
-    </section>
+<div class="main_menu d-none d-md-flex">
+    <ul class="navbar-nav flex-column main_menu__navbar_nav">
 
-    <section class="secondBlock flex">
-      <button class="btn app-btn-warning mr-3" (click)="logOut()">Logout</button>
-    </section>
-</header>
+        <li class="nav-item main_menu__nav_item">
+            <a class="nav-link main_menu__nav_link" routerLink="/" (click)="toggleMenu()" rel="noopener" name="Logo">
+                <div class="main_menu__icon_box">
+                    <span class="main_menu__icon_text">A</span>
+                </div>
+            </a>
+        </li>
+
+        <li class="nav-item main_menu__nav_item" *ngFor="let item of this.menuItems; let i = index;">
+            <a class="nav-link main_menu__nav_link" routerLink={{item.route}} rel="noopener" name={{item.label}}>
+                <i class="fas {{item.icon}} main_menu__icon"></i>
+            </a>
+        </li>
+        
+        <li class="nav-item main_menu__nav_item">
+            <a class="nav-link main_menu__nav_link" routerLink="/" (click)="logOut()" rel="noopener" name="Log Out">
+                <i class="fas fa-sign-out-alt main_menu__icon"></i>
+            </a>
+        </li>
+
+    </ul>
+</div> <!-- .main_menu -->
+<div class="main_menu d-flex d-md-none">
+  <!--Navbar-->
+  <nav class="navbar navbar-light light-blue lighten-4 m-2">
+
+      <!-- Navbar brand -->
+      <a class="navbar-brand m-0" href="#"></a>
+    
+      <!-- Collapse button -->
+      <button class="navbar-toggler toggler-example" type="button" data-toggle="collapse" data-target="#navbarSupportedContent1"
+        aria-controls="navbarSupportedContent1" aria-expanded="false" aria-label="Toggle navigation"><span class="dark-blue-text"><i
+            class="fas fa-bars fa-1x"></i></span></button>
+    
+      <!-- Collapsible content -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent1">
+    
+        <!-- Links -->
+        <ul class="navbar-nav mr-auto">
+
+          <li class="nav-item main_menu__nav_item" *ngFor="let item of this.menuItems; let i = index;">
+              <a class="nav-link main_menu__nav_link" routerLink={{item.route}} rel="noopener" name={{item.label}}>
+                  <!-- <i class="fas {{item.icon}} main_menu__icon"></i>  -->
+                  <span class="main_menu__nav_link_text">{{item.label}}</span>
+              </a>
+          </li>
+          
+          <li class="nav-item main_menu__nav_item">
+              <a class="nav-link main_menu__nav_link" routerLink="/" (click)="logOut()" rel="noopener" name="Log Out">
+                  <!-- <i class="fas fa-sign-out-alt main_menu__icon"></i>  -->
+                  <span class="main_menu__nav_link_text">Log Out</span>
+              </a>
+          </li>
+        </ul>
+        <!-- Links -->
+    
+      </div>
+      <!-- Collapsible content -->
+    
+    </nav>
+    <!--/.Navbar-->
+</div>

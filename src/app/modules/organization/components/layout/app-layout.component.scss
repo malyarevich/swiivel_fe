@@ -1,4 +1,21 @@
 @import '../../../../../styles/variables/index';
+.app_layout_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+@media (min-width: 768px) {
+    .app_layout_container {
+        flex-direction: row;
+        justify-content: flex-start;
+        
+    }
+}
+
+.main-container {
+    flex-grow: 1;
+}
 
 .content-container {
     position: relative;
