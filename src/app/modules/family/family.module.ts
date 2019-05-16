@@ -13,6 +13,7 @@ import { FamilyViewNavComponent } from './family-profile/family-view/family-view
 import { FamilyViewGeneralComponent } from './family-profile/family-view/family-view-general/family-view-general.component';
 import { FamilyViewGeneralNavComponent } from './family-profile/family-view/family-view-general/family-view-general-nav/family-view-general-nav.component';
 import { FamilyPersonCardComponent } from './family-profile/family-view/family-view-general/family-person-card/family-person-card.component';
+import {FamilyService} from "./services/family.service";
 
 @NgModule({
   declarations: [FamiliesListComponent, FamilyPageHeaderComponent, FamilyProfileComponent, FamilyProfileInfoComponent, FamilyViewComponent, FamilyCreateModalComponent, FamilyViewNavComponent, FamilyViewGeneralComponent, FamilyViewGeneralNavComponent, FamilyPersonCardComponent],
@@ -22,6 +23,7 @@ import { FamilyPersonCardComponent } from './family-profile/family-view/family-v
     ReactiveFormsModule,
     FamilyRoutingModule,
     NgbModule,
-  ]
+  ],
+  providers: [FamilyService]
 })
 export class FamilyModule { }
