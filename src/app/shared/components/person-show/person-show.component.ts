@@ -8,6 +8,7 @@ import {Component, Input, OnInit} from '@angular/core';
 export class PersonShowComponent implements OnInit {
   @Input() avatar: string;
   @Input() name: string;
+  @Input() showAvatar = true;
 
   constructor() { }
 

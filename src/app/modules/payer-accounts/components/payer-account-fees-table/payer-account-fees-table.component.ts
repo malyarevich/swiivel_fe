@@ -31,7 +31,7 @@ export class PayerAccountFeesTableComponent implements OnInit {
     {
       id: 'name',
       type: 'text',
-      title: 'STUDENTS',
+      title: 'STUDENTS & FAMILIES',
       sort: true,
       search: true,
       disabled: false,

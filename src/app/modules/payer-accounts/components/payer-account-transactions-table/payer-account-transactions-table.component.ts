@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./payer-account-transactions-table.component.scss']
 })
 export class PayerAccountTransactionsTableComponent implements OnInit {
+  public activeTab = 'groupedSplit';
+
   public tableCols = [
     {
       id: 'name',
@@ -14,6 +16,7 @@ export class PayerAccountTransactionsTableComponent implements OnInit {
       sort: true,
       search: true,
       disabled: false,
+      width: '13%',
     },
     {
       id: 'name',
@@ -22,6 +25,7 @@ export class PayerAccountTransactionsTableComponent implements OnInit {
       sort: true,
       search: true,
       disabled: false,
+      width: '8%',
     },
     {
       id: 'name',
@@ -30,6 +34,7 @@ export class PayerAccountTransactionsTableComponent implements OnInit {
       sort: true,
       search: true,
       disabled: false,
+      width: '10%',
     },
     {
       id: 'name',
@@ -38,6 +43,7 @@ export class PayerAccountTransactionsTableComponent implements OnInit {
       sort: true,
       search: true,
       disabled: false,
+      width: '25%',
     },
     {
       id: 'name',
@@ -46,6 +52,7 @@ export class PayerAccountTransactionsTableComponent implements OnInit {
       sort: true,
       search: true,
       disabled: false,
+      width: '8%',
     },
     {
       id: 'name',
@@ -54,6 +61,7 @@ export class PayerAccountTransactionsTableComponent implements OnInit {
       sort: true,
       search: true,
       disabled: false,
+      width: '8%',
     },
     {
       id: 'name',
@@ -62,6 +70,7 @@ export class PayerAccountTransactionsTableComponent implements OnInit {
       sort: true,
       search: true,
       disabled: false,
+      width: '8%',
     },
     {
       id: 'name',
@@ -70,6 +79,7 @@ export class PayerAccountTransactionsTableComponent implements OnInit {
       sort: true,
       search: true,
       disabled: false,
+      width: '10%',
     },
     {
       id: 'name',
@@ -78,12 +88,22 @@ export class PayerAccountTransactionsTableComponent implements OnInit {
       sort: true,
       search: true,
       disabled: false,
+      width: '10%',
     },
   ];
 
+  public statusValues = ['retry', 'pay now'];
+  public statusValue = this.statusValues[0];
+
   constructor() { }
 
-  ngOnInit() {
+  ngOnInit() { }
+
+  onTab(tabValue) {
+    this.activeTab = tabValue;
   }
 
+  onChangeStatusValue(value) {
+    this.statusValue = value;
+  }
 }
