@@ -5,6 +5,15 @@ import { Observable } from 'rxjs';
 // import { Go } from '../../utils/store/router-store';
 import { Logout } from '../../../login/store/index';
 
+const menuItems: IMenuItems[] = [
+  { route: '/', label: 'Dashboard', icon: 'fa-th' },
+  { route: '/vertical-data-collection', label: 'Bus', icon: 'fa-bus' },
+  { route: '/payer-accounts', label: 'Payer Accounts', icon: 'fa-wallet' },
+  { route: '/persons', label: 'Persons', icon: 'fa-user' },
+  { route: '/family', label: 'Family', icon: 'fa-cog' },
+  { route: '/', label: '???', icon: 'fa-file' },
+];
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -13,6 +22,7 @@ import { Logout } from '../../../login/store/index';
 })
 export class HeaderComponent implements OnInit {
   public user: Observable<any>;
+  private menuItems: IMenuItems[];
   @Input() menu = false;
   @Output() toggleSideMenu = new EventEmitter<boolean>();
 
@@ -20,6 +30,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
       // this.user = this.store.pipe(select('users'));
+      this.menuItems = menuItems;
   }
 
   toggleMenu () {
@@ -38,4 +49,10 @@ export class HeaderComponent implements OnInit {
   logOut (): void {
       this.store.dispatch(new Logout());
   }
+}
+
+interface IMenuItems {
+  route: string;
+  label: string;
+  icon: string;
 }

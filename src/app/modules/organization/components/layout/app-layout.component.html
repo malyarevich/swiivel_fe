@@ -1,30 +1,13 @@
-<div class="main-container">
-    <app-header [menu]="isMenuOpen" (toggleSideMenu)="toggleMenu()"></app-header>
-    <div class="content-container">
-        <section class="sideNav" [class.isOpen]="isMenuOpen">
-            <div class="menuItem" routerLink="/" (click)="toggleMenu()">
-                <span>DASHBOARD</span>
-            </div>
-            <div class="menuItem" routerLink="/vertical-data-collection" (click)="toggleMenu()">
-                <span>DATA COLLECTIONS</span>
-            </div>
-          <!--<div class="menuItem" routerLink="/vertical-data-collection" (click)="toggleMenu()">-->
-                <!--<span>VERTICAL DATA COLLECTIONS</span>-->
-            <!--</div>-->
-            <div class="menuItem" routerLink="/persons" (click)="toggleMenu()">
-                <span>PERSONS</span>
-            </div>
-            <div class="menuItem" routerLink="/payer-accounts" (click)="toggleMenu()">
-                <span>PAYER ACCOUNTS</span>
-            </div>
-            <div class="menuItem" routerLink="/family" (click)="toggleMenu()">
-                <span>FAMILY</span>
-            </div>
-        </section>
+<div class="app_layout_container">
+    
+    <app-header></app-header>
+    
+    <div class="main-container">
+        <div class="content-container">
+            <div class="content-area">
+                    <router-outlet></router-outlet>
+            </div> <!-- .content-area -->
+        </div> <!-- .content-container -->
+    </div> <!-- .main-container -->
+</div> <!-- .app_layout_container -->
 
-        <div class="background" [class.isFade]="isMenuOpen" (click)="toggleMenu()"></div>
-        <div class="content-area">
-                <router-outlet></router-outlet>
-        </div>
-    </div>
-</div>

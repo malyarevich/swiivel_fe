@@ -22,10 +22,17 @@
     width: 250px;
   }
 
+  .payer-account-transactions-table__tab-content {
+    margin: 10px 0 0;
+  }
+
+  .payer-account-transactions-table__tabs-split {
+    margin: 0 15px 0 0;
+  }
+
   .payer-account-transactions-table__table {
     width: 100%;
     color: #151515;
-    margin: 15px 0 0;
     border-collapse: collapse;
   }
 

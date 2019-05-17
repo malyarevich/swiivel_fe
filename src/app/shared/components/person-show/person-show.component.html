@@ -1,5 +1,6 @@
 <div class="app-person-show">
   <div
+    *ngIf="showAvatar"
     class="app-person-show-avatar"
     [ngStyle]="{'background-image': avatar ? 'url(' + avatar + ')' : '' }"
   >
