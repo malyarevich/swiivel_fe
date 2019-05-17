@@ -24,6 +24,7 @@ export class FamiliesListComponent implements OnInit {
     this.getFamilyList();
   }
 
+  // Todo Delete after complete
   getFamilyPersons() {
     this.familyService.getAllFamilyPersons().subscribe((res: FamilyPerson[]) => {
       this.familyPersons = res;

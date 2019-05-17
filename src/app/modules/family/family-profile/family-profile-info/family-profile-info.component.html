@@ -1,18 +1,18 @@
 <!--Show profile info-->
 <ng-container *ngIf="!isEditProfile">
-  <p class="app-text-extra-large font-weight-bold">Fishman Family</p>
+  <p class="app-text-extra-large font-weight-bold">{{family.name}}</p>
 
   <div class="row  no-gutters border-top border-bottom py-3 text-center">
     <div class="col-4 border-right px-4">
-      <p class="app-text-large font-weight-bold mb-0">10</p>
+      <p class="app-text-large font-weight-bold mb-0">{{family.number_of_siblings}}</p>
       <p class="app-text-small mb-0">Number of siblings</p>
     </div>
     <div class="col-4 border-right px-4">
-      <p class="app-text-large font-weight-bold mb-0">5</p>
+      <p class="app-text-large font-weight-bold mb-0">{{family.children_at_home}}</p>
       <p class="app-text-small mb-0">Children at home</p>
     </div>
     <div class="col-4 px-4">
-      <p class="app-text-large font-weight-bold mb-0">2</p>
+      <p class="app-text-large font-weight-bold mb-0">{{family.children_at_home}}</p>
       <p class="app-text-small mb-0">Adopted children</p>
     </div>
   </div>
@@ -22,19 +22,19 @@
       <p class="font-weight-bold mb-2">CONTACTS</p>
       <div class="d-flex justify-content-between">
         <p class="align-self-start app-text-second mb-2">Address:</p>
-        <p class="align-self-end mb-2">High Road 45, New York, 123456</p>
+        <p class="align-self-end mb-2">{{family.address}}</p>
       </div>
       <div class="d-flex justify-content-between">
         <p class="align-self-start app-text-second mb-2">Prefered Contact:</p>
-        <p class="align-self-end mb-2">Atara Fishman</p>
+        <p class="align-self-end mb-2">{{family.preferred_contact}}</p>
       </div>
       <div class="d-flex justify-content-between">
         <p class="align-self-start app-text-second mb-2">Contact number:</p>
-        <p class="align-self-end mb-2">+1-202-555-0181</p>
+        <p class="align-self-end mb-2">{{family.preferred_contact_method}}</p>
       </div>
       <div class="d-flex justify-content-between">
         <p class="align-self-start app-text-second mb-2">Home Phone Number:</p>
-        <p class="align-self-end mb-2">+1-202-555-0181 </p>
+        <p class="align-self-end mb-2">{{family.home_phone_number}}</p>
       </div>
     </div>
   </div>
@@ -44,19 +44,19 @@
       <p class="font-weight-bold mb-2">ADDITIONAL INFORMATION</p>
       <div class="d-flex justify-content-between">
         <p class="align-self-start app-text-second mb-2">Language Spoken at Home:</p>
-        <p class="align-self-end mb-2">Hebrew</p>
+        <p class="align-self-end mb-2">{{family.language_spoken_at_home}}</p>
       </div>
       <div class="d-flex justify-content-between">
         <p class="align-self-start app-text-second mb-2">Family Rabbi:</p>
-        <p class="align-self-end mb-2">Avraham Saphira</p>
+        <p class="align-self-end mb-2">{{family.family_rabbi}}</p>
       </div>
       <div class="d-flex justify-content-between">
         <p class="align-self-start app-text-second mb-2">Family Rabbi Phone:</p>
-        <p class="align-self-end mb-2">+1-202-555-0181</p>
+        <p class="align-self-end mb-2">{{family.rabbi_phone_number}}</p>
       </div>
       <div class="d-flex justify-content-between">
         <p class="align-self-start app-text-second mb-2">Family Shul:</p>
-        <p class="align-self-end mb-2">Chabad Downtown Jewish Center</p>
+        <p class="align-self-end mb-2">{{family.family_shul}}</p>
       </div>
     </div>
   </div>
@@ -250,9 +250,9 @@
       <button class="btn app-btn-warning px-4" (click)="cancelEdit()">Cancel</button>
     </div>
     <div class="col-12">
-      <button [disabled]="!familyEditable.name" class="btn app-btn-primary px-4" (click)="save()">Save</button>
+      <button [disabled]="!familyEditable.name" class="btn app-btn-primary px-4" (click)="update()">Save</button>
     </div>
   </div>
-
+{{familyEditable | json}}
 </ng-container>
 <!--End Edit profile info-->

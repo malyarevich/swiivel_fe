@@ -7,14 +7,16 @@ import {HttpClient} from "@angular/common/http";
 export class FamilyService {
 
   private _familyList: BehaviorSubject<Family[]> = <BehaviorSubject<Family[]>> new BehaviorSubject([]);
+  private _family: BehaviorSubject<Family> = <BehaviorSubject<Family>> new BehaviorSubject(null);
 
   private dataStore: {
     familyList: Family[];
+    family: Family;
   };
 
   // TODO delete
   tempFamily = {
-    id: 1,
+    id: 3,
     name: 'Test3',
     family_id: 'sfferervr',
     address: '',
@@ -75,9 +77,14 @@ export class FamilyService {
     return this._familyList.asObservable();
   }
 
+  get family() {
+    return this._family.asObservable();
+  }
+
   constructor(private http: HttpClient) {
     this.dataStore = {
-      familyList: []
+      familyList: [],
+      family: null,
     };
   }
 
@@ -88,7 +95,12 @@ export class FamilyService {
     // }, error => console.log('Could not load employee.'));
 
     this.dataStore.familyList = this.tempData;
-    this._familyList.next(this.dataStore.familyList);
+    this._familyList.next(Object.assign({}, this.dataStore).familyList);
+  }
+
+  getOne(id) {
+    this.dataStore.family = this.tempFamily;
+    this._family.next(Object.assign({}, this.dataStore).family);
   }
 
   addFamily(familyName) {
@@ -96,6 +108,10 @@ export class FamilyService {
     this.tempFamily.name = familyName;
 
     this.dataStore.familyList.push(this.tempFamily);
-    this._familyList.next(this.dataStore.familyList);
+    this._familyList.next(Object.assign({}, this.dataStore).familyList);
+  }
+
+  update() {
+
   }
 }
