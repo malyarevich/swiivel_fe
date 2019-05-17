@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {Field} from "../../../../../model/field.model";
 import {cloneDeep, isEmpty} from 'lodash';
 import {Form} from "../../../../../model/form.model";
@@ -9,7 +9,8 @@ import {SideBarService} from "../side-bar.service";
   templateUrl: './v-side-bar-field.component.html',
   styleUrls: ['./v-side-bar-field.component.css']
 })
-export class VSideBarFieldComponent implements OnInit {
+export class VSideBarFieldComponent implements OnInit, OnDestroy {
+
 
   @Input() field: Field;
   @Input() section: Field;
@@ -22,7 +23,7 @@ export class VSideBarFieldComponent implements OnInit {
 
   ngOnInit() {
     // console.log(this.form);
-    this.field.exist=false;
+    // this.field.exist=false;
   }
 
   onChangeGroupBeing(field, group) {
@@ -47,15 +48,18 @@ export class VSideBarFieldComponent implements OnInit {
 
 
   onBeingChange(event){
-    event?
+    if(event){
       this.onChangeGroupBeing(
         this.field,
        this.section
       )
-      : this.sideBarService.onDelete(
+    }else{
+
+      this.sideBarService.onFieldDelete(
       this.field,
-      this.section
+      this.form.fields
       );
+    }
     this.field.exist = event;
   }
 
@@ -75,5 +79,9 @@ export class VSideBarFieldComponent implements OnInit {
   //     }
   //   })
   // }
+
+  ngOnDestroy(): void {
+    this.field.exist=false;
+  }
 }
 

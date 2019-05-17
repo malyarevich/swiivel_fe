@@ -13,12 +13,12 @@
   </div>
   <div  class="col-1">
     <button class="btn btn-sm " (click)="showNested=!showNested">
-      <i *ngIf="showNested" class="fas  fa-caret-down dragable-i"></i>
-      <i *ngIf="!showNested" class="fas  fa-caret-up dragable-i"></i>
+      <i [hidden]="!showNested" class="fas  fa-caret-down dragable-i"></i>
+      <i [hidden]="showNested" class="fas  fa-caret-up dragable-i"></i>
     </button>
   </div>
 </div>
-<ng-container *ngIf="showNested">
+<div [hidden]="!showNested">
 <div  class="my-3  ml-3 " *ngFor="let field of section.fields ">
   <app-v-side-bar-group
     *ngIf="field.type==113"
@@ -37,4 +37,4 @@
   >
   </app-v-side-bar-field>
 </div>
-</ng-container>
+</div>

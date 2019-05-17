@@ -1,16 +1,17 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Field} from "../../../../../../model/field.model";
 import {crumbs} from "../index";
 import {SideBarService} from "../../side-bar.service";
 import {Form} from "../../../../../../model/form.model";
-import {v4 as uuid} from 'uuid';
-import {cloneDeep, isEmpty} from 'lodash';
+
 @Component({
   selector: 'app-v-fields-side-bar-detailed',
   templateUrl: './v-fields-side-bar-detailed.component.html',
   styleUrls: ['./v-fields-side-bar-detailed.component.css']
 })
-export class VFieldsSideBarDetailedComponent implements OnInit {
+export class VFieldsSideBarDetailedComponent implements OnInit, AfterViewInit, OnDestroy {
+
+
 
   @Input() section: Field;
   @Input() form: Form;
@@ -23,7 +24,8 @@ export class VFieldsSideBarDetailedComponent implements OnInit {
   }
 
   ngOnInit() {
-    // console.log(this.form);
+    this.initFormFieldsToSideBar( [this.section], this.form.fields);
+
   }
 
   returnToTree(){
@@ -40,7 +42,7 @@ export class VFieldsSideBarDetailedComponent implements OnInit {
   //   // this.fieldsValidator();
   // }
   onBeingChange(event){
-
+    console.log(this.section, event);
    if(event){
      this.sideBarService.addExistingField(
        this.section,
@@ -48,7 +50,7 @@ export class VFieldsSideBarDetailedComponent implements OnInit {
      );
      this.sideBarService.changeExistingAllSection(true, this.section.fields);
    }else{
-     this.sideBarService.onDelete(
+     this.sideBarService.onSectionDelete(
        this.section,
        this.form,
      );
@@ -65,17 +67,29 @@ export class VFieldsSideBarDetailedComponent implements OnInit {
   //   })
   // }
 
+  ngAfterViewInit(): void {
+    // console.log(this.form);
+    // this.initFormFieldsToSideBar( [this.section], this.form.fields);
+  }
 
   initFormFieldsToSideBar(sideBar: Field[], workArea: Field[]) {
     sideBar.forEach(sideBarField => {
       workArea.forEach(field => {
+        // console.log(sideBarField, field);
         if (sideBarField.name == field.name) {
-          if (field.type == 113) this.initFormFieldsToSideBar(sideBarField.fields, field.fields);
-          sideBarField.exist = true
+          // console.log(sideBarField.name, field.name);
+          if (field.type == 113 || field.type == 114){
+            this.initFormFieldsToSideBar(sideBarField.fields, field.fields);
+          }
+          sideBarField.exist = true;
+          // console.log(sideBarField, 'sidebar field');
         }
       })
     })
   }
 
+  ngOnDestroy(): void {
+    this.sideBarService.sectionSubject.next({});
+  }
 
 }

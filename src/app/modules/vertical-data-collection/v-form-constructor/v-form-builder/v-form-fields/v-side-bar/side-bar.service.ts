@@ -36,9 +36,12 @@ export class SideBarService {
     })
   }
 
-  onDelete(field: Field, filedList: Field | Form) {
-
+  onSectionDelete(field: Field, filedList: Field | Form) {
+  // console.log(field, filedList);
     filedList.fields = filedList.fields.filter(sec => sec.name != field.name);
+    // if (field.type == 113 || field.type == 114){
+    //   this.onDelete(fi)
+    // }
     // this.fields = this.findAndDelete(name, this.fields);
     // this.fields.map(group => group.type == 113 ? group.fields = this.findAndDelete(name, group.fields) : group);
     // this.sideBarService.changeExistingAllSection(false, this.section.fields);
@@ -46,4 +49,13 @@ export class SideBarService {
     // this.fieldsValidator();
 
   }
+
+  onFieldDelete(field: Field, filedList: Field[]){
+
+    filedList.forEach(f=>{
+      if (f.type == 113 || f.type == 114) this.onFieldDelete(field, f.fields);
+      if(f.name==field.name && f.prefix==field.prefix) filedList.splice(filedList.indexOf(f), 1)
+    })
+  }
+
 }

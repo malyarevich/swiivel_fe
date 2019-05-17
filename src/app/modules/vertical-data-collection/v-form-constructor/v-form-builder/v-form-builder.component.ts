@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, ViewChild, ElementRef} from '@angular/core';
+import {Component, OnInit, Input, ViewChild, ElementRef, OnDestroy} from '@angular/core';
 import {CdkDragDrop, copyArrayItem, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import {VFormService} from '../../v-form.service';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -34,7 +34,8 @@ import {FeeTemplate, FeeTemplatesData} from "../../../../models/fee-templates.mo
   templateUrl: './v-form-builder.html',
   styleUrls: ['./v-form-builder.scss'],
 })
-export class VFormBuilderComponent implements OnInit {
+export class VFormBuilderComponent implements OnInit, OnDestroy {
+
   validNewCustomFieldName: boolean = true;
   showAddButton = true;
   formId: string = '';
@@ -537,5 +538,11 @@ export class VFormBuilderComponent implements OnInit {
     return this.tuitionContract.fees.findIndex(fee => fee.id === feeTemplateId) !== -1;
   }
   //End Tuition Contract
+
+  ngOnDestroy(): void {
+    for (let fbSectionsKey in this.sections) {
+      this.sections[fbSectionsKey] = false;
+    }
+  }
 }
 
