@@ -97,7 +97,7 @@
           </ng-container>
 
           <div [hidden]="menu.period.isActive" class="row justify-content-center">
-            <button class="btn app-btn-primary" (click)="nextStep(menu.period);$event.preventDefault();">Next Step</button>
+            <button class="btn app-btn-primary" (click)="validateBasicFormInfoFields();$event.preventDefault();">Next Step</button>
           </div>
 
         </div>
@@ -161,7 +161,7 @@
           </div>
 
           <div [hidden]="menu.dates.isActive" class="row justify-content-center">
-            <button class="btn app-btn-primary" (click)="nextStep(menu.dates);$event.preventDefault()">Next Step</button>
+            <button class="btn app-btn-primary" (click)="validatePeriodFields();$event.preventDefault()">Next Step</button>
           </div>
 
         </div>
@@ -231,7 +231,7 @@
           </div>
 
           <div [hidden]="menu.eligible.isActive" class="row justify-content-center">
-            <button class="btn app-btn-primary" (click)="nextStep(menu.eligible);$event.preventDefault()">Next Step</button>
+            <button class="btn app-btn-primary" (click)="validateDatesFields();$event.preventDefault()">Next Step</button>
           </div>
 
         </div>

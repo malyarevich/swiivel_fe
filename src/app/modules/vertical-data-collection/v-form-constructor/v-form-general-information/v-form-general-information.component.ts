@@ -88,6 +88,36 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
     });
   }
 
+  validateBasicFormInfoFields() {
+    console.log(this.generalInfoForm);
+    console.log(this.generalInfoForm.controls.name);
+    console.log(this.generalInfoForm.controls.name);
+    if(this.generalInfoForm.get('name').invalid || this.generalInfoForm.get('language').invalid) {
+      this.generalInfoForm.get('name').markAsTouched({ onlySelf: true });
+      this.generalInfoForm.get('language').markAsTouched({ onlySelf: true });
+    } else {
+      this.nextStep(this.menu.period);
+    }
+    
+  }
+  
+  validatePeriodFields() {
+    if(this.generalInfoForm.get('periodCheckboxGroup').invalid) {
+      this.generalInfoForm.get('periodCheckboxGroup').markAsTouched({ onlySelf: true });
+    } else {
+      this.nextStep(this.menu.dates);
+    }
+  }
+  
+  validateDatesFields() {
+    if(this.generalInfoForm.get('startDate').invalid || this.generalInfoForm.get('endDate').invalid) {
+      this.generalInfoForm.get('startDate').markAsTouched({ onlySelf: true });
+      this.generalInfoForm.get('endDate').markAsTouched({ onlySelf: true });
+    } else {
+      this.nextStep(this.menu.eligible);
+    }
+  }
+
   useDublicate(form: FormSql){
     this.formDublicateId = form.mongo_id;
   }
@@ -182,17 +212,17 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
 
   }
 
-    getDayparting() {
-        let hrs = new Date().getHours();
-        if (hrs >= 6 && hrs < 11) return 'morning';
-        if (hrs >= 11 && hrs < 19) return 'afternoon';
-        if (hrs >= 19 && hrs <= 23) return 'evening';
-        return 'night';
-    }
+  getDayparting() {
+      let hrs = new Date().getHours();
+      if (hrs >= 6 && hrs < 11) return 'morning';
+      if (hrs >= 11 && hrs < 19) return 'afternoon';
+      if (hrs >= 19 && hrs <= 23) return 'evening';
+      return 'night';
+  }
 
-    onScrollTo(target) {
-        this[target].nativeElement.scrollIntoView({behavior:'smooth'});
-    }
+  onScrollTo(target) {
+      this[target].nativeElement.scrollIntoView({behavior:'smooth'});
+  }
 
   setActiveSection(value) {
     this.activeSection = value.target;
