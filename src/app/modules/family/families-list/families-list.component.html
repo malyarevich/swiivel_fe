@@ -21,7 +21,7 @@
           <th scope="row">{{ i + 1 }}</th>
           <td>{{ item.name }}</td>
           <th>
-            <button class="btn app-btn-primary px-2 py-0" [routerLink]="'profile/'+ item.family_id">Edit</button>
+            <button class="btn app-btn-primary px-2 py-0 mr-2" [routerLink]="'profile/'+ item.family_id">Edit</button>
             <button class="btn btn-danger px-2 py-0" (click)="deleteFamily(item.family_id)">Delete</button>
           </th>
         </tr>
