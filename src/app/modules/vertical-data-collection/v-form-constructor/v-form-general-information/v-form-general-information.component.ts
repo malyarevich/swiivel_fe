@@ -89,9 +89,6 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
   }
 
   validateBasicFormInfoFields() {
-    console.log(this.generalInfoForm);
-    console.log(this.generalInfoForm.controls.name);
-    console.log(this.generalInfoForm.controls.name);
     if(this.generalInfoForm.get('name').invalid || this.generalInfoForm.get('language').invalid) {
       this.generalInfoForm.get('name').markAsTouched({ onlySelf: true });
       this.generalInfoForm.get('language').markAsTouched({ onlySelf: true });
