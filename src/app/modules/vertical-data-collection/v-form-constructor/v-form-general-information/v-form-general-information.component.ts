@@ -88,37 +88,48 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
     });
   }
 
-  validateBasicFormInfoFields() {
-    if(this.generalInfoForm.get('name').invalid || this.generalInfoForm.get('language').invalid) {
+  isValidBasicFormInfoFields(): boolean {
+    return !(this.generalInfoForm.get('name').invalid || this.generalInfoForm.get('language').invalid);
+  }
+
+  validateBasicFormInfoFields(): void {
+    if(this.isValidBasicFormInfoFields()) {
+      this.nextStep(this.menu.period);
+    } else {
       this.generalInfoForm.get('name').markAsTouched({ onlySelf: true });
       this.generalInfoForm.get('language').markAsTouched({ onlySelf: true });
-    } else {
-      this.nextStep(this.menu.period);
     }
-    
+  }
+
+  isValidPeriodFields(): boolean {
+    console.log(this.generalInfoForm.get('name').invalid);
+    return !(this.generalInfoForm.get('periodCheckboxGroup').invalid);
   }
   
-  validatePeriodFields() {
-    if(this.generalInfoForm.get('periodCheckboxGroup').invalid) {
-      this.generalInfoForm.get('periodCheckboxGroup').markAsTouched({ onlySelf: true });
-    } else {
+  validatePeriodFields(): void {
+    if(this.isValidBasicFormInfoFields() && this.isValidPeriodFields()) {
       this.nextStep(this.menu.dates);
+    } else {
+      this.generalInfoForm.get('periodCheckboxGroup').markAsTouched({ onlySelf: true });
     }
   }
   
-  validateDatesFields() {
-    if(this.generalInfoForm.get('startDate').invalid || this.generalInfoForm.get('endDate').invalid) {
+  isValidDatesFields(): boolean {
+    return !(this.generalInfoForm.get('startDate').invalid || this.generalInfoForm.get('endDate').invalid);
+  }
+
+  validateDatesFields(): void {
+    if(this.isValidBasicFormInfoFields() && this.isValidPeriodFields() && this.isValidDatesFields()) {
+      this.nextStep(this.menu.eligible);
+    } else {
       this.generalInfoForm.get('startDate').markAsTouched({ onlySelf: true });
       this.generalInfoForm.get('endDate').markAsTouched({ onlySelf: true });
-    } else {
-      this.nextStep(this.menu.eligible);
     }
   }
 
-  useDublicate(form: FormSql){
+  useDublicate(form: FormSql) {
     this.formDublicateId = form.mongo_id;
   }
-
 
   getAllForm(): void {
     this.formService.getFormsList().subscribe(forms => {
