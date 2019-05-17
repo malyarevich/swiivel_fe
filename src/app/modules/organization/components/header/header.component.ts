@@ -22,7 +22,7 @@ export const menuItems: IMenuItems[] = [
 })
 export class HeaderComponent implements OnInit {
   public user: Observable<any>;
-  private menuItems: IMenuItems[];
+  public menuItems: IMenuItems[];
   @Input() menu = false;
   @Output() toggleSideMenu = new EventEmitter<boolean>();
 
