@@ -48,7 +48,7 @@
             <!-- Links -->
             <ul class="navbar-nav mr-auto">
 
-                <li class="nav-item top_menu__nav_item" *ngFor="let item of this.menuItems; let i = index;">
+                <li class="nav-item top_menu__nav_item" *ngFor="let item of menuItems; let i = index;">
                     <a class="nav-link top_menu__nav_link" routerLink={{item.route}} rel="noopener" name={{item.label}}>
                         <!-- <i class="fas {{item.icon}} top_menu__icon"></i>  -->
                         <span class="top_menu__nav_link_text">{{item.label}}</span>

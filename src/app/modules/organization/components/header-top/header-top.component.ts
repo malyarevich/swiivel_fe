@@ -15,7 +15,7 @@ import { menuItems, IMenuItems } from '../header/header.component';
 })
 export class HeaderTopComponent implements OnInit {
   public user: Observable<any>;
-  private menuItems: IMenuItems[];
+  public menuItems: IMenuItems[];
   @Input() menu = false;
   @Output() toggleSideMenu = new EventEmitter<boolean>();
 
