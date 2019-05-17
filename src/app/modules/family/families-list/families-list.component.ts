@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FamilyService} from "../../../services/family/family.service";
-import {FamilyService as FamilyService2} from "../services/family.service";
-import {FamilyPerson} from "../../../models/family-person.model";
+import {FamilyService} from "../services/family.service";
 import {Observable} from "rxjs";
 import {Family} from "../model/family.model";
 
@@ -12,28 +10,21 @@ import {Family} from "../model/family.model";
 })
 export class FamiliesListComponent implements OnInit {
 
-  familyPersons: FamilyPerson[] = [];
+  public familyList: Observable <Family[]> ;
 
-  public familyList: Observable < Family[] > ;
-
-  constructor(private familyService: FamilyService,
-              private familyService2: FamilyService2) { }
+  constructor(private familyService: FamilyService) { }
 
   ngOnInit() {
-    this.getFamilyPersons();
     this.getFamilyList();
   }
 
-  // Todo Delete after complete
-  getFamilyPersons() {
-    this.familyService.getAllFamilyPersons().subscribe((res: FamilyPerson[]) => {
-      this.familyPersons = res;
-    })
+  getFamilyList() {
+    this.familyList = this.familyService.familyList;
+    this.familyService.getAll();
   }
 
-  getFamilyList() {
-    this.familyList = this.familyService2.familyList;
-    this.familyService2.getAll();
+  deleteFamily(familyId) {
+    this.familyService.delete(familyId);
   }
 
 }

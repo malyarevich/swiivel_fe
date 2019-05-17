@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {FamilyService as FamilyService2} from "../../services/family.service";
+import {FamilyService} from "../../services/family.service";
 import {cloneDeep} from 'lodash';
 import {Family} from "../../model/family.model";
 
@@ -17,21 +17,22 @@ export class FamilyProfileInfoComponent implements OnInit {
   family: Family;
   familyEditable: Family;
 
-  constructor(private familyService2: FamilyService2) { }
+  constructor(private familyService: FamilyService) { }
 
   ngOnInit() {
     this.getFamily(this.familyId);
   }
 
-  getFamily(id) {
-    this.familyService2.family.subscribe((res) => {
+  getFamily(familyId) {
+    this.familyService.family.subscribe((res) => {
       this.family = res;
     });
-    this.familyService2.getOne(id);
+    this.familyService.getOne(familyId);
   }
 
   update() {
-    // console.log('save');
+    this.isEditProfile = false;
+    this.familyService.update(this.familyEditable)
   }
 
   onEdit() {

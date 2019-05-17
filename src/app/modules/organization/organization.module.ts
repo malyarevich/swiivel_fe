@@ -11,7 +11,6 @@ import {PersonModule} from "./modules/person";
 import * as fromPerson from './modules/person/store/person.reducer';
 import {PersonEffects} from './modules/person/store/person.effect';
 import {UserService} from "../../services/user/user.service";
-import {FamilyService} from "../../services/family/family.service";
 
 @NgModule({
     declarations: [
@@ -26,7 +25,7 @@ import {FamilyService} from "../../services/family/family.service";
         StoreModule.forFeature('person', fromPerson.reducer),
       EffectsModule.forFeature([PersonEffects]),
     ],
-    providers: [PersonService, UserService, FamilyService]
+    providers: [PersonService, UserService]
 })
 export class OrganizationModule {
 }

@@ -1,6 +1,6 @@
 <!--Show profile info-->
 <ng-container *ngIf="!isEditProfile">
-  <p class="app-text-extra-large font-weight-bold">{{family.name}}</p>
+  <p class="app-text-extra-large font-weight-bold">{{family?.name}}</p>
 
   <div class="row  no-gutters border-top border-bottom py-3 text-center">
     <div class="col-4 border-right px-4">
@@ -253,6 +253,5 @@
       <button [disabled]="!familyEditable.name" class="btn app-btn-primary px-4" (click)="update()">Save</button>
     </div>
   </div>
-{{familyEditable | json}}
 </ng-container>
 <!--End Edit profile info-->
