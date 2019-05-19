@@ -1,0 +1,50 @@
+<div
+  class="app-select-multi-checkbox-field"
+  [ngClass]="{'app-select-multi-checkbox-field-has-error': isInvalid}"
+  id={{id}}
+>
+  <ng-select
+    [ngClass]="{'app-select-multi-checkbox-field-remove-clear-btn': !showClearBtn}"
+    [items]="items"
+    bindLabel={{bindLabel}}
+    bindValue={{bindValue}}
+    [multiple]="true"
+    [(ngModel)]="value"
+    [searchable]="searchable"
+    (change)="onChange($event)"
+    placeholder={{labelTitle}}
+    (blur)="onTouched()"
+  >
+    <ng-template
+      ng-option-tmp
+      let-item="item"
+      let-item$="item$"
+      let-index="index"
+    >
+      <input
+        id="item-{{index}}"
+        type="checkbox"
+        [ngModel]="item$.selected"
+      />
+      {{item.name}}
+      <span class="app-select-multi-checkbox-field-checkmark"></span>
+
+    </ng-template>
+    <ng-template ng-multi-label-tmp let-items="items">
+      <div
+        class="ng-value"
+        *ngFor="let item of items; let isLast=last"
+      >
+        <span class="ng-value-label">
+          {{item.name}}{{isLast ? '' : ','}}
+        </span>
+      </div>
+    </ng-template>
+  </ng-select>
+  <div
+    *ngIf="isInvalid"
+    class="app-select-multi-checkbox-field-error-icon"
+  >
+    x
+  </div>
+</div>

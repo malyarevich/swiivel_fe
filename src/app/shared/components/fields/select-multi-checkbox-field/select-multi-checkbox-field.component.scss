@@ -1,0 +1,169 @@
+@import '../../../../../styles/variables/colors';
+
+.app-select-multi-checkbox-field {
+  position: relative;
+
+  .ng-select::ng-deep {
+
+    .ng-select-container {
+
+      .ng-value-container {
+        overflow: visible;
+
+        .ng-placeholder {
+          position: absolute;
+          color: $gray-color;
+          transform-origin: 0 0;
+          transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),-webkit-transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+          top: 9px;
+        }
+
+        .ng-value {
+          background: transparent;
+          position: relative;
+          top: 5px;
+          margin: 0 0 5px;
+
+          .ng-value-label {
+            padding: 0 2px;
+            font: 12px 'NunitoSans-Bold';
+
+            &::first-letter {
+              text-transform: uppercase;
+            }
+          }
+        }
+      }
+    }
+
+    .ng-has-value {
+
+      .ng-placeholder {
+        display: block;
+        transform: translateY(-7px) scale(0.85) perspective(100px) translateZ(0.001px);
+      }
+    }
+  }
+
+  .ng-select.ng-select-opened::ng-deep {
+
+    .ng-select-container {
+      border-color: $element-base-color;
+    }
+
+    .ng-dropdown-panel::ng-deep {
+      border-color: $element-base-color;
+      border-top: none;
+
+      .ng-dropdown-panel-items {
+        font-size: 12px;
+
+        .ng-option {
+          color: $darkgray-color;
+          position: relative;
+          padding: 8px 0 8px 35px;
+
+          &::first-letter {
+            text-transform: uppercase;
+          }
+
+          input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+          }
+
+          .app-select-multi-checkbox-field-checkmark {
+            position: absolute;
+            top: 9px;
+            left: 8px;
+            height: 16px;
+            width: 16px;
+            background-color: #ebeeff;
+            border-radius: 4px;
+
+            &:after {
+              content: '';
+              position: absolute;
+              display: none;
+              left: 5px;
+              top: 1px;
+              width: 5px;
+              height: 10px;
+              border: solid white;
+              border-width: 0 2px 2px 0;
+              transform: rotate(45deg);
+            }
+          }
+        }
+
+        .ng-option.ng-option-selected,
+        .ng-option.ng-option-selected.ng-option-marked {
+          color: $element-base-color;
+          background: #ebeeff;
+          font: 12px 'NunitoSans-Bold';
+
+          .app-select-multi-checkbox-field-checkmark {
+            background-color: #f8bc45;
+
+            &:after {
+              display: block;
+            }
+          }
+        }
+      }
+    }
+
+    .ng-select-container .ng-arrow {
+      border-color: $element-base-color transparent transparent;
+      border-style: solid;
+      border-width: 5px 5px 2.5px;
+      top: 0;
+    }
+  }
+
+  .app-select-multi-checkbox-field-remove-clear-btn.ng-select::ng-deep {
+    .ng-clear-wrapper {
+      display: none;
+    }
+  }
+
+  &.app-select-multi-checkbox-field-has-error {
+    .ng-select::ng-deep {
+
+      .ng-select-container {
+        border-color: $error-color;
+
+        .ng-value-container {
+
+          .ng-placeholder {
+            color: $error-color;
+          }
+        }
+      }
+    }
+
+    .ng-select.ng-select-opened::ng-deep {
+
+      .ng-select-container {
+        border-color: $element-base-color;
+      }
+    }
+  }
+
+  .app-select-multi-checkbox-field-error-icon {
+    color: #fff;
+    background: $error-color;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    text-align: center;
+    line-height: 7px;
+    position: absolute;
+    right: 11px;
+    top: 11px;
+    padding: 4px 0;
+  }
+}

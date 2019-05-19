@@ -25,4 +25,15 @@ export class FeeService {
         })
       );
   }
+
+  getRecipientFee(recipientId): Observable<any> {
+    const params = new HttpParams().set('recipient_id[]', recipientId);
+
+    return this.http.get(`${API_URL}/fees/`, { headers, params })
+      .pipe(
+        map((response) => {
+          return response;
+        })
+      );
+  }
 }
