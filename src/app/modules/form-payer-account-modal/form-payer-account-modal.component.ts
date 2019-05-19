@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Person } from '../../models/person.model';
 import { Recipient } from '../../models/recipient.model';
 
+import { FeeService } from '../../services/fee/fee.service';
 import { PersonService } from '../../services/person/person.service';
 import { PayersService } from '../payer-accounts/services/payers.service';
 import { RecipientService } from '../../services/recipient/recipient.service';
@@ -19,15 +20,23 @@ export class FormPayerAccountModalComponent implements OnInit {
   private payerAccountForm: FormGroup;
 
   errorMsg: string;
+  fees: any[] = [];
   persons: any[] = [];
   students: any[] = [];
   types = ['Payer', 'Other'];
+  // feeTypes = [
+  //   {
+  //     id: 1,
+  //
+  //   }
+  // ];
 
   constructor(
     private fb: FormBuilder,
     private personService: PersonService,
     private payersService: PayersService,
     private recipientService: RecipientService,
+    private feeService: FeeService,
   ) {
     this.payerAccountForm = fb.group({
       members: [null, Validators.required],
@@ -35,6 +44,7 @@ export class FormPayerAccountModalComponent implements OnInit {
       primary: [false],
       type: [this.types[0], Validators.required],
       fees: [null, Validators.required],
+      receipt: [null],
     });
 
     this.payerAccountForm.controls['members'].valueChanges.subscribe(value => {
@@ -51,6 +61,11 @@ export class FormPayerAccountModalComponent implements OnInit {
 
         this.payerAccountForm.controls['name'].setValue(nameValue);
       }
+
+      // if (!this.payerAccountForm.controls['receipt'].touched) {
+      //   console.log(13, value);
+      //   this.payerAccountForm.controls['receipt'].setValue(value);
+      // }
     });
   }
 
@@ -74,6 +89,19 @@ export class FormPayerAccountModalComponent implements OnInit {
             this.students.push({
               id: recispient.id,
               name: `${recispient.first_name} ${recispient.last_name}`,
+            });
+          });
+        }
+      });
+
+    this.feeService.getRecipientFee(1)
+      .subscribe((res) => {
+        if (res.data.total > 0) {
+          res.data.fees.forEach(fee => {
+            this.fees.push({
+              id: fee.id,
+              name: fee.name,
+              data: fee.amount,
             });
           });
         }

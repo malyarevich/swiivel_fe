@@ -12,10 +12,10 @@ import { CheckboxFieldComponent } from './fields/checkbox-field/checkbox-field.c
 import { InputFieldComponent } from './fields/input-field/input-field.component';
 import { SearchFieldComponent } from './fields/search-field/search-field.component';
 import { SelectFieldComponent } from './fields/select-field/select-field.component';
+import { SelectMultiCheckboxFieldComponent } from './fields/select-multi-checkbox-field/select-multi-checkbox-field.component';
 import { SelectMultiSearchFieldComponent } from './fields/select-multi-search-field/select-multi-search-field.component';
 
 // components
-import { AddFeeComponent } from './add-fee/add-fee.component';
 import { BadgeComponent } from './badge/badge.component';
 import { BadgeDropdownComponent } from './badge-dropdown/badge-dropdown.component';
 import { ModalComponent } from './modal/modal.component';
@@ -32,9 +32,9 @@ import { TagComponent } from './tag/tag.component';
     InputFieldComponent,
     SearchFieldComponent,
     SelectFieldComponent,
+    SelectMultiCheckboxFieldComponent,
     SelectMultiSearchFieldComponent,
     // components
-    AddFeeComponent,
     BadgeComponent,
     BadgeDropdownComponent,
     ModalComponent,
@@ -60,9 +60,9 @@ import { TagComponent } from './tag/tag.component';
     InputFieldComponent,
     SearchFieldComponent,
     SelectFieldComponent,
+    SelectMultiCheckboxFieldComponent,
     SelectMultiSearchFieldComponent,
     // components
-    AddFeeComponent,
     BadgeComponent,
     BadgeDropdownComponent,
     ModalComponent,

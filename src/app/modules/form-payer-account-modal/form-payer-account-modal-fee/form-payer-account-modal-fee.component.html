@@ -1,0 +1,45 @@
+<div class="app-form-payer-account-modal-fee">
+  <div
+    class="app-form-payer-account-modal-fee__header"
+    [ngClass]="{'app-form-payer-account-modal-fee__header--open': isOpen}"
+  >
+    <div class="app-form-payer-account-modal-fee__header-title-block">
+      <div
+        class="app-form-payer-account-modal-fee__header-title"
+        [ngClass]="{'app-form-payer-account-modal-fee__header-title--open': isOpen}"
+      >
+        Aaron Fishman
+      </div>
+      <div>
+        <i
+          class="fas fa-trash app-form-payer-account-modal-fee__header-trash"
+        ></i>
+      </div>
+    </div>
+    <div
+      class="app-form-payer-account-modal-fee__header-arrow-block"
+      [ngClass]="{'app-form-payer-account-modal-fee__header-arrow-block--open': isOpen}"
+      (click)="onOpenFees()"
+    >
+      <i
+        class="fas app-form-payer-account-modal-fee__header-arrow"
+        [ngClass]="{
+          'fa-sort-down app-badge-app-form-payer-account-modal-fee__header-arrow__down': !isOpen,
+          'fa-sort-up app-badge-app-form-payer-account-modal-fee__header-arrow__up': isOpen
+        }"
+      ></i>
+    </div>
+  </div>
+  <div
+    class="app-form-payer-account-modal-fee__content"
+    [ngClass]="{'app-form-payer-account-modal-fee__content--open': isOpen}"
+  >
+    <div>
+      <app-select-multi-checkbox-field
+        bindLabel="name"
+        labelTitle="Fees"
+        [items]="[]"
+      ></app-select-multi-checkbox-field>
+    </div>
+  </div>
+</div>
