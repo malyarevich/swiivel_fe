@@ -88,10 +88,48 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
     });
   }
 
-  useDublicate(form: FormSql){
-    this.formDublicateId = form.mongo_id;
+  isValidBasicFormInfoFields(): boolean {
+    return !(this.generalInfoForm.get('name').invalid || this.generalInfoForm.get('language').invalid);
   }
 
+  validateBasicFormInfoFields(): void {
+    if(this.isValidBasicFormInfoFields()) {
+      this.nextStep(this.menu.period);
+    } else {
+      this.generalInfoForm.get('name').markAsTouched({ onlySelf: true });
+      this.generalInfoForm.get('language').markAsTouched({ onlySelf: true });
+    }
+  }
+
+  isValidPeriodFields(): boolean {
+    console.log(this.generalInfoForm.get('name').invalid);
+    return !(this.generalInfoForm.get('periodCheckboxGroup').invalid);
+  }
+  
+  validatePeriodFields(): void {
+    if(this.isValidBasicFormInfoFields() && this.isValidPeriodFields()) {
+      this.nextStep(this.menu.dates);
+    } else {
+      this.generalInfoForm.get('periodCheckboxGroup').markAsTouched({ onlySelf: true });
+    }
+  }
+  
+  isValidDatesFields(): boolean {
+    return !(this.generalInfoForm.get('startDate').invalid || this.generalInfoForm.get('endDate').invalid);
+  }
+
+  validateDatesFields(): void {
+    if(this.isValidBasicFormInfoFields() && this.isValidPeriodFields() && this.isValidDatesFields()) {
+      this.nextStep(this.menu.eligible);
+    } else {
+      this.generalInfoForm.get('startDate').markAsTouched({ onlySelf: true });
+      this.generalInfoForm.get('endDate').markAsTouched({ onlySelf: true });
+    }
+  }
+
+  useDublicate(form: FormSql) {
+    this.formDublicateId = form.mongo_id;
+  }
 
   getAllForm(): void {
     this.formService.getFormsList().subscribe(forms => {
@@ -182,17 +220,17 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
 
   }
 
-    getDayparting() {
-        let hrs = new Date().getHours();
-        if (hrs >= 6 && hrs < 11) return 'morning';
-        if (hrs >= 11 && hrs < 19) return 'afternoon';
-        if (hrs >= 19 && hrs <= 23) return 'evening';
-        return 'night';
-    }
+  getDayparting() {
+      let hrs = new Date().getHours();
+      if (hrs >= 6 && hrs < 11) return 'morning';
+      if (hrs >= 11 && hrs < 19) return 'afternoon';
+      if (hrs >= 19 && hrs <= 23) return 'evening';
+      return 'night';
+  }
 
-    onScrollTo(target) {
-        this[target].nativeElement.scrollIntoView({behavior:'smooth'});
-    }
+  onScrollTo(target) {
+      this[target].nativeElement.scrollIntoView({behavior:'smooth'});
+  }
 
   setActiveSection(value) {
     this.activeSection = value.target;

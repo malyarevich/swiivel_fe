@@ -1,0 +1,86 @@
+@import '../../../../styles/variables/colors';
+
+.app-form-payer-account-modal-fee {
+  margin: 5px 0;
+
+  .app-form-payer-account-modal-fee__header {
+    min-height: 40px;
+    background: $lightgray-color;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: $softgray-color;
+  }
+
+  .app-form-payer-account-modal-fee__header--open {
+    background: $element-second-color;
+    color: #fff;
+    border-radius: 3px 3px 0 0;
+  }
+
+  .app-form-payer-account-modal-fee__header-title-block {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    min-height: 40px;
+    padding: 0 15px;
+  }
+
+  .app-form-payer-account-modal-fee__header-title {
+    color: $darkgray-color;
+    font: 14px 'NunitoSans-Bold';
+  }
+
+  .app-form-payer-account-modal-fee__header-title--open {
+    color: #fff;
+  }
+
+  .app-form-payer-account-modal-fee__header-trash {
+    cursor: pointer;
+    font-size: 13px;
+  }
+
+  .app-form-payer-account-modal-fee__header-arrow-block {
+    width: 40px;
+    border-left: 1px solid #97979750;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  .app-form-payer-account-modal-fee__header-arrow-block--open {
+    border-left: 1px solid $element-base-color;
+  }
+
+  .app-form-payer-account-modal-fee__header-arrow {
+    font-size: 15px;
+    position: relative;
+  }
+
+  .app-badge-app-form-payer-account-modal-fee__header-arrow__down {
+    top: -2px;
+  }
+
+  .app-badge-app-form-payer-account-modal-fee__header-arrow__up {
+    top: 3px;
+    color: $element-base-color;
+  }
+
+  .app-form-payer-account-modal-fee__content {
+    //height: 0;
+    //transition: all 4s;
+    //overflow: hidden;
+    display: none;
+    background: $lightgray-color;
+    padding: 15px;
+  }
+
+  .app-form-payer-account-modal-fee__content--open {
+    //height: auto;
+    display: block;
+  }
+}

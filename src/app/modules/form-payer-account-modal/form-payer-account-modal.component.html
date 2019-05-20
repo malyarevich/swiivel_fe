@@ -17,7 +17,7 @@
     </div>
   </div>
   <div
-    *ngIf="persons.length && students.length"
+    *ngIf="persons.length && students.length && fees.length"
     class="form-payer-account-container"
   >
     <form
@@ -108,9 +108,21 @@
           Students is required
         </div>
       </div>
-      <!--<div>-->
-        <!--<app-add-fee></app-add-fee>-->
-      <!--</div>-->
+      <div class="form-payer-account-fees">
+        <app-form-payer-account-modal-fee></app-form-payer-account-modal-fee>
+      </div>
+      <div
+        class="form-payer-account-members"
+      >
+        <app-select-multi-search-field
+          bindLabel="name"
+          formControlName="receipt"
+          labelTitle="Receipt"
+          [isInvalid]="payerAccountForm.get('receipt').invalid && payerAccountForm.get('receipt').touched"
+          [items]="persons"
+        >
+        </app-select-multi-search-field>
+      </div>
       <p
         class="form-payer-account-has-error"
         [innerHTML]="this.errorMsg"

@@ -1,0 +1,72 @@
+<div class="top_menu d-flex d-md-flex">
+    <!--Navbar-->
+    <nav class="navbar navbar-light top_menu__navbar">
+        <div class="top_menu__nav_line">
+            <div class="top_menu__control d-flex d-md-none">
+                <!-- Navbar brand -->
+                <a class="navbar-brand m-0" href="#"></a>
+
+                <!-- Collapse button -->
+                <button 
+                    class="navbar-toggler top_menu__navbar_button" 
+                    type="button" 
+                    data-toggle="collapse"
+                    data-target="#navbarMainMenu" aria-controls="navbarMainMenu" 
+                    aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span>
+                        <i class="fas fa-bars fa-1x"></i>
+                    </span>
+                </button>
+
+            </div>
+            <div class="top_menu__user_bar">
+                <!-- Layer Group Button -->
+                <button 
+                    class="navbar-toggler top_menu__navbar_button top_menu__navbar_button--show_label"
+                    type="button"
+                    name="Layer Group Button">
+                    <span>
+                        <i class="fas fa-layer-group fa-1x"></i>
+                    </span>
+                </button>
+                <!-- User Avatar -->
+                <button class="navbar-toggler top_menu__navbar_button top_menu__navbar_button--show_label"
+                    type="button"
+                    name="User">
+                    <div class="top_menu__navbar_user_image">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <!-- <img src="" alt="" class="top_menu__navbar_user_image"> -->
+                </button>
+            </div>
+        </div>
+
+        <!-- Collapsible content -->
+        <div class="collapse d-md-none navbar-collapse" id="navbarMainMenu">
+
+            <!-- Links -->
+            <ul class="navbar-nav mr-auto">
+
+                <li class="nav-item top_menu__nav_item" *ngFor="let item of menuItems; let i = index;">
+                    <a class="nav-link top_menu__nav_link" routerLink={{item.route}} rel="noopener" name={{item.label}}>
+                        <!-- <i class="fas {{item.icon}} top_menu__icon"></i>  -->
+                        <span class="top_menu__nav_link_text">{{item.label}}</span>
+                    </a>
+                </li>
+
+                <li class="nav-item top_menu__nav_item">
+                    <a class="nav-link top_menu__nav_link" routerLink="/" (click)="logOut()" rel="noopener" name="Log Out">
+                        <!-- <i class="fas fa-sign-out-alt top_menu__icon"></i>  -->
+                        <span class="top_menu__nav_link_text">Log Out</span>
+                    </a>
+                </li>
+            </ul>
+            <!-- Links -->
+
+        </div>
+        <!-- Collapsible content -->
+
+    </nav>
+    <!--/.Navbar-->
+</div>

@@ -4,23 +4,16 @@ import { Observable } from 'rxjs';
 
 // import { Go } from '../../utils/store/router-store';
 import { Logout } from '../../../login/store/index';
+import { menuItems, IMenuItems } from '../header/header.component';
 
-export const menuItems: IMenuItems[] = [
-  { route: '/', label: 'Dashboard', icon: 'fa-th' },
-  { route: '/', label: 'Bus', icon: 'fa-bus' },
-  { route: '/payer-accounts', label: 'Payer Accounts', icon: 'fa-wallet' },
-  { route: '/persons', label: 'Persons', icon: 'fa-user' },
-  { route: '/family', label: 'Family', icon: 'fa-cog' },
-  { route: '/vertical-data-collection', label: 'Data Collection', icon: 'fa-file' },
-];
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss'],
+  selector: 'app-header-top',
+  templateUrl: './header-top.component.html',
+  styleUrls: ['./header-top.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HeaderComponent implements OnInit {
+export class HeaderTopComponent implements OnInit {
   public user: Observable<any>;
   public menuItems: IMenuItems[];
   @Input() menu = false;
@@ -49,10 +42,4 @@ export class HeaderComponent implements OnInit {
   logOut (): void {
       this.store.dispatch(new Logout());
   }
-}
-
-export interface IMenuItems {
-  route: string;
-  label: string;
-  icon: string;
 }
