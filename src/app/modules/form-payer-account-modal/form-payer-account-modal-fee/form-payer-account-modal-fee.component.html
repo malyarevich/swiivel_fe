@@ -8,11 +8,12 @@
         class="app-form-payer-account-modal-fee__header-title"
         [ngClass]="{'app-form-payer-account-modal-fee__header-title--open': isOpen}"
       >
-        Aaron Fishman
+        {{recipient.name}}
       </div>
       <div>
         <i
           class="fas fa-trash app-form-payer-account-modal-fee__header-trash"
+          (click)="onRemoveRecipientFees()"
         ></i>
       </div>
     </div>
@@ -34,11 +35,11 @@
     class="app-form-payer-account-modal-fee__content"
     [ngClass]="{'app-form-payer-account-modal-fee__content--open': isOpen}"
   >
-    <div>
+    <div *ngIf="fees && fees.length">
       <app-select-multi-checkbox-field
         bindLabel="name"
         labelTitle="Fees"
-        [items]="[]"
+        [items]="fees"
       ></app-select-multi-checkbox-field>
     </div>
   </div>

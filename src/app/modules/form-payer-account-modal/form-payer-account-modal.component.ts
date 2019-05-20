@@ -20,7 +20,7 @@ export class FormPayerAccountModalComponent implements OnInit {
   private payerAccountForm: FormGroup;
 
   errorMsg: string;
-  fees: any[] = [];
+  fees: any = {};
   persons: any[] = [];
   students: any[] = [];
   types = ['Payer', 'Other'];
@@ -43,7 +43,7 @@ export class FormPayerAccountModalComponent implements OnInit {
       name: [null, Validators.required],
       primary: [false],
       type: [this.types[0], Validators.required],
-      fees: [null, Validators.required],
+      recipients: [null, Validators.required],
       receipt: [null],
     });
 
@@ -62,10 +62,30 @@ export class FormPayerAccountModalComponent implements OnInit {
         this.payerAccountForm.controls['name'].setValue(nameValue);
       }
 
-      // if (!this.payerAccountForm.controls['receipt'].touched) {
-      //   console.log(13, value);
-      //   this.payerAccountForm.controls['receipt'].setValue(value);
-      // }
+      if (!this.payerAccountForm.controls['receipt'].touched) {
+        this.payerAccountForm.controls['receipt'].setValue(value);
+      }
+    });
+
+    this.payerAccountForm.controls['recipients'].valueChanges.subscribe(value => {
+      if (value && value.length) {
+        value.forEach(recipient => {
+          if (!this.fees[recipient.id]) {
+            this.fees[recipient.id] = [];
+
+            this.feeService.getRecipientFee(recipient.id)
+              .subscribe((res) => {
+                res.data.fees.forEach(fee => {
+                  this.fees[recipient.id].push({
+                    id: fee.id,
+                    name: fee.name,
+                    price: fee.amount,
+                  });
+                });
+              });
+          }
+        });
+      }
     });
   }
 
@@ -89,19 +109,6 @@ export class FormPayerAccountModalComponent implements OnInit {
             this.students.push({
               id: recispient.id,
               name: `${recispient.first_name} ${recispient.last_name}`,
-            });
-          });
-        }
-      });
-
-    this.feeService.getRecipientFee(1)
-      .subscribe((res) => {
-        if (res.data.total > 0) {
-          res.data.fees.forEach(fee => {
-            this.fees.push({
-              id: fee.id,
-              name: fee.name,
-              data: fee.amount,
             });
           });
         }
@@ -134,5 +141,19 @@ export class FormPayerAccountModalComponent implements OnInit {
 
   onCloseFormPayerAccountModal() {
     this.closeFormPayerAccount.emit(true);
+  }
+
+  onRemoveRecipient(recipient) {
+    const recipients = [];
+
+    if (this.payerAccountForm.value['recipients'].length) {
+      this.payerAccountForm.value['recipients'].forEach(item => {
+        if (item.id !== recipient.id) {
+          recipients.push(item);
+        }
+      });
+
+      this.payerAccountForm.controls['recipients'].setValue(recipients);
+    }
   }
 }

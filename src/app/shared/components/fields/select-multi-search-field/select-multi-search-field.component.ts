@@ -38,7 +38,9 @@ export class SelectMultiSearchFieldComponent implements OnInit, ControlValueAcce
   ngOnInit() {}
 
   writeValue(value: any): void {
-    this.value = value;
+    if (Array.isArray(value)) {
+      this.value = value.map(item => item.id);
+    }
   }
 
   setDisabledState(isDisabled: boolean): void {
@@ -53,7 +55,7 @@ export class SelectMultiSearchFieldComponent implements OnInit, ControlValueAcce
     this.onTouched = fn;
   }
 
-  onChange(e ) {
+  onChange(e) {
     e.preventDefault();
   }
   onTouched() {}

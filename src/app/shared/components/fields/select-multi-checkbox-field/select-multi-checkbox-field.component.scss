@@ -27,10 +27,6 @@
           .ng-value-label {
             padding: 0 2px;
             font: 12px 'NunitoSans-Bold';
-
-            &::first-letter {
-              text-transform: uppercase;
-            }
           }
         }
       }
@@ -97,13 +93,22 @@
               transform: rotate(45deg);
             }
           }
+
+          .app-select-multi-checkbox-field-option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          }
+
+          .app-select-multi-checkbox-field-option__price {
+            padding: 0 25px 0 0;
+          }
         }
 
         .ng-option.ng-option-selected,
         .ng-option.ng-option-selected.ng-option-marked {
           color: $element-base-color;
           background: #ebeeff;
-          font: 12px 'NunitoSans-Bold';
 
           .app-select-multi-checkbox-field-checkmark {
             background-color: #f8bc45;
@@ -111,6 +116,11 @@
             &:after {
               display: block;
             }
+          }
+
+          .app-select-multi-checkbox-field-label,
+          .app-select-multi-checkbox-field-option__price {
+            font: 12px 'NunitoSans-Bold';
           }
         }
       }
