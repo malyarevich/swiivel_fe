@@ -5,6 +5,11 @@ import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../../environments/environment";
 import {map} from "rxjs/operators";
 
+interface ResponseData {
+  success: boolean;
+  data: Family[];
+}
+
 @Injectable()
 export class FamilyService {
 
@@ -15,65 +20,6 @@ export class FamilyService {
     familyList: Family[];
     family: Family;
   };
-
-  // TODO delete
-  tempFamily = {
-    id: 3,
-    name: 'Test3',
-    family_id: 'sfferervr',
-    address: '',
-    city: '',
-    state: '',
-    zip: '',
-    preferred_contact: '',
-    preferred_contact_method: '',
-    home_phone_number: '',
-    language_spoken_at_home: '',
-    number_of_siblings: '',
-    children_at_home: '',
-    family_rabbi: '',
-    rabbi_phone_number: '',
-    family_shul: '',
-  };
-
-  tempData = [
-    {
-      id: 1,
-      name: 'Test',
-      family_id: 'fewf43rg4g2rg24',
-      address: '',
-      city: '',
-      state: '',
-      zip: '',
-      preferred_contact: '',
-      preferred_contact_method: '',
-      home_phone_number: '',
-      language_spoken_at_home: '',
-      number_of_siblings: '',
-      children_at_home: '',
-      family_rabbi: '',
-      rabbi_phone_number: '',
-      family_shul: '',
-    },
-    {
-      id: 2,
-      name: 'Test2',
-      family_id: 'fewf43rgdsdc4g2rg24',
-      address: '',
-      city: '',
-      state: '',
-      zip: '',
-      preferred_contact: '',
-      preferred_contact_method: '',
-      home_phone_number: '',
-      language_spoken_at_home: '',
-      number_of_siblings: '',
-      children_at_home: '',
-      family_rabbi: '',
-      rabbi_phone_number: '',
-      family_shul: '',
-    },
-  ];
 
   get familyList() {
     return this._familyList.asObservable();
@@ -105,10 +51,10 @@ export class FamilyService {
   }
 
   add(familyName) {
-    this.createOneRequest(familyName).subscribe(data => {
-      console.log(data);
-      // this.dataStore.familyList.push(data);
-      // this._familyList.next(Object.assign({}, this.dataStore).familyList);
+    this.createOneRequest(familyName).subscribe((data: ResponseData) => {
+      if (!data.success) return;
+      this.dataStore.familyList.push(data.data[0]);
+      this._familyList.next(Object.assign({}, this.dataStore).familyList);
     }, error => console.log('Could not add family. Error: ' + error.message));
   }
 
