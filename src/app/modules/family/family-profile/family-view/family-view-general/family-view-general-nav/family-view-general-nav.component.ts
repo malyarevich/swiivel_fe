@@ -11,6 +11,8 @@ export class FamilyViewGeneralNavComponent implements OnInit {
   familyViewGeneralTabs: FamilyViewGeneralTab[] = familyViewGeneralTabs;
   activeTab: string;
 
+  showModal: boolean = false;
+
   constructor() { }
 
   ngOnInit() {
@@ -20,5 +22,13 @@ export class FamilyViewGeneralNavComponent implements OnInit {
   setActiveTab(tabName) {
     this.activeTab = tabName;
     this.activeTabEmitter.emit(this.activeTab);
+  }
+
+  onShowAddFamilyMemberModal() {
+    this.showModal = true;
+  }
+
+  onCloseAddFamilyMemberModal() {
+    this.showModal = false;
   }
 }

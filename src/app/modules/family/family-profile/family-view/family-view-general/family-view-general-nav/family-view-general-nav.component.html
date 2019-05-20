@@ -1,3 +1,8 @@
+<div *ngIf="showModal">
+  <app-family-add-member-modal (closeModalAddFamilyMember)="onCloseAddFamilyMemberModal($event)">
+  </app-family-add-member-modal>
+</div>
+
 <div class="row align-bottom">
   <!--Title-->
   <div class="col-6 d-flex align-items-end">
@@ -6,17 +11,11 @@
   <!--Search Filter-->
   <div class="col-sm-6">
     <div class="row">
-      <div class="col-sm-4"></div>
-      <div class="col-sm-8 text-right">
-        <div class="input-group app-input-search-container">
-          <i class="fas fa-search app-input-search-icon"></i>
-          <input class="form-control app-input-search app-input-search-grey w-50"
-                 type="search"
-                 placeholder="Search">
-          <button type="button" class="btn app-btn-primary ml-2">
-            <i class="fas fa-sliders-h"></i>
-          </button>
-        </div>
+      <div class="col-sm-2"></div>
+      <div class="col-sm-10 d-flex justify-content-end">
+        <app-search-field type="gray" class="mr-3"></app-search-field>
+        <app-search-filter-btn class="mr-3"></app-search-filter-btn>
+        <button class="btn app-btn-primary" (click)="onShowAddFamilyMemberModal()">Add Member</button>
       </div>
     </div>
   </div>

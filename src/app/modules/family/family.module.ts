@@ -17,15 +17,18 @@ import {FamilyService} from "./services/family.service";
 import { FamilyChildrenCardComponent } from './family-profile/family-view/family-view-general/family-children-card/family-children-card.component';
 import { FamilyStudentsCardComponent } from './family-profile/family-view/family-view-general/family-students-card/family-students-card.component';
 import { FamilyGrandparentsCardComponent } from './family-profile/family-view/family-view-general/family-grandparents-card/family-grandparents-card.component';
+import {SharedRedComponentsModule} from "../../shared/components/sharedRedComponents.module";
+import { FamilyAddMemberModalComponent } from './family-profile/family-view/family-view-general/family-add-member-modal/family-add-member-modal.component';
 
 @NgModule({
-  declarations: [FamiliesListComponent, FamilyPageHeaderComponent, FamilyProfileComponent, FamilyProfileInfoComponent, FamilyViewComponent, FamilyCreateModalComponent, FamilyViewNavComponent, FamilyViewGeneralComponent, FamilyViewGeneralNavComponent, FamilyParentsCardComponent, FamilyChildrenCardComponent, FamilyStudentsCardComponent, FamilyGrandparentsCardComponent],
+  declarations: [FamiliesListComponent, FamilyPageHeaderComponent, FamilyProfileComponent, FamilyProfileInfoComponent, FamilyViewComponent, FamilyCreateModalComponent, FamilyViewNavComponent, FamilyViewGeneralComponent, FamilyViewGeneralNavComponent, FamilyParentsCardComponent, FamilyChildrenCardComponent, FamilyStudentsCardComponent, FamilyGrandparentsCardComponent, FamilyAddMemberModalComponent],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     FamilyRoutingModule,
     NgbModule,
+    SharedRedComponentsModule,
   ],
   providers: [FamilyService]
 })
