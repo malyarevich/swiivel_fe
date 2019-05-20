@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'app-form-payer-account-modal-fee',
@@ -7,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FormPayerAccountModalFeeComponent implements OnInit {
   public isOpen = false;
+  @Input() recipient: {id: number, name: string };
+  @Input() fees: any[];
+  @Output() removeRecipientFees: EventEmitter<any> = new EventEmitter<any>();
 
   constructor() { }
 
@@ -14,6 +17,10 @@ export class FormPayerAccountModalFeeComponent implements OnInit {
 
   onOpenFees() {
     this.isOpen = !this.isOpen;
+  }
+
+  onRemoveRecipientFees() {
+    this.removeRecipientFees.emit(this.recipient);
   }
 
 }

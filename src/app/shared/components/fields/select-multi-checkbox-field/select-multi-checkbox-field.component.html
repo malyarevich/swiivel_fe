@@ -21,14 +21,25 @@
       let-item$="item$"
       let-index="index"
     >
-      <input
-        id="item-{{index}}"
-        type="checkbox"
-        [ngModel]="item$.selected"
-      />
-      {{item.name}}
-      <span class="app-select-multi-checkbox-field-checkmark"></span>
-
+      <div class="app-select-multi-checkbox-field-option">
+        <div>
+          <input
+            id="item-{{index}}"
+            type="checkbox"
+            [ngModel]="item$.selected"
+          />
+          <span class="app-select-multi-checkbox-field-label">
+            {{item[bindLabel]}}
+          </span>
+          <span class="app-select-multi-checkbox-field-checkmark"></span>
+        </div>
+        <div
+          *ngIf="item.price"
+          class="app-select-multi-checkbox-field-option__price"
+        >
+          {{ item.price | currency:'USD':true:'.0' }}
+        </div>
+      </div>
     </ng-template>
     <ng-template ng-multi-label-tmp let-items="items">
       <div
