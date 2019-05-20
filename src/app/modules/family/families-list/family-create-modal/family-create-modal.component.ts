@@ -1,8 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {cloneDeep} from 'lodash';
-import {v4 as uuid} from 'uuid';
 import {NgbModal, NgbModalConfig} from "@ng-bootstrap/ng-bootstrap";
-import {Family, initFamily} from "../../../../models/family/family.model";
 import {FamilyService} from "../../services/family.service";
 import {Router} from "@angular/router";
 
@@ -15,7 +12,7 @@ import {Router} from "@angular/router";
 })
 export class FamilyCreateModalComponent implements OnInit {
 
-  family: Family;
+  familyName: string;
 
   constructor(config: NgbModalConfig,
               private modalService: NgbModal,
@@ -30,20 +27,14 @@ export class FamilyCreateModalComponent implements OnInit {
 
   open(content) {
     this.modalService.open(content);
-    this.initNewFamily();
-  }
-
-  initNewFamily() {
-    this.family = cloneDeep(initFamily);
-    this.family._id = uuid();
   }
 
   save() {
-    this.familyService.add(this.family.name);
+    this.familyService.add(this.familyName);
     // this.router.navigate([`/family/profile/${this.family._id}`]);
   }
 
   dismiss() {
-    this.family = null;
+    this.familyName = '';
   }
 }
