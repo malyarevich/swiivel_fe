@@ -42,7 +42,7 @@ export class VFieldsSideBarDetailedComponent implements OnInit, AfterViewInit, O
   //   // this.fieldsValidator();
   // }
   onBeingChange(event){
-    console.log(this.section, event);
+    // console.log(this.section, event);
    if(event){
      this.sideBarService.addExistingField(
        this.section,
@@ -78,10 +78,12 @@ export class VFieldsSideBarDetailedComponent implements OnInit, AfterViewInit, O
         // console.log(sideBarField, field);
         if (sideBarField.name == field.name) {
           // console.log(sideBarField.name, field.name);
+          sideBarField.exist = true;
+
           if (field.type == 113 || field.type == 114){
             this.initFormFieldsToSideBar(sideBarField.fields, field.fields);
           }
-          sideBarField.exist = true;
+          // console.log(sideBarField);
           // console.log(sideBarField, 'sidebar field');
         }
       })

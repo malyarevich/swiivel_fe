@@ -16,7 +16,7 @@ export class SideBarService {
 
 
   addExistingField(field: Field, fields: Field[]) {
-
+console.log(field, fields);
     let newField = cloneDeep(field);
     newField._id = uuid();
     // this.doExistingFieldsUniq(newField);
@@ -54,6 +54,7 @@ export class SideBarService {
 
     filedList.forEach(f=>{
       if (f.type == 113 || f.type == 114) this.onFieldDelete(field, f.fields);
+      // console.log(f);
       if(f.name==field.name && f.prefix==field.prefix) filedList.splice(filedList.indexOf(f), 1)
     })
   }

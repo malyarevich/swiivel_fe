@@ -1,8 +1,8 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Field} from "../../../../../model/field.model";
 import {isEmpty, cloneDeep } from 'lodash';
-import {v4 as uuid} from 'uuid'
 import {Form} from "../../../../../model/form.model";
+import {SideBarService} from "../side-bar.service";
 
 @Component({
   selector: 'app-v-side-bar-group',
@@ -13,72 +13,171 @@ export class VSideBarGroupComponent implements OnInit {
   showAddButton = true;
   showNested: boolean = true;
   validNewCustomFieldName: boolean = true;
-  @Output() onChangeFieldBeing = new EventEmitter<any>();
-  @Output() onChangeGroupBeing = new EventEmitter<any>();
-  @Output() onDeleteNested = new EventEmitter<any>();
+
   @Input() group: Field;
   @Input() section: Field;
   @Input() form: Form;
   @Input() customFields: Field[];
   @Input() existingFields: Field[];
 
-  constructor() { }
+  constructor(private sideBarService: SideBarService) { }
 
   ngOnInit() {
     this.group.exist = false;
   }
 
-  onBeingChange(event){
 
-    event?
-      this.group.fields.forEach(field=>field.exist=true)
-      :this.group.fields.forEach(field=>{
-        this.onDeleteNested.emit(field.name);
-        field.exist=false;
+
+  onChangeFieldInGroup( field, group, section?){
+    let  groupNew = cloneDeep(group);
+    let sectionNew = cloneDeep(section);
+    let sec = this.form.fields.filter(f => f.name == section.name);
+    let grp;
+    this.form.fields.forEach(f => {
+      if(f.name == section.name){
+        f.fields.forEach(f=>{
+          if(f.name==group.name){
+            grp = f.fields;
+          }
+        })
       }
-      );
-
-    this.group.exist=!this.group.exist;
-    this.onChangeFieldBeing.emit(this.group);
-  }
-
-
-  deleteCustomNestedField(event){
-    this.onDeleteNested.emit(event);
-    this.group.fields = this.group.fields.filter((field) => field.name != event);
-  }
-  onBeingChangeNested(event, field){
-    field.exist=!field.exist;
-    event?this.onChangeGroupBeing.emit(field):this.onDeleteNested.emit(field.name);
-    this.group.exist =this.group.fields.filter(field => field.exist==true).length>0;
-    if(!this.group.exist) this.onChangeFieldBeing.emit(this.group);
-  }
-
-  addNewCustomField(name: string, fields: Field[]) {
-    if (name.length < 3 || !this.validNewCustomFieldName) {
-      this.showAddButton = true;
-      return;
+    });
+    if (isEmpty(sec)) {
+      sectionNew.fields = [];
+      groupNew.fields = [];
+      this.sideBarService.addExistingField(field, groupNew.fields);
+      this.sideBarService.addExistingField(groupNew, sectionNew.fields);
+      this.sideBarService.addExistingField(sectionNew, this.form.fields);
+      field.exist = group.exist = true;
+    }else if(isEmpty(grp)){
+      // console.log(grp, 'group');
+      groupNew.fields = [];
+      this.sideBarService.addExistingField(field, groupNew.fields);
+      this.form.fields = this.form.fields.map(sec => {
+        if (sec.name == section.name) {
+          this.sideBarService.addExistingField(groupNew, sec.fields);
+        }
+      return sec;
+      });
+      field.exist = group.exist = true;
+    } else {
+      this.form.fields = this.form.fields.map(sec => {
+        if (sec.name == section.name) {
+          sec.fields = sec.fields.map(g=>{
+            if(g.name == group.name){
+              this.sideBarService.addExistingField(field, g.fields);
+            }
+            return g;
+          });
+        }
+        return sec;
+      });
     }
-    let newField: Field = cloneDeep(this.customFields[0]);
-    newField.name = name;
-    newField._id = uuid();
-    newField.exist = false;
+  }
 
-    newField.isValid = true;
-    newField.isValidName = true;
-    newField.isValidName = this.checkExistingFieldsName(newField.name);
-    //this.doExistingFieldsUniq(newField);
-    // this.fields.push( newField);
-    fields.push(newField);
-   // this.fieldsValidator();
-    this.showAddButton = true;
+  onChangeGroupBeing(field, group) {
+    // console.log(field, group);
+    let  groupNew = cloneDeep(group);
+    let arr = this.form.fields.filter(f => f.name == group.name);
+    if (isEmpty(arr)) {
+      groupNew.fields = [];
+      this.sideBarService.addExistingField(field, groupNew.fields);
+      this.sideBarService.addExistingField(groupNew, this.form.fields);
+      group.exist = true;
+    } else {
+      this.form.fields = this.form.fields.map(f => {
+        if (f.name == groupNew.name) {
+          this.sideBarService.addExistingField(field, f.fields);
+        }
+        return f;
+      });
+    }
 
   }
-  checkExistingFieldsName(name: string): boolean {
-    const arr = this.existingFields.filter((field => field.name.toLowerCase() == name.toLowerCase()));
-    return isEmpty(arr);
+
+  onBeingChangeNested(event, entity,destination, section){
+    if(event){
+      this.onChangeFieldInGroup(entity,destination, section);
+    }else{
+
+      this.sideBarService.onFieldDelete(
+        entity,
+        this.form.fields
+      );
+    }
+    entity.exist = event;
   }
-  nameChange(event) {
-    this.validNewCustomFieldName = this.checkExistingFieldsName(event.target.value.trim());
+
+
+  onBeingChange(event: boolean, entity: Field, destination:Field){
+    if(event){
+      this.onChangeGroupBeing(
+        entity,
+        destination
+      )
+    }else{
+
+      this.sideBarService.onFieldDelete(
+        entity,
+        this.form.fields
+      );
+    }
+    entity.exist = event;
+    entity.fields.forEach(field=>field.exist = event)
   }
+
+
+  // onBeingChange(event){
+  //
+  //   event?
+  //     this.group.fields.forEach(field=>field.exist=true)
+  //     :this.group.fields.forEach(field=>{
+  //       this.onDeleteNested.emit(field.name);
+  //       field.exist=false;
+  //     }
+  //     );
+  //
+  //   this.group.exist=!this.group.exist;
+  //   this.onChangeFieldBeing.emit(this.group);
+  // }
+  //
+  //
+  // deleteCustomNestedField(event){
+  //   this.onDeleteNested.emit(event);
+  //   this.group.fields = this.group.fields.filter((field) => field.name != event);
+  // }
+  // onBeingChangeNested(event, field){
+  //   field.exist=!field.exist;
+  //   event?this.onChangeGroupBeing.emit(field):this.onDeleteNested.emit(field.name);
+  //   this.group.exist =this.group.fields.filter(field => field.exist==true).length>0;
+  //   if(!this.group.exist) this.onChangeFieldBeing.emit(this.group);
+  // }
+  //
+  // addNewCustomField(name: string, fields: Field[]) {
+  //   if (name.length < 3 || !this.validNewCustomFieldName) {
+  //     this.showAddButton = true;
+  //     return;
+  //   }
+  //   let newField: Field = cloneDeep(this.customFields[0]);
+  //   newField.name = name;
+  //   newField._id = uuid();
+  //   newField.exist = false;
+  //
+  //   newField.isValid = true;
+  //   newField.isValidName = true;
+  //   newField.isValidName = this.checkExistingFieldsName(newField.name);
+  //   //this.doExistingFieldsUniq(newField);
+  //   // this.fields.push( newField);
+  //   fields.push(newField);
+  //  // this.fieldsValidator();
+  //   this.showAddButton = true;
+  //
+  // }
+  // checkExistingFieldsName(name: string): boolean {
+  //   const arr = this.existingFields.filter((field => field.name.toLowerCase() == name.toLowerCase()));
+  //   return isEmpty(arr);
+  // }
+  // nameChange(event) {
+  //   this.validNewCustomFieldName = this.checkExistingFieldsName(event.target.value.trim());
+  // }
 }
