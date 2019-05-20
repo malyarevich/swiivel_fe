@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FamilyService} from "../../services/family.service";
 import {cloneDeep} from 'lodash';
-import {Family} from "../../model/family.model";
+import {Family} from "../../../../models/family/family.model";
 
 @Component({
   selector: 'app-family-profile-info',

@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {FamilyPersonService} from "../../../services/family-person.service";
+import {FamilyPerson} from "../../../../../models/family/family-person.model";
+import {Observable} from "rxjs";
+import {Family} from "../../../../../models/family/family.model";
+import {FamilyRoles} from "../../../../../enums/family-roles";
 
 @Component({
   selector: 'app-family-view-general',
@@ -7,9 +12,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FamilyViewGeneralComponent implements OnInit {
 
-  constructor() { }
+  familyPersons: Observable<FamilyPerson[]>;
 
-  ngOnInit() {
+  familyRoles = FamilyRoles;
+
+  constructor(private familyPersonService: FamilyPersonService) {
   }
 
+  ngOnInit() {
+    this.getFamilyPersons();
+  }
+
+  getFamilyPersons() {
+    this.familyPersons = this.familyPersonService.familyPersonList;
+    this.familyPersonService.getAll();
+  }
 }

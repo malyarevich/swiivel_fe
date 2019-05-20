@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FamilyService} from "../services/family.service";
 import {Observable} from "rxjs";
-import {Family} from "../model/family.model";
+import {Family} from "../../../models/family/family.model";
 
 @Component({
   selector: 'app-families-list',

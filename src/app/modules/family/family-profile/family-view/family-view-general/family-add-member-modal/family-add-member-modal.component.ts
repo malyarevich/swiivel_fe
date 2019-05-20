@@ -1,6 +1,6 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FamilyService} from "../../../../services/family.service";
-import {Family} from "../../../../model/family.model";
+import {Family} from "../../../../../../models/family/family.model";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {PersonService} from "../../../../../../services/person/person.service";
 import {PayersService} from "../../../../../payer-accounts/services/payers.service";
@@ -8,6 +8,7 @@ import {RecipientService} from "../../../../../../services/recipient/recipient.s
 import {FeeService} from "../../../../../../services/fee/fee.service";
 import {Person} from "../../../../../../models/person.model";
 import {Recipient} from "../../../../../../models/recipient.model";
+import {FamilyRoles} from "../../../../../../enums/family-roles";
 
 @Component({
   selector: 'app-family-add-member-modal',
@@ -21,45 +22,34 @@ export class FamilyAddMemberModalComponent implements OnInit {
 
   errorMsg: string;
   persons: any[] = [];
-  roles = ['father', 'mother', 'grandmother', 'grandfather', 'student', 'child', 'aunt', 'uncle',];
+  roles = [
+    FamilyRoles.father,
+    FamilyRoles.mother,
+    FamilyRoles.grandmother, FamilyRoles.grandfather,
+    FamilyRoles.student,
+    FamilyRoles.child,
+    FamilyRoles.aunt,
+    FamilyRoles.uncle,
+  ];
 
   private familyPersonForm: FormGroup;
 
   constructor(private familyService: FamilyService,
               private personService: PersonService,
               private fb: FormBuilder,) {
-
-    this.familyPersonForm = fb.group({
-      members: [null, Validators.required],
-      // name: [null, Validators.required],
-      // primary: [false],
-      roles: [this.roles[0], Validators.required],
-      // fees: [null, Validators.required],
-      // receipt: [null],
-    });
-
-    // this.familyPersonForm.controls['members'].valueChanges.subscribe(value => {
-    //
-    //   if (!this.payerAccountForm.controls['name'].touched) {
-    //     let nameValue = '';
-    //     const membersLengt = value.length;
-    //
-    //     value.forEach((member, index) => {
-    //       nameValue += member.name;
-    //       if (index !== membersLengt - 1) {
-    //         nameValue += ' & ';
-    //       }
-    //     });
-    //
-    //     this.payerAccountForm.controls['name'].setValue(nameValue);
-    //   }
-    // });
-
+    this.initFamilyPersonForm();
   }
 
   ngOnInit() {
     this.getFamily();
     this.getPersons();
+  }
+
+  initFamilyPersonForm() {
+    this.familyPersonForm = this.fb.group({
+      members: [null, Validators.required],
+      roles: [this.roles[0], Validators.required],
+    });
   }
 
   getFamily() {
