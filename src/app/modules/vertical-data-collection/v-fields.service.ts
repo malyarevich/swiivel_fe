@@ -16,6 +16,7 @@ import {map} from "rxjs/operators";
 import {environment} from "../../../environments/environment";
 
 
+
 @Injectable()
 export class VFieldsService {
   constructor(private http: HttpClient) {}
@@ -61,6 +62,13 @@ export class VFieldsService {
   getExistingSideBarList2() {
     //TODO: temporarily
     return this.http.get(`${environment.apiFB}/sidebar2?api_token=${environment.api_token}`)
+      .pipe(
+        map(response => response)
+      )
+  }
+
+  getRoleList() {
+    return this.http.get(`${environment.apiFB}/family/roles/?api_token=${environment.api_token}`)
       .pipe(
         map(response => response)
       )

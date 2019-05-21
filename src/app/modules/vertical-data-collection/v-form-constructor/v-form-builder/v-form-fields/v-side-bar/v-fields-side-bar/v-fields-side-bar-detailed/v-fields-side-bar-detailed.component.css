@@ -5,3 +5,6 @@
   color: #9C9D9D;
   cursor: pointer;
 }
+.without-section{
+  color: red!important;
+}
