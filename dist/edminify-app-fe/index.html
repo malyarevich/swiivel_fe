@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Red</title>
+  <base href="/">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <style type="text/css">
+    .app_loading {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 90vh;
+      min-width: 90vw;
+    }
+    
+    .app_loading__logo {
+      font-size: 96px; /** font-size: 8rem;  root font size change during loading page */
+      font-weight: 500;
+      color: grey;
+    }
+    .app_loading__spinner {
+      height: 200px;
+      width: 200px;
+      animation: rotate 2s linear infinite;
+      transform-origin: center center;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+    }
+    .app_loading__path {
+      stroke-dasharray: 1, 200;
+      stroke-dashoffset: 0;
+      animation: dash 1.5s ease-in-out infinite;
+      stroke-linecap: round;
+      stroke: grey;
+    }
+    @keyframes rotate {
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+    @keyframes dash {
+      0% {
+        stroke-dasharray: 1, 200;
+        stroke-dashoffset: 0;
+      }
+      50% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -35px;
+      }
+      100% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -124px;
+      }
+    }
+  </style>
+<link rel="stylesheet" href="styles.eb00d7fad66f422c871a.css"></head>
+<body>
+  <app-root>
+    <!-- loading layout replaced by app after startupp -->
+    <div class="app_loading">
+      <div class="app_loading__logo">i!</div>
+        <svg class="app_loading__spinner" viewBox="25 25 50 50">
+          <circle class="app_loading__path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
+        </svg>
+      </div>
+    </div>
+  </app-root>
+<script type="text/javascript" src="runtime.0adf1501b76631580ebd.js"></script><script type="text/javascript" src="es2015-polyfills.e6b6492f6497e5986f78.js" nomodule></script><script type="text/javascript" src="polyfills.e031f7f67b1e5343df74.js"></script><script type="text/javascript" src="scripts.201cd8c2534507b4525e.js"></script><script type="text/javascript" src="main.c23ce3ec93273980963a.js"></script></body>
+</html>
