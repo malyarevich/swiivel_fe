@@ -7,22 +7,24 @@
 
         <div class="col-3">
           <div class="row align-items-center no-gutters">
-            <div *ngIf="inputGroup.isValidName" cdkDragHandle>
+            <div cdkDragHandle>
+<!--            <div *ngIf="inputGroup.isValidName" cdkDragHandle>-->
               <span><i class="fas fa-ellipsis-v dragable-i"></i></span>
               <span><i class="fas fa-ellipsis-v dragable-i"></i></span>
             </div>
-            <div *ngIf="!inputGroup.isValidName">
-                   <span aria-hidden="true" [title]="warningCheckExistingLabelString"><i
-                     class="fas fa-exclamation-triangle"></i></span>
-            </div>
+<!--            <div *ngIf="!inputGroup.isValidName">-->
+<!--                   <span aria-hidden="true" [title]="warningCheckExistingLabelString"><i-->
+<!--                     class="fas fa-exclamation-triangle"></i></span>-->
+<!--            </div>-->
 
-            <div *ngIf="inputGroup.isValid">
+            <div>
+<!--            <div *ngIf="inputGroup.isValid">-->
               <span class="rectangle"><i class="fas fa-clone"></i></span>
             </div>
-            <div *ngIf="!inputGroup.isValid" class="ml-3">
-              <span aria-hidden="true" [title]="warningCheckUniqString"><i
-                class="fas fa-exclamation-circle"></i></span>
-            </div>
+<!--            <div *ngIf="!inputGroup.isValid" class="ml-3">-->
+<!--              <span aria-hidden="true" [title]="warningCheckUniqString"><i-->
+<!--                class="fas fa-exclamation-circle"></i></span>-->
+<!--            </div>-->
 
           </div>
         </div>

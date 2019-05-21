@@ -58,4 +58,12 @@ export class VFieldsService {
       )
   }
 
+  getExistingSideBarList2() {
+    //TODO: temporarily
+    return this.http.get(`${environment.apiFB}/sidebar2?api_token=${environment.api_token}`)
+      .pipe(
+        map(response => response)
+      )
+  }
+
 }

@@ -1,0 +1,11 @@
+.node-span{
+  color: #151515;
+  font-size: 13px;
+  font-weight: bold;
+  line-height: 13px;
+  cursor: pointer;
+}
+.dragable-i{
+  color: #9C9D9D;
+  cursor: pointer;
+}

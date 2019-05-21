@@ -1,13 +1,13 @@
 <div class="  row no-gutters  align-items-center">
-  <div class="col-2 ">
+  <div class="col-1 pb-2">
     <label class="app-checkbox-container">
     <input
-      type="checkbox" [ngModel]="group.exist" (ngModelChange)="onBeingChange($event)">
+      type="checkbox" [ngModel]="group.exist" (ngModelChange)="onBeingChange($event, group, section)">
     <span class="app-checkbox-checkmark"></span>
   </label>
   </div>
   <div class="col-10 pb-1 row align-items-center no-gutters side-bar-item">
-    <div class="col-1 ml-">
+    <div class="col-1 pl-1">
       <span><i class="fas fa-ellipsis-v dragable-i"></i></span>
       <span><i class="fas fa-ellipsis-v  dragable-i"></i></span>
     </div>
@@ -22,19 +22,19 @@
     </div>
 
   </div>
-  <div class="col-10 offset-2 side-bar-item-modal rounded pb-2" [hidden]="!showNested">
+  <div class="col-10 offset-1 side-bar-item-modal rounded pb-2" [hidden]="!showNested">
     <div class="" *ngFor="let field of group.fields">
 <!--      <app-v-side-bar-field [field]="field"></app-v-side-bar-field>-->
       <div class="  row no-gutters  align-items-center">
-        <div class="ml-2 mb-2 col-2 ">
+        <div class="ml-2 pb-2 col-1 ">
           <label class="app-checkbox-container ">
           <input
-            type="checkbox" class=""[ngModel]="field.exist" (ngModelChange)="onBeingChangeNested($event, field)">
+            type="checkbox" class=""[ngModel]="field.exist" (ngModelChange)="onBeingChangeNested($event, field, group, section)">
           <span class="app-checkbox-checkmark just-white"></span>
         </label>
         </div>
-        <div class="col-9  mb-1 mt-2 row align-items-center no-gutters rounded " [ngClass]="field.mapped==''?'side-bar-item-group-custom':'side-bar-item-group'">
-          <div class="col-1">
+        <div class="col-10  mb-1 mt-2 row align-items-center no-gutters rounded " [ngClass]="field.mapped==''?'side-bar-item-group-custom':'side-bar-item-group'">
+          <div class="col-1 ">
             <span><i class="fas fa-ellipsis-v dragable-i"></i></span>
             <span><i class="fas fa-ellipsis-v  dragable-i"></i></span>
           </div>
@@ -50,15 +50,19 @@
     <div class="p-2 ">
       <button
         *ngIf="showAddButton"
-        type="button"
+        type="button" appClickStopPropagation placement="right"
+        ngbPopover="This feature is under developing"
+        popoverTitle="Notice"
         class="btn btn-outline-primary form-control p-0 text-left"
-        (click)="showAddButton=false">
+        >
+<!--        (click)="showAddButton=false">-->
         &nbsp;&nbsp;+ Add New Field
       </button>
       <input
         *ngIf="!showAddButton"
 
         class="form-control add-input p-0"
+
         autofocus
         #newField
       (keyup)="nameChange($event)"

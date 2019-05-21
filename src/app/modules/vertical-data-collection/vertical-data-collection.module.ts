@@ -84,6 +84,11 @@ import { VInsideAccountCommunicationComponent } from './v-form-info/v-form-info-
 import { VInsideMissingFieldsComponent } from './v-form-info/v-form-info-submissions/v-form-info-submission-inside/v-inside-missing-fields/v-inside-missing-fields.component';
 import { VInsideFormHistoryComponent } from './v-form-info/v-form-info-submissions/v-form-info-submission-inside/v-inside-form-history/v-inside-form-history.component';
 import { VTermsConditionsComponent } from './v-form-constructor/v-form-builder/v-terms-conditions/v-terms-conditions.component';
+import { VFieldsSideBarComponent } from './v-form-constructor/v-form-builder/v-form-fields/v-side-bar/v-fields-side-bar/v-fields-side-bar.component';
+import { VFieldsSideBarNodeComponent } from './v-form-constructor/v-form-builder/v-form-fields/v-side-bar/v-fields-side-bar/v-fields-side-bar-node/v-fields-side-bar-node.component';
+import { VFieldsSideBarDetailedComponent } from './v-form-constructor/v-form-builder/v-form-fields/v-side-bar/v-fields-side-bar/v-fields-side-bar-detailed/v-fields-side-bar-detailed.component';
+import { VFieldsWorkspaceComponent } from './v-form-constructor/v-form-builder/v-form-fields/v-fields-workspace/v-fields-workspace.component';
+import { VSectionConteinerComponent } from './v-form-constructor/v-form-builder/v-form-fields/v-section-conteiner/v-section-conteiner.component';
 import {FinanceService} from "../../services/finance/finance.service";
 
 const routes: Routes = [
@@ -201,6 +206,11 @@ const routes: Routes = [
     VInsideMissingFieldsComponent,
     VInsideFormHistoryComponent,
     VTermsConditionsComponent,
+    VFieldsSideBarComponent,
+    VFieldsSideBarNodeComponent,
+    VFieldsSideBarDetailedComponent,
+    VFieldsWorkspaceComponent,
+    VSectionConteinerComponent,
   ],
   imports: [
     NgbModule,

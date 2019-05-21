@@ -37,51 +37,54 @@
           </div>
         </div>
         <div *ngIf="sections.formFields" class="bg-white rounded mb-3">
-          <input class="form-control mb-3 search-input" [(ngModel)]="searchText" placeholder="Search...">
 
-          <div class="mb-2  " *ngFor="let sideBar of sideBarFields | filter : searchText">
-            <app-v-side-bar-group
-              *ngIf="sideBar.type==113"
-              [group]="sideBar"
-              [existingFields]="existingFields"
-              [customFields]="customFields"
-              (onDeleteNested)="onDelete($event)"
-              (onChangeFieldBeing)="onChangeFieldBeing($event)"
-              (onChangeGroupBeing)="onChangeGroupBeing($event, sideBar)"
-            >
+          <app-v-fields-side-bar [sideBar]="newSideBar" [form]="form"></app-v-fields-side-bar>
 
-            </app-v-side-bar-group>
-            <app-v-side-bar-field
-              *ngIf="sideBar.type!=113"
-              [field]="sideBar"
-              [style]="sideBar.mapped==''"
-              (deleteCustom)="onDeleteCustom($event)"
-              (onChangeFieldBeing)="onChangeFieldBeing($event)"
+<!--          Old side bar-->
+<!--          <div class="mb-2  " *ngFor="let sideBar of sideBarFields | filter : searchText">-->
+<!--            <app-v-side-bar-group-->
+<!--              *ngIf="sideBar.type==113"-->
+<!--              [group]="sideBar"-->
+<!--              [existingFields]="existingFields"-->
+<!--              [customFields]="customFields"-->
+<!--              (onDeleteNested)="onDelete($event)"-->
+<!--              (onChangeFieldBeing)="onChangeFieldBeing($event)"-->
+<!--              (onChangeGroupBeing)="onChangeGroupBeing($event, sideBar)"-->
+<!--            >-->
 
-            >
-            </app-v-side-bar-field>
-          </div>
-          <div>
-            <button
-              *ngIf="showAddButton"
-              type="button"
-              class="btn btn-outline-primary form-control p-0 text-left"
-              (click)="showAddButton=false">
-              &nbsp;&nbsp;+ Add New Field
-            </button>
-            <input
-              *ngIf="!showAddButton"
-              (keyup)="nameChange($event)"
-              [ngClass]="!validNewCustomFieldName?'is-invalid':''"
-              class="form-control add-input p-0"
-              autofocus
-              #newField
-              (blur)="addNewCustomField(newField.value, sideBarFields); newField.value=''"
-              (keyup.enter)="addNewCustomField(newField.value, sideBarFields); newField.value=''">
-            <div class="invalid-feedback">
-              We have existing field with the same name!
-            </div>
-          </div>
+<!--            </app-v-side-bar-group>-->
+<!--            <app-v-side-bar-field-->
+<!--              *ngIf="sideBar.type!=113"-->
+<!--              [field]="sideBar"-->
+<!--              [style]="sideBar.mapped==''"-->
+<!--              (deleteCustom)="onDeleteCustom($event)"-->
+<!--              (onChangeFieldBeing)="onChangeFieldBeing($event)"-->
+
+<!--            >-->
+<!--            </app-v-side-bar-field>-->
+<!--          </div>-->
+<!--          <div>-->
+<!--            <button-->
+<!--              *ngIf="showAddButton"-->
+<!--              type="button"-->
+<!--              class="btn btn-outline-primary form-control p-0 text-left"-->
+<!--              (click)="showAddButton=false">-->
+<!--              &nbsp;&nbsp;+ Add New Field-->
+<!--            </button>-->
+<!--            <input-->
+<!--              *ngIf="!showAddButton"-->
+<!--              (keyup)="nameChange($event)"-->
+<!--              [ngClass]="!validNewCustomFieldName?'is-invalid':''"-->
+<!--              class="form-control add-input p-0"-->
+<!--              autofocus-->
+<!--              #newField-->
+<!--              (blur)="addNewCustomField(newField.value, sideBarFields); newField.value=''"-->
+<!--              (keyup.enter)="addNewCustomField(newField.value, sideBarFields); newField.value=''">-->
+<!--            <div class="invalid-feedback">-->
+<!--              We have existing field with the same name!-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        End of  Old side bar-->
 
         </div>
 
@@ -712,29 +715,29 @@
 
   <div class="col-9 pr-5">
 
-    <div
-      cdkDropList
-      id="workPlaceList"
-      [cdkDropListData]="fields"
-      [cdkDropListConnectedTo]="['ExistingFieldsList', 'CustomFieldsList', '6372c882-3d14-486f-9c1f-52ae8ab928ef']"
-      (cdkDropListDropped)="drop($event)">
-      <ul class="list-group" *ngIf="sections.formFieldsWorkspace">
-        <li class="list-group-item mb-3 py-0" *ngFor="let field of fields; trackBy: trackByFn" cdkDrag
-            cdkDragLockAxis="y"
-            [ngClass]="[!field.isValidName||!field.isValid?'list-group-item-warning':'', field.type==113?'app-list-group-item-info':'']">
-          <app-v-group-container *ngIf="field.type==113" [inputGroup]="field"
-                                 [customFields]="customFields"></app-v-group-container>
-          <app-v-field-container *ngIf="field.type!=113"
-                                 [customFields]="customFields"
-                                 [inputField]="field"
-                                 (onChange)="onChange($event, field)"
-                                 (onUniq)="onUniq($event)"
-                                 (onDelete)="onDelete($event)">
-          </app-v-field-container>
-        </li>
+    <div>
+<!--      cdkDropList-->
+<!--      id="workPlaceList"-->
+<!--      [cdkDropListData]="fields"-->
+<!--      [cdkDropListConnectedTo]="['ExistingFieldsList', 'CustomFieldsList', '6372c882-3d14-486f-9c1f-52ae8ab928ef']"-->
+<!--      (cdkDropListDropped)="drop($event)">-->
+<!--      <ul class="list-group" *ngIf="sections.formFieldsWorkspace">-->
+<!--        <li class="list-group-item mb-3 py-0" *ngFor="let field of fields; trackBy: trackByFn" cdkDrag-->
+<!--            cdkDragLockAxis="y"-->
+<!--            [ngClass]="[!field.isValidName||!field.isValid?'list-group-item-warning':'', field.type==113?'app-list-group-item-info':'']">-->
+<!--          <app-v-group-container *ngIf="field.type==113" [inputGroup]="field"-->
+<!--                                 [customFields]="customFields"></app-v-group-container>-->
+<!--          <app-v-field-container *ngIf="field.type!=113"-->
+<!--                                 [customFields]="customFields"-->
+<!--                                 [inputField]="field"-->
+<!--                                 (onChange)="onChange($event, field)"-->
+<!--                                 (onUniq)="onUniq($event)"-->
+<!--                                 (onDelete)="onDelete($event)">-->
+<!--          </app-v-field-container>-->
+<!--        </li>-->
 
-      </ul>
-
+<!--      </ul>-->
+      <app-v-fields-workspace *ngIf="sections.formFieldsWorkspace" [form]="form" [customFields]="customFields"></app-v-fields-workspace>
       <!--  documents-forms-->
       <app-v-documents-forms
         *ngIf="sections.documentsFormsWorkspace"
