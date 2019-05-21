@@ -36,50 +36,49 @@
   </div>
   <div class="modal-body">
       <div class="">
-        <div class="text-center font-weight-bold"><span>Please enter group name and select group type</span></div>
+        <div class="text-center font-weight-bold"><span>Please enter section name and select section width</span></div>
       </div>
-    <form [formGroup]="sectionAddGroup" (ngSubmit)="addSection()">
+    <form [formGroup]="sectionAddGroup" (ngSubmit)="addSection(modal)">
       <div class="row mt-2">
-        <div class="col  app-input-container"
+        <div class="col  form-group app-input-container"
              [ngClass]="{'app-input-fill': sectionNameId.value}">
           <label for="sectionNameID" class="app-input-label">Section Name</label>
           <input type="text"
                  #sectionNameId
                  formControlName="sectionName"
-                 class="app-input has-error"
+                 class="app-input form-control"
                  id="sectionNameID"
                  [ngClass]="sectionAddGroup.get('sectionName').touched&&sectionAddGroup.get('sectionName').invalid?'is-invalid':''"
                  placeholder="Form Name">
-<!--                 [ngClass]="sectionAddGroup.get('sectionName').touched&&sectionAddGroup.get('sectionName').invalid?'is-invalid':''"-->
 
           <div class="invalid-feedback">
-            Form name is required and contain min 3 and max 50 symbols
+            Section name is required and contain min 3 and max 50 symbols
           </div>
         </div>
-        <div class="col  app-input-container"
+        <div class="col form-group app-input-container"
              [ngClass]="{'app-input-fill': sizeID.value}" >
           <label for="sectionSize" class="app-input-label">Section Width</label>
           <select class="app-input form-control"
                   name="sectionSize"
                   #sizeID
                   formControlName="sectionSize"
+                  [ngClass]="sectionAddGroup.get('sectionSize').touched&&sectionAddGroup.get('sectionSize').invalid?'is-invalid':''"
                   id="sectionSize">
             <option value=""   disabled [selected]="true">Section Width</option>
             <option *ngFor="let width of size"
                     >{{width}}</option>
           </select>
+          <div class="invalid-feedback">
+            Section size is required
+          </div>
         </div>
       </div>
     <div class="row mt-4">
       <div class="col-2 offset-8">
-        <button type="submit" class="btn app-btn-outline-primary form-control" appClickStopPropagation placement="left"
-                ngbPopover="This feature is under developing"
-                popoverTitle="Notice">Cancel</button>
+        <button type="button" class="btn app-btn-outline-primary form-control" (click)="modalClose(modal)">Cancel</button>
       </div>
       <div class="col-2">
-        <button type="submit" class="btn app-btn-primary form-control" appClickStopPropagation placement="left"
-                ngbPopover="This feature is under developing"
-                popoverTitle="Notice">OK</button>
+        <button type="submit" class="btn app-btn-primary form-control">OK</button>
       </div>
     </div>
     </form>
