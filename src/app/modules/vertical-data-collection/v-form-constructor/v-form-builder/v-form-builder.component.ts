@@ -16,7 +16,7 @@ import {FormPayment, TYPE_NAME} from "./v-form-payment/model/form-payment.model"
 import {ConsentInfo, consentInfoDefault, consentItemDefault} from "./v-consent/model/consent.model";
 import {documentItemDefault, DocumentSideBar, DocumentsModel} from "./v-documents-forms/model/documents.model";
 import {GeneralInfoIsValidService} from "../../services/general-info-is-valid.service";
-import {FormPDFDownloadModel, formPDFItemDefault, FormsPDFModel} from "./v-documents-forms/model/formsPDF.model";
+import {formPDFItemDefault, FormsPDFModel} from "./v-documents-forms/model/formsPDF.model";
 import {VFilesService} from "../../v-files.service";
 import {FBSections, fbSections} from "./v-consent/fb-active-section.model";
 
