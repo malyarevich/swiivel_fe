@@ -3,12 +3,9 @@ import {FamilyService} from "../../../../services/family.service";
 import {Family} from "../../../../../../models/family/family.model";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {PersonService} from "../../../../../../services/person/person.service";
-import {PayersService} from "../../../../../payer-accounts/services/payers.service";
-import {RecipientService} from "../../../../../../services/recipient/recipient.service";
-import {FeeService} from "../../../../../../services/fee/fee.service";
 import {Person} from "../../../../../../models/person.model";
-import {Recipient} from "../../../../../../models/recipient.model";
 import {FamilyRoles} from "../../../../../../enums/family-roles";
+import {FamilyPersonService} from "../../../../services/family-person.service";
 
 @Component({
   selector: 'app-family-add-member-modal',
@@ -35,6 +32,7 @@ export class FamilyAddMemberModalComponent implements OnInit {
 
   constructor(private familyService: FamilyService,
               private personService: PersonService,
+              private familyPersonService: FamilyPersonService,
               private fb: FormBuilder,) {
     this.initFamilyPersonForm();
   }
@@ -100,9 +98,15 @@ export class FamilyAddMemberModalComponent implements OnInit {
     const data = {
       family_id: this.family.family_id,
       family_name: this.family.name,
-      person_ids: [],
+      id_person: 0,
       person_role: this.familyPersonForm.value.role,
     };
-    console.log(data);
+    this.familyPersonForm.value.members.map((member) => {
+      data.id_person = member.id;
+      this.familyPersonService.add(data);
+    });
+
+    this.onCloseAddFamilyMemberModal();
+    // console.log(data);
   }
 }

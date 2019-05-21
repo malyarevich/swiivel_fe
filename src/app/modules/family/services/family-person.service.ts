@@ -9,10 +9,11 @@ import {Person} from "../../../models/person.model";
 import {FamilyPerson} from "../../../models/family/family-person.model";
 
 
-// interface ResponseData {
-//   success: boolean;
-//   data: Family[];
-// }
+interface ResponseData {
+  success: boolean;
+  errors: string;
+  data: FamilyPerson;
+}
 
 @Injectable()
 export class FamilyPersonService {
@@ -38,6 +39,13 @@ export class FamilyPersonService {
       this.dataStore.familyPersonList = data;
       this._familyPersonList.next(Object.assign({}, this.dataStore).familyPersonList);
     }, error => console.log('Could not load family persons. Error: ' + error.message));
+  }
+
+  add(data) {
+    this.addOneRequest(data).subscribe(res => {
+      this.dataStore.familyPersonList.push(res.data);
+      this._familyPersonList.next(Object.assign({}, this.dataStore).familyPersonList);
+    }, error => console.log('Could not add families persons. Error: ' + error.message));
   }
 
 //
@@ -96,11 +104,11 @@ export class FamilyPersonService {
 //     );
 //   }
 //
-//   createOneRequest(name): Observable<any> {
-//     return this.http.post(`${environment.apiFB}/families?api_token=${environment.api_token}`, {name: name}).pipe(
-//       map((res) => res)
-//     );
-//   }
+  addOneRequest(data): Observable<any> {
+    return this.http.post(`${environment.apiFB}/persons/family?api_token=${environment.api_token}`, {...data}).pipe(
+      map((res) => res)
+    );
+  }
 //
 //   updateOneRequest(family): Observable<any> {
 //     return this.http.put(`${environment.apiFB}/families/${family.id}?api_token=${environment.api_token}`, {...family}).pipe(
