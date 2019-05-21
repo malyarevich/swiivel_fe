@@ -71,29 +71,6 @@ export class FamilyAddMemberModalComponent implements OnInit {
     this.closeModalAddFamilyMember.emit(true);
   }
 
-  // onCreatePayerAccount() {
-  //
-  //   const data = {
-  //     name: this.payerAccountForm.value.name,
-  //     type: this.payerAccountForm.value.type,
-  //     persons: [],
-  //     primary: this.payerAccountForm.value.primary,
-  //   };
-  //
-  //   this.payerAccountForm.value.members.forEach((member) => {
-  //     data.persons.push({ person_id: member.id });
-  //   });
-  //
-  //   this.payersService.addPayerAccount(data)
-  //     .subscribe((res) => {
-  //       this.closeFormPayerAccount.emit(true);
-  //     }, (err) => {
-  //       if (err.error && err.error.errors) {
-  //         this.errorMsg = err.error.errors;
-  //       }
-  //     });
-  // }
-
   addFamilyPerson() {
     const data = {
       family_id: this.family.family_id,
@@ -107,6 +84,5 @@ export class FamilyAddMemberModalComponent implements OnInit {
     });
 
     this.onCloseAddFamilyMemberModal();
-    // console.log(data);
   }
 }
