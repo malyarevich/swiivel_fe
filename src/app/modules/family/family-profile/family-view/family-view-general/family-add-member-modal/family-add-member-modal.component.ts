@@ -20,7 +20,6 @@ export class FamilyAddMemberModalComponent implements OnInit {
 
   family: Family;
 
-  errorMsg: string;
   persons: any[] = [];
   roles = [
     FamilyRoles.father,
@@ -48,7 +47,7 @@ export class FamilyAddMemberModalComponent implements OnInit {
   initFamilyPersonForm() {
     this.familyPersonForm = this.fb.group({
       members: [null, Validators.required],
-      roles: [this.roles[0], Validators.required],
+      role: [this.roles[0], Validators.required],
     });
   }
 
@@ -75,7 +74,6 @@ export class FamilyAddMemberModalComponent implements OnInit {
   }
 
   // onCreatePayerAccount() {
-  //   this.errorMsg = null;
   //
   //   const data = {
   //     name: this.payerAccountForm.value.name,
@@ -98,7 +96,13 @@ export class FamilyAddMemberModalComponent implements OnInit {
   //     });
   // }
 
-  onAddFamilyPerson() {
-
+  addFamilyPerson() {
+    const data = {
+      family_id: this.family.family_id,
+      family_name: this.family.name,
+      person_ids: [],
+      person_role: this.familyPersonForm.value.role,
+    };
+    console.log(data);
   }
 }

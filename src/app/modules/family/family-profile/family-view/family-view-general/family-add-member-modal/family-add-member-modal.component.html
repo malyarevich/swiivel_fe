@@ -9,7 +9,7 @@
   </div>
 
   <div *ngIf="persons.length" class="form-payer-account-container">
-    <form [formGroup]="familyPersonForm" (ngSubmit)="onAddFamilyPerson()">
+    <form [formGroup]="familyPersonForm" (ngSubmit)="addFamilyPerson()">
 
       <div class="row pb-5">
         <div class="col-8">
@@ -32,15 +32,15 @@
         <div class="col-4">
           <app-select-field
 
-            [formControlName]="'roles'"
+            [formControlName]="'role'"
             labelTitle="Roles"
-            [isInvalid]="familyPersonForm.get('roles').invalid && familyPersonForm.get('roles').touched"
+            [isInvalid]="familyPersonForm.get('role').invalid && familyPersonForm.get('role').touched"
             [items]="roles"
           >
           </app-select-field>
           <div
             class="field-has-error"
-            *ngIf="familyPersonForm.get('roles').invalid && familyPersonForm.get('roles').touched && familyPersonForm.get('roles')['errors']['required']"
+            *ngIf="familyPersonForm.get('role').invalid && familyPersonForm.get('role').touched && familyPersonForm.get('role')['errors']['required']"
           >
             Role is required
           </div>

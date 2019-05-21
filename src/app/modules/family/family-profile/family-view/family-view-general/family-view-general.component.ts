@@ -1,8 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {FamilyPersonService} from "../../../services/family-person.service";
 import {FamilyPerson} from "../../../../../models/family/family-person.model";
 import {Observable} from "rxjs";
-import {Family} from "../../../../../models/family/family.model";
 import {FamilyRoles} from "../../../../../enums/family-roles";
 
 @Component({
@@ -11,6 +10,7 @@ import {FamilyRoles} from "../../../../../enums/family-roles";
   styleUrls: ['./family-view-general.component.css']
 })
 export class FamilyViewGeneralComponent implements OnInit {
+  @Input() familyId: string;
 
   familyPersons: Observable<FamilyPerson[]>;
 
@@ -25,6 +25,6 @@ export class FamilyViewGeneralComponent implements OnInit {
 
   getFamilyPersons() {
     this.familyPersons = this.familyPersonService.familyPersonList;
-    this.familyPersonService.getAll();
+    this.familyPersonService.getByFamilyId(this.familyId);
   }
 }

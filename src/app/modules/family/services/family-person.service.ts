@@ -33,11 +33,11 @@ export class FamilyPersonService {
     };
   }
 
-  getAll() {
-    this.getAllRequest().subscribe(data => {
+  getByFamilyId(familyId) {
+    this.getByFamilyIdRequest(familyId).subscribe(data => {
       this.dataStore.familyPersonList = data;
       this._familyPersonList.next(Object.assign({}, this.dataStore).familyPersonList);
-    }, error => console.log('Could not load families. Error: ' + error.message));
+    }, error => console.log('Could not load family persons. Error: ' + error.message));
   }
 
 //
@@ -83,8 +83,8 @@ export class FamilyPersonService {
 //     }, error => console.log('Could not delete family. Error: ' + error.message));
 //   }
 //
-  getAllRequest(): Observable<any> {
-    return this.http.get(`${environment.apiFB}/persons/family?api_token=${environment.api_token}`).pipe(
+  getByFamilyIdRequest(familyId): Observable<any> {
+    return this.http.get(`${environment.apiFB}/persons/family/${familyId}?api_token=${environment.api_token}`).pipe(
       map((res) => res)
     );
   }
