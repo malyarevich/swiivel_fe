@@ -12,22 +12,17 @@
         <thead>
         <tr>
           <th scope="col"></th>
-          <th scope="col">Family</th>
-          <th scope="col">Name</th>
-          <th scope="col">Gender</th>
-          <th scope="col">Relation</th>
+          <th scope="col">Family Name</th>
           <th></th>
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let item of familyPersons; index as i">
+        <tr *ngFor="let item of familyList | async; index as i">
           <th scope="row">{{ i + 1 }}</th>
-          <td>{{ item.family_name }}</td>
-          <td>{{ item.person.first_name }}</td>
-          <td>{{ item.person.gender }}</td>
-          <td>{{ item.person_role }}</td>
+          <td>{{ item.name }}</td>
           <th>
-            <button class="btn app-btn-primary px-2 py-0" [routerLink]="'profile/'+ item.family_id">Edit</button>
+            <button class="btn app-btn-primary px-2 py-0 mr-2" [routerLink]="'profile/'+ item.family_id">Edit</button>
+            <button class="btn btn-danger px-2 py-0" (click)="deleteFamily(item.family_id)">Delete</button>
           </th>
         </tr>
         </tbody>

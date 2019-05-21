@@ -7,9 +7,9 @@
     </button>
   </div>
   <div class="modal-body">
-    <input [(ngModel)]="family.name">
+    <input [(ngModel)]="familyName">
   </div>
   <div class="modal-footer">
-    <button [disabled]="!family.name" type="button" class="btn btn-outline-dark" (click)="c(); save()">Save</button>
+    <button [disabled]="!familyName" type="button" class="btn btn-outline-dark" (click)="c(); save()">Save</button>
   </div>
 </ng-template>

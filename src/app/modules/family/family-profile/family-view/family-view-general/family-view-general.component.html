@@ -1,9 +1,17 @@
 <app-family-view-general-nav></app-family-view-general-nav>
-<div class="row mt-3">
-  <div class="col-4">
-    <app-family-person-card></app-family-person-card>
-  </div>
-  <div class="col-4">
-    <app-family-person-card></app-family-person-card>
+<div class="d-flex justify-content-between align-items-stretch flex-wrap">
+  <div class="app-person-card-container mt-1" *ngFor="let item of familyPersons | async">
+    <div class="app-family-card-body h-100">
+      <app-family-parents-card [familyPerson]="item"
+                               *ngIf="item.person_role === familyRoles.father || item.person_role === familyRoles.mother">
+      </app-family-parents-card>
+      <app-family-students-card [familyPerson]="item"
+                                *ngIf="item.person_role === familyRoles.student"></app-family-students-card>
+      <app-family-children-card [familyPerson]="item"
+                                *ngIf="item.person_role === familyRoles.child"></app-family-children-card>
+      <app-family-grandparents-card [familyPerson]="item"
+                                    *ngIf="item.person_role === familyRoles.grandfather || item.person_role === familyRoles.grandmother">
+      </app-family-grandparents-card>
+    </div>
   </div>
 </div>

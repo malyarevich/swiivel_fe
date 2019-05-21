@@ -14,7 +14,6 @@ export class FamilyProfileComponent implements OnInit {
 
   ngOnInit() {
     this.getFamilyId();
-    this.getFamilyInfo()
   }
 
   getFamilyId() {
@@ -22,9 +21,4 @@ export class FamilyProfileComponent implements OnInit {
       this.familyId = params['id'];
     });
   }
-
-  getFamilyInfo() {
-
-  }
-
 }

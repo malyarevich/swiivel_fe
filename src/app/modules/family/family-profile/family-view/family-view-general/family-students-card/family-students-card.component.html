@@ -1,0 +1,107 @@
+<div class="row no-gutters app-family-card-header px-4 py-2 app-text-white">
+  <div class="col-6 text-left app-text-large font-weight-bold">
+    {{familyPerson.person.first_name + ' ' + familyPerson.person.last_name | titlecase}}
+  </div>
+  <div class="col-6 text-right">
+    <i class="fas fa-graduation-cap"></i>
+  </div>
+</div>
+
+<div class="p-3">
+  <div class="row no-gutters border-bottom">
+    <div class="col-3">
+      <img src="assets/images/temp/person-foto-placeholder.png" width="70%">
+    </div>
+    <div class="col-9">
+      <div class="row">
+        <div class="col-12 d-flex justify-content-between pb-1">
+          <span class="app-text-second">Name:</span>
+          <span>{{familyPerson.person.first_name + ' ' +
+            familyPerson.person.middle_name + ' ' +
+            familyPerson.person.last_name | titlecase}}</span>
+        </div>
+        <div class="col-12 d-flex justify-content-between pb-1">
+          <span class="app-text-second">Legal Name:</span>
+          <span>??</span>
+        </div>
+        <div class="col-12 d-flex justify-content-between pb-1">
+          <span class="app-text-second">Full Hebrew Name:</span>
+          <span>{{familyPerson.person.hebrew_first_name}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row no-gutters border-bottom pb-1">
+
+    <div class="col-12 text-left app-text-small font-weight-bold pt-3 pb-1">
+      PARENTS
+    </div>
+    <div class="col-12 d-flex justify-content-between pb-1">
+      <span class="app-text-second">Father:</span>
+      <span>??</span>
+    </div>
+    <div class="col-12 d-flex justify-content-between pb-1">
+      <span class="app-text-second">Mother:</span>
+      <span>??</span>
+    </div>
+
+    <div class="col-12 text-left app-text-small font-weight-bold pt-3 pb-1">
+      DATE OF BIRTH
+    </div>
+    <div class="col-12 d-flex justify-content-between pb-1">
+      <span class="app-text-second">Date of Birth:</span>
+      <span>{{familyPerson.person.dob}}</span>
+    </div>
+    <div class="col-12 d-flex justify-content-between pb-1">
+      <span class="app-text-second">Hebrew Date of Birth:</span>
+      <span>??</span>
+    </div>
+
+    <div class="col-12 text-left app-text-small font-weight-bold pt-3 pb-1">
+      CONTACTS
+    </div>
+    <div class="col-12 d-flex justify-content-between pb-1">
+      <span class="app-text-second">Emergency contact:</span><span>?? (Mother | Atara Fishman)</span>
+    </div>
+    <div class="col-12 d-flex justify-content-between pb-1">
+      <span class="app-text-second">Cell Phone:</span>
+      <span>{{familyPerson.person.contact_phone}}</span>
+    </div>
+
+  </div>
+
+  <div class="row pt-2">
+    <div class="col">
+      <nav class="navbar navbar-expand-lg navbar-light p-0">
+        <div class="justify-content-left">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link app-nav-link"
+                 [ngClass]="{'app-nav-link-active' : activeTab==='education'}"
+                 (click)="activeTab = 'education'">
+                Education
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link app-nav-link"
+                 [ngClass]="{'app-nav-link-active' : activeTab==='medical'}"
+                 (click)="activeTab = 'medical'">
+                Medical
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link app-nav-link"
+                 [ngClass]="{'app-nav-link-active' : activeTab==='secondContact'}"
+                 (click)="activeTab = 'secondContact'">
+                Second Contact
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </div>
+
+</div>
+
