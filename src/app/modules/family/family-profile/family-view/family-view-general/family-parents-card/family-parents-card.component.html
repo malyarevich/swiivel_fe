@@ -1,57 +1,69 @@
-<div class="app-family-card-body h-100">
-
-  <div class="row no-gutters app-family-card-header px-4 py-2 app-text-white">
-    <div class="col-6 text-left app-text-large font-weight-bold">
-      Aaron Fishman
-    </div>
-    <div class="col-6 text-right">
-      Father
-    </div>
+<div class="row no-gutters app-family-card-header px-4 py-2 app-text-white">
+  <div class="col-6 text-left app-text-large font-weight-bold">
+    {{familyPerson.person.first_name + ' ' + familyPerson.person.last_name | titlecase}}
   </div>
+  <div class="col-6 text-right">
+    {{familyPerson.person_role | titlecase}}
+  </div>
+</div>
 
-  <div class="p-3">
-    <div class="row no-gutters border-bottom">
-      <div class="col-3">
-        <img src="assets/images/temp/person-foto-placeholder.png" width="70%">
-      </div>
-      <div class="col-9">
-        <div class="row">
-          <div class="col-12 d-flex justify-content-between pb-1">
-            <span class="app-text-second">Name:</span><span>Aeron Daniel Fishman</span>
-          </div>
-          <div class="col-12 d-flex justify-content-between pb-1">
-            <span class="app-text-second">Hebrew Name:</span><span>בר מזל</span>
-          </div>
-          <div class="col-12 d-flex justify-content-between pb-1">
-            <span class="app-text-second">Number of children:</span><span>7</span>
-          </div>
+<div class="p-3">
+  <div class="row no-gutters border-bottom">
+    <div class="col-3">
+      <img src="assets/images/temp/person-foto-placeholder.png" width="70%">
+    </div>
+    <div class="col-9">
+      <div class="row">
+        <div class="col-12 d-flex justify-content-between pb-1">
+          <span class="app-text-second">Name:</span>
+          <span>{{familyPerson.person.first_name + ' ' +
+            familyPerson.person.middle_name + ' ' +
+            familyPerson.person.last_name | titlecase}}</span>
+        </div>
+        <div class="col-12 d-flex justify-content-between pb-1">
+          <span class="app-text-second">Hebrew Name:</span>
+          <span>{{familyPerson.person.hebrew_first_name}}</span>
+        </div>
+        <div *ngIf="familyPerson.person_role === famylyRoles.mother" class="col-12 d-flex justify-content-between pb-1">
+          <span class="app-text-second">Maiden name:</span>
+          <span>??</span>
+        </div>
+        <div class="col-12 d-flex justify-content-between pb-1">
+          <span class="app-text-second">Number of children:</span>
+          <span>
+            ??
+          </span>
         </div>
       </div>
     </div>
-
-    <div class="row">
-      <div class="col-12 text-left app-text-small font-weight-bold pt-3 pb-1">
-        JOB
-      </div>
-      <div class="col-12 d-flex justify-content-between pb-1">
-        <span class="app-text-second">Occupation:</span><span>Engineer</span>
-      </div>
-      <div class="col-12 d-flex justify-content-between pb-1">
-        <span class="app-text-second">Address:</span><span>New City, High Road, 45 </span>
-      </div>
-      <div class="col-12 d-flex justify-content-between pb-1">
-        <span class="app-text-second">Work number:</span><span>+1 234 567-89-00</span>
-      </div>
-      <div class="col-12 text-left app-text-small font-weight-bold pt-3 pb-1">
-        CONTACTS
-      </div>
-      <div class="col-12 d-flex justify-content-between pb-1">
-        <span class="app-text-second">Phone Number:</span><span>+1 234 567-89-00</span>
-      </div>
-      <div class="col-12 d-flex justify-content-between pb-1">
-        <span class="app-text-second">Email Address:</span><span>aaronn@gmial.com</span>
-      </div>
-    </div>
   </div>
 
+  <div class="row">
+    <div class="col-12 text-left app-text-small font-weight-bold pt-3 pb-1">
+      JOB
+    </div>
+    <div class="col-12 d-flex justify-content-between pb-1">
+      <span class="app-text-second">Occupation:</span>
+      <span>??</span>
+    </div>
+    <div class="col-12 d-flex justify-content-between pb-1">
+      <span class="app-text-second">Address:</span>
+      <span class="pl-5 text-right">{{familyPerson.person.address}}</span>
+    </div>
+    <div class="col-12 d-flex justify-content-between pb-1">
+      <span class="app-text-second">Work number:</span>
+      <span>{{familyPerson.person.corporate_phone}}</span>
+    </div>
+    <div class="col-12 text-left app-text-small font-weight-bold pt-3 pb-1">
+      CONTACTS
+    </div>
+    <div class="col-12 d-flex justify-content-between pb-1">
+      <span class="app-text-second">Phone Number:</span>
+      <span>{{familyPerson.person.contact_phone}}</span>
+    </div>
+    <div class="col-12 d-flex justify-content-between pb-1">
+      <span class="app-text-second">Email Address:</span>
+      <span>{{familyPerson.person.contact_email}}</span>
+    </div>
+  </div>
 </div>

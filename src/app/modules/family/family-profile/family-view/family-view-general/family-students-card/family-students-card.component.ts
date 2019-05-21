@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {FamilyPerson} from "../../../../../../models/family/family-person.model";
 
 @Component({
   selector: 'app-family-students-card',
@@ -6,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./family-students-card.component.css']
 })
 export class FamilyStudentsCardComponent implements OnInit {
+  @Input() familyPerson: FamilyPerson;
 
   activeTab: string = 'education';
 

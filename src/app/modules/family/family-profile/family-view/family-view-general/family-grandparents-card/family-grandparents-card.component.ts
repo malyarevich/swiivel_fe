@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {FamilyPerson} from "../../../../../../models/family/family-person.model";
 
 @Component({
   selector: 'app-family-grandparents-card',
@@ -6,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./family-grandparents-card.component.css']
 })
 export class FamilyGrandparentsCardComponent implements OnInit {
+  @Input() familyPerson: FamilyPerson;
 
   constructor() { }
 
