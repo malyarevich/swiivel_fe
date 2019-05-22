@@ -6,9 +6,9 @@
       <app-family-create-modal></app-family-create-modal>
     </div>
   </div>
-  <div class="row mt-5">
-    <div class="col-12">
-      <table class="table table-striped">
+  <div class="row mt-3 app-of-wrap py-5">
+    <div class="col-8 offset-2">
+      <table class="table">
         <thead>
         <tr>
           <th scope="col"></th>
@@ -19,8 +19,8 @@
         <tbody>
         <tr *ngFor="let item of familyList | async; index as i">
           <th scope="row">{{ i + 1 }}</th>
-          <td>{{ item.name }}</td>
-          <th>
+          <td class="font-weight-bold">{{ item.name }}</td>
+          <th class="text-right">
             <button class="btn app-btn-primary px-2 py-0 mr-2" [routerLink]="'profile/'+ item.family_id">Edit</button>
             <button class="btn btn-danger px-2 py-0" (click)="deleteFamily(item.family_id)">Delete</button>
           </th>
