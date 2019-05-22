@@ -66,8 +66,10 @@ export class FamilyService {
   }
 
   getOne(family_id) {
+    this.startLoading();
     this.getOneRequest(family_id).subscribe((res:GetResponseData) => {
       if(res.success) {
+        this.stopLoading();
         this.dataStore.family = res.data[0];
         this._family.next(Object.assign({}, this.dataStore).family);
       }
@@ -86,8 +88,10 @@ export class FamilyService {
   }
 
   update(family) {
+    this.startLoading();
     this.updateOneRequest(family).subscribe((res: UpdateCreateResponseData) => {
       if(res.success) {
+        this.stopLoading();
         this.dataStore.family = res.data;
         this._family.next(Object.assign({}, this.dataStore).family);
 
@@ -100,8 +104,10 @@ export class FamilyService {
   }
 
   delete(familyId) {
+    this.startLoading();
     this.deleteOneRequest(familyId).subscribe((data: DeleteResponseData) => {
       if(data.success) {
+        this.stopLoading();
         this.dataStore.familyList.forEach((item, i) => {
             if (item.family_id === data.id) { this.dataStore.familyList.splice(i, 1); }
           });

@@ -1,5 +1,6 @@
 <!--Show profile info-->
-<ng-container *ngIf="!isEditProfile">
+<app-spinner *ngIf="loader$ | async"></app-spinner>
+<ng-container *ngIf="!isEditProfile && !(loader$ | async)">
   <p class="app-text-extra-large font-weight-bold">{{family?.name}}</p>
 
   <div class="row  no-gutters border-top border-bottom py-3 text-center">
@@ -22,7 +23,7 @@
       <p class="font-weight-bold mb-2">CONTACTS</p>
       <div class="d-flex justify-content-between">
         <p class="align-self-start app-text-second mb-2">Address:</p>
-        <p class="align-self-end mb-2">{{family?.family_info?.address}}</p>
+        <p class="align-self-end mb-2">{{fullFamilyAddress}}</p>
       </div>
       <div class="d-flex justify-content-between">
         <p class="align-self-start app-text-second mb-2">Prefered Contact:</p>
@@ -196,7 +197,8 @@
       <div class="app-input-fill">
         <label class="app-input-label app-family-profile-input">Number of Siblings</label>
         <input
-          type="text"
+          type="number"
+          min="0"
           class="app-input"
           [(ngModel)]="familyEditable.family_info.number_of_siblings">
       </div>
@@ -206,7 +208,8 @@
       <div class="app-input-fill">
         <label class="app-input-label app-family-profile-input">Children at Home</label>
         <input
-          type="text"
+          type="number"
+          min="0"
           class="app-input"
           [(ngModel)]="familyEditable.family_info.children_at_home">
       </div>

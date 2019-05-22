@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {FamilyService} from "../../services/family.service";
 import {cloneDeep} from 'lodash';
 import {Family} from "../../../../models/family/family.model";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-family-profile-info',
@@ -14,12 +15,23 @@ export class FamilyProfileInfoComponent implements OnInit {
   isEditProfile: boolean = false;
   isEditFamilyName: boolean = false;
 
+  loader$: Observable <boolean>;
   family: Family;
   familyEditable: Family;
+
+  get fullFamilyAddress() {
+    let fullAddress = '';
+    fullAddress += this.family.family_info.address ? this.family.family_info.address : '';
+    fullAddress += this.family.family_info.state ? ', ' + this.family.family_info.state : '';
+    fullAddress += this.family.family_info.city ? ', ' + this.family.family_info.city : '';
+    fullAddress += this.family.family_info.zip ? ', ' + this.family.family_info.zip : '';
+    return fullAddress;
+  }
 
   constructor(private familyService: FamilyService) { }
 
   ngOnInit() {
+    this.loader$ = this.familyService.loading;
     this.getFamily(this.familyId);
   }
 
