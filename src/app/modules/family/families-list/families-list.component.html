@@ -4,7 +4,9 @@
   <div class="row mt-4">
     <div class="col-12 text-right">
       <button class="btn app-btn-primary" (click)="showFamilyAddModal()">Create New</button>
-      <app-family-create-modal *ngIf="showModal" (closeFamilyModal) = onCloseFamilyAddModal($event)></app-family-create-modal>
+      <app-family-create-modal *ngIf="showModal"
+                               (closeFamilyModal)=onCloseFamilyAddModal($event)>
+      </app-family-create-modal>
     </div>
   </div>
   <div class="row mt-3 app-of-wrap py-5">

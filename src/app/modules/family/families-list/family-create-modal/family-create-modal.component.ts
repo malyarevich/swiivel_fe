@@ -23,6 +23,7 @@ export class FamilyCreateModalComponent implements OnInit {
 
   save() {
     this.familyService.add(this.familyName);
+    this.onCloseFamilyModal()
     // this.router.navigate([`/family/profile/${this.family._id}`]);
   }
 
