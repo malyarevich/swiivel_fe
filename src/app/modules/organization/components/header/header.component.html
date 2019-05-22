@@ -12,7 +12,9 @@
         <li class="nav-item main_menu__nav_item" 
             *ngFor="let item of menuItems; let i = index;">
             <a 
-                class="nav-link main_menu__nav_link main_menu__nav_link--show_label" 
+                class="nav-link main_menu__nav_link
+                    main_menu__nav_link--show_label
+                    {{ addClassStatus(item.route) }}"
                 routerLink={{item.route}} 
                 rel="noopener" 
                 name={{item.label}}>
