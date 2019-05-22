@@ -1,10 +1,21 @@
-.crump{
+.crump {
   cursor: pointer;
 }
-.dragable-i{
-  color: #9C9D9D;
+
+.dragable-i {
+  color: #9c9d9d;
   cursor: pointer;
 }
-.without-section{
-  color: red!important;
+
+.without-section {
+  color: red !important;
+}
+
+.invalid-feedback {
+  display: block;
+  opacity: 0;
+}
+
+.form-control.is-invalid~.invalid-feedback, .form-control.is-invalid~.invalid-tooltip, .was-validated .form-control:invalid~.invalid-feedback, .was-validated .form-control:invalid~.invalid-tooltip {
+  opacity: 1;
 }

@@ -2,15 +2,15 @@
 /*  background-color: white;*/
 /*  color: #4350A2;*/
 /*}*/
-.circle{
-  width:50px;
-  height:50px;
-  border-radius:25px;
-  font-size:40px;
-  color:#fff;
-  line-height:50px;
-  text-align:center;
-  background:#4350A2;
+.circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+  font-size: 40px;
+  color: #fff;
+  line-height: 50px;
+  text-align: center;
+  background: #4350a2;
   cursor: pointer;
 }
 
@@ -25,44 +25,50 @@
   bottom: 0;
   right: -25px;
 }
-.fields-wrapper{
+
+.fields-wrapper {
   z-index: 1;
   position: relative;
 }
 
-
-.dropdown-add-menu{
-  height: 319px;	width: 206px;	border-radius: 3px;	background-color: #50597A;
+.dropdown-add-menu {
+  height: 319px;
+  width: 206px;
+  border-radius: 3px;
+  background-color: #50597a;
 }
 .dropdown-toggle::after {
-  display:none;
+  display: none;
 }
 
-.menu-dropdown-header{
-  height: 40px;	width: 206px;	border-radius: 5px 5px 0 0;	background-color: #36405F;
+.menu-dropdown-header {
+  height: 40px;
+  width: 206px;
+  border-radius: 5px 5px 0 0;
+  background-color: #36405f;
 }
 
-
-.menu-dropdown-item{
-  height: 27px;	width: 176px;	border-radius: 3px;	background-color: #EBEEFF;	box-shadow: 0 4px 8px 0 rgba(153,162,215,0.22);
+.menu-dropdown-item {
+  height: 27px;
+  width: 176px;
+  border-radius: 3px;
+  background-color: #ebeeff;
+  box-shadow: 0 4px 8px 0 rgba(153, 162, 215, 0.22);
   cursor: pointer;
-
 }
 
-.menu-hr{
-  background-color: #818AAC;
+.menu-hr {
+  background-color: #818aac;
 }
-.span-zero-m-t{
-  margin-top: 0!important;
+.span-zero-m-t {
+  margin-top: 0 !important;
 }
 
-
-.dr-menu-item-span{
+.dr-menu-item-span {
   font-size: 12px;
   font-weight: bold;
   cursor: pointer;
 }
-
 
 //.modal-content{
 //  height: 212px!important;	width: 623px!important;	border-radius: 8px;	background-color: #FFFFFF;
@@ -70,6 +76,15 @@
 //.has-error {
 //  .form-control { @extend .is-invalid; }
 //}
-.without-section{
-  background-color: red!important;
+.without-section {
+  background-color: red !important;
+}
+
+.invalid-feedback {
+  display: block;
+  opacity: 0;
+}
+
+.form-control.is-invalid~.invalid-feedback, .form-control.is-invalid~.invalid-tooltip, .was-validated .form-control:invalid~.invalid-feedback, .was-validated .form-control:invalid~.invalid-tooltip {
+  opacity: 1;
 }
