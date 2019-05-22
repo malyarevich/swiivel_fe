@@ -257,12 +257,12 @@ export class VFormBuilderComponent implements OnInit, OnDestroy {
   formInit(): void {
     const form = this.vDataCollection.getDraftForm(this.formId);
     if (!isEmpty(form)) {
-      console.log("loading draftForm");
+      // console.log("loading draftForm");
       this.setLocalForm(form); //draftForm
     } else if (this.formId) {
       this.formService.getOneForm(this.formId).subscribe(
         (form: Form) => {
-          console.log("loading remoteForm");
+          // console.log("loading remoteForm");
           this.setLocalForm(form); //remoteForm
         },
         (error) => console.log(error, 'error'),
@@ -471,7 +471,7 @@ export class VFormBuilderComponent implements OnInit, OnDestroy {
   }
 
   public saveDraftForm(): void {
-    console.log("SAVE draft");
+    // console.log("SAVE draft");
     this.vDataCollection.setDraftForm(this.formId, this.getForm());
   }
 

@@ -11,18 +11,18 @@ export class VDataCollectionComponent implements OnInit, OnDestroy {
   private draftForm = new Map<string, Form>();
 
   public getDraftForm = (id: string): Form => {
-    console.log('getDraftForm()');
+    // console.log('getDraftForm()');
     if (this.draftForm.has(id))
       return this.draftForm.get(id);
   };
 
   public setDraftForm = (id: string, newForm: Form): void => {
-    console.log('setDraftForm()');
+    // console.log('setDraftForm()');
     this.draftForm.set(id, newForm);
   };
 
   public deleteDraftForm = (id: string): void => {
-    console.log('deleteDraftForm()');
+    // console.log('deleteDraftForm()');
     this.draftForm.delete(id);
   };
 
