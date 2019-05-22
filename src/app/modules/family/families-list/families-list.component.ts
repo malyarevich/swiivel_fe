@@ -10,21 +10,32 @@ import {Family} from "../../../models/family/family.model";
 })
 export class FamiliesListComponent implements OnInit {
 
-  public familyList: Observable <Family[]> ;
+  showModal: boolean = false;
+  public familyList$: Observable <Family[]> ;
+  public loader$: Observable <boolean>;
 
   constructor(private familyService: FamilyService) { }
 
   ngOnInit() {
+    this.loader$ = this.familyService.loading;
     this.getFamilyList();
   }
 
   getFamilyList() {
-    this.familyList = this.familyService.familyList;
+    this.familyList$ = this.familyService.familyList;
     this.familyService.getAll();
   }
 
   deleteFamily(familyId) {
     this.familyService.delete(familyId);
+  }
+
+  showFamilyAddModal() {
+    this.showModal = true;
+  }
+
+  onCloseFamilyAddModal() {
+    this.showModal = false;
   }
 
 }

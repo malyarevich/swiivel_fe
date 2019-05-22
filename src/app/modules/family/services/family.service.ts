@@ -26,10 +26,12 @@ export class FamilyService {
 
   private _familyList: BehaviorSubject<Family[]> = <BehaviorSubject<Family[]>> new BehaviorSubject([]);
   private _family: BehaviorSubject<Family> = <BehaviorSubject<Family>> new BehaviorSubject({});
+  private _loading: BehaviorSubject<boolean> = <BehaviorSubject<boolean>> new BehaviorSubject(false);
 
   private dataStore: {
     familyList: Family[];
     family: Family;
+    loading: boolean;
   };
 
   get familyList() {
@@ -40,16 +42,23 @@ export class FamilyService {
     return this._family.asObservable();
   }
 
+  get loading() {
+    return this._loading.asObservable();
+  }
+
   constructor(private http: HttpClient) {
     this.dataStore = {
       familyList: [],
       family: null,
+      loading: false,
     };
   }
 
   getAll() {
+    this.startLoading();
     this.getAllRequest().subscribe((res: GetResponseData) => {
       if(res.success) {
+        this.stopLoading();
         this.dataStore.familyList = res.data;
         this._familyList.next(Object.assign({}, this.dataStore).familyList);
       }
@@ -66,8 +75,10 @@ export class FamilyService {
   }
 
   add(familyName) {
+    this.startLoading();
     this.createOneRequest(familyName).subscribe((res:UpdateCreateResponseData) => {
       if(res.success) {
+        this.stopLoading();
         this.dataStore.familyList.push(res.data);
         this._familyList.next(Object.assign({}, this.dataStore).familyList);
       }
@@ -127,5 +138,15 @@ export class FamilyService {
     return this.http.delete(`${environment.apiFB}/families/${familyId}?api_token=${environment.api_token}`).pipe(
       map((res: DeleteResponseData) => res)
     );
+  }
+
+  startLoading() {
+    this.dataStore.loading = true;
+    this._loading.next(Object.assign({}, this.dataStore).loading);
+  }
+
+  stopLoading() {
+    this.dataStore.loading = false;
+    this._loading.next(Object.assign({}, this.dataStore).loading);
   }
 }

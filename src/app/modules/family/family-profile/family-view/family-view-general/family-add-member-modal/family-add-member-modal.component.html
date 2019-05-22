@@ -8,7 +8,7 @@
     </div>
   </div>
 
-  <div *ngIf="persons.length" class="form-payer-account-container">
+  <div *ngIf="persons.length">
     <form [formGroup]="familyPersonForm" (ngSubmit)="addFamilyPerson()">
 
       <div class="row pb-5">

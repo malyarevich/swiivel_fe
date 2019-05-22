@@ -1,5 +1,4 @@
-import {Component, OnInit} from '@angular/core';
-import {NgbModal, NgbModalConfig} from "@ng-bootstrap/ng-bootstrap";
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FamilyService} from "../../services/family.service";
 import {Router} from "@angular/router";
 
@@ -8,25 +7,18 @@ import {Router} from "@angular/router";
   selector: 'app-family-create-modal',
   templateUrl: './family-create-modal.component.html',
   styleUrls: ['./family-create-modal.component.css'],
-  providers: [NgbModalConfig, NgbModal]
 })
 export class FamilyCreateModalComponent implements OnInit {
+  @Output() closeFamilyModal: EventEmitter<any> = new EventEmitter<any>();
 
   familyName: string;
 
-  constructor(config: NgbModalConfig,
-              private modalService: NgbModal,
-              private familyService: FamilyService,
-              private router: Router) {
-    config.backdrop = 'static';
-    config.keyboard = false;
+  constructor(
+    private familyService: FamilyService,
+    private router: Router) {
   }
 
   ngOnInit() {
-  }
-
-  open(content) {
-    this.modalService.open(content);
   }
 
   save() {
@@ -34,7 +26,7 @@ export class FamilyCreateModalComponent implements OnInit {
     // this.router.navigate([`/family/profile/${this.family._id}`]);
   }
 
-  dismiss() {
-    this.familyName = '';
+  onCloseFamilyModal() {
+    this.closeFamilyModal.emit(true);
   }
 }

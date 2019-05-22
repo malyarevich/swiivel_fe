@@ -3,7 +3,8 @@
 <div class="container">
   <div class="row mt-4">
     <div class="col-12 text-right">
-      <app-family-create-modal></app-family-create-modal>
+      <button class="btn app-btn-primary" (click)="showFamilyAddModal()">Create New</button>
+      <app-family-create-modal *ngIf="showModal" (closeFamilyModal) = onCloseFamilyAddModal($event)></app-family-create-modal>
     </div>
   </div>
   <div class="row mt-3 app-of-wrap py-5">
@@ -17,7 +18,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let item of familyList | async; index as i">
+        <tr *ngFor="let item of familyList$ | async; index as i">
           <th scope="row">{{ i + 1 }}</th>
           <td class="font-weight-bold">{{ item.name }}</td>
           <th class="text-right">
@@ -27,6 +28,7 @@
         </tr>
         </tbody>
       </table>
+      <app-spinner *ngIf="loader$ | async"></app-spinner>
     </div>
   </div>
 </div>
