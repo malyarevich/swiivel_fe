@@ -14,15 +14,18 @@
   cursor: pointer;
 }
 
-
-.custom-circle-wraper{
-  margin-right: -25px;
-  /*margin-bottom: -260px;*/
-  z-index: 10;
+.position_wrapper {
   position: relative;
-  top: 300px;
+  min-height: 0;
 }
-.fields-wraper{
+
+.custom-circle-wrapper {
+  z-index: 10;
+  position: absolute;
+  bottom: 0;
+  right: -25px;
+}
+.fields-wrapper{
   z-index: 1;
   position: relative;
 }
