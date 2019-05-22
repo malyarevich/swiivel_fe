@@ -4,15 +4,15 @@
 
   <div class="row  no-gutters border-top border-bottom py-3 text-center">
     <div class="col-4 border-right px-4">
-      <p class="app-text-large font-weight-bold mb-0">{{family?.number_of_siblings}}</p>
+      <p class="app-text-large font-weight-bold mb-0">{{family?.family_info?.number_of_siblings}}</p>
       <p class="app-text-small mb-0">Number of siblings</p>
     </div>
     <div class="col-4 border-right px-4">
-      <p class="app-text-large font-weight-bold mb-0">{{family?.children_at_home}}</p>
+      <p class="app-text-large font-weight-bold mb-0">{{family?.family_info?.children_at_home}}</p>
       <p class="app-text-small mb-0">Children at home</p>
     </div>
     <div class="col-4 px-4">
-      <p class="app-text-large font-weight-bold mb-0">{{family?.children_at_home}}</p>
+      <p class="app-text-large font-weight-bold mb-0">{{family?.family_info?.children_at_home}}</p>
       <p class="app-text-small mb-0">Adopted children</p>
     </div>
   </div>
@@ -22,19 +22,19 @@
       <p class="font-weight-bold mb-2">CONTACTS</p>
       <div class="d-flex justify-content-between">
         <p class="align-self-start app-text-second mb-2">Address:</p>
-        <p class="align-self-end mb-2">{{family?.address}}</p>
+        <p class="align-self-end mb-2">{{family?.family_info?.address}}</p>
       </div>
       <div class="d-flex justify-content-between">
         <p class="align-self-start app-text-second mb-2">Prefered Contact:</p>
-        <p class="align-self-end mb-2">{{family?.preferred_contact}}</p>
+        <p class="align-self-end mb-2">{{family?.family_info?.preferred_contact}}</p>
       </div>
       <div class="d-flex justify-content-between">
         <p class="align-self-start app-text-second mb-2">Contact number:</p>
-        <p class="align-self-end mb-2">{{family?.preferred_contact_method}}</p>
+        <p class="align-self-end mb-2">{{family?.family_info?.preferred_contact_method}}</p>
       </div>
       <div class="d-flex justify-content-between">
         <p class="align-self-start app-text-second mb-2">Home Phone Number:</p>
-        <p class="align-self-end mb-2">{{family?.home_phone_number}}</p>
+        <p class="align-self-end mb-2">{{family?.family_info?.home_phone_number}}</p>
       </div>
     </div>
   </div>
@@ -44,19 +44,19 @@
       <p class="font-weight-bold mb-2">ADDITIONAL INFORMATION</p>
       <div class="d-flex justify-content-between">
         <p class="align-self-start app-text-second mb-2">Language Spoken at Home:</p>
-        <p class="align-self-end mb-2">{{family?.language_spoken_at_home}}</p>
+        <p class="align-self-end mb-2">{{family?.family_info?.language_spoken_at_home}}</p>
       </div>
       <div class="d-flex justify-content-between">
         <p class="align-self-start app-text-second mb-2">Family Rabbi:</p>
-        <p class="align-self-end mb-2">{{family?.family_rabbi}}</p>
+        <p class="align-self-end mb-2">{{family?.family_info?.family_rabbi}}</p>
       </div>
       <div class="d-flex justify-content-between">
         <p class="align-self-start app-text-second mb-2">Family Rabbi Phone:</p>
-        <p class="align-self-end mb-2">{{family?.rabbi_phone_number}}</p>
+        <p class="align-self-end mb-2">{{family?.family_info?.rabbi_phone_number}}</p>
       </div>
       <div class="d-flex justify-content-between">
         <p class="align-self-start app-text-second mb-2">Family Shul:</p>
-        <p class="align-self-end mb-2">{{family?.family_shul}}</p>
+        <p class="align-self-end mb-2">{{family?.family_info?.family_shul}}</p>
       </div>
     </div>
   </div>
@@ -104,7 +104,7 @@
         <input
           type="text"
           class="app-input"
-          [(ngModel)]="familyEditable.address">
+          [(ngModel)]="familyEditable.family_info.address">
       </div>
     </div>
 
@@ -114,7 +114,7 @@
         <input
           type="text"
           class="app-input"
-          [(ngModel)]="familyEditable.city">
+          [(ngModel)]="familyEditable.family_info.city">
       </div>
     </div>
 
@@ -124,7 +124,7 @@
         <input
           type="text"
           class="app-input"
-          [(ngModel)]="familyEditable.state">
+          [(ngModel)]="familyEditable.family_info.state">
       </div>
     </div>
 
@@ -134,7 +134,7 @@
         <input
           type="text"
           class="app-input"
-          [(ngModel)]="familyEditable.zip">
+          [(ngModel)]="familyEditable.family_info.zip">
       </div>
     </div>
 
@@ -151,7 +151,7 @@
         <input
           type="text"
           class="app-input"
-          [(ngModel)]="familyEditable.preferred_contact">
+          [(ngModel)]="familyEditable.family_info.preferred_contact">
       </div>
     </div>
 
@@ -161,7 +161,7 @@
         <input
           type="text"
           class="app-input"
-          [(ngModel)]="familyEditable.preferred_contact_method">
+          [(ngModel)]="familyEditable.family_info.preferred_contact_method">
       </div>
     </div>
 
@@ -171,7 +171,7 @@
         <input
           type="text"
           class="app-input"
-          [(ngModel)]="familyEditable.home_phone_number">
+          [(ngModel)]="familyEditable.family_info.home_phone_number">
       </div>
     </div>
 
@@ -188,7 +188,7 @@
         <input
           type="text"
           class="app-input"
-          [(ngModel)]="familyEditable.language_spoken_at_home">
+          [(ngModel)]="familyEditable.family_info.language_spoken_at_home">
       </div>
     </div>
 
@@ -198,7 +198,7 @@
         <input
           type="text"
           class="app-input"
-          [(ngModel)]="familyEditable.number_of_siblings">
+          [(ngModel)]="familyEditable.family_info.number_of_siblings">
       </div>
     </div>
 
@@ -208,7 +208,7 @@
         <input
           type="text"
           class="app-input"
-          [(ngModel)]="familyEditable.children_at_home">
+          [(ngModel)]="familyEditable.family_info.children_at_home">
       </div>
     </div>
 
@@ -218,7 +218,7 @@
         <input
           type="text"
           class="app-input"
-          [(ngModel)]="familyEditable.family_rabbi">
+          [(ngModel)]="familyEditable.family_info.family_rabbi">
       </div>
     </div>
 
@@ -228,7 +228,7 @@
         <input
           type="text"
           class="app-input"
-          [(ngModel)]="familyEditable.rabbi_phone_number">
+          [(ngModel)]="familyEditable.family_info.rabbi_phone_number">
       </div>
     </div>
 
@@ -238,7 +238,7 @@
         <input
           type="text"
           class="app-input"
-          [(ngModel)]="familyEditable.family_shul">
+          [(ngModel)]="familyEditable.family_info.family_shul">
       </div>
     </div>
 
