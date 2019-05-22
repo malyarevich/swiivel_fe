@@ -23,41 +23,7 @@
 <!--</div>-->
 <div class="position_wrapper">
 
-<<<<<<< HEAD
-  <ng-template #contentSection let-modal>
-    <div class="row no-gutters align-items-center text-center mt-4">
-      <div class="offset-1 col-10 text-center">
-        <h4 class=" app-text-extra-bold " id="modal-basic-title">Adding New Section</h4>
-      </div>
-      <div class="col justify-content-end pr-3">
-        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
   
-    </div>
-    <div class="modal-body">
-        <div class="">
-          <div class="text-center font-weight-bold"><span>Please enter group name and select group type</span></div>
-        </div>
-      <form [formGroup]="sectionAddGroup" (ngSubmit)="addSection()">
-        <div class="row mt-2">
-          <div class="col  app-input-container"
-               [ngClass]="{'app-input-fill': sectionNameId.value}">
-            <label for="sectionNameID" class="app-input-label">Section Name</label>
-            <input type="text"
-                   #sectionNameId
-                   formControlName="sectionName"
-                   class="app-input has-error"
-                   id="sectionNameID"
-                   [ngClass]="sectionAddGroup.get('sectionName').touched&&sectionAddGroup.get('sectionName').invalid?'is-invalid':''"
-                   placeholder="Form Name">
-  <!--                 [ngClass]="sectionAddGroup.get('sectionName').touched&&sectionAddGroup.get('sectionName').invalid?'is-invalid':''"-->
-  
-            <div class="invalid-feedback">
-              Form name is required and contain min 3 and max 50 symbols
-            </div>
-=======
 <ng-template #contentSection let-modal>
   <div class="row no-gutters align-items-center text-center mt-4">
     <div class="offset-1 col-10 text-center">
@@ -89,60 +55,8 @@
 
           <div class="invalid-feedback">
             Section name is required and contain min 3 and max 50 symbols
->>>>>>> e11b333072ad456b1b49af9dfcf64b7f6ce68784
-          </div>
-          <div class="col  app-input-container"
-               [ngClass]="{'app-input-fill': sizeID.value}" >
-            <label for="sectionSize" class="app-input-label">Section Width</label>
-            <select class="app-input form-control"
-                    name="sectionSize"
-                    #sizeID
-                    formControlName="sectionSize"
-                    id="sectionSize">
-              <option value=""   disabled [selected]="true">Section Width</option>
-              <option *ngFor="let width of size"
-                      >{{width}}</option>
-            </select>
           </div>
         </div>
-      <div class="row mt-4">
-        <div class="col-2 offset-8">
-          <button type="submit" class="btn app-btn-outline-primary form-control" appClickStopPropagation placement="left"
-                  ngbPopover="This feature is under developing"
-                  popoverTitle="Notice">Cancel</button>
-        </div>
-<<<<<<< HEAD
-        <div class="col-2">
-          <button type="submit" class="btn app-btn-primary form-control" appClickStopPropagation placement="left"
-                  ngbPopover="This feature is under developing"
-                  popoverTitle="Notice">OK</button>
-        </div>
-      </div>
-      </form>
-    </div>
-    
-  <!--  <div class="modal-footer">-->
-  <!--    <button type="submit" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>-->
-  <!--  </div>-->
-  </ng-template>
-  
-  
-  
-  <div class=" d-flex justify-content-end custom-circle-wrapper" ngbDropdown placement="bottom-right" autoClose="outside">
-    <div class="circle" id="dropdownBasic1" ngbDropdownToggle>+</div>
-    <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-add-menu pt-0 mt-0">
-      <div class="row no-gutters align-items-center text-center text-white menu-dropdown-header">
-        <div class="col">
-          <span class="app-text-extra-bold">Additional Options</span>
-        </div>
-      </div>
-      <div class="pl-0 text-white my-1 col-10 offset-1"><span>Formatting Options</span></div>
-  
-      <div class=" pl-1 menu-dropdown-item my-1 col-10 offset-1 align-items-center row no-gutters" (click)="openModal(contentSection)">
-        <span><i class="fas fa-ellipsis-v app-text-second "></i></span>
-        <span><i class="fas fa-ellipsis-v app-text-second "></i></span>
-        <span class=" ml-1 dr-menu-item-span" >New Section</span>
-=======
         <div class="col form-group app-input-container"
              [ngClass]="{'app-input-fill': sizeID.value}" >
           <label for="sectionSize" class="app-input-label">Section Width</label>
@@ -167,51 +81,73 @@
       </div>
       <div class="col-2">
         <button type="submit" class="btn app-btn-primary form-control">OK</button>
->>>>>>> e11b333072ad456b1b49af9dfcf64b7f6ce68784
-      </div>
-      <div class=" pl-1 menu-dropdown-item my-1 col-10 offset-1 align-items-center row no-gutters" appClickStopPropagation placement="left"
-           ngbPopover="This feature is under developing"
-           popoverTitle="Notice"
-      >
-        <span><i class="fas fa-ellipsis-v app-text-second "></i></span>
-        <span><i class="fas fa-ellipsis-v app-text-second "></i></span>
-        <span class=" ml-1 dr-menu-item-span">Divider</span>
-      </div>
-      <div class=" pl-1 menu-dropdown-item my-1 col-10 offset-1 align-items-center row no-gutters" appClickStopPropagation placement="left"
-           ngbPopover="This feature is under developing"
-           popoverTitle="Notice">
-        <span><i class="fas fa-ellipsis-v app-text-second "></i></span>
-        <span><i class="fas fa-ellipsis-v app-text-second "></i></span>
-        <span class=" ml-1 dr-menu-item-span">New Group</span>
-      </div>
-      <hr class="menu-hr">
-      <div class="pl-0  text-white my-1 col-10 offset-1 span-zero-m-t"><span>Widgets</span></div>
-      <div class=" pl-1 menu-dropdown-item my-1 col-10 offset-1 align-items-center row no-gutters" appClickStopPropagation placement="left"
-           ngbPopover="This feature is under developing"
-           popoverTitle="Notice">
-        <span><i class="fas fa-ellipsis-v app-text-second "></i></span>
-        <span><i class="fas fa-ellipsis-v app-text-second "></i></span>
-        <span class=" ml-1 dr-menu-item-span">Input Table</span>
-      </div>
-      <div class=" pl-1 menu-dropdown-item my-1 col-10 offset-1 align-items-center row no-gutters" appClickStopPropagation placement="left"
-           ngbPopover="This feature is under developing"
-           popoverTitle="Notice">
-        <span><i class="fas fa-ellipsis-v app-text-second "></i></span>
-        <span><i class="fas fa-ellipsis-v app-text-second "></i></span>
-        <span class=" ml-1 dr-menu-item-span">Configurable Matrix</span>
-      </div>
-      <div class=" pl-1 menu-dropdown-item my-1 col-10 offset-1 align-items-center row no-gutters" appClickStopPropagation placement="left"
-           ngbPopover="This feature is under developing"
-           popoverTitle="Notice">
-        <span><i class="fas fa-ellipsis-v app-text-second "></i></span>
-        <span><i class="fas fa-ellipsis-v app-text-second "></i></span>
-        <span class=" ml-1 dr-menu-item-span">Custom Embedded Code</span>
       </div>
     </div>
+    </form>
   </div>
-  
-  <div class="fields-wrapper"  *ngFor="let section of form?.fields;">
-    <app-v-section-conteiner *ngIf="section.type==114" [section]="section" [form]="form" [customFields]="customFields"></app-v-section-conteiner>
+<!--  <div class="modal-footer">-->
+<!--    <button type="submit" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>-->
+<!--  </div>-->
+</ng-template>
+
+<div class=" d-flex  justify-content-end custom-circle-wrapper" ngbDropdown placement="bottom-right" autoClose="outside">
+  <div class="circle" id="dropdownBasic1" ngbDropdownToggle>+</div>
+  <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-add-menu pt-0 mt-0">
+    <div class="row no-gutters align-items-center text-center text-white menu-dropdown-header">
+      <div class="col">
+        <span class="app-text-extra-bold">Additional Options</span>
+      </div>
+    </div>
+    <div class="pl-0 text-white my-1 col-10 offset-1"><span>Formatting Options</span></div>
+
+    <div class=" pl-1 menu-dropdown-item my-1 col-10 offset-1 align-items-center row no-gutters" (click)="openModal(contentSection)">
+      <span><i class="fas fa-ellipsis-v app-text-second "></i></span>
+      <span><i class="fas fa-ellipsis-v app-text-second "></i></span>
+      <span class=" ml-1 dr-menu-item-span" >New Section</span>
+    </div>
+    <div class=" pl-1 menu-dropdown-item my-1 col-10 offset-1 align-items-center row no-gutters" appClickStopPropagation placement="left"
+         ngbPopover="This feature is under developing"
+         popoverTitle="Notice"
+    >
+      <span><i class="fas fa-ellipsis-v app-text-second "></i></span>
+      <span><i class="fas fa-ellipsis-v app-text-second "></i></span>
+      <span class=" ml-1 dr-menu-item-span">Divider</span>
+    </div>
+    <div class=" pl-1 menu-dropdown-item my-1 col-10 offset-1 align-items-center row no-gutters" appClickStopPropagation placement="left"
+         ngbPopover="This feature is under developing"
+         popoverTitle="Notice">
+      <span><i class="fas fa-ellipsis-v app-text-second "></i></span>
+      <span><i class="fas fa-ellipsis-v app-text-second "></i></span>
+      <span class=" ml-1 dr-menu-item-span">New Group</span>
+    </div>
+    <hr class="menu-hr">
+    <div class="pl-0  text-white my-1 col-10 offset-1 span-zero-m-t"><span>Widgets</span></div>
+    <div class=" pl-1 menu-dropdown-item my-1 col-10 offset-1 align-items-center row no-gutters" appClickStopPropagation placement="left"
+         ngbPopover="This feature is under developing"
+         popoverTitle="Notice">
+      <span><i class="fas fa-ellipsis-v app-text-second "></i></span>
+      <span><i class="fas fa-ellipsis-v app-text-second "></i></span>
+      <span class=" ml-1 dr-menu-item-span">Input Table</span>
+    </div>
+    <div class=" pl-1 menu-dropdown-item my-1 col-10 offset-1 align-items-center row no-gutters" appClickStopPropagation placement="left"
+         ngbPopover="This feature is under developing"
+         popoverTitle="Notice">
+      <span><i class="fas fa-ellipsis-v app-text-second "></i></span>
+      <span><i class="fas fa-ellipsis-v app-text-second "></i></span>
+      <span class=" ml-1 dr-menu-item-span">Configurable Matrix</span>
+    </div>
+    <div class=" pl-1 menu-dropdown-item my-1 col-10 offset-1 align-items-center row no-gutters" appClickStopPropagation placement="left"
+         ngbPopover="This feature is under developing"
+         popoverTitle="Notice">
+      <span><i class="fas fa-ellipsis-v app-text-second "></i></span>
+      <span><i class="fas fa-ellipsis-v app-text-second "></i></span>
+      <span class=" ml-1 dr-menu-item-span">Custom Embedded Code</span>
+    </div>
   </div>
-  
+</div>
+
+<div class="fields-wrapper"  *ngFor="let section of form?.fields;">
+  <app-v-section-conteiner *ngIf="section.type==114" [section]="section" [form]="form" [customFields]="customFields"></app-v-section-conteiner>
+</div>
+
 </div>
