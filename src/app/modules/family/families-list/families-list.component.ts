@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {FamilyService} from "../../../services/family/family.service";
-import {FamilyPerson} from "../../../models/family-person.model";
+import {FamilyService} from "../services/family.service";
+import {Observable} from "rxjs";
+import {Family} from "../../../models/family/family.model";
 
 @Component({
   selector: 'app-families-list',
@@ -9,18 +10,21 @@ import {FamilyPerson} from "../../../models/family-person.model";
 })
 export class FamiliesListComponent implements OnInit {
 
-  familyPersons: FamilyPerson[] = [];
+  public familyList: Observable <Family[]> ;
 
   constructor(private familyService: FamilyService) { }
 
   ngOnInit() {
-    this.getFamilyPersons();
+    this.getFamilyList();
   }
 
-  getFamilyPersons() {
-    this.familyService.getAllFamilyPersons().subscribe((res: FamilyPerson[]) => {
-      this.familyPersons = res;
-    })
+  getFamilyList() {
+    this.familyList = this.familyService.familyList;
+    this.familyService.getAll();
+  }
+
+  deleteFamily(familyId) {
+    this.familyService.delete(familyId);
   }
 
 }

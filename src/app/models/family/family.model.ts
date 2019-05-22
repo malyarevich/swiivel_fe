@@ -1,30 +1,21 @@
-import {FamilyProfileInfo} from "./family-profile-info.model";
-
 export interface Family {
-  _id: string;
+  id: number;
   name: string;
-  profile: FamilyProfileInfo;
+  family_id: string;
+  family_info: {
+    id_group: number;
+    address: string;
+    city: string;
+    state: string;
+    zip: string;
+    preferred_contact: string;
+    preferred_contact_method: string;
+    home_phone_number: string;
+    language_spoken_at_home: string;
+    number_of_siblings: string;
+    children_at_home: string;
+    family_rabbi: string;
+    rabbi_phone_number: string;
+    family_shul: string;
+  }
 }
-
-export const initFamily: Family = {
-  _id: '',
-  name: '',
-  profile: {
-    address: {
-      homeAddress: '',
-      city: '',
-      zipCode: '',
-    },
-    contacts: {
-      preferredContact: '',
-      contactNumber: '',
-      homePhoneNumber: '',
-    },
-    customFields: {
-      languageSpoken: '',
-      familyRabbi: '',
-      familyRabbiPhone: '',
-      familyShul: '',
-    }
-  },
-};

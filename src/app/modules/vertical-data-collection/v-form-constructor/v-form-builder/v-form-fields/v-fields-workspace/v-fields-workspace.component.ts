@@ -20,7 +20,7 @@ export class VFieldsWorkspaceComponent implements OnInit {
         Validators.minLength(3),
         Validators.maxLength(50)
       ])}),
-    sectionSize: new FormControl(4, Validators.required),
+    sectionSize: new FormControl(null, Validators.required),
   });
 
   @Input() form: Form;
@@ -42,20 +42,26 @@ export class VFieldsWorkspaceComponent implements OnInit {
   }
 
 
-  addSection(){
+  addSection(modal){
     this.validateAllFormFields(this.sectionAddGroup);
-    console.log(this.sectionAddGroup, 'dsdas');
-    console.log(this.sectionAddGroup.get('sectionName').invalid);
-    console.log(this.sectionAddGroup.get('sectionName').touched);
     if (!this.sectionAddGroup.valid) return;
     this.sectionAddGroup.clearValidators();
-    // const newSection :Field = {
-    //   _id: uuid(),
-    //   name: this.sectionAddGroup.value.sectionName,
-    //   type: 114,
-    //   prefix:
-    //
-    // }
+    const newSection :Field = {
+      _id: uuid(),
+      name: this.sectionAddGroup.value.sectionName,
+      type: 114,
+      options: {size: this.sectionAddGroup.value.sectionSize},
+      prefix: this.sectionAddGroup.value.sectionName.toLowerCase().split(' ').join('_'),
+      fields: [],
+    };
+    this.form.fields.push(newSection);
+    this.sectionAddGroup.reset();
+    modal.close();
+  }
+
+  modalClose(modal){
+    this.sectionAddGroup.reset();
+    modal.close();
   }
 
   validateAllFormFields(formGroup: FormGroup) {

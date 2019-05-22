@@ -2,7 +2,7 @@
   class="app-select-multi-search-field"
   [ngClass]="{'app-select-multi-search-field-has-error': isInvalid}"
 >
-  <label
+  <label *ngIf="labelTitle"
     class="app-select-multi-search-field-label"
     [for]="idElement"
   >

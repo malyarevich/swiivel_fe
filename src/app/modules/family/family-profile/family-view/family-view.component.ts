@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {FAMILY_VIEW_SECTIONS} from "../models/family-view-sections";
 
 @Component({
@@ -7,6 +7,7 @@ import {FAMILY_VIEW_SECTIONS} from "../models/family-view-sections";
   styleUrls: ['./family-view.component.css']
 })
 export class FamilyViewComponent implements OnInit {
+  @Input() familyId;
 
   activeSection: string;
   FAMILY_VIEW_SECTIONS = FAMILY_VIEW_SECTIONS;

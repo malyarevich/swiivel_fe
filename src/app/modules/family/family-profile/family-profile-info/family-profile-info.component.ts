@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {FamilyService} from "../../services/family.service";
+import {cloneDeep} from 'lodash';
+import {Family} from "../../../../models/family/family.model";
 
 @Component({
   selector: 'app-family-profile-info',
@@ -6,21 +9,39 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./family-profile-info.component.css']
 })
 export class FamilyProfileInfoComponent implements OnInit {
+  @Input() familyId;
 
   isEditProfile: boolean = false;
   isEditFamilyName: boolean = false;
 
-  tempFamily = {
-    name: 'Fishman Family',
-    homeAddress: '',
-  };
+  family: Family;
+  familyEditable: Family;
 
-  constructor() { }
+  constructor(private familyService: FamilyService) { }
 
   ngOnInit() {
+    this.getFamily(this.familyId);
   }
 
-  save() {
-    // console.log('save');
+  getFamily(familyId) {
+    this.familyService.family.subscribe((res) => {
+      this.family = res;
+    });
+    this.familyService.getOne(familyId);
+  }
+
+  update() {
+    this.isEditProfile = false;
+    this.familyService.update(this.familyEditable)
+  }
+
+  onEdit() {
+    this.isEditProfile = true;
+    this.familyEditable = cloneDeep(this.family);
+  }
+
+  cancelEdit() {
+    this.isEditProfile = false;
+    this.familyEditable = null;
   }
 }

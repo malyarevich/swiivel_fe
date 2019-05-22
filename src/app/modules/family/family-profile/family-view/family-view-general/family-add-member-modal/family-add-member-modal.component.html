@@ -1,0 +1,64 @@
+<app-modal [title]="'Add ' + family?.name + ' Members'" (closeModal)="onCloseAddFamilyMemberModal()">
+
+  <div *ngIf="!persons.length" class="test-c d-flex justify-content-center overlay pt-5">
+    <div class="spinner-border text-light" role="status">
+      <span class="sr-only">
+        Loading...
+      </span>
+    </div>
+  </div>
+
+  <div *ngIf="persons.length" class="form-payer-account-container">
+    <form [formGroup]="familyPersonForm" (ngSubmit)="addFamilyPerson()">
+
+      <div class="row pb-5">
+        <div class="col-8">
+          <app-select-multi-search-field
+            bindLabel="name"
+            [formControlName]="'members'"
+            labelTitle=""
+            [isInvalid]="familyPersonForm.get('members').invalid && familyPersonForm.get('members').touched"
+            [items]="persons"
+          >
+          </app-select-multi-search-field>
+          <div
+            class="field-has-error"
+            *ngIf="familyPersonForm.get('members').invalid && familyPersonForm.get('members').touched && familyPersonForm.get('members')['errors']['required']"
+          >
+            Members is required
+          </div>
+        </div>
+
+        <div class="col-4">
+          <app-select-field
+
+            [formControlName]="'role'"
+            labelTitle="Roles"
+            [isInvalid]="familyPersonForm.get('role').invalid && familyPersonForm.get('role').touched"
+            [items]="roles"
+          >
+          </app-select-field>
+          <div
+            class="field-has-error"
+            *ngIf="familyPersonForm.get('role').invalid && familyPersonForm.get('role').touched && familyPersonForm.get('role')['errors']['required']"
+          >
+            Role is required
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12 text-right">
+          <button (click)="onCloseAddFamilyMemberModal()" class="btn app-btn-outline-primary mr-2">
+            Cancel
+          </button>
+
+          <button type="submit" class="btn app-btn-primary" [disabled]="familyPersonForm.invalid">
+            Add Account
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+</app-modal>

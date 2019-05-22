@@ -26,4 +26,11 @@ export class PersonService {
         })
       );
   }
+
+  // Get Persons from app-core db
+  getPersons() : Observable<any>{
+    return this.http.get('/persons').pipe(
+      map((response) => response)
+    )
+  }
 }
