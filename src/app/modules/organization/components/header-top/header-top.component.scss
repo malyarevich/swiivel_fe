@@ -39,9 +39,14 @@
         border: none;
         border-radius: 0;
         border-left: 1px solid $header-splitter-color;
+        display: flex;
         justify-content: center;
         min-width: 40px;
         position: relative;
+
+        &:focus {
+            outline: 0 transparent solid;
+        }
         
         &:hover {
             color: $element-second-color;
@@ -56,26 +61,33 @@
                 font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
                 font-size: 13px;
                 font-weight: 500;
-                max-height: 0;
+                max-height: 10em;
+                max-width: 10em;
                 opacity: 0;
-                top: $top-menu-height;
-                right: 10px;
+                padding: .4em;
                 position: absolute;
-                transition: 400ms ease-in-out;
+                right: 5px;
+                transition: 600ms ease-in-out;
+                top: $top-menu-height;
                 white-space: nowrap;
                 z-index: -1;
             }
               
             &:hover:after {
                 opacity: 1;
-                top: $top-menu-height;
+                top: ($top-menu-height + 5px);
                 right: 0px;
-                max-height: 10em;
-                padding: .4em;
                 z-index: 100;
             }
         }
         
+    }
+
+    &__navbar_icon {
+        font-size: 17px;
+        line-height: 19px;
+        min-height: 17px;
+        min-width: 14px;
     }
 
     &__navbar_user_image {
@@ -104,6 +116,10 @@
         align-items: center;
         justify-content: center;
         position: relative;
+
+        &:focus {
+            outline: 0 transparent solid;
+        }
     }
 
     &__nav_link_text {

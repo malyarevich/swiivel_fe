@@ -30,6 +30,10 @@
         padding: 10px;
         position: relative;
         
+        &:focus {
+            outline: 0 transparent solid;
+        }
+
         &:hover {
             color: $element-second-color;
         }
@@ -44,7 +48,6 @@
                 font-size: 13px;
                 font-weight: 500;
                 left: $main-menu-width;
-                max-height: 0;
                 max-height: 200px;
                 opacity: 0;
                 padding: .4em;
