@@ -1,6 +1,6 @@
 <div class="row no-gutters app-family-card-header px-4 py-2 app-text-white">
   <div class="col-6 text-left app-text-large font-weight-bold">
-    Medad Fishman
+   {{fullName | titlecase}}
   </div>
   <div class="col-6 text-right">
     Paternal Grandfather
@@ -15,7 +15,7 @@
     <div class="col-9">
       <div class="row">
         <div class="col-12 d-flex justify-content-between pb-1">
-          <span class="app-text-second">Name:</span><span>Medad Daniel Fishman</span>
+          <span class="app-text-second">Name:</span><span>{{fullNameWithMiddle | titlecase}}</span>
         </div>
       </div>
     </div>
@@ -26,19 +26,19 @@
       ADDRESS
     </div>
     <div class="col-12 d-flex justify-content-between pb-1">
-      <span class="app-text-second">Address:</span><span>Israil, Haifa,  High Road, 45</span>
+      <span class="app-text-second">Address:</span><span>{{familyPerson.person.address}}</span>
     </div>
     <div class="col-12 d-flex justify-content-between pb-1">
-      <span class="app-text-second">ZIP:</span><span>123456</span>
+      <span class="app-text-second">ZIP:</span><span>{{familyPerson.person.zip}}</span>
     </div>
     <div class="col-12 text-left app-text-small font-weight-bold pt-3 pb-1">
       CONTACTS
     </div>
     <div class="col-12 d-flex justify-content-between pb-1">
-      <span class="app-text-second">Phone Number:</span><span>+1 234 567-89-00</span>
+      <span class="app-text-second">Phone Number:</span><span>{{familyPerson.person.contact_phone}}</span>
     </div>
     <div class="col-12 d-flex justify-content-between pb-1">
-      <span class="app-text-second">Email Address:</span><span>aaronn@gmial.com</span>
+      <span class="app-text-second">Email Address:</span><span>{{familyPerson.person.contact_email}}</span>
     </div>
   </div>
 </div>

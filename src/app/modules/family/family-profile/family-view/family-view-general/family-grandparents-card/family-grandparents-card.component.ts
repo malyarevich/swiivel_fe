@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FamilyPerson} from "../../../../../../models/family/family-person.model";
+import {HelperFamilyService} from "../../../../services/helper-family.service";
 
 @Component({
   selector: 'app-family-grandparents-card',
@@ -9,7 +10,15 @@ import {FamilyPerson} from "../../../../../../models/family/family-person.model"
 export class FamilyGrandparentsCardComponent implements OnInit {
   @Input() familyPerson: FamilyPerson;
 
-  constructor() { }
+  get fullName() {
+    return this.helperFamilyService.getFullName(this.familyPerson);
+  }
+
+  get fullNameWithMiddle() {
+    return this.helperFamilyService.getFullWithMiddleName(this.familyPerson);
+  }
+
+  constructor(private helperFamilyService: HelperFamilyService) { }
 
   ngOnInit() {
   }

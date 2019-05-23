@@ -21,6 +21,7 @@ import {SharedRedComponentsModule} from "../../shared/components/sharedRedCompon
 import { FamilyAddMemberModalComponent } from './family-profile/family-view/family-view-general/family-add-member-modal/family-add-member-modal.component';
 import {PersonService} from "../../services/person/person.service";
 import {FamilyPersonService} from "./services/family-person.service";
+import {HelperFamilyService} from "./services/helper-family.service";
 
 @NgModule({
   declarations: [FamiliesListComponent, FamilyPageHeaderComponent, FamilyProfileComponent, FamilyProfileInfoComponent, FamilyViewComponent, FamilyCreateModalComponent, FamilyViewNavComponent, FamilyViewGeneralComponent, FamilyViewGeneralNavComponent, FamilyParentsCardComponent, FamilyChildrenCardComponent, FamilyStudentsCardComponent, FamilyGrandparentsCardComponent, FamilyAddMemberModalComponent],
@@ -32,6 +33,6 @@ import {FamilyPersonService} from "./services/family-person.service";
     NgbModule,
     SharedRedComponentsModule,
   ],
-  providers: [FamilyService, PersonService, FamilyPersonService]
+  providers: [FamilyService, PersonService, FamilyPersonService, HelperFamilyService]
 })
 export class FamilyModule { }
