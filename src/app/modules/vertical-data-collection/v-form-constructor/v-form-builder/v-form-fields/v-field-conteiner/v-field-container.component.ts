@@ -1,14 +1,16 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {Field} from '../../../../model/field.model';
 import { range } from 'lodash'
+import {Form} from "../../../../model/form.model";
+import {SideBarService} from "../v-side-bar/side-bar.service";
 @Component({
   selector: 'app-v-field-container',
   templateUrl: './v-field-container.component.html',
   styleUrls: ['./v-field-container.component.scss'],
 })
 export class VFieldContainerComponent implements OnInit, OnDestroy{
-
-
+  @Input() sideBar: Field;
+  @Input() form: Form;
   @Input() inputField: Field;
   @Input() customFields: Field[];
   @Input() warningTitle: string;
@@ -23,13 +25,15 @@ export class VFieldContainerComponent implements OnInit, OnDestroy{
 
   size = range(1  ,13);
 
-  constructor() {
+  constructor(private sideBarService: SideBarService) {
   }
 
 
 
-  removeField(id: string){
-    this.onDelete.emit(id);
+  removeField(field: Field){
+    // console.log(this.sideBar[0].fields);
+    this.sideBarService.onFieldUncheck(field, this.sideBar[0].fields);
+    this.sideBarService.onFieldDelete(field, this.form.fields)
   }
 
 
