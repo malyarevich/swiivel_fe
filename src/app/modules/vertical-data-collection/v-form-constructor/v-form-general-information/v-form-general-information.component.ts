@@ -243,6 +243,9 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
       && this.generalInfoForm.controls[groupName].errors.requireOneCheckboxToBeChecked;
   }
 
+  addHiddenClass(isNeedToHide: boolean): string {
+    return isNeedToHide ? "hidden_block" : "";
+  }
   onFormStatusChanges(): void {
     this.generalInfoForm.statusChanges.subscribe(val => {
       switch (val) {

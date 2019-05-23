@@ -1,50 +1,65 @@
-.side-bar-item-font{
-  font-size: 12px;	font-weight: bold; line-height: 13px; color: #151515
+.side-bar-item-font {
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 13px;
+  color: #151515;
 }
-.side-bar-item{
-  background-color: #EBEEFF;
+.side-bar-item {
+  background-color: #ebeeff;
 }
 
-.side-bar-item-group{
+.side-bar-item-group {
   height: 27px;
   border-radius: 3px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   /*background-color: #F6F6F6;*/
 }
-.side-bar-item-group-custom{
+.side-bar-item-group-custom {
   height: 27px;
   border-radius: 3px;
-  background-color: #E0F7ED;
+  background-color: #e0f7ed;
 }
 .app-checkbox-container input:checked ~ .app-checkbox-checkmark {
-  background-color:#4050A8;
+  background-color: #4050a8;
 }
-.dragable-i{
-  color: #9C9D9D;
+.dragable-i {
+  color: #9c9d9d;
   height: 13px;
   /*margin-left: 2px;*/
 }
-.side-bar-item-modal{
-  background-color: #EBEEFF;
+.side-bar-item-modal {
+  background-color: #ebeeff;
 }
 
-.just-white{
-  background-color: #FFFFFF;
+.just-white {
+  background-color: #ffffff;
 }
-.add-input.form-control{
+.add-input.form-control {
   height: 27px;
 }
-.btn.btn-outline-primary.form-control{
+.btn.btn-outline-primary.form-control {
   height: 27px;
 }
 
 .btn-outline-primary {
-  color: #4050A8;
-  border-color: #4050A8;
+  color: #4050a8;
+  border-color: #4050a8;
 }
 
-.btn-outline-primary:not(:disabled):not(.disabled):active:hover{
-  color: #4050A8;
-  background-color: #4050A8;
-  border-color: #4050A8
+.btn-outline-primary:not(:disabled):not(.disabled):active:hover {
+  color: #4050a8;
+  background-color: #4050a8;
+  border-color: #4050a8;
+}
+
+.invalid-feedback {
+  display: block;
+  opacity: 0;
+}
+
+.form-control.is-invalid ~ .invalid-feedback,
+.form-control.is-invalid ~ .invalid-tooltip,
+.was-validated .form-control:invalid ~ .invalid-feedback,
+.was-validated .form-control:invalid ~ .invalid-tooltip {
+  opacity: 1;
 }

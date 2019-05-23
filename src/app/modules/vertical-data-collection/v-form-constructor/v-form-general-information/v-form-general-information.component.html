@@ -154,8 +154,10 @@
               </div>
             </div>
 
-            <div class="text-center text-danger"
-                 *ngIf="isInvalidCheckboxGroup('periodCheckboxGroup')">
+            <div 
+              class="text-center text-danger 
+              {{addHiddenClass(!isInvalidCheckboxGroup('periodCheckboxGroup'))}}
+              ">
               <small>At least one checkbox is required to check</small>
             </div>
           </div>

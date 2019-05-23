@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, ViewChild, ElementRef, OnDestroy} from '@angular/core';
+import {Component, OnInit, Input, ViewChild, ElementRef, OnDestroy, Host} from '@angular/core';
 import {CdkDragDrop, copyArrayItem, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import {VFormService} from '../../v-form.service';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -28,6 +28,7 @@ import {
 } from "./v-terms-conditions/model/terms-conditions.model";
 import {FinanceService} from "../../../../services/finance/finance.service";
 import {FeeTemplate, FeeTemplatesData} from "../../../../models/fee-templates.model";
+import { VDataCollectionComponent } from '../../v-data-collection.component';
 
 @Component({
   selector: 'app-v-form-table',
@@ -149,10 +150,11 @@ export class VFormBuilderComponent implements OnInit, OnDestroy {
       }
     }
   ];
+  vDataCollection: VDataCollectionComponent;
 
   @ViewChild("addCustomFieldInput") addCustomFieldInput: ElementRef;
-
-  constructor(private formService: VFormService,
+  constructor(@Host() vDataCollection: VDataCollectionComponent,
+              private formService: VFormService,
               private fieldsService: VFieldsService,
               private router: Router,
               private route: ActivatedRoute,
@@ -160,7 +162,7 @@ export class VFormBuilderComponent implements OnInit, OnDestroy {
               private generalInfoIsValidService: GeneralInfoIsValidService,
               private fileService: VFilesService,
               private readonly financeService: FinanceService) {
-
+    this.vDataCollection = vDataCollection;
   }
 
   ngOnInit() {
@@ -237,24 +239,31 @@ export class VFormBuilderComponent implements OnInit, OnDestroy {
     );
   }
 
+  setLocalForm(form: Form): void {
+    if (!isEmpty(form)) {
+      this.form = form;
+      this.formName = form.name;
+      this.fields =this.form.fields = form.fields || [];
+      this.tuitionContract = form.tuitionContract || tuitionContractDefault;
+      this.consentInfo = form.consentInfo || consentInfoDefault;
+      this.termsConditions = form.termsConditions || termsConditionsDefault;
+      this.eligible = form.eligible;
+      this.documents = form.documents || [];
+      this.formsPDF = form.forms || [];
+      this.attachments = form.attachments || {};
+    }
+  }
 
   formInit(): void {
-    if (this.formId) {
-
+    const form = this.vDataCollection.getDraftForm(this.formId);
+    if (!isEmpty(form)) {
+      // console.log("loading draftForm");
+      this.setLocalForm(form); //draftForm
+    } else if (this.formId) {
       this.formService.getOneForm(this.formId).subscribe(
         (form: Form) => {
-          if (!isEmpty(form)) {
-            this.form  = form;
-            this.formName = form.name;
-            this.fields =this.form.fields = form.fields || [];
-            this.tuitionContract = form.tuitionContract || tuitionContractDefault;
-            this.consentInfo = form.consentInfo || consentInfoDefault;
-            this.termsConditions = form.termsConditions || termsConditionsDefault;
-            this.eligible = form.eligible;
-            this.documents = form.documents || [];
-            this.formsPDF = form.forms || [];
-            this.attachments = form.attachments || {};
-          }
+          // console.log("loading remoteForm");
+          this.setLocalForm(form); //remoteForm
         },
         (error) => console.log(error, 'error'),
         () => {
@@ -283,24 +292,29 @@ export class VFormBuilderComponent implements OnInit, OnDestroy {
     })
   }
 
+  getForm(): Form {
+    return {
+      _id: this.formId,
+      fields: this.form.fields,
+      // fields: this.fields,
+      documents: this.documents,
+      forms: this.formsPDF,
+      name: this.formName,
+      sidebar: this.sideBarFields,
+      tuitionContract: this.tuitionContract,
+      consentInfo: this.consentInfo,
+      termsConditions: this.termsConditions,
+      eligible: this.eligible,
+      step: 1
+    }
+  }
+
   saveForm() {
     // if (this.validCheckFields()) {
-      const form: Form = {
-        _id: this.formId,
-        fields: this.form.fields,
-        // fields: this.fields,
-        documents: this.documents,
-        forms: this.formsPDF,
-        name: this.formName,
-        sidebar: this.sideBarFields,
-        tuitionContract: this.tuitionContract,
-        consentInfo: this.consentInfo,
-        termsConditions: this.termsConditions,
-        eligible: this.eligible,
-        step: 1
-      };
+      const form: Form = this.getForm();
       this.formService.sendForm(form).subscribe(res => this.goBack());
     // }
+    this.vDataCollection.deleteDraftForm(this.formId);
   }
 
   drop(event: CdkDragDrop<Field[]>) {
@@ -456,6 +470,10 @@ export class VFormBuilderComponent implements OnInit, OnDestroy {
     this.warningVisible = false;
   }
 
+  public saveDraftForm(): void {
+    // console.log("SAVE draft");
+    this.vDataCollection.setDraftForm(this.formId, this.getForm());
+  }
 
   goBack() {
     this.router.navigate([`/vertical-data-collection/`]);
@@ -540,6 +558,7 @@ export class VFormBuilderComponent implements OnInit, OnDestroy {
   //End Tuition Contract
 
   ngOnDestroy(): void {
+    this.saveDraftForm();
     for (let fbSectionsKey in this.sections) {
       this.sections[fbSectionsKey] = false;
     }

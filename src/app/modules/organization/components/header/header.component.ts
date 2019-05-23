@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 
 // import { Go } from '../../utils/store/router-store';
 import { Logout } from '../../../login/store/index';
+import { Router } from '@angular/router';
 
 export const menuItems: IMenuItems[] = [
   { route: '/', label: 'Dashboard', icon: 'fa-th' },
@@ -26,7 +27,11 @@ export class HeaderComponent implements OnInit {
   @Input() menu = false;
   @Output() toggleSideMenu = new EventEmitter<boolean>();
 
-  constructor(private readonly store: Store<any>) {}
+  constructor(private readonly store: Store<any>,
+              private router: Router,
+  ) {
+    
+  }
 
   ngOnInit() {
       // this.user = this.store.pipe(select('users'));
@@ -35,6 +40,13 @@ export class HeaderComponent implements OnInit {
 
   toggleMenu () {
     this.toggleSideMenu.emit(true);
+  }
+
+  addClassStatus(route: string): string {
+    if (route === this.router.url) {
+      return "main_menu__nav_link--active_page"
+    }
+    return "";
   }
 
   // goToIndex (): void {
