@@ -16,7 +16,6 @@ export class SideBarService {
 
 
   addExistingField(field: Field, fields: Field[]) {
-console.log(field, fields);
     let newField = cloneDeep(field);
     newField._id = uuid();
     // this.doExistingFieldsUniq(newField);
@@ -29,10 +28,13 @@ console.log(field, fields);
   }
 
   changeExistingAllSection(event, fieldList: Field[]) {
-    // console.log(event, fieldList);
+    // console.log(fieldList);
     fieldList.forEach(field => {
       if (field.type == 113) this.changeExistingAllSection(event, field.fields);
+      // console.log(field, event);
       field.exist = event;
+      // console.log(field, event);
+
     })
   }
 
@@ -56,6 +58,19 @@ console.log(field, fields);
       if (f.type == 113 || f.type == 114) this.onFieldDelete(field, f.fields);
       // console.log(f);
       if(f.name==field.name && f.prefix==field.prefix) filedList.splice(filedList.indexOf(f), 1)
+    })
+  }
+
+  onFieldUncheck(field:Field,filedList: Field[]){
+    filedList.forEach(f=>{
+      if (f.type == 113 || f.type == 114) this.onFieldUncheck(field, f.fields);
+      if(f.name==field.name && f.prefix==field.prefix) f.exist = false;
+    })
+  }
+
+  onSectionUnckeck(field:Field,filedList: Field[]) {
+    filedList.forEach(f=>{
+      if (f.type == 113) this.onFieldUncheck(field, f.fields);
     })
   }
 

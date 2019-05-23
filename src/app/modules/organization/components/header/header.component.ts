@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 
 export const menuItems: IMenuItems[] = [
   { route: '/', label: 'Dashboard', icon: 'fa-th' },
-  { route: '/', label: 'Bus', icon: 'fa-bus' },
+  { route: '/bus', label: 'Bus', icon: 'fa-bus' },
   { route: '/payer-accounts', label: 'Payer Accounts', icon: 'fa-wallet' },
   { route: '/persons', label: 'Persons', icon: 'fa-user' },
   { route: '/family', label: 'Family', icon: 'fa-cog' },

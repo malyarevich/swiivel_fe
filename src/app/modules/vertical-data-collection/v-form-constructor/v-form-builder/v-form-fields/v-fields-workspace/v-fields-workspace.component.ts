@@ -24,6 +24,7 @@ export class VFieldsWorkspaceComponent implements OnInit {
   });
 
   @Input() form: Form;
+  @Input() sideBar: Field;
   @Input() customFields: Field[];
   size = range(1  ,13);
   constructor(private modalService: NgbModal,  fb: FormBuilder) {
@@ -75,5 +76,6 @@ export class VFieldsWorkspaceComponent implements OnInit {
       }
     });
   }
+
 
 }

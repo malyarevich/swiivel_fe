@@ -3,6 +3,7 @@ import {Field} from "../../../../model/field.model";
 import {Form} from "../../../../model/form.model";
 import {v4 as uuid} from 'uuid';
 import {cloneDeep, isEmpty} from 'lodash';
+import {SideBarService} from "../v-side-bar/side-bar.service";
 
 @Component({
   selector: 'app-v-section-conteiner',
@@ -10,13 +11,14 @@ import {cloneDeep, isEmpty} from 'lodash';
   styleUrls: ['./v-section-conteiner.component.scss']
 })
 export class VSectionConteinerComponent implements OnInit {
-
+  @Input() sideBar: Field;
   @Input() form: Form;
   @Input() customFields: Field[];
   @Input() section: Field;
-  constructor() { }
+  constructor(private sideBarService: SideBarService) { }
   sectionWidth: string = "4 Columns";
   ngOnInit() {
+    // console.log(this.section);
   }
 
 
@@ -44,7 +46,13 @@ export class VSectionConteinerComponent implements OnInit {
   //   field.exist
   //     ? this.addExistingField(field, this.form.fields)
   //     : this.onDelete(field.name);
-  // }
+  // }Hebrew Middle Name
+  removeSection(section: Field){
+    this.sideBarService.onSectionDelete(section, this.form);
+    this.section.fields.forEach(field=>    this.sideBarService.onFieldUncheck(field, this.sideBar[0].fields));
+    // this.sideBarService.changeExistingAllSection(false, section.fields);
+    this.sideBarService.onSectionUnckeck(section,this.sideBar[0].fields);
+  }
 
   getEndOfSection(){
     return 'End of the ' + this.section.name;
