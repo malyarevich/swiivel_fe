@@ -7,9 +7,11 @@ import {FamilyViewGeneralTab, familyViewGeneralTabs,} from '../../../models/fami
 })
 export class FamilyViewGeneralNavComponent implements OnInit {
   @Output() activeTabEmitter = new EventEmitter<string>();
+  @Output() searchQueryEmitter = new EventEmitter<string>();
 
   familyViewGeneralTabs: FamilyViewGeneralTab[] = familyViewGeneralTabs;
   activeTab: string;
+  searchQuery: string;
 
   showModal: boolean = false;
 
@@ -30,5 +32,9 @@ export class FamilyViewGeneralNavComponent implements OnInit {
 
   onCloseAddFamilyMemberModal() {
     this.showModal = false;
+  }
+
+  setSearchQuery(query) {
+    this.searchQueryEmitter.emit(query);
   }
 }

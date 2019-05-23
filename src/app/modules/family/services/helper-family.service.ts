@@ -8,6 +8,7 @@ export class HelperFamilyService {
 
   getFullName(familyPerson: FamilyPerson) {
     let fullName = '';
+    if(!familyPerson) return;
     fullName += familyPerson.person.first_name ? familyPerson.person.first_name : '';
     fullName += familyPerson.person.last_name ? ' ' + familyPerson.person.last_name : '';
     return fullName;
@@ -15,6 +16,7 @@ export class HelperFamilyService {
 
   getFullWithMiddleName(familyPerson: FamilyPerson) {
     let fullName = '';
+    if(!familyPerson) return;
     fullName += familyPerson.person.first_name ? familyPerson.person.first_name : '';
     fullName += familyPerson.person.middle_name ? ' ' + familyPerson.person.middle_name : '';
     fullName += familyPerson.person.last_name ? ' ' + familyPerson.person.last_name : '';

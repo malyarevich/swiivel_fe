@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from "rxjs";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {environment} from "../../../../environments/environment";
 import {map} from "rxjs/operators";
 import {FamilyPerson} from "../../../models/family/family-person.model";
@@ -30,8 +30,8 @@ export class FamilyPersonService {
     };
   }
 
-  getByFamilyId(familyId) {
-    this.getByFamilyIdRequest(familyId).subscribe(data => {
+  getByFamilyId(familyId, params) {
+    this.getByFamilyIdRequest(familyId, params).subscribe(data => {
       this.dataStore.familyPersonList = data;
       this._familyPersonList.next(Object.assign({}, this.dataStore).familyPersonList);
     }, error => console.log('Could not load family persons. Error: ' + error.message));
@@ -44,8 +44,14 @@ export class FamilyPersonService {
     }, error => console.log('Could not add families persons. Error: ' + error.message));
   }
 
-  getByFamilyIdRequest(familyId): Observable<any> {
-    return this.http.get(`${environment.apiFB}/persons/family/${familyId}?api_token=${environment.api_token}`).pipe(
+  getByFamilyIdRequest(familyId, params): Observable<any> {
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      params: new HttpParams().set('params', JSON.stringify(params)),
+    };
+    return this.http.get(`${environment.apiFB}/persons/family/${familyId}?api_token=${environment.api_token}`, options).pipe(
       map((res) => res)
     );
   }
