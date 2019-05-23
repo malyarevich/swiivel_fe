@@ -1,6 +1,6 @@
 <app-family-view-general-nav></app-family-view-general-nav>
-<div class="d-flex justify-content-between align-items-stretch flex-wrap">
-  <div class="app-person-card-container mt-1" *ngFor="let item of familyPersons | async">
+<div class="d-flex justify-content-between align-items-stretch flex-wrap app-align-last-row">
+  <div class="app-person-card-container mt-2" *ngFor="let item of familyPersons | async">
     <div class="app-family-card-body h-100">
       <app-family-parents-card [familyPerson]="item"
                                *ngIf="item.person_role === familyRoles.father || item.person_role === familyRoles.mother">
