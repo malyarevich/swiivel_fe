@@ -55,12 +55,12 @@
 
 </div>
 <!--End Section Header-->
-<div>
-  <!--  cdkDropList-->
-  <!--  id="workPlaceList"-->
-  <!--  [cdkDropListData]="fields"-->
-  <!--  [cdkDropListConnectedTo]="['ExistingFieldsList', 'CustomFieldsList', '6372c882-3d14-486f-9c1f-52ae8ab928ef']"-->
-  <!--  (cdkDropListDropped)="drop($event)">-->
+<div
+    cdkDropList
+    [id]="section._id"
+  [cdkDropListData]="section.fields"
+    [cdkDropListConnectedTo]="idSectionForDragDrop"
+    (cdkDropListDropped)="drop($event)">
   <ul class="list-group" >
     <li class="list-group-item mb-3 py-0" *ngFor="let field of section.fields; " cdkDrag
         cdkDragLockAxis="y"
@@ -73,9 +73,7 @@
                              [sideBar]="sideBar"
                              [inputField]="field"
                              [form]="form">
-        <!--                             (onChange)="onChange($event, field)"-->
-        <!--                             (onUniq)="onUniq($event)"-->
-        <!--                             (onDelete)="onDelete($event)">-->
+
       </app-v-field-container>
     </li>
 

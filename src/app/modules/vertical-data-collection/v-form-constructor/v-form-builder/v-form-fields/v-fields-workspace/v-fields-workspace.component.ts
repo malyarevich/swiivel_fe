@@ -5,6 +5,7 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import { range } from 'lodash'
 import {FormBuilder, FormGroup, FormControl, Validators} from "@angular/forms";
 import {v4 as uuid} from 'uuid';
+import {CdkDragDrop, moveItemInArray, transferArrayItem} from "@angular/cdk/drag-drop";
 
 @Component({
   selector: 'app-v-fields-workspace',
@@ -27,12 +28,14 @@ export class VFieldsWorkspaceComponent implements OnInit {
   @Input() sideBar: Field;
   @Input() customFields: Field[];
   size = range(1  ,13);
+  idSectionForDragDrop: string[] =[];
   constructor(private modalService: NgbModal,  fb: FormBuilder) {
 
   }
 
   ngOnInit() {
     // console.log(this.form);
+    this.getIdOfSection();
   }
 
   openModal(content) {
@@ -56,6 +59,7 @@ export class VFieldsWorkspaceComponent implements OnInit {
       fields: [],
     };
     this.form.fields.push(newSection);
+    this.getIdOfSection();
     this.sectionAddGroup.reset();
     modal.close();
   }
@@ -76,6 +80,11 @@ export class VFieldsWorkspaceComponent implements OnInit {
       }
     });
   }
+  drop(event: CdkDragDrop<Field[]>) {
+    moveItemInArray(this.form.fields, event.previousIndex, event.currentIndex);
+  }
+  getIdOfSection(){
+    this.idSectionForDragDrop = this.form.fields.map(section =>section._id);
 
-
+  }
 }

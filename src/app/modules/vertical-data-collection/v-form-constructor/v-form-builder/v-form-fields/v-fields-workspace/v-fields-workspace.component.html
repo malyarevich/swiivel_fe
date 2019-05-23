@@ -145,9 +145,27 @@
     </div>
   </div>
 </div>
+</div>
+<div   cdkDropList
+       [cdkDropListData]="form.fields"
+       (cdkDropListDropped)="drop($event)">
+<div
 
-<div class="fields-wraper"  *ngFor="let section of form?.fields;">
-  <app-v-section-conteiner *ngIf="section.type==114" [section]="section" [sideBar]="sideBar" [form]="form" [customFields]="customFields"></app-v-section-conteiner>
+     *ngFor="let section of form?.fields;"      cdkDrag
+             cdkDragLockAxis="y">
+    <app-v-section-conteiner
+
+      *ngIf="section.type==114"
+      [section]="section"
+      [sideBar]="sideBar"
+      [idSectionForDragDrop]="idSectionForDragDrop"
+      [form]="form"
+      [customFields]="customFields">
+
+    </app-v-section-conteiner>
+  </div>
+
 </div>
 
-</div>
+
+
