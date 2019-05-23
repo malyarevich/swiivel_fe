@@ -13,7 +13,7 @@
     <div class="row">
       <div class="col-sm-2"></div>
       <div class="col-sm-10 d-flex justify-content-end">
-        <app-search-field type="gray" class="mr-3"></app-search-field>
+        <app-search-field [ngModel]="searchQuery" (ngModelChange)="setSearchQuery($event)" type="gray" class="mr-3"></app-search-field>
         <app-search-filter-btn class="mr-3"></app-search-filter-btn>
         <button class="btn app-btn-primary" (click)="onShowAddFamilyMemberModal()">Add Member</button>
       </div>

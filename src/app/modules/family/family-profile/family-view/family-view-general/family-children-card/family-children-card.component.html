@@ -1,6 +1,6 @@
 <div class="row no-gutters app-family-card-header px-4 py-2 app-text-white">
   <div class="col-6 text-left app-text-large font-weight-bold">
-    Abdiel Fishman
+    {{fullName | titlecase}}
   </div>
   <div class="col-6 text-right">
     Child
@@ -15,13 +15,13 @@
     <div class="col-9">
       <div class="row">
         <div class="col-12 d-flex justify-content-between pb-1">
-          <span class="app-text-second">Name:</span><span>Aeron Daniel Fishman</span>
+          <span class="app-text-second">Name:</span><span>{{fullNameWithMiddle | titlecase}}</span>
         </div>
         <div class="col-12 d-flex justify-content-between pb-1">
-          <span class="app-text-second">Legal Name:</span><span>Abdiel</span>
+          <span class="app-text-second">Legal Name:</span><span>???</span>
         </div>
         <div class="col-12 d-flex justify-content-between pb-1">
-          <span class="app-text-second">Full Hebrew Name:</span><span>חגי</span>
+          <span class="app-text-second">Full Hebrew Name:</span><span>{{familyPerson.person.hebrew_first_name}}</span>
         </div>
       </div>
     </div>
@@ -32,19 +32,19 @@
       PARENTS
     </div>
     <div class="col-12 d-flex justify-content-between pb-1">
-      <span class="app-text-second">Father:</span><span>Aaron Fishman</span>
+      <span class="app-text-second">Father:</span><span>??</span>
     </div>
     <div class="col-12 d-flex justify-content-between pb-1">
-      <span class="app-text-second">Mother:</span><span>Rachel Fishman</span>
+      <span class="app-text-second">Mother:</span><span>??</span>
     </div>
     <div class="col-12 text-left app-text-small font-weight-bold pt-3 pb-1">
       DATE OF BIRTH
     </div>
     <div class="col-12 d-flex justify-content-between pb-1">
-      <span class="app-text-second">Date of Birth:</span><span>10/13/2000</span>
+      <span class="app-text-second">Date of Birth:</span><span>{{familyPerson.person.dob}}</span>
     </div>
     <div class="col-12 d-flex justify-content-between pb-1">
-      <span class="app-text-second">Hebrew Date of Birth:</span><span>20/13/2003</span>
+      <span class="app-text-second">Hebrew Date of Birth:</span><span>??</span>
     </div>
   </div>
 </div>

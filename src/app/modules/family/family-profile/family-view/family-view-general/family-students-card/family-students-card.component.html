@@ -1,6 +1,6 @@
 <div class="row no-gutters app-family-card-header px-4 py-2 app-text-white">
   <div class="col-6 text-left app-text-large font-weight-bold">
-    {{familyPerson.person.first_name + ' ' + familyPerson.person.last_name | titlecase}}
+    {{fullName | titlecase}}
   </div>
   <div class="col-6 text-right">
     <i class="fas fa-graduation-cap"></i>
@@ -16,9 +16,7 @@
       <div class="row">
         <div class="col-12 d-flex justify-content-between pb-1">
           <span class="app-text-second">Name:</span>
-          <span>{{familyPerson.person.first_name + ' ' +
-            familyPerson.person.middle_name + ' ' +
-            familyPerson.person.last_name | titlecase}}</span>
+          <span>{{fullNameWithMiddle | titlecase}}</span>
         </div>
         <div class="col-12 d-flex justify-content-between pb-1">
           <span class="app-text-second">Legal Name:</span>
