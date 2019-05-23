@@ -1,8 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {FamilyService} from "../../services/family.service";
 import {cloneDeep} from 'lodash';
 import {Family} from "../../../../models/family/family.model";
 import {Observable} from "rxjs";
+import {LoaderService} from "../../../../services/loader/loader.service";
+import {FamilyService} from "../../services/family.service";
 
 @Component({
   selector: 'app-family-profile-info',
@@ -28,10 +29,10 @@ export class FamilyProfileInfoComponent implements OnInit {
     return fullAddress;
   }
 
-  constructor(private familyService: FamilyService) { }
+  constructor(private familyService: FamilyService, private loaderService: LoaderService) { }
 
   ngOnInit() {
-    this.loader$ = this.familyService.loading;
+    this.loader$ = this.loaderService.loader;
     this.getFamily(this.familyId);
   }
 

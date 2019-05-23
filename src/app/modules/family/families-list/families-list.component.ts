@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FamilyService} from "../services/family.service";
 import {Observable} from "rxjs";
 import {Family} from "../../../models/family/family.model";
+import {LoaderService} from "../../../services/loader/loader.service";
 
 @Component({
   selector: 'app-families-list',
@@ -14,10 +15,10 @@ export class FamiliesListComponent implements OnInit {
   public familyList$: Observable <Family[]> ;
   public loader$: Observable <boolean>;
 
-  constructor(private familyService: FamilyService) { }
+  constructor(private familyService: FamilyService, private loaderService: LoaderService) { }
 
   ngOnInit() {
-    this.loader$ = this.familyService.loading;
+    this.loader$ = this.loaderService.loader;
     this.getFamilyList();
   }
 

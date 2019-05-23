@@ -4,6 +4,7 @@ import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {environment} from "../../../../environments/environment";
 import {map} from "rxjs/operators";
 import {FamilyPerson} from "../../../models/family/family-person.model";
+import {LoaderService} from "../../../services/loader/loader.service";
 
 interface ResponseData {
   success: boolean;
@@ -24,21 +25,25 @@ export class FamilyPersonService {
     return this._familyPersonList.asObservable();
   }
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private loaderService: LoaderService) {
     this.dataStore = {
       familyPersonList: [],
     };
   }
 
   getByFamilyId(familyId, params) {
+    this.loaderService.startLoader();
     this.getByFamilyIdRequest(familyId, params).subscribe(data => {
+      this.loaderService.stopLoader();
       this.dataStore.familyPersonList = data;
       this._familyPersonList.next(Object.assign({}, this.dataStore).familyPersonList);
     }, error => console.log('Could not load family persons. Error: ' + error.message));
   }
 
   add(data) {
+    this.loaderService.startLoader();
     this.addOneRequest(data).subscribe((res: ResponseData) => {
+      this.loaderService.stopLoader();
       this.dataStore.familyPersonList.push(res.data);
       this._familyPersonList.next(Object.assign({}, this.dataStore).familyPersonList);
     }, error => console.log('Could not add families persons. Error: ' + error.message));

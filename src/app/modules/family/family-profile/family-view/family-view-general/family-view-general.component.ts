@@ -4,6 +4,7 @@ import {FamilyPerson} from "../../../../../models/family/family-person.model";
 import {Observable} from "rxjs";
 import {FamilyRoles} from "../../../../../enums/family-roles";
 import {FAMILY_VIEW_GENERAL_TABS} from "../../models/family-view-general-tabs";
+import {LoaderService} from "../../../../../services/loader/loader.service";
 
 @Component({
   selector: 'app-family-view-general',
@@ -14,20 +15,20 @@ export class FamilyViewGeneralComponent implements OnInit {
   @Input() familyId: string;
 
   familySearchTab = FAMILY_VIEW_GENERAL_TABS;
-
   familyPersons: Observable<FamilyPerson[]>;
-
   familyRoles = FamilyRoles;
+  public loader$: Observable <boolean>;
 
   params = {
     filter: '',
     query: '',
   };
 
-  constructor(private familyPersonService: FamilyPersonService) {
+  constructor(private familyPersonService: FamilyPersonService, private loaderService: LoaderService) {
   }
 
   ngOnInit() {
+    this.loader$ = this.loaderService.loader;
     this.getFamilyPersons(this.params);
   }
 

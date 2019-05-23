@@ -4,6 +4,7 @@ import {Family} from "../../../models/family/family.model";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../../environments/environment";
 import {map} from "rxjs/operators";
+import {LoaderService} from "../../../services/loader/loader.service";
 
 interface GetResponseData {
   success: boolean;
@@ -26,12 +27,10 @@ export class FamilyService {
 
   private _familyList: BehaviorSubject<Family[]> = <BehaviorSubject<Family[]>> new BehaviorSubject([]);
   private _family: BehaviorSubject<Family> = <BehaviorSubject<Family>> new BehaviorSubject({});
-  private _loading: BehaviorSubject<boolean> = <BehaviorSubject<boolean>> new BehaviorSubject(false);
 
   private dataStore: {
     familyList: Family[];
     family: Family;
-    loading: boolean;
   };
 
   get familyList() {
@@ -42,23 +41,18 @@ export class FamilyService {
     return this._family.asObservable();
   }
 
-  get loading() {
-    return this._loading.asObservable();
-  }
-
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private loaderService: LoaderService) {
     this.dataStore = {
       familyList: [],
       family: null,
-      loading: false,
     };
   }
 
   getAll() {
-    this.startLoading();
+    this.loaderService.startLoader();
     this.getAllRequest().subscribe((res: GetResponseData) => {
       if(res.success) {
-        this.stopLoading();
+        this.loaderService.stopLoader();
         this.dataStore.familyList = res.data;
         this._familyList.next(Object.assign({}, this.dataStore).familyList);
       }
@@ -66,10 +60,10 @@ export class FamilyService {
   }
 
   getOne(family_id) {
-    this.startLoading();
+    this.loaderService.startLoader();
     this.getOneRequest(family_id).subscribe((res:GetResponseData) => {
       if(res.success) {
-        this.stopLoading();
+        this.loaderService.stopLoader();
         this.dataStore.family = res.data[0];
         this._family.next(Object.assign({}, this.dataStore).family);
       }
@@ -77,10 +71,10 @@ export class FamilyService {
   }
 
   add(familyName) {
-    this.startLoading();
+    this.loaderService.startLoader();
     this.createOneRequest(familyName).subscribe((res:UpdateCreateResponseData) => {
       if(res.success) {
-        this.stopLoading();
+        this.loaderService.stopLoader();
         this.dataStore.familyList.push(res.data);
         this._familyList.next(Object.assign({}, this.dataStore).familyList);
       }
@@ -88,10 +82,10 @@ export class FamilyService {
   }
 
   update(family) {
-    this.startLoading();
+    this.loaderService.startLoader();
     this.updateOneRequest(family).subscribe((res: UpdateCreateResponseData) => {
       if(res.success) {
-        this.stopLoading();
+        this.loaderService.stopLoader();
         this.dataStore.family = res.data;
         this._family.next(Object.assign({}, this.dataStore).family);
 
@@ -104,10 +98,10 @@ export class FamilyService {
   }
 
   delete(familyId) {
-    this.startLoading();
+    this.loaderService.startLoader();
     this.deleteOneRequest(familyId).subscribe((data: DeleteResponseData) => {
       if(data.success) {
-        this.stopLoading();
+        this.loaderService.stopLoader();
         this.dataStore.familyList.forEach((item, i) => {
             if (item.family_id === data.id) { this.dataStore.familyList.splice(i, 1); }
           });
@@ -144,15 +138,5 @@ export class FamilyService {
     return this.http.delete(`${environment.apiFB}/families/${familyId}?api_token=${environment.api_token}`).pipe(
       map((res: DeleteResponseData) => res)
     );
-  }
-
-  startLoading() {
-    this.dataStore.loading = true;
-    this._loading.next(Object.assign({}, this.dataStore).loading);
-  }
-
-  stopLoading() {
-    this.dataStore.loading = false;
-    this._loading.next(Object.assign({}, this.dataStore).loading);
   }
 }
