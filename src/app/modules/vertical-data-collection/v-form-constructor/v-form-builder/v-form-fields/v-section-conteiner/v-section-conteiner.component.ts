@@ -1,9 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Field} from "../../../../model/field.model";
 import {Form} from "../../../../model/form.model";
-import {v4 as uuid} from 'uuid';
-import {cloneDeep, isEmpty} from 'lodash';
+
 import {SideBarService} from "../v-side-bar/side-bar.service";
+import {CdkDragDrop, moveItemInArray, transferArrayItem} from "@angular/cdk/drag-drop";
 
 @Component({
   selector: 'app-v-section-conteiner',
@@ -15,14 +15,41 @@ export class VSectionConteinerComponent implements OnInit {
   @Input() form: Form;
   @Input() customFields: Field[];
   @Input() section: Field;
+  @Input() idSectionForDragDrop: string[];
   constructor(private sideBarService: SideBarService) { }
   sectionWidth: string = "4 Columns";
   ngOnInit() {
-    // console.log(this.section);
+     // console.log(this.getIdOfSection());
   }
 
 
+  drop(event: CdkDragDrop<Field[]>) {
 
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex);
+    }
+    // if (event.previousContainer === event.container) {
+    //   moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    // } else if ((event.previousContainer.id == 'workPlaceList' && event.container.id == '6372c882-3d14-486f-9c1f-52ae8ab928ef') ||
+    //   (event.container.id == 'workPlaceList' && event.previousContainer.id == '6372c882-3d14-486f-9c1f-52ae8ab928ef')) {
+    //   transferArrayItem(event.previousContainer.data,
+    //     event.container.data,
+    //     event.previousIndex,
+    //     event.currentIndex);
+    // }
+    // else {
+    //   copyArrayItem(event.previousContainer.data,
+    //     event.container.data,
+    //     event.previousIndex,
+    //     event.currentIndex);
+    //   this.addField(this.fields[event.currentIndex]);
+    // }
+  }
   // addExistingField(field: Field, fields: Field[]) {
   //   let newField = cloneDeep(field);
   //   newField._id = uuid();
@@ -57,4 +84,6 @@ export class VSectionConteinerComponent implements OnInit {
   getEndOfSection(){
     return 'End of the ' + this.section.name;
   }
+
+
 }
