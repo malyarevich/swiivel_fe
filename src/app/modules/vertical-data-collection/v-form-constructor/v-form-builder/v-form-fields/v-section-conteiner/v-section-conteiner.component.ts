@@ -19,7 +19,6 @@ export class VSectionConteinerComponent implements OnInit {
   constructor(private sideBarService: SideBarService) { }
   sectionWidth: string = "4 Columns";
   ngOnInit() {
-     // console.log(this.getIdOfSection());
   }
 
 
@@ -33,22 +32,7 @@ export class VSectionConteinerComponent implements OnInit {
         event.previousIndex,
         event.currentIndex);
     }
-    // if (event.previousContainer === event.container) {
-    //   moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    // } else if ((event.previousContainer.id == 'workPlaceList' && event.container.id == '6372c882-3d14-486f-9c1f-52ae8ab928ef') ||
-    //   (event.container.id == 'workPlaceList' && event.previousContainer.id == '6372c882-3d14-486f-9c1f-52ae8ab928ef')) {
-    //   transferArrayItem(event.previousContainer.data,
-    //     event.container.data,
-    //     event.previousIndex,
-    //     event.currentIndex);
-    // }
-    // else {
-    //   copyArrayItem(event.previousContainer.data,
-    //     event.container.data,
-    //     event.previousIndex,
-    //     event.currentIndex);
-    //   this.addField(this.fields[event.currentIndex]);
-    // }
+
   }
   // addExistingField(field: Field, fields: Field[]) {
   //   let newField = cloneDeep(field);
