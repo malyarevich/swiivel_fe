@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {FamilyPersonService} from "../../../services/family-person.service";
+import {FamilyPersonService} from "../../../../../services/family/family-person.service";
 import {FamilyPerson} from "../../../../../models/family/family-person.model";
 import {Observable} from "rxjs";
 import {FamilyRoles} from "../../../../../enums/family-roles";

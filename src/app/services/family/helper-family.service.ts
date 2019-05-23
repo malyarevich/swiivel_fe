@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {FamilyPerson} from "../../../models/family/family-person.model";
+import {FamilyPerson} from "../../models/family/family-person.model";
 
 @Injectable()
 export class HelperFamilyService {

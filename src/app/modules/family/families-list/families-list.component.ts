@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FamilyService} from "../services/family.service";
+import {FamilyService} from "../../../services/family/family.service";
 import {Observable} from "rxjs";
 import {Family} from "../../../models/family/family.model";
 import {LoaderService} from "../../../services/loader/loader.service";

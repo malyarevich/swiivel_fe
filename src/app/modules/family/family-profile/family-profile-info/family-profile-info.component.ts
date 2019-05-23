@@ -3,7 +3,7 @@ import {cloneDeep} from 'lodash';
 import {Family} from "../../../../models/family/family.model";
 import {Observable} from "rxjs";
 import {LoaderService} from "../../../../services/loader/loader.service";
-import {FamilyService} from "../../services/family.service";
+import {FamilyService} from "../../../../services/family/family.service";
 
 @Component({
   selector: 'app-family-profile-info',
