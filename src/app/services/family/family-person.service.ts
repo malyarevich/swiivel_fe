@@ -41,9 +41,7 @@ export class FamilyPersonService {
   }
 
   add(data) {
-    this.loaderService.startLoader();
     this.addOneRequest(data).subscribe((res: ResponseData) => {
-      this.loaderService.stopLoader();
       this.dataStore.familyPersonList.push(res.data);
       this._familyPersonList.next(Object.assign({}, this.dataStore).familyPersonList);
     }, error => console.log('Could not add families persons. Error: ' + error.message));
