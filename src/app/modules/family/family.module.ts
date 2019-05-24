@@ -23,9 +23,12 @@ import {PersonService} from "../../services/person/person.service";
 import {FamilyPersonService} from "../../services/family/family-person.service";
 import {HelperFamilyService} from "../../services/family/helper-family.service";
 import {LoaderService} from "../../services/loader/loader.service";
+import { FamilyStudentsEducationComponent } from './family-profile/family-view/family-view-general/family-students-card/family-students-education/family-students-education.component';
+import { FamilyStudentsMedicalComponent } from './family-profile/family-view/family-view-general/family-students-card/family-students-medical/family-students-medical.component';
+import { FamilyStudentsSecondContactComponent } from './family-profile/family-view/family-view-general/family-students-card/family-students-second-contact/family-students-second-contact.component';
 
 @NgModule({
-  declarations: [FamiliesListComponent, FamilyPageHeaderComponent, FamilyProfileComponent, FamilyProfileInfoComponent, FamilyViewComponent, FamilyCreateModalComponent, FamilyViewNavComponent, FamilyViewGeneralComponent, FamilyViewGeneralNavComponent, FamilyParentsCardComponent, FamilyChildrenCardComponent, FamilyStudentsCardComponent, FamilyGrandparentsCardComponent, FamilyAddMemberModalComponent],
+  declarations: [FamiliesListComponent, FamilyPageHeaderComponent, FamilyProfileComponent, FamilyProfileInfoComponent, FamilyViewComponent, FamilyCreateModalComponent, FamilyViewNavComponent, FamilyViewGeneralComponent, FamilyViewGeneralNavComponent, FamilyParentsCardComponent, FamilyChildrenCardComponent, FamilyStudentsCardComponent, FamilyGrandparentsCardComponent, FamilyAddMemberModalComponent, FamilyStudentsEducationComponent, FamilyStudentsMedicalComponent, FamilyStudentsSecondContactComponent],
   imports: [
     CommonModule,
     FormsModule,
