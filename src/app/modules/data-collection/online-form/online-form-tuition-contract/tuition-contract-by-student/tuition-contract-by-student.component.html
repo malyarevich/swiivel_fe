@@ -1,0 +1,64 @@
+<table class="table">
+  <thead>
+    <tr class="app-tuition-table-header">
+      <th></th>
+      <th scope="col">
+        CHARLOTTE SIMON
+        <br /><span class="font-weight-normal">1st grade</span>
+      </th>
+      <th scope="col">
+        LUELLA SIMON
+        <br /><span class="font-weight-normal">1st grade</span>
+      </th>
+      <th scope="col">
+        KEITH SIMON
+        <br /><span class="font-weight-normal">1st grade</span>
+      </th>
+      <th scope="col" class="app-th-align-reset">FEE TOTAL</th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngFor="let item of tuitionContract.fees">
+      <tr *ngIf="item.isActive">
+        <td class="font-weight-bold">{{ item.name }}</td>
+        <td>
+          $200<br />
+          <ng-container *ngIf="item.isActiveDiscount">
+            <span class="app-tuition-discount">$90 discount</span>
+          </ng-container>
+        </td>
+        <td>$200</td>
+        <td>$200</td>
+        <td>$600</td>
+      </tr>
+    </ng-container>
+    <tr class="app-tuition-table-total-2 font-weight-bold">
+      <td>TOTAL PER STUDENTS</td>
+      <td>$1000</td>
+      <td>$1000</td>
+      <td>$1000</td>
+      <td>$3500</td>
+    </tr>
+    <tr class="app-tuition-table-total font-weight-bold">
+      <td>BUILDING FEE</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>$1000</td>
+    </tr>
+    <tr class="app-tuition-table-total font-weight-bold">
+      <td>SECURITY FEE</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>$4500</td>
+    </tr>
+    <tr class="app-tuition-table-total font-weight-bold">
+      <td>Tuition and Family Fees Total</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>$4500</td>
+    </tr>
+  </tbody>
+</table>

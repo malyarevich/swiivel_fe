@@ -12,7 +12,7 @@ import {Field} from '../../../reducers/field/field.model';
 @Component({
   selector: 'app-hebrew-date-field',
   templateUrl: './hebrew-date-field.component.html',
-  styleUrls: ['./hebrew-date-field.component.css'],
+  styleUrls: ['./hebrew-date-field.component.scss'],
   providers: [
     {provide: NgbCalendar, useClass: NgbCalendarHebrew},
     {provide: NgbDatepickerI18n, useClass: NgbDatepickerI18nHebrew}

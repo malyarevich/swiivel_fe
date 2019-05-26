@@ -1,0 +1,11 @@
+<div class="form-group app-input-container"
+     [ngClass]="{'app-input-fill': data.value && !data.options.hideLabel}">
+  <label *ngIf="!data.options.hideLabel" class="app-input-label">{{data.name | titlecase}}</label>
+  <input type="text"
+         class="app-input form-control"
+         email
+         [(ngModel)]="data.value"
+         [readOnly]="data.options.readonly"
+         [required]="data.options.required"
+         [placeholder]="data.name | titlecase">
+</div>

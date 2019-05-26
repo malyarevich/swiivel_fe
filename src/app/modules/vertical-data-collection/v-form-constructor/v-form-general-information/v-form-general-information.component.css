@@ -7,7 +7,7 @@
 }
 .test {
   vertical-align: middle;
-  horiz-align: center;
+  /* horiz-align: center; */
 }
 .vertical-center {
   height: 100%;
