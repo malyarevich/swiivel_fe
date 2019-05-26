@@ -29,6 +29,10 @@ export class VSideBarGroupComponent implements OnInit {
 
 
   onChangeFieldInGroup( field, group, section?){
+
+    console.log(field, 'field');
+    console.log(group, 'group');
+    console.log(section, 'sections');
     let  groupNew = cloneDeep(group);
     let sectionNew = cloneDeep(section);
     let sec = this.form.fields.filter(f => f.name == section.name);
@@ -75,19 +79,26 @@ export class VSideBarGroupComponent implements OnInit {
     }
   }
 
-  onChangeGroupBeing(field, group) {
-    // console.log(field, group);
+  onChangeGroupBeing(group: Field, section:Field) {
+    // console.log(section, group, 'onChangeGroupBeing');
+    let  sectionNew = cloneDeep(section);
     let  groupNew = cloneDeep(group);
-    let arr = this.form.fields.filter(f => f.name == group.name);
+    let arr = this.form.fields.filter(f => f.name == section.name);
     if (isEmpty(arr)) {
+      // console.log('if arr');
+      sectionNew.fields = [];
       groupNew.fields = [];
-      this.sideBarService.addExistingField(field, groupNew.fields);
-      this.sideBarService.addExistingField(groupNew, this.form.fields);
-      group.exist = true;
+      group.fields.forEach(field=>this.sideBarService.addExistingField(field, groupNew.fields));
+      // console.log(groupNew);
+      this.sideBarService.addExistingField(group, sectionNew.fields);
+      this.sideBarService.addExistingField(sectionNew, this.form.fields);
+      section.exist = true;
     } else {
       this.form.fields = this.form.fields.map(f => {
-        if (f.name == groupNew.name) {
-          this.sideBarService.addExistingField(field, f.fields);
+        if (f.name == sectionNew.name) {
+          groupNew.fields = [];
+          group.fields.forEach(field=>this.sideBarService.addExistingField(field, groupNew.fields));
+          this.sideBarService.addExistingField(groupNew, f.fields);
         }
         return f;
       });

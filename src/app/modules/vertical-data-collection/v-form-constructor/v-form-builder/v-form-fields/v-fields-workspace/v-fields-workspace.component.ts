@@ -34,8 +34,7 @@ export class VFieldsWorkspaceComponent implements OnInit {
   }
 
   ngOnInit() {
-    // console.log(this.form);
-    this.getIdOfSection();
+    this.getIdOfSection(this.form.fields);
   }
 
   openModal(content) {
@@ -59,7 +58,7 @@ export class VFieldsWorkspaceComponent implements OnInit {
       fields: [],
     };
     this.form.fields.push(newSection);
-    this.getIdOfSection();
+    this.getIdOfSection(this.form.fields);
     this.sectionAddGroup.reset();
     modal.close();
   }
@@ -80,11 +79,20 @@ export class VFieldsWorkspaceComponent implements OnInit {
       }
     });
   }
+
   drop(event: CdkDragDrop<Field[]>) {
     moveItemInArray(this.form.fields, event.previousIndex, event.currentIndex);
   }
-  getIdOfSection(){
-    this.idSectionForDragDrop = this.form.fields.map(section =>section._id);
+
+  getIdOfSection(fieldList: Field[]){
+    if(!fieldList) return;
+    this.idSectionForDragDrop = fieldList.map(groupSection =>{
+      if(groupSection.type==113 || groupSection.type==114){
+        this.getIdOfSection(groupSection.fields);
+        console.log(groupSection._id);
+        return groupSection._id;
+      }
+    })
 
   }
 }

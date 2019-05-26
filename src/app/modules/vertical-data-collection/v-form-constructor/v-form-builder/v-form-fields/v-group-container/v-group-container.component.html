@@ -78,9 +78,9 @@
   </div>
 
   <div [hidden]="!showNested"
-       [cdkDropListConnectedTo]="['ExistingFieldsList', 'CustomFieldsList', 'workPlaceList']"
+       [cdkDropListConnectedTo]="idSectionForDragDrop"
        [cdkDropListData]="inputGroup.fields"
-       id="6372c882-3d14-486f-9c1f-52ae8ab928ef"
+       [id]='inputGroup._id'
        (cdkDropListDropped)="drop($event)"
        class=""
        cdkDropList>
@@ -88,7 +88,9 @@
       <li class="list-group-item ml-4 mb-3" *ngFor="let field of inputGroup.fields" cdkDrag>
         <app-v-field-container *ngIf="field.type!=113"
                                [inputField]="field"
-                               [customFields]="customFields">
+                               [form]="form"
+                               [customFields]="customFields"
+                               [sideBar]="sideBar">
         </app-v-field-container>
       </li>
     </ul>

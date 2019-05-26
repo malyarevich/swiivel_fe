@@ -35,14 +35,13 @@ import { VDataCollectionComponent } from '../../v-data-collection.component';
   templateUrl: './v-form-builder.html',
   styleUrls: ['./v-form-builder.scss'],
 })
-export class VFormBuilderComponent implements OnInit, OnDestroy {
+export class VFormBuilderComponent implements OnInit {
 
   validNewCustomFieldName: boolean = true;
   showAddButton = true;
   formId: string = '';
   warningVisible: boolean = false;
   showWarningMessage: string = 'Please correct existing errors';
-  searchText: string;
   fields: Field[] = [];
 
   feeTemplates: FeeTemplate[] = [];
@@ -557,11 +556,11 @@ export class VFormBuilderComponent implements OnInit, OnDestroy {
   }
   //End Tuition Contract
 
-  ngOnDestroy(): void {
-    this.saveDraftForm();
-    for (let fbSectionsKey in this.sections) {
-      this.sections[fbSectionsKey] = false;
-    }
-  }
+  // ngOnDestroy(): void {
+  //   this.saveDraftForm();
+  //   for (let fbSectionsKey in this.sections) {
+  //     this.sections[fbSectionsKey] = false;
+  //   }
+  // }
 }
 
