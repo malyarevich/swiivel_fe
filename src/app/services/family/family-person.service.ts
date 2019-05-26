@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from "rxjs";
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
-import {environment} from "../../../../environments/environment";
+import {environment} from "../../../environments/environment";
 import {map} from "rxjs/operators";
-import {FamilyPerson} from "../../../models/family/family-person.model";
+import {FamilyPerson} from "../../models/family/family-person.model";
 
 interface ResponseData {
   success: boolean;

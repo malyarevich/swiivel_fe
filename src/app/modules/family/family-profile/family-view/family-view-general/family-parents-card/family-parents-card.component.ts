@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FamilyPerson} from "../../../../../../models/family/family-person.model";
 import {FamilyRoles} from "../../../../../../enums/family-roles";
-import {HelperFamilyService} from "../../../../services/helper-family.service";
+import {HelperFamilyService} from "../../../../../../services/family/helper-family.service";
 
 @Component({
   selector: 'app-family-parents-card',

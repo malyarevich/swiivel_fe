@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FamilyPerson} from "../../../../../../models/family/family-person.model";
-import {HelperFamilyService} from "../../../../services/helper-family.service";
+import {HelperFamilyService} from "../../../../../../services/family/helper-family.service";
 
 @Component({
   selector: 'app-family-grandparents-card',

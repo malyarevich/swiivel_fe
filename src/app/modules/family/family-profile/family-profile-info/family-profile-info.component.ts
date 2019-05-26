@@ -1,13 +1,15 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {FamilyService} from "../../services/family.service";
 import {cloneDeep} from 'lodash';
 import {Family} from "../../../../models/family/family.model";
 import {Observable} from "rxjs";
+import {LoaderService} from "../../../../services/loader/loader.service";
+import {FamilyService} from "../../../../services/family/family.service";
+import {HelperFamilyService} from "../../../../services/family/helper-family.service";
 
 @Component({
   selector: 'app-family-profile-info',
   templateUrl: './family-profile-info.component.html',
-  styleUrls: ['./family-profile-info.component.css']
+  styleUrls: ['./family-profile-info.component.css'],
 })
 export class FamilyProfileInfoComponent implements OnInit {
   @Input() familyId;
@@ -20,18 +22,15 @@ export class FamilyProfileInfoComponent implements OnInit {
   familyEditable: Family;
 
   get fullFamilyAddress() {
-    let fullAddress = '';
-    fullAddress += this.family.family_info.address ? this.family.family_info.address : '';
-    fullAddress += this.family.family_info.state ? ', ' + this.family.family_info.state : '';
-    fullAddress += this.family.family_info.city ? ', ' + this.family.family_info.city : '';
-    fullAddress += this.family.family_info.zip ? ', ' + this.family.family_info.zip : '';
-    return fullAddress;
+    return this.helperFamilyService.getFullFamilyAddress(this.family);
   }
 
-  constructor(private familyService: FamilyService) { }
+  constructor(private familyService: FamilyService,
+              private loaderService: LoaderService,
+              private helperFamilyService: HelperFamilyService) { }
 
   ngOnInit() {
-    this.loader$ = this.familyService.loading;
+    this.loader$ = this.loaderService.loader;
     this.getFamily(this.familyId);
   }
 
