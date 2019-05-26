@@ -111,8 +111,13 @@ const routes: Routes = [
         children: constructorRoutes
       },
       {
-        path: 'onlineform/:id',
-        component: VFormViewComponent
+        path: 'online-form/:id',
+        children: [
+          {
+            path: "",
+            loadChildren: "../data-collection/online-form/online-form.module#OnlineFormModule"
+          }
+        ]
       },
       {
         path: 'v-form-info/:id',
