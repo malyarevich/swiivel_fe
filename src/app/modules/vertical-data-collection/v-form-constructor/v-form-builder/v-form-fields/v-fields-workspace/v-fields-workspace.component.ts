@@ -89,7 +89,7 @@ export class VFieldsWorkspaceComponent implements OnInit {
     this.idSectionForDragDrop = fieldList.map(groupSection =>{
       if(groupSection.type==113 || groupSection.type==114){
         this.getIdOfSection(groupSection.fields);
-        console.log(groupSection._id);
+        // console.log(groupSection._id);
         return groupSection._id;
       }
     })

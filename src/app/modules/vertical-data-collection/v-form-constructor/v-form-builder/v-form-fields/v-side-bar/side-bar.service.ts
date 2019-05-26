@@ -73,5 +73,25 @@ export class SideBarService {
       if (f.type == 113) this.onFieldUncheck(field, f.fields);
     })
   }
+h
+  ////////////////////////
+
+  addField(field: Field, fieldList: Field[]):void{
+    let newField = cloneDeep(field);
+    newField._id = uuid();
+    newField.isValid = true;
+    newField.isValidName = true;
+    fieldList.push(newField);
+
+  }
+
+  deleteField(field: Field, fieldList: Field[]):void{
+
+    fieldList.forEach(f=>{
+      if (f.type == 113 || f.type == 114) this.deleteField(field, f.fields);
+
+      if(f.name==field.name && f.prefix==field.prefix) fieldList.splice(fieldList.indexOf(f), 1)
+    })
+  }
 
 }
