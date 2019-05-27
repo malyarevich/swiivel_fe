@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Field} from "../../../../../model/field.model";
 import {isEmpty, cloneDeep } from 'lodash';
 import {Form} from "../../../../../model/form.model";
@@ -9,7 +9,8 @@ import {SideBarService} from "../side-bar.service";
   templateUrl: './v-side-bar-group.component.html',
   styleUrls: ['./v-side-bar-group.component.css']
 })
-export class VSideBarGroupComponent implements OnInit {
+export class VSideBarGroupComponent implements OnInit, OnDestroy {
+
   showAddButton = true;
   showNested: boolean = true;
   validNewCustomFieldName: boolean = true;
@@ -23,12 +24,15 @@ export class VSideBarGroupComponent implements OnInit {
   constructor(private sideBarService: SideBarService) { }
 
   ngOnInit() {
-    this.group.exist = false;
   }
 
 
 
   onChangeFieldInGroup( field, group, section?){
+
+    console.log(field, 'field');
+    console.log(group, 'group');
+    console.log(section, 'sections');
     let  groupNew = cloneDeep(group);
     let sectionNew = cloneDeep(section);
     let sec = this.form.fields.filter(f => f.name == section.name);
@@ -75,19 +79,26 @@ export class VSideBarGroupComponent implements OnInit {
     }
   }
 
-  onChangeGroupBeing(field, group) {
-    // console.log(field, group);
+  onChangeGroupBeing(group: Field, section:Field) {
+    // console.log(section, group, 'onChangeGroupBeing');
+    let  sectionNew = cloneDeep(section);
     let  groupNew = cloneDeep(group);
-    let arr = this.form.fields.filter(f => f.name == group.name);
+    let arr = this.form.fields.filter(f => f.name == section.name);
     if (isEmpty(arr)) {
+      // console.log('if arr');
+      sectionNew.fields = [];
       groupNew.fields = [];
-      this.sideBarService.addExistingField(field, groupNew.fields);
-      this.sideBarService.addExistingField(groupNew, this.form.fields);
-      group.exist = true;
+      group.fields.forEach(field=>this.sideBarService.addExistingField(field, groupNew.fields));
+      // console.log(groupNew);
+      this.sideBarService.addExistingField(group, sectionNew.fields);
+      this.sideBarService.addExistingField(sectionNew, this.form.fields);
+      section.exist = true;
     } else {
       this.form.fields = this.form.fields.map(f => {
-        if (f.name == groupNew.name) {
-          this.sideBarService.addExistingField(field, f.fields);
+        if (f.name == sectionNew.name) {
+          groupNew.fields = [];
+          group.fields.forEach(field=>this.sideBarService.addExistingField(field, groupNew.fields));
+          this.sideBarService.addExistingField(groupNew, f.fields);
         }
         return f;
       });
@@ -180,4 +191,8 @@ export class VSideBarGroupComponent implements OnInit {
   // nameChange(event) {
   //   this.validNewCustomFieldName = this.checkExistingFieldsName(event.target.value.trim());
   // }
+  ngOnDestroy(): void {
+    this.group.exist = false;
+
+  }
 }

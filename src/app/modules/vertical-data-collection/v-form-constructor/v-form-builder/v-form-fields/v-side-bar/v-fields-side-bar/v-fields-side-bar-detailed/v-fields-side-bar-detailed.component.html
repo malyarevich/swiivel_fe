@@ -128,7 +128,7 @@
                   [ngClass]="fieldsAddGroup.get('sectionRelate').touched&&fieldsAddGroup.get('sectionRelate').invalid?'is-invalid':''"
                   id="sectionRelate">
             <option *ngIf="form.fields.length>0" value=""   disabled [selected]="true">Section Relate</option>
-            <option *ngIf="form.fields.length==0" class="without-section" value=""   disabled [selected]="true" >Please add at least one section</option>
+            <option *ngIf="form.fields.length==0" value=""   disabled [selected]="true" >Please add at least one section</option>
             <option *ngFor="let section of form.fields" [ngValue]="section"
 
             >{{section.name}}</option>
@@ -148,7 +148,4 @@
       </div>
     </form>
   </div>
-  <!--  <div class="modal-footer">-->
-  <!--    <button type="submit" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>-->
-  <!--  </div>-->
 </ng-template>

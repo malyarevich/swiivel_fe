@@ -74,4 +74,49 @@ export class SideBarService {
     })
   }
 
+  ////////////////////////
+
+  // addEntityByParams(form: Form, field:Field, group?: Field, section?: Field ){
+  //   let newGroup: Field, newSection: Field ;
+  //   if(group) newGroup = cloneDeep(group);
+  //   if(section) newSection = cloneDeep(section);
+  //   if()
+  //
+  // }
+  //
+  // addField(field: Field, fieldList: Field[]):void{
+  //   let newField = cloneDeep(field);
+  //   newField._id = uuid();
+  //   newField.fields=[];
+  //   newField.isValid = true;
+  //   newField.isValidName = true;
+  //   fieldList.push(newField);
+  //
+  // }
+  //
+  // checkEntityExisting(field: Field, fieldList: Field[]):boolean{
+  //  let list = fieldList.filter(f=> {
+  //    if(f.name == field.name && f.prefix==field.prefix) return f;
+  //  });
+  //   return list.length>0;
+  // }
+  //
+  // deleteField(field: Field, fieldList: Field[]):void{
+  //
+  //   fieldList.forEach(f=>{
+  //     if (f.type == 113 || f.type == 114) this.deleteField(field, f.fields);
+  //
+  //     if(f.name==field.name && f.prefix==field.prefix) fieldList.splice(fieldList.indexOf(f), 1)
+  //   })
+  // }
+  //
+  // deleteFieldById(id: string, form: Form| Field){
+  //   form.fields.forEach(f=>{
+  //     if (f.type == 113 || f.type == 114) this.deleteFieldById(id, f);
+  //
+  //     if(id==f._id) form.fields.splice(form.fields.indexOf(f), 1)
+  //   })
+  //
+  // }
+
 }
