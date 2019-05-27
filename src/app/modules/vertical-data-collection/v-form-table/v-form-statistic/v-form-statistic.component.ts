@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./v-form-statistic.component.scss']
 })
 export class VFormStatisticComponent implements OnInit {
-  private isShowWidgets: boolean = false;
+  public isShowWidgets: boolean = false;
   private labelHideWidget: string = "hide the widgets";
   private labelShowWidget: string = "view widgets";
 
