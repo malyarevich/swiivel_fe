@@ -23,9 +23,9 @@
           widgets_control__control--extend_control"
         (click)="toggleWidgets()"
       >
-        <ng-container *ngIf="isShowWidgets">{{labelHideWidget}} &nbsp;&nbsp;</ng-container>
+        <ng-container *ngIf="isShowWidgets">&nbsp;{{labelHideWidget}} &nbsp;&nbsp;</ng-container>
         <ng-container *ngIf="!isShowWidgets">{{labelShowWidget}} &nbsp;&nbsp;</ng-container>
-        <i class="fas fa-sort-down"></i>
+        <i class="fas fa-caret-down"></i>
       </a>
     </li>
     
