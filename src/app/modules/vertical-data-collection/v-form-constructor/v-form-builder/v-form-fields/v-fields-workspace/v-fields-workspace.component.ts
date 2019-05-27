@@ -24,6 +24,16 @@ export class VFieldsWorkspaceComponent implements OnInit {
     sectionSize: new FormControl(null, Validators.required),
   });
 
+  groupAddGroup: FormGroup = new FormGroup({
+    groupName: new FormControl('', {
+      validators: Validators.compose([
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(50)
+      ])}),
+    sectionRelate: new FormControl(null, Validators.required),
+  });
+
   @Input() form: Form;
   @Input() sideBar: Field;
   @Input() customFields: Field[];
@@ -34,8 +44,7 @@ export class VFieldsWorkspaceComponent implements OnInit {
   }
 
   ngOnInit() {
-    // console.log(this.form);
-    this.getIdOfSection();
+    this.getIdOfSection(this.form.fields);
   }
 
   openModal(content) {
@@ -59,8 +68,31 @@ export class VFieldsWorkspaceComponent implements OnInit {
       fields: [],
     };
     this.form.fields.push(newSection);
-    this.getIdOfSection();
+    this.getIdOfSection(this.form.fields);
     this.sectionAddGroup.reset();
+    modal.close();
+  }
+
+  addGroup(modal){
+    this.validateAllFormFields(this.groupAddGroup);
+    if (!this.groupAddGroup.valid) return;
+    this.groupAddGroup.clearValidators();
+    const newGroup :Field = {
+      _id: uuid(),
+      name: this.groupAddGroup.value.groupName,
+      type: 113,
+      options: {size: 4},
+      prefix: this.groupAddGroup.value.groupName.toLowerCase().split(' ').join('_'),
+      fields: [],
+    };
+    this.form.fields.forEach(section=>{
+      if(section.name == this.groupAddGroup.value.sectionRelate.name
+        &&section.prefix == this.groupAddGroup.value.sectionRelate.prefix){
+        section.fields.push(newGroup);
+      }
+    });
+    this.getIdOfSection(this.form.fields);
+    this.groupAddGroup.reset();
     modal.close();
   }
 
@@ -80,11 +112,20 @@ export class VFieldsWorkspaceComponent implements OnInit {
       }
     });
   }
+
   drop(event: CdkDragDrop<Field[]>) {
     moveItemInArray(this.form.fields, event.previousIndex, event.currentIndex);
   }
-  getIdOfSection(){
-    this.idSectionForDragDrop = this.form.fields.map(section =>section._id);
+
+  getIdOfSection(fieldList: Field[]){
+    if(!fieldList) return;
+    this.idSectionForDragDrop = fieldList.map(groupSection =>{
+      if(groupSection.type==113 || groupSection.type==114){
+        this.getIdOfSection(groupSection.fields);
+        // console.log(groupSection._id);
+        return groupSection._id;
+      }
+    })
 
   }
 }

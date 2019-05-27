@@ -58,23 +58,30 @@
 <div
     cdkDropList
     [id]="section._id"
-  [cdkDropListData]="section.fields"
+    [cdkDropListData]="section.fields"
     [cdkDropListConnectedTo]="idSectionForDragDrop"
     (cdkDropListDropped)="drop($event)">
   <ul class="list-group" >
+    <li *ngIf="section.fields.length==0" class="list-group-item mb-3 py-0"></li>
     <li class="list-group-item mb-3 py-0" *ngFor="let field of section.fields; " cdkDrag
         cdkDragLockAxis="y"
         [ngClass]="[ field.type==113?'app-list-group-item-info':'']">
 <!--        [ngClass]="[!field.isValidName||!field.isValid?'list-group-item-warning':'', field.type==113?'app-list-group-item-info':'']">-->
-      <app-v-group-container *ngIf="field.type==113" [inputGroup]="field"
-                             [customFields]="customFields"></app-v-group-container>
-      <app-v-field-container *ngIf="field.type!=113"
-                             [customFields]="customFields"
-                             [sideBar]="sideBar"
-                             [inputField]="field"
-                             [form]="form">
-
-      </app-v-field-container>
+      <app-v-group-container
+        *ngIf="field.type==113"
+        [inputGroup]="field"
+        [idSectionForDragDrop]="idSectionForDragDrop"
+        [form]="form"
+        [sideBar]="sideBar"
+        [customFields]="customFields"
+      ></app-v-group-container>
+      <app-v-field-container
+        *ngIf="field.type!=113"
+        [customFields]="customFields"
+        [sideBar]="sideBar"
+        [inputField]="field"
+        [form]="form"
+      ></app-v-field-container>
     </li>
 
   </ul>

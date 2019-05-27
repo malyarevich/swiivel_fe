@@ -65,30 +65,43 @@
       </div>
     </div>
     <div class="col-md-3 row align-items-center no-gutters">
-      <div class="col-2 offset-10">
+      <div class="col-3 offset-9">
         <div class="d-inline-block">
-          <i (click)="onShowGroupSettings()" class="fas fa-cog dragable-i pr-2"></i>
-          <span (click)="onShowNested()">
+          <i (click)="onShowGroupSettings()" class="fas fa-cog dragable-i mr-1 pr-2"></i>
+          <span (click)="onShowNested()" class="mr-2 ">
             <i *ngIf="showNested" class="fas  fa-caret-down dragable-y"></i>
             <i *ngIf="!showNested" class="fas  fa-caret-up dragable-y"></i>
           </span>
+          <span class="" (click)="removeGroup(inputGroup)">
+          <i class="fas  fa-times  "></i>
+        </span>
         </div>
+<!--        <div class="col" >-->
+
+<!--        </div>-->
       </div>
+
     </div>
   </div>
 
   <div [hidden]="!showNested"
-       [cdkDropListConnectedTo]="['ExistingFieldsList', 'CustomFieldsList', 'workPlaceList']"
+       [cdkDropListConnectedTo]="idSectionForDragDrop"
        [cdkDropListData]="inputGroup.fields"
-       id="6372c882-3d14-486f-9c1f-52ae8ab928ef"
+       [id]='inputGroup._id'
        (cdkDropListDropped)="drop($event)"
        class=""
        cdkDropList>
     <ul class="list-group">
+      <li *ngIf="inputGroup.fields.length==0" class="list-group-item empty-group">
+        <div class="text-center">        <span class="empty-group-text">Drag and Drop Fields Onto the Group</span>
+        </div>
+      </li>
       <li class="list-group-item ml-4 mb-3" *ngFor="let field of inputGroup.fields" cdkDrag>
         <app-v-field-container *ngIf="field.type!=113"
                                [inputField]="field"
-                               [customFields]="customFields">
+                               [form]="form"
+                               [customFields]="customFields"
+                               [sideBar]="sideBar">
         </app-v-field-container>
       </li>
     </ul>

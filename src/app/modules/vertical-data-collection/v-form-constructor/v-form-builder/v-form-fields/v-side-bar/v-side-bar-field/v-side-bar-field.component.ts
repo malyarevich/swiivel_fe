@@ -22,13 +22,12 @@ export class VSideBarFieldComponent implements OnInit, OnDestroy {
   constructor(private sideBarService: SideBarService) { }
 
   ngOnInit() {
-    // console.log(this.form);
-    // this.field.exist=false;
+
   }
 
   onChangeGroupBeing(field, group) {
-    console.log(field, group);
-  let  groupNew = cloneDeep(group);
+    // console.log(field, group);
+    let  groupNew = cloneDeep(group);
     let arr = this.form.fields.filter(f => f.name == group.name);
     if (isEmpty(arr)) {
       groupNew.fields = [];
@@ -47,19 +46,31 @@ export class VSideBarFieldComponent implements OnInit, OnDestroy {
   }
 
 
-  onBeingChange(event){
-    if(event){
-      this.onChangeGroupBeing(
-        this.field,
-       this.section
-      )
-    }else{
+  onBeingChange(event: boolean):void{
+    // if(event){
+    //   this.onChangeGroupBeing(
+    //     this.field,
+    //    this.section
+    //   )
+    // }else{
+    //
+    //   this.sideBarService.onFieldDelete(
+    //   this.field,
+    //   this.form.fields
+    //   );
+    // }
+    // console.log(event);
+    event?
+      this.onChangeGroupBeing(this.field, this.section)
+      :
+      this.sideBarService.onFieldDelete(this.field, this.form.fields);
+    this.field.exist = event;
+  }
 
-      this.sideBarService.onFieldDelete(
-      this.field,
-      this.form.fields
-      );
-    }
+  onFieldToggle(event: boolean):void{
+    event
+      ?this.onChangeGroupBeing(this.field, this.section)
+      :this.sideBarService.onFieldDelete(this.field, this.form.fields);
     this.field.exist = event;
   }
 

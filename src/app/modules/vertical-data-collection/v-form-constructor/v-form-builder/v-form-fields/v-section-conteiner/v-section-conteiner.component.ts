@@ -60,7 +60,12 @@ export class VSectionConteinerComponent implements OnInit {
   // }Hebrew Middle Name
   removeSection(section: Field){
     this.sideBarService.onSectionDelete(section, this.form);
-    this.section.fields.forEach(field=>    this.sideBarService.onFieldUncheck(field, this.sideBar[0].fields));
+    this.section.fields.forEach(field=>  {
+      this.sideBarService.onFieldUncheck(field, this.sideBar[0].fields);
+      if( field.type===113) {
+        field.fields.forEach(f=>this.sideBarService.onFieldUncheck(f, this.sideBar[0].fields));
+      }
+    }  );
     // this.sideBarService.changeExistingAllSection(false, section.fields);
     this.sideBarService.onSectionUnckeck(section,this.sideBar[0].fields);
   }

@@ -14,7 +14,6 @@ export class VFieldContainerComponent implements OnInit, OnDestroy{
   @Input() inputField: Field;
   @Input() customFields: Field[];
   @Input() warningTitle: string;
-
   @Output() onDelete = new EventEmitter<any>();
   @Output() onChange = new EventEmitter<any>();
   @Output() onUniq = new EventEmitter<any>();
