@@ -26,6 +26,7 @@ import {LoaderService} from "../../services/loader/loader.service";
 import {FamilyStudentsEducationComponent} from './family-profile/family-view/family-view-general/family-students-card/family-students-education/family-students-education.component';
 import {FamilyStudentsMedicalComponent} from './family-profile/family-view/family-view-general/family-students-card/family-students-medical/family-students-medical.component';
 import {FamilyStudentsSecondContactComponent} from './family-profile/family-view/family-view-general/family-students-card/family-students-second-contact/family-students-second-contact.component';
+import { FamilyProfileInfoViewComponent } from './family-profile/family-profile-info/family-profile-info-view/family-profile-info-view.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import {FamilyStudentsSecondContactComponent} from './family-profile/family-view
     FamilyAddMemberModalComponent,
     FamilyStudentsEducationComponent,
     FamilyStudentsMedicalComponent,
-    FamilyStudentsSecondContactComponent
+    FamilyStudentsSecondContactComponent,
+    FamilyProfileInfoViewComponent
   ],
   imports: [
     CommonModule,
