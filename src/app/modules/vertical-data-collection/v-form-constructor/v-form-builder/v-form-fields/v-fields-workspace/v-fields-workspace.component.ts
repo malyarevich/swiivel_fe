@@ -24,6 +24,16 @@ export class VFieldsWorkspaceComponent implements OnInit {
     sectionSize: new FormControl(null, Validators.required),
   });
 
+  groupAddGroup: FormGroup = new FormGroup({
+    groupName: new FormControl('', {
+      validators: Validators.compose([
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(50)
+      ])}),
+    sectionRelate: new FormControl(null, Validators.required),
+  });
+
   @Input() form: Form;
   @Input() sideBar: Field;
   @Input() customFields: Field[];
@@ -60,6 +70,29 @@ export class VFieldsWorkspaceComponent implements OnInit {
     this.form.fields.push(newSection);
     this.getIdOfSection(this.form.fields);
     this.sectionAddGroup.reset();
+    modal.close();
+  }
+
+  addGroup(modal){
+    this.validateAllFormFields(this.groupAddGroup);
+    if (!this.groupAddGroup.valid) return;
+    this.groupAddGroup.clearValidators();
+    const newGroup :Field = {
+      _id: uuid(),
+      name: this.groupAddGroup.value.groupName,
+      type: 113,
+      options: {size: 4},
+      prefix: this.groupAddGroup.value.groupName.toLowerCase().split(' ').join('_'),
+      fields: [],
+    };
+    this.form.fields.forEach(section=>{
+      if(section.name == this.groupAddGroup.value.sectionRelate.name
+        &&section.prefix == this.groupAddGroup.value.sectionRelate.prefix){
+        section.fields.push(newGroup);
+      }
+    });
+    this.getIdOfSection(this.form.fields);
+    this.groupAddGroup.reset();
     modal.close();
   }
 

@@ -63,14 +63,14 @@ export class VSideBarFieldComponent implements OnInit, OnDestroy {
     event?
       this.onChangeGroupBeing(this.field, this.section)
       :
-      this.sideBarService.deleteField(this.field, this.form.fields);
+      this.sideBarService.onFieldDelete(this.field, this.form.fields);
     this.field.exist = event;
   }
 
   onFieldToggle(event: boolean):void{
     event
       ?this.onChangeGroupBeing(this.field, this.section)
-      :this.sideBarService.deleteField(this.field, this.form.fields);
+      :this.sideBarService.onFieldDelete(this.field, this.form.fields);
     this.field.exist = event;
   }
 

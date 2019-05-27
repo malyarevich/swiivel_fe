@@ -29,6 +29,8 @@ export class VFieldsSideBarDetailedComponent implements OnInit, AfterViewInit, O
     fieldRole: new FormControl(null, Validators.required),
     sectionRelate: new FormControl(null, Validators.required),
   });
+
+
   @Input() section: Field;
   @Input() form: Form;
   showNested: boolean  = true;
@@ -96,7 +98,7 @@ export class VFieldsSideBarDetailedComponent implements OnInit, AfterViewInit, O
       workArea.forEach(field => {
         if (sideBarField.name == field.name) {
           sideBarField.exist = true;
-
+          console.log(sideBarField.name);
           if (field.type == 113 || field.type == 114){
             this.initFormFieldsToSideBar(sideBarField.fields, field.fields);
           }

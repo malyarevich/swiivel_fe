@@ -60,4 +60,17 @@ export class VGroupContainerComponent implements OnInit {
     this.showGroupSettings=false;
   }
 
+
+  removeGroup(group: Field){
+    this.sideBarService.onFieldDelete(group, this.form.fields);
+    this.inputGroup.fields.forEach(field=>  {
+      this.sideBarService.onFieldUncheck(field, this.sideBar[0].fields);
+      if( field.type===113) {
+        field.fields.forEach(f=>this.sideBarService.onFieldUncheck(f, this.sideBar[0].fields));
+      }
+    }  );
+    // this.sideBarService.changeExistingAllSection(false, section.fields);
+    this.sideBarService.onSectionUnckeck(group,this.sideBar[0].fields);
+  }
+
 }

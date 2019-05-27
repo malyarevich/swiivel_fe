@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Field} from "../../../../../model/field.model";
 import {isEmpty, cloneDeep } from 'lodash';
 import {Form} from "../../../../../model/form.model";
@@ -9,7 +9,8 @@ import {SideBarService} from "../side-bar.service";
   templateUrl: './v-side-bar-group.component.html',
   styleUrls: ['./v-side-bar-group.component.css']
 })
-export class VSideBarGroupComponent implements OnInit {
+export class VSideBarGroupComponent implements OnInit, OnDestroy {
+
   showAddButton = true;
   showNested: boolean = true;
   validNewCustomFieldName: boolean = true;
@@ -23,7 +24,6 @@ export class VSideBarGroupComponent implements OnInit {
   constructor(private sideBarService: SideBarService) { }
 
   ngOnInit() {
-    this.group.exist = false;
   }
 
 
@@ -191,4 +191,8 @@ export class VSideBarGroupComponent implements OnInit {
   // nameChange(event) {
   //   this.validNewCustomFieldName = this.checkExistingFieldsName(event.target.value.trim());
   // }
+  ngOnDestroy(): void {
+    this.group.exist = false;
+
+  }
 }
