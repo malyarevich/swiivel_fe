@@ -7,8 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class VFormStatisticComponent implements OnInit {
   public isShowWidgets: boolean = false;
-  private labelHideWidget: string = "hide the widgets";
-  private labelShowWidget: string = "view widgets";
+  public labelHideWidget: string = "Hide dashboard";
+  public labelShowWidget: string = "View dashboard";
 
   constructor() { }
 
