@@ -110,6 +110,16 @@ export class FamilyService {
     }, error => console.log('Could not delete family. Error: ' + error.message));
   }
 
+  incrementFieldCount(fieldName: 'students_count' | 'children_count') {
+    this.dataStore.family[fieldName]++;
+    this._family.next(Object.assign({}, this.dataStore).family);
+  }
+
+  decrementFieldCount(fieldName: 'students_count' | 'children_count') {
+    this.dataStore.family[fieldName]--;
+    this._family.next(Object.assign({}, this.dataStore).family);
+  }
+
   getAllRequest(): Observable<any> {
     return this.http.get(`${environment.apiFB}/families?api_token=${environment.api_token}`).pipe(
       map((res: GetResponseData) => res)
