@@ -1,0 +1,221 @@
+<h1 class="content_section__page_title">
+  Tuition Contract
+</h1>
+<div class="app-of-wrap content_section__main">
+  <!--Title-->
+  <h2 class="content_section__article_title">
+    FEES CONTRACT
+  </h2>
+
+  <!--Table-->
+  <article
+    class="app-fb-tuition-table content_section__article"
+    *ngIf="
+      form.tuitionContract.splitBy === TUITION_CONTRACT_SPLIT_TYPES.STUDENT
+    "
+  >
+    <app-tuition-contract-by-student
+      [tuitionContract]="form.tuitionContract"
+    ></app-tuition-contract-by-student>
+  </article>
+  <article
+    class="content_section__article"
+    *ngIf="form.tuitionContract.splitBy === TUITION_CONTRACT_SPLIT_TYPES.FEE"
+  >
+    <div>
+      <app-tuition-contract-by-fee
+        [tuitionContract]="form.tuitionContract"
+      ></app-tuition-contract-by-fee>
+    </div>
+  </article>
+
+  <!--Text-->
+  <h2 class="content_section__article_title">CONTRACT TEXT:</h2>
+  <article class="content_section__article">
+    <div
+      class="content_section__article_text"
+      [innerHTML]="form.tuitionContract.text"
+    ></div>
+  </article>
+
+  <!--SIGNATURE-->
+  <div *ngIf="signature?.isRequire" class="content_section__additional_fields">
+    <!--E-SIGN SIGNATURE-->
+    <ng-container *ngIf="signature.type === SIGNATURE_TYPES.ESIGN">
+      <!--EXTERNAL SIGNATURE-->
+      <ng-container *ngIf="signature.eType === E_SIGNATURE_TYPES.EXTERNAL">
+        <div
+          class="content_section__inputs_container"
+          *ngIf="!signature.isBothParents"
+        >
+          <textarea
+            class="app-input form-control content_section__textarea"
+            rows="2"
+            placeholder="Parent's Signature"
+            [disabled]="true"
+          ></textarea>
+        </div>
+
+        <div
+          class="content_section__inputs_container"
+          *ngIf="signature.isBothParents"
+        >
+          <textarea
+            class="app-input form-control content_section__textarea"
+            rows="2"
+            placeholder="Father's Signature"
+            [disabled]="true"
+          ></textarea>
+          <textarea
+            class="app-input form-control content_section__textarea"
+            rows="2"
+            placeholder="Mother's Signature"
+            [disabled]="true"
+          ></textarea>
+        </div>
+
+        <div class="content_section__controls_container">
+          <button
+            class="btn app-btn-primary content_section__button"
+            [disabled]="true"
+          >
+            Accept
+          </button>
+        </div>
+      </ng-container>
+
+      <!--SYSTEM SIGNATURE-->
+      <ng-container *ngIf="signature.eType === E_SIGNATURE_TYPES.SYSTEM">
+        <div class="content_section__inputs_container">
+          <ng-container *ngIf="!signature.isBothParents">
+            <div class="content_section__checkbox_container">
+              <input
+                class="content_section__checkbox"
+                type="checkbox"
+                id="system_signature_parents"
+                [(ngModel)]="signature.signed.parents"
+                [disabled]="true"
+              />
+
+              <label
+                tabindex="1"
+                for="system_signature_parents"
+                class="content_section__checkbox_label"
+              >
+                <span
+                  class="app-checkbox-checkmark
+                  content_section__checkbox_checkmark"
+                ></span>
+                Parent's Signature
+              </label>
+            </div>
+            <!-- /.content_section__checkbox_container -->
+          </ng-container>
+
+          <ng-container *ngIf="signature.isBothParents">
+            <div class="content_section__checkbox_container">
+              <input
+                class="content_section__checkbox"
+                type="checkbox"
+                id="system_signature_fathers"
+                [(ngModel)]="signature.signed.fathers"
+                [disabled]="true"
+              />
+
+              <label
+                tabindex="1"
+                for="system_signature_fathers"
+                class="content_section__checkbox_label"
+              >
+                <span
+                  class="app-checkbox-checkmark
+              content_section__checkbox_checkmark"
+                ></span>
+                Father's Signature
+              </label>
+            </div>
+            <!-- /.content_section__checkbox_container -->
+
+            <div class="content_section__checkbox_container">
+              <input
+                class="content_section__checkbox"
+                type="checkbox"
+                id="system_signature_mothers"
+                [(ngModel)]="signature.signed.mothers"
+                [disabled]="true"
+              />
+
+              <label
+                tabindex="1"
+                for="system_signature_mothers"
+                class="content_section__checkbox_label"
+              >
+                <span
+                  class="app-checkbox-checkmark
+              content_section__checkbox_checkmark"
+                ></span>
+                Mother's Signature
+              </label>
+            </div>
+            <!-- /.content_section__checkbox_container -->
+          </ng-container>
+        </div>
+        <!-- /.content_section__inputs_container -->
+
+        <div class="content_section__controls_container">
+          <button
+            class="btn app-btn-primary content_section__button"
+            (click)="onSystemSign()"
+            [disabled]="true"
+          >
+            Accept
+          </button>
+        </div>
+      </ng-container>
+    </ng-container>
+
+    <!--WET SIGNATURE-->
+    <ng-container *ngIf="signature.type === SIGNATURE_TYPES.WET">
+      <div
+        class="content_section__inputs_container"
+        *ngIf="!signature.isBothParents"
+      >
+        <textarea
+          class="app-input form-control content_section__textarea"
+          rows="2"
+          placeholder="Parent's Signature"
+          [disabled]="true"
+        ></textarea>
+      </div>
+
+      <div
+        class="content_section__inputs_container"
+        *ngIf="signature.isBothParents"
+      >
+        <textarea
+          class="app-input form-control content_section__textarea"
+          rows="2"
+          placeholder="Father's Signature"
+          [disabled]="true"
+        ></textarea>
+
+        <textarea
+          class="app-input form-control content_section__textarea"
+          rows="2"
+          placeholder="Mother's Signature"
+          [disabled]="true"
+        ></textarea>
+      </div>
+
+      <div class="content_section__controls_container">
+        <button
+          class="btn app-btn-primary content_section__button"
+          [disabled]="true"
+        >
+          Accept
+        </button>
+      </div>
+    </ng-container>
+  </div>
+  <!--END SIGNATURE-->
+</div>

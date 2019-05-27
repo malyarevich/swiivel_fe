@@ -100,6 +100,8 @@
       </nav>
     </div>
   </div>
-
+  <app-family-students-education *ngIf="activeTab==='education'"></app-family-students-education>
+  <app-family-students-medical *ngIf="activeTab==='medical'"></app-family-students-medical>
+  <app-family-students-second-contact *ngIf="activeTab==='secondContact'"></app-family-students-second-contact>
 </div>
 

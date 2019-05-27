@@ -1,5 +1,5 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {FamilyService} from "../../services/family.service";
+import {FamilyService} from "../../../../services/family/family.service";
 import {Router} from "@angular/router";
 
 

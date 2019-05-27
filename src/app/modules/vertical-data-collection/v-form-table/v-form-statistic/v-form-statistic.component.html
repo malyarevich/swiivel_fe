@@ -1,12 +1,25 @@
-<div class="row justify-content-between">
-  <div class="col-sm-4">
-    <app-v-form-statistic-views></app-v-form-statistic-views>
-  </div>
-  <div class="col-sm-4">
-    <app-v-form-statistic-submissions></app-v-form-statistic-submissions>
-  </div>
-  <div class="col-sm-4">
-    <app-v-form-statistic-invites></app-v-form-statistic-invites>
-  </div>
+<div class="widgets_control">
+  <a 
+    tabindex="-3"
+    class="widgets_control__show_control"
+    (click)="toggleWidgets()"
+  >
+    <ng-container *ngIf="isShowWidgets">{{labelHideWidget}}</ng-container>
+    <ng-container *ngIf="!isShowWidgets">{{labelShowWidget}}</ng-container>
+  </a>
 </div>
+
+<ng-container *ngIf="isShowWidgets === true">
+  <div class="widgets">
+    <div class="widgets__item">
+      <app-v-form-statistic-views></app-v-form-statistic-views>
+    </div>
+    <div class="widgets__item">
+      <app-v-form-statistic-submissions></app-v-form-statistic-submissions>
+    </div>
+    <div class="widgets__item">
+      <app-v-form-statistic-invites></app-v-form-statistic-invites>
+    </div>
+  </div>
+</ng-container>
 

@@ -1,2 +1,17 @@
+@import './bs/index.scss';
+
 $main-menu-width: 55px;
 $top-menu-height: 40px;
+
+/** Breakpoints for devices
+ *  suffixes:
+ *      -only - for strict range pixels
+ *      -between - for range devices
+ *      -up - for device and above
+ */
+
+//  Example: 
+//      @include media-breakpoint-up(lg) { 
+//          ...
+//      }
+ 

@@ -1,11 +1,11 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {FamilyService} from "../../../../services/family.service";
+import {FamilyService} from "../../../../../../services/family/family.service";
 import {Family} from "../../../../../../models/family/family.model";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {PersonService} from "../../../../../../services/person/person.service";
 import {Person} from "../../../../../../models/person.model";
 import {FamilyRoles} from "../../../../../../enums/family-roles";
-import {FamilyPersonService} from "../../../../services/family-person.service";
+import {FamilyPersonService} from "../../../../../../services/family/family-person.service";
 
 @Component({
   selector: 'app-family-add-member-modal',

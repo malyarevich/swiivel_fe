@@ -1,258 +1,194 @@
-<!--Show profile info-->
 <app-spinner *ngIf="loader$ | async"></app-spinner>
-<ng-container *ngIf="!isEditProfile && !(loader$ | async)">
-  <p class="app-text-extra-large font-weight-bold">{{family?.name}}</p>
+<ng-container *ngIf="family">
+  <!--Show profile info-->
+  <app-family-profile-info-view *ngIf="!isEditProfile" [family]="family"
+                                (isEditEmitter)="onEdit($event)"></app-family-profile-info-view>
+  <!--End Show profile info-->
 
-  <div class="row  no-gutters border-top border-bottom py-3 text-center">
-    <div class="col-4 border-right px-4">
-      <p class="app-text-large font-weight-bold mb-0">{{family?.family_info?.number_of_siblings}}</p>
-      <p class="app-text-small mb-0">Number of siblings</p>
-    </div>
-    <div class="col-4 border-right px-4">
-      <p class="app-text-large font-weight-bold mb-0">{{family?.family_info?.children_at_home}}</p>
-      <p class="app-text-small mb-0">Children at home</p>
-    </div>
-    <div class="col-4 px-4">
-      <p class="app-text-large font-weight-bold mb-0">{{family?.family_info?.children_at_home}}</p>
-      <p class="app-text-small mb-0">Adopted children</p>
-    </div>
-  </div>
+  <!--Edit profile info-->
+  <form *ngIf="isEditProfile" [formGroup]="familyForm" (ngSubmit)="submit()">
 
-  <div class="row  no-gutters border-bottom py-3">
-    <div class="col-12">
-      <p class="font-weight-bold mb-2">CONTACTS</p>
-      <div class="d-flex justify-content-between">
-        <p class="align-self-start app-text-second mb-2">Address:</p>
-        <p class="align-self-end mb-2">{{fullFamilyAddress}}</p>
+    <!--Family Name-->
+    <div class="row no-gutters">
+      <div class="col-10">
+        <p [hidden]="isEditFamilyName" class="app-text-extra-large font-weight-bold mb-0">
+          {{familyForm.value.name}}</p>
+        <input type="text"
+               class="form-control w-75"
+               autofocus
+               formControlName="name"
+               [hidden]="!isEditFamilyName"
+               (blur)="isEditFamilyName = false"
+               (keyup.enter)="isEditFamilyName = false"
+               placeholder="Family Name">
       </div>
-      <div class="d-flex justify-content-between">
-        <p class="align-self-start app-text-second mb-2">Prefered Contact:</p>
-        <p class="align-self-end mb-2">{{family?.family_info?.preferred_contact}}</p>
-      </div>
-      <div class="d-flex justify-content-between">
-        <p class="align-self-start app-text-second mb-2">Contact number:</p>
-        <p class="align-self-end mb-2">{{family?.family_info?.preferred_contact_method}}</p>
-      </div>
-      <div class="d-flex justify-content-between">
-        <p class="align-self-start app-text-second mb-2">Home Phone Number:</p>
-        <p class="align-self-end mb-2">{{family?.family_info?.home_phone_number}}</p>
-      </div>
-    </div>
-  </div>
 
-  <div class="row  no-gutters border-bottom py-3">
-    <div class="col-12">
-      <p class="font-weight-bold mb-2">ADDITIONAL INFORMATION</p>
-      <div class="d-flex justify-content-between">
-        <p class="align-self-start app-text-second mb-2">Language Spoken at Home:</p>
-        <p class="align-self-end mb-2">{{family?.family_info?.language_spoken_at_home}}</p>
-      </div>
-      <div class="d-flex justify-content-between">
-        <p class="align-self-start app-text-second mb-2">Family Rabbi:</p>
-        <p class="align-self-end mb-2">{{family?.family_info?.family_rabbi}}</p>
-      </div>
-      <div class="d-flex justify-content-between">
-        <p class="align-self-start app-text-second mb-2">Family Rabbi Phone:</p>
-        <p class="align-self-end mb-2">{{family?.family_info?.rabbi_phone_number}}</p>
-      </div>
-      <div class="d-flex justify-content-between">
-        <p class="align-self-start app-text-second mb-2">Family Shul:</p>
-        <p class="align-self-end mb-2">{{family?.family_info?.family_shul}}</p>
+      <div class="col-2 pt-1">
+        <i class="fas fa-trash fa-sm app-text-second mr-4 app-cursor-pointer"></i>
+        <i class="fas fa-pen fa-sm app-text-second app-cursor-pointer" (click)="isEditFamilyName = true"></i>
       </div>
     </div>
-  </div>
+    <!--End Family Name-->
 
-  <div class="row text-right mt-4">
-    <div class="col-12">
-      <button class="btn app-btn-primary px-4" (click)="onEdit()">Edit</button>
+    <!--Address-->
+    <p class="font-weight-bold app-text-small mt-3 mb-1">ADDRESS</p>
+    <div class="row no-gutters app-family-profile-section p-3">
+
+      <div class="col-12 p-2">
+        <div class="app-input-fill">
+          <label class="app-input-label app-family-profile-input">Home Address</label>
+          <input
+            type="text"
+            class="app-input"
+            formControlName="address">
+        </div>
+      </div>
+
+      <div class="col-4 p-2">
+        <div class="app-input-fill">
+          <label class="app-input-label app-family-profile-input">City</label>
+          <input
+            type="text"
+            class="app-input"
+            formControlName="city">
+        </div>
+      </div>
+
+      <div class="col-4 p-2">
+        <div class="app-input-fill">
+          <label class="app-input-label app-family-profile-input">State</label>
+          <input
+            type="text"
+            class="app-input"
+            formControlName="state">
+        </div>
+      </div>
+
+      <div class="col-4 p-2">
+        <div class="app-input-fill">
+          <label class="app-input-label app-family-profile-input">Zip Code</label>
+          <input
+            type="text"
+            class="app-input"
+            formControlName="zip">
+        </div>
+      </div>
+
     </div>
-  </div>
+    <!--End Address-->
+
+    <!--Contacts-->
+    <p class="font-weight-bold app-text-small mt-4 mb-1">CONTACTS</p>
+    <div class="row no-gutters app-family-profile-section p-3">
+
+      <div class="col-12 p-2">
+        <div class="app-input-fill">
+          <label class="app-input-label app-family-profile-input">Preferred Contact</label>
+          <input
+            type="text"
+            class="app-input"
+            formControlName="preferred_contact">
+        </div>
+      </div>
+
+      <div class="col-12 p-2">
+        <div class="app-input-fill">
+          <label class="app-input-label app-family-profile-input">Preferred Contact Method</label>
+          <input
+            type="text"
+            class="app-input"
+            formControlName="preferred_contact_method">
+        </div>
+      </div>
+
+      <div class="col-12 p-2">
+        <div class="app-input-fill">
+          <label class="app-input-label app-family-profile-input">Home Phone Number</label>
+          <input
+            type="text"
+            class="app-input"
+            formControlName="home_phone_number">
+        </div>
+      </div>
+
+    </div>
+    <!--End Contacts-->
+
+    <!--Custom Fields-->
+    <p class="font-weight-bold app-text-small mt-4 mb-1">CUSTOM FIELDS</p>
+    <div class="row no-gutters app-family-profile-section p-3">
+
+      <div class="col-12 p-2">
+        <div class="app-input-fill">
+          <label class="app-input-label app-family-profile-input">Language Spoken at Home</label>
+          <input
+            type="text"
+            class="app-input"
+            formControlName="language_spoken_at_home">
+        </div>
+      </div>
+
+      <div class="col-6 p-2">
+        <div class="app-input-fill">
+          <label class="app-input-label app-family-profile-input">Students</label>
+          <input
+            type="number"
+            min="0"
+            class="app-input"
+            formControlName="number_of_siblings">
+        </div>
+      </div>
+
+      <div class="col-6 p-2">
+        <div class="app-input-fill">
+          <label class="app-input-label app-family-profile-input">Children living at Home</label>
+          <input
+            type="number"
+            min="0"
+            class="app-input"
+            formControlName="children_at_home">
+        </div>
+      </div>
+
+      <div class="col-6 p-2">
+        <div class="app-input-fill">
+          <label class="app-input-label app-family-profile-input">Family Rabbi</label>
+          <input
+            type="text"
+            class="app-input"
+            formControlName="family_rabbi">
+        </div>
+      </div>
+
+      <div class="col-6 p-2">
+        <div class="app-input-fill">
+          <label class="app-input-label app-family-profile-input">Rabbi Phone number</label>
+          <input
+            type="text"
+            class="app-input"
+            formControlName="rabbi_phone_number">
+        </div>
+      </div>
+
+      <div class="col-12 p-2">
+        <div class="app-input-fill">
+          <label class="app-input-label app-family-profile-input">Family Shul</label>
+          <input
+            type="text"
+            class="app-input"
+            formControlName="family_shul">
+        </div>
+      </div>
+
+    </div>
+    <!--End Custom Fields-->
+
+    <div class="row text-right mt-4">
+      <div class="col-12">
+        <button class="btn app-btn-warning px-4 mr-2" (click)="onEdit(false); $event.preventDefault()">Cancel</button>
+        <button type="submit" [disabled]="!familyForm.valid" class="btn app-btn-primary px-4">Save</button>
+      </div>
+    </div>
+  </form>
+  <!--End Edit profile info-->
 </ng-container>
-<!--End Show profile info-->
-
-<!--Edit profile info-->
-<ng-container *ngIf="isEditProfile">
-
-  <!--Family Name-->
-  <div class="row no-gutters">
-    <div class="col-10">
-      <p *ngIf="!isEditFamilyName" class="app-text-extra-large font-weight-bold mb-0">{{familyEditable.name}}</p>
-      <input type="text"
-             class="form-control w-75"
-             autofocus
-             *ngIf="isEditFamilyName"
-             (blur)="isEditFamilyName = false"
-             (keyup.enter)="isEditFamilyName = false"
-             [(ngModel)]="familyEditable.name"
-             placeholder="Family Name"
-             required>
-    </div>
-
-    <div class="col-2 pt-1">
-      <i class="fas fa-trash fa-sm app-text-second mr-4 app-cursor-pointer"></i>
-      <i class="fas fa-pen fa-sm app-text-second app-cursor-pointer" (click)="isEditFamilyName = true"></i>
-    </div>
-  </div>
-  <!--End Family Name-->
-
-  <!--Address-->
-  <p class="font-weight-bold app-text-small mt-3 mb-1">ADDRESS</p>
-  <div class="row no-gutters app-family-profile-section p-3">
-
-    <div class="col-12 p-2">
-      <div class="app-input-fill">
-        <label class="app-input-label app-family-profile-input">Home Address</label>
-        <input
-          type="text"
-          class="app-input"
-          [(ngModel)]="familyEditable.family_info.address">
-      </div>
-    </div>
-
-    <div class="col-4 p-2">
-      <div class="app-input-fill">
-        <label class="app-input-label app-family-profile-input">City</label>
-        <input
-          type="text"
-          class="app-input"
-          [(ngModel)]="familyEditable.family_info.city">
-      </div>
-    </div>
-
-    <div class="col-4 p-2">
-      <div class="app-input-fill">
-        <label class="app-input-label app-family-profile-input">State</label>
-        <input
-          type="text"
-          class="app-input"
-          [(ngModel)]="familyEditable.family_info.state">
-      </div>
-    </div>
-
-    <div class="col-4 p-2">
-      <div class="app-input-fill">
-        <label class="app-input-label app-family-profile-input">Zip Code</label>
-        <input
-          type="text"
-          class="app-input"
-          [(ngModel)]="familyEditable.family_info.zip">
-      </div>
-    </div>
-
-  </div>
-  <!--End Address-->
-
-  <!--Contacts-->
-  <p class="font-weight-bold app-text-small mt-4 mb-1">CONTACTS</p>
-  <div class="row no-gutters app-family-profile-section p-3">
-
-    <div class="col-12 p-2">
-      <div class="app-input-fill">
-        <label class="app-input-label app-family-profile-input">Preferred Contact</label>
-        <input
-          type="text"
-          class="app-input"
-          [(ngModel)]="familyEditable.family_info.preferred_contact">
-      </div>
-    </div>
-
-    <div class="col-12 p-2">
-      <div class="app-input-fill">
-        <label class="app-input-label app-family-profile-input">Preferred Contact Method</label>
-        <input
-          type="text"
-          class="app-input"
-          [(ngModel)]="familyEditable.family_info.preferred_contact_method">
-      </div>
-    </div>
-
-    <div class="col-12 p-2">
-      <div class="app-input-fill">
-        <label class="app-input-label app-family-profile-input">Home Phone Number</label>
-        <input
-          type="text"
-          class="app-input"
-          [(ngModel)]="familyEditable.family_info.home_phone_number">
-      </div>
-    </div>
-
-  </div>
-  <!--End Contacts-->
-
-  <!--Custom Fields-->
-  <p class="font-weight-bold app-text-small mt-4 mb-1">CUSTOM FIELDS</p>
-  <div class="row no-gutters app-family-profile-section p-3">
-
-    <div class="col-12 p-2">
-      <div class="app-input-fill">
-        <label class="app-input-label app-family-profile-input">Language Spoken at Home</label>
-        <input
-          type="text"
-          class="app-input"
-          [(ngModel)]="familyEditable.family_info.language_spoken_at_home">
-      </div>
-    </div>
-
-    <div class="col-6 p-2">
-      <div class="app-input-fill">
-        <label class="app-input-label app-family-profile-input">Number of Siblings</label>
-        <input
-          type="number"
-          min="0"
-          class="app-input"
-          [(ngModel)]="familyEditable.family_info.number_of_siblings">
-      </div>
-    </div>
-
-    <div class="col-6 p-2">
-      <div class="app-input-fill">
-        <label class="app-input-label app-family-profile-input">Children at Home</label>
-        <input
-          type="number"
-          min="0"
-          class="app-input"
-          [(ngModel)]="familyEditable.family_info.children_at_home">
-      </div>
-    </div>
-
-    <div class="col-6 p-2">
-      <div class="app-input-fill">
-        <label class="app-input-label app-family-profile-input">Family Rabbi</label>
-        <input
-          type="text"
-          class="app-input"
-          [(ngModel)]="familyEditable.family_info.family_rabbi">
-      </div>
-    </div>
-
-    <div class="col-6 p-2">
-      <div class="app-input-fill">
-        <label class="app-input-label app-family-profile-input">Rabbi Phone number</label>
-        <input
-          type="text"
-          class="app-input"
-          [(ngModel)]="familyEditable.family_info.rabbi_phone_number">
-      </div>
-    </div>
-
-    <div class="col-12 p-2">
-      <div class="app-input-fill">
-        <label class="app-input-label app-family-profile-input">Family Shul</label>
-        <input
-          type="text"
-          class="app-input"
-          [(ngModel)]="familyEditable.family_info.family_shul">
-      </div>
-    </div>
-
-  </div>
-  <!--End Custom Fields-->
-
-  <div class="row text-right mt-4">
-    <div class="col-12">
-      <button class="btn app-btn-warning px-4 mr-2" (click)="cancelEdit()">Cancel</button>
-      <button [disabled]="!familyEditable.name" class="btn app-btn-primary px-4" (click)="update()">Save</button>
-    </div>
-  </div>
-</ng-container>
-<!--End Edit profile info-->

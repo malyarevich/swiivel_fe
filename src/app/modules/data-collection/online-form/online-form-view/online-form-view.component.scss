@@ -1,0 +1,33 @@
+@import '../shared/styles/index.scss';
+
+.app-of-background {
+    background-color: $background-color;
+}
+
+.online_form_container{
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    min-height: auto;
+    padding: 1rem;
+
+    @include media-breakpoint-up(lg) {
+        flex-direction: row;
+    }
+
+    &__nav {
+        width: auto;
+        width: -webkit-fill-available;
+        
+        @include media-breakpoint-up(lg) {
+            padding-right: 1rem;
+            width: 27rem;
+        }
+    }
+
+    &__content {
+        width: auto;
+        width: -webkit-fill-available;
+    }
+}
