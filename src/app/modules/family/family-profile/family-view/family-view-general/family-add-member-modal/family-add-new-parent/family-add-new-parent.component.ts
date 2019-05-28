@@ -13,7 +13,7 @@ export class FamilyAddNewParentComponent implements OnInit {
   @Input() family: Family;
   @Input() role: string;
 
-  private familyParentForm: FormGroup;
+  familyParentForm: FormGroup;
 
   constructor(private familyPersonService: FamilyPersonService,
               private fb: FormBuilder,) {
