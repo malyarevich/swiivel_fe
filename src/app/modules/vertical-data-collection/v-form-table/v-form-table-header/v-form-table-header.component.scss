@@ -1,0 +1,12 @@
+@import '../../../../../styles/index.scss';
+
+.app-table-th {
+    border-top: none;
+}
+
+.table_head{
+
+    &__tr {
+        background-color: $table-header-background-color;
+    }
+}

@@ -2,7 +2,7 @@
                         (sortFilter)="changeSort($event)"></app-table-header-title>
 <span class="cancel-input" *ngIf="value" alt="cancel" (click)="cancelSearch()"><i
   class="fas fa-times fa-xs"></i></span>
-<input class="form-control app-input-search-grey h-75 py-1"
+<input class="form-control app-input-search h-75 py-1"
        [(ngModel)]="value"
        ngbDatepicker
        (ngModelChange)="sendData()"

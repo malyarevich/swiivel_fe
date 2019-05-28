@@ -39,6 +39,7 @@ import {VFormTableHeaderComponent} from './v-form-table/v-form-table-header/v-fo
 import {TableHeaderTitleComponent} from './v-form-table/v-form-table-header/table-header-title/table-header-title.component';
 import {TableHeaderFilterTextComponent} from './v-form-table/v-form-table-header/table-header-filter-text/table-header-filter-text.component';
 import {TableHeaderFilterDateComponent} from './v-form-table/v-form-table-header/table-header-filter-date/table-header-filter-date.component';
+import {VFormTableTbodyComponent} from './v-form-table/v-form-table-tbody/v-form-table-tbody.component';
 import {VFormGeneralInformationComponent} from "./v-form-constructor/v-form-general-information/v-form-general-information.component";
 import {VGroupContainerComponent} from './v-form-constructor/v-form-builder/v-form-fields/v-group-container/v-group-container.component';
 import {FilterPipe} from "./v-form-constructor/v-form-builder/v-form-fields/v-side-bar/filter.pipe";
@@ -198,6 +199,7 @@ const routes: Routes = [
     VFormDrawingComponent,
     VFormInfoComponent,
     VFormInfoHeaderComponent,
+    VFormTableTbodyComponent,
     VFormInfoStatsComponent,
     VFormInfoGeneralComponent,
     VFormInfoTableNavComponent,

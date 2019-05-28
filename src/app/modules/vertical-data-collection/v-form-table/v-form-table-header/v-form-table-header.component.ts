@@ -3,7 +3,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 @Component({
     selector: '[app-v-form-table-header]',
     templateUrl: './v-form-table-header.component.html',
-    styleUrls: ['./v-form-table-header.component.css']
+    styleUrls: ['./v-form-table-header.component.scss']
 })
 export class VFormTableHeaderComponent implements OnInit {
     @Input() cols: [any];
