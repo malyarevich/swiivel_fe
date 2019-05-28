@@ -27,6 +27,9 @@ import {FamilyStudentsEducationComponent} from './family-profile/family-view/fam
 import {FamilyStudentsMedicalComponent} from './family-profile/family-view/family-view-general/family-students-card/family-students-medical/family-students-medical.component';
 import {FamilyStudentsSecondContactComponent} from './family-profile/family-view/family-view-general/family-students-card/family-students-second-contact/family-students-second-contact.component';
 import { FamilyProfileInfoViewComponent } from './family-profile/family-profile-info/family-profile-info-view/family-profile-info-view.component';
+import { FamilyAddExistPersonComponent } from './family-profile/family-view/family-view-general/family-add-member-modal/family-add-exist-person/family-add-exist-person.component';
+import { FamilyAddNewPersonComponent } from './family-profile/family-view/family-view-general/family-add-member-modal/family-add-new-person/family-add-new-person.component';
+import { FamilyAddNewParentComponent } from './family-profile/family-view/family-view-general/family-add-member-modal/family-add-new-parent/family-add-new-parent.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +50,10 @@ import { FamilyProfileInfoViewComponent } from './family-profile/family-profile-
     FamilyStudentsEducationComponent,
     FamilyStudentsMedicalComponent,
     FamilyStudentsSecondContactComponent,
-    FamilyProfileInfoViewComponent
+    FamilyProfileInfoViewComponent,
+    FamilyAddExistPersonComponent,
+    FamilyAddNewPersonComponent,
+    FamilyAddNewParentComponent
   ],
   imports: [
     CommonModule,

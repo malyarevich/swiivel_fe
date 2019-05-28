@@ -1,0 +1,18 @@
+<div class="row pb-5">
+  <div class="col-8"></div>
+  <div class="col-4">
+    <app-select-field [(ngModel)]="role"
+                      labelTitle="Roles"
+                      [isInvalid]="!role"
+                      [items]="roles">
+    </app-select-field>
+    <div class="field-has-error" *ngIf="!role">Role is required</div>
+  </div>
+</div>
+
+<app-family-add-new-parent *ngIf="role === FAMILY_ROLES.father || role === FAMILY_ROLES.mother"
+                           [role]="role"
+                           [family]="family"
+                           (closeModalAddFamilyMember)="onCloseAddFamilyMemberModal()">
+</app-family-add-new-parent>
+
