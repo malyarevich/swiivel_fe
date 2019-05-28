@@ -29,7 +29,7 @@
 
 .tbody {
 	
-	td {
+	&__td {
 		padding: 0.4rem;
 	}
 
@@ -67,6 +67,7 @@
 		@extend .default_text;
 		@extend .twelve_font;
 		font-weight: bold;
+		padding-left: 0.6rem;
 	}
 
 	&__type_title {

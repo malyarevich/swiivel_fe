@@ -9,23 +9,23 @@
       'tbody__tr--odd': !isRowEven
     }"
   >
-    <td class="tbody__td--v_center">
-      <div class="tbody__cell_container tbody__cell_container--v_center">
+    <td class="tbody__td tbody__td--v_center">
+      <div class="tbody__cell_container">
         <a class="app-ft-reset-link" [routerLink]="'v-form-info/' + item.id">
           <span class="tbody__form_name">{{ item.name }}</span>
         </a>
       </div>
     </td>
 
-    <td>
+    <td class="tbody__td">
       <div class="tbody__cell_container tbody__cell_container--column">
         <span class="tbody__type_title">{{ item.type }}</span>
         <span class="tbody__sub_type">{{ item.subtype }} Online, Paper</span>
       </div>
     </td>
 
-    <td class="tbody__td--v_center">
-      <div class="tbody__cell_container tbody__cell_container--v_center">
+    <td class="tbody__td tbody__td--v_center">
+      <div class="tbody__cell_container">
         <ng-container *ngIf="item.permissions?.length">
           <div class="user" *ngFor="let permission of item.permissions">
             <img
@@ -56,7 +56,7 @@
       </div>
     </td>
 
-    <td>
+    <td class="tbody__td">
       <div class="tbody__cell_container">
         <div class="user">
           <img
@@ -73,7 +73,7 @@
       </div>
     </td>
 
-    <td nowrap>
+    <td class="tbody__td" nowrap>
       <div class="tbody__cell_container nowrap">
         <span>{{
           parent.convertDate(item.updated_at) | date: "dd-MM-yyyy"
@@ -86,7 +86,7 @@
     </td>
 
     <!--Change status button-->
-    <td class="tbody__td--v_center">
+    <td class="tbody__td tbody__td--v_center">
       <div ngbDropdown class="tbody__cell_container">
         <button
           type="button"
@@ -159,7 +159,7 @@
     </td>
     <!--End Change status button-->
 
-    <td nowrap>
+    <td class="tbody__td" nowrap>
       <button
         type="button"
         class="btn app-btn-primary py-0 px-1 mr-2 p"
