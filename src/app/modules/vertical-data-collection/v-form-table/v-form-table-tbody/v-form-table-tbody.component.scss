@@ -55,12 +55,16 @@
 		flex-direction: row;
 		flex-wrap: wrap;
 		justify-content: flex-start;
-		// padding: 0.4rem;
 
 		&--column {
 			flex-direction: column;
 			justify-content: center;
 		}
+
+		&--center{
+			align-items: center;
+		}
+
 	}
 
 	&__form_name {
@@ -68,6 +72,7 @@
 		@extend .twelve_font;
 		font-weight: bold;
 		padding-left: 0.6rem;
+		margin: 0;
 	}
 
 	&__type_title {
@@ -75,12 +80,15 @@
 		@extend .twelve_font;
 		color: $element-base-color;
 		font-weight: bold;
+		padding-bottom: 0.25rem;
+		margin: 0;
 		text-transform: capitalize;
 	}
 
 	&__sub_type {
 		@extend .gray_text;
 		@extend .ten_font;
+		margin: 0;
 		text-transform: capitalize;
 	}
 }
@@ -161,12 +169,42 @@
 	justify-content: space-between;
 	min-width: 6rem;
 	padding: 0.2rem 0.5rem;
+	
+	position: relative;
+	z-index: 1;	
+	transition: all 300ms ease-in;
+
+	&:hover {
+		opacity: .95;
+		box-shadow: inset 0 2px 4px rgba(155, 155, 155,0.3), 0 3px 3px rgba(200, 200, 200, 0.15);
+        transition: all 300ms ease-in;
+	}
+
+	&:after {
+        // content: attr(status_text);
+        position: absolute;
+        z-index: 5;
+        background-color: rgba(255, 255, 255, .3);
+        
+        width: 0%;
+        visibility: hidden;
+        opacity: 0;
+        transition: all 300ms ease-in;
+	}
+	  
+	&:hover:after {
+		visibility: visible;
+		opacity: 1;
+		width: 81%;
+        transition: all 300ms ease-in;
+	}
 
 	&__text {
 		@extend .default_text;
 		@extend .ten_font;
 		color: $white;
 		font-weight: bold;
+		margin: 0;
 		text-transform: capitalize;
 
 		&--inverted {
@@ -194,6 +232,34 @@
 		@extend .nine_font;
 		white-space: nowrap;
 	}
+}
+
+.control_button {
+	align-items: center;
+	display: flex;
+	justify-content: flex-start;
+	min-width: 5rem;
+	padding: 0.2rem 0.5rem;
+
+	&--left_rounded {
+		border-top-left-radius: 0.25rem;
+		border-bottom-left-radius: 0.25rem;
+		
+		border-top-right-radius: 0;
+		border-bottom-right-radius: 0;
+	}
+
+	&--right_rounded {
+		border-top-left-radius: 0;
+		border-bottom-left-radius: 0;
+		
+		border-top-right-radius: 0.25rem;
+		border-bottom-right-radius: 0.25rem;
+	}
+}
+
+.primary-color {
+	color: $element-base-color;
 }
 
 .app-table-th {

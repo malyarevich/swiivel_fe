@@ -12,15 +12,15 @@
     <td class="tbody__td tbody__td--v_center">
       <div class="tbody__cell_container">
         <a class="app-ft-reset-link" [routerLink]="'v-form-info/' + item.id">
-          <span class="tbody__form_name">{{ item.name }}</span>
+          <p class="tbody__form_name">{{ item.name }}</p>
         </a>
       </div>
     </td>
 
-    <td class="tbody__td">
+    <td class="tbody__td tbody__td--v_center">
       <div class="tbody__cell_container tbody__cell_container--column">
-        <span class="tbody__type_title">{{ item.type }}</span>
-        <span class="tbody__sub_type">{{ item.subtype }} Online, Paper</span>
+        <p class="tbody__type_title">{{ item.type }}</p>
+        <p class="tbody__sub_type">{{ item.subtype }} Online, Paper</p>
       </div>
     </td>
 
@@ -37,7 +37,7 @@
             </p>
           </div>
         </ng-container>
-        <ng-container *ngIf="!item.permissions?.length">
+        <ng-container>
           <a
             class="invite"
             data-toggle="modal"
@@ -138,8 +138,10 @@
             ><i class="fas fa-caret-down"></i
           ></span>
         </button>
-        <div *ngIf="item.status === parent.templateStatuses.STATUS_ACTIVE"
-          class="active_fields">
+        <div
+          *ngIf="item.status === parent.templateStatuses.STATUS_ACTIVE"
+          class="active_fields"
+        >
           <span class="active_fields__title">Round 2</span>
           &nbsp;
           <span class="active_fields__term">(Dec 10-15)</span>
@@ -154,35 +156,86 @@
             {{ status | titlecase }}
           </button>
         </div>
-
       </div>
     </td>
     <!--End Change status button-->
 
-    <td class="tbody__td" nowrap>
-      <button
-        type="button"
-        class="btn app-btn-primary py-0 px-1 mr-2 p"
-        routerLink="v-form-constructor/{{ item.mongo_id }}"
-        routerLinkActive="active"
-        appClickStopPropagation
-      >
-        <span class="app-text-small font-weight-bold"
-          ><i class="fas fa-pen"></i> Edit</span
+    <td class="tbody__td tbody__td--v_center" nowrap>
+      <div ngbDropdown class="tbody__cell_container tbody__cell_container--center">
+        <button
+          type="button"
+          class="btn 
+            app-btn-primary
+            control_button 
+            control_button--left_rounded"
+          routerLink="v-form-constructor/{{ item.mongo_id }}"
+          routerLinkActive="active"
+          appClickStopPropagation
         >
-      </button>
-      <button
-        type="button"
-        class="btn app-btn-primary py-0 px-1 mr-2 "
-        routerLink="online-form/{{ item.mongo_id }}"
-        routerLinkActive="active"
-        appClickStopPropagation
-      >
-        <span class="app-text-small font-weight-bold"
-          ><i class="far fa-eye"></i> View</span
+          <p class="status_button__text"><i class="fas fa-pen"></i> Edit</p>
+        </button>
+
+        <button
+          type="button"
+          class="btn 
+            app-btn-primary 
+            control_button 
+            control_button--right_rounded"
+          routerLink="online-form/{{ item.mongo_id }}"
+          routerLinkActive="active"
+          appClickStopPropagation
         >
-      </button>
-      <button
+          <span class="status_button__text"
+            ><i class="far fa-eye"></i> View</span
+          >
+        </button>
+
+        <button
+          appClickStopPropagation
+          class="btn app-btn-sml mr-2 "
+          placement="top"
+          ngbPopover="This feature is under development"
+          popoverTitle="Notice"
+        >
+          <span class="app-form-table-icon"
+            ><i class="fas fa-share-alt"></i
+          ></span>
+        </button>
+
+        <button
+          appClickStopPropagation
+          class="btn app-btn-sml mr-2 "
+          placement="left"
+          ngbPopover="This feature is under development"
+          popoverTitle="Notice"
+        >
+          <span class="app-form-table-icon"><i class="fas fa-share"></i></span>
+        </button>
+
+        <button
+          appClickStopPropagation
+          class="btn app-btn-sml mr-2 "
+          placement="left"
+          ngbPopover="This feature is under development"
+          popoverTitle="Notice"
+        >
+          <span class="app-form-table-icon"><i class="fas fa-copy"></i></span>
+        </button>
+
+        <button
+          appClickStopPropagation
+          class="btn app-btn-sml "
+          placement="left"
+          ngbPopover="This feature is under development"
+          popoverTitle="Notice"
+        >
+          <span class="app-form-table-icon primary-color"
+            ><i class="fas fa-ellipsis-v"></i
+          ></span>
+        </button>
+      </div>
+
+      <!-- <button
         type="button"
         class="btn btn-outline-danger py-0 px-1 mr-2 "
         (click)="parent.removeForm(item.mongo_id)"
@@ -191,47 +244,7 @@
         <span class="app-text-small font-weight-bold"
           ><i class="fas fa-trash-alt"></i> Delete</span
         >
-      </button>
-      <button
-        appClickStopPropagation
-        class="btn app-btn-sml mr-2 "
-        placement="top"
-        ngbPopover="This feature is under developing"
-        popoverTitle="Notice"
-      >
-        <span class="app-form-table-icon"
-          ><i class="fas fa-share-alt"></i
-        ></span>
-      </button>
-      <button
-        appClickStopPropagation
-        class="btn app-btn-sml mr-2 "
-        placement="left"
-        ngbPopover="This feature is under developing"
-        popoverTitle="Notice"
-      >
-        <span class="app-form-table-icon"><i class="fas fa-share"></i></span>
-      </button>
-      <button
-        appClickStopPropagation
-        class="btn app-btn-sml mr-2 "
-        placement="left"
-        ngbPopover="This feature is under developing"
-        popoverTitle="Notice"
-      >
-        <span class="app-form-table-icon"><i class="fas fa-copy"></i></span>
-      </button>
-      <button
-        appClickStopPropagation
-        class="btn app-btn-sml "
-        placement="left"
-        ngbPopover="This feature is under developing"
-        popoverTitle="Notice"
-      >
-        <span class="app-form-table-icon"
-          ><i class="fas fa-ellipsis-v"></i
-        ></span>
-      </button>
+      </button> -->
     </td>
   </tr>
 </ng-container>
