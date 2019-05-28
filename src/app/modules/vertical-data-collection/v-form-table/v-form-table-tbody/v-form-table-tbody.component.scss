@@ -1,0 +1,205 @@
+@import "../../../../../styles/index.scss";
+
+.default_text {
+	color: #151515;
+	font-family: "NunitoSans-Regular";
+}
+
+.nine_font {
+	font-size: 0.8rem;
+	font-weight: normal;
+	line-height: 1.1rem;
+}
+.ten_font {
+	font-size: 0.9rem;
+	font-weight: normal;
+	line-height: 1.1rem;
+}
+.twelve_font {
+	font-size: 1rem;
+	font-weight: normal;
+	line-height: 1.1rem;
+}
+
+.gray_text {
+	@extend .default_text;
+	color: $gray-color;
+}
+
+
+.tbody {
+	
+	td {
+		padding: 0.4rem;
+	}
+
+	&__td--v_center {
+		vertical-align: middle;
+	}
+	&__tr {
+		display: table-row;
+
+		&--even {
+			background: $table-row-even-background-color;
+		}
+
+		&--odd {
+			background: $table-row-odd-background-color;
+		}
+	}
+
+	&__cell_container {
+		align-self: center;
+		align-items: flex-start;
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: flex-start;
+		// padding: 0.4rem;
+
+		&--column {
+			flex-direction: column;
+			justify-content: center;
+		}
+	}
+
+	&__form_name {
+		@extend .default_text;
+		@extend .twelve_font;
+		font-weight: bold;
+	}
+
+	&__type_title {
+		@extend .default_text;
+		@extend .twelve_font;
+		color: $element-base-color;
+		font-weight: bold;
+		text-transform: capitalize;
+	}
+
+	&__sub_type {
+		@extend .gray_text;
+		@extend .ten_font;
+		text-transform: capitalize;
+	}
+}
+
+.user {
+	align-items: center;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	margin-right: 0.6rem;
+	padding: 0.1rem;
+
+	&__avatar {
+		border: 0 solid;
+		border-radius: 50%; 
+		height: 1rem;
+		margin-right: 0.4rem;
+		width: 1rem;
+	}
+
+	&__name {
+		@extend .default_text;
+		@extend .ten_font;
+		font-weight: bold;
+		margin: 0;
+		white-space: nowrap
+	}
+
+	&__role {
+		@extend .gray_text;
+		@extend .ten_font;
+		margin: 0;
+		margin-left: 0.4rem;
+	}
+}
+
+.invite {
+    align-items: center;
+    cursor: pointer;
+	display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    text-decoration: none;
+    
+	&__icon {
+		@extend .ten_font;
+		align-items: center;
+		background-color: $lightblue-color;
+		border-radius: 0.25rem;
+		color: $element-base-color;
+		display: flex;
+		font-weight: bold;
+		justify-content: center;
+        height: 1.4rem;
+        line-height: 1.4rem;
+        width: 1.4rem;
+	}
+
+	&__text {
+		@extend .default_text;
+		@extend .ten_font;
+		background-color: $lightblue-color;
+		border-radius: 0.25rem;
+		color: $element-base-color;
+		font-weight: bold;
+        height: 1.4rem;
+		line-height: 1.4rem;
+		text-transform: capitalize;
+	}
+}
+
+.status_button {
+	align-items: center;
+	border-radius: 0.25rem;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+	min-width: 6rem;
+	padding: 0.2rem 0.5rem;
+
+	&__text {
+		@extend .default_text;
+		@extend .ten_font;
+		color: $white;
+		font-weight: bold;
+		text-transform: capitalize;
+
+		&--inverted {
+			color: #0C133D;
+		}
+	}
+}
+
+.active_fields {
+	align-items: center;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: flex-start;
+
+	&__title {
+		@extend .gray_text;
+		@extend .nine_font;
+		color: #3CA476;
+		white-space: nowrap;
+	}
+
+	&__term {
+		@extend .gray_text;
+		@extend .nine_font;
+		white-space: nowrap;
+	}
+}
+
+.app-table-th {
+	border-top: none;
+}
+
+.nowrap {
+	flex-wrap: nowrap;
+	white-space: nowrap;
+}
