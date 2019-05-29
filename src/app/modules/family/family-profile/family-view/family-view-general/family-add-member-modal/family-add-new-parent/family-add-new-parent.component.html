@@ -1,0 +1,65 @@
+<form [formGroup]="familyParentForm" (ngSubmit)="addFamilyParent()">
+
+  <!--<div class="row pb-5">-->
+    <!--<div class="col-8">-->
+      <!--<app-select-multi-search-field-->
+        <!--bindLabel="name"-->
+        <!--[formControlName]="'members'"-->
+        <!--labelTitle=""-->
+        <!--[isInvalid]="familyPersonForm.get('members').invalid && familyPersonForm.get('members').touched"-->
+        <!--[items]="persons"-->
+      <!--&gt;-->
+      <!--</app-select-multi-search-field>-->
+      <!--<div-->
+        <!--class="field-has-error"-->
+        <!--*ngIf="familyPersonForm.get('members').invalid && familyPersonForm.get('members').touched && familyPersonForm.get('members')['errors']['required']"-->
+      <!--&gt;-->
+        <!--Members is required-->
+      <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="col-4">-->
+      <!--<app-select-field-->
+
+        <!--[formControlName]="'role'"-->
+        <!--labelTitle="Roles"-->
+        <!--[isInvalid]="familyPersonForm.get('role').invalid && familyPersonForm.get('role').touched"-->
+        <!--[items]="roles"-->
+      <!--&gt;-->
+      <!--</app-select-field>-->
+      <!--<div-->
+        <!--class="field-has-error"-->
+        <!--*ngIf="familyPersonForm.get('role').invalid && familyPersonForm.get('role').touched && familyPersonForm.get('role')['errors']['required']"-->
+      <!--&gt;-->
+        <!--Role is required-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
+  <p class="app-text-small font-weight-bold">PERSONAL {{role | uppercase}} INFO</p>
+  <div class="row no-gutters app-family-card-body p-3">
+    <div class="col-3"><img src="assets/images/temp/person-foto-placeholder.png" width="70%"></div>
+    <div class="col-9 d-flex justify-content-around mt-3">
+        <div class="mr-2">
+          <app-input-field label="First Name"></app-input-field>
+        </div>
+        <div class="mr-2">
+          <app-input-field label="Middle Name"></app-input-field>
+        </div>
+        <div class="mr-2">
+          <app-input-field label="Last Name"></app-input-field>
+        </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12 text-right">
+      <button (click)="onCloseAddFamilyMemberModal()" class="btn app-btn-outline-primary mr-2">
+        Cancel
+      </button>
+
+      <button type="submit" class="btn app-btn-primary" [disabled]="familyParentForm.invalid">
+        Add Account
+      </button>
+    </div>
+  </div>
+</form>
