@@ -38,9 +38,11 @@ import { OnlineFormTermsConditionsComponent } from './online-form-terms-conditio
 import { OnlineFormTuitionContractComponent } from './online-form-tuition-contract/online-form-tuition-contract.component';
 import { TuitionContractByStudentComponent } from './online-form-tuition-contract/tuition-contract-by-student/tuition-contract-by-student.component';
 import { TuitionContractByFeeComponent } from './online-form-tuition-contract/tuition-contract-by-fee/tuition-contract-by-fee.component';
+import { SignaturesComponent } from './shared/components/signatures/signatures.component';
 
 @NgModule({
   declarations: [
+    SignaturesComponent,
     OnlineFormViewComponent,
     OnlineFormNavComponent,
     OnlineFormMenuComponent,
