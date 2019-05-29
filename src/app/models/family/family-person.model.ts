@@ -9,6 +9,4 @@ export interface FamilyPerson {
   role_state: number;
   adopted: number;
   person: Person;
-  children?: [any],
-  parents?: [any],
 }

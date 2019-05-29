@@ -30,6 +30,7 @@ import { FamilyProfileInfoViewComponent } from './family-profile/family-profile-
 import { FamilyAddExistPersonComponent } from './family-profile/family-view/family-view-general/family-add-member-modal/family-add-exist-person/family-add-exist-person.component';
 import { FamilyAddNewPersonComponent } from './family-profile/family-view/family-view-general/family-add-member-modal/family-add-new-person/family-add-new-person.component';
 import { FamilyAddNewParentComponent } from './family-profile/family-view/family-view-general/family-add-member-modal/family-add-new-parent/family-add-new-parent.component';
+import { FamilyAddNewChildComponent } from './family-profile/family-view/family-view-general/family-add-member-modal/family-add-new-child/family-add-new-child.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { FamilyAddNewParentComponent } from './family-profile/family-view/family
     FamilyProfileInfoViewComponent,
     FamilyAddExistPersonComponent,
     FamilyAddNewPersonComponent,
-    FamilyAddNewParentComponent
+    FamilyAddNewParentComponent,
+    FamilyAddNewChildComponent
   ],
   imports: [
     CommonModule,
