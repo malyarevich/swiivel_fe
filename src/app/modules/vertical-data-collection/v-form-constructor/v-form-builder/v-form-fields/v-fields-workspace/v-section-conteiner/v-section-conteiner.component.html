@@ -67,6 +67,11 @@
         cdkDragLockAxis="y"
         [ngClass]="[ field.type==113?'app-list-group-item-info':'']">
 <!--        [ngClass]="[!field.isValidName||!field.isValid?'list-group-item-warning':'', field.type==113?'app-list-group-item-info':'']">-->
+      <app-v-divider-conteiner
+        *ngIf="field.type==112"
+        [inputDivider]="field"
+        [form]="form"
+      ></app-v-divider-conteiner>
       <app-v-group-container
         *ngIf="field.type==113"
         [inputGroup]="field"
@@ -76,7 +81,7 @@
         [customFields]="customFields"
       ></app-v-group-container>
       <app-v-field-container
-        *ngIf="field.type!=113"
+        *ngIf="field.type!=113&&field.type!=112"
         [customFields]="customFields"
         [sideBar]="sideBar"
         [inputField]="field"

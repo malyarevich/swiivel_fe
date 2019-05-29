@@ -1,0 +1,30 @@
+@import '../../../../../../../../styles/variables/colors';
+
+.fa-paint-brush{
+  color: $element-base-color;
+}
+.select-hr { border-bottom: 1px dotted #000; }
+
+
+.dash-dot-dot {
+  height:10px;
+  background:
+    radial-gradient(circle at center,#000 2px,transparent 3px) 0px  50%/30px 5px repeat-x,
+    radial-gradient(circle at center,#000 2px,transparent 3px) 10px 50%/30px 5px repeat-x,
+    repeating-linear-gradient(to right,#000,#000 10px,transparent 10px,transparent 30px) center/100% 3px no-repeat;
+
+}
+
+select{
+  font-family: NunitoSans-Regular;
+}
+.decorated{
+  box-shadow: 0 0 10px 100px #1882A8 inset;
+}
+
+.rectangle{
+  height: 24px;	width: 40px;	border-radius: 1px;
+}
+
+
+.shape-stroke {	height: 13px;	width: 71px;	color: #151515;		font-size: 9px;	letter-spacing: 0.3px;	line-height: 13px;}

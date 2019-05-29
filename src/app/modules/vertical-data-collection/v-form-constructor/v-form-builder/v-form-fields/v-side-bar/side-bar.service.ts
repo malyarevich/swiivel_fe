@@ -61,6 +61,16 @@ export class SideBarService {
     })
   }
 
+  onFieldByIdDelete(field: Field, filedList: Field[]){
+
+    filedList.forEach(f=>{
+      if (f.type == 113 || f.type == 114) this.onFieldDelete(field, f.fields);
+      // console.log(f);
+      if(f._id==field._id ) filedList.splice(filedList.indexOf(f), 1)
+    })
+  }
+
+
   onFieldUncheck(field:Field,filedList: Field[]){
     filedList.forEach(f=>{
       if (f.type == 113 || f.type == 114) this.onFieldUncheck(field, f.fields);
@@ -72,6 +82,19 @@ export class SideBarService {
     filedList.forEach(f=>{
       if (f.type == 113) this.onFieldUncheck(field, f.fields);
     })
+  }
+
+
+  getIdOfSection(fieldList: Field[]){
+    if(!fieldList) return;
+   return  fieldList.map(groupSection =>{
+      if(groupSection.type==113 || groupSection.type==114){
+        this.getIdOfSection(groupSection.fields);
+        // console.log(groupSection._id);
+        return groupSection._id;
+      }
+    })
+
   }
 
   ////////////////////////

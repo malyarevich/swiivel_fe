@@ -19,7 +19,7 @@
   </div>
 </div>
 <div [hidden]="!showNested">
-<div  class="my-3  ml-3 " *ngFor="let field of section.fields ">
+<div  class="my-3  ml-3 " *ngFor="let field of section.fields | filter: searchText">
   <app-v-side-bar-group
     *ngIf="field.type==113"
     [group]="field"
@@ -74,7 +74,7 @@
                  class="app-input form-control"
                  id="fieldNameID"
                  [ngClass]="fieldsAddGroup.get('fieldsName').touched&&fieldsAddGroup.get('fieldsName').invalid?'is-invalid':''"
-                 placeholder="Form Name">
+                 placeholder="Field Name">
 
           <div class="invalid-feedback">
             Field name is required and contain min 3 and max 50 symbols

@@ -6,6 +6,8 @@ import { range } from 'lodash'
 import {FormBuilder, FormGroup, FormControl, Validators} from "@angular/forms";
 import {v4 as uuid} from 'uuid';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from "@angular/cdk/drag-drop";
+import {SideBarService} from "../v-side-bar/side-bar.service";
+import {dividerStyle} from "./divider";
 
 @Component({
   selector: 'app-v-fields-workspace',
@@ -24,6 +26,18 @@ export class VFieldsWorkspaceComponent implements OnInit {
     sectionSize: new FormControl(null, Validators.required),
   });
 
+  dividerAddGroup: FormGroup = new FormGroup({
+    dividerName: new FormControl('', {
+      validators: Validators.compose([
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(50)
+      ])}),
+    dividerStyle: new FormControl(null, Validators.required),
+    sectionRelate: new FormControl(null, Validators.required)
+
+  });
+
   groupAddGroup: FormGroup = new FormGroup({
     groupName: new FormControl('', {
       validators: Validators.compose([
@@ -39,12 +53,18 @@ export class VFieldsWorkspaceComponent implements OnInit {
   @Input() customFields: Field[];
   size = range(1  ,13);
   idSectionForDragDrop: string[] =[];
-  constructor(private modalService: NgbModal,  fb: FormBuilder) {
+
+  dividerStyles = dividerStyle;
+
+
+  constructor(private modalService: NgbModal,
+              fb: FormBuilder,
+              private sideBarService: SideBarService) {
 
   }
 
   ngOnInit() {
-    this.getIdOfSection(this.form.fields);
+    this.idSectionForDragDrop = this.sideBarService.getIdOfSection(this.form.fields);
   }
 
   openModal(content) {
@@ -68,7 +88,7 @@ export class VFieldsWorkspaceComponent implements OnInit {
       fields: [],
     };
     this.form.fields.push(newSection);
-    this.getIdOfSection(this.form.fields);
+    this.idSectionForDragDrop = this.sideBarService.getIdOfSection(this.form.fields);
     this.sectionAddGroup.reset();
     modal.close();
   }
@@ -91,8 +111,33 @@ export class VFieldsWorkspaceComponent implements OnInit {
         section.fields.push(newGroup);
       }
     });
-    this.getIdOfSection(this.form.fields);
+    this.idSectionForDragDrop = this.sideBarService.getIdOfSection(this.form.fields);
     this.groupAddGroup.reset();
+    modal.close();
+  }
+
+  addDivider(modal){
+    this.validateAllFormFields(this.dividerAddGroup);
+    if (!this.dividerAddGroup.valid) return;
+    this.dividerAddGroup.clearValidators();
+    const newDivider :Field = {
+      _id: uuid(),
+      name: this.dividerAddGroup.value.dividerName,
+      type: 112,
+      options: { dividerStyle:this.dividerAddGroup.value.dividerStyle }
+    };
+    if(this.dividerAddGroup.value.sectionRelate.name=='workspace'){
+      this.form.fields.push(newDivider);
+    }else{
+      this.form.fields.forEach(section=>{
+        if(section.name == this.dividerAddGroup.value.sectionRelate.name
+          &&section.prefix == this.dividerAddGroup.value.sectionRelate.prefix){
+          section.fields.push(newDivider);
+        }
+      });
+    }
+
+    this.dividerAddGroup.reset();
     modal.close();
   }
 
@@ -117,15 +162,5 @@ export class VFieldsWorkspaceComponent implements OnInit {
     moveItemInArray(this.form.fields, event.previousIndex, event.currentIndex);
   }
 
-  getIdOfSection(fieldList: Field[]){
-    if(!fieldList) return;
-    this.idSectionForDragDrop = fieldList.map(groupSection =>{
-      if(groupSection.type==113 || groupSection.type==114){
-        this.getIdOfSection(groupSection.fields);
-        // console.log(groupSection._id);
-        return groupSection._id;
-      }
-    })
 
-  }
 }

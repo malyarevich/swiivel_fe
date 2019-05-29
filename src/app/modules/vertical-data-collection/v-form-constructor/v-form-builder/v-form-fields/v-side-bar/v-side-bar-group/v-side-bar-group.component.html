@@ -33,7 +33,7 @@
           <span class="app-checkbox-checkmark just-white"></span>
         </label>
         </div>
-        <div class="col-10  mb-1 mt-2 row align-items-center no-gutters rounded " [ngClass]="field.mapped==''?'side-bar-item-group-custom':'side-bar-item-group'">
+        <div class="col-10  mb-1 mt-2 row align-items-center no-gutters rounded " [ngClass]="field.mapped==''?'side-bar-item-group-custom':'side-bar-item-group'" placement="right" [ngbTooltip]="field.prefix+'\'s'">
           <div class="col-1 ">
             <span><i class="fas fa-ellipsis-v dragable-i"></i></span>
             <span><i class="fas fa-ellipsis-v  dragable-i"></i></span>
@@ -41,38 +41,38 @@
           <div class="col">
             <span class="side-bar-item-font" [title]="field.mapped==''?'Custom':'Existing'">{{field.name}}</span>
           </div>
-          <div *ngIf="field.mapped==''" class="col-1">
-            <span><i class="fas fa-trash dragable-i fa-xs" (click)="deleteCustomNestedField(field.name)"></i></span>
-          </div>
+<!--          <div *ngIf="field.mapped==''" class="col-1">-->
+<!--            <span><i class="fas fa-trash dragable-i fa-xs" (click)="deleteCustomNestedField(field.name)"></i></span>-->
+<!--          </div>-->
         </div>
       </div>
     </div>
-    <div class="p-2 ">
-      <button
-        *ngIf="showAddButton"
-        type="button" appClickStopPropagation placement="right"
-        ngbPopover="This feature is under developing"
-        popoverTitle="Notice"
-        class="btn btn-outline-primary form-control p-0 text-left"
-        >
-<!--        (click)="showAddButton=false">-->
-        &nbsp;&nbsp;+ Add New Field
-      </button>
-      <input
-        *ngIf="!showAddButton"
+<!--    <div class="p-2 ">-->
+<!--      <button-->
+<!--        *ngIf="showAddButton"-->
+<!--        type="button" appClickStopPropagation placement="right"-->
+<!--        ngbPopover="This feature is under developing"-->
+<!--        popoverTitle="Notice"-->
+<!--        class="btn btn-outline-primary form-control p-0 text-left"-->
+<!--        >-->
+<!--&lt;!&ndash;        (click)="showAddButton=false">&ndash;&gt;-->
+<!--        &nbsp;&nbsp;+ Add New Field-->
+<!--      </button>-->
+<!--      <input-->
+<!--        *ngIf="!showAddButton"-->
 
-        class="form-control add-input p-0"
+<!--        class="form-control add-input p-0"-->
 
-        autofocus
-        #newField
-      (keyup)="nameChange($event)"
-      [ngClass]="!validNewCustomFieldName?'is-invalid':''"
-        (blur)="addNewCustomField(newField.value, group.fields); newField.value=''"
-        (keyup.enter)="addNewCustomField(newField.value, group.fields); newField.value=''">
-      <div class="invalid-feedback">
-        We have existing field with the same name!
-      </div>
-    </div>
+<!--        autofocus-->
+<!--        #newField-->
+<!--      (keyup)="nameChange($event)"-->
+<!--      [ngClass]="!validNewCustomFieldName?'is-invalid':''"-->
+<!--        (blur)="addNewCustomField(newField.value, group.fields); newField.value=''"-->
+<!--        (keyup.enter)="addNewCustomField(newField.value, group.fields); newField.value=''">-->
+<!--      <div class="invalid-feedback">-->
+<!--        We have existing field with the same name!-->
+<!--      </div>-->
+<!--    </div>-->
   </div>
 </div>
 
