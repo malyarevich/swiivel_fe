@@ -1,9 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Field} from '../../../../model/field.model';
+import {Field} from '../../../../../model/field.model';
 import { range } from 'lodash'
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from "@angular/cdk/drag-drop";
-import {SideBarService} from "../v-side-bar/side-bar.service";
-import {Form} from "../../../../model/form.model";
+import {SideBarService} from "../../v-side-bar/side-bar.service";
+import {Form} from "../../../../../model/form.model";
 
 @Component({
   selector: 'app-v-group-container',

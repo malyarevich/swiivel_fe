@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Field} from "../../../../model/field.model";
-import {Form} from "../../../../model/form.model";
+import {Field} from "../../../../../model/field.model";
+import {Form} from "../../../../../model/form.model";
 
-import {SideBarService} from "../v-side-bar/side-bar.service";
+import {SideBarService} from "../../v-side-bar/side-bar.service";
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from "@angular/cdk/drag-drop";
 
 @Component({

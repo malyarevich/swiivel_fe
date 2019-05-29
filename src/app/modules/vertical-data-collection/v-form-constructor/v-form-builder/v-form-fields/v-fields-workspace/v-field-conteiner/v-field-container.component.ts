@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
-import {Field} from '../../../../model/field.model';
+import {Field} from '../../../../../model/field.model';
 import { range } from 'lodash'
-import {Form} from "../../../../model/form.model";
-import {SideBarService} from "../v-side-bar/side-bar.service";
+import {Form} from "../../../../../model/form.model";
+import {SideBarService} from "../../v-side-bar/side-bar.service";
 @Component({
   selector: 'app-v-field-container',
   templateUrl: './v-field-container.component.html',
