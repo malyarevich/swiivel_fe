@@ -3,6 +3,7 @@
   [ngClass]="{'app-input-field-has-error': isInvalid}"
 >
   <label
+    (click)="input.focus()"
     [for]="id"
     class="app-input-field-label"
     [ngClass]="{'app-input-field-label__value': value}"
@@ -10,6 +11,7 @@
     {{label}}
   </label>
   <input
+    #input
     class="form-control"
     [ngClass]="{'app-input-field__value': value}"
     [id]="id"
