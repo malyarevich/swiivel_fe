@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
 import {cloneDeep} from 'lodash';
 import {Form} from "../../../vertical-data-collection/model/form.model";
 import {E_SIGNATURE_TYPES, SIGNATURE_TYPES} from "../../../../enums";
@@ -9,7 +9,7 @@ import {SignatureCreateResponse} from "../model/signature-create-response.model"
 @Component({
   selector: 'app-online-form-terms-conditions',
   templateUrl: './online-form-terms-conditions.component.html',
-  styleUrls: ['./online-form-terms-conditions.component.scss']
+  styleUrls: ['./online-form-terms-conditions.component.scss'],
 })
 export class OnlineFormTermsConditionsComponent implements OnInit {
   @Input() form: Form;
@@ -19,11 +19,11 @@ export class OnlineFormTermsConditionsComponent implements OnInit {
 
   signature: TermsConditionsSignature;
 
-  constructor(private readonly systemSignatureService: SystemSignatureService) {
-  }
+
+  constructor(private readonly systemSignatureService: SystemSignatureService) { }
 
   ngOnInit() {
-    this.signature = cloneDeep(this.form.termsConditions.signature)
+    this.signature = cloneDeep(this.form.termsConditions.signature);
   }
 
   onSystemSign() {

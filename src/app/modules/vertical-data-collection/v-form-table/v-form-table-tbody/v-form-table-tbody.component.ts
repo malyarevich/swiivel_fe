@@ -10,6 +10,6 @@ export class VFormTableTbodyComponent implements OnInit {
 
     constructor() { }
 
-    ngOnInit() { console.log(this.parent); }
+    ngOnInit() { }
     
 }
