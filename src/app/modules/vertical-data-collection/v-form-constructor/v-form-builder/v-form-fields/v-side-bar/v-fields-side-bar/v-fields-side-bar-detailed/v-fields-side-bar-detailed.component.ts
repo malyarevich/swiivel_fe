@@ -17,7 +17,7 @@ import {cloneDeep, isEmpty} from 'lodash';
 })
 export class VFieldsSideBarDetailedComponent implements OnInit, AfterViewInit, OnDestroy {
 
-
+  @Input() searchText: string;
   fieldsAddGroup: FormGroup = new FormGroup({
     fieldsName: new FormControl('', {
       validators: Validators.compose([
@@ -80,7 +80,7 @@ export class VFieldsSideBarDetailedComponent implements OnInit, AfterViewInit, O
      this.sideBarService.changeExistingAllSection(false, this.section.fields)
 
    }
-
+  // event?
   }
 
   // changeExistingAllSection(event, fieldList: Field[]){
@@ -119,7 +119,7 @@ export class VFieldsSideBarDetailedComponent implements OnInit, AfterViewInit, O
   loadBasicFields() {
     this.fieldService.getCustomList().subscribe((fields: Field[]) => {
       this.customFields = fields.filter(field=>{
-       if(field.type==113||field.type==114||field.type==112){
+       if(field.type==113||field.type==114){
          return false;
        }
        return true;

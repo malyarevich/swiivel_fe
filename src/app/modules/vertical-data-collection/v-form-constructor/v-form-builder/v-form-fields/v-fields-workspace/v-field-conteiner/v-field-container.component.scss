@@ -1,0 +1,43 @@
+@import '../../../../../../../../styles/variables/colors';
+.spanForLabel{
+  color: #BAB8B8;
+}
+.field-checked {
+  border: 1px solid $element-base-color;
+  border-radius: 5px;
+}
+
+.app-element-color {
+  color: $element-base-color;
+}
+.dragable-i{
+  color: #9C9D9D;
+  cursor: pointer;
+}
+.vertical-center {
+
+  height: 100%;
+  display: flex;
+  align-items: center;
+
+
+}
+.rectangle{
+  //margin-left: 13px;
+  background-color: #4050A8  ;
+  height: 6px;
+  width: 15px;
+}
+
+small{
+  height: 17px;
+  width: 66px;
+ // color: #FFFFFF;
+ // font-family: "Nunito Sans";
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 11px
+}
+.dropdown-toggle::after {
+  display:none;
+}

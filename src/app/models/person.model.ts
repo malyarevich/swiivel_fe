@@ -6,6 +6,11 @@ export interface Person {
   middle_name: string,
   last_name: string,
   dob: string,
+  hebrew_dob: string;
+  hebrew_full_name: string;
+  maiden_name: string;
+  legal_name: string,
+  occupation: string,
   hebrew_first_name: string,
   hebrew_middle_name: string,
   hebrew_last_name: string,
@@ -22,5 +27,7 @@ export interface Person {
   zip: string,
   phone: string,
   created_at: string,
-  updated_at: string
+  updated_at: string,
+  children?: [any],
+  parents?: [any],
 }

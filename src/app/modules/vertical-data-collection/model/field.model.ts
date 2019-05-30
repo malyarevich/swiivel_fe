@@ -29,5 +29,10 @@ export interface FieldOption {
   value? : string,
   autoComplete? : false,
   size? : number,
-  default? : string
+  default? : string,
+  space?: number,
+  shapeStrokeValue: number,
+  shapeStrokeColor: string,
+  dividerStyle?: string
+
 }
