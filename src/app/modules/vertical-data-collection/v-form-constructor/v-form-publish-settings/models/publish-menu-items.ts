@@ -5,8 +5,20 @@ export abstract class PublishMenuItems {
   public static redirect = 'redirect';
   public static titles = {
     conditions: 'Conditions Review',
-    settings: 'Conditions Review',
+    settings: 'Publish Settings',
     automation: 'Automation',
     redirect: 'Redirect Pages',
+  };
+  public static subMenus = {
+    settings: {
+      types: {
+        online: "online",
+        pdf: "pdf",
+      },
+      names: {
+        online: "Online form",
+        pdf: "PDF form",
+      },
+    },
   };
 }
