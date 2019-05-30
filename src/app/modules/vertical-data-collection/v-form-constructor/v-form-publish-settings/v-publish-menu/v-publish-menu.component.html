@@ -1,10 +1,38 @@
 <div>
   <ul class="list-group bg-white ">
-    <li class="list-group-item app-form-publish-menu-item"
+    <ng-container *ngFor="let item of menuItems; let i = index">
+      <li class="list-group-item app-form-publish-menu-item"
         [ngClass]="{'app-form-publish-menu-item-active': activeMenuItem === item.value}"
-        *ngFor="let item of menuItems; let i = index"
         (click)="setActiveItem(item.value)">
-      {{i+1}}. {{item.title | uppercase}}
-    </li>
+        {{i+1}}. {{item.title | uppercase}}
+      </li>
+      <ng-container *ngIf="activeMenuItem === item.value">
+          <li 
+          *ngFor="let subMenu of item.subMenus"
+          class="list-group-item app-form-publish-menu-item"
+        >
+          <div class="row no-gutters slider-item align-items-center">
+            <div class="col-auto mr-2">
+              <label class="app-switch">
+                <input type="checkbox"
+                  [ngModel]="subMenus[item.value][subMenu.type]"
+                  (ngModelChange)="subMenus[item.value][subMenu.type] = subMenus[item.value][subMenu.type] = $event"
+                >
+                <span class="app-slider app-round"></span>
+              </label>
+            </div>
+            <div class="col">
+              <span 
+                class="font-weight-bold side-bar-toggle" 
+                (click)="toggleSubMenu(item.value,subMenu.type);"
+              >{{subMenu.name}}</span>
+            </div>
+          </div>
+        </li>
+      </ng-container>
+
+    </ng-container>
+    
   </ul>
 </div>
+

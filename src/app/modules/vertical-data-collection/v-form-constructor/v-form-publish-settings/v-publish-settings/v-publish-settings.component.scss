@@ -1,0 +1,80 @@
+@import '../../../../../../styles/index.scss';
+
+.extra_bold_bigger {
+    color: $darkgray-color;
+    font-family: NunitoSans-ExtraBold;
+    font-size: 1.2rem;
+    line-height: 1.8rem;
+    text-align: left;
+}
+
+.content {
+    padding: 0;
+    margin: 0;
+
+    &__box {
+        background-color: $white;
+        border-radius: 0.5rem;
+        margin-bottom: 1rem;
+        padding: 3.3rem;
+    }
+
+    
+    &__title {
+        color: $darkgray-color;
+        font-family: NunitoSans-ExtraBold;
+        font-size: 1.5rem;
+        line-height: 1.9rem;
+        text-align: center;
+        margin-bottom: 2rem;
+        margin-top: 0;
+    }
+    
+    &__sub_title {
+        @extend .extra_bold_bigger;
+        margin-bottom: 1rem;
+        margin-top: 0;
+    }
+
+    &__row_list {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start; 
+        margin-bottom: 1.8rem;
+    }
+
+    &__toggle_text {
+        @extend .extra_bold_bigger;
+    }
+}
+
+.checkbox {    
+    margin-bottom: 1.75rem;
+    padding-left: 2rem;
+
+    &--mr_2 {
+        margin-right: 2rem;
+    }
+
+    &__text {
+        color: $darkgray-color;
+        font-family: NunitoSans-Regular;
+        font-weight: normal;
+        transition: all ease-in-out 100ms;
+
+        &--checked {
+            font-weight: bold;
+        }
+    }
+
+    &__popover {
+        border: 0 transparent solid;
+        border-radius: 0.5rem;
+        box-shadow: 0 0.25rem 2rem rgba(80, 80, 80, .25);
+    }
+
+    &__info_icon {
+        color: $icon-grey-color;
+    }
+}
+
