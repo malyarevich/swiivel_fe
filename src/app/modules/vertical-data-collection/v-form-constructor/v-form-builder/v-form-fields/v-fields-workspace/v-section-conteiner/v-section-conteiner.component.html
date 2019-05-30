@@ -39,11 +39,10 @@
         <i class="fas fa-cog dragable-i pr-2"></i>
       </span>
     </div>
-    <div class="col" appClickStopPropagation placement="left"
-         ngbPopover="This feature is under development"
-         popoverTitle="Notice">
+    <div class="col" (click)="isShow=!isShow">
         <span class="app-fb-section-icon-white">
-          <i class="fas  fa-caret-down dragable-y"></i>
+          <i *ngIf="isShow" class="fas  fa-caret-down dragable-y"></i>
+          <i *ngIf="!isShow" class="fas  fa-caret-up dragable-y"></i>
         </span>
     </div>
     <div class="col" (click)="removeSection(section)">
@@ -55,7 +54,7 @@
 
 </div>
 <!--End Section Header-->
-<div
+<div [hidden]="!isShow"
     cdkDropList
     [id]="section._id"
     [cdkDropListData]="section.fields"

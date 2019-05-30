@@ -18,6 +18,7 @@ export class VSectionConteinerComponent implements OnInit {
   @Input() idSectionForDragDrop: string[];
   constructor(private sideBarService: SideBarService) { }
   sectionWidth: string = "4 Columns";
+  isShow: boolean = true;
   ngOnInit() {
   }
 
