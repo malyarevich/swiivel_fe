@@ -77,10 +77,7 @@ export class VPublishSettingsComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit() {
-    console.log(this.pageData);
-    console.log(this.pageData['pdf'].checkBoxList.general);
-  }
+  ngOnInit() { }
 
   toggleOnlineCheckBox(checkBoxIndex: number) {
     this.pageData['online'].checkBoxList[checkBoxIndex].status = !this.pageData['online'].checkBoxList[checkBoxIndex].status;
