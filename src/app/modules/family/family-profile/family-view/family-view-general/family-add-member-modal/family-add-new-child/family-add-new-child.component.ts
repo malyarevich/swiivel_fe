@@ -40,7 +40,7 @@ export class FamilyAddNewChildComponent implements OnInit {
       legal_name: [null],
       dob: [null],
       hebrew_dob: [null],
-      full_hebrew_name: [null],
+      hebrew_full_name: [null],
       gender: [null],
     });
   }
@@ -67,9 +67,10 @@ export class FamilyAddNewChildComponent implements OnInit {
       legal_name: this.familyChildForm.value.legal_name,
       dob: this.familyChildForm.value.dob,
       hebrew_dob: this.familyChildForm.value.hebrew_dob,
-      full_hebrew_name: this.familyChildForm.value.full_hebrew_name,
+      hebrew_full_name: this.familyChildForm.value.hebrew_full_name,
       gender: this.familyChildForm.value.gender,
     };
+    console.log(data);
     this.personService.addPerson(data).subscribe((res) => {
       if (res.created) {
         this.addFamilyPerson(res.data.id);

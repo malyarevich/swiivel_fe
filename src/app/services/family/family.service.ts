@@ -121,31 +121,31 @@ export class FamilyService {
   }
 
   getAllRequest(): Observable<any> {
-    return this.http.get(`${environment.apiFB}/families?api_token=${environment.api_token}`).pipe(
+    return this.http.get(`/families`).pipe(
       map((res: GetResponseData) => res)
     );
   }
 
   getOneRequest(family_id): Observable<any> {
-    return this.http.get(`${environment.apiFB}/families/${family_id}?api_token=${environment.api_token}`).pipe(
+    return this.http.get(`/families/${family_id}`).pipe(
       map((res : GetResponseData) => res)
     );
   }
 
   createOneRequest(name): Observable<any> {
-    return this.http.post(`${environment.apiFB}/families?api_token=${environment.api_token}`, {name: name}).pipe(
+    return this.http.post(`/families`, {name: name}).pipe(
       map((res: UpdateCreateResponseData) => res)
     );
   }
 
   updateOneRequest(family): Observable<any> {
-    return this.http.put(`${environment.apiFB}/families/${family.family_id}?api_token=${environment.api_token}`, {...family}).pipe(
+    return this.http.put(`/families/${family.family_id}`, {...family}).pipe(
       map((res: UpdateCreateResponseData) => res)
     );
   }
 
   deleteOneRequest(familyId): Observable<any> {
-    return this.http.delete(`${environment.apiFB}/families/${familyId}?api_token=${environment.api_token}`).pipe(
+    return this.http.delete(`/families/${familyId}`).pipe(
       map((res: DeleteResponseData) => res)
     );
   }
