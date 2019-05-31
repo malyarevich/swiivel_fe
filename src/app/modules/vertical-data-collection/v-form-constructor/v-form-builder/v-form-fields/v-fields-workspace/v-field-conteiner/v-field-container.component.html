@@ -27,93 +27,168 @@
           </div>
         </div>
 
-        <div class="col-9">
-          <label class="has-float-label">
-            <input class="form-control " (ngModelChange)="nameChange($event)" [disabled]="inputField.mapped!=''&& inputField.hasOwnProperty('mapped')"
-                   [ngModel]="inputField.name">
-            <span class="spanForLabel">Field Label</span>
-          </label>
+        <div class="col-9 justify-content-center" >
+<!--          <label class="has-float-label">-->
+<!--            <input class="form-control " (ngModelChange)="nameChange($event)" [disabled]="inputField.mapped!=''&& inputField.hasOwnProperty('mapped')"-->
+<!--                   [ngModel]="inputField.name">-->
+<!--            <span class="spanForLabel">Field Label</span>-->
+<!--          </label>-->
+          <div class=""><span class="app-text-extra-bold align-self-center">{{inputField.name}}</span></div>
+          <div class=""><span class="field-type-span mb-2">Basic Field – {{returnFieldTYpeName(inputField)}}</span></div>
+
         </div>
       </div>
     </div>
-
-    <div class="col-6">
+    <div class="col-3 ">
       <div class="row align-items-center ">
-        <div class="col-5 offset-1 pl-0">
-          <label class="has-float-label">
-            <select class="form-control" [disabled]="inputField.mapped!='' && inputField.hasOwnProperty('mapped')" [(ngModel)]="inputField.type">
-              <option *ngFor="let item of customFields" [value]="item.type"
-                      [selected]="inputField.type==item.type">{{item.name}}</option>
-            </select>
-            <span class="spanForLabel">Field Type</span>
-          </label>
+        <div class="col-6">
+          <div class="   app-input-container"
+               [ngClass]="{'app-input-fill': placeholderID.value}">
+            <label for="placeholderId" class="app-input-label">Placeholder</label>
+            <input type="text"
+                   #placeholderID
+                   class="app-input form-control"
+                   id="placeholderId"
+                   placeholder="Placeholder"
+                   [value]="inputField.prefix+'\'s'| titlecase">
+          </div>
         </div>
-        <div class="col-3">
-          <label class="has-float-label">
-            <input class="form-control" [value]="inputField.prefix+'\'s'">
-            <span class="spanForLabel">Placeholder</span>
-          </label>
-        </div>
-        <div class="col-3">
-          <label class="has-float-label">
-            <select class="form-control" [(ngModel)]="inputField.options.size">
-              <option *ngFor="let width of size" [value]="width"
-                      [selected]="inputField.options.size==width">{{width}}</option>
+        <div class="col-6">
+          <div class="  app-input-container"
+               [ngClass]="{'app-input-fill': sizeID.value}" >
+            <label for="fieldSize" class="app-input-label">Field Width</label>
+            <select class="app-input form-control"
+                    #sizeID
+                    id="fieldSize"
+            [(ngModel)]="inputField.options.size"
+            >
+              <option *ngFor="let width of size" [value]="width" [selected]="width==inputField.options.size"
+              >{{width}} Columns</option>
             </select>
-            <span class="spanForLabel">Field Width</span>
-          </label>
+
+          </div>
         </div>
       </div>
     </div>
-    <div class="col-md-3 row align-items-center no-gutters">
+    <div class="col-5 row align-items-center pl-2">
+      <div class="col d-flex justify-content-center">
+        <label class="app-checkbox-container mb-0">
+          <input
+            type="checkbox" [(ngModel)]="inputField.options.required" >
 
-      <div class="col-10 row align-items-center no-gutters ml-2">
-        <div class="col ml-1 ">
-          <label class="app-switch mr-2">
-            <input type="checkbox" [(ngModel)]="inputField.options.required">
-            <span class="app-slider app-round"></span>
-          </label>
-          <small>Required</small>
-        </div>
-
-        <div class="col ml-1">
-          <label class="app-switch mr-2">
-            <input type="checkbox" [(ngModel)]="inputField.options.readonly">
-            <span class="app-slider app-round"></span>
-          </label>
-          <small>Read-only</small>
-        </div>
-
-
-        <div class="w-100"></div>
-        <div class="col ml-1">
-          <label class="app-switch mr-2">
-            <input type="checkbox" [(ngModel)]="inputField.options.hideLabel">
-            <span class="app-slider app-round"></span>
-          </label>
-        <small>Hide Label</small>
-        </div>
-
-        <div class="col ml-1">
-          <label class="app-switch mr-2">
-            <input type="checkbox" (ngModelChange)="uniqActivated($event)" [ngModel]="inputField.options.unique">
-            <span class="app-slider app-round"></span>
-          </label>
-          <small>Unique</small>
-        </div>
-
+          <span class="app-checkbox-checkmark"></span>
+          Required
+        </label>
       </div>
-      <div class="col-1">
-        <div  class="d-inline-block ml-2" >
+
+      <div class="col d-flex justify-content-center">
+        <label class="app-checkbox-container mb-0">
+          <input
+            type="checkbox" [(ngModel)]="inputField.options.hideLabel" >
+
+          <span class="app-checkbox-checkmark"></span>
+          Hide Label
+        </label>
+      </div>
+      <div class="col d-flex justify-content-center">
+        <label class="app-checkbox-container mb-0">
+          <input
+            type="checkbox" [(ngModel)]="inputField.options.readonly" >
+
+          <span class="app-checkbox-checkmark"></span>
+          Read-Only
+        </label>
+      </div>
+      <div class="col d-flex justify-content-center">
+        <label class="app-checkbox-container mb-0">
+          <input
+            type="checkbox" [(ngModel)]="inputField.options.unique" >
+
+          <span class="app-checkbox-checkmark"></span>
+          Unique
+        </label>
+      </div>
+
+    </div>
+<!--    <div class="col-1">dasdas</div>-->
+<!--    <div class="col-6">-->
+<!--      <div class="row align-items-center ">-->
+<!--        <div class="col-5 offset-1 pl-0">-->
+<!--          <label class="has-float-label">-->
+<!--            <select class="form-control" [disabled]="inputField.mapped!='' && inputField.hasOwnProperty('mapped')" [(ngModel)]="inputField.type">-->
+<!--              <option *ngFor="let item of customFields" [value]="item.type"-->
+<!--                      [selected]="inputField.type==item.type">{{item.name}}</option>-->
+<!--            </select>-->
+<!--            <span class="spanForLabel">Field Type</span>-->
+<!--          </label>-->
+<!--        </div>-->
+<!--        <div class="col-3">-->
+<!--          <label class="has-float-label">-->
+<!--            <input class="form-control" [value]="inputField.prefix+'\'s'">-->
+<!--            <span class="spanForLabel">Placeholder</span>-->
+<!--          </label>-->
+<!--        </div>-->
+<!--        <div class="col-3">-->
+<!--          <label class="has-float-label">-->
+<!--            <select class="form-control" [(ngModel)]="inputField.options.size">-->
+<!--              <option *ngFor="let width of size" [value]="width"-->
+<!--                      [selected]="inputField.options.size==width">{{width}}</option>-->
+<!--            </select>-->
+<!--            <span class="spanForLabel">Field Width</span>-->
+<!--          </label>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <div class="col-md-3 row align-items-center no-gutters">-->
+
+<!--      <div class="col-10 row align-items-center no-gutters ml-2">-->
+<!--        <div class="col ml-1 ">-->
+<!--          <label class="app-switch mr-2">-->
+<!--            <input type="checkbox" [(ngModel)]="inputField.options.required">-->
+<!--            <span class="app-slider app-round"></span>-->
+<!--          </label>-->
+<!--          <small>Required</small>-->
+<!--        </div>-->
+
+<!--        <div class="col ml-1">-->
+<!--          <label class="app-switch mr-2">-->
+<!--            <input type="checkbox" [(ngModel)]="inputField.options.readonly">-->
+<!--            <span class="app-slider app-round"></span>-->
+<!--          </label>-->
+<!--          <small>Read-only</small>-->
+<!--        </div>-->
+
+
+<!--        <div class="w-100"></div>-->
+<!--        <div class="col ml-1">-->
+<!--          <label class="app-switch mr-2">-->
+<!--            <input type="checkbox" [(ngModel)]="inputField.options.hideLabel">-->
+<!--            <span class="app-slider app-round"></span>-->
+<!--          </label>-->
+<!--        <small>Hide Label</small>-->
+<!--        </div>-->
+
+<!--        <div class="col ml-1">-->
+<!--          <label class="app-switch mr-2">-->
+<!--            <input type="checkbox" (ngModelChange)="uniqActivated($event)" [ngModel]="inputField.options.unique">-->
+<!--            <span class="app-slider app-round"></span>-->
+<!--          </label>-->
+<!--          <small>Unique</small>-->
+<!--        </div>-->
+
+<!--      </div>-->
+      <div class="col-1 row align-items-center">
+        <div  class=" col d-flex justify-content-end" >
             <i class="fas fa-cog dragable-i" (click)="showSettings=!showSettings"></i>
         </div>
-        <div  class="d-inline-block ml-2" >
+        <div  class=" col d-flex justify-content-end" >
             <i class="fas fa-times dragable-i" (click)="removeField(inputField)"></i>
         </div>
       </div>
+
     </div>
 
-  </div>
+
   <div *ngIf="showSettings">
     <app-v-form-field-settings [inputField] = "inputField"></app-v-form-field-settings>
   </div>

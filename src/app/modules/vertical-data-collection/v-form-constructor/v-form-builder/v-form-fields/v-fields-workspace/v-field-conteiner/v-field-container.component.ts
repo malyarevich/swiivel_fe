@@ -43,6 +43,16 @@ export class VFieldContainerComponent implements OnInit, OnDestroy{
   }
 
 
+
+  returnFieldTYpeName(field: Field){
+    let fieldTypeName: string;
+    this.customFields.forEach(f=>{
+      if(field.type==f.type) fieldTypeName = f.name;
+
+    });
+    return fieldTypeName;
+  }
+
   nameChange(event){
     event=event.trim();
 
