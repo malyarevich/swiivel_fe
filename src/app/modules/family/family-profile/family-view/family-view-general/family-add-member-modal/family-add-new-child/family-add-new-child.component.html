@@ -48,19 +48,35 @@
       </div>
       <div class="row no-gutters pt-2">
         <div class="col-4 px-1">
-          <app-input-field [formControlName]="'legal_name'" id='legal_name' label="Date of Birth"></app-input-field>
+          <app-input-field [formControlName]="'legal_name'" id='legal_name' label="Legal Name"></app-input-field>
         </div>
         <div class="col-4 px-1">
           <app-input-field [formControlName]="'dob'" id='dob' label="Date of Birth"></app-input-field>
         </div>
         <div class="col-4 px-1">
-          <app-input-field [formControlName]="'hebrew_dob'" id='hebrew_dob' label="Date of Birth"></app-input-field>
+          <app-input-field [formControlName]="'hebrew_dob'" id='hebrew_dob' label="Hebrew Date of Birth"></app-input-field>
         </div>
       </div>
       <div class="row no-gutters pt-2">
         <div class="col-4 px-1">
-        <app-input-field [formControlName]="'full_hebrew_name'" id='full_hebrew_name'
-        label="Full Hebrew Name"></app-input-field>
+          <app-input-field [formControlName]="'full_hebrew_name'" id='full_hebrew_name'
+                           label="Full Hebrew Name"></app-input-field>
+        </div>
+        <div class="col-4 d-flex justify-content-between align-items-center">
+          <label class="app-radio-container ml-1 mb-0">Son
+            <input type="radio"
+                   [name]="'gender'"
+                   [value]="GENDER.MALE"
+                   [formControlName]="'gender'">
+            <span class="app-radio-checkmark"></span>
+          </label>
+          <label class="app-radio-container ml-1 mb-0">Daughter
+            <input type="radio"
+                   [name]="'gender'"
+                   [value]="GENDER.FEMALE"
+                   [formControlName]="'gender'">
+            <span class="app-radio-checkmark"></span>
+          </label>
         </div>
       </div>
     </div>
@@ -68,27 +84,27 @@
 
   <!--<p class="app-text-small font-weight-bold mb-1 mt-3">JOB</p>-->
   <!--<div class="row no-gutters app-family-card-body p-3">-->
-    <!--<div class="col-3 px-1">-->
-      <!--<app-input-field [formControlName]="'occupation'" id='occupation' label="Occupation"></app-input-field>-->
-    <!--</div>-->
-    <!--<div class="col-3 px-1">-->
-      <!--<app-input-field [formControlName]="'address'" id='address' label="Work Address"></app-input-field>-->
-    <!--</div>-->
-    <!--<div class="col-6 px-1">-->
-      <!--<app-input-field [formControlName]="'corporate_phone'" id='corporate_phone'-->
-                       <!--label="Work Phone number"></app-input-field>-->
-    <!--</div>-->
+  <!--<div class="col-3 px-1">-->
+  <!--<app-input-field [formControlName]="'occupation'" id='occupation' label="Occupation"></app-input-field>-->
+  <!--</div>-->
+  <!--<div class="col-3 px-1">-->
+  <!--<app-input-field [formControlName]="'address'" id='address' label="Work Address"></app-input-field>-->
+  <!--</div>-->
+  <!--<div class="col-6 px-1">-->
+  <!--<app-input-field [formControlName]="'corporate_phone'" id='corporate_phone'-->
+  <!--label="Work Phone number"></app-input-field>-->
+  <!--</div>-->
   <!--</div>-->
 
   <!--<p class="app-text-small font-weight-bold mb-1 mt-3">CONTACTS</p>-->
   <!--<div class="row no-gutters app-family-card-body p-3">-->
-    <!--<div class="col-6 px-1">-->
-      <!--<app-input-field [formControlName]="'contact_phone'" id='contact_phone' label="Phone number"></app-input-field>-->
-    <!--</div>-->
-    <!--<div class="col-6 px-1">-->
-      <!--<app-input-field [formControlName]="'contact_email'" type='email' id='contact_email'-->
-                       <!--label="Email"></app-input-field>-->
-    <!--</div>-->
+  <!--<div class="col-6 px-1">-->
+  <!--<app-input-field [formControlName]="'contact_phone'" id='contact_phone' label="Phone number"></app-input-field>-->
+  <!--</div>-->
+  <!--<div class="col-6 px-1">-->
+  <!--<app-input-field [formControlName]="'contact_email'" type='email' id='contact_email'-->
+  <!--label="Email"></app-input-field>-->
+  <!--</div>-->
   <!--</div>-->
 
   <div class="row pt-3">
