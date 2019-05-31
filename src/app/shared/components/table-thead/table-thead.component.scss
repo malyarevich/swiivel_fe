@@ -1,0 +1,52 @@
+//@import '../../../../styles/variables/colors';
+
+.app-table-thead-tr {
+  background: #f3f3f3;
+  border-bottom: 1px solid #e7e7e7;
+}
+
+.app-table-thead-th {
+  font-size: 9px;
+  padding: 10px 5px 10px;
+  vertical-align: bottom;
+}
+
+.app-table-thead-th__title-block {
+  display: flex;
+  align-items: center;
+}
+
+.app-table-thead-th__title-block--right {
+  justify-content: flex-end;
+}
+
+.app-table-thead-th__title-block--center {
+  justify-content: center;
+}
+
+.app-table-thead-th__title {
+  font-size: 9px;
+}
+
+.app-table-thead-th__sort {
+  color: #a3a3a3;
+  position: relative;
+  cursor: pointer;
+  font-size: 9px;
+}
+
+.app-table-thead-th__sort--up {
+
+}
+
+.app-table-thead-th__sort--down {
+
+}
+
+.app-table-thead-th__title-block--right-padding {
+  padding: 0 129px 0 0;
+}
+
+.app-table-thead-th__title-block--left-padding {
+  padding: 0 0 0 57px;
+}

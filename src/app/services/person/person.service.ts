@@ -32,12 +32,12 @@ export class PersonService {
   getPersons(): Observable<any> {
     return this.http.get('/persons').pipe(
       map((response) => response)
-    )
+    );
   }
 
   addPerson(data): Observable<any> {
     return this.http.post('/persons', data).pipe(
       map((response) => response)
-    )
+    );
   }
 }

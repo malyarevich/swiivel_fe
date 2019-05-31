@@ -5,13 +5,21 @@
 }
 
 .app-checkbox-field-label {
-  display: block;
-  position: relative;
-  padding: 0 0 0 20px;
-  margin: 0 0 20px;
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
   cursor: pointer;
   font-size: 12px;
   user-select: none;
+}
+
+.app-checkbox-field-label__text {
+  margin: 0 0 20px;
+}
+
+.app-checkbox-field-label__text--margin-0 {
+  margin: 0;
 }
 
 .app-checkbox-field-label input {
@@ -22,36 +30,35 @@
   width: 0;
 }
 
-.app-checkbox-checkmark {
-  position: absolute;
-  top: 0;
-  left: 0;
+.app-checkbox-field-checkmark {
+  position: relative;
   height: 16px;
-  width: 16px;
+  min-width: 16px;
+  margin: 0 4px 0 0;
   background-color: #eee;
   border: 1px solid $element-base-color;
   border-radius: 4px;
 }
 
-.app-checkbox-field-label:hover input ~ .app-checkbox-checkmark {
+.app-checkbox-field-label:hover input ~ .app-checkbox-field-checkmark {
   background-color: #ccc;
 }
 
-.app-checkbox-field-label input:checked ~ .app-checkbox-checkmark {
+.app-checkbox-field-label input:checked ~ .app-checkbox-field-checkmark {
   background-color: $element-base-color;
 }
 
-.app-checkbox-checkmark:after {
+.app-checkbox-field-checkmark:after {
   content: '';
   position: absolute;
   display: none;
 }
 
-.app-checkbox-field-label input:checked ~ .app-checkbox-checkmark:after {
+.app-checkbox-field-label input:checked ~ .app-checkbox-field-checkmark:after {
   display: block;
 }
 
-.app-checkbox-field-label .app-checkbox-checkmark:after {
+.app-checkbox-field-label .app-checkbox-field-checkmark:after {
   left: 5px;
   top: 1px;
   width: 5px;
@@ -66,7 +73,7 @@
     color: #e65757;
   }
 
-  .app-checkbox-checkmark {
+  .app-checkbox-field-checkmark {
     border-color: #e65757;
   }
 }

@@ -16,7 +16,7 @@ export class SearchFieldComponent implements OnInit, ControlValueAccessor {
   @Input() disabled: boolean;
   @Input() id: string;
   @Input() isInvalid = false;
-  @Input() placeholder = 'Search';
+  @Input() placeholder = '';
   @Input() type;
 
   value: any = '';

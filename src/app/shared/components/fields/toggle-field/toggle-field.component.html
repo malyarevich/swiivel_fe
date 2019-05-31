@@ -1,0 +1,22 @@
+<div
+  class="app-toggle-field"
+  [ngClass]="{'app-toggle-field-has-error': isInvalid}"
+>
+  <label
+    class="app-toggle-field-label"
+    ([for])="id"
+  >
+    <input
+      type="checkbox"
+      ([id])="id"
+      [value]="isSelected"
+      [checked]="isSelected"
+      [disabled]="disabled"
+      (click)="toggleCheckbox()"
+    >
+    <span class="app-toggle-field-label-slider"></span>
+  </label>
+  <span class="app-toggle-field-value">
+    {{label}}
+  </span>
+</div>

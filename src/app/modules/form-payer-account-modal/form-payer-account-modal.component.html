@@ -85,6 +85,7 @@
       >
         <app-checkbox-field
           label="Primary Payer Account"
+          [hasMargin]="true"
           id="primary-account"
           formControlName="primary"
           [isInvalid]="payerAccountForm.get('primary').invalid && payerAccountForm.get('primary').touched"
@@ -113,11 +114,15 @@
       <div class="form-payer-account-fees">
         <app-form-payer-account-modal-fee
           *ngFor="let recipient of payerAccountForm.value['recipients']"
+          [parentForm] = "feesForm"
           [recipient]="recipient"
-          [fees]="fees[recipient.id]"
+          [fees]="feesData"
           (removeRecipientFees)="onRemoveRecipient($event)"
         ></app-form-payer-account-modal-fee>
       </div>
+
+      <app-form-payer-account-modal-payment [parentForm]="paymentForm"></app-form-payer-account-modal-payment>
+
       <div
         class="form-payer-account-members"
       >
@@ -155,6 +160,5 @@
         </button>
       </div>
     </form>
-    <!--<pre><code>{{ payerAccountForm.value | json }}</code></pre>-->
   </div>
 </app-modal>

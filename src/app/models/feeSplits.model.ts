@@ -5,4 +5,6 @@ export interface FeeSplits {
   date_from: string;
   id: number;
   name: string;
+  isSelected?: boolean;
+  splitPay?: { input: number, param: string };
 }

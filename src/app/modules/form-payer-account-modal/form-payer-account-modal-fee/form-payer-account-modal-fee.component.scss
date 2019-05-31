@@ -71,16 +71,16 @@
   }
 
   .app-form-payer-account-modal-fee__content {
-    //height: 0;
-    //transition: all 4s;
-    //overflow: hidden;
     display: none;
     background: $lightgray-color;
     padding: 15px;
   }
 
   .app-form-payer-account-modal-fee__content--open {
-    //height: auto;
     display: block;
+  }
+
+  .app-form-payer-account-modal-fee__select-fees {
+    margin: 0 0 15px;
   }
 }
