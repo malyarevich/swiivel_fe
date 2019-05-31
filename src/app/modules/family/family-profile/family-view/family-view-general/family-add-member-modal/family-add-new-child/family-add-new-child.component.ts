@@ -100,14 +100,12 @@ export class FamilyAddNewChildComponent implements OnInit {
       data['student_info'] = this.familyChildForm.value.student_info;
     }
 
-
-    console.log(data);
-    // this.personService.addPerson(data).subscribe((res) => {
-    //   if (res.created) {
-    //     this.addFamilyPerson(res.data.id);
-    //   }
-    // }, (error) => console.log(error));
-    // this.onCloseAddFamilyMemberModal();
+    this.personService.addPerson(data).subscribe((res) => {
+      if (res.created) {
+        this.addFamilyPerson(res.data.id);
+      }
+    }, (error) => console.log(error));
+    this.onCloseAddFamilyMemberModal();
   }
 
   addFamilyPerson(personId) {
