@@ -5,6 +5,7 @@ import {Person} from "../../../../../../../models/person.model";
 import {PersonService} from "../../../../../../../services/person/person.service";
 import {Gender} from "../../../../../../../enums/gender";
 import {FamilyPersonService} from "../../../../../../../services/family/family-person.service";
+import {FamilyRoles} from "../../../../../../../enums/family-roles";
 
 @Component({
   selector: 'app-family-add-new-child',
@@ -17,8 +18,10 @@ export class FamilyAddNewChildComponent implements OnInit {
   @Input() role: string;
 
   familyChildForm: FormGroup;
+
   persons: any[] = [];
   GENDER = Gender;
+  FAMILY_ROLES = FamilyRoles;
 
   constructor(private fb: FormBuilder,
               private personService: PersonService,
@@ -31,7 +34,8 @@ export class FamilyAddNewChildComponent implements OnInit {
   }
 
   initFamilyNewChildForm() {
-    this.familyChildForm = this.fb.group({
+
+    let controlsConfig = {
       adopted: [null],
       parents: [null],
       first_name: [null, Validators.required],
@@ -42,7 +46,28 @@ export class FamilyAddNewChildComponent implements OnInit {
       hebrew_dob: [null],
       hebrew_full_name: [null],
       gender: [null],
-    });
+      student_info: this.fb.group({
+        current_grade: [null],
+        start_grade: [null],
+        current_school: [null],
+        previous_school: [null],
+        medical_conditions: [null],
+        allergies: [null],
+        medications: [null],
+        physician: [null],
+        country: [null],
+        address: [null],
+        phone: [null],
+        first_emergency_contact: [null],
+        first_full_name: [null],
+        first_cell_phone: [null],
+        second_full_name: [null],
+        relationship_to_student: [null],
+        second_cell_phone: [null],
+      })
+    };
+
+    this.familyChildForm = this.fb.group(controlsConfig);
   }
 
   getPersons() {
@@ -70,13 +95,19 @@ export class FamilyAddNewChildComponent implements OnInit {
       hebrew_full_name: this.familyChildForm.value.hebrew_full_name,
       gender: this.familyChildForm.value.gender,
     };
+
+    if(this.role === this.FAMILY_ROLES.student) {
+      data['student_info'] = this.familyChildForm.value.student_info;
+    }
+
+
     console.log(data);
-    this.personService.addPerson(data).subscribe((res) => {
-      if (res.created) {
-        this.addFamilyPerson(res.data.id);
-      }
-    }, (error) => console.log(error));
-    this.onCloseAddFamilyMemberModal();
+    // this.personService.addPerson(data).subscribe((res) => {
+    //   if (res.created) {
+    //     this.addFamilyPerson(res.data.id);
+    //   }
+    // }, (error) => console.log(error));
+    // this.onCloseAddFamilyMemberModal();
   }
 
   addFamilyPerson(personId) {
