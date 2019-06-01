@@ -18,10 +18,10 @@
           <span class="app-text-second">Name:</span><span>{{fullNameWithMiddle | titlecase}}</span>
         </div>
         <div class="col-12 d-flex justify-content-between pb-1">
-          <span class="app-text-second">Legal Name:</span><span>???</span>
+          <span class="app-text-second">Legal Name:</span><span>{{familyPerson.person.legal_name}}</span>
         </div>
         <div class="col-12 d-flex justify-content-between pb-1">
-          <span class="app-text-second">Full Hebrew Name:</span><span>{{familyPerson.person.hebrew_first_name}}</span>
+          <span class="app-text-second">Full Hebrew Name:</span><span>{{familyPerson.person.hebrew_full_name}}</span>
         </div>
       </div>
     </div>
@@ -44,7 +44,7 @@
       <span class="app-text-second">Date of Birth:</span><span>{{familyPerson.person.dob}}</span>
     </div>
     <div class="col-12 d-flex justify-content-between pb-1">
-      <span class="app-text-second">Hebrew Date of Birth:</span><span>??</span>
+      <span class="app-text-second">Hebrew Date of Birth:</span><span>{{familyPerson.person.hebrew_dob}}</span>
     </div>
   </div>
 </div>

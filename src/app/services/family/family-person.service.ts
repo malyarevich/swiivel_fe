@@ -55,13 +55,13 @@ export class FamilyPersonService {
       }),
       params: new HttpParams().set('params', JSON.stringify(params)),
     };
-    return this.http.get(`${environment.apiFB}/persons/family/${familyId}?api_token=${environment.api_token}`, options).pipe(
+    return this.http.get(`/person/family/${familyId}`, options).pipe(
       map((res) => res)
     );
   }
 
   addOneRequest(data): Observable<any> {
-    return this.http.post(`${environment.apiFB}/persons/family?api_token=${environment.api_token}`, {...data}).pipe(
+    return this.http.post(`/person/family`, {...data}).pipe(
       map((res) => res)
     );
   }

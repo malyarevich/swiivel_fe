@@ -35,7 +35,7 @@ export class FamilyAddNewParentComponent implements OnInit {
       middle_name: [null],
       last_name: [null],
       dob: [null],
-      full_hebrew_name: [null],
+      hebrew_full_name: [null],
       maiden_name: [null],
       occupation: [null],
       address: [null],
