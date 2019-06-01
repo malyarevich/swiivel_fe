@@ -1,0 +1,377 @@
+<div class="content__box">
+  <h2 class="content__title">{{ pdf.title }}</h2>
+
+  <h3 class="content__sub_title">{{ pdf.subtitle }}</h3>
+  <!-- General -->
+  <div class="content__row_list">
+    <ng-container
+      *ngFor="
+        let checkBoxItem of pdf.checkBoxList['general'];
+        let checkBoxIndex = index;
+        let checkBoxLastIndex = last
+      "
+    >
+      <label
+        class="app-checkbox-container checkbox"
+        [ngClass]="{
+          'checkbox--mr_2': checkBoxIndex !== checkBoxLastIndex
+        }"
+        for="{{ 'pdf_' + 'general_' + checkBoxIndex }}"
+      >
+        <p
+          class="checkbox__text"
+          [ngClass]="{ 'checkbox__text--checked': checkBoxItem.status }"
+        >
+          {{ checkBoxItem.text }}
+        </p>
+        <input
+          type="checkbox"
+          id="{{ 'pdf_' + 'general_' + checkBoxIndex }}"
+          [ngModel]="checkBoxItem.status"
+          (click)="toggleCheckbox('general', checkBoxIndex)"
+        />
+        <span class="app-checkbox-checkmark"></span>
+      </label>
+    </ng-container>
+  </div>
+  <!-- Sending -->
+  <div class="row no-gutters slider-item align-items-center">
+    <div class="col-auto mr-2">
+      <label class="app-switch">
+        <input
+          type="checkbox"
+          [ngModel]="pdf.checkBoxList['sending'][0].status"
+          (ngModelChange)="
+            pdf.checkBoxList['sending'][0].status = pdf.checkBoxList[
+              'sending'
+            ][0].status = $event
+          "
+        />
+        <span class="app-slider app-round"></span>
+      </label>
+    </div>
+    <div class="col">
+      <span
+        class="font-weight-bold side-bar-toggle content__toggle_text"
+        (click)="toggleCheckbox('sending', 0)"
+        >{{ pdf.checkBoxList["sending"][0].text }}</span
+      >
+    </div>
+  </div>
+  <!-- MailForm -->
+
+  <!-- <form [formGroup]="fieldsAddGroup" (ngSubmit)="addField(modal)"> -->
+  <!-- (ngSubmit)="sendMail(modal)" -->
+  <form
+    [formGroup]="pdfMailForm"
+    class="mail_form openable_item"
+    [ngClass]="{
+      'openable_item--close': !pdf.checkBoxList['sending'][0].status
+    }"
+  >
+    <!-- #ProviderNameID -->
+    <div
+      class="form-group app-input-container"
+      [ngClass]="{ 'app-input-fill': true }"
+    >
+      <label for="ProviderName" class="app-input-label">Provider Name</label>
+      <select
+        class="app-input form-control"
+        [ngClass]="{
+          'is-invalid': false
+        }"
+        #ProviderNameID
+        id="ProviderNameID"
+        name="ProviderNameID"
+        formControlName="ProviderName"
+      >
+        <option value="" disabled [selected]="true">Provider Name</option>
+        <option
+          *ngFor="
+            let field of [
+              { value: 1, name: 'da_da' },
+              { value: 2, name: 'da_net' },
+              { value: 3, name: 'da_da_da' }
+            ]
+          "
+          [ngValue]="field"
+          >{{ field.name }}</option
+        >
+      </select>
+      <div class="invalid-feedback">
+        Field type is required!
+      </div>
+    </div>
+    <div class="row">
+      <!-- #AccountNumberID -->
+      <div
+        class="col-12 col-md-6 form-group app-input-container"
+        [ngClass]="{ 'app-input-fill': AccountNumberID.value }"
+      >
+        <label for="AccountNumberID" class="app-input-label"
+          >Account Number</label
+        >
+        <input
+          type="text"
+          class="app-input form-control"
+          [ngClass]="
+            pdfMailForm.get('AccountNumber').touched &&
+            pdfMailForm.get('AccountNumber').invalid
+              ? 'is-invalid'
+              : ''
+          "
+          #AccountNumberID
+          id="AccountNumberID"
+          name="AccountNumberID"
+          formControlName="AccountNumber"
+          placeholder="Account Number"
+        />
+
+        <div class="invalid-feedback">
+          Field name is required and contain min 3 and max 50 symbols
+        </div>
+      </div>
+
+      <!-- #EmailID -->
+      <div
+        class="col-12 col-md-6 form-group app-input-container"
+        [ngClass]="{ 'app-input-fill': EmailID.value }"
+      >
+        <label for="EmailID" class="app-input-label">Email</label>
+        <input
+          type="text"
+          class="app-input form-control"
+          [ngClass]="
+            pdfMailForm.get('Email').touched && pdfMailForm.get('Email').invalid
+              ? 'is-invalid'
+              : ''
+          "
+          #EmailID
+          id="EmailID"
+          name="EmailID"
+          formControlName="Email"
+          placeholder="Email"
+        />
+
+        <div class="invalid-feedback">
+          Field Email is required and should be a valid
+        </div>
+      </div>
+    </div>
+    <!-- #EmailSubjectID -->
+    <div
+      class="form-group app-input-container"
+      [ngClass]="{ 'app-input-fill': EmailSubjectID.value }"
+    >
+      <label for="EmailSubjectID" class="app-input-label">Email Subject</label>
+      <input
+        type="text"
+        class="app-input form-control"
+        [ngClass]="
+          pdfMailForm.get('EmailSubject').touched &&
+          pdfMailForm.get('EmailSubject').invalid
+            ? 'is-invalid'
+            : ''
+        "
+        #EmailSubjectID
+        id="EmailSubjectID"
+        name="EmailSubjectID"
+        formControlName="EmailSubject"
+        placeholder="Email Subject"
+      />
+
+      <div class="invalid-feedback">
+        Field Email Subject is required
+      </div>
+    </div>
+
+    <!-- #EmailBodyID -->
+    <div
+      class="form-group app-input-container"
+      [ngClass]="{ 'app-input-fill': EmailBodyID.value }"
+    >
+      <label for="EmailBodyID" class="app-input-label d-none">Email Body</label>
+      <input
+        type="text"
+        class="app-input form-control d-none"
+        [ngClass]="
+          pdfMailForm.get('EmailBody').touched &&
+          pdfMailForm.get('EmailBody').invalid
+            ? 'is-invalid'
+            : ''
+        "
+        #EmailBodyID
+        id="EmailBodyID"
+        name="EmailBodyID"
+        formControlName="EmailBody"
+        placeholder="Email Body"
+      />
+
+      <div
+        class="form-control app-editable-wrapper mail_form__textarea_container"
+        [ngClass]="
+          pdfMailForm.get('EmailBody').touched &&
+          pdfMailForm.get('EmailBody').invalid
+            ? 'is-invalid'
+            : ''
+        "
+      >
+        <div class="row">
+          <div class="col">Email Body</div>
+          <div class="col text-right">
+            <div class="d-inline-block">
+              <a
+                (click)="setCommand('bold')"
+                (mousedown)="$event.preventDefault()"
+                class="app-cursor-pointer"
+              >
+                <small>Bold</small>
+              </a>
+              <span><small> | </small></span>
+              <a
+                (click)="setCommand('italic')"
+                (mousedown)="$event.preventDefault()"
+                class="app-cursor-pointer"
+              >
+                <small>Italic</small>
+              </a>
+              <span><small> | </small></span>
+              <a
+                (click)="setCommand('removeFormat')"
+                (mousedown)="$event.preventDefault()"
+                class="app-cursor-pointer"
+              >
+                <small>Remove Format</small>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div
+          [innerHTML]="
+            pdfMailForm.value['EmailBody'] ? pdfMailForm.value['EmailBody'] : ''
+          "
+          class="mail_form__textarea"
+          (blur)="
+            onChangeFormValue('EmailBody', {
+              EmailBody: $event.target.innerHTML
+            })
+          "
+          contentEditable="true"
+        ></div>
+      </div>
+
+      <div class="invalid-feedback">
+        Field Email Body is required
+      </div>
+    </div>
+
+    <!-- FormCheckbox -->
+    <label class="app-checkbox-container checkbox" for="FormCheckboxID">
+      <p
+        class="checkbox__text"
+        [ngClass]="{
+          'checkbox__text--checked': pdf.checkBoxList['form'][0].status
+        }"
+      >
+        {{ pdf.checkBoxList["form"][0].text }}
+      </p>
+      <input
+        type="checkbox"
+        id="FormCheckboxID"
+        #FormCheckbox
+        formControlName="FormCheckbox"
+        (click)="toggleCheckbox('form', 0)"
+      />
+      <span class="app-checkbox-checkmark"></span>
+    </label>
+    <!-- #CoverLetterID -->
+
+    <div
+      class="form-group app-input-container openable_item"
+      [ngClass]="{
+        'app-input-fill': CoverLetterID.value,
+        'openable_item--close': !pdf.checkBoxList['form'][0].status
+      }"
+    >
+      <label for="CoverLetterID" class="app-input-label d-none">
+        Cover Letter
+      </label>
+      <input
+        type="text"
+        class="app-input form-control d-none"
+        [ngClass]="
+          pdfMailForm.get('CoverLetter').touched &&
+          pdfMailForm.get('CoverLetter').invalid
+            ? 'is-invalid'
+            : ''
+        "
+        #CoverLetterID
+        id="CoverLetterID"
+        name="CoverLetterID"
+        formControlName="CoverLetter"
+        placeholder="Cover Letter"
+      />
+
+      <div
+        class="form-control app-editable-wrapper mail_form__textarea_container"
+        [ngClass]="
+          pdfMailForm.get('CoverLetter').touched &&
+          pdfMailForm.get('CoverLetter').invalid
+            ? 'is-invalid'
+            : ''
+        "
+      >
+        <div class="row">
+          <div class="col">Cover Letter</div>
+          <div class="col text-right">
+            <div class="d-inline-block">
+              <a
+                (click)="setCommand('bold')"
+                (mousedown)="$event.preventDefault()"
+                class="app-cursor-pointer"
+              >
+                <small>Bold</small>
+              </a>
+              <span><small> | </small></span>
+              <a
+                (click)="setCommand('italic')"
+                (mousedown)="$event.preventDefault()"
+                class="app-cursor-pointer"
+              >
+                <small>Italic</small>
+              </a>
+              <span><small> | </small></span>
+              <a
+                (click)="setCommand('removeFormat')"
+                (mousedown)="$event.preventDefault()"
+                class="app-cursor-pointer"
+              >
+                <small>Remove Format</small>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div
+          [innerHTML]="
+            pdfMailForm.value['CoverLetter']
+              ? pdfMailForm.value['CoverLetter']
+              : ''
+          "
+          class="mail_form__textarea"
+          (blur)="
+            onChangeFormValue('CoverLetter', {
+              CoverLetter: $event.target.innerHTML
+            })
+          "
+          contentEditable="true"
+        ></div>
+      </div>
+
+      <div class="invalid-feedback">
+        Field Cover Letter is required
+      </div>
+    </div>
+  </form>
+</div>

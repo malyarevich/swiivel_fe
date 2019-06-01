@@ -1,117 +1,31 @@
 <div class="content">
   <!-- BEGIN: Online Form -->
-  <ng-container *ngIf="true">
-    <div class="content__box">
-      <h2 class="content__title">{{ pageData["online"].title }}</h2>
-
-      <ng-container
-        *ngFor="
-          let checkBoxItem of pageData['online'].checkBoxList;
-          let checkBoxIndex = index
-        "
-      >
-        <label
-          class="app-checkbox-container checkbox"
-          for="{{ 'online' + checkBoxIndex }}"
-        >
-          <p
-            class="checkbox__text"
-            [ngClass]="{ 'checkbox__text--checked': checkBoxItem.status }"
-          >
-            {{ checkBoxItem.text }}
-            <span
-              placement="right auto"
-              [ngbPopover]="checkBoxItem.tipText"
-              triggers="mouseenter:mouseleave"
-              [openDelay]="100"
-              [closeDelay]="1000"
-              popoverClass="checkbox__popover"
-              ><i class="fas fa-question-circle checkbox__info_icon"></i
-            ></span>
-          </p>
-          <input
-            type="checkbox"
-            id="{{ 'online' + checkBoxIndex }}"
-            [ngModel]="checkBoxItem.status"
-            (click)="toggleOnlineCheckBox(checkBoxIndex)"
-          />
-          <span class="app-checkbox-checkmark"></span>
-        </label>
-      </ng-container>
-    </div>
+  <ng-container>
+    <app-v-publish-settings-online-form
+      class="d-block openable_item"
+      [ngClass]="{'openable_item--close': !stateSub.settings['online']}"
+      [online]="pageData.online"
+      (onToggleCheckbox)="toggleOnlineCheckbox($event)"
+    ></app-v-publish-settings-online-form>
   </ng-container>
   <!-- END: Online Form -->
 
   <!-- BEGIN: PDF Form -->
-  <ng-container *ngIf="true">
-    <div class="content__box">
-      <h2 class="content__title">{{ pageData["pdf"].title }}</h2>
-
-      <h3 class="content__sub_title">{{ pageData["pdf"].subtitle }}</h3>
-      <!-- General -->
-      <div class="content__row_list">
-        <ng-container
-          *ngFor="
-            let checkBoxItem of pageData['pdf'].checkBoxList['general'];
-            let checkBoxIndex = index;
-            let checkBoxLastIndex = last
-          "
-        >
-          <label
-            class="app-checkbox-container checkbox"
-            [ngClass]="{
-              'checkbox--mr_2': checkBoxIndex !== checkBoxLastIndex
-            }"
-            for="{{ 'pdf' + 'general' + checkBoxIndex }}"
-          >
-            <p
-              class="checkbox__text"
-              [ngClass]="{ 'checkbox__text--checked': checkBoxItem.status }"
-            >
-              {{ checkBoxItem.text }}
-            </p>
-            <input
-              type="checkbox"
-              id="{{ 'pdf' + 'general' + checkBoxIndex }}"
-              [ngModel]="checkBoxItem.status"
-              (click)="togglePdfCheckBox('general', checkBoxIndex)"
-            />
-            <span class="app-checkbox-checkmark"></span>
-          </label>
-        </ng-container>
-      </div>
-      <!-- Sending -->
-      <div class="row no-gutters slider-item align-items-center">
-        <div class="col-auto mr-2">
-          <label class="app-switch">
-            <input
-              type="checkbox"
-              [ngModel]="pageData['pdf'].checkBoxList['sending'][0].status"
-              (ngModelChange)="
-                pageData['pdf'].checkBoxList['sending'][0].status = pageData[
-                  'pdf'
-                ].checkBoxList['sending'][0].status = $event
-              "
-            />
-            <span class="app-slider app-round"></span>
-          </label>
-        </div>
-        <div class="col">
-          <span
-            class="font-weight-bold side-bar-toggle content__toggle_text"
-            (click)="togglePdfCheckBox('sending', 0)"
-            >{{ pageData["pdf"].checkBoxList["sending"][0].text }}</span
-          >
-        </div>
-      </div>
-      <!-- MailForm -->
-      <p>>>> MailForm</p>
-      <!-- SaveGo -->
-      <div class="mt-5 text-center">
-        <button class="btn app-btn-primary px-3 py-2">Save & Go Next Step</button>
-      </div>
-    </div>
+  <ng-container>
+    <app-v-publish-settings-pdf-form
+      class="d-block openable_item"
+      [ngClass]="{'openable_item--close': !stateSub.settings['pdf']}"
+      [pdf]="pageData.pdf"
+      (onToggleCheckbox)="togglePdfCheckbox($event)"
+    ></app-v-publish-settings-pdf-form>
   </ng-container>
   <!-- END: PDF Form -->
+  
+  <!-- SaveGo -->
+  <div class="mt-5 text-center">
+    <button class="btn app-btn-primary px-3 py-2">
+      Save & Go Next Step
+    </button>
+  </div>
 </div>
 <!-- /.content -->

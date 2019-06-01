@@ -1,0 +1,38 @@
+<div class="content__box">
+  <h2 class="content__title">{{ online.title }}</h2>
+
+  <ng-container
+    *ngFor="
+      let checkBoxItem of online.checkBoxList;
+      let checkBoxIndex = index
+    "
+  >
+    <label
+      class="app-checkbox-container checkbox checkbox--mb_2"
+      for="{{ 'online' + checkBoxIndex }}"
+    >
+      <p
+        class="checkbox__text"
+        [ngClass]="{ 'checkbox__text--checked': checkBoxItem.status }"
+      >
+        {{ checkBoxItem.text }}
+        <span
+          placement="right auto"
+          [ngbPopover]="checkBoxItem.tipText"
+          triggers="mouseenter:mouseleave"
+          [openDelay]="100"
+          [closeDelay]="1000"
+          popoverClass="checkbox__popover"
+          ><i class="fas fa-question-circle checkbox__info_icon"></i
+        ></span>
+      </p>
+      <input
+        type="checkbox"
+        id="{{ 'online' + checkBoxIndex }}"
+        [ngModel]="checkBoxItem.status"
+        (click)="toggleOnlineCheckBox(checkBoxIndex)"
+      />
+      <span class="app-checkbox-checkmark"></span>
+    </label>
+  </ng-container>
+</div>

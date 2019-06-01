@@ -2,15 +2,17 @@ import {Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {FormUtils} from "../../utils/form.utils";
 import {PublishMenuItems} from "./models/publish-menu-items";
+import {ISubMenus} from "./v-publish-menu/v-publish-menu.component";
 
 @Component({
   selector: 'app-v-form-publish-settings',
   templateUrl: './v-form-publish-settings.component.html',
-  styleUrls: ['./v-form-publish-settings.component.css']
+  styleUrls: ['./v-form-publish-settings.component.scss']
 })
 export class VFormPublishSettingsComponent implements OnInit {
   @Input() formId: string;
   activeMenuItem: string;
+  stateSub: ISubMenus;
   publishMenuItems = PublishMenuItems;
 
   constructor( private formUtils: FormUtils,private route: ActivatedRoute) { }
@@ -25,6 +27,10 @@ export class VFormPublishSettingsComponent implements OnInit {
 
   setActiveMenu(value) {
     this.activeMenuItem = value;
+  }
+
+  setStateSub(newState: ISubMenus):void {
+    this.stateSub = newState;
   }
 
 }

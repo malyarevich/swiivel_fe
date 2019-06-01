@@ -1,4 +1,5 @@
 @import '../../../../../../styles/index.scss';
+@import '../shared/style/index.scss';
 
 .extra_bold_bigger {
     color: $darkgray-color;
@@ -16,7 +17,7 @@
         background-color: $white;
         border-radius: 0.5rem;
         margin-bottom: 1rem;
-        padding: 3.3rem;
+        padding: 3.3rem 3.3rem 1rem;
     }
 
     
@@ -45,12 +46,17 @@
 
     &__toggle_text {
         @extend .extra_bold_bigger;
+        cursor: pointer;
     }
 }
 
-.checkbox {    
-    margin-bottom: 1.75rem;
+.checkbox {
+    margin-bottom: 0;
     padding-left: 2rem;
+
+    &--mb_2 {
+        margin-bottom: 2rem;
+    }
 
     &--mr_2 {
         margin-right: 2rem;
@@ -77,4 +83,6 @@
         color: $icon-grey-color;
     }
 }
-
+.form-group {
+    margin-bottom: 1.5rem;
+}

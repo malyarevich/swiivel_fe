@@ -1,10 +1,7 @@
-import { Component, OnInit, ViewEncapsulation } from "@angular/core";
-
-enum PDFCheckboxGroup {
-  general = "general",
-  sending = "sending",
-  additional = "additional"
-}
+import { Component, OnInit, ViewEncapsulation, Input } from "@angular/core";
+import { ISubMenus } from "../v-publish-menu/v-publish-menu.component";
+import { IOnline } from './v-publish-settings-online-form/v-publish-settings-online-form.component';
+import { IPdf, IPdfCheckboxStructure } from './v-publish-settings-pdf-form/v-publish-settings-pdf-form.component';
 
 @Component({
   selector: "app-v-publish-settings",
@@ -13,6 +10,8 @@ enum PDFCheckboxGroup {
   styleUrls: ["./v-publish-settings.component.scss"]
 })
 export class VPublishSettingsComponent implements OnInit {
+  @Input() stateSub: ISubMenus;
+
   pageData: IPageData = {
     online: {
       title: "Online Form",
@@ -58,7 +57,7 @@ export class VPublishSettingsComponent implements OnInit {
             text: "Send to a Mailing House Service"
           }
         ],
-        additional: [
+        form: [
           {
             status: false,
             text: "Include Cover Letter for Envelope Window"
@@ -79,12 +78,14 @@ export class VPublishSettingsComponent implements OnInit {
 
   ngOnInit() { }
 
-  toggleOnlineCheckBox(checkBoxIndex: number) {
-    this.pageData['online'].checkBoxList[checkBoxIndex].status = !this.pageData['online'].checkBoxList[checkBoxIndex].status;
+  toggleOnlineCheckbox(checkBoxIndex: number) {
+    this.pageData['online'].checkBoxList[checkBoxIndex].status = 
+    !this.pageData['online'].checkBoxList[checkBoxIndex].status;
   }
 
-  togglePdfCheckBox(group: PDFCheckboxGroup, checkBoxIndex: number) {
-    this.pageData['pdf'].checkBoxList[group][checkBoxIndex].status = !this.pageData['pdf'].checkBoxList[group][checkBoxIndex].status;
+  togglePdfCheckbox(checkbox: IPdfCheckboxStructure) {
+    this.pageData['pdf'].checkBoxList[checkbox.group][checkbox.index].status = 
+    !this.pageData['pdf'].checkBoxList[checkbox.group][checkbox.index].status;
   }
 }
 
@@ -93,32 +94,8 @@ export interface IPageData {
   pdf: IPdf;
 }
 
-export interface IOnline {
-  title: string;
-  checkBoxList: ICheckBox[];
-}
-
-export interface IPdf {
-  title: string;
-  subtitle: string;
-  checkBoxList: IPdfCheckBox;
-  inputList?: IInput[];
-}
-
-export interface IPdfCheckBox {
-  general: ICheckBox[];
-  sending: ICheckBox[];
-  additional: ICheckBox[];
-}
-
-export interface ICheckBox {
+export interface ICheckbox {
   status: boolean;
   text: string;
   tipText?: string;
-}
-
-export interface IInput {
-  value: string;
-  type: string;
-  placeholder?: string;
 }

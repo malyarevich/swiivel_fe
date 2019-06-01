@@ -8,6 +8,7 @@ import { PublishMenuItems } from "../models/publish-menu-items";
 })
 export class VPublishMenuComponent implements OnInit {
   @Output() activeMenuItemEmitter = new EventEmitter();
+  @Output() stateSubEmitter = new EventEmitter<ISubMenus>();
 
   activeMenuItem: string = PublishMenuItems.conditions;
 
@@ -16,7 +17,7 @@ export class VPublishMenuComponent implements OnInit {
       online: false,
       pdf: false,
     },
-  }
+  };
 
   menuItems = [
     {
@@ -51,6 +52,7 @@ export class VPublishMenuComponent implements OnInit {
 
   ngOnInit() {
     this.activeMenuItemEmitter.emit(this.activeMenuItem);
+    this.stateSubEmitter.emit(this.subMenus);
   }
 
   setActiveItem(value) {
@@ -60,11 +62,12 @@ export class VPublishMenuComponent implements OnInit {
 
   toggleSubMenu(item, type) {
     this.subMenus[item][type] != this.subMenus[item][type];
+    this.stateSubEmitter.emit(this.subMenus);
   }
 }
 
 export interface ISubMenus {
-  settings: ISettingsMenu;
+  settings?: ISettingsMenu;
 }
 
 export interface ISettingsMenu {
