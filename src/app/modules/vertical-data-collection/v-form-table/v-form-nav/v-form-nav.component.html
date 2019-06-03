@@ -1,43 +1,79 @@
-<div class="row py-4">
-  <div class="col-sm-6">
+<div class="form_nav__container">
+  <div>
     <p class="font-weight-bold">FORMS</p>
   </div>
-  <div class="col-sm-6 text-right">
-    <div class="row">
-      <div class="col-sm-6">
-        <button type="button"
-                class="btn app-btn-primary"
-                routerLink="v-form-constructor"
-                routerLinkActive="active">
+  <div class="form_nav__controls">
+    <div class="form_nav__buttons">
+    <!--
+      <div class="form_nav__button_box">
+        <button
+          type="button"
+          class="btn app-btn-primary form_nav__button"
+          routerLink="v-form-constructor"
+          routerLinkActive="active"
+        >
+          Review the form
+        </button>
+      </div> 
+    -->
+      <div class="form_nav__button_box">
+        <button
+          type="button"
+          class="btn app-btn-primary form_nav__button"
+          routerLink="v-form-constructor"
+          routerLinkActive="active"
+        >
           Create New Form
         </button>
-        <div ngbDropdown class="d-inline-block ml-2">
-          <button class="btn app-btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>
-            Bulk
-            Actions
+      </div>
+      <div class="form_nav__button_box">
+        <div ngbDropdown class="form_nav__button">
+          <button
+            ngbDropdownToggle
+            class="btn app-btn-outline-primary"
+            id="dropdownBasic1"
+          >
+            Bulk Actions
           </button>
-          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-            <button disabled ngbDropdownItem (click)="bulkAction('share')">Share</button>
-            <button disabled ngbDropdownItem (click)="bulkAction('pdfexport')">Export PDF</button>
-            <button ngbDropdownItem (click)="bulkAction('archive')">Archive</button>
-            <button ngbDropdownItem (click)="bulkAction('delete')">Delete</button>
+          <div 
+            ngbDropdownMenu
+            class="w-100"
+            aria-labelledby="dropdownBasic1"
+          >
+            <button disabled ngbDropdownItem (click)="bulkAction('share')">
+              Share
+            </button>
+            <button disabled ngbDropdownItem (click)="bulkAction('pdfexport')">
+              Export PDF
+            </button>
+            <button ngbDropdownItem (click)="bulkAction('archive')">
+              Archive
+            </button>
+            <button ngbDropdownItem (click)="bulkAction('delete')">
+              Delete
+            </button>
           </div>
         </div>
       </div>
-      <div class="col-sm-6">
-        <div class="input-group">
-          <input [(ngModel)]="searchValue" (ngModelChange)="onSearchValue()"
-            class="form-control mr-2"
-            type="search"
-            placeholder="Search">
-          <button type="button" class="btn app-btn-primary"
-            placement="left"
-            ngbPopover="This feature is under development"
-            popoverTitle="Notice"
-          >
-            <i class="fas fa-sliders-h"></i>
-          </button>
-        </div>
+    </div>
+    <div class="form_nav__search_box">
+      <div class="input-group">
+        <input
+          [(ngModel)]="searchValue"
+          (ngModelChange)="onSearchValue()"
+          class="form-control mr-2"
+          type="search"
+          placeholder="Search"
+        />
+        <button
+          type="button"
+          class="btn app-btn-primary"
+          placement="left"
+          ngbPopover="This feature is under development"
+          popoverTitle="Notice"
+        >
+          <i class="fas fa-sliders-h"></i>
+        </button>
       </div>
     </div>
   </div>
@@ -47,44 +83,58 @@
   <div class="collapse justify-content-left navbar-collapse">
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link app-ft-nav-link"
-           [ngClass]="{'app-ft-nav-link-active' : activeFilterTab=='all'}"
-           (click)="onCheckStatusTab('all')">
+        <a
+          class="nav-link app-ft-nav-link"
+          [ngClass]="{ 'app-ft-nav-link-active': activeFilterTab == 'all' }"
+          (click)="onCheckStatusTab('all')"
+        >
           All
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link app-ft-nav-link"
-           [ngClass]="{'app-ft-nav-link-active' : activeFilterTab=='active'}"
-           (click)="onCheckStatusTab('active')">
+        <a
+          class="nav-link app-ft-nav-link"
+          [ngClass]="{ 'app-ft-nav-link-active': activeFilterTab == 'active' }"
+          (click)="onCheckStatusTab('active')"
+        >
           Active
         </a>
       </li>
       <li class="nav-item ">
-        <a class="nav-link app-ft-nav-link"
-           [ngClass]="{'app-ft-nav-link-active' : activeFilterTab=='draft'}"
-           (click)="onCheckStatusTab('draft')">
+        <a
+          class="nav-link app-ft-nav-link"
+          [ngClass]="{ 'app-ft-nav-link-active': activeFilterTab == 'draft' }"
+          (click)="onCheckStatusTab('draft')"
+        >
           Drafts
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link app-ft-nav-link"
-           [ngClass]="{'app-ft-nav-link-active' : activeFilterTab=='review'}"
-           (click)="onCheckStatusTab('review')">
+        <a
+          class="nav-link app-ft-nav-link"
+          [ngClass]="{ 'app-ft-nav-link-active': activeFilterTab == 'review' }"
+          (click)="onCheckStatusTab('review')"
+        >
           In Review
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link app-ft-nav-link"
-           [ngClass]="{'app-ft-nav-link-active' : activeFilterTab=='closed'}"
-           (click)="onCheckStatusTab('closed')">
+        <a
+          class="nav-link app-ft-nav-link"
+          [ngClass]="{ 'app-ft-nav-link-active': activeFilterTab == 'closed' }"
+          (click)="onCheckStatusTab('closed')"
+        >
           Closed
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link app-ft-nav-link"
-           [ngClass]="{'app-ft-nav-link-active' : activeFilterTab=='archived'}"
-           (click)="onCheckStatusTab('archived')">
+        <a
+          class="nav-link app-ft-nav-link"
+          [ngClass]="{
+            'app-ft-nav-link-active': activeFilterTab == 'archived'
+          }"
+          (click)="onCheckStatusTab('archived')"
+        >
           Archived
         </a>
       </li>
