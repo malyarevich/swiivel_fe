@@ -47,23 +47,23 @@ export class FamilyAddNewChildComponent implements OnInit {
       hebrew_full_name: [null],
       gender: [null],
       student_info: this.fb.group({
-        current_grade: [null],
-        start_grade: [null],
-        current_school: [null],
-        previous_school: [null],
-        medical_conditions: [null],
-        allergies: [null],
-        medications: [null],
-        physician: [null],
-        country: [null],
-        address: [null],
-        phone: [null],
-        first_emergency_contact: [null],
-        first_full_name: [null],
-        first_cell_phone: [null],
-        second_full_name: [null],
-        relationship_to_student: [null],
-        second_cell_phone: [null],
+        student_current_grade: [null],
+        student_start_grade: [null],
+        student_current_school: [null],
+        student_previous_school: [null],
+        student_medical_conditions: [null],
+        student_allergies: [null],
+        student_medications: [null],
+        student_physician: [null],
+        student_physician_country: [null],
+        student_physician_address: [null],
+        student_physician_phone: [null],
+        student_first_contact_relationship: [null],
+        student_first_contact_full_name: [null],
+        student_first_contact_cell_phone: [null],
+        student_second_contact_full_name: [null],
+        student_second_contact_relationship: [null],
+        student_second_contact_cell_phone: [null],
       })
     };
 
@@ -94,10 +94,11 @@ export class FamilyAddNewChildComponent implements OnInit {
       hebrew_dob: this.familyChildForm.value.hebrew_dob,
       hebrew_full_name: this.familyChildForm.value.hebrew_full_name,
       gender: this.familyChildForm.value.gender,
+      person_role: this.role,
     };
 
     if(this.role === this.FAMILY_ROLES.student) {
-      data['student_info'] = this.familyChildForm.value.student_info;
+      data['person_info'] = this.familyChildForm.value.student_info;
     }
 
     this.personService.addPerson(data).subscribe((res) => {

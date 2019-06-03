@@ -92,21 +92,21 @@
 
         <div class="row no-gutters">
           <div class="col-3 px-1">
-            <app-input-field [formControlName]="'current_grade'" id='current_grade'
+            <app-input-field [formControlName]="'student_current_grade'" id='current_grade'
                              label="Current Grade"></app-input-field>
           </div>
           <div class="col-3 px-1">
-            <app-input-field [formControlName]="'start_grade'" id='start_grade' label="Start Grade"></app-input-field>
+            <app-input-field [formControlName]="'student_start_grade'" id='start_grade' label="Start Grade"></app-input-field>
           </div>
           <div class="col-6 px-1">
-            <app-input-field [formControlName]="'current_school'" id='current_school'
+            <app-input-field [formControlName]="'student_current_school'" id='current_school'
                              label="Current School"></app-input-field>
           </div>
         </div>
 
         <div class="row no-gutters pt-2">
           <div class="col-12 px-1">
-            <app-input-field [formControlName]="'previous_school'" id='previous_school'
+            <app-input-field [formControlName]="'student_previous_school'" id='previous_school'
                              label="Previous School Attended"></app-input-field>
           </div>
         </div>
@@ -122,35 +122,35 @@
 
         <div class="row no-gutters">
           <div class="col-4 px-1">
-            <app-input-field [formControlName]="'medical_conditions'" id='medical_conditions'
+            <app-input-field [formControlName]="'student_medical_conditions'" id='medical_conditions'
                              label="Medical Conditions"></app-input-field>
           </div>
           <div class="col-4 px-1">
-            <app-input-field [formControlName]="'allergies'" id='allergies' label="Allergies"></app-input-field>
+            <app-input-field [formControlName]="'student_allergies'" id='allergies' label="Allergies"></app-input-field>
           </div>
           <div class="col-4 px-1">
-            <app-input-field [formControlName]="'medications'" id='medications'
+            <app-input-field [formControlName]="'student_medications'" id='medications'
                              label="Medications School"></app-input-field>
           </div>
         </div>
 
         <div class="row no-gutters pt-2">
           <div class="col-12 px-1">
-            <app-input-field [formControlName]="'physician'" id='physician'
+            <app-input-field [formControlName]="'student_physician'" id='physician'
                              label="Physician"></app-input-field>
           </div>
         </div>
 
         <div class="row no-gutters pt-2">
           <div class="col-2 px-1">
-            <app-input-field [formControlName]="'country'" id='country'
+            <app-input-field [formControlName]="'student_physician_country'" id='country'
                              label="Country"></app-input-field>
           </div>
           <div class="col-6 px-1">
-            <app-input-field [formControlName]="'address'" id='address' label="Address"></app-input-field>
+            <app-input-field [formControlName]="'student_physician_address'" id='address' label="Address"></app-input-field>
           </div>
           <div class="col-4 px-1">
-            <app-input-field [formControlName]="'phone'" id='phone'
+            <app-input-field [formControlName]="'student_physician_phone'" id='phone'
                              label="Phone"></app-input-field>
           </div>
         </div>
@@ -165,14 +165,14 @@
         <p class="app-text-small app-text-second mb-2">FIRST EMERGENCY CONTACT</p>
       </div>
       <div class="col-4 px-1">
-        <app-input-field [formControlName]="'first_emergency_contact'" id='first_emergency_contact'
+        <app-input-field [formControlName]="'student_first_contact_relationship'" id='first_emergency_contact'
                          label="Emergency Contact"></app-input-field>
       </div>
       <div class="col-4 px-1">
-        <app-input-field [formControlName]="'first_full_name'" id='first_full_name' label="Full Name"></app-input-field>
+        <app-input-field [formControlName]="'student_first_contact_full_name'" id='first_full_name' label="Full Name"></app-input-field>
       </div>
       <div class="col-4 px-1">
-        <app-input-field [formControlName]="'first_cell_phone'" id='first_cell_phone'
+        <app-input-field [formControlName]="'student_first_contact_cell_phone'" id='first_cell_phone'
                          label="Cell Phone"></app-input-field>
       </div>
     </div>
@@ -181,14 +181,14 @@
         <p class="app-text-small app-text-second mb-2">SECOND EMERGENCY CONTACT</p>
       </div>
       <div class="col-4 px-1">
-        <app-input-field [formControlName]="'second_full_name'" id='second_full_name'
+        <app-input-field [formControlName]="'student_second_contact_full_name'" id='second_full_name'
                          label="Full name"></app-input-field>
       </div>
       <div class="col-4 px-1">
-        <app-input-field [formControlName]="'relationship_to_student'" id='relationship_to_student' label="Relationship to student"></app-input-field>
+        <app-input-field [formControlName]="'student_second_contact_relationship'" id='relationship_to_student' label="Relationship to student"></app-input-field>
       </div>
       <div class="col-4 px-1">
-        <app-input-field [formControlName]="'second_cell_phone'" id='second_cell_phone'
+        <app-input-field [formControlName]="'student_second_contact_cell_phone'" id='second_cell_phone'
                          label="Cell Phone"></app-input-field>
       </div>
     </div>
