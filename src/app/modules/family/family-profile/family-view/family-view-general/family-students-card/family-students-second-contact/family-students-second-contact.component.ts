@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {StudentInfo} from "../../../../../../../models/family/student-info.model";
 
 @Component({
   selector: 'app-family-students-second-contact',
@@ -6,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./family-students-second-contact.component.css']
 })
 export class FamilyStudentsSecondContactComponent implements OnInit {
+  @Input() studentInfo: StudentInfo;
 
   constructor() { }
 

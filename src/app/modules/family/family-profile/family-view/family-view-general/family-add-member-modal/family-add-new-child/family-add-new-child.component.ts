@@ -46,7 +46,7 @@ export class FamilyAddNewChildComponent implements OnInit {
       hebrew_dob: [null],
       hebrew_full_name: [null],
       gender: [null],
-      student_info: this.fb.group({
+      person_info: this.fb.group({
         student_current_grade: [null],
         student_start_grade: [null],
         student_current_school: [null],
@@ -94,12 +94,7 @@ export class FamilyAddNewChildComponent implements OnInit {
       hebrew_dob: this.familyChildForm.value.hebrew_dob,
       hebrew_full_name: this.familyChildForm.value.hebrew_full_name,
       gender: this.familyChildForm.value.gender,
-      person_role: this.role,
     };
-
-    if(this.role === this.FAMILY_ROLES.student) {
-      data['person_info'] = this.familyChildForm.value.student_info;
-    }
 
     this.personService.addPerson(data).subscribe((res) => {
       if (res.created) {
@@ -117,6 +112,9 @@ export class FamilyAddNewChildComponent implements OnInit {
       person_role: this.role,
       adopted: this.familyChildForm.value.adopted ? 1 : null,
     };
+    if(this.role === this.FAMILY_ROLES.student) {
+      data['person_info'] = this.familyChildForm.value.person_info;
+    }
     this.familyPersonService.add(data);
   }
 

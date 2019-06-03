@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {StudentInfo} from "../../../../../../../models/family/student-info.model";
 
 @Component({
   selector: 'app-family-students-education',
@@ -6,8 +7,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./family-students-education.component.css']
 })
 export class FamilyStudentsEducationComponent implements OnInit {
+  @Input() studentInfo: StudentInfo;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }

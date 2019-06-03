@@ -1,4 +1,5 @@
 import {Person} from "../person.model";
+import {StudentInfo} from "./student-info.model";
 
 export interface FamilyPerson {
   id: number;
@@ -9,4 +10,5 @@ export interface FamilyPerson {
   role_state: number;
   adopted: number;
   person: Person;
+  student_info?: StudentInfo;
 }
