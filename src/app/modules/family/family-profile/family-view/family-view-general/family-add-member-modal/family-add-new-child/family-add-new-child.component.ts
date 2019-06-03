@@ -117,6 +117,7 @@ export class FamilyAddNewChildComponent implements OnInit {
       data['person_info'] = this.familyChildForm.value.person_info;
     }
     this.familyPersonService.add(data);
+    this.familyPersonService.getByFamilyId(this.family.family_id);
   }
 
   onCloseAddFamilyMemberModal() {

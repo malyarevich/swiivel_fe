@@ -31,7 +31,7 @@ export class FamilyPersonService {
     };
   }
 
-  getByFamilyId(familyId, params) {
+  getByFamilyId(familyId, params?) {
     this.getByFamilyIdRequest(familyId, params).subscribe(data => {
       this.dataStore.familyPersonList = data;
       this._familyPersonList.next(Object.assign({}, this.dataStore).familyPersonList);
@@ -48,13 +48,13 @@ export class FamilyPersonService {
     }, error => console.log('Could not add families persons. Error: ' + error.message));
   }
 
-  getByFamilyIdRequest(familyId, params): Observable<any> {
-    const options = {
+  getByFamilyIdRequest(familyId, params?): Observable<any> {
+    let options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
       }),
-      params: new HttpParams().set('params', JSON.stringify(params)),
     };
+    if(params) options['params'] = new HttpParams().set('params', JSON.stringify(params));
     return this.http.get(`/person/family/${familyId}`, options).pipe(
       map((res) => res)
     );
