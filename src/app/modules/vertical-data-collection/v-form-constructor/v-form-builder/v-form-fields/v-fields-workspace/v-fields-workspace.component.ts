@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import {Form} from "../../../../model/form.model";
 import {Field} from "../../../../model/field.model";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
@@ -58,7 +58,8 @@ export class VFieldsWorkspaceComponent implements OnInit, AfterViewInit {
 
 
   constructor(private modalService: NgbModal,
-              fb: FormBuilder,
+              private fb: FormBuilder,
+              private cd: ChangeDetectorRef,
               private sideBarService: SideBarService) {
 
   }
@@ -68,6 +69,8 @@ export class VFieldsWorkspaceComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.idSectionForDragDrop = this.sideBarService.getIdOfSection(this.form.fields);
+    this.cd.detectChanges();
+
 
   }
 
@@ -167,6 +170,7 @@ export class VFieldsWorkspaceComponent implements OnInit, AfterViewInit {
   drop(event: CdkDragDrop<Field[]>) {
     moveItemInArray(this.form.fields, event.previousIndex, event.currentIndex);
   }
+
 
 
 }

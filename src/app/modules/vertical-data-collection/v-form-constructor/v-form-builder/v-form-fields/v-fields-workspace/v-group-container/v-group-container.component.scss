@@ -1,5 +1,17 @@
 @import '../../../../../../../../styles/variables/colors';
 
+.group-bc{
+  background-color: #EBEEFF;
+  border: 1px solid rgba(0,0,0,.125);
+}
+
+.nested-bc{
+  background-color: #F2F2F2;
+}
+
+.margin-for-nested{
+  margin-left: 40px;
+}
 .app-element-color {
   color: $element-base-color;
 }
