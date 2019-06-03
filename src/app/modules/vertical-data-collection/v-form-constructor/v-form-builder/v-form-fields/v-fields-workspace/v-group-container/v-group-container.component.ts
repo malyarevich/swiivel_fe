@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import {Field} from '../../../../../model/field.model';
 import { range } from 'lodash'
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from "@angular/cdk/drag-drop";
@@ -23,7 +23,7 @@ export class VGroupContainerComponent implements OnInit {
   showGroupSettings: boolean = false;
 
   size = range(1  ,13);
-  constructor(private sideBarService: SideBarService) { }
+  constructor(private sideBarService: SideBarService,private cd: ChangeDetectorRef) { }
   showNested: boolean = true;
   ngOnInit() {
     console.log(this.idSectionForDragDrop);
@@ -73,4 +73,7 @@ export class VGroupContainerComponent implements OnInit {
     this.sideBarService.onSectionUnckeck(group,this.sideBar[0].fields);
   }
 
+  ngAfterViewInit() {
+    this.cd.detectChanges();
+  }
 }

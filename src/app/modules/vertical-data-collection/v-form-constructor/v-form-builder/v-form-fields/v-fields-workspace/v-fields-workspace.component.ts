@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
 import {Form} from "../../../../model/form.model";
 import {Field} from "../../../../model/field.model";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
@@ -14,7 +14,7 @@ import {dividerStyle} from "./divider";
   templateUrl: './v-fields-workspace.component.html',
   styleUrls: ['./v-fields-workspace.component.scss']
 })
-export class VFieldsWorkspaceComponent implements OnInit {
+export class VFieldsWorkspaceComponent implements OnInit, AfterViewInit {
 
   sectionAddGroup: FormGroup = new FormGroup({
     sectionName: new FormControl('', {
@@ -64,8 +64,13 @@ export class VFieldsWorkspaceComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.idSectionForDragDrop = this.sideBarService.getIdOfSection(this.form.fields);
   }
+
+  ngAfterViewInit(): void {
+    this.idSectionForDragDrop = this.sideBarService.getIdOfSection(this.form.fields);
+
+  }
+
 
   openModal(content) {
     this.modalService.open(content, {size: 'lg',ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
@@ -73,6 +78,7 @@ export class VFieldsWorkspaceComponent implements OnInit {
       console.log(reason);
     });
   }
+
 
 
   addSection(modal){
