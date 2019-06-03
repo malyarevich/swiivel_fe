@@ -1,4 +1,13 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output
+} from '@angular/core';
 import {Field} from '../../../../../model/field.model';
 import { range } from 'lodash'
 import {Form} from "../../../../../model/form.model";
@@ -8,7 +17,7 @@ import {SideBarService} from "../../v-side-bar/side-bar.service";
   templateUrl: './v-field-container.component.html',
   styleUrls: ['./v-field-container.component.scss'],
 })
-export class VFieldContainerComponent implements OnInit, OnDestroy{
+export class VFieldContainerComponent implements OnInit, OnDestroy, AfterViewInit{
   @Input() sideBar: Field;
   @Input() form: Form;
   @Input() inputField: Field;
@@ -24,7 +33,7 @@ export class VFieldContainerComponent implements OnInit, OnDestroy{
 
   size = range(1  ,13);
 
-  constructor(private sideBarService: SideBarService) {
+  constructor(private sideBarService: SideBarService,private cd: ChangeDetectorRef) {
   }
 
 
@@ -68,5 +77,8 @@ export class VFieldContainerComponent implements OnInit, OnDestroy{
 
   ngOnDestroy(): void {
     this.inputField.exist = false;
+  }
+  ngAfterViewInit() {
+    this.cd.detectChanges();
   }
 }
