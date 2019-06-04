@@ -1,20 +1,20 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FamilyPerson} from "../../../../../../models/family/family-person.model";
-import {FamilyRoles} from "../../../../../../enums/family-roles";
 import {HelperFamilyService} from "../../../../../../services/family/helper-family.service";
+import {FamilyRoles} from "../../../../../../enums/family-roles";
 
 @Component({
-  selector: 'app-family-parents-card',
-  templateUrl: './family-parents-card.component.html',
-  styleUrls: ['./family-parents-card.component.css']
+  selector: 'app-family-person-card-container',
+  templateUrl: './family-person-card-container.component.html',
+  styleUrls: ['./family-person-card-container.component.css']
 })
-export class FamilyParentsCardComponent implements OnInit {
+export class FamilyPersonCardContainerComponent implements OnInit {
   @Input() familyPerson: FamilyPerson;
 
   familyRoles = FamilyRoles;
 
-  get fullNameWithMiddle() {
-    return this.helperFamilyService.getFullWithMiddleName(this.familyPerson);
+  get fullName() {
+    return this.helperFamilyService.getFullName(this.familyPerson);
   }
 
   constructor(private helperFamilyService: HelperFamilyService) { }

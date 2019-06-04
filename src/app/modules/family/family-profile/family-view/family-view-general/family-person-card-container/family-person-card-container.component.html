@@ -1,0 +1,13 @@
+<div class="app-family-card-body h-100">
+  <div class="row no-gutters app-family-card-header px-3 py-2 app-text-white">
+    <div class="col-6 text-left app-text-large font-weight-bold">
+      {{fullName | titlecase}}
+    </div>
+    <div class="col-6 text-right">
+      <span class="mr-3" *ngIf="familyPerson.person_role !== familyRoles.student">{{familyPerson.person_role | titlecase}}</span>
+      <i *ngIf="familyPerson.person_role === familyRoles.student" class="fas fa-graduation-cap mr-3"></i>
+      <i class="fas fa-trash-alt"></i>
+    </div>
+  </div>
+  <ng-content></ng-content>
+</div>

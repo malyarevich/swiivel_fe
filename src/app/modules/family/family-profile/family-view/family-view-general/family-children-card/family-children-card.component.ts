@@ -10,10 +10,6 @@ import {HelperFamilyService} from "../../../../../../services/family/helper-fami
 export class FamilyChildrenCardComponent implements OnInit {
   @Input() familyPerson: FamilyPerson;
 
-  get fullName() {
-    return this.helperFamilyService.getFullName(this.familyPerson);
-  }
-
   get fullNameWithMiddle() {
     return this.helperFamilyService.getFullWithMiddleName(this.familyPerson);
   }

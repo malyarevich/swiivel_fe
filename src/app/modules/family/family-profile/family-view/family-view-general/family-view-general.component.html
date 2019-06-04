@@ -1,11 +1,12 @@
 <app-family-view-general-nav [familyId]="familyId"
-  (searchQueryEmitter)="onSetSearchQuery($event)"
-  (activeTabEmitter)="onSetFilterTab($event)"></app-family-view-general-nav>
+                             (searchQueryEmitter)="onSetSearchQuery($event)"
+                             (activeTabEmitter)="onSetFilterTab($event)"></app-family-view-general-nav>
 <div class="d-flex justify-content-between align-items-stretch flex-wrap app-align-last-row">
   <div class="app-person-card-container mt-2" *ngFor="let item of familyPersons | async">
-    <div class="app-family-card-body h-100">
+    <app-family-person-card-container [familyPerson]="item">
       <app-family-parents-card [familyPerson]="item"
                                *ngIf="item.person_role === familyRoles.father || item.person_role === familyRoles.mother">
+
       </app-family-parents-card>
       <app-family-students-card [familyPerson]="item"
                                 *ngIf="item.person_role === familyRoles.student"></app-family-students-card>
@@ -14,7 +15,7 @@
       <app-family-grandparents-card [familyPerson]="item"
                                     *ngIf="item.person_role === familyRoles.grandfather || item.person_role === familyRoles.grandmother">
       </app-family-grandparents-card>
-    </div>
+    </app-family-person-card-container>
   </div>
 </div>
 <app-spinner *ngIf="loader$ | async"></app-spinner>

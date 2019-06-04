@@ -12,10 +12,6 @@ export class FamilyStudentsCardComponent implements OnInit {
 
   activeTab: string = 'education';
 
-  get fullName() {
-    return this.helperFamilyService.getFullName(this.familyPerson);
-  }
-
   get fullNameWithMiddle() {
     return this.helperFamilyService.getFullWithMiddleName(this.familyPerson);
   }
