@@ -4,8 +4,7 @@
 
 export const environment = {
   production: false,
-  // apiCore: 'http://red.dev.codeblue.ventures/api/v1',
-  apiCore: 'http://localhost:8000/api/v1',
+  apiCore: 'http://red.dev.codeblue.ventures/api/v1',
   apiFB: 'http://form-builder.red.dev.codeblue.ventures/api/v1',
   uploadApi: 'http://upload.red.dev.codeblue.ventures/api/v1',
   api_token: '123',
