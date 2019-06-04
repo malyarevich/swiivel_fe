@@ -50,6 +50,7 @@ export class VFormBuilderComponent implements OnInit {
   attachments;
   form: Form;
   newSideBar;
+  idSectionForDragDrop: string[] =[];
 
   customFields: Field[];
   existingFields: Field[];

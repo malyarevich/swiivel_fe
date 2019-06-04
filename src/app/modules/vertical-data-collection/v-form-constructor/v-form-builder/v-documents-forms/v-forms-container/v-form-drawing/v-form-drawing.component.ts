@@ -20,7 +20,6 @@ import {fromEvent, Subscription} from "rxjs";
 import {PDFDocumentProxy, PDFProgressData} from "pdfjs-dist";
 import {pairwise, switchMap, takeUntil} from "rxjs/operators";
 import {v4 as uuid} from 'uuid';
-import {environment} from "../../../../../../../../environments/environment";
 
 @Component({
   selector: 'app-v-form-drawing',
@@ -44,7 +43,6 @@ export class VFormDrawingComponent implements AfterViewInit, OnDestroy, OnInit, 
   finalPos;
   loading: boolean = false;
   page =1;
-  token=`?api_token=${environment.api_token}`;
   drawingType: string = "system";
   temporaryField: FormPDFTemporaryField[] = [];
 

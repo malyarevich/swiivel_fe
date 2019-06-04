@@ -26,9 +26,7 @@ export class VGroupContainerComponent implements OnInit {
   constructor(private sideBarService: SideBarService,private cd: ChangeDetectorRef) { }
   showNested: boolean = true;
   ngOnInit() {
-    console.log(this.idSectionForDragDrop);
-    this.idSectionForDragDrop.push(this.inputGroup._id);
-
+    // this.idSectionForDragDrop.push(this.inputGroup._id)
   }
   drop(event: CdkDragDrop<Field[]>) {
     console.log(event,this.idSectionForDragDrop);
@@ -73,7 +71,16 @@ export class VGroupContainerComponent implements OnInit {
     this.sideBarService.onSectionUnckeck(group,this.sideBar[0].fields);
   }
 
-  ngAfterViewInit() {
+
+  ngAfterViewInit(): void {
+    this.idSectionForDragDrop.push(this.inputGroup._id);
+    console.log(this.idSectionForDragDrop);
+
+    // this.idSectionForDragDrop = this.sideBarService.getIdOfSection(this.form.fields);
+    // console.log(this.sideBarService.getIdOfSection(this.form.fields));
+
     this.cd.detectChanges();
+
+
   }
 }

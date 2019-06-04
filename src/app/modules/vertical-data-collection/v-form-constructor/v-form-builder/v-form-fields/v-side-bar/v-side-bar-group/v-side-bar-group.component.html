@@ -22,18 +22,29 @@
     </div>
 
   </div>
-  <div class="col-10 offset-1 side-bar-item-modal rounded pb-2" [hidden]="!showNested">
-    <div class="" *ngFor="let field of group.fields">
+  <div class="col-10 offset-1 side-bar-item-modal rounded pb-2" [hidden]="!showNested"
+       cdkDropList
+       id="existing"
+       [cdkDropListData]="section.fields"
+       [cdkDropListConnectedTo]="idSectionForDragDrop"
+ >
+    <div class="" *ngFor="let field of group.fields" cdkDrag>
 <!--      <app-v-side-bar-field [field]="field"></app-v-side-bar-field>-->
       <div class="row no-gutters  align-items-center">
         <div class="ml-2 pb-2 col-1 ">
           <label class="app-checkbox-container ">
           <input
-            type="checkbox" class=""[ngModel]="field.exist" (ngModelChange)="onBeingChangeNested($event, field, group, section)">
+            type="checkbox"
+            class=""
+            [ngModel]="field.exist"
+            (ngModelChange)="onBeingChangeNested($event, field, group, section)">
           <span class="app-checkbox-checkmark just-white"></span>
         </label>
         </div>
-        <div class="col-10  mb-1 mt-2 row align-items-center no-gutters rounded " [ngClass]="field.mapped==''?'side-bar-item-group-custom':'side-bar-item-group'" placement="right" [ngbTooltip]="field.prefix+'\'s'">
+        <div
+          class="col-10  mb-1 mt-2 row align-items-center no-gutters rounded "
+          [ngClass]="field.mapped==''?'side-bar-item-group-custom':'side-bar-item-group'">
+<!--        <div class="col-10  mb-1 mt-2 row align-items-center no-gutters rounded " [ngClass]="field.mapped==''?'side-bar-item-group-custom':'side-bar-item-group'" placement="right" [ngbTooltip]="field.prefix+'\'s'">-->
           <div class="col-1 ">
             <span><i class="fas fa-ellipsis-v dragable-i"></i></span>
             <span><i class="fas fa-ellipsis-v  dragable-i"></i></span>

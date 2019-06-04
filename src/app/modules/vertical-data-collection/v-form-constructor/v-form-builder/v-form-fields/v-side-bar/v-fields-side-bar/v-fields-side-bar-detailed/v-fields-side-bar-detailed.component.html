@@ -19,12 +19,19 @@
   </div>
 </div>
 <div [hidden]="!showNested">
-<div  class="my-3  ml-3 " *ngFor="let field of section.fields | filter: searchText">
+  <div   cdkDropList
+         id="existing"
+         [cdkDropListData]="section.fields"
+         [cdkDropListConnectedTo]="idSectionForDragDrop"
+         (cdkDropListDropped)="drop($event)">
+<div  class="my-3  ml-3 " *ngFor="let field of section.fields | filter: searchText" cdkDrag>
   <app-v-side-bar-group
     *ngIf="field.type==113"
     [group]="field"
     [form]="form"
     [section]="section"
+    [idSectionForDragDrop]="idSectionForDragDrop"
+
   >
 
   </app-v-side-bar-group>
@@ -37,6 +44,7 @@
   >
   </app-v-side-bar-field>
 </div>
+  </div>
   <div class="my-3  ml-3 ">
            <button
                   type="button"

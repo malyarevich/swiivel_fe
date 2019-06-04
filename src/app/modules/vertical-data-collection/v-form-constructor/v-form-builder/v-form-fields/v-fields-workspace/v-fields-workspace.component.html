@@ -246,9 +246,7 @@
         </div>
       </form>
     </div>
-    <!--  <div class="modal-footer">-->
-    <!--    <button type="submit" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>-->
-    <!--  </div>-->
+
   </ng-template>
 <div class=" d-flex  justify-content-end custom-circle-wrapper" ngbDropdown placement="bottom-right" autoClose="outside">
   <div class="circle" id="dropdownBasic1" ngbDropdownToggle>+</div>
@@ -307,7 +305,7 @@
        (cdkDropListDropped)="drop($event)">
 <div
 
-     *ngFor="let item of form?.fields;"      cdkDrag
+     *ngFor="let item of form.fields "      cdkDrag
              cdkDragLockAxis="y">
     <app-v-section-conteiner
 

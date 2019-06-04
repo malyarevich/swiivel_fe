@@ -1,9 +1,9 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import {Field} from "../../../../../model/field.model";
 import {Form} from "../../../../../model/form.model";
 
 import {SideBarService} from "../../v-side-bar/side-bar.service";
-import {CdkDragDrop, moveItemInArray, transferArrayItem} from "@angular/cdk/drag-drop";
+import {CdkDragDrop, copyArrayItem, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-v-section-conteiner',
@@ -16,7 +16,7 @@ export class VSectionConteinerComponent implements OnInit {
   @Input() customFields: Field[];
   @Input() section: Field;
   @Input() idSectionForDragDrop: string[];
-  constructor(private sideBarService: SideBarService) { }
+  constructor(private cd: ChangeDetectorRef,private sideBarService: SideBarService) { }
   sectionWidth: string = "4 Columns";
   isShow: boolean = true;
   ngOnInit() {
@@ -24,14 +24,20 @@ export class VSectionConteinerComponent implements OnInit {
 
 
   drop(event: CdkDragDrop<Field[]>) {
-
+    console.log('drop in section');
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else {
+    } else if (event.previousContainer.id!=='existing') {
       transferArrayItem(event.previousContainer.data,
         event.container.data,
         event.previousIndex,
         event.currentIndex);
+    } else {
+      copyArrayItem(event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex);
+      console.log(event, 'section');
     }
 
   }
@@ -75,5 +81,14 @@ export class VSectionConteinerComponent implements OnInit {
     return 'End of the ' + this.section.name;
   }
 
+  ngAfterViewInit(): void {
+    // this.idSectionForDragDrop = this.sideBarService.getIdOfSection(this.form.fields);
+    this.idSectionForDragDrop.push(this.section._id);
 
+    // console.log(this.sideBarService.getIdOfSection(this.form.fields));
+    console.log(this.idSectionForDragDrop);
+    this.cd.detectChanges();
+
+
+  }
 }

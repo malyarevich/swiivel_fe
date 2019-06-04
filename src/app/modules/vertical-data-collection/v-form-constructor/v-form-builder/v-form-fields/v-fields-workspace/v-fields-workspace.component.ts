@@ -52,7 +52,7 @@ export class VFieldsWorkspaceComponent implements OnInit, AfterViewInit {
   @Input() sideBar: Field;
   @Input() customFields: Field[];
   size = range(1  ,13);
-  idSectionForDragDrop: string[] =[];
+  @Input() idSectionForDragDrop: string[];
 
   dividerStyles = dividerStyle;
 
@@ -68,7 +68,10 @@ export class VFieldsWorkspaceComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.idSectionForDragDrop = this.sideBarService.getIdOfSection(this.form.fields);
+    // this.idSectionForDragDrop = this.sideBarService.getIdOfSection(this.form.fields);
+    console.log(this.idSectionForDragDrop);
+
+    // console.log(this.sideBarService.getIdOfSection(this.form.fields));
     this.cd.detectChanges();
 
 
@@ -168,6 +171,7 @@ export class VFieldsWorkspaceComponent implements OnInit, AfterViewInit {
   }
 
   drop(event: CdkDragDrop<Field[]>) {
+    console.log('drop in workspace');
     moveItemInArray(this.form.fields, event.previousIndex, event.currentIndex);
   }
 
