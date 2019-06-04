@@ -65,7 +65,6 @@ export class VGroupContainerComponent implements OnInit {
         field.fields.forEach(f=>this.sideBarService.onFieldUncheck(f, this.sideBar[0].fields));
       }
     }  );
-    // this.sideBarService.changeExistingAllSection(false, section.fields);
     this.sideBarService.onSectionUnckeck(group,this.sideBar[0].fields);
   }
 
