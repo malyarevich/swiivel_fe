@@ -50,10 +50,10 @@ export class VGroupContainerComponent implements OnInit {
   }
 
 
-  onShowGroupSettings() {
-    this.showGroupSettings = !this.showGroupSettings;
-    this.showNested = false;
-  }
+  // onShowGroupSettings() {
+  //   this.showGroupSettings = !this.showGroupSettings;
+  //   this.showNested = false;
+  // }
 
 
 
