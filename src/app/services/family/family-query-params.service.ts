@@ -2,27 +2,22 @@ import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from "rxjs";
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {map} from "rxjs/operators";
-import {FamilyPerson} from "../../models/family/family-person.model";
-
-interface QueryParams {
-  filter: string;
-  query: string;
-}
+import {FamilyQueryParams} from "../../models/family/family-query-params.model";
 
 @Injectable()
 export class FamilyQueryParamsService {
 
-  private _familyQueryParams: BehaviorSubject<QueryParams> = <BehaviorSubject<QueryParams>> new BehaviorSubject({});
+  private _familyQueryParams: BehaviorSubject<FamilyQueryParams> = <BehaviorSubject<FamilyQueryParams>> new BehaviorSubject(null);
 
   private dataStore: {
-    familyQueryParams: QueryParams;
+    familyQueryParams: FamilyQueryParams;
   };
 
   get familyQueryParams() {
     return this._familyQueryParams.asObservable();
   }
 
-  constructor(private http: HttpClient) {
+  constructor() {
     this.dataStore = {
       familyQueryParams: {
         filter: '',
@@ -31,5 +26,14 @@ export class FamilyQueryParamsService {
     };
   }
 
+  setQueryParams(query: string) {
+    this.dataStore.familyQueryParams.query = query;
+    this._familyQueryParams.next(Object.assign({}, this.dataStore).familyQueryParams);
+  }
+
+  setFilterParams(filter: string) {
+    this.dataStore.familyQueryParams.filter = filter;
+    this._familyQueryParams.next(Object.assign({}, this.dataStore).familyQueryParams);
+  }
 
 }

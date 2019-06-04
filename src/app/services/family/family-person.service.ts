@@ -6,6 +6,7 @@ import {map} from "rxjs/operators";
 import {FamilyPerson} from "../../models/family/family-person.model";
 import {FamilyService} from "./family.service";
 import {FamilyRoles} from "../../enums/family-roles";
+import {FamilyQueryParamsService} from "./family-query-params.service";
 
 interface ResponseData {
   success: boolean;
@@ -33,7 +34,8 @@ export class FamilyPersonService {
     return this._familyPersonList.asObservable();
   }
 
-  constructor(private http: HttpClient, private familyService: FamilyService) {
+  constructor(private http: HttpClient,
+              private familyService: FamilyService) {
     this.dataStore = {
       familyPersonList: [],
     };
@@ -73,7 +75,6 @@ export class FamilyPersonService {
       if (data.success) {
         this.dataStore.familyPersonList.forEach((item, i) => {
           if (item.id == data.id) {
-            console.log(data.id);
             this.dataStore.familyPersonList.splice(i, 1);
           }
         });
