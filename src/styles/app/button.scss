@@ -36,6 +36,17 @@
   }
 }
 
+.app-btn-danger {
+  font-weight: bold;
+  background: $element-danger-color;
+  color: #fff;
+  border-radius: 3px;
+
+  &:hover, &:focus, &:active {
+    color: #fff;
+  }
+}
+
 .app-btn-clear {
   color: $gray-color;
   font: 14px  'NunitoSans-Bold';

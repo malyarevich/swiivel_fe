@@ -1,0 +1,15 @@
+<app-modal [width]="'30%'"
+           [title]="'Remove ' + familyPerson?.person?.first_name + '' +
+           familyPerson?.person?.last_name + ' from ' + familyPerson.family_name"
+           (closeModal)="onCloseRemoveFamilyMemberModal()">
+  <div class="row pt-2">
+    <div class="col-12 text-center">
+      <button (click)="onCloseRemoveFamilyMemberModal()" class="btn app-btn-outline-primary mr-2">
+        Cancel
+      </button>
+      <button (click)="delete()" class="btn app-btn-danger">
+        Delete
+      </button>
+    </div>
+  </div>
+</app-modal>

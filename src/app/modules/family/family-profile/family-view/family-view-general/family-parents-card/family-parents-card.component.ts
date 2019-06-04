@@ -13,10 +13,6 @@ export class FamilyParentsCardComponent implements OnInit {
 
   familyRoles = FamilyRoles;
 
-  get fullName() {
-    return this.helperFamilyService.getFullName(this.familyPerson);
-  }
-
   get fullNameWithMiddle() {
     return this.helperFamilyService.getFullWithMiddleName(this.familyPerson);
   }

@@ -5,6 +5,8 @@ import {environment} from "../../../environments/environment";
 import {map} from "rxjs/operators";
 import {FamilyPerson} from "../../models/family/family-person.model";
 import {FamilyService} from "./family.service";
+import {FamilyRoles} from "../../enums/family-roles";
+import {FamilyQueryParamsService} from "./family-query-params.service";
 
 interface ResponseData {
   success: boolean;
@@ -12,10 +14,17 @@ interface ResponseData {
   data: FamilyPerson;
 }
 
+interface DeleteResponseData {
+  success: boolean;
+  errors?: string;
+  id: number;
+}
+
 @Injectable()
 export class FamilyPersonService {
 
   private _familyPersonList: BehaviorSubject<FamilyPerson[]> = <BehaviorSubject<FamilyPerson[]>> new BehaviorSubject([]);
+  private familyRoles = FamilyRoles;
 
   private dataStore: {
     familyPersonList: FamilyPerson[];
@@ -25,7 +34,8 @@ export class FamilyPersonService {
     return this._familyPersonList.asObservable();
   }
 
-  constructor(private http: HttpClient,private familyService: FamilyService) {
+  constructor(private http: HttpClient,
+              private familyService: FamilyService) {
     this.dataStore = {
       familyPersonList: [],
     };
@@ -43,8 +53,8 @@ export class FamilyPersonService {
       const familyPerson: FamilyPerson = res.data;
       this.dataStore.familyPersonList.push(familyPerson);
       this._familyPersonList.next(Object.assign({}, this.dataStore).familyPersonList);
-      if(familyPerson.person_role === 'student') this.familyService.incrementFieldCount('students_count');
-      if(familyPerson.person_role === 'child') this.familyService.incrementFieldCount('children_count');
+      if (familyPerson.person_role === this.familyRoles.student) this.familyService.incrementFieldCount('students_count');
+      if (familyPerson.person_role === this.familyRoles.child) this.familyService.incrementFieldCount('children_count');
     }, error => console.log('Could not add families persons. Error: ' + error.message));
   }
 
@@ -54,15 +64,36 @@ export class FamilyPersonService {
         'Content-Type': 'application/json',
       }),
     };
-    if(params) options['params'] = new HttpParams().set('params', JSON.stringify(params));
+    if (params) options['params'] = new HttpParams().set('params', JSON.stringify(params));
     return this.http.get(`/person/family/${familyId}`, options).pipe(
       map((res) => res)
     );
   }
 
+  delete(id, role) {
+    this.deleteOneRequest(id).subscribe((data: DeleteResponseData) => {
+      if (data.success) {
+        this.dataStore.familyPersonList.forEach((item, i) => {
+          if (item.id == data.id) {
+            this.dataStore.familyPersonList.splice(i, 1);
+          }
+        });
+        this._familyPersonList.next(Object.assign({}, this.dataStore).familyPersonList);
+        if (role === this.familyRoles.student) this.familyService.decrementFieldCount('students_count');
+        if (role === this.familyRoles.child) this.familyService.decrementFieldCount('children_count');
+      }
+    }, error => console.log('Could not delete family person. Error: ' + error.message));
+  }
+
   addOneRequest(data): Observable<any> {
     return this.http.post(`/person/family`, {...data}).pipe(
       map((res) => res)
+    );
+  }
+
+  deleteOneRequest(id): Observable<any> {
+    return this.http.delete(`person/family/${id}`).pipe(
+      map((res: DeleteResponseData) => res)
     );
   }
 }
