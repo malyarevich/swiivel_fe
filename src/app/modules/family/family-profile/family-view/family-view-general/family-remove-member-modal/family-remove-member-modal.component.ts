@@ -17,12 +17,11 @@ export class FamilyRemoveMemberModalComponent implements OnInit {
   }
 
   onCloseRemoveFamilyMemberModal() {
-    this.familyPersonService.delete(this.familyPerson.id, this.familyPerson.person_role);
     this.closeModalRemoveFamilyMember.emit(true);
   }
 
   delete() {
-
+    this.familyPersonService.delete(this.familyPerson.id, this.familyPerson.person_role);
     this.onCloseRemoveFamilyMemberModal();
   }
 
