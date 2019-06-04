@@ -13,4 +13,6 @@ export interface FamilyPerson {
   student_info?: StudentInfo;
   children?: [FamilyPerson];
   parents?: [FamilyPerson];
+  children_count?: number;
+  parents_count?: number;
 }
