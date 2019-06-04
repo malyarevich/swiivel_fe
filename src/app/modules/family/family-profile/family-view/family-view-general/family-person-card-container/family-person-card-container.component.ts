@@ -10,6 +10,7 @@ import {FamilyRoles} from "../../../../../../enums/family-roles";
 })
 export class FamilyPersonCardContainerComponent implements OnInit {
   @Input() familyPerson: FamilyPerson;
+  showRemoveModal: boolean = false;
 
   familyRoles = FamilyRoles;
 
@@ -17,9 +18,14 @@ export class FamilyPersonCardContainerComponent implements OnInit {
     return this.helperFamilyService.getFullName(this.familyPerson);
   }
 
-  constructor(private helperFamilyService: HelperFamilyService) { }
+  constructor(private helperFamilyService: HelperFamilyService) {
+  }
 
   ngOnInit() {
+  }
+
+  onCloseRemoveModal(value) {
+    this.showRemoveModal = !value;
   }
 
 }
