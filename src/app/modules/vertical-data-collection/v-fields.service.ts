@@ -68,7 +68,7 @@ export class VFieldsService {
   }
 
   getRoleList() {
-    return this.http.get(`${environment.apiFB}/family/roles/?api_token=${environment.api_token}`)
+    return this.http.get(`/family/roles`)
       .pipe(
         map(response => response)
       )

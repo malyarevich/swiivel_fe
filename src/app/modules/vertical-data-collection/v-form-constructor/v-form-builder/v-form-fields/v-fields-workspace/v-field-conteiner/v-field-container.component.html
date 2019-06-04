@@ -70,7 +70,7 @@
         </div>
       </div>
     </div>
-    <div class="col-5 row align-items-center pl-2">
+    <div class="col-5 row align-items-center pl-2 no-gutters">
       <div class="col d-flex justify-content-center">
         <label class="app-checkbox-container mb-0">
           <input
@@ -110,78 +110,12 @@
       </div>
 
     </div>
-<!--    <div class="col-1">dasdas</div>-->
-<!--    <div class="col-6">-->
-<!--      <div class="row align-items-center ">-->
-<!--        <div class="col-5 offset-1 pl-0">-->
-<!--          <label class="has-float-label">-->
-<!--            <select class="form-control" [disabled]="inputField.mapped!='' && inputField.hasOwnProperty('mapped')" [(ngModel)]="inputField.type">-->
-<!--              <option *ngFor="let item of customFields" [value]="item.type"-->
-<!--                      [selected]="inputField.type==item.type">{{item.name}}</option>-->
-<!--            </select>-->
-<!--            <span class="spanForLabel">Field Type</span>-->
-<!--          </label>-->
-<!--        </div>-->
-<!--        <div class="col-3">-->
-<!--          <label class="has-float-label">-->
-<!--            <input class="form-control" [value]="inputField.prefix+'\'s'">-->
-<!--            <span class="spanForLabel">Placeholder</span>-->
-<!--          </label>-->
-<!--        </div>-->
-<!--        <div class="col-3">-->
-<!--          <label class="has-float-label">-->
-<!--            <select class="form-control" [(ngModel)]="inputField.options.size">-->
-<!--              <option *ngFor="let width of size" [value]="width"-->
-<!--                      [selected]="inputField.options.size==width">{{width}}</option>-->
-<!--            </select>-->
-<!--            <span class="spanForLabel">Field Width</span>-->
-<!--          </label>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--    <div class="col-md-3 row align-items-center no-gutters">-->
 
-<!--      <div class="col-10 row align-items-center no-gutters ml-2">-->
-<!--        <div class="col ml-1 ">-->
-<!--          <label class="app-switch mr-2">-->
-<!--            <input type="checkbox" [(ngModel)]="inputField.options.required">-->
-<!--            <span class="app-slider app-round"></span>-->
-<!--          </label>-->
-<!--          <small>Required</small>-->
-<!--        </div>-->
-
-<!--        <div class="col ml-1">-->
-<!--          <label class="app-switch mr-2">-->
-<!--            <input type="checkbox" [(ngModel)]="inputField.options.readonly">-->
-<!--            <span class="app-slider app-round"></span>-->
-<!--          </label>-->
-<!--          <small>Read-only</small>-->
-<!--        </div>-->
-
-
-<!--        <div class="w-100"></div>-->
-<!--        <div class="col ml-1">-->
-<!--          <label class="app-switch mr-2">-->
-<!--            <input type="checkbox" [(ngModel)]="inputField.options.hideLabel">-->
-<!--            <span class="app-slider app-round"></span>-->
-<!--          </label>-->
-<!--        <small>Hide Label</small>-->
-<!--        </div>-->
-
-<!--        <div class="col ml-1">-->
-<!--          <label class="app-switch mr-2">-->
-<!--            <input type="checkbox" (ngModelChange)="uniqActivated($event)" [ngModel]="inputField.options.unique">-->
-<!--            <span class="app-slider app-round"></span>-->
-<!--          </label>-->
-<!--          <small>Unique</small>-->
-<!--        </div>-->
-
-<!--      </div>-->
-      <div class="col-1 row align-items-center">
-        <div  class=" col d-flex justify-content-end" >
+      <div class="col-1 row align-items-center no-gutters">
+        <div  class=" col d-flex " >
             <i class="fas fa-cog dragable-i" (click)="showSettings=!showSettings"></i>
         </div>
-        <div  class=" col d-flex justify-content-end" >
+        <div  class=" col d-flex " >
             <i class="fas fa-times dragable-i" (click)="removeField(inputField)"></i>
         </div>
       </div>
