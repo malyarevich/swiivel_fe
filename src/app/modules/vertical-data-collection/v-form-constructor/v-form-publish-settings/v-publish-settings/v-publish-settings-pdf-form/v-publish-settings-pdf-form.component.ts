@@ -58,7 +58,7 @@ export class VPublishSettingsPdfFormComponent implements OnInit {
 
   ngOnInit() {}
 
-  toggleCheckbox(group: PDFCheckboxGroup, index: number) {
+  toggleCheckbox(group, index: number) {
     this.onToggleCheckbox.emit({ group, index });
   }
 
