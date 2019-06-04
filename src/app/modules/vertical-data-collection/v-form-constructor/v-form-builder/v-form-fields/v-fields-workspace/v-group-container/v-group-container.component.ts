@@ -54,11 +54,7 @@ export class VGroupContainerComponent implements OnInit {
     this.showGroupSettings = !this.showGroupSettings;
     this.showNested = false;
   }
-  //
-  // dasdaonShowNested() {
-  //   this.showNested = !this.showNested;
-  //   this.showGroupSettings=false;
-  // }
+
 
 
   removeGroup(group: Field){
