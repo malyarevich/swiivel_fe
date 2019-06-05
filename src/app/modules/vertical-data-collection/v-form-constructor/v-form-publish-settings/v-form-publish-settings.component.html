@@ -3,9 +3,12 @@
 </div>
 
 <div class="container-fluid">
+  <ng-container *ngIf="publish_settings">
+    
   <div class="row mt-5">
     <div class="col-12 col-lg-3 rounded"><!-- pl-lg-5 -->
       <app-v-publish-menu
+        [stateSub]="getStateSub()"
         (activeMenuItemEmitter)="setActiveMenu($event)"
         (stateSubEmitter)="setStateSub($event)"></app-v-publish-menu>
     </div>
@@ -18,7 +21,11 @@
         }"
       ></app-v-conditions-review>
       <app-v-publish-settings
-        [stateSub]="stateSub"
+        [publish_settings]="publish_settings"
+        (onToggleOnlineCheckbox)="toggleOnlineCheckbox($event)"
+        (onTogglePdfCheckbox)="togglePdfCheckbox($event)"
+        (onUpdateFormValue)="updateFormValue($event)"
+        (onSavePublishSettings)="savePublishSettings($event)"
         class="d-block openable_item"
         [ngClass]="{
           'openable_item--close': 
@@ -41,4 +48,5 @@
       ></app-v-redirect-pages>
     </div>
   </div>
+  </ng-container>
 </div>

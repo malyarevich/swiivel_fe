@@ -5,6 +5,7 @@ import {ConsentInfo} from "../v-form-constructor/v-form-builder/v-consent/model/
 import {DocumentsModel} from "../v-form-constructor/v-form-builder/v-documents-forms/model/documents.model";
 import {FormsPDFModel} from "../v-form-constructor/v-form-builder/v-documents-forms/model/formsPDF.model";
 import {TermsConditions} from "../v-form-constructor/v-form-builder/v-terms-conditions/model/terms-conditions.model";
+import { ISubMenus } from '../v-form-constructor/v-form-publish-settings/v-publish-menu/v-publish-menu.component';
 
 export interface Form {
   _id: string;
@@ -19,6 +20,11 @@ export interface Form {
   formDates?: object,
   sidebar?: Field[],
   step?: number;
+  publish_settings?: {
+    state: ISubMenus,
+    online_config: object,
+    pdf_config: object,
+  };
   tuitionContract?: TuitionContract;
   consentInfo?: ConsentInfo;
   termsConditions?: TermsConditions;
@@ -43,6 +49,11 @@ export interface FormSql {
   },
   permissions?: FormSqlPermissions[],
   status: string
+  publish_settings?: {
+    state: ISubMenus,
+    online_config: object,
+    pdf_config: object,
+  };
   type: string
   created_at: string,
   updated_at: string,

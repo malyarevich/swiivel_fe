@@ -1,12 +1,12 @@
 <div class="content__box">
-  <h2 class="content__title">{{ pdf.title }}</h2>
+  <h2 class="content__title">{{ pdfStructure.title }}</h2>
 
-  <h3 class="content__sub_title">{{ pdf.subtitle }}</h3>
+  <h3 class="content__sub_title">{{ pdfStructure.subtitle }}</h3>
   <!-- General -->
   <div class="content__row_list">
     <ng-container
       *ngFor="
-        let checkBoxItem of pdf.checkBoxList['general'];
+        let checkBoxItem of pdfStructure.checkBoxList['general'];
         let checkBoxIndex = index;
         let checkBoxLastIndex = last
       "
@@ -16,19 +16,19 @@
         [ngClass]="{
           'checkbox--mr_2': checkBoxIndex !== checkBoxLastIndex
         }"
-        for="{{ 'pdf_' + 'general_' + checkBoxIndex }}"
+        for="{{ checkBoxItem.key }}"
       >
         <p
           class="checkbox__text"
-          [ngClass]="{ 'checkbox__text--checked': checkBoxItem.status }"
+          [ngClass]="{ 'checkbox__text--checked': pdfConfig[checkBoxItem.key] }"
         >
           {{ checkBoxItem.text }}
         </p>
         <input
           type="checkbox"
-          id="{{ 'pdf_' + 'general_' + checkBoxIndex }}"
-          [ngModel]="checkBoxItem.status"
-          (click)="toggleCheckbox('general', checkBoxIndex)"
+          id="{{ checkBoxItem.key }}"
+          [ngModel]="pdfConfig[checkBoxItem.key]"
+          (click)="toggleCheckbox(checkBoxItem.key)"
         />
         <span class="app-checkbox-checkmark"></span>
       </label>
@@ -40,11 +40,9 @@
       <label class="app-switch">
         <input
           type="checkbox"
-          [ngModel]="pdf.checkBoxList['sending'][0].status"
+          [ngModel]="pdfConfig['is_send_mail']"
           (ngModelChange)="
-            pdf.checkBoxList['sending'][0].status = pdf.checkBoxList[
-              'sending'
-            ][0].status = $event
+            pdfConfig['is_send_mail'] = pdfConfig['is_send_mail'] = $event
           "
         />
         <span class="app-slider app-round"></span>
@@ -53,8 +51,8 @@
     <div class="col">
       <span
         class="font-weight-bold side-bar-toggle content__toggle_text"
-        (click)="toggleCheckbox('sending', 0)"
-        >{{ pdf.checkBoxList["sending"][0].text }}</span
+        (click)="toggleCheckbox('is_send_mail')"
+        >{{ pdfStructure.checkBoxList["sending"][0].text }}</span
       >
     </div>
   </div>
@@ -66,13 +64,12 @@
     [formGroup]="pdfMailForm"
     class="mail_form openable_item"
     [ngClass]="{
-      'openable_item--close': !pdf.checkBoxList['sending'][0].status
+      'openable_item--close': !pdfConfig['is_send_mail']
     }"
   >
     <!-- #ProviderNameID -->
     <div
       class="form-group app-input-container"
-      [ngClass]="{ 'app-input-fill': true }"
     >
       <label for="ProviderName" class="app-input-label">Provider Name</label>
       <select
@@ -84,19 +81,12 @@
         id="ProviderNameID"
         name="ProviderNameID"
         formControlName="ProviderName"
+        (blur)="onBlurFormField()"
       >
         <option value="" disabled [selected]="true">Provider Name</option>
-        <option
-          *ngFor="
-            let field of [
-              { value: 1, name: 'da_da' },
-              { value: 2, name: 'da_net' },
-              { value: 3, name: 'da_da_da' }
-            ]
-          "
-          [ngValue]="field"
-          >{{ field.name }}</option
-        >
+        <option *ngFor="let field of providers" [ngValue]="field">{{
+          field.name
+        }}</option>
       </select>
       <div class="invalid-feedback">
         Field type is required!
@@ -106,7 +96,6 @@
       <!-- #AccountNumberID -->
       <div
         class="col-12 col-md-6 form-group app-input-container"
-        [ngClass]="{ 'app-input-fill': AccountNumberID.value }"
       >
         <label for="AccountNumberID" class="app-input-label"
           >Account Number</label
@@ -125,6 +114,7 @@
           name="AccountNumberID"
           formControlName="AccountNumber"
           placeholder="Account Number"
+          (blur)="onBlurFormField()"
         />
 
         <div class="invalid-feedback">
@@ -135,7 +125,6 @@
       <!-- #EmailID -->
       <div
         class="col-12 col-md-6 form-group app-input-container"
-        [ngClass]="{ 'app-input-fill': EmailID.value }"
       >
         <label for="EmailID" class="app-input-label">Email</label>
         <input
@@ -151,6 +140,7 @@
           name="EmailID"
           formControlName="Email"
           placeholder="Email"
+          (blur)="onBlurFormField()"
         />
 
         <div class="invalid-feedback">
@@ -161,7 +151,6 @@
     <!-- #EmailSubjectID -->
     <div
       class="form-group app-input-container"
-      [ngClass]="{ 'app-input-fill': EmailSubjectID.value }"
     >
       <label for="EmailSubjectID" class="app-input-label">Email Subject</label>
       <input
@@ -178,6 +167,7 @@
         name="EmailSubjectID"
         formControlName="EmailSubject"
         placeholder="Email Subject"
+        (blur)="onBlurFormField()"
       />
 
       <div class="invalid-feedback">
@@ -188,7 +178,6 @@
     <!-- #EmailBodyID -->
     <div
       class="form-group app-input-container"
-      [ngClass]="{ 'app-input-fill': EmailBodyID.value }"
     >
       <label for="EmailBodyID" class="app-input-label d-none">Email Body</label>
       <input
@@ -255,7 +244,8 @@
           (blur)="
             onChangeFormValue('EmailBody', {
               EmailBody: $event.target.innerHTML
-            })
+            });
+            onBlurFormField()
           "
           contentEditable="true"
         ></div>
@@ -267,21 +257,21 @@
     </div>
 
     <!-- FormCheckbox -->
-    <label class="app-checkbox-container checkbox" for="FormCheckboxID">
+    <label class="app-checkbox-container checkbox" for="FormCheckbox">
       <p
         class="checkbox__text"
         [ngClass]="{
-          'checkbox__text--checked': pdf.checkBoxList['form'][0].status
+          'checkbox__text--checked': pdfConfig.is_append_cover_letter
         }"
       >
-        {{ pdf.checkBoxList["form"][0].text }}
+        {{ pdfStructure.checkBoxList["form"][0].text }}
       </p>
       <input
         type="checkbox"
-        id="FormCheckboxID"
+        id="FormCheckbox"
         #FormCheckbox
         formControlName="FormCheckbox"
-        (click)="toggleCheckbox('form', 0)"
+        (click)="toggleCheckbox('is_append_cover_letter')"
       />
       <span class="app-checkbox-checkmark"></span>
     </label>
@@ -290,8 +280,7 @@
     <div
       class="form-group app-input-container openable_item"
       [ngClass]="{
-        'app-input-fill': CoverLetterID.value,
-        'openable_item--close': !pdf.checkBoxList['form'][0].status
+        'openable_item--close': !pdfConfig.is_append_cover_letter
       }"
     >
       <label for="CoverLetterID" class="app-input-label d-none">
@@ -363,7 +352,8 @@
           (blur)="
             onChangeFormValue('CoverLetter', {
               CoverLetter: $event.target.innerHTML
-            })
+            });
+            onBlurFormField()
           "
           contentEditable="true"
         ></div>

@@ -8,7 +8,7 @@
       </li>
       <ng-container *ngIf="activeMenuItem === item.value">
           <li 
-          *ngFor="let subMenu of item.subMenus; let indexSub = index"
+          *ngFor="let subMenu of item.stateSub; let indexSub = index"
           class="list-group-item app-form-publish-menu-item"
         >
           <div class="row no-gutters slider-item align-items-center">
@@ -17,8 +17,8 @@
                 <input type="checkbox"
                   id="switch{{i}}_{{indexSub}}"
                   name="switch{{i}}_{{indexSub}}"
-                  [ngModel]="subMenus[item.value][subMenu.type]"
-                  (ngModelChange)="subMenus[item.value][subMenu.type] = subMenus[item.value][subMenu.type] = $event"
+                  [ngModel]="stateSub[item.value][subMenu.type]"
+                  (ngModelChange)="stateSub[item.value][subMenu.type] = stateSub[item.value][subMenu.type] = $event"
                 >
                 <span class="app-slider app-round"></span>
               </label>

@@ -4,67 +4,95 @@ import {
   ViewEncapsulation,
   Input,
   Output,
-  EventEmitter,
+  EventEmitter
 } from "@angular/core";
 import {
   FormBuilder,
   FormControl,
   FormGroup,
   Validators,
+  AbstractControl
 } from "@angular/forms";
-import { ICheckbox } from "../v-publish-settings.component";
-
-export enum PDFCheckboxGroup {
-  general = "general",
-  sending = "sending",
-  form = "form",
-}
+import { IPdfStructure, PublishSettingsItems } from "../../models/publish-settings";
 
 @Component({
   selector: "app-v-publish-settings-pdf-form",
   templateUrl: "./v-publish-settings-pdf-form.component.html",
   encapsulation: ViewEncapsulation.None,
-  styleUrls: ["./v-publish-settings-pdf-form.component.scss"],
+  styleUrls: ["./v-publish-settings-pdf-form.component.scss"]
 })
 export class VPublishSettingsPdfFormComponent implements OnInit {
-  @Input() pdf: IPdf;
-  @Output() onToggleCheckbox: EventEmitter<
-    IPdfCheckboxStructure
-  > = new EventEmitter<IPdfCheckboxStructure>();
+  @Input() pdfConfig: object;
+  @Output() onTogglePdfCheckbox: EventEmitter<string> = new EventEmitter<
+    string
+  >();
+  @Output() onUpdateFormValue: EventEmitter<object> = new EventEmitter<object>();
+  @Output() onSavePublishSettings: EventEmitter<object> = new EventEmitter<
+    object
+  >();
 
-  pdfMailForm: FormGroup = new FormGroup({
+  pdfStructure = PublishSettingsItems.pdfStructure;
+  providers = PublishSettingsItems.providers;
+
+  defaultMailFormControls = {
     ProviderName: new FormControl(null, Validators.required),
     AccountNumber: new FormControl("", {
       validators: Validators.compose([
         Validators.required,
         Validators.minLength(3),
-        Validators.maxLength(50),
-      ]),
+        Validators.maxLength(50)
+      ])
     }),
     Email: new FormControl(
       null,
       Validators.compose([
         Validators.required,
-        Validators.pattern("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$"),
-      ]),
+        Validators.pattern("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$")
+      ])
     ),
-    EmailSubject: new FormControl(null, Validators.required),
-    EmailBody: new FormControl(null, Validators.required),
-    FormCheckbox: new FormControl(null, Validators.required),
-    CoverLetter: new FormControl(null, Validators.required),
-  });
+    EmailSubject: new FormControl("", Validators.required),
+    EmailBody: new FormControl("", Validators.required),
+    FormCheckbox: new FormControl("", Validators.required),
+    CoverLetter: new FormControl("", Validators.required)
+  };
 
-  constructor() {}
+  pdfMailForm: FormGroup = new FormGroup(this.defaultMailFormControls);
 
-  ngOnInit() {}
+  constructor(private fb: FormBuilder) {}
 
-  toggleCheckbox(group, index: number) {
-    this.onToggleCheckbox.emit({ group, index });
+  ngOnInit() {
+    console.log(this.pdfConfig);
+    if (this.pdfConfig['form_value']) {
+      this.loadForm();
+    }
+  }
+
+  loadForm() {
+    this.pdfMailForm.patchValue(this.pdfConfig['form_value']);
+  }
+
+  toggleCheckbox(key: string) {
+    this.onTogglePdfCheckbox.emit(key);
   }
 
   onChangeFormValue(key: string, newState: object) {
-    const value = newState[key] == "" ? null : newState[key];
+    // const value = newState[key] == "" ? null : newState[key];
     this.setFormValue(key, newState);
+  }
+
+  onBlurFormField() {
+    
+    console.log(this.pdfConfig);
+    // console.log(this.pdfMailForm.value);
+    this.saveFormValues();
+  }
+
+  saveFormValues() {
+    this.onUpdateFormValue.emit(this.pdfMailForm.value);
+  }
+
+  savePublishSettings(state: object) {
+    this.onSavePublishSettings.emit(state);
   }
 
   setFormValue(key: string, newState: object) {
@@ -75,28 +103,4 @@ export class VPublishSettingsPdfFormComponent implements OnInit {
   setCommand(name: string, showUi: boolean = false, value: string = null) {
     document.execCommand(name, showUi, value);
   }
-}
-
-export interface IPdf {
-  title: string;
-  subtitle: string;
-  checkBoxList: IPdfCheckbox;
-  inputList?: IInput[];
-}
-
-export interface IInput {
-  value: string;
-  type: string;
-  placeholder?: string;
-}
-
-export interface IPdfCheckbox {
-  general: ICheckbox[];
-  sending: ICheckbox[];
-  form: ICheckbox[];
-}
-
-export interface IPdfCheckboxStructure {
-  group: PDFCheckboxGroup;
-  index: number;
 }

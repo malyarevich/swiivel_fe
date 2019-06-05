@@ -175,8 +175,6 @@ export class VFormBuilderComponent implements OnInit {
     this.loadSideBar();
     this.loadSideBarNew();
     this.loadMappedFields();
-
-
   }
 
   addDocumentItem() {

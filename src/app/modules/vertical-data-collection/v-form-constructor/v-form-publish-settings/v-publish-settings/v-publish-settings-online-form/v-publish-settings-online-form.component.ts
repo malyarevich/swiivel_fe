@@ -6,7 +6,7 @@ import {
   Output,
   EventEmitter
 } from "@angular/core";
-import { ICheckbox } from "../v-publish-settings.component";
+import { IOnlineStructure, PublishSettingsItems } from "../../models/publish-settings";
 
 @Component({
   selector: "app-v-publish-settings-online-form",
@@ -15,19 +15,16 @@ import { ICheckbox } from "../v-publish-settings.component";
   styleUrls: ["./v-publish-settings-online-form.component.scss"]
 })
 export class VPublishSettingsOnlineFormComponent implements OnInit {
-  @Input() online: IOnline;
-  @Output() onToggleCheckbox: EventEmitter<number> = new EventEmitter<number>();
+  @Input() onlineConfig: object;
+  @Output() onToggleOnlineCheckbox: EventEmitter<string> = new EventEmitter<string>();
+
+  onlineStructure = PublishSettingsItems.onlineStructure;
 
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() { }
 
-  toggleOnlineCheckBox(index: number) {
-    this.onToggleCheckbox.emit(index);
+  toggleOnlineCheckBox(key: string) {
+    this.onToggleOnlineCheckbox.emit(key);
   }
-}
-
-export interface IOnline {
-  title: string;
-  checkBoxList: ICheckbox[];
 }
