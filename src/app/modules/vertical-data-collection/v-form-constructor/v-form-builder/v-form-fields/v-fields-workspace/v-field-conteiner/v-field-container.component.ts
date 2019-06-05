@@ -71,7 +71,6 @@ export class VFieldContainerComponent implements OnInit, OnDestroy, AfterViewIni
 
   ngOnInit(): void {
     this.inputField.exist = true;
-    //console.log(this.inputField.hasOwnProperty('mapped'));
   }
 
 
