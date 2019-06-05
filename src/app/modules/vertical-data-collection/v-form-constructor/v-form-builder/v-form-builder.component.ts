@@ -50,6 +50,7 @@ export class VFormBuilderComponent implements OnInit {
   attachments;
   form: Form;
   newSideBar;
+  idSectionForDragDrop: string[] =[];
 
   customFields: Field[];
   existingFields: Field[];
@@ -314,17 +315,17 @@ export class VFormBuilderComponent implements OnInit {
     this.vDataCollection.deleteDraftForm(this.formId);
   }
 
-  drop(event: CdkDragDrop<Field[]>) {
-
-    if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else if ((event.previousContainer.id == 'workPlaceList' && event.container.id == '6372c882-3d14-486f-9c1f-52ae8ab928ef') ||
-      (event.container.id == 'workPlaceList' && event.previousContainer.id == '6372c882-3d14-486f-9c1f-52ae8ab928ef')) {
-      transferArrayItem(event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex);
-    }
+  // drop(event: CdkDragDrop<Field[]>) {
+  //
+  //   if (event.previousContainer === event.container) {
+  //     moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+  //   } else if ((event.previousContainer.id == 'workPlaceList' && event.container.id == '6372c882-3d14-486f-9c1f-52ae8ab928ef') ||
+  //     (event.container.id == 'workPlaceList' && event.previousContainer.id == '6372c882-3d14-486f-9c1f-52ae8ab928ef')) {
+  //     transferArrayItem(event.previousContainer.data,
+  //       event.container.data,
+  //       event.previousIndex,
+  //       event.currentIndex);
+  //   }
     // else {
     //   copyArrayItem(event.previousContainer.data,
     //     event.container.data,
@@ -332,7 +333,7 @@ export class VFormBuilderComponent implements OnInit {
     //     event.currentIndex);
     //   this.addField(this.fields[event.currentIndex]);
     // }
-  }
+  // }
 
 
   onChangeGroupBeing(field, group) {
