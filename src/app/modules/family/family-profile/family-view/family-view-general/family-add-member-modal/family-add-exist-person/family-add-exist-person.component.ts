@@ -64,7 +64,7 @@ export class FamilyAddExistPersonComponent implements OnInit {
     this.familyPersonForm.value.members.map((member) => {
       data.id_person = member.id;
       this.familyPersonService.add(data);
-      this.familyQueryParamsService.setFilterParams(FAMILY_VIEW_GENERAL_TABS.ALL);
+      this.familyQueryParamsService.setFilterParams(this.FAMILY_VIEW_GENERAL_TABS.ALL);
     });
 
     this.onCloseAddFamilyMemberModal();
