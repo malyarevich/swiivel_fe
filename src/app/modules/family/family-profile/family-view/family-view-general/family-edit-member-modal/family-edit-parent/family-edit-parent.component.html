@@ -1,0 +1,75 @@
+<form [formGroup]="familyParentForm" (ngSubmit)="updateFamilyParent()">
+  <p class="app-text-small font-weight-bold mb-1">PERSONAL {{familyPerson.person_role | uppercase}} INFO</p>
+  <div class="row no-gutters app-family-card-body p-3">
+    <div class="col-3"><img src="assets/images/temp/person-foto-placeholder.png" width="70%"></div>
+    <div class="col-9 mt-3">
+      <div class="row no-gutters">
+        <div class="col-4 px-1">
+          <app-input-field [formControlName]="'first_name'" id='first_name' label="First Name"></app-input-field>
+          <div class="field-has-error"
+               *ngIf="familyParentForm.get('first_name').invalid && familyParentForm.get('first_name').touched && familyParentForm.get('first_name')['errors']['required']"
+          >
+            First Name is required
+          </div>
+        </div>
+        <div class="col-4 px-1">
+          <app-input-field [formControlName]="'middle_name'" id='middle_name' label="Middle Name"></app-input-field>
+        </div>
+        <div class="col-4 px-1">
+          <app-input-field [formControlName]="'last_name'" id='last_name' label="Last Name"></app-input-field>
+        </div>
+      </div>
+      <div class="row no-gutters pt-2">
+        <div class="col-6 px-1">
+          <app-input-field [formControlName]="'dob'" id='dob' label="Date of Birth"></app-input-field>
+        </div>
+        <div class="col-6 px-1">
+          <app-input-field [formControlName]="'hebrew_full_name'" id='full_hebrew_name'
+                           label="Full Hebrew Name"></app-input-field>
+        </div>
+      </div>
+      <div *ngIf="familyPerson.person_role === familyRoles.mother" class="row no-gutters pt-2">
+        <div class="col-6 px-1">
+          <app-input-field [formControlName]="'maiden_name'" id='maiden_name' label="Maiden Name"></app-input-field>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="app-text-small font-weight-bold mb-1 mt-3">JOB</p>
+  <div class="row no-gutters app-family-card-body p-3">
+    <div class="col-3 px-1">
+      <app-input-field [formControlName]="'occupation'" id='occupation' label="Occupation"></app-input-field>
+    </div>
+    <div class="col-3 px-1">
+      <app-input-field [formControlName]="'address'" id='address' label="Work Address"></app-input-field>
+    </div>
+    <div class="col-6 px-1">
+      <app-input-field [formControlName]="'corporate_phone'" id='corporate_phone'
+                       label="Work Phone number"></app-input-field>
+    </div>
+  </div>
+
+  <p class="app-text-small font-weight-bold mb-1 mt-3">CONTACTS</p>
+  <div class="row no-gutters app-family-card-body p-3">
+    <div class="col-6 px-1">
+      <app-input-field [formControlName]="'contact_phone'" id='contact_phone' label="Phone number"></app-input-field>
+    </div>
+    <div class="col-6 px-1">
+      <app-input-field [formControlName]="'contact_email'" type='email' id='contact_email'
+                       label="Email"></app-input-field>
+    </div>
+  </div>
+
+  <div class="row pt-3">
+    <div class="col-12 text-right">
+      <button (click)="onCloseEditFamilyMemberModal()" class="btn app-btn-outline-primary mr-2">
+        Cancel
+      </button>
+      <button type="submit" class="btn app-btn-primary" [disabled]="familyParentForm.invalid">
+        Update
+      </button>
+    </div>
+  </div>
+</form>
+

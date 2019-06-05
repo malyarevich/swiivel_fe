@@ -1,0 +1,15 @@
+<app-modal [width]="'40%'"
+           [title]=""
+           (closeModal)="onCloseEditFamilyMemberModal()">
+  <app-family-edit-parent
+    *ngIf="familyPerson.person_role === FAMILY_ROLES.father || familyPerson.person_role === FAMILY_ROLES.mother"
+    [familyPerson]="familyPerson"
+    (closeModalEditFamilyMember)="onCloseEditFamilyMemberModal()">
+  </app-family-edit-parent>
+
+  <app-family-edit-child
+    *ngIf="familyPerson.person_role === FAMILY_ROLES.child || familyPerson.person_role === FAMILY_ROLES.student"
+    [familyPerson]="familyPerson"
+    (closeModalEditFamilyMember)="onCloseEditFamilyMemberModal()">
+  </app-family-edit-child>
+</app-modal>
