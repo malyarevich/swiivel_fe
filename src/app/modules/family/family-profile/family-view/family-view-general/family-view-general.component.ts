@@ -21,8 +21,6 @@ export class FamilyViewGeneralComponent implements OnInit {
   familyRoles = FamilyRoles;
   public loader$: Observable <boolean>;
 
-  params: FamilyQueryParams;
-
   constructor(private familyPersonService: FamilyPersonService,
               private loaderService: LoaderService,
               private familyQueryParamsService: FamilyQueryParamsService) {
@@ -30,26 +28,21 @@ export class FamilyViewGeneralComponent implements OnInit {
 
   ngOnInit() {
     this.loader$ = this.loaderService.loader;
-    this.getQueryParams();
-    this.getFamilyPersons();
+    this.searchFamilyPerson();
+  }
+
+  searchFamilyPerson() {
+    this.getQueryParams().subscribe((params: FamilyQueryParams) => {
+      this.getFamilyPersons(params)
+    })
   }
 
   getQueryParams() {
-    this.familyQueryParamsService.familyQueryParams.subscribe(params => this.params = {...params});
+    return this.familyQueryParamsService.familyQueryParams;
   }
 
-  getFamilyPersons(params?) {
+  getFamilyPersons(params) {
     this.familyPersons = this.familyPersonService.familyPersonList;
     this.familyPersonService.getByFamilyId(this.familyId, params);
-  }
-
-  onSetFilterTab(filter) {
-    this.familyQueryParamsService.setFilterParams(filter);
-    this.getFamilyPersons(this.params);
-  }
-
-  onSetSearchQuery(query) {
-    this.familyQueryParamsService.setQueryParams(query);
-    this.getFamilyPersons(this.params);
   }
 }

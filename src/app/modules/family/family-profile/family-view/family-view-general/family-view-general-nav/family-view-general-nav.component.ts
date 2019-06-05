@@ -1,7 +1,9 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FamilyViewGeneralTab, familyViewGeneralTabs,} from '../../../models/family-view-general-tabs'
+import {FamilyViewGeneralTab, familyViewGeneralTabs} from '../../../models/family-view-general-tabs'
 import {Family} from "../../../../../../models/family/family.model";
 import {FamilyService} from "../../../../../../services/family/family.service";
+import {FamilyQueryParamsService} from "../../../../../../services/family/family-query-params.service";
+import {FamilyQueryParams} from "../../../../../../models/family/family-query-params.model";
 
 @Component({
   selector: 'app-family-view-general-nav',
@@ -16,16 +18,15 @@ export class FamilyViewGeneralNavComponent implements OnInit {
   familyName: string;
 
   familyViewGeneralTabs: FamilyViewGeneralTab[] = familyViewGeneralTabs;
-  activeTab: string;
-  searchQuery: string;
+  queryParams: FamilyQueryParams;
 
   showModal: boolean = false;
 
-  constructor(private familyService: FamilyService) { }
+  constructor(private familyService: FamilyService, private familyQueryParamsService: FamilyQueryParamsService) { }
 
   ngOnInit() {
     this.getFamilyName();
-    this.setActiveTab(this.familyViewGeneralTabs[0].name);
+    this.getActiveTab();
   }
 
   getFamilyName() {
@@ -34,9 +35,18 @@ export class FamilyViewGeneralNavComponent implements OnInit {
     })
   }
 
-  setActiveTab(tabName) {
-    this.activeTab = tabName;
-    this.activeTabEmitter.emit(this.activeTab);
+  getActiveTab() {
+    this.familyQueryParamsService.familyQueryParams.subscribe(params => {
+      this.queryParams = {...params};
+    })
+  }
+
+  setActiveTab(filter) {
+    this.familyQueryParamsService.setFilterParams(filter);
+  }
+
+  setSearchQuery(query) {
+    this.familyQueryParamsService.setQueryParams(query);
   }
 
   onShowAddFamilyMemberModal() {
@@ -45,9 +55,5 @@ export class FamilyViewGeneralNavComponent implements OnInit {
 
   onCloseAddFamilyMemberModal() {
     this.showModal = false;
-  }
-
-  setSearchQuery(query) {
-    this.searchQueryEmitter.emit(query);
   }
 }
