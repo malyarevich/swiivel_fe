@@ -61,7 +61,7 @@ export class VPublishSettingsPdfFormComponent implements OnInit {
   constructor(private fb: FormBuilder) {}
 
   ngOnInit() {
-    console.log(this.pdfConfig);
+    // console.log(this.pdfConfig);
     if (this.pdfConfig['form_value']) {
       this.loadForm();
     }
@@ -82,7 +82,7 @@ export class VPublishSettingsPdfFormComponent implements OnInit {
 
   onBlurFormField() {
     
-    console.log(this.pdfConfig);
+    // console.log(this.pdfConfig);
     // console.log(this.pdfMailForm.value);
     this.saveFormValues();
   }

@@ -5,7 +5,7 @@ import {ConsentInfo} from "../v-form-constructor/v-form-builder/v-consent/model/
 import {DocumentsModel} from "../v-form-constructor/v-form-builder/v-documents-forms/model/documents.model";
 import {FormsPDFModel} from "../v-form-constructor/v-form-builder/v-documents-forms/model/formsPDF.model";
 import {TermsConditions} from "../v-form-constructor/v-form-builder/v-terms-conditions/model/terms-conditions.model";
-import { ISubMenus } from '../v-form-constructor/v-form-publish-settings/v-publish-menu/v-publish-menu.component';
+import { ISubMenus } from '../v-form-constructor/v-form-publish-settings/models/publish-settings';
 
 export interface Form {
   _id: string;

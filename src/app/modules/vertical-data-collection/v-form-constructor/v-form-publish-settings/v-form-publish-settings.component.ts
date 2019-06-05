@@ -3,23 +3,14 @@ import {
   Input,
   OnInit,
   Host,
-  ViewChild,
-  ElementRef
 } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { VFormService } from "../../v-form.service";
 import { FormUtils } from "../../utils/form.utils";
 import { PublishMenuItems } from "./models/publish-menu-items";
 import { PublishSettingsItems, ISubMenus } from "./models/publish-settings";
-import {
-  CdkDragDrop,
-  copyArrayItem,
-  moveItemInArray,
-  transferArrayItem
-} from "@angular/cdk/drag-drop";
 
-import { v4 as uuid } from "uuid";
-import { cloneDeep, isEmpty } from "lodash";
+import { isEmpty } from "lodash";
 import { Location } from "@angular/common";
 import { VFieldsService } from "../../v-fields.service";
 import { Field } from "../../model/field.model";
@@ -29,22 +20,15 @@ import {
 } from "./../v-form-builder/v-tuition-contract/models/tuition-contract.model";
 import { Form } from "../../model/form.model";
 import {
-  FormPayment,
-  TYPE_NAME
-} from "./../v-form-builder/v-form-payment/model/form-payment.model";
-import {
   ConsentInfo,
   consentInfoDefault,
-  consentItemDefault
 } from "./../v-form-builder/v-consent/model/consent.model";
 import {
-  documentItemDefault,
   DocumentSideBar,
   DocumentsModel
 } from "./../v-form-builder/v-documents-forms/model/documents.model";
 import { GeneralInfoIsValidService } from "../../services/general-info-is-valid.service";
 import {
-  formPDFItemDefault,
   FormsPDFModel
 } from "./../v-form-builder/v-documents-forms/model/formsPDF.model";
 import { VFilesService } from "../../v-files.service";
@@ -52,13 +36,11 @@ import { VFilesService } from "../../v-files.service";
 import { E_SIGNATURE_TYPES, SIGNATURE_TYPES } from "../../../../enums";
 import {
   TermsConditions,
-  termsConditionsDefault,
-  termsConditionsItemDefault
+  termsConditionsDefault
 } from "./../v-form-builder/v-terms-conditions/model/terms-conditions.model";
 import { FinanceService } from "../../../../services/finance/finance.service";
 import {
-  FeeTemplate,
-  FeeTemplatesData
+  FeeTemplate
 } from "../../../../models/fee-templates.model";
 import { VDataCollectionComponent } from "../../v-data-collection.component";
 
@@ -72,8 +54,6 @@ export class VFormPublishSettingsComponent implements OnInit {
   @Input() formId: string;
   activeMenuItem: string;
   publishMenuItems = PublishMenuItems;
-
-  
 
   publish_settings;
 
@@ -193,9 +173,9 @@ export class VFormPublishSettingsComponent implements OnInit {
       this.formsPDF = form.forms || [];
       this.attachments = form.attachments || {};
     }
-    console.log("setLocalForm");
-    console.log(form.publish_settings);
-    console.log(this.publish_settings);
+    // console.log("setLocalForm");
+    // console.log(form.publish_settings);
+    // console.log(this.publish_settings);
   }
 
   formInit(): void {
@@ -252,13 +232,8 @@ export class VFormPublishSettingsComponent implements OnInit {
 
   public saveDraftForm(): void {
     // console.log("SAVE draft");
-    
     const form: Form = this.getForm();
-    // console.log(form);
     this.vDataCollection.setDraftForm(this.draftId, form);
-    const newForm = this.vDataCollection.getDraftForm(this.draftId);
-    // console.log("new Form");
-    // console.log(newForm);
   }
 
   goBack() {
