@@ -27,7 +27,7 @@ export class VSectionConteinerComponent implements OnInit {
     // console.log('drop in section');
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else if (event.previousContainer.id!=='existing') {
+    } else if (event.previousContainer.id!=='existing'&&event.previousContainer.id!=='groupExisting') {
       transferArrayItem(event.previousContainer.data,
         event.container.data,
         event.previousIndex,
@@ -37,7 +37,9 @@ export class VSectionConteinerComponent implements OnInit {
         event.container.data,
         event.previousIndex,
         event.currentIndex);
-      this.section.fields =  this.sideBarService.replaceExistinfField(this.section.fields[event.currentIndex],this.section.fields );
+      // console.log(event);
+      // console.log(this.section.fields[event.currentIndex]);
+      this.section.fields =  this.sideBarService.replaceExistinField(this.section.fields[event.currentIndex],this.section.fields );
       this.sideBarService.fieldCheck(this.section.fields[event.currentIndex], this.sideBar[0]);
     }
 

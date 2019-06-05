@@ -28,7 +28,7 @@ export class SideBarService {
 
   }
 
-  replaceExistinfField(field: Field, fields: Field[]) {
+  replaceExistinField(field: Field, fields: Field[]) {
     let newField = cloneDeep(field);
     newField._id = uuid();
     // this.doExistingFieldsUniq(newField);
@@ -94,7 +94,7 @@ export class SideBarService {
   }
 
   fieldCheck(field:Field,filedList: Field){
-    console.log(field,filedList);
+    // console.log(field,filedList);
     filedList.fields.forEach(f=>{
       if (f.type == 113 || f.type == 114) this.fieldCheck(field, f);
       if(f.name==field.name && f.prefix==field.prefix) f.exist = true;

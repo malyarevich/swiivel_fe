@@ -28,24 +28,13 @@ export class VGroupContainerComponent implements OnInit {
   ngOnInit() {
     // this.idSectionForDragDrop.push(this.inputGroup._id)
   }
-  // drop(event: CdkDragDrop<Field[]>) {
-  //   console.log('in group');
-  //   if (event.previousContainer === event.container) {
-  //     moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-  //   } else {
-  //     transferArrayItem(event.previousContainer.data,
-  //       event.container.data,
-  //       event.previousIndex,
-  //       event.currentIndex);
-  //   }
-  //
-  // }
+
 
   drop(event: CdkDragDrop<Field[]>) {
     // console.log('drop in section');
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else if (event.previousContainer.id!=='existing') {
+    }else if (event.previousContainer.id!=='existing'&&event.previousContainer.id!=='groupExisting'){
       transferArrayItem(event.previousContainer.data,
         event.container.data,
         event.previousIndex,
@@ -55,7 +44,8 @@ export class VGroupContainerComponent implements OnInit {
         event.container.data,
         event.previousIndex,
         event.currentIndex);
-      this.inputGroup.fields =  this.sideBarService.replaceExistinfField(this.inputGroup.fields[event.currentIndex],this.inputGroup.fields );
+      // console.log(this.inputGroup.fields[event.currentIndex]);
+      this.inputGroup.fields =  this.sideBarService.replaceExistinField(this.inputGroup.fields[event.currentIndex],this.inputGroup.fields );
       this.sideBarService.fieldCheck(this.inputGroup.fields[event.currentIndex], this.sideBar[0]);
     }
 
