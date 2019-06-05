@@ -11,6 +11,7 @@ import {FamilyRoles} from "../../../../../../enums/family-roles";
 export class FamilyPersonCardContainerComponent implements OnInit {
   @Input() familyPerson: FamilyPerson;
   showRemoveModal: boolean = false;
+  showEditModal: boolean = false;
 
   familyRoles = FamilyRoles;
 
@@ -26,6 +27,10 @@ export class FamilyPersonCardContainerComponent implements OnInit {
 
   onCloseRemoveModal(value) {
     this.showRemoveModal = !value;
+  }
+
+  onCloseEditModal(value) {
+    this.showEditModal = !value;
   }
 
 }

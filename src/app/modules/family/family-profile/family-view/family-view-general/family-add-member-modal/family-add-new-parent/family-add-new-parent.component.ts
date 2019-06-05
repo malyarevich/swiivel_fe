@@ -5,7 +5,6 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {FamilyRoles} from "../../../../../../../enums/family-roles";
 import {PersonService} from "../../../../../../../services/person/person.service";
 import {Gender} from "../../../../../../../enums/gender";
-import {FamilyQueryParamsService} from "../../../../../../../services/family/family-query-params.service";
 
 @Component({
   selector: 'app-family-add-new-parent',
