@@ -6,6 +6,8 @@ import {PersonService} from "../../../../../../../services/person/person.service
 import {Gender} from "../../../../../../../enums/gender";
 import {FamilyPersonService} from "../../../../../../../services/family/family-person.service";
 import {FamilyRoles} from "../../../../../../../enums/family-roles";
+import {FamilyQueryParamsService} from "../../../../../../../services/family/family-query-params.service";
+import {FAMILY_VIEW_GENERAL_TABS} from "../../../../models/family-view-general-tabs";
 
 @Component({
   selector: 'app-family-add-new-child',
@@ -17,6 +19,8 @@ export class FamilyAddNewChildComponent implements OnInit {
   @Input() family: Family;
   @Input() role: string;
 
+  FAMILY_VIEW_GENERAL_TABS = FAMILY_VIEW_GENERAL_TABS;
+
   familyChildForm: FormGroup;
 
   persons: any[] = [];
@@ -25,7 +29,8 @@ export class FamilyAddNewChildComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private personService: PersonService,
-              private familyPersonService: FamilyPersonService) {
+              private familyPersonService: FamilyPersonService,
+              private familyQueryParamsService: FamilyQueryParamsService) {
     this.initFamilyNewChildForm();
   }
 
@@ -85,7 +90,6 @@ export class FamilyAddNewChildComponent implements OnInit {
   addFamilyChild() {
     if (this.familyChildForm.invalid) return;
     let data = {
-      // parents: this.familyChildForm.value.parents.map((item) => item.id),
       first_name: this.familyChildForm.value.first_name,
       middle_name: this.familyChildForm.value.middle_name,
       last_name: this.familyChildForm.value.last_name,
@@ -117,7 +121,7 @@ export class FamilyAddNewChildComponent implements OnInit {
       data['person_info'] = this.familyChildForm.value.person_info;
     }
     this.familyPersonService.add(data);
-    this.familyPersonService.getByFamilyId(this.family.family_id);
+    this.familyQueryParamsService.setFilterParams(FAMILY_VIEW_GENERAL_TABS.ALL);
   }
 
   onCloseAddFamilyMemberModal() {
