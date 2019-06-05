@@ -27,6 +27,8 @@
                    placeholder="Date of Birth"
                    name="dp1"
                    [formControlName]="'dob'"
+                   [minDate]="{day: 1, month: 1, year: date.getFullYear() - 100}"
+                   [maxDate]="{day: date.getDay(), month: date.getMonth(), year: date.getFullYear()}"
                    ngbDatepicker
                    id="d1"
                    #d1="ngbDatepicker"

@@ -6,6 +6,7 @@ import {PersonService} from "../../../../../../../services/person/person.service
 import {Gender} from "../../../../../../../enums/gender";
 import {FamilyPersonService} from "../../../../../../../services/family/family-person.service";
 import {FamilyRoles} from "../../../../../../../enums/family-roles";
+import {NgbDateParserFormatter} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-family-add-new-child',
@@ -19,13 +20,16 @@ export class FamilyAddNewChildComponent implements OnInit {
 
   familyChildForm: FormGroup;
 
+  date = new Date();
+
   persons: any[] = [];
   GENDER = Gender;
   FAMILY_ROLES = FamilyRoles;
 
   constructor(private fb: FormBuilder,
               private personService: PersonService,
-              private familyPersonService: FamilyPersonService) {
+              private familyPersonService: FamilyPersonService,
+              private parserFormatter: NgbDateParserFormatter) {
     this.initFamilyNewChildForm();
   }
 
@@ -89,7 +93,7 @@ export class FamilyAddNewChildComponent implements OnInit {
       middle_name: this.familyChildForm.value.middle_name,
       last_name: this.familyChildForm.value.last_name,
       legal_name: this.familyChildForm.value.legal_name,
-      dob: this.familyChildForm.value.dob,
+      dob: this.parserFormatter.format(this.familyChildForm.value.dob),
       hebrew_dob: this.familyChildForm.value.hebrew_dob,
       hebrew_full_name: this.familyChildForm.value.hebrew_full_name,
       gender: this.familyChildForm.value.gender,

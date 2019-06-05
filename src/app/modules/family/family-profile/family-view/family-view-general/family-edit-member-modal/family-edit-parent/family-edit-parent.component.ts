@@ -18,6 +18,8 @@ export class FamilyEditParentComponent implements OnInit {
   familyRoles = FamilyRoles;
   gender = Gender;
 
+  date = new Date();
+
   familyParentForm: FormGroup;
 
   constructor(private familyPersonService: FamilyPersonService,
