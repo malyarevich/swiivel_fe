@@ -22,7 +22,7 @@ export class FamilyAddExistPersonComponent implements OnInit {
 
   constructor(private personService: PersonService,
               private familyPersonService: FamilyPersonService,
-              private fb: FormBuilder,) {
+              private fb: FormBuilder) {
     this.initFamilyPersonForm();
   }
 

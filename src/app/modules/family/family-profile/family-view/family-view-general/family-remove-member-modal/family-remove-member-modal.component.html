@@ -1,6 +1,6 @@
 <app-modal [width]="'30%'"
            [title]="'Remove ' + familyPerson?.person?.first_name + '' +
-           familyPerson?.person?.last_name + ' from ' + familyPerson.family_name"
+           familyPerson?.person?.last_name + ' from ' + familyPerson?.family_name + '?'"
            (closeModal)="onCloseRemoveFamilyMemberModal()">
   <div class="row pt-2">
     <div class="col-12 text-center">

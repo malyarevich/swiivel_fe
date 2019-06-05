@@ -5,6 +5,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {FamilyRoles} from "../../../../../../../enums/family-roles";
 import {PersonService} from "../../../../../../../services/person/person.service";
 import {Gender} from "../../../../../../../enums/gender";
+import {FamilyQueryParamsService} from "../../../../../../../services/family/family-query-params.service";
 
 @Component({
   selector: 'app-family-add-new-parent',
@@ -22,7 +23,7 @@ export class FamilyAddNewParentComponent implements OnInit {
 
   constructor(private familyPersonService: FamilyPersonService,
               private personService: PersonService,
-              private fb: FormBuilder,) {
+              private fb: FormBuilder) {
     this.initFamilyNewPersonForm();
   }
 
@@ -59,7 +60,7 @@ export class FamilyAddNewParentComponent implements OnInit {
     this.onCloseAddFamilyMemberModal();
   }
 
-  addFamilyPerson(personId) {
+  async addFamilyPerson(personId) {
     const data = {
       family_id: this.family.family_id,
       family_name: this.family.name,

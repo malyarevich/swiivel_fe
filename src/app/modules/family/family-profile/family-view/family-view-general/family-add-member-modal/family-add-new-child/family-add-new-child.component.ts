@@ -85,7 +85,6 @@ export class FamilyAddNewChildComponent implements OnInit {
   addFamilyChild() {
     if (this.familyChildForm.invalid) return;
     let data = {
-      // parents: this.familyChildForm.value.parents.map((item) => item.id),
       first_name: this.familyChildForm.value.first_name,
       middle_name: this.familyChildForm.value.middle_name,
       last_name: this.familyChildForm.value.last_name,
@@ -117,7 +116,6 @@ export class FamilyAddNewChildComponent implements OnInit {
       data['person_info'] = this.familyChildForm.value.person_info;
     }
     this.familyPersonService.add(data);
-    this.familyPersonService.getByFamilyId(this.family.family_id);
   }
 
   onCloseAddFamilyMemberModal() {

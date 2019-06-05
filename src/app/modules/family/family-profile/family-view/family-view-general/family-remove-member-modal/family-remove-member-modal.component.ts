@@ -1,6 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FamilyPerson} from "../../../../../../models/family/family-person.model";
 import {FamilyPersonService} from "../../../../../../services/family/family-person.service";
+import {FamilyQueryParamsService} from "../../../../../../services/family/family-query-params.service";
+import {FAMILY_VIEW_GENERAL_TABS} from "../../../../../../models/family/family-view-general-tabs";
 
 @Component({
   selector: 'app-family-remove-member-modal',
@@ -11,7 +13,11 @@ export class FamilyRemoveMemberModalComponent implements OnInit {
   @Input() familyPerson: FamilyPerson;
   @Output() closeModalRemoveFamilyMember: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor(private familyPersonService: FamilyPersonService) { }
+  FAMILY_VIEW_GENERAL_TABS = FAMILY_VIEW_GENERAL_TABS;
+
+  constructor(private familyPersonService: FamilyPersonService,
+              private familyQueryParamsService: FamilyQueryParamsService) {
+  }
 
   ngOnInit() {
   }
