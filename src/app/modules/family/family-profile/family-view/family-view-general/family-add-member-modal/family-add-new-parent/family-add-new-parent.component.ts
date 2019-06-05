@@ -71,7 +71,7 @@ export class FamilyAddNewParentComponent implements OnInit {
       person_role: this.role,
     };
     this.familyPersonService.add(data);
-    this.familyQueryParamsService.setFilterParams(FAMILY_VIEW_GENERAL_TABS.ALL);
+    this.familyQueryParamsService.setFilterParams(this.FAMILY_VIEW_GENERAL_TABS.ALL);
   }
 
   onCloseAddFamilyMemberModal() {
