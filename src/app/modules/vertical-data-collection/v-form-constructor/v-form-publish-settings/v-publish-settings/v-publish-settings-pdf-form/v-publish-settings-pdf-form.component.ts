@@ -22,7 +22,7 @@ import { IPdfStructure, PublishSettingsItems } from "../../models/publish-settin
   styleUrls: ["./v-publish-settings-pdf-form.component.scss"]
 })
 export class VPublishSettingsPdfFormComponent implements OnInit {
-  @Input() pdfConfig: object;
+  @Input() pdfConfig: any;
   @Output() onTogglePdfCheckbox: EventEmitter<string> = new EventEmitter<
     string
   >();

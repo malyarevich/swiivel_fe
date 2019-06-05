@@ -8,7 +8,7 @@ import { ISubMenus } from "../models/publish-settings";
   styleUrls: ["./v-publish-settings.component.scss"]
 })
 export class VPublishSettingsComponent implements OnInit {
-  @Input() publish_settings: object;
+  @Input() publish_settings: any;
   @Output() onToggleOnlineCheckbox: EventEmitter<string> = new EventEmitter<string>();
   @Output() onTogglePdfCheckbox: EventEmitter<string> = new EventEmitter<string>();
   @Output() onUpdateFormValue: EventEmitter<object> = new EventEmitter<object>();
