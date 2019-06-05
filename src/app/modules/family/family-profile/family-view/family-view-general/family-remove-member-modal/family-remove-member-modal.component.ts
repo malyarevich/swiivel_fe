@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FamilyPerson} from "../../../../../../models/family/family-person.model";
 import {FamilyPersonService} from "../../../../../../services/family/family-person.service";
 import {FamilyQueryParamsService} from "../../../../../../services/family/family-query-params.service";
-import {FAMILY_VIEW_GENERAL_TABS} from "../../../models/family-view-general-tabs";
+import {FAMILY_VIEW_GENERAL_TABS} from "../../../../../../models/family/family-view-general-tabs";
 
 @Component({
   selector: 'app-family-remove-member-modal',
@@ -28,7 +28,6 @@ export class FamilyRemoveMemberModalComponent implements OnInit {
 
   delete() {
     this.familyPersonService.delete(this.familyPerson.id, this.familyPerson.person_role);
-    this.familyQueryParamsService.setFilterParams(this.FAMILY_VIEW_GENERAL_TABS.ALL);
     this.onCloseRemoveFamilyMemberModal();
   }
 

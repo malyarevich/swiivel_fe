@@ -5,8 +5,6 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {PersonService} from "../../../../../../../services/person/person.service";
 import {FamilyPersonService} from "../../../../../../../services/family/family-person.service";
 import {Person} from "../../../../../../../models/person.model";
-import {FAMILY_VIEW_GENERAL_TABS} from "../../../../models/family-view-general-tabs";
-import {FamilyQueryParamsService} from "../../../../../../../services/family/family-query-params.service";
 
 @Component({
   selector: 'app-family-add-exist-person',
@@ -20,14 +18,11 @@ export class FamilyAddExistPersonComponent implements OnInit {
   persons: any[] = [];
   roles = familyRoles;
 
-  FAMILY_VIEW_GENERAL_TABS = FAMILY_VIEW_GENERAL_TABS;
-
   private familyPersonForm: FormGroup;
 
   constructor(private personService: PersonService,
               private familyPersonService: FamilyPersonService,
-              private fb: FormBuilder,
-              private familyQueryParamsService: FamilyQueryParamsService) {
+              private fb: FormBuilder) {
     this.initFamilyPersonForm();
   }
 
@@ -64,7 +59,6 @@ export class FamilyAddExistPersonComponent implements OnInit {
     this.familyPersonForm.value.members.map((member) => {
       data.id_person = member.id;
       this.familyPersonService.add(data);
-      this.familyQueryParamsService.setFilterParams(this.FAMILY_VIEW_GENERAL_TABS.ALL);
     });
 
     this.onCloseAddFamilyMemberModal();

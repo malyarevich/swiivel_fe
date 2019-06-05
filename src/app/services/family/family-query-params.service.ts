@@ -3,7 +3,7 @@ import {BehaviorSubject, Observable} from "rxjs";
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {map} from "rxjs/operators";
 import {FamilyQueryParams} from "../../models/family/family-query-params.model";
-import {FAMILY_VIEW_GENERAL_TABS} from "../../modules/family/family-profile/models/family-view-general-tabs";
+import {FAMILY_VIEW_GENERAL_TABS} from "../../models/family/family-view-general-tabs";
 
 @Injectable()
 export class FamilyQueryParamsService {

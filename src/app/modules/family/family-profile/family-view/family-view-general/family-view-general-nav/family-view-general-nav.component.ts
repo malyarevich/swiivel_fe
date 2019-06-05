@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FamilyViewGeneralTab, familyViewGeneralTabs} from '../../../models/family-view-general-tabs'
+import {FamilyViewGeneralTab, familyViewGeneralTabs} from '../../../../../../models/family/family-view-general-tabs'
 import {Family} from "../../../../../../models/family/family.model";
 import {FamilyService} from "../../../../../../services/family/family.service";
 import {FamilyQueryParamsService} from "../../../../../../services/family/family-query-params.service";

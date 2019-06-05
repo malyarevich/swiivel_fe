@@ -5,7 +5,6 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {FamilyRoles} from "../../../../../../../enums/family-roles";
 import {PersonService} from "../../../../../../../services/person/person.service";
 import {Gender} from "../../../../../../../enums/gender";
-import {FAMILY_VIEW_GENERAL_TABS} from "../../../../models/family-view-general-tabs";
 import {FamilyQueryParamsService} from "../../../../../../../services/family/family-query-params.service";
 
 @Component({
@@ -21,12 +20,10 @@ export class FamilyAddNewParentComponent implements OnInit {
   familyRoles = FamilyRoles;
   gender = Gender;
   familyParentForm: FormGroup;
-  FAMILY_VIEW_GENERAL_TABS = FAMILY_VIEW_GENERAL_TABS;
 
   constructor(private familyPersonService: FamilyPersonService,
               private personService: PersonService,
-              private fb: FormBuilder,
-              private familyQueryParamsService: FamilyQueryParamsService) {
+              private fb: FormBuilder) {
     this.initFamilyNewPersonForm();
   }
 
@@ -63,7 +60,7 @@ export class FamilyAddNewParentComponent implements OnInit {
     this.onCloseAddFamilyMemberModal();
   }
 
-  addFamilyPerson(personId) {
+  async addFamilyPerson(personId) {
     const data = {
       family_id: this.family.family_id,
       family_name: this.family.name,
@@ -71,7 +68,6 @@ export class FamilyAddNewParentComponent implements OnInit {
       person_role: this.role,
     };
     this.familyPersonService.add(data);
-    this.familyQueryParamsService.setFilterParams(this.FAMILY_VIEW_GENERAL_TABS.ALL);
   }
 
   onCloseAddFamilyMemberModal() {
