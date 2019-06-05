@@ -21,7 +21,22 @@
       </div>
       <div class="row no-gutters pt-2">
         <div class="col-6 px-1">
-          <app-input-field [formControlName]="'dob'" id='dob' label="Date of Birth"></app-input-field>
+          <div class="input-group app-input-container" [ngClass]="{'app-input-fill': familyParentForm.value.dob}">
+            <label for="d1" class="app-input-label">Date of Birth</label>
+            <input class="app-input app-family-input-datepicker form-control"
+                   placeholder="Date of Birth"
+                   name="dp1"
+                   [formControlName]="'dob'"
+                   ngbDatepicker
+                   id="d1"
+                   #d1="ngbDatepicker"
+            >
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary calendar" (click)="d1.toggle()" type="button">
+                <i class="far fa-calendar"></i>
+              </button>
+            </div>
+          </div>
         </div>
         <div class="col-6 px-1">
           <app-input-field [formControlName]="'hebrew_full_name'" id='full_hebrew_name'

@@ -4,6 +4,7 @@ import {FamilyRoles} from "../../../../../../../enums/family-roles";
 import {Gender} from "../../../../../../../enums/gender";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {FamilyPersonService} from "../../../../../../../services/family/family-person.service";
+import {NgbDateParserFormatter} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-family-edit-parent',
@@ -20,7 +21,8 @@ export class FamilyEditParentComponent implements OnInit {
   familyParentForm: FormGroup;
 
   constructor(private familyPersonService: FamilyPersonService,
-              private fb: FormBuilder) {
+              private fb: FormBuilder,
+              private parserFormatter: NgbDateParserFormatter) {
   }
 
   ngOnInit() {
@@ -32,7 +34,7 @@ export class FamilyEditParentComponent implements OnInit {
       first_name: [this.familyPerson.person.first_name, Validators.required],
       middle_name: [this.familyPerson.person.middle_name],
       last_name: [this.familyPerson.person.last_name],
-      dob: [this.familyPerson.person.dob],
+      dob: [this.parserFormatter.parse(this.familyPerson.person.dob)],
       hebrew_full_name: [this.familyPerson.person.hebrew_full_name],
       maiden_name: [this.familyPerson.person.maiden_name],
       occupation: [this.familyPerson.person.occupation],
@@ -46,7 +48,7 @@ export class FamilyEditParentComponent implements OnInit {
   updateFamilyParent() {
     if (this.familyParentForm.invalid) return;
     let data = {
-      person: {...this.familyParentForm.value},
+      person: {...this.familyParentForm.value, dob: this.parserFormatter.format(this.familyParentForm.value.dob)},
     };
     this.familyPersonService.update(data, this.familyPerson.id);
     this.onCloseEditFamilyMemberModal();
