@@ -31,11 +31,12 @@
 	
 	&__td {
 		padding: 0.4rem;
+		
+		&--v_center {
+			vertical-align: middle;
+		}
 	}
 
-	&__td--v_center {
-		vertical-align: middle;
-	}
 	&__tr {
 		display: table-row;
 
@@ -65,6 +66,11 @@
 			align-items: center;
 		}
 
+		&--lx_nowrap {
+			@include media-breakpoint-up(xl) { 
+				flex-wrap: nowrap;
+			}
+		}
 	}
 
 	&__form_name {
