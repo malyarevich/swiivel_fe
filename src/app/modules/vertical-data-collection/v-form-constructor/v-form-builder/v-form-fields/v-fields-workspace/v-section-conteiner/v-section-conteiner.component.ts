@@ -24,7 +24,7 @@ export class VSectionConteinerComponent implements OnInit {
 
 
   drop(event: CdkDragDrop<Field[]>) {
-    console.log('drop in section');
+    // console.log('drop in section');
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else if (event.previousContainer.id!=='existing') {
@@ -37,10 +37,16 @@ export class VSectionConteinerComponent implements OnInit {
         event.container.data,
         event.previousIndex,
         event.currentIndex);
-      console.log(event, 'section');
+      this.section.fields =  this.sideBarService.replaceExistinfField(this.section.fields[event.currentIndex],this.section.fields );
+      this.sideBarService.fieldCheck(this.section.fields[event.currentIndex], this.sideBar[0]);
     }
 
   }
+
+  //   //replace cloned field that which copy to field array with object link by AM Drag&Drop native method
+  //   this.fields = this.fields.map(item => item._id==field._id?newField:item);
+
+
   // addExistingField(field: Field, fields: Field[]) {
   //   let newField = cloneDeep(field);
   //   newField._id = uuid();
@@ -86,7 +92,7 @@ export class VSectionConteinerComponent implements OnInit {
     this.idSectionForDragDrop.push(this.section._id);
 
     // console.log(this.sideBarService.getIdOfSection(this.form.fields));
-    console.log(this.idSectionForDragDrop);
+    // console.log(this.idSectionForDragDrop);
     this.cd.detectChanges();
 
 

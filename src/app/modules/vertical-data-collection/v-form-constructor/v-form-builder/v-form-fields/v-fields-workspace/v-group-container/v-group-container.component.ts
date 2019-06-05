@@ -1,7 +1,7 @@
 import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import {Field} from '../../../../../model/field.model';
 import { range } from 'lodash'
-import {CdkDragDrop, moveItemInArray, transferArrayItem} from "@angular/cdk/drag-drop";
+import {CdkDragDrop, copyArrayItem, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import {SideBarService} from "../../v-side-bar/side-bar.service";
 import {Form} from "../../../../../model/form.model";
 
@@ -28,15 +28,35 @@ export class VGroupContainerComponent implements OnInit {
   ngOnInit() {
     // this.idSectionForDragDrop.push(this.inputGroup._id)
   }
+  // drop(event: CdkDragDrop<Field[]>) {
+  //   console.log('in group');
+  //   if (event.previousContainer === event.container) {
+  //     moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+  //   } else {
+  //     transferArrayItem(event.previousContainer.data,
+  //       event.container.data,
+  //       event.previousIndex,
+  //       event.currentIndex);
+  //   }
+  //
+  // }
+
   drop(event: CdkDragDrop<Field[]>) {
-    console.log(event,this.idSectionForDragDrop);
+    // console.log('drop in section');
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else {
+    } else if (event.previousContainer.id!=='existing') {
       transferArrayItem(event.previousContainer.data,
         event.container.data,
         event.previousIndex,
         event.currentIndex);
+    } else {
+      copyArrayItem(event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex);
+      this.inputGroup.fields =  this.sideBarService.replaceExistinfField(this.inputGroup.fields[event.currentIndex],this.inputGroup.fields );
+      this.sideBarService.fieldCheck(this.inputGroup.fields[event.currentIndex], this.sideBar[0]);
     }
 
   }
@@ -74,7 +94,7 @@ export class VGroupContainerComponent implements OnInit {
 
   ngAfterViewInit(): void {
     this.idSectionForDragDrop.push(this.inputGroup._id);
-    console.log(this.idSectionForDragDrop);
+    // console.log(this.idSectionForDragDrop);
 
     // this.idSectionForDragDrop = this.sideBarService.getIdOfSection(this.form.fields);
     // console.log(this.sideBarService.getIdOfSection(this.form.fields));

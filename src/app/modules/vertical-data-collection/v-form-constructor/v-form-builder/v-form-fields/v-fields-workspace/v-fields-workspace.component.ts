@@ -69,7 +69,7 @@ export class VFieldsWorkspaceComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     // this.idSectionForDragDrop = this.sideBarService.getIdOfSection(this.form.fields);
-    console.log(this.idSectionForDragDrop);
+    // console.log(this.idSectionForDragDrop);
 
     // console.log(this.sideBarService.getIdOfSection(this.form.fields));
     this.cd.detectChanges();

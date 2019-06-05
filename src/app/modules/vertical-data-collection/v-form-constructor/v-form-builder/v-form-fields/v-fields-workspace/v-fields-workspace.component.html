@@ -67,10 +67,10 @@
                     id="sectionRelateD">
               <option  value=""   disabled [selected]="true">Section Relate</option>
               <option  [ngValue]="{name:'workspace'}">Workspace</option>
-
-              <option *ngFor="let section of form.fields" [ngValue]="section"
-
+              <ng-container *ngIf="form">
+                <option *ngFor="let section of form.fields"
               >{{section.name}}</option>
+              </ng-container>
             </select>
             <div class="invalid-feedback">
               Divider section is required!
@@ -149,6 +149,8 @@
             Section name is required and contain min 3 and max 50 symbols
           </div>
         </div>
+
+
         <div class="col form-group app-input-container"
              [ngClass]="{'app-input-fill': sectionRelateTypeID.value}" >
           <label for="sectionRelate" class="app-input-label">Section Relate</label>
@@ -160,15 +162,20 @@
                   id="sectionRelate">
             <option *ngIf="form.fields.length>0" value=""   disabled [selected]="true">Section Relate</option>
             <option *ngIf="form.fields.length==0" value=""   disabled [selected]="true" >Please add at least one section</option>
-            <option *ngFor="let section of form.fields" [ngValue]="section"
+            <ng-container *ngIf="form">
+            <option *ngFor="let section of form.fields"
 
             >{{section.name}}</option>
+            </ng-container>
           </select>
+
           <div class="invalid-feedback">
             Group section is required!
           </div>
         </div>
       </div>
+
+
     <div class="row mt-4">
       <div class="col-2 offset-8">
         <button type="button" class="btn app-btn-outline-primary form-control" (click)="modalClose(modal)">Cancel</button>
@@ -300,6 +307,9 @@
   </div>
 </div>
 </div>
+
+
+<ng-container *ngIf="form">
 <div   cdkDropList
        [cdkDropListData]="form.fields"
        (cdkDropListDropped)="drop($event)">
@@ -329,6 +339,6 @@
   </div>
 
 </div>
-
+</ng-container>
 
 
