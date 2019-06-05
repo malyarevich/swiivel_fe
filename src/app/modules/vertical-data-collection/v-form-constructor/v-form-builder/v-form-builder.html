@@ -38,7 +38,7 @@
         </div>
         <div *ngIf="sections.formFields" class="bg-white rounded mb-3">
 
-          <app-v-fields-side-bar [sideBar]="newSideBar" [form]="form"></app-v-fields-side-bar>
+          <app-v-fields-side-bar [sideBar]="newSideBar" [idSectionForDragDrop]="idSectionForDragDrop"  [form]="form"></app-v-fields-side-bar>
 
 <!--          Old side bar -->
 <!--          <div class="mb-2  " *ngFor="let sideBar of sideBarFields | filter : searchText">-->
@@ -738,7 +738,7 @@
 <!--        </li>-->
 
 <!--      </ul>-->
-      <app-v-fields-workspace *ngIf="sections.formFieldsWorkspace" [form]="form" [sideBar]="newSideBar" [customFields]="customFields" ></app-v-fields-workspace>
+      <app-v-fields-workspace *ngIf="sections.formFieldsWorkspace" [form]="form" [sideBar]="newSideBar" [idSectionForDragDrop]="idSectionForDragDrop" [customFields]="customFields" ></app-v-fields-workspace>
       <!--  documents-forms-->
       <app-v-documents-forms
         *ngIf="sections.documentsFormsWorkspace"

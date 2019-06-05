@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges} from '@angular/core';
 import {Field} from "../../../../../model/field.model";
 import {cloneDeep, isEmpty} from 'lodash';
 import {Form} from "../../../../../model/form.model";
@@ -9,7 +9,7 @@ import {SideBarService} from "../side-bar.service";
   templateUrl: './v-side-bar-field.component.html',
   styleUrls: ['./v-side-bar-field.component.css']
 })
-export class VSideBarFieldComponent implements OnInit, OnDestroy {
+export class VSideBarFieldComponent implements OnInit, OnDestroy, OnChanges {
 
 
   @Input() field: Field;
@@ -19,7 +19,7 @@ export class VSideBarFieldComponent implements OnInit, OnDestroy {
   @Input() style: boolean;
   @Output() onChangeFieldBeing = new EventEmitter<any>();
   @Output() deleteCustom = new EventEmitter<any>();
-  constructor(private sideBarService: SideBarService) { }
+  constructor(private sideBarService: SideBarService,private cd: ChangeDetectorRef  ) { }
 
   ngOnInit() {
 
@@ -45,6 +45,18 @@ export class VSideBarFieldComponent implements OnInit, OnDestroy {
 
   }
 
+
+
+  ngAfterViewInit(): void {
+    // console.log(this.idSectionForDragDrop);
+
+    // this.idSectionForDragDrop = this.sideBarService.getIdOfSection(this.form.fields);
+    // console.log(this.sideBarService.getIdOfSection(this.form.fields));
+
+    this.cd.detectChanges();
+
+
+  }
 
   onBeingChange(event: boolean):void{
     // if(event){
@@ -93,6 +105,10 @@ export class VSideBarFieldComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.field.exist=false;
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    // console.log(changes, 'changes');
   }
 }
 
