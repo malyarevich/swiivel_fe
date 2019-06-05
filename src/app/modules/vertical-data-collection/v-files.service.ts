@@ -15,12 +15,12 @@ export class VFilesService {
   params = new HttpParams().set("api_token", environment.api_token);
 
 
-  getFilesListAll(): Observable<any>{
-    return this.http.get(`${environment.apiFB}/forms/attach?api_token=${environment.api_token}`)
-      .pipe(
-        map(response => response)
-      )
-  }
+  // getFilesListAll(): Observable<any>{
+  //   return this.http.get(`${environment.apiFB}/forms/attach?api_token=${environment.api_token}`)
+  //     .pipe(
+  //       map(response => response)
+  //     )
+  // }
 
   uploadFile(formId: string, file: any): Observable<any>{
     return this.http.post(`${environment.apiFB}/forms/attach/${formId}`, file, {params: this.params})

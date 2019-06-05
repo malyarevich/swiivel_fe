@@ -3,9 +3,9 @@
   <ng-container>
     <app-v-publish-settings-online-form
       class="d-block openable_item"
-      [ngClass]="{'openable_item--close': !stateSub.settings['online']}"
-      [online]="pageData.online"
-      (onToggleCheckbox)="toggleOnlineCheckbox($event)"
+      [ngClass]="{'openable_item--close': !publish_settings.state.settings['online']}"
+      [onlineConfig]="publish_settings.online_config"
+      (onToggleOnlineCheckbox)="toggleOnlineCheckbox($event)"
     ></app-v-publish-settings-online-form>
   </ng-container>
   <!-- END: Online Form -->
@@ -14,18 +14,21 @@
   <ng-container>
     <app-v-publish-settings-pdf-form
       class="d-block openable_item"
-      [ngClass]="{'openable_item--close': !stateSub.settings['pdf']}"
-      [pdf]="pageData.pdf"
-      (onToggleCheckbox)="togglePdfCheckbox($event)"
+      [ngClass]="{'openable_item--close': !publish_settings.state.settings['pdf']}"
+      [pdfConfig]="publish_settings.pdf_config"
+      (onTogglePdfCheckbox)="togglePdfCheckbox($event)"
+      (onUpdateFormValue)="updateFormValue($event)"
+      (onSavePublishSettings)="savePublishSettings($event)"
     ></app-v-publish-settings-pdf-form>
   </ng-container>
   <!-- END: PDF Form -->
   
   <!-- SaveGo -->
   <div class="mt-5 text-center">
-    <button class="btn app-btn-primary px-3 py-2">
+    <button class="btn app-btn-primary px-3 py-2" (click)="savePublishSettings({})">
       Save & Go Next Step
     </button>
   </div>
+
 </div>
 <!-- /.content -->

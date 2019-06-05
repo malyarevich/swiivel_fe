@@ -9,7 +9,7 @@ export abstract class PublishMenuItems {
     automation: 'Automation',
     redirect: 'Redirect Pages',
   };
-  public static subMenus = {
+  public static stateSub = {
     settings: {
       types: {
         online: "online",

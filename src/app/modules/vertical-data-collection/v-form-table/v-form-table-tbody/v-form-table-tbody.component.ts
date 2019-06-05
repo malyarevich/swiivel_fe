@@ -11,5 +11,18 @@ export class VFormTableTbodyComponent implements OnInit {
     constructor() { }
 
     ngOnInit() { }
+
+    getStringPublishSettings(publish_settings: any) {
+        if (publish_settings == undefined) {
+            return '';
+        }
+        return publish_settings.state.settings.online === false 
+            ? publish_settings.state.settings.pdf === false 
+                ? ''
+                : 'Paper'
+            : publish_settings.state.settings.pdf === false
+                ? 'Online'
+                : 'Online, Paper';
+    }
     
 }

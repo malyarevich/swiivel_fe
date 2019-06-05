@@ -50,15 +50,11 @@ export class VGroupContainerComponent implements OnInit {
   }
 
 
-  onShowGroupSettings() {
-    this.showGroupSettings = !this.showGroupSettings;
-    this.showNested = false;
-  }
+  // onShowGroupSettings() {
+  //   this.showGroupSettings = !this.showGroupSettings;
+  //   this.showNested = false;
+  // }
 
-  onShowNested() {
-    this.showNested = !this.showNested;
-    this.showGroupSettings=false;
-  }
 
 
   removeGroup(group: Field){
@@ -69,7 +65,6 @@ export class VGroupContainerComponent implements OnInit {
         field.fields.forEach(f=>this.sideBarService.onFieldUncheck(f, this.sideBar[0].fields));
       }
     }  );
-    // this.sideBarService.changeExistingAllSection(false, section.fields);
     this.sideBarService.onSectionUnckeck(group,this.sideBar[0].fields);
   }
 

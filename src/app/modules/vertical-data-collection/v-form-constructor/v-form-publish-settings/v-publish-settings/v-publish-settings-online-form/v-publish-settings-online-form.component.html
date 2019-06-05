@@ -1,19 +1,16 @@
 <div class="content__box">
-  <h2 class="content__title">{{ online.title }}</h2>
+  <h2 class="content__title">{{ onlineStructure.title }}</h2>
 
   <ng-container
-    *ngFor="
-      let checkBoxItem of online.checkBoxList;
-      let checkBoxIndex = index
-    "
+    *ngFor="let checkBoxItem of onlineStructure.checkBoxList"
   >
     <label
       class="app-checkbox-container checkbox checkbox--mb_2"
-      for="{{ 'online' + checkBoxIndex }}"
+      for="{{ checkBoxItem.key }}"
     >
       <p
         class="checkbox__text"
-        [ngClass]="{ 'checkbox__text--checked': checkBoxItem.status }"
+        [ngClass]="{ 'checkbox__text--checked': onlineConfig[checkBoxItem.key] }"
       >
         {{ checkBoxItem.text }}
         <span
@@ -28,9 +25,9 @@
       </p>
       <input
         type="checkbox"
-        id="{{ 'online' + checkBoxIndex }}"
-        [ngModel]="checkBoxItem.status"
-        (click)="toggleOnlineCheckBox(checkBoxIndex)"
+        id="{{ checkBoxItem.key }}"
+        [ngModel]="onlineConfig[checkBoxItem.key]"
+        (click)="toggleOnlineCheckBox(checkBoxItem.key)"
       />
       <span class="app-checkbox-checkmark"></span>
     </label>
