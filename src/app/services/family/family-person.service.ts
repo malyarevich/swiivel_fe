@@ -77,15 +77,15 @@ export class FamilyPersonService {
   delete(id, role) {
     this.deleteOneRequest(id).subscribe((data: DeleteResponseData) => {
       if (data.success) {
-        this.dataStore.familyPersonList.forEach((item, i) => {
+        // this.dataStore.familyPersonList.forEach((item, i) => {
           // if (item.id == data.id) {
           //   this.dataStore.familyPersonList.splice(i, 1);
           // }
           // this._familyPersonList.next(Object.assign({}, this.dataStore).familyPersonList);
-          if (role === this.familyRoles.student) this.familyService.decrementFieldCount('students_count');
-          if (role === this.familyRoles.child) this.familyService.decrementFieldCount('children_count');
-          this.familyQueryParamsService.setFilterParams(this.FAMILY_VIEW_GENERAL_TABS.ALL);
-        });
+        // });
+        if (role === this.familyRoles.student) this.familyService.decrementFieldCount('students_count');
+        if (role === this.familyRoles.child) this.familyService.decrementFieldCount('children_count');
+        this.familyQueryParamsService.setFilterParams(this.FAMILY_VIEW_GENERAL_TABS.ALL);
       }
     }, error => console.log('Could not delete family person. Error: ' + error.message));
   }
