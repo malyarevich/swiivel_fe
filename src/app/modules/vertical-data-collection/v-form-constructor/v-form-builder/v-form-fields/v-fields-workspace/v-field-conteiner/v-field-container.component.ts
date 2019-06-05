@@ -62,12 +62,12 @@ export class VFieldContainerComponent implements OnInit, OnDestroy, AfterViewIni
     return fieldTypeName;
   }
 
-  nameChange(event){
-    event=event.trim();
-
-    this.inputField.name=event;
-    this.onChange.emit(event);
-  }
+  // nameChange(event){
+  //   event=event.trim();
+  //
+  //   this.inputField.name=event;
+  //   this.onChange.emit(event);
+  // }
 
   ngOnInit(): void {
     this.inputField.exist = true;
