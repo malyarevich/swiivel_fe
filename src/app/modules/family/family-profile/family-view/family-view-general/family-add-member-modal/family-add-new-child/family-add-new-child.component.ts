@@ -22,6 +22,14 @@ export class FamilyAddNewChildComponent implements OnInit {
 
   date = new Date();
 
+  get minDate() {
+    return {day: 1, month: 1, year: this.date.getFullYear() - 100};
+  }
+
+  get maxDate() {
+    return {day: this.date.getDate(), month: this.date.getMonth() + 1, year: this.date.getFullYear()};
+  }
+
   persons: any[] = [];
   GENDER = Gender;
   FAMILY_ROLES = FamilyRoles;

@@ -57,8 +57,8 @@
                    placeholder="Date of Birth"
                    name="dp1"
                    [formControlName]="'dob'"
-                   [minDate]="{day: 1, month: 1, year: date.getFullYear() - 100}"
-                   [maxDate]="{day: date.getDay(), month: date.getMonth(), year: date.getFullYear()}"
+                   [minDate]="minDate"
+                   [maxDate]="maxDate"
                    ngbDatepicker
                    id="d1"
                    #d1="ngbDatepicker"
@@ -69,7 +69,6 @@
               </button>
             </div>
           </div>
-          <!--<app-input-field [formControlName]="'dob'" id='dob' label="Date of Birth"></app-input-field>-->
         </div>
         <div class="col-4 px-1">
           <app-input-field [formControlName]="'hebrew_dob'" id='hebrew_dob'
