@@ -34,6 +34,9 @@ import { FamilyAddNewChildComponent } from './family-profile/family-view/family-
 import { FamilyPersonCardContainerComponent } from './family-profile/family-view/family-view-general/family-person-card-container/family-person-card-container.component';
 import { FamilyRemoveMemberModalComponent } from './family-profile/family-view/family-view-general/family-remove-member-modal/family-remove-member-modal.component';
 import {FamilyQueryParamsService} from "../../services/family/family-query-params.service";
+import { FamilyEditMemberModalComponent } from './family-profile/family-view/family-view-general/family-edit-member-modal/family-edit-member-modal.component';
+import { FamilyEditChildComponent } from './family-profile/family-view/family-view-general/family-edit-member-modal/family-edit-child/family-edit-child.component';
+import { FamilyEditParentComponent } from './family-profile/family-view/family-view-general/family-edit-member-modal/family-edit-parent/family-edit-parent.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +63,10 @@ import {FamilyQueryParamsService} from "../../services/family/family-query-param
     FamilyAddNewParentComponent,
     FamilyAddNewChildComponent,
     FamilyPersonCardContainerComponent,
-    FamilyRemoveMemberModalComponent
+    FamilyRemoveMemberModalComponent,
+    FamilyEditMemberModalComponent,
+    FamilyEditChildComponent,
+    FamilyEditParentComponent
   ],
   imports: [
     CommonModule,

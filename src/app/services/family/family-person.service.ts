@@ -62,6 +62,36 @@ export class FamilyPersonService {
     }, error => console.log('Could not add families persons. Error: ' + error.message));
   }
 
+  update(data, id) {
+    this.updateOneRequest(data, id).subscribe((res: ResponseData) => {
+      if (res.success) {
+        // this.dataStore.familyPersonList.forEach((item, i) => {
+        //   if (item.id == res.data.id) {
+        //     this.dataStore.familyPersonList[i] = res.data;
+        //   }
+        //   this._familyPersonList.next(Object.assign({}, this.dataStore).familyPersonList);
+        //   });
+        this.familyQueryParamsService.setFilterParams(this.FAMILY_VIEW_GENERAL_TABS.ALL);
+      }
+    });
+  }
+
+  delete(id, role) {
+    this.deleteOneRequest(id).subscribe((data: DeleteResponseData) => {
+      if (data.success) {
+        // this.dataStore.familyPersonList.forEach((item, i) => {
+        // if (item.id == data.id) {
+        //   this.dataStore.familyPersonList.splice(i, 1);
+        // }
+        // this._familyPersonList.next(Object.assign({}, this.dataStore).familyPersonList);
+        // });
+        if (role === this.familyRoles.student) this.familyService.decrementFieldCount('students_count');
+        if (role === this.familyRoles.child) this.familyService.decrementFieldCount('children_count');
+        this.familyQueryParamsService.setFilterParams(this.FAMILY_VIEW_GENERAL_TABS.ALL);
+      }
+    }, error => console.log('Could not delete family person. Error: ' + error.message));
+  }
+
   getByFamilyIdRequest(familyId, params?): Observable<any> {
     let options = {
       headers: new HttpHeaders({
@@ -74,24 +104,14 @@ export class FamilyPersonService {
     );
   }
 
-  delete(id, role) {
-    this.deleteOneRequest(id).subscribe((data: DeleteResponseData) => {
-      if (data.success) {
-        // this.dataStore.familyPersonList.forEach((item, i) => {
-          // if (item.id == data.id) {
-          //   this.dataStore.familyPersonList.splice(i, 1);
-          // }
-          // this._familyPersonList.next(Object.assign({}, this.dataStore).familyPersonList);
-        // });
-        if (role === this.familyRoles.student) this.familyService.decrementFieldCount('students_count');
-        if (role === this.familyRoles.child) this.familyService.decrementFieldCount('children_count');
-        this.familyQueryParamsService.setFilterParams(this.FAMILY_VIEW_GENERAL_TABS.ALL);
-      }
-    }, error => console.log('Could not delete family person. Error: ' + error.message));
-  }
-
   addOneRequest(data): Observable<any> {
     return this.http.post(`/person/family`, {...data}).pipe(
+      map((res) => res)
+    );
+  }
+
+  updateOneRequest(data, id): Observable<any> {
+    return this.http.put(`/person/family/${id}`, {...data}).pipe(
       map((res) => res)
     );
   }

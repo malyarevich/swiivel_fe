@@ -6,6 +6,7 @@ import {PersonService} from "../../../../../../../services/person/person.service
 import {Gender} from "../../../../../../../enums/gender";
 import {FamilyPersonService} from "../../../../../../../services/family/family-person.service";
 import {FamilyRoles} from "../../../../../../../enums/family-roles";
+import {NgbDateParserFormatter} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-family-add-new-child',
@@ -19,13 +20,24 @@ export class FamilyAddNewChildComponent implements OnInit {
 
   familyChildForm: FormGroup;
 
+  date = new Date();
+
+  get minDate() {
+    return {day: 1, month: 1, year: this.date.getFullYear() - 100};
+  }
+
+  get maxDate() {
+    return {day: this.date.getDate(), month: this.date.getMonth() + 1, year: this.date.getFullYear()};
+  }
+
   persons: any[] = [];
   GENDER = Gender;
   FAMILY_ROLES = FamilyRoles;
 
   constructor(private fb: FormBuilder,
               private personService: PersonService,
-              private familyPersonService: FamilyPersonService) {
+              private familyPersonService: FamilyPersonService,
+              private parserFormatter: NgbDateParserFormatter) {
     this.initFamilyNewChildForm();
   }
 
@@ -89,7 +101,7 @@ export class FamilyAddNewChildComponent implements OnInit {
       middle_name: this.familyChildForm.value.middle_name,
       last_name: this.familyChildForm.value.last_name,
       legal_name: this.familyChildForm.value.legal_name,
-      dob: this.familyChildForm.value.dob,
+      dob: this.parserFormatter.format(this.familyChildForm.value.dob) || null,
       hebrew_dob: this.familyChildForm.value.hebrew_dob,
       hebrew_full_name: this.familyChildForm.value.hebrew_full_name,
       gender: this.familyChildForm.value.gender,
@@ -105,12 +117,12 @@ export class FamilyAddNewChildComponent implements OnInit {
 
   addFamilyPerson(personId) {
     const data = {
-      parents: this.familyChildForm.value.parents.map((item) => item.id),
+      parents: this.familyChildForm.value.parents ? this.familyChildForm.value.parents.map((item) => item.id) : [],
       family_id: this.family.family_id,
       family_name: this.family.name,
       id_person: personId,
       person_role: this.role,
-      adopted: this.familyChildForm.value.adopted ? 1 : null,
+      adopted: this.familyChildForm.value.adopted ? 1 : 0,
     };
     if(this.role === this.FAMILY_ROLES.student) {
       data['person_info'] = this.familyChildForm.value.person_info;

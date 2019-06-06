@@ -5,7 +5,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {FamilyRoles} from "../../../../../../../enums/family-roles";
 import {PersonService} from "../../../../../../../services/person/person.service";
 import {Gender} from "../../../../../../../enums/gender";
-import {FamilyQueryParamsService} from "../../../../../../../services/family/family-query-params.service";
+import {NgbDateParserFormatter} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-family-add-new-parent',
@@ -17,13 +17,24 @@ export class FamilyAddNewParentComponent implements OnInit {
   @Input() family: Family;
   @Input() role: string;
 
+  date = new Date();
+
+  get minDate() {
+    return {day: 1, month: 1, year: this.date.getFullYear() - 100};
+  }
+
+  get maxDate() {
+    return {day: this.date.getDate(), month: this.date.getMonth() + 1, year: this.date.getFullYear()};
+  }
+
   familyRoles = FamilyRoles;
   gender = Gender;
   familyParentForm: FormGroup;
 
   constructor(private familyPersonService: FamilyPersonService,
               private personService: PersonService,
-              private fb: FormBuilder) {
+              private fb: FormBuilder,
+              private parserFormatter: NgbDateParserFormatter) {
     this.initFamilyNewPersonForm();
   }
 
@@ -51,6 +62,7 @@ export class FamilyAddNewParentComponent implements OnInit {
     let data = {
       ...this.familyParentForm.value,
       gender: this.getGenderByRole(this.role),
+      dob: this.parserFormatter.format(this.familyParentForm.value.dob) || null
     };
     this.personService.addPerson(data).subscribe((res) => {
       if (res.created) {
