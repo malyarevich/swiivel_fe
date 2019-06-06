@@ -65,12 +65,13 @@ export class FamilyPersonService {
   update(data, id) {
     this.updateOneRequest(data, id).subscribe((res: ResponseData) => {
       if (res.success) {
-        this.dataStore.familyPersonList.forEach((item, i) => {
-          if (item.id == res.data.id) {
-            this.dataStore.familyPersonList[i] = res.data;
-          }
-          this._familyPersonList.next(Object.assign({}, this.dataStore).familyPersonList);
-          });
+        // this.dataStore.familyPersonList.forEach((item, i) => {
+        //   if (item.id == res.data.id) {
+        //     this.dataStore.familyPersonList[i] = res.data;
+        //   }
+        //   this._familyPersonList.next(Object.assign({}, this.dataStore).familyPersonList);
+        //   });
+        this.familyQueryParamsService.setFilterParams(this.FAMILY_VIEW_GENERAL_TABS.ALL);
       }
     });
   }
