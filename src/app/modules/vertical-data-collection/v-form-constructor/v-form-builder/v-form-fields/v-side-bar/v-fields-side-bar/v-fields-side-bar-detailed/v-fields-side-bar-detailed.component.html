@@ -19,12 +19,19 @@
   </div>
 </div>
 <div [hidden]="!showNested">
-<div  class="my-3  ml-3 " *ngFor="let field of section.fields | filter: searchText">
+  <div   cdkDropList
+         id="existing"
+         [cdkDropListData]="section.fields"
+         [cdkDropListConnectedTo]="idSectionForDragDrop"
+         (cdkDropListDropped)="drop($event)">
+<div  class="my-3  ml-3 " *ngFor="let field of section.fields | filter: searchText" cdkDrag>
   <app-v-side-bar-group
     *ngIf="field.type==113"
     [group]="field"
     [form]="form"
     [section]="section"
+    [idSectionForDragDrop]="idSectionForDragDrop"
+
   >
 
   </app-v-side-bar-group>
@@ -37,6 +44,7 @@
   >
   </app-v-side-bar-field>
 </div>
+  </div>
   <div class="my-3  ml-3 ">
            <button
                   type="button"
@@ -90,7 +98,7 @@
                   formControlName="fieldType"
                   id="fieldType">
             <option value=""   disabled [selected]="true">Field Type</option>
-            <option *ngFor="let field of customFields" [ngValue]="field"
+            <option *ngFor="let field of customFields"
 
             >{{field.name}}</option>
           </select>
@@ -110,7 +118,7 @@
                   [ngClass]="fieldsAddGroup.get('fieldRole').touched&&fieldsAddGroup.get('fieldRole').invalid?'is-invalid':''"
                   id="fieldRole">
             <option value=""   disabled [selected]="true">Field Role</option>
-            <option *ngFor="let role of roleList" [ngValue]="role"
+            <option *ngFor="let role of roleList"
 
             >{{role}}</option>
           </select>
@@ -129,7 +137,7 @@
                   id="sectionRelate">
             <option *ngIf="form.fields.length>0" value=""   disabled [selected]="true">Section Relate</option>
             <option *ngIf="form.fields.length==0" value=""   disabled [selected]="true" >Please add at least one section</option>
-            <option *ngFor="let section of form.fields" [ngValue]="section"
+            <option *ngFor="let section of form.fields"
 
             >{{section.name}}</option>
           </select>

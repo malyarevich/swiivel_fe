@@ -86,8 +86,8 @@
     </td>
 
     <!--Change status button-->
-    <td class="tbody__td tbody__td--v_center">
-      <div ngbDropdown class="tbody__cell_container">
+    <td class="tbody__td">
+      <div ngbDropdown class="tbody__cell_container tbody__cell_container--column">
         <button
           type="button"
           class="btn app-btn-status app-dropdown-toggle status_button"
@@ -161,7 +161,7 @@
     <!--End Change status button-->
 
     <td class="tbody__td tbody__td--v_center" nowrap>
-      <div ngbDropdown class="tbody__cell_container tbody__cell_container--center">
+      <div ngbDropdown class="tbody__cell_container tbody__cell_container--center tbody__cell_container--lx_nowrap">
         <button
           type="button"
           class="btn 
@@ -189,8 +189,8 @@
             ><i class="far fa-eye"></i> View</span
           >
         </button>
-
-        <button
+        <div>
+          <button
           appClickStopPropagation
           class="btn app-btn-sml mr-2 "
           placement="top"
@@ -233,6 +233,8 @@
             ><i class="fas fa-ellipsis-v"></i
           ></span>
         </button>
+        </div>
+        
       </div>
 
       <!-- <button

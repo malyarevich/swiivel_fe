@@ -8,6 +8,7 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {VFieldsService} from 'src/app/modules/vertical-data-collection/v-fields.service';
 import {v4 as uuid} from 'uuid';
 import {cloneDeep, isEmpty} from 'lodash';
+import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 
 
 @Component({
@@ -30,6 +31,7 @@ export class VFieldsSideBarDetailedComponent implements OnInit, AfterViewInit, O
     sectionRelate: new FormControl(null, Validators.required),
   });
 
+  @Input() idSectionForDragDrop: string[];
 
   @Input() section: Field;
   @Input() form: Form;
@@ -98,7 +100,6 @@ export class VFieldsSideBarDetailedComponent implements OnInit, AfterViewInit, O
       workArea.forEach(field => {
         if (sideBarField.name == field.name) {
           sideBarField.exist = true;
-          console.log(sideBarField.name);
           if (field.type == 113 || field.type == 114){
             this.initFormFieldsToSideBar(sideBarField.fields, field.fields);
           }
@@ -177,5 +178,17 @@ export class VFieldsSideBarDetailedComponent implements OnInit, AfterViewInit, O
         this.validateAllFormFields(control);
       }
     });
+  }
+
+  drop(event: CdkDragDrop<Field[]>) {
+
+    console.log('drop in side-bar');
+    console.log(this.idSectionForDragDrop);
+
+    // if (event.previousContainer !== event.container){
+    //   console.log(event.previousContainer, 'Previous');
+    //   console.log(event.container, 'conteiner');
+    // }
+    // moveItemInArray(this.form.fields, event.previousIndex, event.currentIndex);
   }
 }

@@ -22,6 +22,21 @@ export class SideBarService {
     newField.isValid = true;
     newField.isValidName = true;
     fields.push(newField);
+     // fields.map(item => item.name==field.name&&item.prefix==field.prefix?newField:item)
+    // this.fieldsValidator();
+    // this.changeExistingAllSection(true, this.section.fields);
+
+  }
+
+  replaceExistinField(field: Field, fields: Field[]) {
+    let newField = cloneDeep(field);
+    newField._id = uuid();
+    // this.doExistingFieldsUniq(newField);
+    newField.isValid = true;
+    newField.isValidName = true;
+    // fields.push(newField);
+    return  fields.map(item => item.name==field.name&&item.prefix==field.prefix?newField:item);
+     // console.log(fields);
     // this.fieldsValidator();
     // this.changeExistingAllSection(true, this.section.fields);
 
@@ -75,6 +90,14 @@ export class SideBarService {
     filedList.forEach(f=>{
       if (f.type == 113 || f.type == 114) this.onFieldUncheck(field, f.fields);
       if(f.name==field.name && f.prefix==field.prefix) f.exist = false;
+    })
+  }
+
+  fieldCheck(field:Field,filedList: Field){
+    // console.log(field,filedList);
+    filedList.fields.forEach(f=>{
+      if (f.type == 113 || f.type == 114) this.fieldCheck(field, f);
+      if(f.name==field.name && f.prefix==field.prefix) f.exist = true;
     })
   }
 

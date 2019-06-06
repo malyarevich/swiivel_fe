@@ -261,7 +261,7 @@
       <p
         class="checkbox__text"
         [ngClass]="{
-          'checkbox__text--checked': pdfConfig.is_append_cover_letter
+          'checkbox__text--checked': pdfConfig['is_append_cover_letter']
         }"
       >
         {{ pdfStructure.checkBoxList["form"][0].text }}
@@ -280,7 +280,7 @@
     <div
       class="form-group app-input-container openable_item"
       [ngClass]="{
-        'openable_item--close': !pdfConfig.is_append_cover_letter
+        'openable_item--close': !pdfConfig['is_append_cover_letter']
       }"
     >
       <label for="CoverLetterID" class="app-input-label d-none">

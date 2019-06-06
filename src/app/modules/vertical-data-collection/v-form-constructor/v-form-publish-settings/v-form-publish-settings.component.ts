@@ -66,6 +66,7 @@ export class VFormPublishSettingsComponent implements OnInit {
   attachments;
   form: Form;
   newSideBar;
+  sidebar;
 
   customFields: Field[];
   existingFields: Field[];
@@ -164,10 +165,8 @@ export class VFormPublishSettingsComponent implements OnInit {
       this.tuitionContract = form.tuitionContract || tuitionContractDefault;
       this.consentInfo = form.consentInfo || consentInfoDefault;
       this.termsConditions = form.termsConditions || termsConditionsDefault;
-      this.publish_settings =
-        form.publish_settings
-          ? form.publish_settings
-          : this.publish_settings;
+      this.publish_settings = form.publish_settings;
+      this.sidebar = form.sidebar || {};
       this.eligible = form.eligible;
       this.documents = form.documents || [];
       this.formsPDF = form.forms || [];
@@ -187,7 +186,15 @@ export class VFormPublishSettingsComponent implements OnInit {
     } else if (this.formId) {
       this.formService.getOneForm(this.formId).subscribe(
         (form: Form) => {
-          // console.log("loading remoteForm");
+          console.log("loading remoteForm");
+          console.log(form);
+          if (!form.publish_settings) {
+            form.publish_settings = {
+              state: {...PublishSettingsItems.defaultStateSub},
+              online_config: {...PublishSettingsItems.defaultOnlineConfig},
+              pdf_config: {...PublishSettingsItems.defaultPdfConfig}
+            }
+          }
           this.setLocalForm(form); //remoteForm
         },
         error => console.log(error, "error"),
@@ -195,12 +202,7 @@ export class VFormPublishSettingsComponent implements OnInit {
           this.generalInfoIsValidService.setIsValid(true);
         }
       );
-    } else {      
-      this.publish_settings = {
-        state: {...PublishSettingsItems.defaultStateSub},
-        online_config: {...PublishSettingsItems.defaultOnlineConfig},
-        pdf_config: {...PublishSettingsItems.defaultPdfConfig}
-      }
+    } else {    
     }
   }
 
@@ -212,12 +214,13 @@ export class VFormPublishSettingsComponent implements OnInit {
       documents: this.documents,
       forms: this.formsPDF,
       name: this.formName,
-      sidebar: this.sideBarFields,
+      sidebar: this.sidebar,
       tuitionContract: this.tuitionContract,
       consentInfo: this.consentInfo,
       publish_settings: this.publish_settings,
       termsConditions: this.termsConditions,
       eligible: this.eligible,
+      attachments: this.attachments,
       step: 1
     };
   }
@@ -225,6 +228,7 @@ export class VFormPublishSettingsComponent implements OnInit {
   saveForm() {
     // if (this.validCheckFields()) {
     const form: Form = this.getForm();
+    console.log(form);
     this.formService.sendForm(form).subscribe(res => this.goBack());
     // }
     this.vDataCollection.deleteDraftForm(this.draftId);

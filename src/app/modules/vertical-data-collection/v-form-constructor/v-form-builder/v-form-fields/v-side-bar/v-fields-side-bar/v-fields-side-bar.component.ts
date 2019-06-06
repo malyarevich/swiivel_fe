@@ -12,6 +12,7 @@ export class VFieldsSideBarComponent implements OnInit, OnDestroy {
 
   @Input() sideBar;
   @Input() form: Form;
+  @Input() idSectionForDragDrop: string[];
   isTree: boolean = true;
   sectionDetailed;
   searchText: string;
