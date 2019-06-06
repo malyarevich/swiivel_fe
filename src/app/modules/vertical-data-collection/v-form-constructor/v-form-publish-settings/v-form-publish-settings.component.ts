@@ -107,6 +107,7 @@ export class VFormPublishSettingsComponent implements OnInit {
     private readonly financeService: FinanceService
   ) {
     this.vDataCollection = vDataCollection;
+    // console.log("constructor");
   }
 
   ngOnInit() {
@@ -186,8 +187,8 @@ export class VFormPublishSettingsComponent implements OnInit {
     } else if (this.formId) {
       this.formService.getOneForm(this.formId).subscribe(
         (form: Form) => {
-          console.log("loading remoteForm");
-          console.log(form);
+          // console.log("loading remoteForm");
+          // console.log(form);
           if (!form.publish_settings) {
             form.publish_settings = {
               state: {...PublishSettingsItems.defaultStateSub},
@@ -228,7 +229,7 @@ export class VFormPublishSettingsComponent implements OnInit {
   saveForm() {
     // if (this.validCheckFields()) {
     const form: Form = this.getForm();
-    console.log(form);
+    // console.log(form);
     this.formService.sendForm(form).subscribe(res => this.goBack());
     // }
     this.vDataCollection.deleteDraftForm(this.draftId);

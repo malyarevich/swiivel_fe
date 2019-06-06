@@ -14,12 +14,24 @@ export class OnlineFormMenuComponent implements OnInit {
   activeMenuItem: string = mainMenuNames.generalInfo;
   menuItems = [
     { name: mainMenuNames.generalInfo, title: "General Information", time: 48 },
-    // {name: mainMenuNames.documentsForms, title: 'Documents & Forms', time: 15},
-    // {name: mainMenuNames.consentInfo, title: 'Consent', time: 12},
-    // {name: mainMenuNames.paymentSettings, title: 'Payment Settings', time: 10},
+    {
+      name: mainMenuNames.documentsForms,
+      title: "Documents & Forms",
+      time: 15
+    },
+    { name: mainMenuNames.consentInfo, title: "Consent", time: 12 },
+    {
+      name: mainMenuNames.paymentSettings,
+      title: "Payment Settings",
+      time: 10
+    },
     { name: mainMenuNames.tuitionContract, title: "Tuition Contract", time: 6 },
-    { name: mainMenuNames.termsConditions, title: 'Term & Conditions', time: 14 },
-    // {name: mainMenuNames.payment, title: 'Payment', time: 18},
+    {
+      name: mainMenuNames.termsConditions,
+      title: "Term & Conditions",
+      time: 14
+    },
+    { name: mainMenuNames.payment, title: "Payment", time: 18 }
   ];
 
   constructor() {}

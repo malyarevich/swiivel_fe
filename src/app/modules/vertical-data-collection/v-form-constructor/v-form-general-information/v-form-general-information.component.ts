@@ -102,7 +102,7 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
   }
 
   isValidPeriodFields(): boolean {
-    console.log(this.generalInfoForm.get('name').invalid);
+    // console.log(this.generalInfoForm.get('name').invalid);
     return !(this.generalInfoForm.get('periodCheckboxGroup').invalid);
   }
   
@@ -161,7 +161,7 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
     };
 
     this.formService.sendForm(form).subscribe((res:any) => {
-      this.router.navigate([`/vertical-data-collection/v-form-constructor/${res.id}/form-builder`]);
+      // this.router.navigate([`/vertical-data-collection/v-form-constructor/${res.id}/form-builder`]);
     });
   }
 
