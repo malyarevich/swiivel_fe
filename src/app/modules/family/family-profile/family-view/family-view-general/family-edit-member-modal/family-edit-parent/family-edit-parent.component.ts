@@ -58,7 +58,7 @@ export class FamilyEditParentComponent implements OnInit {
   updateFamilyParent() {
     if (this.familyParentForm.invalid) return;
     let data = {
-      person: {...this.familyParentForm.value, dob: this.parserFormatter.format(this.familyParentForm.value.dob)},
+      person: {...this.familyParentForm.value, dob: this.parserFormatter.format(this.familyParentForm.value.dob) || null},
     };
     this.familyPersonService.update(data, this.familyPerson.id);
     this.onCloseEditFamilyMemberModal();

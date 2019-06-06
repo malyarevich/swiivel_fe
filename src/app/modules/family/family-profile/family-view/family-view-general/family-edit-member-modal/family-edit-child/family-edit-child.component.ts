@@ -101,48 +101,12 @@ export class FamilyEditChildComponent implements OnInit {
       });
   }
 
-  // updateFamilyChild() {
-    // if (this.familyChildForm.invalid) return;
-    // let data = {
-    //   first_name: this.familyChildForm.value.first_name,
-    //   middle_name: this.familyChildForm.value.middle_name,
-    //   last_name: this.familyChildForm.value.last_name,
-    //   legal_name: this.familyChildForm.value.legal_name,
-    //   dob: this.parserFormatter.format(this.familyChildForm.value.dob),
-    //   hebrew_dob: this.familyChildForm.value.hebrew_dob,
-    //   hebrew_full_name: this.familyChildForm.value.hebrew_full_name,
-    //   gender: this.familyChildForm.value.gender,
-    // };
-    //
-    // this.personService.addPerson(data).subscribe((res) => {
-    //   if (res.created) {
-    //     this.addFamilyPerson(res.data.id);
-    //   }
-    // }, (error) => console.log(error));
-    // this.onCloseAddFamilyMemberModal();
-  // }
-
-  // addFamilyPerson(personId) {
-  //   const data = {
-  //     parents: this.familyChildForm.value.parents.map((item) => item.id),
-  //     family_id: this.family.family_id,
-  //     family_name: this.family.name,
-  //     id_person: personId,
-  //     person_role: this.role,
-  //     adopted: this.familyChildForm.value.adopted ? 1 : null,
-  //   };
-  //   if(this.role === this.FAMILY_ROLES.student) {
-  //     data['person_info'] = this.familyChildForm.value.person_info;
-  //   }
-  //   this.familyPersonService.add(data);
-  // }
-
   updateFamilyChild() {
     if (this.familyChildForm.invalid) return;
     let data = {
       person_role:this.familyPerson.person_role,
       adopted: this.familyChildForm.value.adopted ? 1 : null,
-      person: {...this.familyChildForm.value, dob: this.parserFormatter.format(this.familyChildForm.value.dob)},
+      person: {...this.familyChildForm.value, dob: this.parserFormatter.format(this.familyChildForm.value.dob) || null},
       parents: this.familyChildForm.value.parents ? this.familyChildForm.value.parents.map((item) => item.id) : [],
       person_info: this.familyChildForm.value.person_info || [],
     };

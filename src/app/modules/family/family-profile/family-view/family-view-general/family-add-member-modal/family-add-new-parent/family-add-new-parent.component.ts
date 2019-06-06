@@ -62,7 +62,7 @@ export class FamilyAddNewParentComponent implements OnInit {
     let data = {
       ...this.familyParentForm.value,
       gender: this.getGenderByRole(this.role),
-      dob: this.parserFormatter.format(this.familyParentForm.value.dob)
+      dob: this.parserFormatter.format(this.familyParentForm.value.dob) || null
     };
     this.personService.addPerson(data).subscribe((res) => {
       if (res.created) {
