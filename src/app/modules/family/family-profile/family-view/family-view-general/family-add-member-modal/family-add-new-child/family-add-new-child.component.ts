@@ -122,7 +122,7 @@ export class FamilyAddNewChildComponent implements OnInit {
       family_name: this.family.name,
       id_person: personId,
       person_role: this.role,
-      adopted: this.familyChildForm.value.adopted ? 1 : null,
+      adopted: this.familyChildForm.value.adopted ? 1 : 0,
     };
     if(this.role === this.FAMILY_ROLES.student) {
       data['person_info'] = this.familyChildForm.value.person_info;

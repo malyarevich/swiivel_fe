@@ -105,7 +105,7 @@ export class FamilyEditChildComponent implements OnInit {
     if (this.familyChildForm.invalid) return;
     let data = {
       person_role:this.familyPerson.person_role,
-      adopted: this.familyChildForm.value.adopted ? 1 : null,
+      adopted: this.familyChildForm.value.adopted ? 1 : 0,
       person: {...this.familyChildForm.value, dob: this.parserFormatter.format(this.familyChildForm.value.dob) || null},
       parents: this.familyChildForm.value.parents ? this.familyChildForm.value.parents.map((item) => item.id) : [],
       person_info: this.familyChildForm.value.person_info || [],
