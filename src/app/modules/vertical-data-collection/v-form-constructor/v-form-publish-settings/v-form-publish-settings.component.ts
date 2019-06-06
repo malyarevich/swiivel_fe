@@ -178,24 +178,30 @@ export class VFormPublishSettingsComponent implements OnInit {
     // console.log(this.publish_settings);
   }
 
+  getPublishSettingValidOrDefault(publish_settings): any {
+    if (publish_settings) {
+      return publish_settings;
+    }
+    return {
+      state: PublishSettingsItems.defaultStateSub,
+      online_config: {...PublishSettingsItems.defaultOnlineConfig},
+      pdf_config: {...PublishSettingsItems.defaultPdfConfig}
+    }
+  }
+
   formInit(): void {
     const form = this.vDataCollection.getDraftForm(this.draftId);
     if (!isEmpty(form)) {
       // console.log("loading draftForm");
       // console.log(form);
+      form.publish_settings = this.getPublishSettingValidOrDefault(form.publish_settings);
       this.setLocalForm(form); //draftForm
     } else if (this.formId) {
       this.formService.getOneForm(this.formId).subscribe(
         (form: Form) => {
           // console.log("loading remoteForm");
           // console.log(form);
-          if (!form.publish_settings) {
-            form.publish_settings = {
-              state: {...PublishSettingsItems.defaultStateSub},
-              online_config: {...PublishSettingsItems.defaultOnlineConfig},
-              pdf_config: {...PublishSettingsItems.defaultPdfConfig}
-            }
-          }
+          form.publish_settings = this.getPublishSettingValidOrDefault(form.publish_settings);
           this.setLocalForm(form); //remoteForm
         },
         error => console.log(error, "error"),
