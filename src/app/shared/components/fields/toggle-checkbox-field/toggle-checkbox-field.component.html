@@ -1,0 +1,12 @@
+<div class="app-checkbox-field" [ngClass]="{'app-checkbox-field-has-error': isInvalid}">
+  <label class="app-switch" ([for])="id">
+    <span class="pl-5">{{label}}</span>
+    <input type="checkbox"
+           ([id])="id"
+           [value]="isSelected"
+           [checked]="isSelected"
+           [disabled]="disabled"
+           (click)="toggleCheckbox()">
+    <span class="app-slider app-round"></span>
+  </label>
+</div>

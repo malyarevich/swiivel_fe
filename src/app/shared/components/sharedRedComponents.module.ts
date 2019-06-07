@@ -22,6 +22,7 @@ import { ModalComponent } from './modal/modal.component';
 import { PersonShowComponent } from './person-show/person-show.component';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { TagComponent } from './tag/tag.component';
+import { ToggleCheckboxFieldComponent } from './fields/toggle-checkbox-field/toggle-checkbox-field.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { TagComponent } from './tag/tag.component';
     PersonShowComponent,
     SpinnerComponent,
     TagComponent,
+    ToggleCheckboxFieldComponent,
   ],
   imports: [
     CommonModule,
@@ -62,6 +64,7 @@ import { TagComponent } from './tag/tag.component';
     SelectFieldComponent,
     SelectMultiCheckboxFieldComponent,
     SelectMultiSearchFieldComponent,
+    ToggleCheckboxFieldComponent,
     // components
     BadgeComponent,
     BadgeDropdownComponent,
