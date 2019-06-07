@@ -68,10 +68,7 @@ export class VFieldsWorkspaceComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    // this.idSectionForDragDrop = this.sideBarService.getIdOfSection(this.form.fields);
-    // console.log(this.idSectionForDragDrop);
 
-    // console.log(this.sideBarService.getIdOfSection(this.form.fields));
     this.cd.detectChanges();
 
 
@@ -106,6 +103,7 @@ export class VFieldsWorkspaceComponent implements OnInit, AfterViewInit {
   }
 
   addGroup(modal){
+
     this.validateAllFormFields(this.groupAddGroup);
     if (!this.groupAddGroup.valid) return;
     this.groupAddGroup.clearValidators();
@@ -144,6 +142,8 @@ export class VFieldsWorkspaceComponent implements OnInit, AfterViewInit {
       this.form.fields.forEach(section=>{
         if(section.name == this.dividerAddGroup.value.sectionRelate.name
           &&section.prefix == this.dividerAddGroup.value.sectionRelate.prefix){
+          console.log(newDivider, 'section');
+
           section.fields.push(newDivider);
         }
       });
@@ -169,12 +169,6 @@ export class VFieldsWorkspaceComponent implements OnInit, AfterViewInit {
       }
     });
   }
-
-  drop(event: CdkDragDrop<Field[]>) {
-    console.log('drop in workspace');
-    moveItemInArray(this.form.fields, event.previousIndex, event.currentIndex);
-  }
-
 
 
 }

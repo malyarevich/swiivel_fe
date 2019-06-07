@@ -1,26 +1,3 @@
-<!--<div>-->
-<!--&lt;!&ndash;  cdkDropList&ndash;&gt;-->
-<!--&lt;!&ndash;  id="workPlaceList"&ndash;&gt;-->
-<!--&lt;!&ndash;  [cdkDropListData]="fields"&ndash;&gt;-->
-<!--&lt;!&ndash;  [cdkDropListConnectedTo]="['ExistingFieldsList', 'CustomFieldsList', '6372c882-3d14-486f-9c1f-52ae8ab928ef']"&ndash;&gt;-->
-<!--&lt;!&ndash;  (cdkDropListDropped)="drop($event)">&ndash;&gt;-->
-<!--  <ul class="list-group" >-->
-<!--    <li class="list-group-item mb-3 py-0" *ngFor="let field of form.fields; " cdkDrag-->
-<!--        cdkDragLockAxis="y"-->
-<!--        [ngClass]="[!field.isValidName||!field.isValid?'list-group-item-warning':'', field.type==113?'app-list-group-item-info':'']">-->
-<!--      <app-v-group-container *ngIf="field.type==113" [inputGroup]="field"-->
-<!--                             [customFields]="customFields"></app-v-group-container>-->
-<!--      <app-v-field-container *ngIf="field.type!=113&&field.type==114"-->
-<!--                             [customFields]="customFields"-->
-<!--                             [inputField]="field">-->
-<!--&lt;!&ndash;                             (onChange)="onChange($event, field)"&ndash;&gt;-->
-<!--&lt;!&ndash;                             (onUniq)="onUniq($event)"&ndash;&gt;-->
-<!--&lt;!&ndash;                             (onDelete)="onDelete($event)">&ndash;&gt;-->
-<!--      </app-v-field-container>-->
-<!--    </li>-->
-
-<!--  </ul>-->
-<!--</div>-->
 <div class="position_wrapper">
 
   <ng-template #contentDivider let-modal>
@@ -68,8 +45,10 @@
               <option  value=""   disabled [selected]="true">Section Relate</option>
               <option  [ngValue]="{name:'workspace'}">Workspace</option>
               <ng-container *ngIf="form">
-                <option *ngFor="let section of form.fields"
-              >{{section.name}}</option>
+                <option *ngFor="let section of form.fields | fieldType: 114"  [ngValue]="section"
+              >
+                  {{section.name}}
+                </option>
               </ng-container>
             </select>
             <div class="invalid-feedback">
@@ -89,7 +68,7 @@
                     id="dividerStyle">
               <option  value=""   disabled [selected]="true">Divider Style</option>
 
-              <option *ngFor="let item of dividerStyles" [value]="item.type"
+              <option *ngFor="let item of dividerStyles" [ngValue]="item.type"
 
               >{{item.name}}</option>
             </select>
@@ -163,7 +142,7 @@
             <option *ngIf="form.fields.length>0" value=""   disabled [selected]="true">Section Relate</option>
             <option *ngIf="form.fields.length==0" value=""   disabled [selected]="true" >Please add at least one section</option>
             <ng-container *ngIf="form">
-            <option *ngFor="let section of form.fields"
+            <option *ngFor="let section of form.fields | fieldType: 114" [ngValue]="section"
 
             >{{section.name}}</option>
             </ng-container>
@@ -310,13 +289,12 @@
 
 
 <ng-container *ngIf="form">
-<div   cdkDropList
-       [cdkDropListData]="form.fields"
-       (cdkDropListDropped)="drop($event)">
-<div
-
-     *ngFor="let item of form.fields "      cdkDrag
-             cdkDragLockAxis="y">
+<div direction="vertical" dropZone="workspace" class="workspace ngx-dnd-container" ngxDroppable>
+<!--  <div   cdkDropList-->
+<!--       [cdkDropListData]="form.fields"-->
+<!--       (cdkDropListDropped)="drop($event)">-->
+<div class="ngx-dnd-item" *ngFor="let item of form.fields " ngxDraggable>
+<!--<div *ngFor="let item of form.fields " cdkDrag cdkDragLockAxis="y">-->
     <app-v-section-conteiner
 
       *ngIf="item.type==114"
@@ -328,10 +306,11 @@
 
     </app-v-section-conteiner>
 
-  <li class="list-group-item mb-3 py-0"
+  <li class="list-group-item mb-3 p-0"
       *ngIf="item.type==112"
       >
   <app-v-divider-conteiner
+    *ngIf="item.type==112"
     [form]="form"
     [inputDivider]="item"
   ></app-v-divider-conteiner>

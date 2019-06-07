@@ -26,31 +26,16 @@ export class VGroupContainerComponent implements OnInit {
   constructor(private sideBarService: SideBarService,private cd: ChangeDetectorRef) { }
   showNested: boolean = true;
   ngOnInit() {
-    // this.idSectionForDragDrop.push(this.inputGroup._id)
   }
 
 
-  drop(event: CdkDragDrop<Field[]>) {
-    // console.log('drop in section');
-    if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    }else if (event.previousContainer.id!=='existing'&&event.previousContainer.id!=='groupExisting'){
-      transferArrayItem(event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex);
-    } else {
-      copyArrayItem(event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex);
-      // console.log(this.inputGroup.fields[event.currentIndex]);
-      this.inputGroup.fields =  this.sideBarService.replaceExistinField(this.inputGroup.fields[event.currentIndex],this.inputGroup.fields );
-      this.sideBarService.fieldCheck(this.inputGroup.fields[event.currentIndex], this.sideBar[0]);
+  dropAdd(event){
+    if(!event.value._id) {
+      //replace dragged item -> added in right way field
+      this.inputGroup.fields =  this.sideBarService.replaceExistinField(this.inputGroup.fields[event.dropIndex],this.inputGroup.fields );
+      this.sideBarService.fieldCheck(this.inputGroup.fields[event.dropIndex], this.sideBar[0]);
     }
-
   }
-
   removeField(field: Field){
     // console.log(this.sideBar[0].fields);
     this.sideBarService.onFieldUncheck(field, this.sideBar[0].fields);

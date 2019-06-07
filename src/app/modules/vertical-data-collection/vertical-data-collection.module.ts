@@ -95,6 +95,8 @@ import { VFieldsWorkspaceComponent } from './v-form-constructor/v-form-builder/v
 import { VSectionConteinerComponent } from './v-form-constructor/v-form-builder/v-form-fields/v-fields-workspace/v-section-conteiner/v-section-conteiner.component';
 import {FinanceService} from "../../services/finance/finance.service";
 import { VDividerConteinerComponent } from './v-form-constructor/v-form-builder/v-form-fields/v-fields-workspace/v-divider-conteiner/v-divider-conteiner.component';
+import {NgxDnDModule} from '@swimlane/ngx-dnd';
+import { FieldTypePipe } from './v-form-constructor/v-form-builder/v-form-fields/v-side-bar/field-type.pipe';
 
 const routes: Routes = [
   {
@@ -230,8 +232,10 @@ const routes: Routes = [
     VFieldsWorkspaceComponent,
     VSectionConteinerComponent,
     VDividerConteinerComponent,
+    FieldTypePipe,
   ],
   imports: [
+    NgxDnDModule,
     NgbModule,
     CommonModule,
     FormsModule,
