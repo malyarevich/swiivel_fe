@@ -41,7 +41,6 @@ export const interceptorsConfig: InterceptorsConfig = {
         AppRoutingModule,
         LoginModule,
         UserLoggedModule,
-      NgbModule,
       AuthModule.forRoot(authConfig),
         InterceptorsModule.forRoot(interceptorsConfig),
         StoreModule.forRoot({}),

@@ -19,12 +19,8 @@
   </div>
 </div>
 <div [hidden]="!showNested">
-  <div   cdkDropList
-         id="existing"
-         [cdkDropListData]="section.fields"
-         [cdkDropListConnectedTo]="idSectionForDragDrop"
-         (cdkDropListDropped)="drop($event)">
-<div  class="my-3  ml-3 " *ngFor="let field of section.fields | filter: searchText" cdkDrag>
+  <div class=" ngx-dnd-container"  direction="vertical"  [copy]="true" [model]="section.fields" ngxDroppable>
+<div  class="my-3  ml-3 " *ngFor="let field of section.fields | filter: searchText" [model]="field" [ngxDraggable]="idSectionForDragDrop">
   <app-v-side-bar-group
     *ngIf="field.type==113"
     [group]="field"

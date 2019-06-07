@@ -3,7 +3,6 @@ import {Field} from "../../../../../model/field.model";
 import {Form} from "../../../../../model/form.model";
 
 import {SideBarService} from "../../v-side-bar/side-bar.service";
-import {CdkDragDrop, copyArrayItem, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-v-section-conteiner',
@@ -16,33 +15,22 @@ export class VSectionConteinerComponent implements OnInit {
   @Input() customFields: Field[];
   @Input() section: Field;
   @Input() idSectionForDragDrop: string[];
+
   constructor(private cd: ChangeDetectorRef,private sideBarService: SideBarService) { }
   sectionWidth: string = "4 Columns";
+
   isShow: boolean = true;
   ngOnInit() {
+
   }
 
 
-  drop(event: CdkDragDrop<Field[]>) {
-    // console.log('drop in section');
-    if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else if (event.previousContainer.id!=='existing'&&event.previousContainer.id!=='groupExisting') {
-      transferArrayItem(event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex);
-    } else {
-      copyArrayItem(event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex);
-      // console.log(event);
-      // console.log(this.section.fields[event.currentIndex]);
-      this.section.fields =  this.sideBarService.replaceExistinField(this.section.fields[event.currentIndex],this.section.fields );
-      this.sideBarService.fieldCheck(this.section.fields[event.currentIndex], this.sideBar[0]);
+  dropAdd(event){
+    if(!event.value._id) {
+      //replace dragged item -> added in right way field
+      this.section.fields =  this.sideBarService.replaceExistinField(this.section.fields[event.dropIndex],this.section.fields );
+      this.sideBarService.fieldCheck(this.section.fields[event.dropIndex], this.sideBar[0]);
     }
-
   }
 
   //   //replace cloned field that which copy to field array with object link by AM Drag&Drop native method
@@ -90,13 +78,14 @@ export class VSectionConteinerComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
-    // this.idSectionForDragDrop = this.sideBarService.getIdOfSection(this.form.fields);
     this.idSectionForDragDrop.push(this.section._id);
 
-    // console.log(this.sideBarService.getIdOfSection(this.form.fields));
-    // console.log(this.idSectionForDragDrop);
     this.cd.detectChanges();
 
 
+  }
+
+  log(e){
+    console.log(e);
   }
 }
