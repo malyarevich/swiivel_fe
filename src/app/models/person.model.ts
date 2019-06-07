@@ -28,4 +28,6 @@ export interface Person {
   phone: string,
   created_at: string,
   updated_at: string,
+  deceased: number,
+  dod: string,
 }

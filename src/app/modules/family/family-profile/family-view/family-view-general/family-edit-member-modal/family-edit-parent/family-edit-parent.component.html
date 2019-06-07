@@ -45,9 +45,36 @@
                            label="Full Hebrew Name"></app-input-field>
         </div>
       </div>
-      <div *ngIf="familyPerson.person_role === familyRoles.mother" class="row no-gutters pt-2">
-        <div class="col-6 px-1">
+      <div class="row no-gutters pt-2">
+        <div *ngIf="familyPerson.person_role === familyRoles.mother" class="col-6 px-1">
           <app-input-field [formControlName]="'maiden_name'" id='maiden_name' label="Maiden Name"></app-input-field>
+        </div>
+        <div *ngIf="familyPerson.person_role !== familyRoles.mother" class="col-6 px-1">
+        </div>
+        <div class="col-6 px-1">
+          <app-toggle-checkbox-field [formControlName]="'deceased'" label="Deceased"></app-toggle-checkbox-field>
+        </div>
+      </div>
+      <div *ngIf="familyParentForm.value.deceased" class="row no-gutters">
+        <div class="offset-6 col-6 px-1 text-right">
+          <div class="input-group app-input-container" [ngClass]="{'app-input-fill': familyParentForm.value.dod}">
+            <label for="d2" class="app-input-label">Date of Death</label>
+            <input class="app-input app-family-input-datepicker form-control"
+                   placeholder="Date of Death"
+                   name="dp2"
+                   [formControlName]="'dod'"
+                   [minDate]="minDate"
+                   [maxDate]="maxDate"
+                   ngbDatepicker
+                   id="d2"
+                   #d1="ngbDatepicker"
+            >
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary calendar" (click)="d1.toggle()" type="button">
+                <i class="far fa-calendar"></i>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>

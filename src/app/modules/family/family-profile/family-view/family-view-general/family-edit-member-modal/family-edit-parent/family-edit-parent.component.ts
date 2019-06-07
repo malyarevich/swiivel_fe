@@ -52,13 +52,20 @@ export class FamilyEditParentComponent implements OnInit {
       corporate_phone: [this.familyPerson.person.contact_phone],
       contact_phone: [this.familyPerson.person.contact_phone],
       contact_email: [this.familyPerson.person.contact_email],
+      deceased: [this.familyPerson.person.deceased || 0],
+      dod: [this.parserFormatter.parse(this.familyPerson.person.dod) || null]
     });
   }
 
   updateFamilyParent() {
     if (this.familyParentForm.invalid) return;
     let data = {
-      person: {...this.familyParentForm.value, dob: this.parserFormatter.format(this.familyParentForm.value.dob) || null},
+      person: {
+        ...this.familyParentForm.value,
+        dob: this.parserFormatter.format(this.familyParentForm.value.dob) || null,
+        deceased: this.familyParentForm.value.deceased ? 1 : 0,
+        dod: this.parserFormatter.format(this.familyParentForm.value.dod) || null,
+      },
     };
     this.familyPersonService.update(data, this.familyPerson.id);
     this.onCloseEditFamilyMemberModal();
