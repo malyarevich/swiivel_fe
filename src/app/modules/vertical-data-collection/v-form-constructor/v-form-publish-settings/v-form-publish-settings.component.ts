@@ -107,6 +107,7 @@ export class VFormPublishSettingsComponent implements OnInit {
     private readonly financeService: FinanceService
   ) {
     this.vDataCollection = vDataCollection;
+    // console.log("constructor");
   }
 
   ngOnInit() {
@@ -177,24 +178,30 @@ export class VFormPublishSettingsComponent implements OnInit {
     // console.log(this.publish_settings);
   }
 
+  getPublishSettingValidOrDefault(publish_settings): any {
+    if (publish_settings) {
+      return publish_settings;
+    }
+    return {
+      state: PublishSettingsItems.defaultStateSub,
+      online_config: {...PublishSettingsItems.defaultOnlineConfig},
+      pdf_config: {...PublishSettingsItems.defaultPdfConfig}
+    }
+  }
+
   formInit(): void {
     const form = this.vDataCollection.getDraftForm(this.draftId);
     if (!isEmpty(form)) {
       // console.log("loading draftForm");
       // console.log(form);
+      form.publish_settings = this.getPublishSettingValidOrDefault(form.publish_settings);
       this.setLocalForm(form); //draftForm
     } else if (this.formId) {
       this.formService.getOneForm(this.formId).subscribe(
         (form: Form) => {
-          console.log("loading remoteForm");
-          console.log(form);
-          if (!form.publish_settings) {
-            form.publish_settings = {
-              state: {...PublishSettingsItems.defaultStateSub},
-              online_config: {...PublishSettingsItems.defaultOnlineConfig},
-              pdf_config: {...PublishSettingsItems.defaultPdfConfig}
-            }
-          }
+          // console.log("loading remoteForm");
+          // console.log(form);
+          form.publish_settings = this.getPublishSettingValidOrDefault(form.publish_settings);
           this.setLocalForm(form); //remoteForm
         },
         error => console.log(error, "error"),
@@ -228,7 +235,7 @@ export class VFormPublishSettingsComponent implements OnInit {
   saveForm() {
     // if (this.validCheckFields()) {
     const form: Form = this.getForm();
-    console.log(form);
+    // console.log(form);
     this.formService.sendForm(form).subscribe(res => this.goBack());
     // }
     this.vDataCollection.deleteDraftForm(this.draftId);
