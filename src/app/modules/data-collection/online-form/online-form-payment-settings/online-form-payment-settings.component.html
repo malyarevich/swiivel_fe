@@ -4,16 +4,16 @@
 
 <div class="app-of-wrap content_section__main">
   <!--Title-->
-  <ng-container *ngIf="form.termsConditions?.termsConditionsItems?.length">
+  <ng-container *ngIf="form.paymentSettings?.paymentSettingsItems?.length">
     <ng-container
       *ngFor="
-        let item of form.termsConditions.termsConditionsItems;
+        let item of form.paymentSettings.paymentSettingsItems;
         let indexItem = index
       "
     >
       <!--Title-->
       <h2 class="content_section__article_title">
-        {{ item.title }}
+        {{ item.title | uppercase }}
       </h2>
 
       <!--Text-->
@@ -25,6 +25,7 @@
       </article>
 
       <!--Checkbox-->
+
       <div
         *ngIf="item.checkbox.isActive"
         class="content_section__additional_fields"

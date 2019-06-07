@@ -1,15 +1,53 @@
 <div *ngFor="let document of form.documents" class="mb-3">
-  <div class="">
-    <span class="app-text-extra-bold">{{document.name | uppercase}}</span>
-  </div>
-  <div class="my-2" [innerHTML]="document.accompanyingText.data"></div>
-  <div class="col-6  mx-2 document-cont-div row no-gutters align-items-center" >
-<!--    {{document | json}}-->
-    <div class="col-1 py-2 mx-0">
-      <i class="far fa-file-pdf fa-3x app-fb-section-icon"></i>
+  <!--Title-->
+  <h2
+    class="content_section__article_title content_section__article_title--left"
+  >
+    {{ document.name }}
+  </h2>
+
+  <div
+    class="content_section__article_text"
+    [innerHTML]="document.accompanyingText.data"
+  ></div>
+
+  <div class="document_container">
+    <!-- {{ document| json }} -->
+    <div class="document_container__icon_container">
+      <i class="far fa-file-pdf fa-3x document_container__pdf_icon"></i>
     </div>
-    <div class="col-7 py-2"><span class="span-download" (click)="openForPreview(document)">{{form.attachments[document.data].name}}</span></div>
-    <div class="col-4" (click)="openForPreview(document)" ><button class="btn app-btn-primary form-control">Download Document</button> </div>
+    <ng-container *ngIf="document.isUpload">
+      <div class="document_container__file_information">
+        <span>Choose file...</span>
+      </div>
+      <div class="document_container__load">
+        <button class="btn app-btn-primary form-control">
+          Upload Document
+        </button>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="!document.isUpload">
+      <div
+        class="document_container__file_information"
+        (click)="openForPreview(document)"
+      >
+        <span>{{ form.attachments[document.data].name }}</span>
+        <span class="document_container__file_details">230KB (2 pages)</span>
+      </div>
+      <div class="document_container__load">
+        <!-- <button
+          class="btn app-btn-primary form-control text-nowrap"
+          (click)="downloadFile(document)"
+        ></button> -->
+        <button
+          class="btn app-btn-primary form-control text-nowrap"
+          (click)="openForPreview(document)"
+        >
+          Download Document
+        </button>
+      </div>
+    </ng-container>
   </div>
-  <hr>
+  <hr />
 </div>

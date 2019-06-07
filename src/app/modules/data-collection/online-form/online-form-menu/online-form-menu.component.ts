@@ -49,6 +49,8 @@ export class OnlineFormMenuComponent implements OnInit {
     switch (itemMenuName) {
       case mainMenuNames.consentInfo:
         return this.checkItemIsActive(mainMenuNames.consentInfo);
+      case mainMenuNames.paymentSettings:
+        return this.checkItemIsActive(mainMenuNames.paymentSettings);
       case mainMenuNames.termsConditions:
         return this.checkItemIsActive(mainMenuNames.termsConditions);
       case mainMenuNames.tuitionContract:

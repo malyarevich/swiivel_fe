@@ -12,6 +12,7 @@ export class FilesService {
   constructor(private http: HttpClient) { }
 
   getFileFromServer(url: string){
+    // this.http.get(url+this.token).subscribe(data=>this.downloadFile(data)),
     this.http.get(url+this.token).subscribe(data=>this.downloadFile(data)),
       error => console.log('Error downloading the file.'),
       () => console.info('OK');
