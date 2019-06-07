@@ -14,7 +14,7 @@ import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 @Component({
   selector: 'app-v-fields-side-bar-detailed',
   templateUrl: './v-fields-side-bar-detailed.component.html',
-  styleUrls: ['./v-fields-side-bar-detailed.component.css']
+  styleUrls: ['./v-fields-side-bar-detailed.component.scss']
 })
 export class VFieldsSideBarDetailedComponent implements OnInit, AfterViewInit, OnDestroy {
 

@@ -7,7 +7,7 @@ import {SideBarService} from "../side-bar.service";
 @Component({
   selector: 'app-v-side-bar-group',
   templateUrl: './v-side-bar-group.component.html',
-  styleUrls: ['./v-side-bar-group.component.css']
+  styleUrls: ['./v-side-bar-group.component.scss']
 })
 export class VSideBarGroupComponent implements OnInit, OnDestroy {
 

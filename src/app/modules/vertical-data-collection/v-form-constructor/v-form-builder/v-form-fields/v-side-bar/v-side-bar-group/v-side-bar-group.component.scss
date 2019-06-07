@@ -1,79 +1,55 @@
-.circle {
-  width: 50px;
-  height: 50px;
-  border-radius: 25px;
-  font-size: 40px;
-  color: #fff;
-  line-height: 50px;
-  text-align: center;
-  background: #4350a2;
-  cursor: pointer;
-}
-
-.position_wrapper {
-  position: relative;
-  min-height: 0;
-}
-
-.custom-circle-wrapper {
-  z-index: 10;
-  position: absolute;
-  bottom: 0;
-  right: -25px;
-}
-
-.fields-wrapper {
-  z-index: 1;
-  position: relative;
-}
-
-.dropdown-add-menu {
-  height: 319px;
-  width: 206px;
-  border-radius: 3px;
-  background-color: #50597a;
-}
-.dropdown-toggle::after {
-  display: none;
-}
-
-.menu-dropdown-header {
-  height: 40px;
-  width: 206px;
-  border-radius: 5px 5px 0 0;
-  background-color: #36405f;
-}
-
-.menu-dropdown-item {
-  height: 27px;
-  width: 176px;
-  border-radius: 3px;
-  background-color: #ebeeff;
-  box-shadow: 0 4px 8px 0 rgba(153, 162, 215, 0.22);
-  cursor: pointer;
-}
-
-.menu-hr {
-  background-color: #818aac;
-}
-.span-zero-m-t {
-  margin-top: 0 !important;
-}
-
-.dr-menu-item-span {
+.side-bar-item-font {
   font-size: 12px;
   font-weight: bold;
-  cursor: pointer;
+  line-height: 13px;
+  color: #151515;
+}
+.side-bar-item {
+  background-color: #ebeeff;
 }
 
-//.modal-content{
-//  height: 212px!important;	width: 623px!important;	border-radius: 8px;	background-color: #FFFFFF;
-//}
-//.has-error {
-//  .form-control { @extend .is-invalid; }
-//}
-.without-section {
-  background-color: red !important;
+.side-bar-item-group {
+  height: 27px;
+  border-radius: 3px;
+  background-color: #ffffff;
+  /*background-color: #F6F6F6;*/
+}
+.side-bar-item-group-custom {
+  height: 27px;
+  border-radius: 3px;
+  background-color: #e0f7ed;
+}
+.app-checkbox-container input:checked ~ .app-checkbox-checkmark {
+  background-color: #4050a8;
+}
+.dragable-i {
+  color: #9c9d9d;
+  height: 13px;
+  /*margin-left: 2px;*/
+}
+.side-bar-item-modal {
+  background-color: #ebeeff;
+}
+
+.just-white {
+  background-color: #ffffff;
+}
+.add-input.form-control {
+  height: 27px;
+}
+.btn.btn-outline-primary.form-control {
+  height: 27px;
+}
+
+.btn-outline-primary {
+  color: #4050a8;
+  border-color: #4050a8;
+}
+
+.btn-outline-primary:not(:disabled):not(.disabled):active:hover {
+  color: #4050a8;
+  background-color: #4050a8;
+  border-color: #4050a8;
 }
 
 .invalid-feedback {
@@ -81,10 +57,12 @@
   opacity: 0;
 }
 
-.form-control.is-invalid~.invalid-feedback, .form-control.is-invalid~.invalid-tooltip, .was-validated .form-control:invalid~.invalid-feedback, .was-validated .form-control:invalid~.invalid-tooltip {
+.form-control.is-invalid ~ .invalid-feedback,
+.form-control.is-invalid ~ .invalid-tooltip,
+.was-validated .form-control:invalid ~ .invalid-feedback,
+.was-validated .form-control:invalid ~ .invalid-tooltip {
   opacity: 1;
 }
-
 
 .ngx-dnd-box,
 .ngx-dnd-item {
@@ -142,7 +120,7 @@
 
 
 .ngx-dnd-container {
-  background-color: #F2F2F2!important;
+  //background-color: #F2F2F2!important;
 
 
   &.gu-empty {
@@ -150,7 +128,7 @@
   }
 
   &:nth-child(odd) {
-    background-color: rgba(0, 0, 0, 0.2);
+    //background-color: rgba(0, 0, 0, 0.2);
   }
 
   .ex-moved {

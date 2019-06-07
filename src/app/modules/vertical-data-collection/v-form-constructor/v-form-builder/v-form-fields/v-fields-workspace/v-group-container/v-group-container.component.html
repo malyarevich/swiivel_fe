@@ -196,18 +196,23 @@
 </div>
 
   <div [hidden]="!showNested"
-       [cdkDropListConnectedTo]="idSectionForDragDrop"
-       [cdkDropListData]="inputGroup.fields"
-       [id]='inputGroup._id'
-       (cdkDropListDropped)="drop($event)"
-       class=" nested-bc"
-       cdkDropList>
-    <ul class="list-group">
+>
+    <ul
+      class="list-group ngx-dnd-container drop-zone"
+      [ngxDroppable]="inputGroup._id"
+      [model]="inputGroup.fields"
+      (drop)="dropAdd($event)"
+      direction="vertical"
+
+    >
       <li *ngIf="inputGroup.fields.length==0" class="list-group-item empty-group p-0 margin-for-nested">
         <div class="text-center">        <span class="empty-group-text">Drag and Drop Fields Onto the Group</span>
         </div>
       </li>
-      <li class="list-group-item p-0 margin-for-nested" *ngFor="let field of inputGroup.fields" cdkDrag>
+      <li class="list-group-item p-0 ngx-dnd-item margin-for-nested"
+          [model]="field"
+          *ngFor="let field of inputGroup.fields"
+          [ngxDraggable]="idSectionForDragDrop">
         <app-v-field-container *ngIf="field.type!=113"
                                [inputField]="field"
                                [form]="form"
