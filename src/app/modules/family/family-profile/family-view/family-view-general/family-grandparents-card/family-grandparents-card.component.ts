@@ -14,6 +14,10 @@ export class FamilyGrandparentsCardComponent implements OnInit {
     return this.helperFamilyService.getFullWithMiddleName(this.familyPerson);
   }
 
+  get fullAddress() {
+    return this.helperFamilyService.getFullPersonFamilyAddress(this.familyPerson);
+  }
+
   constructor(private helperFamilyService: HelperFamilyService) { }
 
   ngOnInit() {

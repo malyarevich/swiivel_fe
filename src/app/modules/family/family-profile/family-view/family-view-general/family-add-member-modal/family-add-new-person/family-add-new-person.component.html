@@ -16,8 +16,8 @@
                            (closeModalAddFamilyMember)="onCloseAddFamilyMemberModal()">
 </app-family-add-new-parent>
 
-<app-family-add-new-child *ngIf="role === FAMILY_ROLES.child || role === FAMILY_ROLES.student"
+<app-family-add-new-grandparents *ngIf="role === FAMILY_ROLES.grandfather || role === FAMILY_ROLES.grandmother"
                           [role]="role"
                           [family]="family"
                           (closeModalAddFamilyMember)="onCloseAddFamilyMemberModal()" >
-</app-family-add-new-child>
+</app-family-add-new-grandparents>
