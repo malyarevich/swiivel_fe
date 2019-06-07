@@ -14,6 +14,7 @@
     <div class="col-6 text-right mt-1">
       <span class="mr-3" *ngIf="familyPerson.person_role !== familyRoles.student">{{familyPerson.person_role | titlecase}}</span>
       <i *ngIf="familyPerson.person_role === familyRoles.student" class="fas fa-graduation-cap mr-3"></i>
+      <i  *ngIf="familyPerson.person.deceased" class="fas fa-monument mr-3"></i>
       <i (click)="onCloseEditModal(false)" class="fas fa-pen app-cursor-pointer mr-3"></i>
       <i (click)="onCloseRemoveModal(false)" class="fas fa-trash-alt app-cursor-pointer"></i>
     </div>
