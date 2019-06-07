@@ -12,4 +12,10 @@
     [familyPerson]="familyPerson"
     (closeModalEditFamilyMember)="onCloseEditFamilyMemberModal()">
   </app-family-edit-child>
+
+  <app-family-edit-grandparent
+    *ngIf="familyPerson.person_role === FAMILY_ROLES.grandfather || familyPerson.person_role === FAMILY_ROLES.grandmother"
+    [familyPerson]="familyPerson"
+    (closeModalEditFamilyMember)="onCloseEditFamilyMemberModal()">
+  </app-family-edit-grandparent>
 </app-modal>
