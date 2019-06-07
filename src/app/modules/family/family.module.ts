@@ -38,6 +38,7 @@ import { FamilyEditMemberModalComponent } from './family-profile/family-view/fam
 import { FamilyEditChildComponent } from './family-profile/family-view/family-view-general/family-edit-member-modal/family-edit-child/family-edit-child.component';
 import { FamilyEditParentComponent } from './family-profile/family-view/family-view-general/family-edit-member-modal/family-edit-parent/family-edit-parent.component';
 import { FamilyAddNewGrandparentsComponent } from './family-profile/family-view/family-view-general/family-add-member-modal/family-add-new-grandparents/family-add-new-grandparents.component';
+import { FamilyEditGrandparentComponent } from './family-profile/family-view/family-view-general/family-edit-member-modal/family-edit-grandparent/family-edit-grandparent.component';
 
 @NgModule({
   declarations: [
@@ -68,7 +69,8 @@ import { FamilyAddNewGrandparentsComponent } from './family-profile/family-view/
     FamilyEditMemberModalComponent,
     FamilyEditChildComponent,
     FamilyEditParentComponent,
-    FamilyAddNewGrandparentsComponent
+    FamilyAddNewGrandparentsComponent,
+    FamilyEditGrandparentComponent
   ],
   imports: [
     CommonModule,
