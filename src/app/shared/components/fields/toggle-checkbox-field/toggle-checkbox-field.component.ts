@@ -12,7 +12,7 @@ import {
 @Component({
   selector: './app-toggle-checkbox-field',
   templateUrl: './toggle-checkbox-field.component.html',
-  styleUrls: ['./toggle-checkbox-field.component.css'],
+  styleUrls: ['./toggle-checkbox-field.component.scss'],
   providers: [{
     provide: NG_VALUE_ACCESSOR,
     useExisting: forwardRef(() => ToggleCheckboxFieldComponent),

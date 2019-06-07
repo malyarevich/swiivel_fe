@@ -58,6 +58,8 @@ export class FamilyEditChildComponent implements OnInit {
       hebrew_dob: [this.familyPerson.person.hebrew_dob],
       hebrew_full_name: [this.familyPerson.person.hebrew_full_name],
       gender: [this.familyPerson.person.gender],
+      deceased: [this.familyPerson.person.deceased || 0],
+      dod: [this.parserFormatter.parse(this.familyPerson.person.dod) || null],
       person_info: null
     };
 
@@ -106,7 +108,12 @@ export class FamilyEditChildComponent implements OnInit {
     let data = {
       person_role:this.familyPerson.person_role,
       adopted: this.familyChildForm.value.adopted ? 1 : 0,
-      person: {...this.familyChildForm.value, dob: this.parserFormatter.format(this.familyChildForm.value.dob) || null},
+      person: {
+        ...this.familyChildForm.value,
+        dob: this.parserFormatter.format(this.familyChildForm.value.dob) || null,
+        deceased: this.familyChildForm.value.deceased ? 1 : 0,
+        dod: this.parserFormatter.format(this.familyChildForm.value.dod) || null,
+      },
       parents: this.familyChildForm.value.parents ? this.familyChildForm.value.parents.map((item) => item.id) : [],
       person_info: this.familyChildForm.value.person_info || [],
     };
