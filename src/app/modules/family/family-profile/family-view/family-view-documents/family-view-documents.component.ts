@@ -1,8 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Family} from "../../../../../models/family/family.model";
 import {FamilyService} from "../../../../../services/family/family.service";
-import {FamilyQueryParamsService} from "../../../../../services/family/family-query-params.service";
-import {FamilyQueryParams} from "../../../../../models/family/family-query-params.model";
+import {DataTableColumn} from "../../../../../models/data-table/data-table-column.model";
 
 @Component({
   selector: 'app-family-view-documents',
@@ -12,21 +11,59 @@ import {FamilyQueryParams} from "../../../../../models/family/family-query-param
 export class FamilyViewDocumentsComponent implements OnInit {
   @Input() familyId: string;
   familyName: string;
-  queryParams: FamilyQueryParams;
 
-  constructor(private familyService: FamilyService,
-              private familyQueryParamsService: FamilyQueryParamsService) {
+  cols: DataTableColumn[] = [
+    {
+      id: 'title',
+      type: 'text',
+      title: 'TITLE',
+      sort: true,
+      search: true,
+    },
+    {
+      id: 'type',
+      type: 'text',
+      title: 'TYPE',
+      sort: true,
+      search: true,
+    },
+    {
+      id: 'format',
+      type: 'text',
+      title: 'FORMAT',
+      sort: true,
+      search: true,
+    },
+
+    {
+      id: 'uploaded_date',
+      type: 'date',
+      title: 'UPLOADED DATE',
+      sort: true,
+      search: true,
+    },
+    {
+      id: 'student',
+      type: 'text',
+      title: 'STUDENT',
+      sort: true,
+      search: true,
+    },
+    {
+      id: '',
+      type: '',
+      title: '',
+      sort: false,
+      search: false,
+      width: '250px'
+    },
+  ];
+
+  constructor(private familyService: FamilyService) {
   }
 
   ngOnInit() {
     this.getFamilyName();
-    this.initQueryParams();
-  }
-
-  initQueryParams() {
-    this.familyQueryParamsService.familyQueryParams.subscribe(params => {
-      this.queryParams = {...params};
-    })
   }
 
   getFamilyName() {
@@ -35,8 +72,8 @@ export class FamilyViewDocumentsComponent implements OnInit {
     })
   }
 
-  setSearchQuery(query) {
-    this.familyQueryParamsService.setQueryParams(query);
+  onSearchQuery(event) {
+    console.log(event);
   }
 
 }
