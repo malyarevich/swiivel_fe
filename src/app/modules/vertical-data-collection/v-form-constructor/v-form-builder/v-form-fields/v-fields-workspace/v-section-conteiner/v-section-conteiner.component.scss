@@ -50,7 +50,13 @@
 .fas{
   cursor: pointer;
 }
+.empty-section{	height: 115px;		border-radius: 0 0 5px 5px;	background-color: #FFFFFF;
 
+}
+
+.empty-section-text{
+  color: #A4A8BE;		font-size: 10px;	font-weight: bold;	line-height: 11px;	text-align: center;
+}
 
 .ngx-dnd-box,
 .ngx-dnd-item {

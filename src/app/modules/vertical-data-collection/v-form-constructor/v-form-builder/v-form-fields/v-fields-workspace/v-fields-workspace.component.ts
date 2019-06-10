@@ -97,7 +97,7 @@ export class VFieldsWorkspaceComponent implements OnInit, AfterViewInit {
       fields: [],
     };
     this.form.fields.push(newSection);
-    this.idSectionForDragDrop = this.sideBarService.getIdOfSection(this.form.fields);
+    // this.idSectionForDragDrop = this.sideBarService.getIdOfSection(this.form.fields);
     this.sectionAddGroup.reset();
     modal.close();
   }
@@ -121,7 +121,7 @@ export class VFieldsWorkspaceComponent implements OnInit, AfterViewInit {
         section.fields.push(newGroup);
       }
     });
-    this.idSectionForDragDrop = this.sideBarService.getIdOfSection(this.form.fields);
+    // this.idSectionForDragDrop = this.sideBarService.getIdOfSection(this.form.fields);
     this.groupAddGroup.reset();
     modal.close();
   }
