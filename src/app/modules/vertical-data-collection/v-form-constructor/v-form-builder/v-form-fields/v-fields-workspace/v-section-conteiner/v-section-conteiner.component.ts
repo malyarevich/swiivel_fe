@@ -79,12 +79,10 @@ export class VSectionConteinerComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
-    console.log(this.idSectionForDragDrop);
     this.idSectionForDragDrop.push(this.section._id);
 
     this.cd.detectChanges();
 
-    console.log(this.idSectionForDragDrop);
 
   }
 
