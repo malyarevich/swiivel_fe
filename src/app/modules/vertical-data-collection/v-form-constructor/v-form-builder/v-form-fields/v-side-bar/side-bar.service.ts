@@ -29,8 +29,7 @@ export class SideBarService {
   }
 
   replaceExistinField(field: Field, fields: Field[]) {
-    console.log(field, 'field');
-    console.log(fields, 'fields');
+
     let newField = cloneDeep(field);
     newField._id = uuid();
     // this.doExistingFieldsUniq(newField);
