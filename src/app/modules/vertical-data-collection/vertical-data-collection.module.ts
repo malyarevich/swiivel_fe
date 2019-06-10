@@ -97,6 +97,8 @@ import {FinanceService} from "../../services/finance/finance.service";
 import { VDividerConteinerComponent } from './v-form-constructor/v-form-builder/v-form-fields/v-fields-workspace/v-divider-conteiner/v-divider-conteiner.component';
 import {NgxDnDModule} from '@swimlane/ngx-dnd';
 import { FieldTypePipe } from './v-form-constructor/v-form-builder/v-form-fields/v-side-bar/field-type.pipe';
+import { VSectionSettingsComponent } from './v-form-constructor/v-form-builder/v-form-fields/v-fields-workspace/v-section-conteiner/v-section-settings/v-section-settings.component';
+import {SharedRedComponentsModule} from '../../shared/components/sharedRedComponents.module';
 
 const routes: Routes = [
   {
@@ -233,6 +235,7 @@ const routes: Routes = [
     VSectionConteinerComponent,
     VDividerConteinerComponent,
     FieldTypePipe,
+    VSectionSettingsComponent,
   ],
   imports: [
     NgxDnDModule,
@@ -244,7 +247,8 @@ const routes: Routes = [
     DragDropModule,
     ReactiveFormsModule,
     GeneralDirectivesModule,
-    PdfViewerModule
+    PdfViewerModule,
+    SharedRedComponentsModule
   ],
   providers: [
     VFormService,
