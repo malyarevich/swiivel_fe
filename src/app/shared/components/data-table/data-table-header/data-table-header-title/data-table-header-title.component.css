@@ -1,0 +1,9 @@
+.app-table-header-title {
+    color: #151515;
+    letter-spacing: 0.3px;
+    cursor: pointer;
+}
+
+.app-table-header-title i {
+    color: #A3A3A3;
+}

@@ -1,0 +1,12 @@
+<tr class="table_head__tr">
+  <th scope="col" nowrap class="app-table-th" *ngFor="let col of cols" [width]="col.width">
+    <ng-container [ngSwitch]="col.type">
+      <ng-template ngSwitchCase="text">
+        <app-data-table-header-filter-text [col]="col" (filterDataEmitter)="searchCtrl($event, col.id)"></app-data-table-header-filter-text>
+      </ng-template>
+      <ng-template ngSwitchCase="date">
+        <app-data-table-header-filter-date [col]="col" (filterDataEmitter)="searchCtrl($event, col.id)"></app-data-table-header-filter-date>
+      </ng-template>
+    </ng-container>
+  </th>
+</tr>

@@ -2,6 +2,7 @@
   <app-family-view-nav (activeViewSectionEmitter)="setActiveSection($event)"></app-family-view-nav>
   <div class="app-family-info-wrap p-4">
     <app-family-view-general [familyId]="familyId" *ngIf="activeSection === FAMILY_VIEW_SECTIONS.GENERAL"></app-family-view-general>
+    <app-family-view-documents [familyId]="familyId" *ngIf="activeSection === FAMILY_VIEW_SECTIONS.DOCUMENTS"></app-family-view-documents>
   </div>
 </div>
 
