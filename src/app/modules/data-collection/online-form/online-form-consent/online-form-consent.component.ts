@@ -9,7 +9,7 @@ import {SignatureCreateResponse} from '../model/signature-create-response.model'
 @Component({
   selector: 'app-online-form-consent',
   templateUrl: './online-form-consent.component.html',
-  styleUrls: ['./online-form-consent.component.css']
+  styleUrls: ['./online-form-consent.component.scss']
 })
 export class OnlineFormConsentComponent implements OnInit {
   @Input() form: Form;

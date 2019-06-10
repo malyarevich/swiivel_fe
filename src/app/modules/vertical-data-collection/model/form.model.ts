@@ -28,6 +28,7 @@ export interface Form {
   tuitionContract?: TuitionContract;
   consentInfo?: ConsentInfo;
   termsConditions?: TermsConditions;
+  paymentSettings?: any, //Need FIXME: (create PaymentSettings)
   chosen_way_to_create_new_form?: number;
   eligible: string;
   example_form_id?: string;

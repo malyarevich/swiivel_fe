@@ -28,12 +28,13 @@ import { entryComponents } from "./online-form-fields/entryComponents";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { OnlineFormConsentComponent } from "./online-form-consent/online-form-consent.component";
-import { ConsentNavComponent } from "./online-form-consent/consent-nav/consent-nav.component";
+import { ContentNavComponent } from "./shared/components/content-nav/content-nav.component";
 import { SystemSignatureService } from "./services/signatures/system-signature.service";
 import { OnlineFormDocumentsFormsComponent } from "./online-form-documents-forms/online-form-documents-forms.component";
 import { OnlineDocumentsComponent } from "./online-form-documents-forms/online-documents/online-documents.component";
 import { OnlinePdfFormsComponent } from "./online-form-documents-forms/online-pdf-forms/online-pdf-forms.component";
 import { PdfViewerModule } from "ng2-pdf-viewer";
+import { OnlineFormPaymentSettingsComponent } from "./online-form-payment-settings/online-form-payment-settings.component";
 import { OnlineFormTermsConditionsComponent } from "./online-form-terms-conditions/online-form-terms-conditions.component";
 import { OnlineFormTuitionContractComponent } from "./online-form-tuition-contract/online-form-tuition-contract.component";
 import { TuitionContractByStudentComponent } from "./online-form-tuition-contract/tuition-contract-by-student/tuition-contract-by-student.component";
@@ -65,10 +66,11 @@ import { SignaturesComponent } from "./shared/components/signatures/signatures.c
     DateTimeFieldComponent,
     FieldContentDirective,
     OnlineFormConsentComponent,
-    ConsentNavComponent,
+    ContentNavComponent,
     OnlineFormDocumentsFormsComponent,
     OnlineDocumentsComponent,
     OnlinePdfFormsComponent,
+    OnlineFormPaymentSettingsComponent,
     OnlineFormTermsConditionsComponent,
     OnlineFormTuitionContractComponent,
     TuitionContractByStudentComponent,

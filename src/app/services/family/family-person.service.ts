@@ -121,4 +121,10 @@ export class FamilyPersonService {
       map((res: DeleteResponseData) => res)
     );
   }
+
+  getAllRequest(): Observable<any> {
+    return this.http.get('/person/family').pipe(
+      map((res) => res)
+    );
+  }
 }

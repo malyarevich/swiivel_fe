@@ -26,6 +26,10 @@
         [form]="form"
         *ngIf="activeSection === mainMenuNames.consentInfo"
       ></app-online-form-consent>
+      <app-online-form-payment-settings
+        [form]="form"
+        *ngIf="activeSection === mainMenuNames.paymentSettings"
+      ></app-online-form-payment-settings>
       <app-online-form-terms-conditions
         [form]="form"
         *ngIf="activeSection === mainMenuNames.termsConditions"

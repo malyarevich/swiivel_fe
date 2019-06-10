@@ -5,8 +5,11 @@
     <div class="col-9 mt-3">
       <div class="row no-gutters">
         <div class="col-4 px-1">
-          <app-input-field [formControlName]="'first_name'" id='first_name' label="First Name"></app-input-field>
-          <div class="field-has-error"
+          <app-input-field [formControlName]="'first_name'"
+                           id='first_name' label="First Name"
+                           [isInvalid]="familyParentForm.get('first_name').invalid && familyParentForm.get('first_name').touched">
+          </app-input-field>
+          <div class="field-has-error app-position-relative"
                *ngIf="familyParentForm.get('first_name').invalid && familyParentForm.get('first_name').touched && familyParentForm.get('first_name')['errors']['required']"
           >
             First Name is required

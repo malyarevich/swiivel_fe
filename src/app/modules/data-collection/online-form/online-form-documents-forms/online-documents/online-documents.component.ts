@@ -11,18 +11,17 @@ import {FilesService} from "../../services/files.service";
 })
 export class OnlineDocumentsComponent implements OnInit {
   @Input() form: Form;
-  token = '?api_token='+environment.api_token;
 
   constructor(private fileService: FilesService) { }
 
   ngOnInit() {
   }
-
+//FIXME: download instead open
   openForPreview(document: DocumentsModel){
     if(!document.data) return;
-    window.open(this.form.attachments[document.data].link+this.token, '_self'  );
+    window.open(this.form.attachments[document.data].link, '_self'  );
   }
-
+//FIXME: from server 200, but ok=false
   downloadFile(document: DocumentsModel){
     if(!document.data) return;
    this.fileService.getFileFromServer(this.form.attachments[document.data].link)

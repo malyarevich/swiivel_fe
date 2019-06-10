@@ -17,7 +17,7 @@ export class FamilyEditChildComponent implements OnInit {
   @Output() closeModalEditFamilyMember: EventEmitter<any> = new EventEmitter<any>();
   @Input() familyPerson: FamilyPerson;
 
-  persons: any[] = [];
+  familyPersons: any[] = [];
   GENDER = Gender;
   FAMILY_ROLES = FamilyRoles;
   familyChildForm: FormGroup;
@@ -40,7 +40,7 @@ export class FamilyEditChildComponent implements OnInit {
 
   ngOnInit() {
     this.initFamilyChildForm();
-    this.getPersons();
+    this.getFamilyPersons();
   }
 
   initFamilyChildForm() {
@@ -91,13 +91,13 @@ export class FamilyEditChildComponent implements OnInit {
     this.familyChildForm = this.fb.group(controlsConfig);
   }
 
-  getPersons() {
-    this.personService.getPersons()
+  getFamilyPersons() {
+    this.familyPersonService.getAllRequest()
       .subscribe((res) => {
-        res.map((person: Person) => {
-          this.persons.push({
-            id: person.id,
-            name: `${person.first_name} ${person.last_name}`,
+        res.map((familyPerson: FamilyPerson) => {
+          this.familyPersons.push({
+            id: familyPerson.person.id,
+            name: `${familyPerson.person.first_name} ${familyPerson.person.last_name}`,
           });
         });
       });
