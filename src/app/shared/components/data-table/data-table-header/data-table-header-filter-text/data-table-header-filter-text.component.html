@@ -1,0 +1,9 @@
+<app-data-table-header-title [title]="col.title" [isSort]="col.sort"
+                        (sortFilter)="changeSort($event)"></app-data-table-header-title>
+<span class="cancel-input" *ngIf="value" alt="cancel" (click)="cancelSearch()"><i
+  class="fas fa-times fa-xs"></i></span>
+<input class="form-control app-input-search h-75 py-1"
+       type="text"
+       [(ngModel)]="value"
+       (input)="sendData()"
+       [disabled]="!col.search">
