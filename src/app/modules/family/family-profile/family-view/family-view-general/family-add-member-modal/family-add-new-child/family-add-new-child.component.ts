@@ -1,12 +1,12 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Family} from "../../../../../../../models/family/family.model";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {Person} from "../../../../../../../models/person.model";
 import {PersonService} from "../../../../../../../services/person/person.service";
 import {Gender} from "../../../../../../../enums/gender";
 import {FamilyPersonService} from "../../../../../../../services/family/family-person.service";
 import {FamilyRoles} from "../../../../../../../enums/family-roles";
 import {NgbDateParserFormatter} from "@ng-bootstrap/ng-bootstrap";
+import {FamilyPerson} from "../../../../../../../models/family/family-person.model";
 
 @Component({
   selector: 'app-family-add-new-child',
@@ -30,7 +30,7 @@ export class FamilyAddNewChildComponent implements OnInit {
     return {day: this.date.getDate(), month: this.date.getMonth() + 1, year: this.date.getFullYear()};
   }
 
-  persons: any[] = [];
+  familyPersons: any[] = [];
   GENDER = Gender;
   FAMILY_ROLES = FamilyRoles;
 
@@ -42,7 +42,7 @@ export class FamilyAddNewChildComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getPersons();
+    this.getFamilyPersons();
   }
 
   initFamilyNewChildForm() {
@@ -82,13 +82,13 @@ export class FamilyAddNewChildComponent implements OnInit {
     this.familyChildForm = this.fb.group(controlsConfig);
   }
 
-  getPersons() {
-    this.personService.getPersons()
+  getFamilyPersons() {
+    this.familyPersonService.getAllRequest()
       .subscribe((res) => {
-        res.map((person: Person) => {
-          this.persons.push({
-            id: person.id,
-            name: `${person.first_name} ${person.last_name}`,
+        res.map((familyPerson: FamilyPerson) => {
+          this.familyPersons.push({
+            id: familyPerson.person.id,
+            name: `${familyPerson.person.first_name} ${familyPerson.person.last_name}`,
           });
         });
       });
