@@ -73,7 +73,7 @@ export class FamilyViewDocumentsComponent implements OnInit {
   }
 
   onSearchQuery(event) {
-    console.log(event);
+    // console.log(event);
   }
 
 }

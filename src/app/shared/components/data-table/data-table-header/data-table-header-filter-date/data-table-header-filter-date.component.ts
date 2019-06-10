@@ -8,37 +8,37 @@ import {NgbDateParserFormatter} from "@ng-bootstrap/ng-bootstrap";
   styleUrls: ['./data-table-header-filter-date.component.css']
 })
 export class DataTableHeaderFilterDateComponent implements OnInit {
-    @Input() col;
-    @Output() filterDataEmitter: EventEmitter<any> = new EventEmitter<any>();
+  @Input() col;
+  @Output() filterDataEmitter: EventEmitter<any> = new EventEmitter<any>();
 
-    public sortOrder = SORT_ORDER.DESC;
-    public value: {year: number, month: number, day: number};
+  public sortOrder = SORT_ORDER.DESC;
+  public value: { year: number, month: number, day: number };
 
-    constructor(private parserFormatter: NgbDateParserFormatter) {
-    }
+  constructor(private parserFormatter: NgbDateParserFormatter) {
+  }
 
-    ngOnInit() {
-    }
+  ngOnInit() {
+  }
 
-    changeSort (sortOrder: SORT_ORDER): void {
-        this.sortOrder = sortOrder;
-        this.emitData();
-    }
+  changeSort(sortOrder: SORT_ORDER): void {
+    this.sortOrder = sortOrder;
+    this.emitData();
+  }
 
-    cancelSearch (): void {
-        this.value = null;
-        this.emitData();
-    }
+  cancelSearch(): void {
+    this.value = null;
+    this.emitData();
+  }
 
-    sendData (): void {
-        this.emitData();
-    }
+  sendData(): void {
+    this.emitData();
+  }
 
-    emitData (): void {
-        this.filterDataEmitter.emit({
-            value: this.parserFormatter.format(this.value) || '',
-            order: this.sortOrder
-        });
-    }
+  emitData(): void {
+    this.filterDataEmitter.emit({
+      value: this.parserFormatter.format(this.value) || '',
+      order: this.sortOrder
+    });
+  }
 
 }
