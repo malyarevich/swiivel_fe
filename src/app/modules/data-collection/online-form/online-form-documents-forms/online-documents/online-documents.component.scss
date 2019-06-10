@@ -1,16 +1,27 @@
 @import "../../shared/styles/index.scss";
 
 .document_container {
-  align-items: center;
+  align-items: stretch;
   border-radius: 3px;
   background-color: #f6f6f6;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  flex-wrap: nowrap;
   justify-content: flex-start;
+  margin-bottom: 0.25rem;
+  margin-top: 0.25rem;
   padding: 1rem;
 
+  @include media-breakpoint-up(md) {
+    align-items: center;
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+
   &__icon_container {
+    display: flex;
     flex: initial;
+    justify-content: center;
   }
 
   &__pdf_icon {
@@ -18,6 +29,7 @@
   }
 
   &__file_information {
+    align-items: center;
     color: $element-base-color;
     cursor: pointer;
     display: flex;
@@ -25,6 +37,10 @@
     flex-direction: column;
     font-weight: bold;
     padding: 0 1rem;
+
+    @include media-breakpoint-up(md) {
+      align-items: flex-start;
+    }
   }
 
   &__load {

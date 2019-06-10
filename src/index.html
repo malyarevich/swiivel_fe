@@ -9,13 +9,13 @@
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <style type="text/css">
     .app_loading {
-      position: relative;
+      position: fixed;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      min-height: 90vh;
-      min-width: 90vw;
+      min-height: 100vh;
+      min-width: 100vw;
     }
     
     .app_loading__logo {
@@ -23,18 +23,14 @@
       font-size: 96px; /** font-size: 8rem;  root font size change during loading page */
       font-weight: 500;
       color: grey;
+      position: absolute;
+      margin: auto;
     }
     .app_loading__spinner {
       height: 200px;
       width: 200px;
       animation: rotate 2s linear infinite;
       transform-origin: center center;
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      margin: auto;
     }
     .app_loading__path {
       stroke-dasharray: 1, 200;
@@ -69,10 +65,9 @@
     <!-- loading layout replaced by app after startupp -->
     <div class="app_loading">
       <div class="app_loading__logo">i!</div>
-        <svg class="app_loading__spinner" viewBox="25 25 50 50">
-          <circle class="app_loading__path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
-        </svg>
-      </div>
+      <svg class="app_loading__spinner" viewBox="25 25 50 50">
+        <circle class="app_loading__path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
+      </svg>
     </div>
   </app-root>
 </body>

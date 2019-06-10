@@ -1,111 +1,21 @@
-<ng-container *ngFor="let pdf of form.forms">
+<ng-container *ngFor="let pdf of form.forms; let indexPdf = index">
   <!--Title-->
-  <div class="row no-gutters align-items-center pt-4">
-    <div class="col-12 text-center">
-      <p class="app-text-extra-bold mb-0">
-        {{ pdf.name | uppercase }}
-      </p>
-      <p class="app-text-second app-text-small mb-0">
-        <i class="far fa-clock fa-sm mr-1"></i>
-        ~15 minutes
-      </p>
-    </div>
-  </div>
+  <h2 class="content_section__article_title">
+    {{ pdf.name }}
+  </h2>
+
+  <!--SubTitle-->
+  <h3 class="content_section__article_sub_title">
+    <i class="far fa-clock fa-sm mr-1"></i>
+    ~15 minutes
+  </h3>
 
   <!--Text-->
-  <div class="row no-gutters pt-4">
-    <div class="col-2"></div>
-    <div
-      class="col-8 text-center"
-      [innerHTML]="pdf.accompanyingText.data"
-    ></div>
-    <div class="col-2"></div>
-  </div>
-
-  <!-- <div class="dotted-wrap mt-3 d-flex justify-content-center">
-    <div class="slice-wrap m-3">
-      <div
-        [hidden]="loading"
-        class="test-c d-flex justify-content-center overlay pt-5"
-      >
-        <div class="spinner-border text-light" role="status">
-          <span class="sr-only">Loading...</span>
-        </div>
-      </div>
-
-      <div [hidden]="!loading" class="test-c">
-        <div *ngFor="let div of pdf.form.fieldsPdf[page - 1]">
-          <div [ngStyle]="styleObject(div)" class="div-inside">
-            <div
-              *ngIf="div.type === 'system'"
-              class="form-group app-input-container"
-              [ngClass]="{
-                'app-input-fill':
-                  div.linkedField.value && !div.linkedField.options.hideLabel
-              }"
-            >
-              <label
-                *ngIf="!div.linkedField.options.hideLabel"
-                class="app-input-label"
-                >{{ div.linkedField.name | titlecase }}</label
-              >
-              <input
-                type="text"
-                aria-describedby="basic-addon2"
-                class="app-input "
-                [(ngModel)]="div.linkedField.value"
-                [readOnly]="div.linkedField.options.readonly"
-                [required]="div.linkedField.options.required"
-                [placeholder]="div.linkedField.name | titlecase"
-              />
-            </div>
-            <div
-              *ngIf="div.type === 'temporary'"
-              class="form-group app-input-container"
-              [ngClass]="{ 'app-input-fill': div.linkedField.value }"
-            >
-              <label class="app-input-label">{{
-                div.linkedField.name | titlecase
-              }}</label>
-              <input
-                type="text"
-                aria-describedby="basic-addon2"
-                class="app-input "
-                [(ngModel)]="div.linkedField.value"
-                [placeholder]="div.linkedField.name | titlecase"
-              />
-            </div>
-            <div *ngIf="div.type === 'signature'" class="form-group">
-              <span>Sign Here</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div>
-        <pdf-viewer
-          [original-size]="false"
-          [src]="{ url: pdf.form.link + token }"
-          [render-text-mode]="0"
-          [autoresize]="true"
-          [show-all]="false"
-          [page]="page"
-          style="display: block;"
-          (on-progress)="onProgress($event)"
-        >
-        </pdf-viewer>
-      </div>
-    </div>
-  </div> -->
-
   <div
-    *ngIf="pdf.form.numberOfPages > 1"
-    class="d-flex justify-content-center pt-4"
-  >
-    <ngb-pagination
-      [collectionSize]="pdf.form.numberOfPages * 10"
-      [(page)]="page"
-      aria-label="Default pagination"
-    ></ngb-pagination>
-  </div>
+    class="content_section__article_text content_section__article_text--center text_center_max_w"
+    [innerHTML]="pdf.accompanyingText.data"
+  ></div>
+
+  <!-- PDF Loader -->
+  <app-pdf-loader [pdf]="pdf"></app-pdf-loader>
 </ng-container>

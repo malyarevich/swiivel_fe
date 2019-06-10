@@ -43,8 +43,8 @@
     font-family: NunitoSans-Regular;
     font-size: 0.85rem;
     text-align: center;
-    margin-bottom: 0;
-    margin-top: 0;
+    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
   }
 
   &__article {
@@ -64,6 +64,12 @@
 
   &__article_text {
     text-align: justify;
+    margin-bottom: 0.5rem; 
+    margin-top: 0.5rem; 
+
+    &--center {
+      text-align: center;
+    }
   }
 
   &__additional_fields {
@@ -145,4 +151,16 @@
       cursor: pointer;
     }
   }
+}
+
+.spinner_box {
+  align-items: stretch;
+  display: flex;
+  position: absolute;
+  // min-height: 90vh;
+  // min-width: 90vw; 
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
 }

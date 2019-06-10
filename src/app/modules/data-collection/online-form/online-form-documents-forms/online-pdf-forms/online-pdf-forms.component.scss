@@ -1,0 +1,12 @@
+@import '../../shared/styles/index.scss';
+
+.pdf_container {
+  display: flex;
+  justify-content: center;
+  padding-top: 2rem;
+}
+
+.text_center_max_w {
+  margin: 0 auto;
+  max-width: 54rem;
+}

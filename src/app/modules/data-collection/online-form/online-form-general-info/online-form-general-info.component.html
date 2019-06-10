@@ -1,23 +1,25 @@
-<p class="text-center app-text-extra-large app-text-extra-bold">
+<h1 class="content_section__page_title">
   General Information
-</p>
+</h1>
 
-<div class="app-of-wrap">
+<!-- Content Nav -->
+<div class="content_section__nav">
+  <app-content-nav
+    [content]="navContent"
+    (activeEmitter)="onActive($event)"
+  ></app-content-nav>
+</div>
 
-  <div class="row no-gutters align-items-center">
-    <div class="col-12 app-of-nav-wrap">
-      <app-general-info-nav (activeSectionEmitter)="onActiveSection($event)"></app-general-info-nav>
-    </div>
+<!-- Content -->
+<div class="app-of-wrap content_section__main">
+  <div>
+    <app-general-info-parents
+      *ngIf="activeId === 'parents'"
+      [form]="form"
+    ></app-general-info-parents>
+    <app-general-info-students
+      *ngIf="activeId === 'students'"
+      [form]="form"
+    ></app-general-info-students>
   </div>
-
-  <div class="row no-gutters p-4">
-    <div class="col-12">
-      <app-general-info-students *ngIf="activeSection === generalSectionsNames.studentsInfo">
-      </app-general-info-students>
-      <!-- <app-general-info-parents 
-        *ngIf="activeSection === generalSectionsNames.parentsInfo"
-        [form]="form">
-      </app-general-info-parents> -->
-  </div>
-
 </div>

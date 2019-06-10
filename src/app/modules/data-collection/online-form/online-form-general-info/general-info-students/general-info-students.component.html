@@ -1,54 +1,87 @@
-<div class="row align-items-center pb-4">
-  <div class="col-4"></div>
-  <div class="col-4 text-center">
-    <p class="app-text-extra-bold mb-0">
-      {{'Student(s) Information' | uppercase}}
-    </p>
-    <p class="app-text-second app-text-small mb-0">
-      <i class="far fa-clock fa-sm mr-1"></i>
-      ~15 minutes
-    </p>
-  </div>
-  <div class="col-4 text-right">
-    <button class="btn app-btn-outline-primary">Add Student</button>
-  </div>
-</div>
+<!--Title-->
+<h2 class="content_section__article_title">
+  Student(s) Information
+</h2>
+
+<!--SubTitle-->
+<h3 class="content_section__article_sub_title">
+  <i class="far fa-clock fa-sm mr-1"></i>
+  ~15 minutes
+</h3>
 
 <div class="app-of-general-info-section px-3 py-4">
+  <ng-container *ngFor="let familyMember of form.fields">
+    <ng-container *ngIf="familyMember.prefix === 'student'">
+      <!--Title-->
+      <p
+        class="content_section__article_title content_section__article_title--left"
+      >
+        Name: {{ familyMember.name }}
+      </p>
+
+      <!--General Fields-->
+      <div class="row no-gutters">
+        <ng-container *ngFor="let item of familyMember.fields">
+          <div
+            *ngIf="item.type !== 113"
+            class="col-{{ item.options.size }} p-2"
+          >
+            <app-online-form-fields [field]="item"></app-online-form-fields>
+          </div>
+
+          <div class="row no-gutters col-12" *ngIf="item.type === 113">
+            <div class="col-12">
+              <p class="px-2 py-2 app-text-small app-text-extra-bold">
+                {{ item.name | uppercase }}
+              </p>
+            </div>
+            <ng-container *ngFor="let groupField of item.fields">
+              <div class="col-{{ groupField.options.size }} px-2">
+                <app-online-form-fields
+                  [field]="groupField"
+                ></app-online-form-fields>
+              </div>
+            </ng-container>
+          </div>
+        </ng-container>
+      </div>
+    </ng-container>
+  </ng-container>
 
   <!--General Fields-->
   <div class="row no-gutters">
-
     <div class="col-3 px-2">
       <div class="form-group app-input-container app-input-fill">
         <label for="firstName" class="app-input-label">First Name</label>
-        <input type="text"
-               class="app-input form-control"
-               id="firstName"
-               placeholder="First Name"
-               value="Charlotte">
+        <input
+          type="text"
+          class="app-input form-control"
+          id="firstName"
+          placeholder="First Name"
+          value="Charlotte"
+        />
       </div>
     </div>
 
     <div class="col-3 px-2">
       <div class="form-group app-input-container app-input-fill">
         <label for="lastName" class="app-input-label">Last Name</label>
-        <input type="text"
-               class="app-input form-control"
-               id="lastName"
-               placeholder="Last Name"
-               value="Jennings">
+        <input
+          type="text"
+          class="app-input form-control"
+          id="lastName"
+          placeholder="Last Name"
+          value="Jennings"
+        />
       </div>
     </div>
 
     <div class="col-3 px-2">
       <div class="form-group app-input-container app-input-fill">
         <label class="app-input-label" for="grade">Grade</label>
-        <select class="app-input"
-                id="grade">
-          <option [value]="'Grade 1'"
-                  [selected]="true">
-            {{'Grade 1'}}
+        <select class="app-input" id="grade">
+          <option [value]="'Grade 1'" [selected]="true">
+            {{ "Grade 1" }}
           </option>
         </select>
       </div>
@@ -59,11 +92,13 @@
         <div class="col-8">
           <div class="form-group app-input-container app-input-fill mb-0">
             <label for="photo" class="app-input-label">Photo (optional)</label>
-            <input type="text"
-                   class="app-input form-control"
-                   id="photo"
-                   placeholder="Photo (optional)"
-                   value="Photo123871.jpg">
+            <input
+              type="text"
+              class="app-input form-control"
+              id="photo"
+              placeholder="Photo (optional)"
+              value="Photo123871.jpg"
+            />
           </div>
         </div>
         <div class="col-4 d-flex align-items-center">
@@ -71,27 +106,26 @@
           <i class="fas fa-trash ml-2 app-text-second"></i>
         </div>
       </div>
-
     </div>
-
   </div>
   <!--End General Fields-->
 
   <!--MEDICAL INFO-->
-  <p class="px-2 py-2 app-text-small app-text-extra-bold">MEDICAL INFORMATION</p>
+  <p class="px-2 py-2 app-text-small app-text-extra-bold">
+    MEDICAL INFORMATION
+  </p>
 
   <!--END MEDICAL INFO-->
 
   <!--DOCTORS’S INFO-->
-  <p class="px-2 py-2 app-text-small app-text-extra-bold">DOCTORS’S INFORMATION</p>
+  <p class="px-2 py-2 app-text-small app-text-extra-bold">
+    DOCTORS’S INFORMATION
+  </p>
 
   <!--End DOCTORS’S INFO-->
-
 
   <!--DOCTOR’S ADDRESS-->
   <p class="px-2 py-2 app-text-small app-text-extra-bold">DOCTOR’S ADDRESS</p>
 
   <!--END DOCTOR’S ADDRESS-->
-
-
 </div>

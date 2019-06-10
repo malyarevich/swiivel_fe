@@ -9,8 +9,18 @@ import { Form } from "../../../vertical-data-collection/model/form.model";
 })
 export class OnlineFormGeneralInfoComponent implements OnInit {
   @Input() form: Form;
+  navContent: object = [
+    {
+      id: "parents",
+      title: "Parents information"
+    },
+    {
+      id: "students",
+      title: "Students information"
+    }
+  ];
 
-  activeSection: string;
+  activeId: string = "parents";
 
   readonly generalSectionsNames = generalSectionsNames;
 
@@ -18,7 +28,7 @@ export class OnlineFormGeneralInfoComponent implements OnInit {
 
   ngOnInit() {}
 
-  onActiveSection(sectionName) {
-    this.activeSection = sectionName;
+  onActive(id: string) {
+    this.activeId = id;
   }
 }

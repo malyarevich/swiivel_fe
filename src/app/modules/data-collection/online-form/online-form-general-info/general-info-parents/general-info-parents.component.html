@@ -1,40 +1,52 @@
-<div class="row align-items-center pb-4">
-  <div class="col-4"></div>
-  <div class="col-4 text-center">
-    <p class="app-text-extra-bold mb-0">
-      {{'Parents Information' | uppercase}}
-    </p>
-    <p class="app-text-second app-text-small mb-0">
-      <i class="far fa-clock fa-sm mr-1"></i>
-      ~15 minutes
-    </p>
-  </div>
-  <div class="col-4 text-right">
-    <button class="btn app-btn-outline-primary">Add Parent</button>
-  </div>
-</div>
+<!--Title-->
+<h2 class="content_section__article_title">
+  Parents Information
+</h2>
 
-<div class="app-of-general-info-section px-3 py-4">
+<!--SubTitle-->
+<h3 class="content_section__article_sub_title">
+  <i class="far fa-clock fa-sm mr-1"></i>
+  ~15 minutes
+</h3>
 
-  <!--General Fields-->
-  <div *ngIf="form" class="row no-gutters">
-    <ng-container *ngFor="let item of form.fields">
+<ng-container *ngIf="form">
+  <div class="app-of-general-info-section px-3 py-4">
+    <ng-container *ngFor="let familyMember of form.fields">
+      <ng-container *ngIf="familyMember.prefix !== 'student'">
+        <!--Title-->
+        <p
+          class="content_section__article_title content_section__article_title--left"
+        >
+          {{ familyMember.name }}
+        </p>
 
-      <div *ngIf="item.type !== 113" class="col-{{item.options.size}} p-2">
-        <app-online-form-fields [field]="item"></app-online-form-fields>
-      </div>
+        <!--General Fields-->
+        <div class="row no-gutters">
+          <ng-container *ngFor="let item of familyMember.fields">
+            <div
+              *ngIf="item.type !== 113"
+              class="col-{{ item.options.size }} p-2"
+            >
+              <app-online-form-fields [field]="item"></app-online-form-fields>
+            </div>
 
-      <div class="row no-gutters col-12" *ngIf="item.type === 113">
-        <div class="col-12">
-          <p class="px-2 py-2 app-text-small app-text-extra-bold">{{item.name | uppercase}}</p>
+            <div class="row no-gutters col-12" *ngIf="item.type === 113">
+              <div class="col-12">
+                <p class="px-2 py-2 app-text-small app-text-extra-bold">
+                  {{ item.name | uppercase }}
+                </p>
+              </div>
+              <ng-container *ngFor="let groupField of item.fields">
+                <div class="col-{{ groupField.options.size }} px-2">
+                  <app-online-form-fields
+                    [field]="groupField"
+                  ></app-online-form-fields>
+                </div>
+              </ng-container>
+            </div>
+          </ng-container>
         </div>
-        <ng-container *ngFor="let groupField of item.fields">
-          <div class="col-{{groupField.options.size}} px-2">
-            <app-online-form-fields [field]="groupField"></app-online-form-fields>
-          </div>
-        </ng-container>
-      </div>
-
+      </ng-container>
     </ng-container>
   </div>
-</div>
+</ng-container>

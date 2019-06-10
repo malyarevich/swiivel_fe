@@ -28,6 +28,7 @@ export class OnlineFormFieldsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    // console.log(this.field);
     this.createComponent();
   }
 

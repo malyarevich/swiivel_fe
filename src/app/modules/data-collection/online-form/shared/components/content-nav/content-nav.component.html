@@ -1,8 +1,10 @@
 <div class="w-100 app-of-nav-wrap">
-  <nav class="navbar navbar-expand-lg py-0">
+  <nav class="navbar navbar-expand py-0">
     <div class="justify-content-left">
       <ul class="navbar-nav">
-        <ng-container *ngFor="let item of content; let i = index">
+        <ng-container
+          *ngFor="let item of content; let i = index; let lastIndex = last"
+        >
           <li
             class="nav-item py-2 px-1"
             [ngClass]="{
@@ -16,11 +18,13 @@
               {{ item.title }}
             </a>
           </li>
-          <li [hidden]="i === content.length - 1" class="nav-item py-2 px-1">
-            <a class="nav-link">
-              <i class="fas fa-chevron-right fa-sm app-text-second"></i>
-            </a>
-          </li>
+          <ng-container *ngIf="!lastIndex">
+            <li class="nav-item py-2 px-1">
+              <a class="nav-link">
+                <i class="fas fa-chevron-right fa-sm app-text-second"></i>
+              </a>
+            </li>
+          </ng-container>
         </ng-container>
       </ul>
     </div>

@@ -21,6 +21,7 @@ import { BadgeDropdownComponent } from './badge-dropdown/badge-dropdown.componen
 import { ModalComponent } from './modal/modal.component';
 import { PersonShowComponent } from './person-show/person-show.component';
 import { SpinnerComponent } from './spinner/spinner.component';
+import { MainSpinnerComponent } from './main-spinner/main-spinner.component';
 import { TagComponent } from './tag/tag.component';
 import { ToggleCheckboxFieldComponent } from './fields/toggle-checkbox-field/toggle-checkbox-field.component';
 
@@ -41,6 +42,7 @@ import { ToggleCheckboxFieldComponent } from './fields/toggle-checkbox-field/tog
     ModalComponent,
     PersonShowComponent,
     SpinnerComponent,
+    MainSpinnerComponent,
     TagComponent,
     ToggleCheckboxFieldComponent,
   ],
@@ -71,6 +73,7 @@ import { ToggleCheckboxFieldComponent } from './fields/toggle-checkbox-field/tog
     ModalComponent,
     PersonShowComponent,
     SpinnerComponent,
+    MainSpinnerComponent,
     TagComponent,
   ],
 })
