@@ -30,9 +30,6 @@ export class VSideBarGroupComponent implements OnInit, OnDestroy {
 
   onChangeFieldInGroup( field, group, section?){
 
-    console.log(field, 'field');
-    console.log(group, 'group');
-    console.log(section, 'sections');
     let  groupNew = cloneDeep(group);
     let sectionNew = cloneDeep(section);
     let sec = this.form.fields.filter(f => f.name == section.name);
