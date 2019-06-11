@@ -71,7 +71,10 @@
          [model]="section.fields"
          (drop)="dropAdd($event)"
       direction="vertical">
-    <li *ngIf="section.fields.length==0" class="list-group-item mb-3 py-0 "></li>
+    <li *ngIf="section.fields.length==0" class="list-group-item empty-section mb-3 py-0 ">
+      <div class="text-center">        <span class="empty-section-text">Drag and Drop Fields Onto the Section</span>
+      </div>
+    </li>
 
     <li
       class="list-group-item mb-3 p-0 ngx-dnd-item"

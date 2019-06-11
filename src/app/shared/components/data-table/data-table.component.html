@@ -1,0 +1,6 @@
+<table class="table" [ngClass]="tableType">
+  <thead app-data-table-header [cols]="cols" (searchQueryEmitter)="onSetSearch($event)"></thead>
+  <ng-content>
+
+  </ng-content>
+</table>

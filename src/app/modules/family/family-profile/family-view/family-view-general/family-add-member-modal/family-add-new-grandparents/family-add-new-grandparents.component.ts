@@ -18,7 +18,7 @@ export class FamilyAddNewGrandparentsComponent implements OnInit {
 
   familyRoles = FamilyRoles;
   gender = Gender;
-  familyParentForm: FormGroup;
+  familyGrandParentForm: FormGroup;
 
   constructor(private familyPersonService: FamilyPersonService,
               private personService: PersonService,
@@ -30,7 +30,7 @@ export class FamilyAddNewGrandparentsComponent implements OnInit {
   }
 
   initFamilyNewPersonForm() {
-    this.familyParentForm = this.fb.group({
+    this.familyGrandParentForm = this.fb.group({
       first_name: [null, Validators.required],
       middle_name: [null],
       last_name: [null],
@@ -45,9 +45,9 @@ export class FamilyAddNewGrandparentsComponent implements OnInit {
   }
 
   addFamilyParent() {
-    if (this.familyParentForm.invalid) return;
+    if (this.familyGrandParentForm.invalid) return;
     let data = {
-      ...this.familyParentForm.value,
+      ...this.familyGrandParentForm.value,
       gender: this.getGenderByRole(this.role),
     };
     this.personService.addPerson(data).subscribe((res) => {

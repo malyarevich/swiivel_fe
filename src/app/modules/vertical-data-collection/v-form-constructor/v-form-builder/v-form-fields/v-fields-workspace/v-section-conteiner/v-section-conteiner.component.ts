@@ -28,6 +28,7 @@ export class VSectionConteinerComponent implements OnInit {
   dropAdd(event){
     if(!event.value._id) {
       //replace dragged item -> added in right way field
+
       this.section.fields =  this.sideBarService.replaceExistinField(this.section.fields[event.dropIndex],this.section.fields );
       this.sideBarService.fieldCheck(this.section.fields[event.dropIndex], this.sideBar[0]);
     }

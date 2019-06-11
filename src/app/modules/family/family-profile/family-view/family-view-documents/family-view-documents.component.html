@@ -1,0 +1,41 @@
+<app-family-view-documents-nav [familyName]="familyName"></app-family-view-documents-nav>
+<div class="mt-4">
+  <app-data-table [cols]="cols" tableType='table-striped'
+                  (searchQueryEmitter)="onSearchQuery($event)">
+    <tbody>
+    <tr>
+      <td nowrap>Untitled Document</td>
+      <td nowrap>Registration Form</td>
+      <td>PDF</td>
+      <td>05-07-2019</td>
+      <td>Sara Fishman</td>
+      <td class="text-right">
+        <i class="fas fa-download app-text-second app-cursor-pointer mr-4"></i>
+        <i class="fas fa-pen app-text-second app-cursor-pointer mr-5"></i>
+      </td>
+    </tr>
+    <tr>
+      <td nowrap>Fishman Docs</td>
+      <td nowrap>Birth Certificate</td>
+      <td>PNG</td>
+      <td>12-06-2019</td>
+      <td>Sara Fishman</td>
+      <td class="text-right">
+        <i class="fas fa-download app-text-second app-cursor-pointer mr-4"></i>
+        <i class="fas fa-pen app-text-second app-cursor-pointer mr-5"></i>
+      </td>
+    </tr>
+    <tr>
+      <td nowrap>Final Doc</td>
+      <td nowrap>Immunization Records</td>
+      <td>Excel</td>
+      <td>05-29-2019</td>
+      <td>Sara Fishman</td>
+      <td class="text-right">
+        <i class="fas fa-download app-text-second app-cursor-pointer mr-4"></i>
+        <i class="fas fa-pen app-text-second app-cursor-pointer mr-5"></i>
+      </td>
+    </tr>
+    </tbody>
+  </app-data-table>
+</div>

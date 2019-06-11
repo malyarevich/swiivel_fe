@@ -24,6 +24,12 @@ import { SpinnerComponent } from './spinner/spinner.component';
 import { MainSpinnerComponent } from './main-spinner/main-spinner.component';
 import { TagComponent } from './tag/tag.component';
 import { ToggleCheckboxFieldComponent } from './fields/toggle-checkbox-field/toggle-checkbox-field.component';
+import { DataTableComponent } from './data-table/data-table.component';
+import {DataTableHeaderComponent} from "./data-table/data-table-header/data-table-header.component";
+import {DataTableHeaderTitleComponent} from "./data-table/data-table-header/data-table-header-title/data-table-header-title.component";
+import {DataTableHeaderFilterTextComponent} from "./data-table/data-table-header/data-table-header-filter-text/data-table-header-filter-text.component";
+import {DataTableHeaderFilterDateComponent} from "./data-table/data-table-header/data-table-header-filter-date/data-table-header-filter-date.component";
+import {NgbDatepicker, NgbDatepickerModule} from "@ng-bootstrap/ng-bootstrap";
 
 @NgModule({
   declarations: [
@@ -45,18 +51,25 @@ import { ToggleCheckboxFieldComponent } from './fields/toggle-checkbox-field/tog
     MainSpinnerComponent,
     TagComponent,
     ToggleCheckboxFieldComponent,
+    DataTableComponent,
+    DataTableHeaderComponent,
+    DataTableHeaderTitleComponent,
+    DataTableHeaderFilterTextComponent,
+    DataTableHeaderFilterDateComponent,
   ],
   imports: [
     CommonModule,
     FormsModule,
     NgSelectModule,
     ReactiveFormsModule,
+    NgbDatepickerModule,
   ],
   exports: [
     CommonModule,
     FormsModule,
     NgSelectModule,
     ReactiveFormsModule,
+    NgbDatepickerModule,
     // buttons
     SearchFilterBtnComponent,
     // fields
@@ -75,6 +88,7 @@ import { ToggleCheckboxFieldComponent } from './fields/toggle-checkbox-field/tog
     SpinnerComponent,
     MainSpinnerComponent,
     TagComponent,
+    DataTableComponent
   ],
 })
 

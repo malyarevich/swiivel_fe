@@ -16,7 +16,7 @@
         </div>
       </div>
 
-      <div class="row no-gutters mt-3 px-1" *ngIf="persons.length">
+      <div class="row no-gutters mt-3 px-1" *ngIf="familyPersons.length">
         <div class="col-12">
           <app-select-multi-search-field
             bindValue="id"
@@ -24,7 +24,7 @@
             [formControlName]="'parents'"
             labelTitle="Parents"
             [isInvalid]="familyChildForm.get('parents').invalid && familyChildForm.get('parents').touched"
-            [items]="persons"
+            [items]="familyPersons"
           >
           </app-select-multi-search-field>
         </div>
@@ -32,11 +32,14 @@
 
       <div class="row no-gutters mt-3">
         <div class="col-4 px-1">
-          <app-input-field [formControlName]="'first_name'" id='first_name' label="First Name"></app-input-field>
-          <div class="field-has-error"
+          <app-input-field [formControlName]="'first_name'"
+                           id='first_name'
+                           label="First Name"
+                           [isInvalid]="familyChildForm.get('first_name').invalid && familyChildForm.get('first_name').touched">
+          </app-input-field>
+          <div class="field-has-error app-position-relative"
                *ngIf="familyChildForm.get('first_name').invalid && familyChildForm.get('first_name').touched && familyChildForm.get('first_name')['errors']['required']"
-          >
-            First Name is required
+          >First Name is required
           </div>
         </div>
         <div class="col-4 px-1">

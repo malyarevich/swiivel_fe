@@ -1,0 +1,13 @@
+.cancel-input {
+    float: right;
+}
+
+.filter-text-container {
+    position: relative;
+}
+
+.filter-text-search-icon {
+    position: absolute;
+    right: 10%;
+    top: 30%;
+}
