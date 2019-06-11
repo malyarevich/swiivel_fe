@@ -1,13 +1,55 @@
-<div class="app-section-settings-section">
+<div class="app-section-settings-section p-3">
   <div class="row">
   <div class="col-4">
-     <div class="mt-4 mb-1 ">
+     <div class="mb-1 ">
        <span class="app-text-extra-bold">Section Setting</span>
      </div>
     <div class="settings-div">
       <div class="p-3">
         <app-input-field [label]="settingsLabel"></app-input-field>
-        <app-toggle-checkbox-field [label]="settingsLabel"></app-toggle-checkbox-field>
+        <div class="row align-items-center pl-3">
+          <div class="pt-1"><app-toggle-checkbox-field></app-toggle-checkbox-field></div>
+          <div><span class="pl-3 bold-text">Support Text</span></div>
+        </div>
+        <app-input-field></app-input-field>
+        <div class="row align-items-center mt-3">
+          <div class="col">
+            <label class="app-radio-container" >Directly Displayed
+              <input type="radio"  name="dirPop" >
+              <span class="app-radio-checkmark"></span>
+            </label>
+          </div>
+          <div class="col">
+            <label class="app-radio-container" >Pop-up
+              <input type="radio"  name="dirPop" >
+              <span class="app-radio-checkmark"></span>
+            </label>
+          </div>
+        </div>
+      <div>
+        <span class="visibility ">VISIBILITY</span>
+        <i class="fas fa-question-circle app-text-second fa-xs pl-1"></i>
+      </div>
+        <div class="btn-group btn-group-toggle w-100"
+             ngbRadioGroup
+             name="isHidden"
+        >
+          <label ngbButtonLabel class="btn app-btn-signature">
+            <input ngbButton type="radio" [value]="true"> Upload
+          </label>
+          <label ngbButtonLabel class="btn app-btn-signature">
+            <input ngbButton type="radio" [value]="false"> Download
+          </label>
+        </div>
+        <div class="row align-items-center mt-2 pl-3">
+          <label class="app-checkbox-container pb-2">
+            <input
+              type="checkbox" >
+            <span class="app-checkbox-checkmark"></span>
+          </label>
+          <span class="bold-text">Make Expand Button Visible</span>
+          <i class="fas fa-question-circle app-text-second fa-xs pl-1"></i>
+        </div>
       </div>
     </div>
   </div>
@@ -15,8 +57,16 @@
 
 
   <div class="col-8">
-    <div class="mt-4 mb-1">
+    <div class="mb-1">
       <span class="app-text-extra-bold">Section Conditional Logic</span>
+    </div>
+    <div class="settings-div row">
+      <div class="col border-right">
+        <div></div>
+      </div>
+      <div class="col">
+        <button class=" btn app-btn-primary form-control mt-2">Add Logic Builder</button>
+      </div>
     </div>
   </div>
 
