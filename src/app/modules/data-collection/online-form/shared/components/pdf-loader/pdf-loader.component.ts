@@ -11,7 +11,7 @@ import {FormsDivModel} from "../../../../../vertical-data-collection/v-form-cons
   styleUrls: ['./pdf-loader.component.scss']
 })
 export class PdfLoaderComponent implements OnInit {
-  @Input() pdf: any[];
+  @Input() pdf: any;
   // @Output() changeSomeEmitter = new EventEmitter<any>();
 
   // token = `?api_token=${environment.api_token}`;
