@@ -1,21 +1,18 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Form} from "../../../../../vertical-data-collection/model/form.model";
-import {environment} from "../../../../../../../environments/environment";
-import {PDFProgressData} from "pdfjs-dist";
-import {FormsDivModel} from "../../../../../vertical-data-collection/v-form-constructor/v-form-builder/v-documents-forms/model/formsPDF.model";
-
+import { Component, Input, OnInit } from "@angular/core";
+import { PDFProgressData } from "pdfjs-dist";
+import { FormsDivModel } from "../../../../../vertical-data-collection/v-form-constructor/v-form-builder/v-documents-forms/model/formsPDF.model";
 
 @Component({
-  selector: 'app-pdf-loader',
-  templateUrl: './pdf-loader.component.html',
-  styleUrls: ['./pdf-loader.component.scss']
+  selector: "app-pdf-loader",
+  templateUrl: "./pdf-loader.component.html",
+  styleUrls: ["./pdf-loader.component.scss"]
 })
 export class PdfLoaderComponent implements OnInit {
   @Input() pdf: any;
   // @Output() changeSomeEmitter = new EventEmitter<any>();
 
   // token = `?api_token=${environment.api_token}`;
-  token = '';
+  token = "";
   page = 1;
   isStartLoading: boolean = false;
   isFinishLoading: boolean = false;
@@ -24,10 +21,8 @@ export class PdfLoaderComponent implements OnInit {
   defaultWidthPdf: number = 816;
   heightPdf: number = 934;
   widthPdf: number = 660;
-  
 
-  constructor() {
-  }
+  constructor() {}
 
   ngOnInit() {
     // console.log(this.pdf);
@@ -40,7 +35,7 @@ export class PdfLoaderComponent implements OnInit {
   onProgress(progressData: PDFProgressData) {
     // do anything with progress data. For example progress indicator
     this.isStartLoading = true;
-    this.isFinishLoading = progressData.loaded<=progressData.total;
+    this.isFinishLoading = progressData.loaded <= progressData.total;
   }
 
   getKY(): number {
@@ -51,13 +46,13 @@ export class PdfLoaderComponent implements OnInit {
     return this.widthPdf / this.defaultWidthPdf;
   }
 
-  styleObject(div:FormsDivModel){
+  styleObject(div: FormsDivModel) {
     return {
-      'top': div.top * this.getKY() / 12 + 'em',
-      'left': div.left * this.getKX() / 12 + 'em',
-      'width': div.width * this.getKX() / 12 + 'em',
-      'height': div.height * this.getKY() / 12 + 'em'
-    }
+      top: (div.top * this.getKY()) / 12 + "em",
+      left: (div.left * this.getKX()) / 12 + "em",
+      width: (div.width * this.getKX()) / 12 + "em",
+      height: (div.height * this.getKY()) / 12 + "em"
+    };
   }
   // FIXME: need condition for parse LinkedField
   // form.forms.form.fieldsPdf[index].LinkedField = undefined;
@@ -69,7 +64,7 @@ export class PdfLoaderComponent implements OnInit {
     //   console.log(div.type === 'system');
     //   console.log(div.LinkedField);
     // }
-    return div.type === 'system' && div.LinkedField;
+    return div.type === "system" && div.LinkedField;
   }
 
   isShowLinkedFieldForTemporary(div: any) {
@@ -80,7 +75,7 @@ export class PdfLoaderComponent implements OnInit {
     //   console.log(div.type === 'temporary');
     //   console.log(div.LinkedField);
     // }
-    return div.type === 'temporary' && div.LinkedField;
+    return div.type === "temporary" && div.LinkedField;
   }
 
   isShowLinkedFieldForSignature(div: any) {
@@ -91,6 +86,6 @@ export class PdfLoaderComponent implements OnInit {
     //   console.log(div.type === 'signature');
     //   console.log(div.LinkedField);
     // }
-    return div.type === 'signature';
+    return div.type === "signature";
   }
 }
