@@ -30,4 +30,5 @@ export interface Person {
   updated_at: string,
   deceased: number,
   dod: string,
+  avatar: string,
 }

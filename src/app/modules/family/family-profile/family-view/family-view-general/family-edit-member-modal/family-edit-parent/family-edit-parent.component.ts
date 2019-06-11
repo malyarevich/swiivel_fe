@@ -1,10 +1,11 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FamilyPerson} from "../../../../../../../models/family/family-person.model";
 import {FamilyRoles} from "../../../../../../../enums/family-roles";
 import {Gender} from "../../../../../../../enums/gender";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {FamilyPersonService} from "../../../../../../../services/family/family-person.service";
 import {NgbDateParserFormatter} from "@ng-bootstrap/ng-bootstrap";
+import {environment} from "../../../../../../../../environments/environment";
 
 @Component({
   selector: 'app-family-edit-parent',
@@ -18,6 +19,8 @@ export class FamilyEditParentComponent implements OnInit {
   familyRoles = FamilyRoles;
   gender = Gender;
 
+  avatar: string | ArrayBuffer;
+
   date = new Date();
 
   get minDate() {
@@ -26,6 +29,10 @@ export class FamilyEditParentComponent implements OnInit {
 
   get maxDate() {
     return {day: this.date.getDate(), month: this.date.getMonth() + 1, year: this.date.getFullYear()};
+  }
+
+  get getAvatarUrl() {
+    return environment.avatarUrl + this.familyPerson.person.avatar;
   }
 
   familyParentForm: FormGroup;
@@ -65,6 +72,7 @@ export class FamilyEditParentComponent implements OnInit {
         dob: this.parserFormatter.format(this.familyParentForm.value.dob) || null,
         deceased: this.familyParentForm.value.deceased ? 1 : 0,
         dod: this.parserFormatter.format(this.familyParentForm.value.dod) || null,
+        avatar: this.avatar || null,
       },
     };
     this.familyPersonService.update(data, this.familyPerson.id);
@@ -73,5 +81,9 @@ export class FamilyEditParentComponent implements OnInit {
 
   onCloseEditFamilyMemberModal() {
     this.closeModalEditFamilyMember.emit(true);
+  }
+
+  onChangeAvatar($event) {
+    this.avatar = $event;
   }
 }

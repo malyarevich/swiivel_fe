@@ -1,0 +1,23 @@
+.app-person-avatar-container {
+  display: inline-flex;
+  width: 100%;
+  justify-content: center;
+  padding: 6px;
+  margin: 0;
+
+  .app-person-avatar-show {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 150px;
+    min-height: 150px;
+    border-radius: 50%;
+    position: relative;
+    overflow: hidden;
+    background: no-repeat center center #9c9d9d;
+    background-size: cover;
+  }
+  .app-person-avatar-btn {
+
+  }
+}

@@ -1,0 +1,10 @@
+<div class="app-person-avatar-container">
+  <div class="app-person-avatar-show" (mouseover)="hover=true" (mouseleave)="hover=false"
+       [ngStyle]="{'background-image': avatarBase64 ? 'url(' + avatarBase64 + ')' : 'url(' + avatar + ')'}">
+    <input type="file" hidden #inputFile (change)="onFileChange($event)" />
+    <button class="btn app-btn-warning app-person-avatar-btn" *ngIf="hover"
+            (click)="inputFile.click(); $event.preventDefault()">
+      Upload
+    </button>
+  </div>
+</div>

@@ -30,6 +30,7 @@ import {DataTableHeaderTitleComponent} from "./data-table/data-table-header/data
 import {DataTableHeaderFilterTextComponent} from "./data-table/data-table-header/data-table-header-filter-text/data-table-header-filter-text.component";
 import {DataTableHeaderFilterDateComponent} from "./data-table/data-table-header/data-table-header-filter-date/data-table-header-filter-date.component";
 import {NgbDatepicker, NgbDatepickerModule} from "@ng-bootstrap/ng-bootstrap";
+import { PersonAvatarChangeComponent } from './person-avatar-change/person-avatar-change.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import {NgbDatepicker, NgbDatepickerModule} from "@ng-bootstrap/ng-bootstrap";
     DataTableHeaderTitleComponent,
     DataTableHeaderFilterTextComponent,
     DataTableHeaderFilterDateComponent,
+    PersonAvatarChangeComponent,
   ],
   imports: [
     CommonModule,
@@ -88,7 +90,8 @@ import {NgbDatepicker, NgbDatepickerModule} from "@ng-bootstrap/ng-bootstrap";
     SpinnerComponent,
     MainSpinnerComponent,
     TagComponent,
-    DataTableComponent
+    DataTableComponent,
+    PersonAvatarChangeComponent
   ],
 })
 
