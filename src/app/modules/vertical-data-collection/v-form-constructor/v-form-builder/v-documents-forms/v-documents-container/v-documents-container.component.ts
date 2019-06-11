@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {DataTypeAllowed, DocumentsModel, dataTypes, DataTypeItemAllowed} from "../model/documents.model";
-import {VFilesService} from "../../../../v-files.service";
+import {VFilesService} from "../../../../services/v-files.service";
 import {environment} from "../../../../../../../environments/environment";
 import {FormService} from "../../../../../data-collection/form.service";
 

@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {VFormBuilderComponent} from './v-form-constructor/v-form-builder/v-form-builder.component';
 import {RouterModule, Routes} from '@angular/router';
-import {VFormService} from './v-form.service';
+import {VFormService} from './services/v-form.service';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {VFieldContainerComponent} from './v-form-constructor/v-form-builder/v-form-fields/v-fields-workspace/v-field-conteiner/v-field-container.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -14,7 +14,7 @@ import {VFormAccessModalComponent} from "./v-form-access-modal/v-form-access-mod
 import {VFormReviewComponent} from './v-form-review/v-form-review.component';
 import {VFormViewComponent} from './v-form-view/v-form-view.component';
 import {VFormViewContainerComponent} from './v-form-view/v-form-view-container/v-form-view-container.component';
-import {VFieldsService} from "./v-fields.service";
+import {VFieldsService} from "./services/v-fields.service";
 import {TimeFieldComponent} from "./v-form-view/fileds/time-field/time-field.component";
 import {ShortTextFieldComponent} from "./v-form-view/fileds/short-text-field/short-text-field.component";
 import {PhoneNumberFieldComponent} from "./v-form-view/fileds/phone-number-field/phone-number-field.component";
@@ -27,7 +27,7 @@ import {EmptyLineFieldComponent} from "./v-form-view/fileds/empty-line-field/emp
 import {EmailFieldComponent} from "./v-form-view/fileds/email-field/email-field.component";
 import {DropDownListFieldComponent} from "./v-form-view/fileds/drop-down-list-field/drop-down-list-field.component";
 import {DateTimeFieldComponent} from "./v-form-view/fileds/date-time-field/date-time-field.component";
-import {entryComponents} from "./entryComponents";
+import {entryComponents} from "./model/entryComponents";
 import {VDataCollectionComponent} from './v-data-collection.component';
 import {VContentDirective} from "./v-form-view/v-content.directive";
 import {VFormNavigationBarComponent} from './v-form-constructor/v-form-navigation-bar/v-form-navigation-bar.component';

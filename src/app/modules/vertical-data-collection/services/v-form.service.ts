@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import {map} from 'rxjs/operators';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import {Form} from './model/form.model';
+import {Form} from '../model/form.model';
 import {Observable} from 'rxjs';
-import {ApiResponse} from "../../models/api-response";
-import {FormSearchParams} from "../../models/form-search-params";
+import {ApiResponse} from "../../../models/api-response";
+import {FormSearchParams} from "../../../models/form-search-params";
 
 @Injectable()
 export class VFormService {

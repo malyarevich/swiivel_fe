@@ -5,7 +5,7 @@ import {SideBarService} from "../../side-bar.service";
 import {Form} from "../../../../../../model/form.model";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {VFieldsService} from 'src/app/modules/vertical-data-collection/v-fields.service';
+import {VFieldsService} from 'src/app/modules/vertical-data-collection/services/v-fields.service';
 import {v4 as uuid} from 'uuid';
 import {cloneDeep, isEmpty} from 'lodash';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';

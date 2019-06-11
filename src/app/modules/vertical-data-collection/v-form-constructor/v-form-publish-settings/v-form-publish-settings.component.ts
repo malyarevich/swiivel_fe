@@ -5,14 +5,14 @@ import {
   Host,
 } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { VFormService } from "../../v-form.service";
+import { VFormService } from "../../services/v-form.service";
 import { FormUtils } from "../../utils/form.utils";
 import { PublishMenuItems } from "./models/publish-menu-items";
 import { PublishSettingsItems, ISubMenus } from "./models/publish-settings";
 
 import { isEmpty } from "lodash";
 import { Location } from "@angular/common";
-import { VFieldsService } from "../../v-fields.service";
+import { VFieldsService } from "../../services/v-fields.service";
 import { Field } from "../../model/field.model";
 import {
   TuitionContract,
@@ -31,7 +31,7 @@ import { GeneralInfoIsValidService } from "../../services/general-info-is-valid.
 import {
   FormsPDFModel
 } from "./../v-form-builder/v-documents-forms/model/formsPDF.model";
-import { VFilesService } from "../../v-files.service";
+import { VFilesService } from "../../services/v-files.service";
 
 import { E_SIGNATURE_TYPES, SIGNATURE_TYPES } from "../../../../enums";
 import {
