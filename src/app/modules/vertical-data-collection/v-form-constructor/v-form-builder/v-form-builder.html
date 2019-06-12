@@ -15,8 +15,11 @@
 </form>
 <br>
 
+<ng-container *ngIf="form === undefined">
+  <main-spinner></main-spinner>
+</ng-container>
 
-<div class="row no-gutters">
+<div class="row no-gutters" *ngIf="form !== undefined">
   <div class="col-3 pl-5">
 
     <div class="row justify-content-center pb-2">
@@ -774,6 +777,3 @@
     </div>
   </div>
 </div>
-
-
-

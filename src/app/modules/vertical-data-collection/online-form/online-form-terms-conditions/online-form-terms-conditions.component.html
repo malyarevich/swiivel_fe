@@ -4,7 +4,7 @@
 
 <div class="app-of-wrap content_section__main">
   <!--Title-->
-  <ng-container *ngIf="form.termsConditions?.termsConditionsItems?.length">
+  <div *ngIf="form.termsConditions?.termsConditionsItems?.length">
     <ng-container
       *ngFor="
         let item of form.termsConditions.termsConditionsItems;
@@ -29,8 +29,8 @@
         *ngIf="item.checkbox.isActive"
         class="content_section__additional_fields"
       >
-        <div class="content_section__inputs_container p-0">
-          <div class="content_section__checkbox_container p-0">
+        <div class="content_section__inputs_container">
+          <div class="content_section__checkbox_container py-0">
             <input
               class="content_section__checkbox"
               type="checkbox"
@@ -58,5 +58,5 @@
     <app-online-form-signatures
       [signature]="signature"
     ></app-online-form-signatures>
-  </ng-container>
+  </div>
 </div>
