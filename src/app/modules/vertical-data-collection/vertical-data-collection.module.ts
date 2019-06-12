@@ -122,7 +122,7 @@ const routes: Routes = [
         children: [
           {
             path: "",
-            loadChildren: "../data-collection/online-form/online-form.module#OnlineFormModule"
+            loadChildren: "./online-form/online-form.module#OnlineFormModule"
           }
         ]
       },

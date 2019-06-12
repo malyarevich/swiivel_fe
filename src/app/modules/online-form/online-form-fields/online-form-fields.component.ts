@@ -1,7 +1,7 @@
 import {Component, ComponentFactoryResolver, ElementRef, Input, OnInit, Renderer, ViewChild} from '@angular/core';
 import {Field} from "../model/field.model";
 import {v4 as uuid} from 'uuid';
-import {OnlineFormService} from "../services/online-form.service";
+import {OnlineFormService} from "../../../services/online-form/online-form.service";
 import {FieldContentDirective} from "../directives/field-content.directive";
 
 @Component({
