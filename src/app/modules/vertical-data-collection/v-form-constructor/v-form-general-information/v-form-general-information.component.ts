@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {FormUtils} from '../../utils/form.utils';
 import {Form, FormSql} from '../../model/form.model';
 import { isEmpty } from 'lodash';
-import {VFormService} from '../../v-form.service';
+import {VFormService} from '../../services/v-form.service';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
 import {requireCheckboxesToBeCheckedValidator} from '../../../../utils/validators/require-checkboxes-to-be-checked.validator';

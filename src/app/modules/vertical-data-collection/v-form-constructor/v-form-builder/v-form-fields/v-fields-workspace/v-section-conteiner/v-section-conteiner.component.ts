@@ -18,7 +18,7 @@ export class VSectionConteinerComponent implements OnInit {
 
   constructor(private cd: ChangeDetectorRef,private sideBarService: SideBarService) { }
   sectionWidth: string = "4 Columns";
-
+  showSettings: boolean = false;
   isShow: boolean = true;
   ngOnInit() {
 

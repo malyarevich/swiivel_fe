@@ -5,7 +5,7 @@ import {Permissions} from "../../../../services/permission/permissions.model";
 import {User} from "../../../login/rest";
 import {PermissionService} from "../../../../services/permission/permission.service";
 import {UserService} from "../../../../services/user/user.service";
-import {VFormService} from "../../v-form.service";
+import {VFormService} from "../../services/v-form.service";
 
 @Component({
     selector: 'app-v-form-access',

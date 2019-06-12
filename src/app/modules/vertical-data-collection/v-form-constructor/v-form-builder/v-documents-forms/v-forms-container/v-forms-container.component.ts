@@ -1,7 +1,7 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import { FormsPDFModel, FormPDFDownloadModel} from "../model/formsPDF.model";
 import {Field} from "../../../../model/field.model";
-import {VFilesService} from "../../../../v-files.service";
+import {VFilesService} from "../../../../services/v-files.service";
 import {HttpParams} from "@angular/common/http";
 import {environment} from "../../../../../../../environments/environment";
 
