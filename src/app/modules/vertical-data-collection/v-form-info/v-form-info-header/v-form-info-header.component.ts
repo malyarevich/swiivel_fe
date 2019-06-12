@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormSql} from "../../model/form.model";
 import {TEMPLATE_STATUS} from "../../../../enums/template-status";
-import {VFormService} from "../../v-form.service";
+import {VFormService} from "../../services/v-form.service";
 
 @Component({
   selector: 'app-v-form-info-header',

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Location } from "@angular/common";
-import { VFormService } from "../v-form.service";
+import { VFormService } from "../services/v-form.service";
 import { FormSql } from "../model/form.model";
 
 @Component({

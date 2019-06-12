@@ -1,7 +1,8 @@
 <div class="row">
   <div class="col-8"></div>
   <div class="col-4 app-new-person-role">
-    <app-select-field [(ngModel)]="role"
+    <app-select-field class="app-text-capitalize"
+                      [(ngModel)]="role"
                       labelTitle="Roles"
                       [isInvalid]="!role"
                       [items]="roles">
@@ -27,3 +28,9 @@
                           [family]="family"
                           (closeModalAddFamilyMember)="onCloseAddFamilyMemberModal()" >
 </app-family-add-new-grandparents>
+
+<app-family-add-new-parent-sibling *ngIf="role === FAMILY_ROLES.aunt || role === FAMILY_ROLES.uncle"
+                                 [role]="role"
+                                 [family]="family"
+                                 (closeModalAddFamilyMember)="onCloseAddFamilyMemberModal()" >
+</app-family-add-new-parent-sibling>
