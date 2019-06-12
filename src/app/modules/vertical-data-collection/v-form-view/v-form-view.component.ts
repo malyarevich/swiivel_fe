@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Form} from "../model/form.model";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Location} from "@angular/common";
-import {VFormService} from "../v-form.service";
+import {VFormService} from "../services/v-form.service";
 
 @Component({
   selector: 'app-v-form-view',

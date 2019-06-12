@@ -1,11 +1,11 @@
 import {Component, OnInit, Input, ViewChild, ElementRef, OnDestroy, Host} from '@angular/core';
 import {CdkDragDrop, copyArrayItem, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
-import {VFormService} from '../../v-form.service';
+import {VFormService} from '../../services/v-form.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {v4 as uuid} from 'uuid';
 import {cloneDeep, isEmpty} from 'lodash';
 import {Location} from '@angular/common';
-import {VFieldsService} from "../../v-fields.service";
+import {VFieldsService} from "../../services/v-fields.service";
 import {Field} from "../../model/field.model";
 import {
   TuitionContract,
@@ -17,7 +17,7 @@ import {ConsentInfo, consentInfoDefault, consentItemDefault} from "./v-consent/m
 import {documentItemDefault, DocumentSideBar, DocumentsModel} from "./v-documents-forms/model/documents.model";
 import {GeneralInfoIsValidService} from "../../services/general-info-is-valid.service";
 import {formPDFItemDefault, FormsPDFModel} from "./v-documents-forms/model/formsPDF.model";
-import {VFilesService} from "../../v-files.service";
+import {VFilesService} from "../../services/v-files.service";
 import {FBSections, fbSections} from "./v-consent/fb-active-section.model";
 
 import {E_SIGNATURE_TYPES, SIGNATURE_TYPES} from "../../../../enums";

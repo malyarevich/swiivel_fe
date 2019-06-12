@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
-import {VFormService} from "../v-form.service";
+import {VFormService} from "../services/v-form.service";
 import {FormSql} from "../model/form.model";
 
 @Component({
