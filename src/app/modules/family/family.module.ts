@@ -43,6 +43,7 @@ import { FamilyViewDocumentsComponent } from './family-profile/family-view/famil
 import { FamilyViewDocumentsNavComponent } from './family-profile/family-view/family-view-documents/family-view-documents-nav/family-view-documents-nav.component';
 import { FamilyAddNewParentSiblingComponent } from './family-profile/family-view/family-view-general/family-add-member-modal/family-add-new-parent-sibling/family-add-new-parent-sibling.component';
 import { FamilyParentSiblingCardComponent } from './family-profile/family-view/family-view-general/family-parent-sibling-card/family-parent-sibling-card.component';
+import { FamilyEditParentSiblingComponent } from './family-profile/family-view/family-view-general/family-edit-member-modal/family-edit-parent-sibling/family-edit-parent-sibling.component';
 
 @NgModule({
   declarations: [
@@ -78,7 +79,8 @@ import { FamilyParentSiblingCardComponent } from './family-profile/family-view/f
     FamilyViewDocumentsComponent,
     FamilyViewDocumentsNavComponent,
     FamilyAddNewParentSiblingComponent,
-    FamilyParentSiblingCardComponent
+    FamilyParentSiblingCardComponent,
+    FamilyEditParentSiblingComponent
   ],
   imports: [
     CommonModule,
