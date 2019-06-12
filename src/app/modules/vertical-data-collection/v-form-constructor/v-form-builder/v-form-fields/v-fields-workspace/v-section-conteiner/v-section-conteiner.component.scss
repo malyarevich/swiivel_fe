@@ -1,6 +1,12 @@
+@import '../../../../../../../../styles/variables/colors';
+
+
 .app-list-group-item-info {
   background-color: #EBEEFF;
 
+}
+.border-open-setting{
+  border: 1px solid $element-base-color;
 }
 .list-group-item{border: none!important;}
 

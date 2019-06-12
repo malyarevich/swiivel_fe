@@ -28,3 +28,9 @@
                           [family]="family"
                           (closeModalAddFamilyMember)="onCloseAddFamilyMemberModal()" >
 </app-family-add-new-grandparents>
+
+<app-family-add-new-parent-sibling *ngIf="role === FAMILY_ROLES.aunt || role === FAMILY_ROLES.uncle"
+                                 [role]="role"
+                                 [family]="family"
+                                 (closeModalAddFamilyMember)="onCloseAddFamilyMemberModal()" >
+</app-family-add-new-parent-sibling>

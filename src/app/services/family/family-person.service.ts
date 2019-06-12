@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable} from "rxjs";
+import {BehaviorSubject, Observable, throwError} from "rxjs";
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {map} from "rxjs/operators";
 import {FamilyPerson} from "../../models/family/family-person.model";
@@ -12,6 +12,12 @@ interface ResponseData {
   success: boolean;
   errors: string;
   data: FamilyPerson;
+}
+
+interface NewResponseData {
+  status: boolean;
+  errors?: string;
+  data?: FamilyPerson;
 }
 
 interface DeleteResponseData {
@@ -100,7 +106,13 @@ export class FamilyPersonService {
     };
     if (params) options['params'] = new HttpParams().set('params', JSON.stringify(params));
     return this.http.get(`/person/family/${familyId}`, options).pipe(
-      map((res) => res)
+      map((res: NewResponseData) => {
+        if (res.status) {
+         return res.data;
+        } else {
+          return throwError(res.errors);
+        }
+      })
     );
   }
 
