@@ -10,14 +10,14 @@ import { TEMPLATE_STATUS } from "../../../../enums/template-status";
 })
 export class VFormTableTbodyComponent implements OnInit {
   @Input() forms: FormSql[];
-  @Input() formSelected: any;
+  @Input() formSelected: number;
   @Input() templateStatuses: any;
   @Input() changedStatuses: any;
+  @Input() formsSelectedIds: number[];
 
   @Output() addSelectedIdsEmitter: any = new EventEmitter();
   @Output() setFormSelectedEmitter: any = new EventEmitter();
   @Output() resetFormSelectedEmitter: any = new EventEmitter();
-  @Output() changeStatusEmitter: any = new EventEmitter();
   @Output() getAllFormEmitter: any = new EventEmitter();
 
   checkedRows: Array<any> = [];
@@ -53,16 +53,15 @@ export class VFormTableTbodyComponent implements OnInit {
     }
   }
 
-  addSelectedIds(id: any) {
+  addSelectedIds(id: number) {
     this.addSelectedIdsEmitter.emit(id);
-    this.checkedRows[id] = !this.checkedRows[id];
   }
 
-  isCheckedRow(id: any) {
-    return this.checkedRows.find(id);
+  isCheckedRow(id: number) {
+    return this.formsSelectedIds.find(item => item === id);
   }
 
-  setFormSelected(id: any) {
+  setFormSelected(id: number) {
     this.setFormSelectedEmitter.emit(id);
   }
 

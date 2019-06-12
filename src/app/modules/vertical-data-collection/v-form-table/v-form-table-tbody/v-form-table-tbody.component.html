@@ -4,7 +4,7 @@
     class="tbody__tr"
     (click)="addSelectedIds(item.id)"
     [ngClass]="{
-      'checked-row': checkedRows[item.id],
+      'checked-row': isCheckedRow(item.id),
       'tbody__tr--even': isRowEven,
       'tbody__tr--odd': !isRowEven
     }"

@@ -12,13 +12,13 @@
       <tbody app-v-form-table-tbody 
         (addSelectedIdsEmitter)="addSelectedIds($event)"
         (setFormSelectedEmitter)="setFormSelected($event)"
-        (resetFormSelectedEmitter)="resetFormSelected($event)"
-        (changeStatusEmitter)="changeStatus($event)"
-        (getAllFormEmitter)="getAllForm($event)"
+        (resetFormSelectedEmitter)="resetFormSelected()"
+        (getAllFormEmitter)="getAllForm()"
         [forms]="forms"
         [formSelected]="formSelected"
         [templateStatuses]="templateStatuses"
         [changedStatuses]="changedStatuses"
+        [formsSelectedIds]="formsSelectedIds"
         >
       </tbody>
       
