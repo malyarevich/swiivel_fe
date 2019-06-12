@@ -1,0 +1,38 @@
+<form [formGroup]="familySiblingForm" (ngSubmit)="addFamilySibling()">
+  <p class="app-text-small font-weight-bold mb-1">PERSONAL {{role | uppercase}} INFO</p>
+  <div class="row no-gutters app-family-card-body p-3">
+    <div class="col-12">
+      <div class="row no-gutters">
+        <div class="col-4 px-1">
+          <app-input-field [formControlName]="'first_name'"
+                           id='first_name' label="First Name"
+                           [isInvalid]="familySiblingForm.get('first_name').invalid && familySiblingForm.get('first_name').touched">
+          </app-input-field>
+          <div class="field-has-error app-position-relative"
+               *ngIf="familySiblingForm.get('first_name').invalid && familySiblingForm.get('first_name').touched && familySiblingForm.get('first_name')['errors']['required']"
+          >
+            First Name is required
+          </div>
+        </div>
+        <div class="col-4 px-1">
+          <app-input-field [formControlName]="'middle_name'" id='middle_name' label="Middle Name"></app-input-field>
+        </div>
+        <div class="col-4 px-1">
+          <app-input-field [formControlName]="'last_name'" id='last_name' label="Last Name"></app-input-field>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row pt-3">
+    <div class="col-12 text-right">
+      <button (click)="onCloseAddFamilyMemberModal()" class="btn app-btn-outline-primary mr-2">
+        Cancel
+      </button>
+      <button type="submit" class="btn app-btn-primary" [disabled]="familySiblingForm.invalid">
+        Add Account
+      </button>
+    </div>
+  </div>
+</form>
+
