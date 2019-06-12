@@ -1,10 +1,10 @@
-<ng-container *ngIf="parent.forms?.length != 0">
+<ng-container *ngIf="forms?.length != 0">
   <tr
-    *ngFor="let item of parent.forms; let isRowEven = even"
+    *ngFor="let item of forms; let isRowEven = even"
     class="tbody__tr"
-    (click)="parent.addSelectedIds(item.id)"
+    (click)="addSelectedIds(item.id)"
     [ngClass]="{
-      'checked-row': parent.isCheckedRow(item.id),
+      'checked-row': checkedRows[item.id],
       'tbody__tr--even': isRowEven,
       'tbody__tr--odd': !isRowEven
     }"
@@ -20,7 +20,9 @@
     <td class="tbody__td tbody__td--v_center">
       <div class="tbody__cell_container tbody__cell_container--column">
         <p class="tbody__type_title">{{ item.type }}</p>
-        <p class="tbody__sub_type">{{ getStringPublishSettings(item.publish_settings) }}</p>
+        <p class="tbody__sub_type">
+          {{ getStringPublishSettings(item.publish_settings) }}
+        </p>
       </div>
     </td>
 
@@ -42,15 +44,15 @@
             class="invite"
             data-toggle="modal"
             data-target="#formAccess"
-            (click)="parent.formSelected = item.id"
+            (click)="setFormSelected(item.id)"
           >
             <span><i class="fas fa-plus invite__icon"></i></span>
             <span class="invite__text"> Invite Users</span>
           </a>
         </ng-container>
         <app-v-form-access-modal
-          (resetFormSelectedEmitter)="parent.resetFormSelected($event)"
-          [formSelected]="parent.formSelected"
+          (resetFormSelectedEmitter)="resetFormSelected($event)"
+          [formSelected]="formSelected"
         >
         </app-v-form-access-modal>
       </div>
@@ -75,28 +77,29 @@
 
     <td class="tbody__td" nowrap>
       <div class="tbody__cell_container nowrap">
-        <span>{{
-          parent.convertDate(item.updated_at) | date: "dd-MM-yyyy"
-        }}</span>
+        <span>{{ convertDate(item.updated_at) | date: "dd-MM-yyyy" }}</span>
         &nbsp;&nbsp;
         <span class="app-form-table-second-color">
-          {{ parent.convertDate(item.updated_at) | date: "shortTime" }}</span
+          {{ convertDate(item.updated_at) | date: "shortTime" }}</span
         >
       </div>
     </td>
 
     <!--Change status button-->
     <td class="tbody__td">
-      <div ngbDropdown class="tbody__cell_container tbody__cell_container--column">
+      <div
+        ngbDropdown
+        class="tbody__cell_container tbody__cell_container--column"
+      >
         <button
           type="button"
           class="btn app-btn-status app-dropdown-toggle status_button"
-          *ngIf="item.status === parent.templateStatuses.STATUS_CLOSED"
-          [ngClass]="parent.getClassByStatus(item.status)"
+          *ngIf="item.status === templateStatuses.STATUS_CLOSED"
+          [ngClass]="getClassByStatus(item.status)"
           appClickStopPropagation
         >
           <span
-            *ngIf="item.status !== parent.templateStatuses.STATUS_REVIEW"
+            *ngIf="item.status !== templateStatuses.STATUS_REVIEW"
             class="status_button__text status_button__text--inverted"
           >
             {{ item.status }}
@@ -109,23 +112,23 @@
         <button
           type="button"
           class="btn app-btn-status app-dropdown-toggle status_button"
-          *ngIf="item.status !== parent.templateStatuses.STATUS_CLOSED"
-          [ngClass]="parent.getClassByStatus(item.status)"
+          *ngIf="item.status !== templateStatuses.STATUS_CLOSED"
+          [ngClass]="getClassByStatus(item.status)"
           id="dropdownBasic1"
           ngbDropdownToggle
           appClickStopPropagation
         >
           <span
-            *ngIf="item.status === parent.templateStatuses.STATUS_REVIEW"
+            *ngIf="item.status === templateStatuses.STATUS_REVIEW"
             class="status_button__text"
             >{{ "In " + item.status }}
           </span>
           <span
-            *ngIf="item.status !== parent.templateStatuses.STATUS_REVIEW"
+            *ngIf="item.status !== templateStatuses.STATUS_REVIEW"
             class="status_button__text"
             [ngClass]="{
               'status_button__text--inverted':
-                item.status === parent.templateStatuses.STATUS_DRAFT
+                item.status === templateStatuses.STATUS_DRAFT
             }"
             >{{ item.status }}
           </span>
@@ -133,13 +136,13 @@
             class="status_button__text"
             [ngClass]="{
               'status_button__text--inverted':
-                item.status === parent.templateStatuses.STATUS_DRAFT
+                item.status === templateStatuses.STATUS_DRAFT
             }"
             ><i class="fas fa-caret-down"></i
           ></span>
         </button>
         <div
-          *ngIf="item.status === parent.templateStatuses.STATUS_ACTIVE"
+          *ngIf="item.status === templateStatuses.STATUS_ACTIVE"
           class="active_fields"
         >
           <span class="active_fields__title">Round 2</span>
@@ -148,8 +151,8 @@
         </div>
         <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
           <button
-            *ngFor="let status of parent.changedStatuses"
-            (click)="parent.changeStatus(item.id, status)"
+            *ngFor="let status of changedStatuses"
+            (click)="changeStatus(item.id, status)"
             ngbDropdownItem
             appClickStopPropagation
           >
@@ -161,7 +164,10 @@
     <!--End Change status button-->
 
     <td class="tbody__td tbody__td--v_center" nowrap>
-      <div ngbDropdown class="tbody__cell_container tbody__cell_container--center tbody__cell_container--lx_nowrap">
+      <div
+        ngbDropdown
+        class="tbody__cell_container tbody__cell_container--center tbody__cell_container--lx_nowrap"
+      >
         <button
           type="button"
           class="btn 
@@ -191,56 +197,57 @@
         </button>
         <div>
           <button
-          appClickStopPropagation
-          class="btn app-btn-sml mr-2 "
-          placement="top"
-          ngbPopover="This feature is under development"
-          popoverTitle="Notice"
-        >
-          <span class="app-form-table-icon"
-            ><i class="fas fa-share-alt"></i
-          ></span>
-        </button>
+            appClickStopPropagation
+            class="btn app-btn-sml mr-2 "
+            placement="top"
+            ngbPopover="This feature is under development"
+            popoverTitle="Notice"
+          >
+            <span class="app-form-table-icon"
+              ><i class="fas fa-share-alt"></i
+            ></span>
+          </button>
 
-        <button
-          appClickStopPropagation
-          class="btn app-btn-sml mr-2 "
-          placement="left"
-          ngbPopover="This feature is under development"
-          popoverTitle="Notice"
-        >
-          <span class="app-form-table-icon"><i class="fas fa-share"></i></span>
-        </button>
+          <button
+            appClickStopPropagation
+            class="btn app-btn-sml mr-2 "
+            placement="left"
+            ngbPopover="This feature is under development"
+            popoverTitle="Notice"
+          >
+            <span class="app-form-table-icon"
+              ><i class="fas fa-share"></i
+            ></span>
+          </button>
 
-        <button
-          appClickStopPropagation
-          class="btn app-btn-sml mr-2 "
-          placement="left"
-          ngbPopover="This feature is under development"
-          popoverTitle="Notice"
-        >
-          <span class="app-form-table-icon"><i class="fas fa-copy"></i></span>
-        </button>
+          <button
+            appClickStopPropagation
+            class="btn app-btn-sml mr-2 "
+            placement="left"
+            ngbPopover="This feature is under development"
+            popoverTitle="Notice"
+          >
+            <span class="app-form-table-icon"><i class="fas fa-copy"></i></span>
+          </button>
 
-        <button
-          appClickStopPropagation
-          class="btn app-btn-sml "
-          placement="left"
-          ngbPopover="This feature is under development"
-          popoverTitle="Notice"
-        >
-          <span class="app-form-table-icon primary-color"
-            ><i class="fas fa-ellipsis-v"></i
-          ></span>
-        </button>
+          <button
+            appClickStopPropagation
+            class="btn app-btn-sml "
+            placement="left"
+            ngbPopover="This feature is under development"
+            popoverTitle="Notice"
+          >
+            <span class="app-form-table-icon primary-color"
+              ><i class="fas fa-ellipsis-v"></i
+            ></span>
+          </button>
         </div>
-        
       </div>
 
       <!-- <button
         type="button"
         class="btn btn-outline-danger py-0 px-1 mr-2 "
-        (click)="parent.removeForm(item.mongo_id)"
+        (click)="removeForm(item.mongo_id)"
         appClickStopPropagation
       >
         <span class="app-text-small font-weight-bold"
