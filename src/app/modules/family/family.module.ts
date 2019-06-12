@@ -41,6 +41,8 @@ import { FamilyAddNewGrandparentsComponent } from './family-profile/family-view/
 import { FamilyEditGrandparentComponent } from './family-profile/family-view/family-view-general/family-edit-member-modal/family-edit-grandparent/family-edit-grandparent.component';
 import { FamilyViewDocumentsComponent } from './family-profile/family-view/family-view-documents/family-view-documents.component';
 import { FamilyViewDocumentsNavComponent } from './family-profile/family-view/family-view-documents/family-view-documents-nav/family-view-documents-nav.component';
+import { FamilyAddNewParentSiblingComponent } from './family-profile/family-view/family-view-general/family-add-member-modal/family-add-new-parent-sibling/family-add-new-parent-sibling.component';
+import { FamilyParentSiblingCardComponent } from './family-profile/family-view/family-view-general/family-parent-sibling-card/family-parent-sibling-card.component';
 
 @NgModule({
   declarations: [
@@ -74,7 +76,9 @@ import { FamilyViewDocumentsNavComponent } from './family-profile/family-view/fa
     FamilyAddNewGrandparentsComponent,
     FamilyEditGrandparentComponent,
     FamilyViewDocumentsComponent,
-    FamilyViewDocumentsNavComponent
+    FamilyViewDocumentsNavComponent,
+    FamilyAddNewParentSiblingComponent,
+    FamilyParentSiblingCardComponent
   ],
   imports: [
     CommonModule,
