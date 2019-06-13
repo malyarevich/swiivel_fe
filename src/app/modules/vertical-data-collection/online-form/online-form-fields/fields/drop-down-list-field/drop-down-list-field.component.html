@@ -1,10 +1,19 @@
-<div class="form-group app-input-container"
-     [ngClass]="{'app-input-fill': data.value}">
-  <label class="app-input-label">{{data.name | titlecase}}</label>
-  <select class="app-input form-control"
-          [(ngModel)]="data.value"
-          [required]="data.options.required"
-          [disabled]="data.options.readonly">
-    <option *ngFor="let item of data.options.items || list" [selected]="data.value" [ngValue]="item">{{item}}</option>
+<div
+  class="form-group app-input-container"
+  [ngClass]="{ 'app-input-fill': data.value }"
+>
+  <label class="app-input-label">{{ data.name | titlecase }}</label>
+  <select
+    class="app-input form-control"
+    [(ngModel)]="data.value"
+    [required]="data.options.required"
+    [disabled]="true"
+  >
+    <option
+      *ngFor="let item of data.options.items || list"
+      [selected]="data.value"
+      [ngValue]="item"
+      >{{ item }}</option
+    >
   </select>
 </div>

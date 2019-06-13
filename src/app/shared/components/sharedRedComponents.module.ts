@@ -30,20 +30,6 @@ import {DataTableHeaderTitleComponent} from "./data-table/data-table-header/data
 import {DataTableHeaderFilterTextComponent} from "./data-table/data-table-header/data-table-header-filter-text/data-table-header-filter-text.component";
 import {DataTableHeaderFilterDateComponent} from "./data-table/data-table-header/data-table-header-filter-date/data-table-header-filter-date.component";
 import {NgbDatepicker, NgbDatepickerModule} from "@ng-bootstrap/ng-bootstrap";
-//SharedFieldComponent
-import { ShortTextFieldComponent } from "./online-form/online-form-fields/fields/short-text-field/short-text-field.component";
-import { EmptyLineFieldComponent } from "./online-form/online-form-fields/fields/empty-line-field/empty-line-field.component";
-import { LongTextFieldComponent } from "./online-form/online-form-fields/fields/long-text-field/long-text-field.component";
-import { LabelFieldComponent } from "./online-form/online-form-fields/fields/label-field/label-field.component";
-import { NumberTextFieldComponent } from "./online-form/online-form-fields/fields/number-text-field/number-text-field.component";
-import { MultipleOptionsFieldComponent } from "./online-form/online-form-fields/fields/multiple-options-field/multiple-options-field.component";
-import { EmailFieldComponent } from "./online-form/online-form-fields/fields/email-field/email-field.component";
-import { DropDownListFieldComponent } from "./online-form/online-form-fields/fields/drop-down-list-field/drop-down-list-field.component";
-import { DateTimeFieldComponent } from "./online-form/online-form-fields/fields/date-time-field/date-time-field.component";
-import { HebrewDateFieldComponent } from "./online-form/online-form-fields/fields/hebrew-date-field/hebrew-date-field.component";
-import { TimeFieldComponent } from "./online-form/online-form-fields/fields/time-field/time-field.component";
-import { PhoneNumberFieldComponent } from "./online-form/online-form-fields/fields/phone-number-field/phone-number-field.component";
-
 
 @NgModule({
   declarations: [
@@ -70,19 +56,6 @@ import { PhoneNumberFieldComponent } from "./online-form/online-form-fields/fiel
     DataTableHeaderTitleComponent,
     DataTableHeaderFilterTextComponent,
     DataTableHeaderFilterDateComponent,
-    //shared components
-    ShortTextFieldComponent,
-    LongTextFieldComponent,
-    NumberTextFieldComponent,
-    MultipleOptionsFieldComponent,
-    EmailFieldComponent,
-    DropDownListFieldComponent,
-    DateTimeFieldComponent,
-    HebrewDateFieldComponent,
-    TimeFieldComponent,
-    PhoneNumberFieldComponent,
-    LabelFieldComponent,
-    EmptyLineFieldComponent
   ],
   imports: [
     CommonModule,

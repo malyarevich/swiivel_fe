@@ -11,6 +11,13 @@
     background: $element-base-color;
     border: 1px solid $element-base-color;
   }
+
+  &:disabled {
+    color: #495057;
+    background: transparent;
+    background: #e9ecef;
+    border: 1px solid $softgray-color;
+  }
 }
 
 .app-btn-primary {
