@@ -5,7 +5,7 @@ import {SideBarService} from "../../side-bar.service";
 @Component({
   selector: 'app-v-fields-side-bar-node',
   templateUrl: './v-fields-side-bar-node.component.html',
-  styleUrls: ['./v-fields-side-bar-node.component.css']
+  styleUrls: ['./v-fields-side-bar-node.component.scss']
 })
 export class VFieldsSideBarNodeComponent implements OnInit {
 

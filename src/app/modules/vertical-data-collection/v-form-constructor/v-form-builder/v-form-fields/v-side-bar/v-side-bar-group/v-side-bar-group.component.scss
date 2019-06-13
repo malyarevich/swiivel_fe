@@ -1,3 +1,5 @@
+@import '../../../../../../../../styles/variables/colors';
+
 .side-bar-item-font {
   font-size: 12px;
   font-weight: bold;
@@ -7,7 +9,9 @@
 .side-bar-item {
   background-color: #ebeeff;
 }
-
+.border-open-setting{
+  border: 1px solid $element-base-color;
+}
 .side-bar-item-group {
   height: 27px;
   border-radius: 3px;

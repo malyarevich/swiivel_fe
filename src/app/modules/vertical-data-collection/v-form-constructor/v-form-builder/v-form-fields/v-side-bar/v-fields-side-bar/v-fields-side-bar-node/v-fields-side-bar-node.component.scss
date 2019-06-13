@@ -1,6 +1,8 @@
+@import '../../../../../../../../../styles/variables/colors';
+
 .node-span{
   color: #151515;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: bold;
   line-height: 13px;
   cursor: pointer;
@@ -8,4 +10,8 @@
 .dragable-i{
   color: #9C9D9D;
   cursor: pointer;
+}
+.fa-caret-up{
+  color: $element-base-color;
+
 }

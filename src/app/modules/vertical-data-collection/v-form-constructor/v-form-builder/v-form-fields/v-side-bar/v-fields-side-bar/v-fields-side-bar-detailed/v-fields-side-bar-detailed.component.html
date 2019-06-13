@@ -1,7 +1,7 @@
-<div class="mb-3 app-text-second app-text-extra-bold crump" (click)="returnToTree()"><span>{{crumbs[section.prefix]}}</span></div>
+<div class="mb-3 app-text-second app-text-extra-bold crump" (click)="returnToTree()"><span>{{crumbs[section.name]}}</span></div>
 
 <div class="row align-items-center no-gutters">
-  <div class="col-1 pb-2">
+  <div class="col-1 pb-1">
     <label class="app-checkbox-container">
       <input
         type="checkbox" [ngModel]="section.exist" (ngModelChange)="onBeingChange($event)">

@@ -12,7 +12,7 @@
       <span><i class="fas fa-ellipsis-v  dragable-i"></i></span>
     </div>
     <div class="col ml-1">
-      <span class="side-bar-item-font" >{{group.name}}</span>
+      <span class="side-bar-item-font" >{{group.name | titlecase}}</span>
     </div>
     <div  class="col-1 mr-1">
       <button class="btn btn-sm" (click)="showNested=!showNested">
@@ -29,9 +29,20 @@
     [model]="group.fields" ngxDroppable [hidden]="!showNested">
 
     <div class="" *ngFor="let field of group.fields" [model]="field" [ngxDraggable]="idSectionForDragDrop">
+      <div *ngIf="field.type==113" class="ml-2 border-open-setting">
+        <app-v-side-bar-group
+
+          [group]="field"
+          [form]="form"
+          [section]="section"
+          [idSectionForDragDrop]="idSectionForDragDrop"
+
+        ></app-v-side-bar-group>
+      </div>
+
 <!--    <div class="" *ngFor="let field of group.fields" cdkDrag>-->
 <!--      <app-v-side-bar-field [field]="field"></app-v-side-bar-field>-->
-      <div class="row no-gutters  align-items-center">
+      <div *ngIf="field.type!==113" class="row no-gutters  align-items-center">
         <div class="ml-2 pb-2 col-1 ">
           <label class="app-checkbox-container ">
           <input
