@@ -108,7 +108,7 @@ export class FamilyEditChildComponent implements OnInit {
         dod: this.parserFormatter.format(this.familyChildForm.value.dod) || null,
       },
       parents: this.familyChildForm.value.parents ? this.familyChildForm.value.parents.map((item) => item.id) : [],
-
+      person_info: null,
     };
     if(this.familyChildForm.value.student) {
       data = {
