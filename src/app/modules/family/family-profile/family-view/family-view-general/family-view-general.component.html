@@ -13,6 +13,9 @@
       <app-family-grandparents-card [familyPerson]="item"
                                     *ngIf="item.person_role === familyRoles.grandfather || item.person_role === familyRoles.grandmother">
       </app-family-grandparents-card>
+      <app-family-parent-sibling-card [familyPerson]="item"
+                                    *ngIf="item.person_role === familyRoles.uncle || item.person_role === familyRoles.aunt">
+      </app-family-parent-sibling-card>
     </app-family-person-card-container>
   </div>
 </div>

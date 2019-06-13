@@ -10,7 +10,16 @@
     <table class="table">
       <thead app-v-form-table-header [cols]="cols" (searchDataEmitter)="setSearch($event)"></thead>
       <tbody app-v-form-table-tbody 
-        [parent]="this">
+        (addSelectedIdsEmitter)="addSelectedIds($event)"
+        (setFormSelectedEmitter)="setFormSelected($event)"
+        (resetFormSelectedEmitter)="resetFormSelected()"
+        (getAllFormEmitter)="getAllForm()"
+        [forms]="forms"
+        [formSelected]="formSelected"
+        [templateStatuses]="templateStatuses"
+        [changedStatuses]="changedStatuses"
+        [formsSelectedIds]="formsSelectedIds"
+        >
       </tbody>
       
     </table>
