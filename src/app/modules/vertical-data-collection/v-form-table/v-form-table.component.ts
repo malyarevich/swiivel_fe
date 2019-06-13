@@ -162,16 +162,6 @@ export class VFormTableComponent implements OnInit {
     });
   }
 
-  getClassByStatus(status) {
-    return {
-      'app-btn-status-active': status === TEMPLATE_STATUS.STATUS_ACTIVE,
-      'app-btn-status-archived': status === TEMPLATE_STATUS.STATUS_ARCHIVED,
-      'app-btn-status-draft': status === TEMPLATE_STATUS.STATUS_DRAFT,
-      'app-btn-status-review': status === TEMPLATE_STATUS.STATUS_REVIEW,
-      'app-btn-status-closed': status === TEMPLATE_STATUS.STATUS_CLOSED,
-    }
-  }
-
   filterStatus(value) {
     if (value == TEMPLATE_STATUS.STATUS_ALL) {
       this.params.filter = {};
@@ -181,8 +171,8 @@ export class VFormTableComponent implements OnInit {
     this.getAllForm();
   }
 
-// TODO Create directive ConvertData for Safari browser
-  convertDate(date) {
-    return date.replace(/\s/g, "T");
+  setFormSelected(id: any) {
+    this.formSelected = id;
   }
+  
 }

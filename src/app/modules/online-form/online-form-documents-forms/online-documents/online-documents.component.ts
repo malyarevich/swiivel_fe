@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Form} from "../../../vertical-data-collection/model/form.model";
 import {DocumentsModel} from "../../../vertical-data-collection/v-form-constructor/v-form-builder/v-documents-forms/model/documents.model";
 import {environment} from "../../../../../environments/environment";
-import {FilesService} from "../../services/files.service";
+import {FilesService} from "../../../../services/online-form/files.service";
 
 @Component({
   selector: 'app-online-documents',

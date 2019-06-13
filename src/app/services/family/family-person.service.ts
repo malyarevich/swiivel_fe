@@ -136,7 +136,13 @@ export class FamilyPersonService {
 
   getAllRequest(): Observable<any> {
     return this.http.get('/person/family').pipe(
-      map((res) => res)
+      map((res: NewResponseData) => {
+        if (res.status) {
+          return res.data;
+        } else {
+          return throwError(res.errors);
+        }
+      })
     );
   }
 }

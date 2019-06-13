@@ -3,7 +3,7 @@ import {cloneDeep} from 'lodash';
 import {ConsentItemInfo} from "../../vertical-data-collection/v-form-constructor/v-form-builder/v-consent/model/consent.model";
 import {E_SIGNATURE_TYPES, SIGNATURE_TYPES} from "../../../enums";
 import {Form} from "../../vertical-data-collection/model/form.model";
-import {SystemSignatureService} from "../services/signatures/system-signature.service";
+import {SystemSignatureService} from "../../../services/online-form/signatures/system-signature.service";
 import {SignatureCreateResponse} from '../model/signature-create-response.model'
 
 @Component({

@@ -6,7 +6,7 @@ import { OnlineFormViewComponent } from './online-form-view/online-form-view.com
 import { OnlineFormNavComponent } from './online-form-nav/online-form-nav.component';
 import { OnlineFormMenuComponent } from './online-form-menu/online-form-menu.component';
 import { OnlineFormGeneralInfoComponent } from './online-form-general-info/online-form-general-info.component';
-import {OnlineFormService} from "./services/online-form.service";
+import {OnlineFormService} from "./../../services/online-form/online-form.service";
 import { GeneralInfoNavComponent } from './online-form-general-info/general-info-nav/general-info-nav.component';
 import { GeneralInfoStudentsComponent } from './online-form-general-info/general-info-students/general-info-students.component';
 import { GeneralInfoParentsComponent } from './online-form-general-info/general-info-parents/general-info-parents.component';
@@ -29,7 +29,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import { OnlineFormConsentComponent } from './online-form-consent/online-form-consent.component';
 import { ConsentNavComponent } from './online-form-consent/consent-nav/consent-nav.component';
-import {SystemSignatureService} from "./services/signatures/system-signature.service";
+import {SystemSignatureService} from "./../../services/online-form/signatures/system-signature.service";
 import { OnlineFormDocumentsFormsComponent } from './online-form-documents-forms/online-form-documents-forms.component';
 import { OnlineDocumentsComponent } from './online-form-documents-forms/online-documents/online-documents.component';
 import { OnlinePdfFormsComponent } from './online-form-documents-forms/online-pdf-forms/online-pdf-forms.component';

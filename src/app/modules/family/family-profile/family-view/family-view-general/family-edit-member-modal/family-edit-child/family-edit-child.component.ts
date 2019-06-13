@@ -6,7 +6,6 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {FamilyPersonService} from "../../../../../../../services/family/family-person.service";
 import {NgbDateParserFormatter} from "@ng-bootstrap/ng-bootstrap";
 import {PersonService} from "../../../../../../../services/person/person.service";
-import {Person} from "../../../../../../../models/person.model";
 
 @Component({
   selector: 'app-family-edit-child',
@@ -46,6 +45,7 @@ export class FamilyEditChildComponent implements OnInit {
   initFamilyChildForm() {
 
     let controlsConfig = {
+      student: [this.familyPerson.person_role === this.FAMILY_ROLES.student ? 1 : 0],
       adopted: [this.familyPerson.adopted],
       parents: [this.familyPerson.parents.map((parent) => {
         return {id: parent.person.id, name: parent.person.first_name + parent.person.last_name}
@@ -60,33 +60,26 @@ export class FamilyEditChildComponent implements OnInit {
       gender: [this.familyPerson.person.gender],
       deceased: [this.familyPerson.person.deceased || 0],
       dod: [this.parserFormatter.parse(this.familyPerson.person.dod) || null],
-      person_info: null
+      person_info: this.fb.group({
+        student_current_grade: [this.familyPerson.student_info.student_current_grade],
+        student_start_grade: [this.familyPerson.student_info.student_start_grade],
+        student_current_school: [this.familyPerson.student_info.student_current_school],
+        student_previous_school: [this.familyPerson.student_info.student_previous_school],
+        student_medical_conditions: [this.familyPerson.student_info.student_medical_conditions],
+        student_allergies: [this.familyPerson.student_info.student_allergies],
+        student_medications: [this.familyPerson.student_info.student_medications],
+        student_physician: [this.familyPerson.student_info.student_physician],
+        student_physician_country: [this.familyPerson.student_info.student_physician_country],
+        student_physician_address: [this.familyPerson.student_info.student_physician_address],
+        student_physician_phone: [this.familyPerson.student_info.student_physician_phone],
+        student_first_contact_relationship: [this.familyPerson.student_info.student_first_contact_relationship],
+        student_first_contact_full_name: [this.familyPerson.student_info.student_first_contact_full_name],
+        student_first_contact_cell_phone: [this.familyPerson.student_info.student_first_contact_cell_phone],
+        student_second_contact_full_name: [this.familyPerson.student_info.student_second_contact_full_name],
+        student_second_contact_relationship: [this.familyPerson.student_info.student_second_contact_relationship],
+        student_second_contact_cell_phone: [this.familyPerson.student_info.student_second_contact_cell_phone],
+      })
     };
-
-    if(this.familyPerson.person_role === this.FAMILY_ROLES.student && this.familyPerson.student_info) {
-      controlsConfig = {
-        ...controlsConfig,
-        person_info: this.fb.group({
-          student_current_grade: [this.familyPerson.student_info.student_current_grade],
-          student_start_grade: [this.familyPerson.student_info.student_start_grade],
-          student_current_school: [this.familyPerson.student_info.student_current_school],
-          student_previous_school: [this.familyPerson.student_info.student_previous_school],
-          student_medical_conditions: [this.familyPerson.student_info.student_medical_conditions],
-          student_allergies: [this.familyPerson.student_info.student_allergies],
-          student_medications: [this.familyPerson.student_info.student_medications],
-          student_physician: [this.familyPerson.student_info.student_physician],
-          student_physician_country: [this.familyPerson.student_info.student_physician_country],
-          student_physician_address: [this.familyPerson.student_info.student_physician_address],
-          student_physician_phone: [this.familyPerson.student_info.student_physician_phone],
-          student_first_contact_relationship: [this.familyPerson.student_info.student_first_contact_relationship],
-          student_first_contact_full_name: [this.familyPerson.student_info.student_first_contact_full_name],
-          student_first_contact_cell_phone: [this.familyPerson.student_info.student_first_contact_cell_phone],
-          student_second_contact_full_name: [this.familyPerson.student_info.student_second_contact_full_name],
-          student_second_contact_relationship: [this.familyPerson.student_info.student_second_contact_relationship],
-          student_second_contact_cell_phone: [this.familyPerson.student_info.student_second_contact_cell_phone],
-        })
-      }
-    }
 
     this.familyChildForm = this.fb.group(controlsConfig);
   }
@@ -106,7 +99,7 @@ export class FamilyEditChildComponent implements OnInit {
   updateFamilyChild() {
     if (this.familyChildForm.invalid) return;
     let data = {
-      person_role:this.familyPerson.person_role,
+      person_role: this.familyChildForm.value.student ? this.FAMILY_ROLES.student : this.FAMILY_ROLES.child,
       adopted: this.familyChildForm.value.adopted ? 1 : 0,
       person: {
         ...this.familyChildForm.value,
@@ -115,8 +108,14 @@ export class FamilyEditChildComponent implements OnInit {
         dod: this.parserFormatter.format(this.familyChildForm.value.dod) || null,
       },
       parents: this.familyChildForm.value.parents ? this.familyChildForm.value.parents.map((item) => item.id) : [],
-      person_info: this.familyChildForm.value.person_info || [],
+      person_info: null,
     };
+    if(this.familyChildForm.value.student) {
+      data = {
+        ...data,
+        person_info: this.familyChildForm.value.person_info || [],
+      }
+    }
     this.familyPersonService.update(data, this.familyPerson.id);
     this.onCloseEditFamilyMemberModal();
   }
