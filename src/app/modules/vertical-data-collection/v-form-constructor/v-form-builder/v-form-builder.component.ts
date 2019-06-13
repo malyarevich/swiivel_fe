@@ -29,14 +29,18 @@ import {
 import {FinanceService} from "../../../../services/finance/finance.service";
 import {FeeTemplate, FeeTemplatesData} from "../../../../models/fee-templates.model";
 import { VDataCollectionComponent } from '../../v-data-collection.component';
+import { Observable } from 'rxjs';
+import { SaveFormService } from '../../services/save-form.service';
 
 @Component({
   selector: 'app-v-form-table',
   templateUrl: './v-form-builder.html',
   styleUrls: ['./v-form-builder.scss'],
 })
-export class VFormBuilderComponent implements OnInit {
-
+export class VFormBuilderComponent implements OnInit, OnDestroy {
+  saveFormSubscription: any
+  @Input() saveEvents: Observable<void>;
+  
   validNewCustomFieldName: boolean = true;
   showAddButton = true;
   formId: string = '';
@@ -152,6 +156,9 @@ export class VFormBuilderComponent implements OnInit {
   ];
   vDataCollection: VDataCollectionComponent;
 
+  isDataSaving: boolean = false;
+  spinnerText: string = "Data is loading...";
+
   @ViewChild("addCustomFieldInput") addCustomFieldInput: ElementRef;
   constructor(@Host() vDataCollection: VDataCollectionComponent,
               private formService: VFormService,
@@ -161,10 +168,16 @@ export class VFormBuilderComponent implements OnInit {
               private location: Location,
               private generalInfoIsValidService: GeneralInfoIsValidService,
               private fileService: VFilesService,
-              private readonly financeService: FinanceService) {
+              private readonly financeService: FinanceService,
+              private saveFormService: SaveFormService
+              ) {
     this.vDataCollection = vDataCollection;
+    this.saveFormService.onSaveForm.subscribe(
+      () => {
+        this.saveForm();
+      }
+    );
   }
-
   ngOnInit() {
     window.scrollTo(0, 0);
     this.route.parent.url.subscribe((urlPath) => {
@@ -310,7 +323,13 @@ export class VFormBuilderComponent implements OnInit {
   saveForm() {
     // if (this.validCheckFields()) {
       const form: Form = this.getForm();
-      this.formService.sendForm(form).subscribe(res => this.goBack());
+      this.spinnerText = "Data is saving...";
+      this.isDataSaving = true;
+      this.formService.sendForm(form).subscribe(res => {
+        this.isDataSaving = false;
+        this.spinnerText = "Data is loading...";
+        this.goBack();
+      });
     // }
     this.vDataCollection.deleteDraftForm(this.formId);
   }
@@ -561,5 +580,10 @@ export class VFormBuilderComponent implements OnInit {
   //     this.sections[fbSectionsKey] = false;
   //   }
   // }
+
+  ngOnDestroy(): void {
+    this.saveDraftForm();
+    // this.saveFormService.unsubscribe();
+  }
 }
 

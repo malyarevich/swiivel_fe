@@ -92,6 +92,8 @@ export class VFormPublishSettingsComponent implements OnInit {
   documents: DocumentsModel[] = [];
   formsPDF: FormsPDFModel[] = [];
 
+  label: string = "Just a moment..."
+
   vDataCollection: VDataCollectionComponent;
 
   constructor(
