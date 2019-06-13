@@ -8,6 +8,8 @@ import {ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output} from 
 export class PersonAvatarChangeComponent implements OnInit {
   @Output() changeAvatarEmitter: EventEmitter<any> = new EventEmitter<any>();
   @Input() avatar: string;
+  @Input() size: string;
+  @Input() editable: boolean = true;
   avatarBase64:  string | ArrayBuffer;
   hover: boolean = false;
 
