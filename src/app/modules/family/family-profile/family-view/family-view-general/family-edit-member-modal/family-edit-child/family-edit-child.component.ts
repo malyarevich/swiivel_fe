@@ -6,6 +6,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {FamilyPersonService} from "../../../../../../../services/family/family-person.service";
 import {NgbDateParserFormatter} from "@ng-bootstrap/ng-bootstrap";
 import {PersonService} from "../../../../../../../services/person/person.service";
+import {environment} from "../../../../../../../../environments/environment";
 
 @Component({
   selector: 'app-family-edit-child',
@@ -21,6 +22,7 @@ export class FamilyEditChildComponent implements OnInit {
   FAMILY_ROLES = FamilyRoles;
   familyChildForm: FormGroup;
   date = new Date();
+  avatar: string | ArrayBuffer;
 
   get minDate() {
     return {day: 1, month: 1, year: this.date.getFullYear() - 100};
@@ -30,6 +32,9 @@ export class FamilyEditChildComponent implements OnInit {
     return {day: this.date.getDate(), month: this.date.getMonth() + 1, year: this.date.getFullYear()};
   }
 
+  get getAvatarUrl() {
+    return environment.avatarUrl + this.familyPerson.person.avatar;
+  }
 
   constructor(private fb: FormBuilder,
               private personService: PersonService,
@@ -106,6 +111,7 @@ export class FamilyEditChildComponent implements OnInit {
         dob: this.parserFormatter.format(this.familyChildForm.value.dob) || null,
         deceased: this.familyChildForm.value.deceased ? 1 : 0,
         dod: this.parserFormatter.format(this.familyChildForm.value.dod) || null,
+        avatar: this.avatar || null,
       },
       parents: this.familyChildForm.value.parents ? this.familyChildForm.value.parents.map((item) => item.id) : [],
       person_info: null,
@@ -122,6 +128,10 @@ export class FamilyEditChildComponent implements OnInit {
 
   onCloseEditFamilyMemberModal() {
     this.closeModalEditFamilyMember.emit(true);
+  }
+
+  onChangeAvatar($event) {
+    this.avatar = $event;
   }
 
 }
