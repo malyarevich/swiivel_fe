@@ -75,4 +75,16 @@ export class VFormTableTbodyComponent implements OnInit {
       this.getAllFormEmitter.emit();
     });
   }
+
+  getUserName(permission) {
+    return permission.user ? permission.user.full_name : '';
+  }
+
+  getOwnerFullName(item) {
+    return item.owner ? item.owner.full_name : '';
+  }
+
+  getOwnerRoleName(item) {
+    return item.owner ? item.owner.role.role_name : '';
+  }
 }

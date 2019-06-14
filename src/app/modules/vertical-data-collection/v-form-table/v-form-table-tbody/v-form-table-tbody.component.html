@@ -35,7 +35,7 @@
               src="assets/images/temp/person-foto-placeholder.png"
             />
             <p class="user__name">
-              {{ permission.user.full_name }}
+              {{ getUserName(permission) }}
             </p>
           </div>
         </ng-container>
@@ -66,10 +66,10 @@
             src="assets/images/temp/person-foto-placeholder.png"
           />
           <p class="user__name">
-            {{ item.owner.full_name }}
+            {{ getOwnerFullName(item) }}
           </p>
           <p class="user__role">
-            {{ item.owner.role.role_name }}
+            {{ getOwnerRoleName(item) }}
           </p>
         </div>
       </div>

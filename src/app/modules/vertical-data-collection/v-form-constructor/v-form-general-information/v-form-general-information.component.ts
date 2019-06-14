@@ -77,6 +77,7 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
   isSubmitted: boolean = false;
   isDataSaving: boolean = false;
   spinnerText: string = "Data is loading...";
+  isLoaded: boolean = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -101,7 +102,18 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
     });
     this.formInit();
     this.getAllForm();
+    this.isLoaded = true;
   }
+
+  isFormReady() {
+    return (
+      this.generalInfoForm !== undefined 
+      && this.formId !== undefined 
+      && this.isLoaded 
+      && !this.isDataSaving
+    );
+  }
+
   validateAllFormFields(formGroup: FormGroup) {
     Object.keys(formGroup.controls).forEach(field => {
       const control = formGroup.get(field);
@@ -176,7 +188,7 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    if (this.isSubmitted) {
+    if (!this.isSubmitted) {
       this.isSubmitted = true;
       this.validateAllFormFields(this.generalInfoForm);
       if (!this.generalInfoForm.valid) {
@@ -221,8 +233,34 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
     });
   }
   saveFormWithoutRedirect() {
+    // console.log("saveFormWithoutRedirect");
     if (!this.isDataSaving) {
-      const form: Form = {
+      if (!this.generalInfoForm) {
+        return;
+      }
+      const form: Form = this.composeForm();
+      if (form === undefined) {
+        return;
+      }
+      this.spinnerText = "Data is saving...";
+      this.isDataSaving = true;
+
+      this.formService.sendForm(form).subscribe((res: any) => {
+        this.isDataSaving = false;
+        this.spinnerText = "Data is loading...";
+      });
+    }
+  }
+
+  composeForm() {
+    if (
+      this.formId !== "" &&
+      this.generalInfoForm.value.name &&
+      this.generalInfoForm.value.startDate &&
+      this.generalInfoForm.value.endDate &&
+      this.generalInfoForm.value.eligible
+    ) {
+      return {
         _id: this.formId,
         name: this.generalInfoForm.value.name,
         fields: this.fields,
@@ -236,16 +274,13 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
         },
         eligible: this.generalInfoForm.value.eligible,
         step: 0,
-        example_form_id: this.formDublicateId,
+        example_form_id: this.formDublicateId
+          ? this.formDublicateId
+          : undefined,
         chosen_way_to_create_new_form: this.formTypeCreation
       };
-      this.spinnerText = "Data is saving...";
-      this.isDataSaving = true;
-
-      this.formService.sendForm(form).subscribe((res: any) => {
-        this.isDataSaving = false;
-        this.spinnerText = "Data is loading...";
-      });
+    } else {
+      return;
     }
   }
 
@@ -348,6 +383,7 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    // console.log("OnDestroy");
     if (this.isOnSubmit) return;
     if (
       this.router.routerState.snapshot.url.indexOf("form-builder") > -1 ||
@@ -362,9 +398,8 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
     this.activeSection = item.target;
     this.onScrollTo(item.scrollTarget);
   }
-  
+
   goBack() {
     this.router.navigate([`/vertical-data-collection/`]);
   }
-
 }

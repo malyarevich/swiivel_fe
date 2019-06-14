@@ -526,7 +526,9 @@ export class VFormBuilderComponent implements OnInit, OnDestroy {
 
   public saveDraftForm(): void {
     // console.log("SAVE draft");
-    this.vDataCollection.setDraftForm(this.formId, this.getForm());
+    if( this.formId && this.form ) {
+      this.vDataCollection.setDraftForm(this.formId, this.getForm());
+    }
   }
 
   goBack() {

@@ -256,8 +256,10 @@ export class VFormPublishSettingsComponent implements OnInit {
 
   public saveDraftForm(): void {
     // console.log("SAVE draft");
-    const form: Form = this.getForm();
-    this.vDataCollection.setDraftForm(this.draftId, form);
+    if( this.formId && this.form ) {
+      const form: Form = this.getForm();
+      this.vDataCollection.setDraftForm(this.draftId, form);
+    }
   }
 
   goBack() {
