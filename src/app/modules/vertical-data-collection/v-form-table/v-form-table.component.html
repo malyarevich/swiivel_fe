@@ -10,7 +10,7 @@
     </app-v-form-nav>
 
     <ng-container *ngIf="forms === undefined">
-      <main-spinner></main-spinner>
+      <main-spinner [spinnerText]="'Forms are loading...'"></main-spinner>
     </ng-container>
     <ng-container *ngIf="forms !== undefined">
       <table class="table">

@@ -1,4 +1,5 @@
-<div class="container-fluid">
+<!-- General Information Form -->
+<div *ngIf="generalInfoForm !== undefined && formId !== undefined && !isDataSaving" class="container-fluid">
   <div class="row mt-5 px-5">
     <div class="col-3 rounded p-0">
       <app-v-form-general-menu (activeSectionEmitter)="setActiveSection($event)" [menu]="menu"></app-v-form-general-menu>
@@ -410,9 +411,15 @@
         <!--End ELIGIBLE ACCOUNTS-->
 
         <div class="row justify-content-center mt-4" [style.visibility]="menu.eligible.isActive ? 'visible' : 'hidden'">
-          <button class=" btn  app-btn-primary" type="submit">Save & Go Next Step</button>
+          <button class=" btn  app-btn-primary" [disabled]="isSubmitted" type="submit">Save & Go Next Step</button>
         </div>
       </form>
     </div>
   </div>
+
 </div>
+
+<!-- Loading spinner -->
+<ng-container *ngIf="generalInfoForm === undefined || isDataSaving">
+  <main-spinner [spinnerText]="spinnerText"></main-spinner>
+</ng-container>

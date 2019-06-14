@@ -6,7 +6,7 @@ import { Component, OnInit, Input } from "@angular/core";
   styleUrls: ["./main-spinner.component.scss"]
 })
 export class MainSpinnerComponent implements OnInit {
-  @Input() label: string = "";
+  @Input() spinnerText: string = "";
 
   constructor() {}
 

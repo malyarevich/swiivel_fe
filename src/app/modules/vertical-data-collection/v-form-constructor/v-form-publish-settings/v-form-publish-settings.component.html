@@ -1,5 +1,5 @@
 <div class="container-fluid">
-  <ng-container *ngIf="publish_settings !== undefined">
+  <ng-container *ngIf="publish_settings !== undefined && !isDataSaving">
     <div class="row mt-5">
       <div class="col-12 col-lg-3 rounded">
         <!-- pl-lg-5 -->
@@ -45,7 +45,8 @@
       </div>
     </div>
   </ng-container>
-  <ng-container *ngIf="publish_settings === undefined">
-    <main-spinner [label]="label"></main-spinner>
+
+  <ng-container *ngIf="publish_settings === undefined || isDataSaving">
+    <main-spinner [spinnerText]="spinnerText"></main-spinner>
   </ng-container>
 </div>
