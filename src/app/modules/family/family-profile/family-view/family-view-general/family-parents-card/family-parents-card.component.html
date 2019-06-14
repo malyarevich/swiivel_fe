@@ -1,7 +1,10 @@
 <div class="p-3">
   <div class="row no-gutters border-bottom">
     <div class="col-3">
-      <img src="assets/images/temp/person-foto-placeholder.png" width="70%">
+      <app-person-avatar-change [avatar]="familyPerson.person.avatar ? getAvatarUrl : ''"
+                                [editable]="false"
+                                [size]="'4em'">
+      </app-person-avatar-change>
     </div>
     <div class="col-9">
       <div class="row">

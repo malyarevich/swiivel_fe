@@ -30,6 +30,7 @@ import {DataTableHeaderTitleComponent} from "./data-table/data-table-header/data
 import {DataTableHeaderFilterTextComponent} from "./data-table/data-table-header/data-table-header-filter-text/data-table-header-filter-text.component";
 import {DataTableHeaderFilterDateComponent} from "./data-table/data-table-header/data-table-header-filter-date/data-table-header-filter-date.component";
 import {NgbDatepicker, NgbDatepickerModule} from "@ng-bootstrap/ng-bootstrap";
+import { PersonAvatarChangeComponent } from './person-avatar-change/person-avatar-change.component';
 //SharedFieldComponent
 import { ShortTextFieldComponent } from "./online-form/online-form-fields/fields/short-text-field/short-text-field.component";
 import { EmptyLineFieldComponent } from "./online-form/online-form-fields/fields/empty-line-field/empty-line-field.component";
@@ -70,6 +71,7 @@ import { PhoneNumberFieldComponent } from "./online-form/online-form-fields/fiel
     DataTableHeaderTitleComponent,
     DataTableHeaderFilterTextComponent,
     DataTableHeaderFilterDateComponent,
+    PersonAvatarChangeComponent,
     //shared components
     ShortTextFieldComponent,
     LongTextFieldComponent,
@@ -115,7 +117,8 @@ import { PhoneNumberFieldComponent } from "./online-form/online-form-fields/fiel
     SpinnerComponent,
     MainSpinnerComponent,
     TagComponent,
-    DataTableComponent
+    DataTableComponent,
+    PersonAvatarChangeComponent
   ],
 })
 
