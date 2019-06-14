@@ -21,7 +21,11 @@
               General Settings
               <i
                 *ngIf="isGeneralInfoValid"
-                class="fas fa-check-circle fa-xs pr-2"
+                class="fas fa-check-circle fa-xs pl-2"
+              ></i>
+              <i
+                *ngIf="!isGeneralInfoValid"
+                class="fas fa-spacer-non-icon fa-xs pl-2"
               ></i>
             </a>
             <i class="fa fa-chevron-right main_navbar__item_icon"></i>
