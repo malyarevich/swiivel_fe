@@ -1,7 +1,7 @@
 <form [formGroup]="familyChildForm" (ngSubmit)="updateFamilyChild()">
   <p class="app-text-small font-weight-bold mb-1">PERSONAL {{familyPerson.person_role | uppercase}} INFO</p>
   <div class="row no-gutters app-family-card-body p-3">
-    <div class="col-3">
+    <div class="col-3 pl-2">
       <app-person-avatar-change (changeAvatarEmitter)="onChangeAvatar($event)"
                                 [avatar]="familyPerson.person.avatar ? getAvatarUrl : ''"
                                 [size]="'9em'">
@@ -204,7 +204,7 @@
                              label="Address"></app-input-field>
           </div>
           <div class="col-4 px-1">
-            <app-input-field [formControlName]="'student_physician_phone'" id='phone'
+            <app-input-field appNumbersValidator="true" regexStr="^[0-9]+$" [formControlName]="'student_physician_phone'" id='phone'
                              label="Phone"></app-input-field>
           </div>
         </div>
@@ -227,7 +227,8 @@
                          label="Full Name"></app-input-field>
       </div>
       <div class="col-4 px-1">
-        <app-input-field [formControlName]="'student_first_contact_cell_phone'" id='first_cell_phone'
+        <app-input-field appNumbersValidator="true" regexStr="^[0-9]+$"
+                         [formControlName]="'student_first_contact_cell_phone'" id='first_cell_phone'
                          label="Cell Phone"></app-input-field>
       </div>
     </div>
@@ -240,11 +241,16 @@
                          label="Full name"></app-input-field>
       </div>
       <div class="col-4 px-1">
-        <app-input-field [formControlName]="'student_second_contact_relationship'" id='relationship_to_student'
-                         label="Relationship to student"></app-input-field>
+        <app-select-field class="app-text-capitalize"
+                          [formControlName]="'student_second_contact_relationship'"
+                          id='relationship_to_student'
+                          labelTitle="Relationship to student"
+                          [items]="roles">
+        </app-select-field>
       </div>
       <div class="col-4 px-1">
-        <app-input-field [formControlName]="'student_second_contact_cell_phone'" id='second_cell_phone'
+        <app-input-field appNumbersValidator="true" regexStr="^[0-9]+$"
+                         [formControlName]="'student_second_contact_cell_phone'" id='second_cell_phone'
                          label="Cell Phone"></app-input-field>
       </div>
     </div>

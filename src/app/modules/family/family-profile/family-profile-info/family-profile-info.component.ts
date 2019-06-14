@@ -4,6 +4,8 @@ import {Observable} from "rxjs";
 import {LoaderService} from "../../../../services/loader/loader.service";
 import {FamilyService} from "../../../../services/family/family.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FamilyPersonService} from "../../../../services/family/family-person.service";
+import {Person} from "../../../../models/person.model";
 
 @Component({
   selector: 'app-family-profile-info',
@@ -19,10 +21,15 @@ export class FamilyProfileInfoComponent implements OnInit {
   familyForm: FormGroup;
   loader$: Observable<boolean>;
   family: Family;
+  preferredContacts = [];
+
+  language = ['english', 'hebrew'];
+  contactMethod = ['email', 'cell phone'];
 
   constructor(private familyService: FamilyService,
               private loaderService: LoaderService,
-              private formBuilder: FormBuilder) {
+              private formBuilder: FormBuilder,
+              private familyPersonService: FamilyPersonService) {
   }
 
   ngOnInit() {
@@ -43,6 +50,7 @@ export class FamilyProfileInfoComponent implements OnInit {
     });
 
     this.getFamily(this.familyId);
+    this.getPreferredContacts();
   }
 
   getFamily(familyId) {
@@ -55,6 +63,14 @@ export class FamilyProfileInfoComponent implements OnInit {
       });
     });
     this.familyService.getOne(familyId);
+  }
+
+  getPreferredContacts() {
+    this.familyPersonService.familyPersonList.subscribe((res) => {
+      res.map((item) => {
+        this.preferredContacts.push(item.person.first_name + (item.person.last_name ? ' ' + item.person.last_name : ''));
+      });
+    });
   }
 
   submit() {

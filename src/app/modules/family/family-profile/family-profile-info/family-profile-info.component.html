@@ -69,6 +69,7 @@
           <label class="app-input-label app-family-profile-input">Zip Code</label>
           <input
             type="text"
+            appNumbersValidator="true" regexStr="^[0-9]+$"
             class="app-input"
             formControlName="zip">
         </div>
@@ -83,21 +84,23 @@
 
       <div class="col-12 p-2">
         <div class="app-input-fill">
-          <label class="app-input-label app-family-profile-input">Preferred Contact</label>
-          <input
-            type="text"
-            class="app-input"
-            formControlName="preferred_contact">
+          <app-select-field
+                            [formControlName]="'preferred_contact'"
+                            id="preferred_contact"
+                            labelTitle="Preferred Contact"
+                            [items]="preferredContacts">
+          </app-select-field>
         </div>
       </div>
 
       <div class="col-12 p-2">
         <div class="app-input-fill">
-          <label class="app-input-label app-family-profile-input">Preferred Contact Method</label>
-          <input
-            type="text"
-            class="app-input"
-            formControlName="preferred_contact_method">
+          <app-select-field class="app-text-capitalize"
+                            [formControlName]="'preferred_contact_method'"
+                            id="preferred_contact_method"
+                            labelTitle="Preferred Contact Method"
+                            [items]="contactMethod">
+          </app-select-field>
         </div>
       </div>
 
@@ -106,6 +109,7 @@
           <label class="app-input-label app-family-profile-input">Home Phone Number</label>
           <input
             type="text"
+            appNumbersValidator="true" regexStr="^[0-9]+$"
             class="app-input"
             formControlName="home_phone_number">
         </div>
@@ -120,11 +124,12 @@
 
       <div class="col-12 p-2">
         <div class="app-input-fill">
-          <label class="app-input-label app-family-profile-input">Language Spoken at Home</label>
-          <input
-            type="text"
-            class="app-input"
-            formControlName="language_spoken_at_home">
+          <app-select-field class="app-text-capitalize"
+                            [formControlName]="'language_spoken_at_home'"
+                            id="language_spoken_at_home"
+                            labelTitle="Language Spoken at Home"
+                            [items]="language">
+          </app-select-field>
         </div>
       </div>
 
@@ -143,6 +148,7 @@
           <label class="app-input-label app-family-profile-input">Rabbi Phone number</label>
           <input
             type="text"
+            appNumbersValidator="true" regexStr="^[0-9]+$"
             class="app-input"
             formControlName="rabbi_phone_number">
         </div>
