@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FamilyPerson} from "../../../../../../../models/family/family-person.model";
-import {FamilyRoles} from "../../../../../../../enums/family-roles";
+import {familyRoles, FamilyRoles} from "../../../../../../../enums/family-roles";
 import {Gender} from "../../../../../../../enums/gender";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {FamilyPersonService} from "../../../../../../../services/family/family-person.service";
@@ -23,6 +23,7 @@ export class FamilyEditChildComponent implements OnInit {
   familyChildForm: FormGroup;
   date = new Date();
   avatar: string | ArrayBuffer;
+  roles = familyRoles;
 
   get minDate() {
     return {day: 1, month: 1, year: this.date.getFullYear() - 100};

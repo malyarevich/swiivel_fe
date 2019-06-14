@@ -31,4 +31,5 @@ export interface Person {
   deceased: number,
   dod: string,
   avatar: string,
+  full_name?: string,
 }
