@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {GeneralInfoIsValidService} from "../../services/general-info-is-valid.service";
 import { SaveFormService } from '../../services/save-form.service';
 
@@ -9,10 +9,15 @@ import { SaveFormService } from '../../services/save-form.service';
   styleUrls: ['./v-form-navigation-bar.component.scss']
 })
 export class VFormNavigationBarComponent implements OnInit {
+  
+  isGeneralSaved: boolean = false;
+  isBuilderSaved: boolean = false;
+  isPublishSaved: boolean = false;
 
   isGeneralInfoValid: boolean;
 
   constructor(
+    private router: Router,    
     private generalInfoIsValidService: GeneralInfoIsValidService,
     private saveFormService: SaveFormService
     ) {
@@ -20,6 +25,26 @@ export class VFormNavigationBarComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  eventGeneral($event) {
+    this.isGeneralSaved = $event;
+    this.goBack();
+  }
+  eventBuilder($event) {
+    this.isBuilderSaved = $event;
+    this.goBack();
+  }
+  eventPublish($event) {
+    this.isPublishSaved = $event;
+    this.goBack();
+  }
+
+  goBack() {
+    console.log("goBack");
+    if (this.isGeneralSaved && this.isBuilderSaved && this.isPublishSaved) {
+      this.router.navigate([`/vertical-data-collection/`]);
+    }
   }
 
   saveForm() {

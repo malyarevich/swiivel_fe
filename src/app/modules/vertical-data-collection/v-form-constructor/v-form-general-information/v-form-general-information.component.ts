@@ -7,7 +7,9 @@ import {
   OnChanges,
   OnDestroy,
   OnInit,
-  ViewChild
+  ViewChild,
+  Output,
+  EventEmitter
 } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { FormUtils } from "../../utils/form.utils";
@@ -32,6 +34,7 @@ import { SaveFormService } from "../../services/save-form.service";
   styleUrls: ["./v-form-general-information.component.css"]
 })
 export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
+  @Output() goBackGeneral = new EventEmitter<boolean>();
   @ViewChild("generalInfo") generalInfo: ElementRef;
   @ViewChild("basicInfo") basicInfo: ElementRef;
   @ViewChild("period") period: ElementRef;
@@ -91,7 +94,8 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
   ) {
     this.saveFormService.onSaveForm.subscribe(() => {
       this.saveFormWithoutRedirect();
-      this.goBack();
+      this.goBack();      
+      // this.goBackGeneral.emit(true);
     });
   }
 

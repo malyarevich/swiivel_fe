@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Host } from "@angular/core";
+import { Component, Input, OnInit, Host, Output, EventEmitter } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { VFormService } from "../../services/v-form.service";
 import { FormUtils } from "../../utils/form.utils";
@@ -46,6 +46,7 @@ import { Observable } from "rxjs";
 export class VFormPublishSettingsComponent implements OnInit {
   @Input() saveEvents: Observable<void>;
   @Input() formId: string;
+  @Output() goBackPublish = new EventEmitter<boolean>();
   activeMenuItem: string;
   publishMenuItems = PublishMenuItems;
 
@@ -247,7 +248,8 @@ export class VFormPublishSettingsComponent implements OnInit {
       this.formService.sendForm(form).subscribe(res => {
         this.isDataSaving = false;
         this.spinnerText = "Data is loading...";
-        this.goBack();
+        // this.goBack();
+        // this.goBackPublish.emit(true);
       });
     }
     // }

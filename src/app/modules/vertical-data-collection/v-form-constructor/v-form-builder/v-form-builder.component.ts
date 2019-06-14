@@ -5,7 +5,9 @@ import {
   ViewChild,
   ElementRef,
   OnDestroy,
-  Host
+  Host,
+  Output,
+  EventEmitter
 } from "@angular/core";
 import {
   CdkDragDrop,
@@ -69,6 +71,7 @@ import { SaveFormService } from "../../services/save-form.service";
 })
 export class VFormBuilderComponent implements OnInit, OnDestroy {
   @Input() saveEvents: Observable<void>;
+  @Output() goBackBuilder = new EventEmitter<boolean>();
 
   validNewCustomFieldName: boolean = true;
   showAddButton = true;
@@ -369,7 +372,8 @@ export class VFormBuilderComponent implements OnInit, OnDestroy {
       this.formService.sendForm(form).subscribe(res => {
         this.isDataSaving = false;
         this.spinnerText = "Data is loading...";
-        this.goBack();
+        // this.goBack();
+        // this.goBackBuilder.emit(true);
       });
     }
     // }

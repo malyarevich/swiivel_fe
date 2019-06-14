@@ -67,6 +67,10 @@
 
 <div class="content-area">
   <div class="gray_container">
-    <router-outlet></router-outlet>
+    <router-outlet 
+      (goBackGeneral)="eventGeneral($event)"
+      (goBackBuilder)="eventBuilder($event)"
+      (goBackPublish)="eventPublish($event)"
+    ></router-outlet>
   </div>
 </div>
