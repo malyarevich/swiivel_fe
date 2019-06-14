@@ -1,9 +1,4 @@
-import {
-  Component,
-  Input,
-  OnInit,
-  Host,
-} from "@angular/core";
+import { Component, Input, OnInit, Host } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { VFormService } from "../../services/v-form.service";
 import { FormUtils } from "../../utils/form.utils";
@@ -21,16 +16,14 @@ import {
 import { Form } from "../../model/form.model";
 import {
   ConsentInfo,
-  consentInfoDefault,
+  consentInfoDefault
 } from "./../v-form-builder/v-consent/model/consent.model";
 import {
   DocumentSideBar,
   DocumentsModel
 } from "./../v-form-builder/v-documents-forms/model/documents.model";
 import { GeneralInfoIsValidService } from "../../services/general-info-is-valid.service";
-import {
-  FormsPDFModel
-} from "./../v-form-builder/v-documents-forms/model/formsPDF.model";
+import { FormsPDFModel } from "./../v-form-builder/v-documents-forms/model/formsPDF.model";
 import { VFilesService } from "../../services/v-files.service";
 
 import { E_SIGNATURE_TYPES, SIGNATURE_TYPES } from "../../../../enums";
@@ -39,10 +32,10 @@ import {
   termsConditionsDefault
 } from "./../v-form-builder/v-terms-conditions/model/terms-conditions.model";
 import { FinanceService } from "../../../../services/finance/finance.service";
-import {
-  FeeTemplate
-} from "../../../../models/fee-templates.model";
+import { FeeTemplate } from "../../../../models/fee-templates.model";
 import { VDataCollectionComponent } from "../../v-data-collection.component";
+import { SaveFormService } from "../../services/save-form.service";
+import { Observable } from "rxjs";
 
 //TODO: remove excess functional
 @Component({
@@ -51,6 +44,7 @@ import { VDataCollectionComponent } from "../../v-data-collection.component";
   styleUrls: ["./v-form-publish-settings.component.scss"]
 })
 export class VFormPublishSettingsComponent implements OnInit {
+  @Input() saveEvents: Observable<void>;
   @Input() formId: string;
   activeMenuItem: string;
   publishMenuItems = PublishMenuItems;
@@ -92,6 +86,9 @@ export class VFormPublishSettingsComponent implements OnInit {
   documents: DocumentsModel[] = [];
   formsPDF: FormsPDFModel[] = [];
 
+  isDataSaving: boolean = false;
+  spinnerText: string = "Data is loading...";
+
   vDataCollection: VDataCollectionComponent;
 
   constructor(
@@ -104,9 +101,13 @@ export class VFormPublishSettingsComponent implements OnInit {
     private location: Location,
     private generalInfoIsValidService: GeneralInfoIsValidService,
     private fileService: VFilesService,
-    private readonly financeService: FinanceService
+    private readonly financeService: FinanceService,
+    private saveFormService: SaveFormService
   ) {
     this.vDataCollection = vDataCollection;
+    this.saveFormService.onSaveForm.subscribe(() => {
+      this.saveForm();
+    });
     // console.log("constructor");
   }
 
@@ -121,13 +122,14 @@ export class VFormPublishSettingsComponent implements OnInit {
   }
 
   toggleOnlineCheckbox(key: string) {
-    this.publish_settings.online_config[key] = 
-    !this.publish_settings.online_config[key];
+    this.publish_settings.online_config[key] = !this.publish_settings
+      .online_config[key];
   }
 
   togglePdfCheckbox(key: string) {
-    this.publish_settings.pdf_config[key] = 
-    !this.publish_settings.pdf_config[key];
+    this.publish_settings.pdf_config[key] = !this.publish_settings.pdf_config[
+      key
+    ];
   }
 
   updateFormValue(formValue: object) {
@@ -184,9 +186,9 @@ export class VFormPublishSettingsComponent implements OnInit {
     }
     return {
       state: PublishSettingsItems.defaultStateSub,
-      online_config: {...PublishSettingsItems.defaultOnlineConfig},
-      pdf_config: {...PublishSettingsItems.defaultPdfConfig}
-    }
+      online_config: { ...PublishSettingsItems.defaultOnlineConfig },
+      pdf_config: { ...PublishSettingsItems.defaultPdfConfig }
+    };
   }
 
   formInit(): void {
@@ -194,14 +196,18 @@ export class VFormPublishSettingsComponent implements OnInit {
     if (!isEmpty(form)) {
       // console.log("loading draftForm");
       // console.log(form);
-      form.publish_settings = this.getPublishSettingValidOrDefault(form.publish_settings);
+      form.publish_settings = this.getPublishSettingValidOrDefault(
+        form.publish_settings
+      );
       this.setLocalForm(form); //draftForm
     } else if (this.formId) {
       this.formService.getOneForm(this.formId).subscribe(
         (form: Form) => {
           // console.log("loading remoteForm");
           // console.log(form);
-          form.publish_settings = this.getPublishSettingValidOrDefault(form.publish_settings);
+          form.publish_settings = this.getPublishSettingValidOrDefault(
+            form.publish_settings
+          );
           this.setLocalForm(form); //remoteForm
         },
         error => console.log(error, "error"),
@@ -209,7 +215,7 @@ export class VFormPublishSettingsComponent implements OnInit {
           this.generalInfoIsValidService.setIsValid(true);
         }
       );
-    } else {    
+    } else {
     }
   }
 
@@ -234,9 +240,16 @@ export class VFormPublishSettingsComponent implements OnInit {
 
   saveForm() {
     // if (this.validCheckFields()) {
-    const form: Form = this.getForm();
-    // console.log(form);
-    this.formService.sendForm(form).subscribe(res => this.goBack());
+    if (this.form && !this.isDataSaving) {
+      const form: Form = this.getForm();
+      this.spinnerText = "Data is saving...";
+      this.isDataSaving = true;
+      this.formService.sendForm(form).subscribe(res => {
+        this.isDataSaving = false;
+        this.spinnerText = "Data is loading...";
+        this.goBack();
+      });
+    }
     // }
     this.vDataCollection.deleteDraftForm(this.draftId);
   }

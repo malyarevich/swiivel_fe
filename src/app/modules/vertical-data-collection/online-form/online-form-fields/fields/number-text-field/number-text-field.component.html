@@ -4,7 +4,8 @@
   <input type="number"
          class="app-input form-control"
          [(ngModel)]="data.value"
-         [readOnly]="data.options.readonly"
+         [readOnly]="true"
+         [disabled]="true"
          [required]="data.options.required"
          [placeholder]="data.name | titlecase">
 </div>

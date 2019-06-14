@@ -1,13 +1,11 @@
-import {Component, Input} from '@angular/core';
-import {Field} from '../../../model/field.model';
-
+import { Component, Input } from "@angular/core";
+import { Field } from "../../../model/field.model";
 
 @Component({
-  selector: 'app-number-text-field',
-  templateUrl: './number-text-field.component.html',
-  styleUrls: ['./number-text-field.component.css']
+  selector: "app-number-text-field",
+  templateUrl: "./number-text-field.component.html",
+  styleUrls: ["./number-text-field.component.css"]
 })
-export class NumberTextFieldComponent  {
-
+export class NumberTextFieldComponent {
   @Input() data: Field;
 }
