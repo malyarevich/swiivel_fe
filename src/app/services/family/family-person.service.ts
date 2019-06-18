@@ -9,21 +9,9 @@ import {FamilyQueryParamsService} from "./family-query-params.service";
 import {FAMILY_VIEW_GENERAL_TABS} from "../../models/family/family-view-general-tabs";
 
 interface ResponseData {
-  success: boolean;
-  errors: string;
-  data: FamilyPerson;
-}
-
-interface NewResponseData {
   status: boolean;
   errors?: string;
   data?: FamilyPerson;
-}
-
-interface DeleteResponseData {
-  success: boolean;
-  errors?: string;
-  id: number;
 }
 
 @Injectable()
@@ -58,35 +46,31 @@ export class FamilyPersonService {
   }
 
   add(data) {
-    this.addOneRequest(data).subscribe((res: ResponseData) => {
-      const familyPerson: FamilyPerson = res.data;
-      // this.dataStore.familyPersonList.push(familyPerson);
+    this.addOneRequest(data).subscribe((res: FamilyPerson) => {
+      // this.dataStore.familyPersonList.push(res);
       // this._familyPersonList.next(Object.assign({}, this.dataStore).familyPersonList);
-      if (familyPerson.person_role === this.familyRoles.student) this.familyService.incrementFieldCount('students_count');
-      if (familyPerson.person_role === this.familyRoles.child) this.familyService.incrementFieldCount('children_count');
+      if (res.person_role === this.familyRoles.student) this.familyService.incrementFieldCount('students_count');
+      if (res.person_role === this.familyRoles.child) this.familyService.incrementFieldCount('children_count');
       this.familyQueryParamsService.setFilterParams(this.FAMILY_VIEW_GENERAL_TABS.ALL);
     }, error => console.log('Could not add families persons. Error: ' + error.message));
   }
 
   update(data, id) {
-    this.updateOneRequest(data, id).subscribe((res: ResponseData) => {
-      if (res.success) {
+    this.updateOneRequest(data, id).subscribe((res: FamilyPerson) => {
         // this.dataStore.familyPersonList.forEach((item, i) => {
-        //   if (item.id == res.data.id) {
-        //     this.dataStore.familyPersonList[i] = res.data;
+        //   if (item.id == res.id) {
+        //     this.dataStore.familyPersonList[i] = res;
         //   }
         //   this._familyPersonList.next(Object.assign({}, this.dataStore).familyPersonList);
         //   });
         this.familyQueryParamsService.setFilterParams(this.FAMILY_VIEW_GENERAL_TABS.ALL);
-      }
     });
   }
 
   delete(id, role) {
-    this.deleteOneRequest(id).subscribe((data: DeleteResponseData) => {
-      if (data.success) {
+    this.deleteOneRequest(id).subscribe((id) => {
         // this.dataStore.familyPersonList.forEach((item, i) => {
-        // if (item.id == data.id) {
+        // if (item.id == id) {
         //   this.dataStore.familyPersonList.splice(i, 1);
         // }
         // this._familyPersonList.next(Object.assign({}, this.dataStore).familyPersonList);
@@ -94,7 +78,6 @@ export class FamilyPersonService {
         if (role === this.familyRoles.student) this.familyService.decrementFieldCount('students_count');
         if (role === this.familyRoles.child) this.familyService.decrementFieldCount('children_count');
         this.familyQueryParamsService.setFilterParams(this.FAMILY_VIEW_GENERAL_TABS.ALL);
-      }
     }, error => console.log('Could not delete family person. Error: ' + error.message));
   }
 
@@ -106,7 +89,7 @@ export class FamilyPersonService {
     };
     if (params) options['params'] = new HttpParams().set('params', JSON.stringify(params));
     return this.http.get(`/person/family/${familyId}`, options).pipe(
-      map((res: NewResponseData) => {
+      map((res: ResponseData) => {
         if (res.status) {
          return res.data;
         } else {
@@ -118,25 +101,43 @@ export class FamilyPersonService {
 
   addOneRequest(data): Observable<any> {
     return this.http.post(`/person/family`, {...data}).pipe(
-      map((res) => res)
+      map((res : ResponseData) => {
+        if (res.status) {
+          return res.data;
+        } else {
+          return throwError(res.errors);
+        }
+      })
     );
   }
 
   updateOneRequest(data, id): Observable<any> {
     return this.http.put(`/person/family/${id}`, {...data}).pipe(
-      map((res) => res)
+      map((res: ResponseData) => {
+        if (res.status) {
+          return res.data;
+        } else {
+          return throwError(res.errors);
+        }
+      })
     );
   }
 
   deleteOneRequest(id): Observable<any> {
     return this.http.delete(`person/family/${id}`).pipe(
-      map((res: DeleteResponseData) => res)
+      map((res: ResponseData) => {
+        if (res.status) {
+          return res.data;
+        } else {
+          return throwError(res.errors);
+        }
+      })
     );
   }
 
   getAllRequest(): Observable<any> {
     return this.http.get('/person/family').pipe(
-      map((res: NewResponseData) => {
+      map((res: ResponseData) => {
         if (res.status) {
           return res.data;
         } else {
