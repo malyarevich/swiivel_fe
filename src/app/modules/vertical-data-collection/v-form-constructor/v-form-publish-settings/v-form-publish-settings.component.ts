@@ -36,6 +36,7 @@ import { FeeTemplate } from "../../../../models/fee-templates.model";
 import { VDataCollectionComponent } from "../../v-data-collection.component";
 import { SaveFormService } from "../../services/save-form.service";
 import { Observable } from "rxjs";
+import { PublishSettingsIsSavedService } from '../../services/publish-settings-is-saved.service';
 
 //TODO: remove excess functional
 @Component({
@@ -103,6 +104,7 @@ export class VFormPublishSettingsComponent implements OnInit {
     private generalInfoIsValidService: GeneralInfoIsValidService,
     private fileService: VFilesService,
     private readonly financeService: FinanceService,
+    private publishSettingsIsSavedService: PublishSettingsIsSavedService,
     private saveFormService: SaveFormService
   ) {
     this.vDataCollection = vDataCollection;
@@ -114,6 +116,7 @@ export class VFormPublishSettingsComponent implements OnInit {
 
   ngOnInit() {
     window.scrollTo(0, 0);
+    this.publishSettingsIsSavedService.setIsSaved(false);
     this.route.parent.url.subscribe(urlPath => {
       const url = urlPath[urlPath.length - 1].path;
       this.formId = url != "v-form-constructor" ? url : "";
@@ -246,10 +249,14 @@ export class VFormPublishSettingsComponent implements OnInit {
       this.spinnerText = "Data is saving...";
       this.isDataSaving = true;
       this.formService.sendForm(form).subscribe(res => {
-        this.isDataSaving = false;
-        this.spinnerText = "Data is loading...";
-        // this.goBack();
-        // this.goBackPublish.emit(true);
+        this.publishSettingsIsSavedService.setIsSaved(res['updated']);
+
+        this.isDataSaving = !this.saveFormService.getSavingStatus();
+        if (this.isDataSaving) {
+          this.spinnerText = "Other tabs are saving...";
+        } else {
+          this.spinnerText = "Data is loading...";
+        }
       });
     }
     // }

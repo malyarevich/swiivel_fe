@@ -27,6 +27,7 @@ import { requireCheckboxesToBeCheckedValidator } from "../../../../utils/validat
 import { GeneralInfoIsValidService } from "../../services/general-info-is-valid.service";
 import { menuItemModel } from "./menu";
 import { SaveFormService } from "../../services/save-form.service";
+import { GeneralInfoIsSavedService } from '../../services/general-info-is-saved.service';
 
 @Component({
   selector: "app-v-form-general-information",
@@ -34,7 +35,6 @@ import { SaveFormService } from "../../services/save-form.service";
   styleUrls: ["./v-form-general-information.component.css"]
 })
 export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
-  @Output() goBackGeneral = new EventEmitter<boolean>();
   @ViewChild("generalInfo") generalInfo: ElementRef;
   @ViewChild("basicInfo") basicInfo: ElementRef;
   @ViewChild("period") period: ElementRef;
@@ -90,16 +90,17 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private parserFormatter: NgbDateParserFormatter,
     private generalInfoIsValidService: GeneralInfoIsValidService,
+    private generalInfoIsSavedService: GeneralInfoIsSavedService,
     private saveFormService: SaveFormService
   ) {
     this.saveFormService.onSaveForm.subscribe(() => {
       this.saveFormWithoutRedirect();
-      this.goBack();      
-      // this.goBackGeneral.emit(true);
+      // this.goBack();
     });
   }
 
   ngOnInit() {
+    this.generalInfoIsSavedService.setIsSaved(false);
     this.activatedRoute.parent.url.subscribe(urlPath => {
       const url = urlPath[urlPath.length - 1].path;
       this.formId = url != "v-form-constructor" ? url : "";
@@ -250,8 +251,14 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
       this.isDataSaving = true;
 
       this.formService.sendForm(form).subscribe((res: any) => {
-        this.isDataSaving = false;
-        this.spinnerText = "Data is loading...";
+        this.generalInfoIsSavedService.setIsSaved(res['updated']);
+                
+        this.isDataSaving = !this.saveFormService.getSavingStatus();
+        if (this.isDataSaving) {
+          this.spinnerText = "Other tabs are saving...";
+        } else {
+          this.spinnerText = "Data is loading...";
+        }
       });
     }
   }
