@@ -7,11 +7,11 @@
   </label>
   </div>
   <div class="col-10 pb-1 row align-items-center no-gutters side-bar-item">
-    <div class="col-1 pl-1">
-      <span><i class="fas fa-ellipsis-v dragable-i"></i></span>
-      <span><i class="fas fa-ellipsis-v  dragable-i"></i></span>
+    <div class="col-2 ">
+      <span class="v-eclipse-padding"><i class="fas fa-ellipsis-v dragable-i "></i></span>
+      <span class="v-eclipse-padding"><i class="fas fa-ellipsis-v  dragable-i"></i></span>
     </div>
-    <div class="col ml-1">
+    <div class="col ">
       <span class="side-bar-item-font" >{{group.name | titlecase}}</span>
     </div>
     <div  class="col-1 mr-1">
@@ -28,10 +28,10 @@
     [copy]="true"
     [model]="group.fields" ngxDroppable [hidden]="!showNested">
 
-    <div class="" *ngFor="let field of group.fields" [model]="field" [ngxDraggable]="idSectionForDragDrop">
+    <div class="my-1" *ngFor="let field of group.fields" [model]="field" [ngxDraggable]="idSectionForDragDrop">
       <div *ngIf="field.type==113" class="ml-2 border-open-setting">
         <app-v-side-bar-group
-
+          [sideBar]="sideBar"
           [group]="field"
           [form]="form"
           [section]="section"
@@ -39,36 +39,46 @@
 
         ></app-v-side-bar-group>
       </div>
+      <div class="ml-2" >
+        <app-v-side-bar-field
+          *ngIf="field.type!=113"
+          [field]="field"
+          [form]="form"
+          [section]="section"
+          [style]="field.mapped==''"
+        >
+        </app-v-side-bar-field>
+      </div>
 
 <!--    <div class="" *ngFor="let field of group.fields" cdkDrag>-->
 <!--      <app-v-side-bar-field [field]="field"></app-v-side-bar-field>-->
-      <div *ngIf="field.type!==113" class="row no-gutters  align-items-center">
-        <div class="ml-2 pb-2 col-1 ">
-          <label class="app-checkbox-container ">
-          <input
-            type="checkbox"
-            class=""
-            [ngModel]="field.exist"
-            (ngModelChange)="onBeingChangeNested($event, field, group, section)">
-          <span class="app-checkbox-checkmark just-white"></span>
-        </label>
-        </div>
-        <div
-          class="col-10  mb-1 mt-2 row align-items-center no-gutters rounded "
-          [ngClass]="field.mapped==''?'side-bar-item-group-custom':'side-bar-item-group'">
-<!--        <div class="col-10  mb-1 mt-2 row align-items-center no-gutters rounded " [ngClass]="field.mapped==''?'side-bar-item-group-custom':'side-bar-item-group'" placement="right" [ngbTooltip]="field.prefix+'\'s'">-->
-          <div class="col-1 ">
-            <span><i class="fas fa-ellipsis-v dragable-i"></i></span>
-            <span><i class="fas fa-ellipsis-v  dragable-i"></i></span>
-          </div>
-          <div class="col">
-            <span class="side-bar-item-font" [title]="field.mapped==''?'Custom':'Existing'">{{field.name}}</span>
-          </div>
-<!--          <div *ngIf="field.mapped==''" class="col-1">-->
-<!--            <span><i class="fas fa-trash dragable-i fa-xs" (click)="deleteCustomNestedField(field.name)"></i></span>-->
+<!--      <div *ngIf="field.type!==113" class="row no-gutters  align-items-center">-->
+<!--        <div class="ml-2 pb-2 col-1 ">-->
+<!--          <label class="app-checkbox-container ">-->
+<!--          <input-->
+<!--            type="checkbox"-->
+<!--            class=""-->
+<!--            [ngModel]="field.exist"-->
+<!--            (ngModelChange)="onBeingChangeNested($event, field, group, section)">-->
+<!--          <span class="app-checkbox-checkmark just-white"></span>-->
+<!--        </label>-->
+<!--        </div>-->
+<!--        <div-->
+<!--          class="col-10  mb-1 mt-2 row align-items-center no-gutters rounded "-->
+<!--          [ngClass]="field.mapped==''?'side-bar-item-group-custom':'side-bar-item-group'">-->
+<!--&lt;!&ndash;        <div class="col-10  mb-1 mt-2 row align-items-center no-gutters rounded " [ngClass]="field.mapped==''?'side-bar-item-group-custom':'side-bar-item-group'" placement="right" [ngbTooltip]="field.prefix+'\'s'">&ndash;&gt;-->
+<!--          <div class="col-1 ">-->
+<!--            <span><i class="fas fa-ellipsis-v dragable-i"></i></span>-->
+<!--            <span><i class="fas fa-ellipsis-v  dragable-i"></i></span>-->
 <!--          </div>-->
-        </div>
-      </div>
+<!--          <div class="col">-->
+<!--            <span class="side-bar-item-font" [title]="field.mapped==''?'Custom':'Existing'">{{field.name}}</span>-->
+<!--          </div>-->
+<!--&lt;!&ndash;          <div *ngIf="field.mapped==''" class="col-1">&ndash;&gt;-->
+<!--&lt;!&ndash;            <span><i class="fas fa-trash dragable-i fa-xs" (click)="deleteCustomNestedField(field.name)"></i></span>&ndash;&gt;-->
+<!--&lt;!&ndash;          </div>&ndash;&gt;-->
+<!--        </div>-->
+<!--      </div>-->
     </div>
 <!--    <div class="p-2 ">-->
 <!--      <button-->

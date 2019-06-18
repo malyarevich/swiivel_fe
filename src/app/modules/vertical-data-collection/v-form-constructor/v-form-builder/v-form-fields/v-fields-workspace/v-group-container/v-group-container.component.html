@@ -154,25 +154,6 @@
         </div>
       </div>
     </div>
-<!--    <div class="col-3 ">-->
-<!--      <div class="row align-items-center ">-->
-<!--        <div class="col-6">-->
-<!--          <div class="  app-input-container"-->
-<!--               [ngClass]="{'app-input-fill': sizeID.value}" >-->
-<!--            <label for="groupSize" class="app-input-label">Field Width</label>-->
-<!--            <select class="app-input form-control"-->
-<!--                    #sizeID-->
-<!--                    id="groupSize"-->
-<!--                    [(ngModel)]="inputGroup.options.size"-->
-<!--            >-->
-<!--              <option *ngFor="let width of size" [value]="width" [selected]="width==inputGroup.options.size"-->
-<!--              >{{width}} Columns</option>-->
-<!--            </select>-->
-
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>  -->
     <div class="col-3 ">
       <div class="row align-items-center ">
         <div class="col-6">
@@ -182,15 +163,34 @@
             <select class="app-input form-control"
                     #sizeID
                     id="groupSize"
-
+                    [(ngModel)]="inputGroup.options.size"
             >
-              <option *ngFor="let width of size" [value]="width" [selected]="width==3"
+              <option *ngFor="let width of size" [value]="width" [selected]="width==inputGroup.options.size"
               >{{width}} Columns</option>
             </select>
 
           </div>
         </div>
       </div>
+<!--    </div>  -->
+<!--    <div class="col-3 ">-->
+<!--      <div class="row align-items-center ">-->
+<!--        <div class="col-6">-->
+<!--          <div class="  app-input-container"-->
+<!--               [ngClass]="{'app-input-fill': sizeID.value}" >-->
+<!--            <label for="groupSize" class="app-input-label">Field Width</label>-->
+<!--            <select class="app-input form-control"-->
+<!--                    #sizeID-->
+<!--                    id="groupSize"-->
+
+<!--            >-->
+<!--              <option *ngFor="let width of size" [value]="width" [selected]="width==3"-->
+<!--              >{{width}} Columns</option>-->
+<!--            </select>-->
+
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
     </div>
 
     <div class="col-2  row align-items-center offset-4">
@@ -225,11 +225,16 @@
       direction="vertical"
 
     >
-      <li *ngIf="inputGroup.fields.length==0" class="list-group-item empty-group p-0 margin-for-nested">
+      <li *ngIf="inputGroup.fields.length==0"
+          class="list-group-item empty-group p-0 "
+      [ngClass]="nestedLevel==1?'margin-for-nested':''"
+      >
         <div class="text-center">        <span class="empty-group-text">Drag and Drop Fields Onto the Group</span>
         </div>
       </li>
-      <li class="list-group-item p-0 ngx-dnd-item margin-for-nested"
+      <li class="list-group-item p-0 ngx-dnd-item"
+          [ngClass]="nestedLevel==1?'margin-for-nested':''"
+
           [model]="field"
           *ngFor="let field of inputGroup.fields"
           [ngxDraggable]="idSectionForDragDrop">
@@ -247,6 +252,7 @@
         <app-v-group-container
           *ngIf="field.type==113"
           [inputGroup]="field"
+          [nestedLevel]="nestedLevel+1"
           [idSectionForDragDrop]="idSectionForDragDrop"
           [form]="form"
           [sideBar]="sideBar"

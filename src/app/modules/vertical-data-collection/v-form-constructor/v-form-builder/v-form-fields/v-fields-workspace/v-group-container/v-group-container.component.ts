@@ -15,6 +15,7 @@ export class VGroupContainerComponent implements OnInit {
   @Input() customFields: Field[];
   @Input() inputGroup: Field;
   @Input() sideBar: Field;
+  @Input() nestedLevel: number;
 
   @Input() idSectionForDragDrop: string[];
   warningCheckExistingLabelString='Pay attention that we already have existing field with the same name';
@@ -26,6 +27,7 @@ export class VGroupContainerComponent implements OnInit {
   constructor(private sideBarService: SideBarService,private cd: ChangeDetectorRef) { }
   showNested: boolean = true;
   ngOnInit() {
+    console.log(this.inputGroup.name, this.nestedLevel);
   }
 
 

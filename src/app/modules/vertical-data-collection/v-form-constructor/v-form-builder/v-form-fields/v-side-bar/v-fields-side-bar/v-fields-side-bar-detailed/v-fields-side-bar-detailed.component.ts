@@ -69,9 +69,10 @@ export class VFieldsSideBarDetailedComponent implements OnInit, AfterViewInit, O
   // }
   onBeingChange(event){
    if(event){
-     this.sideBarService.addExistingField(
+     this.sideBarService.onChangeGroupBeing(
        this.section,
-       this.form.fields,
+       this.form,
+       this.form
      );
      this.sideBarService.changeExistingAllSection(true, this.section.fields);
    }else{

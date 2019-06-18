@@ -15,7 +15,7 @@ export class VSectionConteinerComponent implements OnInit {
   @Input() customFields: Field[];
   @Input() section: Field;
   @Input() idSectionForDragDrop: string[];
-
+  nestedLevel: number = 0;
   constructor(private cd: ChangeDetectorRef,private sideBarService: SideBarService) { }
   sectionWidth: string = "4 Columns";
   showSettings: boolean = false;

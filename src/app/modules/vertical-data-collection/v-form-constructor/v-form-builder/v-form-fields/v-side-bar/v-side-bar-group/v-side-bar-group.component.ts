@@ -18,6 +18,7 @@ export class VSideBarGroupComponent implements OnInit, OnDestroy {
   @Input() group: Field;
   @Input() section: Field;
   @Input() form: Form;
+  @Input() sideBar: Field;
   @Input() customFields: Field[];
   @Input() existingFields: Field[];
 
@@ -75,33 +76,33 @@ export class VSideBarGroupComponent implements OnInit, OnDestroy {
       });
     }
   }
-
-  onChangeGroupBeing(group: Field, section:Field) {
-    // console.log(section, group, 'onChangeGroupBeing');
-    let  sectionNew = cloneDeep(section);
-    let  groupNew = cloneDeep(group);
-    let arr = this.form.fields.filter(f => f.name == section.name);
-    if (isEmpty(arr)) {
-      // console.log('if arr');
-      sectionNew.fields = [];
-      groupNew.fields = [];
-      group.fields.forEach(field=>this.sideBarService.addExistingField(field, groupNew.fields));
-      // console.log(groupNew);
-      this.sideBarService.addExistingField(group, sectionNew.fields);
-      this.sideBarService.addExistingField(sectionNew, this.form.fields);
-      section.exist = true;
-    } else {
-      this.form.fields = this.form.fields.map(f => {
-        if (f.name == sectionNew.name) {
-          groupNew.fields = [];
-          group.fields.forEach(field=>this.sideBarService.addExistingField(field, groupNew.fields));
-          this.sideBarService.addExistingField(groupNew, f.fields);
-        }
-        return f;
-      });
-    }
-
-  }
+  //
+  // onChangeGroupBeing(group: Field, section:Field) {
+  //   // console.log(section, group, 'onChangeGroupBeing');
+  //   let  sectionNew = cloneDeep(section);
+  //   let  groupNew = cloneDeep(group);
+  //   let arr = this.form.fields.filter(f => f.name == section.name);
+  //   if (isEmpty(arr)) {
+  //     // console.log('if arr');
+  //     sectionNew.fields = [];
+  //     groupNew.fields = [];
+  //     group.fields.forEach(field=>this.sideBarService.addExistingField(field, groupNew.fields));
+  //     // console.log(groupNew);
+  //     this.sideBarService.addExistingField(group, sectionNew.fields);
+  //     this.sideBarService.addExistingField(sectionNew, this.form.fields);
+  //     section.exist = true;
+  //   } else {
+  //     this.form.fields = this.form.fields.map(f => {
+  //       if (f.name == sectionNew.name) {
+  //         groupNew.fields = [];
+  //         group.fields.forEach(field=>this.sideBarService.addExistingField(field, groupNew.fields));
+  //         this.sideBarService.addExistingField(groupNew, f.fields);
+  //       }
+  //       return f;
+  //     });
+  //   }
+  //
+  // }
 
   onBeingChangeNested(event, entity,destination, section){
     if(event){
@@ -119,9 +120,10 @@ export class VSideBarGroupComponent implements OnInit, OnDestroy {
 
   onBeingChange(event: boolean, entity: Field, destination:Field){
     if(event){
-      this.onChangeGroupBeing(
+      this.sideBarService.onChangeGroupBeing(
         entity,
-        destination
+        destination,
+        this.form
       )
     }else{
 

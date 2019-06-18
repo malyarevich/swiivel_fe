@@ -4,6 +4,7 @@ import {Field} from "../../../../model/field.model";
 import {v4 as uuid} from 'uuid';
 import {cloneDeep, isEmpty} from 'lodash';
 import {Form} from "../../../../model/form.model";
+import {hasOwnProperty} from 'tslint/lib/utils';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,39 @@ export class SideBarService {
   }
 
 
+
+  onChangeGroupBeing(group: Field, section, form: Form) {
+     console.log(section, group, 'onChangeGroupBeing');
+    let  sectionNew = cloneDeep(section);
+    let  groupNew = cloneDeep(group);
+    let arr = form.fields.filter(f => f.name == section.name);
+    if (isEmpty(arr)) {
+      console.log('if arr');
+      sectionNew.fields = [];
+      groupNew.fields = [];
+      group.fields.forEach(field=>this.addExistingField(field, groupNew.fields));
+      // console.log(groupNew);
+      this.addExistingField(group, sectionNew.fields);
+      this.addExistingField(sectionNew, form.fields);
+      if(hasOwnProperty(section, 'type')){
+  section.exist = true;
+}
+    } else {
+      console.log('else');
+      form.fields = form.fields.map(f => {
+        if (f.name == sectionNew.name) {
+          groupNew.fields = [];
+          group.fields.forEach(field=>this.addExistingField(field, groupNew.fields));
+          this.addExistingField(groupNew, f.fields);
+        }
+        return f;
+      });
+    }
+
+  }
+
   addExistingField(field: Field, fields: Field[]) {
+    console.log(field);
     let newField = cloneDeep(field);
     newField._id = uuid();
     // this.doExistingFieldsUniq(newField);
