@@ -22,7 +22,7 @@
         </div>
       </div>
 
-      <div class="row no-gutters mt-3 px-1" *ngIf="familyPersons.length">
+      <div class="row no-gutters mt-3 px-1">
         <div class="col-12">
           <app-select-multi-search-field
             bindValue="id"
@@ -30,7 +30,7 @@
             [formControlName]="'parents'"
             labelTitle="Parents"
             [isInvalid]="familyChildForm.get('parents').invalid && familyChildForm.get('parents').touched"
-            [items]="familyPersons"
+            [items]="familyPersons.length ? familyPersons : []"
           >
           </app-select-multi-search-field>
         </div>

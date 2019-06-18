@@ -55,7 +55,7 @@ export class FamilyProfileInfoComponent implements OnInit {
 
   getFamily(familyId) {
     this.familyService.family.subscribe((family) => {
-      this.family = {...family};
+      this.family = family;
       let familyInfo = {...this.family.family_info};
       this.familyForm.patchValue({
         name: family.name,
@@ -66,7 +66,7 @@ export class FamilyProfileInfoComponent implements OnInit {
   }
 
   getPreferredContacts() {
-    this.familyPersonService.familyPersonList.subscribe((res) => {
+    this.familyPersonService. getByFamilyIdRequest(this.familyId).subscribe((res) => {
       res.map((item) => {
         this.preferredContacts.push(item.person.first_name + (item.person.last_name ? ' ' + item.person.last_name : ''));
       });
