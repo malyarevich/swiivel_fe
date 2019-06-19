@@ -157,6 +157,7 @@
     background-color: $input-background-color;
     position: relative;
     margin-right: 1rem;
+    min-width: 1rem;
 
     &:hover {
       cursor: pointer;
