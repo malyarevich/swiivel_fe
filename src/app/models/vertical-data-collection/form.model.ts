@@ -20,6 +20,13 @@ export interface Form {
   formDates?: object;
   sidebar?: Field[];
   step?: number;
+  language?: string, //Need FIXME: (type for languages)
+  periodCheckboxGroup?: {
+    primary1: boolean,
+    primary2: boolean,
+    middle: boolean,
+    height: boolean
+  },
   publish_settings?: {
     state: ISubMenus;
     online_config: object;

@@ -20,7 +20,7 @@
             need?</h4>
           <div class="row my-5">
             <div class="col form-group app-input-container"
-                 [ngClass]="{'app-input-fill': formName.value}">
+                 [ngClass]="{'app-input-fill': generalInfoForm.get('name').value}">
               <label for="formName" class="app-input-label">Form Name</label>
               <input type="text"
                      #formName
@@ -34,7 +34,7 @@
               </div>
             </div>
             <div class="col form-group app-input-container"
-                 [ngClass]="{'app-input-fill': formLanguage.value}">
+                 [ngClass]="{'app-input-fill': generalInfoForm.get('language').value}">
               <label for="formLanguage" class="app-input-label">Form Language</label>
               <select class="app-input form-control"
                       formControlName="language"

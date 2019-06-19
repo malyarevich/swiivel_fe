@@ -5,6 +5,7 @@ import { SaveFormService } from "../../services/save-form.service";
 import { GeneralInfoIsSavedService } from "../../services/general-info-is-saved.service";
 import { FormBuilderIsSavedService } from "../../services/form-builder-is-saved.service";
 import { PublishSettingsIsSavedService } from "../../services/publish-settings-is-saved.service";
+import { ConstructorIsSavingService } from '../../services/constructor-is-saving.service';
 
 @Component({
   selector: "app-v-form-navigation-bar",
@@ -17,10 +18,12 @@ export class VFormNavigationBarComponent implements OnInit {
   isPublishSaved: boolean = undefined;
 
   isGeneralInfoValid: boolean;
+  isSavingConstructor: boolean = false;
 
   constructor(
     private router: Router,
     private generalInfoIsValidService: GeneralInfoIsValidService,
+    private constructorIsSavingService: ConstructorIsSavingService,
     private generalInfoIsSavedService: GeneralInfoIsSavedService,
     private formBuilderIsSavedService: FormBuilderIsSavedService,
     private publishSettingsIsSavedService: PublishSettingsIsSavedService,
@@ -47,6 +50,12 @@ export class VFormNavigationBarComponent implements OnInit {
         this.delegateLogic();
       }
     );
+    this.constructorIsSavingService.onIsSaving.subscribe(
+      val => {
+        console.log(val);
+        this.isSavingConstructor = val;
+      }
+    )
   }
 
   ngOnInit() {

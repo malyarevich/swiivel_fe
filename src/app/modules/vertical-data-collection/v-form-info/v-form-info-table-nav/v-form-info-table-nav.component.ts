@@ -17,7 +17,7 @@ export class VFormInfoTableNavComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.formId)
+    // console.log(this.formId)
     this.activeTabEmitter.emit(this.activeFilterTab);
   }
 

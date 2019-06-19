@@ -9,7 +9,8 @@ import {
   OnInit,
   ViewChild,
   Output,
-  EventEmitter
+  EventEmitter,
+  Host
 } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { FormUtils } from "../../utils/form.utils";
@@ -27,7 +28,9 @@ import { requireCheckboxesToBeCheckedValidator } from "../../../../utils/validat
 import { GeneralInfoIsValidService } from "../../services/general-info-is-valid.service";
 import { menuItemModel } from "./menu";
 import { SaveFormService } from "../../services/save-form.service";
-import { GeneralInfoIsSavedService } from '../../services/general-info-is-saved.service';
+import { GeneralInfoIsSavedService } from "../../services/general-info-is-saved.service";
+import { ConstructorIsSavingService } from "../../services/constructor-is-saving.service";
+import { VDataCollectionComponent } from "../../v-data-collection.component";
 
 @Component({
   selector: "app-v-form-general-information",
@@ -77,12 +80,16 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
       scrollTarget: "eligibleAccounts"
     }
   };
+  vDataCollection: VDataCollectionComponent;
+  draftId: string;
+
   isSubmitted: boolean = false;
   isDataSaving: boolean = false;
   spinnerText: string = "Data is loading...";
   isLoaded: boolean = false;
 
   constructor(
+    @Host() vDataCollection: VDataCollectionComponent,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private formUtils: FormUtils,
@@ -90,9 +97,11 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private parserFormatter: NgbDateParserFormatter,
     private generalInfoIsValidService: GeneralInfoIsValidService,
+    private constructorIsSavingService: ConstructorIsSavingService,
     private generalInfoIsSavedService: GeneralInfoIsSavedService,
     private saveFormService: SaveFormService
   ) {
+    this.vDataCollection = vDataCollection;
     this.saveFormService.onSaveForm.subscribe(() => {
       this.saveFormWithoutRedirect();
       // this.goBack();
@@ -105,17 +114,19 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
       const url = urlPath[urlPath.length - 1].path;
       this.formId = url != "v-form-constructor" ? url : "";
     });
+    this.draftId = this.formId + "_general-information";
     this.formInit();
     this.getAllForm();
     this.isLoaded = true;
+    this.constructorIsSavingService.setIsSaved(this.isDataSaving);
   }
 
   isFormReady() {
     return (
-      this.generalInfoForm !== undefined 
-      && this.formId !== undefined 
-      && this.isLoaded 
-      && !this.isDataSaving
+      this.generalInfoForm !== undefined &&
+      this.formId !== undefined &&
+      this.isLoaded &&
+      !this.isDataSaving
     );
   }
 
@@ -225,6 +236,8 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
         ),
         endDate: this.parserFormatter.format(this.generalInfoForm.value.endDate)
       },
+      language: this.generalInfoForm.value.language,
+      periodCheckboxGroup: this.generalInfoForm.value.periodCheckboxGroup,
       eligible: this.generalInfoForm.value.eligible,
       step: 0,
       example_form_id: this.formDublicateId,
@@ -238,7 +251,7 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
     });
   }
   saveFormWithoutRedirect() {
-    // console.log("saveFormWithoutRedirect");
+    console.log("saveFormWithoutRedirect");
     if (!this.isDataSaving) {
       if (!this.generalInfoForm) {
         return;
@@ -249,11 +262,12 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
       }
       this.spinnerText = "Data is saving...";
       this.isDataSaving = true;
-
+      this.constructorIsSavingService.setIsSaved(this.isDataSaving);
       this.formService.sendForm(form).subscribe((res: any) => {
-        this.generalInfoIsSavedService.setIsSaved(res['updated']);
-                
+        this.generalInfoIsSavedService.setIsSaved(res["updated"]);
+
         this.isDataSaving = !this.saveFormService.getSavingStatus();
+        this.constructorIsSavingService.setIsSaved(this.isDataSaving);
         if (this.isDataSaving) {
           this.spinnerText = "Other tabs are saving...";
         } else {
@@ -263,13 +277,20 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
     }
   }
 
+  public saveDraftForm(): void {
+    // console.log("SAVE draft");
+    if (
+      this.formId !== "" &&
+      this.generalInfoForm.valid
+    ) {
+      this.vDataCollection.setDraftForm(this.draftId, this.composeForm());
+    }
+  }
+
   composeForm() {
     if (
       this.formId !== "" &&
-      this.generalInfoForm.value.name &&
-      this.generalInfoForm.value.startDate &&
-      this.generalInfoForm.value.endDate &&
-      this.generalInfoForm.value.eligible
+      this.generalInfoForm.valid
     ) {
       return {
         _id: this.formId,
@@ -283,6 +304,7 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
             this.generalInfoForm.value.endDate
           )
         },
+        periodCheckboxGroup: this.generalInfoForm.value.periodCheckboxGroup,
         eligible: this.generalInfoForm.value.eligible,
         step: 0,
         example_form_id: this.formDublicateId
@@ -295,7 +317,24 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
     }
   }
 
+  setLocalForm(form: Form): void {
+    if (!isEmpty(form)) {
+      this.fields = form.fields;
+      this.generalInfoForm.patchValue({
+        name: form.name,
+        language: form.language ? form.language : this.generalInfoForm.value.language,
+        endDate: this.parserFormatter.parse(form.formDates["endDate"]),
+        startDate: this.parserFormatter.parse(form.formDates["startDate"]),
+        periodCheckboxGroup: form.periodCheckboxGroup ? form.periodCheckboxGroup : this.generalInfoForm.value.periodCheckboxGroup,
+        eligible: form.eligible
+      });
+      this.menu.dates.isActive = this.menu.eligible.isActive = this.menu.period.isActive = true;
+    }
+  }
+
   formInit(): void {
+    const form = this.vDataCollection.getDraftForm(this.draftId);
+
     this.generalInfoForm = new FormGroup({
       name: new FormControl("", {
         validators: Validators.compose([
@@ -321,24 +360,29 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
       // allParent: new FormControl('Y')
     });
 
-    if (this.formId) {
+    if (!isEmpty(form)) {
+      // console.log("loading draftForm");
+      this.setLocalForm(form); //draftForm
+    } else if (this.formId) {
       this.formService.getOneForm(this.formId).subscribe(
         (form: Form) => {
           if (!isEmpty(form)) {
             this.fields = form.fields;
             this.generalInfoForm.patchValue({
               name: form.name,
-              language: "english",
+              language: form.language ? form.language : "english",
               endDate: this.parserFormatter.parse(form.formDates["endDate"]),
               startDate: this.parserFormatter.parse(
                 form.formDates["startDate"]
               ),
-              periodCheckboxGroup: {
-                primary1: true,
-                primary2: false,
-                middle: false,
-                height: false
-              },
+              periodCheckboxGroup: form.periodCheckboxGroup 
+                ? form.periodCheckboxGroup 
+                : {
+                    primary1: true,
+                    primary2: false,
+                    middle: false,
+                    height: false
+                  },
               eligible: form.eligible
             });
             this.menu.dates.isActive = this.menu.eligible.isActive = this.menu.period.isActive = true;
@@ -394,13 +438,16 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    // console.log("OnDestroy");
-    if (this.isOnSubmit) return;
+    console.log("OnDestroy");
+    this.saveDraftForm();
+    if (this.isOnSubmit) return;    
     if (
+      this.router.routerState.snapshot.url.indexOf("general-information") >
+        -1 ||
       this.router.routerState.snapshot.url.indexOf("form-builder") > -1 ||
       this.router.routerState.snapshot.url.indexOf("publish-settings") > -1
     ) {
-      this.onSubmitDestroy();
+      // this.saveDraftForm();
     }
   }
 

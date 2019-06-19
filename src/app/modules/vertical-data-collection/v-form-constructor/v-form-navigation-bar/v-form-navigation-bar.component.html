@@ -1,6 +1,4 @@
-<nav
-  class="nav_grid"
->
+<nav class="nav_grid">
   <div class="nav_grid__title">
     <span
       class="navbar-brand nav_text_brand"
@@ -10,48 +8,55 @@
   </div>
   <div class="nav_grid__navbar">
     <div>
-        <ul class="main_navbar">
-          <li class="main_navbar__item">
-            <a
-              class="main_navbar__item_link"
-              routerLink="general-information"
-              [ngClass]="{ 'main_navbar__item_link--valid': isGeneralInfoValid }"
-              routerLinkActive="active main_navbar__item_link--active"
-            >
-              General Settings
-              <i
-                *ngIf="isGeneralInfoValid"
-                class="fas fa-check-circle fa-xs pl-2"
-              ></i>
-              <i
-                *ngIf="!isGeneralInfoValid"
-                class="fas fa-spacer-non-icon fa-xs pl-2"
-              ></i>
-            </a>
-            <i class="fa fa-chevron-right main_navbar__item_icon"></i>
-          </li>
-          <li class="main_navbar__item">
-            <a
-              class="main_navbar__item_link"
-              [ngClass]="{ disabled_router: !isGeneralInfoValid }"
-              routerLink="form-builder"
-              routerLinkActive="active main_navbar__item_link--active"
-            >
-              Form Builder
-            </a>
-            <i class="fa fa-chevron-right main_navbar__item_icon"></i>
-          </li>
-          <li class="main_navbar__item">
-            <a
-              class="main_navbar__item_link"
-              [ngClass]="{ disabled_router: !isGeneralInfoValid }"
-              routerLink="publish-settings"
-              routerLinkActive="active main_navbar__item_link--active"
-            >
-              Publish Settings
-            </a>
-          </li>
-        </ul>
+      <ul class="main_navbar">
+        <li class="main_navbar__item">
+          <a
+            class="main_navbar__item_link"
+            routerLink="general-information"
+            [ngClass]="{
+              'main_navbar__item_link--valid': isGeneralInfoValid,
+              'disabled_router': !isGeneralInfoValid || isSavingConstructor
+            }"
+            routerLinkActive="active main_navbar__item_link--active"
+          >
+            General Settings
+            <i
+              *ngIf="isGeneralInfoValid"
+              class="fas fa-check-circle fa-xs pl-2"
+            ></i>
+            <i
+              *ngIf="!isGeneralInfoValid"
+              class="fas fa-spacer-non-icon fa-xs pl-2"
+            ></i>
+          </a>
+          <i class="fa fa-chevron-right main_navbar__item_icon"></i>
+        </li>
+        <li class="main_navbar__item">
+          <a
+            class="main_navbar__item_link"
+            [ngClass]="{
+              'disabled_router': !isGeneralInfoValid || isSavingConstructor
+            }"
+            routerLink="form-builder"
+            routerLinkActive="active main_navbar__item_link--active"
+          >
+            Form Builder
+          </a>
+          <i class="fa fa-chevron-right main_navbar__item_icon"></i>
+        </li>
+        <li class="main_navbar__item">
+          <a
+            class="main_navbar__item_link"
+            [ngClass]="{
+              'disabled_router': !isGeneralInfoValid || isSavingConstructor
+            }"
+            routerLink="publish-settings"
+            routerLinkActive="active main_navbar__item_link--active"
+          >
+            Publish Settings
+          </a>
+        </li>
+      </ul>
     </div>
   </div>
   <div class="nav_grid__controls">

@@ -37,6 +37,7 @@ import { VDataCollectionComponent } from "../../v-data-collection.component";
 import { SaveFormService } from "../../services/save-form.service";
 import { Observable } from "rxjs";
 import { PublishSettingsIsSavedService } from '../../services/publish-settings-is-saved.service';
+import { ConstructorIsSavingService } from '../../services/constructor-is-saving.service';
 
 //TODO: remove excess functional
 @Component({
@@ -105,6 +106,7 @@ export class VFormPublishSettingsComponent implements OnInit {
     private fileService: VFilesService,
     private readonly financeService: FinanceService,
     private publishSettingsIsSavedService: PublishSettingsIsSavedService,
+    private constructorIsSavingService: ConstructorIsSavingService,
     private saveFormService: SaveFormService
   ) {
     this.vDataCollection = vDataCollection;
@@ -112,6 +114,8 @@ export class VFormPublishSettingsComponent implements OnInit {
       this.saveForm();
     });
     // console.log("constructor");
+    this.constructorIsSavingService.setIsSaved(this.isDataSaving);
+    // console.log(this.isDataSaving);
   }
 
   ngOnInit() {
@@ -121,8 +125,9 @@ export class VFormPublishSettingsComponent implements OnInit {
       const url = urlPath[urlPath.length - 1].path;
       this.formId = url != "v-form-constructor" ? url : "";
     });
-    this.draftId = this.formId + "publish";
+    this.draftId = this.formId + "_publish-setting";
     this.formInit();
+    // console.log(this.isDataSaving);
   }
 
   toggleOnlineCheckbox(key: string) {
@@ -248,10 +253,14 @@ export class VFormPublishSettingsComponent implements OnInit {
       const form: Form = this.getForm();
       this.spinnerText = "Data is saving...";
       this.isDataSaving = true;
+      this.constructorIsSavingService.setIsSaved(this.isDataSaving);
+      // console.log(this.isDataSaving);
       this.formService.sendForm(form).subscribe(res => {
         this.publishSettingsIsSavedService.setIsSaved(res['updated']);
 
         this.isDataSaving = !this.saveFormService.getSavingStatus();
+        this.constructorIsSavingService.setIsSaved(this.isDataSaving);
+        // console.log(this.isDataSaving);
         if (this.isDataSaving) {
           this.spinnerText = "Other tabs are saving...";
         } else {

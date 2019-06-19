@@ -64,6 +64,7 @@ import { VDataCollectionComponent } from "../../v-data-collection.component";
 import { Observable } from "rxjs";
 import { SaveFormService } from "../../services/save-form.service";
 import { FormBuilderIsSavedService } from '../../services/form-builder-is-saved.service';
+import { ConstructorIsSavingService } from '../../services/constructor-is-saving.service';
 
 @Component({
   selector: "app-v-form-table",
@@ -201,6 +202,7 @@ export class VFormBuilderComponent implements OnInit, OnDestroy {
     }
   ];
   vDataCollection: VDataCollectionComponent;
+  draftId: string;
 
   isDataSaving: boolean = false;
   spinnerText: string = "Data is loading...";
@@ -214,6 +216,7 @@ export class VFormBuilderComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private location: Location,
     private generalInfoIsValidService: GeneralInfoIsValidService,
+    private constructorIsSavingService: ConstructorIsSavingService,
     private formBuilderIsSavedService: FormBuilderIsSavedService,
     private fileService: VFilesService,
     private readonly financeService: FinanceService,
@@ -223,6 +226,7 @@ export class VFormBuilderComponent implements OnInit, OnDestroy {
     this.saveFormService.onSaveForm.subscribe(() => {
       this.saveForm();
     });
+    this.constructorIsSavingService.setIsSaved(this.isDataSaving);
   }
   ngOnInit() {
     window.scrollTo(0, 0);
@@ -231,6 +235,7 @@ export class VFormBuilderComponent implements OnInit, OnDestroy {
       const url = urlPath[urlPath.length - 1].path;
       this.formId = url != "v-form-constructor" ? url : "";
     });
+    this.draftId = this.formId + "_form-builder";
     this.loadFeeTemplates();
     this.loadBasicFields();
     this.loadSideBar();
@@ -311,7 +316,7 @@ export class VFormBuilderComponent implements OnInit, OnDestroy {
   }
 
   formInit(): void {
-    const form = this.vDataCollection.getDraftForm(this.formId);
+    const form = this.vDataCollection.getDraftForm(this.draftId);
     if (!isEmpty(form)) {
       // console.log("loading draftForm");
       this.setLocalForm(form); //draftForm
@@ -371,10 +376,12 @@ export class VFormBuilderComponent implements OnInit, OnDestroy {
       const form: Form = this.getForm();
       this.spinnerText = "Data is saving...";
       this.isDataSaving = true;
+      this.constructorIsSavingService.setIsSaved(this.isDataSaving);
       this.formService.sendForm(form).subscribe(res => {
         this.formBuilderIsSavedService.setIsSaved(res['updated']);
 
         this.isDataSaving = !this.saveFormService.getSavingStatus();
+        this.constructorIsSavingService.setIsSaved(this.isDataSaving);
         if (this.isDataSaving) {
           this.spinnerText = "Other tabs are saving...";
         } else {
@@ -537,7 +544,7 @@ export class VFormBuilderComponent implements OnInit, OnDestroy {
   public saveDraftForm(): void {
     // console.log("SAVE draft");
     if( this.formId && this.form ) {
-      this.vDataCollection.setDraftForm(this.formId, this.getForm());
+      this.vDataCollection.setDraftForm(this.draftId, this.getForm());
     }
   }
 
