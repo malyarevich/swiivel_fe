@@ -63,6 +63,7 @@ import {
 import { VDataCollectionComponent } from "../../v-data-collection.component";
 import { Observable } from "rxjs";
 import { SaveFormService } from "../../services/save-form.service";
+import { FormBuilderIsSavedService } from '../../services/form-builder-is-saved.service';
 
 @Component({
   selector: "app-v-form-table",
@@ -71,7 +72,6 @@ import { SaveFormService } from "../../services/save-form.service";
 })
 export class VFormBuilderComponent implements OnInit, OnDestroy {
   @Input() saveEvents: Observable<void>;
-  @Output() goBackBuilder = new EventEmitter<boolean>();
 
   validNewCustomFieldName: boolean = true;
   showAddButton = true;
@@ -214,6 +214,7 @@ export class VFormBuilderComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private location: Location,
     private generalInfoIsValidService: GeneralInfoIsValidService,
+    private formBuilderIsSavedService: FormBuilderIsSavedService,
     private fileService: VFilesService,
     private readonly financeService: FinanceService,
     private saveFormService: SaveFormService
@@ -225,6 +226,7 @@ export class VFormBuilderComponent implements OnInit, OnDestroy {
   }
   ngOnInit() {
     window.scrollTo(0, 0);
+    this.formBuilderIsSavedService.setIsSaved(false);
     this.route.parent.url.subscribe(urlPath => {
       const url = urlPath[urlPath.length - 1].path;
       this.formId = url != "v-form-constructor" ? url : "";
@@ -370,10 +372,14 @@ export class VFormBuilderComponent implements OnInit, OnDestroy {
       this.spinnerText = "Data is saving...";
       this.isDataSaving = true;
       this.formService.sendForm(form).subscribe(res => {
-        this.isDataSaving = false;
-        this.spinnerText = "Data is loading...";
-        // this.goBack();
-        // this.goBackBuilder.emit(true);
+        this.formBuilderIsSavedService.setIsSaved(res['updated']);
+
+        this.isDataSaving = !this.saveFormService.getSavingStatus();
+        if (this.isDataSaving) {
+          this.spinnerText = "Other tabs are saving...";
+        } else {
+          this.spinnerText = "Data is loading...";
+        }
       });
     }
     // }
