@@ -61,10 +61,10 @@ import {
   FeeTemplatesData
 } from "../../../../models/fee-templates.model";
 import { VDataCollectionComponent } from "../../v-data-collection.component";
-import { Observable } from "rxjs";
+import { Observable, Subscription } from "rxjs";
 import { SaveFormService } from "../../services/save-form.service";
-import { FormBuilderIsSavedService } from '../../services/form-builder-is-saved.service';
-import { ConstructorIsSavingService } from '../../services/constructor-is-saving.service';
+import { FormBuilderIsSavedService } from "../../services/form-builder-is-saved.service";
+import { ConstructorIsSavingService } from "../../services/constructor-is-saving.service";
 
 @Component({
   selector: "app-v-form-table",
@@ -73,6 +73,9 @@ import { ConstructorIsSavingService } from '../../services/constructor-is-saving
 })
 export class VFormBuilderComponent implements OnInit, OnDestroy {
   @Input() saveEvents: Observable<void>;
+
+  static countSaveFormService: number = 0;
+  saveFormSubscription: Subscription;
 
   validNewCustomFieldName: boolean = true;
   showAddButton = true;
@@ -223,13 +226,18 @@ export class VFormBuilderComponent implements OnInit, OnDestroy {
     private saveFormService: SaveFormService
   ) {
     this.vDataCollection = vDataCollection;
-    this.saveFormService.onSaveForm.subscribe(() => {
-      this.saveForm();
-    });
-    this.constructorIsSavingService.setIsSaved(this.isDataSaving);
   }
   ngOnInit() {
     window.scrollTo(0, 0);
+    // if (VFormBuilderComponent.countSaveFormService < 1) {
+      this.saveFormSubscription = this.saveFormService.onSaveForm.subscribe(
+        () => {
+          this.saveForm();
+        }
+      );
+    // }
+    VFormBuilderComponent.countSaveFormService++;
+
     this.formBuilderIsSavedService.setIsSaved(false);
     this.route.parent.url.subscribe(urlPath => {
       const url = urlPath[urlPath.length - 1].path;
@@ -241,6 +249,7 @@ export class VFormBuilderComponent implements OnInit, OnDestroy {
     this.loadSideBar();
     this.loadSideBarNew();
     this.loadMappedFields();
+    this.constructorIsSavingService.setIsSaving(this.isDataSaving);
   }
 
   addDocumentItem() {
@@ -376,12 +385,12 @@ export class VFormBuilderComponent implements OnInit, OnDestroy {
       const form: Form = this.getForm();
       this.spinnerText = "Data is saving...";
       this.isDataSaving = true;
-      this.constructorIsSavingService.setIsSaved(this.isDataSaving);
+      this.constructorIsSavingService.setIsSaving(this.isDataSaving);
       this.formService.sendForm(form).subscribe(res => {
-        this.formBuilderIsSavedService.setIsSaved(res['updated']);
+        this.formBuilderIsSavedService.setIsSaved(res["updated"]);
 
         this.isDataSaving = !this.saveFormService.getSavingStatus();
-        this.constructorIsSavingService.setIsSaved(this.isDataSaving);
+        this.constructorIsSavingService.setIsSaving(this.isDataSaving);
         if (this.isDataSaving) {
           this.spinnerText = "Other tabs are saving...";
         } else {
@@ -543,7 +552,7 @@ export class VFormBuilderComponent implements OnInit, OnDestroy {
 
   public saveDraftForm(): void {
     // console.log("SAVE draft");
-    if( this.formId && this.form ) {
+    if (this.formId && this.form) {
       this.vDataCollection.setDraftForm(this.draftId, this.getForm());
     }
   }
@@ -647,5 +656,13 @@ export class VFormBuilderComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.saveDraftForm();
     // this.saveFormService.unsubscribe();
+
+    if (
+      VFormBuilderComponent.countSaveFormService > 1 &&
+      this.saveFormSubscription
+    ) {
+      this.saveFormSubscription.unsubscribe();
+      VFormBuilderComponent.countSaveFormService--;
+    }
   }
 }

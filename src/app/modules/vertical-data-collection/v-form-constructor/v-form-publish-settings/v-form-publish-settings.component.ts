@@ -1,4 +1,11 @@
-import { Component, Input, OnInit, Host, Output, EventEmitter } from "@angular/core";
+import {
+  Component,
+  Input,
+  OnInit,
+  Host,
+  Output,
+  EventEmitter
+} from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { VFormService } from "../../services/v-form.service";
 import { FormUtils } from "../../utils/form.utils";
@@ -35,9 +42,9 @@ import { FinanceService } from "../../../../services/finance/finance.service";
 import { FeeTemplate } from "../../../../models/fee-templates.model";
 import { VDataCollectionComponent } from "../../v-data-collection.component";
 import { SaveFormService } from "../../services/save-form.service";
-import { Observable } from "rxjs";
-import { PublishSettingsIsSavedService } from '../../services/publish-settings-is-saved.service';
-import { ConstructorIsSavingService } from '../../services/constructor-is-saving.service';
+import { Observable, Subscription } from "rxjs";
+import { PublishSettingsIsSavedService } from "../../services/publish-settings-is-saved.service";
+import { ConstructorIsSavingService } from "../../services/constructor-is-saving.service";
 
 //TODO: remove excess functional
 @Component({
@@ -49,6 +56,9 @@ export class VFormPublishSettingsComponent implements OnInit {
   @Input() saveEvents: Observable<void>;
   @Input() formId: string;
   @Output() goBackPublish = new EventEmitter<boolean>();
+  static countSaveFormService: number = 0;
+  saveFormSubscription: Subscription;
+
   activeMenuItem: string;
   publishMenuItems = PublishMenuItems;
 
@@ -110,16 +120,20 @@ export class VFormPublishSettingsComponent implements OnInit {
     private saveFormService: SaveFormService
   ) {
     this.vDataCollection = vDataCollection;
-    this.saveFormService.onSaveForm.subscribe(() => {
-      this.saveForm();
-    });
-    // console.log("constructor");
-    this.constructorIsSavingService.setIsSaved(this.isDataSaving);
-    // console.log(this.isDataSaving);
   }
 
   ngOnInit() {
     window.scrollTo(0, 0);
+    // if (VFormPublishSettingsComponent.countSaveFormService < 1) {
+      this.saveFormSubscription = this.saveFormService.onSaveForm.subscribe(
+        () => {
+          this.saveForm();
+        }
+      );
+    // }
+    VFormPublishSettingsComponent.countSaveFormService++;
+    this.constructorIsSavingService.setIsSaving(this.isDataSaving);
+
     this.publishSettingsIsSavedService.setIsSaved(false);
     this.route.parent.url.subscribe(urlPath => {
       const url = urlPath[urlPath.length - 1].path;
@@ -253,13 +267,13 @@ export class VFormPublishSettingsComponent implements OnInit {
       const form: Form = this.getForm();
       this.spinnerText = "Data is saving...";
       this.isDataSaving = true;
-      this.constructorIsSavingService.setIsSaved(this.isDataSaving);
+      this.constructorIsSavingService.setIsSaving(this.isDataSaving);
       // console.log(this.isDataSaving);
       this.formService.sendForm(form).subscribe(res => {
-        this.publishSettingsIsSavedService.setIsSaved(res['updated']);
+        this.publishSettingsIsSavedService.setIsSaved(res["updated"]);
 
         this.isDataSaving = !this.saveFormService.getSavingStatus();
-        this.constructorIsSavingService.setIsSaved(this.isDataSaving);
+        this.constructorIsSavingService.setIsSaving(this.isDataSaving);
         // console.log(this.isDataSaving);
         if (this.isDataSaving) {
           this.spinnerText = "Other tabs are saving...";
@@ -274,7 +288,7 @@ export class VFormPublishSettingsComponent implements OnInit {
 
   public saveDraftForm(): void {
     // console.log("SAVE draft");
-    if( this.formId && this.form ) {
+    if (this.formId && this.form) {
       const form: Form = this.getForm();
       this.vDataCollection.setDraftForm(this.draftId, form);
     }
@@ -286,5 +300,13 @@ export class VFormPublishSettingsComponent implements OnInit {
 
   ngOnDestroy(): void {
     this.saveDraftForm();
+
+    if (
+      VFormPublishSettingsComponent.countSaveFormService > 1 &&
+      this.saveFormSubscription
+    ) {
+      this.saveFormSubscription.unsubscribe();
+      VFormPublishSettingsComponent.countSaveFormService--;
+    }
   }
 }

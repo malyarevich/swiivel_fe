@@ -8,7 +8,7 @@ export class ConstructorIsSavingService {
   private isSaving:boolean;
   onIsSaving: EventEmitter<boolean> = new EventEmitter();
 
-  setIsSaved(value: boolean) {
+  setIsSaving(value: boolean) {
     if (this.isSaving !== value) {
       this.isSaving = value;
       this.onIsSaving.emit(this.isSaving);
