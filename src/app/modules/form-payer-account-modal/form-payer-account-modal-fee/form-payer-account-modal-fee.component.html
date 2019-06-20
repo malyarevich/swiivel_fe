@@ -47,9 +47,12 @@
         [(ngModel)]="selectedFees"
       ></app-select-multi-checkbox-field>
     </div>
-    <app-form-payer-account-modal-responsible-fees
-      [fees]="getSelectedFees()"
-      (onRemoveFee)="onRemoveFee($event)"
-    ></app-form-payer-account-modal-responsible-fees>
+    <div *ngIf="getSelectedFees().length">
+      <app-form-payer-account-modal-responsible-fees
+        [fees]="getSelectedFees()"
+        (onRemoveFee)="onRemoveFee($event)"
+        (onUpdateFees)="onUpdateFee($event)"
+      ></app-form-payer-account-modal-responsible-fees>
+    </div>
   </div>
 </div>
