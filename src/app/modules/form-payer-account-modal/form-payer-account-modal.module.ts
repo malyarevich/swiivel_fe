@@ -10,11 +10,17 @@ import { RecipientService } from '../../services/recipient/recipient.service';
 
 import { FormPayerAccountModalComponent } from './form-payer-account-modal.component';
 import { FormPayerAccountModalFeeComponent } from './form-payer-account-modal-fee/form-payer-account-modal-fee.component';
+import {
+  FormPayerAccountModalResponsibleFeesComponent
+} from './form-payer-account-modal-responsible-fees/form-payer-account-modal-responsible-fees.component';
+import { FormPayerAccountModalPaymentComponent } from './forn-payer-account-modal-payment/form-payer-account-modal-payment.component';
 
 @NgModule({
   declarations: [
     FormPayerAccountModalComponent,
     FormPayerAccountModalFeeComponent,
+    FormPayerAccountModalResponsibleFeesComponent,
+    FormPayerAccountModalPaymentComponent
   ],
   imports: [
     CommonModule,

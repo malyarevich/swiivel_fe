@@ -1,0 +1,48 @@
+<tr
+  class="app-table-thead-tr"
+  [ngStyle]="{'background': backround}"
+>
+  <th
+    class="app-table-thead-th"
+    *ngFor="let col of columns; let colIndex = index"
+    [width]="col.width"
+  >
+    <div
+      class="app-table-thead-th__title-block"
+      [ngClass]="{
+        'app-table-thead-th__title-block--right': col.position === 'right',
+        'app-table-thead-th__title-block--center': col.position === 'center',
+        'app-table-thead-th__title-block--right-padding': col.longRightPadding=== true,
+        'app-table-thead-th__title-block--left-padding': col.longLeftPadding=== true
+      }"
+    >
+      <div class="app-table-thead-th__title">
+        {{col.title}}&nbsp;&nbsp;
+      </div>
+      <div
+        *ngIf="col.sort"
+        class="app-table-thead-th__sort"
+        (click)="onChangeSort(colIndex)"
+      >
+        <i
+          class="fas fa-sort"
+          *ngIf="!col.sortOrder"
+        ></i>
+        <i
+          class="fas fa-sort-up app-table-thead-th__sort--up"
+          title="ASC"
+          *ngIf="col.sortOrder === 'ASC'"
+        ></i>
+        <i
+          class="fas fa-sort-down app-table-thead-th__sort--down"
+          title="DESC"
+          *ngIf="col.sortOrder  === 'DESC'"
+        ></i>
+      </div>
+    </div>
+    <app-search-field
+      *ngIf="col.search"
+    >
+    </app-search-field>
+  </th>
+</tr>

@@ -1,0 +1,66 @@
+@import '../../../../styles/variables/colors';
+
+.app-form-payer-account-modal-payment {
+
+  margin: 0 0 20px;
+
+  .app-form-payer-account-modal-payment__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 0 10px;
+  }
+
+  .app-form-payer-account-modal-payment__header--title {
+    color: #151515;
+    font: 12px/15px 'NunitoSans-Bold';
+    letter-spacing: 0.2px;
+    text-transform: uppercase;
+  }
+
+  .app-form-payer-account-modal-payment__header--button {
+    color: $element-base-color;
+  }
+
+  .app-form-payer-account-modal-payment__header--button:hover {
+    color: $white;
+  }
+
+  .app-form-payer-account-modal-payment__container {
+    position: relative;
+    background: $lightgray-color;
+    margin: 0 0 7px;
+    padding: 15px 40px 15px 12px;
+  }
+
+  .app-form-payer-account-modal-payment__groups {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .app-form-payer-account-modal-payment__group--column {
+    width: 49%;
+    margin: 0 0 10px;
+  }
+
+  .app-form-payer-account-modal-payment__field--group-item {
+    width: 31%;
+    margin: 0 0 10px;
+  }
+
+  .app-form-payer-account-modal-payment__trash {
+    position: absolute;
+    top: 25px;
+    right: 17px;
+    color: #A4A4A4;
+  }
+
+  .app-form-payer-account-modal-payment__trash:hover {
+    color: $element-base-color;
+    cursor: pointer;
+  }
+
+  .app-form-payer-account-modal-payment__field {
+    margin: 0 0 10px;
+  }
+}

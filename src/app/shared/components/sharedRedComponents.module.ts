@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { NgbDatepicker, NgbDatepickerModule } from "@ng-bootstrap/ng-bootstrap";
 import { NgSelectModule } from '@ng-select/ng-select';
 
 // buttons
@@ -14,23 +15,25 @@ import { SearchFieldComponent } from './fields/search-field/search-field.compone
 import { SelectFieldComponent } from './fields/select-field/select-field.component';
 import { SelectMultiCheckboxFieldComponent } from './fields/select-multi-checkbox-field/select-multi-checkbox-field.component';
 import { SelectMultiSearchFieldComponent } from './fields/select-multi-search-field/select-multi-search-field.component';
+import { ToggleFieldComponent } from './fields/toggle-field/toggle-field.component';
 
 // components
 import { BadgeComponent } from './badge/badge.component';
 import { BadgeDropdownComponent } from './badge-dropdown/badge-dropdown.component';
+import { DataTableComponent } from './data-table/data-table.component';
+import { DataTableHeaderComponent } from "./data-table/data-table-header/data-table-header.component";
+import { DataTableHeaderTitleComponent } from "./data-table/data-table-header/data-table-header-title/data-table-header-title.component";
+import { DataTableHeaderFilterTextComponent } from "./data-table/data-table-header/data-table-header-filter-text/data-table-header-filter-text.component";
+import { DataTableHeaderFilterDateComponent } from "./data-table/data-table-header/data-table-header-filter-date/data-table-header-filter-date.component";
 import { ModalComponent } from './modal/modal.component';
+import { PersonAvatarChangeComponent } from './person-avatar-change/person-avatar-change.component';
 import { PersonShowComponent } from './person-show/person-show.component';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { MainSpinnerComponent } from './main-spinner/main-spinner.component';
 import { TagComponent } from './tag/tag.component';
+import { TableTheadComponent } from './table-thead/table-thead.component';
+import { TipQuestionComponent } from './tip-question/tip-question.component';
 import { ToggleCheckboxFieldComponent } from './fields/toggle-checkbox-field/toggle-checkbox-field.component';
-import { DataTableComponent } from './data-table/data-table.component';
-import {DataTableHeaderComponent} from "./data-table/data-table-header/data-table-header.component";
-import {DataTableHeaderTitleComponent} from "./data-table/data-table-header/data-table-header-title/data-table-header-title.component";
-import {DataTableHeaderFilterTextComponent} from "./data-table/data-table-header/data-table-header-filter-text/data-table-header-filter-text.component";
-import {DataTableHeaderFilterDateComponent} from "./data-table/data-table-header/data-table-header-filter-date/data-table-header-filter-date.component";
-import {NgbDatepicker, NgbDatepickerModule} from "@ng-bootstrap/ng-bootstrap";
-import { PersonAvatarChangeComponent } from './person-avatar-change/person-avatar-change.component';
 
 @NgModule({
   declarations: [
@@ -43,35 +46,38 @@ import { PersonAvatarChangeComponent } from './person-avatar-change/person-avata
     SelectFieldComponent,
     SelectMultiCheckboxFieldComponent,
     SelectMultiSearchFieldComponent,
+    ToggleFieldComponent,
     // components
     BadgeComponent,
     BadgeDropdownComponent,
-    ModalComponent,
-    PersonShowComponent,
-    SpinnerComponent,
-    MainSpinnerComponent,
-    TagComponent,
-    ToggleCheckboxFieldComponent,
     DataTableComponent,
     DataTableHeaderComponent,
     DataTableHeaderTitleComponent,
     DataTableHeaderFilterTextComponent,
     DataTableHeaderFilterDateComponent,
+    MainSpinnerComponent,
+    ModalComponent,
     PersonAvatarChangeComponent,
+    PersonShowComponent,
+    SpinnerComponent,
+    TableTheadComponent,
+    TagComponent,
+    TipQuestionComponent,
+    ToggleCheckboxFieldComponent,
   ],
   imports: [
     CommonModule,
     FormsModule,
+    NgbDatepickerModule,
     NgSelectModule,
     ReactiveFormsModule,
-    NgbDatepickerModule,
   ],
   exports: [
     CommonModule,
     FormsModule,
+    NgbDatepickerModule,
     NgSelectModule,
     ReactiveFormsModule,
-    NgbDatepickerModule,
     // buttons
     SearchFilterBtnComponent,
     // fields
@@ -82,16 +88,19 @@ import { PersonAvatarChangeComponent } from './person-avatar-change/person-avata
     SelectMultiCheckboxFieldComponent,
     SelectMultiSearchFieldComponent,
     ToggleCheckboxFieldComponent,
+    ToggleFieldComponent,
     // components
     BadgeComponent,
     BadgeDropdownComponent,
+    DataTableComponent,
+    MainSpinnerComponent,
     ModalComponent,
+    PersonAvatarChangeComponent,
     PersonShowComponent,
     SpinnerComponent,
-    MainSpinnerComponent,
+    TableTheadComponent,
     TagComponent,
-    DataTableComponent,
-    PersonAvatarChangeComponent
+    TipQuestionComponent,
   ],
 })
 
