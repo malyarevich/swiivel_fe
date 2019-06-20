@@ -13,8 +13,8 @@ export class FormPayerAccountModalPaymentComponent implements OnInit {
 
   public paymentMethod = '';
   public payerPaymentMethods = [];
+  public isSelectVisible = false;
 
-  private isSelectVisible: boolean = false;
   private paymentMethods: string[] = ['ACH', 'Credit Card'];
 
 
