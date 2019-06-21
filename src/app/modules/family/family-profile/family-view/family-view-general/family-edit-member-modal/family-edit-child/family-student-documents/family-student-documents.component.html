@@ -22,10 +22,15 @@
     </div>
     <div class="col-2 row no-gutters align-items-center justify-content-end">
       <!--<div class="col-4" (click)="openForPreview(document)">-->
-      <i class="fas fa-eye mr-3 app-text-second"></i>
-      <!--<div class="col-4" (click)="deleteAttachment(document)">-->
-      <i class="fas fa-trash mr-3 app-text-second"></i>
-      <i class="fas fa-paperclip app-background-primary app-text-white rounded p-3"></i>
+      <i class="fas fa-eye mr-3 app-text-second app-cursor-pointer"
+         (click)="fileDownload(attachment.link)"></i>
+      <i class="fas fa-trash mr-3 app-text-second app-cursor-pointer"
+         (click)="fileDelete(attachment.link)"></i>
+      <i class="fas fa-paperclip app-background-primary app-text-white rounded p-3 app-cursor-pointer"
+         (click)="inputDownload.click()"></i>
     </div>
+  </div>
+  <div class="col-12 d-flex justify-content-center">
+    <app-spinner *ngIf="loader"></app-spinner>
   </div>
 </div>

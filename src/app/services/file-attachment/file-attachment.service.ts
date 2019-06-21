@@ -10,8 +10,26 @@ export class FileAttachmentService {
 
   constructor(private http: HttpClient) { }
 
-  uploadFile(data): Observable<any>{
+  upload(data): Observable<any>{
     return this.http.post(`file/attach`, data)
+      .pipe(
+        map((response) => {
+          return response;
+        })
+      );
+  }
+
+  getDownloadLink(link): Observable<any> {
+    return this.http.get(link)
+      .pipe(
+        map((response) => {
+          return response;
+        })
+      );
+  }
+
+  delete(link): Observable<any> {
+    return this.http.delete(link)
       .pipe(
         map((response) => {
           return response;
