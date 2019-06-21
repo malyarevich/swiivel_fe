@@ -82,7 +82,7 @@ export class FamilyViewDocumentsComponent implements OnInit {
   }
 
   getFamilyDocuments() {
-    this.fileAttachmentService.getByFamilyId(this.familyId).subscribe((res) => {
+    this.fileAttachmentService.getByFamilyId(this.familyId).subscribe((res: Response) => {
       this.attachments = res.data;
     })
   }
