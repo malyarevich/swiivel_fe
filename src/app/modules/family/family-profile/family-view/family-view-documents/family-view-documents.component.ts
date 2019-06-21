@@ -2,6 +2,13 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Family} from "../../../../../models/family/family.model";
 import {FamilyService} from "../../../../../services/family/family.service";
 import {DataTableColumn} from "../../../../../models/data-table/data-table-column.model";
+import {FileAttachment} from "../../../../../models/family/file-attachment.model";
+import {FileAttachmentService} from "../../../../../services/file-attachment/file-attachment.service";
+
+interface Response {
+  status: number;
+  data: [FileAttachment]
+}
 
 @Component({
   selector: 'app-family-view-documents',
@@ -11,6 +18,7 @@ import {DataTableColumn} from "../../../../../models/data-table/data-table-colum
 export class FamilyViewDocumentsComponent implements OnInit {
   @Input() familyId: string;
   familyName: string;
+  attachments: [FileAttachment];
 
   cols: DataTableColumn[] = [
     {
@@ -59,11 +67,12 @@ export class FamilyViewDocumentsComponent implements OnInit {
     },
   ];
 
-  constructor(private familyService: FamilyService) {
+  constructor(private familyService: FamilyService,private fileAttachmentService: FileAttachmentService) {
   }
 
   ngOnInit() {
     this.getFamilyName();
+    this.getFamilyDocuments();
   }
 
   getFamilyName() {
@@ -72,8 +81,19 @@ export class FamilyViewDocumentsComponent implements OnInit {
     })
   }
 
+  getFamilyDocuments() {
+    this.fileAttachmentService.getByFamilyId(this.familyId).subscribe((res) => {
+      this.attachments = res.data;
+    })
+  }
+
   onSearchQuery(event) {
     // console.log(event);
+  }
+
+  // TODO: Create directive or pipe ConvertData for Safari browser
+  convertDate(date) {
+    return date.replace(/\s/g, "T");
   }
 
 }

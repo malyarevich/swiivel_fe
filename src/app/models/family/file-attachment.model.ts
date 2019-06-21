@@ -1,3 +1,5 @@
+import {FamilyPerson} from "./family-person.model";
+
 export interface FileAttachment {
   id: number;
   fileable_id: number;
@@ -8,4 +10,5 @@ export interface FileAttachment {
   link: string;
   updated_at: string;
   created_at: string;
+  fileable?: FamilyPerson
 }

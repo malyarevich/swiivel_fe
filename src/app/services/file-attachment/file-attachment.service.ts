@@ -36,4 +36,13 @@ export class FileAttachmentService {
         })
       );
   }
+
+  getByFamilyId(familyId: string) {
+    return this.http.get(`file/attach/family/${familyId}`)
+      .pipe(
+        map((response) => {
+          return response;
+        })
+      );
+  }
 }
