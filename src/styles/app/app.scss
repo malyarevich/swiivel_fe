@@ -65,3 +65,12 @@
 .app-text-capitalize {
   text-transform: capitalize;
 }
+
+
+.app-background-primary {
+  background-color: $element-base-color!important;
+}
+
+.app-background-light-gray {
+  background-color: $lightgray-color!important;
+}
