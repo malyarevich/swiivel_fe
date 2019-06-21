@@ -33,7 +33,7 @@ export class FamilyStudentDocumentsComponent implements OnInit {
     let formData: FormData = new FormData();
     formData.append('file', file, file.name);
     formData.append('entityType', 'personFamily');
-    formData.append('entityId', this.familyPerson.id);
+    formData.append('entityId', JSON.stringify(this.familyPerson.id));
     this.fileAttachmentService.uploadFile(formData)
       .subscribe((result: Response) => {
           if (result.status) {
