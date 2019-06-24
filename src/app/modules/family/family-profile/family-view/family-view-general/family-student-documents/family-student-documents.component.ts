@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {FileAttachment} from "../../../../../../../../models/family/file-attachment.model";
-import {FileAttachmentService} from "../../../../../../../../services/file-attachment/file-attachment.service";
-import {FamilyPerson} from "../../../../../../../../models/family/family-person.model";
+import {FileAttachment} from "../../../../../../models/family/file-attachment.model";
+import {FileAttachmentService} from "../../../../../../services/file-attachment/file-attachment.service";
+import {FamilyPerson} from "../../../../../../models/family/family-person.model";
 
 interface Response {
   status: number;
