@@ -45,4 +45,13 @@ export class FileAttachmentService {
         })
       );
   }
+
+  updateInfo(id, data) {
+    return this.http.put(`file/attach/${id}`, data)
+      .pipe(
+        map((response) => {
+          return response;
+        })
+      );
+  }
 }
