@@ -7,7 +7,6 @@ import {FamilyPersonService} from "../../../../../../../services/family/family-p
 import {NgbDateParserFormatter} from "@ng-bootstrap/ng-bootstrap";
 import {PersonService} from "../../../../../../../services/person/person.service";
 import {environment} from "../../../../../../../../environments/environment";
-import {FileAttachment} from "../../../../../../../models/family/file-attachment.model";
 
 @Component({
   selector: 'app-family-edit-child',

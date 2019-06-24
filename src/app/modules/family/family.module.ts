@@ -45,7 +45,8 @@ import { FamilyAddNewParentSiblingComponent } from './family-profile/family-view
 import { FamilyParentSiblingCardComponent } from './family-profile/family-view/family-view-general/family-parent-sibling-card/family-parent-sibling-card.component';
 import { FamilyEditParentSiblingComponent } from './family-profile/family-view/family-view-general/family-edit-member-modal/family-edit-parent-sibling/family-edit-parent-sibling.component';
 import {GeneralDirectivesModule} from "../../utils/directives/general-directives.module";
-import { FamilyStudentDocumentsComponent } from './family-profile/family-view/family-view-general/family-edit-member-modal/family-edit-child/family-student-documents/family-student-documents.component';
+import { FamilyStudentDocumentsComponent } from './family-profile/family-view/family-view-general/family-student-documents/family-student-documents.component';
+import { FamilyEditDocumentComponent } from './family-profile/family-view/family-view-documents/family-edit-document/family-edit-document.component';
 
 @NgModule({
   declarations: [
@@ -83,7 +84,8 @@ import { FamilyStudentDocumentsComponent } from './family-profile/family-view/fa
     FamilyAddNewParentSiblingComponent,
     FamilyParentSiblingCardComponent,
     FamilyEditParentSiblingComponent,
-    FamilyStudentDocumentsComponent
+    FamilyStudentDocumentsComponent,
+    FamilyEditDocumentComponent
   ],
   imports: [
     CommonModule,

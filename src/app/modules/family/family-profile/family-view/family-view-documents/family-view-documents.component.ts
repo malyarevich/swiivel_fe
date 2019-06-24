@@ -19,6 +19,8 @@ export class FamilyViewDocumentsComponent implements OnInit {
   @Input() familyId: string;
   familyName: string;
   attachments: [FileAttachment];
+  showEditModal: boolean = false;
+  attachmentEditable: FileAttachment;
 
   cols: DataTableColumn[] = [
     {
@@ -94,6 +96,30 @@ export class FamilyViewDocumentsComponent implements OnInit {
   // TODO: Create directive or pipe ConvertData for Safari browser
   convertDate(date) {
     return date.replace(/\s/g, "T");
+  }
+
+  downloadFamilyDocument(link) {
+    this.fileAttachmentService.getDownloadLink(link)
+      .subscribe((result) => {
+          if (result.status) {
+            window.open(result.data, "_blank");
+          }
+        },
+        error => console.log(error)
+      );
+  }
+
+  editAttachment(attachment) {
+    this.showEditModal = true;
+    this.attachmentEditable = attachment;
+  }
+
+  onCloseEditFamilyDocumentModal() {
+    this.showEditModal = false;
+  }
+
+  onReloadFamilyDocument() {
+    this.getFamilyDocuments();
   }
 
 }
