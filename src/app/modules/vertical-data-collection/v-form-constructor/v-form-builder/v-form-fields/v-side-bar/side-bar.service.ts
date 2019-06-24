@@ -23,7 +23,7 @@ export class SideBarService {
     let  groupNew = cloneDeep(group);
     let arr = form.fields.filter(f => f.name == section.name);
     if (isEmpty(arr)) {
-      console.log('if arr');
+      console.log(arr);
       sectionNew.fields = [];
       groupNew.fields = [];
       group.fields.forEach(field=>this.addExistingField(field, groupNew.fields));

@@ -61,7 +61,7 @@ export class VSectionConteinerComponent implements OnInit {
   //   field.exist
   //     ? this.addExistingField(field, this.form.fields)
   //     : this.onDelete(field.name);
-  // }Hebrew Middle Name
+  // }
   removeSection(section: Field){
     this.sideBarService.onSectionDelete(section, this.form);
     this.section.fields.forEach(field=>  {

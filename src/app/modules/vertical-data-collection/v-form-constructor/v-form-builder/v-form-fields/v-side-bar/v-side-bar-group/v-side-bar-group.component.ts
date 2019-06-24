@@ -10,9 +10,7 @@ import {SideBarService} from "../side-bar.service";
   styleUrls: ['./v-side-bar-group.component.scss']
 })
 export class VSideBarGroupComponent implements OnInit, OnDestroy {
-
-  showAddButton = true;
-  showNested: boolean = true;
+ showNested: boolean = true;
   validNewCustomFieldName: boolean = true;
   @Input() idSectionForDragDrop: string[];
   @Input() group: Field;
