@@ -1,6 +1,7 @@
 <app-modal
   class="form-payer-account"
   title="Create Payer Account"
+  [width]="'700px'"
   (closeModal)="onCloseFormPayerAccountModal()"
 >
   <div
@@ -155,8 +156,8 @@
           type="button"
           class="btn app-btn-primary"
           (click)="onCreatePayerAccount()"
+          [disabled]="payerAccountForm.invalid"
         >
-          <!--[disabled]="payerAccountForm.invalid"-->
           Add Account
         </button>
       </div>

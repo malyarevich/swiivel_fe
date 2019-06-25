@@ -40,11 +40,12 @@
       class="app-form-payer-account-modal-fee__select-fees"
     >
       <app-select-multi-checkbox-field
+        bindValue="id"
         bindLabel="name"
         labelTitle="Fees"
         [items]="onlyFees"
-        (selectedItems)="onSelect($event)"
-        [(ngModel)]="selectedFees"
+        (ngModelChange)="onSelect($event)"
+        [(ngModel)]="selectedFeesId"
       ></app-select-multi-checkbox-field>
     </div>
     <div *ngIf="getSelectedFees().length">

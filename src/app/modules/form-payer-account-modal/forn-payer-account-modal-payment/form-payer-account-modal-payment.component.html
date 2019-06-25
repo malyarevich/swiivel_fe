@@ -36,15 +36,20 @@
             <div class="app-form-payer-account-modal-payment__field">
               <app-select-field
                 [value]="'Credit Card'"
-                [disabled]="false"
-                id="paymentOption"
+                [disabled]="true"
                 [items]="['Credit Card']"
                 labelTitle="Payment Option"
               ></app-select-field>
             </div>
+            <div class="app-form-payer-account-modal-payment__field">
+              <app-input-field
+                [formControl]="method.controls.method_name"
+                [type]="text"
+                label="Method name"
+              ></app-input-field>
+            </div>
             <app-input-field
               [formControl]="method.controls.name"
-              id='card-holder'
               label="Card Holder"
             ></app-input-field>
           </div>
@@ -54,7 +59,6 @@
                 [formControl]="method.controls.number"
                 [maxLength]="19"
                 [type]="number"
-                id='card-number'
                 label="Card Number"
               ></app-input-field>
             </div>
@@ -64,7 +68,6 @@
                   [formControl]="method.controls.expiry_year"
                   [maxLength]="4"
                   [type]="number"
-                  id='expiration_year'
                   label="Expiration Year"
                 ></app-input-field>
               </div>
@@ -73,7 +76,6 @@
                   [formControl]="method.controls.expiry_month"
                   [maxLength]="2"
                   [type]="number"
-                  id='month'
                   label="Month"
                 ></app-input-field>
               </div>
@@ -82,7 +84,6 @@
                   [formControl]="method.controls.cvv"
                   [maxLength]="3"
                   [type]="number"
-                  id='cvv'
                   label="CVV"></app-input-field>
               </div>
             </div>
@@ -94,53 +95,40 @@
             class="fas fa-trash app-form-payer-account-modal-payment__trash"
           ></i>
         </div>
-        <app-checkbox-field
-          [formControl]="method.controls.priority"
-          label="Make Primary"
-        >
-        </app-checkbox-field>
       </div>
       <div
-        *ngIf="method.controls.method_type.value === 'ACH'"
+        *ngIf="method.controls.method_type.value === 'Ach'"
         class="app-form-payer-account-modal-payment__container"
       >
         <div class="app-form-payer-account-modal-payment__field">
           <app-input-field
             [formControl]="method.controls.method_name"
             [type]="text"
-            id='method-name'
             label="Method name"
           ></app-input-field>
         </div>
         <div class="app-form-payer-account-modal-payment__field">
           <app-select-field
             [value]="'Checking'"
-            [formControl]="method.controls.type"
+            [formControl]="method.controls.account_type"
             [items]="['Checking', 'Savings']"
           >
           </app-select-field>
         </div>
         <div class="app-form-payer-account-modal-payment__groups">
           <div class="app-form-payer-account-modal-payment__group--column">
-            <div class="app-form-payer-account-modal-payment__field">
-              <app-input-field
-                [formControl]="method.controls.routing"
-                [type]="text"
-                id='routing'
-                label="Routing"
-              ></app-input-field>
-            </div>
+            <app-input-field
+              [formControl]="method.controls.routing"
+              [type]="text"
+              label="Routing"
+            ></app-input-field>
           </div>
           <div class="app-form-payer-account-modal-payment__group--column">
-            <div class="app-form-payer-account-modal-payment__field">
-              <app-input-field
-                [formControl]="method.controls.account"
-                [type]="text"
-                id='account'
-                label="Account"
-                disable="true"
-              ></app-input-field>
-            </div>
+            <app-input-field
+              [formControl]="method.controls.account"
+              [type]="text"
+              label="Account"
+            ></app-input-field>
           </div>
         </div>
         <div>
@@ -149,11 +137,6 @@
             class="fas fa-trash app-form-payer-account-modal-payment__trash"
           ></i>
         </div>
-        <app-checkbox-field
-          label="Make Primary"
-          [formControl]="method.controls.priority"
-        >
-        </app-checkbox-field>
       </div>
     </div>
   </div>

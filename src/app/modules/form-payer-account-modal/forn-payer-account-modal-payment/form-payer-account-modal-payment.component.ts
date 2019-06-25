@@ -11,7 +11,6 @@ export class FormPayerAccountModalPaymentComponent implements OnInit {
 
   @Input() parentForm: FormGroup;
 
-  // @Input() parentFormArray: FormGroup;
   @Output() onChangePaymentForm: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
 
   paymentForm: FormGroup;
@@ -20,7 +19,7 @@ export class FormPayerAccountModalPaymentComponent implements OnInit {
   public paymentMethod = null;
   public isSelectVisible = false;
 
-  public paymentMethods: string[] = ['ACH', 'Credit Card'];
+  public paymentMethods: string[] = ['Ach', 'Credit Card'];
 
   constructor(private formBuilder: FormBuilder) {
   }
@@ -35,32 +34,31 @@ export class FormPayerAccountModalPaymentComponent implements OnInit {
     });
   }
 
-  createPayment(method?: string): FormGroup {
+  createPayment(method: string): FormGroup {
     if (method === 'Credit Card') {
       return this.formBuilder.group({
         method_type: new FormControl(method),
+        method_name: new FormControl(''),
         name: new FormControl(''),
         number: new FormControl(''),
         expiry_year: new FormControl(''),
         expiry_month: new FormControl(''),
-        cvv: new FormControl(''),
-        priority: new FormControl(false),
+        cvv: new FormControl('')
       });
     } else {
       return this.formBuilder.group({
         method_type: new FormControl(method),
         method_name: new FormControl(''),
         number: new FormControl(''),
-        type: new FormControl(''),
+        account_type: new FormControl('Checking'),
         routing: new FormControl(''),
-        account: new FormControl(''),
-        priority: new FormControl(false),
+        account: new FormControl('')
       });
     }
   }
 
-  addPayment(method?: string): void {
-    this.paymentMethodsArray.push(this.createPayment(method));
+  addPayment(method: string): void {
+    this.paymentMethodsArray.insert(0, this.createPayment(method));
   }
 
   get paymentMethodsArray(): FormArray {

@@ -34,7 +34,7 @@ import { FormPayerAccountModalPaymentComponent } from './forn-payer-account-moda
   providers: [
     PersonService,
     PayersService,
-    RecipientService,
+    RecipientService
   ],
   entryComponents: []
 })
