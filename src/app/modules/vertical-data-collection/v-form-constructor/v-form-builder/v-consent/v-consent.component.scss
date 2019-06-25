@@ -32,7 +32,9 @@ a.active {
   color: #ffffff;
   border-radius: 3px;
 }
-
+/** 
+FIXME:
+*/
 .app-consent-dropdown-var {
   background-color: $element-base-color;
   border-radius: 50%;
@@ -56,3 +58,10 @@ a.active {
   //background-color: red;
   color: red;
 }
+.command_arrows {
+  color: $white;
+  background-color: $element-base-color;
+  border-radius: 50%;
+}
+
+/**/

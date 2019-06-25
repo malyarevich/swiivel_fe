@@ -1,10 +1,11 @@
 <nav class="nav_grid">
   <div class="nav_grid__title">
-    <span
-      class="navbar-brand nav_text_brand"
-      routerLink="/vertical-data-collection"
-      >NEW DATA COLLECTIONS FORM</span
-    >
+    <span class="nav_icon_brand" routerLink="/vertical-data-collection">
+      <i class="fas fa-chevron-left fa-xs"></i>
+    </span>
+    <span class="nav_text_brand">
+      NEW DATA COLLECTIONS FORM
+    </span>
   </div>
   <div class="nav_grid__navbar">
     <div>
@@ -15,7 +16,7 @@
             routerLink="general-information"
             [ngClass]="{
               'main_navbar__item_link--valid': isGeneralInfoValid,
-              'disabled_router': !isGeneralInfoValid || isSavingConstructor
+              disabled_router: !isGeneralInfoValid || isSavingConstructor
             }"
             routerLinkActive="active main_navbar__item_link--active"
           >
@@ -35,7 +36,7 @@
           <a
             class="main_navbar__item_link"
             [ngClass]="{
-              'disabled_router': !isGeneralInfoValid || isSavingConstructor
+              disabled_router: !isGeneralInfoValid || isSavingConstructor
             }"
             routerLink="form-builder"
             routerLinkActive="active main_navbar__item_link--active"
@@ -48,7 +49,7 @@
           <a
             class="main_navbar__item_link"
             [ngClass]="{
-              'disabled_router': !isGeneralInfoValid || isSavingConstructor
+              disabled_router: !isGeneralInfoValid || isSavingConstructor
             }"
             routerLink="publish-settings"
             routerLinkActive="active main_navbar__item_link--active"
