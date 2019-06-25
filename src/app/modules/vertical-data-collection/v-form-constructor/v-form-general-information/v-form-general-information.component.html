@@ -117,8 +117,8 @@
 
           <div  *ngIf="periods?.length" formGroupName="periodCheckboxGroup" class="form-group pl-5 ml-5">
 
-            <div class="row justify-content-center pt-3 mt-4">
-              <div class="form-group col-5 pl-5" *ngFor="let period of periods">
+            <div class="row justify-content-between pt-3 mt-4 mx-5">
+              <div class="form-group col-6" *ngFor="let period of periods">
                 <label class="app-checkbox-container" [for]="period.id">{{period.name}} ({{period.date_from}} - {{period.date_to}})
                   <input type="checkbox" class="form-check-input" [id]="period.id" [formControlName]="period.id">
                   <span class="app-checkbox-checkmark"
