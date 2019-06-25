@@ -35,12 +35,24 @@
     class="app-form-payer-account-modal-fee__content"
     [ngClass]="{'app-form-payer-account-modal-fee__content--open': isOpen}"
   >
-    <div *ngIf="fees && fees.length">
+    <div
+      *ngIf="fees && fees.length"
+      class="app-form-payer-account-modal-fee__select-fees"
+    >
       <app-select-multi-checkbox-field
         bindLabel="name"
         labelTitle="Fees"
-        [items]="fees"
+        [items]="onlyFees"
+        (selectedItems)="onSelect($event)"
+        [(ngModel)]="selectedFees"
       ></app-select-multi-checkbox-field>
+    </div>
+    <div *ngIf="getSelectedFees().length">
+      <app-form-payer-account-modal-responsible-fees
+        [fees]="getSelectedFees()"
+        (onRemoveFee)="onRemoveFee($event)"
+        (onUpdateFees)="onUpdateFee($event)"
+      ></app-form-payer-account-modal-responsible-fees>
     </div>
   </div>
 </div>

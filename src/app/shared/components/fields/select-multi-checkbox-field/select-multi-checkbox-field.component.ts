@@ -1,8 +1,9 @@
 import {
-  Component,
+  Component, EventEmitter,
   Input,
   OnInit,
   Optional,
+  Output,
   Self,
 } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
@@ -23,6 +24,7 @@ export class SelectMultiCheckboxFieldComponent  implements OnInit, ControlValueA
   @Input() bindValue = 'value';
   @Input() searchable = false;
   @Input() showClearBtn = false;
+  @Output() selectedItems: EventEmitter<any> = new EventEmitter<any>();
 
   value: any;
 
@@ -55,6 +57,7 @@ export class SelectMultiCheckboxFieldComponent  implements OnInit, ControlValueA
   }
 
   onChange(value) {
+    this.selectedItems.emit(value);
     return value;
   }
   onTouched() {}

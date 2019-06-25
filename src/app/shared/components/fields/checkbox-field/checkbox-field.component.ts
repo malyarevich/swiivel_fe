@@ -2,7 +2,9 @@ import {
   Component,
   OnInit,
   Input,
-  forwardRef
+  forwardRef,
+  Output,
+  EventEmitter
 } from '@angular/core';
 import {
   NG_VALUE_ACCESSOR,
@@ -24,8 +26,9 @@ export class CheckboxFieldComponent implements OnInit, ControlValueAccessor {
   @Input() id: string;
   @Input() label = '';
   @Input() isInvalid = false;
-
-  isSelected: boolean;
+  @Input() isSelected: boolean;
+  @Input() hasMargin: boolean = false;
+  @Output() changeCheckboxState = new EventEmitter();
 
   constructor() {}
 
@@ -55,7 +58,7 @@ export class CheckboxFieldComponent implements OnInit, ControlValueAccessor {
       return;
     }
     this.isSelected = !this.isSelected;
+    this.changeCheckboxState.emit(this.isSelected);
     this.onChange(this.isSelected);
   }
-
 }

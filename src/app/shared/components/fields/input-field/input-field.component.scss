@@ -5,18 +5,37 @@
   padding: 0;
   min-height: 36px;
   max-height: 36px;
-  background: #fff;
   width: auto;
   position: relative;
+
+  &.app-input-field-table {
+    min-height: 24px;
+    max-height: 24px;
+
+    input {
+      min-height: 24px;
+      padding: 0 10px;
+      font-size: 12px;
+    }
+
+    input[type='number'] {
+      -moz-appearance:textfield;
+    }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+    }
+  }
 
   .app-input-field-label {
     position: absolute;
     color: #909090;
     transform-origin: 0 0;
     z-index: 1;
-    top: 9px;
+    top: 11px;
     left: 11px;
-    font-size: 12px;
+    font-size: 10px;
   }
 
   .app-input-field-label__value {
@@ -38,7 +57,7 @@
     }
 
     &.app-input-field__value {
-      padding-top: 14px;
+      padding-top: 10px;
     }
   }
 
@@ -65,4 +84,5 @@
       border-color: #e65757;
     }
   }
+
 }

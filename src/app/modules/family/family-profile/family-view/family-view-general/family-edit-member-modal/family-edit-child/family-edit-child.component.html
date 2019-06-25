@@ -205,7 +205,8 @@
                              label="Address"></app-input-field>
           </div>
           <div class="col-4 px-1">
-            <app-input-field appNumbersValidator="true" regexStr="^[0-9]+$" [formControlName]="'student_physician_phone'" id='phone'
+            <app-input-field appNumbersValidator="true" regexStr="^[0-9]+$"
+                             [formControlName]="'student_physician_phone'" id='phone'
                              label="Phone"></app-input-field>
           </div>
         </div>
@@ -256,6 +257,8 @@
       </div>
     </div>
 
+    <!--DOCUMENTS-->
+    <app-family-student-documents [familyPerson]="familyPerson"></app-family-student-documents>
 
   </div>
   <!--END STUDENT INFO-->

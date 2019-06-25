@@ -1,39 +1,27 @@
 <app-family-view-documents-nav [familyName]="familyName"></app-family-view-documents-nav>
+<app-modal *ngIf="showEditModal" [width]="'45%'"
+           [title]="'Edit Documents Info'"
+           (closeModal)="onCloseEditFamilyDocumentModal()">
+  <app-family-edit-document [attachmentEditable]="attachmentEditable"
+                            (reloadFamilyDocument)="onReloadFamilyDocument()"
+                            (closeModalEditFamilyDocument)="onCloseEditFamilyDocumentModal()">
+  </app-family-edit-document>
+</app-modal>
 <div class="mt-4">
   <app-data-table [cols]="cols" tableType='table-striped'
                   (searchQueryEmitter)="onSearchQuery($event)">
-    <tbody>
-    <tr>
-      <td nowrap>Untitled Document</td>
-      <td nowrap>Registration Form</td>
-      <td>PDF</td>
-      <td>05-07-2019</td>
-      <td>Sara Fishman</td>
+    <tbody *ngIf="attachments?.length">
+    <tr *ngFor="let attachment of attachments">
+      <td nowrap>{{attachment.title}}</td>
+      <td nowrap>{{attachment.type}}</td>
+      <td>{{attachment.format | uppercase}}</td>
+      <td>{{ convertDate(attachment.created_at) | date: "dd-MM-yyyy" }}</td>
+      <td>{{attachment.fileable.person.first_name}} {{attachment.fileable.person.last_name}}</td>
       <td class="text-right">
-        <i class="fas fa-download app-text-second app-cursor-pointer mr-4"></i>
-        <i class="fas fa-pen app-text-second app-cursor-pointer mr-5"></i>
-      </td>
-    </tr>
-    <tr>
-      <td nowrap>Fishman Docs</td>
-      <td nowrap>Birth Certificate</td>
-      <td>PNG</td>
-      <td>12-06-2019</td>
-      <td>Sara Fishman</td>
-      <td class="text-right">
-        <i class="fas fa-download app-text-second app-cursor-pointer mr-4"></i>
-        <i class="fas fa-pen app-text-second app-cursor-pointer mr-5"></i>
-      </td>
-    </tr>
-    <tr>
-      <td nowrap>Final Doc</td>
-      <td nowrap>Immunization Records</td>
-      <td>Excel</td>
-      <td>05-29-2019</td>
-      <td>Sara Fishman</td>
-      <td class="text-right">
-        <i class="fas fa-download app-text-second app-cursor-pointer mr-4"></i>
-        <i class="fas fa-pen app-text-second app-cursor-pointer mr-5"></i>
+        <i class="fas fa-download app-text-second app-cursor-pointer mr-4"
+           (click)="downloadFamilyDocument(attachment.link)"></i>
+        <i class="fas fa-pen app-text-second app-cursor-pointer mr-5"
+           (click)="editAttachment(attachment)"></i>
       </td>
     </tr>
     </tbody>

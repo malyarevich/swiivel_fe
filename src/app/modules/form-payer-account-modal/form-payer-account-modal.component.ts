@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { Person } from '../../models/person.model';
 import { Recipient } from '../../models/recipient.model';
@@ -24,6 +24,8 @@ export class FormPayerAccountModalComponent implements OnInit {
   persons: any[] = [];
   students: any[] = [];
   types = ['Payer', 'Other'];
+
+  feesData: any[] = [];
   // feeTypes = [
   //   {
   //     id: 1,
@@ -45,16 +47,23 @@ export class FormPayerAccountModalComponent implements OnInit {
       type: [this.types[0], Validators.required],
       recipients: [null, Validators.required],
       receipt: [null],
+      fees: [null, Validators.required],
+      paymentMethodsForm: this.fb.group(
+        { payerPaymentMethods: this.fb.array(
+          [this.fb.group({
+          method_type: new FormControl('')
+        })])
+      })
     });
 
     this.payerAccountForm.controls['members'].valueChanges.subscribe(value => {
       if (!this.payerAccountForm.controls['name'].touched) {
         let nameValue = '';
-        const membersLengt = value.length;
+        const membersLength = value.length;
 
         value.forEach((member, index) => {
           nameValue += member.name;
-          if (index !== membersLengt - 1) {
+          if (index !== membersLength - 1) {
             nameValue += ' & ';
           }
         });
@@ -113,9 +122,49 @@ export class FormPayerAccountModalComponent implements OnInit {
           });
         }
       });
+
+    this.feeService.getRecipientFee(1)
+      .subscribe((res) => {
+        res.data.fees.forEach((fee, index) => {
+          const feeData = {
+            amount: fee.amount,
+            id: fee.id,
+            name: fee.name,
+            type: 'fee',
+            backgroundWhite: false,
+            open: false,
+            isSelected: false,
+            isActive: false,
+            splitFields: { input: '', param: '$'},
+            totalForPay: 0
+          };
+          const feeSplits = {
+            id: fee.id,
+            splits: fee.splits,
+            type: 'splits',
+            backgroundWhite: false,
+            open: false,
+            isActive: false,
+            isSelected: false,
+          };
+
+          feeSplits.splits.forEach((split) => {
+            split.splitPay = { input: 0, param: '$'};
+          });
+
+          if (index % 2 === 0) {
+            feeData.backgroundWhite = true;
+            feeSplits.backgroundWhite = true;
+          }
+
+          this.feesData.push(feeData);
+          this.feesData.push(feeSplits);
+        });
+      });
   }
 
-  onCreatePayerAccount() {
+  onCreatePayerAccount(): void {
+    console.log(this.payerAccountForm.controls.paymentMethodsForm.value);
     this.errorMsg = null;
 
     const data = {
@@ -123,7 +172,27 @@ export class FormPayerAccountModalComponent implements OnInit {
       type: this.payerAccountForm.value.type,
       persons: [],
       primary: this.payerAccountForm.value.primary,
+      fees: [],
+      payment_methods: []
     };
+
+    this.payerAccountForm.value.fees.forEach((fee) => {
+      if (fee.type === 'fee') {
+        data.fees.push(
+          {
+            fee_id: fee.id,
+            responsibility_amount: fee.totalForPay,
+            is_percentage: fee.splitFields.param === '%',
+            splits: this.getSplits(fee)
+          });
+      }
+    });
+    //
+    // this.payerAccountForm.controls.paymentMethodsForm.value.payerPaymentMethods.forEach((paymentMethod) => {
+    //   if (paymentMethod.method_type === 'Credit Card') {
+    //     console.log(paymentMethod);
+    //   }
+    // });
 
     this.payerAccountForm.value.members.forEach((member) => {
       data.persons.push({ person_id: member.id });
@@ -139,7 +208,7 @@ export class FormPayerAccountModalComponent implements OnInit {
       });
   }
 
-  onCloseFormPayerAccountModal() {
+  onCloseFormPayerAccountModal(): void {
     this.closeFormPayerAccount.emit(true);
   }
 
@@ -156,4 +225,27 @@ export class FormPayerAccountModalComponent implements OnInit {
       this.payerAccountForm.controls['recipients'].setValue(recipients);
     }
   }
+
+  changePaymentForm(paymentForm: FormGroup): void {
+    // нужно, чтобы в формгруппу записовалось приходящее
+    console.log(paymentForm);
+    this.payerAccountForm.controls.paymentMethodsForm.patchValue(paymentForm);
+    console.log(this.payerAccountForm.controls.paymentMethodsForm);
+  }
+
+  updateFee(fees): void {
+    console.log('updateFee');
+    this.payerAccountForm.controls.fees.setValue(fees);
+    console.log(this.payerAccountForm.controls.fees);
+  }
+
+  getSplits(fee): Array<{id: number, amount: number}> {
+    const splits = [];
+
+    this.payerAccountForm.value.fees[this.payerAccountForm.value.fees.indexOf(fee) + 1].splits.forEach((split) => {
+      splits.push({id: split.id, amount: split.splitPay.input, is_percentage: split.splitPay.param === '%'});
+    });
+    return splits;
+  }
 }
+

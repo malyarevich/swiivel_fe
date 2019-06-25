@@ -1,0 +1,66 @@
+@import '../../../../../styles/variables/colors';
+
+.app-toggle-field {
+  display: flex;
+  align-items: center;
+
+  .app-toggle-field-label {
+    position: relative;
+    display: inline-block;
+    top: 3px;
+    width: 30px;
+    height: 17px;
+  }
+
+  .app-toggle-field-label input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .app-toggle-field-label-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #ccc;
+    transition: .4s;
+    border-radius: 34px;
+  }
+
+  .app-toggle-field-label-slider:before {
+    position: absolute;
+    content: "";
+    height: 13px;
+    width: 13px;
+    left: 2px;
+    bottom: 2px;
+    background-color: #fff;
+    transition: .4s;
+    border-radius: 50%;
+  }
+
+  input:checked + .app-toggle-field-label-slider {
+    background-color: $element-base-color;
+  }
+
+  input:focus + .app-toggle-field-label-slider {
+    box-shadow: 0 0 1px $element-base-color;
+  }
+
+  input:checked + .app-toggle-field-label-slider:before {
+    transform: translateX(13px);
+  }
+
+  .app-toggle-field-value {
+    padding: 0 5px;
+  }
+
+  &.app-toggle-field-has-error {
+    .app-toggle-field-value {
+      color: #e65757;
+    }
+  }
+}

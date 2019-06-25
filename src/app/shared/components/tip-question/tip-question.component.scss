@@ -1,0 +1,31 @@
+@import '../../../../styles/variables/colors';
+
+.app-tip-question {
+  position: relative;
+
+  .app-tip-question-label {
+    display: inline-block;
+    background: #999;
+    color: #fff;
+    cursor: help;
+    border-radius: 50%;
+    width: 14px;
+    height: 14px;
+    text-align: center;
+    font: 11px/15px 'NunitoSans-Regular';
+  }
+
+  .app-tip-question-content {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 16px;
+    padding: 5px;
+    background: #b6b6b6;
+    border-radius: 4px;
+  }
+
+  &:hover .app-tip-question-content{
+    display: block;
+  }
+}
