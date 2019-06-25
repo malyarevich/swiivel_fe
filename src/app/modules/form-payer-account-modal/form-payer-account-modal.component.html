@@ -22,7 +22,6 @@
   >
     <form
       [formGroup]="payerAccountForm"
-      (ngSubmit)="onCreatePayerAccount()"
     >
       <div
         class="form-payer-account-members"
@@ -114,15 +113,16 @@
       <div class="form-payer-account-fees">
         <app-form-payer-account-modal-fee
           *ngFor="let recipient of payerAccountForm.value['recipients']"
-          [parentForm] = "feesForm"
           [recipient]="recipient"
           [fees]="feesData"
           (removeRecipientFees)="onRemoveRecipient($event)"
+          (updateFee)="updateFee($event)"
         ></app-form-payer-account-modal-fee>
       </div>
-
-      <app-form-payer-account-modal-payment [parentForm]="paymentForm"></app-form-payer-account-modal-payment>
-
+        <app-form-payer-account-modal-payment
+          [parentForm]="payerAccountForm.get('paymentMethodsForm')"
+          (onChangePaymentForm)="changePaymentForm($event)"
+        ></app-form-payer-account-modal-payment>
       <div
         class="form-payer-account-members"
       >
@@ -152,10 +152,11 @@
         </button>
 
         <button
-          type="submit"
+          type="button"
           class="btn app-btn-primary"
-          [disabled]="payerAccountForm.invalid"
+          (click)="onCreatePayerAccount()"
         >
+          <!--[disabled]="payerAccountForm.invalid"-->
           Add Account
         </button>
       </div>

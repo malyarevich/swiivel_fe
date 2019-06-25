@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Fee } from '../../../models/fee.model';
 import { FeeSplits } from '../../../models/feeSplits.model';
 
@@ -11,6 +11,7 @@ import { FeeSplits } from '../../../models/feeSplits.model';
 export class FormPayerAccountModalResponsibleFeesComponent implements OnInit {
   @Input() fees: Fee[];
   @Output() onRemoveFee = new EventEmitter();
+  @Output() onUpdateFees = new EventEmitter();
 
   public selectFees: number[] = [];
 
@@ -109,6 +110,8 @@ export class FormPayerAccountModalResponsibleFeesComponent implements OnInit {
         });
       }
     }
+
+    this.updateFees();
   }
 
   onSelectFee(fee: Fee): void {
@@ -124,6 +127,8 @@ export class FormPayerAccountModalResponsibleFeesComponent implements OnInit {
         this.getSplits(fee).forEach((split) => {split.isSelected = true; });
       }
     }
+
+    this.updateFees();
   }
 
   getSplits(fee): FeeSplits[] {
@@ -148,6 +153,8 @@ export class FormPayerAccountModalResponsibleFeesComponent implements OnInit {
       }
     });
     this.selectFees.splice(this.selectFees.indexOf(feeId));
+
+    this.updateFees();
   }
 
   onChangeFeeSplits(changeInput: { fieldValue: string, id: number, type: string }): void {
@@ -163,6 +170,8 @@ export class FormPayerAccountModalResponsibleFeesComponent implements OnInit {
         }
       }
     });
+
+    this.updateFees();
   }
 
   onChangeSplit(changeInput: { fieldValue: string, id: number, type: string }): void {
@@ -181,6 +190,8 @@ export class FormPayerAccountModalResponsibleFeesComponent implements OnInit {
         });
       }
     });
+
+    this.updateFees();
   }
 
   setMaxSplitInput(fee: Fee, split: FeeSplits, changeInput: { fieldValue: string, id: number, type: string }): void {
@@ -190,6 +201,8 @@ export class FormPayerAccountModalResponsibleFeesComponent implements OnInit {
         feeSplit.splitPay.input = split.amount;
       }
     });
+
+    this.updateFees();
   }
 
   getTotalSum(): number {
@@ -226,5 +239,28 @@ export class FormPayerAccountModalResponsibleFeesComponent implements OnInit {
       }
     }
     return null;
+  }
+
+  updateFees() {
+    this.fees.forEach((fee) => {
+      fee.totalForPay = this.getTotalFeeSum(fee);
+    });
+    this.onUpdateFees.emit(this.fees);
+  }
+
+  getTotalFeeSum(sumFee: Fee): number {
+    const totalSumArray = [];
+    this.getSplits(sumFee).forEach((split) => {
+      if (split.splitPay.param && split.splitPay.input) {
+        split.splitPay.param === '$' ?
+          totalSumArray.push(split.splitPay.input) :
+          totalSumArray.push(Math.ceil(split.amount * (split.splitPay.input / 100)));
+      }
+    });
+    if (sumFee.splitFields.param === '$') {
+      return totalSumArray.reduce((a, b) => a + b, 0);
+     } else {
+      return ((totalSumArray.reduce((a, b) => a + b, 0) / parseInt(sumFee.amount, 10)) * 100);
+    }
   }
 }
