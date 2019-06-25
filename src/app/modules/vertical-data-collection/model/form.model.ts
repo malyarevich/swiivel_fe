@@ -25,6 +25,7 @@ export interface Form {
     middle: boolean,
     height: boolean
   },
+  formPeriods?: object,
   sidebar?: Field[],
   step?: number;
   publish_settings?: {

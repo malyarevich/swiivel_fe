@@ -12,26 +12,28 @@ import {
   EventEmitter,
   Host
 } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
-import { FormUtils } from "../../utils/form.utils";
-import { Form, FormSql } from "../../model/form.model";
-import { isEmpty } from "lodash";
-import { VFormService } from "../../services/v-form.service";
+import {ActivatedRoute, Router} from "@angular/router";
+import {FormUtils} from "../../utils/form.utils";
+import {Form, FormSql} from "../../model/form.model";
+import {isEmpty} from "lodash";
+import {VFormService} from "../../services/v-form.service";
 import {
   FormBuilder,
   FormControl,
   FormGroup,
   Validators
 } from "@angular/forms";
-import { NgbDateParserFormatter } from "@ng-bootstrap/ng-bootstrap";
-import { requireCheckboxesToBeCheckedValidator } from "../../../../utils/validators/require-checkboxes-to-be-checked.validator";
-import { GeneralInfoIsValidService } from "../../services/general-info-is-valid.service";
-import { menuItemModel } from "./menu";
-import { SaveFormService } from "../../services/save-form.service";
-import { GeneralInfoIsSavedService } from "../../services/general-info-is-saved.service";
-import { ConstructorIsSavingService } from "../../services/constructor-is-saving.service";
-import { VDataCollectionComponent } from "../../v-data-collection.component";
-import { Subscription } from "rxjs";
+import {NgbDateParserFormatter} from "@ng-bootstrap/ng-bootstrap";
+import {requireCheckboxesToBeCheckedValidator} from "../../../../utils/validators/require-checkboxes-to-be-checked.validator";
+import {GeneralInfoIsValidService} from "../../services/general-info-is-valid.service";
+import {menuItemModel} from "./menu";
+import {SaveFormService} from "../../services/save-form.service";
+import {GeneralInfoIsSavedService} from "../../services/general-info-is-saved.service";
+import {ConstructorIsSavingService} from "../../services/constructor-is-saving.service";
+import {VDataCollectionComponent} from "../../v-data-collection.component";
+import {Subscription} from "rxjs";
+import {VFormPeriodsService} from "../../services/v-form-periods.service";
+import {FinPeriod} from "../../../../models/fin-period.model";
 
 @Component({
   selector: "app-v-form-general-information",
@@ -92,6 +94,8 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
   spinnerText: string = "Data is loading...";
   isLoaded: boolean = false;
 
+  periods: [FinPeriod];
+
   constructor(
     @Host() vDataCollection: VDataCollectionComponent,
     private activatedRoute: ActivatedRoute,
@@ -103,7 +107,8 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
     private generalInfoIsValidService: GeneralInfoIsValidService,
     private constructorIsSavingService: ConstructorIsSavingService,
     private generalInfoIsSavedService: GeneralInfoIsSavedService,
-    private saveFormService: SaveFormService
+    private saveFormService: SaveFormService,
+    private formPeriodsService: VFormPeriodsService,
   ) {
     this.vDataCollection = vDataCollection;
   }
@@ -111,11 +116,11 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.generalInfoIsSavedService.setIsSaved(false);
     // if (VFormGeneralInformationComponent.countSaveFormService < 1) {
-      this.saveFormSubscription = this.saveFormService.onSaveForm.subscribe(
-        () => {
-          this.saveFormWithoutRedirect();
-        }
-      );
+    this.saveFormSubscription = this.saveFormService.onSaveForm.subscribe(
+      () => {
+        this.saveFormWithoutRedirect();
+      }
+    );
     // }
     VFormGeneralInformationComponent.countSaveFormService++;
     this.activatedRoute.parent.url.subscribe(urlPath => {
@@ -142,9 +147,9 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
     Object.keys(formGroup.controls).forEach(field => {
       const control = formGroup.get(field);
       if (control instanceof FormControl) {
-        control.markAsTouched({ onlySelf: true });
+        control.markAsTouched({onlySelf: true});
       } else if (control instanceof FormGroup) {
-        control.markAsTouched({ onlySelf: true });
+        control.markAsTouched({onlySelf: true});
         this.validateAllFormFields(control);
       }
     });
@@ -161,8 +166,8 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
     if (this.isValidBasicFormInfoFields()) {
       this.nextStep(this.menu.period);
     } else {
-      this.generalInfoForm.get("name").markAsTouched({ onlySelf: true });
-      this.generalInfoForm.get("language").markAsTouched({ onlySelf: true });
+      this.generalInfoForm.get("name").markAsTouched({onlySelf: true});
+      this.generalInfoForm.get("language").markAsTouched({onlySelf: true});
     }
   }
 
@@ -177,7 +182,7 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
     } else {
       this.generalInfoForm
         .get("periodCheckboxGroup")
-        .markAsTouched({ onlySelf: true });
+        .markAsTouched({onlySelf: true});
     }
   }
 
@@ -196,8 +201,8 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
     ) {
       this.nextStep(this.menu.eligible);
     } else {
-      this.generalInfoForm.get("startDate").markAsTouched({ onlySelf: true });
-      this.generalInfoForm.get("endDate").markAsTouched({ onlySelf: true });
+      this.generalInfoForm.get("startDate").markAsTouched({onlySelf: true});
+      this.generalInfoForm.get("endDate").markAsTouched({onlySelf: true});
     }
   }
 
@@ -245,7 +250,7 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
         endDate: this.parserFormatter.format(this.generalInfoForm.value.endDate)
       },
       language: this.generalInfoForm.value.language,
-      periodCheckboxGroup: this.generalInfoForm.value.periodCheckboxGroup,
+      formPeriods: this.generalInfoForm.value.periodCheckboxGroup,
       eligible: this.generalInfoForm.value.eligible,
       step: 0,
       example_form_id: this.formDublicateId,
@@ -258,6 +263,7 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
       ]);
     });
   }
+
   saveFormWithoutRedirect() {
     // console.log("saveFormWithoutRedirect");
     if (!this.isDataSaving) {
@@ -306,7 +312,7 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
             this.generalInfoForm.value.endDate
           )
         },
-        periodCheckboxGroup: this.generalInfoForm.value.periodCheckboxGroup,
+        formPeriods: this.generalInfoForm.value.periodCheckboxGroup,
         eligible: this.generalInfoForm.value.eligible,
         step: 0,
         example_form_id: this.formDublicateId
@@ -329,8 +335,8 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
           : this.generalInfoForm.value.language,
         endDate: this.parserFormatter.parse(form.formDates["endDate"]),
         startDate: this.parserFormatter.parse(form.formDates["startDate"]),
-        periodCheckboxGroup: form.periodCheckboxGroup
-          ? form.periodCheckboxGroup
+        periodCheckboxGroup: form.formPeriods
+          ? form.formPeriods
           : this.generalInfoForm.value.periodCheckboxGroup,
         eligible: form.eligible
       });
@@ -352,19 +358,12 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
       language: new FormControl(),
       endDate: new FormControl(new Date(1971, 10, 10), Validators.required),
       startDate: new FormControl(new Date(1971, 10, 10), Validators.required),
-      periodCheckboxGroup: new FormGroup(
-        {
-          primary1: new FormControl(false),
-          primary2: new FormControl(false),
-          middle: new FormControl(false),
-          height: new FormControl(false)
-        },
-        requireCheckboxesToBeCheckedValidator()
-      ),
       eligible: new FormControl("allParents", Validators.required)
 
       // allParent: new FormControl('Y')
     });
+
+    this.initPeriods();
 
     if (!isEmpty(form)) {
       // console.log("loading draftForm");
@@ -378,17 +377,8 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
               name: form.name,
               language: form.language ? form.language : "english",
               endDate: this.parserFormatter.parse(form.formDates["endDate"]),
-              startDate: this.parserFormatter.parse(
-                form.formDates["startDate"]
-              ),
-              periodCheckboxGroup: form.periodCheckboxGroup
-                ? form.periodCheckboxGroup
-                : {
-                    primary1: true,
-                    primary2: false,
-                    middle: false,
-                    height: false
-                  },
+              startDate: this.parserFormatter.parse(form.formDates["startDate"]),
+              periodCheckboxGroup: form.formPeriods ? form.formPeriods : {},
               eligible: form.eligible
             });
             this.menu.dates.isActive = this.menu.eligible.isActive = this.menu.period.isActive = true;
@@ -401,6 +391,18 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
     this.onFormStatusChanges();
   }
 
+  initPeriods() {
+    this.formPeriodsService.getAll().subscribe((res) => {
+      this.periods = res;
+      if (this.periods.length) {
+        let group = {};
+        this.periods.map(period => group[period.id] = new FormControl(false));
+        let periodCheckboxGroup = new FormGroup(group, requireCheckboxesToBeCheckedValidator());
+        this.generalInfoForm.setControl('periodCheckboxGroup', periodCheckboxGroup);
+      }
+    })
+  }
+
   getDayparting() {
     let hrs = new Date().getHours();
     if (hrs >= 6 && hrs < 11) return "morning";
@@ -410,7 +412,7 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
   }
 
   onScrollTo(target) {
-    this[target].nativeElement.scrollIntoView({ behavior: "smooth" });
+    this[target].nativeElement.scrollIntoView({behavior: "smooth"});
   }
 
   setActiveSection(value) {
@@ -430,6 +432,7 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
   addHiddenClass(isNeedToHide: boolean): string {
     return isNeedToHide ? "hidden_block" : "";
   }
+
   onFormStatusChanges(): void {
     this.generalInfoForm.statusChanges.subscribe(val => {
       switch (val) {
@@ -459,7 +462,7 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
     if (this.isOnSubmit) return;
     if (
       this.router.routerState.snapshot.url.indexOf("general-information") >
-        -1 ||
+      -1 ||
       this.router.routerState.snapshot.url.indexOf("form-builder") > -1 ||
       this.router.routerState.snapshot.url.indexOf("publish-settings") > -1
     ) {

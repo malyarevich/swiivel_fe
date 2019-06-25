@@ -100,6 +100,7 @@ import { FieldTypePipe } from "./v-form-constructor/v-form-builder/v-form-fields
 import { VSectionSettingsComponent } from "./v-form-constructor/v-form-builder/v-form-fields/v-fields-workspace/v-section-conteiner/v-section-settings/v-section-settings.component";
 import { SharedRedComponentsModule } from "../../shared/components/sharedRedComponents.module";
 import { SaveFormService } from "./services/save-form.service";
+import {VFormPeriodsService} from "./services/v-form-periods.service";
 
 const routes: Routes = [
   {
@@ -255,7 +256,8 @@ const routes: Routes = [
     FormUtils,
     VFieldsService,
     FinanceService,
-    SaveFormService
+    SaveFormService,
+    VFormPeriodsService
   ],
   entryComponents: [entryComponents]
 })
