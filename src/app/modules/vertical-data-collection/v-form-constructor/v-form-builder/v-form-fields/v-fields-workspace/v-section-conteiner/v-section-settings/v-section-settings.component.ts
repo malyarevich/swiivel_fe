@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-v-section-settings',
@@ -25,7 +25,7 @@ export class VSectionSettingsComponent implements OnInit {
           Validators.maxLength(50)
         ])}),
       isDirectlyDisplayed: new FormControl(true, Validators.required),
-
+      isHidden: new FormControl(true, Validators.required),
       isMakeExpandButtonVisible: new FormControl(true, Validators.required),
 
     }),
@@ -48,9 +48,12 @@ export class VSectionSettingsComponent implements OnInit {
 
 
 settingsLabel = 'Group Presets';
-  constructor() { }
+  constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
   }
 
+  onSubmit(){
+    console.log(this.sectionSettings.value);
+  }
 }

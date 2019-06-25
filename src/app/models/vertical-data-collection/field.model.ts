@@ -1,7 +1,7 @@
 export interface Field {
   _id: string;
   type: number;
-  options?: FieldOption | SectionOption|  any;
+  options?: FieldOption |   any;
   constraints?: any;
   validators?: any;
   name:string;
@@ -38,16 +38,4 @@ export interface FieldOption {
 }
 
 
-export interface SectionOption {
-  size? : number,
-  settings: SectionOptionSettings,
-  conditionLogic: any
-}
 
-export interface SectionOptionSettings {
-  groupPresent?: string,
-  isSupportText?: boolean,
-  isSupportTextData?: string,
-  isDirectlyDisplayed?: boolean,
-  isMakeExpandButtonVisible?: boolean,
-}
