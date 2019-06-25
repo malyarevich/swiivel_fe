@@ -13,6 +13,7 @@ export class FormPayerAccountModalFeeComponent implements OnInit {
   @Input() fees: Fee[];
   @Input() parentForm: FormGroup;
   @Output() removeRecipientFees: EventEmitter<any> = new EventEmitter<any>();
+  @Output() updateFee: EventEmitter<any> = new EventEmitter<any>();
 
   public selectedFees: Fee[] = [];
   private onlyFees: Fee[] = [];
@@ -82,6 +83,10 @@ export class FormPayerAccountModalFeeComponent implements OnInit {
     // this.selectedFees = selectedFees;
     // пока сделаем так, так как в selectFee input = id[], Output = fee[] - нужно поразбераться
     this.selectedFees = [];
+  }
+
+  onUpdateFee(fees): void {
+    this.updateFee.emit(fees);
   }
 
 }

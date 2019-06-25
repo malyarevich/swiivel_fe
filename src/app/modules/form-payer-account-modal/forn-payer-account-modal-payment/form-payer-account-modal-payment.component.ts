@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormArray, FormGroup } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-form-payer-account-modal-payment',
@@ -11,25 +11,65 @@ export class FormPayerAccountModalPaymentComponent implements OnInit {
 
   @Input() parentForm: FormGroup;
 
-  public paymentMethod = '';
-  public payerPaymentMethods = [];
+  // @Input() parentFormArray: FormGroup;
+  @Output() onChangePaymentForm: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
+
+  paymentForm: FormGroup;
+  payerPaymentMethods: FormArray;
+
+  public paymentMethod = null;
   public isSelectVisible = false;
 
-  private paymentMethods: string[] = ['ACH', 'Credit Card'];
+  public paymentMethods: string[] = ['ACH', 'Credit Card'];
 
+  constructor(private formBuilder: FormBuilder) {
+  }
 
-  constructor() { }
+  ngOnInit() {
+    this.paymentForm = this.formBuilder.group({
+      payerPaymentMethods: this.formBuilder.array([])
+    });
 
-  ngOnInit() {}
+    this.paymentForm.controls['payerPaymentMethods'].valueChanges.subscribe(value => {
+      this.onChangePaymentForm.emit(this.paymentForm);
+    });
+  }
+
+  createPayment(method?: string): FormGroup {
+    if (method === 'Credit Card') {
+      return this.formBuilder.group({
+        method_type: new FormControl(method),
+        name: new FormControl(''),
+        number: new FormControl(''),
+        expiry_year: new FormControl(''),
+        expiry_month: new FormControl(''),
+        cvv: new FormControl(''),
+        priority: new FormControl(false),
+      });
+    } else {
+      return this.formBuilder.group({
+        method_type: new FormControl(method),
+        method_name: new FormControl(''),
+        number: new FormControl(''),
+        type: new FormControl(''),
+        routing: new FormControl(''),
+        account: new FormControl(''),
+        priority: new FormControl(false),
+      });
+    }
+  }
+
+  addPayment(method?: string): void {
+    this.paymentMethodsArray.push(this.createPayment(method));
+  }
+
+  get paymentMethodsArray(): FormArray {
+    return this.paymentForm.get('payerPaymentMethods') as FormArray;
+  }
 
   onSelectMethod(method): void {
     this.isSelectVisible = !this.isSelectVisible;
-    this.payerPaymentMethods.length === 0 ?
-      this.payerPaymentMethods.push({method: method.fieldValue, id: 1}) :
-      this.payerPaymentMethods.push({
-        method: method.fieldValue,
-        id: (this.payerPaymentMethods[this.payerPaymentMethods.length - 1].id + 1)
-      });
+    this.addPayment(method.fieldValue);
   }
 
   onChangeMethodSelect(): void {
@@ -39,12 +79,8 @@ export class FormPayerAccountModalPaymentComponent implements OnInit {
     }
   }
 
-  onDeleteMethod(id: number): void {
-    this.payerPaymentMethods.forEach((method) => {
-      if (method.id === id) {
-        this.payerPaymentMethods.splice(this.payerPaymentMethods.indexOf(method), 1);
-      }
-    });
+  onDeleteMethod(index): void {
+    this.paymentMethodsArray.removeAt(index);
   }
 
 }

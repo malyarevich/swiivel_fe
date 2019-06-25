@@ -9,7 +9,7 @@ export interface Fee {
   name: string;
   is_percentage: number;
   groups: FeeGroups[];
-  open:boolean;
+  open: boolean;
   period_id: number;
   period_name: string;
   recipient_id: number;
@@ -21,4 +21,5 @@ export interface Fee {
   isSelected?: boolean;
   isActive?: boolean;
   splitFields?: { input: number, param: string};
+  totalForPay: number;
 }

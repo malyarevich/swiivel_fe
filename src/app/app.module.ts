@@ -36,6 +36,7 @@ export const interceptorsConfig: InterceptorsConfig = {
         AppComponent,
     ],
     imports: [
+        NgbModule,
         BrowserModule,
         BrowserAnimationsModule,
         AppRoutingModule,

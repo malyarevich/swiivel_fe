@@ -1,12 +1,12 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
-import { NgbDatepicker, NgbDatepickerModule } from "@ng-bootstrap/ng-bootstrap";
+import { NgbDatepicker, NgbDatepickerModule, NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { NgSelectModule } from '@ng-select/ng-select';
 
 // buttons
-import { SearchFilterBtnComponent } from './buttons/search-filter-btn/search-filter-btn.component';
+import { SearchFilterBtnComponent } from "./buttons/search-filter-btn/search-filter-btn.component";
 
 // fields
 import { CheckboxFieldComponent } from './fields/checkbox-field/checkbox-field.component';
@@ -34,6 +34,7 @@ import { TagComponent } from './tag/tag.component';
 import { TableTheadComponent } from './table-thead/table-thead.component';
 import { TipQuestionComponent } from './tip-question/tip-question.component';
 import { ToggleCheckboxFieldComponent } from './fields/toggle-checkbox-field/toggle-checkbox-field.component';
+import { CommandDropdownComponent } from "./command-dropdown/command-dropdown.component";
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { ToggleCheckboxFieldComponent } from './fields/toggle-checkbox-field/tog
     // components
     BadgeComponent,
     BadgeDropdownComponent,
+    CommandDropdownComponent,
     DataTableComponent,
     DataTableHeaderComponent,
     DataTableHeaderTitleComponent,
@@ -68,6 +70,7 @@ import { ToggleCheckboxFieldComponent } from './fields/toggle-checkbox-field/tog
   imports: [
     CommonModule,
     FormsModule,
+    NgbModule,
     NgbDatepickerModule,
     NgSelectModule,
     ReactiveFormsModule,
@@ -92,6 +95,7 @@ import { ToggleCheckboxFieldComponent } from './fields/toggle-checkbox-field/tog
     // components
     BadgeComponent,
     BadgeDropdownComponent,
+    CommandDropdownComponent,
     DataTableComponent,
     MainSpinnerComponent,
     ModalComponent,
@@ -103,5 +107,4 @@ import { ToggleCheckboxFieldComponent } from './fields/toggle-checkbox-field/tog
     TipQuestionComponent,
   ],
 })
-
 export class SharedRedComponentsModule {}
