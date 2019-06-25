@@ -21,13 +21,6 @@ export class VFormPeriodsService {
   }
 
   getAll(): Observable<any> {
-
-    // const API_URL = environment.apiFinanceCore;
-    // const headers = new HttpHeaders({
-    //   'Content-Type': 'application/json',
-    //   'Authorization': environment.apiFinanceToken,
-    // });
-
     return this.http.get(`/proxy/periods`)
       .pipe(
         map((response: Response) => response.data.periods)
