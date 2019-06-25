@@ -1,7 +1,16 @@
-<div class="container-fluid row no-gutters py-2 align-items-center">
-  <div class="col app-text-second app-text-uppercase">{{formName}}</div>
-  <div class="col text-right">
-    <button class="btn app-btn-outline-primary app-text-uppercase px-5 mr-3" (click)="onAction('cancel')">Back</button>
-    <button class="btn app-btn-primary app-text-uppercase px-5" (click)="onAction('save')">Save Form</button>
+<div class="online_form_nav">
+  <div class="online_form_nav__line">
+    <div (click)="onAction('cancel')">
+      <i class="fas fa-long-arrow-alt-left fa-2x"></i>
+    </div>
+    <div>
+      <h1 class="online_form_nav__title">
+        {{ formName }}
+      </h1>
+    </div>
+
+    <div (click)="onAction('cancel')">
+      <i class="fas fa-sign-out-alt fa-2x"></i>
+    </div>
   </div>
 </div>

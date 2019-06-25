@@ -1,6 +1,15 @@
-<h1 class="content_section__page_title">
-  Consent
-</h1>
+<div class="content_section__container_page_title">
+  <h1 class="content_section__page_title">
+    Consent
+  </h1>
+
+  <!--SubTitle-->
+  <h3 class="sub_title">
+    <i class="far fa-clock fa-sm mr-1"></i>
+    ~45 minutes
+  </h3>
+</div>
+
 <!-- Content Nav -->
 <div class="content_section__nav">
   <app-content-nav
@@ -9,7 +18,6 @@
   ></app-content-nav>
 </div>
 <div class="app-of-wrap content_section__main">
-  
   <ng-container *ngFor="let item of consents">
     <div *ngIf="item.id === activeConsentId">
       <!--Title-->
@@ -17,11 +25,10 @@
         {{ item.title }}
       </h2>
       <!--SubTitle-->
-      <h3 class="content_section__article_sub_title">
+      <h3 class="sub_title">
         <i class="far fa-clock fa-sm mr-1"></i>
         ~15 minutes
       </h3>
-
 
       <!--Text-->
       <article class="content_section__article">
@@ -31,7 +38,6 @@
         ></div>
       </article>
 
-      
       <!--Checkbox-->
       <div
         *ngIf="item.checkbox.isActive"

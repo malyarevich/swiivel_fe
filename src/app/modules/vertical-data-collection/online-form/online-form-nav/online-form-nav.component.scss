@@ -1,0 +1,25 @@
+@import "../../../../../styles/index.scss";
+
+.online_form_nav {
+  background-color: $element-additional-color;
+  color: $white;
+  height: 11rem;
+  padding: 0;
+
+  &__line {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 5.5rem;
+    padding: 1.6rem;
+  }
+
+  &__title {
+    color: $white;
+    font-family: "NunitoSans-ExtraBold";
+    font-size: 1.35rem;
+    font-weight: normal;
+    line-height: 1.25rem;
+  }
+}

@@ -27,7 +27,16 @@
     }
 
     &__content {
+        background-color: $white;
+        border-radius: 0.5rem;
+        position: relative;
+        top: 1rem;
         width: auto;
         width: -webkit-fill-available;
+
+        @include media-breakpoint-up(lg) {
+            border-radius: 0.5rem;
+            top: -5.5rem;
+        }
     }
 }

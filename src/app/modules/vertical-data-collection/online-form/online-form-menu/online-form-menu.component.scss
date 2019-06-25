@@ -1,8 +1,8 @@
 @import "../shared/styles/index.scss";
 
 .app-of-menu-wrap {
-  background-color: #ffffff;
-  border: 1px solid #e7e9ef;
+  background-color: transparent;
+  border-bottom: 1px solid #e7e9ef;
   border-radius: 3px;
 }
 
@@ -10,9 +10,87 @@
   display: inline-block;
   border-radius: 50%;
   padding: 0.6em 0.7em;
-  background-color: #e4e7ff;
+  background-color: $lightblue-color;
 }
 
 .app-of-menu-active {
-  border-left: 3px solid $element-base-color;
+  background-color: $white;
+  border-left: 3px solid $element-additional-color;
+  box-shadow: 0 1px 10px 0 rgba(0,0,0,0.1);
 }
+
+.list-group-item {
+  background-color: transparent;
+}
+
+.online_form_menu {
+
+  &__group {
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 0;
+  }
+
+  &__group_item {
+    background-color: transparent;
+    cursor: pointer;
+    list-style-type: none;
+
+    &--active {
+      background-color: $white;
+      border-left: 3px solid $element-additional-color;
+      border-radius: 0.5rem;
+      box-shadow: 0 1px 10px 0 rgba(0,0,0,0.1);
+    }
+  }
+}
+
+.online_form_item {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+
+  &__start {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+
+  &__end {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+
+  &__icon {
+    width: 2rem;
+    margin: 1.3rem;
+  }
+  
+  &__text_area {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  &__title {
+    color: $element-additional-color;
+    font-family: NunitoSans-ExtraBold;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    text-transform: uppercase;
+    margin: 0;
+  }
+
+  &__status {
+
+  }
+}
+
