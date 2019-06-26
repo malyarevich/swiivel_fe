@@ -12,8 +12,10 @@ export class VDataCollectionComponent implements OnInit, OnDestroy {
 
   public getDraftForm = (id: string): Form => {
     // console.log('getDraftForm()');
-    if (this.draftForm.has(id))
+    if (this.draftForm.has(id)) {
+      // console.log(this.draftForm);
       return this.draftForm.get(id);
+    }
   };
 
   public setDraftForm = (id: string, newForm: Form): void => {
