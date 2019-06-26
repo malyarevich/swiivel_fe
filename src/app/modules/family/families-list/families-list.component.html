@@ -11,48 +11,27 @@
   </div>
   <div class="row mt-3 app-of-wrap py-5">
     <div class="col-12">
-      <table class="table">
-        <thead>
-        <tr>
-          <th scope="col"></th>
-          <th scope="col">Family Name</th>
-          <th scope="col">Parents</th>
-          <th scope="col">Children</th>
-          <th></th>
-        </tr>
-        </thead>
+      <app-data-table [cols]="cols" tableType='table-striped'
+                      (searchQueryEmitter)="onSearchQuery($event)">
         <tbody>
         <tr *ngFor="let item of familyList$ | async; index as i">
-          <th scope="row">{{ i + 1 }}</th>
           <td nowrap class="font-weight-bold">{{ item.name }}</td>
           <td>
             <div class="d-flex justify-content-start flex-wrap">
               <ng-container *ngFor="let familyPerson of item.family_persons">
-                <div class="d-flex justify-content-start align-items-center mr-2"
-                     *ngIf="familyPerson.person_role === familyRoles.mother || familyPerson.person_role === familyRoles.father">
-                  <app-person-avatar-change
-                    [avatar]="familyPerson.person.avatar ? avatarUrl + familyPerson.person.avatar : ''"
-                    [editable]="false"
-                    [size]="'1em'">
-                  </app-person-avatar-change>
-                  <p class="mb-1 ml-1">{{familyPerson.person.first_name}} {{familyPerson.person.last_name}}</p>
-                </div>
+                <ng-container
+                  *ngIf="familyPerson.person_role === familyRoles.mother || familyPerson.person_role === familyRoles.father">
+                  <app-family-person-container [familyPerson]="familyPerson"></app-family-person-container>
+                </ng-container>
               </ng-container>
             </div>
           </td>
           <td>
             <div class="d-flex justify-content-start flex-wrap">
               <ng-container *ngFor="let familyPerson of item.family_persons">
-                <div class="d-flex justify-content-start align-items-center mr-2"
-                     *ngIf="familyPerson.person_role === familyRoles.student">
-                  <app-person-avatar-change
-                    [avatar]="familyPerson.person.avatar ? avatarUrl + familyPerson.person.avatar : ''"
-                    [editable]="false"
-                    [size]="'1em'">
-                  </app-person-avatar-change>
-                  <p class="mb-1 ml-1" style="white-space: nowrap">{{familyPerson.person.first_name}}
-                    {{familyPerson.person.last_name}}</p>
-                </div>
+                <ng-container *ngIf="familyPerson.person_role === familyRoles.student">
+                  <app-family-person-container [familyPerson]="familyPerson"></app-family-person-container>
+                </ng-container>
               </ng-container>
             </div>
           </td>
@@ -62,7 +41,7 @@
           </td>
         </tr>
         </tbody>
-      </table>
+      </app-data-table>
       <app-spinner *ngIf="loader$ | async"></app-spinner>
     </div>
   </div>
