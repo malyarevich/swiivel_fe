@@ -3,6 +3,8 @@ import {FamilyService} from "../../../services/family/family.service";
 import {Observable} from "rxjs";
 import {Family} from "../../../models/family/family.model";
 import {LoaderService} from "../../../services/loader/loader.service";
+import {FamilyRoles} from "../../../enums/family-roles";
+import {environment} from "../../../../environments/environment";
 
 @Component({
   selector: 'app-families-list',
@@ -14,6 +16,9 @@ export class FamiliesListComponent implements OnInit {
   showModal: boolean = false;
   public familyList$: Observable <Family[]> ;
   public loader$: Observable <boolean>;
+
+  familyRoles = FamilyRoles;
+  avatarUrl = environment.avatarUrl;
 
   constructor(private familyService: FamilyService, private loaderService: LoaderService) { }
 

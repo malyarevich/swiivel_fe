@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {FamilyPersonService} from "../../../../../services/family/family-person.service";
 import {FamilyPerson} from "../../../../../models/family/family-person.model";
 import {Observable} from "rxjs";
@@ -13,7 +13,7 @@ import {FamilyQueryParams} from "../../../../../models/family/family-query-param
   templateUrl: './family-view-general.component.html',
   styleUrls: ['./family-view-general.component.css']
 })
-export class FamilyViewGeneralComponent implements OnInit {
+export class FamilyViewGeneralComponent implements OnInit, OnDestroy {
   @Input() familyId: string;
 
   familySearchTab = FAMILY_VIEW_GENERAL_TABS;
@@ -42,7 +42,11 @@ export class FamilyViewGeneralComponent implements OnInit {
   }
 
   getFamilyPersons(params) {
-    this.familyPersons = this.familyPersonService.familyPersonList;
     this.familyPersonService.getByFamilyId(this.familyId, params);
+    this.familyPersons = this.familyPersonService.familyPersonList;
+  }
+
+  ngOnDestroy() {
+
   }
 }
