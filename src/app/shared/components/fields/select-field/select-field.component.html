@@ -12,6 +12,7 @@
       'app-select-field__no-label': value && !labelTitle
     }"
     [items]="items"
+    [disabled]="disabled"
     bindLabel={{bindLabel}}
     bindValue={{bindValue}}
     [(ngModel)]="value"
