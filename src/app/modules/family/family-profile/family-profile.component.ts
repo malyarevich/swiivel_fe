@@ -6,23 +6,19 @@ import {ActivatedRoute} from "@angular/router";
   templateUrl: './family-profile.component.html',
   styleUrls: ['./family-profile.component.css']
 })
-export class FamilyProfileComponent implements OnInit, OnDestroy {
+export class FamilyProfileComponent implements OnInit {
 
   familyId: string;
 
-  constructor(private route: ActivatedRoute) { }
-
-  ngOnInit() {
+  constructor(private route: ActivatedRoute) {
     this.getFamilyId();
   }
 
-  getFamilyId() {
-    this.route.params.subscribe((params) => {
-      this.familyId = params['id'];
-    });
+  ngOnInit() {
+
   }
 
-  ngOnDestroy() {
-    this.familyId = null;
+  getFamilyId() {
+    this.familyId = this.route.snapshot.paramMap.get('id');
   }
 }

@@ -1,12 +1,13 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {FamilyPersonService} from "../../../../../services/family/family-person.service";
 import {FamilyPerson} from "../../../../../models/family/family-person.model";
-import {Observable} from "rxjs";
+import {Observable, Subscription} from "rxjs";
 import {FamilyRoles} from "../../../../../enums/family-roles";
 import {FAMILY_VIEW_GENERAL_TABS} from "../../../../../models/family/family-view-general-tabs";
 import {LoaderService} from "../../../../../services/loader/loader.service";
 import {FamilyQueryParamsService} from "../../../../../services/family/family-query-params.service";
 import {FamilyQueryParams} from "../../../../../models/family/family-query-params.model";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-family-view-general',
@@ -19,6 +20,8 @@ export class FamilyViewGeneralComponent implements OnInit, OnDestroy {
   familySearchTab = FAMILY_VIEW_GENERAL_TABS;
   familyPersons: Observable<FamilyPerson[]>;
   familyRoles = FamilyRoles;
+
+  queryParamsChange: Subscription;
   public loader$: Observable <boolean>;
 
   constructor(private familyPersonService: FamilyPersonService,
@@ -32,7 +35,7 @@ export class FamilyViewGeneralComponent implements OnInit, OnDestroy {
   }
 
   searchFamilyPerson() {
-    this.getQueryParams().subscribe((params: FamilyQueryParams) => {
+    this.queryParamsChange = this.getQueryParams().subscribe((params: FamilyQueryParams) => {
       this.getFamilyPersons(params)
     })
   }
@@ -47,6 +50,6 @@ export class FamilyViewGeneralComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-
+    this.queryParamsChange.unsubscribe();
   }
 }
