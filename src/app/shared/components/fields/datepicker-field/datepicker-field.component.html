@@ -1,0 +1,40 @@
+<div
+  class="app-datepicker-field"
+  [ngClass]="{'app-datepicker-field-has-error': isInvalid}"
+  [ngStyle]="{'width': width}"
+>
+  <label
+    *ngIf="label"
+    (click)="input.focus()"
+    [for]="id"
+    class="app-datepicker-field-label"
+    [ngClass]="{'app-datepicker-field-label__value': value}"
+  >
+    {{ label }}
+  </label>
+  <input
+    #input
+    type="text"
+    class="form-control"
+    [ngClass]="{ 'app-datepicker-field__value': value && label}"
+    [id]="id"
+    [disabled]="disabled"
+    [(ngModel)]="value"
+    (blur)="onTouched()"
+    (ngModelChange)="onInput($event)"
+    bsDatepicker
+    [bsConfig]="bsConfig"
+    #dp="bsDatepicker"
+    placement="bottom"
+  />
+  <div *ngIf="dp.isOpen === false" class="app-datepicker-field-calendar">
+    <button class="btn calendar" (click)="dp.show()" type="button">
+      <i class="fas fa-calendar"></i>
+    </button>
+  </div>
+  <div *ngIf="dp.isOpen === true" class="app-datepicker-field-chevron-down">
+    <button class="btn chevron-down" (click)="dp.show()" type="button">
+      <i class="fas fa-chevron-down"></i>
+    </button>
+  </div>
+</div>

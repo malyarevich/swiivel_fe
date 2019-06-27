@@ -1,15 +1,17 @@
-import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { NgbDatepicker, NgbDatepickerModule, NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { NgbDatepickerModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
 
 // buttons
-import { SearchFilterBtnComponent } from "./buttons/search-filter-btn/search-filter-btn.component";
+import { SearchFilterBtnComponent } from './buttons/search-filter-btn/search-filter-btn.component';
 
 // fields
 import { CheckboxFieldComponent } from './fields/checkbox-field/checkbox-field.component';
+import { DatePickerFieldComponent } from './fields/datepicker-field/datepicker-field.component';
 import { InputFieldComponent } from './fields/input-field/input-field.component';
 import { SearchFieldComponent } from './fields/search-field/search-field.component';
 import { SelectFieldComponent } from './fields/select-field/select-field.component';
@@ -21,10 +23,14 @@ import { ToggleFieldComponent } from './fields/toggle-field/toggle-field.compone
 import { BadgeComponent } from './badge/badge.component';
 import { BadgeDropdownComponent } from './badge-dropdown/badge-dropdown.component';
 import { DataTableComponent } from './data-table/data-table.component';
-import { DataTableHeaderComponent } from "./data-table/data-table-header/data-table-header.component";
-import { DataTableHeaderTitleComponent } from "./data-table/data-table-header/data-table-header-title/data-table-header-title.component";
-import { DataTableHeaderFilterTextComponent } from "./data-table/data-table-header/data-table-header-filter-text/data-table-header-filter-text.component";
-import { DataTableHeaderFilterDateComponent } from "./data-table/data-table-header/data-table-header-filter-date/data-table-header-filter-date.component";
+import { DataTableHeaderComponent } from './data-table/data-table-header/data-table-header.component';
+import { DataTableHeaderTitleComponent } from './data-table/data-table-header/data-table-header-title/data-table-header-title.component';
+import {
+  DataTableHeaderFilterTextComponent
+} from './data-table/data-table-header/data-table-header-filter-text/data-table-header-filter-text.component';
+import {
+  DataTableHeaderFilterDateComponent
+} from './data-table/data-table-header/data-table-header-filter-date/data-table-header-filter-date.component';
 import { ModalComponent } from './modal/modal.component';
 import { PersonAvatarChangeComponent } from './person-avatar-change/person-avatar-change.component';
 import { PersonShowComponent } from './person-show/person-show.component';
@@ -35,7 +41,7 @@ import { TagComponent } from './tag/tag.component';
 import { TableTheadComponent } from './table-thead/table-thead.component';
 import { TipQuestionComponent } from './tip-question/tip-question.component';
 import { ToggleCheckboxFieldComponent } from './fields/toggle-checkbox-field/toggle-checkbox-field.component';
-import { CommandDropdownComponent } from "./command-dropdown/command-dropdown.component";
+import { CommandDropdownComponent } from './command-dropdown/command-dropdown.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +49,7 @@ import { CommandDropdownComponent } from "./command-dropdown/command-dropdown.co
     SearchFilterBtnComponent,
     // fields
     CheckboxFieldComponent,
+    DatePickerFieldComponent,
     InputFieldComponent,
     SearchFieldComponent,
     SelectFieldComponent,
@@ -71,6 +78,7 @@ import { CommandDropdownComponent } from "./command-dropdown/command-dropdown.co
   ],
   imports: [
     CommonModule,
+    BsDatepickerModule.forRoot(),
     FormsModule,
     NgbModule,
     NgbDatepickerModule,
@@ -87,6 +95,7 @@ import { CommandDropdownComponent } from "./command-dropdown/command-dropdown.co
     SearchFilterBtnComponent,
     // fields
     CheckboxFieldComponent,
+    DatePickerFieldComponent,
     InputFieldComponent,
     SearchFieldComponent,
     SelectFieldComponent,

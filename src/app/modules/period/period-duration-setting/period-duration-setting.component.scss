@@ -1,0 +1,19 @@
+.app-period-duration-setting {
+
+  background: white;
+  padding: 15px 10px;
+
+  .app-period-duration-setting__name {
+    margin: 0 0 10px;
+  }
+
+  .app-period-duration-setting__range {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .mat-calendar-body-cell-content {
+    border: 1px solid #0C133D;
+  }
+
+}

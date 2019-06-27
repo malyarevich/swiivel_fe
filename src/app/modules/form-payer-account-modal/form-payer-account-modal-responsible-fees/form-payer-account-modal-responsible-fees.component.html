@@ -20,7 +20,8 @@
     >
       <thead
         app-table-thead
-        [columns]=  "feeTableColumns"
+        [columns]="feeTableColumns"
+        (sortFilter)="onSort($event)"
       ></thead>
       <tbody class="app-form-payer-account-modal-responsible-fees-table-tbody">
         <tr
@@ -203,5 +204,6 @@
       </tr>
       </tbody>
     </table>
+    <pre>{{ activeFees | json}}</pre>
   </div>
 </div>

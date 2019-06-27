@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import {Fee} from '../../../../models/fee.model';
+import { Fee } from '../../../../models/fee.model';
 
 @Component({
   selector: 'app-payer-account-fees-table',
