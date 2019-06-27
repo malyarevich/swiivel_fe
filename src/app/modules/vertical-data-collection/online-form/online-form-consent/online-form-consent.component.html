@@ -5,8 +5,8 @@
 
   <!--SubTitle-->
   <h3 class="sub_title">
-    <i class="far fa-clock fa-sm mr-1"></i>
-    ~45 minutes
+    <!-- <i class="far fa-clock fa-sm mr-1"></i> -->
+    ~{{ getTime() }} minutes
   </h3>
 </div>
 
@@ -17,62 +17,66 @@
     (activeEmitter)="onActiveConsent($event)"
   ></app-content-nav>
 </div>
-<div class="app-of-wrap content_section__main">
-  <ng-container *ngFor="let item of consents">
-    <div *ngIf="item.id === activeConsentId">
-      <!--Title-->
-      <h2 class="content_section__article_title">
-        {{ item.title }}
-      </h2>
-      <!--SubTitle-->
-      <h3 class="sub_title">
-        <i class="far fa-clock fa-sm mr-1"></i>
-        ~15 minutes
-      </h3>
 
-      <!--Text-->
-      <article class="content_section__article">
+<!-- Content -->
+<div class="content_section__main_container">
+  <div class="content_section__main">
+    <ng-container *ngFor="let item of consents">
+      <div *ngIf="item.id === activeConsentId">
+        <!--Title-->
+        <h2 class="content_section__article_title">
+          {{ item.title }}
+        </h2>
+        <!--SubTitle-->
+        <h3 class="sub_title">
+          <i class="far fa-clock fa-sm mr-1"></i>
+          ~15 minutes
+        </h3>
+
+        <!--Text-->
+        <article class="content_section__article">
+          <div
+            class="content_section__article_text"
+            [innerHTML]="item.text.value"
+          ></div>
+        </article>
+
+        <!--Checkbox-->
         <div
-          class="content_section__article_text"
-          [innerHTML]="item.text.value"
-        ></div>
-      </article>
+          *ngIf="item.checkbox.isActive"
+          class="content_section__additional_fields"
+        >
+          <div class="content_section__inputs_container">
+            <div class="content_section__checkbox_container p-0">
+              <input
+                class="content_section__checkbox"
+                type="checkbox"
+                id="item.checkbox.id"
+                [(ngModel)]="item.checkbox.checked"
+                [disabled]="true"
+              />
 
-      <!--Checkbox-->
-      <div
-        *ngIf="item.checkbox.isActive"
-        class="content_section__additional_fields"
-      >
-        <div class="content_section__inputs_container">
-          <div class="content_section__checkbox_container p-0">
-            <input
-              class="content_section__checkbox"
-              type="checkbox"
-              id="item.checkbox.id"
-              [(ngModel)]="item.checkbox.checked"
-              [disabled]="true"
-            />
-
-            <label
-              tabindex="indexItem"
-              for="item.id"
-              class="content_section__checkbox_label py-0"
-            >
-              <span
-                class="app-checkbox-checkmark
+              <label
+                tabindex="indexItem"
+                for="item.id"
+                class="content_section__checkbox_label py-0"
+              >
+                <span
+                  class="app-checkbox-checkmark
                   content_section__checkbox_checkmark"
-              ></span>
-              {{ item.checkbox.text }}
-            </label>
+                ></span>
+                {{ item.checkbox.text }}
+              </label>
+            </div>
           </div>
         </div>
-      </div>
 
-      <!--SIGNATURE-->
-      <app-online-form-signatures
-        [signature]="item.signature"
-      ></app-online-form-signatures>
-      <!--END SIGNATURE-->
-    </div>
-  </ng-container>
+        <!--SIGNATURE-->
+        <app-online-form-signatures
+          [signature]="item.signature"
+        ></app-online-form-signatures>
+        <!--END SIGNATURE-->
+      </div>
+    </ng-container>
+  </div>
 </div>

@@ -1,6 +1,15 @@
-<h1 class="content_section__page_title">
-  Documents & Forms
-</h1>
+<div class="content_section__container_page_title">
+  <h1 class="content_section__page_title">
+    Documents & Forms
+  </h1>
+
+  <!--SubTitle-->
+  <h3 class="sub_title">
+    <!-- <i class="far fa-clock fa-sm mr-1"></i> -->
+    ~{{ getTime() }} minutes
+  </h3>
+</div>
+
 <!-- Content Nav -->
 <div class="content_section__nav">
   <app-content-nav
@@ -8,15 +17,19 @@
     (activeEmitter)="onActive($event)"
   ></app-content-nav>
 </div>
-<div class="app-of-wrap content_section__main">
-  <div>
-    <app-online-documents
-      *ngIf="activeId == 'documents'"
-      [form]="form"
-    ></app-online-documents>
-    <app-online-pdf-forms
-      *ngIf="activeId == 'pdf-forms'"
-      [form]="form"
-    ></app-online-pdf-forms>
+
+<!-- Content -->
+<div class="content_section__main_container">
+  <div class="content_section__main">
+    <div>
+      <app-online-documents
+        *ngIf="activeId == 'documents'"
+        [form]="form"
+      ></app-online-documents>
+      <app-online-pdf-forms
+        *ngIf="activeId == 'pdf-forms'"
+        [form]="form"
+      ></app-online-pdf-forms>
+    </div>
   </div>
 </div>

@@ -1,42 +1,43 @@
-@import '../shared/styles/index.scss';
+@import "../shared/styles/index.scss";
 
 .app-of-background {
-    background-color: $background-color;
+  background-color: $background-color;
 }
 
-.online_form_container{
-    align-items: stretch;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    min-height: auto;
-    padding: 1rem;
+.online_form_container {
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-height: auto;
+  padding: 1rem;
+
+  @include media-breakpoint-up(lg) {
+    flex-direction: row;
+  }
+
+  &__nav {
+    width: auto;
+    width: -webkit-fill-available;
 
     @include media-breakpoint-up(lg) {
-        flex-direction: row;
+      padding-right: 1rem;
+      width: 32rem;
     }
+  }
 
-    &__nav {
-        width: auto;
-        width: -webkit-fill-available;
-        
-        @include media-breakpoint-up(lg) {
-            padding-right: 1rem;
-            width: 27rem;
-        }
+  &__content {
+    background-color: $white;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.15rem 1rem 0 rgba(0, 0, 0, 0.1);
+    position: relative;
+    top: 1rem;
+    width: auto;
+    width: -webkit-fill-available;
+
+    @include media-breakpoint-up(lg) {
+      border-radius: 0.5rem;
+      top: -5.5rem;
     }
-
-    &__content {
-        background-color: $white;
-        border-radius: 0.5rem;
-        position: relative;
-        top: 1rem;
-        width: auto;
-        width: -webkit-fill-available;
-
-        @include media-breakpoint-up(lg) {
-            border-radius: 0.5rem;
-            top: -5.5rem;
-        }
-    }
+  }
 }

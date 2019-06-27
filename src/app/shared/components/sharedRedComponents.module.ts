@@ -30,6 +30,7 @@ import { PersonAvatarChangeComponent } from './person-avatar-change/person-avata
 import { PersonShowComponent } from './person-show/person-show.component';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { MainSpinnerComponent } from './main-spinner/main-spinner.component';
+import { SvgIconComponent } from './svg-icon/svg-icon.component';
 import { TagComponent } from './tag/tag.component';
 import { TableTheadComponent } from './table-thead/table-thead.component';
 import { TipQuestionComponent } from './tip-question/tip-question.component';
@@ -58,6 +59,7 @@ import { CommandDropdownComponent } from "./command-dropdown/command-dropdown.co
     DataTableHeaderFilterTextComponent,
     DataTableHeaderFilterDateComponent,
     MainSpinnerComponent,
+    SvgIconComponent,
     ModalComponent,
     PersonAvatarChangeComponent,
     PersonShowComponent,
@@ -98,6 +100,7 @@ import { CommandDropdownComponent } from "./command-dropdown/command-dropdown.co
     CommandDropdownComponent,
     DataTableComponent,
     MainSpinnerComponent,
+    SvgIconComponent,
     ModalComponent,
     PersonAvatarChangeComponent,
     PersonShowComponent,

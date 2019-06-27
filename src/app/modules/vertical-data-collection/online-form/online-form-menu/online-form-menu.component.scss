@@ -50,13 +50,18 @@
 .online_form_item {
   align-items: center;
   display: flex;
+  flex: 6 1;
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: space-between;
+  height: 5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
 
   &__start {
     align-items: center;
     display: flex;
+    flex: 10 1 20rem;
     flex-direction: row;
     justify-content: flex-start;
   }
@@ -64,18 +69,25 @@
   &__end {
     align-items: center;
     display: flex;
+    flex: 1 1 2rem;
     flex-direction: row;
     justify-content: flex-end;
   }
 
   &__icon {
-    width: 2rem;
-    margin: 1.3rem;
+    // max-height: 2.5rem;
+    // max-width: 2.5rem;
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1 10 3em;
   }
   
   &__text_area {
     align-items: flex-start;
     display: flex;
+    flex: 15 2 1rem;
     flex-direction: column;
     justify-content: center;
   }
@@ -90,7 +102,14 @@
   }
 
   &__status {
-
+    
+  }
+  &__status_icon {
+    color: $success-color;
+    fill: $success-color;
+    font-size: 1.5rem;
+    height: 1.5rem;
+    width: 1.5rem;
   }
 }
 

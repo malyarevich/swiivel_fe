@@ -2,9 +2,13 @@
 
 .content_section {
   align-items: stretch;
+  border-radius: 0.5rem;
   display: flex;
+  background-color: $background-semi-wrap-color;
+  padding: 1.7rem 2rem;
   flex-direction: column;
   justify-content: flex-start;
+  box-shadow: 0 0.15rem 1rem 0 rgba(0,0,0,0.1);
   
   &__container_page_title {
     align-items: center;
@@ -14,11 +18,18 @@
     margin-top: 1.56rem;
   }
 
+  &__main_container {
+    background-color: $background-semi-wrap-color;
+    padding: 1.7rem 2rem;
+  }
+
   &__page_title {
     font-family: NunitoSans-ExtraBold;
     font-size: 1.5rem;
+    padding-left: 0.85rem;
+    padding-right: 0.85rem;
     text-align: center;
-    margin-bottom: 0;
+    margin-bottom: 0.5rem;
 
     background: -webkit-linear-gradient(transparent 50%, #ffc244a6 50%);
     background: -moz-linear-gradient(transparent 50%, #ffc244a6 50%);
@@ -44,10 +55,11 @@
 
   &__main {
     align-items: center;
+    background-color: $white;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    padding: 1.5rem;
+    padding: 1.75rem;
   }
 
   &__article_title {
@@ -202,5 +214,5 @@
   font-family: NunitoSans-Regular;
   font-size: 0.85rem;
   text-align: center;
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.5rem;
 }

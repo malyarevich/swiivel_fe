@@ -14,14 +14,23 @@
         <div class="online_form_item">
           <div class="online_form_item__start">
             <div class="online_form_item__icon">
-              <i
+              <img
+                [src]="
+                  pathIconsFolder +
+                  item.icon +
+                  (activeMenuItem === item.name ? '-active' : '') +
+                  '.svg'
+                "
+              />
+              <!-- <svg-icon name="payment-active"></svg-icon> -->
+              <!-- <i
                 class="fas fa-file-alt fa-lg app-of-menu-i"
                 [ngClass]="
                   activeMenuItem === item.name
                     ? 'app-text-primary'
                     : 'app-text-second'
                 "
-              ></i>
+              ></i> -->
             </div>
             <div class="online_form_item__text_area">
               <p
@@ -35,7 +44,7 @@
                 {{ item.title }}
               </p>
               <p class="sub_title">
-                <i class="far fa-clock fa-sm mr-1"></i>
+                <!-- <i class="far fa-clock fa-sm mr-1"></i> -->
                 ~{{ item.time }} minutes
               </p>
             </div>
@@ -43,7 +52,7 @@
 
           <div class="online_form_item__end">
             <div class="col online_form_item__status">
-              ☻
+              <i class="fas fa-check-circle online_form_item__status_icon"></i>
             </div>
           </div>
         </div>
