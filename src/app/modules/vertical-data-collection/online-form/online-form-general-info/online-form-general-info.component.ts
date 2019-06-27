@@ -1,6 +1,12 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { generalSectionsNames } from "../model/general-info-section-name.model";
 import { Form } from "../../model/form.model";
+import {
+  menuItems,
+  mainMenuNames,
+  IMainMenuNames,
+  IMenuItems
+} from "../../../../models/vertical-data-collection/v-form-constructor/online-form/menu-items";
 
 @Component({
   selector: "app-online-form-general-info",
@@ -9,6 +15,10 @@ import { Form } from "../../model/form.model";
 })
 export class OnlineFormGeneralInfoComponent implements OnInit {
   @Input() form: Form;
+
+  menuItems: IMenuItems[] = menuItems;
+  mainMenuNames: IMainMenuNames = mainMenuNames;
+
   navContent: object = [
     {
       id: "parents",
@@ -27,6 +37,10 @@ export class OnlineFormGeneralInfoComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {}
+
+  getTime() {
+    return this.menuItems.find(o => o.name === this.mainMenuNames.generalInfo).time;
+  }
 
   onActive(id: string) {
     this.activeId = id;

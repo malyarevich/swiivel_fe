@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="29px" height="31px" viewBox="0 0 29 31" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 54.1 (76490) - https://sketchapp.com -->
+    <title>5C488FE7-BFE3-46B6-BEDB-865F83E6A9F1</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <filter x="-63.3%" y="-66.7%" width="230.0%" height="240.0%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.05 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+        <filter x="-44.4%" y="-40.0%" width="188.9%" height="180.0%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.07 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="Registration-Form-(Online)" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Registration-Form-Online-(Desktop-UI)-–-Genetal-Information" transform="translate(-36.000000, -223.000000)">
+            <g id="icon-/-custom-(30x30)-/-General-Information-Copy" transform="translate(36.061952, 223.000000)">
+                <g id="Group" transform="translate(0.000000, 0.000000)">
+                    <path d="M22.4371188,9.12432982 L20.4371188,8.39638935 L20.4371188,6.00264767 L17.4341128,6.00264767 C16.8818281,6.00264767 16.4341128,5.55493242 16.4341128,5.00264767 L16.4341128,2 L9.43711878,2 L9.43711878,7.97592098 L9.23347072,7.87983177 C8.99219234,7.76598708 8.71542603,7.75327448 8.46472726,7.84452137 L7.43711878,8.21854028 L7.43711878,2 C7.43711878,0.8954305 8.33254928,3.90798505e-14 9.43711878,3.73034936e-14 L17.0440991,3.73034936e-14 C17.3108871,3.67805747e-14 17.5666144,0.106605589 17.7544048,0.296106663 L22.1474245,4.72914605 C22.3330029,4.91641504 22.4371188,5.16939375 22.4371188,5.43303938 L22.4371188,9.12432982 L22.4371188,9.12432982 Z" id="Shape" fill="#FFC244"></path>
+                    <path d="M10.7775932,26.1579069 C10.824181,26.1790102 10.8719258,26.1984993 10.9207845,26.2162824 L13.6928006,27.2252137 L8.15690688,29.2401143 C7.11895108,29.6178993 5.97126637,29.0827251 5.59348136,28.0447693 L0.121159062,13.0096874 C-0.256625956,11.9717316 0.278548209,10.8240469 1.31650402,10.4462619 L8.46472726,7.84452137 C8.71542603,7.75327448 8.99219234,7.76598708 9.23347072,7.87983177 L14.5528284,10.3897152 L13.7773533,12.5203155 L13.7061493,12.324684 L10.8842467,13.3517725 C10.3652688,13.540665 9.79142647,13.273078 9.60253396,12.7541001 L8.57556797,9.9325342 L2.0005443,12.3256471 L7.4728666,27.360729 L10.7775932,26.1579069 L10.7775932,26.1579069 Z" id="Shape" fill="#004ED9"></path>
+                    <path d="M25.0092954,14.7031147 L22.0062894,14.7031147 C21.4540047,14.7031147 21.0062894,14.2553994 21.0062894,13.7031147 L21.0062894,10.700467 L14.0092954,10.700467 L14.0092954,26.700467 L25.0092954,26.700467 L25.0092954,14.7031147 Z M14.0092954,8.70046698 L21.6162757,8.70046698 C21.8830637,8.70046698 22.138791,8.80707257 22.3265814,8.99657364 L26.7196011,13.429613 C26.9051795,13.616882 27.0092954,13.8698607 27.0092954,14.1335064 L27.0092954,26.700467 C27.0092954,27.8050365 26.1138649,28.700467 25.0092954,28.700467 L14.0092954,28.700467 C12.9047259,28.700467 12.0092954,27.8050365 12.0092954,26.700467 L12.0092954,10.700467 C12.0092954,9.59589748 12.9047259,8.70046698 14.0092954,8.70046698 Z" id="Combined-Shape" fill="#C3D6F7" transform="translate(19.509295, 18.700467) rotate(20.000000) translate(-19.509295, -18.700467) "></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

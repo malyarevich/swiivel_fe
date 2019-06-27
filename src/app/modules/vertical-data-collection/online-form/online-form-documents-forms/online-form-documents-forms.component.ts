@@ -1,5 +1,11 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { Form } from "../../model/form.model";
+import {
+  menuItems,
+  mainMenuNames,
+  IMainMenuNames,
+  IMenuItems
+} from "../../../../models/vertical-data-collection/v-form-constructor/online-form/menu-items";
 
 @Component({
   selector: "app-online-form-documents-forms",
@@ -8,6 +14,10 @@ import { Form } from "../../model/form.model";
 })
 export class OnlineFormDocumentsFormsComponent implements OnInit {
   @Input() form: Form;
+
+  menuItems: IMenuItems[] = menuItems;
+  mainMenuNames: IMainMenuNames = mainMenuNames;
+  
   navContent: object = [
     {
       id: "documents",
@@ -25,6 +35,10 @@ export class OnlineFormDocumentsFormsComponent implements OnInit {
 
   ngOnInit() {
     // console.log(this.form);
+  }
+
+  getTime() {
+    return this.menuItems.find(o => o.name === this.mainMenuNames.documentsForms).time;
   }
 
   logWhatIWant() {

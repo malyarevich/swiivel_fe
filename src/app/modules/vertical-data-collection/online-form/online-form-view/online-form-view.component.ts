@@ -1,53 +1,56 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
-import {Form} from "../../model/form.model";
-import {OnlineFormService} from "../services/online-form.service";
-import {MainMenuNames, mainMenuNames} from "../model/main-menu-name.model";
-import {Location} from "@angular/common";
+import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
+import { Form } from "../../model/form.model";
+import { OnlineFormService } from "../services/online-form.service";
+import { Location } from "@angular/common";
+import {
+  menuItems,
+  mainMenuNames,
+  IMainMenuNames,
+  IMenuItems
+} from "../../../../models/vertical-data-collection/v-form-constructor/online-form/menu-items";
 
 @Component({
-  selector: 'app-online-form-view',
-  templateUrl: './online-form-view.component.html',
-  styleUrls: ['./online-form-view.component.scss']
+  selector: "app-online-form-view",
+  templateUrl: "./online-form-view.component.html",
+  styleUrls: ["./online-form-view.component.scss"]
 })
 export class OnlineFormViewComponent implements OnInit {
-
   form: Form;
   activeSection: string;
-  mainMenuNames: MainMenuNames = mainMenuNames;
 
-  constructor(private route: ActivatedRoute,
-              private onlineFormService: OnlineFormService,
-              private location: Location) {
-  }
+  menuItems: IMenuItems[] = menuItems;
+  mainMenuNames: IMainMenuNames = mainMenuNames;
+
+  constructor(
+    private route: ActivatedRoute,
+    private onlineFormService: OnlineFormService,
+    private location: Location
+  ) { }
 
   ngOnInit() {
     this.getForm();
   }
 
   getForm(): void {
-    const id = this.route.snapshot.paramMap.get('id');
-    this.onlineFormService.getOneForm(id).subscribe(
-      (form: Form) => {
-        this.form = form;
-      }
-    );
+    const id = this.route.snapshot.paramMap.get("id");
+    this.onlineFormService.getOneForm(id).subscribe((form: Form) => {
+      this.form = form;
+    });
   }
 
   onAction(actionType) {
     switch (actionType) {
-      case 'save':
+      case "save":
         this.saveForm();
-      case 'cancel':
+      case "cancel":
         this.goBack();
     }
   }
 
   saveForm() {
     //PDF form save
-
     // this.onlineFormService.sendForm(this.form).subscribe(res => this.goBack());
-
     // this.onlineFormService.sendFamilyForm(this.form).subscribe(res => this.goBack());
   }
 
@@ -58,5 +61,4 @@ export class OnlineFormViewComponent implements OnInit {
   onActiveMenuItem(menuItemName) {
     this.activeSection = menuItemName;
   }
-
 }

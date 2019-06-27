@@ -5,6 +5,12 @@ import {E_SIGNATURE_TYPES, SIGNATURE_TYPES} from "../../../../enums";
 import {Form} from "../../model/form.model";
 import {SystemSignatureService} from "../services/signatures/system-signature.service";
 import {SignatureCreateResponse} from '../model/signature-create-response.model'
+import {
+  menuItems,
+  mainMenuNames,
+  IMainMenuNames,
+  IMenuItems
+} from "../../../../models/vertical-data-collection/v-form-constructor/online-form/menu-items";
 
 @Component({
   selector: 'app-online-form-consent',
@@ -13,6 +19,9 @@ import {SignatureCreateResponse} from '../model/signature-create-response.model'
 })
 export class OnlineFormConsentComponent implements OnInit {
   @Input() form: Form;
+
+  menuItems: IMenuItems[] = menuItems;
+  mainMenuNames: IMainMenuNames = mainMenuNames;
 
   activeConsentId: string;
   SIGNATURE_TYPES = SIGNATURE_TYPES;
@@ -25,6 +34,10 @@ export class OnlineFormConsentComponent implements OnInit {
 
   ngOnInit() {
     this.consents = cloneDeep(this.form.consentInfo.consents);
+  }
+
+  getTime() {
+    return this.menuItems.find(o => o.name === this.mainMenuNames.consentInfo).time;
   }
 
   onActiveConsent(id) {

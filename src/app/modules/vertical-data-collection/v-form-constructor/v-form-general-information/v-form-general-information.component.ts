@@ -88,6 +88,7 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
   };
   vDataCollection: VDataCollectionComponent;
   draftId: string;
+  // isFormPrepared = false;
 
   isSubmitted: boolean = false;
   isDataSaving: boolean = false;
@@ -128,7 +129,8 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
       this.formId = url != "v-form-constructor" ? url : "";
     });
     this.draftId = this.formId + "_general-information";
-    this.formInit();
+    this.formPreparing(); // in this branch -> this.formInit();
+    // this.formInit();
     this.getAllForm();
     this.isLoaded = true;
     this.constructorIsSavingService.setIsSaving(this.isDataSaving);
@@ -142,6 +144,13 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
       !this.isDataSaving
     );
   }
+  
+  // onFormChanges() {
+  //   this.generalInfoForm.valueChanges.subscribe(val => {
+  //     // console.log("rerender");
+  //     // console.log(this.generalInfoForm.value);
+  //   });
+  // }
 
   validateAllFormFields(formGroup: FormGroup) {
     Object.keys(formGroup.controls).forEach(field => {
@@ -298,12 +307,17 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
     }
   }
 
+  cleanDraftForm(): void {
+    this.vDataCollection.deleteDraftForm(this.draftId);
+  }
+
   composeForm() {
     if (this.formId !== "" && this.generalInfoForm.valid) {
       return {
         _id: this.formId,
         name: this.generalInfoForm.value.name,
         fields: this.fields,
+        language: this.generalInfoForm.value.language,
         formDates: {
           startDate: this.parserFormatter.format(
             this.generalInfoForm.value.startDate
@@ -326,6 +340,7 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
   }
 
   setLocalForm(form: Form): void {
+    // console.log(form)
     if (!isEmpty(form)) {
       this.fields = form.fields;
       this.generalInfoForm.patchValue({
@@ -344,9 +359,7 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
     }
   }
 
-  formInit(): void {
-    const form = this.vDataCollection.getDraftForm(this.draftId);
-
+  formPreparing() {    
     this.generalInfoForm = new FormGroup({
       name: new FormControl("", {
         validators: Validators.compose([
@@ -356,6 +369,7 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
         ])
       }),
       language: new FormControl(),
+      // periodCheckboxGroup: new FormControl(),
       endDate: new FormControl(new Date(1971, 10, 10), Validators.required),
       startDate: new FormControl(new Date(1971, 10, 10), Validators.required),
       eligible: new FormControl("allParents", Validators.required)
@@ -364,7 +378,10 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
     });
 
     this.initPeriods();
+  }
 
+  formInit() {
+    const form = this.vDataCollection.getDraftForm(this.draftId);
     if (!isEmpty(form)) {
       // console.log("loading draftForm");
       this.setLocalForm(form); //draftForm
@@ -387,8 +404,9 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
         error => console.log(error, "error")
       );
     }
-
+    
     this.onFormStatusChanges();
+    // this.onFormChanges();
   }
 
   initPeriods() {
@@ -400,7 +418,10 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
         let periodCheckboxGroup = new FormGroup(group, requireCheckboxesToBeCheckedValidator());
         this.generalInfoForm.setControl('periodCheckboxGroup', periodCheckboxGroup);
       }
-    })
+      // this.isFormPrepared = true;
+      
+      this.formInit();
+    });
   }
 
   getDayparting() {
@@ -458,8 +479,11 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     // console.log("OnDestroy");
+    if (this.isOnSubmit) {
+      this.cleanDraftForm();
+      return;
+    }
     this.saveDraftForm();
-    if (this.isOnSubmit) return;
     if (
       this.router.routerState.snapshot.url.indexOf("general-information") >
       -1 ||

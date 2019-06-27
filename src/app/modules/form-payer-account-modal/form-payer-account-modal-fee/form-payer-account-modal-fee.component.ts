@@ -7,18 +7,20 @@ import { FormGroup } from '@angular/forms';
   templateUrl: './form-payer-account-modal-fee.component.html',
   styleUrls: ['./form-payer-account-modal-fee.component.scss']
 })
+
 export class FormPayerAccountModalFeeComponent implements OnInit {
   public isOpen = false;
-  @Input() recipient: {id: number, name: string };
+  @Input() recipient: { id: number, name: string };
   @Input() fees: Fee[];
   @Input() parentForm: FormGroup;
   @Output() removeRecipientFees: EventEmitter<any> = new EventEmitter<any>();
   @Output() updateFee: EventEmitter<any> = new EventEmitter<any>();
 
   public selectedFees: Fee[] = [];
+  public selectedFeesId: number[] = [];
   private onlyFees: Fee[] = [];
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
     this.onlyFees = this.getFees();
@@ -34,22 +36,26 @@ export class FormPayerAccountModalFeeComponent implements OnInit {
 
   onSelect(selectedFees: Fee[]): void {
     const selectedFeeId = [];
+
     selectedFees.forEach((selectedFee) => {
       selectedFeeId.push(selectedFee.id);
     });
     this.fees.forEach((fee) => {
       selectedFeeId.includes(fee.id) ? fee.isActive = true : fee.isActive = false;
     });
-    this.selectedFees = selectedFeeId;
+
+    this.selectedFees = selectedFees;
+    this.selectedFeesId = selectedFeeId;
   }
 
   getSelectedFees(): Fee[] {
     const activeFees: Fee[] = [];
-
     const selectedFeeId = [];
+
     this.selectedFees.forEach((selectedFee) => {
       selectedFeeId.push(selectedFee.id);
     });
+
     this.fees.forEach((fee) => {
       selectedFeeId.includes(fee.id) ? fee.isActive = true : fee.isActive = false;
     });
@@ -59,30 +65,36 @@ export class FormPayerAccountModalFeeComponent implements OnInit {
         activeFees.push(fee);
       }
     });
+
     return activeFees;
   }
 
   getFees(): Fee[] {
     const feeOnly = [];
+
     this.fees.forEach((fee) => {
       if (fee.type === 'fee') {
         feeOnly.push(fee);
       }
     });
+
     return feeOnly;
   }
 
   onRemoveFee(removedFee: Fee): void {
-    // const selectedFees = [];
-    // this.selectedFees.forEach((fee) => {
-    //     if (fee.id !== removedFee.id) {
-    //       selectedFees.push(fee);
-    //     }
-    //   }
-    // );
-    // this.selectedFees = selectedFees;
-    // пока сделаем так, так как в selectFee input = id[], Output = fee[] - нужно поразбераться
-    this.selectedFees = [];
+    const selectedFees = [];
+    const selectedFeesId = [];
+
+    this.selectedFees.forEach((fee) => {
+        if (fee.id !== removedFee.id) {
+          selectedFees.push(fee);
+          selectedFeesId.push(fee.id);
+        }
+      }
+    );
+
+    this.selectedFees = selectedFees;
+    this.selectedFeesId = selectedFeesId;
   }
 
   onUpdateFee(fees): void {

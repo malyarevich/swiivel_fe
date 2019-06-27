@@ -131,8 +131,8 @@ export class FormPayerAccountModalResponsibleFeesComponent implements OnInit {
     this.updateFees();
   }
 
-  getSplits(fee): FeeSplits[] {
-    return this.fees[this.fees.indexOf(fee) + 1].splits;
+  getSplits(fee): FeeSplits[] | null {
+      return this.fees[this.fees.indexOf(fee) + 1].splits;
   }
 
   getFee(fee): Fee {
@@ -243,8 +243,11 @@ export class FormPayerAccountModalResponsibleFeesComponent implements OnInit {
 
   updateFees() {
     this.fees.forEach((fee) => {
-      fee.totalForPay = this.getTotalFeeSum(fee);
+      if (fee.type === 'fee') {
+        fee.totalForPay = this.getTotalFeeSum(fee);
+      }
     });
+    console.log(this.fees);
     this.onUpdateFees.emit(this.fees);
   }
 
@@ -254,13 +257,14 @@ export class FormPayerAccountModalResponsibleFeesComponent implements OnInit {
       if (split.splitPay.param && split.splitPay.input) {
         split.splitPay.param === '$' ?
           totalSumArray.push(split.splitPay.input) :
-          totalSumArray.push(Math.ceil(split.amount * (split.splitPay.input / 100)));
+          totalSumArray.push(Math.ceil((split.splitPay.input / 100) * split.amount));
       }
     });
     if (sumFee.splitFields.param === '$') {
       return totalSumArray.reduce((a, b) => a + b, 0);
-     } else {
+     } else if (sumFee.splitFields.param === '%') {
       return ((totalSumArray.reduce((a, b) => a + b, 0) / parseInt(sumFee.amount, 10)) * 100);
     }
+    return 0;
   }
 }
