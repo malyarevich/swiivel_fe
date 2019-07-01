@@ -1,6 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { mainMenuNames } from "../model/main-menu-name.model";
 import { Form } from "../../model/form.model";
+import {
+  menuItems,
+  mainMenuNames,
+  IMainMenuNames,
+  IMenuItems
+} from "../../../../models/vertical-data-collection/v-form-constructor/online-form/menu-items";
 
 @Component({
   selector: "app-online-form-menu",
@@ -11,28 +16,14 @@ export class OnlineFormMenuComponent implements OnInit {
   @Input() form: Form;
   @Output() activeMenuItemEmitter = new EventEmitter<string>();
 
+  hoveredItems = [];
+
+  menuItems: IMenuItems[] = menuItems;
+  mainMenuNames: IMainMenuNames = mainMenuNames;
+
+  pathIconsFolder = "../../../../../assets/images/icons/";
+
   activeMenuItem: string = mainMenuNames.generalInfo;
-  menuItems = [
-    { name: mainMenuNames.generalInfo, title: "General Information", time: 48 },
-    {
-      name: mainMenuNames.documentsForms,
-      title: "Documents & Forms",
-      time: 15
-    },
-    { name: mainMenuNames.consentInfo, title: "Consent", time: 12 },
-    {
-      name: mainMenuNames.paymentSettings,
-      title: "Payment Settings",
-      time: 10
-    },
-    { name: mainMenuNames.tuitionContract, title: "Tuition Contract", time: 6 },
-    {
-      name: mainMenuNames.termsConditions,
-      title: "Term & Conditions",
-      time: 14
-    },
-    { name: mainMenuNames.payment, title: "Payment", time: 18 }
-  ];
 
   constructor() {}
 
@@ -65,5 +56,17 @@ export class OnlineFormMenuComponent implements OnInit {
       return this.form[itemMenuName].isActive;
     }
     return false;
+  }
+
+  setHovered(itemName) {
+    this.hoveredItems[itemName] = true;
+  }
+
+  unsetHovered(itemName) {
+    this.hoveredItems[itemName] = false;
+  }
+
+  isHovered(itemName) {
+    return this.hoveredItems[itemName] === true;
   }
 }

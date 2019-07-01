@@ -2,27 +2,36 @@
   <h4 class="font-weight-bold">Form Builder</h4>
   <app-v-form-statistic></app-v-form-statistic>
   <div class="col-sm-12 block-wrapper mt-3 pb-3">
-    <app-v-form-nav (bulkActionEmitter)="doBulkAction($event)"
-                    (searchValueEmitter)="setSearchValue($event)"
-                    (filterStatusEmitter)="filterStatus($event)">
+    <app-v-form-nav
+      (bulkActionEmitter)="doBulkAction($event)"
+      (searchValueEmitter)="setSearchValue($event)"
+      (filterStatusEmitter)="filterStatus($event)"
+    >
     </app-v-form-nav>
 
-    <table class="table">
-      <thead app-v-form-table-header [cols]="cols" (searchDataEmitter)="setSearch($event)"></thead>
-      <tbody app-v-form-table-tbody 
-        (addSelectedIdsEmitter)="addSelectedIds($event)"
-        (setFormSelectedEmitter)="setFormSelected($event)"
-        (resetFormSelectedEmitter)="resetFormSelected()"
-        (getAllFormEmitter)="getAllForm()"
-        [forms]="forms"
-        [formSelected]="formSelected"
-        [templateStatuses]="templateStatuses"
-        [changedStatuses]="changedStatuses"
-        [formsSelectedIds]="formsSelectedIds"
-        >
-      </tbody>
-      
-    </table>
+    <ng-container *ngIf="forms === undefined">
+      <main-spinner [spinnerText]="'Forms are loading...'"></main-spinner>
+    </ng-container>
+    <ng-container *ngIf="forms !== undefined">
+      <table class="table">
+        <thead
+          app-v-form-table-header
+          [cols]="cols"
+          (searchDataEmitter)="setSearch($event)"
+        ></thead>
+        <tbody
+          app-v-form-table-tbody
+          (addSelectedIdsEmitter)="addSelectedIds($event)"
+          (setFormSelectedEmitter)="setFormSelected($event)"
+          (resetFormSelectedEmitter)="resetFormSelected()"
+          (getAllFormEmitter)="getAllForm()"
+          [forms]="forms"
+          [formSelected]="formSelected"
+          [templateStatuses]="templateStatuses"
+          [changedStatuses]="changedStatuses"
+          [formsSelectedIds]="formsSelectedIds"
+        ></tbody>
+      </table>
+    </ng-container>
   </div>
 </div>
-

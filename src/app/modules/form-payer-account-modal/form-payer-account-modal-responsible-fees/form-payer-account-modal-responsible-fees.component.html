@@ -1,0 +1,207 @@
+<div class="app-form-payer-account-modal-responsible-fees">
+  <div class="app-form-payer-account-modal-responsible-fees-title-block">
+    <div class="app-form-payer-account-modal-responsible-fees-title-block-label">
+      Responsible Fees
+    </div>
+    <div class="app-form-payer-account-modal-responsible-fees-title-block-right">
+      <app-toggle-field
+        label="Include Outstanding Fees"
+        id="test"
+      ></app-toggle-field>
+      <app-tip-question>
+        What is it include outstanding fees?
+      </app-tip-question>
+    </div>
+  </div>
+
+  <div>
+    <table
+      class="app-form-payer-account-modal-responsible-fees-table"
+    >
+      <thead
+        app-table-thead
+        [columns]=  "feeTableColumns"
+      ></thead>
+      <tbody class="app-form-payer-account-modal-responsible-fees-table-tbody">
+        <tr
+          class="app-form-payer-account-modal-responsible-fees-table-tbody--tr"
+          *ngFor="let fee of fees; let feeIndex = index;"
+          [ngClass]="{
+            'app-form-payer-account-modal-responsible-fees-table-tbody--tr__white': fee.backgroundWhite,
+            'app-form-payer-account-modal-responsible-fees-table-tbody--tr__open': fee.open,
+            'app-form-payer-account-modal-responsible-fees-table-tbody--tr__open-fee': fee.open && fee.type === 'fee'
+          }"
+        >
+          <td
+            *ngIf="fee.type === 'fee'"
+            class="app-form-payer-account-modal-responsible-fees-td app-form-payer-account-modal-responsible-fees-td-checkbox"
+          >
+            <div>
+              <app-checkbox-field
+                (changeCheckboxState)=onSelectFee(fee)
+                [isSelected]="fee.isSelected"
+              >
+              </app-checkbox-field>
+            </div>
+          </td>
+          <td
+            *ngIf="fee.type === 'fee'"
+            class="app-form-payer-account-modal-responsible-fees-td"
+          >
+            {{ fee.name }}
+          </td>
+          <td
+            *ngIf="fee.type === 'fee'"
+            class="app-form-payer-account-modal-responsible-fees-td app-form-payer-account-modal-responsible-fees-td__price"
+          >
+            {{ fee.amount | currency:'USD':true:'.0' }}
+          </td>
+          <td
+            *ngIf="fee.type === 'fee'"
+            class="app-form-payer-account-modal-responsible-fees-td"
+          >
+            <div class="app-form-payer-account-modal-responsible-fees-td__payment app-form-payer-account-modal-responsible-fees-td__payment-container">
+              <div class="app-form-payer-account-modal-responsible-fees-td__payment--input">
+                <app-input-field
+                  type = "number"
+                  fieldType="table"
+                  [id]="fee.id"
+                  [max]="getMaxInput(this.types.fee, fee)"
+                  (onChangeField)=onChangeFeeSplits($event)
+                >
+                </app-input-field>
+              </div>
+
+              <div class="app-form-payer-account-modal-responsible-fees-td__payment--select">
+                <app-select-field
+                  fieldType="table"
+                  [value]="fee.splitFields.param"
+                  [items]="['$', '%']"
+                  [id]="fee.id"
+                  (onChangeField)=onChangeFeeSplits($event)
+                >
+                </app-select-field>
+              </div>
+              <a
+                class="app-form-payer-account-modal-responsible-fees-td__apply-button"
+                [ngClass]="{
+                'app-form-payer-account-modal-responsible-fees-td__apply-button--show':
+                !!fee.splitFields.input && !!fee.splitFields.param
+                }"
+                (click)="onApplyFees(fee)">
+                Apply to all fees
+              </a>
+            </div>
+          </td>
+          <td
+            *ngIf="fee.type === 'fee'"
+            class="app-form-payer-account-modal-responsible-fees-td app-form-payer-account-modal-responsible-fees-td__price"
+          >
+            {{ 500 | currency:'USD':true:'.0' }}
+          </td>
+          <td
+            *ngIf="fee.type === 'fee'"
+            class="app-form-payer-account-modal-responsible-fees-td app-form-payer-account-modal-responsible-fees-td__trash"
+          >
+            <i
+              class="fas fa-trash app-form-payer-account-modal-fee__header-trash"
+              (click)="onRemoveClick(fee)"
+            ></i>
+          </td>
+          <td
+            *ngIf="fee.type === 'fee'"
+            class="app-form-payer-account-modal-responsible-fees-td-arrow-block"
+            [ngClass]="{
+              'app-form-payer-account-modal-responsible-fees-td-arrow-block--open': fee.open
+            }"
+            (click)="onOpenRow(fee.id)"
+          >
+            <i
+              class="fas app-form-payer-account-modal-responsible-fees-td-arrow"
+              [ngClass]="{
+                'fa-sort-down app-form-payer-account-modal-responsible-fees-td-arrow--down': !fee.open,
+                'fa-sort-up app-form-payer-account-modal-responsible-fees-td-arrow--up': fee.open
+              }"
+            ></i>
+          </td>
+          <td
+            *ngIf="fee.type === 'splits' && fee.open"
+            class="app-form-payer-account-modal-responsible-fees-td__splits"
+            colspan="7"
+          >
+            <table
+              class="app-form-payer-account-modal-responsible-fees-table-splits"
+            >
+              <thead
+                app-table-thead
+                backround="transparent"
+                [columns]="splitsTableColumns"
+              ></thead>
+              <tbody class="app-form-payer-account-modal-responsible-fees-table-splits-tbody">
+              <tr
+                class="app-form-payer-account-modal-responsible-fees-table-splits-tbody--tr"
+                *ngFor="let split of fee.splits"
+              >
+                <td
+                  class="app-form-payer-account-modal-responsible-fees-table-splits-tbody-td app-form-payer-account-modal-responsible-fees-table-splits-tbody-td-checkbox"
+                >
+                  <div>
+                    <app-checkbox-field
+                      [isSelected]="split.isSelected"
+                      (changeCheckboxState)=onSelectSplit(fee.id,split.id)>
+                    </app-checkbox-field>
+                  </div>
+                </td>
+                <td
+                  class="app-form-payer-account-modal-responsible-fees-table-splits-tbody-td app-form-payer-account-modal-responsible-fees-table-splits-tbody-td__name"
+                >
+                  {{split.name}}
+                </td>
+                <td
+                  class="app-form-payer-account-modal-responsible-fees-table-splits-tbody-td app-form-payer-account-modal-responsible-fees-table-splits-tbody-td__price"
+                >
+                  {{split.amount}}
+                </td>
+                <td>
+                  <div class="app-form-payer-account-modal-responsible-fees-td__payment">
+                    <div class="app-form-payer-account-modal-responsible-fees-td__payment--input">
+                      <app-input-field
+                        fieldType="table"
+                        [id]="split.id"
+                        [value]="split.splitPay.input"
+                        (onChangeField)=onChangeSplit($event)
+                        [max]="getMaxInput(this.types.split, split)"
+                        type="number"
+                      >
+                      </app-input-field>
+                    </div>
+
+                    <div class="app-form-payer-account-modal-responsible-fees-td__payment--select">
+                      <app-select-field
+                        fieldType="table"
+                        [value]="split.splitPay.param"
+                        [id]="split.id"
+                        (onChangeField)=onChangeSplit($event)
+                        [items]="['$', '%']"
+                      >
+                      </app-select-field>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      <tr class="payer-account-fees-table__table-row">
+        <td colspan="5" class="payer-account-fees-table__table-td payer-account-fees-table__table-tbody-total">
+          Total
+        </td>
+        <td class="payer-account-fees-table__table-td payer-account-fees-table__table-tbody-price payer-account-fees-table__table-tbody-price-total">
+          {{ this.getTotalSum() | currency:'USD':true:'.0' }}
+        </td>
+        <td></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

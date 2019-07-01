@@ -1,6 +1,7 @@
 <app-modal
   class="form-payer-account"
   title="Create Payer Account"
+  [width]="'700px'"
   (closeModal)="onCloseFormPayerAccountModal()"
 >
   <div
@@ -22,7 +23,6 @@
   >
     <form
       [formGroup]="payerAccountForm"
-      (ngSubmit)="onCreatePayerAccount()"
     >
       <div
         class="form-payer-account-members"
@@ -85,6 +85,7 @@
       >
         <app-checkbox-field
           label="Primary Payer Account"
+          [hasMargin]="true"
           id="primary-account"
           formControlName="primary"
           [isInvalid]="payerAccountForm.get('primary').invalid && payerAccountForm.get('primary').touched"
@@ -114,10 +115,15 @@
         <app-form-payer-account-modal-fee
           *ngFor="let recipient of payerAccountForm.value['recipients']"
           [recipient]="recipient"
-          [fees]="fees[recipient.id]"
+          [fees]="feesData"
           (removeRecipientFees)="onRemoveRecipient($event)"
+          (updateFee)="updateFee($event)"
         ></app-form-payer-account-modal-fee>
       </div>
+        <app-form-payer-account-modal-payment
+          [parentForm]="payerAccountForm.get('paymentMethodsForm')"
+          (onChangePaymentForm)="changePaymentForm($event)"
+        ></app-form-payer-account-modal-payment>
       <div
         class="form-payer-account-members"
       >
@@ -147,14 +153,14 @@
         </button>
 
         <button
-          type="submit"
+          type="button"
           class="btn app-btn-primary"
+          (click)="onCreatePayerAccount()"
           [disabled]="payerAccountForm.invalid"
         >
           Add Account
         </button>
       </div>
     </form>
-    <!--<pre><code>{{ payerAccountForm.value | json }}</code></pre>-->
   </div>
 </app-modal>

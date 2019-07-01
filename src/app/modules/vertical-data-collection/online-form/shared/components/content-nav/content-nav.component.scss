@@ -1,5 +1,59 @@
-@import '../../styles/index.scss';
+@import "../../styles/index.scss";
 
-.navbar-expand .navbar-nav {
-    flex-wrap: wrap;
+// .content_nav_container {
+// }
+
+.content_nav {
+  font-family: NunitoSans-Regular;
+
+  &__list {
+    align-items: stretch;
+    display: flex;
+    flex-direction: row;
+
+    list-style: none;
+    margin: 0;
+    padding: 0 1.5rem;
+  }
+
+  &__item {
+    border-bottom: 0.2rem solid transparent;
+    cursor: pointer;
+    padding: 0.5rem 0.5rem;
+    box-sizing: border-box;
+
+    &--active {
+      border-bottom: 0.2rem solid $element-additional-color;
+    }
+  }
+
+  &__link {
+    color: $icon-grey-color;
+    font-family: NunitoSans-Regular;
+    font-weight: normal;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+      text-decoration: none;
+    }
+
+    &:focus {
+      outline: transparent 0;
+    }
+
+    &--active {
+      color: $element-additional-color;
+      font-weight: bold;
+    }
+  }
+
+  &__splitter {
+    padding: 0.5rem 0.5rem;
+  }
+
+//   &__icon_wrapper {
+//   }
+
+//   &__icon {
+//   }
 }

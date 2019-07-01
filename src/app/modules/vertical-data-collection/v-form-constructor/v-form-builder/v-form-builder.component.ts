@@ -1,56 +1,91 @@
-import {Component, OnInit, Input, ViewChild, ElementRef, OnDestroy, Host} from '@angular/core';
-import {CdkDragDrop, copyArrayItem, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
-import {VFormService} from '../../services/v-form.service';
-import {ActivatedRoute, Router} from '@angular/router';
-import {v4 as uuid} from 'uuid';
-import {cloneDeep, isEmpty} from 'lodash';
-import {Location} from '@angular/common';
-import {VFieldsService} from "../../services/v-fields.service";
-import {Field} from "../../model/field.model";
+import {
+  Component,
+  OnInit,
+  Input,
+  ViewChild,
+  ElementRef,
+  OnDestroy,
+  Host,
+
+} from "@angular/core";
+
+import { VFormService } from "../../services/v-form.service";
+import { ActivatedRoute, Router } from "@angular/router";
+import { v4 as uuid } from "uuid";
+import { cloneDeep, isEmpty } from "lodash";
+import { Location } from "@angular/common";
+import { VFieldsService } from "../../services/v-fields.service";
+import { Field } from "../../model/field.model";
 import {
   TuitionContract,
   tuitionContractDefault
 } from "./v-tuition-contract/models/tuition-contract.model";
-import {Form} from "../../model/form.model";
-import {FormPayment, TYPE_NAME} from "./v-form-payment/model/form-payment.model";
-import {ConsentInfo, consentInfoDefault, consentItemDefault} from "./v-consent/model/consent.model";
-import {documentItemDefault, DocumentSideBar, DocumentsModel} from "./v-documents-forms/model/documents.model";
-import {GeneralInfoIsValidService} from "../../services/general-info-is-valid.service";
-import {formPDFItemDefault, FormsPDFModel} from "./v-documents-forms/model/formsPDF.model";
-import {VFilesService} from "../../services/v-files.service";
-import {FBSections, fbSections} from "./v-consent/fb-active-section.model";
+import { Form } from "../../model/form.model";
+import {
+  FormPayment,
+  TYPE_NAME
+} from "./v-form-payment/model/form-payment.model";
+import {
+  ConsentInfo,
+  consentInfoDefault,
+  consentItemDefault
+} from "./v-consent/model/consent.model";
+import {
+  documentItemDefault,
+  DocumentSideBar,
+  DocumentsModel
+} from "./v-documents-forms/model/documents.model";
+import { GeneralInfoIsValidService } from "../../services/general-info-is-valid.service";
+import {
+  formPDFItemDefault,
+  FormsPDFModel
+} from "./v-documents-forms/model/formsPDF.model";
+import { VFilesService } from "../../services/v-files.service";
+import { FBSections, fbSections } from "./v-consent/fb-active-section.model";
 
-import {E_SIGNATURE_TYPES, SIGNATURE_TYPES} from "../../../../enums";
+import { E_SIGNATURE_TYPES, SIGNATURE_TYPES } from "../../../../enums";
 import {
   TermsConditions,
   termsConditionsDefault,
   termsConditionsItemDefault
 } from "./v-terms-conditions/model/terms-conditions.model";
-import {FinanceService} from "../../../../services/finance/finance.service";
-import {FeeTemplate, FeeTemplatesData} from "../../../../models/fee-templates.model";
-import { VDataCollectionComponent } from '../../v-data-collection.component';
+import { FinanceService } from "../../../../services/finance/finance.service";
+import {
+  FeeTemplate,
+  FeeTemplatesData
+} from "../../../../models/fee-templates.model";
+import { VDataCollectionComponent } from "../../v-data-collection.component";
+import { Observable, Subscription } from "rxjs";
+import { SaveFormService } from "../../services/save-form.service";
+import { FormBuilderIsSavedService } from "../../services/form-builder-is-saved.service";
+import { ConstructorIsSavingService } from "../../services/constructor-is-saving.service";
+import {Fee} from "../../../../models/fee.model";
 
 @Component({
-  selector: 'app-v-form-table',
-  templateUrl: './v-form-builder.html',
-  styleUrls: ['./v-form-builder.scss'],
+  selector: "app-v-form-table",
+  templateUrl: "./v-form-builder.html",
+  styleUrls: ["./v-form-builder.scss"]
 })
-export class VFormBuilderComponent implements OnInit {
+export class VFormBuilderComponent implements OnInit, OnDestroy {
+  @Input() saveEvents: Observable<void>;
+
+  static countSaveFormService: number = 0;
+  saveFormSubscription: Subscription;
 
   validNewCustomFieldName: boolean = true;
   showAddButton = true;
-  formId: string = '';
+  formId: string = "";
   warningVisible: boolean = false;
-  showWarningMessage: string = 'Please correct existing errors';
+  showWarningMessage: string = "Please correct existing errors";
   fields: Field[] = [];
 
-  feeTemplates: FeeTemplate[] = [];
+  masterFees: Fee[] = [];
 
-  formName: string = '';
+  formName: string = "";
   attachments;
   form: Form;
   newSideBar;
-  idSectionForDragDrop: string[] =[];
+  idSectionForDragDrop: string[] = [];
 
   customFields: Field[];
   existingFields: Field[];
@@ -70,7 +105,7 @@ export class VFormBuilderComponent implements OnInit {
 
   isDocumentsForms: DocumentSideBar = {
     isDocuments: true,
-    isForms: true,
+    isForms: true
   };
 
   documents: DocumentsModel[] = [];
@@ -80,9 +115,11 @@ export class VFormBuilderComponent implements OnInit {
 
   formPaymentSideBar: FormPayment[] = [
     {
-      name: 'TUITION', isActive: false,
+      name: "TUITION",
+      isActive: false,
       type: {
-        value: 0, name: TYPE_NAME.fixed
+        value: 0,
+        name: TYPE_NAME.fixed
       },
       payMore: {
         isActive: false,
@@ -90,9 +127,11 @@ export class VFormBuilderComponent implements OnInit {
       }
     },
     {
-      name: 'BAIS MEDRASH WINTER DORMITORY FEE', isActive: true,
+      name: "BAIS MEDRASH WINTER DORMITORY FEE",
+      isActive: true,
       type: {
-        value: 0, name: TYPE_NAME.fixed
+        value: 0,
+        name: TYPE_NAME.fixed
       },
       payMore: {
         isActive: false,
@@ -100,9 +139,11 @@ export class VFormBuilderComponent implements OnInit {
       }
     },
     {
-      name: 'LUNCH FEE', isActive: false,
+      name: "LUNCH FEE",
+      isActive: false,
       type: {
-        value: 0, name: TYPE_NAME.fixed,
+        value: 0,
+        name: TYPE_NAME.fixed
       },
       payMore: {
         isActive: false,
@@ -110,9 +151,11 @@ export class VFormBuilderComponent implements OnInit {
       }
     },
     {
-      name: 'BUSING/TRANSPORTATION', isActive: false,
+      name: "BUSING/TRANSPORTATION",
+      isActive: false,
       type: {
-        value: 0, name: TYPE_NAME.fixed
+        value: 0,
+        name: TYPE_NAME.fixed
       },
       payMore: {
         isActive: false,
@@ -120,9 +163,11 @@ export class VFormBuilderComponent implements OnInit {
       }
     },
     {
-      name: 'REGISTRATION', isActive: true,
+      name: "REGISTRATION",
+      isActive: true,
       type: {
-        value: 0, name: TYPE_NAME.percentage,
+        value: 0,
+        name: TYPE_NAME.percentage
       },
       payMore: {
         isActive: false,
@@ -130,9 +175,11 @@ export class VFormBuilderComponent implements OnInit {
       }
     },
     {
-      name: 'SUPPLIES', isActive: true,
+      name: "SUPPLIES",
+      isActive: true,
       type: {
-        value: 0, name: TYPE_NAME.full,
+        value: 0,
+        name: TYPE_NAME.full
       },
       payMore: {
         isActive: false,
@@ -140,9 +187,11 @@ export class VFormBuilderComponent implements OnInit {
       }
     },
     {
-      name: 'ACTIVITY FEE', isActive: false,
+      name: "ACTIVITY FEE",
+      isActive: false,
       type: {
-        value: 0, name: TYPE_NAME.fixed,
+        value: 0,
+        name: TYPE_NAME.fixed
       },
       payMore: {
         isActive: false,
@@ -151,31 +200,51 @@ export class VFormBuilderComponent implements OnInit {
     }
   ];
   vDataCollection: VDataCollectionComponent;
+  draftId: string;
+
+  isDataSaving: boolean = false;
+  spinnerText: string = "Data is loading...";
 
   @ViewChild("addCustomFieldInput") addCustomFieldInput: ElementRef;
-  constructor(@Host() vDataCollection: VDataCollectionComponent,
-              private formService: VFormService,
-              private fieldsService: VFieldsService,
-              private router: Router,
-              private route: ActivatedRoute,
-              private location: Location,
-              private generalInfoIsValidService: GeneralInfoIsValidService,
-              private fileService: VFilesService,
-              private readonly financeService: FinanceService) {
+  constructor(
+    @Host() vDataCollection: VDataCollectionComponent,
+    private formService: VFormService,
+    private fieldsService: VFieldsService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private location: Location,
+    private generalInfoIsValidService: GeneralInfoIsValidService,
+    private constructorIsSavingService: ConstructorIsSavingService,
+    private formBuilderIsSavedService: FormBuilderIsSavedService,
+    private fileService: VFilesService,
+    private readonly financeService: FinanceService,
+    private saveFormService: SaveFormService
+  ) {
     this.vDataCollection = vDataCollection;
   }
-
   ngOnInit() {
     window.scrollTo(0, 0);
-    this.route.parent.url.subscribe((urlPath) => {
+    // if (VFormBuilderComponent.countSaveFormService < 1) {
+      this.saveFormSubscription = this.saveFormService.onSaveForm.subscribe(
+        () => {
+          this.saveForm();
+        }
+      );
+    // }
+    VFormBuilderComponent.countSaveFormService++;
+
+    this.formBuilderIsSavedService.setIsSaved(false);
+    this.route.parent.url.subscribe(urlPath => {
       const url = urlPath[urlPath.length - 1].path;
-      this.formId = url != 'v-form-constructor' ? url : '';
+      this.formId = url != "v-form-constructor" ? url : "";
     });
-    this.loadFeeTemplates();
+    this.draftId = this.formId + "_form-builder";
+    this.loadMasterFees();
     this.loadBasicFields();
     this.loadSideBar();
     this.loadSideBarNew();
     this.loadMappedFields();
+    this.constructorIsSavingService.setIsSaving(this.isDataSaving);
   }
 
   addDocumentItem() {
@@ -186,7 +255,6 @@ export class VFormBuilderComponent implements OnInit {
 
   removeDocument(id: string): void {
     this.documents = this.documents.filter(doc => doc.id != id);
-
   }
 
   addFormPDF() {
@@ -199,7 +267,6 @@ export class VFormBuilderComponent implements OnInit {
     this.formsPDF = this.formsPDF.filter(forms => forms.id != id);
   }
 
-
   loadBasicFields() {
     this.fieldsService.getCustomList().subscribe((fields: Field[]) => {
       this.customFields = fields;
@@ -210,30 +277,30 @@ export class VFormBuilderComponent implements OnInit {
     this.fieldsService.getExistingList().subscribe((fields: Field[]) => {
       this.existingFields = fields;
     });
-
   }
 
   loadSideBar() {
-    this.fieldsService.getExistingSideBarList().subscribe((fields: Field[]) => {
+    this.fieldsService.getExistingSideBarList().subscribe(
+      (fields: Field[]) => {
         this.sideBarFields = fields;
         this.sideBarFields.forEach(field => {
           if (field.type == 113) {
-            field.fields.forEach(f => f.exist = false)
+            field.fields.forEach(f => (f.exist = false));
           }
-          field.exist = false
+          field.exist = false;
         });
-
       },
-      (error) => console.log(error, 'error'),
+      error => console.log(error, "error"),
       () => this.formInit()
     );
   }
 
   loadSideBarNew() {
-    this.fieldsService.getExistingSideBarList2().subscribe(data => {
-            this.newSideBar = data
+    this.fieldsService.getExistingSideBarList2().subscribe(
+      data => {
+        this.newSideBar = data;
       },
-      (error) => console.log(error, 'error')
+      error => console.log(error, "error")
     );
   }
 
@@ -241,7 +308,7 @@ export class VFormBuilderComponent implements OnInit {
     if (!isEmpty(form)) {
       this.form = form;
       this.formName = form.name;
-      this.fields =this.form.fields = form.fields || [];
+      this.fields = this.form.fields = form.fields || [];
       this.tuitionContract = form.tuitionContract || tuitionContractDefault;
       this.consentInfo = form.consentInfo || consentInfoDefault;
       this.termsConditions = form.termsConditions || termsConditionsDefault;
@@ -253,7 +320,7 @@ export class VFormBuilderComponent implements OnInit {
   }
 
   formInit(): void {
-    const form = this.vDataCollection.getDraftForm(this.formId);
+    const form = this.vDataCollection.getDraftForm(this.draftId);
     if (!isEmpty(form)) {
       // console.log("loading draftForm");
       this.setLocalForm(form); //draftForm
@@ -263,17 +330,16 @@ export class VFormBuilderComponent implements OnInit {
           // console.log("loading remoteForm");
           this.setLocalForm(form); //remoteForm
         },
-        (error) => console.log(error, 'error'),
+        error => console.log(error, "error"),
         () => {
           this.generalInfoIsValidService.setIsValid(true);
           if (!isEmpty(this.fields)) {
             this.initFormFieldsToSideBar(this.sideBarFields, this.fields);
           }
 
-          if (!isEmpty(this.feeTemplates)) {
+          if (!isEmpty(this.masterFees)) {
             this.initFeeToTuitionContract();
           }
-
         }
       );
     }
@@ -283,11 +349,12 @@ export class VFormBuilderComponent implements OnInit {
     sideBar.forEach(sideBarField => {
       workArea.forEach(field => {
         if (sideBarField.name == field.name) {
-          if (field.type == 113) this.initFormFieldsToSideBar(sideBarField.fields, field.fields);
-          sideBarField.exist = true
+          if (field.type == 113)
+            this.initFormFieldsToSideBar(sideBarField.fields, field.fields);
+          sideBarField.exist = true;
         }
-      })
-    })
+      });
+    });
   }
 
   getForm(): Form {
@@ -304,13 +371,28 @@ export class VFormBuilderComponent implements OnInit {
       termsConditions: this.termsConditions,
       eligible: this.eligible,
       step: 1
-    }
+    };
   }
 
   saveForm() {
     // if (this.validCheckFields()) {
+    if (this.form && !this.isDataSaving) {
       const form: Form = this.getForm();
-      this.formService.sendForm(form).subscribe(res => this.goBack());
+      this.spinnerText = "Data is saving...";
+      this.isDataSaving = true;
+      this.constructorIsSavingService.setIsSaving(this.isDataSaving);
+      this.formService.sendForm(form).subscribe(res => {
+        this.formBuilderIsSavedService.setIsSaved(res["updated"]);
+
+        this.isDataSaving = !this.saveFormService.getSavingStatus();
+        this.constructorIsSavingService.setIsSaving(this.isDataSaving);
+        if (this.isDataSaving) {
+          this.spinnerText = "Other tabs are saving...";
+        } else {
+          this.spinnerText = "Data is loading...";
+        }
+      });
+    }
     // }
     this.vDataCollection.deleteDraftForm(this.formId);
   }
@@ -326,15 +408,14 @@ export class VFormBuilderComponent implements OnInit {
   //       event.previousIndex,
   //       event.currentIndex);
   //   }
-    // else {
-    //   copyArrayItem(event.previousContainer.data,
-    //     event.container.data,
-    //     event.previousIndex,
-    //     event.currentIndex);
-    //   this.addField(this.fields[event.currentIndex]);
-    // }
+  // else {
+  //   copyArrayItem(event.previousContainer.data,
+  //     event.container.data,
+  //     event.previousIndex,
+  //     event.currentIndex);
+  //   this.addField(this.fields[event.currentIndex]);
   // }
-
+  // }
 
   onChangeGroupBeing(field, group) {
     group = cloneDeep(group);
@@ -351,7 +432,6 @@ export class VFormBuilderComponent implements OnInit {
         return f;
       });
     }
-
   }
 
   onChangeFieldBeing(field: Field) {
@@ -368,7 +448,6 @@ export class VFormBuilderComponent implements OnInit {
     newField.isValidName = true;
     fields.push(newField);
     this.fieldsValidator();
-
   }
 
   addNewCustomField(name: string, fields: Field[]) {
@@ -389,64 +468,63 @@ export class VFormBuilderComponent implements OnInit {
     fields.push(newField);
     this.fieldsValidator();
     this.showAddButton = true;
-
   }
 
   nameChange(event) {
-    this.validNewCustomFieldName = this.checkExistingFieldsName(event.target.value.trim());
+    this.validNewCustomFieldName = this.checkExistingFieldsName(
+      event.target.value.trim()
+    );
   }
-
 
   //find in main array or nester(group) filed and delete
   findAndDelete(name: string, fields: Field[]) {
     let find = fields.find(field => field.name == name);
     if (find) {
-      fields = fields.filter((field) => field.name != name);
-
+      fields = fields.filter(field => field.name != name);
     }
     return fields;
   }
 
   onDelete(name: string) {
     this.fields = this.findAndDelete(name, this.fields);
-    this.fields.map(group => group.type == 113 ? group.fields = this.findAndDelete(name, group.fields) : group);
+    this.fields.map(group =>
+      group.type == 113
+        ? (group.fields = this.findAndDelete(name, group.fields))
+        : group
+    );
 
     this.fieldsValidator();
   }
 
   onChange(uniqEvent, field) {
-    if (field.mapped == '') {
+    if (field.mapped == "") {
       field.isValidName = this.checkExistingFieldsName(field.name);
     }
   }
 
   onDeleteCustom(name: string) {
     this.onDelete(name);
-    this.sideBarFields = this.sideBarFields.filter((field) => field.name != name);
-
+    this.sideBarFields = this.sideBarFields.filter(field => field.name != name);
   }
 
   onUniq(event) {
     this.fieldsValidator();
-
   }
 
-
   fieldsValidator() {
-
-    this.fields.map(field => field.isValid = true);
+    this.fields.map(field => (field.isValid = true));
     const uniqFields = this.fields.filter(field => {
       return field.options.unique == true;
     });
-    uniqFields.forEach((field) => {
+    uniqFields.forEach(field => {
       this.labelCheck(field.name);
     });
-
   }
 
-
   checkExistingFieldsName(name: string): boolean {
-    const arr = this.existingFields.filter((field => field.name.toLowerCase() == name.toLowerCase()));
+    const arr = this.existingFields.filter(
+      field => field.name.toLowerCase() == name.toLowerCase()
+    );
     return isEmpty(arr);
   }
 
@@ -456,13 +534,12 @@ export class VFormBuilderComponent implements OnInit {
 
   //
   labelCheck(name: string): boolean {
-    const arr = this.fields.filter((field) => field.name == name);
+    const arr = this.fields.filter(field => field.name == name);
     if (arr.length > 1) {
-      arr.map(field => field.isValid = false);
+      arr.map(field => (field.isValid = false));
     }
     return arr.length > 1;
   }
-
 
   disableWarning() {
     this.warningVisible = false;
@@ -470,13 +547,14 @@ export class VFormBuilderComponent implements OnInit {
 
   public saveDraftForm(): void {
     // console.log("SAVE draft");
-    this.vDataCollection.setDraftForm(this.formId, this.getForm());
+    if (this.formId && this.form) {
+      this.vDataCollection.setDraftForm(this.draftId, this.getForm());
+    }
   }
 
   goBack() {
     this.router.navigate([`/vertical-data-collection/`]);
   }
-
 
   doExistingFieldsUniq(field: Field) {
     if (field.mapped) {
@@ -484,9 +562,10 @@ export class VFormBuilderComponent implements OnInit {
     }
   }
 
-
   validCheckFields() {
-    const result = this.fields.filter(field => field.isValid == false || field.isValidName == false);
+    const result = this.fields.filter(
+      field => field.isValid == false || field.isValidName == false
+    );
     if (!isEmpty(result)) {
       this.warningVisible = true;
     }
@@ -510,9 +589,11 @@ export class VFormBuilderComponent implements OnInit {
   }
 
   removeTermsConditionsItem(id) {
-    this.termsConditions.termsConditionsItems = this.termsConditions.termsConditionsItems.filter(item => {
-      return item.id !== id;
-    });
+    this.termsConditions.termsConditionsItems = this.termsConditions.termsConditionsItems.filter(
+      item => {
+        return item.id !== id;
+      }
+    );
   }
 
   // setActiveSection(event, section) {
@@ -523,35 +604,42 @@ export class VFormBuilderComponent implements OnInit {
   // }
 
   // Tuition Contract
-  loadFeeTemplates() {
-    this.financeService.getAllFeeTemplates().subscribe((res: FeeTemplatesData) => {
-      this.feeTemplates = res.fee_templates;
-    })
+
+  loadMasterFees() {
+    this.financeService
+      .getMasterFees()
+      .subscribe((res) => {
+        this.masterFees = res.fees;
+      });
   }
 
   initFeeToTuitionContract() {
-   this.addFeeToTuitionContract();
-   // this.deleteFeeFromTuitionContract()
+    this.addFeeToTuitionContract();
+    // this.deleteFeeFromTuitionContract()
   }
 
   addFeeToTuitionContract() {
-    this.feeTemplates.map((feeTemplate: FeeTemplate) => {
-
-      let {id, name, description} = feeTemplate;
-      let template = {
+    this.masterFees.map((fee: Fee) => {
+      let { id, name, amount, description } = fee;
+      let tuitionFee = {
         id,
         name,
+        amount,
         description,
         isActive: false,
         isActiveDiscount: false
       };
 
-      if(!this.existFeeToTuitionContract(feeTemplate.id)) this.tuitionContract.fees.push(template);
+      if (!this.existFeeToTuitionContract(tuitionFee.id))
+        this.tuitionContract.fees.push(tuitionFee);
     });
   }
 
   existFeeToTuitionContract(feeTemplateId) {
-    return this.tuitionContract.fees.findIndex(fee => fee.id === feeTemplateId) !== -1;
+    return (
+      this.tuitionContract.fees.findIndex(fee => fee.id === feeTemplateId) !==
+      -1
+    );
   }
   //End Tuition Contract
 
@@ -561,5 +649,17 @@ export class VFormBuilderComponent implements OnInit {
   //     this.sections[fbSectionsKey] = false;
   //   }
   // }
-}
 
+  ngOnDestroy(): void {
+    this.saveDraftForm();
+    // this.saveFormService.unsubscribe();
+
+    if (
+      VFormBuilderComponent.countSaveFormService > 1 &&
+      this.saveFormSubscription
+    ) {
+      this.saveFormSubscription.unsubscribe();
+      VFormBuilderComponent.countSaveFormService--;
+    }
+  }
+}

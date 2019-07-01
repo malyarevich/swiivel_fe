@@ -14,7 +14,7 @@
 }
 
 .app-text-primary {
-  color: $element-base-color!important;
+  color: $element-base-color !important;
 }
 
 .app-text-second {
@@ -23,15 +23,15 @@
 }
 
 .app-text-danger {
-  color: #E65757;
+  color: #e65757;
 }
 
 .app-text-success {
-  color: #3CA476;
+  color: #3ca476;
 }
 
 .app-text-white {
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .app-text-extra-bold {
@@ -39,7 +39,7 @@
 }
 
 .app-text-uppercase {
-  text-transform: uppercase; 
+  text-transform: uppercase;
 }
 
 //CURSOR
@@ -64,4 +64,44 @@
 
 .app-text-capitalize {
   text-transform: capitalize;
+}
+
+.command_text_line {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+
+  &__line_params {
+    line-height: 0.85rem;
+    padding-bottom: 0;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    padding-top: 0;
+  }
+
+  &__item {
+    color: $darkgray-color;
+    border-right: 0.2rem solid #d7d7d7;
+    font-size: 0.85rem;
+    font-weight: bold;
+    @extend .command_text_line__line_params;
+
+    &:last-child {
+      border: none;
+    }
+  }
+
+  &__item_extended {
+    @extend .command_text_line__line_params;
+    padding-right: 0;
+  }
+}
+
+.app-background-primary {
+  background-color: $element-base-color !important;
+}
+
+.app-background-light-gray {
+  background-color: $lightgray-color !important;
 }

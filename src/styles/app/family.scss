@@ -39,7 +39,7 @@
 }
 
 .app-family-card-body {
-  background-color: #F2F2F2;
+  background-color: #F6F6F6;
   border-radius: 3px 3px;
 }
 
@@ -48,4 +48,8 @@
   border-top-left-radius: 3px !important;
   border-bottom-left-radius: 3px !important;
   min-height: 36px;
+}
+
+.app-family-input-datepicker::placeholder {
+  font-size: 10px;
 }

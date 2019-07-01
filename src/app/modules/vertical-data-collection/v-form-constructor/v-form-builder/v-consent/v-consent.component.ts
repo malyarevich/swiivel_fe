@@ -4,6 +4,7 @@ import {uuid} from 'uuid';
 
 import {E_SIGNATURE_TYPES, SIGNATURE_TYPES} from "../../../../../enums";
 import {ConsentItemInfo} from "./model/consent.model";
+import { ICommand } from 'src/app/models/vertical-data-collection/v-form-constructor/v-form-builder/component.model';
 
 @Component({
   selector: 'app-v-consent',
@@ -41,6 +42,10 @@ export class VConsentComponent implements OnInit, AfterViewInit {
   //   this.text = replace(this.text, '{%parent%}', '<span class="app-consent-var">Parent</span>');
   //   this.text = replace(this.text, '{%date%}', '<span class="app-consent-var">Date</span>');
   // }
+
+  onSetCommand(command: ICommand) {
+    this.setCommand(command.name, command.showUi, command.value);
+  }
 
   setCommand(name: string, showUi: boolean = false, value: string = null) {
     let success = document.execCommand(name, showUi, value);

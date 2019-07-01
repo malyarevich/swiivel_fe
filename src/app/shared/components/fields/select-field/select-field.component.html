@@ -1,11 +1,18 @@
 <div
   class="app-select-field"
-  [ngClass]="{'app-select-field-has-error': isInvalid}"
+  [ngClass]="{
+    'app-select-field-has-error': isInvalid,
+    'app-select-field-table': fieldType == 'table'
+  }"
   id={{id}}
 >
   <ng-select
-    [ngClass]="{'app-select-field-remove-clear-btn': !showClearBtn}"
+    [ngClass]="{
+      'app-select-field-remove-clear-btn': !showClearBtn,
+      'app-select-field__no-label': value && !labelTitle
+    }"
     [items]="items"
+    [disabled]="disabled"
     bindLabel={{bindLabel}}
     bindValue={{bindValue}}
     [(ngModel)]="value"

@@ -1,3 +1,5 @@
+import {FamilyPerson} from "./family-person.model";
+
 export interface Family {
   id: number;
   name: string;
@@ -17,5 +19,6 @@ export interface Family {
     family_rabbi: string;
     rabbi_phone_number: string;
     family_shul: string;
-  }
+  },
+  family_persons: FamilyPerson[]
 }

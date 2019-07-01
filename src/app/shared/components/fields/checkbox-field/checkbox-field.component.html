@@ -4,9 +4,12 @@
 >
   <label
     class="app-checkbox-field-label"
+    [ngClass]="{'app-checkbox-field-label__text': hasMargin}"
     ([for])="id"
   >
-    {{label}}
+    <div>
+      {{label}}
+    </div>
     <input
       type="checkbox"
       ([id])="id"
@@ -15,6 +18,6 @@
       [disabled]="disabled"
       (click)="toggleCheckbox()"
     >
-    <span class="app-checkbox-checkmark"></span>
+    <div class="app-checkbox-field-checkmark"></div>
   </label>
 </div>

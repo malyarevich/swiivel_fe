@@ -1,8 +1,5 @@
-<div class="mt-4 ml-5">
-  <button type="button" class="btn btn-outline-secondary " routerLink="/vertical-data-collection">CLOSE WIZARD</button>
-</div>
-
-<div class="container-fluid">
+<!-- General Information Form -->
+<div *ngIf="isFormReady()" class="container-fluid">
   <div class="row mt-5 px-5">
     <div class="col-3 rounded p-0">
       <app-v-form-general-menu (activeSectionEmitter)="setActiveSection($event)" [menu]="menu"></app-v-form-general-menu>
@@ -23,7 +20,7 @@
             need?</h4>
           <div class="row my-5">
             <div class="col form-group app-input-container"
-                 [ngClass]="{'app-input-fill': formName.value}">
+                 [ngClass]="{'app-input-fill': generalInfoForm.get('name').value}">
               <label for="formName" class="app-input-label">Form Name</label>
               <input type="text"
                      #formName
@@ -37,7 +34,7 @@
               </div>
             </div>
             <div class="col form-group app-input-container"
-                 [ngClass]="{'app-input-fill': formLanguage.value}">
+                 [ngClass]="{'app-input-fill': generalInfoForm.get('language').value}">
               <label for="formLanguage" class="app-input-label">Form Language</label>
               <select class="app-input form-control"
                       formControlName="language"
@@ -118,42 +115,17 @@
             <h4 class="pt-3 text-center font-weight-bold">What period is this for? You may select more than one</h4>
           </div>
 
-          <div formGroupName="periodCheckboxGroup" class="form-group pl-5 ml-5">
+          <div  *ngIf="periods?.length" formGroupName="periodCheckboxGroup" class="form-group pl-5 ml-5">
 
-            <div class="row justify-content-center pt-3 mt-4">
-              <div class="form-group col-5 pl-5">
-                <label class="app-checkbox-container" for="primary1">Primary 1 (August 31 - May 25)
-                  <input type="checkbox" class="form-check-input" id="primary1" formControlName="primary1">
-                  <span class="app-checkbox-checkmark"
-                        [ngClass]="{'app-checkmark-is-invalid' : isInvalidCheckboxGroup('periodCheckboxGroup')}"></span>
-                </label>
-              </div>
-              <div class="form-group col-5 pl-5">
-                <label class="app-checkbox-container" for="primary2">Primary 2 (September 4 - June 1)
-                  <input type="checkbox" class="form-check-input" id="primary2" formControlName="primary2">
+            <div class="row justify-content-between pt-3 mt-4 mx-5">
+              <div class="form-group col-6" *ngFor="let period of periods">
+                <label class="app-checkbox-container" [for]="period.id">{{period.name}} ({{period.date_from}} - {{period.date_to}})
+                  <input type="checkbox" class="form-check-input" [id]="period.id" [formControlName]="period.id">
                   <span class="app-checkbox-checkmark"
                         [ngClass]="{'app-checkmark-is-invalid' : isInvalidCheckboxGroup('periodCheckboxGroup')}"></span>
                 </label>
               </div>
             </div>
-
-            <div class="row justify-content-center">
-              <div class="form-group col-5 pl-5">
-                <label class="app-checkbox-container" for="middle">Middle (September 1 - May 31)
-                  <input type="checkbox" class="form-check-input" id="middle" formControlName="middle">
-                  <span class="app-checkbox-checkmark"
-                        [ngClass]="{'app-checkmark-is-invalid' : isInvalidCheckboxGroup('periodCheckboxGroup')}"></span>
-                </label>
-              </div>
-              <div class="form-group col-5 form-check pl-5">
-                <label class="app-checkbox-container" for="height">Hight (October 1 - June 22)
-                  <input type="checkbox" class="form-check-input" id="height" formControlName="height">
-                  <span class="app-checkbox-checkmark"
-                        [ngClass]="{'app-checkmark-is-invalid' : isInvalidCheckboxGroup('periodCheckboxGroup')}"></span>
-                </label>
-              </div>
-            </div>
-
             <div 
               class="text-center text-danger 
               {{addHiddenClass(!isInvalidCheckboxGroup('periodCheckboxGroup'))}}
@@ -414,9 +386,15 @@
         <!--End ELIGIBLE ACCOUNTS-->
 
         <div class="row justify-content-center mt-4" [style.visibility]="menu.eligible.isActive ? 'visible' : 'hidden'">
-          <button class=" btn  app-btn-primary" type="submit">Save & Go Next Step</button>
+          <button class=" btn  app-btn-primary" [disabled]="isSubmitted" (click)="onSubmit()">Save & Go Next Step</button>
         </div>
       </form>
     </div>
   </div>
+
 </div>
+
+<!-- Loading spinner -->
+<ng-container *ngIf="!isFormReady()">
+  <main-spinner [spinnerText]="spinnerText"></main-spinner>
+</ng-container>

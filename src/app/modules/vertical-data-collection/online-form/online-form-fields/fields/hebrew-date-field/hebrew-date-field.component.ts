@@ -1,26 +1,24 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit } from "@angular/core";
 import {
   NgbCalendar,
-    NgbCalendarHebrew, NgbDate,
-    NgbDatepickerI18n,
-    NgbDatepickerI18nHebrew,
-    NgbDateStruct
-} from '@ng-bootstrap/ng-bootstrap';
-import {Field} from '../../../model/field.model';
-
-
+  NgbCalendarHebrew,
+  NgbDate,
+  NgbDatepickerI18n,
+  NgbDatepickerI18nHebrew,
+  NgbDateStruct
+} from "@ng-bootstrap/ng-bootstrap";
+import { Field } from "../../../model/field.model";
 
 @Component({
-  selector: 'app-hebrew-date-field',
-  templateUrl: './hebrew-date-field.component.html',
-  styleUrls: ['./hebrew-date-field.component.scss'],
+  selector: "app-hebrew-date-field",
+  templateUrl: "./hebrew-date-field.component.html",
+  styleUrls: ["./hebrew-date-field.component.scss"],
   providers: [
-    {provide: NgbCalendar, useClass: NgbCalendarHebrew},
-    {provide: NgbDatepickerI18n, useClass: NgbDatepickerI18nHebrew}
+    { provide: NgbCalendar, useClass: NgbCalendarHebrew },
+    { provide: NgbDatepickerI18n, useClass: NgbDatepickerI18nHebrew }
   ]
 })
-export class HebrewDateFieldComponent  implements OnInit {
-
+export class HebrewDateFieldComponent implements OnInit {
   model: NgbDateStruct;
   @Input() data: Field;
 
@@ -28,8 +26,6 @@ export class HebrewDateFieldComponent  implements OnInit {
     this.dayTemplateData = this.dayTemplateData.bind(this);
     // console.log(this.dayTemplateData);
   }
-
-
 
   dayTemplateData(date: NgbDate) {
     return {

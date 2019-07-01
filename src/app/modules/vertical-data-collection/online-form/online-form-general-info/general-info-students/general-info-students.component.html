@@ -4,7 +4,7 @@
 </h2>
 
 <!--SubTitle-->
-<h3 class="content_section__article_sub_title">
+<h3 class="sub_title">
   <i class="far fa-clock fa-sm mr-1"></i>
   ~15 minutes
 </h3>
@@ -59,6 +59,7 @@
           id="firstName"
           placeholder="First Name"
           value="Charlotte"
+          [disabled]="true"
         />
       </div>
     </div>
@@ -72,6 +73,7 @@
           id="lastName"
           placeholder="Last Name"
           value="Jennings"
+          [disabled]="true"
         />
       </div>
     </div>
@@ -79,8 +81,8 @@
     <div class="col-3 px-2">
       <div class="form-group app-input-container app-input-fill">
         <label class="app-input-label" for="grade">Grade</label>
-        <select class="app-input" id="grade">
-          <option [value]="'Grade 1'" [selected]="true">
+        <select class="app-input" id="grade" [disabled]="true">
+          <option [value]="'Grade 1'" [selected]="true" [disabled]="true">
             {{ "Grade 1" }}
           </option>
         </select>
@@ -98,11 +100,14 @@
               id="photo"
               placeholder="Photo (optional)"
               value="Photo123871.jpg"
+              [disabled]="true"
             />
           </div>
         </div>
         <div class="col-4 d-flex align-items-center">
-          <button class="btn app-btn-primary h-100">Upload</button>
+          <button class="btn app-btn-primary h-100" [disabled]="true">
+            Upload
+          </button>
           <i class="fas fa-trash ml-2 app-text-second"></i>
         </div>
       </div>

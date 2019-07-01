@@ -1,0 +1,76 @@
+<!--Var Dropdown-->
+<div
+  class="command_dropdown"
+  #varDrop="ngbDropdown"
+  ngbDropdown
+  placement="bottom-right"
+  autoClose="outside"
+>
+  <span
+    id="dropdownConsentVar"
+    (mouseenter)="varDrop.open()"
+    ngbDropdownToggle
+    class="command_dropdown__button"
+  >
+    <i class="fas fa-angle-left fa-xs pr-1"></i><i class="fas fa-angle-right fa-xs"></i>
+  </span>
+
+  <div
+    class="p-3"
+    ngbDropdownMenu
+    aria-labelledby="dropdownConsentVar"
+    style="min-width: 400px"
+    (mouseleave)="varDrop.close()"
+  >
+    <div class="row no-gutters align-items-center">
+      <div class="col-4 p-1">
+        <div
+          class="command_dropdown__item"
+          (click)="setCommand('insertText', false, '{%studentsName%}')"
+          (mousedown)="$event.preventDefault()"
+        >
+          <span class="command_dropdown__item_icon">
+            <i class="fas fa-ellipsis-v"></i>
+            <i class="fas fa-ellipsis-v"></i>
+          </span>
+          <span class="command_dropdown__item_text">
+            Student’s Name
+          </span>
+        </div>
+      </div>
+
+      <div class="col-4 p-1">
+        <div
+          class="command_dropdown__item"
+          (click)="setCommand('insertText', false, '{%parent%}')"
+          (mousedown)="$event.preventDefault()"
+        >
+          <span class="command_dropdown__item_icon">
+            <i class="fas fa-ellipsis-v"></i>
+            <i class="fas fa-ellipsis-v"></i>
+          </span>
+          <span class="command_dropdown__item_text">
+            Parent
+          </span>
+        </div>
+      </div>
+
+      <div class="col-4 p-1">
+        <div
+          class="command_dropdown__item"
+          (click)="setCommand('insertText', false, '{%date%}')"
+          (mousedown)="$event.preventDefault()"
+        >
+          <span class="command_dropdown__item_icon">
+            <i class="fas fa-ellipsis-v"></i>
+            <i class="fas fa-ellipsis-v"></i>
+          </span>
+          <span class="command_dropdown__item_text">
+            Date
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--End Var Dropdown-->

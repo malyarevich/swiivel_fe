@@ -1,5 +1,6 @@
 import {Person} from "../person.model";
 import {StudentInfo} from "./student-info.model";
+import {FileAttachment} from "./file-attachment.model";
 
 export interface FamilyPerson {
   id: number;
@@ -13,4 +14,5 @@ export interface FamilyPerson {
   student_info?: StudentInfo;
   children?: [FamilyPerson];
   parents?: [FamilyPerson];
+  file_attachments?: [FileAttachment]
 }

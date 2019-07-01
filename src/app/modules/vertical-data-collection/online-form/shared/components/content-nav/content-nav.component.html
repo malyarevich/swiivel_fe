@@ -1,32 +1,34 @@
-<div class="w-100 app-of-nav-wrap">
-  <nav class="navbar navbar-expand py-0">
-    <div class="justify-content-left">
-      <ul class="navbar-nav">
-        <ng-container
-          *ngFor="let item of content; let i = index; let lastIndex = last"
+<div class="content_nav_container">
+  <nav class="content_nav">
+    <ul class="content_nav__list">
+      <ng-container
+        *ngFor="let item of content; let i = index; let lastIndex = last"
+      >
+        <li
+          class="content_nav__item"
+          [ngClass]="{
+            'content_nav__item--active': activeId === item.id
+          }"
         >
-          <li
-            class="nav-item py-2 px-1"
+          <a
+            class="content_nav__link"
             [ngClass]="{
-              'app-text-primary app-of-nav-active-border': activeId === item.id
+              'content_nav__link--active': activeId === item.id
             }"
+            [tabindex]="item.id"
+            (click)="setActiveId(item.id)"
           >
-            <a
-              class="nav-link font-weight-bold app-cursor-pointer"
-              (click)="setActiveId(item.id)"
-            >
-              {{ item.title }}
-            </a>
+            {{ item.title }}
+          </a>
+        </li>
+        <ng-container *ngIf="!lastIndex">
+          <li class="content_nav__splitter">
+            <span class="content_nav__icon_wrapper">
+              <i class="fas fa-chevron-right fa-sm content_nav__icon"></i>
+            </span>
           </li>
-          <ng-container *ngIf="!lastIndex">
-            <li class="nav-item py-2 px-1">
-              <a class="nav-link">
-                <i class="fas fa-chevron-right fa-sm app-text-second"></i>
-              </a>
-            </li>
-          </ng-container>
         </ng-container>
-      </ul>
-    </div>
+      </ng-container>
+    </ul>
   </nav>
 </div>

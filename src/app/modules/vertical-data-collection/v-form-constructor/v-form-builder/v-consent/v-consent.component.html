@@ -1,35 +1,39 @@
 <!--Section Header-->
-<div class="app-section-wrapper app-section-header mt-2 mb-2 row align-items-center no-gutters">
-
+<div
+  class="app-section-wrapper app-section-header mt-2 mb-2 row align-items-center no-gutters"
+>
   <div class="col-4 row align-items-center no-gutters">
     <div class="col-1 row align-items-center no-gutters">
-          <span class="app-fb-section-icon-white">
-            <i class="fas fa-ellipsis-v"></i>
-            <i class="fas fa-ellipsis-v"></i>
-          </span>
+      <span class="app-fb-section-icon-white">
+        <i class="fas fa-ellipsis-v"></i>
+        <i class="fas fa-ellipsis-v"></i>
+      </span>
     </div>
-    <div class="col-10 ml-3" [ngClass]="{'app-input-fill': sectionName}">
+    <div class="col-10 ml-3" [ngClass]="{ 'app-input-fill': sectionName }">
       <label class="app-input-label" for="section-name">Section Name</label>
       <input
         id="section-name"
         type="text"
         class="app-input"
         [(ngModel)]="sectionName"
-        placeholder="Section Name">
+        placeholder="Section Name"
+      />
     </div>
   </div>
 
-
-  <div class="col-2 pl-4 app-input-container w-100" [ngClass]="{'app-input-fill': sectionWidth}">
+  <div
+    class="col-2 pl-4 app-input-container w-100"
+    [ngClass]="{ 'app-input-fill': sectionWidth }"
+  >
     <label class="app-input-label" for="section-width">Section Width</label>
     <input
       id="section-width"
       type="text"
       class="app-input"
       [(ngModel)]="sectionWidth"
-      placeholder="Section Name">
+      placeholder="Section Name"
+    />
   </div>
-
 
   <div class="col-1 offset-5   row align-items-center no-gutters">
     <div class="col">
@@ -38,17 +42,18 @@
       </span>
     </div>
     <div class="col">
-        <span class="app-fb-section-icon-white">
-          <i class="fas  fa-caret-down dragable-y"></i>
-        </span>
+      <span class="app-fb-section-icon-white">
+        <i class="fas  fa-caret-down dragable-y"></i>
+      </span>
     </div>
   </div>
-
 </div>
 <!--End Section Header-->
 
-<div class="app-section-wrapper pb-4 mb-2" *ngFor="let item of consents; let i = index">
-
+<div
+  class="app-section-wrapper pb-4 mb-2"
+  *ngFor="let item of consents; let i = index"
+>
   <!--TITLE-->
   <div class="row">
     <div class="col-6">
@@ -60,14 +65,19 @@
           </span>
         </div>
         <div class="col">
-          <div class="form-group app-input-container w-50" [ngClass]="{'app-input-fill': consentText.value}">
+          <div
+            class="form-group app-input-container w-50"
+            [ngClass]="{ 'app-input-fill': consentText.value }"
+          >
             <label class="app-input-label" for="consent-text">Title</label>
-            <input #consentText
-                   [(ngModel)]="item.title"
-                   id="consent-text"
-                   type="text"
-                   class="app-input"
-                   placeholder="Title">
+            <input
+              #consentText
+              [(ngModel)]="item.title"
+              id="consent-text"
+              type="text"
+              class="app-input"
+              placeholder="Title"
+            />
           </div>
         </div>
       </div>
@@ -79,86 +89,46 @@
       <div class="row">
         <div class="col">Text</div>
         <div class="col text-right">
-          <div class="d-inline-block">
-            <a (click)="setCommand('bold')" (mousedown)="$event.preventDefault()">
-              <small>Bold</small>
-            </a>
-            <span><small> | </small></span>
-            <a (click)="setCommand('italic')" (mousedown)="$event.preventDefault()">
-              <small>Italic</small>
-            </a>
-            <span><small> | </small></span>
-            <a (click)="setCommand('removeFormat')" (mousedown)="$event.preventDefault()">
-              <small>Remove Format</small>
-            </a>
-          </div>
-
-          <!--Var Dropdown-->
-          <div class="d-inline-block ml-3"
-               #varDrop="ngbDropdown" ngbDropdown
-               placement="bottom-right"
-               autoClose="outside"
-               (mouseleave)="varDrop.close()">
-
-            <span id="dropdownConsentVar"
-                  (mouseover)="varDrop.open()"
-                  ngbDropdownToggle
-                  class="app-consent-dropdown-var">
-              <i class="fas fa-angle-left mr-1"></i><i class="fas fa-angle-right"></i>
-            </span>
-
-            <div class="p-3" ngbDropdownMenu aria-labelledby="dropdownConsentVar" style="min-width: 400px">
-
-              <div class="row no-gutters align-items-center">
-
-                <div class="col-4 p-1">
-                  <div class="app-consent-dropdown-var-item p-2"
-                       (click)="setCommand('insertText', false, '{%studentsName%}')"
-                       (mousedown)="$event.preventDefault()">
-                    <span class="app-fb-section-icon mr-1">
-                      <i class="fas fa-ellipsis-v"></i>
-                      <i class="fas fa-ellipsis-v"></i>
-                    </span>Student’s Name
-                  </div>
-                </div>
-
-                <div class="col-4 p-1">
-                  <div class="app-consent-dropdown-var-item p-2"
-                       (click)="setCommand('insertText', false, '{%parent%}')"
-                       (mousedown)="$event.preventDefault()">
-                    <span class="app-fb-section-icon mr-1">
-                      <i class="fas fa-ellipsis-v"></i>
-                      <i class="fas fa-ellipsis-v"></i>
-                    </span>Parent
-                  </div>
-                </div>
-
-                <div class="col-4 p-1">
-                  <div class="app-consent-dropdown-var-item p-2"
-                       (click)="setCommand('insertText', false, '{%date%}')"
-                       (mousedown)="$event.preventDefault()">
-                    <span class="app-fb-section-icon mr-1">
-                      <i class="fas fa-ellipsis-v"></i>
-                      <i class="fas fa-ellipsis-v"></i>
-                    </span>Date
-                  </div>
-                </div>
-
-              </div>
-
+          <div class="command_text_line">
+            <div class="command_text_line">
+              <a
+                class="command_text_line__item"
+                (click)="setCommand('bold')"
+                (mousedown)="$event.preventDefault()"
+              >
+                Bold
+              </a>
+              <a
+                class="command_text_line__item"
+                (click)="setCommand('italic')"
+                (mousedown)="$event.preventDefault()"
+              >
+                Italic
+              </a>
+              <a
+                class="command_text_line__item"
+                (click)="setCommand('removeFormat')"
+                (mousedown)="$event.preventDefault()"
+              >
+                Remove Format
+              </a>
+            </div>
+            <div class="command_text_line__item_extended">
+              <app-command-dropdown
+                (onSetCommandEmitter)="onSetCommand($event)"
+              ></app-command-dropdown>
             </div>
           </div>
-          <!--End Var Dropdown-->
-
         </div>
       </div>
 
-      <div [innerHTML]="item.text.value"
-           #consentText
-           class="mt-3 mb-2"
-           (blur)="item.text.value = $event.target.innerHTML"
-           contentEditable=true>
-      </div>
+      <div
+        [innerHTML]="item.text.value"
+        #consentText
+        class="mt-3 mb-2"
+        (blur)="item.text.value = $event.target.innerHTML"
+        contentEditable="true"
+      ></div>
     </div>
   </div>
 
@@ -168,19 +138,26 @@
       <div class="px-3 pt-3 row no-gutters">
         <div class="col-1 pt-3">
           <label class="app-checkbox-container">
-            <input type="checkbox" [(ngModel)]="item.checkbox.checked">
+            <input type="checkbox" [(ngModel)]="item.checkbox.checked" />
             <span class="app-checkbox-checkmark"></span>
           </label>
         </div>
         <div class="col">
-          <div class="form-group app-input-container" [ngClass]="{'app-input-fill': consentCheckboxText.value}">
-            <label class="app-input-label" for="consent-checkbox-text">Text</label>
-            <input #consentCheckboxText
-                   [(ngModel)]="item.checkbox.text"
-                   id="consent-checkbox-text"
-                   type="text"
-                   class="app-input"
-                   placeholder="Text">
+          <div
+            class="form-group app-input-container"
+            [ngClass]="{ 'app-input-fill': consentCheckboxText.value }"
+          >
+            <label class="app-input-label" for="consent-checkbox-text"
+              >Text</label
+            >
+            <input
+              #consentCheckboxText
+              [(ngModel)]="item.checkbox.text"
+              id="consent-checkbox-text"
+              type="text"
+              class="app-input"
+              placeholder="Text"
+            />
           </div>
         </div>
       </div>
@@ -189,20 +166,19 @@
 
   <!--SIGNATURE-->
   <div *ngIf="item.signature.isRequire" class="mt-3">
-
     <!--E-SIGN SIGNATURE-->
     <ng-container *ngIf="item.signature.type === SIGNATURE_TYPES.ESIGN">
-
       <!--EXTERNAL SIGNATURE-->
       <ng-container *ngIf="item.signature.eType === E_SIGNATURE_TYPES.EXTERNAL">
-
         <div class="row pt-3" *ngIf="!item.signature.isBothParents">
           <div class="col-12 app-consent-text">
             <div class="row">
               <div class="col-4">
-      <textarea class="app-consent-table w-100 pl-3"
-                rows="2"
-                placeholder="Parent's Signature"></textarea>
+                <textarea
+                  class="app-consent-table w-100 pl-3"
+                  rows="2"
+                  placeholder="Parent's Signature"
+                ></textarea>
               </div>
             </div>
           </div>
@@ -212,30 +188,33 @@
           <div class="col-12 app-consent-text">
             <div class="row">
               <div class="col-4">
-          <textarea class="app-consent-table w-100 pl-3"
-                    rows="2"
-                    placeholder="Father's Signature"></textarea>
+                <textarea
+                  class="app-consent-table w-100 pl-3"
+                  rows="2"
+                  placeholder="Father's Signature"
+                ></textarea>
               </div>
               <div class="col-4">
-          <textarea class="app-consent-table w-100 pl-3"
-                    rows="2"
-                    placeholder="Mother's Signature"></textarea>
+                <textarea
+                  class="app-consent-table w-100 pl-3"
+                  rows="2"
+                  placeholder="Mother's Signature"
+                ></textarea>
               </div>
             </div>
           </div>
         </div>
-
       </ng-container>
 
       <!--SYSTEM SIGNATURE-->
       <ng-container *ngIf="item.signature.eType === E_SIGNATURE_TYPES.SYSTEM">
-
         <div class="row pt-3" *ngIf="!item.signature.isBothParents">
           <div class="col-12 app-consent-text">
             <div class="row">
               <div class="col-4">
-                <label class="app-checkbox-container">Parent's Signature
-                  <input type="checkbox" disabled>
+                <label class="app-checkbox-container"
+                  >Parent's Signature
+                  <input type="checkbox" disabled />
                   <span class="app-checkbox-checkmark"></span>
                 </label>
               </div>
@@ -247,35 +226,36 @@
           <div class="col-12 app-consent-text">
             <div class="row">
               <div class="col-4">
-                <label class="app-checkbox-container">Father's Signature
-                  <input type="checkbox" disabled>
+                <label class="app-checkbox-container"
+                  >Father's Signature
+                  <input type="checkbox" disabled />
                   <span class="app-checkbox-checkmark"></span>
                 </label>
               </div>
               <div class="col-4">
-                <label class="app-checkbox-container">Mother's Signature
-                  <input type="checkbox" disabled>
+                <label class="app-checkbox-container"
+                  >Mother's Signature
+                  <input type="checkbox" disabled />
                   <span class="app-checkbox-checkmark"></span>
                 </label>
               </div>
             </div>
           </div>
         </div>
-
       </ng-container>
-
     </ng-container>
 
     <!--WET SIGNATURE-->
     <ng-container *ngIf="item.signature.type === SIGNATURE_TYPES.WET">
-
       <div class="row pt-3" *ngIf="!item.signature.isBothParents">
         <div class="col-12 app-consent-text">
           <div class="row">
             <div class="col-4">
-      <textarea class="app-consent-table w-100 pl-3"
+              <textarea
+                class="app-consent-table w-100 pl-3"
                 rows="2"
-                placeholder="Parent's Signature"></textarea>
+                placeholder="Parent's Signature"
+              ></textarea>
             </div>
           </div>
         </div>
@@ -285,27 +265,27 @@
         <div class="col-12 app-consent-text">
           <div class="row">
             <div class="col-4">
-          <textarea class="app-consent-table w-100 pl-3"
-                    rows="2"
-                    placeholder="Father's Signature"></textarea>
+              <textarea
+                class="app-consent-table w-100 pl-3"
+                rows="2"
+                placeholder="Father's Signature"
+              ></textarea>
             </div>
             <div class="col-4">
-          <textarea class="app-consent-table w-100 pl-3"
-                    rows="2"
-                    placeholder="Mother's Signature"></textarea>
+              <textarea
+                class="app-consent-table w-100 pl-3"
+                rows="2"
+                placeholder="Mother's Signature"
+              ></textarea>
             </div>
           </div>
         </div>
       </div>
-
     </ng-container>
 
     <div class="py-2 pr-5 text-right">
       <button class="btn app-btn-accept px-5 py-2 mr-3">Accept</button>
     </div>
-
   </div>
   <!--END SIGNATURE-->
-
 </div>
-

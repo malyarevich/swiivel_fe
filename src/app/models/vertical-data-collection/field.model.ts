@@ -1,7 +1,7 @@
 export interface Field {
   _id: string;
   type: number;
-  options?: FieldOption | any;
+  options?: FieldOption |   any;
   constraints?: any;
   validators?: any;
   name:string;
@@ -36,3 +36,6 @@ export interface FieldOption {
   dividerStyle?: string
 
 }
+
+
+

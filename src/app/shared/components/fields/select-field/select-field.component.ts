@@ -1,8 +1,10 @@
 import {
   Component,
+  EventEmitter,
   Input,
   OnInit,
   Optional,
+  Output,
   Self,
 } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
@@ -13,7 +15,7 @@ import { ControlValueAccessor, NgControl } from '@angular/forms';
   styleUrls: ['select-field.component.scss'],
 })
 export class SelectFieldComponent  implements OnInit, ControlValueAccessor {
-  @Input() disabled: boolean;
+  @Input() disabled: boolean = false;
   @Input() labelTitle: string;
   @Input() id: string;
   @Input() items: [any];
@@ -21,10 +23,11 @@ export class SelectFieldComponent  implements OnInit, ControlValueAccessor {
   @Input() idElement: string;
   @Input() bindLabel = 'label';
   @Input() bindValue = 'value';
+  @Input() fieldType: 'table' = null;
   @Input() searchable = false;
   @Input() showClearBtn = false;
-
-  value: any;
+  @Input() value: any = null;
+  @Output() onChangeField = new EventEmitter();
 
   constructor(
     @Self()
@@ -55,7 +58,9 @@ export class SelectFieldComponent  implements OnInit, ControlValueAccessor {
   }
 
   onChange(e) {
-    e.preventDefault();
+    this.onChangeField.emit({ fieldValue: e, id: this.id, type: 'select' });
+    // здесь бага в консоли, потому что в e - это значение, а не event, закоменчу
+    // e.preventDefault();
   }
   onTouched() {}
 }

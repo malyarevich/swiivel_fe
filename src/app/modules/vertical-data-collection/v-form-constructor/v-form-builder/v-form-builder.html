@@ -1,13 +1,10 @@
 <br>
 <form class="form-inline">
-
-  <button type="button" class="btn btn-outline-secondary text-uppercase form-control" (click)="goBack()">Back</button>
+  <!-- <button type="button" class="btn btn-outline-secondary text-uppercase form-control" (click)="goBack()">Back</button> -->
   <!--<div *ngIf="formName.length>3" class="justify-content-end">-->
-  <div class="justify-content-end">
+  <!-- <div class="justify-content-end">
     <button type="button" class="btn btn-outline-secondary text-uppercase " (click)="saveForm()">Save</button>
-  </div>
-
-
+  </div> -->
   <div *ngIf="warningVisible" class="alert alert-warning alert-dismissible col-md-4 col-md-offset-1">
     <a href="#" class="close" data-dismiss="alert" aria-label="close" (click)="disableWarning()">&times;</a>
     <strong>Warning! </strong>{{showWarningMessage}}
@@ -15,8 +12,8 @@
 </form>
 <br>
 
-
-<div class="row no-gutters">
+<!-- Form builder -->
+<div class="row no-gutters" *ngIf="form !== undefined && !isDataSaving">
   <div class="col-3 pl-5">
 
     <div class="row justify-content-center pb-2">
@@ -775,5 +772,7 @@
   </div>
 </div>
 
-
-
+<!-- Loading spinner -->
+<ng-container *ngIf="form === undefined || isDataSaving">
+  <main-spinner [spinnerText]="spinnerText"></main-spinner>
+</ng-container>

@@ -1,11 +1,12 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FamilyPerson} from "../../../../../../../models/family/family-person.model";
-import {FamilyRoles} from "../../../../../../../enums/family-roles";
+import {familyRoles, FamilyRoles} from "../../../../../../../enums/family-roles";
 import {Gender} from "../../../../../../../enums/gender";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {FamilyPersonService} from "../../../../../../../services/family/family-person.service";
 import {NgbDateParserFormatter} from "@ng-bootstrap/ng-bootstrap";
 import {PersonService} from "../../../../../../../services/person/person.service";
+import {environment} from "../../../../../../../../environments/environment";
 
 @Component({
   selector: 'app-family-edit-child',
@@ -21,6 +22,8 @@ export class FamilyEditChildComponent implements OnInit {
   FAMILY_ROLES = FamilyRoles;
   familyChildForm: FormGroup;
   date = new Date();
+  avatar: string | ArrayBuffer;
+  roles = familyRoles;
 
   get minDate() {
     return {day: 1, month: 1, year: this.date.getFullYear() - 100};
@@ -30,6 +33,9 @@ export class FamilyEditChildComponent implements OnInit {
     return {day: this.date.getDate(), month: this.date.getMonth() + 1, year: this.date.getFullYear()};
   }
 
+  get getAvatarUrl() {
+    return environment.avatarUrl + this.familyPerson.person.avatar;
+  }
 
   constructor(private fb: FormBuilder,
               private personService: PersonService,
@@ -61,23 +67,23 @@ export class FamilyEditChildComponent implements OnInit {
       deceased: [this.familyPerson.person.deceased || 0],
       dod: [this.parserFormatter.parse(this.familyPerson.person.dod) || null],
       person_info: this.fb.group({
-        student_current_grade: [this.familyPerson.student_info.student_current_grade],
-        student_start_grade: [this.familyPerson.student_info.student_start_grade],
-        student_current_school: [this.familyPerson.student_info.student_current_school],
-        student_previous_school: [this.familyPerson.student_info.student_previous_school],
-        student_medical_conditions: [this.familyPerson.student_info.student_medical_conditions],
-        student_allergies: [this.familyPerson.student_info.student_allergies],
-        student_medications: [this.familyPerson.student_info.student_medications],
-        student_physician: [this.familyPerson.student_info.student_physician],
-        student_physician_country: [this.familyPerson.student_info.student_physician_country],
-        student_physician_address: [this.familyPerson.student_info.student_physician_address],
-        student_physician_phone: [this.familyPerson.student_info.student_physician_phone],
-        student_first_contact_relationship: [this.familyPerson.student_info.student_first_contact_relationship],
-        student_first_contact_full_name: [this.familyPerson.student_info.student_first_contact_full_name],
-        student_first_contact_cell_phone: [this.familyPerson.student_info.student_first_contact_cell_phone],
-        student_second_contact_full_name: [this.familyPerson.student_info.student_second_contact_full_name],
-        student_second_contact_relationship: [this.familyPerson.student_info.student_second_contact_relationship],
-        student_second_contact_cell_phone: [this.familyPerson.student_info.student_second_contact_cell_phone],
+        student_current_grade: [this.familyPerson.student_info ? this.familyPerson.student_info.student_current_grade : null],
+        student_start_grade: [this.familyPerson.student_info ? this.familyPerson.student_info.student_start_grade : null],
+        student_current_school: [this.familyPerson.student_info ? this.familyPerson.student_info.student_current_school : null],
+        student_previous_school: [this.familyPerson.student_info ? this.familyPerson.student_info.student_previous_school : null],
+        student_medical_conditions: [this.familyPerson.student_info ? this.familyPerson.student_info.student_medical_conditions : null],
+        student_allergies: [this.familyPerson.student_info ? this.familyPerson.student_info.student_allergies : null],
+        student_medications: [this.familyPerson.student_info ? this.familyPerson.student_info.student_medications : null],
+        student_physician: [this.familyPerson.student_info ? this.familyPerson.student_info.student_physician : null],
+        student_physician_country: [this.familyPerson.student_info ? this.familyPerson.student_info.student_physician_country : null],
+        student_physician_address: [this.familyPerson.student_info ? this.familyPerson.student_info.student_physician_address : null],
+        student_physician_phone: [this.familyPerson.student_info ? this.familyPerson.student_info.student_physician_phone : null],
+        student_first_contact_relationship: [this.familyPerson.student_info ? this.familyPerson.student_info.student_first_contact_relationship : null],
+        student_first_contact_full_name: [this.familyPerson.student_info ? this.familyPerson.student_info.student_first_contact_full_name : null],
+        student_first_contact_cell_phone: [this.familyPerson.student_info ? this.familyPerson.student_info.student_first_contact_cell_phone : null],
+        student_second_contact_full_name: [this.familyPerson.student_info ? this.familyPerson.student_info.student_second_contact_full_name : null],
+        student_second_contact_relationship: [this.familyPerson.student_info ? this.familyPerson.student_info.student_second_contact_relationship : null],
+        student_second_contact_cell_phone: [this.familyPerson.student_info ? this.familyPerson.student_info.student_second_contact_cell_phone : null],
       })
     };
 
@@ -106,6 +112,7 @@ export class FamilyEditChildComponent implements OnInit {
         dob: this.parserFormatter.format(this.familyChildForm.value.dob) || null,
         deceased: this.familyChildForm.value.deceased ? 1 : 0,
         dod: this.parserFormatter.format(this.familyChildForm.value.dod) || null,
+        avatar: this.avatar || null,
       },
       parents: this.familyChildForm.value.parents ? this.familyChildForm.value.parents.map((item) => item.id) : [],
       person_info: null,
@@ -122,6 +129,10 @@ export class FamilyEditChildComponent implements OnInit {
 
   onCloseEditFamilyMemberModal() {
     this.closeModalEditFamilyMember.emit(true);
+  }
+
+  onChangeAvatar($event) {
+    this.avatar = $event;
   }
 
 }

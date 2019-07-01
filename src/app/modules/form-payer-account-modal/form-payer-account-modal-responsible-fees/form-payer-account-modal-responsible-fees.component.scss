@@ -1,0 +1,202 @@
+@import '../../../../styles/variables/colors';
+
+.app-form-payer-account-modal-responsible-fees {
+
+  .app-form-payer-account-modal-responsible-fees-title-block {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 0 15px;
+    vertical-align: baseline;
+  }
+
+  .app-form-payer-account-modal-responsible-fees-title-block-label {
+    color: $darkgray-color;
+    font: 12px/15px 'NunitoSans-Bold';
+    letter-spacing: 0.2px;
+    text-transform: uppercase;
+  }
+
+  .app-form-payer-account-modal-responsible-fees-title-block-right {
+    display: flex;
+    align-items: center;
+  }
+
+  .app-form-payer-account-modal-responsible-fees-table {
+    width: 100%;
+  }
+
+  .app-form-payer-account-modal-responsible-fees-table-tbody {
+    .app-form-payer-account-modal-responsible-fees-table-tbody--tr {
+      border-bottom: 1px solid #e7e7e7;
+      background: #fafafa;
+
+      &.app-form-payer-account-modal-responsible-fees-table-tbody--tr__white {
+        background: #fff;
+      }
+
+      &.app-form-payer-account-modal-responsible-fees-table-tbody--tr__open {
+        background: #e4e7ff;
+      }
+
+      &.app-form-payer-account-modal-responsible-fees-table-tbody--tr__open-fee {
+        border-bottom: 1px solid #969fd1;
+      }
+    }
+
+    .app-form-payer-account-modal-responsible-fees-td {
+      padding: 8px 0 8px 5px;
+      font: 12px/15px 'NunitoSans-Bold';
+    }
+
+    .app-form-payer-account-modal-responsible-fees-td__price {
+      text-align: right;
+      padding: 10px;
+    }
+
+    .app-form-payer-account-modal-responsible-fees-td__payment {
+      display: flex;
+      position: relative;
+      padding: 3px 0;
+    }
+
+    .app-form-payer-account-modal-responsible-fees-td__payment-container {
+      min-width: 195px;
+      padding: 0 0 0 54px;
+    }
+
+    .app-form-payer-account-modal-responsible-fees-td__payment--input {
+      width: 50px;
+      margin: 0 5px 0 0;
+    }
+
+    .app-form-payer-account-modal-responsible-fees-td__payment--select {
+      width: 50px;
+      margin: 0 8px 0 0;
+    }
+
+    .app-form-payer-account-modal-responsible-fees-td__trash {
+      text-align: center;
+    }
+
+    .app-form-payer-account-modal-responsible-fees-td__splits {
+      padding: 10px;
+    }
+
+    .app-form-payer-account-modal-responsible-fees-table-splits-tbody {
+      .app-form-payer-account-modal-responsible-fees-table-splits-tbody--tr {
+        border-bottom: 1px solid #e7e7e7;
+        background: #fafafa;
+
+        &:nth-child(even) {background-color: #f2f2f2;}
+      }
+    }
+
+    .app-form-payer-account-modal-responsible-fees-td-arrow-block {
+      border-left: 1px solid #e7e7e7;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .app-form-payer-account-modal-responsible-fees-td-arrow-block--open {
+      border-color: #969fd1;
+      color: #4350A2;
+    }
+
+    .app-form-payer-account-modal-responsible-fees-td-arrow {
+      position: relative;
+      font-size: 15px;
+      color: $softgray-color;
+    }
+
+    .app-form-payer-account-modal-responsible-fees-td-arrow--down {
+      top: -2px;
+    }
+
+    .app-form-payer-account-modal-responsible-fees-arrow--up {
+      top: 3px;
+      color: $element-base-color;
+    }
+
+    .app-form-payer-account-modal-responsible-fees-td-checkbox {
+      text-align: center;
+    }
+
+    .app-form-payer-account-modal-responsible-fees-table-splits {
+      width: 100%;
+    }
+
+    .app-form-payer-account-modal-fee__header-trash {
+      color: #4350A2;
+    }
+
+    .app-form-payer-account-modal-fee__header-trash:hover {
+      cursor: pointer;
+    }
+
+    .app-form-payer-account-modal-responsible-fees-toggle {
+      background: $lightblue-color;
+      border: 1px solid $element-base-color;
+      height: 12px;
+    }
+
+    .app-form-payer-account-modal-responsible-fees-table-splits-tbody-td-checkbox {
+      padding:  0 0 0 5px;
+    }
+
+    .app-form-payer-account-modal-responsible-fees-td-arrow--up {
+      color: $element-base-color;
+      vertical-align: middle;
+    }
+
+    .app-form-payer-account-modal-responsible-fees-table-splits-tbody-td__name,
+    .app-form-payer-account-modal-responsible-fees-table-splits-tbody-td__price {
+      font: inherit/inherit 'NunitoSans-Bold';
+    }
+
+    .app-form-payer-account-modal-responsible-fees-table-splits-tbody-td__price {
+      padding: 0 129px 0 0;
+      text-align: end;
+    }
+
+    .app-form-payer-account-modal-responsible-fees-td__apply-button {
+      position: absolute;
+      top: 5px;
+      left: 163px;
+      height: 20px;
+      width: 88px;
+      margin: auto 0;
+      font: 10px/11px 'NunitoSans';
+      text-align: center;
+      padding: 4px 0;
+      color: white;
+      background: $element-base-color;
+      border-radius: 5px 5px;
+      display: none;
+    }
+
+    .app-form-payer-account-modal-responsible-fees-td__apply-button:hover {
+      cursor: pointer;
+    }
+
+    .app-form-payer-account-modal-responsible-fees-td__apply-button--show {
+      display: inline-block;
+    }
+
+    .payer-account-fees-table__table-td {
+      padding: 10px 0 17px;
+    }
+
+    .payer-account-fees-table__table-tbody-total {
+      padding: 0 0 0 35px;
+      font: 12px/15px 'NunitoSans-Bold';
+      color: $gray-color;
+    }
+
+    .payer-account-fees-table__table-tbody-price-total {
+      font: 14px/20px 'NunitoSans-Bold';
+      color: #3CA476;
+    }
+  }
+}
+

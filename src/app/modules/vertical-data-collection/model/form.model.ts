@@ -18,6 +18,14 @@ export interface Form {
   personId?: number,
   template_sql_link?: object,
   formDates?: object,
+  language?: string, //Need FIXME: (type for languages)
+  periodCheckboxGroup?: {
+    primary1: boolean,
+    primary2: boolean,
+    middle: boolean,
+    height: boolean
+  },
+  formPeriods?: object,
   sidebar?: Field[],
   step?: number;
   publish_settings?: {

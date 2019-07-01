@@ -4,6 +4,8 @@
   .ng-select::ng-deep {
 
     .ng-select-container {
+      border: 1px solid #b6b6b6;
+      border-radius: 3px;
 
       .ng-value-container {
         overflow: visible;
@@ -71,6 +73,22 @@
     }
   }
 
+  .app-select-field__no-label.ng-select::ng-deep {
+    .ng-select-container {
+
+      .ng-value-container {
+
+        .ng-value {
+
+          .ng-value-label {
+            position: relative;
+            bottom: 0;
+          }
+        }
+      }
+    }
+  }
+
   &.app-select-field-has-error {
     .ng-select::ng-deep {
 
@@ -106,5 +124,15 @@
     right: 11px;
     top: 11px;
     padding: 4px 0;
+  }
+}
+
+.app-select-field-table {
+  .ng-select::ng-deep {
+    .ng-select-container {
+      min-height: 29px;
+      max-height: 29px;
+      height: 29px;
+    }
   }
 }

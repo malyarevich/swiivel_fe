@@ -23,8 +23,8 @@
       <p class="align-self-end mb-2">{{family?.family_info?.preferred_contact}}</p>
     </div>
     <div class="d-flex justify-content-between">
-      <p class="align-self-start app-text-second mb-2">Contact number:</p>
-      <p class="align-self-end mb-2">{{family?.family_info?.preferred_contact_method}}</p>
+      <p class="align-self-start app-text-second mb-2">Contact method:</p>
+      <p class="align-self-end mb-2">{{family?.family_info?.preferred_contact_method | titlecase}}</p>
     </div>
     <div class="d-flex justify-content-between">
       <p class="align-self-start app-text-second mb-2">Home Phone Number:</p>
@@ -38,7 +38,7 @@
     <p class="font-weight-bold mb-2">ADDITIONAL INFORMATION</p>
     <div class="d-flex justify-content-between">
       <p class="align-self-start app-text-second mb-2">Language Spoken at Home:</p>
-      <p class="align-self-end mb-2">{{family?.family_info?.language_spoken_at_home}}</p>
+      <p class="align-self-end mb-2">{{family?.family_info?.language_spoken_at_home | titlecase}}</p>
     </div>
     <div class="d-flex justify-content-between">
       <p class="align-self-start app-text-second mb-2">Family Rabbi:</p>

@@ -27,6 +27,11 @@ export class PayerAccountsComponent implements OnInit {
 
   onCloseCreatePayerAccount() {
     this.showModal = false;
+
+    this.payersService.getAllPayers()
+      .subscribe((res) => {
+        this.payers = res.data.payers;
+      });
   }
 
 }

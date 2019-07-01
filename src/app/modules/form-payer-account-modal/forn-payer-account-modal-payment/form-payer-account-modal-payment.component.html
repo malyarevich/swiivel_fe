@@ -1,0 +1,143 @@
+<div class="app-form-payer-account-modal-payment">
+  <div class="app-form-payer-account-modal-payment__header">
+    <div class="app-form-payer-account-modal-payment__header--title">
+      Payment Method
+    </div>
+    <div class="app-form-payer-account-modal-payment__header--button">
+      <a class="btn app-btn-outline-primary form-payer-account-cancel" (click)="onChangeMethodSelect()">Add Split</a>
+    </div>
+  </div>
+  <div
+    *ngIf="isSelectVisible"
+    class="app-form-payer-account-modal-payment__container"
+  >
+    <app-select-field
+      [value]="paymentMethod"
+      labelTitle="Payment Option"
+      [items]="paymentMethods"
+      (onChangeField)="onSelectMethod($event)"
+    ></app-select-field>
+    <div>
+      <i
+        (click)="onChangeMethodSelect()"
+        class="fas fa-trash app-form-payer-account-modal-payment__trash"
+      ></i>
+    </div>
+  </div>
+  <div [formGroup]="parentForm">
+    <div formArrayName="payerPaymentMethods"
+         *ngFor="let method of paymentMethodsArray.controls; let i = index;">
+      <div
+        *ngIf="method.controls.method_type.value === 'Credit Card'"
+        class="app-form-payer-account-modal-payment__container"
+      >
+        <div class="app-form-payer-account-modal-payment__groups">
+          <div class="app-form-payer-account-modal-payment__group--column">
+            <div class="app-form-payer-account-modal-payment__field">
+              <app-select-field
+                [value]="'Credit Card'"
+                [disabled]="true"
+                [items]="['Credit Card']"
+                labelTitle="Payment Option"
+              ></app-select-field>
+            </div>
+            <div class="app-form-payer-account-modal-payment__field">
+              <app-input-field
+                [formControl]="method.controls.method_name"
+                [type]="text"
+                label="Method name"
+              ></app-input-field>
+            </div>
+            <app-input-field
+              [formControl]="method.controls.name"
+              label="Card Holder"
+            ></app-input-field>
+          </div>
+          <div class="app-form-payer-account-modal-payment__group--column">
+            <div class="app-form-payer-account-modal-payment__field">
+              <app-input-field
+                [formControl]="method.controls.number"
+                [maxLength]="19"
+                [type]="number"
+                label="Card Number"
+              ></app-input-field>
+            </div>
+            <div class="app-form-payer-account-modal-payment__groups">
+              <div class="app-form-payer-account-modal-payment__field--group-item">
+                <app-input-field
+                  [formControl]="method.controls.expiry_year"
+                  [maxLength]="4"
+                  [type]="number"
+                  label="Expiration Year"
+                ></app-input-field>
+              </div>
+              <div class="app-form-payer-account-modal-payment__field--group-item">
+                <app-input-field
+                  [formControl]="method.controls.expiry_month"
+                  [maxLength]="2"
+                  [type]="number"
+                  label="Month"
+                ></app-input-field>
+              </div>
+              <div class="app-form-payer-account-modal-payment__field--group-item">
+                <app-input-field
+                  [formControl]="method.controls.cvv"
+                  [maxLength]="3"
+                  [type]="number"
+                  label="CVV"></app-input-field>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <i
+            (click)="onDeleteMethod(i)"
+            class="fas fa-trash app-form-payer-account-modal-payment__trash"
+          ></i>
+        </div>
+      </div>
+      <div
+        *ngIf="method.controls.method_type.value === 'Ach'"
+        class="app-form-payer-account-modal-payment__container"
+      >
+        <div class="app-form-payer-account-modal-payment__field">
+          <app-input-field
+            [formControl]="method.controls.method_name"
+            [type]="text"
+            label="Method name"
+          ></app-input-field>
+        </div>
+        <div class="app-form-payer-account-modal-payment__field">
+          <app-select-field
+            [value]="'Checking'"
+            [formControl]="method.controls.account_type"
+            [items]="['Checking', 'Savings']"
+          >
+          </app-select-field>
+        </div>
+        <div class="app-form-payer-account-modal-payment__groups">
+          <div class="app-form-payer-account-modal-payment__group--column">
+            <app-input-field
+              [formControl]="method.controls.routing"
+              [type]="text"
+              label="Routing"
+            ></app-input-field>
+          </div>
+          <div class="app-form-payer-account-modal-payment__group--column">
+            <app-input-field
+              [formControl]="method.controls.account"
+              [type]="text"
+              label="Account"
+            ></app-input-field>
+          </div>
+        </div>
+        <div>
+          <i
+            (click)="onDeleteMethod(i)"
+            class="fas fa-trash app-form-payer-account-modal-payment__trash"
+          ></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
