@@ -1,0 +1,9 @@
+<div class="d-flex justify-content-start align-items-center mr-2">
+  <app-person-avatar-change
+    [avatar]="familyPerson.person.avatar ? avatarUrl + familyPerson.person.avatar : ''"
+    [editable]="false"
+    [size]="'1em'">
+  </app-person-avatar-change>
+  <p class="mb-1 ml-1" style="white-space: nowrap">{{familyPerson.person.first_name}}
+    {{familyPerson.person.last_name}}</p>
+</div>

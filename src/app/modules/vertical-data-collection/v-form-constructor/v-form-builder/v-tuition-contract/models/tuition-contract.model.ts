@@ -13,6 +13,7 @@ export interface TuitionContract {
 export interface TuitionContractFee {
   id: number;
   name: string;
+  amount: string;
   description: string;
   isActive: boolean;
   isActiveDiscount: boolean;

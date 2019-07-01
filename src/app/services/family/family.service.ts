@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from "rxjs";
 import {Family} from "../../models/family/family.model";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {map} from "rxjs/operators";
 import {LoaderService} from "../loader/loader.service";
 
@@ -47,9 +47,19 @@ export class FamilyService {
     };
   }
 
-  getAll() {
+  getAll(params?) {
+    let options = {};
+    if (params) {
+       options = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+        }),
+        params: new HttpParams().set('params', JSON.stringify(params)),
+      };
+    }
+
     this.loaderService.startLoader();
-    this.getAllRequest().subscribe((res: GetResponseData) => {
+    this.getAllRequest(options).subscribe((res: GetResponseData) => {
       if(res.success) {
         this.loaderService.stopLoader();
         this.dataStore.familyList = res.data;
@@ -119,9 +129,9 @@ export class FamilyService {
     this._family.next(Object.assign({}, this.dataStore).family);
   }
 
-  getAllRequest(): Observable<any> {
-    return this.http.get(`/families`).pipe(
-      map((res: GetResponseData) => res)
+  getAllRequest(options?): Observable<any> {
+    return this.http.get(`/families`, options).pipe(
+      map((res) => res)
     );
   }
 

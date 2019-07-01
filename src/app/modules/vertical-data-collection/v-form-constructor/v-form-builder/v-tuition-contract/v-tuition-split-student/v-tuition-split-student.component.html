@@ -21,43 +21,51 @@
   <ng-container *ngFor="let item of tuitionContract.fees">
     <tr *ngIf="item.isActive">
       <td class="font-weight-bold">{{item.name}}</td>
-      <td>$200<br>
+      <td>${{item.amount}}<br>
         <ng-container *ngIf="item.isActiveDiscount">
-          <span class="app-tuition-discount">$90 discount</span>
+          <span class="app-tuition-discount">$?? discount</span>
         </ng-container>
       </td>
-      <td>$200</td>
-      <td>$200</td>
-      <td>$600</td>
+      <td>${{item.amount}}<br>
+        <ng-container *ngIf="item.isActiveDiscount">
+          <span class="app-tuition-discount">$?? discount</span>
+        </ng-container>
+      </td>
+      <td>${{item.amount}}<br>
+        <ng-container *ngIf="item.isActiveDiscount">
+          <span class="app-tuition-discount">$?? discount</span>
+        </ng-container>
+      </td>
+      <td>${{item.amount * 3}}</td>
     </tr>
   </ng-container>
   <tr class="app-tuition-table-total-2 font-weight-bold">
     <td>TOTAL PER STUDENTS</td>
-    <td>$1000</td>
-    <td>$1000</td>
-    <td>$1000</td>
-    <td>$3500</td>
+    <td>${{totalFees}}</td>
+    <td>${{totalFees}}</td>
+    <td>${{totalFees}}</td>
+    <td>${{totalFees *3}}</td>
   </tr>
   <tr class="app-tuition-table-total font-weight-bold">
     <td>BUILDING FEE</td>
     <td></td>
     <td></td>
     <td></td>
-    <td>$1000</td>
+    <td>$??</td>
   </tr>
   <tr class="app-tuition-table-total font-weight-bold">
     <td>SECURITY FEE</td>
     <td></td>
     <td></td>
     <td></td>
-    <td>$4500</td>
+    <td>$??</td>
   </tr>
   <tr class="app-tuition-table-total font-weight-bold">
     <td>Tuition and Family Fees Total</td>
     <td></td>
     <td></td>
     <td></td>
-    <td>$4500</td>
+    <td>${{totalFees *3}}</td>
   </tr>
   </tbody>
 </table>

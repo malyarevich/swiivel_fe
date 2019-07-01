@@ -9,7 +9,13 @@ import {TuitionContract} from "../models/tuition-contract.model";
 export class VTuitionSplitFeeComponent implements OnInit {
   @Input() tuitionContract: TuitionContract;
 
-  tempFees = [1600, 1080, 1080, 9840, 3200, 3200];
+  get totalFees() {
+    let total = 0;
+    this.tuitionContract.fees.map((fee) => {
+      total += fee.isActive ? +fee.amount : 0;
+    });
+    return total;
+  }
 
   constructor() { }
 
