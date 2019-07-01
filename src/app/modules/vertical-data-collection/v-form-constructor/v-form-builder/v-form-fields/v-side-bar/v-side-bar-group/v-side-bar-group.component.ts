@@ -19,10 +19,13 @@ export class VSideBarGroupComponent implements OnInit, OnDestroy {
   @Input() sideBar: Field;
   @Input() customFields: Field[];
   @Input() existingFields: Field[];
+  @Input() nestedLevel: number;
 
   constructor(private sideBarService: SideBarService) { }
 
   ngOnInit() {
+    console.log(this.group.exist);
+    console.log(this.group, this.nestedLevel, 'side-bar');
   }
 
 

@@ -25,6 +25,7 @@
     *ngIf="field.type==113"
     [group]="field"
     [form]="form"
+    [nestedLevel]="nestedLevel+1"
     [section]="section"
     [idSectionForDragDrop]="idSectionForDragDrop"
 
@@ -35,6 +36,7 @@
     *ngIf="field.type!=113"
     [field]="field"
     [form]="form"
+    [nestedLevel]="nestedLevel+1"
     [section]="section"
     [style]="field.mapped==''"
   >

@@ -15,7 +15,7 @@ export class VSideBarFieldComponent implements OnInit, OnDestroy, OnChanges {
   @Input() field: Field;
   @Input() section: Field;
   @Input() form: Form;
-
+  @Input() nestedLevel: number;
   @Input() style: boolean;
   @Output() onChangeFieldBeing = new EventEmitter<any>();
   @Output() deleteCustom = new EventEmitter<any>();
