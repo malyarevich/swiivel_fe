@@ -112,7 +112,9 @@
   }
 
   &__status {
+    cursor: pointer;
   }
+  
   &__status_icon {
     color: $success-color;
     fill: $success-color;
