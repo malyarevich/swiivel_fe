@@ -9,20 +9,24 @@
   <ng-container *ngFor="let item of tuitionContract.fees; let i = index">
     <tr *ngIf="item.isActive">
       <td class="font-weight-bold">{{item.name}}</td>
-      <td>${{tempFees[i] || tempFees[0]}}</td>
+      <td>${{item.amount}}<br>
+        <ng-container *ngIf="item.isActiveDiscount">
+          <span class="app-tuition-discount">$?? discount</span>
+        </ng-container>
+      </td>
     </tr>
   </ng-container>
   <tr class="app-tuition-table-total font-weight-bold">
     <td>BUILDING FEE</td>
-    <td>$1000</td>
+    <td>$??</td>
   </tr>
   <tr class="app-tuition-table-total font-weight-bold">
     <td>SECURITY FEE</td>
-    <td>$520</td>
+    <td>$??</td>
   </tr>
   <tr class="app-tuition-table-total font-weight-bold app-text-large">
     <td>Tuition and Family Fees Total</td>
-    <td>$21160</td>
+    <td>${{totalFees}}</td>
   </tr>
   </tbody>
 </table>

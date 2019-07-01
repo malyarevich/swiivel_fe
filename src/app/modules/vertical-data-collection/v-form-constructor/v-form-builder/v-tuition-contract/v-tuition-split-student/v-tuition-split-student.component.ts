@@ -9,6 +9,14 @@ import {TuitionContract} from "../models/tuition-contract.model";
 export class VTuitionSplitStudentComponent implements OnInit {
   @Input() tuitionContract: TuitionContract;
 
+  get totalFees() {
+    let total = 0;
+    this.tuitionContract.fees.map((fee) => {
+      total += fee.isActive ? +fee.amount : 0;
+    });
+    return total;
+  }
+
   constructor() { }
 
   ngOnInit() {

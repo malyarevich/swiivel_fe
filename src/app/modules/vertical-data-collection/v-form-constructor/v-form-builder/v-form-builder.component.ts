@@ -65,6 +65,7 @@ import { Observable, Subscription } from "rxjs";
 import { SaveFormService } from "../../services/save-form.service";
 import { FormBuilderIsSavedService } from "../../services/form-builder-is-saved.service";
 import { ConstructorIsSavingService } from "../../services/constructor-is-saving.service";
+import {Fee} from "../../../../models/fee.model";
 
 @Component({
   selector: "app-v-form-table",
@@ -84,7 +85,7 @@ export class VFormBuilderComponent implements OnInit, OnDestroy {
   showWarningMessage: string = "Please correct existing errors";
   fields: Field[] = [];
 
-  feeTemplates: FeeTemplate[] = [];
+  masterFees: Fee[] = [];
 
   formName: string = "";
   attachments;
@@ -244,7 +245,7 @@ export class VFormBuilderComponent implements OnInit, OnDestroy {
       this.formId = url != "v-form-constructor" ? url : "";
     });
     this.draftId = this.formId + "_form-builder";
-    this.loadFeeTemplates();
+    this.loadMasterFees();
     this.loadBasicFields();
     this.loadSideBar();
     this.loadSideBarNew();
@@ -342,7 +343,7 @@ export class VFormBuilderComponent implements OnInit, OnDestroy {
             this.initFormFieldsToSideBar(this.sideBarFields, this.fields);
           }
 
-          if (!isEmpty(this.feeTemplates)) {
+          if (!isEmpty(this.masterFees)) {
             this.initFeeToTuitionContract();
           }
         }
@@ -609,11 +610,12 @@ export class VFormBuilderComponent implements OnInit, OnDestroy {
   // }
 
   // Tuition Contract
-  loadFeeTemplates() {
+
+  loadMasterFees() {
     this.financeService
-      .getAllFeeTemplates()
-      .subscribe((res: FeeTemplatesData) => {
-        this.feeTemplates = res.fee_templates;
+      .getMasterFees()
+      .subscribe((res) => {
+        this.masterFees = res.fees;
       });
   }
 
@@ -623,18 +625,19 @@ export class VFormBuilderComponent implements OnInit, OnDestroy {
   }
 
   addFeeToTuitionContract() {
-    this.feeTemplates.map((feeTemplate: FeeTemplate) => {
-      let { id, name, description } = feeTemplate;
-      let template = {
+    this.masterFees.map((fee: Fee) => {
+      let { id, name, amount, description } = fee;
+      let tuitionFee = {
         id,
         name,
+        amount,
         description,
         isActive: false,
         isActiveDiscount: false
       };
 
-      if (!this.existFeeToTuitionContract(feeTemplate.id))
-        this.tuitionContract.fees.push(template);
+      if (!this.existFeeToTuitionContract(tuitionFee.id))
+        this.tuitionContract.fees.push(tuitionFee);
     });
   }
 
