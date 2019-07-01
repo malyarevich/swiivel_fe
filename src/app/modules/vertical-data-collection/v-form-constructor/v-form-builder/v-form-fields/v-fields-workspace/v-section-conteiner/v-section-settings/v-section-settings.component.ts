@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {Field} from '../../../../../../model/field.model';
 
 @Component({
   selector: 'app-v-section-settings',
@@ -7,7 +8,8 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
   styleUrls: ['./v-section-settings.component.scss']
 })
 export class VSectionSettingsComponent implements OnInit {
-
+  @Input() customFields: Field[];
+ customFieldsName: string[] = [];
 
   sectionSettings: FormGroup = new FormGroup({
     settings: new FormGroup({
@@ -32,25 +34,20 @@ export class VSectionSettingsComponent implements OnInit {
 
   });
 
-//   export interface SectionOption {
-//   size? : number,
-//   settings: SectionOptionSettings,
-//   conditionLogic: any
-// }
-//
-// export interface SectionOptionSettings {
-//   groupPresent?: string,
-//   isSupportText?: boolean,
-//   isSupportTextData?: string
-//   isDirectlyDisplayed?: boolean,
-//   isMakeExpandButtonVisible?: boolean,
-// }
-
+conditLogic = ['Hide', 'Visible'];
+fieldLabelType = 'Field type ';
 
 settingsLabel = 'Group Presets';
   constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
+
+    // this.customFieldsName = this.customFields.map( f => {
+    // if(f.type!=113 && f.type!=112 && f.type!=114){
+    //   console.log(f.name);
+    //   return  f.name;
+    // }
+    // });
   }
 
   onSubmit(){
