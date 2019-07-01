@@ -10,6 +10,8 @@
         "
         *ngIf="isShowMenuItem(item.name)"
         (click)="setActiveMenuItem(item.name)"
+        (mouseenter)="setHovered(item.name)"
+        (mouseleave)="unsetHovered(item.name)"
       >
         <div class="online_form_item">
           <div class="online_form_item__start">
@@ -18,7 +20,9 @@
                 [src]="
                   pathIconsFolder +
                   item.icon +
-                  (activeMenuItem === item.name ? '-active' : '') +
+                  (activeMenuItem === item.name || isHovered(item.name)
+                    ? '-active'
+                    : '') +
                   '.svg'
                 "
               />
@@ -35,11 +39,12 @@
             <div class="online_form_item__text_area">
               <p
                 class="online_form_item__title"
-                [ngClass]="
+                [ngClass]="[
                   activeMenuItem === item.name
-                    ? 'app-text-primary'
-                    : 'app-text-second'
-                "
+                    ? 'online_form_item__title--active'
+                    : '',
+                  isHovered(item.name) ? 'online_form_item__title--hover' : ''
+                ]"
               >
                 {{ item.title }}
               </p>

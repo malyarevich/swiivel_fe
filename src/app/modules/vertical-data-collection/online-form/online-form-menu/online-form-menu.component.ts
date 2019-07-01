@@ -16,6 +16,8 @@ export class OnlineFormMenuComponent implements OnInit {
   @Input() form: Form;
   @Output() activeMenuItemEmitter = new EventEmitter<string>();
 
+  hoveredItems = [];
+
   menuItems: IMenuItems[] = menuItems;
   mainMenuNames: IMainMenuNames = mainMenuNames;
 
@@ -54,5 +56,17 @@ export class OnlineFormMenuComponent implements OnInit {
       return this.form[itemMenuName].isActive;
     }
     return false;
+  }
+
+  setHovered(itemName) {
+    this.hoveredItems[itemName] = true;
+  }
+
+  unsetHovered(itemName) {
+    this.hoveredItems[itemName] = false;
+  }
+
+  isHovered(itemName) {
+    return this.hoveredItems[itemName] === true;
   }
 }

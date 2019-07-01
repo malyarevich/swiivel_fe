@@ -16,7 +16,7 @@
 .app-of-menu-active {
   background-color: $white;
   border-left: 3px solid $element-additional-color;
-  box-shadow: 0 1px 10px 0 rgba(0,0,0,0.1);
+  box-shadow: 0 1px 10px 0 rgba(0, 0, 0, 0.1);
 }
 
 .list-group-item {
@@ -24,7 +24,6 @@
 }
 
 .online_form_menu {
-
   &__group {
     align-items: stretch;
     display: flex;
@@ -37,12 +36,13 @@
     background-color: transparent;
     cursor: pointer;
     list-style-type: none;
+    transition: all 0.5s ease-in-out;
 
     &--active {
       background-color: $white;
       border-left: 3px solid $element-additional-color;
       border-radius: 0.5rem;
-      box-shadow: 0 1px 10px 0 rgba(0,0,0,0.1);
+      box-shadow: 0 1px 10px 0 rgba(0, 0, 0, 0.1);
     }
   }
 }
@@ -83,7 +83,7 @@
     justify-content: center;
     flex: 1 10 3em;
   }
-  
+
   &__text_area {
     align-items: flex-start;
     display: flex;
@@ -91,18 +91,27 @@
     flex-direction: column;
     justify-content: center;
   }
-  
+
   &__title {
-    color: $element-additional-color;
-    font-family: NunitoSans-ExtraBold;
+    color: $dark-gray-blue-color;
+    font-family: NunitoSans-Regular;
     font-size: 1rem;
     line-height: 1.5rem;
     text-transform: uppercase;
     margin: 0;
+    transition: all 0.2s ease-in-out;
+
+    &--active {
+      color: $element-additional-color;
+      font-family: NunitoSans-ExtraBold;
+    }
+
+    &--hover {
+      color: $element-additional-color;
+    }
   }
 
   &__status {
-    
   }
   &__status_icon {
     color: $success-color;
@@ -112,4 +121,3 @@
     width: 1.5rem;
   }
 }
-
