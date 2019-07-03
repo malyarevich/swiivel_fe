@@ -54,7 +54,7 @@ export class DatePickerFieldComponent implements OnInit, ControlValueAccessor {
   }
 
   private onChange = (_: any) => {};
-  private onTouched = () => {};
+  onTouched = () => {};
 
 
   onInput() {
