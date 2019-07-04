@@ -11,7 +11,8 @@ import {SideBarService} from "../side-bar.service";
 })
 export class VSideBarFieldComponent implements OnInit, OnDestroy, OnChanges {
 
-
+  @Input() group: Field;
+  @Input() rootGroup: Field;
   @Input() field: Field;
   @Input() section: Field;
   @Input() form: Form;
@@ -22,10 +23,10 @@ export class VSideBarFieldComponent implements OnInit, OnDestroy, OnChanges {
   constructor(private sideBarService: SideBarService,private cd: ChangeDetectorRef  ) { }
 
   ngOnInit() {
-
+    // console.log(this.form.fields);
   }
 
-  onChangeGroupBeingField(field, group) {
+  onChangeGroupBeingField(field:Field,  section: Field, group?:Field, rootGroup?: Field) {
     // console.log(field, group);
     let  groupNew = cloneDeep(group);
     let arr = this.form.fields.filter(f => f.name == group.name);
@@ -61,16 +62,33 @@ export class VSideBarFieldComponent implements OnInit, OnDestroy, OnChanges {
   onBeingChange(event: boolean):void{
 
     event?
-      this.onChangeGroupBeingField(this.field, this.section)
+      this.onChangeGroupBeingField(this.field, this.section, this.group, this.rootGroup)
       :
       this.sideBarService.onFieldDelete(this.field, this.form.fields);
     this.field.exist = event;
   }
 
   onFieldToggle(event: boolean):void{
-    event
-      ?this.onChangeGroupBeingField(this.field, this.section)
-      :this.sideBarService.onFieldDelete(this.field, this.form.fields);
+    if(event){
+      // if(this.rootGroup&&this.group&&this.nestedLevel>1){
+      //   // this.rootGroup.fields=[];
+      //   this.sideBarService.onChangeGroupBeing(this.field, this.group, this.form, this.rootGroup);
+      //
+      // }else if(this.group){
+      //   this.sideBarService.onChangeGroupBeing(
+      //     entity,
+      //     destination,
+      //     this.form
+      //   )
+      // }
+      //
+      this.sideBarService.onChangeGroupBeing(this.field, this.section, this.form, this.group,this.rootGroup);
+      this.section.exist = true;
+      // this.onChangeGroupBeingField(this.field, this.section, this.group, this.rootGroup);
+      // this.onChangeGroupBeingField(this.field, this.section)
+    }else{
+      this.sideBarService.onFieldDelete(this.field, this.form.fields);
+    }
     this.field.exist = event;
   }
 

@@ -16,49 +16,90 @@ export class SideBarService {
   }
 
 
-//TODO: this is not good code,  to put it mildly. should rewrite! I am sorry about this
-  onChangeGroupBeing(group: Field,  section: Field,  form?: Form, rootGroup?: Field) {
+//FiXME:This is a very bad code that was written very quickly. I hope the followers will fix it
+  onChangeGroupBeing(field:Field,  section: Field, form?:Form, group?:Field, rootGroup?: Field) {
+  // onChangeGroupBeing(group: Field,  section: Field,  form?: Form, rootGroup?: Field) {
     console.log(arguments);
     // console.log('formPeriods' in section);
     // console.log(section._id, form._id);
-    if(section._id==form._id) this.pureAddAllFieldsToList(group, section.fields);
+    if(section._id==form._id) this.pureAddAllFieldsToList(field, section.fields);
     // if(section._id==form._id) this.pureAddAllFieldsToList(group, section.fields);
     let  sectionNew = cloneDeep(section);
-    let  groupNew = cloneDeep(group);
+    let  newField = cloneDeep(field);
+    newField.fields = [];
+    let  newGroup ;
     let newRootGroup;
     let arr = form.fields.filter(f => f.name == section.name);
-    if(rootGroup&&isEmpty(arr)){
-      newRootGroup = cloneDeep(rootGroup);
-      sectionNew.fields = [];
-      newRootGroup.fields = [];
-      groupNew.fields = [];
-      group.fields.forEach(field=>this.addExistingField(field, groupNew.fields));
-      this.addExistingField(groupNew, sectionNew.fields);
-      this.addExistingField(sectionNew, form.fields);
-      if(hasOwnProperty(section, 'type')){
-        section.exist = true;
-      }
-    }
-    if (isEmpty(arr)&&!rootGroup) {
-      sectionNew.fields = [];
+  if (field.fields)field.fields.forEach(f=>this.addExistingField(f, newField.fields));
 
-      groupNew.fields = [];
-      group.fields.forEach(field=>this.addExistingField(field, groupNew.fields));
-      this.addExistingField(groupNew, sectionNew.fields);
-      this.addExistingField(sectionNew, form.fields);
-      if(hasOwnProperty(section, 'type')){
-         section.exist = true;
+    if (isEmpty(arr)) {
+      console.log('if (isEmpty(arr)) {');
+
+      if(rootGroup&&group){
+        console.log('if(rootGroup){');
+        newGroup = cloneDeep(group);
+        newRootGroup = cloneDeep(rootGroup);
+        sectionNew.fields = [];
+        newRootGroup.fields = [];
+        newGroup.fields = [];
+        this.addExistingField(newField, newGroup.fields);
+        this.addExistingField(newGroup, newRootGroup.fields);
+        this.addExistingField(newRootGroup, sectionNew.fields);
+        this.addExistingField(sectionNew, form.fields);
+        // if(hasOwnProperty(section, 'type')){
+          section.exist = group.exist=rootGroup.exist = true;
+        // }
+      }else if (group&&!rootGroup){
+        console.log('else(rootGroup){');
+        newGroup = cloneDeep(group);
+        sectionNew.fields = [];
+
+        newGroup.fields = [];
+      // group.fields.forEach(field=>this.addExistingField(field, newGroup.fields));
+      //   field.fields.forEach(f=>this.addExistingField(f, newField.fields));
+        this.addExistingField(newField, newGroup.fields);
+        this.addExistingField(newGroup, sectionNew.fields);
+        this.addExistingField(sectionNew, form.fields);
+      // if(hasOwnProperty(section, 'type')){
+      //    section.exist = rootGroup.exist = true;
+
+      // }
+        section.exist = group.exist = true;
+
       }
     } else {
       console.log('else');
       console.log(arr);
-      form.fields = form.fields.map(f => {
+      if(rootGroup&&group){
+
+      }
+     form.fields.forEach(f => {
         if (f.name == sectionNew.name) {
-          groupNew.fields = [];
-          group.fields.forEach(field=>this.addExistingField(field, groupNew.fields));
-          this.addExistingField(groupNew, f.fields);
+          if(rootGroup&&group){
+            f.fields.forEach(f1=>{
+              if(f1.name==rootGroup.name){
+                f1.fields.forEach(f2=>{
+                  console.log('rootGroup&&group', newField);
+                  if(f2.name==group.name)  this.addExistingField(newField, f2.fields)
+                })
+              }
+            })
+          }else if(!rootGroup&&group){
+            f.fields.forEach(f1=>{
+              if(f1.name==group.name){
+                console.log('&group', newField, f, f1, group);
+                  this.addExistingField(newField, f1.fields);
+              }
+            })
+          }else{
+            console.log('rootGroup&&group', newField, 'else add one');
+            this.addExistingField(newGroup, f.fields)
+          }
+          // newGroup.fields = [];
+          // group.fields.forEach(field=>this.addExistingField(field, newGroup.fields));
+          // this.addExistingField(newGroup, f.fields);
         }
-        return f;
+
       });
     }
 
@@ -109,6 +150,7 @@ export class SideBarService {
   // }
 
   addExistingField(field: Field, fields: Field[]) {
+    console.log(arguments);
     let newField = cloneDeep(field);
     newField._id = uuid();
     newField.isValid = true;

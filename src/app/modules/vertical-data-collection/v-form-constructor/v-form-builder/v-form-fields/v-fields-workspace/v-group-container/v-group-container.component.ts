@@ -27,7 +27,7 @@ export class VGroupContainerComponent implements OnInit {
   constructor(private sideBarService: SideBarService,private cd: ChangeDetectorRef) { }
   showNested: boolean = true;
   ngOnInit() {
-    console.log(this.inputGroup.name, this.nestedLevel);
+    // console.log(this.inputGroup.name, this.nestedLevel);
   }
 
 
