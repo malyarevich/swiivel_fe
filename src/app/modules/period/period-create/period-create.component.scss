@@ -1,0 +1,26 @@
+.app-period-create {
+
+  padding: 30px;
+
+  .app-period-create-header {
+    color: #151515;
+    font: 800 17px/20px 'NunitoSans-Bold';
+    letter-spacing: 0.2px;
+    text-transform: uppercase;
+  }
+
+  .app-period-create-container {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .app-period-create-left-panel {
+    width: 320px;
+    margin: 0 20px 0 0;
+  }
+
+  .app-period-create-right-panel {
+    flex-grow: 1;
+  }
+
+}

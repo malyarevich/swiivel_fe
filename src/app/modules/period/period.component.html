@@ -1,13 +1,12 @@
-<app-period-page-header [titleHeader]="'CREATE PERIOD'"></app-period-page-header>
+<app-period-page-header
+  [titleHeader]="'Periods'"
+  [routerLink]="'/period/create'"
+  [isBackArrowEnable] = "false"
+  [buttonText]="'Add Period'"
+  (onButtonClick)="onAddPeriod()"
+></app-period-page-header>
 
-<div class="app-period">
-  <h1 class="app-period-header">Create Period</h1>
-  <div class="app-period-container">
-    <div class="app-period-left-panel">
-      <app-period-duration-setting [period]="period"></app-period-duration-setting>
-    </div>
-    <div class="app-period-right-panel">
-      <app-period-general-setting></app-period-general-setting>
-    </div>
-  </div>
-</div>
+
+<h1 class="app-period-header">Periods</h1>
+
+<button routerLink="/period/create">Create Period</button>

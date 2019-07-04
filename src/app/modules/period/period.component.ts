@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Period } from '../../models/period/period.model';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-period',
@@ -8,16 +9,14 @@ import { Period } from '../../models/period/period.model';
 })
 
 export class PeriodComponent implements OnInit {
-  public period: Period = {
-    name: 'test',
-    date_from: new Date(),
-    date_to:  new Date()
-  };
 
-  constructor() {
+  constructor(private router: Router) {
   }
 
   ngOnInit() {
   }
 
+  onAddPeriod(): void {
+    this.router.navigateByUrl('/period/create');
+  }
 }

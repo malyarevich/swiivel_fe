@@ -2,5 +2,17 @@ export interface Period {
   name: string;
   date_from: Date;
   date_to: Date;
-  split_set?: Array<{ name: string, splits: Array<{ name: string, date_from: Date; date_to: Date, days: number }> }>;
+  duration?: number;
+  split_set?: PeriodSplitSet[];
+}
+
+export interface PeriodSplitSet {
+  name: string;
+  splits?: PeriodSplit[];
+}
+
+export interface PeriodSplit {
+  name: string;
+  date_from: Date;
+  date_to: Date;
 }
