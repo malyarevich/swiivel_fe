@@ -29,78 +29,92 @@ export class SideBarService {
     newField.fields = [];
     let  newGroup ;
     let newRootGroup;
-    let arr = form.fields.filter(f => f.name == section.name);
+    let sectionFind = form.fields.filter(f => f.name == section.name);
   if (field.fields)field.fields.forEach(f=>this.addExistingField(f, newField.fields));
 
-    if (isEmpty(arr)) {
+    if (isEmpty(sectionFind)) {
       console.log('if (isEmpty(arr)) {');
 
       if(rootGroup&&group){
         console.log('if(rootGroup){');
         newGroup = cloneDeep(group);
         newRootGroup = cloneDeep(rootGroup);
-        sectionNew.fields = [];
-        newRootGroup.fields = [];
-        newGroup.fields = [];
+        sectionNew.fields = newRootGroup.field=newGroup.fields=[];
         this.addExistingField(newField, newGroup.fields);
         this.addExistingField(newGroup, newRootGroup.fields);
         this.addExistingField(newRootGroup, sectionNew.fields);
         this.addExistingField(sectionNew, form.fields);
-        // if(hasOwnProperty(section, 'type')){
           section.exist = group.exist=rootGroup.exist = true;
-        // }
       }else if (group&&!rootGroup){
         console.log('else(rootGroup){');
         newGroup = cloneDeep(group);
-        sectionNew.fields = [];
-
-        newGroup.fields = [];
-      // group.fields.forEach(field=>this.addExistingField(field, newGroup.fields));
-      //   field.fields.forEach(f=>this.addExistingField(f, newField.fields));
+        sectionNew.fields = newGroup.fields =  [];
+        console.log(sectionNew, newGroup);
         this.addExistingField(newField, newGroup.fields);
+        console.log(newGroup);
         this.addExistingField(newGroup, sectionNew.fields);
+        console.log(sectionNew);
         this.addExistingField(sectionNew, form.fields);
-      // if(hasOwnProperty(section, 'type')){
-      //    section.exist = rootGroup.exist = true;
-
-      // }
         section.exist = group.exist = true;
-
+      }else {
+        console.log('else in finish where empty');
+        sectionNew.fields = [];
+        this.addExistingField(newField, sectionNew.fields);
+        this.addExistingField(sectionNew, form.fields);
       }
     } else {
       console.log('else');
-      console.log(arr);
-      if(rootGroup&&group){
-
-      }
-     form.fields.forEach(f => {
-        if (f.name == sectionNew.name) {
-          if(rootGroup&&group){
-            f.fields.forEach(f1=>{
-              if(f1.name==rootGroup.name){
-                f1.fields.forEach(f2=>{
-                  console.log('rootGroup&&group', newField);
-                  if(f2.name==group.name)  this.addExistingField(newField, f2.fields)
-                })
-              }
-            })
-          }else if(!rootGroup&&group){
-            f.fields.forEach(f1=>{
-              if(f1.name==group.name){
-                console.log('&group', newField, f, f1, group);
+      console.log(sectionFind);
+      if(!rootGroup&&!group){
+        console.log('if(!rootGroup&&group!){');
+        form.fields.forEach(f => {
+          if (f.name == sectionNew.name) {
+            if(rootGroup&&group){
+              f.fields.forEach(f1=>{
+                if(f1.name==rootGroup.name){
+                  f1.fields.forEach(f2=>{
+                    console.log('rootGroup&&group', newField);
+                    if(f2.name==group.name)  this.addExistingField(newField, f2.fields)
+                  })
+                }
+              })
+            }else if(!rootGroup&&group){
+              console.log('}else if(!rootGroup&&group){');
+              f.fields.forEach(f1=>{
+                if(f1.name==group.name){
+                  console.log('&group', newField, f, f1, group);
                   this.addExistingField(newField, f1.fields);
+                }
+              })
+            }else{
+              console.log('rootGroup&&group', newField, 'else add one');
+              this.addExistingField(newField, f.fields)
+            }
+            // newGroup.fields = [];
+            // group.fields.forEach(field=>this.addExistingField(field, newGroup.fields));
+            // this.addExistingField(newGroup, f.fields);
+          }
+
+        });
+      }else if(!rootGroup&&group){
+        console.log('}else if(!rootGroup&&group){');
+        let groupFind = sectionFind[0].fields.filter(f => f.name == group.name);
+        if(isEmpty(groupFind)){
+
+        }else{
+          form.fields.forEach(f => {
+            if (f.name == sectionNew.name) {
+            f.fields.forEach(f1 => {
+
+              if (f1.name == group.name) {
+                console.log('&grou!!!!!!!!!!p', newField, f, f1, group);
+                this.addExistingField(newField, f1.fields);
               }
             })
-          }else{
-            console.log('rootGroup&&group', newField, 'else add one');
-            this.addExistingField(newGroup, f.fields)
-          }
-          // newGroup.fields = [];
-          // group.fields.forEach(field=>this.addExistingField(field, newGroup.fields));
-          // this.addExistingField(newGroup, f.fields);
+          }});
         }
+      }
 
-      });
     }
 
   }
@@ -173,27 +187,15 @@ export class SideBarService {
   }
 
   changeExistingAllSection(event, fieldList: Field[]) {
-    // console.log(fieldList);
     fieldList.forEach(field => {
       if (field.type == 113) this.changeExistingAllSection(event, field.fields);
-      // console.log(field, event);
       field.exist = event;
-      // console.log(field, event);
 
     })
   }
 
   onSectionDelete(field: Field, filedList: Field | Form) {
     filedList.fields = filedList.fields.filter(sec => sec.name != field.name);
-    // if (field.type == 113 || field.type == 114){
-    //   this.onDelete(fi)
-    // }
-    // this.fields = this.findAndDelete(name, this.fields);
-    // this.fields.map(group => group.type == 113 ? group.fields = this.findAndDelete(name, group.fields) : group);
-    // this.sideBarService.changeExistingAllSection(false, this.section.fields);
-
-    // this.fieldsValidator();
-
   }
 
   onFieldDelete(field: Field, filedList: Field[]){

@@ -137,7 +137,7 @@ export class VSideBarGroupComponent implements OnInit, OnDestroy {
       )
     }
 
-
+    this.section.exist = true;
     }else{
 
       this.sideBarService.onFieldDelete(
