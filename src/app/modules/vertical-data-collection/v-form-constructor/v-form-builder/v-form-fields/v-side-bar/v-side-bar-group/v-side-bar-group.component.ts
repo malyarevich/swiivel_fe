@@ -14,6 +14,7 @@ export class VSideBarGroupComponent implements OnInit, OnDestroy {
   validNewCustomFieldName: boolean = true;
   @Input() idSectionForDragDrop: string[];
   @Input() group: Field;
+  @Input() rootGroup: Field;
   @Input() section: Field;
   @Input() form: Form;
   @Input() sideBar: Field;
@@ -24,8 +25,9 @@ export class VSideBarGroupComponent implements OnInit, OnDestroy {
   constructor(private sideBarService: SideBarService) { }
 
   ngOnInit() {
-    console.log(this.group.exist);
-    console.log(this.group, this.nestedLevel, 'side-bar');
+    // console.log(this.group.exist);
+    // console.log(this.rootGroup, 'rootGroup');
+    // console.log(this.group, this.nestedLevel, 'side-bar');
   }
 
 
@@ -120,7 +122,15 @@ export class VSideBarGroupComponent implements OnInit, OnDestroy {
 
 
   onBeingChange(event: boolean, entity: Field, destination:Field){
+    console.log('I am in group!');
+    console.log(arguments);
     if(event){
+    if(this.rootGroup&&this.nestedLevel>1){
+     // this.rootGroup.fields=[];
+       this.sideBarService.onChangeGroupBeing(entity, destination, this.form, this.rootGroup);
+
+    }
+
       this.sideBarService.onChangeGroupBeing(
         entity,
         destination,
@@ -134,7 +144,9 @@ export class VSideBarGroupComponent implements OnInit, OnDestroy {
       );
     }
     entity.exist = event;
-    entity.fields.forEach(field=>field.exist = event)
+
+    this.sideBarService.changeAllGroupAndNested(event, entity);
+
   }
 
 

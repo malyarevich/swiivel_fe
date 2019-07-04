@@ -33,11 +33,11 @@ export class VGroupContainerComponent implements OnInit {
 
   dropAdd(event){
     if(!event.value._id) {
-      //replace dragged item -> added in right way field
       this.inputGroup.fields =  this.sideBarService.replaceExistinField(this.inputGroup.fields[event.dropIndex],this.inputGroup.fields );
       this.sideBarService.fieldCheck(this.inputGroup.fields[event.dropIndex], this.sideBar[0]);
     }
   }
+
   removeField(field: Field){
     // console.log(this.sideBar[0].fields);
     this.sideBarService.onFieldUncheck(field, this.sideBar[0].fields);
@@ -53,12 +53,18 @@ export class VGroupContainerComponent implements OnInit {
 
 
   removeGroup(group: Field){
+    // console.log(group);
     this.sideBarService.onFieldDelete(group, this.form.fields);
-    this.inputGroup.fields.forEach(field=>  {
-      this.sideBarService.onFieldUncheck(field, this.sideBar[0].fields);
-      if( field.type===113) {
-        field.fields.forEach(f=>this.sideBarService.onFieldUncheck(f, this.sideBar[0].fields));
-      }
+    group.fields.forEach(field=>  {
+      this.sideBarService.onSectionUnckeck(field, this.sideBar[0].fields);
+      // if( field.type===113) {
+      //   field.fields.forEach(f=>{
+      //     // this.removeGroup(f)
+      //     this.sideBarService.onFieldUncheck(f, this.sideBar[0].fields)
+      //
+      //   })
+          // this.sideBarService.onFieldUncheck(f, this.sideBar[0].fields));
+      // }
     }  );
     this.sideBarService.onSectionUnckeck(group,this.sideBar[0].fields);
   }

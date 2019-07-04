@@ -16,25 +16,42 @@ export class SideBarService {
   }
 
 
-
-  onChangeGroupBeing(group: Field, section, form: Form) {
-     console.log(section, group, 'onChangeGroupBeing');
+//TODO: this is not good code,  to put it mildly. should rewrite! I am sorry about this
+  onChangeGroupBeing(group: Field,  section: Field,  form?: Form, rootGroup?: Field) {
+    console.log(arguments);
+    // console.log('formPeriods' in section);
+    // console.log(section._id, form._id);
+    if(section._id==form._id) this.pureAddAllFieldsToList(group, section.fields);
+    // if(section._id==form._id) this.pureAddAllFieldsToList(group, section.fields);
     let  sectionNew = cloneDeep(section);
     let  groupNew = cloneDeep(group);
+    let newRootGroup;
     let arr = form.fields.filter(f => f.name == section.name);
-    if (isEmpty(arr)) {
-      console.log(arr);
+    if(rootGroup&&isEmpty(arr)){
+      newRootGroup = cloneDeep(rootGroup);
       sectionNew.fields = [];
+      newRootGroup.fields = [];
       groupNew.fields = [];
       group.fields.forEach(field=>this.addExistingField(field, groupNew.fields));
-      // console.log(groupNew);
-      this.addExistingField(group, sectionNew.fields);
+      this.addExistingField(groupNew, sectionNew.fields);
       this.addExistingField(sectionNew, form.fields);
       if(hasOwnProperty(section, 'type')){
-  section.exist = true;
-}
+        section.exist = true;
+      }
+    }
+    if (isEmpty(arr)&&!rootGroup) {
+      sectionNew.fields = [];
+
+      groupNew.fields = [];
+      group.fields.forEach(field=>this.addExistingField(field, groupNew.fields));
+      this.addExistingField(groupNew, sectionNew.fields);
+      this.addExistingField(sectionNew, form.fields);
+      if(hasOwnProperty(section, 'type')){
+         section.exist = true;
+      }
     } else {
       console.log('else');
+      console.log(arr);
       form.fields = form.fields.map(f => {
         if (f.name == sectionNew.name) {
           groupNew.fields = [];
@@ -47,17 +64,56 @@ export class SideBarService {
 
   }
 
+  pureAddAllFieldsToList(field: Field, list: Field[]): Field[]
+  {
+    let newField: Field = cloneDeep(field);
+    newField.fields = [];
+    newField._id = uuid();
+    if(newField.type==113 || newField.type==114){
+       field.fields.forEach(f=>{
+        this.pureAddAllFieldsToList(f, newField.fields);
+      })
+    }
+    // list.push(newField);
+    this.addExistingField(newField, list);
+    console.log(newField);
+
+    return list;
+  }
+  // onChangeGroupBeing(group: Field, section, form: Form) {
+  //   let  sectionNew = cloneDeep(section);
+  //   let  groupNew = cloneDeep(group);
+  //   let arr = form.fields.filter(f => f.name == section.name);
+  //   if (isEmpty(arr)) {
+  //     sectionNew.fields = [];
+  //     groupNew.fields = [];
+  //     group.fields.forEach(field=>this.addExistingField(field, groupNew.fields));
+  //     this.addExistingField(group, sectionNew.fields);
+  //     this.addExistingField(sectionNew, form.fields);
+  //     if(hasOwnProperty(section, 'type')){
+  //        section.exist = true;
+  //     }
+  //   } else {
+  //     console.log('else');
+  //     console.log(arr);
+  //     form.fields = form.fields.map(f => {
+  //       if (f.name == sectionNew.name) {
+  //         groupNew.fields = [];
+  //         group.fields.forEach(field=>this.addExistingField(field, groupNew.fields));
+  //         this.addExistingField(groupNew, f.fields);
+  //       }
+  //       return f;
+  //     });
+  //   }
+  //
+  // }
+
   addExistingField(field: Field, fields: Field[]) {
-    console.log(field);
     let newField = cloneDeep(field);
     newField._id = uuid();
-    // this.doExistingFieldsUniq(newField);
     newField.isValid = true;
     newField.isValidName = true;
     fields.push(newField);
-     // fields.map(item => item.name==field.name&&item.prefix==field.prefix?newField:item)
-    // this.fieldsValidator();
-    // this.changeExistingAllSection(true, this.section.fields);
 
   }
 
@@ -65,14 +121,12 @@ export class SideBarService {
 
     let newField = cloneDeep(field);
     newField._id = uuid();
-    // this.doExistingFieldsUniq(newField);
+
     newField.isValid = true;
     newField.isValidName = true;
-    // fields.push(newField);
+
     return  fields.map(item => item.name==field.name&&item.prefix==field.prefix?newField:item);
-     // console.log(fields);
-    // this.fieldsValidator();
-    // this.changeExistingAllSection(true, this.section.fields);
+
 
   }
 
@@ -88,7 +142,6 @@ export class SideBarService {
   }
 
   onSectionDelete(field: Field, filedList: Field | Form) {
-  // console.log(field, filedList);
     filedList.fields = filedList.fields.filter(sec => sec.name != field.name);
     // if (field.type == 113 || field.type == 114){
     //   this.onDelete(fi)
@@ -105,7 +158,6 @@ export class SideBarService {
 
     filedList.forEach(f=>{
       if (f.type == 113 || f.type == 114) this.onFieldDelete(field, f.fields);
-      // console.log(f);
       if(f.name==field.name && f.prefix==field.prefix) filedList.splice(filedList.indexOf(f), 1)
     })
   }
@@ -120,8 +172,16 @@ export class SideBarService {
   }
 
 
+  changeAllGroupAndNested(event: boolean, field: Field){
+    field.fields.forEach(f=>{
+      if(f.type==113) this.changeAllGroupAndNested(event, f);
+      f.exist=event;
+    })
+  }
+
   onFieldUncheck(field:Field,filedList: Field[]){
     filedList.forEach(f=>{
+      // console.log(f);
       if (f.type == 113 || f.type == 114) this.onFieldUncheck(field, f.fields);
       if(f.name==field.name && f.prefix==field.prefix) f.exist = false;
     })

@@ -25,7 +25,7 @@ export class VSideBarFieldComponent implements OnInit, OnDestroy, OnChanges {
 
   }
 
-  onChangeGroupBeing(field, group) {
+  onChangeGroupBeingField(field, group) {
     // console.log(field, group);
     let  groupNew = cloneDeep(group);
     let arr = this.form.fields.filter(f => f.name == group.name);
@@ -59,21 +59,9 @@ export class VSideBarFieldComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   onBeingChange(event: boolean):void{
-    // if(event){
-    //   this.onChangeGroupBeing(
-    //     this.field,
-    //    this.section
-    //   )
-    // }else{
-    //
-    //   this.sideBarService.onFieldDelete(
-    //   this.field,
-    //   this.form.fields
-    //   );
-    // }
-    // console.log(event);
+
     event?
-      this.onChangeGroupBeing(this.field, this.section)
+      this.onChangeGroupBeingField(this.field, this.section)
       :
       this.sideBarService.onFieldDelete(this.field, this.form.fields);
     this.field.exist = event;
@@ -81,7 +69,7 @@ export class VSideBarFieldComponent implements OnInit, OnDestroy, OnChanges {
 
   onFieldToggle(event: boolean):void{
     event
-      ?this.onChangeGroupBeing(this.field, this.section)
+      ?this.onChangeGroupBeingField(this.field, this.section)
       :this.sideBarService.onFieldDelete(this.field, this.form.fields);
     this.field.exist = event;
   }
@@ -108,7 +96,6 @@ export class VSideBarFieldComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    // console.log(changes, 'changes');
   }
 }
 
