@@ -67,63 +67,63 @@ export class VPublishSettingsAutomationService {
   /** Template CRUD */
 
 
-  sendAutomationTemplate(automationTemplate: IAutomationTemplate) {
-    if (automationTemplate.id !== undefined) {
-      return this.http
-        .put(`/proxy/forms/public-settings/${automationTemplate.id}`, automationTemplate)
-        .pipe(map(response => response));
-    }
-    return this.http.post("/proxy/forms/public-settings/", automationTemplate).pipe(map(response => response));
-  }
+  // sendAutomationTemplate(automationTemplate: IAutomationTemplate) {
+  //   if (automationTemplate.id !== undefined) {
+  //     return this.http
+  //       .put(`/proxy/forms/public-settings/${automationTemplate.id}`, automationTemplate)
+  //       .pipe(map(response => response));
+  //   }
+  //   return this.http.post("/proxy/forms/public-settings/", automationTemplate).pipe(map(response => response));
+  // }
 
-  getFormsList(params?: FormSearchParams): Observable<any> {
-    const options = {
-      headers: new HttpHeaders({
-        "Content-Type": "application/json"
-      }),
-      params: new HttpParams().set("params", JSON.stringify(params))
-    };
-    return this.http.get("/proxy/forms", options).pipe(
-      map(response => {
-        return response;
-      })
-    );
-  }
+  // getFormsList(params?: FormSearchParams): Observable<any> {
+  //   const options = {
+  //     headers: new HttpHeaders({
+  //       "Content-Type": "application/json"
+  //     }),
+  //     params: new HttpParams().set("params", JSON.stringify(params))
+  //   };
+  //   return this.http.get("/proxy/forms", options).pipe(
+  //     map(response => {
+  //       return response;
+  //     })
+  //   );
+  // }
   
-  /** Logic CRUD */
+  // /** Logic CRUD */
   
-  getFormWithPermissions(formId: number | string) {
-    return this.http
-      .get(`/forms/${formId}/permissions`)
-      .pipe(map((res: ApiResponse) => res.data[0]));
-  }
+  // getFormWithPermissions(formId: number | string) {
+  //   return this.http
+  //     .get(`/forms/${formId}/permissions`)
+  //     .pipe(map((res: ApiResponse) => res.data[0]));
+  // }
 
-  deleteForm(id: string) {
-    return this.http
-      .delete(`/proxy/forms/${id}`)
-      .pipe(map(response => response));
-  }
+  // deleteForm(id: string) {
+  //   return this.http
+  //     .delete(`/proxy/forms/${id}`)
+  //     .pipe(map(response => response));
+  // }
 
-  bulkDeleteForms(ids) {
-    const options = {
-      headers: new HttpHeaders({
-        "Content-Type": "application/json"
-      }),
-      body: {
-        id: ids
-      }
-    };
-    return this.http
-      .delete(`/proxy/forms`, options)
-      .pipe(map(response => response));
-  }
+  // bulkDeleteForms(ids) {
+  //   const options = {
+  //     headers: new HttpHeaders({
+  //       "Content-Type": "application/json"
+  //     }),
+  //     body: {
+  //       id: ids
+  //     }
+  //   };
+  //   return this.http
+  //     .delete(`/proxy/forms`, options)
+  //     .pipe(map(response => response));
+  // }
 
-  changeStatus(ids, status) {
-    return this.http
-      .post(`/proxy/forms/status`, {
-        id: ids,
-        status: status
-      })
-      .pipe(map(response => response));
-  }
+  // changeStatus(ids, status) {
+  //   return this.http
+  //     .post(`/proxy/forms/status`, {
+  //       id: ids,
+  //       status: status
+  //     })
+  //     .pipe(map(response => response));
+  // }
 }
