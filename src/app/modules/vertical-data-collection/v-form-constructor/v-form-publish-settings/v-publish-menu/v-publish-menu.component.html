@@ -6,8 +6,8 @@
         (click)="setActiveItem(item.value)">
         {{indexMenu+1}}. {{item.title | uppercase}}
       </li>
-      <ng-container *ngIf="activeMenuItem === item.value">
-          <li 
+      <ng-container *ngIf="activeMenuItem === item.value && stateSub !== undefined">
+        <li 
           *ngFor="let subMenu of item.stateSub; let indexSub = index"
           class="list-group-item app-form-publish-menu-item"
         >
@@ -35,6 +35,8 @@
             </div>
           </div>
         </li>
+      </ng-container>
+      <ng-container *ngIf="activeMenuItem === item.value && addOptions !== undefined">
       </ng-container>
 
     </ng-container>

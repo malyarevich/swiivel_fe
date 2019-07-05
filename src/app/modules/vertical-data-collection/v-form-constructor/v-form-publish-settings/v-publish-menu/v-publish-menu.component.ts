@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output, Input } from "@angular/core";
 import { PublishMenuItems } from "../models/publish-menu-items";
-import { ISubMenus } from '../models/publish-settings';
+import { ISubMenus } from "../models/publish-settings";
 
 @Component({
   selector: "app-v-publish-menu",
@@ -29,20 +29,40 @@ export class VPublishMenuComponent implements OnInit {
     {
       title: PublishMenuItems.titles[PublishMenuItems.settings],
       value: PublishMenuItems.settings,
-      stateSub:  [
+      stateSub: [
         {
-          type: PublishMenuItems.stateSub[PublishMenuItems.settings].types['online'],
-          name: PublishMenuItems.stateSub[PublishMenuItems.settings].names['online'],
+          type:
+            PublishMenuItems.stateSub[PublishMenuItems.settings].types[
+              "online"
+            ],
+          name:
+            PublishMenuItems.stateSub[PublishMenuItems.settings].names["online"]
         },
         {
-          type: PublishMenuItems.stateSub[PublishMenuItems.settings].types['pdf'],
-          name: PublishMenuItems.stateSub[PublishMenuItems.settings].names['pdf'],
+          type:
+            PublishMenuItems.stateSub[PublishMenuItems.settings].types["pdf"],
+          name:
+            PublishMenuItems.stateSub[PublishMenuItems.settings].names["pdf"]
         }
       ]
     },
     {
       title: PublishMenuItems.titles[PublishMenuItems.automation],
-      value: PublishMenuItems.automation
+      value: PublishMenuItems.automation,
+      addOptions: [
+        {
+          listTitle: "List of Automation",
+          automation_list: [
+            {
+              id: 1,
+              name: "Automation first",
+              type_id: 2,
+              template_id: 2,
+              logics: [1, 2]
+            }
+          ]
+        }
+      ]
     },
     {
       title: PublishMenuItems.titles[PublishMenuItems.redirect],

@@ -110,6 +110,7 @@ import { VPaymentSettingsSamplePreviewComponent } from './v-form-constructor/v-f
 import { VPaymentSettingsScholarshipComponent } from './v-form-constructor/v-form-builder/v-payment-settings/scholarship/scholarship.component';
 import { VPaymentSettingsTuitionComponent } from './v-form-constructor/v-form-builder/v-payment-settings/tuition/tuition.component';
 import { VPaymentSettingsTableSchoolCustomDefaultComponent } from './v-form-constructor/v-form-builder/v-payment-settings/table/school-custom-default/school-custom-default.component';
+import { VPublishSettingsAutomationService } from './services/v-publish-settings-automation.service';
 
 const routes: Routes = [
   {
@@ -278,7 +279,8 @@ const routes: Routes = [
     VFieldsService,
     FinanceService,
     SaveFormService,
-    VFormPeriodsService
+    VFormPeriodsService,
+    VPublishSettingsAutomationService
   ],
   entryComponents: [entryComponents]
 })
