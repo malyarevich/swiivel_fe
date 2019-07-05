@@ -9,13 +9,14 @@ import {SideBarService} from "../side-bar.service";
   templateUrl: './v-side-bar-field.component.html',
   styleUrls: ['./v-side-bar-field.component.css']
 })
-export class VSideBarFieldComponent implements OnInit, OnDestroy, OnChanges {
+export class VSideBarFieldComponent implements OnInit, OnDestroy {
 
-
+  @Input() group: Field;
+  @Input() rootGroup: Field;
   @Input() field: Field;
   @Input() section: Field;
   @Input() form: Form;
-
+  @Input() nestedLevel: number;
   @Input() style: boolean;
   @Output() onChangeFieldBeing = new EventEmitter<any>();
   @Output() deleteCustom = new EventEmitter<any>();
@@ -25,90 +26,42 @@ export class VSideBarFieldComponent implements OnInit, OnDestroy, OnChanges {
 
   }
 
-  onChangeGroupBeing(field, group) {
-    // console.log(field, group);
-    let  groupNew = cloneDeep(group);
-    let arr = this.form.fields.filter(f => f.name == group.name);
-    if (isEmpty(arr)) {
-      groupNew.fields = [];
-      this.sideBarService.addExistingField(field, groupNew.fields);
-      this.sideBarService.addExistingField(groupNew, this.form.fields);
-      group.exist = true;
-    } else {
-      this.form.fields = this.form.fields.map(f => {
-        if (f.name == groupNew.name) {
-          this.sideBarService.addExistingField(field, f.fields);
-        }
-        return f;
-      });
-    }
-
-  }
 
 
 
   ngAfterViewInit(): void {
-    // console.log(this.idSectionForDragDrop);
 
-    // this.idSectionForDragDrop = this.sideBarService.getIdOfSection(this.form.fields);
-    // console.log(this.sideBarService.getIdOfSection(this.form.fields));
 
     this.cd.detectChanges();
 
 
   }
 
-  onBeingChange(event: boolean):void{
-    // if(event){
-    //   this.onChangeGroupBeing(
-    //     this.field,
-    //    this.section
-    //   )
-    // }else{
-    //
-    //   this.sideBarService.onFieldDelete(
-    //   this.field,
-    //   this.form.fields
-    //   );
-    // }
-    // console.log(event);
-    event?
-      this.onChangeGroupBeing(this.field, this.section)
-      :
-      this.sideBarService.onFieldDelete(this.field, this.form.fields);
-    this.field.exist = event;
-  }
+
 
   onFieldToggle(event: boolean):void{
-    event
-      ?this.onChangeGroupBeing(this.field, this.section)
-      :this.sideBarService.onFieldDelete(this.field, this.form.fields);
+    if(event){
+
+      this.sideBarService.onChangeGroupBeing(this.field, this.section, this.form, this.group,this.rootGroup);
+      this.section.exist = true;
+
+    }else{
+      this.sideBarService.onFieldDelete(this.field, this.form.fields);
+    }
     this.field.exist = event;
   }
 
-  // onBeingChange(event){
-  //   console.log(event, this.field);
-  //   this.field.exist=!this.field.exist;
-  //   this.onChangeFieldBeing.emit(this.field);
-  // }
+
 
   deleteCustomField(name: string){
     this.deleteCustom.emit(name);
   }
-  // findSection(field:Field):Field[]{
-  //    this.form.fields.forEach(section=>{
-  //     if(section.prefix == field.prefix){
-  //       return section.fields;
-  //     }
-  //   })
-  // }
+
 
   ngOnDestroy(): void {
     this.field.exist=false;
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    // console.log(changes, 'changes');
-  }
+
 }
 

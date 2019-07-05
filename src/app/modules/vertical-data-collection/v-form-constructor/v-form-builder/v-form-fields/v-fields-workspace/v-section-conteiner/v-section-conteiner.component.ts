@@ -15,7 +15,7 @@ export class VSectionConteinerComponent implements OnInit {
   @Input() customFields: Field[];
   @Input() section: Field;
   @Input() idSectionForDragDrop: string[];
-
+  nestedLevel: number = 0;
   constructor(private cd: ChangeDetectorRef,private sideBarService: SideBarService) { }
   sectionWidth: string = "4 Columns";
   showSettings: boolean = false;
@@ -61,7 +61,7 @@ export class VSectionConteinerComponent implements OnInit {
   //   field.exist
   //     ? this.addExistingField(field, this.form.fields)
   //     : this.onDelete(field.name);
-  // }Hebrew Middle Name
+  // }
   removeSection(section: Field){
     this.sideBarService.onSectionDelete(section, this.form);
     this.section.fields.forEach(field=>  {

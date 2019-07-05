@@ -1,7 +1,7 @@
 <ng-container *ngIf="sideBar">
   <div class="ml-3" *ngFor="let node of sideBar">
 
-      <div class="row align-items-center" (click)="nodeAction(node)">
+      <div class="row align-items-center border-bottom" (click)="nodeAction(node)">
         <div class="col">        <span class="node-span" > {{ node.name }} </span>
 <!--        <div class="col">        <span class="node-span" (click)="nodeAction(node)"> {{ node.name }} </span>-->
         </div>
@@ -13,7 +13,7 @@
           </button>
         </div>
       </div>
-      <hr class="my-3">
+<!--      <hr class="mt-1">-->
       <ng-container *ngIf="node.isActive&&node.type!=114">
 
         <app-v-fields-side-bar-node [sideBar]="node.fields"></app-v-fields-side-bar-node>

@@ -61,11 +61,20 @@ export class VFieldsService {
 
   getExistingSideBarList2() {
     //TODO: temporarily
-    return this.http.get(`${environment.apiFB}/sidebar2?api_token=${environment.api_token}`)
+    return this.http.get(`${environment.apiFB}/sidebar_red_267?api_token=${environment.api_token}`)
       .pipe(
         map(response => response)
       )
   }
+
+
+  // getExistingSideBarList2() {
+  //   //TODO: temporarily
+  //   return this.http.get(`${environment.apiFB}/sidebar2?api_token=${environment.api_token}`)
+  //     .pipe(
+  //       map(response => response)
+  //     )
+  // }  }
 
   getRoleList() {
     return this.http.get(`/family/roles`)
