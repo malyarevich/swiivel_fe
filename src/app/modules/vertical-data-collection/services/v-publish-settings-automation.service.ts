@@ -5,7 +5,7 @@ import { Form } from "../model/form.model";
 import { Observable } from "rxjs";
 import { ApiResponse } from "../../../models/api-response";
 import { FormSearchParams } from "../../../models/form-search-params";
-import { IAutomationList, IAutomationTemplate } from '../model/publish-settings.model';
+import { IAutomationList, IAutomationTemplate, IAutomationLogic } from '../model/publish-settings.model';
 
 @Injectable()
 export class VPublishSettingsAutomationService {
@@ -51,10 +51,10 @@ export class VPublishSettingsAutomationService {
    * 
    */
 
-  sendAutomationList(automationList: IAutomationList) {
-    if (automationList.id !== undefined) {
+  sendAutomationList(automationList: IAutomationList, id: string) {
+    if (id !== undefined) {
       return this.http
-        .put(`/proxy/forms/public-settings/${automationList.id}`, automationList)
+        .put(`/proxy/forms/public-settings/${id}`, automationList)
         .pipe(map(response => response));
     }
     return this.http.post("/proxy/forms/public-settings/", automationList).pipe(map(response => response));
@@ -65,65 +65,42 @@ export class VPublishSettingsAutomationService {
   }
 
   /** Template CRUD */
-
-
-  // sendAutomationTemplate(automationTemplate: IAutomationTemplate) {
-  //   if (automationTemplate.id !== undefined) {
-  //     return this.http
-  //       .put(`/proxy/forms/public-settings/${automationTemplate.id}`, automationTemplate)
-  //       .pipe(map(response => response));
-  //   }
-  //   return this.http.post("/proxy/forms/public-settings/", automationTemplate).pipe(map(response => response));
-  // }
-
-  // getFormsList(params?: FormSearchParams): Observable<any> {
-  //   const options = {
-  //     headers: new HttpHeaders({
-  //       "Content-Type": "application/json"
-  //     }),
-  //     params: new HttpParams().set("params", JSON.stringify(params))
-  //   };
-  //   return this.http.get("/proxy/forms", options).pipe(
-  //     map(response => {
-  //       return response;
-  //     })
-  //   );
-  // }
+  sendAutomationTemplate(automationTemplate: IAutomationTemplate) {
+    if (automationTemplate.id !== undefined) {
+      return this.http
+        .put(`/proxy/automation/template/${automationTemplate.id}`, automationTemplate)
+        .pipe(map(response => response));
+    }
+    return this.http.post("/proxy/automation/template/", automationTemplate).pipe(map(response => response));
+  }
   
-  // /** Logic CRUD */
+  // FIXME:
+  // getOneAutomationTemplate(id: string): Observable<any> {
+  //   return this.http.get(`/proxy/automation/template/${id}`).pipe(map(response => response));
+  // }
+
+  deleteOneAutomationTemplate(id: string): Observable<any> {
+    return this.http.delete(`/proxy/automation/template/${id}`).pipe(map(response => response));
+  }
   
-  // getFormWithPermissions(formId: number | string) {
-  //   return this.http
-  //     .get(`/forms/${formId}/permissions`)
-  //     .pipe(map((res: ApiResponse) => res.data[0]));
+  /** Logic CRUD */
+  sendAutomationLogic(automationLogic: IAutomationLogic) {
+    if (automationLogic.id !== undefined) {
+      return this.http
+        .put(`/proxy/automation/logic/${automationLogic.id}`, automationLogic)
+        .pipe(map(response => response));
+    }
+    return this.http.post("/proxy/automation/logic/", automationLogic).pipe(map(response => response));
+  }
+  
+  // FIXME:
+  // getOneAutomationLogic(id: string): Observable<any> {
+  //   return this.http.get(`/proxy/automation/logic/${id}`).pipe(map(response => response));
   // }
 
-  // deleteForm(id: string) {
-  //   return this.http
-  //     .delete(`/proxy/forms/${id}`)
-  //     .pipe(map(response => response));
-  // }
-
-  // bulkDeleteForms(ids) {
-  //   const options = {
-  //     headers: new HttpHeaders({
-  //       "Content-Type": "application/json"
-  //     }),
-  //     body: {
-  //       id: ids
-  //     }
-  //   };
-  //   return this.http
-  //     .delete(`/proxy/forms`, options)
-  //     .pipe(map(response => response));
-  // }
-
-  // changeStatus(ids, status) {
-  //   return this.http
-  //     .post(`/proxy/forms/status`, {
-  //       id: ids,
-  //       status: status
-  //     })
-  //     .pipe(map(response => response));
-  // }
+  deleteOneAutomationLogic(id: string): Observable<any> {
+    return this.http.delete(`/proxy/automation/logic/${id}`).pipe(map(response => response));
+  }
+  
+  ////////////////////////////////////////////////////////////////////////////////////////////////////
 }

@@ -1,10 +1,13 @@
 export interface IAutomationList {
+  "automation_list": IAutomationListItem[];
+}
+
+export interface IAutomationListItem {
   "id"?: string,            
   "name": string,
   "type_id": string,
   "template_id": string,
   "logics": any
-
 }
 
 export interface IAutomationTemplate {
@@ -15,8 +18,7 @@ export interface IAutomationTemplate {
 }
 
 export interface IAutomationLogic {
-  "type_id"?: "string";
+  "id"?: string,
+	"logic": string,
 	"name": string,
-	"content": string
 }
-
