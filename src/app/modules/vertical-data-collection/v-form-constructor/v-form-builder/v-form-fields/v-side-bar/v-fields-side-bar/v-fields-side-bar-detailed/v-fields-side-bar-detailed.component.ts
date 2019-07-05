@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
 import {Field} from "../../../../../../model/field.model";
 import {crumbs} from "../index";
 import {SideBarService} from "../../side-bar.service";
@@ -16,7 +16,7 @@ import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
   templateUrl: './v-fields-side-bar-detailed.component.html',
   styleUrls: ['./v-fields-side-bar-detailed.component.scss']
 })
-export class VFieldsSideBarDetailedComponent implements OnInit, AfterViewInit, OnDestroy {
+export class VFieldsSideBarDetailedComponent implements OnInit,  OnDestroy {
 
   @Input() searchText: string;
   fieldsAddGroup: FormGroup = new FormGroup({
@@ -45,7 +45,6 @@ export class VFieldsSideBarDetailedComponent implements OnInit, AfterViewInit, O
               private modalService: NgbModal,
               private fb: FormBuilder,
               private fieldService: VFieldsService) {
-    // this.section.exist = false;
   }
 
   ngOnInit() {
@@ -59,15 +58,6 @@ export class VFieldsSideBarDetailedComponent implements OnInit, AfterViewInit, O
     this.sideBarService.sectionSubject.next({});
   }
 
-  // onDelete(section: Field) {
-  //
-  //   this.form.fields =  this.form.fields.filter(sec=>sec.name!=section.name);
-  //   // this.fields = this.findAndDelete(name, this.fields);
-  //   // this.fields.map(group => group.type == 113 ? group.fields = this.findAndDelete(name, group.fields) : group);
-  //   this.sideBarService.changeExistingAllSection(false, this.section.fields);
-  //
-  //   // this.fieldsValidator();
-  // }
   onBeingChange(event){
    if(event){
      this.sideBarService.onChangeGroupBeing(
@@ -84,30 +74,17 @@ export class VFieldsSideBarDetailedComponent implements OnInit, AfterViewInit, O
      this.sideBarService.changeExistingAllSection(false, this.section.fields)
 
    }
-  // event?
+
   }
 
-  // changeExistingAllSection(event, fieldList: Field[]){
-  //   fieldList.forEach(field=>{
-  //     if(field.type==113) this.changeExistingAllSection(event, field.fields) ;
-  //     field.exist = event;
-  //   })
-  // }
-
-  ngAfterViewInit(): void {
-    // console.log(this.section, 'view init');
-  }
 
 
   initFormFieldsToSideBar(sideBar: Field[], workArea: Field[]) {
     sideBar.forEach(sideBarField => {
       workArea.forEach(field => {
         if (sideBarField.name == field.name) {
-          // console.log(sideBarField.name, field.name);
           sideBarField.exist = true;
-          // console.log(sideBarField.exist);
           if (field.type == 113 || field.type == 114){
-            // console.log(sideBarField);
             this.initFormFieldsToSideBar(sideBarField.fields, field.fields);
           }
 
@@ -143,8 +120,6 @@ export class VFieldsSideBarDetailedComponent implements OnInit, AfterViewInit, O
   }
   addField(modal){
     this.validateAllFormFields(this.fieldsAddGroup);
-    // console.log(this.fieldsAddGroup.value);
-
     if (!this.fieldsAddGroup.valid) return;
     this.fieldsAddGroup.clearValidators();
     let newField: Field = cloneDeep(this.fieldsAddGroup.value.fieldType);
@@ -157,15 +132,7 @@ export class VFieldsSideBarDetailedComponent implements OnInit, AfterViewInit, O
         section.fields.push(newField);
       }
     });
-      // const newSection :Field = {
-    //   _id: uuid(),
-    //   name: this.fieldsAddGroup.value.sectionName,
-    //   type: 114,
-    //   options: {size: this.fieldsAddGroup.value.sectionSize},
-    //   prefix: this.fieldsAddGroup.value.sectionName.toLowerCase().split(' ').join('_'),
-    //   fields: [],
-    // };
-    // this.form.fields.push(newSection);
+
     this.fieldsAddGroup.reset();
     modal.close();
   }
@@ -187,15 +154,4 @@ export class VFieldsSideBarDetailedComponent implements OnInit, AfterViewInit, O
     });
   }
 
-  drop(event: CdkDragDrop<Field[]>) {
-
-    console.log('drop in side-bar');
-    console.log(this.idSectionForDragDrop);
-
-    // if (event.previousContainer !== event.container){
-    //   console.log(event.previousContainer, 'Previous');
-    //   console.log(event.container, 'conteiner');
-    // }
-    // moveItemInArray(this.form.fields, event.previousIndex, event.currentIndex);
-  }
 }

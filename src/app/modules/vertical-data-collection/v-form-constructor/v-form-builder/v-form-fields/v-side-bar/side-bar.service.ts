@@ -4,7 +4,6 @@ import {Field} from "../../../../model/field.model";
 import {v4 as uuid} from 'uuid';
 import {cloneDeep, isEmpty} from 'lodash';
 import {Form} from "../../../../model/form.model";
-import {hasOwnProperty} from 'tslint/lib/utils';
 
 @Injectable({
   providedIn: 'root'
@@ -18,100 +17,130 @@ export class SideBarService {
 
 //FiXME:This is a very bad code that was written very quickly. I hope the followers will fix it
   onChangeGroupBeing(field:Field,  section: Field, form?:Form, group?:Field, rootGroup?: Field) {
-  // onChangeGroupBeing(group: Field,  section: Field,  form?: Form, rootGroup?: Field) {
-    console.log(arguments);
-    // console.log('formPeriods' in section);
-    // console.log(section._id, form._id);
+
     if(section._id==form._id) this.pureAddAllFieldsToList(field, section.fields);
-    // if(section._id==form._id) this.pureAddAllFieldsToList(group, section.fields);
     let  sectionNew = cloneDeep(section);
     let  newField = cloneDeep(field);
     newField.fields = [];
     let  newGroup ;
     let newRootGroup;
+    if(group){
+      newGroup = cloneDeep(group);
+      newGroup.fields=[];
+    }
+    if(rootGroup){
+      newRootGroup = cloneDeep(rootGroup);
+      newRootGroup.fields = [];
+    }
     let sectionFind = form.fields.filter(f => f.name == section.name);
-  if (field.fields)field.fields.forEach(f=>this.addExistingField(f, newField.fields));
+  if (field.fields){
+    field.fields.forEach(f=>this.addExistingField(f, newField.fields));
+  }
 
     if (isEmpty(sectionFind)) {
-      console.log('if (isEmpty(arr)) {');
-
+      sectionNew.fields = [];
       if(rootGroup&&group){
-        console.log('if(rootGroup){');
-        newGroup = cloneDeep(group);
-        newRootGroup = cloneDeep(rootGroup);
-        sectionNew.fields = newRootGroup.field=newGroup.fields=[];
+         newRootGroup.field=[];
+        newGroup.fields=[];
         this.addExistingField(newField, newGroup.fields);
         this.addExistingField(newGroup, newRootGroup.fields);
         this.addExistingField(newRootGroup, sectionNew.fields);
         this.addExistingField(sectionNew, form.fields);
           section.exist = group.exist=rootGroup.exist = true;
       }else if (group&&!rootGroup){
-        console.log('else(rootGroup){');
-        newGroup = cloneDeep(group);
-        sectionNew.fields = newGroup.fields =  [];
-        console.log(sectionNew, newGroup);
+         newGroup.fields =  [];
         this.addExistingField(newField, newGroup.fields);
-        console.log(newGroup);
         this.addExistingField(newGroup, sectionNew.fields);
-        console.log(sectionNew);
         this.addExistingField(sectionNew, form.fields);
         section.exist = group.exist = true;
       }else {
-        console.log('else in finish where empty');
-        sectionNew.fields = [];
         this.addExistingField(newField, sectionNew.fields);
         this.addExistingField(sectionNew, form.fields);
+        section.exist = true;
       }
     } else {
-      console.log('else');
-      console.log(sectionFind);
+
       if(!rootGroup&&!group){
-        console.log('if(!rootGroup&&group!){');
         form.fields.forEach(f => {
           if (f.name == sectionNew.name) {
             if(rootGroup&&group){
               f.fields.forEach(f1=>{
                 if(f1.name==rootGroup.name){
                   f1.fields.forEach(f2=>{
-                    console.log('rootGroup&&group', newField);
                     if(f2.name==group.name)  this.addExistingField(newField, f2.fields)
                   })
                 }
               })
             }else if(!rootGroup&&group){
-              console.log('}else if(!rootGroup&&group){');
               f.fields.forEach(f1=>{
                 if(f1.name==group.name){
-                  console.log('&group', newField, f, f1, group);
                   this.addExistingField(newField, f1.fields);
                 }
               })
             }else{
-              console.log('rootGroup&&group', newField, 'else add one');
               this.addExistingField(newField, f.fields)
             }
-            // newGroup.fields = [];
-            // group.fields.forEach(field=>this.addExistingField(field, newGroup.fields));
-            // this.addExistingField(newGroup, f.fields);
           }
 
         });
       }else if(!rootGroup&&group){
-        console.log('}else if(!rootGroup&&group){');
         let groupFind = sectionFind[0].fields.filter(f => f.name == group.name);
         if(isEmpty(groupFind)){
-
+          newGroup.fields =  [];
+          this.addExistingField(newField, newGroup.fields);
+          form.fields.forEach(f => {
+            if (f.name == sectionNew.name) {
+              this.addExistingField(newGroup, f.fields);
+            group.exist = true;
+            }})
         }else{
           form.fields.forEach(f => {
             if (f.name == sectionNew.name) {
             f.fields.forEach(f1 => {
-
               if (f1.name == group.name) {
-                console.log('&grou!!!!!!!!!!p', newField, f, f1, group);
                 this.addExistingField(newField, f1.fields);
               }
             })
           }});
+        }
+      }else{
+        let groupRootFind = sectionFind[0].fields.filter(f => f.name == rootGroup.name);
+        if(isEmpty(groupRootFind)){
+          newRootGroup.field=newGroup.fields=[];
+          this.addExistingField(newField, newGroup.fields);
+          this.addExistingField(newGroup, newRootGroup.fields);
+          form.fields.forEach(f => {
+            if (f.name == sectionNew.name) {
+              this.addExistingField(newRootGroup, f.fields);
+              group.exist = section.exist = rootGroup.exist=true;
+            }})
+        }else{
+          let groupFind = groupRootFind[0].fields.filter(f => f.name == group.name);
+          if(isEmpty(groupFind)){
+            newGroup.fields =  [];
+            this.addExistingField(newField, newGroup.fields);
+            form.fields.forEach(f => {
+              if (f.name == sectionNew.name) {
+                f.fields.forEach(f1=>{
+                  if(f1.name==rootGroup.name) this.addExistingField(newGroup, f1.fields);
+                  group.exist = true;
+                });
+              }})
+          }else{
+            form.fields.forEach(f => {
+              if (f.name == sectionNew.name) {
+                f.fields.forEach(f1 => {
+
+                  if (f1.name == rootGroup.name) {
+                    f1.fields.forEach(f2=>{
+                      if(f2.name==group.name)  this.addExistingField(newField, f2.fields);
+                    });
+
+
+                  }
+                })
+              }});
+          }
         }
       }
 
@@ -129,42 +158,13 @@ export class SideBarService {
         this.pureAddAllFieldsToList(f, newField.fields);
       })
     }
-    // list.push(newField);
     this.addExistingField(newField, list);
-    console.log(newField);
 
     return list;
   }
-  // onChangeGroupBeing(group: Field, section, form: Form) {
-  //   let  sectionNew = cloneDeep(section);
-  //   let  groupNew = cloneDeep(group);
-  //   let arr = form.fields.filter(f => f.name == section.name);
-  //   if (isEmpty(arr)) {
-  //     sectionNew.fields = [];
-  //     groupNew.fields = [];
-  //     group.fields.forEach(field=>this.addExistingField(field, groupNew.fields));
-  //     this.addExistingField(group, sectionNew.fields);
-  //     this.addExistingField(sectionNew, form.fields);
-  //     if(hasOwnProperty(section, 'type')){
-  //        section.exist = true;
-  //     }
-  //   } else {
-  //     console.log('else');
-  //     console.log(arr);
-  //     form.fields = form.fields.map(f => {
-  //       if (f.name == sectionNew.name) {
-  //         groupNew.fields = [];
-  //         group.fields.forEach(field=>this.addExistingField(field, groupNew.fields));
-  //         this.addExistingField(groupNew, f.fields);
-  //       }
-  //       return f;
-  //     });
-  //   }
-  //
-  // }
+
 
   addExistingField(field: Field, fields: Field[]) {
-    console.log(arguments);
     let newField = cloneDeep(field);
     newField._id = uuid();
     newField.isValid = true;
@@ -210,7 +210,6 @@ export class SideBarService {
 
     filedList.forEach(f=>{
       if (f.type == 113 || f.type == 114) this.onFieldDelete(field, f.fields);
-      // console.log(f);
       if(f._id==field._id ) filedList.splice(filedList.indexOf(f), 1)
     })
   }
@@ -258,49 +257,6 @@ export class SideBarService {
 
   }
 
-  ////////////////////////
 
-  // addEntityByParams(form: Form, field:Field, group?: Field, section?: Field ){
-  //   let newGroup: Field, newSection: Field ;
-  //   if(group) newGroup = cloneDeep(group);
-  //   if(section) newSection = cloneDeep(section);
-  //   if()
-  //
-  // }
-  //
-  // addField(field: Field, fieldList: Field[]):void{
-  //   let newField = cloneDeep(field);
-  //   newField._id = uuid();
-  //   newField.fields=[];
-  //   newField.isValid = true;
-  //   newField.isValidName = true;
-  //   fieldList.push(newField);
-  //
-  // }
-  //
-  // checkEntityExisting(field: Field, fieldList: Field[]):boolean{
-  //  let list = fieldList.filter(f=> {
-  //    if(f.name == field.name && f.prefix==field.prefix) return f;
-  //  });
-  //   return list.length>0;
-  // }
-  //
-  // deleteField(field: Field, fieldList: Field[]):void{
-  //
-  //   fieldList.forEach(f=>{
-  //     if (f.type == 113 || f.type == 114) this.deleteField(field, f.fields);
-  //
-  //     if(f.name==field.name && f.prefix==field.prefix) fieldList.splice(fieldList.indexOf(f), 1)
-  //   })
-  // }
-  //
-  // deleteFieldById(id: string, form: Form| Field){
-  //   form.fields.forEach(f=>{
-  //     if (f.type == 113 || f.type == 114) this.deleteFieldById(id, f);
-  //
-  //     if(id==f._id) form.fields.splice(form.fields.indexOf(f), 1)
-  //   })
-  //
-  // }
 
 }

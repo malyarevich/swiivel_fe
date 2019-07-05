@@ -27,7 +27,6 @@ export class VGroupContainerComponent implements OnInit {
   constructor(private sideBarService: SideBarService,private cd: ChangeDetectorRef) { }
   showNested: boolean = true;
   ngOnInit() {
-    // console.log(this.inputGroup.name, this.nestedLevel);
   }
 
 
@@ -38,33 +37,13 @@ export class VGroupContainerComponent implements OnInit {
     }
   }
 
-  removeField(field: Field){
-    // console.log(this.sideBar[0].fields);
-    this.sideBarService.onFieldUncheck(field, this.sideBar[0].fields);
-    this.sideBarService.onFieldDelete(field, this.form.fields)
-  }
-
-
-  // onShowGroupSettings() {
-  //   this.showGroupSettings = !this.showGroupSettings;
-  //   this.showNested = false;
-  // }
-
 
 
   removeGroup(group: Field){
-    // console.log(group);
     this.sideBarService.onFieldDelete(group, this.form.fields);
     group.fields.forEach(field=>  {
       this.sideBarService.onSectionUnckeck(field, this.sideBar[0].fields);
-      // if( field.type===113) {
-      //   field.fields.forEach(f=>{
-      //     // this.removeGroup(f)
-      //     this.sideBarService.onFieldUncheck(f, this.sideBar[0].fields)
-      //
-      //   })
-          // this.sideBarService.onFieldUncheck(f, this.sideBar[0].fields));
-      // }
+
     }  );
     this.sideBarService.onSectionUnckeck(group,this.sideBar[0].fields);
   }
@@ -72,10 +51,7 @@ export class VGroupContainerComponent implements OnInit {
 
   ngAfterViewInit(): void {
     this.idSectionForDragDrop.push(this.inputGroup._id);
-    // console.log(this.idSectionForDragDrop);
 
-    // this.idSectionForDragDrop = this.sideBarService.getIdOfSection(this.form.fields);
-    // console.log(this.sideBarService.getIdOfSection(this.form.fields));
 
     this.cd.detectChanges();
 
