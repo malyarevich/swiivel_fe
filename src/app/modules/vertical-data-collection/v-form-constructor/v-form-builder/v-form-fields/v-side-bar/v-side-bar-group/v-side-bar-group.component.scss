@@ -1,13 +1,20 @@
+@import '../../../../../../../../styles/variables/colors';
+
 .side-bar-item-font {
   font-size: 12px;
   font-weight: bold;
   line-height: 13px;
   color: #151515;
+  height: 13px;
 }
 .side-bar-item {
   background-color: #ebeeff;
+  border-radius: 3px;
+  box-shadow: 0 4px 8px 0 rgba(153,162,215,0.22);
 }
-
+.border-open-setting{
+  border: 1px solid $element-base-color;
+}
 .side-bar-item-group {
   height: 27px;
   border-radius: 3px;
@@ -163,3 +170,12 @@
   height: 0;
   clear: both;
 }
+
+
+.v-eclipse-padding{
+  padding-left: 2px;
+}
+
+//.app-checkbox-checkmark{
+//  background-color: white!important;
+//}

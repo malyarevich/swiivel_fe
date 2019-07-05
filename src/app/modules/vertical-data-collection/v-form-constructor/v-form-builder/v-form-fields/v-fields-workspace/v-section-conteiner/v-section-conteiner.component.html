@@ -95,6 +95,7 @@
       <app-v-group-container
         *ngIf="field.type==113"
         [inputGroup]="field"
+        [nestedLevel]="nestedLevel+1"
         [idSectionForDragDrop]="idSectionForDragDrop"
         [form]="form"
         [sideBar]="sideBar"

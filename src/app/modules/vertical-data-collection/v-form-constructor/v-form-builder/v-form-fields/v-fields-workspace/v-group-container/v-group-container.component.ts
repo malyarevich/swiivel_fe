@@ -15,6 +15,7 @@ export class VGroupContainerComponent implements OnInit {
   @Input() customFields: Field[];
   @Input() inputGroup: Field;
   @Input() sideBar: Field;
+  @Input() nestedLevel: number;
 
   @Input() idSectionForDragDrop: string[];
   warningCheckExistingLabelString='Pay attention that we already have existing field with the same name';
@@ -31,32 +32,18 @@ export class VGroupContainerComponent implements OnInit {
 
   dropAdd(event){
     if(!event.value._id) {
-      //replace dragged item -> added in right way field
       this.inputGroup.fields =  this.sideBarService.replaceExistinField(this.inputGroup.fields[event.dropIndex],this.inputGroup.fields );
       this.sideBarService.fieldCheck(this.inputGroup.fields[event.dropIndex], this.sideBar[0]);
     }
   }
-  removeField(field: Field){
-    // console.log(this.sideBar[0].fields);
-    this.sideBarService.onFieldUncheck(field, this.sideBar[0].fields);
-    this.sideBarService.onFieldDelete(field, this.form.fields)
-  }
-
-
-  // onShowGroupSettings() {
-  //   this.showGroupSettings = !this.showGroupSettings;
-  //   this.showNested = false;
-  // }
 
 
 
   removeGroup(group: Field){
     this.sideBarService.onFieldDelete(group, this.form.fields);
-    this.inputGroup.fields.forEach(field=>  {
-      this.sideBarService.onFieldUncheck(field, this.sideBar[0].fields);
-      if( field.type===113) {
-        field.fields.forEach(f=>this.sideBarService.onFieldUncheck(f, this.sideBar[0].fields));
-      }
+    group.fields.forEach(field=>  {
+      this.sideBarService.onSectionUnckeck(field, this.sideBar[0].fields);
+
     }  );
     this.sideBarService.onSectionUnckeck(group,this.sideBar[0].fields);
   }
@@ -64,10 +51,7 @@ export class VGroupContainerComponent implements OnInit {
 
   ngAfterViewInit(): void {
     this.idSectionForDragDrop.push(this.inputGroup._id);
-    // console.log(this.idSectionForDragDrop);
 
-    // this.idSectionForDragDrop = this.sideBarService.getIdOfSection(this.form.fields);
-    // console.log(this.sideBarService.getIdOfSection(this.form.fields));
 
     this.cd.detectChanges();
 

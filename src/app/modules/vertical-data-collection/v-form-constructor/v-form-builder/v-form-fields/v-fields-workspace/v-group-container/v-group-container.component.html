@@ -148,7 +148,7 @@
           <!--                   [ngModel]="inputField.name">-->
           <!--            <span class="spanForLabel">Field Label</span>-->
           <!--          </label>-->
-          <div class=""><span class="app-text-extra-bold align-self-center">{{inputGroup.name}}</span></div>
+          <div class=""><span class="app-text-extra-bold align-self-center">{{inputGroup.name | titlecase}}</span></div>
           <div class=""><span class="field-type-span mb-2">Field Group</span></div>
 
         </div>
@@ -172,6 +172,25 @@
           </div>
         </div>
       </div>
+<!--    </div>  -->
+<!--    <div class="col-3 ">-->
+<!--      <div class="row align-items-center ">-->
+<!--        <div class="col-6">-->
+<!--          <div class="  app-input-container"-->
+<!--               [ngClass]="{'app-input-fill': sizeID.value}" >-->
+<!--            <label for="groupSize" class="app-input-label">Field Width</label>-->
+<!--            <select class="app-input form-control"-->
+<!--                    #sizeID-->
+<!--                    id="groupSize"-->
+
+<!--            >-->
+<!--              <option *ngFor="let width of size" [value]="width" [selected]="width==3"-->
+<!--              >{{width}} Columns</option>-->
+<!--            </select>-->
+
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
     </div>
 
     <div class="col-2  row align-items-center offset-4">
@@ -206,11 +225,16 @@
       direction="vertical"
 
     >
-      <li *ngIf="inputGroup.fields.length==0" class="list-group-item empty-group p-0 margin-for-nested">
+      <li *ngIf="inputGroup.fields.length==0"
+          class="list-group-item empty-group p-0 "
+      [ngClass]="nestedLevel==1?'margin-for-nested':''"
+      >
         <div class="text-center">        <span class="empty-group-text">Drag and Drop Fields Onto the Group</span>
         </div>
       </li>
-      <li class="list-group-item p-0 ngx-dnd-item margin-for-nested"
+      <li class="list-group-item p-0 ngx-dnd-item"
+          [ngClass]="nestedLevel==1?'margin-for-nested':''"
+
           [model]="field"
           *ngFor="let field of inputGroup.fields"
           [ngxDraggable]="idSectionForDragDrop">
@@ -220,6 +244,20 @@
                                [customFields]="customFields"
                                [sideBar]="sideBar">
         </app-v-field-container>
+        <app-v-divider-conteiner
+          *ngIf="field.type==112"
+          [inputDivider]="field"
+          [form]="form"
+        ></app-v-divider-conteiner>
+        <app-v-group-container
+          *ngIf="field.type==113"
+          [inputGroup]="field"
+          [nestedLevel]="nestedLevel+1"
+          [idSectionForDragDrop]="idSectionForDragDrop"
+          [form]="form"
+          [sideBar]="sideBar"
+          [customFields]="customFields"
+        ></app-v-group-container>
       </li>
     </ul>
   </div>

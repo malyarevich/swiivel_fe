@@ -8,11 +8,11 @@
     <span class="app-checkbox-checkmark"></span>
   </label>
   </div>
-  <div class="col-10  row align-items-center no-gutters" [ngClass]="style?'side-bar-item-custom':'side-bar-item'">
+  <div class="col-10   row align-items-center no-gutters" [ngClass]="style?'side-bar-item-custom':'side-bar-item'" [ngClass]="nestedLevel?'offset-1 ':''">
 <!--  <div class="col-10  row align-items-center no-gutters" [ngClass]="style?'side-bar-item-custom':'side-bar-item'" placement="right" [ngbTooltip]="field.prefix+'\'s'">-->
-    <div class="col-1 pl-1">
-      <span><i class="fas fa-ellipsis-v dragable-i"></i></span>
-      <span><i class="fas fa-ellipsis-v  dragable-i"></i></span>
+    <div class="col-2 ">
+      <span class="v-eclipse-padding"><i class="fas fa-ellipsis-v dragable-i "></i></span>
+      <span class="v-eclipse-padding"><i class="fas fa-ellipsis-v  dragable-i"></i></span>
     </div>
     <div class="col">
       <span class="side-bar-item-font" [title]="style?'Custom':'Existing'">{{field.name}}</span>
