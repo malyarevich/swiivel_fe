@@ -1,0 +1,55 @@
+<div 
+  *ngIf="fieldTitle !== undefined"
+  class="field_title"
+>
+  <p class="field_title__text">{{ fieldTitle }}</p>
+</div>
+
+<div class="extended_field">
+  <div class="app-consent-table px-3 py-2">
+    <div class="row">
+      <div class="col extended_field__label_text" (click)="editContent()">Text</div>
+      <div class="col text-right">
+        <div class="command_text_line" 
+        (click)="preventDefault">
+          <div class="command_text_line">
+            <a
+              class="command_text_line__item"
+              (click)="setCommand('bold')"
+              (mousedown)="$event.preventDefault()"
+            >
+              Bold
+            </a>
+            <a
+              class="command_text_line__item"
+              (click)="setCommand('italic')"
+              (mousedown)="$event.preventDefault()"
+            >
+              Italic
+            </a>
+            <a
+              class="command_text_line__item"
+              (click)="setCommand('removeFormat')"
+              (mousedown)="$event.preventDefault()"
+            >
+              Remove Format
+            </a>
+          </div>
+          <div class="command_text_line__item_extended">
+            <app-command-dropdown
+              (onSetCommandEmitter)="onSetCommand($event)"
+            ></app-command-dropdown>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      #content
+      class="extended_field__content"
+      (click)="preventDefault"
+      (blur)="setContent($event.target.innerHTML);"
+      contentEditable="true"
+    ></div>
+  </div>
+</div>

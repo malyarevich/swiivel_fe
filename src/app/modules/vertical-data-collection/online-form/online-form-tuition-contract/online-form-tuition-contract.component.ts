@@ -10,7 +10,7 @@ import {
   TUITION_CONTRACT_SPLIT_TYPES
 } from "../../../../enums";
 import { SystemSignatureService } from "../services/signatures/system-signature.service";
-import { SignatureCreateResponse } from "../model/signature-create-response.model";
+import { SignatureCreateResponse } from "../../../../models/shared/signatures/signature-create-response.model";
 import { Form } from "../../model/form.model";
 import {
   menuItems,

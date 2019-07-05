@@ -91,10 +91,11 @@ input {
 //}
 
 .app-section-wrapper {
-  background-color: #fff;
+  background-color: $white;
   border: 1px solid rgba(0, 0, 0, .125);
-  padding: 1rem;
   border-radius: 5px;
+  margin-bottom: 1rem;
+  padding: 1.75rem;
 }
 
 .app-btn-signature {
@@ -106,7 +107,7 @@ input {
 
 label.btn.app-btn-signature.active {
   background: #FFB915;
-  color: #FFFFFF;
+  color: $white;
 }
 
 .app-tuition-signature {
@@ -114,7 +115,7 @@ label.btn.app-btn-signature.active {
 }
 
 .app-consent-signature {
-  background-color: #FFFFFF;
+  background-color: $white;
 }
 
 .app-fb-trash, .app-fb-gear{
@@ -156,6 +157,8 @@ label.btn.app-btn-signature.active {
   font-size: 1.3em;
   color: $element-base-color;
   cursor: pointer;
+  transition: all 0.8s ease-in-out;
+  vertical-align: middle;
 }
 
 .fa-trash{
@@ -174,4 +177,15 @@ label.btn.app-btn-signature.active {
 
 .side-bar-toggle{
   cursor: pointer;
+}
+
+.sidebar_item {
+  background-color: $white;
+  border-radius: 0.5rem;
+  padding: 1.25rem;
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+  }
 }

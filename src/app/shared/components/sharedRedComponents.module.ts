@@ -36,12 +36,15 @@ import { TableTheadComponent } from './table-thead/table-thead.component';
 import { TipQuestionComponent } from './tip-question/tip-question.component';
 import { ToggleCheckboxFieldComponent } from './fields/toggle-checkbox-field/toggle-checkbox-field.component';
 import { CommandDropdownComponent } from "./command-dropdown/command-dropdown.component";
+import { ExtendedFieldComponent } from './fields/extended-field/extended-field.component';
+import { SignaturesComponent } from './signatures/signatures.component';
 
 @NgModule({
   declarations: [
     // buttons
     SearchFilterBtnComponent,
     // fields
+    ExtendedFieldComponent,
     CheckboxFieldComponent,
     InputFieldComponent,
     SearchFieldComponent,
@@ -68,6 +71,8 @@ import { CommandDropdownComponent } from "./command-dropdown/command-dropdown.co
     TagComponent,
     TipQuestionComponent,
     ToggleCheckboxFieldComponent,
+    // complex
+    SignaturesComponent,
   ],
   imports: [
     CommonModule,
@@ -86,6 +91,7 @@ import { CommandDropdownComponent } from "./command-dropdown/command-dropdown.co
     // buttons
     SearchFilterBtnComponent,
     // fields
+    ExtendedFieldComponent,
     CheckboxFieldComponent,
     InputFieldComponent,
     SearchFieldComponent,
@@ -108,6 +114,8 @@ import { CommandDropdownComponent } from "./command-dropdown/command-dropdown.co
     TableTheadComponent,
     TagComponent,
     TipQuestionComponent,
+    // complex
+    SignaturesComponent,
   ],
 })
 export class SharedRedComponentsModule {}

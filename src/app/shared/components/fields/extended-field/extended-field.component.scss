@@ -1,0 +1,90 @@
+@import '../../../../../styles/index.scss';
+
+.field_title {
+  display: flex;
+  flex-direction: row;
+  
+  &__text {
+    color: $darkgray-color;
+    font-family: "NunitoSans-Regular";
+    font-size: 1.5rem;
+    font-weight: 800;
+    line-height: 1.75rem;
+  }
+}
+
+.extended_field {
+
+  &__label_text {
+    cursor: pointer;
+  }
+
+  &__content {
+    outline: 0 transparent solid;
+  }
+}
+a {
+  cursor: pointer;
+}
+
+a.active {
+  color: $element-base-color;
+  font-weight: bold;
+
+}
+
+.bold-for-a {
+  font-weight: bold;
+}
+
+.italic-for-a {
+  font-style: italic;
+}
+
+.app-consent-table {
+  border: 1px solid #B6B6B6;
+  border-radius: 5px;
+}
+
+.app-consent-text {
+  padding: 0 5.3em;
+}
+
+.app-btn-accept {
+  background-color: $element-base-color;
+  color: $white;
+  border-radius: 3px;
+}
+/** 
+FIXME:
+*/
+.app-consent-dropdown-var {
+  background-color: $element-base-color;
+  border-radius: 50%;
+  padding: 5px;
+  color: white;
+  cursor: pointer;
+}
+
+.app-consent-dropdown-var:after {
+  display: none;
+}
+
+.app-consent-dropdown-var-item {
+  border-radius: 3px;
+  background-color: #EBEEFF;
+  cursor: pointer;
+}
+
+.app-consent-var-item {
+  //border-radius: 3px;
+  //background-color: red;
+  color: red;
+}
+.command_arrows {
+  color: $white;
+  background-color: $element-base-color;
+  border-radius: 50%;
+}
+
+/**/

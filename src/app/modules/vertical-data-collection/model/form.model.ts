@@ -6,6 +6,7 @@ import {DocumentsModel} from "../v-form-constructor/v-form-builder/v-documents-f
 import {FormsPDFModel} from "../v-form-constructor/v-form-builder/v-documents-forms/model/formsPDF.model";
 import {TermsConditions} from "../v-form-constructor/v-form-builder/v-terms-conditions/model/terms-conditions.model";
 import { ISubMenus } from '../v-form-constructor/v-form-publish-settings/models/publish-settings';
+import { PaymentSettings } from '../../../models/vertical-data-collection/v-form-constructor/v-form-builder/payment-settings.model';
 
 export interface Form {
   _id: string;
@@ -36,7 +37,7 @@ export interface Form {
   tuitionContract?: TuitionContract;
   consentInfo?: ConsentInfo;
   termsConditions?: TermsConditions;
-  paymentSettings?: any, //Need FIXME: (create PaymentSettings)
+  paymentSettings?: PaymentSettings,
   chosen_way_to_create_new_form?: number;
   eligible: string;
   example_form_id?: string;

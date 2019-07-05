@@ -55,6 +55,11 @@ import {
   termsConditionsDefault,
   termsConditionsItemDefault
 } from "./v-terms-conditions/model/terms-conditions.model";
+import {
+  PaymentSettings,
+  paymentSettingsDefault,
+  paymentSettingsItemDefault
+} from "../../../../models/vertical-data-collection/v-form-constructor/v-form-builder/payment-settings.model";
 import { FinanceService } from "../../../../services/finance/finance.service";
 import {
   FeeTemplate,
@@ -99,6 +104,7 @@ export class VFormBuilderComponent implements OnInit, OnDestroy {
   tuitionContract: TuitionContract = tuitionContractDefault;
   consentInfo: ConsentInfo = consentInfoDefault;
   termsConditions: TermsConditions = termsConditionsDefault;
+  paymentSettings: PaymentSettings = paymentSettingsDefault;
   eligible: string;
 
   SIGNATURE_TYPES = SIGNATURE_TYPES;
@@ -108,6 +114,7 @@ export class VFormBuilderComponent implements OnInit, OnDestroy {
   isEditDocumentName: string | null = null;
   isEditFormPDFName: string | null = null;
   isEditTermsConditionsName: string | null = null;
+  isEditPaymentSettingsName: string | null = null;
 
   isDocumentsForms: DocumentSideBar = {
     isDocuments: true,
@@ -318,6 +325,7 @@ export class VFormBuilderComponent implements OnInit, OnDestroy {
       this.tuitionContract = form.tuitionContract || tuitionContractDefault;
       this.consentInfo = form.consentInfo || consentInfoDefault;
       this.termsConditions = form.termsConditions || termsConditionsDefault;
+      this.paymentSettings = form.paymentSettings || paymentSettingsDefault;
       this.eligible = form.eligible;
       this.documents = form.documents || [];
       this.formsPDF = form.forms || [];
@@ -375,6 +383,7 @@ export class VFormBuilderComponent implements OnInit, OnDestroy {
       tuitionContract: this.tuitionContract,
       consentInfo: this.consentInfo,
       termsConditions: this.termsConditions,
+      paymentSettings: this.paymentSettings,
       eligible: this.eligible,
       step: 1
     };
@@ -596,6 +605,20 @@ export class VFormBuilderComponent implements OnInit, OnDestroy {
 
   removeTermsConditionsItem(id) {
     this.termsConditions.termsConditionsItems = this.termsConditions.termsConditionsItems.filter(
+      item => {
+        return item.id !== id;
+      }
+    );
+  }
+
+  addPaymentSettingsItem() {
+    let paymentSettingsItem = cloneDeep(paymentSettingsItemDefault);
+    paymentSettingsItem.id = uuid();
+    this.paymentSettings.paymentSettingsItems.push(paymentSettingsItem);
+  }
+
+  removePaymentSettingsItem(id) {
+    this.paymentSettings.paymentSettingsItems = this.paymentSettings.paymentSettingsItems.filter(
       item => {
         return item.id !== id;
       }

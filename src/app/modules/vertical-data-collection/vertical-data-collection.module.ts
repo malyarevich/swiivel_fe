@@ -100,7 +100,16 @@ import { FieldTypePipe } from "./v-form-constructor/v-form-builder/v-form-fields
 import { VSectionSettingsComponent } from "./v-form-constructor/v-form-builder/v-form-fields/v-fields-workspace/v-section-conteiner/v-section-settings/v-section-settings.component";
 import { SharedRedComponentsModule } from "../../shared/components/sharedRedComponents.module";
 import { SaveFormService } from "./services/save-form.service";
-import {VFormPeriodsService} from "./services/v-form-periods.service";
+import { VFormPeriodsService } from "./services/v-form-periods.service";
+import { VPaymentSettingsComponent } from "./v-form-constructor/v-form-builder/v-payment-settings/v-payment-settings.component";
+import { VPaymentSettingsTableComponent } from './v-form-constructor/v-form-builder/v-payment-settings/table/table.component';
+import { VPaymentSettingsDormitoryFeeComponent } from './v-form-constructor/v-form-builder/v-payment-settings/dormitory-fee/dormitory-fee.component';
+import { VPaymentSettingsLunchFeeComponent } from './v-form-constructor/v-form-builder/v-payment-settings/lunch-fee/lunch-fee.component';
+import { VPaymentSettingsRegistrationComponent } from './v-form-constructor/v-form-builder/v-payment-settings/registration/registration.component';
+import { VPaymentSettingsSamplePreviewComponent } from './v-form-constructor/v-form-builder/v-payment-settings/sample-preview/sample-preview.component';
+import { VPaymentSettingsScholarshipComponent } from './v-form-constructor/v-form-builder/v-payment-settings/scholarship/scholarship.component';
+import { VPaymentSettingsTuitionComponent } from './v-form-constructor/v-form-builder/v-payment-settings/tuition/tuition.component';
+import { VPaymentSettingsTableSchoolCustomDefaultComponent } from './v-form-constructor/v-form-builder/v-payment-settings/table/school-custom-default/school-custom-default.component';
 
 const routes: Routes = [
   {
@@ -227,6 +236,18 @@ const routes: Routes = [
     VInsideAccountCommunicationComponent,
     VInsideMissingFieldsComponent,
     VInsideFormHistoryComponent,
+    //PaymentSettings
+    VPaymentSettingsComponent,
+    VPaymentSettingsTableComponent,
+    VPaymentSettingsDormitoryFeeComponent,
+    VPaymentSettingsLunchFeeComponent,
+    VPaymentSettingsRegistrationComponent,
+    VPaymentSettingsSamplePreviewComponent,
+    VPaymentSettingsScholarshipComponent,
+    VPaymentSettingsTuitionComponent,
+    //PaymentSettingsTable
+    VPaymentSettingsTableSchoolCustomDefaultComponent,
+
     VTermsConditionsComponent,
     VFieldsSideBarComponent,
     VFieldsSideBarNodeComponent,
