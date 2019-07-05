@@ -6,15 +6,9 @@ import {
   ElementRef,
   OnDestroy,
   Host,
-  Output,
-  EventEmitter
+
 } from "@angular/core";
-import {
-  CdkDragDrop,
-  copyArrayItem,
-  moveItemInArray,
-  transferArrayItem
-} from "@angular/cdk/drag-drop";
+
 import { VFormService } from "../../services/v-form.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { v4 as uuid } from "uuid";

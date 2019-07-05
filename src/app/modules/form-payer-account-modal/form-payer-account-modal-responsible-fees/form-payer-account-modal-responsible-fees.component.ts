@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { Fee } from '../../../models/fee.model';
 import { FeeSplits } from '../../../models/feeSplits.model';
 
@@ -8,12 +8,13 @@ import { FeeSplits } from '../../../models/feeSplits.model';
   styleUrls: ['./form-payer-account-modal-responsible-fees.component.scss']
 })
 
-export class FormPayerAccountModalResponsibleFeesComponent implements OnInit {
+export class FormPayerAccountModalResponsibleFeesComponent implements OnInit, OnChanges {
   @Input() fees: Fee[];
   @Output() onRemoveFee = new EventEmitter();
   @Output() onUpdateFees = new EventEmitter();
 
   public selectFees: number[] = [];
+  public activeFees: Fee[];
 
   public feeTableColumns = [
     {},
@@ -77,14 +78,23 @@ export class FormPayerAccountModalResponsibleFeesComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
+
+  ngOnChanges(): void {
+    const activeFees: Fee[] = null;
+    this.fees.forEach((fee) => {
+      if (fee.isSelected) {
+        activeFees.push(fee);
+      }
+    });
+    this.activeFees = activeFees;
+  }
 
 
   onOpenRow(id) {
     this.fees.forEach((fee) => {
-      if (fee.id === id) {
-        fee.open = !fee.open;
-      }
+      fee.id === id ? fee.open = !fee.open : fee.open = false;
     });
   }
 
@@ -247,7 +257,6 @@ export class FormPayerAccountModalResponsibleFeesComponent implements OnInit {
         fee.totalForPay = this.getTotalFeeSum(fee);
       }
     });
-    console.log(this.fees);
     this.onUpdateFees.emit(this.fees);
   }
 
@@ -266,5 +275,53 @@ export class FormPayerAccountModalResponsibleFeesComponent implements OnInit {
       return ((totalSumArray.reduce((a, b) => a + b, 0) / parseInt(sumFee.amount, 10)) * 100);
     }
     return 0;
+  }
+
+  onSort(event): void {
+    // подумать, как обновлять и делать сортировку по алфавиту
+    if (event.order === 'DESC') {
+      this.fees.forEach((fee) => {
+        if (fee.type === 'fee') {
+          this.fees.forEach((compareFee) => {
+            let temporaryFee = null;
+            let temporarySplit = null;
+            let compareSplit = null;
+            if (compareFee.type === 'fee' && fee[event.id] < compareFee[event.id]) {
+              temporaryFee = fee;
+              temporarySplit = this.fees[this.fees.findIndex(indexFee => indexFee.id === fee.id) + 1];
+              compareSplit = this.fees[this.fees.findIndex(indexFee => indexFee.id === compareFee.id) + 1];
+
+              this.fees[this.fees.findIndex(indexFee => indexFee.id === fee.id) + 1] = compareSplit;
+              this.fees[this.fees.findIndex(indexFee => indexFee.id === fee.id)] = compareFee;
+
+              this.fees[this.fees.findIndex(indexFee => indexFee.id === compareFee.id) + 1] = temporarySplit;
+              this.fees[this.fees.findIndex(indexFee => indexFee.id === compareFee.id)] = temporaryFee;
+            }
+          });
+        }
+      });
+    } else if (event.order === 'ASC') {
+      this.fees.forEach((fee) => {
+        if (fee.type === 'fee') {
+          this.fees.forEach((compareFee) => {
+            let temporaryFee = null;
+            let temporarySplit = null;
+            let compareSplit = null;
+            if (compareFee.type === 'fee' && compareFee[event.id] > fee[event.id]) {
+              temporaryFee = fee;
+              temporarySplit = this.fees[this.fees.findIndex(indexFee => indexFee.id === fee.id) + 1];
+              compareSplit = this.fees[this.fees.findIndex(indexFee => indexFee.id === compareFee.id) + 1];
+
+              this.fees[this.fees.findIndex(indexFee => indexFee.id === compareFee.id) + 1] = temporarySplit;
+              this.fees[this.fees.findIndex(indexFee => indexFee.id === compareFee.id)] = temporaryFee;
+
+              this.fees[this.fees.findIndex(indexFee => indexFee.id === fee.id) + 1] = compareSplit;
+              this.fees[this.fees.findIndex(indexFee => indexFee.id === fee.id)] = compareFee;
+            }
+          });
+        }
+      });
+    }
+    this.updateFees();
   }
 }

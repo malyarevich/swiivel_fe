@@ -69,6 +69,16 @@ export const routes: Routes = [
       }
     ],
   },
+  {
+    path: 'period',
+    component: LayoutComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: '../period/period.module#PeriodModule',
+      }
+    ],
+  },
 ];
 
 @NgModule({

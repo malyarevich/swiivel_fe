@@ -12,6 +12,7 @@ export const menuItems: IMenuItems[] = [
   { route: '/payer-accounts', label: 'Payer Accounts', icon: 'fa-wallet' },
   { route: '/persons', label: 'Persons', icon: 'fa-user' },
   { route: '/family', label: 'Family', icon: 'fa-cog' },
+  { route: '/period', label: 'Period', icon: 'fa-calendar' },
   { route: '/vertical-data-collection', label: 'Data Collection', icon: 'fa-file' },
 ];
 
@@ -30,7 +31,7 @@ export class HeaderComponent implements OnInit {
   constructor(private readonly store: Store<any>,
               private router: Router,
   ) {
-    
+
   }
 
   ngOnInit() {
