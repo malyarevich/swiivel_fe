@@ -27,8 +27,8 @@ export class VAutomationComponent implements OnInit {
     // this.automationService.sendAutomationList(this.defaultObject, this.id);
     this.automationService.getOneAutomationList(this.id).subscribe(
       (list: any) => {
-        console.log("loading AutomationList");
-        console.log(list);
+        // console.log("loading AutomationList");
+        // console.log(list);
         this.automationList = list;
       },
       error => console.log(error, "error"),
