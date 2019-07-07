@@ -206,6 +206,23 @@ export class SideBarService {
     })
   }
 
+
+  findIfPresent(field: Field, filedList: Field[]){
+    let arr=[];
+    filedList.filter(f=>{
+      if (f.type == 113 || f.type == 114) {
+        let a = this.findIfPresent(field, f.fields);
+        // console.log(a, 'a');
+        a.forEach(t=>arr.push(t))
+      }
+      if(f.name==field.name && f.prefix==field.prefix){
+        arr.push(field);
+      }
+    });
+    // console.log(arr);
+    return arr;
+  }
+
   onFieldByIdDelete(field: Field, filedList: Field[]){
 
     filedList.forEach(f=>{

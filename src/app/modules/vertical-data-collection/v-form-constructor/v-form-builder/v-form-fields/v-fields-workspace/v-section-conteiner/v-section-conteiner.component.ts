@@ -27,9 +27,12 @@ export class VSectionConteinerComponent implements OnInit {
 
   dropAdd(event){
     if(!event.value._id) {
-      //replace dragged item -> added in right way field
 
       this.section.fields =  this.sideBarService.replaceExistinField(this.section.fields[event.dropIndex],this.section.fields );
+      if(this.sideBarService.findIfPresent(this.section.fields[event.dropIndex],this.section.fields  ).length>1){
+       this.sideBarService.onFieldDelete(this.section.fields[event.dropIndex], this.section.fields);
+         return;
+      }
       this.sideBarService.fieldCheck(this.section.fields[event.dropIndex], this.sideBar[0]);
     }
   }
@@ -38,30 +41,7 @@ export class VSectionConteinerComponent implements OnInit {
   //   this.fields = this.fields.map(item => item._id==field._id?newField:item);
 
 
-  // addExistingField(field: Field, fields: Field[]) {
-  //   let newField = cloneDeep(field);
-  //   newField._id = uuid();
-  //   // this.doExistingFieldsUniq(newField);
-  //   newField.isValid = true;
-  //   newField.isValidName = true;
-  //   fields.push(newField);
-  //   // this.fieldsValidator();
-  //
-  // }
-  // onDelete(name: string) {
-  //   console.log(name);
-  //   // this.fields = this.findAndDelete(name, this.fields);
-  //   // this.fields.map(group => group.type == 113 ? group.fields = this.findAndDelete(name, group.fields) : group);
-  //
-  //   // this.fieldsValidator();
-  // }
-  //
-  //
-  // onChangeFieldBeing(field: Field) {
-  //   field.exist
-  //     ? this.addExistingField(field, this.form.fields)
-  //     : this.onDelete(field.name);
-  // }
+
   removeSection(section: Field){
     this.sideBarService.onSectionDelete(section, this.form);
     this.section.fields.forEach(field=>  {
