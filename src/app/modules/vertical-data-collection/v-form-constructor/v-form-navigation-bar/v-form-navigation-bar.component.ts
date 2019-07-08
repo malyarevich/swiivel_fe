@@ -6,6 +6,7 @@ import { GeneralInfoIsSavedService } from "../../services/general-info-is-saved.
 import { FormBuilderIsSavedService } from "../../services/form-builder-is-saved.service";
 import { PublishSettingsIsSavedService } from "../../services/publish-settings-is-saved.service";
 import { ConstructorIsSavingService } from "../../services/constructor-is-saving.service";
+import { GeneralInfoIsFormExistService } from "../../services/general-info-is-form-exist.service";
 
 @Component({
   selector: "app-v-form-navigation-bar",
@@ -19,10 +20,12 @@ export class VFormNavigationBarComponent implements OnInit {
 
   isGeneralInfoValid: boolean;
   isSavingConstructor: boolean = false;
+  isFormExisted: boolean;
 
   constructor(
     private router: Router,
     private generalInfoIsValidService: GeneralInfoIsValidService,
+    private generalInfoIsFormExistService: GeneralInfoIsFormExistService,
     private constructorIsSavingService: ConstructorIsSavingService,
     private generalInfoIsSavedService: GeneralInfoIsSavedService,
     private formBuilderIsSavedService: FormBuilderIsSavedService,
@@ -32,29 +35,35 @@ export class VFormNavigationBarComponent implements OnInit {
     this.generalInfoIsValidService.onIsValid.subscribe(
       val => (this.isGeneralInfoValid = val)
     );
+    this.initSavedServices();
+    this.constructorIsSavingService.onIsSaving.subscribe(val => {
+      this.isSavingConstructor = val;
+    });
+    this.generalInfoIsFormExistService.onIsExist.subscribe(val => {
+      this.isFormExisted = val;
+    });
+    this.isFormExisted = true;
+  }
+
+  initSavedServices() {
     this.generalInfoIsSavedService.onIsSaved.subscribe(val => {
       this.isGeneralSaved = val;
       this.delegateLogic();
     });
+    this.isGeneralSaved = undefined;
     this.formBuilderIsSavedService.onIsSaved.subscribe(val => {
       this.isBuilderSaved = val;
       this.delegateLogic();
     });
+    this.isBuilderSaved = undefined;
     this.publishSettingsIsSavedService.onIsSaved.subscribe(val => {
       this.isPublishSaved = val;
       this.delegateLogic();
     });
-    this.constructorIsSavingService.onIsSaving.subscribe(val => {
-      // console.log(val);
-      this.isSavingConstructor = val;
-    });
-  }
-
-  ngOnInit() {
-    this.isGeneralSaved = undefined;
-    this.isBuilderSaved = undefined;
     this.isPublishSaved = undefined;
   }
+
+  ngOnInit() {}
 
   getSavingStatus() {
     // console.log(`isGeneralSaved: ${this.isGeneralSaved}`);
@@ -74,6 +83,14 @@ export class VFormNavigationBarComponent implements OnInit {
     } else {
       this.saveFormService.setSavingStatus(false);
     }
+  }
+
+  isRoutingDisable() {
+    return (
+      !this.isGeneralInfoValid ||
+      this.isSavingConstructor ||
+      !this.isFormExisted
+    );
   }
 
   goBack() {

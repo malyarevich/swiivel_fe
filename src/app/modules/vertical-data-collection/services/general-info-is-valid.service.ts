@@ -1,11 +1,10 @@
-import {EventEmitter, Injectable} from '@angular/core';
+import { EventEmitter, Injectable } from "@angular/core";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class GeneralInfoIsValidService {
-
-  private isValid:boolean;
+  private isValid: boolean;
   onIsValid: EventEmitter<boolean> = new EventEmitter();
 
   setIsValid(value: boolean) {

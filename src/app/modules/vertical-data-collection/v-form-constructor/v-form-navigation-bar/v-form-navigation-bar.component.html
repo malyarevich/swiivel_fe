@@ -16,7 +16,7 @@
             routerLink="general-information"
             [ngClass]="{
               'main_navbar__item_link--valid': isGeneralInfoValid,
-              disabled_router: !isGeneralInfoValid || isSavingConstructor
+              disabled_router: isRoutingDisable()
             }"
             routerLinkActive="active main_navbar__item_link--active"
           >
@@ -36,7 +36,7 @@
           <a
             class="main_navbar__item_link"
             [ngClass]="{
-              disabled_router: !isGeneralInfoValid || isSavingConstructor
+              disabled_router: isRoutingDisable()
             }"
             routerLink="form-builder"
             routerLinkActive="active main_navbar__item_link--active"
@@ -49,7 +49,7 @@
           <a
             class="main_navbar__item_link"
             [ngClass]="{
-              disabled_router: !isGeneralInfoValid || isSavingConstructor
+              disabled_router: isRoutingDisable()
             }"
             routerLink="publish-settings"
             routerLinkActive="active main_navbar__item_link--active"

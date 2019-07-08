@@ -34,6 +34,7 @@ import {VDataCollectionComponent} from "../../v-data-collection.component";
 import {Subscription} from "rxjs";
 import {VFormPeriodsService} from "../../services/v-form-periods.service";
 import {FinPeriod} from "../../../../models/fin-period.model";
+import { GeneralInfoIsFormExistService } from '../../services/general-info-is-form-exist.service';
 
 @Component({
   selector: "app-v-form-general-information",
@@ -106,6 +107,7 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private parserFormatter: NgbDateParserFormatter,
     private generalInfoIsValidService: GeneralInfoIsValidService,
+    private generalInfoIsFormExistService: GeneralInfoIsFormExistService,
     private constructorIsSavingService: ConstructorIsSavingService,
     private generalInfoIsSavedService: GeneralInfoIsSavedService,
     private saveFormService: SaveFormService,
@@ -134,6 +136,8 @@ export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
     this.getAllForm();
     this.isLoaded = true;
     this.constructorIsSavingService.setIsSaving(this.isDataSaving);
+    // console.log(this.formId !== "");
+    this.generalInfoIsFormExistService.setIsExist(this.formId !== "");
   }
 
   isFormReady() {

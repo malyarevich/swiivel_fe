@@ -1,11 +1,10 @@
-import {EventEmitter, Injectable} from '@angular/core';
+import { EventEmitter, Injectable } from "@angular/core";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class PublishSettingsIsSavedService {
-
-  private isSaved:boolean;
+  private isSaved: boolean;
   onIsSaved: EventEmitter<boolean> = new EventEmitter();
 
   setIsSaved(value: boolean) {
