@@ -16,8 +16,8 @@
   text-overflow: ellipsis;
   top: 0;
   text-align: left;
-  transform: translateY(3px);
-  transition: all .2s ease-out;
+  transform: translateY(0.25rem);
+  transition: all .4s ease-in-out;
   user-select: none;
   white-space: nowrap;
   width: 100%;
@@ -25,6 +25,10 @@
   .app-input-fill & {
     opacity: 1;
     transform: none;
+  }
+  .app-input-fill .app-input:placeholder-shown + &{
+    opacity: 0;
+    transform: translateY(1.4rem);
   }
 }
 
@@ -35,7 +39,7 @@
   padding: 0 1em;
   min-height: 40px;
   background-color: #FFF;
-  transition: all .2s ease-out;
+  transition: all .4s ease-in-out;
   width: 100%;
   &:hover, &:focus {
     /* inset | offset-x | offset-y | blur-radius | spread-radius | color */
@@ -50,18 +54,26 @@
 
 ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
   color: #919293;
+  transition: all .3s ease-in-out;
 }
 
 ::-moz-placeholder { /* Firefox 19+ */
   color: #919293;
+  transition: all .3s ease-in-out;
 }
 
 :-ms-input-placeholder { /* IE 10+ */
   color: #919293;
+  transition: all .3s ease-in-out;
 }
 
 :-moz-placeholder { /* Firefox 18- */
   color: #919293;
+  transition: all .3s ease-in-out;
+}
+::placeholder {
+  color: #919293;
+  transition: all .3s ease-in-out;
 }
 
 .app-input-text {

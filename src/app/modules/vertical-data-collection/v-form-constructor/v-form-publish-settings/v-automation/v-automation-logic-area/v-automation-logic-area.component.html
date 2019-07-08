@@ -1,0 +1,20 @@
+<div class="logic_area">
+    <div class="logic_area__controls">
+      <div class="preview_title logic_area__button">
+        <span>Automation Logic </span> 
+        <span class="logic_area__icon">
+          <i class="fas fa-question-circle"></i>
+        </span>
+      </div>
+      <div class="section_content__template_button_box">
+        <p class="section_content__template_button">
+          Add Logic Builder
+        </p>
+      </div>
+    </div>
+    <div class="logic_area__content_box">
+      <div class="logic_area__content" *ngFor="let logicItem of logicList">
+        <span [innerHTML]="logicItem['name']"></span>
+      </div>
+    </div>
+</div>

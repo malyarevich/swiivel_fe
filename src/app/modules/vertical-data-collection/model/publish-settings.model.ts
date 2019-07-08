@@ -1,24 +1,60 @@
-export interface IAutomationList {
-  "automation_list": IAutomationListItem[];
+export interface IAutomation {
+  "automation_list"?: IAutomationListItem[];
+  "logic_list"?: IAutomationLogicListItem[];
+  "template_list"?: IAutomationTemplateListItem[];
+  "type_list"?: IAutomationTypeListItem[];
 }
 
 export interface IAutomationListItem {
-  "id"?: string,            
-  "name": string,
-  "type_id": string,
-  "template_id": string,
-  "logics": any
+  "created_at"?: string;
+  "updated_at"?: string;
+  "deleted_at"?: string;
+
+  "created_by"?: object;
+  "updated_by"?: object;
+
+  "id"?: number;
+  "form_id"?: number;
+  "logics": IAutomationLogicListItem[];
+  "name": string;
+  "template"?: IAutomationTemplateListItem[];
+  "template_id"?: number;
+  "type"?: IAutomationTypeListItem[];
+  "type_id"?: number;
 }
 
-export interface IAutomationTemplate {
-  "id"?: string,    
-  "type_id"?: "string";
-	"name": string,
-	"content": string
+export interface IAutomationLogicListItem {
+  "created_at"?: string;
+  "updated_at"?: string;
+  "deleted_at"?: string;
+    
+  "id"?: number;
+  "logic": string;
+  "name": string;
+  "pivot"?: {
+    "automation_id": number;
+    "logic_id": number;
+  };
 }
 
-export interface IAutomationLogic {
-  "id"?: string,
-	"logic": string,
-	"name": string,
+export interface IAutomationTemplateListItem {
+  "created_at"?: string;
+  "updated_at"?: string;
+  "deleted_at"?: string;
+
+  "id"?: string;    
+  "type_id"?: string;
+	"name": string;
+	"content": string;
+}
+
+export interface IAutomationTypeListItem {
+  "created_at"?: string;
+  "updated_at"?: string;
+  "deleted_at"?: string;
+
+  "id"?: number;
+	"name": string;
+  "type": string;
+
 }

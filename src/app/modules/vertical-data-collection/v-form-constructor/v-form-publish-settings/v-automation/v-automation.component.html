@@ -1,82 +1,38 @@
-<div class="section_header">
-  <div class="section_header__item">
-    <label class="app-input-label" for="section-name">Automation Name</label>
-    <input
-      id="section-name"
-      type="text"
-      class="app-input"
-      placeholder="Section Name"
-    />
-  </div>
-  <div class="section_header__item">
-    <label class="app-input-label" for="section-width">Automation Type</label>
-    <input
-      id="section-width"
-      type="text"
-      class="app-input"
-      placeholder="Section Name"
-    />
-  </div>
-  <div class="section_header__item">
-    <label class="app-input-label" for="section-width">Created by</label>
-    <input
-      id="section-width"
-      type="text"
-      class="app-input"
-      placeholder="Section Name"
-    />
-  </div>
-
-  <div class="section_header__item">
-    <label class="app-input-label" for="section-width">Lasted Updated by</label>
-    <input
-      id="section-width"
-      type="text"
-      class="app-input"
-      placeholder="Section Name"
-    />
-  </div>
-
-  <!-- trash -->
-  <div class="section_header__control_item">
-    <span class="app-fb-section-icon-white">
-      <i class="fas fa-trash"></i>
-    </span>
-  </div>
-
-  <!-- caret -->
-  <div
-    class="section_header__control_item section_header__control_item--border_left"
+<ng-container *ngIf="automation !== undefined">
+  <ng-container
+    *ngFor="let automationItem of automation['automation_list']"
   >
-    <span class="app-fb-section-icon-primary">
-      <i class="fas fa-caret-up"></i>
-    </span>
-  </div>
-</div>
+    <app-v-automation-header *ngIf="automationItem !== undefined"
+      [automationItem]="automationItem"
+      [typeList]="automation['type_list']"
+    ></app-v-automation-header>
 
-<div class="section_content">
-  <div class="section_content__row mb_125">
-    <div class="section_content__template_title_box">
-      <p class="section_content__template_title">
-        Default Primary School Email Template
-      </p>
-    </div>
-    <div class="section_content__template_button_box">
-      <p class="section_content__template_button">
-        Select Template
-      </p>
-    </div>
-  </div>
+    <div class="section_content">
+      <div class="section_content__row mb_125">
+        <div class="section_content__template_title_box">
+          <p class="section_content__template_title">
+            {{ automationItem['template']['name'] }}
+          </p>
+        </div>
+        <div class="section_content__template_button_box">
+          <p class="section_content__template_button">
+            Select Template
+          </p>
+        </div>
+      </div>
 
-  <div class="section_content__row">
-    <div class="template_area">
-      <div class="section_content__row template_area__controls">
-        <div class="preview_title">Template Preview</div>
-        <div class="page_status">Page 1 of 3</div>
-        <div class="edit_icon">/</div>
-
+      <div class="section_content__row">
+        <app-v-automation-template-area
+          [template]="automationItem['template']"
+          class="section_content__template_area"
+        ></app-v-automation-template-area>
+        <app-v-automation-logic-area
+          [logicList]="automationItem['logics']"
+          class="section_content__logic_area"
+        ></app-v-automation-logic-area>
       </div>
     </div>
-    <div class="logic_area"></div>
-  </div>
-</div>
+  </ng-container>
+</ng-container>
+
+<ng-container *ngIf="automation === undefined"> </ng-container>

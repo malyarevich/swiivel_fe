@@ -184,6 +184,8 @@ export class VFormPublishSettingsComponent implements OnInit {
   }
 
   setLocalForm(form: Form): void {
+    
+    // console.log(form);
     if (!isEmpty(form)) {
       this.form = form;
       this.formName = form.name;
@@ -232,6 +234,8 @@ export class VFormPublishSettingsComponent implements OnInit {
             form.publish_settings
           );
           this.setLocalForm(form); //remoteForm
+    
+          // console.log(this.publish_settings);
         },
         error => console.log(error, "error"),
         () => {

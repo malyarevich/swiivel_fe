@@ -1,0 +1,71 @@
+<div class="section_header">
+  <!-- Name -->
+  <div class="section_header__item app-input-fill">
+    <input
+      id="section-name"
+      type="text"
+      class="app-input"
+      placeholder="Automation Name"
+      [value]="automationItem['name']"
+    />
+    <label class="app-input-label" for="section-name">Automation Name</label>
+  </div>
+
+  <!-- Type -->
+  <div class="section_header__item app-input-fill">
+    <select class="app-input" id="section-type">
+      <ng-container *ngFor="let itemType of typeList">
+        <option
+          [value]="itemType['type']"
+          [selected]="automationItem['type']['id'] === itemType['id']"
+        >
+          {{ itemType["name"] }}
+        </option>
+      </ng-container>
+    </select>
+    <label class="app-input-label" for="section-type">Automation Type</label>
+  </div>
+
+  <!-- Created by -->
+  <div class="section_header__item app-input-fill">
+    <input
+      id="section-created"
+      type="text"
+      class="app-input"
+      placeholder="Created by"
+      readonly
+      [value]="createdBy"
+    />
+    <label class="app-input-label" for="section-created">Created by</label>
+  </div>
+
+  <!-- Lasted Updated by -->
+  <div class="section_header__item app-input-fill">
+    <input
+      id="section-updated"
+      type="text"
+      class="app-input"
+      readonly
+      [value]="updatedBy"
+    />
+    <label class="app-input-label" for="section-updated"
+      >Lasted Updated by</label
+    >
+  </div>
+
+  <!-- Trash -->
+  <div class="section_header__control_item">
+    <span class="app-fb-section-icon-white">
+      <i class="fas fa-trash"></i>
+    </span>
+  </div>
+
+  <!-- Caret -->
+  <div
+    class="section_header__control_item section_header__control_item--border_left"
+  >
+    <span class="app-fb-section-icon-primary">
+      <i class="fas fa-caret-up"></i>
+    </span>
+  </div>
+</div>
