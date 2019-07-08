@@ -5,7 +5,6 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import { range } from 'lodash'
 import {FormBuilder, FormGroup, FormControl, Validators} from "@angular/forms";
 import {v4 as uuid} from 'uuid';
-import {CdkDragDrop, moveItemInArray, transferArrayItem} from "@angular/cdk/drag-drop";
 import {SideBarService} from "../v-side-bar/side-bar.service";
 import {dividerStyle} from "./divider";
 

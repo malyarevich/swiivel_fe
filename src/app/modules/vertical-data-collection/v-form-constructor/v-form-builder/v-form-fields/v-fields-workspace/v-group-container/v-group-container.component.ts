@@ -33,6 +33,10 @@ export class VGroupContainerComponent implements OnInit {
   dropAdd(event){
     if(!event.value._id) {
       this.inputGroup.fields =  this.sideBarService.replaceExistinField(this.inputGroup.fields[event.dropIndex],this.inputGroup.fields );
+      if(this.sideBarService.findIfPresent(this.inputGroup.fields[event.dropIndex],this.inputGroup.fields ).length>1){
+        this.sideBarService.onFieldDelete(this.inputGroup.fields[event.dropIndex], this.inputGroup.fields);
+        return;
+      }
       this.sideBarService.fieldCheck(this.inputGroup.fields[event.dropIndex], this.sideBar[0]);
     }
   }
