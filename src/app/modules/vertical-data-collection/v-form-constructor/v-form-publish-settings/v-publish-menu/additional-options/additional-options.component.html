@@ -2,15 +2,15 @@
   class="app-div-animation"
   [ngClass]="{
     'app-div-show':
-      activeMenuItem === item.value && item.addOptions !== undefined,
+      activeMenuItem === item['value'] && item['addOptions'] !== undefined,
     'app-div-hide': !(
-      activeMenuItem === item.value && item.addOptions !== undefined
+      activeMenuItem === item['value'] && item['addOptions'] !== undefined
     )
   }"
 >
   <div class="menu_subtitle">
     <span class="menu_subtitle__text">
-      {{ item.addOptions.listTitle }}
+      {{ item['addOptions']['listTitle'] }}
     </span>
     <span (click)="addNewAutomation()">
       <i class="fas fa-plus-square menu_subtitle__icon"></i>
