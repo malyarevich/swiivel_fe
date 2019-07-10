@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { PaymentMethodsService } from './person.service';
 
-describe('PersonService', () => {
+describe('PeriodService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {

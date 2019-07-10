@@ -3,6 +3,7 @@
     <app-input-field
       [(ngModel)]="period.name"
       label="Period Name"
+      (ngModelChange)="onChangePeriod()"
     >
     </app-input-field>
   </div>
@@ -12,13 +13,16 @@
       label="Period Start"
       [(ngModel)]="period.date_from"
       [width]="'147px'"
+      [isInvalid]="period.date_from > period.date_to"
+      (ngModelChange)="onChangePeriod()"
     ></app-datepicker-field>
+
     <app-datepicker-field
       label="Period End"
       [(ngModel)]="period.date_to"
       [width]="'147px'"
+      [isInvalid]="period.date_from > period.date_to"
+      (ngModelChange)="onChangePeriod()"
     ></app-datepicker-field>
   </div>
-
-  <pre>{{period | json }}}</pre>
 </div>
