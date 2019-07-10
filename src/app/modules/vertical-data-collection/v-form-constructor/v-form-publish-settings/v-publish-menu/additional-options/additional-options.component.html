@@ -1,0 +1,40 @@
+<div
+  class="app-div-animation"
+  [ngClass]="{
+    'app-div-show':
+      activeMenuItem === item.value && item.addOptions !== undefined,
+    'app-div-hide': !(
+      activeMenuItem === item.value && item.addOptions !== undefined
+    )
+  }"
+>
+  <div class="menu_subtitle">
+    <span class="menu_subtitle__text">
+      {{ item.addOptions.listTitle }}
+    </span>
+    <span (click)="addNewAutomation()">
+      <i class="fas fa-plus-square menu_subtitle__icon"></i>
+    </span>
+  </div>
+
+  <div class="menu_list">
+    <div class="menu_list__item" *ngFor="let automationItem of automationList">
+      <div class="menu_list__icon_type_box">
+        <i
+          class="fas {{
+            getTypeIcon(automationItem['type_id'])
+          }} menu_list__icon_type"
+        ></i>
+      </div>
+      <div class="menu_list__title_box">
+        <span class="menu_list__name">{{ automationItem["name"] }}</span>
+        <span class="menu_list__type">{{
+          getTypeName(automationItem["type_id"])
+        }}</span>
+      </div>
+      <div class="menu_list__icon_trash_box">
+        <i class="fas fa-trash menu_list__icon_trash"></i>
+      </div>
+    </div>
+  </div>
+</div>

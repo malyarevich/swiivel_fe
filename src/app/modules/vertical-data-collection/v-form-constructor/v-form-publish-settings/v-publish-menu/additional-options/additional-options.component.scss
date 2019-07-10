@@ -1,0 +1,99 @@
+@import "../v-publish-menu.component.scss";
+
+.font_default {
+  color: $darkgray-color;
+  font-family: "NunitoSans-Regular", "Helvetica";
+  font-size: 1rem;
+  font-weight: normal;
+  line-height: 1.1rem;
+}
+
+.menu_subtitle {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+
+  &__text {
+    font-family: "NunitoSans-Regular", "Helvetica";
+    font-size: 1.2rem;
+    line-height: 1.7rem;
+  }
+
+  &__icon {
+    color: $element-base-color;
+    cursor: pointer;
+    font-size: 1.25rem;
+  }
+}
+
+.menu_list {
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-bottom: 0.5rem;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  padding-top: 0.25rem;
+
+  //d-flex flex-row align-items-stretch justify-content-start p-2 m-1
+  &__item {
+    align-items: stretch;
+    background-color: #f6f6f6;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
+  }
+
+  &__icon_type_box {
+    align-items: center;
+    display: flex;
+    flex: 1 1 1.5rem;
+    flex-direction: row;
+    justify-content: center;
+    margin-right: 1rem;
+  }
+
+  &__icon_type {
+    color: #a4a8be;
+    font-size: 1.5rem;
+  }
+
+  &__title_box {
+    align-items: flex-start;
+    display: flex;
+    flex: 10 10 auto;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  &__name {
+    @extend .font_default;
+
+    font-weight: bold;
+  }
+
+  &__type {
+    @extend .font_default;
+
+    font-size: 0.85rem;
+    line-height: 1rem;
+  }
+
+  &__icon_trash_box {
+    align-items: center;
+    display: flex;
+    flex: 1 1 1.5rem;
+    justify-content: flex-end;
+  }
+
+  &__icon_trash {
+    color: $gray-color;
+  }
+}

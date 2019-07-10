@@ -66,7 +66,7 @@ export class VPublishMenuComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    this.activeMenuItemEmitter.emit(PublishMenuItems.conditions);
+    this.setActiveItem(PublishMenuItems.conditions);
     this.stateSubEmitter.emit(this.stateSub);
     this.automationList = this.automation.automation_list;
   }
@@ -79,39 +79,6 @@ export class VPublishMenuComponent implements OnInit {
   toggleSubMenu(item, type) {
     this.stateSub[item][type] != this.stateSub[item][type];
     this.stateSubEmitter.emit(this.stateSub);
-  }
-
-  getName(type_id: number): string {
-    const filtered_list = this.automation['type_list'].filter((item) => type_id === item.id);
-    return filtered_list[0]['name'];
-  }
-
-  getTypeName(type_id: number): string {
-    const filtered_list = this.automation['type_list'].filter((item) => type_id === item.id);
-    return filtered_list[0]['name'];
-  }
-
-  getTypeIcon(type_id: number): string {
-    const filtered_list = this.automation['type_list'].filter((item) => type_id === item.id);
-    switch (filtered_list[0]['type']) {
-      case "email":
-        return `fa-envelope`;
-        break;
-      case "mailing":
-        return `fa-envelope-open-text`;
-        break;
-      case "system_notification":
-        return `fa-bell`;
-        break;
-      case "text_message":
-        return `fa-file-alt`;
-        break;
-      case "robocall":
-        return `fa-phone-alt`;
-        break;
-      default:
-        return `fa-toilet-paper-alt`;
-    }
   }
 
   addNewAutomation() {
