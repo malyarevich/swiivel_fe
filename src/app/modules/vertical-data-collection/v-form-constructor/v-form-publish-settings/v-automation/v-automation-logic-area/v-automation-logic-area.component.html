@@ -13,8 +13,8 @@
       </div>
     </div>
     <div class="logic_area__content_box">
-      <div class="logic_area__content" *ngFor="let logicItem of logicList">
-        <span [innerHTML]="logicItem['name']"></span>
+      <div class="logic_area__content" *ngFor="let logicId of logicList">
+        <span [innerHTML]="getLogicName(logicId)"></span>
       </div>
     </div>
 </div>

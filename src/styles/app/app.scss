@@ -105,3 +105,17 @@
 .app-background-light-gray {
   background-color: $lightgray-color !important;
 }
+
+.app-div-animation {
+  transition: all 0.5s ease-in-out;
+}
+
+.app-div-show {
+  opacity: 1;
+  max-height: auto;
+}
+
+.app-div-hide {
+  opacity: 0;
+  max-height: 0;
+}

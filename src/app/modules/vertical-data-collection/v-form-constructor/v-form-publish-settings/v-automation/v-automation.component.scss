@@ -73,6 +73,12 @@
     flex: 15 15;
     justify-content: stretch;
   }
+
+  &:after {
+    content: "";
+    display: block;
+    clear: both;
+  }
 }
 
 .mb_125 {

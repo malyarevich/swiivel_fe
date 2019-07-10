@@ -45,6 +45,8 @@ import { SaveFormService } from "../../services/save-form.service";
 import { Observable, Subscription } from "rxjs";
 import { PublishSettingsIsSavedService } from "../../services/publish-settings-is-saved.service";
 import { ConstructorIsSavingService } from "../../services/constructor-is-saving.service";
+import { IAutomation, defaultAutomation } from "../../model/publish-settings.model";
+import { VPublishSettingsAutomationService } from "../../services/v-publish-settings-automation.service";
 
 //TODO: remove excess functional
 @Component({
@@ -98,6 +100,9 @@ export class VFormPublishSettingsComponent implements OnInit {
 
   documents: DocumentsModel[] = [];
   formsPDF: FormsPDFModel[] = [];
+  automation: IAutomation;
+
+  
 
   isDataSaving: boolean = false;
   spinnerText: string = "Data is loading...";
@@ -116,6 +121,7 @@ export class VFormPublishSettingsComponent implements OnInit {
     private fileService: VFilesService,
     private readonly financeService: FinanceService,
     private publishSettingsIsSavedService: PublishSettingsIsSavedService,
+    private automationService: VPublishSettingsAutomationService,
     private constructorIsSavingService: ConstructorIsSavingService,
     private saveFormService: SaveFormService
   ) {
@@ -125,11 +131,11 @@ export class VFormPublishSettingsComponent implements OnInit {
   ngOnInit() {
     window.scrollTo(0, 0);
     // if (VFormPublishSettingsComponent.countSaveFormService < 1) {
-      this.saveFormSubscription = this.saveFormService.onSaveForm.subscribe(
-        () => {
-          this.saveForm();
-        }
-      );
+    this.saveFormSubscription = this.saveFormService.onSaveForm.subscribe(
+      () => {
+        this.saveForm();
+      }
+    );
     // }
     VFormPublishSettingsComponent.countSaveFormService++;
     this.constructorIsSavingService.setIsSaving(this.isDataSaving);
@@ -141,7 +147,23 @@ export class VFormPublishSettingsComponent implements OnInit {
     });
     this.draftId = this.formId + "_publish-setting";
     this.formInit();
+    this.initAutomation();
     // console.log(this.isDataSaving);
+  }
+
+  initAutomation() {
+    this.automationService.getOneAutomation(this.formId).subscribe(
+      (automation: IAutomation) => {
+        // console.log("loading AutomationList");
+        // console.log(automation);
+        this.automation = automation;
+      },
+      error => console.log(error, "error"),
+      () => {
+        // this.generalInfoIsValidService.setIsValid(true);
+      }
+    );
+    this.activeMenuItem = this.publishMenuItems.conditions;
   }
 
   toggleOnlineCheckbox(key: string) {
@@ -184,7 +206,6 @@ export class VFormPublishSettingsComponent implements OnInit {
   }
 
   setLocalForm(form: Form): void {
-    
     // console.log(form);
     if (!isEmpty(form)) {
       this.form = form;
@@ -234,7 +255,7 @@ export class VFormPublishSettingsComponent implements OnInit {
             form.publish_settings
           );
           this.setLocalForm(form); //remoteForm
-    
+
           // console.log(this.publish_settings);
         },
         error => console.log(error, "error"),
@@ -296,6 +317,22 @@ export class VFormPublishSettingsComponent implements OnInit {
       const form: Form = this.getForm();
       this.vDataCollection.setDraftForm(this.draftId, form);
     }
+  }
+
+  addAutomation(event: any) {
+    // this.automationService.sendAutomation(this.defaultAutomation, this.formId);
+    // FIXME: add UI to newItem
+    // console.log(defaultAutomation);
+    this.automation.automation_list.push(defaultAutomation.automation_list[0]);
+  }
+
+  isLoading(): boolean {
+    return (
+      this.publish_settings !== undefined &&
+      !this.isDataSaving &&
+      // && this.activeMenuItem !== undefined
+      this.publishMenuItems !== undefined
+    );
   }
 
   goBack() {

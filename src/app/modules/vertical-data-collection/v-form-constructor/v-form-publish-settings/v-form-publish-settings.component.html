@@ -1,15 +1,20 @@
 <div class="container-fluid">
-  <ng-container *ngIf="publish_settings !== undefined && !isDataSaving">
+  <ng-container *ngIf="isLoading()">
     <div class="row mt-5">
       <div class="col-12 col-lg-3 rounded">
         <!-- pl-lg-5 -->
-        <app-v-publish-menu
-          [stateSub]="publish_settings.state"
-          (activeMenuItemEmitter)="setActiveMenu($event)"
-          (stateSubEmitter)="setStateSub($event)"
-        ></app-v-publish-menu>
+        <ng-container *ngIf="automation !== undefined">
+          <app-v-publish-menu
+            [stateSub]="publish_settings.state"
+            [automation]="automation"
+            
+            (addAutomation)="addAutomation($event)"
+            (activeMenuItemEmitter)="setActiveMenu($event)"
+            (stateSubEmitter)="setStateSub($event)"
+          ></app-v-publish-menu>
+        </ng-container>
       </div>
-      <div class="col-12 col-lg-9 openable_item">
+      <div class="col-12 col-lg-9 openable_item" *ngIf="activeMenuItem !== undefined">
         <!-- pr-lg-5 -->
         <app-v-conditions-review
           class="d-block openable_item"
@@ -29,14 +34,18 @@
             'openable_item--close': activeMenuItem !== publishMenuItems.settings
           }"
         ></app-v-publish-settings>
-        <app-v-automation
-          class="d-block openable_item"
-          [ngClass]="{
-            'openable_item--close':
-              activeMenuItem !== publishMenuItems.automation
-          }"
-          [id]="formId"
-        ></app-v-automation>
+
+        <ng-container *ngIf="automation !== undefined">
+          <app-v-automation
+            [automation]="automation"
+            class="d-block openable_item"
+            [ngClass]="{
+              'openable_item--close':
+                activeMenuItem !== publishMenuItems.automation
+            }"
+            [id]="formId"
+          ></app-v-automation>
+        </ng-container>
         <app-v-redirect-pages
           class="d-block openable_item"
           [ngClass]="{
@@ -47,7 +56,7 @@
     </div>
   </ng-container>
 
-  <ng-container *ngIf="publish_settings === undefined || isDataSaving">
+  <ng-container *ngIf="!isLoading()">
     <main-spinner [spinnerText]="spinnerText"></main-spinner>
   </ng-container>
 </div>

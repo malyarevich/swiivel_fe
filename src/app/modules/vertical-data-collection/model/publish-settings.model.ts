@@ -1,3 +1,15 @@
+export const defaultAutomation: IAutomation = {
+  automation_list: [
+    {
+      name: "New Automation",
+      type_id: 1,
+      template_id: 1,
+      logics: [1,2,3]
+    }
+  ]
+};
+
+
 export interface IAutomation {
   "automation_list"?: IAutomationListItem[];
   "logic_list"?: IAutomationLogicListItem[];
@@ -15,11 +27,9 @@ export interface IAutomationListItem {
 
   "id"?: number;
   "form_id"?: number;
-  "logics": IAutomationLogicListItem[];
+  "logics": number[];
   "name": string;
-  "template"?: IAutomationTemplateListItem[];
   "template_id"?: number;
-  "type"?: IAutomationTypeListItem[];
   "type_id"?: number;
 }
 
@@ -42,8 +52,8 @@ export interface IAutomationTemplateListItem {
   "updated_at"?: string;
   "deleted_at"?: string;
 
-  "id"?: string;    
-  "type_id"?: string;
+  "id"?: number;    
+  "type_id"?: number;
 	"name": string;
 	"content": string;
 }

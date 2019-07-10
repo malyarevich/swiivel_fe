@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output, Input } from "@angular/core";
 import { PublishMenuItems } from "../models/publish-menu-items";
 import { ISubMenus } from "../models/publish-settings";
+import { IAutomationListItem, IAutomation } from '../../../model/publish-settings.model';
 
 @Component({
   selector: "app-v-publish-menu",
@@ -9,10 +10,13 @@ import { ISubMenus } from "../models/publish-settings";
 })
 export class VPublishMenuComponent implements OnInit {
   @Input() stateSub: ISubMenus;
+  @Input() automation: IAutomation;
+  @Output() addAutomation = new EventEmitter();
   @Output() activeMenuItemEmitter = new EventEmitter();
   @Output() stateSubEmitter = new EventEmitter<ISubMenus>();
 
-  activeMenuItem: string = PublishMenuItems.conditions;
+  activeMenuItem: string;
+  automationList: IAutomationListItem[];
 
   // stateSub: ISubMenus = {
   //   settings: {
@@ -49,20 +53,9 @@ export class VPublishMenuComponent implements OnInit {
     {
       title: PublishMenuItems.titles[PublishMenuItems.automation],
       value: PublishMenuItems.automation,
-      addOptions: [
-        {
-          listTitle: "List of Automation",
-          automation_list: [
-            {
-              id: 1,
-              name: "Automation first",
-              type_id: 2,
-              template_id: 2,
-              logics: [1, 2]
-            }
-          ]
-        }
-      ]
+      addOptions: {
+        listTitle: "List of Automation",
+      }
     },
     {
       title: PublishMenuItems.titles[PublishMenuItems.redirect],
@@ -73,8 +66,9 @@ export class VPublishMenuComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    this.activeMenuItemEmitter.emit(this.activeMenuItem);
+    this.activeMenuItemEmitter.emit(PublishMenuItems.conditions);
     this.stateSubEmitter.emit(this.stateSub);
+    this.automationList = this.automation.automation_list;
   }
 
   setActiveItem(value) {
@@ -86,4 +80,42 @@ export class VPublishMenuComponent implements OnInit {
     this.stateSub[item][type] != this.stateSub[item][type];
     this.stateSubEmitter.emit(this.stateSub);
   }
+
+  getName(type_id: number): string {
+    const filtered_list = this.automation['type_list'].filter((item) => type_id === item.id);
+    return filtered_list[0]['name'];
+  }
+
+  getTypeName(type_id: number): string {
+    const filtered_list = this.automation['type_list'].filter((item) => type_id === item.id);
+    return filtered_list[0]['name'];
+  }
+
+  getTypeIcon(type_id: number): string {
+    const filtered_list = this.automation['type_list'].filter((item) => type_id === item.id);
+    switch (filtered_list[0]['type']) {
+      case "email":
+        return `fa-envelope`;
+        break;
+      case "mailing":
+        return `fa-envelope-open-text`;
+        break;
+      case "system_notification":
+        return `fa-bell`;
+        break;
+      case "text_message":
+        return `fa-file-alt`;
+        break;
+      case "robocall":
+        return `fa-phone-alt`;
+        break;
+      default:
+        return `fa-toilet-paper-alt`;
+    }
+  }
+
+  addNewAutomation() {
+    this.addAutomation.emit();
+  }
+
 }

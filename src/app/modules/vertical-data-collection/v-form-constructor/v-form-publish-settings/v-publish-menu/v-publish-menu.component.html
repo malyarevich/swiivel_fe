@@ -1,47 +1,90 @@
 <div>
-  <ul class="list-group bg-white ">
+  <ul class="list-group bg-white">
     <ng-container *ngFor="let item of menuItems; let indexMenu = index">
-      <li class="list-group-item app-form-publish-menu-item"
-        [ngClass]="{'app-form-publish-menu-item-active': activeMenuItem === item.value}"
-        (click)="setActiveItem(item.value)">
-        {{indexMenu+1}}. {{item.title | uppercase}}
+      <li
+        class="list-group-item app-form-publish-menu-item"
+        [ngClass]="{
+          'app-form-publish-menu-item-active': activeMenuItem === item.value
+        }"
+        (click)="setActiveItem(item.value)"
+      >
+        {{ indexMenu + 1 }}. {{ item.title | uppercase }}
       </li>
-      <ng-container *ngIf="activeMenuItem === item.value && stateSub !== undefined">
-        <li 
+      <ng-container
+        *ngIf="activeMenuItem === item.value && stateSub !== undefined"
+      >
+        <li
           *ngFor="let subMenu of item.stateSub; let indexSub = index"
           class="list-group-item app-form-publish-menu-item"
         >
           <div class="row no-gutters slider-item align-items-center">
             <div class="col-auto mr-2">
               <label class="app-switch">
-                <input type="checkbox"
-                  id="switch{{i}}_{{indexSub}}"
-                  name="switch{{i}}_{{indexSub}}"
+                <input
+                  type="checkbox"
+                  id="switch{{ i }}_{{ indexSub }}"
+                  name="switch{{ i }}_{{ indexSub }}"
                   [ngModel]="stateSub[item.value][subMenu.type]"
-                  (ngModelChange)="stateSub[item.value][subMenu.type] = stateSub[item.value][subMenu.type] = $event"
-                >
+                  (ngModelChange)="
+                    stateSub[item.value][subMenu.type] = stateSub[item.value][
+                      subMenu.type
+                    ] = $event
+                  "
+                />
                 <span class="app-slider app-round"></span>
               </label>
             </div>
             <div class="col">
-              <label
-                class="switch_label"
-                for="switch{{i}}_{{indexSub}}">
-                <span 
-                  class="font-weight-bold side-bar-toggle" 
-                  (click)="toggleSubMenu(item.value, subMenu.type);"
-                >{{subMenu.name}}</span>
+              <label class="switch_label" for="switch{{ i }}_{{ indexSub }}">
+                <span
+                  class="font-weight-bold side-bar-toggle"
+                  (click)="toggleSubMenu(item.value, subMenu.type)"
+                >
+                  {{ subMenu.name }}
+                </span>
               </label>
             </div>
           </div>
         </li>
       </ng-container>
-      <ng-container *ngIf="activeMenuItem === item.value && addOptions !== undefined">
-        
-      </ng-container>
+      <ng-container *ngIf="item.addOptions !== undefined">
+        <!-- *ngIf="activeMenuItem === item.value && item.addOptions !== undefined" -->
+        <div
+          class="app-div-animation"
+          [ngClass]="{
+            'app-div-show':
+              activeMenuItem === item.value && item.addOptions !== undefined,
+            'app-div-hide': !(
+              activeMenuItem === item.value && item.addOptions !== undefined
+            )
+          }"
+        >
+          <div class="menu_subtitle">
+            <span class="menu_subtitle__text">
+              {{ item.addOptions.listTitle }}
+            </span>
+            <span (click)="addNewAutomation()">
+              <i class="fas fa-plus-square menu_subtitle__icon"></i>
+            </span>
+          </div>
 
+          <div class="menu_list">
+            <div class="menu_list__item" *ngFor="let automationItem of automationList">
+              <div class="menu_list__icon_type_box">
+                <i class="fas {{ getTypeIcon(automationItem['type_id']) }} menu_list__icon_type"></i>
+              </div>
+              <div class="menu_list__title_box">
+                <span class="menu_list__name">{{ automationItem['name'] }}</span>
+                <span class="menu_list__type">{{ getTypeName(automationItem['type_id']) }}</span>
+              </div>
+              <div class="menu_list__icon_trash_box">
+                <i class="fas fa-trash menu_list__icon_trash"></i>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </ng-container>
     </ng-container>
-    
   </ul>
 </div>
-

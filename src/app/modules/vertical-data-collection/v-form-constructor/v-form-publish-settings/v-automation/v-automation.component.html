@@ -3,15 +3,15 @@
     *ngFor="let automationItem of automation['automation_list']"
   >
     <app-v-automation-header *ngIf="automationItem !== undefined"
+      [automation]="automation"
       [automationItem]="automationItem"
-      [typeList]="automation['type_list']"
     ></app-v-automation-header>
 
     <div class="section_content">
       <div class="section_content__row mb_125">
         <div class="section_content__template_title_box">
           <p class="section_content__template_title">
-            {{ automationItem['template']['name'] }}
+            {{ getTemplateName(automationItem['template_id']) }}
           </p>
         </div>
         <div class="section_content__template_button_box">
@@ -23,11 +23,13 @@
 
       <div class="section_content__row">
         <app-v-automation-template-area
-          [template]="automationItem['template']"
+          [templateId]="automationItem['template_id']"
+          [automation]="automation"
           class="section_content__template_area"
         ></app-v-automation-template-area>
         <app-v-automation-logic-area
           [logicList]="automationItem['logics']"
+          [automation]="automation"
           class="section_content__logic_area"
         ></app-v-automation-logic-area>
       </div>

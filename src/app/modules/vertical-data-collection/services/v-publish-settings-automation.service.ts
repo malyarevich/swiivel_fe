@@ -56,11 +56,13 @@ export class VPublishSettingsAutomationService {
    */
 
   sendAutomation(automation: IAutomation, id: string) {
+    console.log( JSON.stringify(automation));
     if (id !== undefined) {
       return this.http
         .put(`/proxy/forms/public-settings/${id}`, automation)
         .pipe(map(response => response));
     }
+    console.log(automation);
     return this.http
       .post("/proxy/forms/public-settings/", automation)
       .pipe(map(response => response));
@@ -139,3 +141,5 @@ export class VPublishSettingsAutomationService {
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////
 }
+
+

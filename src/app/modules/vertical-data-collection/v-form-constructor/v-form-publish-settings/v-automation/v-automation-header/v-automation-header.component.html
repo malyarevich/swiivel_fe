@@ -14,10 +14,10 @@
   <!-- Type -->
   <div class="section_header__item app-input-fill">
     <select class="app-input" id="section-type">
-      <ng-container *ngFor="let itemType of typeList">
+      <ng-container *ngFor="let itemType of automation['type_list']">
         <option
           [value]="itemType['type']"
-          [selected]="automationItem['type']['id'] === itemType['id']"
+          [selected]="automationItem['type_id'] === itemType['id']"
         >
           {{ itemType["name"] }}
         </option>
