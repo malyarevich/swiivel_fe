@@ -136,6 +136,12 @@
           [items]="persons"
         >
         </app-select-multi-search-field>
+        <div class="form-payer-account-members__switcher">
+          <app-toggle-field
+            label="Autoreceipt Send"
+            formControlName="autoreceipt"
+          ></app-toggle-field>
+        </div>
       </div>
       <p
         class="form-payer-account-has-error"
@@ -161,7 +167,6 @@
           Add Account
         </button>
       </div>
-      <pre>{{ this.feesData | json }}</pre>
     </form>
   </div>
 </app-modal>

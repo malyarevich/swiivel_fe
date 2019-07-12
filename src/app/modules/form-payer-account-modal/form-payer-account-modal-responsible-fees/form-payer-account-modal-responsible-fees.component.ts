@@ -82,7 +82,7 @@ export class FormPayerAccountModalResponsibleFeesComponent implements OnInit, On
   }
 
   ngOnChanges(): void {
-    const activeFees: Fee[] = null;
+    const activeFees: Fee[] = [];
     this.fees.forEach((fee) => {
       if (fee.isSelected) {
         activeFees.push(fee);

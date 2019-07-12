@@ -46,6 +46,7 @@ export class FormPayerAccountModalComponent implements OnInit {
       primary: [false],
       type: [this.types[0], Validators.required],
       recipients: [null, Validators.required],
+      autoreceipt: [false],
       receipt: [null],
       fees: [null, Validators.required],
       paymentMethodsForm: this.fb.group(
@@ -171,7 +172,8 @@ export class FormPayerAccountModalComponent implements OnInit {
       persons: [],
       primary: this.payerAccountForm.value.primary,
       fees: [],
-      payment_methods: []
+      payment_methods: [],
+      autoreceipt_send: +this.payerAccountForm.value.autoreceipt
     };
 
     this.payerAccountForm.value.fees.forEach((fee) => {
@@ -211,7 +213,7 @@ export class FormPayerAccountModalComponent implements OnInit {
     }
 
     this.payerAccountForm.value.members.forEach((member) => {
-      data.persons.push({person_id: member.id});
+      data.persons.push({person_id: member.id, receipt_send: 1});
     });
 
     this.payersService.addPayerAccount(data)

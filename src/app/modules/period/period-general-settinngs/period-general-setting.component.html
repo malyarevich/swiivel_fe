@@ -1,0 +1,22 @@
+<div class="app-period-general-settings">
+  <div class="app-period-general-settings__container">
+    <div class="app-period-general-settings__period">
+      <h2 class="app-period-general-settings__period--header">{{ period.name }}</h2>
+      <div class="app-period-general-settings__period--bar">
+        <gridster [options]="options">
+          <gridster-item [item]="item" *ngFor="let item of dashboard">
+            <div class="app-period-general-settings__period--label">
+              <label>{{ item.label }}</label>
+            </div>
+          </gridster-item>
+        </gridster>
+      </div>
+    </div>
+    <div
+      *ngIf="period.split_set"
+      ngFor="let set from period.split_set"
+      class="app-period-general-settings__split-set">
+    </div>
+    <pre>{{ dashboard | json }}</pre>
+  </div>
+</div>

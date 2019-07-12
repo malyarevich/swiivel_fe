@@ -1,13 +1,16 @@
 <div class="row no-gutters app-period-page-header pr-3 bg-white">
   <div class="col-10">
-    <div class="d-inline-block back p-3 mr-3 app-cursor-pointer" routerLink="/">
+    <div
+      *ngIf="isBackArrowEnable"
+      class="d-inline-block back p-3 mr-3 app-cursor-pointer"
+      [routerLink]="routerLink">
       <i class="fas fa-chevron-left"></i>
     </div>
     <span>{{ titleHeader }}</span>
   </div>
-  <div class="col-2 pt-2">
-    <button class="btn app-btn-outline-primary form-payer-account-cancel" type="button" (click)="onExit">
-      Save & exit
+  <div class="col-2 pt-2 app-period-page-header__button-container">
+    <button class="btn app-btn-outline-primary form-payer-account-cancel" type="button" (click)="onClick">
+      {{ buttonText }}
     </button>
   </div>
 </div>
