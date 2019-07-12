@@ -11,12 +11,10 @@ import { IAutomationListItem, IAutomation } from '../../../model/publish-setting
 export class VPublishMenuComponent implements OnInit {
   @Input() stateSub: ISubMenus;
   @Input() automation: IAutomation;
-  @Output() addAutomation = new EventEmitter();
   @Output() activeMenuItemEmitter = new EventEmitter();
   @Output() stateSubEmitter = new EventEmitter<ISubMenus>();
 
   activeMenuItem: string;
-  automationList: IAutomationListItem[];
 
   // stateSub: ISubMenus = {
   //   settings: {
@@ -68,7 +66,6 @@ export class VPublishMenuComponent implements OnInit {
   ngOnInit() {
     this.setActiveItem(PublishMenuItems.conditions);
     this.stateSubEmitter.emit(this.stateSub);
-    this.automationList = this.automation.automation_list;
   }
 
   setActiveItem(value) {
@@ -79,10 +76,6 @@ export class VPublishMenuComponent implements OnInit {
   toggleSubMenu(item, type) {
     this.stateSub[item][type] != this.stateSub[item][type];
     this.stateSubEmitter.emit(this.stateSub);
-  }
-
-  addNewAutomation() {
-    this.addAutomation.emit();
   }
 
 }

@@ -1,4 +1,4 @@
-<ng-container *ngIf="automation !== undefined">
+<ng-container *ngIf="automation !== undefined && activeMenuItem === publishMenuItems.automation">
   <ng-container
     *ngFor="let automationItem of automation['automation_list']"
   >
@@ -7,7 +7,12 @@
       [automationItem]="automationItem"
     ></app-v-automation-header>
 
-    <div class="section_content">
+    <div class="section_content app-div-animation"
+      [ngClass]="{
+        'app-div-show': !isHideAutomationItemContent[automationItem['id']],
+        'app-div-hide': isHideAutomationItemContent[automationItem['id']]
+      }"
+    >
       <div class="section_content__row mb_125">
         <div class="section_content__template_title_box">
           <p class="section_content__template_title">

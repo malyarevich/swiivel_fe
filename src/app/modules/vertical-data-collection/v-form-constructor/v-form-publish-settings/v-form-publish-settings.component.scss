@@ -1,1 +1,7 @@
 @import './shared/style/index.scss';
+
+.app-div-hide {
+    &:nth-child() {
+        height: 0; 
+    }
+}

@@ -62,9 +62,10 @@
   <!-- (ngSubmit)="sendMail(modal)" -->
   <form
     [formGroup]="pdfMailForm"
-    class="mail_form openable_item"
+    class="mail_form app-div-animation"
     [ngClass]="{
-      'openable_item--close': !pdfConfig['is_send_mail']
+      'app-div-show': pdfConfig['is_send_mail'],
+      'app-div-hide': !pdfConfig['is_send_mail']
     }"
   >
     <!-- #ProviderNameID -->
@@ -278,9 +279,10 @@
     <!-- #CoverLetterID -->
 
     <div
-      class="form-group app-input-container openable_item"
+      class="form-group app-input-container app-div-animation"
       [ngClass]="{
-        'openable_item--close': !pdfConfig['is_append_cover_letter']
+        'app-div-show': pdfConfig['is_append_cover_letter'],
+        'app-div-hide': !pdfConfig['is_append_cover_letter']
       }"
     >
       <label for="CoverLetterID" class="app-input-label d-none">

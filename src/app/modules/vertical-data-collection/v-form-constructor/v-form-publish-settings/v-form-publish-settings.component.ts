@@ -47,6 +47,7 @@ import { PublishSettingsIsSavedService } from "../../services/publish-settings-i
 import { ConstructorIsSavingService } from "../../services/constructor-is-saving.service";
 import { IAutomation, defaultAutomation } from "../../model/publish-settings.model";
 import { VPublishSettingsAutomationService } from "../../services/v-publish-settings-automation.service";
+import { VPublishSettingsAutomationLocalService } from '../../services/v-publish-settings-automation-local.service';
 
 //TODO: remove excess functional
 @Component({
@@ -101,7 +102,7 @@ export class VFormPublishSettingsComponent implements OnInit {
   documents: DocumentsModel[] = [];
   formsPDF: FormsPDFModel[] = [];
   automation: IAutomation;
-
+  maxAddedId: number;
   
 
   isDataSaving: boolean = false;
@@ -122,6 +123,7 @@ export class VFormPublishSettingsComponent implements OnInit {
     private readonly financeService: FinanceService,
     private publishSettingsIsSavedService: PublishSettingsIsSavedService,
     private automationService: VPublishSettingsAutomationService,
+    private automationLocalService: VPublishSettingsAutomationLocalService,
     private constructorIsSavingService: ConstructorIsSavingService,
     private saveFormService: SaveFormService
   ) {
@@ -151,19 +153,50 @@ export class VFormPublishSettingsComponent implements OnInit {
     // console.log(this.isDataSaving);
   }
 
-  initAutomation() {
+  initAutomation() {    
     this.automationService.getOneAutomation(this.formId).subscribe(
       (automation: IAutomation) => {
         // console.log("loading AutomationList");
         // console.log(automation);
         this.automation = automation;
+        this.maxAddedId = -1;
+        this.automation['automation_list'].reverse().forEach((automationItem) => {
+          if(automationItem['id'] > this.maxAddedId) {
+            this.maxAddedId = automationItem['id'];
+          }
+        })
       },
       error => console.log(error, "error"),
       () => {
         // this.generalInfoIsValidService.setIsValid(true);
       }
     );
+
     this.activeMenuItem = this.publishMenuItems.conditions;
+
+    this.automationLocalService.onAddAutomationItem.subscribe(
+      () => { this.addAutomationItem(); },
+      error => console.log(error, "error"),
+      () => { }
+    )
+
+    this.automationLocalService.onRemoveAutomationItem.subscribe(
+      (itemId: number) => { this.removeAutomationItem(itemId); },
+      error => console.log(error, "error"),
+      () => { }
+    )
+
+    this.automationLocalService.onChangeAutomationItemName.subscribe(
+      (obj: object) => { this.changeAutomationItemName(obj['id'], obj['name']); },
+      error => console.log(error, "error"),
+      () => { }
+    )
+
+    this.automationLocalService.onChangeAutomationItemType.subscribe(
+      (obj: object) => { this.changeAutomationItemType(obj['id'], obj['type_id']); },
+      error => console.log(error, "error"),
+      () => { }
+    )
   }
 
   toggleOnlineCheckbox(key: string) {
@@ -319,11 +352,37 @@ export class VFormPublishSettingsComponent implements OnInit {
     }
   }
 
-  addAutomation(event: any) {
-    // this.automationService.sendAutomation(this.defaultAutomation, this.formId);
-    // FIXME: add UI to newItem
-    // console.log(defaultAutomation);
-    this.automation.automation_list.push(defaultAutomation.automation_list[0]);
+  addAutomationItem(): number {
+    console.log(this.maxAddedId);
+    return this.automation['automation_list'].push(
+      {...{id: ++this.maxAddedId}, ...defaultAutomation.automation_list[0]} //concat ES6
+      );
+  }
+
+  removeAutomationItem(itemId: number): void {
+    this.automation['automation_list'] = 
+      this.automation['automation_list']
+      .filter((automationItem) => automationItem['id'] !== itemId);
+  }
+
+  changeAutomationItemName(itemId: number, name: string): void {
+    this.automation['automation_list'] = 
+      this.automation['automation_list']
+      .map((automationItem) => {
+        if(automationItem['id'] === itemId) {
+          automationItem['name'] = name;
+        }
+        return automationItem;
+      });
+  }
+
+  changeAutomationItemType(itemId: number, type_id: number): void {
+    console.log('changeAutomationItemType');
+    const indexItem =  this.automation['automation_list'].findIndex((item) => item.id === itemId);
+    this.automation['automation_list'][indexItem] = {
+      ...this.automation['automation_list'][indexItem],
+      'type_id': type_id
+    }
   }
 
   isLoading(): boolean {

@@ -112,6 +112,7 @@ import { VPaymentSettingsScholarshipComponent } from './v-form-constructor/v-for
 import { VPaymentSettingsTuitionComponent } from './v-form-constructor/v-form-builder/v-payment-settings/tuition/tuition.component';
 import { VPaymentSettingsTableSchoolCustomDefaultComponent } from './v-form-constructor/v-form-builder/v-payment-settings/table/school-custom-default/school-custom-default.component';
 import { VPublishSettingsAutomationService } from './services/v-publish-settings-automation.service';
+import { VPublishSettingsAutomationLocalService } from './services/v-publish-settings-automation-local.service';
 import { VAutomationHeaderComponent } from './v-form-constructor/v-form-publish-settings/v-automation/v-automation-header/v-automation-header.component';
 import { VAutomationLogicAreaComponent } from './v-form-constructor/v-form-publish-settings/v-automation/v-automation-logic-area/v-automation-logic-area.component';
 import { VAutomationTemplateAreaComponent } from './v-form-constructor/v-form-publish-settings/v-automation/v-automation-template-area/v-automation-template-area.component';
@@ -290,7 +291,8 @@ const routes: Routes = [
     FinanceService,
     SaveFormService,
     VFormPeriodsService,
-    VPublishSettingsAutomationService
+    VPublishSettingsAutomationService,
+    VPublishSettingsAutomationLocalService,
   ],
   entryComponents: [entryComponents]
 })

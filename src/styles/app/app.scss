@@ -106,16 +106,46 @@
   background-color: $lightgray-color !important;
 }
 
+
 .app-div-animation {
   transition: all 0.5s ease-in-out;
+  position: relative;
+}
+
+@keyframes prettyShow {
+  0% {
+      top: 0;
+  }
+  100% {
+  }
+}
+
+@keyframes prettyHide {
+  0% {
+      opacity: 1;
+      top: 0;
+  }
+  50% {
+      opacity: 0;
+      top: 0;
+  }
+  100% {
+      top: -10000vh;
+  }
 }
 
 .app-div-show {
+  animation: prettyShow 600ms ease-in-out;
   opacity: 1;
-  max-height: auto;
+  max-height: 1000rem;
+  visibility: visible;
+  top: 0;
 }
 
 .app-div-hide {
+  animation: prettyHide 900ms ease-in-out;
   opacity: 0;
   max-height: 0;
+  visibility: hidden;
+  top: -10000vh;
 }

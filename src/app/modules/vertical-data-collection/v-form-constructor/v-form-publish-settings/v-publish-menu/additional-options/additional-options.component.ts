@@ -2,6 +2,8 @@ import { Component, EventEmitter, OnInit, Output, Input } from "@angular/core";
 import { PublishMenuItems } from "../../models/publish-menu-items";
 import { ISubMenus } from "../../models/publish-settings";
 import { IAutomationListItem, IAutomation } from '../../../../model/publish-settings.model';
+import { VPublishSettingsAutomationLocalService } from 'src/app/modules/vertical-data-collection/services/v-publish-settings-automation-local.service';
+import { routes } from 'src/app/modules/online-form/online-form-routing.module';
 
 @Component({
   selector: "app-v-publish-menu-additional-options",
@@ -12,31 +14,34 @@ export class VPublishMenuComponentAdditionalOptions implements OnInit {
   @Input() item: object;
   @Input() activeMenuItem: string;
   @Input() automation: IAutomation;
-  @Input() automationItem: IAutomationListItem;
-  @Output() addAutomation = new EventEmitter();
 
-  automationList: IAutomationListItem[];
+  arrayIsHoverTrash: boolean[] = [];
 
-  constructor() {}
+  constructor(
+    private automationLocalService: VPublishSettingsAutomationLocalService
+    ) {}
 
   ngOnInit() {
-    //   console.log(this.activeMenuItem);
-    this.automationList = this.automation.automation_list;
+      // console.log(this.automation);
   }
 
 
   getName(type_id: number): string {
-    const filtered_list = this.automation['type_list'].filter((item) => type_id === item.id);
+    const filtered_list = this.automation['type_list'].filter((item) => type_id === item['id']);
     return filtered_list[0]['name'];
   }
 
   getTypeName(type_id: number): string {
-    const filtered_list = this.automation['type_list'].filter((item) => type_id === item.id);
+    const filtered_list = this.automation['type_list'].filter((item) => {
+      return type_id === item['id'];
+    } );
     return filtered_list[0]['name'];
   }
 
   getTypeIcon(type_id: number): string {
-    const filtered_list = this.automation['type_list'].filter((item) => type_id === item.id);
+    // console.log(type_id);
+    const filtered_list = this.automation['type_list'].filter((item) => type_id === item['id']);
+    // console.log(filtered_list);
     switch (filtered_list[0]['type']) {
       case "email":
         return `fa-envelope`;
@@ -51,15 +56,28 @@ export class VPublishMenuComponentAdditionalOptions implements OnInit {
         return `fa-file-alt`;
         break;
       case "robocall":
-        return `fa-phone-alt`;
+        return `fa-phone-volume`;
         break;
       default:
         return `fa-toilet-paper-alt`;
     }
   }
 
-  addNewAutomation() {
-    this.addAutomation.emit();
+  addAutomationItem() {
+    this.automationLocalService.addAutomationItem();
+  }
+
+  removeAutomationItem(itemId: number) {
+    this.automationLocalService.removeAutomationItem(itemId);
+  }
+
+  goToHash(hash: string) {
+    // console.log(hash);
+    
+    // Root App Module:
+    // imports[ ...
+    // RouterModule.forRoot(routes, {anchorScrolling: 'enabled'})
+    // ...]
   }
 
 }

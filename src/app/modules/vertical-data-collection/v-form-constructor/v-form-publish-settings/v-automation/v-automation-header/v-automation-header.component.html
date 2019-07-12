@@ -1,4 +1,4 @@
-<div class="section_header">
+<div class="section_header" id="automation-{{automationItem['id']}}">
   <!-- Name -->
   <div class="section_header__item app-input-fill">
     <input
@@ -7,16 +7,19 @@
       class="app-input"
       placeholder="Automation Name"
       [value]="automationItem['name']"
+      (input)="onChangeAutomationName(automationItem['id'], $event.target.value)"
     />
     <label class="app-input-label" for="section-name">Automation Name</label>
   </div>
 
   <!-- Type -->
   <div class="section_header__item app-input-fill">
-    <select class="app-input" id="section-type">
+    <select class="app-input" id="section-type"
+      (input)="onChangeAutomationType(automationItem['id'], $event.target.value)"
+    >
       <ng-container *ngFor="let itemType of automation['type_list']">
         <option
-          [value]="itemType['type']"
+          [value]="itemType['id']"
           [selected]="automationItem['type_id'] === itemType['id']"
         >
           {{ itemType["name"] }}
@@ -54,7 +57,10 @@
   </div>
 
   <!-- Trash -->
-  <div class="section_header__control_item">
+  <div
+    class="section_header__control_item"
+    (click)="removeAutomationItem(automationItem['id'])"
+  >
     <span class="app-fb-section-icon-white">
       <i class="fas fa-trash"></i>
     </span>
@@ -63,9 +69,10 @@
   <!-- Caret -->
   <div
     class="section_header__control_item section_header__control_item--border_left"
+    (click)="switchAutomationItemContent(automationItem['id'])"
   >
     <span class="app-fb-section-icon-primary">
-      <i class="fas fa-caret-up"></i>
+      <i class="fas {{getStatusContent(automationItem['id']) ? 'fa-caret-up' : 'fa-caret-down'}}"></i>
     </span>
   </div>
 </div>

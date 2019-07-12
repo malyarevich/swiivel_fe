@@ -7,19 +7,19 @@
           <app-v-publish-menu
             [stateSub]="publish_settings.state"
             [automation]="automation"
-            
-            (addAutomation)="addAutomation($event)"
             (activeMenuItemEmitter)="setActiveMenu($event)"
             (stateSubEmitter)="setStateSub($event)"
           ></app-v-publish-menu>
         </ng-container>
       </div>
-      <div class="col-12 col-lg-9 openable_item" *ngIf="activeMenuItem !== undefined">
+      <div class="col-12 col-lg-9" *ngIf="activeMenuItem !== undefined">
         <!-- pr-lg-5 -->
         <app-v-conditions-review
-          class="d-block openable_item"
+          class="d-block app-div-animation"
           [ngClass]="{
-            'openable_item--close':
+            'app-div-show':
+              activeMenuItem === publishMenuItems.conditions,
+            'app-div-hide':
               activeMenuItem !== publishMenuItems.conditions
           }"
         ></app-v-conditions-review>
@@ -29,27 +29,36 @@
           (onTogglePdfCheckbox)="togglePdfCheckbox($event)"
           (onUpdateFormValue)="updateFormValue($event)"
           (onSavePublishSettings)="savePublishSettings($event)"
-          class="d-block openable_item"
+          class="d-block app-div-animation"
           [ngClass]="{
-            'openable_item--close': activeMenuItem !== publishMenuItems.settings
+            'app-div-show':
+              activeMenuItem === publishMenuItems.settings,
+            'app-div-hide':
+              activeMenuItem !== publishMenuItems.settings
           }"
         ></app-v-publish-settings>
 
         <ng-container *ngIf="automation !== undefined">
           <app-v-automation
             [automation]="automation"
-            class="d-block openable_item"
+            [activeMenuItem]="activeMenuItem"
+            class="d-block app-div-animation"
             [ngClass]="{
-              'openable_item--close':
+              'app-div-show':
+                activeMenuItem === publishMenuItems.automation,
+              'app-div-hide':
                 activeMenuItem !== publishMenuItems.automation
             }"
             [id]="formId"
           ></app-v-automation>
         </ng-container>
         <app-v-redirect-pages
-          class="d-block openable_item"
+          class="d-block app-div-animation"
           [ngClass]="{
-            'openable_item--close': activeMenuItem !== publishMenuItems.redirect
+            'app-div-show':
+              activeMenuItem === publishMenuItems.redirect,
+            'app-div-hide':
+              activeMenuItem !== publishMenuItems.redirect
           }"
         ></app-v-redirect-pages>
       </div>
