@@ -42,7 +42,7 @@ export const interceptorsConfig: InterceptorsConfig = {
         AppRoutingModule,
         LoginModule,
         UserLoggedModule,
-      AuthModule.forRoot(authConfig),
+        AuthModule.forRoot(authConfig),
         InterceptorsModule.forRoot(interceptorsConfig),
         StoreModule.forRoot({}),
         EffectsModule.forRoot([UserLoggedEffects]),

@@ -7,54 +7,14 @@
      background-color: white;
    }
 
-  .app-period-general-settings__period {
-    display: flex;
+  .app-period-general-settings__add {
+    font: 10px/11px 'NunitoSans-Bold';
+    color: $element-base-color;
+    cursor: pointer;
   }
 
-  .app-period-general-settings__period--header {
-    width: 120px;
-    font: 800 12px/15px 'NunitoSans-Bold';
-  }
-
-  .app-period-general-settings__period--bar {
-    width: 100%;
-    height: 40px;
-
-    gridster {
-      background: white;
-
-      .gridster-column {
-        z-index: 2;
-        background-color: $icon-dark-gray-color;
-      }
-
-      .gridster-column::before {
-        content: '';
-        position: absolute;
-        top: -7px;
-        left: -1px;
-        height: 4px;
-        width: 4px;
-        background-color: $icon-dark-gray-color;
-      }
-
-      .gridster-row {
-        z-index: 1;
-        background-color: #F7F8FF;
-      }
-
-      gridster-item {
-        z-index: 3;
-        background-color: $icon-dark-gray-color;
-      }
-
-      .app-period-general-settings__period--label {
-        text-align: center;
-        color: white;
-      }
-
-    }
-
+  .app-period-general-settings__add:hover {
+    opacity: 0.6;
   }
 
 }

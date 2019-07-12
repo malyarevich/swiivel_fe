@@ -1,0 +1,15 @@
+<div
+  class="app-input-editable-field"
+  [ngClass]="{'app-input-editable-field__header': inputStyle === 'header'}">
+  <input
+    #input
+    AutoSizeInput
+    class="form-control app-input-editable-field__input"
+    [value]="value"
+    [(ngModel)]="value"
+    (input)="onChange($event.target.value)"
+    (blur)="onTouched()"
+    [ngStyle]="{'color': inputColor}"
+  />
+  <i class="fas fa-pen app-input-editable-field__ico" (click)="onPenClick()"></i>
+</div>
