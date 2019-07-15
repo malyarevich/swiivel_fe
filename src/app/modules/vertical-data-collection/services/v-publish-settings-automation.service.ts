@@ -59,17 +59,17 @@ export class VPublishSettingsAutomationService {
     console.log( JSON.stringify(automation));
     if (id !== undefined) {
       return this.http
-        .put(`/proxy/forms/public-settings/${id}`, automation)
+        .put(`/proxy/forms/publish-settings/${id}`, automation)
         .pipe(map(response => response));
     }
     console.log(automation);
     return this.http
-      .post("/proxy/forms/public-settings/", automation)
+      .post("/proxy/forms/publish-settings/", automation)
       .pipe(map(response => response));
   }
 
   getOneAutomation(id: string): Observable<any> {
-    return this.http.get(`/proxy/forms/public-settings/${id}`).pipe(
+    return this.http.get(`/proxy/forms/publish-settings/${id}`).pipe(
       map(
         (response): IAutomation => {
           return response["data"]["automation"];
