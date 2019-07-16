@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Field, FieldSettingMultiplier} from "../../../../../../../../../models/vertical-data-collection/field.model";
 import {cloneDeep, isEmpty} from 'lodash';
+import {Form} from "../../../../../../../model/form.model";
 
 const defaultMultiplier: FieldSettingMultiplier = {
   enabled: false,
@@ -19,11 +20,13 @@ const defaultMultiplier: FieldSettingMultiplier = {
 
 export class VGroupSettingMultiplierComponent implements OnInit {
   @Input() inputGroup: Field;
+  @Input() form: Form;
 
   constructor() { }
 
   ngOnInit() {
     this.initMultiplier();
+    // console.log(this.form.fields)
   }
 
   initMultiplier() {
