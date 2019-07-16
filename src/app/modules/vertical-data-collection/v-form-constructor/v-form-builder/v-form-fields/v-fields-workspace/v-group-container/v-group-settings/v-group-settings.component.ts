@@ -12,7 +12,7 @@ export class VGroupSettingsComponent implements OnInit {
 
   groupPreset: string = 'Preset 1';
   supportText: string = 'Actually Student\'s Address';
-  limitAmount: number = 10;
+  // limitAmount: number = 10;
 
   constructor() {
   }

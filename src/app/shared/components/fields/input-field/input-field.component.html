@@ -27,6 +27,7 @@
     [maxlength]="maxLength"
     [disabled]="disabled"
     [(ngModel)]="value"
+    [min]="min"
     (input)="onChange($event.target.value)"
     (blur)="onTouched()"
   />

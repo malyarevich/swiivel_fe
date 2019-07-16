@@ -1,0 +1,56 @@
+<div class="row no-gutters">
+  <div class="col">
+    <app-toggle-checkbox-field [label]="'FIELD MULTIPLIER OPTION'"
+                               [(ngModel)]="inputGroup.settings.multiplier.enabled">
+    </app-toggle-checkbox-field>
+  </div>
+</div>
+<div [hidden]="!inputGroup.settings.multiplier.enabled">
+  <div class="row no-gutters pt-4">
+    <div class="col">
+      <label class="app-radio-container">Mapped multiples
+        <input type="radio" name="mapped_type" value="multiple"
+               [(ngModel)]="inputGroup.settings.multiplier.mapped_type"
+               [disabled]="!inputGroup.settings.multiplier.enabled">
+        <span class="app-radio-checkmark"></span>
+      </label>
+    </div>
+    <div class="col">
+      <label class="app-radio-container">Manual selection
+        <input type="radio" name="mapped_type" value="manual"
+               [(ngModel)]="inputGroup.settings.multiplier.mapped_type"
+               [disabled]="!inputGroup.settings.multiplier.enabled">
+        <span class="app-radio-checkmark"></span>
+      </label>
+    </div>
+  </div>
+  <div class="form-group app-input-container app-input-fill">
+    <label class="app-input-label" for="criteria">This Field is Mapping to</label>
+    <select class="app-input" id="criteria"
+            [(ngModel)]="inputGroup.settings.multiplier.mapping_field"
+            [disabled]="!inputGroup.settings.multiplier.enabled">
+      <option value="amount_of_students_in_family">"Amount of Students in Family"</option>
+    </select>
+  </div>
+  <div class="pt-3">
+    <label class="app-checkbox-container">
+      Prefill with system information
+      <input type="checkbox" [(ngModel)]="inputGroup.settings.multiplier.prefill">
+      <span class="app-checkbox-checkmark"></span>
+    </label>
+  </div>
+  <div class="pt-2">
+    <label class="app-checkbox-container">
+      Limit. amount to
+      <input type="checkbox" [(ngModel)]="inputGroup.settings.multiplier.limit">
+      <span class="app-checkbox-checkmark"></span>
+    </label>
+  </div>
+  <div class="form-group app-input-container w-75">
+    <app-input-field
+      [(ngModel)]="inputGroup.settings.multiplier.limit_amount"
+      type="number"
+      [min]="1">
+    </app-input-field>
+  </div>
+</div>

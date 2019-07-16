@@ -116,6 +116,7 @@ import { VPublishSettingsAutomationLocalService } from './services/v-publish-set
 import { VAutomationHeaderComponent } from './v-form-constructor/v-form-publish-settings/v-automation/v-automation-header/v-automation-header.component';
 import { VAutomationLogicAreaComponent } from './v-form-constructor/v-form-publish-settings/v-automation/v-automation-logic-area/v-automation-logic-area.component';
 import { VAutomationTemplateAreaComponent } from './v-form-constructor/v-form-publish-settings/v-automation/v-automation-template-area/v-automation-template-area.component';
+import { VGroupSettingMultiplierComponent } from './v-form-constructor/v-form-builder/v-form-fields/v-fields-workspace/v-group-container/v-group-settings/v-group-setting-multiplier/v-group-setting-multiplier.component';
 
 const routes: Routes = [
   {
@@ -268,7 +269,8 @@ const routes: Routes = [
     VSectionConteinerComponent,
     VDividerConteinerComponent,
     FieldTypePipe,
-    VSectionSettingsComponent
+    VSectionSettingsComponent,
+    VGroupSettingMultiplierComponent
   ],
   imports: [
     NgxDnDModule,
