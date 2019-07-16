@@ -8,6 +8,7 @@ import {Field} from "../../../../../../model/field.model";
 })
 export class VFormFieldSettingsComponent implements OnInit, OnChanges {
     @Input() inputField;
+    @Input() fieldTypeName: string;
 
     tab: string = 'settings';
 

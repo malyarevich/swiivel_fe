@@ -24,6 +24,8 @@ export class InputFieldComponent implements OnInit, ControlValueAccessor {
   @Input() value: any = '';
   @Input() maxLength?: number = null;
   @Input() max?: number = null;
+  @Input() min?: number = null;
+
   @Output() onChangeField = new EventEmitter();
 
   // value: any = '';

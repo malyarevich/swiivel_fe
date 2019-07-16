@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {Form} from "../../../../../../model/form.model";
 
 @Component({
   selector: 'app-v-group-settings',
@@ -7,12 +8,12 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class VGroupSettingsComponent implements OnInit {
   @Input() inputGroup;
+  @Input() form: Form;
 
   tab: string = 'settings';
 
   groupPreset: string = 'Preset 1';
   supportText: string = 'Actually Student\'s Address';
-  limitAmount: number = 10;
 
   constructor() {
   }

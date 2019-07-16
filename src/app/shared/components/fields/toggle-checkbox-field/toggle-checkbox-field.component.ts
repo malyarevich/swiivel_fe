@@ -10,7 +10,7 @@ import {
 } from '@angular/forms';
 
 @Component({
-  selector: './app-toggle-checkbox-field',
+  selector: 'app-toggle-checkbox-field',
   templateUrl: './toggle-checkbox-field.component.html',
   styleUrls: ['./toggle-checkbox-field.component.scss'],
   providers: [{

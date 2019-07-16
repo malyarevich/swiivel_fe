@@ -1,13 +1,13 @@
 <div class="p-3 mt-3 app-field-settings-section">
   <div class="row mb-2 mt-3">
-    <div class="col-sm-6">
+    <div class="col-sm-8">
       <ul class="nav">
         <li class="nav-item">
           <a class="app-nav-link" [ngClass]="{'app-active': tab == 'general'}" (click)="tab = 'general'">General</a>
         </li>
         <li class="nav-item">
         <span class="app-nav-link" [ngClass]="{'app-active': tab == 'settings'}"
-              (click)="tab = 'settings'">Settings</span>
+              (click)="tab = 'settings'">{{fieldTypeName}} Settings</span>
         </li>
         <li class="nav-item">
           <a class="app-nav-link" [ngClass]="{'app-active': tab == 'conditional'}" (click)="tab = 'conditional'">Conditional
@@ -19,7 +19,7 @@
         </li>
       </ul>
     </div>
-    <div class="col-sm-6 text-right">
+    <div class="col-sm-4 text-right">
       <button class="btn app-btn-outline-primary">
         Save Field Settings as a Preset
       </button>

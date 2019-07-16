@@ -124,6 +124,6 @@
 
 
   <div *ngIf="showSettings">
-    <app-v-form-field-settings [inputField] = "inputField"></app-v-form-field-settings>
+    <app-v-form-field-settings [inputField] = "inputField" [fieldTypeName]="returnFieldTYpeName(inputField)"></app-v-form-field-settings>
   </div>
 </div>

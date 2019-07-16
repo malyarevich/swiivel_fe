@@ -13,7 +13,8 @@ export interface Field {
   exist?:boolean;
   fields?: Field[],
   isActive?: boolean,
-  prefix?: string
+  prefix?: string,
+  settings?: FieldSettings;
 }
 
 
@@ -35,6 +36,20 @@ export interface FieldOption {
   shapeStrokeColor: string,
   dividerStyle?: string
 
+}
+
+export interface FieldSettings {
+  multiplier: FieldSettingMultiplier,
+  options: any
+}
+
+export interface FieldSettingMultiplier {
+  enabled: boolean,
+  mapped_type: string,
+  mapping_field: string,
+  prefill: boolean,
+  limit: boolean,
+  limit_amount: number
 }
 
 
