@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from "@angular/core";
-import { VPublishSettingsAutomationLocalService } from "../../../../services/v-publish-settings-automation-local.service";
+import { VPublishSettingsAutomationService } from "../../../../services/v-publish-settings-automation.service";
 import {
   IAutomationListItem,
   IAutomation
@@ -18,7 +18,7 @@ export class VAutomationHeaderComponent implements OnInit {
   updatedBy: string;
 
   constructor(
-    private automationLocalService: VPublishSettingsAutomationLocalService
+    private automationService: VPublishSettingsAutomationService
   ) {}
 
   ngOnInit() {
@@ -39,24 +39,24 @@ export class VAutomationHeaderComponent implements OnInit {
 
   onChangeAutomationName(id: number, name: string) {
     const obj: object = {"id": id, "name": name};
-    this.automationLocalService.changeAutomationItemName(obj);
+    this.automationService.changeAutomationItemName(obj);
   }
 
   onChangeAutomationType(id: number, type_id: string) {
     const obj: object = {"id": id, "type_id": parseInt(type_id, 10) };
-    this.automationLocalService.changeAutomationItemType(obj);
+    this.automationService.changeAutomationItemType(obj);
   }
 
   removeAutomationItem(itemId: number) {
-    this.automationLocalService.removeAutomationItem(itemId);
+    this.automationService.removeAutomationItem(itemId);
   }
 
   switchAutomationItemContent(id: number) {
-    this.automationLocalService.switchAutomationItemContent(id);
+    this.automationService.switchAutomationItemContent(id);
   }
 
   getStatusContent(id: number) {
-    return this.automationLocalService.isHideAutomationItemContent[id];
+    return this.automationService.isHideAutomationItemContent[id];
   }
 
 }

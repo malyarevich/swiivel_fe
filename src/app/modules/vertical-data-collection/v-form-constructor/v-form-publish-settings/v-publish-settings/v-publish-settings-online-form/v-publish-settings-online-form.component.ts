@@ -1,12 +1,9 @@
+import { Component, OnInit, ViewEncapsulation, Input } from "@angular/core";
 import {
-  Component,
-  OnInit,
-  ViewEncapsulation,
-  Input,
-  Output,
-  EventEmitter
-} from "@angular/core";
-import { IOnlineStructure, PublishSettingsItems } from "../../models/publish-settings";
+  IOnlineStructure,
+  PublishSettingsEntity
+} from "../../../../model/publish-settings.model";
+import { VPublishSettingsPublishSettingsService } from "../../../../services/v-publish-settings-publish-settings.service";
 
 @Component({
   selector: "app-v-publish-settings-online-form",
@@ -15,16 +12,17 @@ import { IOnlineStructure, PublishSettingsItems } from "../../models/publish-set
   styleUrls: ["./v-publish-settings-online-form.component.scss"]
 })
 export class VPublishSettingsOnlineFormComponent implements OnInit {
-  @Input() onlineConfig: object;
-  @Output() onToggleOnlineCheckbox: EventEmitter<string> = new EventEmitter<string>();
+  @Input() onlineConfig: IOnlineStructure;
 
-  onlineStructure = PublishSettingsItems.onlineStructure;
+  onlineStructure = PublishSettingsEntity.onlineStructure;
 
-  constructor() {}
+  constructor(
+    private publishSettingsService: VPublishSettingsPublishSettingsService
+  ) {}
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   toggleOnlineCheckBox(key: string) {
-    this.onToggleOnlineCheckbox.emit(key);
+    this.publishSettingsService.toggleOnlineCheckbox(key);
   }
 }

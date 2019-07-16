@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation, Input, Output, EventEmitter } from "@angular/core";
-import { ISubMenus } from "../models/publish-settings";
+import { IPublishSettings } from "../../../model/publish-settings.model";
 
 @Component({
   selector: "app-v-publish-settings",
@@ -8,29 +8,9 @@ import { ISubMenus } from "../models/publish-settings";
   styleUrls: ["./v-publish-settings.component.scss"]
 })
 export class VPublishSettingsComponent implements OnInit {
-  @Input() publish_settings: any;
-  @Output() onToggleOnlineCheckbox: EventEmitter<string> = new EventEmitter<string>();
-  @Output() onTogglePdfCheckbox: EventEmitter<string> = new EventEmitter<string>();
-  @Output() onUpdateFormValue: EventEmitter<object> = new EventEmitter<object>();
-  @Output() onSavePublishSettings: EventEmitter<object> = new EventEmitter<object>();
+  @Input() publish_settings: IPublishSettings;
 
   constructor() {}
 
   ngOnInit() { }
-
-  toggleOnlineCheckbox(key: string) {
-    this.onToggleOnlineCheckbox.emit(key);
-  }
-
-  togglePdfCheckbox(key: string) {
-    this.onTogglePdfCheckbox.emit(key);
-  }
-
-  updateFormValue(formValues: object) {
-    this.onUpdateFormValue.emit(formValues);
-  }
-
-  savePublishSettings(state: object) {
-    this.onSavePublishSettings.emit(state);
-  }
 }

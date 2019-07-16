@@ -1,53 +1,26 @@
-import {
-  Component,
-  Input,
-  OnInit,
-  Host,
-  Output,
-  EventEmitter
-} from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { VFormService } from "../../services/v-form.service";
-import { FormUtils } from "../../utils/form.utils";
 import { PublishMenuItems } from "./models/publish-menu-items";
-import { PublishSettingsItems, ISubMenus } from "./models/publish-settings";
 
 import { isEmpty } from "lodash";
-import { Location } from "@angular/common";
-import { VFieldsService } from "../../services/v-fields.service";
-import { Field } from "../../model/field.model";
-import {
-  TuitionContract,
-  tuitionContractDefault
-} from "./../v-form-builder/v-tuition-contract/models/tuition-contract.model";
-import { Form } from "../../model/form.model";
-import {
-  ConsentInfo,
-  consentInfoDefault
-} from "./../v-form-builder/v-consent/model/consent.model";
-import {
-  DocumentSideBar,
-  DocumentsModel
-} from "./../v-form-builder/v-documents-forms/model/documents.model";
-import { GeneralInfoIsValidService } from "../../services/general-info-is-valid.service";
-import { FormsPDFModel } from "./../v-form-builder/v-documents-forms/model/formsPDF.model";
-import { VFilesService } from "../../services/v-files.service";
-
-import { E_SIGNATURE_TYPES, SIGNATURE_TYPES } from "../../../../enums";
-import {
-  TermsConditions,
-  termsConditionsDefault
-} from "./../v-form-builder/v-terms-conditions/model/terms-conditions.model";
-import { FinanceService } from "../../../../services/finance/finance.service";
-import { FeeTemplate } from "../../../../models/fee-templates.model";
-import { VDataCollectionComponent } from "../../v-data-collection.component";
 import { SaveFormService } from "../../services/save-form.service";
+import { VConstructorDraftService } from "../../services/v-constructor-draft.service";
 import { Observable, Subscription } from "rxjs";
 import { PublishSettingsIsSavedService } from "../../services/publish-settings-is-saved.service";
 import { ConstructorIsSavingService } from "../../services/constructor-is-saving.service";
-import { IAutomation, defaultAutomation } from "../../model/publish-settings.model";
+import {
+  IPublishSettings,
+  IAutomation,
+  IData,
+  PublishSettingsEntity,
+  AutomationEntity,
+  DataEntity,
+  ISubMenus
+} from "../../model/publish-settings.model";
+import { VPublishSettingsService } from "../../services/v-publish-settings.service";
+import { VPublishSettingsRemoteService } from "../../services/v-publish-settings-remote.service";
+import { VPublishSettingsPublishSettingsService } from "../../services/v-publish-settings-publish-settings.service";
 import { VPublishSettingsAutomationService } from "../../services/v-publish-settings-automation.service";
-import { VPublishSettingsAutomationLocalService } from '../../services/v-publish-settings-automation-local.service';
 
 //TODO: remove excess functional
 @Component({
@@ -56,342 +29,399 @@ import { VPublishSettingsAutomationLocalService } from '../../services/v-publish
   styleUrls: ["./v-form-publish-settings.component.scss"]
 })
 export class VFormPublishSettingsComponent implements OnInit {
-  @Input() saveEvents: Observable<void>;
-  @Input() formId: string;
-  @Output() goBackPublish = new EventEmitter<boolean>();
+  // @Input() saveEvents: Observable<void>;
+  formId: string;
+  draftId: string;
+
+  // for subscriptions that watch for Save
   static countSaveFormService: number = 0;
   saveFormSubscription: Subscription;
+  
+  // URL Subscriptions
+  onURLSubscription: Subscription;
+  
+  // Active Menu Item Subscriptions
+  onChangeActiveMenuItemSubscription: Subscription;
 
+  // Remote Service Subscriptions
+  onGetDataSubscription: Subscription;
+  onSendDataSubscription: Subscription;
+  
+  // PublishSettings Subscriptions
+  onToggleStateSubscription: Subscription;
+  onSavePublishSettingsSubscription: Subscription;
+  onToggleOnlineCheckboxSubscription: Subscription;
+  onTogglePdfCheckboxSubscription: Subscription;
+  onUpdateFormValueSubscription: Subscription;
+  
+  // Automation Subscriptions
+  onAddAutomationItemSubscription: Subscription;
+  onRemoveAutomationItemSubscription: Subscription;
+  onChangeAutomationItemNameSubscription: Subscription;
+  onChangeAutomationItemTypeSubscription: Subscription;
+
+  // Menu state
   activeMenuItem: string;
   publishMenuItems = PublishMenuItems;
 
-  publish_settings;
+  // Tabs information
+  data: IData;
 
-  draftId: string;
-  fields: Field[] = [];
-
-  feeTemplates: FeeTemplate[] = [];
-
-  formName: string = "";
-  attachments;
-  form: Form;
-  newSideBar;
-  sidebar;
-
-  customFields: Field[];
-  existingFields: Field[];
-  sideBarFields: Field[];
-  tuitionContract: TuitionContract = tuitionContractDefault;
-  consentInfo: ConsentInfo = consentInfoDefault;
-  termsConditions: TermsConditions = termsConditionsDefault;
-  eligible: string;
-
-  SIGNATURE_TYPES = SIGNATURE_TYPES;
-  E_SIGNATURE_TYPES = E_SIGNATURE_TYPES;
-
-  isEditConsentName: number | null = null;
-  isEditDocumentName: string | null = null;
-  isEditFormPDFName: string | null = null;
-  isEditTermsConditionsName: string | null = null;
-
-  isDocumentsForms: DocumentSideBar = {
-    isDocuments: true,
-    isForms: true
-  };
-
-  documents: DocumentsModel[] = [];
-  formsPDF: FormsPDFModel[] = [];
-  automation: IAutomation;
   maxAddedId: number;
-  
 
+  // Loading states
   isDataSaving: boolean = false;
   spinnerText: string = "Data is loading...";
 
-  vDataCollection: VDataCollectionComponent;
-
   constructor(
-    @Host() vDataCollection: VDataCollectionComponent,
-    private formUtils: FormUtils,
-    private formService: VFormService,
-    private fieldsService: VFieldsService,
     private router: Router,
     private route: ActivatedRoute,
-    private location: Location,
-    private generalInfoIsValidService: GeneralInfoIsValidService,
-    private fileService: VFilesService,
-    private readonly financeService: FinanceService,
+    private vConstructorDraftService: VConstructorDraftService,
     private publishSettingsIsSavedService: PublishSettingsIsSavedService,
+    private vPublishSettingsService: VPublishSettingsService,
+    private vPublishSettingsRemoteService: VPublishSettingsRemoteService,
+    private publishSettingsService: VPublishSettingsPublishSettingsService,
     private automationService: VPublishSettingsAutomationService,
-    private automationLocalService: VPublishSettingsAutomationLocalService,
     private constructorIsSavingService: ConstructorIsSavingService,
     private saveFormService: SaveFormService
-  ) {
-    this.vDataCollection = vDataCollection;
-  }
+  ) {}
 
   ngOnInit() {
     window.scrollTo(0, 0);
-    // if (VFormPublishSettingsComponent.countSaveFormService < 1) {
-    this.saveFormSubscription = this.saveFormService.onSaveForm.subscribe(
-      () => {
-        this.saveForm();
-      }
-    );
-    // }
-    VFormPublishSettingsComponent.countSaveFormService++;
-    this.constructorIsSavingService.setIsSaving(this.isDataSaving);
 
-    this.publishSettingsIsSavedService.setIsSaved(false);
-    this.route.parent.url.subscribe(urlPath => {
+    this.prepareSaving();
+
+    this.onURLSubscription = this.route.parent.url.subscribe(urlPath => {
       const url = urlPath[urlPath.length - 1].path;
       this.formId = url != "v-form-constructor" ? url : "";
+      this.draftId = this.formId + "_publish-setting";
+
+      this.initPage();
     });
-    this.draftId = this.formId + "_publish-setting";
-    this.formInit();
-    this.initAutomation();
-    // console.log(this.isDataSaving);
   }
 
-  initAutomation() {    
-    this.automationService.getOneAutomation(this.formId).subscribe(
-      (automation: IAutomation) => {
-        // console.log("loading AutomationList");
-        // console.log(automation);
-        this.automation = automation;
-        this.maxAddedId = -1;
-        this.automation['automation_list'].reverse().forEach((automationItem) => {
-          if(automationItem['id'] > this.maxAddedId) {
-            this.maxAddedId = automationItem['id'];
-          }
-        })
-      },
-      error => console.log(error, "error"),
-      () => {
-        // this.generalInfoIsValidService.setIsValid(true);
-      }
-    );
-
-    this.activeMenuItem = this.publishMenuItems.conditions;
-
-    this.automationLocalService.onAddAutomationItem.subscribe(
-      () => { this.addAutomationItem(); },
-      error => console.log(error, "error"),
-      () => { }
-    )
-
-    this.automationLocalService.onRemoveAutomationItem.subscribe(
-      (itemId: number) => { this.removeAutomationItem(itemId); },
-      error => console.log(error, "error"),
-      () => { }
-    )
-
-    this.automationLocalService.onChangeAutomationItemName.subscribe(
-      (obj: object) => { this.changeAutomationItemName(obj['id'], obj['name']); },
-      error => console.log(error, "error"),
-      () => { }
-    )
-
-    this.automationLocalService.onChangeAutomationItemType.subscribe(
-      (obj: object) => { this.changeAutomationItemType(obj['id'], obj['type_id']); },
-      error => console.log(error, "error"),
-      () => { }
-    )
-  }
-
-  toggleOnlineCheckbox(key: string) {
-    this.publish_settings.online_config[key] = !this.publish_settings
-      .online_config[key];
-  }
-
-  togglePdfCheckbox(key: string) {
-    this.publish_settings.pdf_config[key] = !this.publish_settings.pdf_config[
-      key
-    ];
-  }
-
-  updateFormValue(formValue: object) {
-    this.publish_settings.pdf_config["form_value"] = formValue;
-  }
-
-  savePublishSettings(state: object) {
-    this.saveForm();
-  }
-
-  setActiveMenu(value) {
-    this.activeMenuItem = value;
-  }
-
-  setStateSub(newState: ISubMenus): void {
-    this.publish_settings.state = newState;
-  }
-
-  getStateSub(): ISubMenus {
-    return this.publish_settings.state;
-  }
-
-  getOnlineConfig() {
-    return this.publish_settings.online_config;
-  }
-
-  getPdfConfig() {
-    return this.publish_settings.pdf_config;
-  }
-
-  setLocalForm(form: Form): void {
-    // console.log(form);
-    if (!isEmpty(form)) {
-      this.form = form;
-      this.formName = form.name;
-      this.fields = this.form.fields = form.fields || [];
-      this.tuitionContract = form.tuitionContract || tuitionContractDefault;
-      this.consentInfo = form.consentInfo || consentInfoDefault;
-      this.termsConditions = form.termsConditions || termsConditionsDefault;
-      this.publish_settings = form.publish_settings;
-      this.sidebar = form.sidebar || {};
-      this.eligible = form.eligible;
-      this.documents = form.documents || [];
-      this.formsPDF = form.forms || [];
-      this.attachments = form.attachments || {};
-    }
-    // console.log("setLocalForm");
-    // console.log(form.publish_settings);
-    // console.log(this.publish_settings);
-  }
-
-  getPublishSettingValidOrDefault(publish_settings): any {
-    if (publish_settings) {
-      return publish_settings;
-    }
-    return {
-      state: PublishSettingsItems.defaultStateSub,
-      online_config: { ...PublishSettingsItems.defaultOnlineConfig },
-      pdf_config: { ...PublishSettingsItems.defaultPdfConfig }
-    };
-  }
-
-  formInit(): void {
-    const form = this.vDataCollection.getDraftForm(this.draftId);
-    if (!isEmpty(form)) {
-      // console.log("loading draftForm");
-      // console.log(form);
-      form.publish_settings = this.getPublishSettingValidOrDefault(
-        form.publish_settings
+  prepareSaving() {
+    if (VFormPublishSettingsComponent.countSaveFormService < 1) {
+      this.saveFormSubscription = this.saveFormService.onSaveForm.subscribe(
+        () => {
+          this.savePage();
+        }
       );
-      this.setLocalForm(form); //draftForm
-    } else if (this.formId) {
-      this.formService.getOneForm(this.formId).subscribe(
-        (form: Form) => {
-          // console.log("loading remoteForm");
-          // console.log(form);
-          form.publish_settings = this.getPublishSettingValidOrDefault(
-            form.publish_settings
-          );
-          this.setLocalForm(form); //remoteForm
+    }
+    VFormPublishSettingsComponent.countSaveFormService++;
 
-          // console.log(this.publish_settings);
+    this.constructorIsSavingService.setIsSaving(this.isDataSaving);
+    this.publishSettingsIsSavedService.setIsSaved(false);
+  }
+
+  initPage() {
+    let  draftData: IData;
+    draftData = this.vConstructorDraftService.getDraftForm(this.draftId);
+
+    if (draftData !== undefined) {
+      this.loadData(draftData);
+      this.initServices();
+    } else {
+      this.onGetDataSubscription = this.vPublishSettingsRemoteService.getOneData(this.formId).subscribe(
+        (data: IData) => {
+          this.loadData(data);
         },
         error => console.log(error, "error"),
         () => {
-          this.generalInfoIsValidService.setIsValid(true);
+          this.initServices();
         }
       );
-    } else {
     }
   }
 
-  getForm(): Form {
-    return {
-      _id: this.formId,
-      // fields: this.form.fields,
-      fields: this.fields,
-      documents: this.documents,
-      forms: this.formsPDF,
-      name: this.formName,
-      sidebar: this.sidebar,
-      tuitionContract: this.tuitionContract,
-      consentInfo: this.consentInfo,
-      publish_settings: this.publish_settings,
-      termsConditions: this.termsConditions,
-      eligible: this.eligible,
-      attachments: this.attachments,
-      step: 1
+  loadData(data: IData) {
+    this.maxAddedId = -1;
+
+    // TODO: checking of all fields(automation, publish_settings etc)
+    if (data !== undefined) {
+      this.data = data;
+      this.data["automation"]["automation_list"]
+        .reverse()
+        .forEach(automationItem => {
+          if (automationItem["id"] > this.maxAddedId) {
+            this.maxAddedId = automationItem["id"];
+          }
+        });
+    } else {
+      this.setDefaultData(data);
+    }
+  }
+
+  initServices() {
+    this.initPageServices();
+    this.initPublishSettingsServices();
+    this.initAutomationServices();
+  }
+
+  setDefaultData(data: IData) {
+    this.data = {
+      ...DataEntity.defaultData,
+      ...data
     };
   }
 
-  saveForm() {
-    // if (this.validCheckFields()) {
-    if (this.form && !this.isDataSaving) {
-      const form: Form = this.getForm();
+  initPageServices() {
+    this.activeMenuItem = PublishMenuItems.conditions;
+    this.onChangeActiveMenuItemSubscription = this.vPublishSettingsService.onChangeActiveMenuItem.subscribe(
+      (activeMenuItem: string) => {
+        this.activeMenuItem = activeMenuItem;
+      },
+      error => console.log(error, "error"),
+      () => {}
+    );
+  }
+
+  initPublishSettingsServices() {
+    this.onToggleStateSubscription = this.publishSettingsService.onToggleState.subscribe(
+      (state: ISubMenus) => {
+        this.setPublishSettingsState(state);
+      },
+      error => console.log(error, "error"),
+      () => {}
+    );
+    this.onSavePublishSettingsSubscription = this.publishSettingsService.onSavePublishSettings.subscribe(
+      (state: ISubMenus) => {
+        this.savePublishSettings(state);
+      },
+      error => console.log(error, "error"),
+      () => {}
+    );
+
+    this.onToggleOnlineCheckboxSubscription = this.publishSettingsService.onToggleOnlineCheckbox.subscribe(
+      (key: string) => {
+        this.toggleOnlineCheckbox(key);
+      },
+      error => console.log(error, "error"),
+      () => {}
+    );
+    this.onTogglePdfCheckboxSubscription = this.publishSettingsService.onTogglePdfCheckbox.subscribe(
+      (key: string) => {
+        this.togglePdfCheckbox(key);
+      },
+      error => console.log(error, "error"),
+      () => {}
+    );
+    this.onUpdateFormValueSubscription = this.publishSettingsService.onUpdateFormValue.subscribe(
+      (value: any) => {
+        this.updateFormValue(value);
+      },
+      error => console.log(error, "error"),
+      () => {}
+    );
+  }
+
+  initAutomationServices() {
+    this.onAddAutomationItemSubscription = this.automationService.onAddAutomationItem.subscribe(
+      () => {
+        this.addAutomationItem();
+      },
+      error => console.log(error, "error"),
+      () => {}
+    );
+
+    this.onRemoveAutomationItemSubscription = this.automationService.onRemoveAutomationItem.subscribe(
+      (itemId: number) => {
+        this.removeAutomationItem(itemId);
+      },
+      error => console.log(error, "error"),
+      () => {}
+    );
+
+    this.onChangeAutomationItemNameSubscription = this.automationService.onChangeAutomationItemName.subscribe(
+      (obj: object) => {
+        this.changeAutomationItemName(obj["id"], obj["name"]);
+      },
+      error => console.log(error, "error"),
+      () => {}
+    );
+
+    this.onChangeAutomationItemTypeSubscription = this.automationService.onChangeAutomationItemType.subscribe(
+      (obj: object) => {
+        this.changeAutomationItemType(obj["id"], obj["type_id"]);
+      },
+      error => console.log(error, "error"),
+      () => {}
+    );
+  }
+
+  setPublishSettingsState(state: ISubMenus) {
+    this.data["publish_settings"] = { ...this.data["publish_settings"], state };
+  }
+
+  toggleOnlineCheckbox(key: string) {
+    this.data["publish_settings"]["online_config"][key] = !this.data[
+      "publish_settings"
+    ]["online_config"][key];
+  }
+
+  togglePdfCheckbox(key: string) {
+    this.data["publish_settings"]["pdf_config"][key] = !this.data[
+      "publish_settings"
+    ]["pdf_config"][key];
+  }
+
+  updateFormValue(formValue: object) {
+    this.data["publish_settings"]["pdf_config"]["form_value"] = formValue;
+  }
+
+  savePublishSettings(state: object) {
+    this.savePage();
+  }
+
+  setStateSub(newState: ISubMenus): void {
+    this.data["publish_settings"]["state"] = newState;
+  }
+
+  getStateSub(): ISubMenus {
+    return this.data["publish_settings"]["state"];
+  }
+
+  getOnlineConfig() {
+    return this.data["publish_settings"]["online_config"];
+  }
+
+  getPdfConfig() {
+    return this.data["publish_settings"]["pdf_config"];
+  }
+
+  getPublishSettingValidOrDefault(publishSettings): any {
+    if (publishSettings) {
+      return publishSettings;
+    }
+    return {
+      state: PublishSettingsEntity.defaultStateSub,
+      online_config: { ...PublishSettingsEntity.defaultOnlineConfig },
+      pdf_config: { ...PublishSettingsEntity.defaultPdfConfig }
+    };
+  }
+
+  savePage() {
+    if (
+      (this.data !== undefined ||
+        this.data["publishSettings"] ||
+        this.data["automation"]) &&
+      !this.isDataSaving
+    ) {
       this.spinnerText = "Data is saving...";
       this.isDataSaving = true;
       this.constructorIsSavingService.setIsSaving(this.isDataSaving);
-      // console.log(this.isDataSaving);
-      this.formService.sendForm(form).subscribe(res => {
-        this.publishSettingsIsSavedService.setIsSaved(res["updated"]);
 
-        this.isDataSaving = !this.saveFormService.getSavingStatus();
-        this.constructorIsSavingService.setIsSaving(this.isDataSaving);
-        // console.log(this.isDataSaving);
-        if (this.isDataSaving) {
-          this.spinnerText = "Other tabs are saving...";
-        } else {
-          this.spinnerText = "Data is loading...";
-        }
-      });
+      this.onSendDataSubscription = this.vPublishSettingsRemoteService
+        .sendData(this.data, this.formId)
+        .subscribe(res => {
+          this.publishSettingsIsSavedService.setIsSaved(res["updated"]);
+
+          this.isDataSaving = !this.saveFormService.getSavingStatus();
+          this.constructorIsSavingService.setIsSaving(this.isDataSaving);
+
+          if (this.isDataSaving) {
+            this.spinnerText = "Other tabs are saving...";
+          } else {
+            this.spinnerText = "Data is loading...";
+          }
+        });
     }
-    // }
-    this.vDataCollection.deleteDraftForm(this.draftId);
+    this.vConstructorDraftService.deleteDraftForm(this.draftId);
   }
 
   public saveDraftForm(): void {
-    // console.log("SAVE draft");
-    if (this.formId && this.form) {
-      const form: Form = this.getForm();
-      this.vDataCollection.setDraftForm(this.draftId, form);
-    }
+    this.vConstructorDraftService.setDraftForm(this.draftId, this.data);
   }
 
   addAutomationItem(): number {
-    console.log(this.maxAddedId);
-    return this.automation['automation_list'].push(
-      {...{id: ++this.maxAddedId}, ...defaultAutomation.automation_list[0]} //concat ES6
-      );
+    return this.data["automation"]["automation_list"].push(
+      {
+        ...{ id: ++this.maxAddedId },
+        ...AutomationEntity.defaultAutomation.automation_list[0]
+      } //concat ES6
+    );
   }
 
   removeAutomationItem(itemId: number): void {
-    this.automation['automation_list'] = 
-      this.automation['automation_list']
-      .filter((automationItem) => automationItem['id'] !== itemId);
+    this.data["automation"]["automation_list"] = this.data["automation"][
+      "automation_list"
+    ].filter(automationItem => automationItem["id"] !== itemId);
   }
 
   changeAutomationItemName(itemId: number, name: string): void {
-    this.automation['automation_list'] = 
-      this.automation['automation_list']
-      .map((automationItem) => {
-        if(automationItem['id'] === itemId) {
-          automationItem['name'] = name;
-        }
-        return automationItem;
-      });
+    this.data["automation"]["automation_list"] = this.data["automation"][
+      "automation_list"
+    ].map(automationItem => {
+      if (automationItem["id"] === itemId) {
+        automationItem["name"] = name;
+      }
+      return automationItem;
+    });
   }
 
   changeAutomationItemType(itemId: number, type_id: number): void {
-    console.log('changeAutomationItemType');
-    const indexItem =  this.automation['automation_list'].findIndex((item) => item.id === itemId);
-    this.automation['automation_list'][indexItem] = {
-      ...this.automation['automation_list'][indexItem],
-      'type_id': type_id
-    }
+    const indexItem = this.data["automation"]["automation_list"].findIndex(
+      item => item.id === itemId
+    );
+    this.data["automation"]["automation_list"][indexItem] = {
+      ...this.data["automation"]["automation_list"][indexItem],
+      type_id: type_id
+    };
   }
 
   isLoading(): boolean {
     return (
-      this.publish_settings !== undefined &&
+      this.data !== undefined &&
+      this.data["publish_settings"] !== undefined &&
+      this.data["automation"] !== undefined &&
       !this.isDataSaving &&
-      // && this.activeMenuItem !== undefined
       this.publishMenuItems !== undefined
     );
+  }
+
+  unsubscribeFromServices() {
+    if(this.onURLSubscription) {
+      this.onURLSubscription.unsubscribe();
+    }
+    if(this.onChangeActiveMenuItemSubscription) {
+      this.onChangeActiveMenuItemSubscription.unsubscribe();
+    }
+
+    if(this.onGetDataSubscription) {
+      this.onGetDataSubscription.unsubscribe();
+    }
+    if(this.onSendDataSubscription) {
+      this.onSendDataSubscription.unsubscribe();
+    }
+
+    if(this.onToggleStateSubscription) {
+      this.onToggleStateSubscription.unsubscribe();
+    }
+    if(this.onSavePublishSettingsSubscription) {
+      this.onSavePublishSettingsSubscription.unsubscribe();
+    }
+    if(this.onToggleOnlineCheckboxSubscription) {
+      this.onToggleOnlineCheckboxSubscription.unsubscribe();
+    }
+    if(this.onTogglePdfCheckboxSubscription) {
+      this.onTogglePdfCheckboxSubscription.unsubscribe();
+    }
+    if(this.onUpdateFormValueSubscription) {
+      this.onUpdateFormValueSubscription.unsubscribe();
+    }
+
+    if(this.onAddAutomationItemSubscription) {
+      this.onAddAutomationItemSubscription.unsubscribe();
+    }
+    if(this.onRemoveAutomationItemSubscription) {
+      this.onRemoveAutomationItemSubscription.unsubscribe();
+    }
+    if(this.onChangeAutomationItemNameSubscription) {
+      this.onChangeAutomationItemNameSubscription.unsubscribe();
+    }
+    if(this.onChangeAutomationItemTypeSubscription) {
+      this.onChangeAutomationItemTypeSubscription.unsubscribe();
+    }
   }
 
   goBack() {
@@ -400,7 +430,7 @@ export class VFormPublishSettingsComponent implements OnInit {
 
   ngOnDestroy(): void {
     this.saveDraftForm();
-
+    this.unsubscribeFromServices();
     if (
       VFormPublishSettingsComponent.countSaveFormService > 1 &&
       this.saveFormSubscription

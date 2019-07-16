@@ -8,7 +8,6 @@
         'app-div-hide': !publish_settings.state.settings['online']
       }"
       [onlineConfig]="publish_settings.online_config"
-      (onToggleOnlineCheckbox)="toggleOnlineCheckbox($event)"
     ></app-v-publish-settings-online-form>
   </ng-container>
   <!-- END: Online Form -->
@@ -22,9 +21,6 @@
         'app-div-hide': !publish_settings.state.settings['pdf']
       }"
       [pdfConfig]="publish_settings.pdf_config"
-      (onTogglePdfCheckbox)="togglePdfCheckbox($event)"
-      (onUpdateFormValue)="updateFormValue($event)"
-      (onSavePublishSettings)="savePublishSettings($event)"
     ></app-v-publish-settings-pdf-form>
   </ng-container>
   <!-- END: PDF Form -->

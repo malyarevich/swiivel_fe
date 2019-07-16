@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { IAutomation } from "../../../model/publish-settings.model";
 import { PublishMenuItems } from "../models/publish-menu-items";
-import { VPublishSettingsAutomationLocalService } from '../../../services/v-publish-settings-automation-local.service';
+import { VPublishSettingsAutomationService } from '../../../services/v-publish-settings-automation.service';
 
 @Component({
   selector: "app-v-automation",
@@ -18,12 +18,12 @@ export class VAutomationComponent implements OnInit {
   isHideAutomationItemContent: boolean[];
 
   constructor(
-    private automationLocalService: VPublishSettingsAutomationLocalService
+    private automationService: VPublishSettingsAutomationService
     ) {}
   // http://red.dev.codeblue.ventures/api/v1/proxy/forms/public-settings/5d1de9f28ffb0833a8374152
   ngOnInit() { 
-    this.isHideAutomationItemContent = this.automationLocalService.isHideAutomationItemContent;
-    this.automationLocalService.onSwitchAutomationItemContent.subscribe((obj) => {
+    this.isHideAutomationItemContent = this.automationService.isHideAutomationItemContent;
+    this.automationService.onSwitchAutomationItemContent.subscribe((obj) => {
       this.isHideAutomationItemContent[obj['id']] = obj['value'];
     });}
   

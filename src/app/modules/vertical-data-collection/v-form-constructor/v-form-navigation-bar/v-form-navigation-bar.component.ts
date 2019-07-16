@@ -18,7 +18,7 @@ export class VFormNavigationBarComponent implements OnInit {
   isBuilderSaved: boolean = undefined;
   isPublishSaved: boolean = undefined;
 
-  isGeneralInfoValid: boolean;
+  isGeneralInfoValid: boolean = true;
   isSavingConstructor: boolean = false;
   isFormExisted: boolean;
 

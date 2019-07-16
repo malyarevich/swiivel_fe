@@ -11,7 +11,10 @@
         {{ indexMenu + 1 }}. {{ item.title | uppercase }}
       </li>
       <ng-container
-        *ngIf="activeMenuItem === item.value && stateSub !== undefined"
+        *ngIf="
+          activeMenuItem === item.value &&
+          item.stateSub !== undefined
+        "
       >
         <li
           *ngFor="let subMenu of item.stateSub; let indexSub = index"
@@ -24,9 +27,13 @@
                   type="checkbox"
                   id="switch{{ i }}_{{ indexSub }}"
                   name="switch{{ i }}_{{ indexSub }}"
-                  [ngModel]="stateSub[item.value][subMenu.type]"
+                  [ngModel]="
+                    data['publish_settings']['state'][item.value][subMenu.type]
+                  "
                   (ngModelChange)="
-                    stateSub[item.value][subMenu.type] = stateSub[item.value][
+                    data['publish_settings']['state'][item.value][
+                      subMenu.type
+                    ] = data['publish_settings']['state'][item.value][
                       subMenu.type
                     ] = $event
                   "
@@ -52,10 +59,9 @@
         <app-v-publish-menu-additional-options
           [item]="item"
           [activeMenuItem]="activeMenuItem"
-          [automation]="automation"
+          [automation]="data['automation']"
           (addAutomation)="addNewAutomation($event)"
         ></app-v-publish-menu-additional-options>
-        
       </ng-container>
     </ng-container>
   </ul>

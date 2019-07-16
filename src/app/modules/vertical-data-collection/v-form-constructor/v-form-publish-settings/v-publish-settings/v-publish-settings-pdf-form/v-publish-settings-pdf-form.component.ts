@@ -2,18 +2,18 @@ import {
   Component,
   OnInit,
   ViewEncapsulation,
-  Input,
-  Output,
-  EventEmitter
+  Input
 } from "@angular/core";
 import {
-  FormBuilder,
   FormControl,
   FormGroup,
-  Validators,
-  AbstractControl
+  Validators
 } from "@angular/forms";
-import { IPdfStructure, PublishSettingsItems } from "../../models/publish-settings";
+import {
+  IPdfStructure,
+  PublishSettingsEntity
+} from "../../../../model/publish-settings.model";
+import { VPublishSettingsPublishSettingsService } from "../../../../services/v-publish-settings-publish-settings.service";
 
 @Component({
   selector: "app-v-publish-settings-pdf-form",
@@ -22,17 +22,10 @@ import { IPdfStructure, PublishSettingsItems } from "../../models/publish-settin
   styleUrls: ["./v-publish-settings-pdf-form.component.scss"]
 })
 export class VPublishSettingsPdfFormComponent implements OnInit {
-  @Input() pdfConfig: any;
-  @Output() onTogglePdfCheckbox: EventEmitter<string> = new EventEmitter<
-    string
-  >();
-  @Output() onUpdateFormValue: EventEmitter<object> = new EventEmitter<object>();
-  @Output() onSavePublishSettings: EventEmitter<object> = new EventEmitter<
-    object
-  >();
+  @Input() pdfConfig: IPdfStructure;
 
-  pdfStructure = PublishSettingsItems.pdfStructure;
-  providers = PublishSettingsItems.providers;
+  pdfStructure = PublishSettingsEntity.pdfStructure;
+  providers = PublishSettingsEntity.providers;
 
   defaultMailFormControls = {
     ProviderName: new FormControl(null, Validators.required),
@@ -58,41 +51,38 @@ export class VPublishSettingsPdfFormComponent implements OnInit {
 
   pdfMailForm: FormGroup = new FormGroup(this.defaultMailFormControls);
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private publishSettingsService: VPublishSettingsPublishSettingsService
+  ) {}
 
   ngOnInit() {
-    // console.log(this.pdfConfig);
-    if (this.pdfConfig['form_value']) {
+    if (this.pdfConfig["form_value"]) {
       this.loadForm();
     }
   }
 
   loadForm() {
-    this.pdfMailForm.patchValue(this.pdfConfig['form_value']);
+    this.pdfMailForm.patchValue(this.pdfConfig["form_value"]);
   }
 
   toggleCheckbox(key: string) {
-    this.onTogglePdfCheckbox.emit(key);
+    this.publishSettingsService.togglePdfCheckbox(key);
   }
 
   onChangeFormValue(key: string, newState: object) {
-    // const value = newState[key] == "" ? null : newState[key];
     this.setFormValue(key, newState);
   }
 
   onBlurFormField() {
-    
-    // console.log(this.pdfConfig);
-    // console.log(this.pdfMailForm.value);
     this.saveFormValues();
   }
 
   saveFormValues() {
-    this.onUpdateFormValue.emit(this.pdfMailForm.value);
+    this.publishSettingsService.updateFormValue(this.pdfMailForm.value);
   }
 
   savePublishSettings(state: object) {
-    this.onSavePublishSettings.emit(state);
+    this.publishSettingsService.savePublishSettings(state);
   }
 
   setFormValue(key: string, newState: object) {
