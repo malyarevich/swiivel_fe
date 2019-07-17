@@ -1,249 +1,286 @@
 <!--Section-->
-<div class="app-section-wrapper app-consent-section mt-2 mb-2 row align-items-center no-gutters">
+<app-section-header
+  [sectionName]="sectionName"
+  [sectionWidth]="sectionWidth"
+  [isExpand]="isExpand"
+  (onChangeSectionName)="changeSectionName($event)"
+  (onChangeSectionWidth)="changeSectionWidth($event)"
+  (onToggleExpand)="toggleExpand($event)"
+></app-section-header>
+<!--End Section-->
 
+<!--OLD Section-->
+<div
+  class="app-section-wrapper app-consent-section mt-2 mb-2 row align-items-center no-gutters"
+>
   <div class="col-4 row align-items-center no-gutters">
     <div class="col-1 row align-items-center no-gutters">
-          <span class="app-fb-section-icon-white">
-            <i class="fas fa-ellipsis-v"></i>
-            <i class="fas fa-ellipsis-v"></i>
-          </span>
+      <span class="app-fb-section-icon-white">
+        <i class="fas fa-ellipsis-v"></i>
+        <i class="fas fa-ellipsis-v"></i>
+      </span>
     </div>
-    <div class="col-10 ml-3" [ngClass]="{'app-input-fill': sectionName}">
+    <div class="col-10 ml-3" [ngClass]="{ 'app-input-fill': sectionName }">
       <label class="app-input-label" for="section-name">Section Name</label>
       <input
         id="section-name"
         type="text"
         class="app-input"
         [(ngModel)]="sectionName"
-        placeholder="Section Name">
+        placeholder="Section Name"
+      />
     </div>
   </div>
 
-
-  <div class="col-2 pl-4 app-input-container w-100" [ngClass]="{'app-input-fill': sectionWidth}">
+  <div
+    class="col-2 pl-4 app-input-container w-100"
+    [ngClass]="{ 'app-input-fill': sectionWidth }"
+  >
     <label class="app-input-label" for="section-width">Section Width</label>
     <input
       id="section-width"
       type="text"
       class="app-input"
       [(ngModel)]="sectionWidth"
-      placeholder="Section Name">
+      placeholder="Section Name"
+    />
   </div>
 
-
-  <div class="col-1 offset-5   row align-items-center no-gutters">
+  <div class="col-1 offset-5 row align-items-center no-gutters">
     <div class="col">
       <span class="app-fb-section-icon-white">
         <i class="fas fa-cog dragable-i pr-2"></i>
       </span>
     </div>
-    <div class="col">
-        <span class="app-fb-section-icon-white">
-          <i class="fas  fa-caret-down dragable-y"></i>
-        </span>
+    <div class="col app-cursor-pointer" (click)="toggleExpand()">
+      <span class="app-fb-section-icon-white">
+          <i
+          class="fas dragable-y"
+          [ngClass]="{
+            'fa-caret-up': isExpand,
+            'fa-caret-down': !isExpand
+          }"
+        ></i>
+      </span>
     </div>
   </div>
-
 </div>
-<!--End Section-->
+<!--End OLD Section-->
 
-<div  *ngFor="let forms of formsPDF">
+<!-- Section body -->
+<div
+  class="app-div-animation app-div-hide"
+  [ngClass]="{
+    'app-div-show': isExpand,
+    'app-div-hide': !isExpand
+  }"
+>
+  <div *ngFor="let forms of formsPDF">
+    <div class="app-section-wrapper mb-2">
+      <div class="row no-gutters align-items-center">
+        <div class="col-5 row no-gutters align-items-center">
+          <div class=" col-1 row align-items-center no-gutters">
+            <span class="app-fb-section-icon">
+              <i class="fas fa-ellipsis-v"></i>
+              <i class="fas fa-ellipsis-v"></i>
+            </span>
+          </div>
 
-<div class="app-section-wrapper mb-2">
-  <div class="row no-gutters align-items-center">
-    <div class="col-5 row no-gutters align-items-center">
-      <div class=" col-1 row align-items-center no-gutters">
-          <span class="app-fb-section-icon">
-            <i class="fas fa-ellipsis-v"></i>
-            <i class="fas fa-ellipsis-v"></i>
-          </span>
+          <div class="col-10 ml-1" [ngClass]="{ 'app-input-fill': forms.name }">
+            <label class="app-input-label" for="forms-name">Form Name</label>
+            <input
+              type="text"
+              class="app-input"
+              id="forms-name"
+              [(ngModel)]="forms.name"
+              placeholder="Form Name"
+            />
+          </div>
+        </div>
+        <div class="col-1 ">
+          <span
+            *ngIf="forms.isPerFamily"
+            class="badge badge-pill badge-success ml-3"
+            >&nbsp;Family&nbsp;</span
+          >
+          <span
+            *ngIf="!forms.isPerFamily"
+            class="badge badge-pill badge-info ml-3"
+            >Student</span
+          >
+        </div>
+        <div class="col-2 offset-4">
+          <button type="button" class="btn btn-outline-primary form-control">
+            Add Specific Criteria
+          </button>
+        </div>
       </div>
 
-
-      <div class="col-10 ml-1" [ngClass]="{'app-input-fill': forms.name}">
-        <label class="app-input-label" for="forms-name">Form Name</label>
-        <input
-          type="text"
-          class="app-input"
-          id="forms-name"
-          [(ngModel)]="forms.name"
-          placeholder="Form Name">
-      </div>
-    </div>
-    <div class="col-1 ">
-      <span *ngIf="forms.isPerFamily" class="badge badge-pill badge-success ml-3">&nbsp;Family&nbsp;</span>
-      <span *ngIf="!forms.isPerFamily" class="badge badge-pill badge-info ml-3">Student</span>
-    </div>
-    <div class="col-2 offset-4">
-      <button type="button" class="btn btn-outline-primary form-control">Add Specific Criteria</button>
-    </div>
-
-  </div>
-
-
-  <div  class="row">
-    <div class="col-12 ">
-      <div class="text-right">
-        <a
-          [ngClass]="forms.accompanyingText.isBold?'active':''"
-          (click)="forms.accompanyingText.isBold=!forms.accompanyingText.isBold">
-          <small>Bold</small>
-        </a>
-        <span><small> | </small></span>
-        <a
-          [ngClass]="forms.accompanyingText.isItalic?'active':''"
-          (click)="forms.accompanyingText.isItalic=!forms.accompanyingText.isItalic">
-          <small>Italic</small>
-        </a>
-      </div>
-    </div>
-    <div class="col ">
+      <div class="row">
+        <div class="col-12 ">
+          <div class="text-right">
+            <a
+              [ngClass]="forms.accompanyingText.isBold ? 'active' : ''"
+              (click)="
+                forms.accompanyingText.isBold = !forms.accompanyingText.isBold
+              "
+            >
+              <small>Bold</small>
+            </a>
+            <span><small> | </small></span>
+            <a
+              [ngClass]="forms.accompanyingText.isItalic ? 'active' : ''"
+              (click)="
+                forms.accompanyingText.isItalic = !forms.accompanyingText
+                  .isItalic
+              "
+            >
+              <small>Italic</small>
+            </a>
+          </div>
+        </div>
+        <div class="col ">
           <textarea
             class="app-consent-table form-control float-right"
-            [ngClass]="[forms.accompanyingText.isBold?'bold-for-a':'',
-                        forms.accompanyingText.isItalic?'italic-for-a':'']"
+            [ngClass]="[
+              forms.accompanyingText.isBold ? 'bold-for-a' : '',
+              forms.accompanyingText.isItalic ? 'italic-for-a' : ''
+            ]"
             rows="4"
             placeholder="Text"
             [(ngModel)]="forms.accompanyingText.data"
           ></textarea>
-    </div>
-
-  </div>
-
-  <div [hidden]="!forms.isNew"  class="row  align-items-center mt-3 no-gutters ">
-
-    <div class="row  align-items-center col-7 pl-5">
-
-      <div class="col-6  "
-        [ngClass]="{'app-input-fill': true}">
-        <label for="formTypesN" class="app-input-label">Form Type</label>
-        <select class="app-input "
-                id="formTypesN">
-          <option value="">New Form</option>
-        </select>
+        </div>
       </div>
 
-      <div  class="col-6 " [ngClass]="{'app-input-fill': forms.name}">
-        <label class="app-input-label" for="new-forms-name">New form Name</label>
-        <input
-          type="text"
-          class="app-input"
-          id="new-forms-name"
-          [(ngModel)]="forms.name"
-          placeholder="forms Name">
-      </div>
+      <div
+        [hidden]="!forms.isNew"
+        class="row  align-items-center mt-3 no-gutters "
+      >
+        <div class="row  align-items-center col-7 pl-5">
+          <div class="col-6  " [ngClass]="{ 'app-input-fill': true }">
+            <label for="formTypesN" class="app-input-label">Form Type</label>
+            <select class="app-input " id="formTypesN">
+              <option value="">New Form</option>
+            </select>
+          </div>
 
+          <div class="col-6 " [ngClass]="{ 'app-input-fill': forms.name }">
+            <label class="app-input-label" for="new-forms-name"
+              >New form Name</label
+            >
+            <input
+              type="text"
+              class="app-input"
+              id="new-forms-name"
+              [(ngModel)]="forms.name"
+              placeholder="forms Name"
+            />
+          </div>
+        </div>
 
+        <div class="col-4 input-group pl-3">
+          <div class="input-group-prepend form-control p-0">
+            <span class="input-group-text form-control" id="basic-addon1">{{
+              forms.form?.name
+            }}</span>
+          </div>
+          <div class="input-group-append">
+            <input
+              type="file"
+              #uploader
+              accept=".pdf"
+              (change)="fileChange($event, forms)"
+              hidden
+            />
+            <button
+              class="btn btn-primary d-u-button"
+              type="button"
+              id="button-addon2"
+              (click)="uploader.click()"
+            >
+              Upload
+            </button>
+          </div>
+        </div>
 
-    </div>
-
-    <div  class="col-4 input-group pl-3">
-      <div class="input-group-prepend form-control p-0">
-        <span class="input-group-text form-control" id="basic-addon1">{{forms.form?.name}}</span>
-      </div>
-        <div class="input-group-append">
-          <input
-            type="file"
-            #uploader
-            accept=".pdf"
-            (change)="fileChange($event, forms)"
-            hidden
-          >
+        <div class="col-1 ml-4">
           <button
-            class="btn btn-primary d-u-button"
+            [hidden]="forms.isEdit"
             type="button"
-            id="button-addon2"
-            (click)="uploader.click()"
+            class="btn btn-primary d-u-button form-control"
+            (click)="forms.isEdit = true"
           >
-            Upload
+            Edit Form
           </button>
         </div>
-    </div>
-
-
-
-
-    <div class="col-1 ml-4">
-      <button
-        [hidden]="forms.isEdit"
-        type="button"
-        class="btn btn-primary d-u-button form-control"
-        (click)="forms.isEdit=true"
-      >
-        Edit Form
-      </button>
-    </div>
-
-  </div>
-
-
-
-  <div [hidden]="forms.isNew"  class="row  align-items-center mt-3 no-gutters ">
-
-    <div class="row  align-items-center col-5">
-
-      <div class="col-8  offset-1"
-        [ngClass]="{'app-input-fill': true}">
-        <label for="formTypes" class="app-input-label">Form Type</label>
-        <select class="app-input "
-                id="formTypes">
-          <option value="">Existing Form</option>
-        </select>
       </div>
 
+      <div
+        [hidden]="forms.isNew"
+        class="row  align-items-center mt-3 no-gutters "
+      >
+        <div class="row  align-items-center col-5">
+          <div class="col-8  offset-1" [ngClass]="{ 'app-input-fill': true }">
+            <label for="formTypes" class="app-input-label">Form Type</label>
+            <select class="app-input " id="formTypes">
+              <option value="">Existing Form</option>
+            </select>
+          </div>
+        </div>
 
-    </div>
-
-    <div class="row  align-items-center col-6 no-gutters">
-
-    <div class="col-9 pr-1"
-         [ngClass]="{'app-input-fill': true}">
-      <label for="formExisting" class="app-input-label">Form</label>
-      <select class="app-input font-weight-bold" [(ngModel)]="forms.form" [disabled]="forms.isEdit"
+        <div class="row  align-items-center col-6 no-gutters">
+          <div class="col-9 pr-1" [ngClass]="{ 'app-input-fill': true }">
+            <label for="formExisting" class="app-input-label">Form</label>
+            <select
+              class="app-input font-weight-bold"
+              [(ngModel)]="forms.form"
+              [disabled]="forms.isEdit"
               id="formExisting"
               (ngModelChange)="testLog($event)"
-      >
-        <option *ngFor="let pdf of existingFormsPDF" [ngValue]="pdf"
-                [selected]="forms.form?._id===pdf._id">{{pdf.name}}</option>
-      </select>
-    </div>
-      <div class="col-3  row no-gutters slider-item align-items-center">
-        <div class="col-1 pb-1 ml-2">
-          <label class="app-checkbox-container">
-            <input
-              type="checkbox" >
-            <span class="app-checkbox-checkmark"></span>
-          </label>
+            >
+              <option
+                *ngFor="let pdf of existingFormsPDF"
+                [ngValue]="pdf"
+                [selected]="forms.form?._id === pdf._id"
+                >{{ pdf.name }}</option
+              >
+            </select>
+          </div>
+          <div class="col-3  row no-gutters slider-item align-items-center">
+            <div class="col-1 pb-1 ml-2">
+              <label class="app-checkbox-container">
+                <input type="checkbox" />
+                <span class="app-checkbox-checkmark"></span>
+              </label>
+            </div>
+            <div class="col-10 text-center">
+              <span class=" ">Share Publicly</span>
+            </div>
+          </div>
         </div>
-        <div class="col-10 text-center">
-          <span class=" ">Share Publicly</span>
+
+        <div class="col ml-4 ">
+          <button
+            [hidden]="forms.isEdit"
+            type="button"
+            class="btn btn-primary d-u-button form-control "
+            (click)="forms.isEdit = true"
+          >
+            Edit Form
+          </button>
         </div>
       </div>
     </div>
 
-    <div class="col ml-4 ">
-      <button
-        [hidden]="forms.isEdit"
-        type="button"
-        class="btn btn-primary d-u-button form-control "
-        (click)="forms.isEdit=true"
-      >
-        Edit Form
-      </button>
+    <div *ngIf="forms.form" class=" row justify-content-center my-3 pt-4">
+      <div class="div-wrap  justify-content-center row app-section-wrapper">
+        <app-v-form-drawing
+          [existingFields]="existingFields"
+          [pages]="forms.form.numberOfPages"
+          [formsPDF]="forms"
+        ></app-v-form-drawing>
+      </div>
     </div>
-
   </div>
-
-
 </div>
-
-  <div *ngIf="forms.form"  class=" row justify-content-center my-3 pt-4">
-    <div  class="div-wrap  justify-content-center row app-section-wrapper">
-      <app-v-form-drawing [existingFields]="existingFields" [pages]="forms.form.numberOfPages"  [formsPDF]="forms"></app-v-form-drawing>
-
-    </div>
-
-  </div>
-
-</div>
-
