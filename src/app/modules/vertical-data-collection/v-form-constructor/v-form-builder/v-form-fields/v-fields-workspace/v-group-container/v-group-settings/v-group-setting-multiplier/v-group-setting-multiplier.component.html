@@ -9,14 +9,14 @@
   <div class="row no-gutters pt-4">
     <div class="col">
       <label class="app-radio-container">Mapped multiples
-        <input type="radio" name="mapped_type" value="multiple"
+        <input type="radio" name="mapped_type" [value]="'multiple'"
                [(ngModel)]="inputGroup.settings.multiplier.mapped_type">
         <span class="app-radio-checkmark"></span>
       </label>
     </div>
     <div class="col">
       <label class="app-radio-container">Manual selection
-        <input type="radio" name="mapped_type" value="manual"
+        <input type="radio" name="mapped_type" [value]="'manual'"
                [(ngModel)]="inputGroup.settings.multiplier.mapped_type">
         <span class="app-radio-checkmark"></span>
       </label>
@@ -24,8 +24,8 @@
   </div>
   <ng-container *ngIf="inputGroup.settings.multiplier.mapped_type === 'multiple'">
     <div class="form-group app-input-container app-input-fill">
-      <label class="app-input-label" for="criteria">This Field is Mapping to</label>
-      <select class="app-input" id="criteria"
+      <label class="app-input-label" for="multiple">This Field is Mapping to</label>
+      <select class="app-input" id="multiple"
               [(ngModel)]="inputGroup.settings.multiplier.mapping_field">
         <option value="amount_of_students_in_family">"Amount of Students in Family"</option>
       </select>
@@ -34,10 +34,12 @@
 
   <ng-container *ngIf="inputGroup.settings.multiplier.mapped_type === 'manual'">
     <div class="form-group app-input-container app-input-fill">
-      <label class="app-input-label" for="criteria">This Field is Mapping to</label>
-      <select class="app-input" id="criteria"
+      <label class="app-input-label" for="manual">This Field is Mapping to</label>
+      <select class="app-input" id="manual"
               [(ngModel)]="inputGroup.settings.multiplier.mapping_field">
-        <option value="amount_of_students_in_family">"Amount of Students in Family"</option>
+        <option *ngFor='let item of manualMultiplierOptions'
+                [value]="item.value">{{item.name | titlecase}}
+        </option>
       </select>
     </div>
   </ng-container>
