@@ -19,12 +19,6 @@ export class VPublishMenuComponentAdditionalOptions implements OnInit {
     ) {}
 
   ngOnInit() {
-      // console.log(this.automation);
-  }
-
-  getName(type_id: number): string {
-    const filtered_list = this.automation['type_list'].filter((item) => type_id === item['id']);
-    return filtered_list[0]['name'];
   }
 
   getTypeName(type_id: number): string {
@@ -35,9 +29,7 @@ export class VPublishMenuComponentAdditionalOptions implements OnInit {
   }
 
   getTypeIcon(type_id: number): string {
-    // console.log(type_id);
     const filtered_list = this.automation['type_list'].filter((item) => type_id === item['id']);
-    // console.log(filtered_list);
     switch (filtered_list[0]['type']) {
       case "email":
         return `fa-envelope`;

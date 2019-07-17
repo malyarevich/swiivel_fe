@@ -23,10 +23,7 @@
         ></app-v-conditions-review>
         <app-v-publish-settings
           [publish_settings]="data['publish_settings']"
-          (onToggleOnlineCheckbox)="toggleOnlineCheckbox($event)"
-          (onTogglePdfCheckbox)="togglePdfCheckbox($event)"
-          (onUpdateFormValue)="updateFormValue($event)"
-          (onSavePublishSettings)="savePublishSettings($event)"
+          [id]="formId"
           class="d-block app-div-animation"
           [ngClass]="{
             'app-div-show':

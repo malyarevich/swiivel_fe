@@ -28,7 +28,7 @@ export class VPublishSettingsPdfFormComponent implements OnInit {
   providers = PublishSettingsEntity.providers;
 
   defaultMailFormControls = {
-    ProviderName: new FormControl(null, Validators.required),
+    ProviderName: new FormControl({ value: 0, name: "Provider Name" }, Validators.required),
     AccountNumber: new FormControl("", {
       validators: Validators.compose([
         Validators.required,
@@ -37,7 +37,7 @@ export class VPublishSettingsPdfFormComponent implements OnInit {
       ])
     }),
     Email: new FormControl(
-      null,
+      "",
       Validators.compose([
         Validators.required,
         Validators.pattern("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$")
@@ -45,7 +45,7 @@ export class VPublishSettingsPdfFormComponent implements OnInit {
     ),
     EmailSubject: new FormControl("", Validators.required),
     EmailBody: new FormControl("", Validators.required),
-    FormCheckbox: new FormControl("", Validators.required),
+    FormCheckbox: new FormControl(false, Validators.required),
     CoverLetter: new FormControl("", Validators.required)
   };
 
@@ -59,9 +59,14 @@ export class VPublishSettingsPdfFormComponent implements OnInit {
     if (this.pdfConfig["form_value"]) {
       this.loadForm();
     }
+
   }
 
   loadForm() {
+    // TODO: remove if after renew
+    if (!this.pdfConfig["form_value"]['ProviderName']) {
+      this.pdfConfig["form_value"]['ProviderName'] = {"value": ""};
+    }
     this.pdfMailForm.patchValue(this.pdfConfig["form_value"]);
   }
 

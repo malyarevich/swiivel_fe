@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { IAutomation } from "../../../model/publish-settings.model";
-import { PublishMenuItems } from "../models/publish-menu-items";
+import { PublishMenuItems } from "../../../model/publish-menu-items";
 import { VPublishSettingsAutomationService } from '../../../services/v-publish-settings-automation.service';
 
 @Component({

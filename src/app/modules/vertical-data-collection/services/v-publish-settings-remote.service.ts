@@ -13,8 +13,6 @@ import {
 export class VPublishSettingsRemoteService {
   constructor(private http: HttpClient) {}
 
-  
-
 
   getOneData(id: string): Observable<any> {
     return this.http.get(`/proxy/forms/publish-settings/${id}`).pipe(
@@ -27,12 +25,7 @@ export class VPublishSettingsRemoteService {
   }
 
   sendData(data: IData, id: string) {
-    console.log( JSON.stringify(data));
-    if (id !== undefined) {
-      return this.http
-        .put(`/proxy/forms/publish-settings/${id}`, data)
-        .pipe(map(response => response));
-    }
+    // console.log( JSON.stringify(data));
     return this.http
       .post(`/proxy/forms/publish-settings/${id}`, data)
       .pipe(map(response => response));

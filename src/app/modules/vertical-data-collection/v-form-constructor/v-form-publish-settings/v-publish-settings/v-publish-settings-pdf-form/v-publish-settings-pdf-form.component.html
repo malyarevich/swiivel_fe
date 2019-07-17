@@ -69,10 +69,8 @@
     }"
   >
     <!-- #ProviderNameID -->
-    <div
-      class="form-group app-input-container"
-    >
-      <label for="ProviderName" class="app-input-label">Provider Name</label>
+    <div class="form-group app-input-container">
+      <label for="ProviderNameID" class="app-input-label">Provider Name</label>
       <select
         class="app-input form-control"
         [ngClass]="{
@@ -84,10 +82,10 @@
         formControlName="ProviderName"
         (blur)="onBlurFormField()"
       >
-        <option value="" disabled [selected]="true">Provider Name</option>
-        <option *ngFor="let field of providers" [ngValue]="field">{{
-          field.name
-        }}</option>
+        <option value="" disabled>Provider Name</option>
+        <option *ngFor="let field of providers" [ngValue]="field">
+          {{ field.name }}
+        </option>
       </select>
       <div class="invalid-feedback">
         Field type is required!
@@ -95,9 +93,7 @@
     </div>
     <div class="row">
       <!-- #AccountNumberID -->
-      <div
-        class="col-12 col-md-6 form-group app-input-container"
-      >
+      <div class="col-12 col-md-6 form-group app-input-container">
         <label for="AccountNumberID" class="app-input-label"
           >Account Number</label
         >
@@ -124,9 +120,7 @@
       </div>
 
       <!-- #EmailID -->
-      <div
-        class="col-12 col-md-6 form-group app-input-container"
-      >
+      <div class="col-12 col-md-6 form-group app-input-container">
         <label for="EmailID" class="app-input-label">Email</label>
         <input
           type="text"
@@ -150,9 +144,7 @@
       </div>
     </div>
     <!-- #EmailSubjectID -->
-    <div
-      class="form-group app-input-container"
-    >
+    <div class="form-group app-input-container">
       <label for="EmailSubjectID" class="app-input-label">Email Subject</label>
       <input
         type="text"
@@ -177,9 +169,7 @@
     </div>
 
     <!-- #EmailBodyID -->
-    <div
-      class="form-group app-input-container"
-    >
+    <div class="form-group app-input-container">
       <label for="EmailBodyID" class="app-input-label d-none">Email Body</label>
       <input
         type="text"

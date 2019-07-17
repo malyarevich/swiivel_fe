@@ -1,5 +1,3 @@
-
-
 export abstract class AutomationEntity {
   public static defaultAutomation: IAutomation = {
     automation_list: [
@@ -14,36 +12,35 @@ export abstract class AutomationEntity {
 }
 
 export abstract class PublishSettingsEntity {
-  
   public static defaultStateSub: ISubMenus = {
     settings: {
       online: false,
       pdf: false
     }
   };
-  
-  public static defaultOnlineConfig: object = {
+
+  public static defaultOnlineConfig: IOnlineConfig = {
     is_mutable_verified_fields: false,
     is_immutable_verified_fields: true,
     is_pre_fill_fields: false
   };
-  
-  public static defaultPdfConfig: object = {
+
+  public static defaultPdfConfig: IPdfConfig = {
     is_include_verified_fields: false,
     is_display_fields: false,
     is_send_mail: false,
     is_append_cover_letter: false,
     form_value: {
-      ProviderName: null,
+      ProviderName: { value: 0, name: "Provider Name" },
       AccountNumber: "",
-      Email: null,
+      Email: "",
       EmailSubject: "",
       EmailBody: "",
-      FormCheckbox: "",
+      FormCheckbox: false,
       CoverLetter: ""
     }
   };
-  
+
   //Online
   public static onlineStructure: IOnlineStructure = {
     title: "Online Form",
@@ -51,31 +48,31 @@ export abstract class PublishSettingsEntity {
       {
         key: "is_mutable_verified_fields",
         text:
-        "Verified Fields Where the Information Can Change Will Still be Shown",
+          "Verified Fields Where the Information Can Change Will Still be Shown",
         tipText: "Example: Address, Phone Number"
       },
       {
         key: "is_immutable_verified_fields",
         text: "Verified Fields That Will not Change Will not be Shown",
         tipText:
-        "Example: Birthday, Social security Number, Mother's Name, Father's Name"
+          "Example: Birthday, Social security Number, Mother's Name, Father's Name"
       },
       {
         key: "is_pre_fill_fields",
         text:
           "Pre-Fill Fields With Data that is Already in the System (Regardless of Verification)",
-          tipText:
+        tipText:
           "If the system has any information in the system, to show it in the form instead empty fields that need to be completely started from scratch."
-        }
-      ]
-    };
-    
-    //PDF
-    public static pdfStructure: IPdfStructure = {
-      title: "PDF Form",
-      subtitle: "General Settings",
-      checkBoxList: {
-        general: [
+      }
+    ]
+  };
+
+  //PDF
+  public static pdfStructure: IPdfStructure = {
+    title: "PDF Form",
+    subtitle: "General Settings",
+    checkBoxList: {
+      general: [
         {
           key: "is_include_verified_fields",
           text: "Include Verified Fields in PDF Form"
@@ -106,7 +103,7 @@ export abstract class PublishSettingsEntity {
       }
     ]
   };
-  
+
   public static providers = [
     { value: 1, name: "First provider" },
     { value: 2, name: "Second provider" },
@@ -117,7 +114,7 @@ export abstract class PublishSettingsEntity {
     online_config: PublishSettingsEntity.defaultOnlineConfig,
     pdf_config: PublishSettingsEntity.defaultPdfConfig,
     state: PublishSettingsEntity.defaultStateSub
-  }
+  };
 }
 
 export abstract class DataEntity {
@@ -141,7 +138,7 @@ export interface IPdfStructure {
 
 export interface IInput {
   value: string;
-  type: string;
+  type?: string;
   placeholder?: string;
 }
 
@@ -169,9 +166,31 @@ export interface IData {
 }
 
 export interface IPublishSettings {
-  online_config?: object;
-  pdf_config?: object;
+  online_config?: IOnlineConfig;
+  pdf_config?: IPdfConfig;
   state?: ISubMenus;
+}
+
+export interface IOnlineConfig {
+  is_mutable_verified_fields: boolean;
+  is_immutable_verified_fields: boolean;
+  is_pre_fill_fields: boolean;
+}
+
+export interface IPdfConfig {
+  is_include_verified_fields: boolean,
+  is_display_fields: boolean,
+  is_send_mail: boolean,
+  is_append_cover_letter: boolean,
+  form_value: {
+    ProviderName: { value: number, name: string },
+    AccountNumber: string,
+    Email: string,
+    EmailSubject: string,
+    EmailBody: string,
+    FormCheckbox: boolean,
+    CoverLetter: string
+  }
 }
 
 export interface ISubMenus {

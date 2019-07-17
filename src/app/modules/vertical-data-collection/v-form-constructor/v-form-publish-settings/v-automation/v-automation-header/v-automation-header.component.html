@@ -1,4 +1,4 @@
-<div class="section_header" id="automation-{{automationItem['id']}}">
+<div class="section_header" id="automation-{{automationItem['_id']}}">
   <!-- Name -->
   <div class="section_header__item app-input-fill">
     <input
@@ -7,7 +7,7 @@
       class="app-input"
       placeholder="Automation Name"
       [value]="automationItem['name']"
-      (input)="onChangeAutomationName(automationItem['id'], $event.target.value)"
+      (input)="onChangeAutomationName(automationItem['_id'], $event.target.value)"
     />
     <label class="app-input-label" for="section-name">Automation Name</label>
   </div>
@@ -15,12 +15,12 @@
   <!-- Type -->
   <div class="section_header__item app-input-fill">
     <select class="app-input" id="section-type"
-      (input)="onChangeAutomationType(automationItem['id'], $event.target.value)"
+      (input)="onChangeAutomationType(automationItem['_id'], $event.target.value)"
     >
       <ng-container *ngFor="let itemType of automation['type_list']">
         <option
           [value]="itemType['id']"
-          [selected]="automationItem['type_id'] === itemType['id']"
+          [selected]="automationItem['type_id'] === itemType['_id']"
         >
           {{ itemType["name"] }}
         </option>
@@ -59,7 +59,7 @@
   <!-- Trash -->
   <div
     class="section_header__control_item"
-    (click)="removeAutomationItem(automationItem['id'])"
+    (click)="removeAutomationItem(automationItem['_id'])"
   >
     <span class="app-fb-section-icon-white">
       <i class="fas fa-trash"></i>
@@ -69,10 +69,10 @@
   <!-- Caret -->
   <div
     class="section_header__control_item section_header__control_item--border_left"
-    (click)="switchAutomationItemContent(automationItem['id'])"
+    (click)="switchAutomationItemContent(automationItem['_id'])"
   >
     <span class="app-fb-section-icon-primary">
-      <i class="fas {{getStatusContent(automationItem['id']) ? 'fa-caret-up' : 'fa-caret-down'}}"></i>
+      <i class="fas {{getStatusContent(automationItem['_id']) ? 'fa-caret-up' : 'fa-caret-down'}}"></i>
     </span>
   </div>
 </div>

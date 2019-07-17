@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output, Input } from "@angular/core";
-import { PublishMenuItems } from "../models/publish-menu-items";
-import { ISubMenus, IData, PublishSettingsEntity } from "../../../model/publish-settings.model";
+import { PublishMenuItems } from "../../../model/publish-menu-items";
+import { IData, PublishSettingsEntity } from "../../../model/publish-settings.model";
 import { VPublishSettingsPublishSettingsService } from '../../../services/v-publish-settings-publish-settings.service';
 import { VPublishSettingsService } from '../../../services/v-publish-settings.service';
 

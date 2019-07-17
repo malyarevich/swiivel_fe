@@ -1,4 +1,5 @@
 <div class="content">
+    <ng-container *ngIf="!isSaving">
   <!-- BEGIN: Online Form -->
   <ng-container>
     <app-v-publish-settings-online-form
@@ -27,10 +28,14 @@
   
   <!-- SaveGo -->
   <div class="mt-5 text-center">
-    <button class="btn app-btn-primary px-3 py-2" (click)="savePublishSettings({})">
+    <button class="btn app-btn-primary px-3 py-2" (click)="savePublishSettings()">
       Save & Go Next Step
     </button>
   </div>
+</ng-container>
 
+  <ng-container *ngIf="isSaving">
+    <main-spinner [spinnerText]="spinnerText"></main-spinner>
+  </ng-container>
 </div>
 <!-- /.content -->

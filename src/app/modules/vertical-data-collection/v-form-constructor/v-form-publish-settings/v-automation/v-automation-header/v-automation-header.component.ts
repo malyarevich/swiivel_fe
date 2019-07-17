@@ -37,13 +37,13 @@ export class VAutomationHeaderComponent implements OnInit {
         : `You (not yet updated)`;
   }
 
-  onChangeAutomationName(id: number, name: string) {
-    const obj: object = {"id": id, "name": name};
+  onChangeAutomationName(_id: number, name: string) {
+    const obj: object = {"_id": _id, "name": name};
     this.automationService.changeAutomationItemName(obj);
   }
 
-  onChangeAutomationType(id: number, type_id: string) {
-    const obj: object = {"id": id, "type_id": parseInt(type_id, 10) };
+  onChangeAutomationType(_id: number, type_id: string) {
+    const obj: object = {"_id": _id, "type_id": parseInt(type_id, 10) };
     this.automationService.changeAutomationItemType(obj);
   }
 
@@ -51,12 +51,12 @@ export class VAutomationHeaderComponent implements OnInit {
     this.automationService.removeAutomationItem(itemId);
   }
 
-  switchAutomationItemContent(id: number) {
-    this.automationService.switchAutomationItemContent(id);
+  switchAutomationItemContent(_id: number) {
+    this.automationService.switchAutomationItemContent(_id);
   }
 
-  getStatusContent(id: number) {
-    return this.automationService.isHideAutomationItemContent[id];
+  getStatusContent(_id: number) {
+    return this.automationService.isHideAutomationItemContent[_id];
   }
 
 }
