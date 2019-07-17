@@ -60,6 +60,10 @@
     flex-direction: column;
     justify-content: flex-start;
     padding: 1.75rem;
+
+    &--center {
+      align-items: center;
+    }
   }
 
   &__article_title {
