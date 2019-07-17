@@ -7,6 +7,7 @@ import {
   IMainMenuNames,
   IMenuItems
 } from "../../../../models/vertical-data-collection/v-form-constructor/online-form/menu-items";
+import { Field } from '../../model/field.model';
 
 @Component({
   selector: "app-online-form-general-info",
@@ -14,7 +15,8 @@ import {
   styleUrls: ["./online-form-general-info.component.scss"]
 })
 export class OnlineFormGeneralInfoComponent implements OnInit {
-  @Input() form: Form;
+  // @Input() form: Form;
+  @Input() form: Field;
 
   menuItems: IMenuItems[] = menuItems;
   mainMenuNames: IMainMenuNames = mainMenuNames;

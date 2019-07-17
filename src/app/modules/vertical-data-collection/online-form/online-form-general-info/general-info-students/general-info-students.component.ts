@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { Form } from "../../../model/form.model";
+import { Field } from '../../../model/field.model';
 
 @Component({
   selector: "app-general-info-students",
@@ -7,7 +8,8 @@ import { Form } from "../../../model/form.model";
   styleUrls: ["./general-info-students.component.scss"]
 })
 export class GeneralInfoStudentsComponent implements OnInit {
-  @Input() form: Form;
+  // @Input() form: Form;
+  @Input() form: Field;
 
   constructor() {}
 

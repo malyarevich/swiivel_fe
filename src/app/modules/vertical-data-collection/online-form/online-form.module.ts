@@ -34,6 +34,7 @@ import { OnlineFormDocumentsFormsComponent } from "./online-form-documents-forms
 import { OnlineDocumentsComponent } from "./online-form-documents-forms/online-documents/online-documents.component";
 import { OnlinePdfFormsComponent } from "./online-form-documents-forms/online-pdf-forms/online-pdf-forms.component";
 import { PdfViewerModule } from "ng2-pdf-viewer";
+import { OnlineFormPaymentComponent } from "./online-form-payment/online-form-payment.component";
 import { OnlineFormPaymentSettingsComponent } from "./online-form-payment-settings/online-form-payment-settings.component";
 import { OnlineFormTermsConditionsComponent } from "./online-form-terms-conditions/online-form-terms-conditions.component";
 import { OnlineFormTuitionContractComponent } from "./online-form-tuition-contract/online-form-tuition-contract.component";
@@ -71,6 +72,7 @@ import { SharedRedComponentsModule } from '../../../shared/components/sharedRedC
     OnlineFormDocumentsFormsComponent,
     OnlineDocumentsComponent,
     OnlinePdfFormsComponent,
+    OnlineFormPaymentComponent,
     OnlineFormPaymentSettingsComponent,
     OnlineFormTermsConditionsComponent,
     OnlineFormTuitionContractComponent,
