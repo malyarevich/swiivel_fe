@@ -1,6 +1,18 @@
 import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { Section } from '../../../../models/vertical-data-collection/section.model';
 
+/**Help for use
+ * Example for base usage:
+<app-section-header
+  [sectionName]="sectionName"
+  [sectionWidth]="sectionWidth"
+  [isExpand]="isExpand"
+  (onChangeSectionName)="changeSectionName($event)"
+  (onChangeSectionWidth)="changeSectionWidth($event)"
+  (onToggleExpand)="toggleExpand()"
+></app-section-header>
+ */
+
 @Component({
   selector: "app-section-header",
   templateUrl: "./section-header.component.html",
