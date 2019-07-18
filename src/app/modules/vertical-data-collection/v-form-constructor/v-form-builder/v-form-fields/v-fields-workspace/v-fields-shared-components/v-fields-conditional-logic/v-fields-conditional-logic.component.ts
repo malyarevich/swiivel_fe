@@ -9,7 +9,7 @@ const defaultConditional: FieldSettingConditional = {
   logic: 'hide',
   when: 'all',
   field: '',
-  rules: [{name: 'is', value: ''}, {name: 'start', value: ''}]
+  rules: [{name: 'is', value: ''}]
 };
 
 @Component({
