@@ -2,9 +2,9 @@
   class="app-div-animation"
   *ngIf="item['addOptions'] !== undefined"
   [ngClass]="{
-    'app-div-show':
+    'app-div-show app-div-show--static':
       activeMenuItem === item['value'] && item['addOptions'] !== undefined,
-    'app-div-hide': !(
+    'app-div-hide app-div-hide--static': !(
       activeMenuItem === item['value'] && item['addOptions'] !== undefined
     )
   }"
@@ -45,9 +45,9 @@
       >
         <i class="fas fa-trash menu_list__icon_trash app-div-animation"
           [ngClass]="{
-            'app-div-show':
+            'app-div-show app-div-show--static':
               !arrayIsHoverTrash[indexAutomation],
-            'app-div-hide': !(
+            'app-div-hide app-div-hide--static': !(
               arrayIsHoverTrash[indexAutomation]
             )
           }"
