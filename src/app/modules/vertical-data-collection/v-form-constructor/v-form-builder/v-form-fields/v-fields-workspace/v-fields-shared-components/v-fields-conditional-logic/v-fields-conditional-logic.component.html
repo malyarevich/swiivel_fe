@@ -1,0 +1,68 @@
+<div class="row  my-2 align-items-center">
+  <div class="col">
+    <span class="app-text-small app-text-extra-bold ">CONDITIONAL LOGIC</span>
+  </div>
+  <div class="col-3 text-right">
+    <i class="fas fa-plus fa-xs app-background-primary app-text-white rounded p-1 app-cursor-pointer"></i>
+    <i class="fas fa-trash app-text-second fa-sm ml-2"></i>
+  </div>
+</div>
+<form [formGroup]="conditionalForm">
+  <div class="row align-items-center">
+    <div class="col-7">
+      <app-select-field class="app-text-capitalize"
+                        [formControlName]="'logic'"
+                        [items]="conditLogic"></app-select-field>
+    </div>
+    <div class="col"><span>this field when</span></div>
+  </div>
+  <div class="row align-items-center mt-2">
+    <div class="col-4">
+      <app-input-field class="app-text-capitalize" [formControlName]="'when'"></app-input-field>
+    </div>
+    <div class="col j"><span>of the following rules match</span></div>
+  </div>
+  <div class="row align-items-center no-gutters mt-2">
+    <div class="col-10  bg-white p-2">
+      <div class="form-group app-input-container app-input-fill mb-0">
+        <label class="app-input-label" for="manual">Field</label>
+        <select class="app-input" id="manual"
+                [formControlName]="'field'">
+          <option *ngFor='let item of fieldsOptions'
+                  [value]="item.value">{{item.name | titlecase}}
+          </option>
+        </select>
+      </div>
+
+    </div>
+    <div class="col-1 offset-1">
+      <span>
+        <i class="fas fa-plus app-text-second fa-xs pl-2 app-cursor-pointer"
+           (click)="addRule()">
+        </i>
+      </span>
+    </div>
+  </div>
+  <div class="row align-items-center no-gutters"
+       formArrayName="rules"
+       *ngFor="let item of rules.controls; let i=index">
+    <ng-container [formGroupName]="i">
+      <div class="col-5  bg-white p-2">
+        <app-input-field class="" [formControlName]="'name'"></app-input-field>
+
+      </div>
+      <div class="col-5  bg-white p-2">
+        <app-input-field class="" [formControlName]="'value'"></app-input-field>
+
+      </div>
+    </ng-container>
+    <div class="col-1 offset-1">
+      <span>
+        <i class="fas fa-trash app-text-second fa-xs pl-2 app-cursor-pointer"
+        (click)="removeRule(i)">
+        </i>
+      </span>
+    </div>
+  </div>
+
+</form>

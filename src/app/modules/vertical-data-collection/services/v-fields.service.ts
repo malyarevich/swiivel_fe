@@ -14,14 +14,15 @@ import {LabelFieldComponent} from "../v-form-view/fileds/label-field/label-field
 import {EmptyLineFieldComponent} from "../v-form-view/fileds/empty-line-field/empty-line-field.component";
 import {map} from "rxjs/operators";
 import {environment} from "../../../../environments/environment";
-
+import {Field} from "../../../models/vertical-data-collection/field.model";
 
 
 @Injectable()
 export class VFieldsService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
-  componentMap = new Map<number,Type<any>>([
+  componentMap = new Map<number, Type<any>>([
       [101, ShortTextFieldComponent],
       [102, LongTextFieldComponent],
       [103, NumberTextFieldComponent],
@@ -83,4 +84,34 @@ export class VFieldsService {
       )
   }
 
+  // Get forms fields and return array of objects with fields name and fields mapped
+  // [{name: string, value: string}]
+  getFieldsRecursive(fields: Field[]) {
+
+    let options: { name: string, value: string }[] = [];
+
+    function getOptions(fields: Field[], fieldName?, fieldMapped?) {
+      fields.map((field) => {
+        if (field.type === 114) {
+          getOptions(field.fields, field.name, field.mapped);
+        }
+        if (field.type == 113) {
+          getOptions(
+            field.fields,
+            fieldName ? fieldName + ' - ' + field.name : field.name,
+            fieldMapped ? fieldMapped + '|' + field.mapped : field.mapped
+          );
+        }
+        if (field.type && field.type !== 113 && field.type !== 114) {
+          options.push({
+            name: fieldName ? fieldName + ' - ' + field.name : field.name,
+            value: fieldMapped ? fieldMapped + '|' + field.mapped : field.mapped
+          });
+        }
+      });
+    }
+
+    getOptions(fields);
+    return options;
+  }
 }

@@ -1,36 +1,37 @@
 export interface Field {
   _id: string;
   type: number;
-  options?: FieldOption |   any;
+  options?: FieldOption | any;
   constraints?: any;
   validators?: any;
-  name:string;
+  name: string;
   mapped?: string;
-  title?:string;
+  title?: string;
   value?: string;
   isValid?: boolean;
   isValidName?: boolean;
-  exist?:boolean;
+  exist?: boolean;
   fields?: Field[],
   isActive?: boolean,
   prefix?: string,
   settings?: FieldSettings;
+  conditional?: FieldSettingConditional,
 }
 
 
 export interface FieldOption {
-  placeholder? : string,
-  language? : string,
-  text? : string,
-  textPopUp? : false,
-  required? : false,
-  readonly? : false,
-  hideLabel? : false,
-  unique? : false,
-  value? : string,
-  autoComplete? : false,
-  size? : number,
-  default? : string,
+  placeholder?: string,
+  language?: string,
+  text?: string,
+  textPopUp?: false,
+  required?: false,
+  readonly?: false,
+  hideLabel?: false,
+  unique?: false,
+  value?: string,
+  autoComplete?: false,
+  size?: number,
+  default?: string,
   space?: number,
   shapeStrokeValue: number,
   shapeStrokeColor: string,
@@ -40,7 +41,7 @@ export interface FieldOption {
 
 export interface FieldSettings {
   multiplier: FieldSettingMultiplier,
-  options: any
+  options: any,
 }
 
 export interface FieldSettingMultiplier {
@@ -50,6 +51,13 @@ export interface FieldSettingMultiplier {
   prefill: boolean,
   limit: boolean,
   limit_amount: number
+}
+
+export interface FieldSettingConditional {
+  logic: string;
+  when: string;
+  field: string;
+  rules: {name: string, value: string}[];
 }
 
 

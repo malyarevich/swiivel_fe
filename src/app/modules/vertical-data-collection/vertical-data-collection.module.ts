@@ -120,6 +120,7 @@ import { VAutomationLogicAreaComponent } from './v-form-constructor/v-form-publi
 import { VAutomationTemplateAreaComponent } from './v-form-constructor/v-form-publish-settings/v-automation/v-automation-template-area/v-automation-template-area.component';
 import { VConstructorDraftService } from './services/v-constructor-draft.service';
 import { VGroupSettingMultiplierComponent } from './v-form-constructor/v-form-builder/v-form-fields/v-fields-workspace/v-group-container/v-group-settings/v-group-setting-multiplier/v-group-setting-multiplier.component';
+import { VFieldsConditionalLogicComponent } from './v-form-constructor/v-form-builder/v-form-fields/v-fields-workspace/v-fields-shared-components/v-fields-conditional-logic/v-fields-conditional-logic.component';
 
 const routes: Routes = [
   {
@@ -273,7 +274,8 @@ const routes: Routes = [
     VDividerConteinerComponent,
     FieldTypePipe,
     VSectionSettingsComponent,
-    VGroupSettingMultiplierComponent
+    VGroupSettingMultiplierComponent,
+    VFieldsConditionalLogicComponent
   ],
   imports: [
     NgxDnDModule,
