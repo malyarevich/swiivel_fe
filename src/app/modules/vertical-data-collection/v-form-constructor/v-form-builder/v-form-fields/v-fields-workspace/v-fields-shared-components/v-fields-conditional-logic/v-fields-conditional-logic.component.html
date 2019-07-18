@@ -26,23 +26,33 @@
 
     </div>
     <div class="col-1 offset-1">
-      <span><i class="fas fa-trash app-text-second fa-xs pl-2 "></i></span>
-
+      <span>
+        <i class="fas fa-plus app-text-second fa-xs pl-2 app-cursor-pointer"
+           (click)="addRule()">
+        </i>
+      </span>
     </div>
   </div>
-  <div class="row align-items-center no-gutters">
-    <div class="col-5  bg-white p-2">
-      <app-input-field class="" [formControlName]="'rule'"></app-input-field>
+  <div class="row align-items-center no-gutters"
+       formArrayName="rules"
+       *ngFor="let item of rules.controls; let i=index">
+    <ng-container [formGroupName]="i">
+      <div class="col-5  bg-white p-2">
+        <app-input-field class="" [formControlName]="'name'"></app-input-field>
 
-    </div>
-    <div class="col-5  bg-white p-2">
-      <app-input-field class="" [formControlName]="'value'"></app-input-field>
+      </div>
+      <div class="col-5  bg-white p-2">
+        <app-input-field class="" [formControlName]="'value'"></app-input-field>
 
-    </div>
+      </div>
+    </ng-container>
     <div class="col-1 offset-1">
-      <span><i class="fas fa-plus app-text-second fa-xs pl-2 "></i></span>
-
+      <span>
+        <i class="fas fa-trash app-text-second fa-xs pl-2 app-cursor-pointer"
+        (click)="removeRule(i)">
+        </i>
+      </span>
     </div>
   </div>
+
 </form>
-<p>{{inputField.conditional | json}}</p>

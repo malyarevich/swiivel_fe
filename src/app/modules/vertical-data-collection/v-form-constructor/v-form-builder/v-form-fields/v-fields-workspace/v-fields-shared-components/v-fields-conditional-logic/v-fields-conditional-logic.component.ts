@@ -1,14 +1,13 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Field, FieldSettingConditional} from "../../../../../../../../models/vertical-data-collection/field.model";
 import {cloneDeep} from 'lodash';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 const defaultConditional: FieldSettingConditional = {
   logic: 'hide',
   when: 'all',
   field: '',
-  rule: 'is',
-  value: '',
+  rules: [{name: 'is', value: ''}, {name: 'start', value: ''}]
 };
 
 @Component({
@@ -20,7 +19,11 @@ export class VFieldsConditionalLogicComponent implements OnInit {
   @Input() inputField: Field;
   conditionalForm: FormGroup;
 
-  conditLogic = ['hide', 'visible'];
+  conditLogic = ['hide', 'visible', 'required', 'unrequired'];
+
+  get rules() {
+    return this.conditionalForm.get('rules') as FormArray;
+  }
 
   constructor(private readonly fb: FormBuilder) {
 
@@ -43,9 +46,19 @@ export class VFieldsConditionalLogicComponent implements OnInit {
       logic: [this.inputField.conditional.logic],
       when: [this.inputField.conditional.when],
       field: [this.inputField.conditional.field],
-      rule: [this.inputField.conditional.rule],
-      value: [this.inputField.conditional.value]
+      rules: this.fb.array(this.initRules()),
     });
+  }
+
+  initRules() {
+    let rules = [];
+    this.inputField.conditional.rules.map((rule) => {
+      rules.push(this.fb.group({
+        name: [rule.name],
+        value: [rule.value]
+      }));
+    });
+    return rules;
   }
 
   onChangesConditionalForm() {
@@ -54,5 +67,14 @@ export class VFieldsConditionalLogicComponent implements OnInit {
     });
   }
 
+  addRule() {
+    this.rules.push(this.fb.group({
+      name: '',
+      value: ''
+    }));
+  }
 
+  removeRule(index) {
+    this.rules.removeAt(index);
+  }
 }

@@ -57,8 +57,7 @@ export interface FieldSettingConditional {
   logic: string;
   when: string;
   field: string;
-  rule: string;
-  value: string;
+  rules: {name: string, value: string}[];
 }
 
 
