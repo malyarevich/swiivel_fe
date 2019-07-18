@@ -7,18 +7,18 @@
   <div class="container-fluid app-of-background online_form_container">
     <div class="online_form_container__nav">
       <app-online-form-menu
-        [form]="form"
+        [form]="form['fields'][0]"
         (activeMenuItemEmitter)="onActiveMenuItem($event)"
       ></app-online-form-menu>
     </div>
     <div class="online_form_container__content">
       <app-online-form-general-info
         *ngIf="activeSection === mainMenuNames.generalInfo"
-        [form]="form"
+        [form]="form['fields'][0]"
       >
       </app-online-form-general-info>
       <app-online-form-documents-forms
-        [form]="form"
+        [form]="form['fields'][0]"
         *ngIf="activeSection === mainMenuNames.documentsForms"
       ></app-online-form-documents-forms>
       <app-online-form-consent
@@ -29,6 +29,10 @@
         [form]="form"
         *ngIf="activeSection === mainMenuNames.paymentSettings"
       ></app-online-form-payment-settings>
+      <app-online-form-payment
+        [form]="form"
+        *ngIf="activeSection === mainMenuNames.payment"
+      ></app-online-form-payment>
       <app-online-form-terms-conditions
         [form]="form"
         *ngIf="activeSection === mainMenuNames.termsConditions"

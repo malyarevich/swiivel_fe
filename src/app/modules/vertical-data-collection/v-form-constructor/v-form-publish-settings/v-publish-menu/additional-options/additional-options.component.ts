@@ -1,9 +1,6 @@
-import { Component, EventEmitter, OnInit, Output, Input } from "@angular/core";
-import { PublishMenuItems } from "../../models/publish-menu-items";
-import { ISubMenus } from "../../models/publish-settings";
+import { Component, OnInit, Input } from "@angular/core";
 import { IAutomationListItem, IAutomation } from '../../../../model/publish-settings.model';
-import { VPublishSettingsAutomationLocalService } from 'src/app/modules/vertical-data-collection/services/v-publish-settings-automation-local.service';
-import { routes } from 'src/app/modules/online-form/online-form-routing.module';
+import { VPublishSettingsAutomationService } from '../../../../services/v-publish-settings-automation.service';
 
 @Component({
   selector: "app-v-publish-menu-additional-options",
@@ -18,17 +15,10 @@ export class VPublishMenuComponentAdditionalOptions implements OnInit {
   arrayIsHoverTrash: boolean[] = [];
 
   constructor(
-    private automationLocalService: VPublishSettingsAutomationLocalService
+    private automationService: VPublishSettingsAutomationService
     ) {}
 
   ngOnInit() {
-      // console.log(this.automation);
-  }
-
-
-  getName(type_id: number): string {
-    const filtered_list = this.automation['type_list'].filter((item) => type_id === item['id']);
-    return filtered_list[0]['name'];
   }
 
   getTypeName(type_id: number): string {
@@ -39,9 +29,7 @@ export class VPublishMenuComponentAdditionalOptions implements OnInit {
   }
 
   getTypeIcon(type_id: number): string {
-    // console.log(type_id);
     const filtered_list = this.automation['type_list'].filter((item) => type_id === item['id']);
-    // console.log(filtered_list);
     switch (filtered_list[0]['type']) {
       case "email":
         return `fa-envelope`;
@@ -64,11 +52,11 @@ export class VPublishMenuComponentAdditionalOptions implements OnInit {
   }
 
   addAutomationItem() {
-    this.automationLocalService.addAutomationItem();
+    this.automationService.addAutomationItem();
   }
 
   removeAutomationItem(itemId: number) {
-    this.automationLocalService.removeAutomationItem(itemId);
+    this.automationService.removeAutomationItem(itemId);
   }
 
   goToHash(hash: string) {

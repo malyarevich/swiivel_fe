@@ -44,6 +44,8 @@ import { ToggleCheckboxFieldComponent } from './fields/toggle-checkbox-field/tog
 import { CommandDropdownComponent } from "./command-dropdown/command-dropdown.component";
 import { ExtendedFieldComponent } from './fields/extended-field/extended-field.component';
 import { SignaturesComponent } from './signatures/signatures.component';
+// form builder
+import { SectionHeaderComponent } from './form-builder/section-header/section-header.component';
 
 @NgModule({
   declarations: [
@@ -80,6 +82,8 @@ import { SignaturesComponent } from './signatures/signatures.component';
     ToggleCheckboxFieldComponent,
     // complex
     SignaturesComponent,
+    // form builder
+    SectionHeaderComponent,
   ],
   imports: [
     CommonModule,
@@ -125,6 +129,8 @@ import { SignaturesComponent } from './signatures/signatures.component';
     TipQuestionComponent,
     // complex
     SignaturesComponent,
+    // form builder
+    SectionHeaderComponent,
   ],
 })
 export class SharedRedComponentsModule {}

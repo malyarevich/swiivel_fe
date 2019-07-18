@@ -5,7 +5,7 @@ import { ConsentInfo } from "./v-form-constructor/v-form-builder/consent.model";
 import { DocumentsModel } from "./v-form-constructor/v-form-builder/documents.model";
 import { FormsPDFModel } from "./v-form-constructor/v-form-builder/formsPDF.model";
 import { TermsConditions } from "./v-form-constructor/v-form-builder/terms-conditions.model";
-import { ISubMenus } from "./v-form-constructor/v-form-publish-settings/publish-settings";
+import { ISubMenus } from "./v-form-constructor/v-form-publish-settings/publish-settings.model";
 
 export interface Form {
   _id: string;
@@ -21,17 +21,7 @@ export interface Form {
   sidebar?: Field[];
   step?: number;
   language?: string, //Need FIXME: (type for languages)
-  periodCheckboxGroup?: {
-    primary1: boolean,
-    primary2: boolean,
-    middle: boolean,
-    height: boolean
-  },
-  publish_settings?: {
-    state: ISubMenus;
-    online_config: object;
-    pdf_config: object;
-  };
+  periodCheckboxGroup?: object,
   tuitionContract?: TuitionContract;
   consentInfo?: ConsentInfo;
   termsConditions?: TermsConditions;

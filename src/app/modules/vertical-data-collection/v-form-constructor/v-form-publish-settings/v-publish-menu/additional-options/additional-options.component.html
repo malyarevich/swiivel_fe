@@ -24,7 +24,7 @@
       *ngFor="let automationItem of automation['automation_list']; let indexAutomation = index"
       (mouseenter)="arrayIsHoverTrash[indexAutomation] = true"
       (mouseleave)="arrayIsHoverTrash[indexAutomation] = false"
-      (click)="goToHash('automation-' + automationItem['id'])"
+      (click)="goToHash('automation-' + automationItem['_id'])"
     >
       <div class="menu_list__icon_type_box">
         <i
@@ -41,7 +41,7 @@
       </div>
       <div 
         class="menu_list__icon_trash_box"
-        (click)="removeAutomationItem(automationItem['id'])"
+        (click)="removeAutomationItem(automationItem['_id'])"
       >
         <i class="fas fa-trash menu_list__icon_trash app-div-animation"
           [ngClass]="{

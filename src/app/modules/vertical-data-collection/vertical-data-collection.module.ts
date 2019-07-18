@@ -111,11 +111,14 @@ import { VPaymentSettingsSamplePreviewComponent } from './v-form-constructor/v-f
 import { VPaymentSettingsScholarshipComponent } from './v-form-constructor/v-form-builder/v-payment-settings/scholarship/scholarship.component';
 import { VPaymentSettingsTuitionComponent } from './v-form-constructor/v-form-builder/v-payment-settings/tuition/tuition.component';
 import { VPaymentSettingsTableSchoolCustomDefaultComponent } from './v-form-constructor/v-form-builder/v-payment-settings/table/school-custom-default/school-custom-default.component';
+import { VPublishSettingsService } from './services/v-publish-settings.service';
+import { VPublishSettingsRemoteService } from './services/v-publish-settings-remote.service';
 import { VPublishSettingsAutomationService } from './services/v-publish-settings-automation.service';
-import { VPublishSettingsAutomationLocalService } from './services/v-publish-settings-automation-local.service';
+import { VPublishSettingsPublishSettingsService } from './services/v-publish-settings-publish-settings.service';
 import { VAutomationHeaderComponent } from './v-form-constructor/v-form-publish-settings/v-automation/v-automation-header/v-automation-header.component';
 import { VAutomationLogicAreaComponent } from './v-form-constructor/v-form-publish-settings/v-automation/v-automation-logic-area/v-automation-logic-area.component';
 import { VAutomationTemplateAreaComponent } from './v-form-constructor/v-form-publish-settings/v-automation/v-automation-template-area/v-automation-template-area.component';
+import { VConstructorDraftService } from './services/v-constructor-draft.service';
 import { VGroupSettingMultiplierComponent } from './v-form-constructor/v-form-builder/v-form-fields/v-fields-workspace/v-group-container/v-group-settings/v-group-setting-multiplier/v-group-setting-multiplier.component';
 import { VFieldsConditionalLogicComponent } from './v-form-constructor/v-form-builder/v-form-fields/v-fields-workspace/v-fields-shared-components/v-fields-conditional-logic/v-fields-conditional-logic.component';
 
@@ -294,9 +297,12 @@ const routes: Routes = [
     VFieldsService,
     FinanceService,
     SaveFormService,
+    VConstructorDraftService,
     VFormPeriodsService,
+    VPublishSettingsService,
+    VPublishSettingsRemoteService,
     VPublishSettingsAutomationService,
-    VPublishSettingsAutomationLocalService,
+    VPublishSettingsPublishSettingsService,
   ],
   entryComponents: [entryComponents]
 })

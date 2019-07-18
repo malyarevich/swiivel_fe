@@ -3,12 +3,10 @@
     <div class="row mt-5">
       <div class="col-12 col-lg-3 rounded">
         <!-- pl-lg-5 -->
-        <ng-container *ngIf="automation !== undefined">
+        <ng-container *ngIf="data !== undefined">
           <app-v-publish-menu
-            [stateSub]="publish_settings.state"
-            [automation]="automation"
-            (activeMenuItemEmitter)="setActiveMenu($event)"
-            (stateSubEmitter)="setStateSub($event)"
+            [data]="data"
+            [activeMenuItem]="activeMenuItem"
           ></app-v-publish-menu>
         </ng-container>
       </div>
@@ -24,11 +22,8 @@
           }"
         ></app-v-conditions-review>
         <app-v-publish-settings
-          [publish_settings]="publish_settings"
-          (onToggleOnlineCheckbox)="toggleOnlineCheckbox($event)"
-          (onTogglePdfCheckbox)="togglePdfCheckbox($event)"
-          (onUpdateFormValue)="updateFormValue($event)"
-          (onSavePublishSettings)="savePublishSettings($event)"
+          [publish_settings]="data['publish_settings']"
+          [id]="formId"
           class="d-block app-div-animation"
           [ngClass]="{
             'app-div-show':
@@ -38,20 +33,19 @@
           }"
         ></app-v-publish-settings>
 
-        <ng-container *ngIf="automation !== undefined">
-          <app-v-automation
-            [automation]="automation"
-            [activeMenuItem]="activeMenuItem"
-            class="d-block app-div-animation"
-            [ngClass]="{
-              'app-div-show':
-                activeMenuItem === publishMenuItems.automation,
-              'app-div-hide':
-                activeMenuItem !== publishMenuItems.automation
-            }"
-            [id]="formId"
-          ></app-v-automation>
-        </ng-container>
+        <app-v-automation
+          [automation]="data['automation']"
+          [activeMenuItem]="activeMenuItem"
+          class="d-block app-div-animation"
+          [ngClass]="{
+            'app-div-show':
+              activeMenuItem === publishMenuItems.automation,
+            'app-div-hide':
+              activeMenuItem !== publishMenuItems.automation
+          }"
+          [id]="formId"
+        ></app-v-automation>
+
         <app-v-redirect-pages
           class="d-block app-div-animation"
           [ngClass]="{
