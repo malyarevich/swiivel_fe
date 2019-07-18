@@ -2,6 +2,8 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Field, FieldSettingConditional} from "../../../../../../../../models/vertical-data-collection/field.model";
 import {cloneDeep} from 'lodash';
 import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {VFieldsService} from "../../../../../../services/v-fields.service";
+import {Form} from "../../../../../../model/form.model";
 
 const defaultConditional: FieldSettingConditional = {
   logic: 'hide',
@@ -17,7 +19,10 @@ const defaultConditional: FieldSettingConditional = {
 })
 export class VFieldsConditionalLogicComponent implements OnInit {
   @Input() inputField: Field;
+  @Input() form: Form;
   conditionalForm: FormGroup;
+  fieldsOptions: {name: string, value: string}[] = [];
+
 
   conditLogic = ['hide', 'visible', 'required', 'unrequired'];
 
@@ -25,13 +30,14 @@ export class VFieldsConditionalLogicComponent implements OnInit {
     return this.conditionalForm.get('rules') as FormArray;
   }
 
-  constructor(private readonly fb: FormBuilder) {
+  constructor(private readonly fb: FormBuilder, private vFieldsService: VFieldsService) {
 
   }
 
   ngOnInit() {
     this.initConditional();
     this.initConditionalForm();
+    this.getFieldsOptionsRecursive(this.form.fields);
     this.onChangesConditionalForm();
   }
 
@@ -76,5 +82,9 @@ export class VFieldsConditionalLogicComponent implements OnInit {
 
   removeRule(index) {
     this.rules.removeAt(index);
+  }
+
+  getFieldsOptionsRecursive(fields) {
+    this.fieldsOptions = this.vFieldsService.getFieldsRecursive(fields);
   }
 }

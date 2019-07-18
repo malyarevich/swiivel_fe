@@ -10,19 +10,29 @@
 <form [formGroup]="conditionalForm">
   <div class="row align-items-center">
     <div class="col-7">
-      <app-select-field [formControlName]="'logic'" [items]="conditLogic"></app-select-field>
+      <app-select-field class="app-text-capitalize"
+                        [formControlName]="'logic'"
+                        [items]="conditLogic"></app-select-field>
     </div>
     <div class="col"><span>this field when</span></div>
   </div>
   <div class="row align-items-center mt-2">
     <div class="col-4">
-      <app-input-field [formControlName]="'when'"></app-input-field>
+      <app-input-field class="app-text-capitalize" [formControlName]="'when'"></app-input-field>
     </div>
     <div class="col j"><span>of the following rules match</span></div>
   </div>
   <div class="row align-items-center no-gutters mt-2">
     <div class="col-10  bg-white p-2">
-      <app-select-field class="" [formControlName]="'field'"></app-select-field>
+      <div class="form-group app-input-container app-input-fill mb-0">
+        <label class="app-input-label" for="manual">Field</label>
+        <select class="app-input" id="manual"
+                [formControlName]="'field'">
+          <option *ngFor='let item of fieldsOptions'
+                  [value]="item.value">{{item.name | titlecase}}
+          </option>
+        </select>
+      </div>
 
     </div>
     <div class="col-1 offset-1">
