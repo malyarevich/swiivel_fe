@@ -14,6 +14,7 @@ import {
 })
 export class OnlineFormMenuComponent implements OnInit {
   @Input() form: Form;
+  @Input() percents: number[];
   @Output() activeMenuItemEmitter = new EventEmitter<string>();
 
   hoveredItems = [];

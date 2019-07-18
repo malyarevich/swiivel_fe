@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input, OnInit, Output, EventEmitter } from "@angular/core";
 import { cloneDeep } from "lodash";
 import {
   TuitionContract,
@@ -26,7 +26,9 @@ import {
 })
 export class OnlineFormTuitionContractComponent implements OnInit {
   @Input() form: Form;
+  @Output() onSetPercent: EventEmitter<number> = new EventEmitter();
 
+  percent: number;
   menuItems: IMenuItems[] = menuItems;
   mainMenuNames: IMainMenuNames = mainMenuNames;
 
@@ -42,6 +44,9 @@ export class OnlineFormTuitionContractComponent implements OnInit {
 
   ngOnInit() {
     this.signature = cloneDeep(this.form.tuitionContract.signature);
+    // TODO: count percent
+    this.percent = 0;
+    this.onSetPercent.emit(this.percent);
   }
   getTime() {
     return this.menuItems.find(o => o.name === this.mainMenuNames.tuitionContract)

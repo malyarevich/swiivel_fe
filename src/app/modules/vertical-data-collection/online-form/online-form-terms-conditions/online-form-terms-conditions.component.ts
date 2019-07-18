@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewEncapsulation } from "@angular/core";
+import { Component, Input, OnInit, ViewEncapsulation, Output, EventEmitter } from "@angular/core";
 import { cloneDeep } from "lodash";
 import { Form } from "../../model/form.model";
 import { E_SIGNATURE_TYPES, SIGNATURE_TYPES } from "../../../../enums";
@@ -19,7 +19,9 @@ import {
 })
 export class OnlineFormTermsConditionsComponent implements OnInit {
   @Input() form: Form;
+  @Output() onSetPercent: EventEmitter<number> = new EventEmitter();
 
+  percent: number;
   menuItems: IMenuItems[] = menuItems;
   mainMenuNames: IMainMenuNames = mainMenuNames;
 
@@ -34,6 +36,9 @@ export class OnlineFormTermsConditionsComponent implements OnInit {
 
   ngOnInit() {
     this.signature = cloneDeep(this.form.termsConditions.signature);
+    // TODO: count percent
+    this.percent = 0;
+    this.onSetPercent.emit(this.percent);
   }
 
   getTime() {

@@ -57,7 +57,9 @@
 
           <div class="online_form_item__end">
             <div class="col online_form_item__status">
-              <i class="fas fa-check-circle online_form_item__status_icon"></i>
+              <ng-container *ngIf="percents !== undefined">
+                <app-progress-bar [processPercent]="percents[item.name] === undefined ? -1 : percents[item.name]"></app-progress-bar>
+              </ng-container>
             </div>
           </div>
         </div>

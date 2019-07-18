@@ -1,0 +1,51 @@
+@import "./../../styles/index.scss";
+
+*,
+:before,
+:after {
+  box-sizing: border-box;
+}
+
+/*** RADIAL PROGRESS ***/
+/* Circumference = 2πr */
+/* π = 3.1415926535898 */
+/* r = 8 */
+.radial_progress {
+  height: auto;
+  padding: 0;
+  transform: rotate(-90deg);
+  min-width: 1.5rem;
+
+  & circle {
+    fill: rgba(0, 0, 0, 0);
+    stroke: #fff;
+    stroke-dashoffset: 50.2654824574; /* Circumference */
+    stroke-width: 3;
+
+    &.incomplete {
+      // opacity: 0.25;
+      stroke: #fadde1;
+    }
+    &.complete {
+      stroke-dasharray: 50.2654824574; /* Circumference */
+      stroke: #fd6969;
+    }
+  }
+}
+
+.percent_text {
+  color: #fd6969;
+  font-family: NunitoSans-Regular;
+  font-size: 0.85rem;
+  font-weight: bold;
+  line-height: 0.9rem;
+  text-align: center;
+}
+
+.status_icon {
+  color: $success-color;
+  fill: $success-color;
+  font-size: 1.5rem;
+  height: 1.5rem;
+  width: 1.5rem;
+}

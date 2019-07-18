@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input, OnInit, Output, EventEmitter } from "@angular/core";
 import { Form } from "../../model/form.model";
 import {
   menuItems,
@@ -14,6 +14,9 @@ import {
 })
 export class OnlineFormDocumentsFormsComponent implements OnInit {
   @Input() form: Form;
+  @Output() onSetPercent: EventEmitter<number> = new EventEmitter();
+
+  percent: number;
 
   menuItems: IMenuItems[] = menuItems;
   mainMenuNames: IMainMenuNames = mainMenuNames;
@@ -35,6 +38,9 @@ export class OnlineFormDocumentsFormsComponent implements OnInit {
 
   ngOnInit() {
     // console.log(this.form);
+    // TODO: count percent
+    this.percent = 0;
+    this.onSetPercent.emit(this.percent)
   }
 
   getTime() {

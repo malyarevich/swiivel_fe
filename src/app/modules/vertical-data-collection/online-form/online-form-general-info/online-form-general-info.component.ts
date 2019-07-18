@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input, OnInit, Output, EventEmitter } from "@angular/core";
 import { generalSectionsNames } from "../model/general-info-section-name.model";
 import { Form } from "../../model/form.model";
 import {
@@ -7,7 +7,7 @@ import {
   IMainMenuNames,
   IMenuItems
 } from "../../../../models/vertical-data-collection/v-form-constructor/online-form/menu-items";
-import { Field } from '../../model/field.model';
+import { Field } from "../../model/field.model";
 
 @Component({
   selector: "app-online-form-general-info",
@@ -17,7 +17,9 @@ import { Field } from '../../model/field.model';
 export class OnlineFormGeneralInfoComponent implements OnInit {
   // @Input() form: Form;
   @Input() form: Field;
+  @Output() onSetPercent: EventEmitter<number> = new EventEmitter();
 
+  percent: number;
   menuItems: IMenuItems[] = menuItems;
   mainMenuNames: IMainMenuNames = mainMenuNames;
 
@@ -38,10 +40,15 @@ export class OnlineFormGeneralInfoComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    // TODO: count percent
+    this.percent = 65;
+    this.onSetPercent.emit(this.percent);
+  }
 
   getTime() {
-    return this.menuItems.find(o => o.name === this.mainMenuNames.generalInfo).time;
+    return this.menuItems.find(o => o.name === this.mainMenuNames.generalInfo)
+      .time;
   }
 
   onActive(id: string) {

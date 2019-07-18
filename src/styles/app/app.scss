@@ -151,6 +151,10 @@
   visibility: visible;
   top: 0;
 
+  &--static {
+    animation: 600ms ease-in-out;
+  }
+
   ::nth-child(&) {
     opacity: 1;
     max-height: 1000rem;
@@ -165,6 +169,11 @@
   visibility: hidden;
   top: -10000vh;
 
+  &--static {
+    animation: 600ms ease-in-out;
+    top: 0;
+  }
+  
   ::nth-child(&) {
     opacity: 0;
     max-height: 0;

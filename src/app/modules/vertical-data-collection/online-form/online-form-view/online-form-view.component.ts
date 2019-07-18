@@ -19,6 +19,7 @@ export class OnlineFormViewComponent implements OnInit {
   form: Form;
   activeSection: string;
 
+  percents: number[];
   menuItems: IMenuItems[] = menuItems;
   mainMenuNames: IMainMenuNames = mainMenuNames;
 
@@ -29,6 +30,7 @@ export class OnlineFormViewComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.percents = [];
     this.getForm();
   }
 
@@ -60,5 +62,9 @@ export class OnlineFormViewComponent implements OnInit {
 
   onActiveMenuItem(menuItemName) {
     this.activeSection = menuItemName;
+  }
+
+  setPercent(itemName: string, percent: number) {
+    this.percents[itemName] = percent;
   }
 }
