@@ -20,7 +20,7 @@ import { VPublishSettingsService } from "../../services/v-publish-settings.servi
 import { VPublishSettingsRemoteService } from "../../services/v-publish-settings-remote.service";
 import { VPublishSettingsPublishSettingsService } from "../../services/v-publish-settings-publish-settings.service";
 import { VPublishSettingsAutomationService } from "../../services/v-publish-settings-automation.service";
-import { IAutomationListItem } from 'src/app/models/vertical-data-collection/v-form-constructor/v-form-publish-settings/publish-settings.model';
+import { IAutomationListItem } from "src/app/models/vertical-data-collection/v-form-constructor/v-form-publish-settings/publish-settings.model";
 
 //TODO: remove excess functional
 @Component({
@@ -63,6 +63,7 @@ export class VFormPublishSettingsComponent implements OnInit {
   // Menu state
   activeMenuItem: string;
   publishMenuItems = PublishMenuItems;
+  isSavedOnServer: boolean = true;
 
   // Tabs information
   data: IData;
@@ -115,7 +116,7 @@ export class VFormPublishSettingsComponent implements OnInit {
   }
 
   isDataComplete(data: IData) {
-    return !!(data && data["automation"] && data["publish_settings"]);
+    return !!(data && data.automation && data.publish_settings);
   }
 
   initPage() {
@@ -132,7 +133,9 @@ export class VFormPublishSettingsComponent implements OnInit {
           (data: IData) => {
             this.loadData(data);
           },
-          error => console.error(error, "error"),
+          error => {
+            console.error(error, "error");
+          },
           () => {
             this.initServices();
           }
@@ -146,12 +149,13 @@ export class VFormPublishSettingsComponent implements OnInit {
     // TODO: checking of all fields(automation, publish_settings etc)
     if (this.isDataComplete(data)) {
       this.data = data;
-      this.data["automation"]["automation_list"]
-        .reverse()
+      this.data.automation.automation_list
+        // .reverse()
         .forEach(automationItem => {
-          automationItem["_id"] = automationItem["id"] !== undefined 
-            ? automationItem["id"]
-            : automationItem["_id"];
+          automationItem["_id"] =
+            automationItem["id"] !== undefined
+              ? automationItem["id"]
+              : automationItem["_id"];
           if (automationItem["_id"] > this.maxAddedId) {
             this.maxAddedId = automationItem["id"];
           }
@@ -168,11 +172,11 @@ export class VFormPublishSettingsComponent implements OnInit {
   }
 
   setDefaultData(data: IData) {
-    if(!data['automation']) {
-      delete data['automation'];
+    if (!data.automation) {
+      delete data.automation;
     }
-    if(!data['publish_settings']) {
-      delete data['publish_settings'];
+    if (!data.publish_settings) {
+      delete data.publish_settings;
     }
     this.data = {
       ...DataEntity.defaultData,
@@ -186,7 +190,9 @@ export class VFormPublishSettingsComponent implements OnInit {
       (activeMenuItem: string) => {
         this.activeMenuItem = activeMenuItem;
       },
-      error => console.error(error, "error"),
+      error => {
+        console.error(error, "error");
+      },
       () => {}
     );
   }
@@ -196,14 +202,18 @@ export class VFormPublishSettingsComponent implements OnInit {
       (state: ISubMenus) => {
         this.setPublishSettingsState(state);
       },
-      error => console.error(error, "error"),
+      error => {
+        console.error(error, "error");
+      },
       () => {}
     );
     this.onSavePublishSettingsSubscription = this.publishSettingsService.onSavePublishSettings.subscribe(
       (state: ISubMenus) => {
         this.savePublishSettings(state);
       },
-      error => console.error(error, "error"),
+      error => {
+        console.error(error, "error");
+      },
       () => {}
     );
 
@@ -211,21 +221,27 @@ export class VFormPublishSettingsComponent implements OnInit {
       (key: string) => {
         this.toggleOnlineCheckbox(key);
       },
-      error => console.error(error, "error"),
+      error => {
+        console.error(error, "error");
+      },
       () => {}
     );
     this.onTogglePdfCheckboxSubscription = this.publishSettingsService.onTogglePdfCheckbox.subscribe(
       (key: string) => {
         this.togglePdfCheckbox(key);
       },
-      error => console.error(error, "error"),
+      error => {
+        console.error(error, "error");
+      },
       () => {}
     );
     this.onUpdateFormValueSubscription = this.publishSettingsService.onUpdateFormValue.subscribe(
       (value: any) => {
         this.updateFormValue(value);
       },
-      error => console.error(error, "error"),
+      error => {
+        console.error(error, "error");
+      },
       () => {}
     );
   }
@@ -235,7 +251,9 @@ export class VFormPublishSettingsComponent implements OnInit {
       () => {
         this.addAutomationItem();
       },
-      error => console.error(error, "error"),
+      error => {
+        console.error(error, "error");
+      },
       () => {}
     );
 
@@ -243,7 +261,9 @@ export class VFormPublishSettingsComponent implements OnInit {
       (itemId: number) => {
         this.removeAutomationItem(itemId);
       },
-      error => console.error(error, "error"),
+      error => {
+        console.error(error, "error");
+      },
       () => {}
     );
 
@@ -251,7 +271,9 @@ export class VFormPublishSettingsComponent implements OnInit {
       (obj: object) => {
         this.changeAutomationItemName(obj["_id"], obj["name"]);
       },
-      error => console.error(error, "error"),
+      error => {
+        console.error(error, "error");
+      },
       () => {}
     );
 
@@ -259,49 +281,47 @@ export class VFormPublishSettingsComponent implements OnInit {
       (obj: object) => {
         this.changeAutomationItemType(obj["_id"], obj["type_id"]);
       },
-      error => console.error(error, "error"),
+      error => {
+        console.error(error, "error");
+      },
       () => {}
     );
   }
 
   setPublishSettingsState(state: ISubMenus) {
-    this.data["publish_settings"] = { ...this.data["publish_settings"], state };
+    this.data.publish_settings = { ...this.data.publish_settings, state };
   }
 
   toggleOnlineCheckbox(key: string) {
-    this.data["publish_settings"]["online_config"][key] = !this.data[
-      "publish_settings"
-    ]["online_config"][key];
+    this.isSavedOnServer = false;
+    this.data.publish_settings.online_config[key] = !this.data
+      .publish_settings.online_config[key];
   }
 
   togglePdfCheckbox(key: string) {
-    this.data["publish_settings"]["pdf_config"][key] = !this.data[
-      "publish_settings"
-    ]["pdf_config"][key];
+    this.isSavedOnServer = false;
+    this.data.publish_settings.pdf_config[key] = !this.data.publish_settings.pdf_config[key];
   }
 
   updateFormValue(formValue: IPdfConfig["form_value"]) {
-    this.data["publish_settings"]["pdf_config"]["form_value"] = formValue;
+    this.isSavedOnServer = false;
+    this.data.publish_settings.pdf_config["form_value"] = formValue;
   }
 
   savePublishSettings(state: object) {
     this.savePage();
   }
 
-  setStateSub(newState: ISubMenus): void {
-    this.data["publish_settings"]["state"] = newState;
-  }
-
   getStateSub(): ISubMenus {
-    return this.data["publish_settings"]["state"];
+    return this.data.publish_settings["state"];
   }
 
   getOnlineConfig() {
-    return this.data["publish_settings"]["online_config"];
+    return this.data.publish_settings.online_config;
   }
 
   getPdfConfig() {
-    return this.data["publish_settings"]["pdf_config"];
+    return this.data.publish_settings.pdf_config;
   }
 
   getPublishSettingValidOrDefault(publishSettings): any {
@@ -317,31 +337,27 @@ export class VFormPublishSettingsComponent implements OnInit {
 
   getAutomationListItemSavingEdition(item: IAutomationListItem) {
     return {
-      "id": item['id'],
-      "name": item['name'],
-      "type_id": item['type_id'],
-      "template_id": item['template_id'],
-      "logics": item['logics']
-    }
+      id: item["id"],
+      name: item["name"],
+      type_id: item["type_id"],
+      template_id: item["template_id"],
+      logics: item["logics"]
+    };
   }
 
   prepareDataToSaving(data: IData): IData {
     let finishData = cloneDeep(data);
-    delete finishData["automation"]["logic_list"];
-    delete finishData["automation"]["template_list"];
-    delete finishData["automation"]["type_list"];
-    finishData["automation"]["automation_list"] = finishData["automation"][
-      "automation_list"
-    ].map(item => {
-      if(item.id !== 0) {
+    delete finishData.automation["logic_list"];
+    delete finishData.automation["template_list"];
+    delete finishData.automation["type_list"];
+    finishData.automation.automation_list = finishData.automation.automation_list.map(item => {
+      if (item.id !== 0) {
         item = this.getAutomationListItemSavingEdition(item);
       } else {
         delete item["_id"];
       }
       return item;
     });
-    console.log(finishData);
-    console.log(JSON.stringify(finishData));
     return finishData;
   }
 
@@ -355,19 +371,26 @@ export class VFormPublishSettingsComponent implements OnInit {
 
       this.onSendDataSubscription = this.vPublishSettingsRemoteService
         .sendData(preparedData, this.formId)
-        .subscribe(res => {
-          // console.log(res["updated"]);
-          this.publishSettingsIsSavedService.setIsSaved(res["updated"]);
+        .subscribe(
+          res => {
+            this.publishSettingsIsSavedService.setIsSaved(res["updated"]);
 
-          this.isDataSaving = !this.saveFormService.getSavingStatus();
-          this.constructorIsSavingService.setIsSaving(this.isDataSaving);
+            this.isDataSaving = !this.saveFormService.getSavingStatus();
+            this.constructorIsSavingService.setIsSaving(this.isDataSaving);
 
-          if (this.isDataSaving) {
-            this.spinnerText = "Other tabs are saving...";
-          } else {
-            this.spinnerText = "Data is loading...";
-          }
-        });
+            if (this.isDataSaving) {
+              this.spinnerText = "Other tabs are saving...";
+            } else {
+              this.spinnerText = "Data is loading...";
+            }
+            this.isSavedOnServer = true;
+          },
+          error => {
+            console.error(error, "error");
+            this.isSavedOnServer = true;
+          },
+          () => {}
+        );
     }
     this.vConstructorDraftService.deleteDraftForm(this.draftId);
   }
@@ -377,7 +400,8 @@ export class VFormPublishSettingsComponent implements OnInit {
   }
 
   addAutomationItem(): number {
-    return this.data["automation"]["automation_list"].push(
+    this.isSavedOnServer = false;
+    return this.data.automation.automation_list.push(
       {
         ...{ _id: ++this.maxAddedId },
         ...AutomationEntity.defaultAutomation.automation_list[0]
@@ -386,15 +410,13 @@ export class VFormPublishSettingsComponent implements OnInit {
   }
 
   removeAutomationItem(itemId: number): void {
-    this.data["automation"]["automation_list"] = this.data["automation"][
-      "automation_list"
-    ].filter(automationItem => automationItem["_id"] !== itemId);
+    this.isSavedOnServer = false;
+    this.data.automation.automation_list = this.data.automation.automation_list.filter(automationItem => automationItem["_id"] !== itemId);
   }
 
   changeAutomationItemName(itemId: number, name: string): void {
-    this.data["automation"]["automation_list"] = this.data["automation"][
-      "automation_list"
-    ].map(automationItem => {
+    this.isSavedOnServer = false;
+    this.data.automation.automation_list = this.data.automation.automation_list.map(automationItem => {
       if (automationItem["_id"] === itemId) {
         automationItem["name"] = name;
       }
@@ -403,13 +425,13 @@ export class VFormPublishSettingsComponent implements OnInit {
   }
 
   changeAutomationItemType(itemId: number, type_id: number): void {
-    const indexItem = this.data["automation"]["automation_list"].findIndex(
-      item => item["_id"] === itemId
-    );
-    this.data["automation"]["automation_list"][indexItem] = {
-      ...this.data["automation"]["automation_list"][indexItem],
-      type_id: type_id
-    };
+    this.isSavedOnServer = false;
+    this.data.automation.automation_list = this.data.automation.automation_list.map(automationItem => {
+      if (automationItem["_id"] === itemId) {
+        automationItem["type_id"] = type_id;
+      }
+      return automationItem;
+    });
   }
 
   isLoading(): boolean {
@@ -470,7 +492,9 @@ export class VFormPublishSettingsComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
-    this.saveDraftForm();
+    if (!this.isSavedOnServer) {
+      this.saveDraftForm();
+    }
     this.unsubscribeFromServices();
     if (
       VFormPublishSettingsComponent.countSaveFormService > 1 &&

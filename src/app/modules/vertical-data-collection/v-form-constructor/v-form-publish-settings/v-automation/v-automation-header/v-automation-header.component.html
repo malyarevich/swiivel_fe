@@ -20,7 +20,7 @@
       <ng-container *ngFor="let itemType of automation['type_list']">
         <option
           [value]="itemType['id']"
-          [selected]="automationItem['type_id'] === itemType['_id']"
+          [selected]="automationItem['type_id'] === itemType['id']"
         >
           {{ itemType["name"] }}
         </option>
@@ -69,7 +69,7 @@
   <!-- Caret -->
   <div
     class="section_header__control_item section_header__control_item--border_left"
-    (click)="switchAutomationItemContent(automationItem['_id'])"
+    (click)="toggleAutomationItemContent(automationItem['_id'])"
   >
     <span class="app-fb-section-icon-primary">
       <i class="fas {{getStatusContent(automationItem['_id']) ? 'fa-caret-up' : 'fa-caret-down'}}"></i>

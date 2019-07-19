@@ -25,7 +25,8 @@ export class VAutomationComponent implements OnInit {
     this.isHideAutomationItemContent = this.automationService.isHideAutomationItemContent;
     this.automationService.onSwitchAutomationItemContent.subscribe((obj) => {
       this.isHideAutomationItemContent[obj['id']] = obj['value'];
-    });}
+    })
+  }
   
   getTemplateName(template_id: number): string {
     const filtered_list = this.automation['template_list'].filter((item) => template_id === item.id);
