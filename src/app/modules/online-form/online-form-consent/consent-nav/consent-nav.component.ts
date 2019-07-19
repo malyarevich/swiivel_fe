@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {ConsentItemInfo} from "../../../vertical-data-collection/v-form-constructor/v-form-builder/v-consent/model/consent.model";
+import {ConsentItemInfo} from "../../../../models/vertical-data-collection/v-form-constructor/v-form-builder/consent.model";
 
 @Component({
   selector: 'app-consent-nav',

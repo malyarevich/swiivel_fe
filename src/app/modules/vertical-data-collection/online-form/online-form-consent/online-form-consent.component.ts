@@ -1,6 +1,6 @@
-import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {cloneDeep} from 'lodash';
-import {ConsentItemInfo} from "../../v-form-constructor/v-form-builder/v-consent/model/consent.model";
+import {ConsentItemInfo} from "../../../../models/vertical-data-collection/v-form-constructor/v-form-builder/consent.model";
 import {E_SIGNATURE_TYPES, SIGNATURE_TYPES} from "../../../../enums";
 import {Form} from "../../model/form.model";
 import {SystemSignatureService} from "../services/signatures/system-signature.service";
@@ -19,9 +19,6 @@ import {
 })
 export class OnlineFormConsentComponent implements OnInit {
   @Input() form: Form;
-  @Output() onSetPercent: EventEmitter<number> = new EventEmitter();
-
-  percent: number;
 
   menuItems: IMenuItems[] = menuItems;
   mainMenuNames: IMainMenuNames = mainMenuNames;
@@ -37,9 +34,6 @@ export class OnlineFormConsentComponent implements OnInit {
 
   ngOnInit() {
     this.consents = cloneDeep(this.form.consentInfo.consents);
-    // TODO: count percent
-    this.percent = 0;
-    this.onSetPercent.emit(this.percent)
   }
 
   getTime() {

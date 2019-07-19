@@ -1,4 +1,4 @@
-import {E_SIGNATURE_TYPES, SIGNATURE_TYPES} from "../../../../enums";
+import {E_SIGNATURE_TYPES, SIGNATURE_TYPES} from "../../../../enums/index";
 
 export interface ConsentInfo {
   isActive: boolean;
