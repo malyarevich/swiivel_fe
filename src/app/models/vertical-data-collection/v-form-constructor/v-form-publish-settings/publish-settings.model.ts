@@ -181,6 +181,7 @@ export interface IAutomationListItem {
   updated_by?: object;
 
   id?: number;
+  _id?: number; // for local needs
   form_id?: number;
   logics: number[];
   name: string;

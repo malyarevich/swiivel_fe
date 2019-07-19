@@ -20,6 +20,7 @@ import { VPublishSettingsService } from "../../services/v-publish-settings.servi
 import { VPublishSettingsRemoteService } from "../../services/v-publish-settings-remote.service";
 import { VPublishSettingsPublishSettingsService } from "../../services/v-publish-settings-publish-settings.service";
 import { VPublishSettingsAutomationService } from "../../services/v-publish-settings-automation.service";
+import { IAutomationListItem } from 'src/app/models/vertical-data-collection/v-form-constructor/v-form-publish-settings/publish-settings.model';
 
 //TODO: remove excess functional
 @Component({
@@ -148,8 +149,10 @@ export class VFormPublishSettingsComponent implements OnInit {
       this.data["automation"]["automation_list"]
         .reverse()
         .forEach(automationItem => {
-          automationItem["_id"] = automationItem["id"];
-          if (automationItem["id"] > this.maxAddedId) {
+          automationItem["_id"] = automationItem["id"] !== undefined 
+            ? automationItem["id"]
+            : automationItem["_id"];
+          if (automationItem["_id"] > this.maxAddedId) {
             this.maxAddedId = automationItem["id"];
           }
         });
@@ -312,6 +315,16 @@ export class VFormPublishSettingsComponent implements OnInit {
     };
   }
 
+  getAutomationListItemSavingEdition(item: IAutomationListItem) {
+    return {
+      "id": item['id'],
+      "name": item['name'],
+      "type_id": item['type_id'],
+      "template_id": item['template_id'],
+      "logics": item['logics']
+    }
+  }
+
   prepareDataToSaving(data: IData): IData {
     let finishData = cloneDeep(data);
     delete finishData["automation"]["logic_list"];
@@ -320,7 +333,11 @@ export class VFormPublishSettingsComponent implements OnInit {
     finishData["automation"]["automation_list"] = finishData["automation"][
       "automation_list"
     ].map(item => {
-      delete item["_id"];
+      if(item.id !== 0) {
+        item = this.getAutomationListItemSavingEdition(item);
+      } else {
+        delete item["_id"];
+      }
       return item;
     });
     console.log(finishData);
