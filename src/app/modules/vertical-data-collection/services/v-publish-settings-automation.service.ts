@@ -28,7 +28,7 @@ export class VPublishSettingsAutomationService {
     this.onChangeAutomationItemType.emit(value);
   }
   
-  switchAutomationItemContent(id: number) {
+  toggleAutomationItemContent(id: number) {
     this.isHideAutomationItemContent[id] = !this.isHideAutomationItemContent[id];
     const obj = {"id": id, "value": this.isHideAutomationItemContent[id]};
     this.onSwitchAutomationItemContent.emit(obj);

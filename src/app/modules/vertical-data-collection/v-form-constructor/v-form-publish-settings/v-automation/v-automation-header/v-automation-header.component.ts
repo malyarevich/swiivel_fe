@@ -43,7 +43,7 @@ export class VAutomationHeaderComponent implements OnInit {
   }
 
   onChangeAutomationType(_id: number, type_id: string) {
-    const obj: object = {"_id": _id, "type_id": parseInt(type_id, 10) };
+    const obj: object = {"_id": _id, "type_id": parseInt(type_id, 10)};
     this.automationService.changeAutomationItemType(obj);
   }
 
@@ -51,8 +51,8 @@ export class VAutomationHeaderComponent implements OnInit {
     this.automationService.removeAutomationItem(itemId);
   }
 
-  switchAutomationItemContent(_id: number) {
-    this.automationService.switchAutomationItemContent(_id);
+  toggleAutomationItemContent(_id: number) {
+    this.automationService.toggleAutomationItemContent(_id);
   }
 
   getStatusContent(_id: number) {
