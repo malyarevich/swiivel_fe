@@ -20,7 +20,7 @@
       >
       </app-online-form-general-info>
       <app-online-form-documents-forms
-        [form]="form['fields'][0]"
+        [form]="form"
         (onSetPercent)="setPercent(mainMenuNames.documentsForms, $event)"
         *ngIf="activeSection === mainMenuNames.documentsForms"
       ></app-online-form-documents-forms>

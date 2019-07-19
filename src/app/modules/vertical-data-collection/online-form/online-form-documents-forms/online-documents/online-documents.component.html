@@ -1,53 +1,92 @@
-<div *ngFor="let document of form.documents" class="mb-3">
-  <!--Title-->
-  <h2
-    class="content_section__article_title content_section__article_title--left"
-  >
-    {{ document.name }}
-  </h2>
+<!--Title-->
+<h2 class="content_section__section_title">
+  Documents
+</h2>
 
-  <div
-    class="content_section__article_text"
-    [innerHTML]="document.accompanyingText.data"
-  ></div>
+<div class="content_section__main">
+  <div *ngFor="let document of form.documents" class="mb-3">
+    <!--Title-->
+    <h2
+      class="content_section__article_title content_section__article_title--left"
+    >
+      {{ document.name }}
+    </h2>
+    <div
+      class="content_section__article_text"
+      [innerHTML]="document.accompanyingText.data"
+    ></div>
 
-  <div class="document_container">
-    <!-- {{ document| json }} -->
-    <div class="document_container__icon_container">
-      <i class="far fa-file-pdf fa-3x document_container__pdf_icon"></i>
+    <div class="containers_line">
+      <div class="wrapper_container">
+        <div class="document_container">
+          <div class="document_container__icon_container">
+            <i class="far fa-file-pdf fa-3x document_container__pdf_icon"></i>
+          </div>
+          <ng-container *ngIf="document.isUpload">
+            <div class="document_container__file_information">
+              <span>Choose file...</span>
+            </div>
+            <div class="document_container__load">
+              <button
+                class="btn form-control text-nowrap load_button"
+              >
+                <i class="fas fa-download"></i>
+              </button>
+            </div>
+          </ng-container>
+
+          <ng-container *ngIf="!document.isUpload">
+            <div
+              class="document_container__file_information"
+              (click)="openForPreview(document)"
+            >
+              <span>{{ getDocumentName(document) }}</span>
+              <span class="document_container__file_details"
+                >230KB (2 pages)</span
+              >
+            </div>
+            <div class="document_container__load">
+              <button
+                class="btn form-control text-nowrap load_button"
+                (click)="openForPreview(document)"
+              >
+                <i class="fas fa-download"></i>
+              </button>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="wrapper_container">
+        <ng-container *ngIf="document.isUpload">
+          <label [for]="document.name" class="document_container document_container--upload">
+            <div class="document_container__icon_container mx-2">
+              <i
+                class="fas fa-cloud-upload-alt fa-3x document_container__cloud_icon"
+              ></i>
+            </div>
+            <span class="document_container__notice_text app-text-uppercase"
+              >Drop File(s) Here or
+            </span>
+            <span
+              class="document_container__file_information app-text-uppercase flex-grow-0"
+            >
+              Upload Document
+            </span>
+            <span class="document_container__notice_text app-text-uppercase"
+              >Up to 10MB, Formats
+            </span>
+            <input 
+              class="d-none"
+              type="file"
+              [name]="document.name"
+              [id]="document.name"
+              (change)="onFileSelected($event, document.name)"
+            >
+          </label>
+        </ng-container>
+      </div>
+      <hr />
     </div>
-    <ng-container *ngIf="document.isUpload">
-      <div class="document_container__file_information">
-        <span>Choose file...</span>
-      </div>
-      <div class="document_container__load">
-        <button class="btn app-btn-primary form-control">
-          Upload Document
-        </button>
-      </div>
-    </ng-container>
-
-    <ng-container *ngIf="!document.isUpload">
-      <div
-        class="document_container__file_information"
-        (click)="openForPreview(document)"
-      >
-        <span>{{ form.attachments[document.data].name }}</span>
-        <span class="document_container__file_details">230KB (2 pages)</span>
-      </div>
-      <div class="document_container__load">
-        <!-- <button
-          class="btn app-btn-primary form-control text-nowrap"
-          (click)="downloadFile(document)"
-        ></button> -->
-        <button
-          class="btn app-btn-primary form-control text-nowrap"
-          (click)="openForPreview(document)"
-        >
-          Download Document
-        </button>
-      </div>
-    </ng-container>
   </div>
-  <hr />
 </div>

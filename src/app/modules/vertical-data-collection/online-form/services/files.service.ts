@@ -1,26 +1,32 @@
-import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {environment} from "../../../../../environments/environment";
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { environment } from "../../../../../environments/environment";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class FilesService {
-  token = '?api_token='+environment.api_token;
+  token = "?api_token=" + environment.api_token;
 
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) { }
-
-  getFileFromServer(url: string){
+  getFileFromServer(url: string) {
     // this.http.get(url+this.token).subscribe(data=>this.downloadFile(data)),
-    this.http.get(url+this.token).subscribe(data=>this.downloadFile(data)),
-      error => console.log('Error downloading the file.'),
-      () => console.info('OK');
+    this.http.get(url + this.token).subscribe(data => this.downloadFile(data)),
+      error => console.log("Error downloading the file."),
+      () => console.info("OK");
+  }
+  UploadFileToServer(fd: FormData) {
+    const url = '';
+    // this.http.get(url+this.token).subscribe(data=>this.downloadFile(data)),
+    this.http.post(url + this.token, fd).subscribe(data => this.downloadFile(data)),
+      error => console.log("Error downloading the file."),
+      () => console.info("OK");
   }
 
   downloadFile(data) {
-    const blob = new Blob([data], { type: 'application/pdf' });
-    const url= window.URL.createObjectURL(blob);
+    const blob = new Blob([data], { type: "application/pdf" });
+    const url = window.URL.createObjectURL(blob);
     window.open(url);
   }
 }

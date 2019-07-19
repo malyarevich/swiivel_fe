@@ -1,22 +1,48 @@
 @import "../../shared/styles/index.scss";
 
+.containers_line {
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+
+  @include media-breakpoint-up(xl) {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
 .document_container {
   align-items: stretch;
-  border-radius: 3px;
-  background-color: #f6f6f6;
+  border-radius: 0.25rem;
+  background-color: #F4F4F5;
   display: flex;
+  flex: 1;
   flex-direction: column;
   flex-wrap: nowrap;
   justify-content: flex-start;
-  margin-bottom: 0.25rem;
-  margin-top: 0.25rem;
+  margin: 0.25rem 0.5rem;
   padding: 1rem;
 
-  @include media-breakpoint-up(md) {
+
+  &--upload {
+    align-items: center;
+    background-color: #F5FBFF;
+    border: 0.1rem dashed #97CDF4;
+    cursor: pointer;
+    justify-content: center;
+  }
+
+  @include media-breakpoint-up(sm) {
     align-items: center;
     flex-direction: row;
     justify-content: flex-start;
+
+    &--upload {
+      justify-content: center;
+    }
   }
+
 
   &__icon_container {
     display: flex;
@@ -24,13 +50,17 @@
     justify-content: center;
   }
 
+  &__cloud_icon {
+    color: $icon-light-blue-color;
+  }
+
   &__pdf_icon {
-    color: $icon-dark-gray-color;
+    color: $icon-light-blue-color;
   }
 
   &__file_information {
     align-items: center;
-    color: $element-base-color;
+    color: $element-additional-color;
     cursor: pointer;
     display: flex;
     flex: auto;
@@ -43,24 +73,55 @@
     }
   }
 
+  &__notice_text {
+    color: #9294A2;
+    font-size: 0.75rem;
+    font-weight: bold;
+    line-height: 0.9rem;
+  }
+
   &__load {
+    align-items: center;
+    display: flex;
     flex: initial;
+    justify-content: center;
   }
 
   &__file_details {
     color: $gray-color;
+    color: #A8AABA;
     font-family: "NunitoSans-Regular";
     font-size: 0.85rem;
   }
 }
 
-.app-btn-primary {
+.wrapper_container {
+  align-items: stretch;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: stretch;
+  min-height: 0;
+}
+
+.load_button {
+  align-items: center;
   color: white;
-  outline: 0 solid transparent;
+  background-color: $orange-fill-color;
+  border-radius: 0.25rem;
+  display: flex;
+  flex: initial;
+  justify-content: center;
+  height: 3rem;
+  padding: 0.5rem;
+  width: 3rem;
 
   &:hover,
   &:focus,
   &:active {
-    background-color: $element-base-color;
+    outline: 0 solid transparent;
+    border-color: transparent;
+    background-color: darken($color: $orange-fill-color, $amount: 5);
+    box-shadow: 0 0 0 0.1rem lighten($color: $orange-fill-color, $amount: 10);
   }
 }

@@ -37,6 +37,17 @@
     background: linear-gradient(transparent 50%, #ffc244a6 50%);
   }
 
+  &__section_title {
+    font-family: NunitoSans-ExtraBold;
+    font-size: 1rem;
+    line-height: 1.75;
+    margin-bottom: 1.25rem;
+    padding-left: 0.85rem;
+    padding-right: 0.85rem;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
   // &__page_sub_title {
   //   color: $gray-color;
   //   font-family: NunitoSans-Regular;
@@ -56,6 +67,8 @@
   &__main {
     align-items: stretch;
     background-color: $white;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 10px 0 rgba(0,0,0,0.05);
     display: flex;
     flex-direction: column;
     justify-content: flex-start;

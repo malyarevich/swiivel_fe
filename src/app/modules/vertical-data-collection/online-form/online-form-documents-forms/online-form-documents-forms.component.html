@@ -20,16 +20,14 @@
 
 <!-- Content -->
 <div class="content_section__main_container">
-  <div class="content_section__main">
-    <div>
-      <app-online-documents
-        *ngIf="activeId == 'documents'"
-        [form]="form"
-      ></app-online-documents>
-      <app-online-pdf-forms
-        *ngIf="activeId == 'pdf-forms'"
-        [form]="form"
-      ></app-online-pdf-forms>
-    </div>
+  <div>
+    <app-online-documents
+      *ngIf="activeId == 'documents'"
+      [form]="form"
+    ></app-online-documents>
+    <app-online-pdf-forms
+      *ngIf="activeId == 'pdf-forms'"
+      [form]="form"
+    ></app-online-pdf-forms>
   </div>
 </div>

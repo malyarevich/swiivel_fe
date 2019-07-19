@@ -12,10 +12,14 @@ import { FilesService } from "../../services/files.service";
 export class OnlineDocumentsComponent implements OnInit {
   @Input() form: Form;
 
-  constructor(private fileService: FilesService) {}
+  selectedFile: File = null;
+
+  constructor(
+    private fileService: FilesService,
+  ) {}
 
   ngOnInit() {
-    // console.log(this);
+    // console.log(this.form);
   }
   //FIXME: download instead open
   openForPreview(document: DocumentsModel) {
@@ -23,10 +27,35 @@ export class OnlineDocumentsComponent implements OnInit {
     window.open(this.form.attachments[document.data].link, "_self");
   }
   //FIXME: from server 200, but ok=false
+  
+  //   <button
+  //   class="btn app-btn-primary form-control text-nowrap"
+  //   (click)="downloadFile(document)"
+  // ></button>
   downloadFile(document: DocumentsModel) {
     if (!document.data) return;
     this.fileService.getFileFromServer(
       this.form.attachments[document.data].link
     );
   }
+
+  onFileSelected(event, name) {
+    this.selectedFile = <File>event.target.files[0];
+    // TODO: organize the uploading process 
+    this.onUploadFile(name);
+  }
+
+  onUploadFile(name = 'fake') {
+    const fd = new FormData();
+    fd.append(name, this.selectedFile,  this.selectedFile.name);
+    this.fileService.UploadFileToServer(fd);
+  }
+
+  getDocumentName(document: DocumentsModel): string {
+    if(document.data) {
+      return this.form.attachments[document.data].name;
+    }
+    return "File is not exist...";
+  }
+
 }

@@ -28,7 +28,7 @@ export class OnlineFormDocumentsFormsComponent implements OnInit {
     },
     {
       id: "pdf-forms",
-      title: "School Forms"
+      title: "External Forms"
     }
   ];
 
@@ -45,10 +45,6 @@ export class OnlineFormDocumentsFormsComponent implements OnInit {
 
   getTime() {
     return this.menuItems.find(o => o.name === this.mainMenuNames.documentsForms).time;
-  }
-
-  logWhatIWant() {
-    console.log(this.form.forms[0].form);
   }
 
   onActive(id: string) {

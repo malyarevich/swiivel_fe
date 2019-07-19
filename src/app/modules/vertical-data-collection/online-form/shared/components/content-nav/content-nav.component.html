@@ -4,27 +4,27 @@
       <ng-container
         *ngFor="let item of content; let i = index; let lastIndex = last"
       >
-        <li
-          class="content_nav__item"
+        <a
+          class="content_nav__link"
           [ngClass]="{
-            'content_nav__item--active': activeId === item.id
+            'content_nav__link--active': activeId === item.id
           }"
+          [tabindex]="item.id"
+          (click)="setActiveId(item.id)"
         >
-          <a
-            class="content_nav__link"
+          <li
+            class="content_nav__item"
             [ngClass]="{
-              'content_nav__link--active': activeId === item.id
+              'content_nav__item--active': activeId === item.id
             }"
-            [tabindex]="item.id"
-            (click)="setActiveId(item.id)"
           >
             {{ item.title }}
-          </a>
-        </li>
+          </li>
+        </a>
         <ng-container *ngIf="!lastIndex">
           <li class="content_nav__splitter">
             <span class="content_nav__icon_wrapper">
-              <i class="fas fa-chevron-right fa-sm content_nav__icon"></i>
+              <!-- <i class="fas fa-chevron-right fa-sm content_nav__icon"></i> -->
             </span>
           </li>
         </ng-container>

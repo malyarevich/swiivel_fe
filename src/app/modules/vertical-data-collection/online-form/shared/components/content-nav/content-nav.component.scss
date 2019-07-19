@@ -17,13 +17,34 @@
   }
 
   &__item {
-    border-bottom: 0.2rem solid transparent;
+    // border-bottom: 0.2rem solid transparent;
     cursor: pointer;
     padding: 0.5rem 0.5rem;
     box-sizing: border-box;
+    position: relative;
+    transition: all 0.1s ease-in-out;
+
+    &::after {
+      background-color: $element-additional-color;
+      border-radius: 0.05rem;
+      bottom: 0;
+      content: "";
+      opacity: 0;
+      display: block;
+      height: 0.1rem;
+      left: 0.5rem;
+      position: absolute;
+      transition: all 0.1s ease-in-out;
+      width: 1.25rem;
+    }
 
     &--active {
-      border-bottom: 0.2rem solid $element-additional-color;
+      // border-bottom: 0.2rem solid $element-additional-color;
+
+      &::after {
+        opacity: 1;
+        transition: all 0.1s ease-in-out;
+      }
     }
   }
 
@@ -31,7 +52,7 @@
     color: $icon-grey-color;
     font-family: NunitoSans-Regular;
     font-weight: normal;
-    transition: all 0.2s ease-in-out;
+    transition: all 0.1s ease-in-out;
 
     &:hover {
       text-decoration: none;
@@ -51,9 +72,9 @@
     padding: 0.5rem 0.5rem;
   }
 
-//   &__icon_wrapper {
-//   }
+  //   &__icon_wrapper {
+  //   }
 
-//   &__icon {
-//   }
+  //   &__icon {
+  //   }
 }
