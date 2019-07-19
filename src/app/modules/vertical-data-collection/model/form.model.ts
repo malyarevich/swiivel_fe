@@ -1,12 +1,13 @@
 import { Field } from "./field.model";
 import { Permissions } from "../../../services/permission/permissions.model";
 import { TuitionContract } from "../v-form-constructor/v-form-builder/v-tuition-contract/models/tuition-contract.model";
-import { ConsentInfo } from "../v-form-constructor/v-form-builder/v-consent/model/consent.model";
+import { ConsentInfo } from "../../../models/vertical-data-collection/v-form-constructor/v-form-builder/consent.model";
 import { DocumentsModel } from "../v-form-constructor/v-form-builder/v-documents-forms/model/documents.model";
 import { FormsPDFModel } from "../v-form-constructor/v-form-builder/v-documents-forms/model/formsPDF.model";
 import { TermsConditions } from "../v-form-constructor/v-form-builder/v-terms-conditions/model/terms-conditions.model";
 import { ISubMenus } from "../model/publish-settings.model";
 import { PaymentSettings } from "../../../models/vertical-data-collection/v-form-constructor/v-form-builder/payment-settings.model";
+import {IActiveSections} from "../../../models/vertical-data-collection/v-form-constructor/v-form-builder/active-section.model";
 
 export interface Form {
   _id: string;
@@ -44,6 +45,7 @@ export interface Form {
   documents?: DocumentsModel[];
   forms?: FormsPDFModel[];
   attachments?: object;
+  activeSections?: IActiveSections;
 }
 
 export interface FormSql {

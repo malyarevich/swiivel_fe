@@ -54,12 +54,14 @@ export class VFieldContainerComponent implements OnInit, OnDestroy, AfterViewIni
 
 
   returnFieldTYpeName(field: Field){
+    if(this.customFields) {
     let fieldTypeName: string;
-    this.customFields.forEach(f=>{
-      if(field.type==f.type) fieldTypeName = f.name;
+      this.customFields.forEach(f => {
+        if (field.type == f.type) fieldTypeName = f.name;
 
-    });
-    return fieldTypeName;
+      });
+      return fieldTypeName;
+    }
   }
 
   // nameChange(event){

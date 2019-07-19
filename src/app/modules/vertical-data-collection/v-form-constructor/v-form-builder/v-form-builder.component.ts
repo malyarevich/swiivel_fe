@@ -29,7 +29,7 @@ import {
   ConsentInfo,
   consentInfoDefault,
   consentItemDefault
-} from "./v-consent/model/consent.model";
+} from "../../../../models/vertical-data-collection/v-form-constructor/v-form-builder/consent.model";
 import {
   documentItemDefault,
   DocumentSideBar,
@@ -41,7 +41,6 @@ import {
   FormsPDFModel
 } from "./v-documents-forms/model/formsPDF.model";
 import { VFilesService } from "../../services/v-files.service";
-import { FBSections, fbSections } from "./v-consent/fb-active-section.model";
 
 import { E_SIGNATURE_TYPES, SIGNATURE_TYPES } from "../../../../enums";
 import {
@@ -65,6 +64,10 @@ import { SaveFormService } from "../../services/save-form.service";
 import { FormBuilderIsSavedService } from "../../services/form-builder-is-saved.service";
 import { ConstructorIsSavingService } from "../../services/constructor-is-saving.service";
 import {Fee} from "../../../../models/fee.model";
+import {
+  activeSectionsDefault,
+  IActiveSections
+} from "../../../../models/vertical-data-collection/v-form-constructor/v-form-builder/active-section.model";
 
 @Component({
   selector: "app-v-form-table",
@@ -92,6 +95,8 @@ export class VFormBuilderComponent implements OnInit, OnDestroy {
   newSideBar;
   idSectionForDragDrop: string[] = [];
 
+  activeSections: IActiveSections = activeSectionsDefault;
+
   customFields: Field[];
   existingFields: Field[];
   sideBarFields: Field[];
@@ -117,8 +122,6 @@ export class VFormBuilderComponent implements OnInit, OnDestroy {
 
   documents: DocumentsModel[] = [];
   formsPDF: FormsPDFModel[] = [];
-
-  sections: FBSections = fbSections;
 
   formPaymentSideBar: FormPayment[] = [
     {
@@ -324,6 +327,7 @@ export class VFormBuilderComponent implements OnInit, OnDestroy {
       this.documents = form.documents || [];
       this.formsPDF = form.forms || [];
       this.attachments = form.attachments || {};
+      this.activeSections = form.activeSections || activeSectionsDefault;
     }
   }
 
@@ -379,7 +383,8 @@ export class VFormBuilderComponent implements OnInit, OnDestroy {
       termsConditions: this.termsConditions,
       paymentSettings: this.paymentSettings,
       eligible: this.eligible,
-      step: 1
+      step: 1,
+      activeSections: this.activeSections
     };
   }
 
