@@ -12,6 +12,8 @@ import { FormsDivModel } from "../../../v-form-constructor/v-form-builder/v-docu
 export class OnlinePdfFormsComponent implements OnInit {
   @Input() form: Form;
 
+  isOpened: boolean[] = [];
+
   constructor() {}
 
   ngOnInit() {

@@ -1,21 +1,56 @@
-<ng-container *ngFor="let pdf of form.forms; let indexPdf = index">
-  <!--Title-->
-  <h2 class="content_section__article_title">
-    {{ pdf.name }}
-  </h2>
+<!--Title-->
+<h2 class="content_section__section_title">
+  Forms | Documents
+</h2>
 
-  <!--SubTitle-->
-  <h3 class="sub_title">
-    <i class="far fa-clock fa-sm mr-1"></i>
-    ~15 minutes
-  </h3>
+<!-- <div class="content_section__main"> -->
+<div>
+  <ng-container *ngFor="let pdfForm of form.forms; let indexPdf = index">
+    <div
+      class="content_section__main_list_item"
+      (click)="isOpened[indexPdf] = !isOpened[indexPdf]"
+      [ngClass]="{
+        'content_section__main_list_item--active': isOpened[indexPdf]
+      }"
+    >
+      <!--Title-->
+      <div class="d-flex justify-content-between">
+        <h2
+          class="content_section__article_title content_section__article_title--left"
+          [ngClass]="{
+            'content_section__article_title--additional-color': !isOpened[
+              indexPdf
+            ]
+          }"
+        >
+          {{ pdfForm.name }}
+        </h2>
+        <div class="d-flex justify-content-end">
+          <div class="controls_load">
+            <i class="fas fa-cloud-upload-alt fa-2x controls_load__icon"></i>
+          </div>
+          <div class="controls_load">
+            <i class="fas fa-download fa-2x controls_load__icon"></i>
+          </div>
+        </div>
+      </div>
 
-  <!--Text-->
-  <div
-    class="content_section__article_text content_section__article_text--center text_center_max_w"
-    [innerHTML]="pdf.accompanyingText.data"
-  ></div>
+      <!--Text-->
+      <div
+        class="content_section__article_text"
+        [innerHTML]="pdfForm.accompanyingText.data"
+      ></div>
 
-  <!-- PDF Loader -->
-  <app-pdf-loader [pdf]="pdf"></app-pdf-loader>
-</ng-container>
+      <div
+        class="app-div-animation app-div-hide--static"
+        [ngClass]="{
+          'app-div-show': isOpened[indexPdf],
+          'app-div-hide': !isOpened[indexPdf]
+        }"
+      >
+        <!-- PDF Loader -->
+        <app-pdf-loader [pdf]="pdfForm"></app-pdf-loader>
+      </div>
+    </div>
+  </ng-container>
+</div>
