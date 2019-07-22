@@ -1,8 +1,9 @@
 import { E_SIGNATURE_TYPES, SIGNATURE_TYPES } from "../../../../enums";
+import {Section} from "../../section.model";
 
 export interface TermsConditions {
-  isActive: boolean;
-  showSideInfo: boolean;
+  sectionName: string;
+  sectionWidth: string;
   termsConditionsItems: TermsConditionsItem[];
   signature: TermsConditionsSignature;
 }
@@ -46,8 +47,8 @@ export const termsConditionsItemDefault: TermsConditionsItem = {
 };
 
 export const termsConditionsDefault: TermsConditions = {
-  isActive: false,
-  showSideInfo: false,
+  sectionName: 'Terms and Conditions',
+  sectionWidth: Section.full,
   termsConditionsItems: [],
   signature: {
     isRequire: false,

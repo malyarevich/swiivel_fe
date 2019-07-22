@@ -2,7 +2,6 @@ import { Component, Input, OnInit, ViewEncapsulation, Output, EventEmitter } fro
 import { cloneDeep } from "lodash";
 import { Form } from "../../model/form.model";
 import { E_SIGNATURE_TYPES, SIGNATURE_TYPES } from "../../../../enums";
-import { TermsConditionsSignature } from "../../v-form-constructor/v-form-builder/v-terms-conditions/model/terms-conditions.model";
 import { SystemSignatureService } from "../services/signatures/system-signature.service";
 import { SignatureCreateResponse } from "../../../../models/shared/signatures/signature-create-response.model";
 import {
@@ -11,6 +10,7 @@ import {
   IMainMenuNames,
   IMenuItems
 } from "../../../../models/vertical-data-collection/v-form-constructor/online-form/menu-items";
+import {TermsConditionsSignature} from "../../../../models/vertical-data-collection/v-form-constructor/v-form-builder/terms-conditions.model";
 
 @Component({
   selector: "app-online-form-terms-conditions",

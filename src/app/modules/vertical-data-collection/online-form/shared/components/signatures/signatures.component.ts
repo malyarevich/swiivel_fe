@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, ViewEncapsulation } from "@angular/core";
 import { E_SIGNATURE_TYPES, SIGNATURE_TYPES } from "../../../../../../enums";
-import { TermsConditionsSignature } from "../../../../v-form-constructor/v-form-builder/v-terms-conditions/model/terms-conditions.model";
 import { SystemSignatureService } from "../../../services/signatures/system-signature.service";
+import {TermsConditionsSignature} from "../../../../../../models/vertical-data-collection/v-form-constructor/v-form-builder/terms-conditions.model";
 
 
 @Component({

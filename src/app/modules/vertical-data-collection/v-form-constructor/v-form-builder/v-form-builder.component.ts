@@ -40,11 +40,6 @@ import { VFilesService } from "../../services/v-files.service";
 
 import { E_SIGNATURE_TYPES, SIGNATURE_TYPES } from "../../../../enums";
 import {
-  TermsConditions,
-  termsConditionsDefault,
-  termsConditionsItemDefault
-} from "./v-terms-conditions/model/terms-conditions.model";
-import {
   PaymentSettings,
   paymentSettingsDefault,
   paymentSettingsItemDefault
@@ -68,6 +63,10 @@ import {
   TuitionContract,
   tuitionContractDefault
 } from "../../../../models/vertical-data-collection/v-form-constructor/v-form-builder/tuition-contract.model";
+import {
+  TermsConditions,
+  termsConditionsDefault, termsConditionsItemDefault
+} from "../../../../models/vertical-data-collection/v-form-constructor/v-form-builder/terms-conditions.model";
 
 @Component({
   selector: "app-v-form-table",

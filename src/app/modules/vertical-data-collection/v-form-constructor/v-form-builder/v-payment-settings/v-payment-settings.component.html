@@ -9,39 +9,40 @@
 ></app-section-header>
 <!--End Section Header-->
 
-<div class="app-section-content-wrapper"
-     [ngClass]="{
+<div [ngClass]="{
     'app-div-show': isExpand,
     'app-div-hide': !isExpand
   }">
-  <!-- *ngFor="let item of paymentSettings.paymentSettingsItems" -->
-  <extended-field
-    [content]="this.paymentSettings.paymentOptionsContent"
-    (changeContent)="onChangePaymentOptionsContent($event)"
-    fieldTitle="Payment Options"
-  ></extended-field>
+  <div class="app-section-content-wrapper">
+    <!-- *ngFor="let item of paymentSettings.paymentSettingsItems" -->
+    <extended-field
+      [content]="this.paymentSettings.paymentOptionsContent"
+      (changeContent)="onChangePaymentOptionsContent($event)"
+      fieldTitle="Payment Options"
+    ></extended-field>
 
-  <!-- Bais Medrash Winter Dormitory Fee -->
-  <app-v-payment-settings-dormitory-fee></app-v-payment-settings-dormitory-fee>
-  <!-- Registration -->
-  <app-v-payment-settings-registration></app-v-payment-settings-registration>
-  <!-- Tuition -->
-  <app-v-payment-settings-tuition></app-v-payment-settings-tuition>
-  <!-- Scholarship -->
-  <app-v-payment-settings-scholarship></app-v-payment-settings-scholarship>
-  <!-- Lunch Fee -->
-  <app-v-payment-settings-lunch-fee></app-v-payment-settings-lunch-fee>
-  <!-- Text -->
-  <extended-field
-    fieldTitle="Text"
-    content="some content"></extended-field>
+    <!-- Bais Medrash Winter Dormitory Fee -->
+    <app-v-payment-settings-dormitory-fee></app-v-payment-settings-dormitory-fee>
+    <!-- Registration -->
+    <app-v-payment-settings-registration></app-v-payment-settings-registration>
+    <!-- Tuition -->
+    <app-v-payment-settings-tuition></app-v-payment-settings-tuition>
+    <!-- Scholarship -->
+    <app-v-payment-settings-scholarship></app-v-payment-settings-scholarship>
+    <!-- Lunch Fee -->
+    <app-v-payment-settings-lunch-fee></app-v-payment-settings-lunch-fee>
+    <!-- Text -->
+    <extended-field
+      fieldTitle="Text"
+      content="some content"></extended-field>
 
-  <!--SIGNATURE-->
-  <ng-container *ngIf="paymentSettings.signature.isRequire">
-    <app-signatures [signature]="paymentSettings.signature"></app-signatures>
-  </ng-container>
-  <!--END SIGNATURE-->
-  
-  <!-- Sample Preview -->
-  <app-v-payment-settings-sample-preview></app-v-payment-settings-sample-preview>
+    <!--SIGNATURE-->
+    <ng-container *ngIf="paymentSettings.signature.isRequire">
+      <app-signatures [signature]="paymentSettings.signature"></app-signatures>
+    </ng-container>
+    <!--END SIGNATURE-->
+
+    <!-- Sample Preview -->
+    <app-v-payment-settings-sample-preview></app-v-payment-settings-sample-preview>
+  </div>
 </div>
