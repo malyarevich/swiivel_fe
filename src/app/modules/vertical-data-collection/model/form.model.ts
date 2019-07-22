@@ -1,6 +1,5 @@
 import { Field } from "./field.model";
 import { Permissions } from "../../../services/permission/permissions.model";
-import { TuitionContract } from "../v-form-constructor/v-form-builder/v-tuition-contract/models/tuition-contract.model";
 import { ConsentInfo } from "../../../models/vertical-data-collection/v-form-constructor/v-form-builder/consent.model";
 import { DocumentsModel } from "../v-form-constructor/v-form-builder/v-documents-forms/model/documents.model";
 import { FormsPDFModel } from "../v-form-constructor/v-form-builder/v-documents-forms/model/formsPDF.model";
@@ -8,6 +7,7 @@ import { TermsConditions } from "../v-form-constructor/v-form-builder/v-terms-co
 import { ISubMenus } from "../model/publish-settings.model";
 import { PaymentSettings } from "../../../models/vertical-data-collection/v-form-constructor/v-form-builder/payment-settings.model";
 import {IActiveSections} from "../../../models/vertical-data-collection/v-form-constructor/v-form-builder/active-section.model";
+import {TuitionContract} from "../../../models/vertical-data-collection/v-form-constructor/v-form-builder/tuition-contract.model";
 
 export interface Form {
   _id: string;

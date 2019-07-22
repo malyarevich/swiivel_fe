@@ -1,10 +1,6 @@
 import { Component, Input, OnInit, Output, EventEmitter } from "@angular/core";
 import { cloneDeep } from "lodash";
 import {
-  TuitionContract,
-  TuitionContractSignature
-} from "../../v-form-constructor/v-form-builder/v-tuition-contract/models/tuition-contract.model";
-import {
   E_SIGNATURE_TYPES,
   SIGNATURE_TYPES,
   TUITION_CONTRACT_SPLIT_TYPES
@@ -18,6 +14,7 @@ import {
   IMainMenuNames,
   IMenuItems
 } from "../../../../models/vertical-data-collection/v-form-constructor/online-form/menu-items";
+import {TuitionContractSignature} from "../../../../models/vertical-data-collection/v-form-constructor/v-form-builder/tuition-contract.model";
 
 @Component({
   selector: "app-online-form-tuition-contract",

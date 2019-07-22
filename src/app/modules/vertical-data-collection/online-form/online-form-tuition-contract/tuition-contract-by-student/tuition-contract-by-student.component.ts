@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {TuitionContract} from "../../../v-form-constructor/v-form-builder/v-tuition-contract/models/tuition-contract.model";
+import {TuitionContract} from "../../../../../models/vertical-data-collection/v-form-constructor/v-form-builder/tuition-contract.model";
 
 @Component({
   selector: 'app-tuition-contract-by-student',

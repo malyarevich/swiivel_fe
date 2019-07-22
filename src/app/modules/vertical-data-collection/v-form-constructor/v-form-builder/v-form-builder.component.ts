@@ -16,10 +16,6 @@ import { cloneDeep, isEmpty } from "lodash";
 import { Location } from "@angular/common";
 import { VFieldsService } from "../../services/v-fields.service";
 import { Field } from "../../model/field.model";
-import {
-  TuitionContract,
-  tuitionContractDefault
-} from "./v-tuition-contract/models/tuition-contract.model";
 import { Form } from "../../model/form.model";
 import {
   FormPayment,
@@ -68,6 +64,10 @@ import {
   activeSectionsDefault,
   IActiveSections
 } from "../../../../models/vertical-data-collection/v-form-constructor/v-form-builder/active-section.model";
+import {
+  TuitionContract,
+  tuitionContractDefault
+} from "../../../../models/vertical-data-collection/v-form-constructor/v-form-builder/tuition-contract.model";
 
 @Component({
   selector: "app-v-form-table",
