@@ -8,7 +8,7 @@ import {
 import { FormsPDFModel, FormPDFDownloadModel } from "../model/formsPDF.model";
 import { Field } from "../../../../model/field.model";
 import { VFilesService } from "../../../../services/v-files.service";
-import { Section } from "../../../../../../models/vertical-data-collection/section.model";
+import {DocumentsFormsModel} from "../../../../../../models/vertical-data-collection/v-form-constructor/v-form-builder/documents-forms.model";
 
 @Component({
   selector: "app-v-forms-container",
@@ -18,20 +18,17 @@ import { Section } from "../../../../../../models/vertical-data-collection/secti
 export class VFormsContainerComponent implements OnInit, OnChanges {
   @Input() existingFields: Field[];
   @Input() formsPDF: FormsPDFModel[];
+  @Input() documentsForms: DocumentsFormsModel;
 
   existingFormsPDF: FormPDFDownloadModel[] = [];
   // page = 1;
 
-  sectionName: string;
-  sectionWidth: string;
   isExpand: boolean = true;
 
   constructor(private fileService: VFilesService) {}
 
   ngOnInit(): void {
     this.getExistingsFormPDFList();
-    this.sectionName = "School Forms";
-    this.sectionWidth = Section.full;
   }
 
   fileChange(event, form: FormsPDFModel) {
@@ -77,11 +74,11 @@ export class VFormsContainerComponent implements OnInit, OnChanges {
   // }
 
   changeSectionName(sectionName: string) {
-    this.sectionName = sectionName;
+    this.documentsForms.formsPDF.sectionName = sectionName;
   }
 
   changeSectionWidth(sectionWidthType: string) {
-    this.sectionWidth = sectionWidthType;
+    this.documentsForms.formsPDF.sectionWidth = sectionWidthType;
   }
 
   toggleExpand() {

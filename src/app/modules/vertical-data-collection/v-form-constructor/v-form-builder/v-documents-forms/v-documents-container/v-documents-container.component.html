@@ -1,72 +1,13 @@
-<!--Section-->
+<!--Section Header-->
 <app-section-header
-  [sectionName]="sectionName"
-  [sectionWidth]="sectionWidth"
+  [sectionName]="documentsForms.documents.sectionName"
+  [sectionWidth]="documentsForms.documents.sectionWidth"
   [isExpand]="isExpand"
   (onChangeSectionName)="changeSectionName($event)"
   (onChangeSectionWidth)="changeSectionWidth($event)"
   (onToggleExpand)="toggleExpand()"
 ></app-section-header>
-<!--End Section-->
-
-<!--OLD Section-->
-<div
-  *ngIf="documents.length > 0"
-  class="app-section-wrapper app-consent-section mt-2 mb-2 row align-items-center no-gutters"
->
-  <div class="col-4 row align-items-center no-gutters">
-    <div class="col-1 row align-items-center no-gutters">
-      <span class="app-fb-section-icon-white">
-        <i class="fas fa-ellipsis-v"></i>
-        <i class="fas fa-ellipsis-v"></i>
-      </span>
-    </div>
-    <div class="col-10 ml-3" [ngClass]="{ 'app-input-fill': sectionName }">
-      <label class="app-input-label" for="section-name">Section Name</label>
-      <input
-        id="section-name"
-        type="text"
-        class="app-input"
-        [(ngModel)]="sectionName"
-        placeholder="Section Name"
-      />
-    </div>
-  </div>
-
-  <div
-    class="col-2 pl-4 app-input-container w-100"
-    [ngClass]="{ 'app-input-fill': sectionWidth }"
-  >
-    <label class="app-input-label" for="section-width">Section Width</label>
-    <input
-      id="section-width"
-      type="text"
-      class="app-input"
-      [(ngModel)]="sectionWidth"
-      placeholder="Section Name"
-    />
-  </div>
-
-  <div class="col-1 offset-5   row align-items-center no-gutters">
-    <div class="col">
-      <span class="app-fb-section-icon-white">
-        <i class="fas fa-cog dragable-i pr-2"></i>
-      </span>
-    </div>
-    <div class="col app-cursor-pointer" (click)="toggleExpand()">
-      <span class="app-fb-section-icon-white">
-        <i
-          class="fas dragable-y"
-          [ngClass]="{
-            'fa-caret-up': isExpand,
-            'fa-caret-down': !isExpand
-          }"
-        ></i>
-      </span>
-    </div>
-  </div>
-</div>
-<!-- End OLD Section-->
+<!--End Section Header-->
 
 <!-- Section body -->
 <div

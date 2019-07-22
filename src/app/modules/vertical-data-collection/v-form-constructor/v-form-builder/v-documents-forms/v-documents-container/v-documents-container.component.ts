@@ -8,7 +8,7 @@ import {
 import { VFilesService } from "../../../../services/v-files.service";
 import { environment } from "../../../../../../../environments/environment";
 import { FormService } from "../../../../../data-collection/form.service";
-import { Section } from "src/app/models/vertical-data-collection/section.model";
+import {DocumentsFormsModel} from "../../../../../../models/vertical-data-collection/v-form-constructor/v-form-builder/documents-forms.model";
 
 @Component({
   selector: "app-v-documents-container",
@@ -20,20 +20,18 @@ export class VDocumentsContainerComponent implements OnInit {
   @Input() documents: DocumentsModel[];
   @Input() formId: string;
   @Input() attachments;
+  @Input() documentsForms: DocumentsFormsModel;
+
   token = "?api_token=" + environment.api_token;
 
   isExpand: boolean = true;
 
-  sectionName: string;
-  sectionWidth: string;
   constructor(
     private fileService: VFilesService,
     private formService: FormService
   ) {}
 
   ngOnInit() {
-    this.sectionName = "Documents for Parents";
-    this.sectionWidth = Section.full;
   }
 
   fileChange(event, document) {
@@ -74,11 +72,11 @@ export class VDocumentsContainerComponent implements OnInit {
   }
 
   changeSectionName(sectionName: string) {
-    this.sectionName = sectionName;
+    this.documentsForms.documents.sectionName = sectionName;
   }
 
   changeSectionWidth(sectionWidthType: string) {
-    this.sectionWidth = sectionWidthType;
+    this.documentsForms.documents.sectionWidth = sectionWidthType;
   }
 
   toggleExpand() {

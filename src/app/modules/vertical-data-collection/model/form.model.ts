@@ -8,6 +8,7 @@ import { PaymentSettings } from "../../../models/vertical-data-collection/v-form
 import {IActiveSections} from "../../../models/vertical-data-collection/v-form-constructor/v-form-builder/active-section.model";
 import {TuitionContract} from "../../../models/vertical-data-collection/v-form-constructor/v-form-builder/tuition-contract.model";
 import {TermsConditions} from "../../../models/vertical-data-collection/v-form-constructor/v-form-builder/terms-conditions.model";
+import {DocumentsFormsModel} from "../../../models/vertical-data-collection/v-form-constructor/v-form-builder/documents-forms.model";
 
 export interface Form {
   _id: string;
@@ -42,6 +43,7 @@ export interface Form {
   chosen_way_to_create_new_form?: number;
   eligible: string;
   example_form_id?: string;
+  documentsForms?: DocumentsFormsModel;
   documents?: DocumentsModel[];
   forms?: FormsPDFModel[];
   attachments?: object;
