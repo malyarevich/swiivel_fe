@@ -32,7 +32,8 @@ export class OnlineFormDocumentsFormsComponent implements OnInit {
     }
   ];
 
-  activeId: string = "documents";
+  // activeId: string = "documents";
+  activeId: string = this.navContent[0].id;
 
   constructor() {}
 

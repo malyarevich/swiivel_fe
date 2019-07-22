@@ -6,7 +6,13 @@
   padding-top: 2rem;
 }
 
-.text_center_max_w {
-  margin: 0 auto;
-  max-width: 54rem;
+.controls_load {
+  display: flex;
+  height: 2rem;
+  margin-left: 1.25rem;
+  width: 2rem;
+
+  &__icon {
+    color: #97CDF4;
+  }
 }
