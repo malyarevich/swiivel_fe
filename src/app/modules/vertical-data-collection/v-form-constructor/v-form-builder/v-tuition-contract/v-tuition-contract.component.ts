@@ -10,8 +10,6 @@ import {TuitionContract} from "../../../../../models/vertical-data-collection/v-
 export class VTuitionContractComponent implements OnInit {
   @Input() tuitionContract: TuitionContract;
 
-  // sectionName: string = 'Tuition Contract';
-  // sectionWidth: string = "4 Columns";
   isExpand: boolean = true;
 
   TUITION_CONTRACT_SPLIT_TYPES = TUITION_CONTRACT_SPLIT_TYPES;

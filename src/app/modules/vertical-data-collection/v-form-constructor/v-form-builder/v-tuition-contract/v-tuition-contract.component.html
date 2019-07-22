@@ -1,52 +1,4 @@
 <!--Section Header-->
-<!--<div class="app-section-wrapper app-section-header mt-2 mb-2 row align-items-center no-gutters">-->
-
-  <!--<div class="col-4 row align-items-center no-gutters">-->
-    <!--<div class="col-1 row align-items-center no-gutters">-->
-          <!--<span class="app-fb-section-icon-white">-->
-            <!--<i class="fas fa-ellipsis-v"></i>-->
-            <!--<i class="fas fa-ellipsis-v"></i>-->
-          <!--</span>-->
-    <!--</div>-->
-    <!--<div class="col-10 ml-3" [ngClass]="{'app-input-fill': sectionName}">-->
-      <!--<label class="app-input-label" for="section-name">Section Name</label>-->
-      <!--<input-->
-        <!--id="section-name"-->
-        <!--type="text"-->
-        <!--class="app-input"-->
-        <!--[(ngModel)]="sectionName"-->
-        <!--placeholder="Section Name">-->
-    <!--</div>-->
-  <!--</div>-->
-
-
-  <!--<div class="col-2 pl-4 app-input-container w-100" [ngClass]="{'app-input-fill': sectionWidth}">-->
-    <!--<label class="app-input-label" for="section-width">Section Width</label>-->
-    <!--<input-->
-      <!--id="section-width"-->
-      <!--type="text"-->
-      <!--class="app-input"-->
-      <!--[(ngModel)]="sectionWidth"-->
-      <!--placeholder="Section Name">-->
-  <!--</div>-->
-
-
-  <!--<div class="col-1 offset-5   row align-items-center no-gutters">-->
-    <!--<div class="col">-->
-      <!--<span class="app-fb-section-icon-white">-->
-        <!--<i class="fas fa-cog dragable-i pr-2"></i>-->
-      <!--</span>-->
-    <!--</div>-->
-    <!--<div class="col">-->
-        <!--<span class="app-fb-section-icon-white">-->
-          <!--<i class="fas  fa-caret-down dragable-y"></i>-->
-        <!--</span>-->
-    <!--</div>-->
-  <!--</div>-->
-
-<!--</div>-->
-
-<!--Section Header-->
 <app-section-header
   [sectionName]="tuitionContract.sectionName"
   [sectionWidth]="tuitionContract.sectionWidth"
@@ -56,8 +8,6 @@
   (onToggleExpand)="toggleExpand()"
 ></app-section-header>
 <!--End Section Header-->
-<!--End Section Header-->
-
 
 <div class="app-section-wrapper"
      [ngClass]="{
