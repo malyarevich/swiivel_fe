@@ -1,8 +1,9 @@
 import {E_SIGNATURE_TYPES, SIGNATURE_TYPES} from "../../../../enums/index";
+import {Section} from "../../section.model";
 
 export interface ConsentInfo {
-  isActive: boolean;
-  showSideInfo: boolean;
+  sectionName: string;
+  sectionWidth: string;
   consents: ConsentItemInfo[];
 }
 
@@ -59,7 +60,7 @@ export const consentItemDefault: ConsentItemInfo = {
 };
 
 export const consentInfoDefault: ConsentInfo = {
-  isActive: false,
-  showSideInfo: false,
+  sectionName: "Parent Consent",
+  sectionWidth: Section.full,
   consents: [],
 };
