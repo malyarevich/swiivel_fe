@@ -39,16 +39,20 @@
   </div>
 
   <div class="section_header__group_box section_header__group_box--end">
-      <div class="section_header__control_item"
-           (click)="toggleSettings()">
-        <span><i class="fas fa-cog section_header__control_icon"></i></span>
-      </div>
-      <div 
-        class="section_header__control_item section_header__control_item--expander"
-        (click)="toggleExpand()"
-      >
+    <div class="section_header__control_item"
+         (click)="toggleSettings()">
+      <span><i class="fas fa-cog section_header__control_icon"></i></span>
+    </div>
+    <div class="section_header__control_item"
+         (click)="removeSection()">
+      <span><i class="fas fa-times section_header__control_icon"></i></span>
+    </div>
+    <div
+      class="section_header__control_item section_header__control_item--expander"
+      (click)="toggleExpand()"
+    >
         <span>
-          <i 
+          <i
             class="fas section_header__control_icon"
             [ngClass]="{
               'fa-caret-up': isExpand,
@@ -56,6 +60,6 @@
             }"
           ></i>
         </span>
-      </div>
+    </div>
   </div>
 </div>

@@ -61,11 +61,12 @@
             <select class="app-input form-control"
                     #sizeID
                     id="fieldSize"
-                    [(ngModel)]="inputField.options.size"
+                    [(ngModel)]="inputField.width"
             >
-              <option *ngFor="let width of size" [value]="width" [selected]="width==inputField.options.size"
-              >{{width}} Columns
-              </option>
+              <option *ngFor="let key of objectKeys(list)"
+                      [value]="list[key]['type']"
+                      [selected]="list[key]['type'] === inputField.width"
+              >{{ list[key]["label"] }}</option>
             </select>
 
           </div>
