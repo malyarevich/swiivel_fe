@@ -4,6 +4,7 @@ import { range } from 'lodash'
 import {CdkDragDrop, copyArrayItem, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import {SideBarService} from "../../v-side-bar/side-bar.service";
 import {Form} from "../../../../../model/form.model";
+import {Section} from "../../../../../../../models/vertical-data-collection/section.model";
 
 @Component({
   selector: 'app-v-group-container',
@@ -23,10 +24,14 @@ export class VGroupContainerComponent implements OnInit {
 
   showGroupSettings: boolean = false;
 
-  size = range(1  ,13);
+  // size = range(1  ,13);
+  objectKeys = Object.keys;
+  list: object;
+
   constructor(private sideBarService: SideBarService,private cd: ChangeDetectorRef) { }
   showNested: boolean = true;
   ngOnInit() {
+    this.list = Section.sectionWidth;
   }
 
 

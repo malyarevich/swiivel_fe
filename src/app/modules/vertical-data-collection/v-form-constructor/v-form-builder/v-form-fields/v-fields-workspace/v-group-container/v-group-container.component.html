@@ -159,14 +159,16 @@
         <div class="col-6">
           <div class="  app-input-container"
                [ngClass]="{'app-input-fill': sizeID.value}" >
-            <label for="groupSize" class="app-input-label">Field Width</label>
+            <label for="groupWidth" class="app-input-label">Field Width</label>
             <select class="app-input form-control"
                     #sizeID
-                    id="groupSize"
-                    [(ngModel)]="inputGroup.options.size"
+                    id="groupWidth"
+                    [(ngModel)]="inputGroup.width"
             >
-              <option *ngFor="let width of size" [value]="width" [selected]="width==inputGroup.options.size"
-              >{{width}} Columns</option>
+              <option *ngFor="let key of objectKeys(list)"
+                      [value]="list[key]['type']"
+                      [selected]="list[key]['type'] === inputGroup.width"
+              >{{ list[key]["label"] }}</option>
             </select>
 
           </div>
