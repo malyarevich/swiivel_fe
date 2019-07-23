@@ -4,16 +4,18 @@ import {
   FieldSettingConditional,
   GroupOptions
 } from "../../../../../../../../../models/vertical-data-collection/field.model";
+import {FormBuilder, FormGroup} from "@angular/forms";
+import {isEmpty} from "lodash";
 
 const defaultSettingOptions: GroupOptions = {
-  groupPreset: string;
-required: boolean,
-  readonly: boolean,
-  hideLabel: boolean,
-  unique: boolean;
-isSupportText: boolean;
-supportText: string;
-supportTextDisplayed: 'popup' | 'directly';
+  groupPreset: 'Preset 1',
+  required: true,
+  readonly: false,
+  hideLabel: true,
+  unique: true,
+  isSupportText: true,
+  supportText: 'Actually Student\'s Address',
+  supportTextDisplayed: 'directly',
 };
 
 @Component({
@@ -23,20 +25,43 @@ supportTextDisplayed: 'popup' | 'directly';
 })
 export class VGroupSettingOptionsComponent implements OnInit {
   @Input() inputGroup: Field;
+  groupSettingOptionsForm: FormGroup;
 
   groupPreset: string = 'Preset 1';
   supportText: string = 'Actually Student\'s Address';
 
-  constructor() { }
-
-  ngOnInit() {
-    this.initSettingOptions();
+  constructor(private readonly fb: FormBuilder) {
   }
 
-  initSettingOptions() {
-    if (!this.inputGroup.settings.options) {
-      this.inputGroup.settings['options'] = Object.assign(defaultSettingOptions);
+  ngOnInit() {
+    this.initGroupSettingOptions();
+    this.initGroupSettingOptionsForm();
+    this.onChangesGroupSettingOptionsForm()
+  }
+
+  initGroupSettingOptions() {
+    if (isEmpty(this.inputGroup.settings.options)) {
+      this.inputGroup.settings.options = Object.assign(defaultSettingOptions);
     }
+  }
+
+  initGroupSettingOptionsForm() {
+    this.groupSettingOptionsForm = this.fb.group({
+      groupPreset: [this.inputGroup.settings.options.groupPreset],
+      required: [this.inputGroup.settings.options.required],
+      readonly: [this.inputGroup.settings.options.readonly],
+      hideLabel: [this.inputGroup.settings.options.hideLabel],
+      unique: [this.inputGroup.settings.options.unique],
+      isSupportText: [this.inputGroup.settings.options.isSupportText],
+      supportText: [this.inputGroup.settings.options.supportText],
+      supportTextDisplayed: [this.inputGroup.settings.options.supportTextDisplayed],
+    });
+  }
+
+  onChangesGroupSettingOptionsForm() {
+    this.groupSettingOptionsForm.valueChanges.subscribe((val) => {
+      this.inputGroup.settings.options = Object.assign(val);
+    });
   }
 
 }
