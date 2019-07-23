@@ -121,6 +121,7 @@ import { VAutomationTemplateAreaComponent } from './v-form-constructor/v-form-pu
 import { VConstructorDraftService } from './services/v-constructor-draft.service';
 import { VGroupSettingMultiplierComponent } from './v-form-constructor/v-form-builder/v-form-fields/v-fields-workspace/v-group-container/v-group-settings/v-group-setting-multiplier/v-group-setting-multiplier.component';
 import { VFieldsConditionalLogicComponent } from './v-form-constructor/v-form-builder/v-form-fields/v-fields-workspace/v-fields-shared-components/v-fields-conditional-logic/v-fields-conditional-logic.component';
+import { VGroupSettingOptionsComponent } from './v-form-constructor/v-form-builder/v-form-fields/v-fields-workspace/v-group-container/v-group-settings/v-group-setting-options/v-group-setting-options.component';
 
 const routes: Routes = [
   {
@@ -275,7 +276,8 @@ const routes: Routes = [
     FieldTypePipe,
     VSectionSettingsComponent,
     VGroupSettingMultiplierComponent,
-    VFieldsConditionalLogicComponent
+    VFieldsConditionalLogicComponent,
+    VGroupSettingOptionsComponent
   ],
   imports: [
     NgxDnDModule,

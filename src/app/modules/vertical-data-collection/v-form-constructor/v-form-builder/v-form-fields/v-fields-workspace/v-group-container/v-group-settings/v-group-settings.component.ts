@@ -12,9 +12,6 @@ export class VGroupSettingsComponent implements OnInit {
 
   tab: string = 'settings';
 
-  groupPreset: string = 'Preset 1';
-  supportText: string = 'Actually Student\'s Address';
-
   constructor() {
   }
 

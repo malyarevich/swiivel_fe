@@ -40,8 +40,8 @@ export interface FieldOption {
 }
 
 export interface FieldSettings {
-  multiplier: FieldSettingMultiplier,
-  options: any,
+  multiplier?: FieldSettingMultiplier,
+  options?: GroupOptions,
 }
 
 export interface FieldSettingMultiplier {
@@ -58,6 +58,17 @@ export interface FieldSettingConditional {
   when: string;
   field: string;
   rules: {name: string, value: string}[];
+}
+
+export interface GroupOptions {
+  groupPreset: string;
+  required: boolean,
+  readonly: boolean,
+  hideLabel: boolean,
+  unique: boolean;
+  isSupportText: boolean;
+  supportText: string;
+  supportTextDisplayed: 'popup' | 'directly';
 }
 
 
