@@ -31,7 +31,7 @@ export class VFormService {
     getOneForm(id): Observable<any> {
         return this.http.get(`/proxy/forms/${id}`)
             .pipe(
-                map((response) => response)
+                map((response) => response.data)
             );
     }
 
