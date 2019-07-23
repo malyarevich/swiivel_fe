@@ -24,7 +24,6 @@ export class VGroupContainerComponent implements OnInit {
 
   showGroupSettings: boolean = false;
 
-  // size = range(1  ,13);
   objectKeys = Object.keys;
   list: object;
 

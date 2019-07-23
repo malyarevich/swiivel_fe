@@ -12,6 +12,7 @@ import {Field} from '../../../../../model/field.model';
 import { range } from 'lodash'
 import {Form} from "../../../../../model/form.model";
 import {SideBarService} from "../../v-side-bar/side-bar.service";
+import {Section} from "../../../../../../../models/vertical-data-collection/section.model";
 @Component({
   selector: 'app-v-field-container',
   templateUrl: './v-field-container.component.html',
@@ -31,7 +32,8 @@ export class VFieldContainerComponent implements OnInit, OnDestroy, AfterViewIni
 
   showSettings: boolean = false;
 
-  size = range(1  ,13);
+  objectKeys = Object.keys;
+  list: object;
 
   constructor(private sideBarService: SideBarService,private cd: ChangeDetectorRef) {
   }
@@ -72,6 +74,7 @@ export class VFieldContainerComponent implements OnInit, OnDestroy, AfterViewIni
   // }
 
   ngOnInit(): void {
+    this.list = Section.sectionWidth;
     this.inputField.exist = true;
   }
 
