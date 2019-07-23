@@ -193,9 +193,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 
-angular-gridster2
-MIT
-
 atoa
 MIT
 The MIT License (MIT)
@@ -411,6 +408,9 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 
 ng2-pdf-viewer
+MIT
+
+ngx-autosize-input
 MIT
 
 ngx-bootstrap/chronos
