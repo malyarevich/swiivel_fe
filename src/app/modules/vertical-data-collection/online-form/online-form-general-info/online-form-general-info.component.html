@@ -22,14 +22,19 @@
 <div class="content_section__main_container">
   <div class="app-of-wrap content_section__main">
     <div>
-      <app-general-info-parents
+      <ng-container *ngFor="let section of form.fields">
+        <app-general-info-section
+          [section]="section"
+        ></app-general-info-section>
+      </ng-container>
+      <!-- <app-general-info-parents
         *ngIf="activeId === 'parents'"
         [form]="form"
       ></app-general-info-parents>
       <app-general-info-students
         *ngIf="activeId === 'students'"
         [form]="form"
-      ></app-general-info-students>
+      ></app-general-info-students> -->
     </div>
   </div>
 </div>

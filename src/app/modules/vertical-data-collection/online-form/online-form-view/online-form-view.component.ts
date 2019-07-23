@@ -37,7 +37,8 @@ export class OnlineFormViewComponent implements OnInit {
   getForm(): void {
     const id = this.route.snapshot.paramMap.get("id");
     this.onlineFormService.getOneForm(id).subscribe((form: Form) => {
-      this.form = form;
+      this.form = form['data'];
+      console.log(form);
     });
   }
 
