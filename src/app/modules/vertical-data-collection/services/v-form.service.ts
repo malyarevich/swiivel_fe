@@ -6,6 +6,12 @@ import {Observable} from 'rxjs';
 import {ApiResponse} from "../../../models/api-response";
 import {FormSearchParams} from "../../../models/form-search-params";
 
+interface Response {
+  status: number;
+  data?: any;
+  errors?: any[];
+}
+
 @Injectable()
 export class VFormService {
 
@@ -31,7 +37,7 @@ export class VFormService {
     getOneForm(id): Observable<any> {
         return this.http.get(`/proxy/forms/${id}`)
             .pipe(
-                map((response) => response.data)
+                map((response: Response) => response.data)
             );
     }
 
