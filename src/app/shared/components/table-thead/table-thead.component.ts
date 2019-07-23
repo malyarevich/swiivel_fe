@@ -10,26 +10,30 @@ import { SORT_ORDER } from '../../../enums/sort-order';
 export class TableTheadComponent implements OnInit {
   @Input() columns: TableThead[];
   @Input() backround: string;
+  @Input() isSortable?: boolean = true;
   @Output() sortFilter: EventEmitter<any> = new EventEmitter<any>();
 
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   onChangeSort(index) {
-    this.columns.forEach((column, columnIndex) => {
-      if (column.sortOrder && columnIndex !== index) {
-        delete column.sortOrder;
-      }
-    });
+    if (this.isSortable) {
+      this.columns.forEach((column, columnIndex) => {
+        if (column.sortOrder && columnIndex !== index) {
+          delete column.sortOrder;
+        }
+      });
 
-    this.columns[index].sortOrder = this.columns[index].sortOrder === SORT_ORDER.DESC ? SORT_ORDER.ASC : SORT_ORDER.DESC;
+      this.columns[index].sortOrder = this.columns[index].sortOrder === SORT_ORDER.DESC ? SORT_ORDER.ASC : SORT_ORDER.DESC;
 
-    const sortFilter = {
-      id: this.columns[index].id,
-      order: this.columns[index].sortOrder,
-    };
+      const sortFilter = {
+        id: this.columns[index].id,
+        order: this.columns[index].sortOrder,
+      };
 
-    this.sortFilter.emit(sortFilter);
+      this.sortFilter.emit(sortFilter);
+    }
   }
 }

@@ -22,6 +22,7 @@
       <div
         *ngIf="col.sort"
         class="app-table-thead-th__sort"
+        [ngClass]="{'app-table-thead-th__sort--not-sortable': !isSortable}"
         (click)="onChangeSort(colIndex)"
       >
         <i

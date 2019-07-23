@@ -6,24 +6,24 @@ import {
   Output,
   Optional,
   Self,
+  ViewChild,
+  ElementRef,
 } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 
 @Component({
-  selector: 'app-datepicker-field',
-  templateUrl: './datepicker-field.component.html',
-  styleUrls: ['./datepicker-field.component.scss']
+  selector: 'app-input-editable-field',
+  templateUrl: './input-editable-field.component.html',
+  styleUrls: ['./input-editable-field.component.scss']
 })
-export class DatePickerFieldComponent implements OnInit, ControlValueAccessor {
-  @Input() disabled: boolean;
-  @Input() value: Date;
-  @Input() id: string;
-  @Input() label = '';
-  @Input() isInvalid = false;
-  @Input() width?: number = null;
-  @Output() onChangeField = new EventEmitter();
 
-  bsConfig = { containerClass: 'theme-blue', showWeekNumbers: false, dateInputFormat: 'MMMM DD, YYYY' };
+export class InputEditableFieldComponent implements OnInit, ControlValueAccessor {
+  @Input() disabled: boolean;
+  @Input() value: any = '';
+  @Input() inputStyle: string = null;
+  @Input() inputColor?: string = null;
+  @Output() onChangeField = new EventEmitter();
+  @ViewChild('input') input: ElementRef;
 
   constructor(
     @Self()
@@ -35,8 +35,7 @@ export class DatePickerFieldComponent implements OnInit, ControlValueAccessor {
     }
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   writeValue(value: any): void {
     this.value = value;
@@ -54,17 +53,14 @@ export class DatePickerFieldComponent implements OnInit, ControlValueAccessor {
     this.onTouched = fn;
   }
 
-  private onChange = (_: any) => {};
-  onTouched = () => {};
-
-
-  onInput() {
-    this.isInvalid = this.validateValue();
-    this.onChange(this.value);
+  onChange(value) {
+    this.onChangeField.emit({ fieldValue: value, type: 'input' });
+    return value;
   }
+  onTouched() {}
 
-  validateValue(): boolean {
-    return !this.value;
+  onPenClick(): void {
+    this.input.nativeElement.focus();
   }
 
 }

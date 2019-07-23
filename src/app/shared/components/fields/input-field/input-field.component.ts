@@ -1,5 +1,6 @@
 import {
-  Component, EventEmitter,
+  Component,
+  EventEmitter,
   Input,
   OnInit,
   Output,
@@ -27,8 +28,6 @@ export class InputFieldComponent implements OnInit, ControlValueAccessor {
   @Input() min?: number = null;
 
   @Output() onChangeField = new EventEmitter();
-
-  // value: any = '';
 
   constructor(
     @Self()

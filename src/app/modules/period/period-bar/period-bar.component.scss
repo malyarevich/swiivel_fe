@@ -1,0 +1,94 @@
+@import '../../../../styles/variables/colors';
+
+.app-period-bar {
+  display: flex;
+  padding: 20px 15px;
+  background-color: white;
+  overflow-x:hidden;
+
+  .app-period-bar__header {
+    min-width: 120px;
+    max-width: 120px;
+    height: 15px;
+    font: 800 12px/15px 'NunitoSans-Bold';
+    margin: 7px 0 auto;
+  }
+
+  .app-period-bar__scale {
+    flex-grow: 1;
+    display: flex;
+    position: relative;
+    overflow:visible;
+    min-width: 500px;
+    max-width: 1025px;
+    height: 65px;
+    padding: 10px 0 15px;
+    overflow-y: auto;
+
+
+    .app-period-bar__scale--label {
+      position: absolute;
+      z-index: 1;
+      overflow: hidden;
+    }
+  }
+
+  .app-period-bar__scale--cell {
+    width: 4px;
+    height: 14px;
+    margin: 0 2px 0 0;
+    background-color: #F7F8FF;
+    position: relative;
+
+    .app-period-bar__cell--month {
+      position: absolute;
+      bottom: -14px;
+      height: 10px;
+      font-size: 12px;
+      color: black;
+    }
+
+    .app-period-bar__cell--month:before{
+      content: '';
+      position: absolute;
+      bottom: 9px;
+      left: 1px;
+      height: 7px;
+      width: 2px;
+      background-color: black;
+    }
+
+    .app-period-bar__cell--high-extreme,
+    .app-period-bar__cell--low-extreme {
+      position: absolute;
+      z-index: 2;
+      top: 1px;
+      right: -2px;
+    }
+
+    .app-period-bar__cell--high-extreme {
+      right: -4px;
+    }
+  }
+
+  .app-period-bar__scale--cell::before {
+    content: '';
+    position: absolute;
+    top: -7px;
+    height: 4px;
+    width: 4px;
+    background-color: $dark-purple;
+  }
+
+  .app-period-bar__cell--selected {
+    width: 5.5px;
+    height: 14px;
+    background-color: $dark-purple;
+  }
+
+  .app-period-bar__scale--cell:active .app-period-bar__cell--selected {
+    background-color: transparent;
+    position: absolute;
+  }
+
+}

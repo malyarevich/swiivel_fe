@@ -21,7 +21,8 @@
       <thead
         app-table-thead
         [columns]="feeTableColumns"
-        (sortFilter)="onSort($event)"
+        (sortFilter)="onSortFee($event)"
+        [isSortable]="fees.length > 2"
       ></thead>
       <tbody class="app-form-payer-account-modal-responsible-fees-table-tbody">
         <tr
@@ -137,6 +138,7 @@
                 app-table-thead
                 backround="transparent"
                 [columns]="splitsTableColumns"
+                (sortFilter)="onSortSplits($event, fee.id)"
               ></thead>
               <tbody class="app-form-payer-account-modal-responsible-fees-table-splits-tbody">
               <tr

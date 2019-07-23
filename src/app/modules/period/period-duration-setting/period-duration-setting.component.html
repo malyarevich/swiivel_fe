@@ -4,8 +4,7 @@
       [(ngModel)]="period.name"
       label="Period Name"
       (ngModelChange)="onChangePeriod()"
-    >
-    </app-input-field>
+    ></app-input-field>
   </div>
 
   <div class="app-period-duration-setting__range">
@@ -25,4 +24,5 @@
       (ngModelChange)="onChangePeriod()"
     ></app-datepicker-field>
   </div>
+  <pre>{{ period | json }}</pre>
 </div>
