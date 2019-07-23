@@ -1,84 +1,48 @@
 <!--Section Header-->
-<div
-  class="app-section-wrapper app-section-header mt-2 mb-2 row align-items-center no-gutters"
->
-  <div class="col-4 row align-items-center no-gutters">
-    <div class="col-1 row align-items-center no-gutters">
-      <span class="app-fb-section-icon-white">
-        <i class="fas fa-ellipsis-v"></i>
-        <i class="fas fa-ellipsis-v"></i>
-      </span>
-    </div>
-    <div class="col-10 ml-3" [ngClass]="{ 'app-input-fill': sectionName }">
-      <label class="app-input-label" for="section-name">Section Name</label>
-      <input
-        id="section-name"
-        type="text"
-        class="app-input"
-        [(ngModel)]="sectionName"
-        placeholder="Section Name"
-      />
-    </div>
-  </div>
-
-  <div
-    class="col-2 pl-4 app-input-container w-100"
-    [ngClass]="{ 'app-input-fill': sectionWidth }"
-  >
-    <label class="app-input-label" for="section-width">Section Width</label>
-    <input
-      id="section-width"
-      type="text"
-      class="app-input"
-      [(ngModel)]="sectionWidth"
-      placeholder="Section Name"
-    />
-  </div>
-
-  <div class="col-1 offset-5   row align-items-center no-gutters">
-    <div class="col">
-      <span class="app-fb-section-icon-white">
-        <i class="fas fa-cog dragable-i pr-2"></i>
-      </span>
-    </div>
-    <div class="col">
-      <span class="app-fb-section-icon-white">
-        <i class="fas  fa-caret-down dragable-y"></i>
-      </span>
-    </div>
-  </div>
-</div>
+<app-section-header
+  [sectionName]="paymentSettings.sectionName"
+  [sectionWidth]="paymentSettings.sectionWidth"
+  [isExpand]="isExpand"
+  (onChangeSectionName)="changeSectionName($event)"
+  (onChangeSectionWidth)="changeSectionWidth($event)"
+  (onToggleExpand)="toggleExpand()"
+></app-section-header>
 <!--End Section Header-->
 
-<div class="app-section-content-wrapper">
-  <!-- *ngFor="let item of paymentSettings.paymentSettingsItems" -->
-  <extended-field
-    [content]="this.paymentSettings.paymentOptionsContent"
-    (changeContent)="onChangePaymentOptionsContent($event)"
-    fieldTitle="Payment Options"
-  ></extended-field>
+<div [ngClass]="{
+    'app-div-show': isExpand,
+    'app-div-hide': !isExpand
+  }">
+  <div class="app-section-content-wrapper">
+    <!-- *ngFor="let item of paymentSettings.paymentSettingsItems" -->
+    <extended-field
+      [content]="this.paymentSettings.paymentOptionsContent"
+      (changeContent)="onChangePaymentOptionsContent($event)"
+      fieldTitle="Payment Options"
+    ></extended-field>
 
-  <!-- Bais Medrash Winter Dormitory Fee -->
-  <app-v-payment-settings-dormitory-fee></app-v-payment-settings-dormitory-fee>
-  <!-- Registration -->
-  <app-v-payment-settings-registration></app-v-payment-settings-registration>
-  <!-- Tuition -->
-  <app-v-payment-settings-tuition></app-v-payment-settings-tuition>
-  <!-- Scholarship -->
-  <app-v-payment-settings-scholarship></app-v-payment-settings-scholarship>
-  <!-- Lunch Fee -->
-  <app-v-payment-settings-lunch-fee></app-v-payment-settings-lunch-fee>
-  <!-- Text -->
-  <extended-field
-    fieldTitle="Text"
-    content="some content"></extended-field>
+    <!-- Bais Medrash Winter Dormitory Fee -->
+    <app-v-payment-settings-dormitory-fee></app-v-payment-settings-dormitory-fee>
+    <!-- Registration -->
+    <app-v-payment-settings-registration></app-v-payment-settings-registration>
+    <!-- Tuition -->
+    <app-v-payment-settings-tuition></app-v-payment-settings-tuition>
+    <!-- Scholarship -->
+    <app-v-payment-settings-scholarship></app-v-payment-settings-scholarship>
+    <!-- Lunch Fee -->
+    <app-v-payment-settings-lunch-fee></app-v-payment-settings-lunch-fee>
+    <!-- Text -->
+    <extended-field
+      fieldTitle="Text"
+      content="some content"></extended-field>
 
-  <!--SIGNATURE-->
-  <ng-container *ngIf="paymentSettings.signature.isRequire">
-    <app-signatures [signature]="paymentSettings.signature"></app-signatures>
-  </ng-container>
-  <!--END SIGNATURE-->
-  
-  <!-- Sample Preview -->
-  <app-v-payment-settings-sample-preview></app-v-payment-settings-sample-preview>
+    <!--SIGNATURE-->
+    <ng-container *ngIf="paymentSettings.signature.isRequire">
+      <app-signatures [signature]="paymentSettings.signature"></app-signatures>
+    </ng-container>
+    <!--END SIGNATURE-->
+
+    <!-- Sample Preview -->
+    <app-v-payment-settings-sample-preview></app-v-payment-settings-sample-preview>
+  </div>
 </div>

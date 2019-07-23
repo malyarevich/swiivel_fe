@@ -16,10 +16,6 @@ import { cloneDeep, isEmpty } from "lodash";
 import { Location } from "@angular/common";
 import { VFieldsService } from "../../services/v-fields.service";
 import { Field } from "../../model/field.model";
-import {
-  TuitionContract,
-  tuitionContractDefault
-} from "./v-tuition-contract/models/tuition-contract.model";
 import { Form } from "../../model/form.model";
 import {
   FormPayment,
@@ -44,11 +40,6 @@ import { VFilesService } from "../../services/v-files.service";
 
 import { E_SIGNATURE_TYPES, SIGNATURE_TYPES } from "../../../../enums";
 import {
-  TermsConditions,
-  termsConditionsDefault,
-  termsConditionsItemDefault
-} from "./v-terms-conditions/model/terms-conditions.model";
-import {
   PaymentSettings,
   paymentSettingsDefault,
   paymentSettingsItemDefault
@@ -68,6 +59,18 @@ import {
   activeSectionsDefault,
   IActiveSections
 } from "../../../../models/vertical-data-collection/v-form-constructor/v-form-builder/active-section.model";
+import {
+  TuitionContract,
+  tuitionContractDefault
+} from "../../../../models/vertical-data-collection/v-form-constructor/v-form-builder/tuition-contract.model";
+import {
+  TermsConditions,
+  termsConditionsDefault, termsConditionsItemDefault
+} from "../../../../models/vertical-data-collection/v-form-constructor/v-form-builder/terms-conditions.model";
+import {
+  documentsFormsDefault,
+  DocumentsFormsModel
+} from "../../../../models/vertical-data-collection/v-form-constructor/v-form-builder/documents-forms.model";
 
 @Component({
   selector: "app-v-form-table",
@@ -120,6 +123,7 @@ export class VFormBuilderComponent implements OnInit, OnDestroy {
     isForms: true
   };
 
+  documentsForms: DocumentsFormsModel;
   documents: DocumentsModel[] = [];
   formsPDF: FormsPDFModel[] = [];
 
@@ -324,6 +328,7 @@ export class VFormBuilderComponent implements OnInit, OnDestroy {
       this.termsConditions = form.termsConditions || termsConditionsDefault;
       this.paymentSettings = form.paymentSettings || paymentSettingsDefault;
       this.eligible = form.eligible;
+      this.documentsForms = form.documentsForms || documentsFormsDefault;
       this.documents = form.documents || [];
       this.formsPDF = form.forms || [];
       this.attachments = form.attachments || {};
@@ -374,6 +379,7 @@ export class VFormBuilderComponent implements OnInit, OnDestroy {
       _id: this.formId,
       fields: this.form.fields,
       // fields: this.fields,
+      documentsForms: this.documentsForms,
       documents: this.documents,
       forms: this.formsPDF,
       name: this.formName,

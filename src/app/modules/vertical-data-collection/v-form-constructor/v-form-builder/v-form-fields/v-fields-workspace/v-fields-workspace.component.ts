@@ -90,6 +90,7 @@ export class VFieldsWorkspaceComponent implements OnInit, AfterViewInit {
     const newSection :Field = {
       _id: uuid(),
       name: this.sectionAddGroup.value.sectionName,
+      width: 'full',
       type: 114,
       options: {size: this.sectionAddGroup.value.sectionSize},
       prefix: this.sectionAddGroup.value.sectionName.toLowerCase().split(' ').join('_'),
@@ -109,6 +110,7 @@ export class VFieldsWorkspaceComponent implements OnInit, AfterViewInit {
     const newGroup :Field = {
       _id: uuid(),
       name: this.groupAddGroup.value.groupName,
+      width: 'full',
       type: 113,
       options: {size: 4},
       prefix: this.groupAddGroup.value.groupName.toLowerCase().split(' ').join('_'),

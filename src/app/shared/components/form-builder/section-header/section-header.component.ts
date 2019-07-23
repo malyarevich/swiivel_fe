@@ -25,6 +25,8 @@ export class SectionHeaderComponent implements OnInit {
   @Output() onChangeSectionName: EventEmitter<string> = new EventEmitter;
   @Output() onChangeSectionWidth: EventEmitter<string> = new EventEmitter;
   @Output() onToggleExpand: EventEmitter<any> = new EventEmitter;
+  @Output() onToggleSettings: EventEmitter<any> = new EventEmitter;
+  @Output() onRemoveSection: EventEmitter<any> = new EventEmitter;
 
   objectKeys = Object.keys;
   list: object;
@@ -45,5 +47,13 @@ export class SectionHeaderComponent implements OnInit {
 
   toggleExpand() {
     this.onToggleExpand.emit();
+  }
+
+  toggleSettings() {
+    this.onToggleSettings.emit()
+  }
+
+  removeSection() {
+    this.onRemoveSection.emit()
   }
 }

@@ -1127,6 +1127,7 @@
       <app-v-documents-forms
         *ngIf="activeSections.documentsForms.isActive"
         [isDocumentsForms]="isDocumentsForms"
+        [documentsForms]="documentsForms"
         [documents]="documents"
         [formsPDF]="formsPDF"
         [attachments]="attachments"
@@ -1139,7 +1140,7 @@
       <!--  consent-->
       <app-v-consent
         *ngIf="activeSections.consent.isActive"
-        [consents]="consentInfo.consents"
+        [consentInfo]="consentInfo"
       ></app-v-consent>
       <!--  end consent-->
 

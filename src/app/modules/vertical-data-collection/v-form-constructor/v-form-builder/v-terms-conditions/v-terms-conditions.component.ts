@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {TermsConditions} from "./model/terms-conditions.model";
 import {E_SIGNATURE_TYPES, SIGNATURE_TYPES} from "../../../../../enums";
+import {TermsConditions} from "../../../../../models/vertical-data-collection/v-form-constructor/v-form-builder/terms-conditions.model";
 
 @Component({
   selector: 'app-v-terms-conditions',
@@ -10,8 +10,7 @@ import {E_SIGNATURE_TYPES, SIGNATURE_TYPES} from "../../../../../enums";
 export class VTermsConditionsComponent implements OnInit {
   @Input() termsConditions: TermsConditions;
 
-  sectionName: string = 'Terms and Conditions';
-  sectionWidth: string = "4 Columns";
+  isExpand: boolean = true;
 
   SIGNATURE_TYPES = SIGNATURE_TYPES;
   E_SIGNATURE_TYPES = E_SIGNATURE_TYPES;
@@ -23,6 +22,18 @@ export class VTermsConditionsComponent implements OnInit {
 
   setCommand(name: string, showUi: boolean = false, value: string = null) {
     document.execCommand(name, showUi, value);
+  }
+
+  changeSectionName(sectionName: string) {
+    this.termsConditions.sectionName = sectionName;
+  }
+
+  changeSectionWidth(sectionWidthType: string) {
+    this.termsConditions.sectionWidth = sectionWidthType;
+  }
+
+  toggleExpand() {
+    this.isExpand = !this.isExpand;
   }
 
 }

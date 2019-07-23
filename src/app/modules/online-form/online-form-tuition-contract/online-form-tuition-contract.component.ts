@@ -1,13 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {cloneDeep} from 'lodash';
-import {
-  TuitionContract,
-  TuitionContractSignature
-} from "../../vertical-data-collection/v-form-constructor/v-form-builder/v-tuition-contract/models/tuition-contract.model";
 import {E_SIGNATURE_TYPES, SIGNATURE_TYPES, TUITION_CONTRACT_SPLIT_TYPES} from "../../../enums";
 import {SystemSignatureService} from "../../../services/online-form/signatures/system-signature.service";
 import {SignatureCreateResponse} from "../model/signature-create-response.model";
 import {Form} from "../../vertical-data-collection/model/form.model";
+import {TuitionContractSignature} from "../../../models/vertical-data-collection/v-form-constructor/v-form-builder/tuition-contract.model";
 
 @Component({
   selector: 'app-online-form-tuition-contract',

@@ -3,8 +3,12 @@ import {replace, cloneDeep} from 'lodash';
 import {uuid} from 'uuid';
 
 import {E_SIGNATURE_TYPES, SIGNATURE_TYPES} from "../../../../../enums";
-import {ConsentItemInfo} from "../../../../../models/vertical-data-collection/v-form-constructor/v-form-builder/consent.model";
+import {
+  ConsentInfo,
+  ConsentItemInfo
+} from "../../../../../models/vertical-data-collection/v-form-constructor/v-form-builder/consent.model";
 import { ICommand } from 'src/app/models/vertical-data-collection/v-form-constructor/v-form-builder/component.model';
+import {Section} from "../../../../../models/vertical-data-collection/section.model";
 
 @Component({
   selector: 'app-v-consent',
@@ -12,10 +16,9 @@ import { ICommand } from 'src/app/models/vertical-data-collection/v-form-constru
   styleUrls: ['./v-consent.component.scss']
 })
 export class VConsentComponent implements OnInit, AfterViewInit {
-  @Input() consents: ConsentItemInfo[];
+  @Input() consentInfo: ConsentInfo;
 
-  sectionName: string = 'Parent Consent';
-  sectionWidth: string = "4 Columns";
+  isExpand: boolean = true;
 
   SIGNATURE_TYPES = SIGNATURE_TYPES;
   E_SIGNATURE_TYPES = E_SIGNATURE_TYPES;
@@ -49,5 +52,17 @@ export class VConsentComponent implements OnInit, AfterViewInit {
 
   setCommand(name: string, showUi: boolean = false, value: string = null) {
     let success = document.execCommand(name, showUi, value);
+  }
+
+  changeSectionName(sectionName: string) {
+    this.consentInfo.sectionName = sectionName;
+  }
+
+  changeSectionWidth(sectionWidthType: string) {
+    this.consentInfo.sectionWidth = sectionWidthType;
+  }
+
+  toggleExpand() {
+    this.isExpand = !this.isExpand;
   }
 }

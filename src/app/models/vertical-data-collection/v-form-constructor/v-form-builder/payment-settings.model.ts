@@ -1,8 +1,9 @@
 import {E_SIGNATURE_TYPES, SIGNATURE_TYPES} from "../../../../enums";
+import {Section} from "../../section.model";
 
 export interface PaymentSettings {
-  isActive: boolean;
-  showSideInfo: boolean;
+  sectionName: string;
+  sectionWidth: string;
   paymentSettingsItems: PaymentSettingsItem[];
   signature: PaymentSettingsSignature;
   paymentOptionsContent: string;
@@ -47,8 +48,8 @@ export const paymentSettingsItemDefault: PaymentSettingsItem = {
 };
 
 export const paymentSettingsDefault: PaymentSettings = {
-  isActive: false,
-  showSideInfo: false,
+  sectionName: 'Payment Settings',
+  sectionWidth: Section.full,
   paymentSettingsItems: [],
   signature: {
     isRequire: false,

@@ -12,8 +12,7 @@ import { SystemSignatureService } from '../../../../../services/signatures/syste
 export class VPaymentSettingsComponent implements OnInit {
   @Input() paymentSettings: PaymentSettings;
 
-  sectionName: string = "Payment Settings";
-  sectionWidth: string = "4 Columns";
+  isExpand: boolean = true;
 
   SIGNATURE_TYPES = SIGNATURE_TYPES;
   E_SIGNATURE_TYPES = E_SIGNATURE_TYPES;
@@ -29,5 +28,17 @@ export class VPaymentSettingsComponent implements OnInit {
 
   onChangePaymentOptionsContent(innerHTML: string) {
     this.paymentSettings.paymentOptionsContent = innerHTML;
+  }
+
+  changeSectionName(sectionName: string) {
+    this.paymentSettings.sectionName = sectionName;
+  }
+
+  changeSectionWidth(sectionWidthType: string) {
+    this.paymentSettings.sectionWidth = sectionWidthType;
+  }
+
+  toggleExpand() {
+    this.isExpand = !this.isExpand;
   }
 }

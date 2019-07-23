@@ -17,9 +17,8 @@ export class VSectionConteinerComponent implements OnInit {
   @Input() idSectionForDragDrop: string[];
   nestedLevel: number = 0;
   constructor(private cd: ChangeDetectorRef,private sideBarService: SideBarService) { }
-  sectionWidth: string = "4 Columns";
   showSettings: boolean = false;
-  isShow: boolean = true;
+  isExpand: boolean = true;
   ngOnInit() {
 
   }
@@ -66,7 +65,19 @@ export class VSectionConteinerComponent implements OnInit {
 
   }
 
-  log(e){
-    console.log(e);
+  changeSectionName(sectionName: string) {
+    this.section.name = sectionName;
+  }
+
+  changeSectionWidth(sectionWidthType: string) {
+    this.section.width = sectionWidthType;
+  }
+
+  toggleExpand() {
+    this.isExpand = !this.isExpand;
+  }
+
+  toggleSettings() {
+    this.showSettings = !this.showSettings;
   }
 }

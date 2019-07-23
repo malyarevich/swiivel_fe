@@ -5,6 +5,7 @@ export interface Field {
   constraints?: any;
   validators?: any;
   name:string;
+  width?: string;
   mapped?: string;
   title?:string;
   value?: string;
