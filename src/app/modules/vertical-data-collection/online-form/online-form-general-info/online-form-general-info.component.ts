@@ -1,13 +1,13 @@
 import { Component, Input, OnInit, Output, EventEmitter } from "@angular/core";
 import { generalSectionsNames } from "../model/general-info-section-name.model";
-import { Form } from "../../model/form.model";
+import { Form } from 'src/app/models/vertical-data-collection/form.model';
+import { Field } from "../../../../models/vertical-data-collection/field.model";
 import {
   menuItems,
   mainMenuNames,
   IMainMenuNames,
   IMenuItems
 } from "../../../../models/vertical-data-collection/v-form-constructor/online-form/menu-items";
-import { Field } from "../../model/field.model";
 
 @Component({
   selector: "app-online-form-general-info",
@@ -34,7 +34,8 @@ export class OnlineFormGeneralInfoComponent implements OnInit {
     }
   ];
 
-  activeId: string = "parents";
+  // activeId: string = "parents";
+  activeId: string = this.navContent[0].id;
 
   readonly generalSectionsNames = generalSectionsNames;
 

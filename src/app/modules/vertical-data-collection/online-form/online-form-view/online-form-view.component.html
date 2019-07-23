@@ -4,7 +4,8 @@
     (actionEmitter)="onAction($event)"
   ></app-online-form-nav>
 
-  <div class="container-fluid app-of-background online_form_container">
+  <div class="container-fluid app-of-background online_form_container"
+    *ngIf="form['fields']">
     <div class="online_form_container__nav">
       <app-online-form-menu
         [form]="form['fields'][0]"

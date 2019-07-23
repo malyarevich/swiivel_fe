@@ -43,6 +43,9 @@ import { TuitionContractByFeeComponent } from "./online-form-tuition-contract/tu
 import { SignaturesComponent } from "./shared/components/signatures/signatures.component";
 import { SharedRedComponentsModule } from '../../../shared/components/sharedRedComponents.module';
 import { ProgressBarComponent } from './shared/components/progress-bar/progress-bar.component';
+import { GeneralInfoSectionComponent } from './online-form-general-info/general-info-section/general-info-section.component';
+import { GeneralInfoGroupComponent } from './online-form-general-info/general-info-group/general-info-group.component';
+import { GeneralInfoFieldComponent } from './online-form-general-info/general-info-field/general-info-field.component';
 
 @NgModule({
   declarations: [
@@ -79,7 +82,10 @@ import { ProgressBarComponent } from './shared/components/progress-bar/progress-
     OnlineFormTuitionContractComponent,
     TuitionContractByStudentComponent,
     TuitionContractByFeeComponent,
-    ProgressBarComponent
+    ProgressBarComponent,
+    GeneralInfoSectionComponent,
+    GeneralInfoGroupComponent,
+    GeneralInfoFieldComponent
   ],
   imports: [
     CommonModule,

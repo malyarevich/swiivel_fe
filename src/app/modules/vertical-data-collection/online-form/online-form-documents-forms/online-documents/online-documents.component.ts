@@ -47,7 +47,9 @@ export class OnlineDocumentsComponent implements OnInit {
 
   onUploadFile(name = 'fake') {
     const fd = new FormData();
-    fd.append(name, this.selectedFile,  this.selectedFile.name);
+    fd.append(name, this.selectedFile, this.selectedFile.name);
+    // TODO: in this service when we uploading at the server 
+    // we subscribe and emit percent via another service to our process bar(!)
     this.fileService.UploadFileToServer(fd);
   }
 
