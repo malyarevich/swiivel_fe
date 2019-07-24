@@ -27,7 +27,7 @@ export class VDocumentsContainerComponent implements OnInit {
   isExpand: boolean = true;
 
   getAttachmentName(document) {
-    if(document.data && this.attachments[document.data]) {
+    if(document.data && this.attachments && this.attachments[document.data] != undefined) {
       return this.attachments[document.data].name;
     }
   }
