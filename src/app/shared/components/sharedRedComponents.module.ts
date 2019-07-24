@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { NgbDatepickerModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { AutoSizeInputModule } from 'ngx-autosize-input';
 
 // buttons
 import { SearchFilterBtnComponent } from './buttons/search-filter-btn/search-filter-btn.component';
@@ -12,6 +13,7 @@ import { SearchFilterBtnComponent } from './buttons/search-filter-btn/search-fil
 // fields
 import { CheckboxFieldComponent } from './fields/checkbox-field/checkbox-field.component';
 import { DatePickerFieldComponent } from './fields/datepicker-field/datepicker-field.component';
+import { InputEditableFieldComponent } from './fields/input-ediatble-field/input-editable-field.component';
 import { InputFieldComponent } from './fields/input-field/input-field.component';
 import { SearchFieldComponent } from './fields/search-field/search-field.component';
 import { SelectFieldComponent } from './fields/select-field/select-field.component';
@@ -41,11 +43,15 @@ import { TagComponent } from './tag/tag.component';
 import { TableTheadComponent } from './table-thead/table-thead.component';
 import { TipQuestionComponent } from './tip-question/tip-question.component';
 import { ToggleCheckboxFieldComponent } from './fields/toggle-checkbox-field/toggle-checkbox-field.component';
-import { CommandDropdownComponent } from "./command-dropdown/command-dropdown.component";
+import { CommandDropdownComponent } from './command-dropdown/command-dropdown.component';
 import { ExtendedFieldComponent } from './fields/extended-field/extended-field.component';
 import { SignaturesComponent } from './signatures/signatures.component';
+
 // form builder
 import { SectionHeaderComponent } from './form-builder/section-header/section-header.component';
+
+// multi icons
+import { CaretsComponent } from './multi-icons/carets/carets.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +61,7 @@ import { SectionHeaderComponent } from './form-builder/section-header/section-he
     ExtendedFieldComponent,
     CheckboxFieldComponent,
     DatePickerFieldComponent,
+    InputEditableFieldComponent,
     InputFieldComponent,
     SearchFieldComponent,
     SelectFieldComponent,
@@ -84,6 +91,8 @@ import { SectionHeaderComponent } from './form-builder/section-header/section-he
     SignaturesComponent,
     // form builder
     SectionHeaderComponent,
+    // multi icons
+    CaretsComponent
   ],
   imports: [
     CommonModule,
@@ -93,6 +102,7 @@ import { SectionHeaderComponent } from './form-builder/section-header/section-he
     NgbDatepickerModule,
     NgSelectModule,
     ReactiveFormsModule,
+    AutoSizeInputModule
   ],
   exports: [
     CommonModule,
@@ -106,6 +116,7 @@ import { SectionHeaderComponent } from './form-builder/section-header/section-he
     ExtendedFieldComponent,
     CheckboxFieldComponent,
     DatePickerFieldComponent,
+    InputEditableFieldComponent,
     InputFieldComponent,
     SearchFieldComponent,
     SelectFieldComponent,
@@ -131,6 +142,8 @@ import { SectionHeaderComponent } from './form-builder/section-header/section-he
     SignaturesComponent,
     // form builder
     SectionHeaderComponent,
+    // multi icons
+    CaretsComponent
   ],
 })
 export class SharedRedComponentsModule {}

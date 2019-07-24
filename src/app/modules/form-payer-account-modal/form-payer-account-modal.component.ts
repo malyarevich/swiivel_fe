@@ -150,6 +150,7 @@ export class FormPayerAccountModalComponent implements OnInit {
 
           feeSplits.splits.forEach((split) => {
             split.splitPay = {input: 0, param: '$'};
+            split.payment = 0;
           });
 
           if (index % 2 === 0) {
@@ -161,6 +162,62 @@ export class FormPayerAccountModalComponent implements OnInit {
           this.feesData.push(feeSplits);
         });
       });
+    //
+    // const testFees = [
+    //   {
+    //     amount: 5000,
+    //     backgroundWhite: true,
+    //     id: 6,
+    //     isActive: true,
+    //     isSelected: false,
+    //     name: 'abs 2019',
+    //     open: false,
+    //     splitFields: {input: '', param: '$'},
+    //     totalForPay: 0,
+    //     type: 'fee'
+    //   }, {
+    //     backgroundWhite: true,
+    //     id: 6,
+    //     isActive: true,
+    //     isSelected: false,
+    //     open: false,
+    //     splits: [
+    //       {
+    //         amount: 700,
+    //         date_from: '2018-08-28',
+    //         date_to: '2018-09-30',
+    //         due_on: '2018-09-01',
+    //         id: 22,
+    //         name: 'Month 1',
+    //         payment: 0,
+    //         splitPay: { input: 0, param: '$'}
+    //       },
+    //       {
+    //         amount: 600,
+    //         date_from: '2018-08-28',
+    //         date_to: '2018-09-30',
+    //         due_on: '2018-09-01',
+    //         id: 23,
+    //         name: 'Month 2',
+    //         payment: 0,
+    //         splitPay: { input: 0, param: '$'}
+    //       },
+    //       {
+    //         amount: 500,
+    //         date_from: '2018-08-28',
+    //         date_to: '2018-09-30',
+    //         due_on: '2018-09-01',
+    //         id: 24,
+    //         name: 'Month 3',
+    //         payment: 0,
+    //         splitPay: { input: 0, param: '$'}
+    //       }
+    //     ],
+    //     type: 'splits'
+    //   }
+    // ];
+    //
+    // this.feesData = testFees;
   }
 
   onCreatePayerAccount(): void {
@@ -258,6 +315,7 @@ export class FormPayerAccountModalComponent implements OnInit {
 
   updateFee(fees): void {
     this.payerAccountForm.controls.fees.setValue(fees);
+    this.feesData = fees;
   }
 
   getSplits(fee): Array<{ id: number, amount: number }> {

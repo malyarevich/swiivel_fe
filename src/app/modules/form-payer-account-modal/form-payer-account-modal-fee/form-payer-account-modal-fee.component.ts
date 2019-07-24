@@ -49,6 +49,7 @@ export class FormPayerAccountModalFeeComponent implements OnInit {
   }
 
   getSelectedFees(): Fee[] {
+
     const activeFees: Fee[] = [];
     const selectedFeeId = [];
 
@@ -98,6 +99,7 @@ export class FormPayerAccountModalFeeComponent implements OnInit {
   }
 
   onUpdateFee(fees): void {
+    console.log(fees);
     this.updateFee.emit(fees);
   }
 
