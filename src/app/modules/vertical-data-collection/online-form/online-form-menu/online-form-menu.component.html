@@ -1,69 +1,66 @@
 <div class="online_form_menu">
   <ul class="online_form_menu__group">
     <ng-container *ngFor="let item of menuItems">
-      <li
-        class="online_form_menu__group_item"
-        [ngClass]="
-          activeMenuItem === item.name
-            ? 'online_form_menu__group_item--active'
-            : ''
-        "
-        *ngIf="isShowMenuItem(item.name)"
-        (click)="setActiveMenuItem(item.name)"
-        (mouseenter)="setHovered(item.name)"
-        (mouseleave)="unsetHovered(item.name)"
-      >
-        <div class="online_form_item">
-          <div class="online_form_item__start">
-            <div class="online_form_item__icon">
-              <img
-                [src]="
-                  pathIconsFolder +
-                  item.icon +
-                  (activeMenuItem === item.name || isHovered(item.name)
-                    ? '-active'
-                    : '') +
-                  '.svg'
-                "
-              />
-              <!-- <svg-icon name="payment-active"></svg-icon> -->
-              <!-- <i
-                class="fas fa-file-alt fa-lg app-of-menu-i"
-                [ngClass]="
-                  activeMenuItem === item.name
-                    ? 'app-text-primary'
-                    : 'app-text-second'
-                "
-              ></i> -->
+      <ng-container *ngIf="isShowMenuItem(item.name)">
+        <li
+          class="online_form_menu__group_item"
+          [ngClass]="
+            activeMenuItem === item.name
+              ? 'online_form_menu__group_item--active'
+              : ''
+          "
+          (click)="setActiveMenuItem(item.name)"
+          (mouseenter)="setHovered(item.name)"
+          (mouseleave)="unsetHovered(item.name)"
+        >
+          <div class="online_form_item">
+            <div class="online_form_item__start">
+              <div class="online_form_item__icon">
+                <img
+                  [src]="
+                    pathIconsFolder +
+                    item.icon +
+                    (activeMenuItem === item.name || isHovered(item.name)
+                      ? '-active'
+                      : '') +
+                    '.svg'
+                  "
+                />
+              </div>
+              <div class="online_form_item__text_area">
+                <p
+                  class="online_form_item__title"
+                  [ngClass]="[
+                    activeMenuItem === item.name
+                      ? 'online_form_item__title--active'
+                      : '',
+                    isHovered(item.name) ? 'online_form_item__title--hover' : ''
+                  ]"
+                >
+                  {{ item.title }}
+                </p>
+                <p class="sub_title">
+                  ~{{ item.time }} minutes
+                </p>
+              </div>
             </div>
-            <div class="online_form_item__text_area">
-              <p
-                class="online_form_item__title"
-                [ngClass]="[
-                  activeMenuItem === item.name
-                    ? 'online_form_item__title--active'
-                    : '',
-                  isHovered(item.name) ? 'online_form_item__title--hover' : ''
-                ]"
-              >
-                {{ item.title }}
-              </p>
-              <p class="sub_title">
-                <!-- <i class="far fa-clock fa-sm mr-1"></i> -->
-                ~{{ item.time }} minutes
-              </p>
-            </div>
-          </div>
 
-          <div class="online_form_item__end">
-            <div class="col online_form_item__status">
-              <ng-container *ngIf="percents !== undefined">
-                <app-progress-bar [processPercent]="percents[item.name] === undefined ? -1 : percents[item.name]"></app-progress-bar>
-              </ng-container>
+            <div class="online_form_item__end">
+              <div class="col online_form_item__status">
+                <ng-container *ngIf="percents !== undefined">
+                  <app-progress-bar
+                    [processPercent]="
+                      percents[item.name] === undefined
+                        ? -1
+                        : percents[item.name]
+                    "
+                  ></app-progress-bar>
+                </ng-container>
+              </div>
             </div>
           </div>
-        </div>
-      </li>
+        </li>
+      </ng-container>
     </ng-container>
   </ul>
 </div>

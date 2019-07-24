@@ -1,4 +1,9 @@
-<p>
-  general-info-group works!
-</p>
-<app-general-info-field></app-general-info-field>
+<!--Title-->
+<h2 class="content_section__article_title content_section__article_title--left pt-3 pb-2">
+  {{ group.name }}
+</h2>
+<div>
+  <ng-container *ngFor="let field of fields">
+    <app-general-info-field [field]="field"></app-general-info-field>
+  </ng-container>
+</div>
