@@ -1,0 +1,19 @@
+@import '../../../../../../../../../../styles/variables/colors';
+.visibility{
+    height: 13px;	width: 49px;	color: #535353;	font-family: "Nunito Sans ExtraBold";	font-size: 9px;	letter-spacing: 0.3px;	line-height: 13px;
+}
+.app-btn-signature {
+    background: #E0E6FF;
+    border-color: white !important;
+    color: $element-base-color;
+    cursor: pointer;
+}
+
+label.btn.app-btn-signature.active {
+    background: #FFB915;
+    color: #FFFFFF;
+}
+.span-text{
+    font-size: 9px;
+    letter-spacing: 0.3px;	line-height: 13px;
+}

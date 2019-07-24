@@ -41,7 +41,7 @@ export interface FieldOption {
 
 export interface FieldSettings {
   multiplier?: FieldSettingMultiplier,
-  options?: GroupOptions,
+  options?: GroupSectionOptions,
 }
 
 export interface FieldSettingMultiplier {
@@ -60,15 +60,17 @@ export interface FieldSettingConditional {
   rules: {name: string, value: string}[];
 }
 
-export interface GroupOptions {
+export interface GroupSectionOptions {
   groupPreset: string;
-  required: boolean,
-  readonly: boolean,
-  hideLabel: boolean,
-  unique: boolean;
+  required?: boolean,
+  readonly?: boolean,
+  hideLabel?: boolean,
+  unique?: boolean;
   isSupportText: boolean;
   supportText: string;
   supportTextDisplayed: 'popup' | 'directly';
+  isVisible?: boolean;
+  isMakeExpandButtonVisible?: boolean;
 }
 
 
