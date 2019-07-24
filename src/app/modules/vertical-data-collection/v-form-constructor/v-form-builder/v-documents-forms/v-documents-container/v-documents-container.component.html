@@ -108,7 +108,7 @@
         class="col-7 offset-1 download-div  rounded row align-items-center no-gutters"
       >
         <div class="col pl-2">
-          <span>{{ attachments[document.data]?.name }}</span>
+          <span>{{ getAttachmentName(document) }}</span>
         </div>
         <div class="col-1 row no-gutters align-items-center">
           <div class="col-4" (click)="openForPreview(document)">

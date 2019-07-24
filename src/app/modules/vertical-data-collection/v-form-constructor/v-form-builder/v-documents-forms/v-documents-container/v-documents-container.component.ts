@@ -7,8 +7,8 @@ import {
 } from "../model/documents.model";
 import { VFilesService } from "../../../../services/v-files.service";
 import { environment } from "../../../../../../../environments/environment";
-import { FormService } from "../../../../../data-collection/form.service";
 import {DocumentsFormsModel} from "../../../../../../models/vertical-data-collection/v-form-constructor/v-form-builder/documents-forms.model";
+import {VFormService} from "../../../../services/v-form.service";
 
 @Component({
   selector: "app-v-documents-container",
@@ -26,12 +26,19 @@ export class VDocumentsContainerComponent implements OnInit {
 
   isExpand: boolean = true;
 
+  getAttachmentName(document) {
+    if(document.data && this.attachments && this.attachments[document.data] != undefined) {
+      return this.attachments[document.data].name;
+    }
+  }
+
   constructor(
     private fileService: VFilesService,
-    private formService: FormService
+    private formService: VFormService
   ) {}
 
   ngOnInit() {
+    this.updateAttachments();
   }
 
   fileChange(event, document) {
