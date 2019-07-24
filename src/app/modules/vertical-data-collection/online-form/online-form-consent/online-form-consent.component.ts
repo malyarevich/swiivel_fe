@@ -33,7 +33,13 @@ export class OnlineFormConsentComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.consents = cloneDeep(this.form.consentInfo.consents);
+    this.initConsents();
+  }
+  
+  initConsents(){
+    this.consents = cloneDeep(this.form.consentInfo.consents).map((item) => {
+      return {...item, _id: item.id, name: item.title}
+    });
   }
 
   getTime() {

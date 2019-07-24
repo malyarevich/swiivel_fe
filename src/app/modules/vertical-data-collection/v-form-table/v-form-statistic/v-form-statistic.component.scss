@@ -52,7 +52,6 @@
     margin-left: -1rem;
 
     box-sizing: border-box;
-    max-height: auto;
     opacity: 1;
     -moz-transition: all 1s ease-in-out;
     -ms-transition: all 1s ease-in-out;
@@ -61,24 +60,30 @@
     transition: all 1s;
     position: relative;
     clear: both;
-    visibility: visible;
 
     @include media-breakpoint-up(lg) {
         flex-direction: row;
         justify-content: space-between;
-        height: 150px;
     }
 
     &--hidden {
-        -moz-transition: all 1s ease-in-out;
-        -ms-transition: all 1s ease-in-out;
-        -o-transition: all 1s ease-in-out;
-        -webkit-transition: all 1s ease-in-out;
-        transition: all 1s;
         height: 0;
+        min-height: 0;
         opacity: 0;
         visibility: hidden;
         overflow: hidden;
+    }
+
+    &--visible {
+        height: 0;
+        min-height: 450px;
+        opacity: 1;
+        visibility: visible;
+        overflow: hidden;
+
+        @include media-breakpoint-up(lg) {
+            min-height: 150px;
+        }
     }
 
     &__item {

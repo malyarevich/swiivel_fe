@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Field } from 'src/app/models/vertical-data-collection/field.model';
 
 @Component({
   selector: 'app-general-info-group',
@@ -6,10 +7,31 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./general-info-group.component.scss']
 })
 export class GeneralInfoGroupComponent implements OnInit {
+  @Input() group: Field;
+
+  groups: Field[];
+  fields: Field[];
 
   constructor() { }
 
   ngOnInit() {
+    this.initNestedGroups();
+    this.initFields();
+    console.log(this.group);
+    console.log(this.groups);
+    console.log(this.fields);
+  }
+
+  initNestedGroups() {
+    this.groups = this.group.fields.filter((item) => {
+      return item.type === 113;
+    })
+  }
+
+  initFields() {
+    this.fields = this.group.fields.filter((item) => {
+      return item.type && item.type !== 113;
+    })
   }
 
 }

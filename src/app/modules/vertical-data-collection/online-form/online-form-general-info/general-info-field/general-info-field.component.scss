@@ -1,0 +1,31 @@
+@import "../../shared/styles/index.scss";
+
+.field {
+  &__width {
+
+    &--full {
+      display: flex;
+      flex: 1 1 100%;
+    }
+
+    &--three_quarter {
+      display: flex;
+      flex: 1 1 75%;
+    }
+
+    &--half {
+      display: flex;
+      flex: 1 1 50%;
+    }
+
+    &--third {
+      display: flex;
+      flex: 1 1 33.33%;
+    }
+
+    &--quarter {
+      display: flex;
+      flex: 1 1 25%;
+    }
+  }
+}

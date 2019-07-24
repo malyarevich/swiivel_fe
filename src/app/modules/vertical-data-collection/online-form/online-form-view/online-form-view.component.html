@@ -4,11 +4,10 @@
     (actionEmitter)="onAction($event)"
   ></app-online-form-nav>
 
-  <div class="container-fluid app-of-background online_form_container"
-    *ngIf="form['fields']">
+  <div class="container-fluid app-of-background online_form_container">
     <div class="online_form_container__nav">
       <app-online-form-menu
-        [form]="form['fields'][0]"
+        [activeSections]="form['activeSections']"
         [percents]="percents"
         (activeMenuItemEmitter)="onActiveMenuItem($event)"
       ></app-online-form-menu>
@@ -16,7 +15,7 @@
     <div class="online_form_container__content" *ngIf="mainMenuNames">
       <app-online-form-general-info
         *ngIf="activeSection === mainMenuNames.generalInfo"
-        [form]="form['fields'][0]"
+        [form]="form"
         (onSetPercent)="setPercent(mainMenuNames.generalInfo, $event)"
       >
       </app-online-form-general-info>

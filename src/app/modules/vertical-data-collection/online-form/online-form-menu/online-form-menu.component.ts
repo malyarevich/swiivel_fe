@@ -6,6 +6,7 @@ import {
   IMainMenuNames,
   IMenuItems
 } from "../../../../models/vertical-data-collection/v-form-constructor/online-form/menu-items";
+import { IActiveSections, IActiveSection } from "src/app/models/vertical-data-collection/v-form-constructor/v-form-builder/active-section.model";
 
 @Component({
   selector: "app-online-form-menu",
@@ -13,10 +14,11 @@ import {
   styleUrls: ["./online-form-menu.component.scss"]
 })
 export class OnlineFormMenuComponent implements OnInit {
-  @Input() form: Form;
+  @Input() activeSections: IActiveSections;
   @Input() percents: number[];
   @Output() activeMenuItemEmitter = new EventEmitter<string>();
 
+  activeMenuList: Object;
   hoveredItems = [];
 
   menuItems: IMenuItems[] = menuItems;
@@ -29,7 +31,18 @@ export class OnlineFormMenuComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
+    this.initActiveMenuList();
     this.activeMenuItemEmitter.emit(this.activeMenuItem);
+  }
+
+  initActiveMenuList() {
+    let activeMenuList = {};
+    for (let key in this.activeSections) {
+      if (this.activeSections[key] && this.activeSections[key].isActive) {
+        activeMenuList[key] = (this.activeSections[key]);
+      }
+    }
+    this.activeMenuList = activeMenuList;
   }
 
   setActiveMenuItem(menuItemName) {
@@ -38,25 +51,7 @@ export class OnlineFormMenuComponent implements OnInit {
   }
 
   isShowMenuItem(itemMenuName) {
-    switch (itemMenuName) {
-      case mainMenuNames.consentInfo:
-        return this.checkItemIsActive(mainMenuNames.consentInfo);
-      case mainMenuNames.paymentSettings:
-        return this.checkItemIsActive(mainMenuNames.paymentSettings);
-      case mainMenuNames.termsConditions:
-        return this.checkItemIsActive(mainMenuNames.termsConditions);
-      case mainMenuNames.tuitionContract:
-        return this.checkItemIsActive(mainMenuNames.tuitionContract);
-      default:
-        return true;
-    }
-  }
-
-  checkItemIsActive(itemMenuName) {
-    if (this.form && this.form[itemMenuName]) {
-      return this.form[itemMenuName].isActive;
-    }
-    return false;
+    return this.activeMenuList[itemMenuName];
   }
 
   setHovered(itemName) {
