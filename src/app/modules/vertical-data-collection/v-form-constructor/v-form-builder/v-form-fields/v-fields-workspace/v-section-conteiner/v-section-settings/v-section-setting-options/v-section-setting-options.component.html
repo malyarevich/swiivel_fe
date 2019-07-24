@@ -1,54 +1,5 @@
 <form [formGroup]="sectionSettingOptionsForm">
-  <app-input-field label="Group Presets"
-                   [formControlName]="'groupPreset'"></app-input-field>
-  <div class="row no-gutters pt-3">
-    <div class="col">
-      <app-toggle-checkbox-field label="SUPPORT TEXT" [formControlName]="'isSupportText'"></app-toggle-checkbox-field>
-    </div>
-  </div>
-  <div [hidden]="!sectionSettingOptionsForm.get('isSupportText').value">
-    <app-input-field [formControlName]="'supportText'"></app-input-field>
-    <div class="row no-gutters pt-3">
-      <div class="col">
-        <label class="app-radio-container">Pop-up
-          <input type="radio" name="supportTextDisplayed" [formControlName]="'supportTextDisplayed'" value="popup">
-          <span class="app-radio-checkmark"></span>
-        </label>
-      </div>
-      <div class="col">
-        <label class="app-radio-container">Directly Displayed
-          <input type="radio" name="supportTextDisplayed" [formControlName]="'supportTextDisplayed'" value="directly">
-          <span class="app-radio-checkmark"></span>
-        </label>
-      </div>
-    </div>
-  </div>
-
-  <div class="mt-3 mb-2">
-    <span class="visibility ">VISIBILITY</span>
-    <i class="fas fa-question-circle app-text-second fa-xs pl-1"></i>
-  </div>
-  <div class="btn-group btn-group-toggle w-100"
-       ngbRadioGroup
-       name="isHidden"
-       [formControlName]="'isVisible'"
-  >
-    <label ngbButtonLabel class="btn app-btn-signature">
-      <input ngbButton type="radio" [value]="false"> Hidden
-    </label>
-    <label ngbButtonLabel class="btn app-btn-signature">
-      <input ngbButton type="radio" [value]="true"> Visible
-    </label>
-  </div>
-  <div class="row align-items-center mt-3 pl-4">
-    <label class="app-checkbox-container pb-2">
-      <input
-        type="checkbox" [formControlName]="'isMakeExpandButtonVisible'">
-      <span class="app-checkbox-checkmark"></span>
-    </label>
-    <span class="bold-text">Make Expand Button Visible</span>
-    <i class="fas fa-question-circle app-text-second fa-xs pl-1"></i>
-  </div>
-
-
+  <app-v-fields-setting-preset [parentForm]="sectionSettingOptionsForm"></app-v-fields-setting-preset>
+  <app-v-fields-setting-support-text [parentForm]="sectionSettingOptionsForm"></app-v-fields-setting-support-text>
+  <app-v-fields-setting-visibility [parentForm]="sectionSettingOptionsForm"></app-v-fields-setting-visibility>
 </form>

@@ -1,0 +1,27 @@
+<div [formGroup]="parentForm">
+  <div class="mt-3 mb-2">
+    <span class="visibility ">VISIBILITY</span>
+    <i class="fas fa-question-circle app-text-second fa-xs pl-1"></i>
+  </div>
+  <div class="btn-group btn-group-toggle w-100"
+       ngbRadioGroup
+       name="isHidden"
+       [formControlName]="'isVisible'"
+  >
+    <label ngbButtonLabel class="btn app-btn-signature">
+      <input ngbButton type="radio" [value]="false"> Hidden
+    </label>
+    <label ngbButtonLabel class="btn app-btn-signature">
+      <input ngbButton type="radio" [value]="true"> Visible
+    </label>
+  </div>
+  <div class="row align-items-center mt-3 pl-4">
+    <label class="app-checkbox-container pb-2">
+      <input
+        type="checkbox" [formControlName]="'isMakeExpandButtonVisible'">
+      <span class="app-checkbox-checkmark"></span>
+    </label>
+    <span class="bold-text">Make Expand Button Visible</span>
+    <i class="fas fa-question-circle app-text-second fa-xs pl-1"></i>
+  </div>
+</div>
