@@ -86,6 +86,9 @@ export interface ITypeFieldSettings {
   fieldWidth?: number;
   fieldHeight?: number;
   selection?: 'one' | 'multiple';
+  options?: {name: string}[];
+  isSelectedDefault?: boolean;
+  selectedDefault?: {name: string};
 }
 
 
