@@ -1,22 +1,4 @@
 @import '../../../../../../../../../styles/variables/colors';
-
-.app-section-settings-section {
-  background-color: white;
-  //height: 364px;
-  border: 1px solid $element-base-color;
-  border-radius: 0 0 5px 5px;
-}
-
-
-.settings-div{
-  //height: 296px;
-  border-radius: 3px;
-  background-color: #F6F6F6;
-}
-.bold-text{
-  font-weight: bold;
-}
-
 .visibility{
   height: 13px;	width: 49px;	color: #535353;	font-family: "Nunito Sans ExtraBold";	font-size: 9px;	letter-spacing: 0.3px;	line-height: 13px;
 }
@@ -32,9 +14,6 @@ label.btn.app-btn-signature.active {
   color: #FFFFFF;
 }
 .span-text{
- 	font-size: 9px;
+  font-size: 9px;
   letter-spacing: 0.3px;	line-height: 13px;
-}
-.fa-plus-square{
-  color: $element-base-color;
 }

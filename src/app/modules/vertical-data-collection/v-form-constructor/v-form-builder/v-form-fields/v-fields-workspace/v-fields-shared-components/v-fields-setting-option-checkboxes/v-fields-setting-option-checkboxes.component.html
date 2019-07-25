@@ -1,0 +1,19 @@
+<div [formGroup]="parentForm">
+  <p class="app-gs-sub-title mt-4 mb-0">GROUP OPTIONS</p>
+  <div class="row no-gutters pt-3">
+    <div class="col">
+      <app-checkbox-field label="Required" [formControlName]="'required'"></app-checkbox-field>
+    </div>
+    <div class="col">
+      <app-checkbox-field label="Read-Only" [formControlName]="'readonly'"></app-checkbox-field>
+    </div>
+    <div class="col">
+      <app-checkbox-field label="Unique" [formControlName]="'unique'"></app-checkbox-field>
+    </div>
+  </div>
+  <div class="row no-gutters">
+    <div class="col">
+      <app-checkbox-field label="Hide Label" [formControlName]="'hideLabel'"></app-checkbox-field>
+    </div>
+  </div>
+</div>

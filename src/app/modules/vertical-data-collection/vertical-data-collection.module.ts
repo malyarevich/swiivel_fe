@@ -122,6 +122,11 @@ import { VConstructorDraftService } from './services/v-constructor-draft.service
 import { VGroupSettingMultiplierComponent } from './v-form-constructor/v-form-builder/v-form-fields/v-fields-workspace/v-group-container/v-group-settings/v-group-setting-multiplier/v-group-setting-multiplier.component';
 import { VFieldsConditionalLogicComponent } from './v-form-constructor/v-form-builder/v-form-fields/v-fields-workspace/v-fields-shared-components/v-fields-conditional-logic/v-fields-conditional-logic.component';
 import { VGroupSettingOptionsComponent } from './v-form-constructor/v-form-builder/v-form-fields/v-fields-workspace/v-group-container/v-group-settings/v-group-setting-options/v-group-setting-options.component';
+import { VSectionSettingOptionsComponent } from './v-form-constructor/v-form-builder/v-form-fields/v-fields-workspace/v-section-conteiner/v-section-settings/v-section-setting-options/v-section-setting-options.component';
+import { VFieldsSettingVisibilityComponent } from './v-form-constructor/v-form-builder/v-form-fields/v-fields-workspace/v-fields-shared-components/v-fields-setting-visibility/v-fields-setting-visibility.component';
+import { VFieldsSettingSupportTextComponent } from './v-form-constructor/v-form-builder/v-form-fields/v-fields-workspace/v-fields-shared-components/v-fields-setting-support-text/v-fields-setting-support-text.component';
+import { VFieldsSettingPresetComponent } from './v-form-constructor/v-form-builder/v-form-fields/v-fields-workspace/v-fields-shared-components/v-fields-setting-preset/v-fields-setting-preset.component';
+import { VFieldsSettingOptionCheckboxesComponent } from './v-form-constructor/v-form-builder/v-form-fields/v-fields-workspace/v-fields-shared-components/v-fields-setting-option-checkboxes/v-fields-setting-option-checkboxes.component';
 
 const routes: Routes = [
   {
@@ -277,7 +282,12 @@ const routes: Routes = [
     VSectionSettingsComponent,
     VGroupSettingMultiplierComponent,
     VFieldsConditionalLogicComponent,
-    VGroupSettingOptionsComponent
+    VGroupSettingOptionsComponent,
+    VSectionSettingOptionsComponent,
+    VFieldsSettingVisibilityComponent,
+    VFieldsSettingSupportTextComponent,
+    VFieldsSettingPresetComponent,
+    VFieldsSettingOptionCheckboxesComponent
   ],
   imports: [
     NgxDnDModule,

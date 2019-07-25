@@ -1,13 +1,12 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {
   Field,
-  FieldSettingConditional,
-  GroupOptions
+  GroupSectionOptions
 } from "../../../../../../../../../models/vertical-data-collection/field.model";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {isEmpty} from "lodash";
 
-const defaultSettingOptions: GroupOptions = {
+const defaultSettingOptions: GroupSectionOptions = {
   groupPreset: 'Preset 1',
   required: true,
   readonly: false,
@@ -26,9 +25,6 @@ const defaultSettingOptions: GroupOptions = {
 export class VGroupSettingOptionsComponent implements OnInit {
   @Input() inputGroup: Field;
   groupSettingOptionsForm: FormGroup;
-
-  groupPreset: string = 'Preset 1';
-  supportText: string = 'Actually Student\'s Address';
 
   constructor(private readonly fb: FormBuilder) {
   }
