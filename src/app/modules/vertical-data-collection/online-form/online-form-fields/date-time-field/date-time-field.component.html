@@ -1,0 +1,31 @@
+<div
+  class="input-group app-input-container app-input-fill"
+  [ngClass]="{ 'app-input-fill': formatDate && !data.options.hideLabel }"
+>
+  <label *ngIf="!data.options.hideLabel" class="app-input-label">{{
+    data.name | titlecase
+  }}</label>
+  <input
+    class="form-control app-input"
+    placeholder="yyyy-mm-dd"
+    name="dp"
+    ngbDatepicker
+    #d="ngbDatepicker"
+    (ngModelChange)="blurChanges($event)"
+    (click)="d.toggle()"
+    [ngModel]="formatDate"
+    [disabled]="isDisabled"
+    [required]="data.options.required"
+  />
+
+  <div class="input-group-append">
+    <button
+      class="btn app-btn-outline-primary calendar"
+      (click)="d.toggle()"
+      type="button"
+      [disabled]="isDisabled"
+    >
+      <i class="far fa-calendar"></i>
+    </button>
+  </div>
+</div>

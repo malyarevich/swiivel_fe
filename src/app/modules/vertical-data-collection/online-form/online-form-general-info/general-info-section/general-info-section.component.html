@@ -3,13 +3,17 @@
   {{ section.name }}
 </h2>
 
-<div class="app-of-wrap content_section__main">
-  <ng-container *ngFor="let field of fields">
-    <app-general-info-field [field]="field"></app-general-info-field>
-  </ng-container>
-  <ng-container *ngFor="let group of groups">
-    <div class="w-100">
+<div class="app-of-wrap content_section__main section">
+  <div class="section__fields">
+    <ng-container *ngFor="let field of fields">
+      <div class="field_width--{{ field.width }}">
+        <app-general-info-field [field]="field"></app-general-info-field>
+      </div>
+    </ng-container>
+  </div>
+  <div class="section__groups">
+    <ng-container *ngFor="let group of groups">
       <app-general-info-group [group]="group"></app-general-info-group>
-    </div>
-  </ng-container>
+    </ng-container>
+  </div>
 </div>

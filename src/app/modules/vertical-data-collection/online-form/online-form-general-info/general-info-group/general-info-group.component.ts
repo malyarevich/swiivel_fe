@@ -17,9 +17,6 @@ export class GeneralInfoGroupComponent implements OnInit {
   ngOnInit() {
     this.initNestedGroups();
     this.initFields();
-    console.log(this.group);
-    console.log(this.groups);
-    console.log(this.fields);
   }
 
   initNestedGroups() {
