@@ -1,0 +1,3 @@
+<ng-container [ngSwitch]="inputField.type">
+  <app-v-short-text-settings *ngSwitchCase="fieldTypes.shortTextField" [inputField]="inputField"></app-v-short-text-settings>
+</ng-container>

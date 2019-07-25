@@ -28,41 +28,42 @@
   <div class="settings-wrapper p-3">
     <div class="row" *ngIf="tab === 'settings'">
       <div class="col-sm-4 app-border-right">
-        <small><b>FIELD SIZE & MASK</b></small>
-        <div class="form-row">
-          <div class="form-group col-md-6 app-input-container" [ngClass]="{'app-input-fill': minFieldSize.value}">
-            <label class="app-input-label" for="min-field-size">Min Field Size</label>
-            <input [ngModel]="field.options.minFieldSize"
-                   (ngModelChange)=changeMinFieldSize($event)
-                   #minFieldSize
-                   min="1"
-                   id="min-field-size"
-                   type="number"
-                   class="app-input"
-                   placeholder="Min Field Size">
-          </div>
-          <div class="form-group col-md-6 app-input-container" [ngClass]="{'app-input-fill': maxFieldSize.value}">
-            <label class="app-input-label" for="max-field-size">Max Field Size</label>
-            <input [ngModel]="field.options.maxFieldSize"
-                   (ngModelChange)=changeMaxFieldSize($event)
-                   #maxFieldSize
-                   min="1"
-                   id="max-field-size"
-                   type="number"
-                   class="app-input"
-                   placeholder="Max Field Size">
-          </div>
-        </div>
-        <div class="form-group app-input-container" [ngClass]="{'app-input-fill': inputMask.value}">
-          <label class="app-input-label" for="input-mask">Input Mask</label>
-          <input [ngModel]="field.options.inputMask"
-                 (ngModelChange)=changeInputMask($event)
-                 #inputMask
-                 id="input-mask"
-                 type="text"
-                 class="app-input"
-                 placeholder="Input Mask">
-        </div>
+        <app-v-field-type-settings-container [inputField]="inputField"></app-v-field-type-settings-container>
+        <!--<small><b>FIELD SIZE & MASK</b></small>-->
+        <!--<div class="form-row">-->
+          <!--<div class="form-group col-md-6 app-input-container" [ngClass]="{'app-input-fill': minFieldSize.value}">-->
+            <!--<label class="app-input-label" for="min-field-size">Min Field Size</label>-->
+            <!--<input [ngModel]="field.options.minFieldSize"-->
+                   <!--(ngModelChange)=changeMinFieldSize($event)-->
+                   <!--#minFieldSize-->
+                   <!--min="1"-->
+                   <!--id="min-field-size"-->
+                   <!--type="number"-->
+                   <!--class="app-input"-->
+                   <!--placeholder="Min Field Size">-->
+          <!--</div>-->
+          <!--<div class="form-group col-md-6 app-input-container" [ngClass]="{'app-input-fill': maxFieldSize.value}">-->
+            <!--<label class="app-input-label" for="max-field-size">Max Field Size</label>-->
+            <!--<input [ngModel]="field.options.maxFieldSize"-->
+                   <!--(ngModelChange)=changeMaxFieldSize($event)-->
+                   <!--#maxFieldSize-->
+                   <!--min="1"-->
+                   <!--id="max-field-size"-->
+                   <!--type="number"-->
+                   <!--class="app-input"-->
+                   <!--placeholder="Max Field Size">-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group app-input-container" [ngClass]="{'app-input-fill': inputMask.value}">-->
+          <!--<label class="app-input-label" for="input-mask">Input Mask</label>-->
+          <!--<input [ngModel]="field.options.inputMask"-->
+                 <!--(ngModelChange)=changeInputMask($event)-->
+                 <!--#inputMask-->
+                 <!--id="input-mask"-->
+                 <!--type="text"-->
+                 <!--class="app-input"-->
+                 <!--placeholder="Input Mask">-->
+        <!--</div>-->
       </div>
       <div class="col-sm-4 app-border-right">
         <label class="app-switch mr-2">
