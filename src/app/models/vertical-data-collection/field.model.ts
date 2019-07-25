@@ -16,7 +16,7 @@ export interface Field {
   prefix?: string,
   settings?: FieldSettings;
   conditional?: FieldSettingConditional,
-  typeSettings?: ShortTextSettings,
+  typeSettings?: ITypeFieldSettings,
 }
 
 
@@ -74,24 +74,18 @@ export interface GroupSectionOptions {
   isMakeExpandButtonVisible?: boolean;
 }
 
-export interface ShortTextSettings {
-  minSizeChar: number;
-  maxSizeChar: number;
-  inputMask: string;
-  isDefaultValue: boolean;
-  defaultValue: string;
-}
-
-export interface ShortTextSettings {
-  minSizeChar: number;
-  maxSizeChar: number;
-  inputMask: string;
-  isDefaultValue: boolean;
-  defaultValue: string;
-}
-
-export interface DropDownListSettings {
-  
+export interface ITypeFieldSettings {
+  //ShortTextSettings
+  minSizeChar?: number;
+  maxSizeChar?: number;
+  inputMask?: string;
+  isDefaultValue?: boolean;
+  defaultValue?: string;
+  //DropDownListSettings
+  isFullWidth?: boolean;
+  fieldWidth?: number;
+  fieldHeight?: number;
+  selection?: 'one' | 'multiple';
 }
 
 

@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Field} from "../../../../../../../../../models/vertical-data-collection/field.model";
+import {Field, ITypeFieldSettings} from "../../../../../../../../../models/vertical-data-collection/field.model";
 import {FormBuilder, FormGroup} from "@angular/forms";
 
-const defaultSettings = {
+const defaultSettings: ITypeFieldSettings = {
   minSizeChar: 1,
   maxSizeChar: 30,
   inputMask: '',

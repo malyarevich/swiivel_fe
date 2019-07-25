@@ -1,0 +1,36 @@
+<form [formGroup]="dropDownListSettingsForm">
+  <p class="app-text-small app-text-extra-bold">FIELD SIZE</p>
+  <div class="mb-3">
+    <app-checkbox-field label="Full Width" [formControlName]="'isFullWidth'"></app-checkbox-field>
+  </div>
+  <div class="row no-gutters mb-4">
+    <div class="col-6 pr-2">
+      <app-input-field [formControlName]="'fieldWidth'"
+                       label="Field Width"
+                       type="number"
+                       [min]="1"></app-input-field>
+    </div>
+    <div class="col-6 pl-2">
+      <app-input-field [formControlName]="'fieldHeight'"
+                       label="Field Height (in rows)"
+                       type="number"
+                       [min]="1"></app-input-field>
+    </div>
+  </div>
+  <p class="app-text-small app-text-extra-bold">NUMBER OF SELECTION</p>
+  <div class="row no-gutters">
+    <div class="col">
+      <label class="app-radio-container">One Selection
+        <input type="radio" name="selection" [formControlName]="'selection'" value="one">
+        <span class="app-radio-checkmark"></span>
+      </label>
+    </div>
+    <div class="col">
+      <label class="app-radio-container">Multiple Selection
+        <input type="radio" name="selection" [formControlName]="'selection'" value="multiple">
+        <span class="app-radio-checkmark"></span>
+      </label>
+    </div>
+  </div>
+
+</form>
