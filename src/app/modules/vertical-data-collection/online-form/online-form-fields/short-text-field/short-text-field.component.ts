@@ -13,6 +13,8 @@ export class ShortTextFieldComponent implements OnInit {
   @Input() isDisable: boolean = false;
   @Output() onChangeValue: EventEmitter<string> = new EventEmitter;
 
+  value: string;
+
   ngOnInit() {
     // console.log(this.fieldId);
   }
