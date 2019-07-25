@@ -1,3 +1,9 @@
-<div class="field field__width field__width--full">
-  {{ field.name }}
+<div class="field">
+  <!-- {{ field.type }} -->
+
+  <ndc-dynamic
+    [ndcDynamicComponent]="fieldComponent"
+    [ndcDynamicInputs]="fieldInputs"
+    [ndcDynamicOutputs]="fieldOutputs"
+  ></ndc-dynamic>
 </div>

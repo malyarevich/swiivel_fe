@@ -44,6 +44,7 @@
     "jquery": "^3.3.1",
     "lodash": "^4.17.11",
     "moment": "^2.24.0",
+    "ng-dynamic-component": "^5.0.0",
     "ng2-pdf-viewer": "^5.2.4",
     "ngx-autosize-input": "^2.2.2",
     "ngx-bootstrap": "^5.0.0",

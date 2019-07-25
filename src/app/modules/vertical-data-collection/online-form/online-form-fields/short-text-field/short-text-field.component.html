@@ -1,0 +1,20 @@
+<div
+  class="form-group app-input-container"
+  [ngClass]="{ 'app-input-fill': value && !data.options.hideLabel }"
+>
+  <label *ngIf="!data.options.hideLabel" class="app-input-label">{{
+    data.name | titlecase
+  }}</label>
+  <input
+    type="text"
+    aria-describedby="basic-addon2"
+    class="app-input form-control"
+    [(ngModel)]="value"
+    [readOnly]="isDisable"
+    [disabled]="isDisable"
+    [required]="data.options.required"
+    [placeholder]="data.name | titlecase"
+    [value]="value"
+    (blur)="changeValue($event)"
+  />
+</div>

@@ -8,6 +8,7 @@ import { Field } from 'src/app/models/vertical-data-collection/field.model';
 })
 export class GeneralInfoSectionComponent implements OnInit {
   @Input() section: Field;
+  @Input() sectionId: string;
 
   groups: Field[];
   fields: Field[];
