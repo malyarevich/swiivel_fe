@@ -1,6 +1,6 @@
 <div class="field">
   <!-- {{ field.type }} -->
-  <ng-container *ngIf="fg">
+  <ng-container *ngIf="fg && fc">
     <ndc-dynamic
       [ndcDynamicComponent]="fieldComponent"
       [ndcDynamicInputs]="fieldInputs"

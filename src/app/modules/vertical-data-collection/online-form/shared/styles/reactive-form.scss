@@ -41,3 +41,9 @@ input.ng-dirty.ng-invalid + .error_icon,
 .form-group {
   margin-bottom: 0;
 }
+
+.form-control:disabled, 
+.form-control[readonly] {
+  cursor: text;
+  background-color: $white;
+}

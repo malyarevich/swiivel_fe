@@ -19,12 +19,14 @@ export class LongTextFieldComponent implements OnInit, OnDestroy {
   constructor() {}
 
   ngOnInit() {
-    this.value = this.field._id ? this.fg.get(this.field._id).value : undefined;
-    this.onValueChangeSubscription = this.field._id
-      ? this.fg.get(this.field._id).valueChanges.subscribe(val => {
+    if (this.field._id && !this.field.options.readonly) {
+      this.value = this.fg.get(this.field._id).value;
+      this.onValueChangeSubscription = this.fg
+        .get(this.field._id)
+        .valueChanges.subscribe(val => {
           this.value = val;
-        })
-      : undefined;
+        });
+    }
   }
 
   ngOnDestroy(): void {

@@ -64,7 +64,7 @@ export class GeneralInfoFieldComponent implements OnInit, OnDestroy {
       this.fc = new FormControl(
         {
           value: "",
-          disabled: !!this.isDisabled
+          disabled: !!this.isDisabled && this.field.options.readonly
         },
         aValidators
       );
@@ -77,11 +77,11 @@ export class GeneralInfoFieldComponent implements OnInit, OnDestroy {
   getComposed() {
     let arrayValidators = [];
 
-    if (this.field.options.required) {
+    if (this.field.options.required && this.field.options.readonly) {
       arrayValidators.push(Validators.required);
     }
 
-    if (this.field.options.minFieldSize) {
+    if (this.field.options.minFieldSize && this.field.options.readonly) {
       arrayValidators.push(
         Validators.minLength(this.field.options.minFieldSize)
       );

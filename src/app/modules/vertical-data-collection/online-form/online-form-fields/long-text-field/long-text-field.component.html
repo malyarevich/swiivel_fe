@@ -4,9 +4,9 @@
     [formGroup]="fg"
     [ngClass]="{ 'app-input-fill': value && !field.options.hideLabel }"
   >
-    <label *ngIf="!field.options.hideLabel" class="app-input-label">{{
-      field.name | titlecase
-    }}</label>
+    <label *ngIf="!field.options.hideLabel" class="app-input-label">
+      {{ field.name | titlecase }}
+    </label>
     <input
       [formControlName]="field._id"
       mdInput
