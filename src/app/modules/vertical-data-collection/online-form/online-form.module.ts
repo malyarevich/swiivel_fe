@@ -46,6 +46,7 @@ import { ProgressBarComponent } from './shared/components/progress-bar/progress-
 import { GeneralInfoSectionComponent } from './online-form-general-info/general-info-section/general-info-section.component';
 import { GeneralInfoGroupComponent } from './online-form-general-info/general-info-group/general-info-group.component';
 import { GeneralInfoFieldComponent } from './online-form-general-info/general-info-field/general-info-field.component';
+import { GeneralDirectivesModule } from '../../../utils/directives/general-directives.module';
 
 @NgModule({
   declarations: [
@@ -94,7 +95,8 @@ import { GeneralInfoFieldComponent } from './online-form-general-info/general-in
     NgbModule,
     OnlineFormRoutingModule,
     PdfViewerModule,
-    SharedRedComponentsModule
+    SharedRedComponentsModule,
+    GeneralDirectivesModule
   ],
   providers: [OnlineFormService, SystemSignatureService],
   entryComponents: [entryComponents]

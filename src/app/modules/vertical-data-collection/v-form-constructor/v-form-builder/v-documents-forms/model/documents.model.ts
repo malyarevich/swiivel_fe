@@ -1,17 +1,21 @@
 
 export interface DocumentsModel {
-  id:string;
+  id: string;
   name: string;
   // isUpload: Upload - true, Download - false
   isUpload: boolean;
-  //isPerFamily: Family - true, Student - false
+  // isPerFamily: Family - true, Student - false
   isPerFamily: boolean;
-  //data - should contain object with file and relative info
+  // data - should contain object with file and relative info
   data?: string;
-  //accompanyingText - should contain object with accompanying text and relative info
-  accompanyingText?:AccompanyingText;
-  //dataTypeAllowed - should contain an array of allowed data types
-  dataTypeAllowed?:DataTypeItemAllowed[];
+  // accompanyingText - should contain object with accompanying text and relative info
+  accompanyingText?: AccompanyingText;
+  // dataTypeAllowed - should contain an array of allowed data types
+  dataTypeAllowed?: DataTypeAllowed;
+  // fileUploading
+  fileUploading?: boolean;
+  // fileUploaded
+  fileUploaded?: boolean;
 }
 
 
@@ -22,8 +26,14 @@ export interface AccompanyingText {
 }
 
 export interface DocumentSideBar {
-  isDocuments: boolean,
-  isForms: boolean,
+  isDocuments: boolean;
+  isForms: boolean;
+}
+
+export interface DataTypeItemAllowed {
+  isAllow: boolean;
+  name: string;
+  type: string;
 }
 
 export interface DataTypeAllowed {
@@ -33,13 +43,6 @@ export interface DataTypeAllowed {
   isDocuments: boolean;
   images: DataTypeItemAllowed[];
   isImages: boolean;
-}
-
-
-export interface DataTypeItemAllowed {
-  name: string;
-  isAllow: boolean;
-  type: string;
 }
 
 export const dataTypes: DataTypeAllowed = {
@@ -144,5 +147,5 @@ export const documentItemDefault: DocumentsModel = {
     isItalic: false
   },
   data: '',
-  dataTypeAllowed: []
+  dataTypeAllowed: dataTypes
 };
