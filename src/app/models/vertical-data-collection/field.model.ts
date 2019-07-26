@@ -58,7 +58,7 @@ export interface FieldSettingConditional {
   logic: string;
   when: string;
   field: string;
-  rules: {name: string, value: string}[];
+  rules: { name: string, value: string }[];
 }
 
 export interface GroupSectionOptions {
@@ -86,9 +86,15 @@ export interface ITypeFieldSettings {
   fieldWidth?: number;
   fieldHeight?: number;
   selection?: 'one' | 'multiple';
-  options?: {name: string}[];
+  options?: { name: string }[];
   isSelectedDefault?: boolean;
-  selectedDefault?: {name: string};
+  selectedDefault?: { name: string };
+  //DropDownListSettings
+  validateEmail: boolean;
+  confirmationTextBox: boolean;
+  emailBlocks: boolean;
+  disallowFreeAddress: boolean;
+  blockDomains: string;
 }
 
 

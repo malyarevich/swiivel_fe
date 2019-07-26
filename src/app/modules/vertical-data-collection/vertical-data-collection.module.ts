@@ -130,6 +130,7 @@ import { VFieldsSettingOptionCheckboxesComponent } from './v-form-constructor/v-
 import { VShortTextSettingsComponent } from './v-form-constructor/v-form-builder/v-form-fields/v-fields-workspace/v-field-conteiner/v-form-field-settings/v-short-text-settings/v-short-text-settings.component';
 import { VFieldTypeSettingsContainerComponent } from './v-form-constructor/v-form-builder/v-form-fields/v-fields-workspace/v-field-conteiner/v-form-field-settings/v-field-type-settings-container/v-field-type-settings-container.component';
 import { VDropDownListSettingsComponent } from './v-form-constructor/v-form-builder/v-form-fields/v-fields-workspace/v-field-conteiner/v-form-field-settings/v-drop-down-list-settings/v-drop-down-list-settings.component';
+import { VEmailSettingsComponent } from './v-form-constructor/v-form-builder/v-form-fields/v-fields-workspace/v-field-conteiner/v-form-field-settings/v-email-settings/v-email-settings.component';
 
 const routes: Routes = [
   {
@@ -293,7 +294,8 @@ const routes: Routes = [
     VFieldsSettingOptionCheckboxesComponent,
     VShortTextSettingsComponent,
     VFieldTypeSettingsContainerComponent,
-    VDropDownListSettingsComponent
+    VDropDownListSettingsComponent,
+    VEmailSettingsComponent
   ],
   imports: [
     NgxDnDModule,
