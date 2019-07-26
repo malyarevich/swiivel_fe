@@ -90,11 +90,11 @@ export interface ITypeFieldSettings {
   isSelectedDefault?: boolean;
   selectedDefault?: { name: string };
   //DropDownListSettings
-  validateEmail: boolean;
-  confirmationTextBox: boolean;
-  emailBlocks: boolean;
-  disallowFreeAddress: boolean;
-  blockDomains: string;
+  validateEmail?: boolean;
+  confirmationTextBox?: boolean;
+  emailBlocks?: boolean;
+  disallowFreeAddress?: boolean;
+  blockDomains?: string;
 }
 
 
