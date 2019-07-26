@@ -1,53 +1,74 @@
-<ngb-datepicker
-  class="hebrew rtl"
-  #dp
-  [(ngModel)]="model"
-  [displayMonths]="1"
-  [firstDayOfWeek]="7"
-  [dayTemplate]="dt"
-  [dayTemplateData]="dayTemplateData"
-  [disabled]="true"
-  [markDisabled]="true"
->
-</ngb-datepicker>
-
-<ng-template
-  #dt
-  let-date
-  let-data="data"
-  let-selected="selected"
-  let-currentMonth="currentMonth"
->
+<ng-container *ngIf="field._id; else isHasNotId">
   <div
-    class="hebrew-day"
-    [class.outside]="date.month !== currentMonth"
-    [class.selected]="selected"
+    class="form-group app-input-container position-relative"
+    [formGroup]="fg"
+    [ngClass]="{ 'app-input-fill': value && !field.options.hideLabel }"
   >
-    <div class="gregorian-num">
-      {{ data.gregorian.day + "/" + data.gregorian.month }}
-    </div>
-    <div class="hebrew-num">{{ i18n.getDayNumerals(date) }}</div>
+    <label *ngIf="!field.options.hideLabel" class="app-input-label">{{
+      field.name | titlecase
+    }}</label>
+
+    <ngb-datepicker
+      class="hebrew rtl"
+      #dp
+      [formControlName]="field._id"
+      [displayMonths]="1"
+      [firstDayOfWeek]="7"
+      [dayTemplate]="dt"
+      [dayTemplateData]="dayTemplateData"
+      [ngClass]="{ validation_error: !!validationText }"
+    >
+    </ngb-datepicker>
+
+    <ng-template
+      #dt
+      let-date
+      let-data="field"
+      let-selected="selected"
+      let-currentMonth="currentMonth"
+    >
+      <div
+        class="hebrew-day"
+        [class.outside]="date.month !== currentMonth"
+        [class.selected]="selected"
+      >
+        <div class="gregorian-num">
+          {{ field.gregorian.day + "/" + field.gregorian.month }}
+        </div>
+        <div class="hebrew-num">{{ i18n.getDayNumerals(date) }}</div>
+      </div>
+    </ng-template>
+
+    <hr />
+
+    <button class="btn btn-sm btn-outline-primary mr-2" (click)="selectToday()">
+      Select Today
+    </button>
+    <button
+      class="btn btn-sm btn-outline-primary mr-2"
+      (click)="dp.navigateTo()"
+      [disabled]="isDisabled"
+    >
+      To current month
+    </button>
+
+    <hr />
+    <span class="error_icon" [ngClass]="{ validation_error: !!validationText }">
+      <i class="fas fa-times fa-xs"> </i>
+    </span>
+
+    <app-error-list
+      [fg]="fg"
+      [field]="field"
+      [validationText]="validationText"
+    ></app-error-list>
   </div>
+</ng-container>
+
+<ng-template #isHasNotId>
+  <p>Hebrew Date Field has not '_id'</p>
+  <pre>{{ field | json }}</pre>
 </ng-template>
-
-<hr />
-
-<button
-  class="btn btn-sm btn-outline-primary mr-2"
-  (click)="selectToday()"
-  [disabled]="isDisabled"
->
-  Select Today
-</button>
-<button
-  class="btn btn-sm btn-outline-primary mr-2"
-  (click)="dp.navigateTo()"
-  [disabled]="isDisabled"
->
-  To current month
-</button>
-
-<hr />
 
 <!--<form class="form-inline">-->
 <!--<div class="form-group">-->

@@ -43,6 +43,7 @@ import { GeneralInfoSectionComponent } from './online-form-general-info/general-
 import { GeneralInfoGroupComponent } from './online-form-general-info/general-info-group/general-info-group.component';
 import { GeneralInfoFieldComponent } from './online-form-general-info/general-info-field/general-info-field.component';
 import { DynamicModule } from 'ng-dynamic-component';
+import { ErrorListComponent } from './online-form-fields/error-list/error-list.component';
 
 @NgModule({
   declarations: [
@@ -79,7 +80,8 @@ import { DynamicModule } from 'ng-dynamic-component';
     ProgressBarComponent,
     GeneralInfoSectionComponent,
     GeneralInfoGroupComponent,
-    GeneralInfoFieldComponent
+    GeneralInfoFieldComponent,
+    ErrorListComponent
   ],
   imports: [
     CommonModule,

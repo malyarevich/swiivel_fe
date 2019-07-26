@@ -1,9 +1,10 @@
 <div class="field">
   <!-- {{ field.type }} -->
-
-  <ndc-dynamic
-    [ndcDynamicComponent]="fieldComponent"
-    [ndcDynamicInputs]="fieldInputs"
-    [ndcDynamicOutputs]="fieldOutputs"
-  ></ndc-dynamic>
+  <ng-container *ngIf="fg">
+    <ndc-dynamic
+      [ndcDynamicComponent]="fieldComponent"
+      [ndcDynamicInputs]="fieldInputs"
+      [ndcDynamicOutputs]="fieldOutputs"
+    ></ndc-dynamic>
+  </ng-container>
 </div>

@@ -1,75 +1,128 @@
-import {Injectable, Type} from '@angular/core';
-import {Observable} from "rxjs";
-import {map} from "rxjs/operators";
-import {HttpClient} from "@angular/common/http";
-import {ShortTextFieldComponent} from "../online-form-fields/short-text-field/short-text-field.component";
-import {LongTextFieldComponent} from "../online-form-fields/long-text-field/long-text-field.component";
-import {NumberTextFieldComponent} from "../online-form-fields/number-text-field/number-text-field.component";
-import {MultipleOptionsFieldComponent} from "../online-form-fields/multiple-options-field/multiple-options-field.component";
-import {DropDownListFieldComponent} from "../online-form-fields/drop-down-list-field/drop-down-list-field.component";
-import {DateTimeFieldComponent} from "../online-form-fields/date-time-field/date-time-field.component";
-import {TimeFieldComponent} from "../online-form-fields/time-field/time-field.component";
-import {EmailFieldComponent} from "../online-form-fields/email-field/email-field.component";
-import {PhoneNumberFieldComponent} from "../online-form-fields/phone-number-field/phone-number-field.component";
-import {HebrewDateFieldComponent} from "../online-form-fields/hebrew-date-field/hebrew-date-field.component";
-import {LabelFieldComponent} from "../online-form-fields/label-field/label-field.component";
-import {EmptyLineFieldComponent} from "../online-form-fields/empty-line-field/empty-line-field.component";
-import {Form} from "../../model/form.model";
-import {environment} from "../../../../../environments/environment";
+import { Injectable, Type, EventEmitter, Output } from "@angular/core";
+import { Observable } from "rxjs";
+import { map } from "rxjs/operators";
+import { HttpClient } from "@angular/common/http";
+import { ShortTextFieldComponent } from "../online-form-fields/short-text-field/short-text-field.component";
+import { LongTextFieldComponent } from "../online-form-fields/long-text-field/long-text-field.component";
+import { NumberTextFieldComponent } from "../online-form-fields/number-text-field/number-text-field.component";
+import { MultipleOptionsFieldComponent } from "../online-form-fields/multiple-options-field/multiple-options-field.component";
+import { DropDownListFieldComponent } from "../online-form-fields/drop-down-list-field/drop-down-list-field.component";
+import { DateTimeFieldComponent } from "../online-form-fields/date-time-field/date-time-field.component";
+import { TimeFieldComponent } from "../online-form-fields/time-field/time-field.component";
+import { EmailFieldComponent } from "../online-form-fields/email-field/email-field.component";
+import { PhoneNumberFieldComponent } from "../online-form-fields/phone-number-field/phone-number-field.component";
+import { HebrewDateFieldComponent } from "../online-form-fields/hebrew-date-field/hebrew-date-field.component";
+import { LabelFieldComponent } from "../online-form-fields/label-field/label-field.component";
+import { EmptyLineFieldComponent } from "../online-form-fields/empty-line-field/empty-line-field.component";
+import { Form } from "../../model/form.model";
+import { environment } from "../../../../../environments/environment";
+import { FormControl, FormBuilder, FormGroup } from "@angular/forms";
+
+// TODO: Move this guy in any other place
+export type IFormField =
+  | typeof ShortTextFieldComponent
+  | typeof LongTextFieldComponent
+  | typeof NumberTextFieldComponent
+  | typeof MultipleOptionsFieldComponent
+  | typeof DropDownListFieldComponent
+  | typeof DateTimeFieldComponent
+  | typeof TimeFieldComponent
+  | typeof EmailFieldComponent
+  | typeof PhoneNumberFieldComponent
+  | typeof HebrewDateFieldComponent
+  | typeof LabelFieldComponent
+  | typeof EmptyLineFieldComponent;
 
 @Injectable()
 export class OnlineFormService {
+  formValues: Map<string, any> = new Map();
+  profileForm;
+  fg: FormGroup;
+  //FIXME: replace 'any' to interface (depend on server data)
+  @Output() onChangeServerValidations: EventEmitter<any> = new EventEmitter();
 
-  componentFieldsMap = new Map<number,Type<any>>([
-      [101, ShortTextFieldComponent],
-      [102, LongTextFieldComponent],
-      [103, NumberTextFieldComponent],
-      [104, MultipleOptionsFieldComponent],
-      [105, DropDownListFieldComponent],
-      [106, DateTimeFieldComponent],
-      [107, TimeFieldComponent],
-      [108, EmailFieldComponent],
-      [109, PhoneNumberFieldComponent],
-      [110, HebrewDateFieldComponent],
-      [111, LabelFieldComponent],
-      [112, EmptyLineFieldComponent]
-    ]
-  );
+  changeServerValidations(list: any) {
+    this.onChangeServerValidations.emit(list);
+  }
+
+  updateServerInfo() {
+    this.changeServerValidations({
+      "bf1ba789-cbce-49c0-a5ad-71138ecb2d31": "Some Error from server...",
+      "cf814c1c-dfb7-454c-983d-b75bab17984e": "Some another Error from server!"
+    });
+  }
+
+  componentFieldsMap = new Map<number, IFormField>([
+    [101, ShortTextFieldComponent],
+    [102, LongTextFieldComponent],
+    [103, NumberTextFieldComponent],
+    [104, MultipleOptionsFieldComponent],
+    [105, DropDownListFieldComponent],
+    [106, DateTimeFieldComponent],
+    [107, TimeFieldComponent],
+    [108, EmailFieldComponent],
+    [109, PhoneNumberFieldComponent],
+    [110, HebrewDateFieldComponent],
+    [111, LabelFieldComponent],
+    [112, EmptyLineFieldComponent]
+  ]);
 
   getComponentByTypeNumber = (typeNumber: number) => {
     return this.componentFieldsMap.get(typeNumber);
+  };
+
+  setFormValueById(id: string, value: any) {
+    this.formValues.set(id, value);
+    // console.log(this.formValues);
   }
-  
-  constructor(private http: HttpClient) { }
+
+  getFormValueById(id: string): any {
+    return this.formValues && this.formValues.has(id)
+      ? this.formValues.get(id)
+      : undefined;
+  }
+
+  setValuesForm(formValues: Map<string, any>) {
+    this.formValues = formValues;
+  }
+
+  getIsFormView(): boolean {
+    return false;
+  }
+
+  getFormGroup(): FormGroup {
+    return this.fg;
+  }
+
+  addFormControl(id: string, fc: FormControl) {
+    this.fg.addControl(id, fc);
+  }
+
+  setFormControlValue(id: string, value: string) {
+    this.fg.patchValue({ id, value });
+    // console.log(this.fg.value);
+  }
+
+  constructor(private http: HttpClient, private fb: FormBuilder) {}
 
   getOneForm(id): Observable<any> {
-    return this.http.get(`/proxy/forms/${id}`)
-      .pipe(
-        map((response) => response)
-      );
+    return this.http.get(`/proxy/forms/${id}`).pipe(map(response => response));
   }
 
   sendForm(form: Form) {
-
-    if(form._id!==""){
-      form.step=1;
-      return this.http.put(`/proxy/forms/${form._id}`, form)
-        .pipe(
-          map((response) =>  response)
-        );
+    if (form._id !== "") {
+      form.step = 1;
+      return this.http
+        .put(`/proxy/forms/${form._id}`, form)
+        .pipe(map(response => response));
     }
-    return this.http.post('/proxy/forms', form)
-      .pipe(
-        map((response) => response)
-      );
-
+    return this.http.post("/proxy/forms", form).pipe(map(response => response));
   }
 
-  sendFamilyForm(form: Form) {
-    return this.http.put(`${environment.apiFB}/familyForm/${form._id}?api_token=123`, form)
-      .pipe(
-        map((response) =>  response)
-      );
+  initOneForm(form: Form) {
+    this.fg = new FormGroup({});
+    if (form.formValues) {
+      this.fg.patchValue(form.formValues);
+    }
   }
-
 }
