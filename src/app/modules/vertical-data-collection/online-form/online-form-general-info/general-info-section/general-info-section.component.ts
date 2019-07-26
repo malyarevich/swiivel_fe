@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Field } from 'src/app/models/vertical-data-collection/field.model';
+import { FormGroup, FormControl } from '@angular/forms';
+import { OnlineFormService } from '../../services/online-form.service';
 
 @Component({
   selector: 'app-general-info-section',

@@ -1,31 +1,53 @@
-<div
-  class="input-group app-input-container app-input-fill"
-  [ngClass]="{ 'app-input-fill': formatDate && !data.options.hideLabel }"
->
-  <label *ngIf="!data.options.hideLabel" class="app-input-label">{{
-    data.name | titlecase
-  }}</label>
-  <input
-    class="form-control app-input"
-    placeholder="yyyy-mm-dd"
-    name="dp"
-    ngbDatepicker
-    #d="ngbDatepicker"
-    (ngModelChange)="blurChanges($event)"
-    (click)="d.toggle()"
-    [ngModel]="formatDate"
-    [disabled]="isDisabled"
-    [required]="data.options.required"
-  />
-
-  <div class="input-group-append">
-    <button
-      class="btn app-btn-outline-primary calendar"
-      (click)="d.toggle()"
-      type="button"
-      [disabled]="isDisabled"
+<ng-container *ngIf="field._id; else isHasNotId">
+    <div
+      class="form-group app-input-container position-relative date_controls"
+      [formGroup]="fg"
+      [ngClass]="{ 'app-input-fill': value && !field.options.hideLabel }"
     >
-      <i class="far fa-calendar"></i>
-    </button>
-  </div>
-</div>
+      <label *ngIf="!field.options.hideLabel" class="app-input-label">
+        {{ field.name | titlecase }}
+      </label>
+      <input
+        [formControlName]="field._id"
+        mdInput
+        type="text"
+        aria-describedby="basic-addon2"
+        class="form-control app-input date_controls__wide"
+        [ngClass]="{ validation_error: !!validationText }"
+        [placeholder]="getPlaceholder()"
+        name="dp"
+        ngbDatepicker
+        #d="ngbDatepicker"
+        (blur)="blurChanges($event)"
+        (click)="d.toggle()"
+        readonly
+      />
+      <span class="error_icon" [ngClass]="{ validation_error: !!validationText }">
+        <i class="fas fa-times fa-xs"> </i>
+      </span>
+      <app-error-list
+        [fg]="fg"
+        [field]="field"
+        [validationText]="validationText"
+      ></app-error-list>
+  
+      <div class="input-group-append date_controls__append">
+        <button
+          class="btn app-btn-outline-primary calendar"
+          (click)="d.toggle()"
+          type="button"
+        >
+          <i class="far fa-calendar"></i>
+        </button>
+      </div>
+    </div>
+    
+    <pre>[ "placeholder": "{{getPlaceholder()}}" ]</pre>
+    
+  </ng-container>
+  
+  <ng-template #isHasNotId>
+    <p>Short Text Field has not '_id'</p>
+    <pre>{{ field | json }}</pre>
+  </ng-template>
+  
