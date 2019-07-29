@@ -22,7 +22,13 @@
   <div>
     <app-toggle-checkbox-field [formControlName]="'isInputMask'" label="INPUT MASK"></app-toggle-checkbox-field>
   </div>
-  <div class="mb-4">
+  <div class="mb-4 text-right">
+    <app-tool-tip-question [placement]="'right-bottom'">
+      <div class="p-2">
+        <p class="mb-0 text-left">Use <span class="app-text-extra-bold"># - symbols</span> for number mask</p>
+        <p class="mb-0 text-left">Regex is allowed</p>
+      </div>
+    </app-tool-tip-question>
     <app-input-field [formControlName]="'inputMask'" label="Input Mask"></app-input-field>
   </div>
   <hr>

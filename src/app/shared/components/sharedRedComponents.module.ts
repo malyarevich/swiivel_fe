@@ -52,6 +52,7 @@ import { SectionHeaderComponent } from './form-builder/section-header/section-he
 
 // multi icons
 import { CaretsComponent } from './multi-icons/carets/carets.component';
+import { ToolTipQuestionComponent } from './tool-tip-question/tool-tip-question.component';
 
 @NgModule({
   declarations: [
@@ -86,13 +87,14 @@ import { CaretsComponent } from './multi-icons/carets/carets.component';
     TableTheadComponent,
     TagComponent,
     TipQuestionComponent,
+    ToolTipQuestionComponent,
     ToggleCheckboxFieldComponent,
     // complex
     SignaturesComponent,
     // form builder
     SectionHeaderComponent,
     // multi icons
-    CaretsComponent
+    CaretsComponent,
   ],
   imports: [
     CommonModule,
@@ -138,6 +140,7 @@ import { CaretsComponent } from './multi-icons/carets/carets.component';
     TableTheadComponent,
     TagComponent,
     TipQuestionComponent,
+    ToolTipQuestionComponent,
     // complex
     SignaturesComponent,
     // form builder
