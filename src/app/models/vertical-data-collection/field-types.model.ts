@@ -2,7 +2,7 @@ export class FieldTypesModel {
   static readonly fieldTypes = {
     shortTextField: 101,
     longTextField: 102,
-    numberTextField: 102,
+    numberTextField: 103,
     multipleOptionsField: 104,
     dropDownListField: 105,
     dateTimeField: 106,

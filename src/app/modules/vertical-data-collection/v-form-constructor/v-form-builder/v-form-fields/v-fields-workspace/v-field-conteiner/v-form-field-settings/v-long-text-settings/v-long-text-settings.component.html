@@ -1,0 +1,22 @@
+<form [formGroup]="settingsForm">
+  <p class="app-text-small app-text-extra-bold">TEXTAREA SIZE</p>
+  <div>
+    <app-checkbox-field [formControlName]="'isFullWidth'" label="Full width"></app-checkbox-field>
+  </div>
+  <hr>
+  <p class="app-text-small app-text-extra-bold">EDITOR MODE</p>
+  <div class="btn-group btn-group-toggle w-100"
+       ngbRadioGroup
+       [formControlName]="'editorMode'"
+  >
+    <label ngbButtonLabel class="btn app-btn-signature">
+      <input ngbButton type="radio" [value]="'plain'"> Plain text
+    </label>
+    <label ngbButtonLabel class="btn app-btn-signature">
+      <input ngbButton type="radio" [value]="'rich'"> Rich text
+    </label>
+    <label ngbButtonLabel class="btn app-btn-signature">
+      <input ngbButton type="radio" [value]="'full'"> Full screen
+    </label>
+  </div>
+</form>
