@@ -1,6 +1,6 @@
 import {Component, Input, OnChanges, OnInit} from '@angular/core';
-import {Field} from "../../../../../../model/field.model";
 import {Form} from "../../../../../../model/form.model";
+import {Field} from "../../../../../../../../models/vertical-data-collection/field.model";
 
 @Component({
   selector: 'app-v-form-field-settings',
@@ -8,7 +8,7 @@ import {Form} from "../../../../../../model/form.model";
   styleUrls: ['./v-form-field-settings.component.scss']
 })
 export class VFormFieldSettingsComponent implements OnInit, OnChanges {
-  @Input() inputField;
+  @Input() inputField: Field;
   @Input() form: Form;
   @Input() fieldTypeName: string;
 

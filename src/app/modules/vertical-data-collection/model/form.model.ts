@@ -48,6 +48,8 @@ export interface Form {
   forms?: FormsPDFModel[];
   attachments?: object;
   activeSections?: IActiveSections;
+  //FIXME: when back-end will complete
+  formValues?: any;
 }
 
 export interface FormSql {

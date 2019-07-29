@@ -34,7 +34,10 @@
 </div>
 
 <div class="widgets"
-  [ngClass]="{'widgets--hidden': isShowWidgets === false}">
+  [ngClass]="{
+    'widgets--visible': isShowWidgets,
+    'widgets--hidden': !isShowWidgets
+  }">
   <div class="widgets__item">
     <app-v-form-statistic-views></app-v-form-statistic-views>
   </div>

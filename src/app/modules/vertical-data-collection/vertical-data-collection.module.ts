@@ -121,6 +121,16 @@ import { VAutomationTemplateAreaComponent } from './v-form-constructor/v-form-pu
 import { VConstructorDraftService } from './services/v-constructor-draft.service';
 import { VGroupSettingMultiplierComponent } from './v-form-constructor/v-form-builder/v-form-fields/v-fields-workspace/v-group-container/v-group-settings/v-group-setting-multiplier/v-group-setting-multiplier.component';
 import { VFieldsConditionalLogicComponent } from './v-form-constructor/v-form-builder/v-form-fields/v-fields-workspace/v-fields-shared-components/v-fields-conditional-logic/v-fields-conditional-logic.component';
+import { VGroupSettingOptionsComponent } from './v-form-constructor/v-form-builder/v-form-fields/v-fields-workspace/v-group-container/v-group-settings/v-group-setting-options/v-group-setting-options.component';
+import { VSectionSettingOptionsComponent } from './v-form-constructor/v-form-builder/v-form-fields/v-fields-workspace/v-section-conteiner/v-section-settings/v-section-setting-options/v-section-setting-options.component';
+import { VFieldsSettingVisibilityComponent } from './v-form-constructor/v-form-builder/v-form-fields/v-fields-workspace/v-fields-shared-components/v-fields-setting-visibility/v-fields-setting-visibility.component';
+import { VFieldsSettingSupportTextComponent } from './v-form-constructor/v-form-builder/v-form-fields/v-fields-workspace/v-fields-shared-components/v-fields-setting-support-text/v-fields-setting-support-text.component';
+import { VFieldsSettingPresetComponent } from './v-form-constructor/v-form-builder/v-form-fields/v-fields-workspace/v-fields-shared-components/v-fields-setting-preset/v-fields-setting-preset.component';
+import { VFieldsSettingOptionCheckboxesComponent } from './v-form-constructor/v-form-builder/v-form-fields/v-fields-workspace/v-fields-shared-components/v-fields-setting-option-checkboxes/v-fields-setting-option-checkboxes.component';
+import { VShortTextSettingsComponent } from './v-form-constructor/v-form-builder/v-form-fields/v-fields-workspace/v-field-conteiner/v-form-field-settings/v-short-text-settings/v-short-text-settings.component';
+import { VFieldTypeSettingsContainerComponent } from './v-form-constructor/v-form-builder/v-form-fields/v-fields-workspace/v-field-conteiner/v-form-field-settings/v-field-type-settings-container/v-field-type-settings-container.component';
+import { VDropDownListSettingsComponent } from './v-form-constructor/v-form-builder/v-form-fields/v-fields-workspace/v-field-conteiner/v-form-field-settings/v-drop-down-list-settings/v-drop-down-list-settings.component';
+import { VEmailSettingsComponent } from './v-form-constructor/v-form-builder/v-form-fields/v-fields-workspace/v-field-conteiner/v-form-field-settings/v-email-settings/v-email-settings.component';
 
 const routes: Routes = [
   {
@@ -275,7 +285,17 @@ const routes: Routes = [
     FieldTypePipe,
     VSectionSettingsComponent,
     VGroupSettingMultiplierComponent,
-    VFieldsConditionalLogicComponent
+    VFieldsConditionalLogicComponent,
+    VGroupSettingOptionsComponent,
+    VSectionSettingOptionsComponent,
+    VFieldsSettingVisibilityComponent,
+    VFieldsSettingSupportTextComponent,
+    VFieldsSettingPresetComponent,
+    VFieldsSettingOptionCheckboxesComponent,
+    VShortTextSettingsComponent,
+    VFieldTypeSettingsContainerComponent,
+    VDropDownListSettingsComponent,
+    VEmailSettingsComponent
   ],
   imports: [
     NgxDnDModule,

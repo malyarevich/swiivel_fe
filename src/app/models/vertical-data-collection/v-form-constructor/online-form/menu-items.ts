@@ -1,12 +1,12 @@
 
 export const mainMenuNames: IMainMenuNames = {
-  generalInfo: 'generalInfo',
+  generalInfo: 'formFields',
   documentsForms: 'documentsForms',
-  consentInfo: 'consentInfo',
+  consentInfo: 'consent',
   paymentSettings: 'paymentSettings',
-  tuitionContract: 'tuitionContract',
-  termsConditions: 'termsConditions',
-  payment: 'payment',
+  tuitionContract: 'tuition',
+  termsConditions: 'termsConditionals',
+  payment: 'formPayment',
 };
 
 export const menuItems: IMenuItems[] = [

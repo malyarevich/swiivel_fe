@@ -23,28 +23,27 @@ export class OnlineFormGeneralInfoComponent implements OnInit {
   menuItems: IMenuItems[] = menuItems;
   mainMenuNames: IMainMenuNames = mainMenuNames;
 
-  navContent: object = [
-    {
-      id: "parents",
-      title: "Parents information"
-    },
-    {
-      id: "students",
-      title: "Students information"
-    }
-  ];
-
-  // activeId: string = "parents";
-  activeId: string = this.navContent[0].id;
+  sections: Field[];
+  activeId: string;
 
   readonly generalSectionsNames = generalSectionsNames;
 
   constructor() {}
 
   ngOnInit() {
+    this.initSections();
+    this.activeId = this.sections[0]._id;
     // TODO: count percent
     this.percent = 65;
     this.onSetPercent.emit(this.percent);
+  }
+
+  initSections() {
+    if (this.form.fields) {
+      this.sections = this.form.fields.filter((item) => {
+        return item.type === 114;
+      });
+    }
   }
 
   getTime() {
@@ -55,4 +54,5 @@ export class OnlineFormGeneralInfoComponent implements OnInit {
   onActive(id: string) {
     this.activeId = id;
   }
+
 }

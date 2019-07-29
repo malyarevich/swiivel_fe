@@ -1,0 +1,34 @@
+<ng-container *ngIf="field._id; else isHasError">
+  <div
+    class="form-group app-input-container position-relative"
+    [formGroup]="fg"
+    [ngClass]="{ 'app-input-fill': value && !field.options.hideLabel }"
+  >
+    <label *ngIf="!field.options.hideLabel" class="app-input-label">{{
+      field.name | titlecase
+    }}</label>
+    <input
+      [formControlName]="field._id"
+      mdInput
+      type="phone"
+      aria-describedby="basic-addon2"
+      class="app-input form-control"
+      [ngClass]="{ validation_error: !!validationText }"
+      [placeholder]="field.name | titlecase"
+    />
+    <span class="error_icon" [ngClass]="{ validation_error: !!validationText }">
+      <i class="fas fa-times fa-xs"> </i>
+    </span>
+
+    <app-error-list
+      [fg]="fg"
+      [field]="field"
+      [validationText]="validationText"
+    ></app-error-list>
+  </div>
+</ng-container>
+
+<ng-template #isHasError>
+  <p>Phone Number Field has error</p>
+  <pre>{{ field | json }}</pre>
+</ng-template>

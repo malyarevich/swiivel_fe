@@ -28,13 +28,13 @@
     }
     &.complete {
       stroke-dasharray: 50.2654824574; /* Circumference */
-      stroke: #fd6969;
+      stroke: $error-color;
     }
   }
 }
 
 .percent_text {
-  color: #fd6969;
+  color: $error-color;
   font-family: NunitoSans-Regular;
   font-size: 0.85rem;
   font-weight: bold;

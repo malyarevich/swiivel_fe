@@ -195,6 +195,7 @@ export class FormPayerAccountModalResponsibleFeesComponent implements OnInit, On
               this.setMaxSplitInput(fee, split, changeInput);
             } else {
               split.splitPay.input = parseInt(changeInput.fieldValue, 10);
+              split.payment = parseInt(changeInput.fieldValue, 10);
             }
             }
         });
@@ -277,8 +278,7 @@ export class FormPayerAccountModalResponsibleFeesComponent implements OnInit, On
     return 0;
   }
 
-  onSort(event): void {
-    // подумать, как обновлять и делать сортировку по алфавиту
+  onSortFee(event): void {
     if (event.order === 'DESC') {
       this.fees.forEach((fee) => {
         if (fee.type === 'fee') {
@@ -323,5 +323,40 @@ export class FormPayerAccountModalResponsibleFeesComponent implements OnInit, On
       });
     }
     this.updateFees();
+  }
+
+  onSortSplits(event, feeId): void {
+    console.log(event);
+    if (event.order === 'DESC') {
+      this.fees.forEach((fee) => {
+        if (fee.type === 'splits' && fee.id === feeId) {
+          this.fees[this.fees.indexOf(fee)].splits.sort((referenceSplit, compareSplit) => {
+            if (event.id === 'name') {
+              return referenceSplit.name.localeCompare(compareSplit.name, 'en', {
+                numeric: true,
+                sensitivity: 'base'
+              });
+            } else {
+              return referenceSplit[event.id] > compareSplit[event.id] ? 1 : -1;
+            }
+          });
+        }
+      });
+    } else if (event.order === 'ASC') {
+      this.fees.forEach((fee) => {
+        if (fee.type === 'splits' && fee.id === feeId) {
+          this.fees[this.fees.indexOf(fee)].splits.sort((referenceSplit, compareSplit) => {
+            if (event.id === 'name') {
+              return compareSplit.name.localeCompare(referenceSplit.name, 'en', {
+                numeric: true,
+                sensitivity: 'base'
+              });
+            } else {
+              return referenceSplit[event.id] < compareSplit[event.id] ? 1 : -1;
+            }
+          });
+        }
+      });
+    }
   }
 }

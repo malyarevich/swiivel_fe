@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { FormGroup } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 import { Form } from "../../model/form.model";
 import { OnlineFormService } from "../services/online-form.service";
@@ -18,6 +19,7 @@ import {
 export class OnlineFormViewComponent implements OnInit {
   form: Form;
   activeSection: string;
+  fg: FormGroup;
 
   percents: number[];
   menuItems: IMenuItems[] = menuItems;
@@ -27,7 +29,7 @@ export class OnlineFormViewComponent implements OnInit {
     private route: ActivatedRoute,
     private onlineFormService: OnlineFormService,
     private location: Location
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.percents = [];
@@ -37,9 +39,15 @@ export class OnlineFormViewComponent implements OnInit {
   getForm(): void {
     const id = this.route.snapshot.paramMap.get("id");
     this.onlineFormService.getOneForm(id).subscribe((form: Form) => {
-      this.form = form['data'];
+      this.form = form["data"];
       console.log(form);
+      this.initForm();
     });
+  }
+
+  initForm(): void {
+    this.onlineFormService.initOneForm(this.form);
+    this.fg = this.onlineFormService.getFormGroup();
   }
 
   onAction(actionType) {

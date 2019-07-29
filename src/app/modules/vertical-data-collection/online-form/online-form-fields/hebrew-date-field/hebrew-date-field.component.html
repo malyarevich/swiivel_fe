@@ -1,0 +1,96 @@
+<ng-container *ngIf="field._id; else isHasError">
+  <div
+    class="form-group app-input-container position-relative"
+    [formGroup]="fg"
+    [ngClass]="{ 'app-input-fill': value && !field.options.hideLabel }"
+  >
+    <label *ngIf="!field.options.hideLabel" class="app-input-label">{{
+      field.name | titlecase
+    }}</label>
+
+    <ngb-datepicker
+      class="hebrew rtl"
+      #dp
+      [formControlName]="field._id"
+      [displayMonths]="1"
+      [firstDayOfWeek]="7"
+      [dayTemplate]="dt"
+      [dayTemplateData]="dayTemplateData"
+      [ngClass]="{ validation_error: !!validationText }"
+    >
+    </ngb-datepicker>
+
+    <ng-template
+      #dt
+      let-date
+      let-data="field"
+      let-selected="selected"
+      let-currentMonth="currentMonth"
+    >
+      <div
+        class="hebrew-day"
+        [class.outside]="date.month !== currentMonth"
+        [class.selected]="selected"
+      >
+        <div class="gregorian-num">
+          {{ field.gregorian.day + "/" + field.gregorian.month }}
+        </div>
+        <div class="hebrew-num">{{ i18n.getDayNumerals(date) }}</div>
+      </div>
+    </ng-template>
+
+    <hr />
+
+    <button class="btn btn-sm btn-outline-primary mr-2" (click)="selectToday()">
+      Select Today
+    </button>
+    <button
+      class="btn btn-sm btn-outline-primary mr-2"
+      (click)="dp.navigateTo()"
+      [disabled]="isDisabled"
+    >
+      To current month
+    </button>
+
+    <hr />
+    <span class="error_icon" [ngClass]="{ validation_error: !!validationText }">
+      <i class="fas fa-times fa-xs"> </i>
+    </span>
+
+    <app-error-list
+      [fg]="fg"
+      [field]="field"
+      [validationText]="validationText"
+    ></app-error-list>
+  </div>
+</ng-container>
+
+<ng-template #isHasError>
+  <p>Hebrew Date Field has error</p>
+  <pre>{{ field | json }}</pre>
+</ng-template>
+
+<!--<form class="form-inline">-->
+<!--<div class="form-group">-->
+<!--<div class="input-group">-->
+<!--<input class="form-control" placeholder="yyyy-mm-dd"-->
+<!--name="dp" [(ngModel)]="model" ngbDatepicker [footerTemplate]="dt"  [displayMonths]="1" [firstDayOfWeek]="7" [dayTemplate]="dt" #dp="ngbDatepicker" [dayTemplateData]="dayTemplateData">-->
+<!--<div class="input-group-addon">-->
+<!--<button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</form>-->
+
+<!--<ng-template #dt let-date let-data="data" let-selected="selected" let-currentMonth="currentMonth">-->
+<!--<div class="hebrew-day" [class.outside]="date.month !== currentMonth" [class.selected]="selected">-->
+<!--&lt;!&ndash;<div class="gregorian-num">{{ data.gregorian.day + '/' + (data.gregorian.month) }}</div>&ndash;&gt;-->
+<!--<div class="hebrew-num">{{ i18n.getDayNumerals(date) }}</div>-->
+<!--</div>-->
+<!--&lt;!&ndash;<hr/>&ndash;&gt;-->
+
+<!--&lt;!&ndash;<button class="btn btn-sm btn-outline-primary mr-2" (click)="selectToday()">Select Today</button>&ndash;&gt;-->
+<!--&lt;!&ndash;<button class="btn btn-sm btn-outline-primary mr-2" (click)="dp.navigateTo()">To current month</button>&ndash;&gt;-->
+
+<!--&lt;!&ndash;<hr/>&ndash;&gt;-->
+<!--</ng-template>-->

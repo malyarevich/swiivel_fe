@@ -13,21 +13,26 @@
 <!-- Content Nav -->
 <div class="content_section__nav">
   <app-content-nav
-    [content]="navContent"
+    [content]="sections"
     (activeEmitter)="onActive($event)"
   ></app-content-nav>
 </div>
 
 <!-- Content -->
 <div class="content_section__main_container">
-  <div class="app-of-wrap content_section__main">
-    <div>
-      <ng-container *ngFor="let section of form.fields">
-        <app-general-info-section
-          [section]="section"
-        ></app-general-info-section>
+  <div>
+    <ng-container *ngIf="form.fields">
+      <ng-container *ngFor="let section of sections">
+        <ng-container *ngIf="section._id === activeId">
+          <app-general-info-section
+            [section]="section"
+            [sectionId]="section._id"
+          ></app-general-info-section>
+        </ng-container>
       </ng-container>
-      <!-- <app-general-info-parents
+    </ng-container>
+
+    <!-- <app-general-info-parents
         *ngIf="activeId === 'parents'"
         [form]="form"
       ></app-general-info-parents>
@@ -35,6 +40,5 @@
         *ngIf="activeId === 'students'"
         [form]="form"
       ></app-general-info-students> -->
-    </div>
   </div>
 </div>

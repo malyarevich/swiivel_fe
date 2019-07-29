@@ -15,10 +15,8 @@ export class ContentNavComponent implements OnInit {
   }
 
   ngOnInit() {
-    // console.log(this.content);
     if(this.content.length) {
-      this.setActiveId(this.content[0].id);
-      // console.log(this.content[0].id);
+      this.setActiveId(this.content[0]._id);
     }
   }
 

@@ -1,0 +1,32 @@
+<div class="app-period-bar">
+
+  <h2 class="app-period-bar__header">{{ period.name }}</h2>
+
+  <div class="app-period-bar__scale" cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="dropItem($event)">
+
+    <div class="app-period-bar__scale--label" [style.width]=getWidth()>
+      <app-input-editable-field [(ngModel)]="period.name" (ngModelChange)="onChangeName($event)"></app-input-editable-field>
+    </div>
+
+    <div *ngFor="let cellItem of periodScale.items; let i = index"
+         class="app-period-bar__scale--cell"
+         cdkDrag
+         cdkDragLockAxis="x"
+         cdkDragBoundary=".app-period-bar__scale"
+         [cdkDragDisabled]="!(cellItem.isHighExtreme || cellItem.isLowExtreme)">
+      <div *ngIf="cellItem.label" class="app-period-bar__cell--month">{{ cellItem.label }}</div>
+      <div *ngIf="cellItem.isSelected" class="app-period-bar__cell--selected"></div>
+
+      <app-carets
+        *ngIf="cellItem.isHighExtreme"
+        class="app-period-bar__cell--high-extreme"
+        cdkDragHandle></app-carets>
+
+      <app-carets
+        *ngIf="cellItem.isLowExtreme"
+        class="app-period-bar__cell--low-extreme"
+        cdkDragHandle></app-carets>
+    </div>
+
+  </div>
+</div>

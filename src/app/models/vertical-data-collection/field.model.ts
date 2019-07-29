@@ -16,6 +16,7 @@ export interface Field {
   prefix?: string,
   settings?: FieldSettings;
   conditional?: FieldSettingConditional,
+  typeSettings?: ITypeFieldSettings,
 }
 
 
@@ -40,8 +41,8 @@ export interface FieldOption {
 }
 
 export interface FieldSettings {
-  multiplier: FieldSettingMultiplier,
-  options: any,
+  multiplier?: FieldSettingMultiplier,
+  options?: GroupSectionOptions,
 }
 
 export interface FieldSettingMultiplier {
@@ -57,7 +58,43 @@ export interface FieldSettingConditional {
   logic: string;
   when: string;
   field: string;
-  rules: {name: string, value: string}[];
+  rules: { name: string, value: string }[];
+}
+
+export interface GroupSectionOptions {
+  groupPreset: string;
+  required?: boolean,
+  readonly?: boolean,
+  hideLabel?: boolean,
+  unique?: boolean;
+  isSupportText: boolean;
+  supportText: string;
+  supportTextDisplayed: 'popup' | 'directly';
+  isVisible?: boolean;
+  isMakeExpandButtonVisible?: boolean;
+}
+
+export interface ITypeFieldSettings {
+  //ShortTextSettings
+  minSizeChar?: number;
+  maxSizeChar?: number;
+  inputMask?: string;
+  isDefaultValue?: boolean;
+  defaultValue?: string;
+  //DropDownListSettings
+  isFullWidth?: boolean;
+  fieldWidth?: number;
+  fieldHeight?: number;
+  selection?: 'one' | 'multiple';
+  options?: { name: string }[];
+  isSelectedDefault?: boolean;
+  selectedDefault?: { name: string };
+  //DropDownListSettings
+  validateEmail?: boolean;
+  confirmationTextBox?: boolean;
+  emailBlocks?: boolean;
+  disallowFreeAddress?: boolean;
+  blockDomains?: string;
 }
 
 

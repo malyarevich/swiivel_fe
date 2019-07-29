@@ -1,10 +1,19 @@
 <!--Title-->
 <h2 class="content_section__section_title">
-  section_title
+  {{ section.name }}
 </h2>
 
-<p>
-  general-info-section works!
-</p>
-<app-general-info-group></app-general-info-group>
-<app-general-info-field></app-general-info-field>
+<div class="app-of-wrap content_section__main section">
+  <div class="section__fields">
+    <ng-container *ngFor="let field of fields">
+      <div class="field_width--{{ field.width }}">
+        <app-general-info-field [field]="field"></app-general-info-field>
+      </div>
+    </ng-container>
+  </div>
+  <div class="section__groups">
+    <ng-container *ngFor="let group of groups">
+      <app-general-info-group [group]="group"></app-general-info-group>
+    </ng-container>
+  </div>
+</div>

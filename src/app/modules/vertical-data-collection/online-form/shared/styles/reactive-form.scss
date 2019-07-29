@@ -1,0 +1,49 @@
+@import "./root-styles.scss";
+
+input.ng-dirty.ng-invalid,
+input.validation_error {
+  border: 1px solid $error-color;
+}
+
+.error_icon {
+  cursor: pointer;
+  align-items: center;
+  border-radius: 50%;
+  background-color: $error-color;
+  display: flex;
+  justify-content: center;
+  height: 1.1rem;
+  opacity: 0;
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  transition: all 0.5s ease-in-out;
+  width: 1.1rem;
+
+  & > i {
+    color: $white;
+  }
+}
+
+input.ng-dirty.ng-invalid + .error_icon,
+.error_icon.validation_error {
+  opacity: 1;
+}
+
+.error_msg {
+  color: $error-color;
+  font-family: NunitoSans-Regular;
+  font-size: 1rem;
+  line-height: 1.1rem;
+  padding-top: 0.5rem;
+}
+
+.form-group {
+  margin-bottom: 0;
+}
+
+.form-control:disabled, 
+.form-control[readonly] {
+  cursor: text;
+  background-color: $white;
+}

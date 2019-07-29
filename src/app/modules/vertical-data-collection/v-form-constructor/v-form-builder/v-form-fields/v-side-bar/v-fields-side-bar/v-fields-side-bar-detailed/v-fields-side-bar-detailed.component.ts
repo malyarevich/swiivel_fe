@@ -122,13 +122,12 @@ export class VFieldsSideBarDetailedComponent implements OnInit,  OnDestroy {
     this.validateAllFormFields(this.fieldsAddGroup);
     if (!this.fieldsAddGroup.valid) return;
     this.fieldsAddGroup.clearValidators();
-    let newField: Field = cloneDeep(this.fieldsAddGroup.value.fieldType);
+    let newField: Field = cloneDeep(this.customFields.find((field) => field.name === this.fieldsAddGroup.value.fieldType));
     newField.name = this.fieldsAddGroup.value.fieldsName;
     newField._id = uuid();
     newField.prefix = this.fieldsAddGroup.value.fieldRole;
     this.form.fields.forEach(section=>{
-      if(section.name == this.fieldsAddGroup.value.sectionRelate.name
-        &&section.prefix == this.fieldsAddGroup.value.sectionRelate.prefix){
+      if(section.name == this.fieldsAddGroup.value.sectionRelate){
         section.fields.push(newField);
       }
     });
