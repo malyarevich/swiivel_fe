@@ -26,18 +26,76 @@
     }
   }
 
-  &__content {
-    background-color: $white;
-    border-radius: 0.5rem;
-    box-shadow: 0 0.15rem 1rem 0 rgba(0, 0, 0, 0.1);
+  &__wrapper {
+    background-color: transparent;
     position: relative;
     top: 1rem;
     width: auto;
     width: -webkit-fill-available;
 
     @include media-breakpoint-up(lg) {
-      border-radius: 0.5rem;
       top: -5.5rem;
     }
+  }
+
+  &__content {
+    background-color: $white;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.15rem 1rem 0 rgba(0, 0, 0, 0.1);
+    padding-top: 1.5rem;
+
+    @include media-breakpoint-up(lg) {
+      border-radius: 0.5rem;
+    }
+  }
+
+  &__control_block {
+    align-items: stretch;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    padding-top: 2.5rem;
+  }
+
+}
+
+.btn {
+  font-family: NunitoSans-Regular;
+  font-size: 0.85rem;
+  font-weight: bold;
+  line-height: 1.1rem;
+  padding: 1rem 2rem;
+  text-transform: uppercase;
+
+  &:not(:disabled):not(.disabled).active, 
+  &:not(:disabled):not(.disabled):active,
+  &:focus,
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.btn-link {
+  color: $element-base-color;
+
+  &:not(:disabled):not(.disabled).active, 
+  &:not(:disabled):not(.disabled):active,
+  &:focus,
+  &:hover {
+    color: lighten($color: $element-base-color, $amount: 10);
+    text-decoration: none;
+  }
+}
+
+.btn-primary {
+  background-color: $element-base-color;
+  color: $white;
+
+  &:not(:disabled):not(.disabled).active, 
+  &:not(:disabled):not(.disabled):active,
+  &:focus,
+  &:hover {
+    background-color: lighten($color: $element-base-color, $amount: 5);
+    text-decoration: none;
   }
 }

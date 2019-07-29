@@ -1,53 +1,44 @@
-<ng-container *ngIf="field._id; else isHasError">
-    <div
-      class="form-group app-input-container position-relative date_controls"
-      [formGroup]="fg"
-      [ngClass]="{ 'app-input-fill': value && !field.options.hideLabel }"
-    >
-      <label *ngIf="!field.options.hideLabel" class="app-input-label">
-        {{ field.name | titlecase }}
-      </label>
-      <input
-        [formControlName]="field._id"
-        mdInput
-        type="text"
-        aria-describedby="basic-addon2"
-        class="form-control app-input date_controls__wide"
-        [ngClass]="{ validation_error: !!validationText }"
-        [placeholder]="getPlaceholder()"
-        name="dp"
-        ngbDatepicker
-        #d="ngbDatepicker"
-        (blur)="blurChanges($event)"
+<ng-container *ngIf="isLoaded">
+  <div
+    class="form-group app-input-container position-relative date_controls"
+    [formGroup]="fg"
+    [ngClass]="{ 'app-input-fill': value && !field.options.hideLabel }"
+  >
+    <label *ngIf="!field.options.hideLabel" class="app-input-label">
+      {{ field.name | titlecase }}
+    </label>
+    <input
+      [formControlName]="field._id"
+      mdInput
+      type="text"
+      aria-describedby="basic-addon2"
+      class="form-control app-input date_controls__wide"
+      [ngClass]="{ validation_error: !!validationText }"
+      [placeholder]="getPlaceholder()"
+      name="dp"
+      ngbDatepicker
+      #d="ngbDatepicker"
+      (blur)="blurChanges($event)"
+      (click)="d.toggle()"
+      readonly
+    />
+    <span class="error_icon" [ngClass]="{ validation_error: !!validationText }">
+      <i class="fas fa-times fa-xs"> </i>
+    </span>
+    <app-error-list
+      [fg]="fg"
+      [field]="field"
+      [validationText]="validationText"
+    ></app-error-list>
+
+    <div class="input-group-append date_controls__append">
+      <button
+        class="btn app-btn-outline-primary calendar"
         (click)="d.toggle()"
-        readonly
-      />
-      <span class="error_icon" [ngClass]="{ validation_error: !!validationText }">
-        <i class="fas fa-times fa-xs"> </i>
-      </span>
-      <app-error-list
-        [fg]="fg"
-        [field]="field"
-        [validationText]="validationText"
-      ></app-error-list>
-  
-      <div class="input-group-append date_controls__append">
-        <button
-          class="btn app-btn-outline-primary calendar"
-          (click)="d.toggle()"
-          type="button"
-        >
-          <i class="far fa-calendar"></i>
-        </button>
-      </div>
+        type="button"
+      >
+        <i class="far fa-calendar"></i>
+      </button>
     </div>
-    
-    <!-- <pre>[ "placeholder": "{{getPlaceholder()}}" ]</pre> -->
-    
-  </ng-container>
-  
-  <ng-template #isHasError>
-    <p>Short Text Field has error</p>
-    <pre>{{ field | json }}</pre>
-  </ng-template>
-  
+  </div>
+</ng-container>

@@ -14,6 +14,7 @@ export class DropDownListFieldComponent implements OnInit, OnDestroy {
   @Input() validationText: string;
 
   value: string;
+  isLoaded: boolean = false;
   onValueChangeSubscription: Subscription;
 
   list: Array<string> = [
@@ -27,12 +28,21 @@ export class DropDownListFieldComponent implements OnInit, OnDestroy {
   constructor() {}
 
   ngOnInit() {
-    this.value = this.field._id ? this.fg.get(this.field._id).value : undefined;
-    this.onValueChangeSubscription = this.field._id
-      ? this.fg.get(this.field._id).valueChanges.subscribe(val => {
-          this.value = val;
-        })
-      : undefined;
+    if (this.field._id) {
+      this.value = this.fg.get(this.field._id).value;
+      if (!this.field.options.readonly) {
+        this.onValueChangeSubscription = this.fg
+          .get(this.field._id)
+          .valueChanges.subscribe(val => {
+            this.value = val;
+          });
+      }
+
+      if (this.field.options.readonly) {
+        this.fg.controls[this.field._id].disable();
+      }
+    }
+    this.isLoaded = true;
   }
 
   ngOnDestroy(): void {

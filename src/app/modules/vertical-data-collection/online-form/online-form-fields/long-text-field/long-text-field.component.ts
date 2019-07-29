@@ -13,20 +13,28 @@ export class LongTextFieldComponent implements OnInit, OnDestroy {
   @Input() fg: FormGroup;
   @Input() validationText: string;
 
-  value: string;
+  // value: string;
+  isLoaded: boolean = false;
   onValueChangeSubscription: Subscription;
 
   constructor() {}
 
   ngOnInit() {
-    if (this.field._id && !this.field.options.readonly) {
-      this.value = this.fg.get(this.field._id).value;
-      this.onValueChangeSubscription = this.fg
-        .get(this.field._id)
-        .valueChanges.subscribe(val => {
-          this.value = val;
-        });
+    if (this.field._id) {
+      // this.value = this.fg.get(this.field._id).value;
+      // if (!this.field.options.readonly) {
+      //   this.onValueChangeSubscription = this.fg
+      //     .get(this.field._id)
+      //     .valueChanges.subscribe(val => {
+      //       this.value = val;
+      //     });
+      // }
+
+      // if (this.field.options.readonly) {
+      //   this.fg.controls[this.field._id].disable();
+      // }
     }
+    this.isLoaded = true;
   }
 
   ngOnDestroy(): void {

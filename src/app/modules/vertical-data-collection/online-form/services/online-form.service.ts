@@ -35,6 +35,7 @@ export type IFormField =
 
 @Injectable()
 export class OnlineFormService {
+  formId: string;
   formValues: Map<string, any> = new Map();
   profileForm;
   fg: FormGroup;
@@ -50,6 +51,10 @@ export class OnlineFormService {
       "bf1ba789-cbce-49c0-a5ad-71138ecb2d31": "Some Error from server...",
       "cf814c1c-dfb7-454c-983d-b75bab17984e": "Some another Error from server!"
     });
+  }
+
+  verifyForm() {
+    return this.fg.hasError;
   }
 
   componentFieldsMap = new Map<number, IFormField>([
@@ -82,8 +87,12 @@ export class OnlineFormService {
       : undefined;
   }
 
-  setValuesForm(formValues: Map<string, any>) {
+  setFormValues(formValues: Map<string, any>) {
     this.formValues = formValues;
+  }
+
+  getFormValues(): any {
+    return this.fg.value;
   }
 
   getIsFormView(): boolean {
@@ -105,18 +114,26 @@ export class OnlineFormService {
 
   constructor(private http: HttpClient, private fb: FormBuilder) {}
 
-  getOneForm(id): Observable<any> {
-    return this.http.get(`/proxy/forms/${id}`).pipe(map(response => response));
+  setFromId(id: string) {
+    this.formId = id;
   }
 
-  sendForm(form: Form) {
-    if (form._id !== "") {
-      form.step = 1;
+  getOneForm(id = this.formId): Observable<any> {
+    if (id) {
+      return this.http.get(`/proxy/forms/${id}`).pipe(map(response => response));
+    }
+    console.error("Id of form is undefined");
+    return undefined;
+  }
+
+  sendForm(form: object = {}): Observable<any>  {
+    if (this.formId) {
       return this.http
-        .put(`/proxy/forms/${form._id}`, form)
+        .put(`/proxy/forms/${this.formId}`, form)
         .pipe(map(response => response));
     }
-    return this.http.post("/proxy/forms", form).pipe(map(response => response));
+    console.error("Id of form is undefined");
+    return undefined;
   }
 
   initOneForm(form: Form) {

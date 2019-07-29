@@ -10,6 +10,7 @@ import {
   IMainMenuNames,
   IMenuItems
 } from "../../../../models/vertical-data-collection/v-form-constructor/online-form/menu-items";
+import { Observable } from "rxjs";
 
 @Component({
   selector: "app-online-form-view",
@@ -37,8 +38,8 @@ export class OnlineFormViewComponent implements OnInit {
   }
 
   getForm(): void {
-    const id = this.route.snapshot.paramMap.get("id");
-    this.onlineFormService.getOneForm(id).subscribe((form: Form) => {
+    this.onlineFormService.setFromId(this.route.snapshot.paramMap.get("id"));
+    this.onlineFormService.getOneForm().subscribe((form: Form) => {
       this.form = form["data"];
       console.log(form);
       this.initForm();
@@ -59,10 +60,35 @@ export class OnlineFormViewComponent implements OnInit {
     }
   }
 
-  saveForm() {
-    //PDF form save
-    // this.onlineFormService.sendForm(this.form).subscribe(res => this.goBack());
-    // this.onlineFormService.sendFamilyForm(this.form).subscribe(res => this.goBack());
+  goBackStep() {
+    //TODO: previous step in iterator
+  }
+
+  saveAndGoNext() {
+    this.saveForm().subscribe(res => {
+      if (res.status === 0 && res.errors) {
+        //TODO? catch errors
+        this.onlineFormService.updateServerInfo();
+      } else {
+        this.goNextStep();
+      }
+    });
+  }
+
+  saveForm(): Observable<any> {
+    const form = this.onlineFormService.getFormValues();
+    console.log(this.fg);
+    console.log(JSON.stringify({ values: form }));
+
+    if (!this.fg.valid) {
+      return new Observable;
+    }
+
+    return this.onlineFormService.sendForm({ values: form });
+  }
+
+  goNextStep() {
+    //TODO: next step in iterator
   }
 
   goBack() {
