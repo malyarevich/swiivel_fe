@@ -1,8 +1,8 @@
-<ng-container *ngIf="isLoaded">
+<ng-container *ngIf="true">
   <div
     class="form-group multi-div position-relative"
     [formGroup]="fg"
-    [ngClass]="{ 'app-input-fill': value && !field.options.hideLabel }"
+    [ngClass]="{ 'app-input-fill': !field.options.hideLabel }"
   >
     <div
       class="checkbox"
@@ -11,9 +11,7 @@
       <label>
         <input
           type="checkbox"
-          [formControlName]="field._id + i"
           mdInput
-          value=""
           [ngClass]="{ validation_error: !!validationText }"
         />{{ item }}
       </label>
@@ -23,7 +21,7 @@
         <input type="checkbox" value="" />
         <input
           type="text"
-          [formControlName]="field._id + 'other'"
+          [formControlName]="field._id"
           placeholder="Other"
         />
       </label>

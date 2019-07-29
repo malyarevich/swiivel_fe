@@ -78,13 +78,13 @@ export class OnlineFormViewComponent implements OnInit {
   saveForm(): Observable<any> {
     const form = this.onlineFormService.getFormValues();
     console.log(this.fg);
-    console.log(JSON.stringify({ values: form }));
+    console.log(JSON.stringify({ fieldsData: form }));
 
     if (!this.fg.valid) {
       return new Observable;
     }
 
-    return this.onlineFormService.sendForm({ values: form });
+    return this.onlineFormService.sendForm({ fieldsData: form });
   }
 
   goNextStep() {

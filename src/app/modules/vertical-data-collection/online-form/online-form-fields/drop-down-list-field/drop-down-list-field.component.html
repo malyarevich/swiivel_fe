@@ -1,8 +1,8 @@
-<ng-container *ngIf="isLoaded">
+<ng-container *ngIf="true">
   <div
     class="form-group app-input-container position-relative"
     [formGroup]="fg"
-    [ngClass]="{ 'app-input-fill': value && !field.options.hideLabel }"
+    [ngClass]="{ 'app-input-fill': !field.options.hideLabel }"
   >
     <label *ngIf="!field.options.hideLabel" class="app-input-label">
       {{ field.name | titlecase }}
@@ -13,7 +13,7 @@
       class="app-input form-control"
       [ngClass]="{ validation_error: !!validationText }"
     >
-      <option [ngValue]="" selected>{{ field.name }}</option>
+      <option [ngValue]="''" selected>{{ field.name }}</option>
       <option *ngFor="let item of field.options.items || list" [ngValue]="item">
         {{ item }}
       </option>

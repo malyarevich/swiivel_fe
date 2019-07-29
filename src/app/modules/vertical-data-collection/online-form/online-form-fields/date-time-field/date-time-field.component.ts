@@ -23,7 +23,12 @@ export class DateTimeFieldComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     if (this.field._id) {
+      if (!this.fg.get(this.field._id).value) {
+        this.fg.patchValue({ [this.field._id]: {"year":1970,"month":1,"day":1} });
+      }
+
       this.value = this.fg.get(this.field._id).value;
+
       if (!this.field.options.readonly) {
         this.onValueChangeSubscription = this.fg
           .get(this.field._id)
