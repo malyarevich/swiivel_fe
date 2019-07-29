@@ -93,12 +93,18 @@ export interface ITypeFieldSettings {
   options?: { name: string }[];
   isSelectedDefault?: boolean;
   selectedDefault?: { name: string };
-  //DropDownListSettings
+  //EmailSettings
   validateEmail?: boolean;
   confirmationTextBox?: boolean;
   emailBlocks?: boolean;
   disallowFreeAddress?: boolean;
   blockDomains?: string;
+  //PhoneNumberSettings
+  numberFormat?: ILabelValueSelect;
+  country?: ILabelValueSelect;
+  isCellphone?: boolean;
+  isVerify?: boolean;
+  isInputMask?: boolean;
 }
 
 export interface IFieldValidators {
@@ -111,7 +117,10 @@ export interface IFieldValidators {
   errorText: string;
 }
 
-export interface IFieldValidatorsRule {
+export interface IFieldValidatorsRule extends ILabelValueSelect {
+}
+
+export interface ILabelValueSelect {
   label: string;
   value: string;
 }

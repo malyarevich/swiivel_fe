@@ -2,7 +2,6 @@ import {Component, Input, OnInit} from '@angular/core';
 import {
   Field,
   IFieldValidators,
-  IFieldValidatorsRule
 } from "../../../../../../../../../models/vertical-data-collection/field.model";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {isEmpty} from 'lodash';
@@ -78,7 +77,7 @@ export class VFieldValidationComponent implements OnInit {
   initValidatorsForm() {
     this.validatorsForm = this.fb.group({
       isValidator: [this.inputField.validators.isValidator],
-      rule: [this.inputField.validators.rule],
+      rule: [this.inputField.validators.rule.value],
       minChar: [this.inputField.validators.minChar],
       maxChar: [this.inputField.validators.maxChar],
       isErrorMessage: [this.inputField.validators.isErrorMessage],

@@ -133,6 +133,7 @@ import { VDropDownListSettingsComponent } from './v-form-constructor/v-form-buil
 import { VEmailSettingsComponent } from './v-form-constructor/v-form-builder/v-form-fields/v-fields-workspace/v-field-conteiner/v-form-field-settings/v-email-settings/v-email-settings.component';
 import { VFieldValidationComponent } from './v-form-constructor/v-form-builder/v-form-fields/v-fields-workspace/v-field-conteiner/v-form-field-settings/v-field-validation/v-field-validation.component';
 import { VLongTextSettingsComponent } from './v-form-constructor/v-form-builder/v-form-fields/v-fields-workspace/v-field-conteiner/v-form-field-settings/v-long-text-settings/v-long-text-settings.component';
+import { VPhoneNumberSettingsComponent } from './v-form-constructor/v-form-builder/v-form-fields/v-fields-workspace/v-field-conteiner/v-form-field-settings/v-phone-number-settings/v-phone-number-settings.component';
 
 const routes: Routes = [
   {
@@ -299,7 +300,8 @@ const routes: Routes = [
     VDropDownListSettingsComponent,
     VEmailSettingsComponent,
     VFieldValidationComponent,
-    VLongTextSettingsComponent
+    VLongTextSettingsComponent,
+    VPhoneNumberSettingsComponent
   ],
   imports: [
     NgxDnDModule,
