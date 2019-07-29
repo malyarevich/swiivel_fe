@@ -1,4 +1,4 @@
-<ng-container *ngIf="field._id; else isHasNotId">
+<ng-container *ngIf="field._id; else isHasError">
   <div
     class="form-group multi-div position-relative"
     [formGroup]="fg"
@@ -39,7 +39,7 @@
   </div>
 </ng-container>
 
-<ng-template #isHasNotId>
-  <p>Multiple Options Field has not '_id'</p>
+<ng-template #isHasError>
+  <p>Multiple Options Field has error</p>
   <pre>{{ field | json }}</pre>
 </ng-template>

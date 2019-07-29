@@ -2,14 +2,14 @@
 
 input.ng-dirty.ng-invalid,
 input.validation_error {
-  border: 1px solid #FD6969;
+  border: 1px solid $error-color;
 }
 
 .error_icon {
   cursor: pointer;
   align-items: center;
   border-radius: 50%;
-  background-color: #FD6969;
+  background-color: $error-color;
   display: flex;
   justify-content: center;
   height: 1.1rem;
@@ -31,7 +31,7 @@ input.ng-dirty.ng-invalid + .error_icon,
 }
 
 .error_msg {
-  color: #FD6969;
+  color: $error-color;
   font-family: NunitoSans-Regular;
   font-size: 1rem;
   line-height: 1.1rem;

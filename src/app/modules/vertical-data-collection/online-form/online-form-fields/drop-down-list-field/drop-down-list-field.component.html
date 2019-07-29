@@ -1,4 +1,4 @@
-<ng-container *ngIf="field._id; else isHasNotId">
+<ng-container *ngIf="field._id; else isHasError">
   <div
     class="form-group app-input-container position-relative"
     [formGroup]="fg"
@@ -33,7 +33,7 @@
   </div>
 </ng-container>
 
-<ng-template #isHasNotId>
-  <p>Drop Down List Field has not '_id'</p>
+<ng-template #isHasError>
+  <p>Drop Down List Field has error</p>
   <pre>{{ field | json }}</pre>
 </ng-template>

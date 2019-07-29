@@ -1,10 +1,16 @@
 <div class="field">
   <!-- {{ field.type }} -->
-  <ng-container *ngIf="fg && fc">
+  <ng-container *ngIf="fg && fc; else noComponent">
     <ndc-dynamic
       [ndcDynamicComponent]="fieldComponent"
       [ndcDynamicInputs]="fieldInputs"
       [ndcDynamicOutputs]="fieldOutputs"
     ></ndc-dynamic>
   </ng-container>
+  <ng-template #noComponent>
+    <div class="component_error">
+      {{field.name}} Component has no init
+    </div>
+  </ng-template>
+  
 </div>

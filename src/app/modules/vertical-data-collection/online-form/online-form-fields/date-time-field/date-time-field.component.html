@@ -1,4 +1,4 @@
-<ng-container *ngIf="field._id; else isHasNotId">
+<ng-container *ngIf="field._id; else isHasError">
     <div
       class="form-group app-input-container position-relative date_controls"
       [formGroup]="fg"
@@ -46,8 +46,8 @@
     
   </ng-container>
   
-  <ng-template #isHasNotId>
-    <p>Short Text Field has not '_id'</p>
+  <ng-template #isHasError>
+    <p>Short Text Field has error</p>
     <pre>{{ field | json }}</pre>
   </ng-template>
   
