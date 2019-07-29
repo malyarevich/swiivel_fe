@@ -12,7 +12,7 @@ import {Location} from "@angular/common";
 })
 export class OnlineFormViewComponent implements OnInit {
 
-  form: Form;
+  form: any;
   activeSection: string;
   mainMenuNames: MainMenuNames = mainMenuNames;
 

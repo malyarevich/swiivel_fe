@@ -1,52 +1,40 @@
-import { Component, Input, OnInit } from "@angular/core";
-import {
-  DataTypeAllowed,
-  DocumentsModel,
-  dataTypes,
-  DataTypeItemAllowed
-} from "../model/documents.model";
-import { VFilesService } from "../../../../services/v-files.service";
-import { environment } from "../../../../../../../environments/environment";
-import {DocumentsFormsModel} from "../../../../../../models/vertical-data-collection/v-form-constructor/v-form-builder/documents-forms.model";
-import {VFormService} from "../../../../services/v-form.service";
+import { Component, Input, OnInit } from '@angular/core';
+import { DataTypeAllowed, DocumentsModel } from '../model/documents.model';
+import { VFilesService } from '../../../../services/v-files.service';
+import { environment } from '../../../../../../../environments/environment';
+import { FormService } from '../../../../../data-collection/form.service';
+import { DocumentsFormsModel } from '../../../../../../models/vertical-data-collection/v-form-constructor/v-form-builder/documents-forms.model';
 
 @Component({
-  selector: "app-v-documents-container",
-  templateUrl: "./v-documents-container.component.html",
-  styleUrls: ["./v-documents-container.component.scss"]
+  selector: 'app-v-documents-container',
+  templateUrl: './v-documents-container.component.html',
+  styleUrls: ['./v-documents-container.component.scss']
 })
+
 export class VDocumentsContainerComponent implements OnInit {
-  dataTypes: DataTypeAllowed = dataTypes;
+
   @Input() documents: DocumentsModel[];
   @Input() formId: string;
   @Input() attachments;
   @Input() documentsForms: DocumentsFormsModel;
 
-  token = "?api_token=" + environment.api_token;
-
-  isExpand: boolean = true;
-
-  getAttachmentName(document) {
-    if(document.data && this.attachments && this.attachments[document.data] != undefined) {
-      return this.attachments[document.data].name;
-    }
-  }
-
   constructor(
     private fileService: VFilesService,
-    private formService: VFormService
+    private formService: FormService
   ) {}
 
-  ngOnInit() {
-    this.updateAttachments();
-  }
+  public token = '?api_token=' + environment.api_token;
+  public isExpand = true;
+  public dataTypeAllowed: DataTypeAllowed;
+
+  ngOnInit() {}
 
   fileChange(event, document) {
-    let fileList: FileList = event.target.files;
+    const fileList: FileList = event.target.files;
     if (fileList.length > 0) {
-      let file: File = fileList[0];
-      let formData: FormData = new FormData();
-      formData.append("attachment", file, file.name);
+      const file: File = fileList[0];
+      const formData: FormData = new FormData();
+      formData.append('attachment', file, file.name);
       this.fileService.uploadFile(this.formId, formData).subscribe(
         result => {
           document.data = result.hash;
@@ -57,18 +45,27 @@ export class VDocumentsContainerComponent implements OnInit {
     }
   }
 
-  dataSectionChange(event: boolean, typeArray: DataTypeItemAllowed[]) {
-    typeArray.forEach(item => {
-      item.isAllow = event;
-    });
+  dataSectionChange(type: string, i: number) {
+    this.dataTypeAllowed = this.documents[i].dataTypeAllowed;
+    switch (type) {
+      case 'documents':
+        this.dataTypeAllowed.isDocuments = this.dataTypeAllowed.documents.some(item => item.isAllow);
+        break;
+      case 'images':
+        this.dataTypeAllowed.isImages = this.dataTypeAllowed.images.some(item => item.isAllow);
+        break;
+      case 'videoAudio':
+        this.dataTypeAllowed.isVideoAudio = this.dataTypeAllowed.videoAudio.some(item => item.isAllow);
+        break;
+    }
   }
 
   deleteAttachment(document: DocumentsModel) {
-    document.data = "";
+    document.data = '';
   }
 
   openForPreview(document: DocumentsModel) {
-    if (!document.data) return;
+    if (!document.data) { return; }
     window.open(this.attachments[document.data].link + this.token);
   }
 
