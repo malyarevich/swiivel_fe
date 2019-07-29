@@ -1,4 +1,4 @@
-<ng-container *ngIf="field._id; else isHasError">
+<ng-container *ngIf="isLoaded">
   <div
     class="form-group multi-div position-relative"
     [formGroup]="fg"
@@ -38,8 +38,3 @@
     ></app-error-list>
   </div>
 </ng-container>
-
-<ng-template #isHasError>
-  <p>Multiple Options Field has error</p>
-  <pre>{{ field | json }}</pre>
-</ng-template>
