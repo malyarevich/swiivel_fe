@@ -2,14 +2,14 @@
 
 .content_section {
   &__main {
-    padding: 1.25rem 0 0 0;
+    padding: 1.666rem 0 0 0;
   }
   &__article_text {
-    margin: 0.625rem 0;
+    margin: 0.833rem 0;
   }
   &__document {
-    padding: 0 1.25rem;
-    margin-bottom: 0.9375rem;
+    padding: 0 1.666rem;
+    margin-bottom: 1.25rem;
     &:not(:last-of-type) {
       border-bottom: 1px solid #E7E7EC;
     }
@@ -21,7 +21,7 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  margin-bottom: 0.9375rem;
+  margin-bottom: 1.25rem;
   @include media-breakpoint-up(xl) {
     flex-direction: row;
     justify-content: space-between;
@@ -30,18 +30,18 @@
 
 .document_container {
   max-width: 50%;
-  height: 3.5rem;
+  height: 4.665rem;
   display: flex;
   flex: 1;
   background-color: #F4F4F5;
-  border-radius: 0.25rem;
-  padding: 0.625rem;
+  border-radius: 3px;
+  padding: 0.833rem;
   &:not(:last-of-type) {
-    margin-right: 0.9375rem;
+    margin-right: 1.25rem;
   }
   @media screen and (max-width: 1200px) {
     max-width: 100%;
-    margin: 0 0 0.625rem 0!important;
+    margin: 0 0 0.833rem 0!important;
   }
   &__file {
     &_information {
@@ -51,31 +51,31 @@
       display: flex;
       flex: auto;
       flex-direction: column;
-      font-size: 0.75rem;
+      font-size: 1rem;
       font-weight: bold;
       @include media-breakpoint-up(md) {
         align-items: flex-start;
       }
     }
     &_icon {
-      width: 2rem;
-      margin-right: 0.6875rem;
+      width: 2.666rem;
+      margin-right: 0.916rem;
     }
     &_title {
       color: $element-additional-color;
-      font-size: 0.75rem;
+      font-size: 1rem;
       font-weight: bold;
-      margin-bottom: 0.1875rem;
+      margin-bottom: 0.25rem;
     }
     &_size {
-      font-size: 0.5625rem;
+      font-size: 0.75rem;
       font-weight: bold;
       color: #A8AABA;
     }
   }
   &__download {
-    width: 2.25rem;
-    height: 2.25rem;
+    width: 3rem;
+    height: 3rem;
     border: none;
     border-radius: 3px;
     background-color: $orange-fill-color;
@@ -90,8 +90,8 @@
       box-shadow: 0 0 0 0.1rem lighten($color: $orange-fill-color, $amount: 10);
     }
     &_icon {
-      width: 1.5rem;
-      height: 1.5rem;
+      width: 2rem;
+      height: 2rem;
     }
   }
   &__upload {
@@ -103,19 +103,20 @@
       align-items: center;
       justify-content: center;
       background-color: #F5FBFF;
-      border: 0.1rem dashed #97CDF4;
+      border: 1px dashed #97CDF4;
+      border-radius: 3px;
       cursor: pointer;
       margin-bottom: 0;
       &.dragover {
-        border: 0.1rem dashed $element-additional-color;
+        border: 1px dashed $element-additional-color;
       }
     }
     &_icon {
-      width: 2.8125rem;
-      margin-right: 0.9375rem;
+      width: 3.75rem;
+      margin-right: 1.25rem;
     }
     &_text {
-      font-size: 0.5625rem;
+      font-size: 0.75rem;
       font-weight: bold;
       color: #9294A2;
       position: relative;
@@ -126,59 +127,59 @@
         &:before {
           content: '';
           width: 1px;
-          height: 0.9375rem;
+          height: 1.25rem;
           display: inline-block;
           background-color: #9294A2;
-          margin-right: 0.25rem;
+          margin-right: 0.333rem;
         }
       }
       &.blue {
         display: block;
         color: #004ED9;
         font-weight: bold;
-        margin: 0 0.25rem;
+        margin: 0 0.333rem;
       }
     }
     &_formats {
-      font-size: 0.5625rem;
+      font-size: 0.75rem;
       text-decoration: underline;
-      margin-left: 0.25rem;
+      margin-left: 0.333rem;
       &:hover + ul {
         display: block;
       }
       &_list {
-        width: 13.125rem;
+        width: 17.5rem;
         display: none;
         position: absolute;
-        top: 1rem;
-        right: 2rem;
+        top: 1.333rem;
+        right: 2.666rem;
         background-color: $white;
-        padding: 0.9375rem 0.9375rem 1.1125rem 1.1125rem;
+        padding: 1.25rem 1.25rem 1.482rem 1.482rem;
         border: 1px solid #F6F6F6;
         border-radius: 3px;
         box-shadow: 1px 1px 5px 0 $softgray-color;
         li {
           display: flex;
           align-items: center;
-          font-size: 0.5625rem;
+          font-size: 0.75rem;
           color: $black;
           &:not(:last-of-type) {
-            margin-bottom: 0.6875rem;
+            margin-bottom: 0.916rem;
           }
           svg {
-            height: 1.25rem;
+            height: 1.666rem;
             display: block;
-            margin-right: 0.5625rem;
+            margin-right: 0.75rem;
           }
           &.documents {
             svg {
-              margin-left: -0.125rem;
+              margin-left: -0.166rem;
             }
           }
           &.media {
             svg {
-              margin-left: -0.25rem;
-              margin-right: 0.1875rem;
+              margin-left: -0.333rem;
+              margin-right: 0.25rem;
             }
           }
         }
@@ -188,22 +189,22 @@
   &__uploading {
     flex-direction: column!important;
     align-items: start!important;
-    padding: 0.5rem 0.625rem;
+    padding: 0.666rem 0.833rem;
     &_header {
       width: 100%;
       display: flex;
       justify-content: space-between;
-      margin-bottom: 0.3125rem;
+      margin-bottom: 0.416rem;
     }
     &_title {
-      font-size: 0.75rem;
+      font-size: 1rem;
       font-weight: bold;
       line-height: 1;
       color: $black;
       margin-bottom: 0;
     }
     &_cancel {
-      font-size: 0.75rem;
+      font-size: 1rem;
       font-weight: bold;
       line-height: 1;
       color: #004ED9;
@@ -218,22 +219,22 @@
     }
     &_total {
       width: 100%;
-      height: 0.25rem;
+      height: 0.333rem;
       display: block;
       position: relative;
       background-color: #E0E1EF;
       border-radius: 2px;
-      margin-bottom: 0.3125rem;
+      margin-bottom: 0.416rem;
     }
     &_uploaded {
       width: 1%;
-      height: 0.25rem;
-      border-radius: 2px;
+      height: 0.333rem;
+      border-radius: 3px;
       background-color: $element-additional-color;
     }
     &_uploaded_value {
       display: block;
-      font-size: 0.5625rem;
+      font-size: 0.75rem;
       font-weight: bold;
       color: #A8AABA;
       text-transform: uppercase;
@@ -242,30 +243,30 @@
   &__uploaded {
     background-color: #E9FBF2;
     &_icon {
-      width: 2rem;
-      margin-right: 0.75rem;
+      width: 2.666rem;
+      margin-right: 1rem;
     }
     &_title {
       color: #14BB3E;
-      font-size: 0.75rem;
+      font-size: 1rem;
       font-weight: bold;
-      margin-bottom: 0.25rem;
+      margin-bottom: 0.333rem;
     }
     &_size {
       display: block;
       color: #A8AABA;
-      font-size: 0.5625rem;
+      font-size: 0.75rem;
       font-weight: bold;
       margin-bottom: 0;
     }
     &_delete {
-      width: 1.5rem;
-      height: 1.5rem;
+      width: 2rem;
+      height: 2rem;
       background: transparent;
       border: none;
       outline: none;
       padding: 0;
-      margin: 0 0.325rem 0 auto;
+      margin: 0 0.433rem 0 auto;
     }
   }
 }
