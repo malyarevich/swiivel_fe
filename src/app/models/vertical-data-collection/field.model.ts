@@ -83,6 +83,8 @@ export interface ITypeFieldSettings {
   inputMask?: string;
   isDefaultValue?: boolean;
   defaultValue?: string;
+  //LongTextSettings
+  editorMode?: 'plain' | 'rich' | 'full'
   //DropDownListSettings
   isFullWidth?: boolean;
   fieldWidth?: number;

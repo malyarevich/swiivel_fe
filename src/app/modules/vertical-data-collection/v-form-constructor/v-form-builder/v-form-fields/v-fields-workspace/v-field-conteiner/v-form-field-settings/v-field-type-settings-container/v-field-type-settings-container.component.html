@@ -1,6 +1,8 @@
 <ng-container [ngSwitch]="inputField.type">
   <app-v-short-text-settings *ngSwitchCase="fieldTypes.shortTextField"
                              [inputField]="inputField"></app-v-short-text-settings>
+  <app-v-long-text-settings *ngSwitchCase="fieldTypes.longTextField"
+                            [inputField]="inputField"></app-v-long-text-settings>
   <app-v-drop-down-list-settings *ngSwitchCase="fieldTypes.dropDownListField"
                                  [inputField]="inputField"></app-v-drop-down-list-settings>
   <app-v-email-settings *ngSwitchCase="fieldTypes.emailField"
