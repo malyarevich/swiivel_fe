@@ -92,7 +92,20 @@ import { GeneralDirectivesModule } from '../../../utils/directives/general-direc
     OnlineFormRoutingModule,
     PdfViewerModule,
     SharedRedComponentsModule,
-    GeneralDirectivesModule
+    DynamicModule.withComponents([
+      ShortTextFieldComponent,
+      PhoneNumberFieldComponent,
+      NumberTextFieldComponent,
+      MultipleOptionsFieldComponent,
+      LongTextFieldComponent,
+      LabelFieldComponent,
+      HebrewDateFieldComponent,
+      EmptyLineFieldComponent,
+      EmailFieldComponent,
+      DropDownListFieldComponent,
+      DateTimeFieldComponent,
+      TimeFieldComponent,
+    ])
   ],
   providers: [OnlineFormService, SystemSignatureService]
 })
