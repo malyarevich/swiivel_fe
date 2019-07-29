@@ -1,5 +1,9 @@
 @import "../../styles/index.scss";
 
+:host {
+  display: block;
+}
+
 .pdf_wrapper {
   border: 3px dashed #d6d6d6;
   border-radius: 3px;

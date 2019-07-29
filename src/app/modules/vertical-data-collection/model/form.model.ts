@@ -50,6 +50,7 @@ export interface Form {
   activeSections?: IActiveSections;
   //FIXME: when back-end will complete
   formValues?: any;
+  isOpened?: boolean;
 }
 
 export interface FormSql {
