@@ -13,25 +13,9 @@ export class LongTextFieldComponent implements OnInit, OnDestroy {
   @Input() fg: FormGroup;
   @Input() validationText: string;
 
-  value: string;
-  onValueChangeSubscription: Subscription;
-
   constructor() {}
 
-  ngOnInit() {
-    if (this.field._id && !this.field.options.readonly) {
-      this.value = this.fg.get(this.field._id).value;
-      this.onValueChangeSubscription = this.fg
-        .get(this.field._id)
-        .valueChanges.subscribe(val => {
-          this.value = val;
-        });
-    }
-  }
+  ngOnInit() {}
 
-  ngOnDestroy(): void {
-    if (this.onValueChangeSubscription) {
-      this.onValueChangeSubscription.unsubscribe();
-    }
-  }
+  ngOnDestroy(): void {}
 }

@@ -1,8 +1,8 @@
-<ng-container *ngIf="field._id; else isHasError">
+<ng-container *ngIf="true">
   <div
     class="form-group app-input-container position-relative"
     [formGroup]="fg"
-    [ngClass]="{ 'app-input-fill': value && !field.options.hideLabel }"
+    [ngClass]="{ 'app-input-fill': !field.options.hideLabel }"
   >
     <label *ngIf="!field.options.hideLabel" class="app-input-label">{{
       field.name | titlecase
@@ -27,8 +27,3 @@
     ></app-error-list>
   </div>
 </ng-container>
-
-<ng-template #isHasError>
-  <p>Number Text Field has error</p>
-  <pre>{{ field | json }}</pre>
-</ng-template>

@@ -15,23 +15,33 @@ export class DateTimeFieldComponent implements OnInit, OnDestroy {
   @Input() validationText: string;
 
   value: string;
+  isLoaded: boolean = false;
   onValueChangeSubscription: Subscription;
 
   formatDate;
   constructor(private parserFormatter: NgbDateParserFormatter) {}
 
   ngOnInit() {
-    this.value = this.field._id
-      ? this.fg.get(this.field._id).value
-      : "12/12/2020";
-    this.onValueChangeSubscription = this.field._id
-      ? this.fg.get(this.field._id).valueChanges.subscribe(val => {
-          this.value = val;
-        })
-      : undefined;
-    // this.formatDate = this.value && this.value !== ""
-    //   ? this.parserFormatter.parse(this.value)
-    //   : { day: 19, month: 7, year: 2019};
+    if (this.field._id) {
+      if (!this.fg.get(this.field._id).value) {
+        this.fg.patchValue({ [this.field._id]: {"year":1970,"month":1,"day":1} });
+      }
+
+      this.value = this.fg.get(this.field._id).value;
+
+      if (!this.field.options.readonly) {
+        this.onValueChangeSubscription = this.fg
+          .get(this.field._id)
+          .valueChanges.subscribe(val => {
+            this.value = val;
+          });
+      }
+
+      if (this.field.options.readonly) {
+        this.fg.controls[this.field._id].disable();
+      }
+    }
+    this.isLoaded = true;
   }
 
   blurChanges(event) {

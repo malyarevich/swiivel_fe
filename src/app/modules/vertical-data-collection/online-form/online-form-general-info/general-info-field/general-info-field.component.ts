@@ -60,11 +60,11 @@ export class GeneralInfoFieldComponent implements OnInit, OnDestroy {
 
   initReactiveFormControl() {
     if (this.field._id) {
-      const aValidators = Validators.compose(this.getComposed());
+      const aValidators = !this.field.options.readonly ? Validators.compose(this.getComposed()) : {};
       this.fc = new FormControl(
         {
-          value: "",
-          disabled: !!this.isDisabled && this.field.options.readonly
+          value: '',
+          disabled: this.field.options.readonly || this.isDisabled
         },
         aValidators
       );
@@ -77,11 +77,11 @@ export class GeneralInfoFieldComponent implements OnInit, OnDestroy {
   getComposed() {
     let arrayValidators = [];
 
-    if (this.field.options.required && this.field.options.readonly) {
+    if (this.field.options.required) {
       arrayValidators.push(Validators.required);
     }
 
-    if (this.field.options.minFieldSize && this.field.options.readonly) {
+    if (this.field.options.minFieldSize) {
       arrayValidators.push(
         Validators.minLength(this.field.options.minFieldSize)
       );

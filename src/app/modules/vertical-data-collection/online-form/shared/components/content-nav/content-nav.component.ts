@@ -5,6 +5,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
   templateUrl: './content-nav.component.html',
   styleUrls: ['./content-nav.component.scss']
 })
+
 export class ContentNavComponent implements OnInit {
   @Input() content: any[];
   @Output() activeEmitter = new EventEmitter<string>();
@@ -15,7 +16,7 @@ export class ContentNavComponent implements OnInit {
   }
 
   ngOnInit() {
-    if(this.content.length) {
+    if (this.content.length) {
       this.setActiveId(this.content[0]._id);
     }
   }
