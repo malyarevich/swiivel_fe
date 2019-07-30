@@ -46,7 +46,7 @@ import { DynamicModule } from 'ng-dynamic-component';
 import { ErrorListComponent } from './online-form-fields/error-list/error-list.component';
 import { OnlineFormNavigationService } from './services/online-form-navigation.service';
 import { GeneralDirectivesModule } from '../../../utils/directives/general-directives.module';
-import {GeneralPipesModule} from '../../../utils/pipes/general-pipes.module';
+import { GeneralPipesModule } from '../../../utils/pipes/general-pipes.module';
 
 @NgModule({
   declarations: [
@@ -107,8 +107,10 @@ import {GeneralPipesModule} from '../../../utils/pipes/general-pipes.module';
       DropDownListFieldComponent,
       DateTimeFieldComponent,
       TimeFieldComponent,
-    ])
+    ]),
+    GeneralDirectivesModule,
+    GeneralPipesModule
   ],
-  providers: [OnlineFormService, SystemSignatureService]
+  providers: [OnlineFormService, OnlineFormNavigationService, SystemSignatureService]
 })
 export class OnlineFormModule {}
