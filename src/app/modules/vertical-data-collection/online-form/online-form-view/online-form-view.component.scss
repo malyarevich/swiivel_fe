@@ -76,26 +76,26 @@
 }
 
 .btn-link {
-  color: $element-base-color;
+  color: $element-additional-color;
 
   &:not(:disabled):not(.disabled).active, 
   &:not(:disabled):not(.disabled):active,
   &:focus,
   &:hover {
-    color: lighten($color: $element-base-color, $amount: 10);
+    color: lighten($color: $element-additional-color, $amount: 10);
     text-decoration: none;
   }
 }
 
 .btn-primary {
-  background-color: $element-base-color;
+  background-color: $element-additional-color;
   color: $white;
 
   &:not(:disabled):not(.disabled).active, 
   &:not(:disabled):not(.disabled):active,
   &:focus,
   &:hover {
-    background-color: lighten($color: $element-base-color, $amount: 5);
+    background-color: lighten($color: $element-additional-color, $amount: 5);
     text-decoration: none;
   }
 }

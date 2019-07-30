@@ -120,7 +120,7 @@ export class OnlineFormService {
 
   getOneForm(id = this.formId): Observable<any> {
     if (id) {
-      return this.http.get(`/proxy/forms/${id}`).pipe(map(response => response));
+      return this.http.get(`/proxy/forms/online/${id}`).pipe(map(response => response));
     }
     console.error("Id of form is undefined");
     return undefined;
@@ -129,7 +129,7 @@ export class OnlineFormService {
   sendForm(form: object = {}): Observable<any>  {
     if (this.formId) {
       return this.http
-        .post(`/proxy/online/${this.formId}`, form)
+        .put(`/proxy/forms/online/${this.formId}`, form)
         .pipe(map(response => response));
     }
     console.error("Id of form is undefined");

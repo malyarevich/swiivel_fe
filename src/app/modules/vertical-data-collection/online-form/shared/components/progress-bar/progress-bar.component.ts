@@ -1,11 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 
 @Component({
   selector: 'app-progress-bar',
   templateUrl: './progress-bar.component.html',
   styleUrls: ['./progress-bar.component.scss']
 })
-export class ProgressBarComponent implements OnInit {
+export class ProgressBarComponent implements OnInit, OnChanges {
   @Input() processPercent: number;
   
   radius: number = 8;
@@ -15,9 +15,13 @@ export class ProgressBarComponent implements OnInit {
   // const circumference = 2 * Math.PI * this.radius; 
   circumference = 50.2654824574; 
   dashoffset: number;
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
+    this.setStrokeDashOffset();
+  }
+
+  ngOnChanges(): void {
     this.setStrokeDashOffset();
   }
 
