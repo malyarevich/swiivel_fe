@@ -7,6 +7,7 @@ import {FormBuilder, FormGroup, FormControl, Validators} from "@angular/forms";
 import {v4 as uuid} from 'uuid';
 import {SideBarService} from "../v-side-bar/side-bar.service";
 import {dividerStyle} from "./divider";
+import {Section} from "../../../../../../models/vertical-data-collection/section.model";
 
 @Component({
   selector: 'app-v-fields-workspace',
@@ -53,6 +54,9 @@ export class VFieldsWorkspaceComponent implements OnInit, AfterViewInit {
   size = range(1  ,13);
   @Input() idSectionForDragDrop: string[];
 
+  objectKeys = Object.keys;
+  list: object;
+
   dividerStyles = dividerStyle;
 
 
@@ -64,6 +68,7 @@ export class VFieldsWorkspaceComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.list = Section.sectionWidth;
   }
 
   ngAfterViewInit(): void {

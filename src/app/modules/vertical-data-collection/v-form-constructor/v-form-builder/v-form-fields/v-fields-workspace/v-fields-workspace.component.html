@@ -214,8 +214,9 @@
                     [ngClass]="sectionAddGroup.get('sectionSize').touched&&sectionAddGroup.get('sectionSize').invalid?'is-invalid':''"
                     id="sectionSize">
               <option value=""   disabled [selected]="true">Section Width</option>
-              <option *ngFor="let width of size"
-              >{{width}}</option>
+              <option *ngFor="let key of objectKeys(list)"
+                      [value]="list[key]['type']"
+              >{{ list[key]["label"] }}</option>
             </select>
             <div class="invalid-feedback">
               Section size is required
