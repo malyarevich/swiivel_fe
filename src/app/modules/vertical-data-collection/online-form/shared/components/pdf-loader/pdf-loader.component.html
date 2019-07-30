@@ -38,7 +38,6 @@
                         [readOnly]="div.linkedField.options.readonly"
                         [required]="div.linkedField.options.required"
                         [placeholder]="div.linkedField.name | titlecase"
-                        disabled
                       />
                     </div>
                   </ng-container>
@@ -49,16 +48,15 @@
                       class="form-group app-input-container"
                       [ngClass]="{ 'app-input-fill': div.linkedField.value }"
                     >
-                      <label class="app-input-label">{{
-                        div.linkedField.name | titlecase
-                      }}</label>
+                      <label class="app-input-label">
+                        {{div.linkedField.name | titlecase}}
+                      </label>
                       <input
                         type="text"
                         aria-describedby="basic-addon2"
                         class="app-input"
                         [(ngModel)]="div.linkedField.value"
                         [placeholder]="div.linkedField.name | titlecase"
-                        disabled
                       />
                     </div>
                   </ng-container>
