@@ -6,6 +6,7 @@ import { DocumentsModel } from "./v-form-constructor/v-form-builder/documents.mo
 import { FormsPDFModel } from "./v-form-constructor/v-form-builder/formsPDF.model";
 import { TermsConditions } from "./v-form-constructor/v-form-builder/terms-conditions.model";
 import { ISubMenus } from "./v-form-constructor/v-form-publish-settings/publish-settings.model";
+import { IActiveSections } from './v-form-constructor/v-form-builder/active-section.model';
 
 export interface Form {
   _id: string;
@@ -32,6 +33,8 @@ export interface Form {
   documents?: DocumentsModel[];
   forms?: FormsPDFModel[];
   attachments?: object;
+  activeSections?: IActiveSections;
+  fieldsData: Map<string, any>;
 }
 
 export interface FormSql {
