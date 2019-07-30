@@ -1,4 +1,4 @@
-<div class="zooming">
+<div class="zooming" (click)="$event.stopPropagation()">
     <div class="pdf_wrapper">
         <ng-container *ngIf="isStartLoading && !isFinishLoading">
           <main-spinner class="spinner_box"></main-spinner>
@@ -12,7 +12,7 @@
           </div> -->
         </ng-container>
         <div class="slice-wrap m-3">
-      
+
           <ng-container *ngIf="isFinishLoading">
             <div class="fields_group">
               <div *ngFor="let div of pdf.form.fieldsPdf[page - 1]">
@@ -42,7 +42,7 @@
                       />
                     </div>
                   </ng-container>
-      
+
                   <ng-container *ngIf="isShowLinkedFieldForTemporary(div)">
                     <div
                       *ngIf="isShowLinkedFieldForTemporary(div)"
@@ -74,7 +74,7 @@
               </div>
             </div>
           </ng-container>
-      
+
           <div>
             <pdf-viewer
               [original-size]="false"
@@ -90,7 +90,7 @@
           </div>
         </div>
       </div>
-      
+
       <div *ngIf="pdf.form.numberOfPages > 1" class="pdf_container">
         <ngb-pagination
           [collectionSize]="pdf.form.numberOfPages * 10"
@@ -98,5 +98,5 @@
           aria-label="Default pagination"
         ></ngb-pagination>
       </div>
-      
-</div> 
+
+</div>

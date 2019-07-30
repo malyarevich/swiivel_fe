@@ -1,9 +1,11 @@
+import {stripBom} from "@angular-devkit/build-angular/src/angular-cli-files/utilities/strip-bom";
+
 export interface Field {
   _id: string;
   type: number;
   options?: FieldOption | any;
   constraints?: any;
-  validators?: any;
+  validators?: IFieldValidators;
   name: string;
   mapped?: string;
   title?: string;
@@ -23,8 +25,9 @@ export interface Field {
 export interface FieldOption {
   placeholder?: string,
   language?: string,
-  text?: string,
-  textPopUp?: false,
+  isSupportText?: boolean;
+  supportText?: string,
+  supportTextDisplayed?: boolean,
   required?: false,
   readonly?: false,
   hideLabel?: false,
@@ -81,6 +84,8 @@ export interface ITypeFieldSettings {
   inputMask?: string;
   isDefaultValue?: boolean;
   defaultValue?: string;
+  //LongTextSettings
+  editorMode?: 'plain' | 'rich' | 'full'
   //DropDownListSettings
   isFullWidth?: boolean;
   fieldWidth?: number;
@@ -89,12 +94,36 @@ export interface ITypeFieldSettings {
   options?: { name: string }[];
   isSelectedDefault?: boolean;
   selectedDefault?: { name: string };
-  //DropDownListSettings
+  //EmailSettings
   validateEmail?: boolean;
   confirmationTextBox?: boolean;
   emailBlocks?: boolean;
   disallowFreeAddress?: boolean;
   blockDomains?: string;
+  //PhoneNumberSettings
+  numberFormat?: ILabelValueSelect;
+  country?: ILabelValueSelect;
+  isCellphone?: boolean;
+  isVerify?: boolean;
+  isInputMask?: boolean;
+}
+
+export interface IFieldValidators {
+  isValidator: boolean;
+  rule: IFieldValidatorsRule;
+  minChar: number;
+  maxChar: number;
+  isErrorMessage: boolean;
+  isProhibitDataEntry: boolean;
+  errorText: string;
+}
+
+export interface IFieldValidatorsRule extends ILabelValueSelect {
+}
+
+export interface ILabelValueSelect {
+  label: string;
+  value: string;
 }
 
 

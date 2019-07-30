@@ -1,0 +1,11 @@
+.app-tooltip-white .tooltip-inner {
+    background-color: white;
+    max-width: 400px;
+    color: #6c757d;
+    -moz-box-shadow: 0 0 5px #ccc;
+    -webkit-box-shadow: 0 0 5px #ccc;
+    box-shadow: 0 0 5px #ccc;
+}
+.app-tooltip-white .arrow {
+    visibility:hidden;
+}
