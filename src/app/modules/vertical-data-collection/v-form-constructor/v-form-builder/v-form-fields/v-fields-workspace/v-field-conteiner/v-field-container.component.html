@@ -76,7 +76,7 @@
     <div class="col-5 row align-items-center pl-2 no-gutters">
       <div class="col d-flex justify-content-center">
         <label class="app-checkbox-container mb-0">
-          <input
+          <input [disabled]="inputField.options.readonly"
             type="checkbox" [(ngModel)]="inputField.options.required">
 
           <span class="app-checkbox-checkmark"></span>
@@ -96,7 +96,8 @@
       <div class="col d-flex justify-content-center">
         <label class="app-checkbox-container mb-0">
           <input
-            type="checkbox" [(ngModel)]="inputField.options.readonly">
+            type="checkbox" [(ngModel)]="inputField.options.readonly"
+            (ngModelChange)="onSetReadonly($event)">
 
           <span class="app-checkbox-checkmark"></span>
           Read-Only
@@ -104,7 +105,7 @@
       </div>
       <div class="col d-flex justify-content-center">
         <label class="app-checkbox-container mb-0">
-          <input
+          <input [disabled]="inputField.options.readonly"
             type="checkbox" [(ngModel)]="inputField.options.unique">
 
           <span class="app-checkbox-checkmark"></span>

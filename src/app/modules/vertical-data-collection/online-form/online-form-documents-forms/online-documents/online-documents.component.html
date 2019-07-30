@@ -53,7 +53,7 @@
             {{getDocumentName(document)}}
           </div>
           <div class="document_container__file_size">
-            230KB (2 pages)
+            {{getDocumentPages(document)}}
           </div>
         </div>
         <button
@@ -350,7 +350,7 @@
       >
         <div class="document_container__uploading_header">
           <label class="document_container__uploading_title">
-            {{selectedFile.name}}
+            {{document.selectedFile.name}}
           </label>
           <button
             (click)="onCancelUpload(document)"
@@ -363,11 +363,11 @@
           <div class="document_container__uploading_total">
             <div
               class="document_container__uploading_uploaded"
-              [ngStyle]="{width: uploadProgress}"
+              [ngStyle]="{width: (document.uploaded * 100 / document.selectedFile.size) + '%' }"
             ></div>
           </div>
           <label class="document_container__uploading_uploaded_value">
-            {{uploaded}} of {{selectedFileSize}} uploaded
+            {{document.uploaded | fileSize}} of {{document.selectedFile.size | fileSize}} uploaded
           </label>
         </div>
       </div>
@@ -412,10 +412,13 @@
         </svg>
         <div class="document_container__uploaded_file_information">
           <div class="document_container__uploaded_title">
-            {{selectedFile.name}}
+            {{document.selectedFile.name}}
           </div>
           <label class="document_container__uploaded_size">
-            {{selectedFileSize}}
+            {{document.selectedFile.size | fileSize}}
+            <ng-container *ngIf="document.countPages">
+              ({{document.countPages}} pages)
+            </ng-container>
           </label>
         </div>
         <button

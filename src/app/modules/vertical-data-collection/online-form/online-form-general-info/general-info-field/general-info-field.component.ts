@@ -12,6 +12,7 @@ import { Subscription } from "rxjs";
   templateUrl: "./general-info-field.component.html",
   styleUrls: ["./general-info-field.component.scss"]
 })
+
 export class GeneralInfoFieldComponent implements OnInit, OnDestroy {
   @Input() field: Field;
   value: string | any;

@@ -54,17 +54,20 @@
 }
 
 .zooming {
-  zoom: 0.35;
+
+  @include media-breakpoint-up(xs) {
+    zoom: 0.25;
+  }
 
   @include media-breakpoint-up(sm) {
     zoom: 0.5;
   }
 
   @include media-breakpoint-up(md) {
-    zoom: 0.75;
+    zoom: 0.6;
   }
 
-  @include media-breakpoint-up(lg) {
+  @include media-breakpoint-up(xl) {
     zoom: normal;
   }
 }

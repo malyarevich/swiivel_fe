@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../../environments/environment';
-import {Observable} from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -33,27 +33,5 @@ export class FilesService {
     const blob = new Blob([data], { type: 'application/pdf' });
     const url = window.URL.createObjectURL(blob);
     window.open(url);
-  }
-
-  public formatFileSize(bytes: number): string {
-    let val = bytes / 1024;
-    let suffix;
-    if (val < 1000) {
-      suffix = 'KB';
-    } else {
-      val = val / 1024;
-      if (val < 1000) {
-        suffix = 'MB';
-      } else {
-        val = val / 1024;
-        if (val < 1000) {
-          suffix = 'GB';
-        } else {
-          val = val / 1024;
-          suffix = 'TB';
-        }
-      }
-    }
-    return val.toFixed(2) + suffix;
   }
 }

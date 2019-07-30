@@ -1,9 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import { Form } from '../../../model/form.model';
 // import { environment } from '../../../../../../environments/environment';
 // import { PDFProgressData } from 'pdfjs-dist';
 // import { FormsDivModel } from '../../../v-form-constructor/v-form-builder/v-documents-forms/model/formsPDF.model';
 import {animate, group, state, style, transition, trigger} from '@angular/animations';
+import {Subscription} from 'rxjs';
+import {FilesService} from '../../services/files.service';
 
 @Component({
   selector: 'app-online-pdf-forms',
@@ -32,17 +34,33 @@ import {animate, group, state, style, transition, trigger} from '@angular/animat
   ]
 })
 
-export class OnlinePdfFormsComponent implements OnInit {
+export class OnlinePdfFormsComponent implements OnInit, OnDestroy {
 
   @Input() form: Form;
 
-  constructor() {}
+  constructor(
+    private fileService: FilesService
+  ) {}
+
+  uploadSubscription: Subscription;
 
   ngOnInit() {}
 
   onFileSelected($event) {
     const file = $event.target.files[0];
-    console.log(file);
+    const formData = new FormData();
+    formData.append('type', 'document');
+    formData.append('original_name', file.name);
+    formData.append('file', file, file.name);
+    this.uploadSubscription = this.fileService.uploadFileToServer(this.form._id, formData).subscribe(() => {
+      console.log(this.form);
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.uploadSubscription) {
+      this.uploadSubscription.unsubscribe();
+    }
   }
 
 }
