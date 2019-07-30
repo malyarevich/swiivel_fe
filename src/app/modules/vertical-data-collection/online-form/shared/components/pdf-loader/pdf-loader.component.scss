@@ -5,9 +5,9 @@
 }
 
 .pdf_wrapper {
-  border: 3px dashed #d6d6d6;
+  border: 1px dashed #BDBFC9;
   border-radius: 3px;
-  background-color: #f6f6f6;
+  background-color: $background-semi-wrap-color;
   display: flex;
   justify-content: center;
   margin-bottom: 1rem;
