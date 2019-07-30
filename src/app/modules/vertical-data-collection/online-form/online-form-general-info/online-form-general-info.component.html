@@ -23,12 +23,17 @@
   <div>
     <ng-container *ngIf="form.fields">
       <ng-container *ngFor="let section of sections">
-        <ng-container *ngIf="section._id === activeId">
-          <app-general-info-section
-            [section]="section"
-            [sectionId]="section._id"
-          ></app-general-info-section>
-        </ng-container>
+          <div 
+            class="app-div-animation"
+            [ngClass]="{
+              'app-div-show': section._id === activeId,
+              'app-div-hide': section._id !== activeId
+            }">
+            <app-general-info-section
+              [section]="section"
+              [sectionId]="section._id"
+            ></app-general-info-section>
+          </div>
       </ng-container>
     </ng-container>
 

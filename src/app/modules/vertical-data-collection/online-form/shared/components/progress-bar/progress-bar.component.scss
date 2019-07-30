@@ -6,12 +6,38 @@
   box-sizing: border-box;
 }
 
+.icon_wrapper {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  height: 3rem;
+  position: relative;
+  width: 2rem;
+
+}
+
+.radial_progress_box {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  position: absolute;
+}
+
+.status_icon_box {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  top: 0.55rem;
+  right: 0.5rem;
+}
+
 /*** RADIAL PROGRESS ***/
 /* Circumference = 2πr */
 /* π = 3.1415926535898 */
 /* r = 8 */
 .radial_progress {
-  height: auto;
+  height: 2.5rem;
   padding: 0;
   transform: rotate(-90deg);
   min-width: 1.5rem;
