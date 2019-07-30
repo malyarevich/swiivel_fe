@@ -106,6 +106,15 @@ export interface ITypeFieldSettings {
   isCellphone?: boolean;
   isVerify?: boolean;
   isInputMask?: boolean;
+  //NumberTextSettings
+  minValue?: number;
+  maxValue?: number;
+  numberFormat?: ILabelValueSelect;
+  decimalRange?: number;
+  isCurrency?: boolean;
+  currency?: ILabelValueSelect;
+  isDisplay?: boolean;
+  displayType?: 'slider' | 'spinner' | 'star' | 'scale';
 }
 
 export interface IFieldValidators {
