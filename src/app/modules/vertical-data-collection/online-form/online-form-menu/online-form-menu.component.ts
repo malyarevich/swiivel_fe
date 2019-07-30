@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { Form } from "../../model/form.model";
 import {
   menuItems,
   mainMenuNames,
   IMainMenuNames,
   IMenuItems
 } from "../../../../models/vertical-data-collection/v-form-constructor/online-form/menu-items";
-import { IActiveSections, IActiveSection } from "src/app/models/vertical-data-collection/v-form-constructor/v-form-builder/active-section.model";
+import { IActiveSections } from "src/app/models/vertical-data-collection/v-form-constructor/v-form-builder/active-section.model";
+import { OnlineFormNavigationService } from '../services/online-form-navigation.service';
 
 @Component({
   selector: "app-online-form-menu",
@@ -14,25 +14,23 @@ import { IActiveSections, IActiveSection } from "src/app/models/vertical-data-co
   styleUrls: ["./online-form-menu.component.scss"]
 })
 export class OnlineFormMenuComponent implements OnInit {
-  @Input() activeSections: IActiveSections;
   @Input() percents: number[];
   @Output() activeMenuItemEmitter = new EventEmitter<string>();
 
-  activeMenuList: Object;
+  activeSections: IActiveSections;
   hoveredItems = [];
 
   menuItems: IMenuItems[] = menuItems;
   mainMenuNames: IMainMenuNames = mainMenuNames;
 
-  pathIconsFolder = "../../../../../assets/images/icons/";
+  pathIconsFolder = "assets/images/icons/";
 
-  activeMenuItem: string = mainMenuNames.generalInfo;
-
-  constructor() {}
+  constructor(private onlineFormNavigationService: OnlineFormNavigationService) {}
 
   ngOnInit() {
+    this.activeSections = this.onlineFormNavigationService.getActiveSections();
+    console.log(this.activeSections);
     this.initActiveMenuList();
-    this.activeMenuItemEmitter.emit(this.activeMenuItem);
   }
 
   initActiveMenuList() {
@@ -42,16 +40,21 @@ export class OnlineFormMenuComponent implements OnInit {
         activeMenuList[key] = (this.activeSections[key]);
       }
     }
-    this.activeMenuList = activeMenuList;
+
+    this.onlineFormNavigationService.setActiveSections(<IActiveSections>activeMenuList);
+    this.onlineFormNavigationService.setActiveMenuItem(this.onlineFormNavigationService.getMenuItemNameById(0));
   }
 
-  setActiveMenuItem(menuItemName) {
-    this.activeMenuItem = menuItemName;
-    this.activeMenuItemEmitter.emit(this.activeMenuItem);
+  getActiveMenuItem(): string {
+    return this.onlineFormNavigationService.getActiveMenuItem()
+  }
+
+  setActiveMenuItem(menuItemName: string) {
+    this.onlineFormNavigationService.setActiveMenuItem(menuItemName)
   }
 
   isShowMenuItem(itemMenuName) {
-    return this.activeMenuList[itemMenuName];
+    return this.activeSections[itemMenuName].isActive;
   }
 
   setHovered(itemName) {

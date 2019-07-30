@@ -64,13 +64,13 @@ export class GeneralInfoFieldComponent implements OnInit, OnDestroy {
       const aValidators = !this.field.options.readonly ? Validators.compose(this.getComposed()) : {};
       this.fc = new FormControl(
         {
-          value: '',
+          value: this.value,
           disabled: this.field.options.readonly || this.isDisabled
         },
         aValidators
       );
       this.onlineFormService.addFormControl(this.field._id, this.fc);
-      this.onlineFormService.setFormControlValue(this.field._id, this.value);
+      // this.onlineFormService.setFormControlValue(this.field._id, this.value);
     }
     this.fg = this.onlineFormService.getFormGroup();
   }

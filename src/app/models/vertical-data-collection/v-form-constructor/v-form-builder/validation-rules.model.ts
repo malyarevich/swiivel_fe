@@ -31,7 +31,7 @@ export class ValidationRulesModel {
   ];
 
   public static dateTimeValidators = [
-    {label: 'Data', value: 'data'},
+    {label: 'Date', value: 'date'},
   ];
 
   public static timeValidators = [
@@ -47,7 +47,7 @@ export class ValidationRulesModel {
   ];
 
   public static hebrewDateValidators = [
-    {label: 'Data', value: 'data'},
+    {label: 'Date', value: 'date'},
   ];
 
   public static labelValidators = [

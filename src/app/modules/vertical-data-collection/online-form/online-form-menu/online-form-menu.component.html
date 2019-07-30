@@ -5,7 +5,7 @@
         <li
           class="online_form_menu__group_item"
           [ngClass]="
-            activeMenuItem === item.name
+            getActiveMenuItem() === item.name
               ? 'online_form_menu__group_item--active'
               : ''
           "
@@ -20,7 +20,7 @@
                   [src]="
                     pathIconsFolder +
                     item.icon +
-                    (activeMenuItem === item.name || isHovered(item.name)
+                    (getActiveMenuItem() === item.name || isHovered(item.name)
                       ? '-active'
                       : '') +
                     '.svg'
@@ -31,7 +31,7 @@
                 <p
                   class="online_form_item__title"
                   [ngClass]="[
-                    activeMenuItem === item.name
+                    getActiveMenuItem() === item.name
                       ? 'online_form_item__title--active'
                       : '',
                     isHovered(item.name) ? 'online_form_item__title--hover' : ''

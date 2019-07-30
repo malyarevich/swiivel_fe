@@ -115,6 +115,13 @@ export interface ITypeFieldSettings {
   currency?: ILabelValueSelect;
   isDisplay?: boolean;
   displayType?: 'slider' | 'spinner' | 'star' | 'scale';
+  //DateSettings
+  separator?: ILabelValueSelect;
+  dateFormat?: ILabelValueSelect;
+  monthDisplay?: ILabelValueSelect;
+  defaultDate?: ILabelValueSelect;
+  defaultDateValue?: string;
+  isSeparateFields?: boolean;
 }
 
 export interface IFieldValidators {

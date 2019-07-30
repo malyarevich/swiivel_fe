@@ -136,6 +136,7 @@ import { VLongTextSettingsComponent } from './v-form-constructor/v-form-builder/
 import { VPhoneNumberSettingsComponent } from './v-form-constructor/v-form-builder/v-form-fields/v-fields-workspace/v-field-conteiner/v-form-field-settings/v-phone-number-settings/v-phone-number-settings.component';
 import { VGeneralSettingsComponent } from './v-form-constructor/v-form-builder/v-form-fields/v-fields-workspace/v-field-conteiner/v-form-field-settings/v-general-settings/v-general-settings.component';
 import { VNumberSettingsComponent } from './v-form-constructor/v-form-builder/v-form-fields/v-fields-workspace/v-field-conteiner/v-form-field-settings/v-number-settings/v-number-settings.component';
+import { VDateSettingsComponent } from './v-form-constructor/v-form-builder/v-form-fields/v-fields-workspace/v-field-conteiner/v-form-field-settings/v-date-settings/v-date-settings.component';
 
 const routes: Routes = [
   {
@@ -305,7 +306,8 @@ const routes: Routes = [
     VLongTextSettingsComponent,
     VPhoneNumberSettingsComponent,
     VGeneralSettingsComponent,
-    VNumberSettingsComponent
+    VNumberSettingsComponent,
+    VDateSettingsComponent
   ],
   imports: [
     NgxDnDModule,

@@ -85,4 +85,11 @@ export class VFieldContainerComponent implements OnInit, OnDestroy, AfterViewIni
   ngAfterViewInit() {
     this.cd.detectChanges();
   }
+
+  onSetReadonly(event) {
+   if(event) {
+     this.inputField.options.unique = false;
+     this.inputField.options.required = false;
+   }
+  }
 }
