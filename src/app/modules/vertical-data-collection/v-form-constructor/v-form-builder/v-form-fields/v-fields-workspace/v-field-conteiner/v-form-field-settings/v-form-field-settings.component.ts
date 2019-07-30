@@ -12,7 +12,7 @@ export class VFormFieldSettingsComponent implements OnInit {
   @Input() form: Form;
   @Input() fieldTypeName: string;
 
-  tab: string = 'settings';
+  tab: string = 'general';
 
   constructor() {
   }

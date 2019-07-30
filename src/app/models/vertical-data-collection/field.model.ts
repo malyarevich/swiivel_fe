@@ -25,8 +25,9 @@ export interface Field {
 export interface FieldOption {
   placeholder?: string,
   language?: string,
-  text?: string,
-  textPopUp?: false,
+  isSupportText?: boolean;
+  supportText?: string,
+  supportTextDisplayed?: boolean,
   required?: false,
   readonly?: false,
   hideLabel?: false,
