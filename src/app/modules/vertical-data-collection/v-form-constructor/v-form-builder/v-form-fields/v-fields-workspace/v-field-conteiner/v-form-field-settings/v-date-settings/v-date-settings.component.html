@@ -1,7 +1,33 @@
 <form [formGroup]="settingsForm">
-  <div>
+  <div class="mb-3">
     <app-select-field [formControlName]="'separator'"
                       [items]="separators"
                       labelTitle="Separator"></app-select-field>
+  </div>
+  <div class="row no-gutters mb-3">
+    <div class="col-6 pr-2">
+      <app-select-field [formControlName]="'dateFormat'"
+                        [items]="dateFormats"
+                        labelTitle="Date Format"></app-select-field>
+    </div>
+    <div class="col-6 pl-2">
+      <app-select-field [formControlName]="'monthDisplay'"
+                        [items]="displayMonthes"
+                        labelTitle="Month Display as"></app-select-field>
+    </div>
+  </div>
+  <div class="row no-gutters mb-2">
+    <div class="col-6 pr-2">
+      <app-select-field [formControlName]="'defaultDate'"
+                        [items]="defaultDates"
+                        labelTitle="Default Date"></app-select-field>
+    </div>
+    <div class="col-6 pl-2" [hidden]="inputField.typeSettings.defaultDate.value !== 'custom'">
+      <app-datepicker-field [formControlName]="'defaultDateValue'"></app-datepicker-field>
+    </div>
+  </div>
+  <div>
+    <app-toggle-checkbox-field [formControlName]="'isSeparateFields'"
+                               label="Allow Date as 3 separate fields"></app-toggle-checkbox-field>
   </div>
 </form>

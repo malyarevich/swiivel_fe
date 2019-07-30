@@ -9,7 +9,7 @@ const defaultSettings: ITypeFieldSettings = {
   separator: {label: '- (Dash)', value: 'dash'},
   dateFormat:  {label: 'mm-dd-yyyy', value: 'mm-dd-yyyy'},
   monthDisplay: {label: 'January', value: 'full'},
-  defaultDate: {label: '', value: ''},
+  defaultDate: {label: 'Custom', value: 'custom'},
   defaultDateValue: '',
   isSeparateFields: false,
 };
@@ -35,7 +35,7 @@ export class VDateSettingsComponent implements OnInit {
     {label: 'yyyy-mm-dd', value: 'yyyy-mm-dd'},
   ];
 
-  monthDisplay = [
+  displayMonthes = [
     {label: '1', value: 'number'},
     {label: 'January', value: 'full'},
     {label: 'Jan', value: 'short'},
