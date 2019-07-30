@@ -12,10 +12,16 @@ export interface DocumentsModel {
   accompanyingText?: AccompanyingText;
   // dataTypeAllowed - should contain an array of allowed data types
   dataTypeAllowed?: DataTypeAllowed;
+  // selectedFile
+  selectedFile?: File;
   // fileUploading
   fileUploading?: boolean;
-  // fileUploaded
+  // uploaded
+  uploaded?: number;
+  // uploadProgress
   fileUploaded?: boolean;
+  // countPages
+  countPages?: number;
 }
 
 

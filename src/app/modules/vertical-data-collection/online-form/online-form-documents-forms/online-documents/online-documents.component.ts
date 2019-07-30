@@ -21,10 +21,6 @@ export class OnlineDocumentsComponent implements OnInit, OnDestroy {
     private detectorRef: ChangeDetectorRef
   ) {}
 
-  public selectedFile: File = null;
-  public selectedFileSize: string;
-  public uploaded: string;
-  public uploadProgress: string;
   public uploadSubscription: Subscription;
 
   ngOnInit() {}
@@ -109,26 +105,27 @@ export class OnlineDocumentsComponent implements OnInit, OnDestroy {
     const regExp = new RegExp(/\.[^.]*$/);
     const fileFormat = regExp.exec(file.name)[0];
     if (acceptedFormats.includes(fileFormat)) {
-      this.selectedFile = file;
-      this.selectedFileSize = this.fileService.formatFileSize(this.selectedFile.size);
+      document.selectedFile = file;
       document.fileUploading = true;
       const formData = new FormData();
+      formData.append('id', document.id);
       formData.append('type', 'document');
       formData.append('original_name', file.name);
-      formData.append('file', file);
+      formData.append('file', file, file.name);
       this.uploadSubscription = this.fileService.uploadFileToServer(this.form._id, formData)
         .subscribe(event => {
           if (event.type === HttpEventType.UploadProgress) {
-            this.uploaded = this.fileService.formatFileSize(event.loaded);
-            this.uploadProgress = Math.round(event.loaded * 100 / event.total) + '%';
+            document.uploaded = event.loaded;
             this.detectorRef.markForCheck();
             if (event.loaded === event.total) {
               document.fileUploading = false;
               document.fileUploaded = true;
+              this.getCountPages(document);
             }
           }
         });
     } else {
+      console.log(file);
       alert('File type does not supported');
     }
   }
@@ -139,18 +136,22 @@ export class OnlineDocumentsComponent implements OnInit, OnDestroy {
   }
 
   deleteUploadedFile(document: DocumentsModel) {
-    this.selectedFile = null;
+    document.selectedFile = null;
+    document.uploaded = null;
     document.fileUploaded = false;
   }
 
-  getCountPdfPages() {
-    const reader = new FileReader();
-    reader.readAsBinaryString(this.selectedFile);
-    reader.onloadend = () => {
-      if (typeof reader.result === 'string') {
-        return reader.result.match(new RegExp(/\/Type[\s]*\/Page[^s]/g)).length;
-      }
-    };
+  getCountPages(document: DocumentsModel) {
+    if (document.selectedFile.type === 'application/pdf') {
+      const reader = new FileReader();
+      reader.readAsBinaryString(document.selectedFile);
+      reader.onloadend = () => {
+        if (typeof reader.result === 'string') {
+          document.countPages = reader.result.match(new RegExp(/\/Type[\s]*\/Page[^s]/g)).length;
+          this.detectorRef.markForCheck();
+        }
+      };
+    }
   }
 
   getDocumentName(document: DocumentsModel): string {
@@ -158,6 +159,13 @@ export class OnlineDocumentsComponent implements OnInit, OnDestroy {
       return this.form.attachments[document.data].name;
     }
     return 'File is not exist...';
+  }
+
+  getDocumentPages(document: DocumentsModel): string {
+    if (document.data) {
+      const pages = this.form.attachments[document.data].numberOfPages;
+      return String( '(' + pages + ' pages)');
+    }
   }
 
   ngOnDestroy(): void {
