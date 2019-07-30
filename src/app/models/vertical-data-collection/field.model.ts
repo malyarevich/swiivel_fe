@@ -109,7 +109,7 @@ export interface ITypeFieldSettings {
   //NumberTextSettings
   minValue?: number;
   maxValue?: number;
-  numberFormat?: ILabelValueSelect;
+  numberType?: ILabelValueSelect;
   decimalRange?: number;
   isCurrency?: boolean;
   currency?: ILabelValueSelect;

@@ -22,7 +22,7 @@
                         [items]="numberFormat"
                         labelTitle="Format"></app-select-field>
     </div>
-    <div class="col-4 pl-2" [hidden]="inputField.typeSettings.numberFormat.value !== 'decimal'">
+    <div class="col-4 pl-2" [hidden]="inputField.typeSettings.numberType.value !== 'decimal'">
       <app-input-field [formControlName]="'decimalRange'"
                        type="number"
                        [min]="1"></app-input-field>

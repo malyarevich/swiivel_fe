@@ -7,15 +7,15 @@ import {
 import {FormBuilder, FormGroup} from "@angular/forms";
 
 const defaultSettings: ITypeFieldSettings = {
-    minValue: null,
-    maxValue: null,
-    numberFormat: {label: 'decimal', value: 'decimal'},
-    decimalRange: 3,
-    isCurrency: false,
-    currency: {label: 'United States Dollar', value: 'usd'},
-    isDisplay: true,
-    displayType: 'slider',
-  };
+  minValue: null,
+  maxValue: null,
+  numberType: {label: 'decimal', value: 'decimal'},
+  decimalRange: 3,
+  isCurrency: false,
+  currency: {label: 'United States Dollar', value: 'usd'},
+  isDisplay: true,
+  displayType: 'slider',
+};
 
 @Component({
   selector: 'app-v-number-settings',
@@ -48,7 +48,7 @@ export class VNumberSettingsComponent implements OnInit {
     this.settingsForm = this.fb.group({
       minValue: [this.inputField.typeSettings.minValue],
       maxValue: [this.inputField.typeSettings.maxValue],
-      numberFormat: [this.inputField.typeSettings.numberFormat.value],
+      numberType: [this.inputField.typeSettings.numberType.value],
       decimalRange: [this.inputField.typeSettings.decimalRange],
       isCurrency: [this.inputField.typeSettings.isCurrency],
       currency: [this.inputField.typeSettings.currency.value],
@@ -60,8 +60,8 @@ export class VNumberSettingsComponent implements OnInit {
   onChangesSettingsForm() {
     Object.keys(this.settingsForm.controls).forEach(key => {
       this.settingsForm.get(key).valueChanges.subscribe((val) => {
-          this.inputField.typeSettings[key] = val;
-        });
+        this.inputField.typeSettings[key] = val;
+      });
     });
   }
 }
