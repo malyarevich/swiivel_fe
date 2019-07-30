@@ -9,4 +9,6 @@
                         [inputField]="inputField"></app-v-email-settings>
   <app-v-phone-number-settings *ngSwitchCase="fieldTypes.phoneNumberField"
                                [inputField]="inputField"></app-v-phone-number-settings>
+  <app-v-number-settings *ngSwitchCase="fieldTypes.numberTextField"
+                               [inputField]="inputField"></app-v-number-settings>
 </ng-container>

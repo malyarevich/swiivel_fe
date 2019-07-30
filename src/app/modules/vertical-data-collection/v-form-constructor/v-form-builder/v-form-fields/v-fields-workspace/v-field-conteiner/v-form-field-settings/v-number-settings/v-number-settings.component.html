@@ -1,0 +1,72 @@
+<form [formGroup]="settingsForm">
+  <p class="app-text-small app-text-extra-bold">FIELD VALUES</p>
+  <div class="row no-gutters mb-4">
+    <div class="col-6 pr-2">
+      <app-input-field [formControlName]="'minValue'"
+                       label="Minimum"
+                       type="number"
+                       [min]="1"></app-input-field>
+    </div>
+    <div class="col-6 pl-2">
+      <app-input-field [formControlName]="'maxValue'"
+                       label="Maximum"
+                       type="number"
+                       [min]="1"></app-input-field>
+    </div>
+  </div>
+  <hr>
+  <p class="app-text-small app-text-extra-bold">NUMBER FORMAT</p>
+  <div class="row no-gutters mb-3">
+    <div class="col-8 pr-2">
+      <app-select-field [formControlName]="'numberType'"
+                        [items]="numberFormat"
+                        labelTitle="Format"></app-select-field>
+    </div>
+    <div class="col-4 pl-2" [hidden]="inputField.typeSettings.numberType.value !== 'decimal'">
+      <app-input-field [formControlName]="'decimalRange'"
+                       type="number"
+                       [min]="1"></app-input-field>
+    </div>
+  </div>
+  <div>
+    <app-toggle-checkbox-field [formControlName]="'isCurrency'" label="Currency"></app-toggle-checkbox-field>
+  </div>
+  <div class="mb-4">
+    <app-select-field [formControlName]="'currency'"
+                      [items]="currency"></app-select-field>
+  </div>
+  <hr class="mb-1">
+  <div class="mb-2">
+    <app-toggle-checkbox-field [formControlName]="'isDisplay'" label="DISPLAY"></app-toggle-checkbox-field>
+  </div>
+
+  <div class="row no-gutters">
+    <div class="col">
+      <label class="app-radio-container">Slider
+        <input type="radio" name="displayType" [formControlName]="'displayType'" value="slider">
+        <span class="app-radio-checkmark"></span>
+      </label>
+    </div>
+    <div class="col">
+      <label class="app-radio-container">Spinner
+        <input type="radio" name="displayType" [formControlName]="'displayType'" value="spinner">
+        <span class="app-radio-checkmark"></span>
+      </label>
+    </div>
+  </div>
+  <div class="row no-gutters">
+    <div class="col">
+      <label class="app-radio-container">Star Rating
+        <input type="radio" name="displayType" [formControlName]="'displayType'" value="star">
+        <span class="app-radio-checkmark"></span>
+      </label>
+    </div>
+    <div class="col">
+      <label class="app-radio-container">Scale Rating
+        <input type="radio" name="displayType" [formControlName]="'displayType'" value="scale">
+        <span class="app-radio-checkmark"></span>
+      </label>
+    </div>
+  </div>
+</form>
+
