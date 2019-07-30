@@ -8,7 +8,7 @@ import { Subscription } from "rxjs";
   templateUrl: "./empty-line-field.component.html",
   styleUrls: ["./empty-line-field.component.scss"]
 })
-export class EmptyLineFieldComponent implements OnInit, OnDestroy {
+export class EmptyLineFieldComponent implements OnInit {
   @Input() field: Field;
   @Input() fg: FormGroup;
   @Input() validationText: string;
@@ -17,5 +17,4 @@ export class EmptyLineFieldComponent implements OnInit, OnDestroy {
 
   ngOnInit() {}
 
-  ngOnDestroy(): void {}
 }

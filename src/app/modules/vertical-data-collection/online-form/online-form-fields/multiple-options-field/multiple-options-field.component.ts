@@ -8,7 +8,7 @@ import { FormGroup } from "@angular/forms";
   templateUrl: "./multiple-options-field.component.html",
   styleUrls: ["./multiple-options-field.component.scss"]
 })
-export class MultipleOptionsFieldComponent implements OnInit, OnDestroy {
+export class MultipleOptionsFieldComponent implements OnInit {
   @Input() field: Field;
   @Input() fg: FormGroup;
   @Input() validationText: string;
@@ -25,5 +25,4 @@ export class MultipleOptionsFieldComponent implements OnInit, OnDestroy {
 
   ngOnInit() {}
 
-  ngOnDestroy(): void {}
 }

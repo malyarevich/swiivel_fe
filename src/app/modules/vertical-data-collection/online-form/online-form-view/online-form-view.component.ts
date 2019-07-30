@@ -78,16 +78,15 @@ export class OnlineFormViewComponent implements OnInit {
   saveAndGoNext() {
     this.saveForm().subscribe(
       res => {
-        if (res.status === 0 && res.errors) {
-          //TODO:? catch errors
-          console.log(res);
-          this.onlineFormService.updateServerInfo();
-        } else {
-          this.goNextStep();
-        }
+        this.goNextStep();
       },
       error => {
-        console.error(error);
+        if (error.error.status === 0 && error.error.errors && error.error.errors.fields) {
+          //TODO:? catch errors
+          console.log(error.error.errors.fields);
+          this.onlineFormService.updateServerFormErrors(error.error.errors.fields);
+        }
+        // console.error(error);
       },
       () => {
         this.isDisabledSaveButton = false;
@@ -100,11 +99,6 @@ export class OnlineFormViewComponent implements OnInit {
     const form = this.onlineFormService.getFormValues();
     console.log(this.fg);
     console.log(JSON.stringify({ fieldsData: form }));
-
-    if (!this.fg.valid) {
-      return new Observable();
-    }
-
     return this.onlineFormService.sendForm({ fieldsData: form });
   }
 

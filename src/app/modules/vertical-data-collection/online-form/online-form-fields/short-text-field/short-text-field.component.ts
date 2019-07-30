@@ -8,7 +8,7 @@ import { Subscription } from "rxjs";
   templateUrl: "./short-text-field.component.html",
   styleUrls: ["./short-text-field.component.scss"]
 })
-export class ShortTextFieldComponent implements OnInit, OnDestroy {
+export class ShortTextFieldComponent implements OnInit {
   @Input() field: Field;
   @Input() fg: FormGroup;
   @Input() validationText: string;
@@ -17,5 +17,4 @@ export class ShortTextFieldComponent implements OnInit, OnDestroy {
 
   ngOnInit() {}
 
-  ngOnDestroy(): void {}
 }

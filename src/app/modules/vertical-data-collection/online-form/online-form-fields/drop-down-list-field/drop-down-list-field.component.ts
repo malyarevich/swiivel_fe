@@ -8,7 +8,7 @@ import { Subscription } from "rxjs";
   templateUrl: "./drop-down-list-field.component.html",
   styleUrls: ["./drop-down-list-field.component.scss"]
 })
-export class DropDownListFieldComponent implements OnInit, OnDestroy {
+export class DropDownListFieldComponent implements OnInit {
   @Input() field: Field;
   @Input() fg: FormGroup;
   @Input() validationText: string;
@@ -25,5 +25,4 @@ export class DropDownListFieldComponent implements OnInit, OnDestroy {
 
   ngOnInit() {}
 
-  ngOnDestroy(): void {}
 }

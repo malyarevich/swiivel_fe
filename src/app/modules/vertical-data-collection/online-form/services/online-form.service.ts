@@ -46,11 +46,8 @@ export class OnlineFormService {
     this.onChangeServerValidations.emit(list);
   }
 
-  updateServerInfo() {
-    this.changeServerValidations({
-      "bf1ba789-cbce-49c0-a5ad-71138ecb2d31": "Some Error from server...",
-      "cf814c1c-dfb7-454c-983d-b75bab17984e": "Some another Error from server!"
-    });
+  updateServerFormErrors(errorList) {
+    this.changeServerValidations(errorList);
   }
 
   verifyForm() {

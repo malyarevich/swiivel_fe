@@ -8,7 +8,7 @@ import { Subscription } from "rxjs";
   templateUrl: "./long-text-field.component.html",
   styleUrls: ["./long-text-field.component.scss"]
 })
-export class LongTextFieldComponent implements OnInit, OnDestroy {
+export class LongTextFieldComponent implements OnInit {
   @Input() field: Field;
   @Input() fg: FormGroup;
   @Input() validationText: string;
@@ -17,5 +17,4 @@ export class LongTextFieldComponent implements OnInit, OnDestroy {
 
   ngOnInit() {}
 
-  ngOnDestroy(): void {}
 }

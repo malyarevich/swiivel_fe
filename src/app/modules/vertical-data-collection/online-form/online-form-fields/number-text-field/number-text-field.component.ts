@@ -8,7 +8,7 @@ import { Subscription } from "rxjs";
   templateUrl: "./number-text-field.component.html",
   styleUrls: ["./number-text-field.component.scss"]
 })
-export class NumberTextFieldComponent implements OnInit, OnDestroy {
+export class NumberTextFieldComponent implements OnInit {
   @Input() field: Field;
   @Input() fg: FormGroup;
   @Input() validationText: string;
@@ -17,5 +17,4 @@ export class NumberTextFieldComponent implements OnInit, OnDestroy {
 
   ngOnInit() {}
 
-  ngOnDestroy(): void {}
 }

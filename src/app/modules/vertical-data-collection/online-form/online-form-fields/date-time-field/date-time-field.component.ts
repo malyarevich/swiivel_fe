@@ -9,7 +9,7 @@ import { Subscription } from "rxjs";
   templateUrl: "./date-time-field.component.html",
   styleUrls: ["./date-time-field.component.scss"]
 })
-export class DateTimeFieldComponent implements OnInit, OnDestroy {
+export class DateTimeFieldComponent implements OnInit {
   @Input() field: Field;
   @Input() fg: FormGroup;
   @Input() validationText: string;
@@ -55,9 +55,4 @@ export class DateTimeFieldComponent implements OnInit, OnDestroy {
       : "12/12/2020";
   }
 
-  ngOnDestroy(): void {
-    if (this.onValueChangeSubscription) {
-      this.onValueChangeSubscription.unsubscribe();
-    }
-  }
 }

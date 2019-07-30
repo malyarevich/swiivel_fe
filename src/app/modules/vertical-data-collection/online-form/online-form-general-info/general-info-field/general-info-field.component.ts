@@ -99,13 +99,15 @@ export class GeneralInfoFieldComponent implements OnInit, OnDestroy {
   initListener() {
     this.validSubscription = this.onlineFormService.onChangeServerValidations.subscribe(
       list => {
-        this.validationText = list[this.field._id]
-          ? list[this.field._id]
-          : undefined;
+        this.validationText = list[this.field._id];
+
+        this.fieldInputs = {
+          field: this.field,
+          fg: this.fg,
+          validationText: this.validationText
+        };
       }
     );
-    //FIXME: remove this hook!!!
-    this.onlineFormService.updateServerInfo();
   }
 
   ngOnDestroy(): void {

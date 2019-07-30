@@ -8,7 +8,7 @@ import { Subscription } from "rxjs";
   templateUrl: "./label-field.component.html",
   styleUrls: ["./label-field.component.scss"]
 })
-export class LabelFieldComponent implements OnInit, OnDestroy {
+export class LabelFieldComponent implements OnInit {
   @Input() field: Field;
   @Input() fg: FormGroup;
   @Input() validationText: string;
@@ -17,5 +17,4 @@ export class LabelFieldComponent implements OnInit, OnDestroy {
 
   ngOnInit() {}
 
-  ngOnDestroy(): void {}
 }

@@ -57,8 +57,8 @@ export class OnlineFormGeneralInfoComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.initSections();
     this.activeId = this.sections[0]._id;
-    // TODO: count percent
-    // this.setPercent(0);
+    // TODO: init count percent
+    this.setPercent(0);
   }
 
   ngAfterViewInit() {
@@ -66,6 +66,9 @@ export class OnlineFormGeneralInfoComponent implements OnInit, AfterViewInit {
     this.onValueChangeSubscription = this.fg.valueChanges.subscribe((controlList) => {
       this.calcPercent(controlList);
     });
+    if(this.fg.valid) {
+      this.setPercent(100);
+    }
   }
 
   initSections() {

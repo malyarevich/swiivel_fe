@@ -8,7 +8,7 @@ import { Subscription } from "rxjs";
   templateUrl: "./time-field.component.html",
   styleUrls: ["./time-field.component.scss"]
 })
-export class TimeFieldComponent implements OnInit, OnDestroy {
+export class TimeFieldComponent implements OnInit {
   @Input() field: Field;
   @Input() fg: FormGroup;
   @Input() validationText: string;
@@ -17,5 +17,4 @@ export class TimeFieldComponent implements OnInit, OnDestroy {
 
   ngOnInit() {}
 
-  ngOnDestroy(): void {}
 }

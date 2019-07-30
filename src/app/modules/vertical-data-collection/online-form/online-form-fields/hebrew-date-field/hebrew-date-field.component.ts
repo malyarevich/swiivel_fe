@@ -11,6 +11,7 @@ import { Field } from "../../model/field.model";
 import { FormGroup } from "@angular/forms";
 import { Subscription } from "rxjs";
 
+//TODO: Refactoring of the class
 @Component({
   selector: "app-hebrew-date-field",
   templateUrl: "./hebrew-date-field.component.html",
