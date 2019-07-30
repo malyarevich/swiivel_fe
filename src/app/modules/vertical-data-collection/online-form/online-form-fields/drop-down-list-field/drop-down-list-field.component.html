@@ -13,7 +13,7 @@
       class="app-input form-control"
       [ngClass]="{ validation_error: !!validationText }"
     >
-      <option [ngValue]="''" selected>{{ field.name }}</option>
+      <option [ngValue]="undefined" selected>{{ field.name }}</option>
       <option *ngFor="let item of field.options.items || list" [ngValue]="item">
         {{ item }}
       </option>

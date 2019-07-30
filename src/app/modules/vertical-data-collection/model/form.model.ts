@@ -49,7 +49,6 @@ export interface Form {
   attachments?: object;
   activeSections?: IActiveSections;
   //FIXME: when back-end will complete
-  formValues?: any;
   isOpened?: boolean;
 }
 

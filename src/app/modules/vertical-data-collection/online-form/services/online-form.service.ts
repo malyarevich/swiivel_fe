@@ -14,7 +14,7 @@ import { PhoneNumberFieldComponent } from "../online-form-fields/phone-number-fi
 import { HebrewDateFieldComponent } from "../online-form-fields/hebrew-date-field/hebrew-date-field.component";
 import { LabelFieldComponent } from "../online-form-fields/label-field/label-field.component";
 import { EmptyLineFieldComponent } from "../online-form-fields/empty-line-field/empty-line-field.component";
-import { Form } from "../../model/form.model";
+import { Form } from 'src/app/models/vertical-data-collection/form.model';
 import { environment } from "../../../../../environments/environment";
 import { FormControl, FormBuilder, FormGroup } from "@angular/forms";
 
@@ -88,7 +88,7 @@ export class OnlineFormService {
   }
 
   setFormValues(formValues: Map<string, any>) {
-    this.formValues = formValues;
+    this.formValues = formValues ? new Map(Object.entries(formValues)) : this.formValues;
   }
 
   getFormValues(): any {
@@ -120,7 +120,10 @@ export class OnlineFormService {
 
   getOneForm(id = this.formId): Observable<any> {
     if (id) {
-      return this.http.get(`/proxy/forms/online/${id}`).pipe(map(response => response));
+      return this.http.get(`/proxy/forms/online/${id}`).pipe(map((response) => {
+        this.setFormValues(response['data']['fieldsData']);
+        return response
+      }));
     }
     console.error("Id of form is undefined");
     return undefined;
@@ -136,10 +139,7 @@ export class OnlineFormService {
     return undefined;
   }
 
-  initOneForm(form: Form) {
+  initOneForm() {
     this.fg = new FormGroup({});
-    if (form.formValues) {
-      this.fg.patchValue(form.formValues);
-    }
   }
 }

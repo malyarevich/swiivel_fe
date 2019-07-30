@@ -44,7 +44,7 @@ import { GeneralInfoGroupComponent } from './online-form-general-info/general-in
 import { GeneralInfoFieldComponent } from './online-form-general-info/general-info-field/general-info-field.component';
 import { DynamicModule } from 'ng-dynamic-component';
 import { ErrorListComponent } from './online-form-fields/error-list/error-list.component';
-import { GeneralDirectivesModule } from '../../../utils/directives/general-directives.module';
+import { OnlineFormNavigationService } from './services/online-form-navigation.service';
 
 @NgModule({
   declarations: [
@@ -107,6 +107,6 @@ import { GeneralDirectivesModule } from '../../../utils/directives/general-direc
       TimeFieldComponent,
     ])
   ],
-  providers: [OnlineFormService, SystemSignatureService]
+  providers: [OnlineFormService, SystemSignatureService, OnlineFormNavigationService]
 })
 export class OnlineFormModule {}
