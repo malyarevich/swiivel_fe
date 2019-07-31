@@ -1,4 +1,4 @@
-import { Injectable, Type, EventEmitter, Output } from "@angular/core";
+import { Injectable, EventEmitter, Output } from "@angular/core";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { HttpClient } from "@angular/common/http";
@@ -14,9 +14,26 @@ import { PhoneNumberFieldComponent } from "../online-form-fields/phone-number-fi
 import { HebrewDateFieldComponent } from "../online-form-fields/hebrew-date-field/hebrew-date-field.component";
 import { LabelFieldComponent } from "../online-form-fields/label-field/label-field.component";
 import { EmptyLineFieldComponent } from "../online-form-fields/empty-line-field/empty-line-field.component";
-import { Form } from 'src/app/models/vertical-data-collection/form.model';
-import { environment } from "../../../../../environments/environment";
-import { FormControl, FormBuilder, FormGroup } from "@angular/forms";
+import { FormControl, FormBuilder, FormGroup, AbstractControl } from "@angular/forms";
+
+export const hasRequiredField = (abstractControl: AbstractControl): boolean => {
+  if (abstractControl.validator) {
+      const validator = abstractControl.validator({}as AbstractControl);
+      if (validator && validator.required) {
+          return true;
+      }
+  }
+  if (abstractControl['controls']) {
+      for (const controlName in abstractControl['controls']) {
+          if (abstractControl['controls'][controlName]) {
+              if (hasRequiredField(abstractControl['controls'][controlName])) {
+                  return true;
+              }
+          }
+      }
+  }
+  return false;
+};
 
 // TODO: Move this guy in any other place
 export type IFormField =

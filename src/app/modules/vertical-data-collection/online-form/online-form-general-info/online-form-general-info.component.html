@@ -5,7 +5,6 @@
 
   <!--SubTitle-->
   <h3 class="sub_title">
-    <!-- <i class="far fa-clock fa-sm mr-1"></i> -->
     ~{{ getTime() }} minutes
   </h3>
 </div>
@@ -14,7 +13,7 @@
 <div class="content_section__nav">
   <app-content-nav
     [content]="sections"
-    (activeEmitter)="onActive($event)"
+    [parentMenuItemId]="mainMenuNames.generalInfo"
   ></app-content-nav>
 </div>
 
@@ -26,8 +25,8 @@
           <div 
             class="app-div-animation"
             [ngClass]="{
-              'app-div-show': section._id === activeId,
-              'app-div-hide': section._id !== activeId
+              'app-div-show': section._id === activeSectionId,
+              'app-div-hide': section._id !== activeSectionId
             }">
             <app-general-info-section
               [section]="section"
@@ -36,14 +35,5 @@
           </div>
       </ng-container>
     </ng-container>
-
-    <!-- <app-general-info-parents
-        *ngIf="activeId === 'parents'"
-        [form]="form"
-      ></app-general-info-parents>
-      <app-general-info-students
-        *ngIf="activeId === 'students'"
-        [form]="form"
-      ></app-general-info-students> -->
   </div>
 </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 import { Form } from "src/app/models/vertical-data-collection/form.model";
@@ -10,19 +10,24 @@ import {
   IMainMenuNames,
   IMenuItems
 } from "../../../../models/vertical-data-collection/v-form-constructor/online-form/menu-items";
-import { Observable } from "rxjs";
+import { Observable, Subscription } from "rxjs";
 import { OnlineFormNavigationService } from "../services/online-form-navigation.service";
+import { IActiveSections } from "src/app/models/vertical-data-collection/v-form-constructor/v-form-builder/active-section.model";
 
 @Component({
   selector: "app-online-form-view",
   templateUrl: "./online-form-view.component.html",
   styleUrls: ["./online-form-view.component.scss"]
 })
-export class OnlineFormViewComponent implements OnInit {
+export class OnlineFormViewComponent implements OnInit, OnDestroy {
   form: Form;
   activeSection: string;
   fg: FormGroup;
 
+  activeSections: IActiveSections;
+  sectionListOfMenuItems: Array<object[]>;
+  onActiveMenuItemSubscription: Subscription;
+  onChangeSectionListOfMenuItemsSubscription: Subscription;
   isDisabledSaveButton: boolean;
 
   percents: number[];
@@ -39,9 +44,15 @@ export class OnlineFormViewComponent implements OnInit {
   ngOnInit() {
     this.percents = [];
     this.getForm();
-    this.onlineFormNavigationService.onActiveMenuItem.subscribe(
+    this.onActiveMenuItemSubscription = this.onlineFormNavigationService.onActiveMenuItem.subscribe(
       menuItemName => {
         this.activeSection = menuItemName;
+      }
+    );
+    this.onChangeSectionListOfMenuItemsSubscription = this.onlineFormNavigationService.onChangeSectionListOfMenuItems.subscribe(
+      sectionListOfMenuItems => {
+        this.sectionListOfMenuItems = sectionListOfMenuItems;
+        sectionListOfMenuItems.length === Object.keys(this.activeSections).length;
       }
     );
   }
@@ -50,16 +61,39 @@ export class OnlineFormViewComponent implements OnInit {
     this.onlineFormService.setFromId(this.route.snapshot.paramMap.get("id"));
     this.onlineFormService.getOneForm().subscribe((form: Form) => {
       this.form = form["data"];
-      this.onlineFormNavigationService.setActiveSections(
-        this.form["activeSections"]
-      );
+      
+      console.log(this.form);
+
+      this.activeSections = this.getFilteredSections();
+      this.onlineFormNavigationService.setActiveSections(this.activeSections);
+
       this.initForm();
     });
+  }
+
+  getFilteredSections(): IActiveSections {
+    //FilterByActive
+    let activeMenuList = {};
+    for (let key in this.form["activeSections"]) {
+      if (
+        this.form["activeSections"][key] &&
+        this.form["activeSections"][key].isActive
+      ) {
+        activeMenuList[key] = this.form["activeSections"][key];
+      }
+    }
+    return <IActiveSections>activeMenuList;
   }
 
   initForm(): void {
     this.onlineFormService.initOneForm();
     this.fg = this.onlineFormService.getFormGroup();
+  }
+
+  isStartInitMenu(): boolean {
+    return this.sectionListOfMenuItems
+      && this.activeSections
+      && this.sectionListOfMenuItems.length === Object.keys(this.activeSections).length
   }
 
   onAction(actionType) {
@@ -71,8 +105,8 @@ export class OnlineFormViewComponent implements OnInit {
     }
   }
 
-  goBackStep() {
-    //TODO: previous step in iterator
+  goPreviousStep() {
+    this.onlineFormNavigationService.previousStep();
   }
 
   saveAndGoNext() {
@@ -81,10 +115,15 @@ export class OnlineFormViewComponent implements OnInit {
         this.goNextStep();
       },
       error => {
-        if (error.error.status === 0 && error.error.errors && error.error.errors.fields) {
+        if (
+          error.error.status === 0 &&
+          error.error.errors &&
+          error.error.errors.fields
+        ) {
           //TODO:? catch errors
-          console.log(error.error.errors.fields);
-          this.onlineFormService.updateServerFormErrors(error.error.errors.fields);
+          this.onlineFormService.updateServerFormErrors(
+            error.error.errors.fields
+          );
         }
         // console.error(error);
       },
@@ -97,8 +136,8 @@ export class OnlineFormViewComponent implements OnInit {
   saveForm(): Observable<any> {
     this.isDisabledSaveButton = true;
     const form = this.onlineFormService.getFormValues();
-    console.log(this.fg);
-    console.log(JSON.stringify({ fieldsData: form }));
+    // console.log(this.fg);
+    // console.log(JSON.stringify({ fieldsData: form }));
     return this.onlineFormService.sendForm({ fieldsData: form });
   }
 
@@ -112,5 +151,14 @@ export class OnlineFormViewComponent implements OnInit {
 
   setPercent(itemName: string, percent: number) {
     this.percents[itemName] = percent;
+  }
+
+  ngOnDestroy(): void {
+    if (this.onActiveMenuItemSubscription) {
+      this.onActiveMenuItemSubscription.unsubscribe();
+    }
+    if (this.onChangeSectionListOfMenuItemsSubscription) {
+      this.onChangeSectionListOfMenuItemsSubscription.unsubscribe();
+    }
   }
 }

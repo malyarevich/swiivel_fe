@@ -15,6 +15,7 @@ import {
   IMenuItems
 } from "../../../../models/vertical-data-collection/v-form-constructor/online-form/menu-items";
 import {TuitionContractSignature} from "../../../../models/vertical-data-collection/v-form-constructor/v-form-builder/tuition-contract.model";
+import { OnlineFormNavigationService } from '../services/online-form-navigation.service';
 
 @Component({
   selector: "app-online-form-tuition-contract",
@@ -35,16 +36,33 @@ export class OnlineFormTuitionContractComponent implements OnInit {
 
   signature: TuitionContractSignature;
 
+  sections: object[];
+  activeSectionId: string;
+
   constructor(
-    private readonly systemSignatureService: SystemSignatureService
+    private readonly systemSignatureService: SystemSignatureService,
+    private onlineFormNavigationService: OnlineFormNavigationService
   ) {}
 
   ngOnInit() {
     this.signature = cloneDeep(this.form.tuitionContract.signature);
+    this.initSections();
+    this.onlineFormNavigationService.onActiveSectionItem.subscribe((newActiveSectionId) => {
+      this.activeSectionId = newActiveSectionId;
+    });
     // TODO: count percent
     this.percent = 0;
     this.onSetPercent.emit(this.percent);
   }
+
+  initSections() {
+    if (this.form.tuitionContract) {
+      this.sections = [{_id: this.form.tuitionContract.sectionName, name: this.form.tuitionContract.sectionName}];
+    } else {
+      this.sections = [{_id: "tuitionContract", name: "Tuition Contract section"}];
+    }
+  }
+
   getTime() {
     return this.menuItems.find(o => o.name === this.mainMenuNames.tuitionContract)
       .time;

@@ -6,58 +6,132 @@
     ></app-online-form-nav>
 
     <div class="container-fluid app-of-background online_form_container">
-      <div class="online_form_container__nav">
-        <app-online-form-menu
-          [percents]="percents"
-        ></app-online-form-menu>
+      <div class="online_form_container__nav" *ngIf="isStartInitMenu()">
+        <app-online-form-menu [percents]="percents"></app-online-form-menu>
       </div>
 
       <div class="online_form_container__wrapper">
-        <div class="online_form_container__content" *ngIf="mainMenuNames">
-          <app-online-form-general-info
-            *ngIf="activeSection === mainMenuNames.generalInfo"
-            [form]="form"
-            (onSetPercent)="setPercent(mainMenuNames.generalInfo, $event)"
-          >
-          </app-online-form-general-info>
-          <app-online-form-documents-forms
-            [form]="form"
-            (onSetPercent)="setPercent(mainMenuNames.documentsForms, $event)"
-            *ngIf="activeSection === mainMenuNames.documentsForms"
-          ></app-online-form-documents-forms>
-          <app-online-form-consent
-            [form]="form"
-            (onSetPercent)="setPercent(mainMenuNames.consentInfo, $event)"
-            *ngIf="activeSection === mainMenuNames.consentInfo"
-          ></app-online-form-consent>
-          <app-online-form-payment-settings
-            [form]="form"
-            (onSetPercent)="setPercent(mainMenuNames.paymentSettings, $event)"
-            *ngIf="activeSection === mainMenuNames.paymentSettings"
-          ></app-online-form-payment-settings>
-          <app-online-form-payment
-            [form]="form"
-            (onSetPercent)="setPercent(mainMenuNames.payment, $event)"
-            *ngIf="activeSection === mainMenuNames.payment"
-          ></app-online-form-payment>
-          <app-online-form-terms-conditions
-            [form]="form"
-            (onSetPercent)="setPercent(mainMenuNames.termsConditions, $event)"
-            *ngIf="activeSection === mainMenuNames.termsConditions"
-          ></app-online-form-terms-conditions>
-          <app-online-form-tuition-contract
-            [form]="form"
-            (onSetPercent)="setPercent(mainMenuNames.tuitionContract, $event)"
-            *ngIf="activeSection === mainMenuNames.tuitionContract"
-          ></app-online-form-tuition-contract>
+        <div
+          class="online_form_container__content"
+          *ngIf="mainMenuNames && activeSections"
+        >
+          <ng-container *ngIf="activeSections[mainMenuNames.generalInfo]">
+            <div
+              class="app-div-animation"
+              [ngClass]="{
+                'app-div-show': activeSection === mainMenuNames.generalInfo,
+                'app-div-hide': activeSection !== mainMenuNames.generalInfo
+              }"
+            >
+              <app-online-form-general-info
+                [form]="form"
+                (onSetPercent)="setPercent(mainMenuNames.generalInfo, $event)"
+              >
+              </app-online-form-general-info>
+            </div>
+          </ng-container>
+
+          <ng-container *ngIf="activeSections[mainMenuNames.documentsForms]">
+            <div
+              class="app-div-animation"
+              [ngClass]="{
+                'app-div-show': activeSection === mainMenuNames.documentsForms,
+                'app-div-hide': activeSection !== mainMenuNames.documentsForms
+              }"
+            >
+              <app-online-form-documents-forms
+                [form]="form"
+                (onSetPercent)="
+                  setPercent(mainMenuNames.documentsForms, $event)
+                "
+              ></app-online-form-documents-forms>
+            </div>
+          </ng-container>
+
+          <ng-container *ngIf="activeSections[mainMenuNames.consentInfo]">
+            <div
+              class="app-div-animation"
+              [ngClass]="{
+                'app-div-show': activeSection === mainMenuNames.consentInfo,
+                'app-div-hide': activeSection !== mainMenuNames.consentInfo
+              }"
+            >
+              <app-online-form-consent
+                [form]="form"
+                (onSetPercent)="setPercent(mainMenuNames.consentInfo, $event)"
+              ></app-online-form-consent>
+            </div>
+          </ng-container>
+
+          <ng-container *ngIf="activeSections[mainMenuNames.paymentSettings]">
+            <div
+              class="app-div-animation"
+              [ngClass]="{
+                'app-div-show': activeSection === mainMenuNames.paymentSettings,
+                'app-div-hide': activeSection !== mainMenuNames.paymentSettings
+              }"
+            >
+              <app-online-form-payment-settings
+                [form]="form"
+                (onSetPercent)="
+                  setPercent(mainMenuNames.paymentSettings, $event)
+                "
+              ></app-online-form-payment-settings>
+            </div>
+          </ng-container>
+
+          <ng-container *ngIf="activeSections[mainMenuNames.payment]">
+            <div
+              class="app-div-animation"
+              [ngClass]="{
+                'app-div-show': activeSection === mainMenuNames.payment,
+                'app-div-hide': activeSection !== mainMenuNames.payment
+              }"
+            >
+              <app-online-form-payment
+                [form]="form"
+                (onSetPercent)="setPercent(mainMenuNames.payment, $event)"
+              ></app-online-form-payment>
+            </div>
+          </ng-container>
+
+          <ng-container *ngIf="activeSections[mainMenuNames.termsConditions]">
+            <div
+              class="app-div-animation"
+              [ngClass]="{
+                'app-div-show': activeSection === mainMenuNames.termsConditions,
+                'app-div-hide': activeSection !== mainMenuNames.termsConditions
+              }"
+            >
+              <app-online-form-terms-conditions
+                [form]="form"
+                (onSetPercent)="
+                  setPercent(mainMenuNames.termsConditions, $event)
+                "
+              ></app-online-form-terms-conditions>
+            </div>
+          </ng-container>
+
+          <ng-container *ngIf="activeSections[mainMenuNames.tuitionContract]">
+            <div
+              class="app-div-animation"
+              [ngClass]="{
+                'app-div-show': activeSection === mainMenuNames.tuitionContract,
+                'app-div-hide': activeSection !== mainMenuNames.tuitionContract
+              }"
+            >
+              <app-online-form-tuition-contract
+                [form]="form"
+                (onSetPercent)="
+                  setPercent(mainMenuNames.tuitionContract, $event)
+                "
+              ></app-online-form-tuition-contract>
+            </div>
+          </ng-container>
         </div>
 
         <div class="online_form_container__control_block">
-          <button 
-            type="button" 
-            class="btn btn-link" 
-            (click)="goBackStep()"
-          >
+          <button type="button" class="btn btn-link" (click)="goPreviousStep()">
             Go back
           </button>
           <button

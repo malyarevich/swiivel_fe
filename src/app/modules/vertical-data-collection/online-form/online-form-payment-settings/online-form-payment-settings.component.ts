@@ -1,4 +1,11 @@
-import { Component, Input, OnInit, ViewEncapsulation, Output, EventEmitter } from "@angular/core";
+import {
+  Component,
+  Input,
+  OnInit,
+  ViewEncapsulation,
+  Output,
+  EventEmitter
+} from "@angular/core";
 import { cloneDeep } from "lodash";
 import { Form } from "../../model/form.model";
 import { E_SIGNATURE_TYPES, SIGNATURE_TYPES } from "../../../../enums";
@@ -11,6 +18,7 @@ import {
   IMainMenuNames,
   IMenuItems
 } from "../../../../models/vertical-data-collection/v-form-constructor/online-form/menu-items";
+import { OnlineFormNavigationService } from "../services/online-form-navigation.service";
 
 @Component({
   selector: "app-online-form-payment-settings",
@@ -31,15 +39,37 @@ export class OnlineFormPaymentSettingsComponent implements OnInit {
   // signature: PaymentSettingsSignature;
   signature: any;
 
+  sections: object[];
+  activeSectionId: string;
+
   constructor(
-    private readonly systemSignatureService: SystemSignatureService
+    private readonly systemSignatureService: SystemSignatureService,
+    private onlineFormNavigationService: OnlineFormNavigationService
   ) {}
 
   ngOnInit() {
     this.signature = cloneDeep(this.form.paymentSettings.signature);
+    this.initSections();
+    this.onlineFormNavigationService.onActiveSectionItem.subscribe(
+      newActiveSectionId => {
+        this.activeSectionId = newActiveSectionId;
+      }
+    );
     // TODO: count percent
     this.percent = 100;
     this.onSetPercent.emit(this.percent);
+  }
+
+  initSections() {
+    if (this.form.paymentSettings && this.form.paymentSettings.paymentSettingsItems.length > 0) {
+      this.sections = Object.values(
+        this.form.paymentSettings.paymentSettingsItems
+      ).map(item => {
+        return { _id: item.id, name: item.title };
+      });
+    } else {
+      this.sections = [{ _id: "paymentSettings", name: "Payment Settings section" }];
+    }
   }
 
   getTime() {

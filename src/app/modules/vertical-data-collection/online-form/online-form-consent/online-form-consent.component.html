@@ -13,8 +13,8 @@
 <!-- Content Nav -->
 <div class="content_section__nav">
   <app-content-nav
-    [content]="consents"
-    (activeEmitter)="onActiveConsent($event)"
+    [content]="sections"
+    [parentMenuItemId]="mainMenuNames.consentInfo"
   ></app-content-nav>
 </div>
 

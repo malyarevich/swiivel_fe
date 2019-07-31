@@ -11,6 +11,7 @@ import {
   IMenuItems
 } from "../../../../models/vertical-data-collection/v-form-constructor/online-form/menu-items";
 import {TermsConditionsSignature} from "../../../../models/vertical-data-collection/v-form-constructor/v-form-builder/terms-conditions.model";
+import { OnlineFormNavigationService } from '../services/online-form-navigation.service';
 
 @Component({
   selector: "app-online-form-terms-conditions",
@@ -30,15 +31,33 @@ export class OnlineFormTermsConditionsComponent implements OnInit {
 
   signature: TermsConditionsSignature;
 
+  sections: object[];
+  activeSectionId: string;
+
   constructor(
-    private readonly systemSignatureService: SystemSignatureService
+    private readonly systemSignatureService: SystemSignatureService,
+    private onlineFormNavigationService: OnlineFormNavigationService
   ) {}
 
   ngOnInit() {
     this.signature = cloneDeep(this.form.termsConditions.signature);
+    this.initSections();
+    this.onlineFormNavigationService.onActiveSectionItem.subscribe((newActiveSectionId) => {
+      this.activeSectionId = newActiveSectionId;
+    });
     // TODO: count percent
     this.percent = 0;
     this.onSetPercent.emit(this.percent);
+  }
+
+  initSections() {
+    if (this.form.termsConditions && this.form.termsConditions.termsConditionsItems.length > 0) {
+      this.sections = Object.values(this.form.termsConditions.termsConditionsItems).map((item) => {
+        return {_id: item.id, name: item.title }
+      });
+    } else {
+      this.sections = [{_id: "termsConditions", name: "Terms & Conditions section"}];
+    }
   }
 
   getTime() {

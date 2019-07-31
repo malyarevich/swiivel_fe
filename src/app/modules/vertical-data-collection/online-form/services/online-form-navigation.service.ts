@@ -11,12 +11,22 @@ import { IActiveSections } from "src/app/models/vertical-data-collection/v-form-
 
 @Injectable()
 export class OnlineFormNavigationService {
-  private activeSections: IActiveSections;
-  private activeMenuItem: string;
+  @Output() onActiveSectionItem: EventEmitter<string> = new EventEmitter();
   @Output() onActiveMenuItem: EventEmitter<string> = new EventEmitter();
+  @Output() onSetActiveMenuItems: EventEmitter<IActiveSections> = new EventEmitter();
+  @Output() onChangeSectionListOfMenuItems: EventEmitter<Array<object[]>> = new EventEmitter();
+  private activeSections: IActiveSections;
+  //page like a General Information or Documents&Forms:
+  private activeMenuItem: string;
+  private activeMenuItemIndex: number;
+  //tab (section in form builder):
+  private activeSectionItem: string;
+  private activeSectionItemIndex: number;
+  private sectionListOfMenuItems: Array<object[]> = [];
 
   setActiveSections(activeSections: IActiveSections) {
     this.activeSections = activeSections;
+    this.onSetActiveMenuItems.emit(this.activeSections);
   }
 
   getActiveSections(): IActiveSections {
@@ -25,6 +35,7 @@ export class OnlineFormNavigationService {
 
   setActiveMenuItem(activeMenuItem: string) {
     this.activeMenuItem = activeMenuItem;
+    this.activeMenuItemIndex = this.getMenuItemIndexById(activeMenuItem);
     this.onActiveMenuItem.emit(this.activeMenuItem);
   }
 
@@ -32,12 +43,10 @@ export class OnlineFormNavigationService {
     return this.activeMenuItem;
   }
 
-  getMenuItemNameById(index: number): string {
+  getMenuItemNameByIndex(index: number): string {
     if (index > 0 && index < Object.keys(this.activeSections).length) {
       return Object.keys(this.activeSections)[index];
     } else {
-      console.log(Object.keys(this.activeSections));
-      console.log(index);
       if (Object.keys(this.activeSections).length > 0) {
         return Object.keys(this.activeSections)[0];
       } else {
@@ -47,12 +56,124 @@ export class OnlineFormNavigationService {
   }
 
   getActiveMenuItemIndex(): number {
-    return Object.keys(this.activeSections).findIndex((item) => {
-      return item === this.activeMenuItem;
-    })
+    return this.activeMenuItemIndex;
+  }
+
+  getMenuItemIndexById(id: string): number {
+    return Object.keys(this.activeSections).findIndex(item => {
+      return item === id;
+    });
+  }
+
+  getSectionItemIndexById(menuIndex: number, sectionId: string): number {
+    return this.sectionListOfMenuItems[menuIndex].findIndex((item) => {
+      return item['_id'] === sectionId;
+    });
+  }
+
+  setSectionItemOfMenuItems(menuId: string, sections: object[]) {
+    this.sectionListOfMenuItems[this.getMenuItemIndexById(menuId)] = sections;
+    this.onChangeSectionListOfMenuItems.emit(this.sectionListOfMenuItems);
+  }
+
+  getActiveSectionItem(): string {
+    return this.activeSectionItem;
+  }
+
+  setActiveSectionItem(activeSectionItem: string) {
+    this.activeSectionItem = activeSectionItem;
+    this.activeSectionItemIndex = this.getSectionItemIndexById(
+      this.activeMenuItemIndex,
+      activeSectionItem
+    );
+    this.onActiveSectionItem.emit(activeSectionItem);
+  }
+
+  setFirstMenuItem() {
+    this.setActiveMenuItem(
+      this.getMenuItemNameByIndex(0)
+    );
+  }
+
+  getSectionItemIdByIndex(menuIndex: number, sectionIndex: number): string {
+    return this.sectionListOfMenuItems[menuIndex][sectionIndex]['_id'];
+  }
+
+  nextMenuItem() {
+    this.setActiveMenuItem(
+      this.getMenuItemNameByIndex(this.activeMenuItemIndex + 1)
+    );
+  }
+
+  previousMenuItem() {
+    this.setActiveMenuItem(
+      this.getMenuItemNameByIndex(this.activeMenuItemIndex - 1)
+    );
+  }
+
+  setFirstSectionItem() {
+    this.setActiveSectionItem(
+      this.getSectionItemIdByIndex(
+        this.activeMenuItemIndex, 0)
+    );
+  }
+
+  setLastSectionItem() {
+    this.setActiveSectionItem(
+      this.getSectionItemIdByIndex(
+        this.activeMenuItemIndex, this.getLastSectionIndex())
+    );
+  }
+
+  nextSectionItem() {
+    const NEXT_INDEX = this.activeSectionItemIndex + 1;
+    this.setActiveSectionItem(
+      this.getSectionItemIdByIndex(
+        this.activeMenuItemIndex,
+        NEXT_INDEX
+      )
+    );
+  }
+
+  previousSectionItem() {
+    this.setActiveSectionItem(
+      this.getSectionItemIdByIndex(
+        this.activeMenuItemIndex,
+        (this.activeSectionItemIndex - 1)
+      )
+    );
+  }
+
+  getLastMenuIndex(): number {
+    return this.sectionListOfMenuItems.length - 1;
+  }
+
+  getLastSectionIndex(): number {
+    return this.sectionListOfMenuItems[this.activeMenuItemIndex].length - 1;
   }
 
   nextStep() {
-    this.setActiveMenuItem(this.getMenuItemNameById(this.getActiveMenuItemIndex() + 1))
+    if (this.activeSectionItemIndex !== this.getLastSectionIndex()) {
+      this.nextSectionItem();
+    } else {
+      if (this.activeMenuItemIndex !== this.getLastMenuIndex()) {
+        this.nextMenuItem();
+        this.setFirstSectionItem();
+      } else {
+        this.setFirstMenuItem();
+        this.setFirstSectionItem();
+      }
+    }
+  }
+
+  previousStep() {
+    if (this.activeSectionItemIndex !== 0) {
+      this.previousSectionItem();
+    } else {
+      if (this.activeMenuItemIndex !== 0) {
+        this.previousMenuItem();
+        this.setLastSectionItem();
+      }
+    }
   }
 }

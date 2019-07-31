@@ -1,28 +1,51 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  OnDestroy
+} from "@angular/core";
+import { OnlineFormNavigationService } from "../../../services/online-form-navigation.service";
+import { Subscription } from "rxjs";
 
 @Component({
-  selector: 'app-content-nav',
-  templateUrl: './content-nav.component.html',
-  styleUrls: ['./content-nav.component.scss']
+  selector: "app-content-nav",
+  templateUrl: "./content-nav.component.html",
+  styleUrls: ["./content-nav.component.scss"]
 })
-
-export class ContentNavComponent implements OnInit {
+export class ContentNavComponent implements OnInit, OnDestroy {
   @Input() content: any[];
-  @Output() activeEmitter = new EventEmitter<string>();
+  @Input() parentMenuItemId: string;
 
+  onSetActiveIdSubscription: Subscription;
   activeId: string;
 
-  constructor() {
-  }
+  constructor(
+    private onlineFormNavigationService: OnlineFormNavigationService
+  ) {}
 
   ngOnInit() {
-    if (this.content.length) {
-      this.setActiveId(this.content[0]._id);
-    }
+    this.onlineFormNavigationService.setSectionItemOfMenuItems(
+      this.parentMenuItemId,
+      this.content
+    );
+    // if (this.content.length) {
+    //   this.setActiveId(this.content[0]._id);
+    // }
+    this.onSetActiveIdSubscription = this.onlineFormNavigationService.onActiveSectionItem.subscribe(
+      (activeId: string) => {
+        this.activeId = activeId;
+      }
+    );
   }
 
   setActiveId(id) {
     this.activeId = id;
-    this.activeEmitter.emit(this.activeId);
+    this.onlineFormNavigationService.setActiveSectionItem(this.activeId);
+  }
+
+  ngOnDestroy(): void {
+    if (this.onSetActiveIdSubscription) {
+      this.onSetActiveIdSubscription.unsubscribe();
+    }
   }
 }
