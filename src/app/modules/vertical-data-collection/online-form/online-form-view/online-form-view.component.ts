@@ -73,7 +73,7 @@ export class OnlineFormViewComponent
     })
     setTimeout(() => {
       this.goPreviousStep();
-    }, 0);
+    }, 500);
   }
 
   getForm(): void {
