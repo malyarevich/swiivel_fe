@@ -19,7 +19,7 @@
       }"
       [placeholder]="field.name | titlecase"
     />
-    <span class="error_icon" [ngClass]="{ validation_error: !!validationText }">
+    <span class="error_icon" [ngClass]="{ validation_error: !!validationText }" (click)="validationText = ''">
       <i class="fas fa-times fa-xs"></i>
     </span>
 
