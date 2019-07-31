@@ -41,6 +41,7 @@
         [nestedLevel]="nestedLevel+1"
         [section]="section"
         [style]="field.mapped==''"
+        (deleteCustom)="deleteCustomField($event)"
       >
       </app-v-side-bar-field>
     </div>
@@ -112,7 +113,7 @@
         </div>
       </div>
       <div class="row mt-2">
-        <div class="col form-group app-input-container"
+        <div class="col-6 form-group app-input-container"
              [ngClass]="{'app-input-fill': fieldRoleID.value}">
           <label for="fieldRole" class="app-input-label">Field Role</label>
           <select class="app-input form-control"
@@ -131,28 +132,28 @@
             Field relation is required!
           </div>
         </div>
-        <div class="col form-group app-input-container"
-             [ngClass]="{'app-input-fill': sectionRelateTypeID.value}">
-          <label for="sectionRelate" class="app-input-label">Section Relate</label>
-          <select class="app-input form-control"
-                  name="sectionRelate"
-                  #sectionRelateTypeID
-                  formControlName="sectionRelate"
-                  [ngClass]="fieldsAddGroup.get('sectionRelate').touched&&fieldsAddGroup.get('sectionRelate').invalid?'is-invalid':''"
-                  id="sectionRelate">
-            <option *ngIf="form.fields.length>0" value="" disabled [selected]="true">Section Relate</option>
-            <option *ngIf="form.fields.length==0" value="" disabled [selected]="true">Please add at least one section
-            </option>
-            <ng-container *ngFor="let section of form.fields">
-            <option *ngIf="section.type===114"
-            >{{section.name}}
-            </option>
-            </ng-container>
-          </select>
-          <div class="invalid-feedback">
-            Field section is required!
-          </div>
-        </div>
+        <!--<div class="col form-group app-input-container"-->
+             <!--[ngClass]="{'app-input-fill': sectionRelateTypeID.value}">-->
+          <!--<label for="sectionRelate" class="app-input-label">Section Relate</label>-->
+          <!--<select class="app-input form-control"-->
+                  <!--name="sectionRelate"-->
+                  <!--#sectionRelateTypeID-->
+                  <!--formControlName="sectionRelate"-->
+                  <!--[ngClass]="fieldsAddGroup.get('sectionRelate').touched&&fieldsAddGroup.get('sectionRelate').invalid?'is-invalid':''"-->
+                  <!--id="sectionRelate">-->
+            <!--<option *ngIf="form.fields.length>0" value="" disabled [selected]="true">Section Relate</option>-->
+            <!--<option *ngIf="form.fields.length==0" value="" disabled [selected]="true">Please add at least one section-->
+            <!--</option>-->
+            <!--<ng-container *ngFor="let section of form.fields">-->
+            <!--<option *ngIf="section.type===114"-->
+            <!--&gt;{{section.name}}-->
+            <!--</option>-->
+            <!--</ng-container>-->
+          <!--</select>-->
+          <!--<div class="invalid-feedback">-->
+            <!--Field section is required!-->
+          <!--</div>-->
+        <!--</div>-->
       </div>
       <div class="row mt-4">
         <div class="col-2 offset-8">

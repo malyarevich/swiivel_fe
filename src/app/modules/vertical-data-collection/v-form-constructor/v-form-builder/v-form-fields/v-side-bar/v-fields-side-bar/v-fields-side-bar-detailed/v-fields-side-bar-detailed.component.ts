@@ -28,7 +28,7 @@ export class VFieldsSideBarDetailedComponent implements OnInit,  OnDestroy {
       ])}),
     fieldType: new FormControl(null, Validators.required),
     fieldRole: new FormControl(null, Validators.required),
-    sectionRelate: new FormControl(null, Validators.required),
+    // sectionRelate: new FormControl(null, Validators.required),
   });
 
   @Input() idSectionForDragDrop: string[];
@@ -126,14 +126,21 @@ export class VFieldsSideBarDetailedComponent implements OnInit,  OnDestroy {
     newField.name = this.fieldsAddGroup.value.fieldsName;
     newField._id = uuid();
     newField.prefix = this.fieldsAddGroup.value.fieldRole;
-    this.form.fields.forEach(section=>{
-      if(section.name == this.fieldsAddGroup.value.sectionRelate){
-        section.fields.push(newField);
-      }
-    });
+    // this.form.fields.forEach(section=>{
+    //   if(section.name == this.fieldsAddGroup.value.sectionRelate){
+    //     section.fields.push(newField);
+    //   }
+    // });
+    this.section.fields.push(newField);
 
     this.fieldsAddGroup.reset();
     modal.close();
+  }
+
+  deleteCustomField(name) {
+    this.section.fields = this.section.fields.filter((field) => {
+      return field.name !== name;
+    });
   }
 
   modalClose(modal){

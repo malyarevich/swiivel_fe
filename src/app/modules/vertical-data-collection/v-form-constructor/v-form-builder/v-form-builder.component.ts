@@ -255,7 +255,7 @@ export class VFormBuilderComponent implements OnInit, OnDestroy {
     this.draftId = this.formId + "_form-builder";
     this.loadMasterFees();
     this.loadBasicFields();
-    this.loadSideBar();
+    // this.loadSideBar();
     this.loadSideBarNew();
     this.loadMappedFields();
     this.constructorIsSavingService.setIsSaving(this.isDataSaving);
@@ -314,7 +314,8 @@ export class VFormBuilderComponent implements OnInit, OnDestroy {
       data => {
         this.newSideBar = data;
       },
-      error => console.log(error, "error")
+      error => console.log(error, "error"),
+      () => this.formInit()
     );
   }
 
@@ -333,6 +334,7 @@ export class VFormBuilderComponent implements OnInit, OnDestroy {
       this.formsPDF = form.forms || [];
       this.attachments = form.attachments || {};
       this.activeSections = form.activeSections || activeSectionsDefault;
+      this.newSideBar = form.sidebar.length ? form.sidebar : this.newSideBar;
     }
   }
 
@@ -351,7 +353,7 @@ export class VFormBuilderComponent implements OnInit, OnDestroy {
         () => {
           this.generalInfoIsValidService.setIsValid(true);
           if (!isEmpty(this.fields)) {
-            this.initFormFieldsToSideBar(this.sideBarFields, this.fields);
+            this.initFormFieldsToSideBar(this.newSideBar, this.fields);
           }
 
           if (!isEmpty(this.masterFees)) {
@@ -383,7 +385,7 @@ export class VFormBuilderComponent implements OnInit, OnDestroy {
       documents: this.documents,
       forms: this.formsPDF,
       name: this.formName,
-      sidebar: this.sideBarFields,
+      sidebar: this.newSideBar,
       tuitionContract: this.tuitionContract,
       consentInfo: this.consentInfo,
       termsConditions: this.termsConditions,
