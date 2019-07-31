@@ -84,7 +84,7 @@
 * {
   font-family: "NunitoSans-Regular", "Helvetica";
   font-size: 12px;
-  
+
   &:focus {
     outline: 0 solid transparent;
   }
@@ -114,4 +114,14 @@ body {
   * {
     font-size: 16px;
   }
+}
+
+/**
+* MacOs Select Fix
+*/
+
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
