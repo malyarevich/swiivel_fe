@@ -56,7 +56,7 @@ export class OnlineFormViewComponent
       sectionListOfMenuItems => {
         this.sectionListOfMenuItems = sectionListOfMenuItems;
         // sectionListOfMenuItems.length === Object.keys(this.activeSections).length;
-        this.goPreviousStep();
+        this.goFirstStep();
       }
     );
   }
@@ -67,12 +67,12 @@ export class OnlineFormViewComponent
     this.isStartMenu$ = this.onlineFormNavigationService.isStartMenu;
     this.isStartMenu$.subscribe(() => {
       if (this.isFirst) {
-        this.goPreviousStep();
+        this.goFirstStep();
         this.isFirst = false;
       }
-    })
+    });
     setTimeout(() => {
-      this.goPreviousStep();
+      this.goFirstStep();
     }, 0);
   }
 
@@ -127,9 +127,25 @@ export class OnlineFormViewComponent
         this.goBack();
     }
   }
-
+  goFirstStep() {
+    if (
+      this.sectionListOfMenuItems &&
+      this.activeSections &&
+      Object.keys({ ...this.sectionListOfMenuItems }).length ===
+        Object.keys(this.activeSections).length
+    ) {
+      this.onlineFormNavigationService.setFirstMenuItem();
+      this.onlineFormNavigationService.setFirstSectionItem();
+    }
+    
+  }
   goPreviousStep() {
-    if (this.sectionListOfMenuItems && this.sectionListOfMenuItems.length > 0) {
+    if (
+      this.sectionListOfMenuItems &&
+      this.activeSections &&
+      Object.keys({ ...this.sectionListOfMenuItems }).length ===
+        Object.keys(this.activeSections).length
+    ) {
       this.onlineFormNavigationService.previousStep();
     }
   }
