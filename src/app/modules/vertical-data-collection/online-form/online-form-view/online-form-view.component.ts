@@ -19,7 +19,8 @@ import { IActiveSections } from "src/app/models/vertical-data-collection/v-form-
   templateUrl: "./online-form-view.component.html",
   styleUrls: ["./online-form-view.component.scss"]
 })
-export class OnlineFormViewComponent implements OnInit, AfterViewInit, OnDestroy {
+export class OnlineFormViewComponent
+  implements OnInit, AfterViewInit, OnDestroy {
   form: Form;
   activeSection: string;
   fg: FormGroup;
@@ -30,6 +31,7 @@ export class OnlineFormViewComponent implements OnInit, AfterViewInit, OnDestroy
   onChangeSectionListOfMenuItemsSubscription: Subscription;
   isDisabledSaveButton: boolean;
   isStartMenu$: Observable<boolean>;
+  isFirst: boolean = true;
 
   percents: number[];
   menuItems: IMenuItems[] = menuItems;
@@ -54,7 +56,7 @@ export class OnlineFormViewComponent implements OnInit, AfterViewInit, OnDestroy
       sectionListOfMenuItems => {
         this.sectionListOfMenuItems = sectionListOfMenuItems;
         // sectionListOfMenuItems.length === Object.keys(this.activeSections).length;
-      this.onlineFormNavigationService.previousStep();
+        this.goPreviousStep();
       }
     );
   }
@@ -63,8 +65,14 @@ export class OnlineFormViewComponent implements OnInit, AfterViewInit, OnDestroy
     //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
     //Add 'implements AfterViewInit' to the class.
     this.isStartMenu$ = this.onlineFormNavigationService.isStartMenu;
+    this.isStartMenu$.subscribe(() => {
+      if (this.isFirst) {
+        this.goPreviousStep();
+        this.isFirst = false;
+      }
+    })
     setTimeout(() => {
-      this.onlineFormNavigationService.previousStep();
+      this.goPreviousStep();
     }, 0);
   }
 
@@ -79,7 +87,7 @@ export class OnlineFormViewComponent implements OnInit, AfterViewInit, OnDestroy
       this.onlineFormNavigationService.setActiveSections(this.activeSections);
 
       this.initForm();
-      this.onlineFormNavigationService.previousStep();
+      this.goPreviousStep();
     });
   }
 
@@ -121,7 +129,9 @@ export class OnlineFormViewComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   goPreviousStep() {
-    this.onlineFormNavigationService.previousStep();
+    if (this.sectionListOfMenuItems && this.sectionListOfMenuItems.length > 0) {
+      this.onlineFormNavigationService.previousStep();
+    }
   }
 
   saveAndGoNext() {
