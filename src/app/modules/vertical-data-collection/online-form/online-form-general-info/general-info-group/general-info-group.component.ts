@@ -8,6 +8,7 @@ import { Field } from 'src/app/models/vertical-data-collection/field.model';
 })
 export class GeneralInfoGroupComponent implements OnInit {
   @Input() group: Field;
+  @Input() groupCaption: string; 
 
   groups: Field[];
   fields: Field[];
@@ -15,6 +16,7 @@ export class GeneralInfoGroupComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    this.groupCaption = this.groupCaption ? `${this.groupCaption}   /   ${this.group.name}` : this.group.name;
     this.initNestedGroups();
     this.initFields();
   }

@@ -11,7 +11,10 @@
     <select
       [formControlName]="field._id"
       class="app-input form-control"
-      [ngClass]="{ validation_error: !!validationText }"
+      [ngClass]="{ 
+        validation_required: this.field.options.required,
+        validation_error: !!validationText
+      }"
     >
       <option [ngValue]="undefined" selected>{{ field.name }}</option>
       <option *ngFor="let item of field.options.items || list" [ngValue]="item">
@@ -20,6 +23,10 @@
     </select>
     <span class="error_icon" [ngClass]="{ validation_error: !!validationText }">
       <i class="fas fa-times fa-xs"> </i>
+    </span>
+
+    <span class="validation_icon" [ngClass]="{ validation_required: this.field.options.required }">
+        <i class="fas fa-asterisk fa-xs"></i>
     </span>
 
     <app-error-list

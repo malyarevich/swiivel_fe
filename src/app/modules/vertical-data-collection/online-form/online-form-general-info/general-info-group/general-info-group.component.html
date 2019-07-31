@@ -2,7 +2,7 @@
 <h2
   class="content_section__article_title content_section__article_title--left pt-3 pb-2"
 >
-  {{ group.name }}
+  {{ groupCaption }}
 </h2>
 <!-- <div class="pl-3"> -->
 <div>
@@ -16,7 +16,10 @@
 
   <div class="section__groups">
     <ng-container *ngFor="let group of groups">
-      <app-general-info-group [group]="group"></app-general-info-group>
+      <app-general-info-group
+        [group]="group"
+        [groupCaption]="groupCaption"
+      ></app-general-info-group>
     </ng-container>
   </div>
 </div>
