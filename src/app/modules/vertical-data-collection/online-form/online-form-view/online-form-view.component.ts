@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, AfterViewInit } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 import { Form } from "src/app/models/vertical-data-collection/form.model";
@@ -19,7 +19,7 @@ import { IActiveSections } from "src/app/models/vertical-data-collection/v-form-
   templateUrl: "./online-form-view.component.html",
   styleUrls: ["./online-form-view.component.scss"]
 })
-export class OnlineFormViewComponent implements OnInit, OnDestroy {
+export class OnlineFormViewComponent implements OnInit, AfterViewInit, OnDestroy {
   form: Form;
   activeSection: string;
   fg: FormGroup;
@@ -29,6 +29,7 @@ export class OnlineFormViewComponent implements OnInit, OnDestroy {
   onActiveMenuItemSubscription: Subscription;
   onChangeSectionListOfMenuItemsSubscription: Subscription;
   isDisabledSaveButton: boolean;
+  isStartMenu$: Observable<boolean>;
 
   percents: number[];
   menuItems: IMenuItems[] = menuItems;
@@ -52,9 +53,19 @@ export class OnlineFormViewComponent implements OnInit, OnDestroy {
     this.onChangeSectionListOfMenuItemsSubscription = this.onlineFormNavigationService.onChangeSectionListOfMenuItems.subscribe(
       sectionListOfMenuItems => {
         this.sectionListOfMenuItems = sectionListOfMenuItems;
-        sectionListOfMenuItems.length === Object.keys(this.activeSections).length;
+        // sectionListOfMenuItems.length === Object.keys(this.activeSections).length;
+      this.onlineFormNavigationService.previousStep();
       }
     );
+  }
+
+  ngAfterViewInit(): void {
+    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
+    //Add 'implements AfterViewInit' to the class.
+    this.isStartMenu$ = this.onlineFormNavigationService.isStartMenu;
+    // setTimeout(() => {
+    //   this.onlineFormNavigationService.previousStep();
+    // }, 0);
   }
 
   getForm(): void {
@@ -68,6 +79,7 @@ export class OnlineFormViewComponent implements OnInit, OnDestroy {
       this.onlineFormNavigationService.setActiveSections(this.activeSections);
 
       this.initForm();
+      this.onlineFormNavigationService.previousStep();
     });
   }
 
@@ -90,10 +102,13 @@ export class OnlineFormViewComponent implements OnInit, OnDestroy {
     this.fg = this.onlineFormService.getFormGroup();
   }
 
-  isStartInitMenu(): boolean {
-    return this.sectionListOfMenuItems
-      && this.activeSections
-      && this.sectionListOfMenuItems.length === Object.keys(this.activeSections).length
+  isStartInitMenu(): boolean | undefined {
+    let isStartInitMenu: boolean = false;
+    if (this.sectionListOfMenuItems && this.activeSections) {
+      isStartInitMenu = this.sectionListOfMenuItems.length === Object.keys(this.activeSections).length;
+      return isStartInitMenu;
+    }
+    return;
   }
 
   onAction(actionType) {

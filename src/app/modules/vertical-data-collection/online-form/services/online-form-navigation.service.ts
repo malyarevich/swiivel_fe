@@ -1,5 +1,5 @@
 import { Injectable, Type, EventEmitter, Output } from "@angular/core";
-import { Observable } from "rxjs";
+import { Observable, BehaviorSubject } from "rxjs";
 import { map } from "rxjs/operators";
 import {
   menuItems,
@@ -23,7 +23,12 @@ export class OnlineFormNavigationService {
   private activeSectionItem: string;
   private activeSectionItemIndex: number;
   private sectionListOfMenuItems: Array<object[]> = [];
+  private isBothLoaded = new BehaviorSubject<boolean>(false);
 
+  get isStartMenu() {
+    return this.isBothLoaded.asObservable();
+  }
+  
   setActiveSections(activeSections: IActiveSections) {
     this.activeSections = activeSections;
     this.onSetActiveMenuItems.emit(this.activeSections);
@@ -74,6 +79,9 @@ export class OnlineFormNavigationService {
   setSectionItemOfMenuItems(menuId: string, sections: object[]) {
     this.sectionListOfMenuItems[this.getMenuItemIndexById(menuId)] = sections;
     this.onChangeSectionListOfMenuItems.emit(this.sectionListOfMenuItems);
+    if(this.sectionListOfMenuItems && this.activeSections && this.sectionListOfMenuItems.length === Object.keys(this.activeSections).length) {
+      this.isBothLoaded.next(true);
+    }
   }
 
   getActiveSectionItem(): string {
