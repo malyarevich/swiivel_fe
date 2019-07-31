@@ -7,12 +7,12 @@
 
     <div class="container-fluid app-of-background online_form_container">
       <div class="online_form_container__nav">
-        <ng-container *ngIf="(isStartMenu$ | async)">
-        
-        <app-online-form-menu
-          [percents]="percents"
-          [isStartMenu]="(isStartMenu$ | async)"
-        ></app-online-form-menu></ng-container>
+        <ng-container *ngIf="isStartMenu$ | async">
+          <app-online-form-menu
+            [percents]="percents"
+            [isStartMenu]="isStartMenu$ | async"
+          ></app-online-form-menu
+        ></ng-container>
       </div>
 
       <div class="online_form_container__wrapper">

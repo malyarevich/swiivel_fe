@@ -72,7 +72,7 @@ export class OnlineFormViewComponent implements OnInit, AfterViewInit, OnDestroy
     this.onlineFormService.setFromId(this.route.snapshot.paramMap.get("id"));
     this.onlineFormService.getOneForm().subscribe((form: Form) => {
       this.form = form["data"];
-      
+
       console.log(this.form);
 
       this.activeSections = this.getFilteredSections();
@@ -102,14 +102,14 @@ export class OnlineFormViewComponent implements OnInit, AfterViewInit, OnDestroy
     this.fg = this.onlineFormService.getFormGroup();
   }
 
-  isStartInitMenu(): boolean | undefined {
-    let isStartInitMenu: boolean = false;
-    if (this.sectionListOfMenuItems && this.activeSections) {
-      isStartInitMenu = this.sectionListOfMenuItems.length === Object.keys(this.activeSections).length;
-      return isStartInitMenu;
-    }
-    return;
-  }
+  // isStartInitMenu(): boolean | undefined {
+  //   let isStartInitMenu: boolean = false;
+  //   if (this.sectionListOfMenuItems && this.activeSections) {
+  //     isStartInitMenu = this.sectionListOfMenuItems.length === Object.keys(this.activeSections).length;
+  //     return isStartInitMenu;
+  //   }
+  //   return;
+  // }
 
   onAction(actionType) {
     switch (actionType) {
