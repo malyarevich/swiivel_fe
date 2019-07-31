@@ -49,10 +49,19 @@ label.btn.app-btn-signature.active {
 //}
 .div-inside-wrap{
   z-index: 9900;
-  margin-top: -30px!important;
+  margin-top: -20px!important;
 
   //position: absolute;
 }
+
+p {
+  height: 100%;
+  line-height: 1;
+  text-transform: uppercase;
+  padding: 0.5rem;
+  margin: 0;
+}
+
 .div-inside-field-name{
   z-index: 9900;
   margin-bottom: -30px!important;
@@ -76,11 +85,12 @@ label.btn.app-btn-signature.active {
   font-size: 0.5rem!important;
 }
 .div-inside-active{
-
-  //opacity: 0.8;
   background-color: #EBEEFF;
   position: absolute;
   z-index: 9900;
+  &:first-of-type {
+    z-index: 9999;
+  }
 }
 
 .div-active-type, .div-inside-active{

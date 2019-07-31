@@ -43,7 +43,7 @@
     </div>
   </div>
   <div [hidden]="!loading" class="test-c">
-    <div *ngFor="let div of formsPDF.form.fieldsPdf[page-1]">
+    <ng-container *ngFor="let div of formsPDF.form.fieldsPdf[page-1]">
       <div
         [ngStyle]="styleObject(div)"
         [ngClass]="[
@@ -222,7 +222,7 @@
         </div>
 
       </div>
-    </div>
+    </ng-container>
 
   </div>
 
