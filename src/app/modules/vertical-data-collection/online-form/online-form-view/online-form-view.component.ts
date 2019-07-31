@@ -63,9 +63,9 @@ export class OnlineFormViewComponent implements OnInit, AfterViewInit, OnDestroy
     //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
     //Add 'implements AfterViewInit' to the class.
     this.isStartMenu$ = this.onlineFormNavigationService.isStartMenu;
-    // setTimeout(() => {
-    //   this.onlineFormNavigationService.previousStep();
-    // }, 0);
+    setTimeout(() => {
+      this.onlineFormNavigationService.previousStep();
+    }, 0);
   }
 
   getForm(): void {
