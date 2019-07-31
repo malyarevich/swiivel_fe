@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output, OnDestroy } from "@angular/core";
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  OnDestroy,
+  OnChanges
+} from "@angular/core";
 import {
   menuItems,
   mainMenuNames,
@@ -6,17 +14,17 @@ import {
   IMenuItems
 } from "../../../../models/vertical-data-collection/v-form-constructor/online-form/menu-items";
 import { IActiveSections } from "src/app/models/vertical-data-collection/v-form-constructor/v-form-builder/active-section.model";
-import { OnlineFormNavigationService } from '../services/online-form-navigation.service';
-import { Subscription } from 'rxjs';
+import { OnlineFormNavigationService } from "../services/online-form-navigation.service";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-online-form-menu",
   templateUrl: "./online-form-menu.component.html",
   styleUrls: ["./online-form-menu.component.scss"]
 })
-export class OnlineFormMenuComponent implements OnInit, OnDestroy {
+export class OnlineFormMenuComponent implements OnInit, OnChanges, OnDestroy {
   @Input() percents: number[];
-  @Output() activeMenuItemEmitter = new EventEmitter<string>();
+  @Input() isStartMenu: boolean;
 
   activeSections: IActiveSections;
   onSetActiveMenuItemsSubscription: Subscription;
@@ -27,16 +35,34 @@ export class OnlineFormMenuComponent implements OnInit, OnDestroy {
 
   pathIconsFolder = "assets/images/icons/";
 
-  constructor(private onlineFormNavigationService: OnlineFormNavigationService) {}
+  constructor(
+    private onlineFormNavigationService: OnlineFormNavigationService
+  ) {}
 
   ngOnInit() {
-    this.activeSections = this.onlineFormNavigationService.getActiveSections();
-    this.onSetActiveMenuItemsSubscription = this.onlineFormNavigationService.onSetActiveMenuItems.subscribe(
-      activeSections => {
-        this.activeSections = activeSections;
+    if (this.isStartMenu) {
+      this.activeSections = this.onlineFormNavigationService.getActiveSections();
+      this.onSetActiveMenuItemsSubscription = this.onlineFormNavigationService.onSetActiveMenuItems.subscribe(
+        activeSections => {
+          this.activeSections = activeSections;
+        }
+      );
+      this.initActiveMenuList();
+    }
+  }
+
+  ngOnChanges(): void {
+    if (this.isStartMenu) {
+      this.activeSections = this.onlineFormNavigationService.getActiveSections();
+      if (!this.onSetActiveMenuItemsSubscription) {
+        this.onSetActiveMenuItemsSubscription = this.onlineFormNavigationService.onSetActiveMenuItems.subscribe(
+          activeSections => {
+            this.activeSections = activeSections;
+          }
+        );
       }
-    );
-    this.initActiveMenuList();
+      this.initActiveMenuList();
+    }
   }
 
   initActiveMenuList() {
@@ -46,7 +72,7 @@ export class OnlineFormMenuComponent implements OnInit, OnDestroy {
   }
 
   getActiveMenuItem(): string {
-    return this.onlineFormNavigationService.getActiveMenuItem()
+    return this.onlineFormNavigationService.getActiveMenuItem();
   }
 
   setActiveMenuItem(menuItemName: string) {
