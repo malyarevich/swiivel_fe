@@ -143,10 +143,11 @@
             <option *ngIf="form.fields.length>0" value="" disabled [selected]="true">Section Relate</option>
             <option *ngIf="form.fields.length==0" value="" disabled [selected]="true">Please add at least one section
             </option>
-            <option *ngFor="let section of form.fields"
-
+            <ng-container *ngFor="let section of form.fields">
+            <option *ngIf="section.type===114"
             >{{section.name}}
             </option>
+            </ng-container>
           </select>
           <div class="invalid-feedback">
             Field section is required!
