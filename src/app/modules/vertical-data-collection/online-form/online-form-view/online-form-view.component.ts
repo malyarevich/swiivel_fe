@@ -61,7 +61,7 @@ export class OnlineFormViewComponent implements OnInit, OnDestroy {
     this.onlineFormService.setFromId(this.route.snapshot.paramMap.get("id"));
     this.onlineFormService.getOneForm().subscribe((form: Form) => {
       this.form = form["data"];
-      
+
       console.log(this.form);
 
       this.activeSections = this.getFilteredSections();
@@ -93,7 +93,7 @@ export class OnlineFormViewComponent implements OnInit, OnDestroy {
   isStartInitMenu(): boolean {
     return this.sectionListOfMenuItems
       && this.activeSections
-      && this.sectionListOfMenuItems.length === Object.keys(this.activeSections).length
+      && this.sectionListOfMenuItems.length === Object.keys(this.activeSections).length;
   }
 
   onAction(actionType) {
