@@ -1,4 +1,4 @@
-<div class="zooming" (click)="$event.stopPropagation()">
+<div class="zooming" (click)="$event.stopPropagation()" xmlns="http://www.w3.org/1999/html">
     <div class="pdf_wrapper">
         <ng-container *ngIf="isStartLoading && !isFinishLoading">
           <main-spinner class="spinner_box"></main-spinner>
@@ -30,15 +30,14 @@
                         class="app-input-label"
                         >{{ div.linkedField.name | titlecase }}</label
                       >
-                      <input
-                        type="text"
+                      <textarea
                         aria-describedby="basic-addon2"
                         class="app-input"
                         [(ngModel)]="div.linkedField.value"
                         [readOnly]="div.linkedField.options.readonly"
                         [required]="div.linkedField.options.required"
                         [placeholder]="div.linkedField.name | titlecase"
-                      />
+                      ></textarea>
                     </div>
                   </ng-container>
 
@@ -51,13 +50,12 @@
                       <label class="app-input-label">
                         {{div.linkedField.name | titlecase}}
                       </label>
-                      <input
-                        type="text"
+                      <textarea
                         aria-describedby="basic-addon2"
                         class="app-input"
                         [(ngModel)]="div.linkedField.value"
                         [placeholder]="div.linkedField.name | titlecase"
-                      />
+                      ></textarea>
                     </div>
                   </ng-container>
                   <ng-container *ngIf="isShowLinkedFieldForSignature(div)">
@@ -73,7 +71,8 @@
             </div>
           </ng-container>
 
-          <div>
+          <div class="pdf-wrapper">
+            <div class="pdf-overlay"></div>
             <pdf-viewer
               [original-size]="false"
               [src]="{ url: pdf.form.link + token }"

@@ -47,10 +47,30 @@
   zoom: normal;
 }
 
+.form-group {
+  height: 100%;
+}
+
 .app-input {
   border: none;
   min-height: 0;
   zoom: normal;
+  resize: none;
+  padding-top: 1.3rem;
+}
+
+.pdf-wrapper {
+  display: block;
+  position: relative;
+  .pdf-overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.15);
+    z-index: 1;
+  }
 }
 
 .zooming {
