@@ -7,7 +7,7 @@ import {
   Optional,
   Self,
 } from '@angular/core';
-import { ControlValueAccessor, NgControl } from '@angular/forms';
+import {ControlValueAccessor, NgControl} from '@angular/forms';
 
 @Component({
   selector: 'app-datepicker-field',
@@ -21,9 +21,10 @@ export class DatePickerFieldComponent implements OnInit, ControlValueAccessor {
   @Input() label = '';
   @Input() isInvalid = false;
   @Input() width?: number = null;
+  @Input() dateInputFormat?: string = 'MMMM DD, YYYY';
   @Output() onChangeField = new EventEmitter();
 
-  bsConfig = { containerClass: 'theme-blue', showWeekNumbers: false, dateInputFormat: 'MMMM DD, YYYY' };
+  bsConfig: object;
 
   constructor(
     @Self()
@@ -36,6 +37,11 @@ export class DatePickerFieldComponent implements OnInit, ControlValueAccessor {
   }
 
   ngOnInit() {
+    this.bsConfig = {
+      containerClass: 'theme-blue',
+      showWeekNumbers: false,
+      dateInputFormat: this.dateInputFormat,
+    };
   }
 
   writeValue(value: any): void {
@@ -54,8 +60,10 @@ export class DatePickerFieldComponent implements OnInit, ControlValueAccessor {
     this.onTouched = fn;
   }
 
-  private onChange = (_: any) => {};
-  onTouched = () => {};
+  private onChange = (_: any) => {
+  };
+  onTouched = () => {
+  };
 
 
   onInput() {

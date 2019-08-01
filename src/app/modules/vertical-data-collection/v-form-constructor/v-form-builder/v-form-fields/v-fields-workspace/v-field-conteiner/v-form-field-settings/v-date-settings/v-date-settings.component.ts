@@ -4,6 +4,7 @@ import {
   ITypeFieldSettings
 } from "../../../../../../../../../models/vertical-data-collection/field.model";
 import {FormBuilder, FormGroup} from "@angular/forms";
+import * as moment from 'moment';
 
 const defaultSettings: ITypeFieldSettings = {
   separator: {label: '- (Dash)', value: 'dash'},
@@ -58,6 +59,7 @@ export class VDateSettingsComponent implements OnInit {
 
   initSettings() {
     if (!this.inputField.hasOwnProperty('typeSettings')) {
+      defaultSettings.defaultDateValue = moment().utc();
       this.inputField.typeSettings = Object.assign(defaultSettings);
     }
   }
@@ -68,7 +70,7 @@ export class VDateSettingsComponent implements OnInit {
       dateFormat: [this.inputField.typeSettings.dateFormat.value],
       monthDisplay: [this.inputField.typeSettings.monthDisplay.value],
       defaultDate: [this.inputField.typeSettings.defaultDate.value],
-      defaultDateValue: [this.inputField.typeSettings.defaultDateValue],
+      defaultDateValue: [new Date(this.inputField.typeSettings.defaultDateValue)],
       isSeparateFields: [this.inputField.typeSettings.isSeparateFields],
     });
   }
