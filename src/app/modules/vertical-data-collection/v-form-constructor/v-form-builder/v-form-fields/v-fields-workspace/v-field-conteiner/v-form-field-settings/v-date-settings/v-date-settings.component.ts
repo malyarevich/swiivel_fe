@@ -59,7 +59,7 @@ export class VDateSettingsComponent implements OnInit {
 
   initSettings() {
     if (!this.inputField.hasOwnProperty('typeSettings')) {
-      defaultSettings.defaultDateValue = moment().utc();
+      // defaultSettings.defaultDateValue = moment().utc(); // TODO
       this.inputField.typeSettings = Object.assign(defaultSettings);
     }
   }
