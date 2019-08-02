@@ -27,6 +27,7 @@ export class SelectFieldComponent  implements OnInit, ControlValueAccessor {
   @Input() searchable = false;
   @Input() showClearBtn = false;
   @Input() value: any = null;
+  @Input() style?: string = null;
   @Output() onChangeField = new EventEmitter();
 
   constructor(

@@ -4,6 +4,7 @@ export interface TableThead {
   id?: string;
   position?: string;
   search?: boolean;
+  dateSearch?: boolean;
   sort?: boolean;
   sortOrder?: SORT_ORDER.ASC | SORT_ORDER.DESC;
   title?: string;

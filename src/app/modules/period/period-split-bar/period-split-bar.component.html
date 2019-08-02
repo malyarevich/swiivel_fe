@@ -59,12 +59,31 @@
         </div>
       </div>
     </div>
-    <div class="app-period-split-bar__add_split" (click)="onAddSplit()">
+    <div
+      class="app-period-split-bar__add_split"
+      [ngClass]="{
+      'app-period-split-bar__add_split--error': hasShownSplitSetError(activePeriodSet)}"
+      (click)="onCreateSplit()">
       <i class="fa fa-plus app-period-split-bar__add_split--ico"></i>
     </div>
   </div>
   <div *ngIf="!getSplitSetLength()" class="app-period-split-bar__add" (click)="onCreateSplit()">
     + Create first split
   </div>
+  <div
+    *ngIf="hasShownSplitSetError(activePeriodSet)"
+    class="app-period-split-bar__error">
+      <app-period-error
+        [errors]="activePeriodSet.error.text"
+        (closeError)="onCloseSplitSetError()">
+      </app-period-error>
+  </div>
+  <div
+    *ngIf="savePeriodError && savePeriodError.text && savePeriodError.isOpen"
+    class="app-period-split-bar__error">
+    <app-period-error
+      [errors]="savePeriodError.text"
+      (closeError)="onCloseSavePeriodError()">
+    </app-period-error>
+  </div>
 </div>
-<pre> {{ activePeriodSet | json }}</pre>

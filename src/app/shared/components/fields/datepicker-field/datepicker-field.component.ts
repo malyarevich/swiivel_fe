@@ -20,6 +20,7 @@ export class DatePickerFieldComponent implements OnInit, ControlValueAccessor {
   @Input() id: string;
   @Input() label = '';
   @Input() isInvalid = false;
+  @Input() isValidatable: boolean = true;
   @Input() width?: number = null;
   @Input() dateInputFormat?: string = 'MMMM DD, YYYY';
   @Input() style?: string = null;
@@ -66,7 +67,9 @@ export class DatePickerFieldComponent implements OnInit, ControlValueAccessor {
 
 
   onInput() {
-    this.isInvalid = this.validateValue();
+    if (this.isValidatable) {
+      this.isInvalid = this.validateValue();
+    }
     this.onChange(this.value);
   }
 

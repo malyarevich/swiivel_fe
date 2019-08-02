@@ -1,6 +1,9 @@
 <div
   class="app-datepicker-field"
-  [ngClass]="{'app-datepicker-field-has-error': isInvalid , 'app-datepicker-field--short': style === 'short'}"
+  [ngClass]="{'app-datepicker-field-has-error': isInvalid ,
+   'app-datepicker-field--short': style === 'short',
+   'app-datepicker-field--thead': style === 'thead',
+   'app-datepicker-field--cell': style === 'cell'}"
   [ngStyle]="{'width': width}"
 >
   <label
@@ -16,8 +19,7 @@
     #input
     type="text"
     class="form-control app-datepicker-field__input"
-    [ngClass]="{
-      'app-datepicker-field__value': value && label}"
+    [ngClass]="{'app-datepicker-field__value': value && label}"
     [id]="id"
     [disabled]="disabled"
     [(ngModel)]="value"

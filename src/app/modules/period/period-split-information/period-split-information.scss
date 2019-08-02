@@ -1,0 +1,186 @@
+@import '../../../../styles/variables/colors';
+
+.app-period-split-information {
+
+  .app-period-split-information__header {
+    display: flex;
+    justify-content: space-between;
+    height: 55px;
+    padding: 0 15px;
+
+    .app-period-split-information__header--input {
+      width: 188px;
+      margin: auto 0;
+    }
+
+    .app-period-split-information__header--icons {
+      display: flex;
+      justify-content: space-between;
+      width: 47px;
+    }
+
+  }
+
+  .app-period-split-information--trash,
+  .app-period-split-information--cog {
+    font-size: 14px;
+    margin: auto 0;
+  }
+
+  .app-period-split-information--trash:hover,
+  .app-period-split-information--cog:hover {
+    cursor: pointer;
+    opacity: 0.7;
+  }
+
+  .app-period-split-information--trash {
+    color: gray;
+  }
+
+  .app-period-split-information--cog {
+    color: $purple;
+  }
+
+  .app-period-split-information__modification {
+    display: flex;
+    justify-content: space-between;
+    height: 60px;
+    margin: 15px 15px 20px;
+    padding: 15px;
+    background-color: $gray;
+
+    .app-period-split-information__modification--select {
+      width: 116px;
+    }
+
+    .app-period-split-information__modification--input {
+      width: 50px;
+    }
+
+    .app-period-split-information__modification--label {
+      margin: auto 0;
+      font-size: 12px;
+      line-height: 15px;
+    }
+
+    .app-period-split-information__modification--field-container{
+      display: flex;
+
+      .app-period-split-information__modification--split-unit {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        width: 194px;
+        padding: 0 20px 0 0;
+
+      }
+
+      .app-period-split-information__modification--split-unit::after {
+        content: "";
+        position: absolute;
+        width: 1px;
+        right: 1px;
+        top: -3px;
+        height: 40px;
+        background-color: $soft-gray;
+      }
+
+      .app-period-split-information__modification--split-amount{
+        display: flex;
+        justify-content: space-between;
+        width: 133px;
+        padding: 0 0 0 20px;
+      }
+
+      .app-period-split-information__modification--split-duration {
+        display: flex;
+        justify-content: space-between;
+        width: 155px;
+        padding: 0 0 0 10px;
+      }
+
+    }
+
+    .app-period-split-information__modification--button {
+      width: 101px;
+      height: 25px;
+      margin: auto 0;
+      font-size: 12px;
+      line-height: 20px;
+      background-color: $purple;
+      color: white;
+      border-radius: 3px;
+      align-items: center;
+      vertical-align: middle;
+    }
+
+    .app-period-split-information__modification--button:hover {
+      background-color: $hover-purple;
+    }
+  }
+
+  .app-period-split-information__information {
+    padding: 0 15px 25px;
+    position: relative;
+
+    .app-period-split-information__information--header {
+      font: 800 13px/15px 'NunitoSans-Bold';
+      text-transform: uppercase;
+      margin: 0 0 10px;
+    }
+
+    .app-period-split-information__information--button {
+      margin: 0 0 0 15px;
+      font: 800 13px/15px 'NunitoSans-Bold';
+      color: $purple;
+      background-color: transparent;
+      border-color: transparent;
+    }
+
+    .app-period-split-information__table {
+      width: 100%;
+      margin: 0 0 10px;
+
+      .app-period-split-information__row {
+        height: 45px;
+        border-bottom: 1px solid #E7E7E7;
+
+        .app-period-split-information__cell {
+          width: 170px;
+
+          .app-period-split-information__field {
+            padding: 6px 3px 6px 10px;
+            width: 92px;
+            min-height: 25px;
+            max-height: 25px;
+            border: 1px solid #b6b6b6;
+            border-radius: 3px;
+          }
+        }
+
+        .app-period-split-information--trash {
+          display: block;
+        }
+
+        .app-period-split-information__cell:last-of-type {
+          width: auto;
+          height: 45px;
+          display: flex;
+          justify-content: flex-end;
+          padding: 0 10px 0 0;
+        }
+
+        .app-period-split-information__cell:nth-child(1){
+          padding: 0 0 0 15px;
+        }
+
+      }
+    }
+
+    .app-period-split-information__error {
+      position: absolute;
+      bottom: -10px;
+      right: 0;
+    }
+  }
+}

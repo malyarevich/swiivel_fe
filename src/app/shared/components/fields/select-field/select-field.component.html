@@ -2,7 +2,8 @@
   class="app-select-field"
   [ngClass]="{
     'app-select-field-has-error': isInvalid,
-    'app-select-field-table': fieldType == 'table'
+    'app-select-field-table': fieldType == 'table',
+    'app-select-field-thead': style === 'thead'
   }"
   id={{id}}
 >
