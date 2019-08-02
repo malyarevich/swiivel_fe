@@ -1,6 +1,6 @@
 <div
   class="app-datepicker-field"
-  [ngClass]="{'app-datepicker-field-has-error': isInvalid}"
+  [ngClass]="{'app-datepicker-field-has-error': isInvalid , 'app-datepicker-field--short': style === 'short'}"
   [ngStyle]="{'width': width}"
 >
   <label
@@ -15,8 +15,9 @@
   <input
     #input
     type="text"
-    class="form-control"
-    [ngClass]="{ 'app-datepicker-field__value': value && label}"
+    class="form-control app-datepicker-field__input"
+    [ngClass]="{
+      'app-datepicker-field__value': value && label}"
     [id]="id"
     [disabled]="disabled"
     [(ngModel)]="value"
@@ -27,14 +28,18 @@
     #dp="bsDatepicker"
     placement="bottom"
   />
-  <div *ngIf="dp.isOpen === false" class="app-datepicker-field-calendar">
-    <button class="btn calendar" (click)="dp.show()" type="button">
-      <i class="fas fa-calendar"></i>
+  <div
+    *ngIf="dp.isOpen === false"
+    class="app-datepicker-field-calendar">
+    <button class="btn" (click)="dp.show()" type="button">
+      <i class="fas fa-calendar app-datepicker-field-calendar__ico"></i>
     </button>
   </div>
-  <div *ngIf="dp.isOpen === true" class="app-datepicker-field-chevron-down">
-    <button class="btn chevron-down" (click)="dp.show()" type="button">
-      <i class="fas fa-chevron-down"></i>
+  <div
+    *ngIf="dp.isOpen === true"
+    class="app-datepicker-field-chevron-down">
+    <button class="btn" (click)="dp.show()" type="button">
+      <i class="fas fa-chevron-down app-datepicker-field-chevron-down__ico"></i>
     </button>
   </div>
 </div>
