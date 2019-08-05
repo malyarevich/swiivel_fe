@@ -7,8 +7,8 @@
   overflow-x:hidden;
 
   .app-period-bar__header {
-    min-width: 120px;
-    max-width: 120px;
+    min-width: 113px;
+    max-width: 113px;
     height: 15px;
     font: 800 12px/15px 'NunitoSans-Bold';
     margin: 7px 0 auto;
@@ -22,7 +22,7 @@
     min-width: 500px;
     max-width: 1025px;
     height: 65px;
-    padding: 10px 0 15px;
+    padding: 10px 0 15px 7px;
     overflow-y: auto;
 
 
@@ -44,7 +44,7 @@
       position: absolute;
       bottom: -14px;
       height: 10px;
-      font-size: 12px;
+      font-size: 10px;
       color: black;
     }
 
@@ -86,9 +86,15 @@
     background-color: $dark-purple;
   }
 
-  .app-period-bar__scale--cell:active .app-period-bar__cell--selected {
-    background-color: transparent;
-    position: absolute;
+  .cdk-drag-placeholder {
+    .app-period-bar__cell--month {
+      display: none;
+    }
   }
+}
 
+.cdk-drag-preview {
+  .app-period-bar__cell--month {
+    display: none;
+  }
 }

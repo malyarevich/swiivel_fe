@@ -64,6 +64,7 @@ export class PeriodBarComponent implements OnInit {
     for (let i = 0; i < this.periodScale.length; i++ ) {
       this.drawItem(i);
     }
+
     if (this.periodScale.items && this.period && this.period.duration && this.period.duration > 0) {
       this.periodScale.items[0].isLowExtreme = true;
       this.periodScale.items[this.period.duration - 1].isHighExtreme = true;

@@ -1,3 +1,106 @@
-.app-period-split-settings {
+@import '../../../../styles/variables/colors';
 
+.app-period-split-settings {
+  width: 310px;
+  height: 95px;
+  border-radius: 5px 5px;
+  background-color: $soft-purple;
+
+  .app-period-split-settings__header {
+    display: flex;
+    justify-content: space-between;
+    height: 35px;
+    padding: 10px 10px 10px 15px;
+    border-radius: 5px 5px 0 0;
+    color: white;
+    background-color: $dark-purple;
+
+    .app-period-split-settings__header--text {
+      font: 800 11px/15px 'NunitoSans-Bold';
+      text-transform: uppercase;
+    }
+
+    .app-period-split-settings__header--cross:hover {
+      cursor: pointer;
+    }
+  }
+
+   .app-period-split-settings__content {
+     display: flex;
+     padding: 10px 15px;
+
+     .app-period-split-settings__col{
+       width: 57px;
+     }
+
+     .app-period-split-settings__col--duration {
+       width: 63px;
+
+       .app-period-split-settings__duration {
+         display: flex;
+
+         .app-period-split-settings__duration--field {
+           width: 41px;
+           height: 22px;
+           padding: 5px;
+           border: 1px solid #b6b6b6;
+           border-radius: 3px;
+           font-size: 12px;
+         }
+
+         .app-period-split-settings__duration--text {
+           margin: auto 0 auto 5px;
+           font-size: 12px;
+           line-height: 15px;
+           color: white;
+         }
+       }
+     }
+
+     .app-period-split-settings__cols {
+       display: flex;
+       justify-content: space-between;
+       width: 222px;
+       padding: 0 15px 0 0;
+       position: relative;
+
+       .app-period-split-settings__col--text {
+         margin: 0 0 4px;
+         font: 400 9px/11px 'NunitoSans-Bold';
+         color: white;
+         text-transform: uppercase;
+       }
+
+       .app-period-split-settings__duration {
+         display: flex;
+       }
+     }
+
+     .app-period-split-settings__cols:after {
+       position: absolute;
+       content: "";
+       width: 1px;
+       height: 32px;
+       top: 9px;
+       right: 1px;
+       background-color: $light-purple;
+     }
+
+     .app-period-split-settings__buttons {
+       display: flex;
+       flex-grow: 1;
+       justify-content: space-between;
+       align-items: center;
+       padding: 0 0 0 15px;
+       color: white;
+     }
+
+     .app-period-split-settings__buttons-ico {
+       font-size: 12px;
+     }
+
+     .app-period-split-settings__buttons-ico:hover {
+       cursor: pointer;
+     }
+   }
 }

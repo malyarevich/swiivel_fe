@@ -4,27 +4,38 @@
   display: flex;
   padding: 0 15px;
   background-color: white;
-  overflow-x:hidden;
 
   .app-period-split-bar__header {
     min-width: 115px;
     max-width: 115px;
   }
 
-  .app-period-split-bar__scale {
-    flex-grow: 1;
+  .app-period-split-bar__splitset {
     display: flex;
-    position: relative;
-    overflow:visible;
-    min-width: 500px;
-    max-width: 1003px;
-    height: 65px;
-    padding: 10px 0 15px;
-    overflow-y: auto;
+    width: 100%;
+    max-width: 1025px;
+
+    .app-period-split-bar__scale {
+      display: flex;
+      position: relative;
+      overflow:visible;
+      min-width: 100px;
+      max-width: 1003px;
+      height: 65px;
+      padding: 10px 10px 15px 0;
+
+      .app-period-split-bar__scale--label {
+        position: absolute;
+        z-index: 1;
+        overflow: hidden;
+      }
+    }
 
     .app-period-split-bar__add_split {
+      flex-grow: 2;
       height: 19px;
       width: 19px;
+      margin: 5px 0 0 0;
       cursor: pointer;
       color: $purple;
       background-color: $light-purple;
@@ -37,83 +48,83 @@
       }
     }
 
-    .app-period-split-bar__scale--label {
-      position: absolute;
-      z-index: 1;
-      overflow: hidden;
-    }
-  }
+    .app-period-split-bar__scale--cell {
+      width: 6px;
+      height: 14px;
+      position: relative;
 
-  .app-period-split-bar__scale--cell {
-    width: 4px;
-    height: 14px;
-    margin: 0 2px 0 0;
-    background-color: #F7F8FF;
-    position: relative;
-
-    .app-period-split-bar--month {
-      position: absolute;
-      bottom: -14px;
-      height: 10px;
-      font-size: 12px;
-      color: $icon-dark-gray-color;
+      .app-period-split-bar--date {
+        position: absolute;
+        bottom: -14px;
+        left: -8px;
+        height: 10px;
+        font-size: 10px;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
+      }
+
+      .app-period-split-bar--input {
+        position: absolute;
+        top: 2px;
+        height: 10px;
+        font-size: 10px;
+        line-height: 13px;
+        border: none;
+        border-radius: 5px 5px;
+      }
+
     }
 
-    .app-period-split-bar--month:before{
+    .app-period-split-bar--label {
+      position: absolute;
+      height: 14px;
+      z-index: 1;
+      font-size: 10px;
+      line-height: 15px;
+    }
+
+    .app-period-split-bar--label--yellow {
+      color: $dark-yellow;
+    }
+
+    .app-period-split-bar--label--blue{
+      color: $dark-blue;
+    }
+
+    .app-period-split-bar__scale--cell::before {
       content: '';
       position: absolute;
-      bottom: 9px;
-      left: 1px;
-      height: 7px;
-      width: 2px;
+      top: -7px;
+      height: 4px;
+      width: 4px;
+      background-color: $dark-yellow;
+    }
+
+    .app-period-split-bar__cell--selected {
+      width: 5.5px;
+      height: 14px;
       background-color: $icon-dark-gray-color;
     }
 
-    .app-period-split-bar--high-extreme,
-    .app-period-split-bar--low-extreme {
-      position: absolute;
-      z-index: 2;
-      top: 1px;
-      right: -2px;
-      width: 12px;
-      height: 12px;
-      background-color: white;
-      border-radius: 50% 50%;
-      border: 1px solid gray;
+    .app-period-split-bar__scale--yellow {
+      background-color: $soft-yellow;
     }
 
-    .app-period-split-bar--high-extreme {
-      right: -4px;
+    .app-period-split-bar__scale--yellow::before{
+      background-color: $dark-yellow;
     }
 
-    .app-period-split-bar--high-extreme:hover,
-    .app-period-split-bar--low-extreme:hover,
-    .app-period-split-bar--high-extreme:active,
-    .app-period-split-bar--low-extreme:active {
-      width: 13px;
-      height: 13px;
-      cursor: pointer;
+    .app-period-split-bar__scale--blue {
+      background-color: $soft-blue;
     }
-  }
 
-  .app-period-split-bar__scale--cell::before {
-    content: '';
-    position: absolute;
-    top: -7px;
-    height: 4px;
-    width: 4px;
-    background-color: $icon-dark-gray-color;
-  }
+    .app-period-split-bar__scale--blue::before{
+      background-color: $dark-blue;
+    }
 
-  .app-period-split-bar__cell--selected {
-    width: 5.5px;
-    height: 14px;
-    background-color: $icon-dark-gray-color;
   }
 
   .app-period-split-bar__add {
@@ -128,4 +139,32 @@
     text-align: center;
   }
 
+  .cdk-drag-placeholder {
+    .app-period-split-bar--date {
+      display: none;
+    }
+  }
+
+  .app-period-split-bar__ico {
+    font-size: 10px;
+    position: absolute;
+    top: 2px;
+  }
+
+  .app-period-split-bar__ico:hover {
+    cursor: pointer;
+  }
+
+  .app-period-split-bar__settings {
+    position: absolute;
+    top: 18px;
+    right: -30px;
+  }
+}
+
+.cdk-drag-preview {
+  color: red;
+  .app-period-split-bar--date {
+    display: none;
+  }
 }

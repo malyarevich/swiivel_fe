@@ -1,2 +1,50 @@
-<div> Split Settings</div>
+<div class="app-period-split-settings">
+  <div class="app-period-split-settings__header">
+    <h3 class="app-period-split-settings__header--text">Split Settings</h3>
+    <i class="fa fa-times app-period-split-settings__header--cross" (click)="onCloseInfo()"></i>
+  </div>
+  <div class="app-period-split-settings__content">
+    <div class="app-period-split-settings__cols">
+      <div class="app-period-split-settings__col">
+        <p class="app-period-split-settings__col--text">Starts</p>
+        <app-datepicker-field
+          [(ngModel)]="activeSplit.date_from"
+          [dateInputFormat]="'MM/DD'"
+          [style]="'short'"
+          [width]="'57px'"
+          [isInvalid]="activeSplit.date_from > activeSplit.date_to"
+          (ngModelChange)="onChangeSplitDate()"
+        ></app-datepicker-field>
+      </div>
+      <div class="app-period-split-settings__col--duration">
+        <p class="app-period-split-settings__col--text">Duration</p>
+        <div class="app-period-split-settings__duration">
+          <input
+            #input
+            class="app-period-split-settings__duration--field"
+            type="number"
+            [(ngModel)]="activeSplit.duration"
+            (ngModelChange)="onChangeSplitDuration()"
+          />
+          <div class="app-period-split-settings__duration--text">days</div>
+        </div>
+      </div>
+      <div class="app-period-split-settings__col">
+        <p class="app-period-split-settings__col--text">Ends</p>
+        <app-datepicker-field
+          [(ngModel)]="activeSplit.date_to"
+          [dateInputFormat]="'MM/DD'"
+          [style]="'short'"
+          [width]="'57px'"
+          [isInvalid]="activeSplit.date_from > activeSplit.date_to"
+          (ngModelChange)="onChangeSplitDate()"
+        ></app-datepicker-field>
+      </div>
+    </div>
+    <div class="app-period-split-settings__buttons">
+      <i class="fas fa-trash app-period-split-settings__buttons-ico" (click)="onDeleteClick()"></i>
+      <i class="fas fa-copy app-period-split-settings__buttons-ico" (click)="onCopyClick()"></i>
+    </div>
+  </div>
+</div>
 
