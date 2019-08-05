@@ -25,7 +25,7 @@ export class OnlineFormViewComponent
   activeSection: string;
   fg: FormGroup;
 
-  activeSections: IActiveSections;
+  activeMainMenuItems: IActiveSections;
   sectionListOfMenuItems: Array<object[]>;
   onActiveMenuItemSubscription: Subscription;
   onChangeSectionListOfMenuItemsSubscription: Subscription;
@@ -44,6 +44,8 @@ export class OnlineFormViewComponent
     private location: Location
   ) {}
 
+  
+
   ngOnInit() {
     this.percents = [];
     this.getForm();
@@ -55,8 +57,9 @@ export class OnlineFormViewComponent
     this.onChangeSectionListOfMenuItemsSubscription = this.onlineFormNavigationService.onChangeSectionListOfMenuItems.subscribe(
       sectionListOfMenuItems => {
         this.sectionListOfMenuItems = sectionListOfMenuItems;
-        // sectionListOfMenuItems.length === Object.keys(this.activeSections).length;
-        this.goPreviousStep();
+        console.log(sectionListOfMenuItems);
+        // sectionListOfMenuItems.length === Object.keys(this.activeMainMenuItems).length;
+        // this.goPreviousStep();
       }
     );
   }
@@ -67,13 +70,10 @@ export class OnlineFormViewComponent
     this.isStartMenu$ = this.onlineFormNavigationService.isStartMenu;
     this.isStartMenu$.subscribe(() => {
       if (this.isFirst) {
-        this.goPreviousStep();
+        this.goToFirstStep();
         this.isFirst = false;
       }
     })
-    setTimeout(() => {
-      this.goPreviousStep();
-    }, 500);
   }
 
   getForm(): void {
@@ -83,11 +83,11 @@ export class OnlineFormViewComponent
 
       console.log(this.form);
 
-      this.activeSections = this.getFilteredSections();
-      this.onlineFormNavigationService.setActiveSections(this.activeSections);
+      this.activeMainMenuItems = this.getFilteredSections();
+      this.onlineFormNavigationService.setActiveMainMenuItems(this.activeMainMenuItems);
 
       this.initForm();
-      this.goPreviousStep();
+      this.goToFirstStep();
     });
   }
 
@@ -102,6 +102,7 @@ export class OnlineFormViewComponent
         activeMenuList[key] = this.form["activeSections"][key];
       }
     }
+    console.log(<IActiveSections>activeMenuList);
     return <IActiveSections>activeMenuList;
   }
 
@@ -112,8 +113,8 @@ export class OnlineFormViewComponent
 
   // isStartInitMenu(): boolean | undefined {
   //   let isStartInitMenu: boolean = false;
-  //   if (this.sectionListOfMenuItems && this.activeSections) {
-  //     isStartInitMenu = this.sectionListOfMenuItems.length === Object.keys(this.activeSections).length;
+  //   if (this.sectionListOfMenuItems && this.activeMainMenuItems) {
+  //     isStartInitMenu = this.sectionListOfMenuItems.length === Object.keys(this.activeMainMenuItems).length;
   //     return isStartInitMenu;
   //   }
   //   return;
@@ -128,8 +129,13 @@ export class OnlineFormViewComponent
     }
   }
 
+  goToFirstStep() {
+    console.log(this.sectionListOfMenuItems);
+    this.onlineFormNavigationService.setAtFirstStep();
+  }
+
   goPreviousStep() {
-    if (this.sectionListOfMenuItems && this.sectionListOfMenuItems.length === Object.keys(this.activeSections).length) {
+    if (this.sectionListOfMenuItems && this.sectionListOfMenuItems.length === Object.keys(this.activeMainMenuItems).length) {
       this.onlineFormNavigationService.previousStep();
     }
   }

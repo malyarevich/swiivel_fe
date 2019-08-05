@@ -84,6 +84,7 @@ export class OnlineFormGeneralInfoComponent implements OnInit, AfterViewInit {
         { _id: "generalInfo", name: "General Information", type: 114 }
       ];
     }
+    this.onlineFormNavigationService.setSectionItemOfMenuItems(mainMenuNames.generalInfo, this.sections);
   }
 
   calcPercent(list: object) {

@@ -62,6 +62,7 @@ export class OnlineFormDocumentsFormsComponent implements OnInit {
     } else {
       this.sections = [{ _id: "documentsForms", name: "Documents & Forms" }];
     }
+    this.onlineFormNavigationService.setSectionItemOfMenuItems(mainMenuNames.documentsForms, this.sections);
   }
 
   getTime() {

@@ -63,6 +63,7 @@ export class OnlineFormConsentComponent implements OnInit {
     } else {
       this.sections = [{ _id: "consentInfo", name: "Consent section" }];
     }
+    this.onlineFormNavigationService.setSectionItemOfMenuItems(mainMenuNames.consentInfo, this.sections);
   }
 
   initConsents() {

@@ -66,6 +66,7 @@ export class OnlineFormPaymentComponent implements OnInit {
     } else {
       this.sections = [{ _id: "payment", name: "Payment section" }];
     }
+    this.onlineFormNavigationService.setSectionItemOfMenuItems(mainMenuNames.payment, this.sections);
   }
 
   getTime() {

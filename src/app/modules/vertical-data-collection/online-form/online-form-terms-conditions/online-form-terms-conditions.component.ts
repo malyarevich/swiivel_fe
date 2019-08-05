@@ -58,6 +58,7 @@ export class OnlineFormTermsConditionsComponent implements OnInit {
     } else {
       this.sections = [{_id: "termsConditions", name: "Terms & Conditions section"}];
     }
+    this.onlineFormNavigationService.setSectionItemOfMenuItems(mainMenuNames.termsConditions, this.sections);
   }
 
   getTime() {

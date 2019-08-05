@@ -61,6 +61,7 @@ export class OnlineFormTuitionContractComponent implements OnInit {
     } else {
       this.sections = [{_id: "tuitionContract", name: "Tuition Contract section"}];
     }
+    this.onlineFormNavigationService.setSectionItemOfMenuItems(mainMenuNames.tuitionContract, this.sections);
   }
 
   getTime() {

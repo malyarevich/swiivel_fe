@@ -41,7 +41,7 @@ export class OnlineFormMenuComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnInit() {
     if (this.isStartMenu) {
-      this.activeSections = this.onlineFormNavigationService.getActiveSections();
+      this.activeSections = this.onlineFormNavigationService.getActiveMainMenuItems();
       this.onSetActiveMenuItemsSubscription = this.onlineFormNavigationService.onSetActiveMenuItems.subscribe(
         activeSections => {
           this.activeSections = activeSections;
@@ -53,7 +53,7 @@ export class OnlineFormMenuComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnChanges(): void {
     if (this.isStartMenu) {
-      this.activeSections = this.onlineFormNavigationService.getActiveSections();
+      this.activeSections = this.onlineFormNavigationService.getActiveMainMenuItems();
       if (!this.onSetActiveMenuItemsSubscription) {
         this.onSetActiveMenuItemsSubscription = this.onlineFormNavigationService.onSetActiveMenuItems.subscribe(
           activeSections => {

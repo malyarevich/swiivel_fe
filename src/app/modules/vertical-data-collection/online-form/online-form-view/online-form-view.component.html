@@ -18,9 +18,9 @@
       <div class="online_form_container__wrapper">
         <div
           class="online_form_container__content"
-          *ngIf="mainMenuNames && activeSections"
+          *ngIf="!!activeMainMenuItems"
         >
-          <ng-container *ngIf="activeSections[mainMenuNames.generalInfo]">
+          <ng-container *ngIf="activeMainMenuItems[mainMenuNames.generalInfo]">
             <div
               class="app-div-animation"
               [ngClass]="{
@@ -36,7 +36,7 @@
             </div>
           </ng-container>
 
-          <ng-container *ngIf="activeSections[mainMenuNames.documentsForms]">
+          <ng-container *ngIf="activeMainMenuItems[mainMenuNames.documentsForms]">
             <div
               class="app-div-animation"
               [ngClass]="{
@@ -53,7 +53,7 @@
             </div>
           </ng-container>
 
-          <ng-container *ngIf="activeSections[mainMenuNames.consentInfo]">
+          <ng-container *ngIf="activeMainMenuItems[mainMenuNames.consentInfo]">
             <div
               class="app-div-animation"
               [ngClass]="{
@@ -68,7 +68,7 @@
             </div>
           </ng-container>
 
-          <ng-container *ngIf="activeSections[mainMenuNames.paymentSettings]">
+          <ng-container *ngIf="activeMainMenuItems[mainMenuNames.paymentSettings]">
             <div
               class="app-div-animation"
               [ngClass]="{
@@ -85,7 +85,7 @@
             </div>
           </ng-container>
 
-          <ng-container *ngIf="activeSections[mainMenuNames.payment]">
+          <ng-container *ngIf="activeMainMenuItems[mainMenuNames.payment]">
             <div
               class="app-div-animation"
               [ngClass]="{
@@ -100,7 +100,7 @@
             </div>
           </ng-container>
 
-          <ng-container *ngIf="activeSections[mainMenuNames.termsConditions]">
+          <ng-container *ngIf="activeMainMenuItems[mainMenuNames.termsConditions]">
             <div
               class="app-div-animation"
               [ngClass]="{
@@ -117,7 +117,7 @@
             </div>
           </ng-container>
 
-          <ng-container *ngIf="activeSections[mainMenuNames.tuitionContract]">
+          <ng-container *ngIf="activeMainMenuItems[mainMenuNames.tuitionContract]">
             <div
               class="app-div-animation"
               [ngClass]="{
@@ -136,14 +136,19 @@
         </div>
 
         <div class="online_form_container__control_block">
-          <button type="button" class="btn btn-link" (click)="goPreviousStep()">
+          <button
+            type="button"
+            class="btn btn-link"
+            (click)="goPreviousStep()"
+            [disabled]="isDisabledSaveButton"
+          >
             Go back
           </button>
           <button
             type="submit"
             class="btn btn-primary btn-lg"
             (click)="saveAndGoNext()"
-            [disabled]="false"
+            [disabled]="isDisabledSaveButton"
           >
             Save & go next step
           </button>
