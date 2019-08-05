@@ -16,7 +16,7 @@ import {
 })
 export class VFormGeneralMenuComponent implements OnInit, AfterViewInit {
 
-  @ViewChild('generalInfoMenu') menuElement: ElementRef;
+  @ViewChild('generalInfoMenu', { static: true }) menuElement: ElementRef;
   @Output() scrollToEmitter = new EventEmitter<string>();
   @Output() activeSectionEmitter = new EventEmitter<string>();
   objectKeys = Object.keys;

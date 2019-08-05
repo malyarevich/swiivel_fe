@@ -15,7 +15,7 @@ import {PermissionService} from "../../../services/permission/permission.service
   styleUrls: ['./form-table.component.css']
 })
 export class FormTableComponent implements OnInit {
-    @ViewChild(FormAccessModalComponent) formAccessModal : FormAccessModalComponent ;
+    @ViewChild(FormAccessModalComponent, { static: false }) formAccessModal : FormAccessModalComponent ;
   forms$: Observable<Form[]>;
   formSelected;
 

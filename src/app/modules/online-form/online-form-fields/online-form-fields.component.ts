@@ -14,7 +14,7 @@ export class OnlineFormFieldsComponent implements OnInit {
   @Input() field: Field;
 
 
-  @ViewChild(FieldContentDirective) contentDirective: FieldContentDirective;
+  @ViewChild(FieldContentDirective, { static: true }) contentDirective: FieldContentDirective;
 
 
   constructor(private resolver: ComponentFactoryResolver,

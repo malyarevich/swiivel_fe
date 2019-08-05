@@ -7,7 +7,7 @@ import {VFormAccessComponent} from "./v-form-access/v-form-access.component";
     styleUrls: ['./v-form-access-modal.component.css']
 })
 export class VFormAccessModalComponent implements OnInit {
-    @ViewChild(VFormAccessComponent) formAccessComponent:VFormAccessComponent;
+    @ViewChild(VFormAccessComponent, { static: false }) formAccessComponent:VFormAccessComponent;
     @Input() formSelected: string;
     @Output() resetFormSelectedEmitter: EventEmitter<any[]> = new EventEmitter();
 

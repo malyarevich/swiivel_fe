@@ -10,7 +10,7 @@ const routes: Routes = [
   {
     path: '',
     canActivate: [AuthGuard],
-    loadChildren: './modules/organization/organization.module#OrganizationModule'
+    loadChildren: () => import('./modules/organization/organization.module').then(m => m.OrganizationModule)
   },
 
   {

@@ -16,7 +16,7 @@ export class VFormViewContainerComponent implements OnInit {
   @Input() field: Field;
 
 
-  @ViewChild(VContentDirective) contentDirective: VContentDirective;
+  @ViewChild(VContentDirective, { static: true }) contentDirective: VContentDirective;
 
 
   constructor(private fieldStore$: Store<FieldState>,

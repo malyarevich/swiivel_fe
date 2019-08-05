@@ -42,11 +42,11 @@ import { GeneralInfoIsFormExistService } from '../../services/general-info-is-fo
   styleUrls: ["./v-form-general-information.component.css"]
 })
 export class VFormGeneralInformationComponent implements OnInit, OnDestroy {
-  @ViewChild("generalInfo") generalInfo: ElementRef;
-  @ViewChild("basicInfo") basicInfo: ElementRef;
-  @ViewChild("period") period: ElementRef;
-  @ViewChild("formDates") formDates: ElementRef;
-  @ViewChild("eligibleAccounts") eligibleAccounts: ElementRef;
+  @ViewChild("generalInfo", { static: false }) generalInfo: ElementRef;
+  @ViewChild("basicInfo", { static: false }) basicInfo: ElementRef;
+  @ViewChild("period", { static: false }) period: ElementRef;
+  @ViewChild("formDates", { static: false }) formDates: ElementRef;
+  @ViewChild("eligibleAccounts", { static: false }) eligibleAccounts: ElementRef;
 
   static countSaveFormService: number = 0;
   saveFormSubscription: Subscription;

@@ -9,8 +9,8 @@ import {FormsViewsRate} from "../../../model/forms-stats.models";
   styleUrls: ['./v-form-statistic-views.component.css']
 })
 export class VFormStatisticViewsComponent implements OnInit, AfterViewInit {
-  @ViewChild('chartTotalViews') chartTotalViews: ElementRef;
-  @ViewChild('chartMonthViews') chartMonthViews: ElementRef;
+  @ViewChild('chartTotalViews', { static: false }) chartTotalViews: ElementRef;
+  @ViewChild('chartMonthViews', { static: false }) chartMonthViews: ElementRef;
 
   chartTotal: Chart = {};
   chartMonth: Chart = {};

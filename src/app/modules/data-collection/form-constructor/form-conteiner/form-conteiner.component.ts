@@ -22,7 +22,7 @@ export class FormConteinerComponent implements OnInit {
   @Input() field: Field;
 
 
-  @ViewChild(ContentDirective) contentDirective: ContentDirective;
+  @ViewChild(ContentDirective, { static: true }) contentDirective: ContentDirective;
 
 
   constructor(private fieldStore$: Store<FieldState>,
