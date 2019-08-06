@@ -162,7 +162,7 @@ const routes: Routes = [
         children: [
           {
             path: "",
-            loadChildren: "./online-form/online-form.module#OnlineFormModule"
+            loadChildren: () => import('./online-form/online-form.module').then(m => m.OnlineFormModule)
           }
         ]
       },

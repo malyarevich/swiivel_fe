@@ -1,11 +1,12 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
-import {FormSql} from "../../../data-collection/reducers/forms/form.model";
-import {Permissions} from "../../../../services/permission/permissions.model";
-import {User} from "../../../login/rest";
-import {PermissionService} from "../../../../services/permission/permission.service";
-import {UserService} from "../../../../services/user/user.service";
-import {VFormService} from "../../services/v-form.service";
+import {ActivatedRoute} from '@angular/router';
+import {Permissions} from '../../../../services/permission/permissions.model';
+import {User} from '../../../login/rest';
+import {PermissionService} from '../../../../services/permission/permission.service';
+import {UserService} from '../../../../services/user/user.service';
+import {VFormService} from '../../services/v-form.service';
+import {FormSql} from '../../../../models/vertical-data-collection/form.model';
+
 
 @Component({
     selector: 'app-v-form-access',
@@ -57,11 +58,11 @@ export class VFormAccessComponent implements OnInit, OnDestroy {
 
     selectUsers(user) {
         if (this.permissions.find(item => item.user_id === user.id)) {
-            this.error = "User " + user.username + " already exists in the list";
+            this.error = 'User ' + user.username + ' already exists in the list';
             return;
         }
         if (this.selectedUsers.find(item => item.id == user.id)) {
-            this.error = "User " + user.username + " already selected";
+            this.error = 'User ' + user.username + ' already selected';
             return;
         }
         this.selectedUsers.push(user);
@@ -70,20 +71,20 @@ export class VFormAccessComponent implements OnInit, OnDestroy {
     addUsersToList() {
         this.selectedUsers.map(user => {
             this.permissions.push({
-                'user_id': user.id,
-                'entity': 'form',
-                'entity_id': this.form.id,
-                'view': 0,
-                'edit': 0,
-                'delete': 0,
-                'access': 0,
+                user_id: user.id,
+                entity: 'form',
+                entity_id: this.form.id,
+                view: 0,
+                edit: 0,
+                delete: 0,
+                access: 0,
             });
         });
         this.resetSelectedUsers();
     }
 
     setPermission($event, user_id, permissionType) {
-        let permission = this.permissions.find(item => item.user_id === user_id);
+        const permission = this.permissions.find(item => item.user_id === user_id);
         permission[permissionType] = $event ? 1 : 0;
     }
 
@@ -91,7 +92,7 @@ export class VFormAccessComponent implements OnInit, OnDestroy {
         this.permissionService.savePermissions(this.permissions).subscribe(
             (res) => {
             }
-        )
+        );
     }
 
     deleteUserPermissions(permissions) {
@@ -103,7 +104,7 @@ export class VFormAccessComponent implements OnInit, OnDestroy {
             () => {
                 this.permissions = this.permissions.filter((item) => item.user_id != permissions.user_id);
             }
-        )
+        );
     }
 
     ngOnDestroy() {
@@ -119,7 +120,7 @@ export class VFormAccessComponent implements OnInit, OnDestroy {
         }
         this.filteredUsers = Object.assign([], this.users).filter(
             item => item.username.toLowerCase().indexOf(value.toLowerCase()) > -1
-        )
+        );
     }
 
     resetSelectedUsers() {

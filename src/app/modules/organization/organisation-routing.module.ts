@@ -3,7 +3,6 @@ import {RouterModule, Routes} from '@angular/router';
 import {LayoutComponent} from './components/layout';
 import {routes as personRoutes} from './modules/person';
 import {routes as dashboardRoutes} from './modules/dashboard';
-import {routes as familyRoutes} from '../family';
 
 export const routes: Routes = [
   {
@@ -16,26 +15,13 @@ export const routes: Routes = [
     component: LayoutComponent,
     children: personRoutes,
   },
-
-  // Depreciated
-  // {
-  //     path: 'data-collection',
-  //     component: LayoutComponent,
-  //     children: [
-  //         {
-  //             path: '',
-  //             loadChildren: '../data-collection/data-collection.module#DataCollectionModule',
-  //
-  //         }
-  //     ],
-  // },
   {
     path: 'vertical-data-collection',
     component: LayoutComponent,
     children: [
       {
         path: '',
-        loadChildren: '../vertical-data-collection/vertical-data-collection.module#VerticalDataCollectionModule',
+        loadChildren: () => import('../vertical-data-collection/vertical-data-collection.module').then(m => m.VerticalDataCollectionModule),
 
       }
     ],
@@ -46,16 +32,7 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        loadChildren: '../payer-accounts/payer-accounts.module#PayerAccountsModule',
-      }
-    ],
-  },
-  {
-    path: 'online-form/:id',
-    children: [
-      {
-        path: '',
-        loadChildren: '../online-form/online-form.module#OnlineFormModule',
+        loadChildren: () => import('../payer-accounts/payer-accounts.module').then(m => m.PayerAccountsModule),
       }
     ],
   },
@@ -65,7 +42,7 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        loadChildren: '../family/family.module#FamilyModule',
+        loadChildren: () => import('../family/family.module').then(m => m.FamilyModule),
       }
     ],
   },
@@ -75,7 +52,7 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        loadChildren: '../period/period.module#PeriodModule',
+        loadChildren: () => import('../period/period.module').then(m => m.PeriodModule),
       }
     ],
   },

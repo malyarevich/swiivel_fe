@@ -189,10 +189,10 @@ a.active{
   width: 280px;
 }
 
-/deep/.pagination .page-link{
+::ng-deep.pagination .page-link{
   color: $element-base-color;
 }
-/deep/.pagination .page-item.active .page-link{
+::ng-deep.pagination .page-item.active .page-link{
   background-color: $element-base-color;
   color: white;
 }

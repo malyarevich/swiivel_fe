@@ -2,8 +2,8 @@ import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit} fr
 import {DataTypeAllowed, DocumentsModel} from '../model/documents.model';
 import {VFilesService} from '../../../../services/v-files.service';
 import {environment} from '../../../../../../../environments/environment';
-import {FormService} from '../../../../../data-collection/form.service';
 import {DocumentsFormsModel} from '../../../../../../models/vertical-data-collection/v-form-constructor/v-form-builder/documents-forms.model';
+import {VFormService} from '../../../../services/v-form.service';
 
 @Component({
   selector: 'app-v-documents-container',
@@ -20,7 +20,7 @@ export class VDocumentsContainerComponent implements OnInit {
 
   constructor(
     private fileService: VFilesService,
-    private formService: FormService,
+    private formService: VFormService,
   ) {}
 
   public token = '?api_token=' + environment.api_token;
@@ -39,7 +39,7 @@ export class VDocumentsContainerComponent implements OnInit {
         this.formService
           .getOneForm(this.formId)
           .subscribe(form => {
-            this.attachments = form.data.attachments;
+            this.attachments = form.attachments;
             document.data = result.hash;
           });
         }

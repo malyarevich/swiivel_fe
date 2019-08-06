@@ -24,7 +24,7 @@ export class ExtendedFieldComponent implements OnInit {
   @Input() content: string;
   @Output() changeContent: EventEmitter<string> = new EventEmitter<string>();
 
-  @ViewChild("content") contentField: ElementRef;
+  @ViewChild("content", { static: true }) contentField: ElementRef;
 
   constructor() {}
 

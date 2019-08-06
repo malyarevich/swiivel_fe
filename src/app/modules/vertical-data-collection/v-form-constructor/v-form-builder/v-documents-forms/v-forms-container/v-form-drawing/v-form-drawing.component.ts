@@ -33,7 +33,7 @@ export class VFormDrawingComponent implements AfterViewInit, OnDestroy, OnInit, 
   @Input() height = 1056;
   @Input() existingFields: Field[];
   @Input() formsPDF: FormsPDFModel;
-  @ViewChild('viewer') canvas: ElementRef;
+  @ViewChild('viewer', { static: true }) canvas: ElementRef;
 
   showAddButtonTemporary: boolean = false;
   canvasEl: HTMLCanvasElement;

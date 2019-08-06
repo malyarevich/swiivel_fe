@@ -23,7 +23,7 @@ export class InputEditableFieldComponent implements OnInit, ControlValueAccessor
   @Input() inputStyle: string = null;
   @Input() inputColor?: string = null;
   @Output() onChangeField = new EventEmitter();
-  @ViewChild('input') input: ElementRef;
+  @ViewChild('input', { static: true }) input: ElementRef;
 
   constructor(
     @Self()
