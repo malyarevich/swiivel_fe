@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, ElementRef, ViewChild } from "@angular/core";
-import { ICommand } from '../../../../models/vertical-data-collection/v-form-constructor/v-form-builder/component.model';
+import { ICommand } from '../../../../models/data-collection/form-constructor/form-builder/component.model';
 
 /** Extended field for any input even as HTML
  * all information save as inner HTML 
