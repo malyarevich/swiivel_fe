@@ -3,7 +3,6 @@ import {RouterModule, Routes} from '@angular/router';
 import {LayoutComponent} from './components/layout';
 import {routes as personRoutes} from './modules/person';
 import {routes as dashboardRoutes} from './modules/dashboard';
-import {routes as familyRoutes} from '../family';
 
 export const routes: Routes = [
   {
@@ -16,19 +15,6 @@ export const routes: Routes = [
     component: LayoutComponent,
     children: personRoutes,
   },
-
-  // Depreciated
-  // {
-  //     path: 'data-collection',
-  //     component: LayoutComponent,
-  //     children: [
-  //         {
-  //             path: '',
-  //             loadChildren: '../data-collection/data-collection.module#DataCollectionModule',
-  //
-  //         }
-  //     ],
-  // },
   {
     path: 'vertical-data-collection',
     component: LayoutComponent,
@@ -47,15 +33,6 @@ export const routes: Routes = [
       {
         path: '',
         loadChildren: () => import('../payer-accounts/payer-accounts.module').then(m => m.PayerAccountsModule),
-      }
-    ],
-  },
-  {
-    path: 'online-form/:id',
-    children: [
-      {
-        path: '',
-        loadChildren: () => import('../online-form/online-form.module').then(m => m.OnlineFormModule),
       }
     ],
   },
