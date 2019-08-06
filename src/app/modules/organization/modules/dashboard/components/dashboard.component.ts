@@ -1,7 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import {select, Store} from "@ngrx/store";
-import {FormState} from "../../../../data-collection/reducers/forms/form.reducer";
-import {selectAllForms} from "../../../../data-collection/reducers/forms/form.selectors";
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,14 +7,12 @@ import {selectAllForms} from "../../../../data-collection/reducers/forms/form.se
 })
 export class DashboardComponent implements OnInit {
 
-  public forms$;
 
-  constructor(private formStore: Store<FormState>) { }
+  constructor() {
+  }
 
   ngOnInit() {
-      this.forms$ = this.formStore.pipe(
-          select(selectAllForms)
-      );
+
   }
 
 }

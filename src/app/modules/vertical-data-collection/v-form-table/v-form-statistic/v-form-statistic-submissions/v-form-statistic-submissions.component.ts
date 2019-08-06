@@ -10,7 +10,7 @@ import {FormsSubmissionsRate, FormsViewsRate} from "../../../model/forms-stats.m
 })
 export class VFormStatisticSubmissionsComponent implements OnInit, AfterViewInit {
 
-  @ViewChild('chartSubmissionRef') chartSubmissionRef: ElementRef;
+  @ViewChild('chartSubmissionRef', { static: false }) chartSubmissionRef: ElementRef;
 
   submissionsRate: FormsSubmissionsRate;
   chartSubmissions: Chart = {};

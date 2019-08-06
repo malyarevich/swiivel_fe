@@ -1,8 +1,8 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {VFormService} from "../services/v-form.service";
-import {FormSql} from "../../data-collection/reducers/forms/form.model";
 import {FormSearchParams} from "../../../models/form-search-params";
 import {TEMPLATE_STATUS} from "../../../enums/template-status";
+import {FormSql} from "../../../models/vertical-data-collection/form.model";
 
 @Component({
   selector: 'app-v-form-table',

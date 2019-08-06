@@ -12,8 +12,8 @@ import {Chart} from 'chart.js';
 export class VFormInfoStatsComponent implements OnInit, AfterViewInit {
   @Input() form: FormSql;
 
-  @ViewChild('chartTotalViews') chartTotalViews: ElementRef;
-  @ViewChild('chartMonthViews') chartMonthViews: ElementRef;
+  @ViewChild('chartTotalViews', { static: false }) chartTotalViews: ElementRef;
+  @ViewChild('chartMonthViews', { static: false }) chartMonthViews: ElementRef;
 
   chartTotal: Chart = {};
   chartMonth: Chart = {};

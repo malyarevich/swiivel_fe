@@ -219,7 +219,7 @@ export class VFormBuilderComponent implements OnInit, OnDestroy {
   isDataSaving: boolean = false;
   spinnerText: string = "Data is loading...";
 
-  @ViewChild("addCustomFieldInput") addCustomFieldInput: ElementRef;
+  @ViewChild("addCustomFieldInput", { static: false }) addCustomFieldInput: ElementRef;
   constructor(
     @Host() vDataCollection: VDataCollectionComponent,
     private formService: VFormService,

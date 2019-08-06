@@ -48,7 +48,8 @@ export interface FormSql {
     full_name: string;
     role: { id: number; role_name: string };
   };
-  permissions?: FormSqlPermissions[];
+  // permissions?: FormSqlPermissions[];
+  permissions?: Permissions[];
   status: string;
   publish_settings?: {
     state: ISubMenus;

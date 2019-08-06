@@ -23,7 +23,9 @@
                         labelTitle="Default Date"></app-select-field>
     </div>
     <div class="col-6 pl-2" [hidden]="inputField.typeSettings.defaultDate.value !== 'custom'">
-      <app-datepicker-field [formControlName]="'defaultDateValue'"></app-datepicker-field>
+      <app-datepicker-field [formControlName]="'defaultDateValue'"
+                            label="Date"
+                            dateInputFormat="DD MMM, YYYY"></app-datepicker-field>
     </div>
   </div>
   <div>

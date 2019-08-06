@@ -12,7 +12,7 @@ export class InputContainerComponent {
     @Input() label: string;
     @Input() icon: string;
     @Input() showErrors = true;
-    @ContentChild(FormControlName) private formControlName: FormControlName;
+    @ContentChild(FormControlName, {static: false}) private formControlName: FormControlName;
 
     constructor(
         @Optional()
