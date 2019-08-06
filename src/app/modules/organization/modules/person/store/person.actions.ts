@@ -1,7 +1,6 @@
 import { Action } from '@ngrx/store';
 import { Update } from '@ngrx/entity';
 import { Person } from '../person.model';
-import {FormActionTypes} from '../../../../data-collection/reducers/forms/form.actions';
 
 export enum PersonActionTypes {
   LoadPersons = '[Person] Load Persons',

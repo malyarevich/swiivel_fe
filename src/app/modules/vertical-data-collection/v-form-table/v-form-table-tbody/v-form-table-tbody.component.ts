@@ -1,12 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { FormSql } from "../../../data-collection/reducers/forms/form.model";
-import { VFormService } from "../../services/v-form.service";
-import { TEMPLATE_STATUS } from "../../../../enums/template-status";
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { VFormService } from '../../services/v-form.service';
+import { TEMPLATE_STATUS } from '../../../../enums/template-status';
+import {FormSql} from '../../../../models/vertical-data-collection/form.model';
 
 @Component({
-  selector: "[app-v-form-table-tbody]",
-  templateUrl: "./v-form-table-tbody.component.html",
-  styleUrls: ["./v-form-table-tbody.component.scss"]
+  selector: '[app-v-form-table-tbody]',
+  templateUrl: './v-form-table-tbody.component.html',
+  styleUrls: ['./v-form-table-tbody.component.scss']
 })
 export class VFormTableTbodyComponent implements OnInit {
   @Input() forms: FormSql[];
@@ -27,20 +27,20 @@ export class VFormTableTbodyComponent implements OnInit {
 
   getStringPublishSettings(publish_settings: any) {
     if (publish_settings == undefined) {
-      return "";
+      return '';
     }
     return publish_settings.state.settings.online === false
       ? publish_settings.state.settings.pdf === false
-        ? ""
-        : "Paper"
+        ? ''
+        : 'Paper'
       : publish_settings.state.settings.pdf === false
-      ? "Online"
-      : "Online, Paper";
+      ? 'Online'
+      : 'Online, Paper';
   }
 
   // TODO: Create directive ConvertData for Safari browser
   convertDate(date) {
-    return date.replace(/\s/g, "T");
+    return date.replace(/\s/g, 'T');
   }
 
   getClassByStatus(status) {
@@ -50,7 +50,7 @@ export class VFormTableTbodyComponent implements OnInit {
       'app-btn-status-draft': status === TEMPLATE_STATUS.STATUS_DRAFT,
       'app-btn-status-review': status === TEMPLATE_STATUS.STATUS_REVIEW,
       'app-btn-status-closed': status === TEMPLATE_STATUS.STATUS_CLOSED,
-    }
+    };
   }
 
   addSelectedIds(id: number) {
@@ -69,7 +69,7 @@ export class VFormTableTbodyComponent implements OnInit {
     this.resetFormSelectedEmitter.emit();
     this.checkedRows = [];
   }
-  
+
   changeStatus(id, status) {
     this.vFormService.changeStatus(id, status).subscribe(res => {
       this.getAllFormEmitter.emit();
