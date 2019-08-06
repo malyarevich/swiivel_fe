@@ -39,7 +39,7 @@ export class VDocumentsContainerComponent implements OnInit {
         this.formService
           .getOneForm(this.formId)
           .subscribe(form => {
-            this.attachments = form.data.attachments;
+            this.attachments = form.attachments;
             document.data = result.hash;
           });
         }
