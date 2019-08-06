@@ -3,12 +3,10 @@
 <div *ngIf="isTree" class="mr-3">
   <app-v-fields-side-bar-node [sideBar]="sideBar"></app-v-fields-side-bar-node>
 </div>
-<div *ngIf="!isTree">
-  <app-v-fields-side-bar-detailed
-    [idSectionForDragDrop]="idSectionForDragDrop"
-    [section]="sectionDetailed"
-    [searchText]="searchText"
-    [form]="form"
-  >
-  </app-v-fields-side-bar-detailed>
-</div>
+<app-v-fields-side-bar-detailed
+  *ngIf="!isTree"
+  [idSectionForDragDrop]="idSectionForDragDrop"
+  [section]="sectionDetailed"
+  [form]="form"
+  [searchText]="searchText"
+> </app-v-fields-side-bar-detailed>

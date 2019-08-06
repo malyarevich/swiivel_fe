@@ -1,115 +1,63 @@
-<div class="row no-gutters  align-items-center">
+<div class="row no-gutters align-items-center">
   <div class="col-1 pb-2">
-    <label class="app-checkbox-container">
-    <input
-      type="checkbox" [ngModel]="group.exist" (ngModelChange)="onBeingChange($event, group, section)">
+    <label [for]="group.name.split(' ').join('-')" class="app-checkbox-container">
+      <input
+        type="checkbox"
+        [id]="group.name.split(' ').join('-')"
+        [ngModel]="group.exist"
+        (ngModelChange)="onChangeGroup($event, group)"
+      />
     <span class="app-checkbox-checkmark"></span>
   </label>
   </div>
-  <div class="col-10 pb-1 row align-items-center no-gutters side-bar-item" >
-    <div class="col-2 ">
-      <span class="v-eclipse-padding"><i class="fas fa-ellipsis-v dragable-i "></i></span>
-      <span class="v-eclipse-padding"><i class="fas fa-ellipsis-v  dragable-i"></i></span>
+  <div class="col-10 pb-1 row align-items-center no-gutters side-bar-item">
+    <div class="col-2">
+      <span class="v-eclipse-padding"><i class="fas fa-ellipsis-v dragable-i"></i></span>
+      <span class="v-eclipse-padding"><i class="fas fa-ellipsis-v dragable-i"></i></span>
     </div>
-    <div class="col ">
+    <div class="col">
       <span class="side-bar-item-font" >{{group.name | titlecase}}</span>
     </div>
     <div  class="col-1 mr-1">
-      <button class="btn btn-sm" (click)="showNested=!showNested">
-        <i *ngIf="showNested" class="fas  fa-caret-down dragable-i"></i>
-        <i *ngIf="!showNested" class="fas  fa-caret-up dragable-i"></i>
+      <button class="btn btn-sm" (click)="showNested = !showNested">
+        <i class="fas dragable-i" [ngClass]="showNested ? 'fa-caret-up' : 'fa-caret-down'"></i>
       </button>
     </div>
-
   </div>
   <div
     class="col-10 offset-1 side-bar-item-modal rounded pb-2 ngx-dnd-container"
     direction="vertical"
     [copy]="true"
-    [model]="group.fields" ngxDroppable [hidden]="!showNested">
-
-    <div class="my-1" *ngFor="let field of group.fields" [model]="field" [ngxDraggable]="idSectionForDragDrop">
-      <div *ngIf="field.type==113" class="ml-2 border-open-setting">
+    [model]="group.fields"
+    [hidden]="!showNested"
+    ngxDroppable
+  >
+    <div
+      class="my-1"
+      *ngFor="let field of section.fields; let i = index"
+      [model]="field"
+      [ngxDraggable]="idSectionForDragDrop"
+    >
+      <div *ngIf="field.type === 113" class="ml-2 border-open-setting">
         <app-v-side-bar-group
           [sideBar]="sideBar"
           [group]="field"
-          [form]="form"
-          [rootGroup]="group"
-          [nestedLevel]="nestedLevel+1"
-          [section]="section"
+          [form]="form.fields[i]"
+          [nestedLevel]="nestedLevel + 1"
+          [section]="field"
           [idSectionForDragDrop]="idSectionForDragDrop"
-
         ></app-v-side-bar-group>
       </div>
-      <div class="ml-2" >
+      <div class="ml-2">
         <app-v-side-bar-field
-          *ngIf="field.type!=113"
+          *ngIf="field.type !== 113"
           [field]="field"
-          [form]="form"
-          [rootGroup]="rootGroup"
-          [group]="group"
-          [section]="section"
-          [style]="field.mapped==''"
-        >
-        </app-v-side-bar-field>
+          [form]="form.fields"
+          [style]="field.mapped === ''"
+          (fieldChanged)="onFieldChanged()"
+        ></app-v-side-bar-field>
       </div>
-
-<!--    <div class="" *ngFor="let field of group.fields" cdkDrag>-->
-<!--      <app-v-side-bar-field [field]="field"></app-v-side-bar-field>-->
-<!--      <div *ngIf="field.type!==113" class="row no-gutters  align-items-center">-->
-<!--        <div class="ml-2 pb-2 col-1 ">-->
-<!--          <label class="app-checkbox-container ">-->
-<!--          <input-->
-<!--            type="checkbox"-->
-<!--            class=""-->
-<!--            [ngModel]="field.exist"-->
-<!--            (ngModelChange)="onBeingChangeNested($event, field, group, section)">-->
-<!--          <span class="app-checkbox-checkmark just-white"></span>-->
-<!--        </label>-->
-<!--        </div>-->
-<!--        <div-->
-<!--          class="col-10  mb-1 mt-2 row align-items-center no-gutters rounded "-->
-<!--          [ngClass]="field.mapped==''?'side-bar-item-group-custom':'side-bar-item-group'">-->
-<!--&lt;!&ndash;        <div class="col-10  mb-1 mt-2 row align-items-center no-gutters rounded " [ngClass]="field.mapped==''?'side-bar-item-group-custom':'side-bar-item-group'" placement="right" [ngbTooltip]="field.prefix+'\'s'">&ndash;&gt;-->
-<!--          <div class="col-1 ">-->
-<!--            <span><i class="fas fa-ellipsis-v dragable-i"></i></span>-->
-<!--            <span><i class="fas fa-ellipsis-v  dragable-i"></i></span>-->
-<!--          </div>-->
-<!--          <div class="col">-->
-<!--            <span class="side-bar-item-font" [title]="field.mapped==''?'Custom':'Existing'">{{field.name}}</span>-->
-<!--          </div>-->
-<!--&lt;!&ndash;          <div *ngIf="field.mapped==''" class="col-1">&ndash;&gt;-->
-<!--           <span><i class="fas fa-trash dragable-i fa-xs" (click)="deleteCustomNestedField(field.name)"></i></span>&ndash;&gt;-->
-<!--&lt;!&ndash;          </div>&ndash;&gt;-->
-<!--        </div>-->
-<!--      </div>-->
     </div>
-<!--    <div class="p-2 ">-->
-<!--      <button-->
-<!--        *ngIf="showAddButton"-->
-<!--        type="button" appClickStopPropagation placement="right"-->
-<!--        ngbPopover="This feature is under developing"-->
-<!--        popoverTitle="Notice"-->
-<!--        class="btn btn-outline-primary form-control p-0 text-left"-->
-<!--        >-->
-<!--&lt;!&ndash;        (click)="showAddButton=false">&ndash;&gt;-->
-<!--        &nbsp;&nbsp;+ Add New Field-->
-<!--      </button>-->
-<!--      <input-->
-<!--        *ngIf="!showAddButton"-->
-
-<!--        class="form-control add-input p-0"-->
-
-<!--        autofocus-->
-<!--        #newField-->
-<!--      (keyup)="nameChange($event)"-->
-<!--      [ngClass]="!validNewCustomFieldName?'is-invalid':''"-->
-<!--        (blur)="addNewCustomField(newField.value, group.fields); newField.value=''"-->
-<!--        (keyup.enter)="addNewCustomField(newField.value, group.fields); newField.value=''">-->
-<!--      <div class="invalid-feedback">-->
-<!--        We have existing field with the same name!-->
-<!--      </div>-->
-<!--    </div>-->
   </div>
 </div>
 

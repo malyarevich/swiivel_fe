@@ -1,19 +1,20 @@
 import {AfterViewInit, ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
-import {Form} from "../../../../model/form.model";
-import {Field} from "../../../../model/field.model";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import { range } from 'lodash'
-import {FormBuilder, FormGroup, FormControl, Validators} from "@angular/forms";
+import {Form} from '../../../../model/form.model';
+import {Field} from '../../../../model/field.model';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { range } from 'lodash';
+import {FormBuilder, FormGroup, FormControl, Validators} from '@angular/forms';
 import {v4 as uuid} from 'uuid';
-import {SideBarService} from "../v-side-bar/side-bar.service";
-import {dividerStyle} from "./divider";
-import {Section} from "../../../../../../models/vertical-data-collection/section.model";
+import {SideBarService} from '../v-side-bar/side-bar.service';
+import {dividerStyle} from './divider';
+import {Section} from '../../../../../../models/vertical-data-collection/section.model';
 
 @Component({
   selector: 'app-v-fields-workspace',
   templateUrl: './v-fields-workspace.component.html',
   styleUrls: ['./v-fields-workspace.component.scss']
 })
+
 export class VFieldsWorkspaceComponent implements OnInit, AfterViewInit {
 
   sectionAddGroup: FormGroup = new FormGroup({
@@ -51,7 +52,7 @@ export class VFieldsWorkspaceComponent implements OnInit, AfterViewInit {
   @Input() form: Form;
   @Input() sideBar: Field;
   @Input() customFields: Field[];
-  size = range(1  ,13);
+  size = range(1  , 13);
   @Input() idSectionForDragDrop: string[];
 
   objectKeys = Object.keys;
@@ -60,12 +61,12 @@ export class VFieldsWorkspaceComponent implements OnInit, AfterViewInit {
   dividerStyles = dividerStyle;
 
 
-  constructor(private modalService: NgbModal,
-              private fb: FormBuilder,
-              private cd: ChangeDetectorRef,
-              private sideBarService: SideBarService) {
-
-  }
+  constructor(
+    private modalService: NgbModal,
+    private fb: FormBuilder,
+    private cd: ChangeDetectorRef,
+    private sideBarService: SideBarService
+  ) {}
 
   ngOnInit() {
     this.list = Section.sectionWidth;
@@ -80,7 +81,7 @@ export class VFieldsWorkspaceComponent implements OnInit, AfterViewInit {
 
 
   openModal(content) {
-    this.modalService.open(content, {size: 'lg',ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+    this.modalService.open(content, {size: 'lg', ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
     }, (reason) => {
       console.log(reason);
     });
@@ -88,11 +89,11 @@ export class VFieldsWorkspaceComponent implements OnInit, AfterViewInit {
 
 
 
-  addSection(modal){
+  addSection(modal) {
     this.validateAllFormFields(this.sectionAddGroup);
-    if (!this.sectionAddGroup.valid) return;
+    if (!this.sectionAddGroup.valid) { return; }
     this.sectionAddGroup.clearValidators();
-    const newSection :Field = {
+    const newSection: Field = {
       _id: uuid(),
       name: this.sectionAddGroup.value.sectionName,
       width: 'full',
@@ -107,12 +108,12 @@ export class VFieldsWorkspaceComponent implements OnInit, AfterViewInit {
     modal.close();
   }
 
-  addGroup(modal){
+  addGroup(modal) {
 
     this.validateAllFormFields(this.groupAddGroup);
-    if (!this.groupAddGroup.valid) return;
+    if (!this.groupAddGroup.valid) { return; }
     this.groupAddGroup.clearValidators();
-    const newGroup :Field = {
+    const newGroup: Field = {
       _id: uuid(),
       name: this.groupAddGroup.value.groupName,
       width: 'full',
@@ -121,9 +122,9 @@ export class VFieldsWorkspaceComponent implements OnInit, AfterViewInit {
       prefix: this.groupAddGroup.value.groupName.toLowerCase().split(' ').join('_'),
       fields: [],
     };
-    this.form.fields.forEach(section=>{
-      if(section.name == this.groupAddGroup.value.sectionRelate.name
-        &&section.prefix == this.groupAddGroup.value.sectionRelate.prefix){
+    this.form.fields.forEach(section => {
+      if (section.name == this.groupAddGroup.value.sectionRelate.name
+        && section.prefix == this.groupAddGroup.value.sectionRelate.prefix) {
         section.fields.push(newGroup);
       }
     });
@@ -132,22 +133,22 @@ export class VFieldsWorkspaceComponent implements OnInit, AfterViewInit {
     modal.close();
   }
 
-  addDivider(modal){
+  addDivider(modal) {
     this.validateAllFormFields(this.dividerAddGroup);
-    if (!this.dividerAddGroup.valid) return;
+    if (!this.dividerAddGroup.valid) { return; }
     this.dividerAddGroup.clearValidators();
-    const newDivider :Field = {
+    const newDivider: Field = {
       _id: uuid(),
       name: this.dividerAddGroup.value.dividerName,
       type: 112,
-      options: { dividerStyle:this.dividerAddGroup.value.dividerStyle }
+      options: { dividerStyle: this.dividerAddGroup.value.dividerStyle }
     };
-    if(this.dividerAddGroup.value.sectionRelate.name=='workspace'){
+    if (this.dividerAddGroup.value.sectionRelate.name == 'workspace') {
       this.form.fields.push(newDivider);
-    }else{
-      this.form.fields.forEach(section=>{
-        if(section.name == this.dividerAddGroup.value.sectionRelate.name
-          &&section.prefix == this.dividerAddGroup.value.sectionRelate.prefix){
+    } else {
+      this.form.fields.forEach(section => {
+        if (section.name == this.dividerAddGroup.value.sectionRelate.name
+          && section.prefix == this.dividerAddGroup.value.sectionRelate.prefix) {
           console.log(newDivider, 'section');
 
           section.fields.push(newDivider);
@@ -159,7 +160,7 @@ export class VFieldsWorkspaceComponent implements OnInit, AfterViewInit {
     modal.close();
   }
 
-  modalClose(modal){
+  modalClose(modal) {
     this.sectionAddGroup.reset();
     modal.close();
   }

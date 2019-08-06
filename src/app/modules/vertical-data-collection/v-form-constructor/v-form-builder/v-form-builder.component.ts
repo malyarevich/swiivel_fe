@@ -236,6 +236,7 @@ export class VFormBuilderComponent implements OnInit, OnDestroy {
   ) {
     this.vDataCollection = vDataCollection;
   }
+
   ngOnInit() {
     window.scrollTo(0, 0);
     // if (VFormBuilderComponent.countSaveFormService < 1) {
@@ -298,7 +299,7 @@ export class VFormBuilderComponent implements OnInit, OnDestroy {
       (fields: Field[]) => {
         this.sideBarFields = fields;
         this.sideBarFields.forEach(field => {
-          if (field.type == 113) {
+          if (field.type === 113) {
             field.fields.forEach(f => (f.exist = false));
           }
           field.exist = false;
@@ -311,10 +312,8 @@ export class VFormBuilderComponent implements OnInit, OnDestroy {
 
   loadSideBarNew() {
     this.fieldsService.getExistingSideBarList2().subscribe(
-      data => {
-        this.newSideBar = data;
-      },
-      error => console.log(error, "error"),
+      data => this.newSideBar = data,
+      error => console.log(error, 'error'),
       () => this.formInit()
     );
   }
@@ -355,7 +354,6 @@ export class VFormBuilderComponent implements OnInit, OnDestroy {
           if (!isEmpty(this.fields)) {
             this.initFormFieldsToSideBar(this.newSideBar, this.fields);
           }
-
           if (!isEmpty(this.masterFees)) {
             this.initFeeToTuitionContract();
           }
@@ -367,9 +365,10 @@ export class VFormBuilderComponent implements OnInit, OnDestroy {
   initFormFieldsToSideBar(sideBar: Field[], workArea: Field[]) {
     sideBar.forEach(sideBarField => {
       workArea.forEach(field => {
-        if (sideBarField.name == field.name) {
-          if (field.type == 113)
+        if (sideBarField.name === field.name) {
+          if (field.type === 113) {
             this.initFormFieldsToSideBar(sideBarField.fields, field.fields);
+          }
           sideBarField.exist = true;
         }
       });

@@ -12,12 +12,12 @@ export abstract class PublishMenuItems {
   public static stateSub = {
     settings: {
       types: {
-        online: "online",
-        pdf: "pdf",
+        online: 'online',
+        pdf: 'pdf',
       },
       names: {
-        online: "Online form",
-        pdf: "PDF form",
+        online: 'Online form',
+        pdf: 'PDF form',
       },
     },
   };

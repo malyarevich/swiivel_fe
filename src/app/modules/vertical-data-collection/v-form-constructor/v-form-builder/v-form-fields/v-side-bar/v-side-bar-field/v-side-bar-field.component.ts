@@ -1,67 +1,38 @@
-import {ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges} from '@angular/core';
-import {Field} from "../../../../../model/field.model";
-import {cloneDeep, isEmpty} from 'lodash';
-import {Form} from "../../../../../model/form.model";
-import {SideBarService} from "../side-bar.service";
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {Field} from '../../../../../model/field.model';
+import {Form} from '../../../../../model/form.model';
+import {SideBarService} from '../side-bar.service';
 
 @Component({
   selector: 'app-v-side-bar-field',
   templateUrl: './v-side-bar-field.component.html',
   styleUrls: ['./v-side-bar-field.component.css']
 })
+
 export class VSideBarFieldComponent implements OnInit, OnDestroy {
 
-  @Input() group: Field;
-  @Input() rootGroup: Field;
   @Input() field: Field;
-  @Input() section: Field;
   @Input() form: Form;
   @Input() nestedLevel: number;
   @Input() style: boolean;
-  @Output() onChangeFieldBeing = new EventEmitter<any>();
-  @Output() deleteCustom = new EventEmitter<any>();
-  constructor(private sideBarService: SideBarService,private cd: ChangeDetectorRef  ) { }
 
-  ngOnInit() {
+  @Output() fieldChanged: EventEmitter<void> = new EventEmitter<void>();
 
+  constructor(
+    private sideBarService: SideBarService
+  ) {}
+
+  ngOnInit() {}
+
+  onFieldToggle(): void {
+    console.log(this.form);
+    this.sideBarService.onChangeField(this.field, this.form);
+    this.fieldChanged.emit();
   }
-
-
-
-
-  ngAfterViewInit(): void {
-
-
-    this.cd.detectChanges();
-
-
-  }
-
-
-
-  onFieldToggle(event: boolean):void{
-    if(event){
-
-      this.sideBarService.onChangeGroupBeing(this.field, this.section, this.form, this.group,this.rootGroup);
-      this.section.exist = true;
-
-    }else{
-      this.sideBarService.onFieldDelete(this.field, this.form.fields);
-    }
-    this.field.exist = event;
-  }
-
-
-
-  deleteCustomField(name: string){
-    this.deleteCustom.emit(name);
-  }
-
 
   ngOnDestroy(): void {
-    this.field.exist=false;
+    this.field.exist = false;
   }
-
 
 }
 

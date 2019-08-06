@@ -1,7 +1,7 @@
 interface FormsRate {
   total: number;
   month: number;
-  today: number
+  today: number;
 }
 
 export interface FormsViewsRate extends FormsRate {

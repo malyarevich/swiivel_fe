@@ -1,11 +1,9 @@
 <div class="mb-3 app-text-second app-text-extra-bold crump" (click)="returnToTree()">
   <span>{{crumbs[section.name]}}</span></div>
-
 <div class="row align-items-center no-gutters">
   <div class="col-1 pb-1">
-    <label class="app-checkbox-container">
-      <input
-        type="checkbox" [(ngModel)]="section.exist" (ngModelChange)="onBeingChange($event)">
+    <label [for]="section.name" class="app-checkbox-container">
+      <input [id]="section.name" type="checkbox" [(ngModel)]="section.exist" (ngModelChange)="onBeingChange($event)" />
       <span class="app-checkbox-checkmark"></span>
     </label>
   </div>
@@ -14,42 +12,43 @@
   </div>
   <div class="col-1">
     <button class="btn btn-sm " (click)="showNested=!showNested">
-      <i [hidden]="!showNested" class="fas  fa-caret-down dragable-i"></i>
-      <i [hidden]="showNested" class="fas  fa-caret-up dragable-i"></i>
+      <i class="fas dragable-i {{showNested ? 'fa-caret-up' : 'fa-caret-down'}}"></i>
     </button>
   </div>
 </div>
 <div [hidden]="!showNested">
-  <div class=" ngx-dnd-container" direction="vertical" [copy]="true" [model]="section.fields" ngxDroppable>
-    <div class="my-3  ml-3 " *ngFor="let field of section.fields | filter: searchText" [model]="field"
-         [ngxDraggable]="idSectionForDragDrop">
+  <div class="ngx-dnd-container" direction="vertical" [copy]="true" [model]="section.fields" ngxDroppable>
+    <div
+      class="my-3 ml-3"
+      *ngFor="let field of section.fields | filter: searchText; let i = index" [model]="field"
+      [ngxDraggable]="idSectionForDragDrop"
+    >
+      {{field.name}}
       <app-v-side-bar-group
-        *ngIf="field.type==113"
-        [group]="field"
-        [form]="form"
-        [nestedLevel]="nestedLevel+1"
-        [section]="section"
+        [group]="section"
+        [section]="section.fields[i]"
+        [form]="form.fields[1].fields[i]"
+        [nestedLevel]="nestedLevel + 1"
         [idSectionForDragDrop]="idSectionForDragDrop"
+      ></app-v-side-bar-group>
+<!--      <app-v-side-bar-field-->
+<!--        *ngIf="field.type !== 113"-->
+<!--        [field]="field"-->
+<!--        [section]="section.fields[i]"-->
+<!--        [group]="section"-->
+<!--        [form]="form"-->
+<!--        [nestedLevel]="nestedLevel + 1"-->
+<!--        [style]="field.mapped === ''"-->
 
-      >
-
-      </app-v-side-bar-group>
-      <app-v-side-bar-field
-        *ngIf="field.type!=113"
-        [field]="field"
-        [form]="form"
-        [nestedLevel]="nestedLevel+1"
-        [section]="section"
-        [style]="field.mapped==''"
-        (deleteCustom)="deleteCustomField($event)"
-      >
-      </app-v-side-bar-field>
+<!--        (deleteCustom)="deleteCustomField($event)"-->
+<!--      ></app-v-side-bar-field>-->
     </div>
   </div>
-  <div class="my-3  ml-3 ">
+  <div class="my-3 ml-3">
     <button
       type="button"
-      class="btn btn-outline-primary form-control p-0 text-left" (click)="openModal(addFieldModal)">
+      class="btn btn-outline-primary form-control p-0 text-left" (click)="openModal(addFieldModal)"
+    >
       &nbsp;&nbsp;+ Add New Field
     </button>
   </div>
@@ -78,14 +77,15 @@
         <div class="col  form-group app-input-container"
              [ngClass]="{'app-input-fill': fieldNameId.value}">
           <label for="fieldNameID" class="app-input-label">Field Name</label>
-          <input type="text"
-                 #fieldNameId
-                 formControlName="fieldsName"
-                 class="app-input form-control"
-                 id="fieldNameID"
-                 [ngClass]="fieldsAddGroup.get('fieldsName').touched&&fieldsAddGroup.get('fieldsName').invalid?'is-invalid':''"
-                 placeholder="Field Name">
-
+          <input
+            type="text"
+            #fieldNameId
+            formControlName="fieldsName"
+            class="app-input form-control"
+            id="fieldNameID"
+            [ngClass]="fieldsAddGroup.get('fieldsName').touched && fieldsAddGroup.get('fieldsName').invalid ? 'is-invalid' : ''"
+            placeholder="Field Name"
+          />
           <div class="invalid-feedback">
             Field name is required and contain min 3 and max 50 symbols
           </div>
@@ -93,12 +93,14 @@
         <div class="col form-group app-input-container"
              [ngClass]="{'app-input-fill': fieldTypeID.value}">
           <label for="fieldType" class="app-input-label">Field Type</label>
-          <select class="app-input form-control"
-                  name="fieldType"
-                  #fieldTypeID
-                  [ngClass]="fieldsAddGroup.get('fieldType').touched&&fieldsAddGroup.get('fieldType').invalid?'is-invalid':''"
-                  formControlName="fieldType"
-                  id="fieldType">
+          <select
+            class="app-input form-control"
+            name="fieldType"
+            #fieldTypeID
+            [ngClass]="fieldsAddGroup.get('fieldType').touched && fieldsAddGroup.get('fieldType').invalid ? 'is-invalid' : ''"
+            formControlName="fieldType"
+            id="fieldType"
+          >
             <option value="" disabled [selected]="true">Field Type</option>
             <ng-container *ngFor="let field of customFields">
               <!--Hide not active field types-->
@@ -116,12 +118,14 @@
         <div class="col-6 form-group app-input-container"
              [ngClass]="{'app-input-fill': fieldRoleID.value}">
           <label for="fieldRole" class="app-input-label">Field Role</label>
-          <select class="app-input form-control"
-                  name="fieldRole"
-                  #fieldRoleID
-                  formControlName="fieldRole"
-                  [ngClass]="fieldsAddGroup.get('fieldRole').touched&&fieldsAddGroup.get('fieldRole').invalid?'is-invalid':''"
-                  id="fieldRole">
+          <select
+            class="app-input form-control"
+            name="fieldRole"
+            #fieldRoleID
+            formControlName="fieldRole"
+            [ngClass]="fieldsAddGroup.get('fieldRole').touched && fieldsAddGroup.get('fieldRole').invalid ? 'is-invalid' : ''"
+            id="fieldRole"
+          >
             <option value="" disabled [selected]="true">Field Role</option>
             <option *ngFor="let role of roleList"
 

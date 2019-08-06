@@ -1,61 +1,55 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {Field} from "../../../../../model/field.model";
-import {Form} from "../../../../../model/form.model";
-import {SideBarService} from "../side-bar.service";
+import {AfterViewInit, Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Field} from '../../../../../model/field.model';
+import {SideBarService} from '../side-bar.service';
 
 @Component({
   selector: 'app-v-side-bar-group',
   templateUrl: './v-side-bar-group.component.html',
   styleUrls: ['./v-side-bar-group.component.scss']
 })
-export class VSideBarGroupComponent implements OnInit, OnDestroy {
- showNested: boolean = true;
+
+export class VSideBarGroupComponent implements OnInit, AfterViewInit, OnDestroy {
+
   @Input() idSectionForDragDrop: string[];
   @Input() group: Field;
-  @Input() rootGroup: Field;
   @Input() section: Field;
-  @Input() form: Form;
+  @Input() form: any;
   @Input() sideBar: Field;
-  @Input() customFields: Field[];
-  @Input() existingFields: Field[];
+
   @Input() nestedLevel: number;
 
-  constructor(private sideBarService: SideBarService) { }
+  public showNested = true;
 
-  ngOnInit() {
+  constructor(
+    private sideBarService: SideBarService
+  ) {}
 
+  ngOnInit() {}
+
+  ngAfterViewInit() {
+    // console.log(this.sideBar);
   }
 
-
-
-  onBeingChange(event: boolean, entity: Field, destination:Field){
-    if(event){
-    if(this.rootGroup&&this.nestedLevel>1){
-       this.sideBarService.onChangeGroupBeing(entity, destination, this.form, this.rootGroup);
-
-    }else{
-      this.sideBarService.onChangeGroupBeing(
-        entity,
-        destination,
-        this.form
-      )
+  onChangeGroup(event: boolean) {
+    this.group.exist = event;
+    if (this.group.exist) {
+      this.group.fields.forEach(field => field.exist = true);
+      // this.sideBarService.onChangeGroup(this.group, this.form);
+    } else {
+      this.group.fields.forEach(field => field.exist = false);
+      console.log(this.form);;
     }
-
-    this.section.exist = true;
-    }else{
-
-      this.sideBarService.onFieldDelete(
-        entity,
-        this.form.fields
-      );
-    }
-    if(this.rootGroup&&this.nestedLevel>1) this.rootGroup.exist = event;
-    entity.exist = event;
-
-    this.sideBarService.changeAllGroupAndNested(event, entity);
-
+    console.log(this.group);
+    console.log(this.form);
   }
 
+  onFieldChanged() {
+    if (this.group.fields.some(field => field.exist)) {
+      this.group.exist = true;
+    } else {
+      this.group.exist = false;
+    }
+  }
 
   ngOnDestroy(): void {
     this.group.exist = false;

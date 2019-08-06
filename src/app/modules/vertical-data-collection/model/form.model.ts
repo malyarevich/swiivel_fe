@@ -1,14 +1,14 @@
-import { Field } from "./field.model";
-import { Permissions } from "../../../services/permission/permissions.model";
-import { ConsentInfo } from "../../../models/vertical-data-collection/v-form-constructor/v-form-builder/consent.model";
-import { DocumentsModel } from "../v-form-constructor/v-form-builder/v-documents-forms/model/documents.model";
-import { FormsPDFModel } from "../v-form-constructor/v-form-builder/v-documents-forms/model/formsPDF.model";
-import { ISubMenus } from "../model/publish-settings.model";
-import { PaymentSettings } from "../../../models/vertical-data-collection/v-form-constructor/v-form-builder/payment-settings.model";
-import {IActiveSections} from "../../../models/vertical-data-collection/v-form-constructor/v-form-builder/active-section.model";
-import {TuitionContract} from "../../../models/vertical-data-collection/v-form-constructor/v-form-builder/tuition-contract.model";
-import {TermsConditions} from "../../../models/vertical-data-collection/v-form-constructor/v-form-builder/terms-conditions.model";
-import {DocumentsFormsModel} from "../../../models/vertical-data-collection/v-form-constructor/v-form-builder/documents-forms.model";
+import { Field } from './field.model';
+import { Permissions } from '../../../services/permission/permissions.model';
+import { ConsentInfo } from '../../../models/vertical-data-collection/v-form-constructor/v-form-builder/consent.model';
+import { DocumentsModel } from '../v-form-constructor/v-form-builder/v-documents-forms/model/documents.model';
+import { FormsPDFModel } from '../v-form-constructor/v-form-builder/v-documents-forms/model/formsPDF.model';
+import { ISubMenus } from './publish-settings.model';
+import { PaymentSettings } from '../../../models/vertical-data-collection/v-form-constructor/v-form-builder/payment-settings.model';
+import {IActiveSections} from '../../../models/vertical-data-collection/v-form-constructor/v-form-builder/active-section.model';
+import {TuitionContract} from '../../../models/vertical-data-collection/v-form-constructor/v-form-builder/tuition-contract.model';
+import {TermsConditions} from '../../../models/vertical-data-collection/v-form-constructor/v-form-builder/terms-conditions.model';
+import {DocumentsFormsModel} from '../../../models/vertical-data-collection/v-form-constructor/v-form-builder/documents-forms.model';
 
 export interface Form {
   _id: string;
@@ -21,7 +21,7 @@ export interface Form {
   personId?: number;
   template_sql_link?: object;
   formDates?: object;
-  language?: string; //Need FIXME: (type for languages)
+  language?: string; // Need FIXME: (type for languages)
   periodCheckboxGroup?: {
     primary1: boolean;
     primary2: boolean;
@@ -48,7 +48,7 @@ export interface Form {
   forms?: FormsPDFModel[];
   attachments?: object;
   activeSections?: IActiveSections;
-  //FIXME: when back-end will complete
+  // FIXME: when back-end will complete
   isOpened?: boolean;
 }
 
