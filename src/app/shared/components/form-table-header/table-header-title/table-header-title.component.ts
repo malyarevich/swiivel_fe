@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {SORT_ORDER} from "../../../../../enums/sort-order";
+import {SORT_ORDER} from "../../../../enums/sort-order";
 
 @Component({
     selector: 'app-table-header-title',

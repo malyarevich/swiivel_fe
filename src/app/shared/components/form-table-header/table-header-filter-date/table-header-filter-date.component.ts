@@ -1,19 +1,20 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {SORT_ORDER} from "../../../../../enums/sort-order";
+import {SORT_ORDER} from "../../../../enums/sort-order";
+import {NgbDateParserFormatter} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
-    selector: 'app-table-header-filter-text',
-    templateUrl: './table-header-filter-text.component.html',
-    styleUrls: ['./table-header-filter-text.component.css']
+  selector: 'app-table-header-filter-date',
+  templateUrl: './table-header-filter-date.component.html',
+  styleUrls: ['./table-header-filter-date.component.css']
 })
-export class TableHeaderFilterTextComponent implements OnInit {
+export class TableHeaderFilterDateComponent implements OnInit {
     @Input() col;
     @Output() filterDataEmitter: EventEmitter<any> = new EventEmitter<any>();
 
     public sortOrder = SORT_ORDER.DESC;
-    public value;
+    public value: {year: number, month: number, day: number};
 
-    constructor() {
+    constructor(private parserFormatter: NgbDateParserFormatter) {
     }
 
     ngOnInit() {
@@ -35,8 +36,9 @@ export class TableHeaderFilterTextComponent implements OnInit {
 
     emitData (): void {
         this.filterDataEmitter.emit({
-            value: this.value || '',
+            value: this.parserFormatter.format(this.value) || '',
             order: this.sortOrder
         });
     }
+
 }

@@ -16,10 +16,7 @@ import { DataCollectionComponent } from './data-collection.component';
 import { FormNavigationBarComponent } from './form-constructor/form-navigation-bar/form-navigation-bar.component';
 import { FormPublishSettingsComponent } from './form-constructor/form-publish-settings/form-publish-settings.component';
 import { routes as constructorRoutes } from './form-constructor/constructor-routing.module';
-import { FormTableHeaderComponent } from './form-table/form-table-header/form-table-header.component';
-import { TableHeaderTitleComponent } from './form-table/form-table-header/table-header-title/table-header-title.component';
-import { TableHeaderFilterTextComponent } from './form-table/form-table-header/table-header-filter-text/table-header-filter-text.component';
-import { TableHeaderFilterDateComponent } from './form-table/form-table-header/table-header-filter-date/table-header-filter-date.component';
+import { FormTableHeaderModule } from '../../shared/components';
 import { FormTableTbodyComponent } from './form-table/form-table-tbody/form-table-tbody.component';
 import { FormGeneralInformationComponent } from './form-constructor/form-general-information/form-general-information.component';
 import { GroupContainerComponent } from './form-constructor/form-builder/form-fields/fields-workspace/group-container/group-container.component';
@@ -166,10 +163,6 @@ const routes: Routes = [
     FormNavigationBarComponent,
     FormGeneralInformationComponent,
     FormPublishSettingsComponent,
-    FormTableHeaderComponent,
-    TableHeaderTitleComponent,
-    TableHeaderFilterTextComponent,
-    TableHeaderFilterDateComponent,
     FormGeneralInformationComponent,
     FormFieldSettingsComponent,
     GroupContainerComponent,
@@ -278,7 +271,8 @@ const routes: Routes = [
     ReactiveFormsModule,
     GeneralDirectivesModule,
     PdfViewerModule,
-    SharedRedComponentsModule
+    SharedRedComponentsModule,
+    FormTableHeaderModule,
   ],
   providers: [
     FormService,
