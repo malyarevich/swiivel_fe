@@ -11,7 +11,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormNavComponent } from './form-table/form-nav/form-nav.component';
 import { FormAccessComponent } from './form-access-modal/form-access/form-access.component';
 import { FormAccessModalComponent } from './form-access-modal/form-access-modal.component';
-import { FormReviewComponent } from './form-review/form-review.component';
 import { FormViewComponent } from './form-view/form-view.component';
 import { FormViewContainerComponent } from './form-view/form-view-container/form-view-container.component';
 import { FieldsService } from './services/fields.service';
@@ -168,10 +167,6 @@ const routes: Routes = [
         path: 'v-form-info/:id',
         component: FormInfoComponent
       },
-      {
-        path: 'v-form-review/:id',
-        component: FormReviewComponent
-      }
     ]
   }
 ];
@@ -184,7 +179,6 @@ const routes: Routes = [
     FormNavComponent,
     FormAccessComponent,
     FormAccessModalComponent,
-    FormReviewComponent,
     FormViewComponent,
     FormViewContainerComponent,
     ContentDirective,
