@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {FormsStatsService} from "../../../services/forms-stats.service";
-import {FormsInvitesRate} from "../../../model/forms-stats.models";
+import {FormsStatsService} from '../../services/forms-stats.service';
+import {FormsInvitesRate} from '../../model/forms-stats.models';
 
 @Component({
   selector: 'app-form-statistic-invites',
@@ -9,7 +9,7 @@ import {FormsInvitesRate} from "../../../model/forms-stats.models";
 })
 export class FormStatisticInvitesComponent implements OnInit {
 
-  period: string = 'month';
+  period = 'month';
 
   periodsName = {
     month: 'LAST MONTH',
@@ -34,7 +34,7 @@ export class FormStatisticInvitesComponent implements OnInit {
   };
 
   get invitesValue(): number {
-    if(!this.invitesRate) return;
+    if (!this.invitesRate) { return; }
     switch (this.period) {
       case 'month': return this.invitesRate.invites.month;
       case 'today': return this.invitesRate.invites.today;
@@ -42,7 +42,7 @@ export class FormStatisticInvitesComponent implements OnInit {
   }
 
   get submissionValue(): number {
-    if(!this.invitesRate) return;
+    if (!this.invitesRate) { return; }
     switch (this.period) {
       case 'month': return this.invitesRate.submissions.month;
       case 'today': return this.invitesRate.submissions.today;
@@ -57,7 +57,7 @@ export class FormStatisticInvitesComponent implements OnInit {
     this.formsStatsService.getInvitesRate().subscribe((val: FormsInvitesRate) => {
       this.invitesRate = val;
       // this.invitesRate = this.testInviteRate;
-    })
+    });
   }
 
   setPeriod(period: string) {

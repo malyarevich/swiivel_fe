@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Chart} from 'chart.js';
-import {FormsStatsService} from "../../../services/forms-stats.service";
-import {FormsViewsRate} from "../../../model/forms-stats.models";
+import {FormsStatsService} from '../../services/forms-stats.service';
+import {FormsViewsRate} from '../../model/forms-stats.models';
 
 @Component({
   selector: 'app-form-statistic-views',
@@ -23,7 +23,7 @@ export class FormStatisticViewsComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.formsStatsService.getViewsRate().subscribe((val: FormsViewsRate) => {
       this.viewsRate = val;
-    })
+    });
   }
 
   ngAfterViewInit() {

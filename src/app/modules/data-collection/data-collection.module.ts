@@ -16,7 +16,7 @@ import { DataCollectionComponent } from './data-collection.component';
 import { FormNavigationBarComponent } from './form-constructor/form-navigation-bar/form-navigation-bar.component';
 import { FormPublishSettingsComponent } from './form-constructor/form-publish-settings/form-publish-settings.component';
 import { routes as constructorRoutes } from './form-constructor/constructor-routing.module';
-import { FormTableHeaderModule } from '../../shared/components';
+import {FormTableHeaderModule, ProgressBarModule} from '../../shared/components';
 import { FormTableTbodyComponent } from './form-table/form-table-tbody/form-table-tbody.component';
 import { FormGeneralInformationComponent } from './form-constructor/form-general-information/form-general-information.component';
 import { GroupContainerComponent } from './form-constructor/form-builder/form-fields/fields-workspace/group-container/group-container.component';
@@ -45,11 +45,6 @@ import { RedirectPagesComponent } from './form-constructor/form-publish-settings
 import { PublishMenuComponent } from './form-constructor/form-publish-settings/publish-menu/publish-menu.component';
 import { VPublishMenuComponentAdditionalOptions } from './form-constructor/form-publish-settings/publish-menu/additional-options/additional-options.component';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
-import { FormStatisticComponent } from './form-table/form-statistic/form-statistic.component';
-import { FormStatisticViewsComponent } from './form-table/form-statistic/form-statistic-views/form-statistic-views.component';
-import { FormStatisticInvitesComponent } from './form-table/form-statistic/form-statistic-invites/form-statistic-invites.component';
-import { ProgressBarComponent } from './common-components/progress-bar/progress-bar.component';
-import { FormStatisticSubmissionsComponent } from './form-table/form-statistic/form-statistic-submissions/form-statistic-submissions.component';
 import { FormDrawingComponent } from './form-constructor/form-builder/documents-forms/forms-container/form-drawing/form-drawing.component';
 import { FormInfoComponent } from './form-info/form-info.component';
 import { FormInfoHeaderComponent } from './form-info/form-info-header/form-info-header.component';
@@ -114,6 +109,7 @@ import { PhoneNumberSettingsComponent } from './form-constructor/form-builder/fo
 import { GeneralSettingsComponent } from './form-constructor/form-builder/form-fields/fields-workspace/field-conteiner/form-field-settings/general-settings/general-settings.component';
 import { NumberSettingsComponent } from './form-constructor/form-builder/form-fields/fields-workspace/field-conteiner/form-field-settings/number-settings/number-settings.component';
 import { DateSettingsComponent } from './form-constructor/form-builder/form-fields/fields-workspace/field-conteiner/form-field-settings/date-settings/date-settings.component';
+import {FormStatisticModule} from './form-statistic/form-statistic.module';
 
 const routes: Routes = [
   {
@@ -199,11 +195,6 @@ const routes: Routes = [
     RedirectPagesComponent,
     PublishMenuComponent,
     VPublishMenuComponentAdditionalOptions,
-    FormStatisticComponent,
-    FormStatisticViewsComponent,
-    FormStatisticInvitesComponent,
-    ProgressBarComponent,
-    FormStatisticSubmissionsComponent,
     FormDrawingComponent,
     FormInfoComponent,
     FormInfoHeaderComponent,
@@ -273,6 +264,8 @@ const routes: Routes = [
     PdfViewerModule,
     SharedRedComponentsModule,
     FormTableHeaderModule,
+    ProgressBarModule,
+    FormStatisticModule,
   ],
   providers: [
     FormService,
