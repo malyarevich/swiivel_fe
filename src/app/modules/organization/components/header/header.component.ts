@@ -13,7 +13,7 @@ export const menuItems: IMenuItems[] = [
   { route: '/persons', label: 'Persons', icon: 'fa-user' },
   { route: '/family', label: 'Family', icon: 'fa-cog' },
   { route: '/period', label: 'Period', icon: 'fa-calendar' },
-  { route: '/vertical-data-collection', label: 'Data Collection', icon: 'fa-file' },
+  { route: '/data-collection', label: 'Data Collection', icon: 'fa-file' },
 ];
 
 @Component({
