@@ -13,9 +13,15 @@ import { IActiveSections } from "src/app/models/data-collection/form-constructor
 export class OnlineFormNavigationService {
   @Output() onActiveSectionItem: EventEmitter<string> = new EventEmitter();
   @Output() onActiveMenuItem: EventEmitter<string> = new EventEmitter();
-  @Output() onSetActiveMenuItems: EventEmitter<IActiveSections> = new EventEmitter();
-  @Output() onChangeSectionListOfMenuItems: EventEmitter<Array<object[]>> = new EventEmitter();
-  private activeSections: IActiveSections;
+  @Output() onSetActiveMenuItems: EventEmitter<
+    IActiveSections
+  > = new EventEmitter();
+  @Output() onChangeSectionListOfMenuItems: EventEmitter<
+    Array<object[]>
+  > = new EventEmitter();
+  @Output() onBothLoaded: EventEmitter<boolean> = new EventEmitter();
+  @Output() onSetSectionPercents: EventEmitter<object> = new EventEmitter();
+  private activeMainMenuItems: IActiveSections;
   //page like a General Information or Documents&Forms:
   private activeMenuItem: string;
   private activeMenuItemIndex: number;
@@ -23,19 +29,15 @@ export class OnlineFormNavigationService {
   private activeSectionItem: string;
   private activeSectionItemIndex: number;
   private sectionListOfMenuItems: Array<object[]> = [];
-  private isBothLoaded = new BehaviorSubject<boolean>(false);
+  private sectionPercents: object = {};
 
-  get isStartMenu() {
-    return this.isBothLoaded.asObservable();
-  }
-  
-  setActiveSections(activeSections: IActiveSections) {
-    this.activeSections = activeSections;
-    this.onSetActiveMenuItems.emit(this.activeSections);
+  setActiveMainMenuItems(activeMainMenuItems: IActiveSections) {
+    this.activeMainMenuItems = activeMainMenuItems;
+    this.onSetActiveMenuItems.emit(this.activeMainMenuItems);
   }
 
-  getActiveSections(): IActiveSections {
-    return this.activeSections;
+  getActiveMainMenuItems(): IActiveSections {
+    return this.activeMainMenuItems;
   }
 
   setActiveMenuItem(activeMenuItem: string) {
@@ -49,11 +51,11 @@ export class OnlineFormNavigationService {
   }
 
   getMenuItemNameByIndex(index: number): string {
-    if (index > 0 && index < Object.keys(this.activeSections).length) {
-      return Object.keys(this.activeSections)[index];
+    if (index > 0 && index < Object.keys(this.activeMainMenuItems).length) {
+      return Object.keys(this.activeMainMenuItems)[index];
     } else {
-      if (Object.keys(this.activeSections).length > 0) {
-        return Object.keys(this.activeSections)[0];
+      if (Object.keys(this.activeMainMenuItems).length > 0) {
+        return Object.keys(this.activeMainMenuItems)[0];
       } else {
         return;
       }
@@ -65,22 +67,27 @@ export class OnlineFormNavigationService {
   }
 
   getMenuItemIndexById(id: string): number {
-    return Object.keys(this.activeSections).findIndex(item => {
+    return Object.keys(this.activeMainMenuItems).findIndex(item => {
       return item === id;
     });
   }
 
   getSectionItemIndexById(menuIndex: number, sectionId: string): number {
-    return this.sectionListOfMenuItems[menuIndex].findIndex((item) => {
-      return item['_id'] === sectionId;
+    return this.sectionListOfMenuItems[menuIndex].findIndex(item => {
+      return item["_id"] === sectionId;
     });
   }
 
   setSectionItemOfMenuItems(menuId: string, sections: object[]) {
     this.sectionListOfMenuItems[this.getMenuItemIndexById(menuId)] = sections;
     this.onChangeSectionListOfMenuItems.emit(this.sectionListOfMenuItems);
-    if(this.sectionListOfMenuItems && this.activeSections && this.sectionListOfMenuItems.length === Object.keys(this.activeSections).length) {
-      this.isBothLoaded.next(true);
+    if (
+      this.sectionListOfMenuItems &&
+      this.activeMainMenuItems &&
+      this.sectionListOfMenuItems.length ===
+        Object.keys(this.activeMainMenuItems).length
+    ) {
+      this.onBothLoaded.emit(true);
     }
   }
 
@@ -98,13 +105,19 @@ export class OnlineFormNavigationService {
   }
 
   setFirstMenuItem() {
-    this.setActiveMenuItem(
-      this.getMenuItemNameByIndex(0)
-    );
+    try {
+      if (this.activeMainMenuItems) {
+        this.setActiveMenuItem(this.getMenuItemNameByIndex(0));
+      } else {
+        throw "Not initialized - OnlineFormNavigationService.activeMainMenuItems";
+      }
+    } catch (error) {
+      console.warn(error.text ? error.text : error);
+    }
   }
 
   getSectionItemIdByIndex(menuIndex: number, sectionIndex: number): string {
-    return this.sectionListOfMenuItems[menuIndex][sectionIndex]['_id'];
+    return this.sectionListOfMenuItems[menuIndex][sectionIndex]["_id"];
   }
 
   nextMenuItem() {
@@ -120,26 +133,37 @@ export class OnlineFormNavigationService {
   }
 
   setFirstSectionItem() {
-    this.setActiveSectionItem(
-      this.getSectionItemIdByIndex(
-        this.activeMenuItemIndex, 0)
-    );
+    try {
+      if (this.sectionListOfMenuItems) {
+        this.setActiveSectionItem(
+          this.getSectionItemIdByIndex(this.activeMenuItemIndex, 0)
+        );
+      } else {
+        throw "Not initialized - OnlineFormNavigationService.sectionListOfMenuItems";
+      }
+    } catch (error) {
+      console.warn(error.text ? error.text : error);
+    }
   }
 
   setLastSectionItem() {
     this.setActiveSectionItem(
       this.getSectionItemIdByIndex(
-        this.activeMenuItemIndex, this.getLastSectionIndex())
+        this.activeMenuItemIndex,
+        this.getLastSectionIndex()
+      )
     );
+  }
+
+  setAtFirstStep() {
+    this.setFirstMenuItem();
+    this.setFirstSectionItem();
   }
 
   nextSectionItem() {
     const NEXT_INDEX = this.activeSectionItemIndex + 1;
     this.setActiveSectionItem(
-      this.getSectionItemIdByIndex(
-        this.activeMenuItemIndex,
-        NEXT_INDEX
-      )
+      this.getSectionItemIdByIndex(this.activeMenuItemIndex, NEXT_INDEX)
     );
   }
 
@@ -147,7 +171,7 @@ export class OnlineFormNavigationService {
     this.setActiveSectionItem(
       this.getSectionItemIdByIndex(
         this.activeMenuItemIndex,
-        (this.activeSectionItemIndex - 1)
+        this.activeSectionItemIndex - 1
       )
     );
   }
@@ -168,8 +192,7 @@ export class OnlineFormNavigationService {
         this.nextMenuItem();
         this.setFirstSectionItem();
       } else {
-        this.setFirstMenuItem();
-        this.setFirstSectionItem();
+        this.setAtFirstStep();
       }
     }
   }
@@ -184,4 +207,14 @@ export class OnlineFormNavigationService {
       }
     }
   }
+
+  setSectionPercent(key: string, value: number) {
+    this.sectionPercents[key] = value;
+    this.onSetSectionPercents.emit(this.sectionPercents);
+  }
+
+  getSectionPercent(key: string): number {
+    return this.sectionPercents[key] ? this.sectionPercents[key] : -1;
+  }
+
 }

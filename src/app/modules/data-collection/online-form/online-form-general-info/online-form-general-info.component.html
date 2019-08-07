@@ -21,7 +21,7 @@
 <div class="content_section__main_container">
   <div>
     <ng-container *ngIf="form.fields">
-      <ng-container *ngFor="let section of sections">
+      <ng-container *ngFor="let section of sections; let sectionIndex = index">
           <div 
             class="app-div-animation"
             [ngClass]="{

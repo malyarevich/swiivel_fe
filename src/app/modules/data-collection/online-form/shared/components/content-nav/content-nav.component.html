@@ -7,7 +7,7 @@
         <a
           class="content_nav__link"
           [ngClass]="{
-            'content_nav__link--active': activeId === item._id
+            'content_nav__link--active': activeId === item._id || (i === 0 && !activeId)
           }"
           [tabindex]="item._id"
           (click)="setActiveId(item._id)"
@@ -15,7 +15,7 @@
           <li
             class="content_nav__item"
             [ngClass]="{
-              'content_nav__item--active': activeId === item._id
+              'content_nav__item--active': activeId === item._id || (i === 0 && !activeId)
             }"
           >
             {{ item.name }}

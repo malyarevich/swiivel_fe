@@ -1,4 +1,10 @@
-import { Component, OnInit, OnDestroy, AfterViewInit } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  AfterViewInit,
+  NgZone
+} from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 import { Form } from "src/app/models/data-collection/form.model";
@@ -22,18 +28,20 @@ import { IActiveSections } from "src/app/models/data-collection/form-constructor
 export class OnlineFormViewComponent
   implements OnInit, AfterViewInit, OnDestroy {
   form: Form;
-  activeSection: string;
   fg: FormGroup;
 
-  activeSections: IActiveSections;
+  activeMainMenuItems: IActiveSections;
+  activeMenuItem: string;
   sectionListOfMenuItems: Array<object[]>;
+
   onActiveMenuItemSubscription: Subscription;
   onChangeSectionListOfMenuItemsSubscription: Subscription;
+  onBothLoadedSubscription: Subscription;
+
   isDisabledSaveButton: boolean;
-  isStartMenu$: Observable<boolean>;
+  isBothLoaded: boolean = false;
   isFirst: boolean = true;
 
-  percents: number[];
   menuItems: IMenuItems[] = menuItems;
   mainMenuNames: IMainMenuNames = mainMenuNames;
 
@@ -45,18 +53,25 @@ export class OnlineFormViewComponent
   ) {}
 
   ngOnInit() {
-    this.percents = [];
     this.getForm();
     this.onActiveMenuItemSubscription = this.onlineFormNavigationService.onActiveMenuItem.subscribe(
       menuItemName => {
-        this.activeSection = menuItemName;
+        this.activeMenuItem = menuItemName;
       }
     );
+
     this.onChangeSectionListOfMenuItemsSubscription = this.onlineFormNavigationService.onChangeSectionListOfMenuItems.subscribe(
       sectionListOfMenuItems => {
         this.sectionListOfMenuItems = sectionListOfMenuItems;
-        // sectionListOfMenuItems.length === Object.keys(this.activeSections).length;
-        this.goPreviousStep();
+        // sectionListOfMenuItems.length === Object.keys(this.activeMainMenuItems).length;
+        // this.goPreviousStep();
+      }
+    );
+
+    this.onBothLoadedSubscription = this.onlineFormNavigationService.onBothLoaded.subscribe(
+      isBothLoaded => {
+        this.goToFirstStep();
+        this.isBothLoaded = isBothLoaded;
       }
     );
   }
@@ -64,16 +79,6 @@ export class OnlineFormViewComponent
   ngAfterViewInit(): void {
     //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
     //Add 'implements AfterViewInit' to the class.
-    this.isStartMenu$ = this.onlineFormNavigationService.isStartMenu;
-    this.isStartMenu$.subscribe(() => {
-      if (this.isFirst) {
-        this.goPreviousStep();
-        this.isFirst = false;
-      }
-    })
-    setTimeout(() => {
-      this.goPreviousStep();
-    }, 500);
   }
 
   getForm(): void {
@@ -83,11 +88,12 @@ export class OnlineFormViewComponent
 
       console.log(this.form);
 
-      this.activeSections = this.getFilteredSections();
-      this.onlineFormNavigationService.setActiveSections(this.activeSections);
+      this.activeMainMenuItems = this.getFilteredSections();
+      this.onlineFormNavigationService.setActiveMainMenuItems(
+        this.activeMainMenuItems
+      );
 
       this.initForm();
-      this.goPreviousStep();
     });
   }
 
@@ -112,8 +118,8 @@ export class OnlineFormViewComponent
 
   // isStartInitMenu(): boolean | undefined {
   //   let isStartInitMenu: boolean = false;
-  //   if (this.sectionListOfMenuItems && this.activeSections) {
-  //     isStartInitMenu = this.sectionListOfMenuItems.length === Object.keys(this.activeSections).length;
+  //   if (this.sectionListOfMenuItems && this.activeMainMenuItems) {
+  //     isStartInitMenu = this.sectionListOfMenuItems.length === Object.keys(this.activeMainMenuItems).length;
   //     return isStartInitMenu;
   //   }
   //   return;
@@ -128,8 +134,16 @@ export class OnlineFormViewComponent
     }
   }
 
+  goToFirstStep() {
+    this.onlineFormNavigationService.setAtFirstStep();
+  }
+
   goPreviousStep() {
-    if (this.sectionListOfMenuItems && this.sectionListOfMenuItems.length === Object.keys(this.activeSections).length) {
+    if (
+      this.sectionListOfMenuItems &&
+      this.sectionListOfMenuItems.length ===
+        Object.keys(this.activeMainMenuItems).length
+    ) {
       this.onlineFormNavigationService.previousStep();
     }
   }
@@ -172,10 +186,6 @@ export class OnlineFormViewComponent
 
   goBack() {
     this.location.back();
-  }
-
-  setPercent(itemName: string, percent: number) {
-    this.percents[itemName] = percent;
   }
 
   ngOnDestroy(): void {

@@ -16,7 +16,7 @@ export const routes: Routes = [
     children: personRoutes,
   },
   {
-    path: 'vertical-data-collection',
+    path: 'data-collection',
     component: LayoutComponent,
     children: [
       {

@@ -20,7 +20,6 @@ import { OnlineFormNavigationService } from '../services/online-form-navigation.
 })
 export class OnlineFormTermsConditionsComponent implements OnInit {
   @Input() form: Form;
-  @Output() onSetPercent: EventEmitter<number> = new EventEmitter();
 
   percent: number;
   menuItems: IMenuItems[] = menuItems;
@@ -43,11 +42,11 @@ export class OnlineFormTermsConditionsComponent implements OnInit {
     this.signature = cloneDeep(this.form.termsConditions.signature);
     this.initSections();
     this.onlineFormNavigationService.onActiveSectionItem.subscribe((newActiveSectionId) => {
+      //TODO: go to behaviorSubjects 
       this.activeSectionId = newActiveSectionId;
     });
     // TODO: count percent
-    this.percent = 0;
-    this.onSetPercent.emit(this.percent);
+    this.setPercent(100);
   }
 
   initSections() {
@@ -58,12 +57,18 @@ export class OnlineFormTermsConditionsComponent implements OnInit {
     } else {
       this.sections = [{_id: "termsConditions", name: "Terms & Conditions section"}];
     }
+    this.onlineFormNavigationService.setSectionItemOfMenuItems(mainMenuNames.termsConditions, this.sections);
   }
 
   getTime() {
     return this.menuItems.find(
       o => o.name === this.mainMenuNames.termsConditions
     ).time;
+  }
+
+  setPercent(percent: number) {
+    this.percent = percent;
+    this.onlineFormNavigationService.setSectionPercent(mainMenuNames.termsConditions, percent);
   }
 
   onSystemSign() {

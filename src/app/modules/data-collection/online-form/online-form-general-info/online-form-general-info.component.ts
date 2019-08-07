@@ -2,8 +2,6 @@ import {
   Component,
   Input,
   OnInit,
-  Output,
-  EventEmitter,
   AfterViewInit
 } from "@angular/core";
 import { generalSectionsNames } from "../model/general-info-section-name.model";
@@ -30,7 +28,6 @@ import { OnlineFormNavigationService } from "../services/online-form-navigation.
 export class OnlineFormGeneralInfoComponent implements OnInit, AfterViewInit {
   // @Input() form: Form;
   @Input() form: Field;
-  @Output() onSetPercent: EventEmitter<number> = new EventEmitter();
 
   percent: number;
   menuItems: IMenuItems[] = menuItems;
@@ -52,6 +49,7 @@ export class OnlineFormGeneralInfoComponent implements OnInit, AfterViewInit {
     this.initSections();
     this.onlineFormNavigationService.onActiveSectionItem.subscribe(
       newActiveSectionId => {
+        //TODO: go to behaviorSubjects 
         this.activeSectionId = newActiveSectionId;
       }
     );
@@ -84,6 +82,7 @@ export class OnlineFormGeneralInfoComponent implements OnInit, AfterViewInit {
         { _id: "generalInfo", name: "General Information", type: 114 }
       ];
     }
+    this.onlineFormNavigationService.setSectionItemOfMenuItems(mainMenuNames.generalInfo, this.sections);
   }
 
   calcPercent(list: object) {
@@ -103,7 +102,7 @@ export class OnlineFormGeneralInfoComponent implements OnInit, AfterViewInit {
 
   setPercent(percent: number) {
     this.percent = percent;
-    this.onSetPercent.emit(this.percent);
+    this.onlineFormNavigationService.setSectionPercent(mainMenuNames.generalInfo, percent);
   }
 
   getTime() {
