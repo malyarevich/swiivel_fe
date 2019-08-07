@@ -95,7 +95,7 @@ export class FormNavigationBarComponent implements OnInit {
 
   goBack() {
     // console.log("goBack");
-    this.router.navigate([`/vertical-data-collection/`]);
+    this.router.navigate([`/data-collection/`]);
   }
 
   saveForm() {

@@ -575,7 +575,7 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
   }
 
   goBack() {
-    this.router.navigate([`/vertical-data-collection/`]);
+    this.router.navigate([`/data-collection/`]);
   }
 
   doExistingFieldsUniq(field: Field) {

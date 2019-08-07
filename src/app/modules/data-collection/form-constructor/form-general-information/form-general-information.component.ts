@@ -270,7 +270,7 @@ export class FormGeneralInformationComponent implements OnInit, OnDestroy {
 
     this.formService.sendForm(form).subscribe((res: any) => {
       this.router.navigate([
-        `/vertical-data-collection/v-form-constructor/${res.id}/form-builder`
+        `/data-collection/v-form-constructor/${res.id}/form-builder`
       ]);
     });
   }
@@ -476,7 +476,7 @@ export class FormGeneralInformationComponent implements OnInit, OnDestroy {
   }
 
   // goBack() {
-  //   this.router.navigate([`/vertical-data-collection/`]);
+  //   this.router.navigate([`/data-collection/`]);
   // }
 
   ngOnDestroy() {

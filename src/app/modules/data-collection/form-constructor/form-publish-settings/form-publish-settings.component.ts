@@ -488,7 +488,7 @@ export class FormPublishSettingsComponent implements OnInit {
   }
 
   goBack() {
-    this.router.navigate([`/vertical-data-collection/`]);
+    this.router.navigate([`/data-collection/`]);
   }
 
   ngOnDestroy(): void {

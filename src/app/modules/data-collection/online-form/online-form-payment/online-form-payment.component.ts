@@ -9,7 +9,7 @@ import {
 import { cloneDeep } from "lodash";
 import { Form } from "../../model/form.model";
 import { E_SIGNATURE_TYPES, SIGNATURE_TYPES } from "../../../../enums";
-// import {PaymentSettingsSignature} from "../../../vertical-data-collection/v-form-constructor/v-form-builder/v-terms-conditions/model/payment-settings.model";
+// import {PaymentSettingsSignature} from "../../../data-collection/v-form-constructor/v-form-builder/v-terms-conditions/model/payment-settings.model";
 import { SystemSignatureService } from "../services/signatures/system-signature.service";
 import { SignatureCreateResponse } from "../../../../models/shared/signatures/signature-create-response.model";
 import {
