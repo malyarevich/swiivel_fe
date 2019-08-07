@@ -25,12 +25,15 @@ import { Subscription, BehaviorSubject } from "rxjs";
 export class OnlineFormMenuComponent implements OnInit, OnDestroy {
   percents: object = {};
   percentsEmitter$ = new BehaviorSubject<object>(this.percents);
+  activeMenuItem: string;
+  activeMenuItemEmitter$: BehaviorSubject<string>;
 
   activeMenuItems: IActiveSections;
 
   onSetActiveMenuItemsSubscription: Subscription;
   onChangeSectionListOfMenuItemsSubscription: Subscription;
   onSetSectionPercentsSubscription: Subscription;
+  onActiveMenuItemSubscription: Subscription;
 
   hoveredItems = [];
 
@@ -44,12 +47,18 @@ export class OnlineFormMenuComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    this.activeMenuItem = this.getActiveMenuItem();
+    this.activeMenuItemEmitter$ = new BehaviorSubject<string>(
+      this.activeMenuItem
+    );
+
     this.onSetActiveMenuItemsSubscription = this.onlineFormNavigationService.onSetActiveMenuItems.subscribe(
       activeMenuItems => {
         this.activeMenuItems = activeMenuItems;
         this.initActiveMenuList();
       }
     );
+
     this.onChangeSectionListOfMenuItemsSubscription = this.onlineFormNavigationService.onChangeSectionListOfMenuItems.subscribe(
       sectionListOfMenuItems => {
         this.onlineFormNavigationService.setAtFirstStep();
@@ -62,6 +71,14 @@ export class OnlineFormMenuComponent implements OnInit, OnDestroy {
         this.percentsEmitter$.next(this.percents);
       }
     );
+
+    this.onActiveMenuItemSubscription = this.onlineFormNavigationService.onActiveMenuItem.subscribe(
+      (activeMenuItem: string) => {
+        this.activeMenuItem = activeMenuItem;
+        this.activeMenuItemEmitter$.next(this.activeMenuItem);
+      }
+    );
+
     this.activeMenuItems = this.onlineFormNavigationService.getActiveMainMenuItems();
     this.initActiveMenuList();
   }
@@ -107,11 +124,17 @@ export class OnlineFormMenuComponent implements OnInit, OnDestroy {
     if (this.onSetActiveMenuItemsSubscription) {
       this.onSetActiveMenuItemsSubscription.unsubscribe();
     }
+
     if (this.onChangeSectionListOfMenuItemsSubscription) {
       this.onChangeSectionListOfMenuItemsSubscription.unsubscribe();
     }
+
     if (this.onSetSectionPercentsSubscription) {
       this.onSetSectionPercentsSubscription.unsubscribe();
+    }
+
+    if (this.onActiveMenuItemSubscription) {
+      this.onActiveMenuItemSubscription.unsubscribe();
     }
   }
 }
