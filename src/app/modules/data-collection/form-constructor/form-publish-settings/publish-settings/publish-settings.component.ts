@@ -5,7 +5,7 @@ import { PublishSettingsService } from '../../../services/publish-settings.servi
 import { PublishMenuItems } from "../../../model/publish-menu-items";
 
 @Component({
-  selector: "app-v-publish-settings",
+  selector: "app-publish-settings",
   templateUrl: "./publish-settings.component.html",
   encapsulation: ViewEncapsulation.None,
   styleUrls: ["./publish-settings.component.scss"]

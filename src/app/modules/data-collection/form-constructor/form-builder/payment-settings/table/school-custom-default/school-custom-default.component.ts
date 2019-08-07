@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
 
 @Component({
-  selector: "app-v-payment-settings-table-school-custom-default",
+  selector: "app-payment-settings-table-school-custom-default",
   templateUrl: "./school-custom-default.component.html",
   styleUrls: ["./school-custom-default.component.scss"]
 })

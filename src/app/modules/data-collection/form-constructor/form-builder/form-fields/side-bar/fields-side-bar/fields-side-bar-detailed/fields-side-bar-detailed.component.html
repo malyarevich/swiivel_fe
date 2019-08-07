@@ -23,7 +23,7 @@
   <div class=" ngx-dnd-container" direction="vertical" [copy]="true" [model]="section.fields" ngxDroppable>
     <div class="my-3  ml-3 " *ngFor="let field of section.fields | filter: searchText" [model]="field"
          [ngxDraggable]="idSectionForDragDrop">
-      <app-v-side-bar-group
+      <app-side-bar-group
         *ngIf="field.type==113"
         [group]="field"
         [form]="form"
@@ -33,8 +33,8 @@
 
       >
 
-      </app-v-side-bar-group>
-      <app-v-side-bar-field
+      </app-side-bar-group>
+      <app-side-bar-field
         *ngIf="field.type!=113"
         [field]="field"
         [form]="form"
@@ -43,7 +43,7 @@
         [style]="field.mapped==''"
         (deleteCustom)="deleteCustomField($event)"
       >
-      </app-v-side-bar-field>
+      </app-side-bar-field>
     </div>
   </div>
   <div class="my-3  ml-3 ">

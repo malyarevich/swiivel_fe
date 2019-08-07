@@ -11,7 +11,7 @@ const defaultSettings: ITypeFieldSettings = {
 };
 
 @Component({
-  selector: 'app-v-short-text-settings',
+  selector: 'app-short-text-settings',
   templateUrl: './short-text-settings.component.html',
   styleUrls: ['./short-text-settings.component.css']
 })

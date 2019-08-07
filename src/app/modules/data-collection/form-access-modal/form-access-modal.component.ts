@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angula
 import {FormAccessComponent} from "./form-access/form-access.component";
 
 @Component({
-    selector: 'app-v-form-access-modal',
+    selector: 'app-form-access-modal',
     templateUrl: './form-access-modal.component.html',
     styleUrls: ['./form-access-modal.component.css']
 })

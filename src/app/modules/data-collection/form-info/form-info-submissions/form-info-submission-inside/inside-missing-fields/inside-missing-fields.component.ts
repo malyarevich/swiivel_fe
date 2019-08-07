@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'app-v-inside-missing-fields',
+  selector: 'app-inside-missing-fields',
   templateUrl: './inside-missing-fields.component.html',
   styleUrls: ['./inside-missing-fields.component.css']
 })

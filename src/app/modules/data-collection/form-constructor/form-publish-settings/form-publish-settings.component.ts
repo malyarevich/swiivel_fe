@@ -24,7 +24,7 @@ import { IAutomationListItem } from "src/app/models/data-collection/form-constru
 
 //TODO: remove excess functional
 @Component({
-  selector: "app-v-form-publish-settings",
+  selector: "app-form-publish-settings",
   templateUrl: "./form-publish-settings.component.html",
   styleUrls: ["./form-publish-settings.component.scss"]
 })

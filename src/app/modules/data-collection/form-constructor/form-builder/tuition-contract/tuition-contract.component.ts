@@ -3,7 +3,7 @@ import {E_SIGNATURE_TYPES, SIGNATURE_TYPES, TUITION_CONTRACT_SPLIT_TYPES} from "
 import {TuitionContract} from "../../../../../models/data-collection/form-constructor/form-builder/tuition-contract.model";
 
 @Component({
-  selector: 'app-v-tuition-contract',
+  selector: 'app-tuition-contract',
   templateUrl: './tuition-contract.component.html',
   styleUrls: ['./tuition-contract.component.css']
 })

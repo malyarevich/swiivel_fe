@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
 
 @Component({
-  selector: "app-v-payment-settings-table",
+  selector: "app-payment-settings-table",
   templateUrl: "./table.component.html",
   styleUrls: ["./table.component.scss"]
 })

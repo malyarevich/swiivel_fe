@@ -5,7 +5,7 @@ import {FormsStatsService} from "../../services/forms-stats.service";
 import {Chart} from 'chart.js';
 
 @Component({
-  selector: 'app-v-form-info-stats',
+  selector: 'app-form-info-stats',
   templateUrl: './form-info-stats.component.html',
   styleUrls: ['./form-info-stats.component.scss']
 })

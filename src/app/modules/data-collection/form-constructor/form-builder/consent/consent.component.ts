@@ -11,7 +11,7 @@ import { ICommand } from 'src/app/models/data-collection/form-constructor/form-b
 import {Section} from "../../../../../models/data-collection/section.model";
 
 @Component({
-  selector: 'app-v-consent',
+  selector: 'app-consent',
   templateUrl: './consent.component.html',
   styleUrls: ['./consent.component.scss']
 })

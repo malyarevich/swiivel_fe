@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {FormGroup} from "@angular/forms";
 
 @Component({
-  selector: 'app-v-fields-setting-option-checkboxes',
+  selector: 'app-fields-setting-option-checkboxes',
   templateUrl: './fields-setting-option-checkboxes.component.html',
   styleUrls: ['./fields-setting-option-checkboxes.component.css']
 })

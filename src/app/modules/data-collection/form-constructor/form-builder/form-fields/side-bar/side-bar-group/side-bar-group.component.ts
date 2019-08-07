@@ -4,7 +4,7 @@ import {Form} from "../../../../../model/form.model";
 import {SideBarService} from "../side-bar.service";
 
 @Component({
-  selector: 'app-v-side-bar-group',
+  selector: 'app-side-bar-group',
   templateUrl: './side-bar-group.component.html',
   styleUrls: ['./side-bar-group.component.scss']
 })

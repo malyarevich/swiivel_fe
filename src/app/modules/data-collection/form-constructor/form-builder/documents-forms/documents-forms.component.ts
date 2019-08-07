@@ -5,7 +5,7 @@ import {FormsPDFModel} from "./model/formsPDF.model";
 import {DocumentsFormsModel} from "../../../../../models/data-collection/form-constructor/form-builder/documents-forms.model";
 
 @Component({
-  selector: 'app-v-documents-forms',
+  selector: 'app-documents-forms',
   templateUrl: './documents-forms.component.html',
   styleUrls: ['./documents-forms.component.css']
 })

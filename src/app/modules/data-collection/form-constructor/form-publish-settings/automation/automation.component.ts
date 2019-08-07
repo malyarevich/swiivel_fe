@@ -4,7 +4,7 @@ import { PublishMenuItems } from "../../../model/publish-menu-items";
 import { PublishSettingsAutomationService } from '../../../services/publish-settings-automation.service';
 
 @Component({
-  selector: "app-v-automation",
+  selector: "app-automation",
   templateUrl: "./automation.component.html",
   styleUrls: ["./automation.component.scss"]
 })

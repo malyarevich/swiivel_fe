@@ -7,7 +7,7 @@ import {Form} from "../../../../../model/form.model";
 import {Section} from "../../../../../../../models/data-collection/section.model";
 
 @Component({
-  selector: 'app-v-group-container',
+  selector: 'app-group-container',
   templateUrl: './group-container.component.html',
   styleUrls: ['./group-container.component.scss']
 })

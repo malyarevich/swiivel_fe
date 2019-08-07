@@ -12,7 +12,7 @@ const defaultSettings: ITypeFieldSettings = {
 };
 
 @Component({
-  selector: 'app-v-email-settings',
+  selector: 'app-email-settings',
   templateUrl: './email-settings.component.html',
   styleUrls: ['./email-settings.component.css']
 })

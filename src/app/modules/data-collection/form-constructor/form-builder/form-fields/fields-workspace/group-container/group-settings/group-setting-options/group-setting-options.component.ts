@@ -18,7 +18,7 @@ const defaultSettingOptions: GroupSectionOptions = {
 };
 
 @Component({
-  selector: 'app-v-group-setting-options',
+  selector: 'app-group-setting-options',
   templateUrl: './group-setting-options.component.html',
   styleUrls: ['./group-setting-options.component.css']
 })

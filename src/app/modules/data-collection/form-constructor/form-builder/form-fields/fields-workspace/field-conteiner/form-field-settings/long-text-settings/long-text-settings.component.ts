@@ -8,7 +8,7 @@ const defaultSettings: ITypeFieldSettings = {
 };
 
 @Component({
-  selector: 'app-v-long-text-settings',
+  selector: 'app-long-text-settings',
   templateUrl: './long-text-settings.component.html',
   styleUrls: ['./long-text-settings.component.scss']
 })

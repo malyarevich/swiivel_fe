@@ -2,7 +2,7 @@
 <div *ngIf="isFormReady()" class="container-fluid">
   <div class="row mt-5 px-5">
     <div class="col-3 rounded p-0">
-      <app-v-form-general-menu (activeSectionEmitter)="setActiveSection($event)" [menu]="menu"></app-v-form-general-menu>
+      <app-form-general-menu (activeSectionEmitter)="setActiveSection($event)" [menu]="menu"></app-form-general-menu>
     </div>
     <div class=" col-9">
       <form [formGroup]="generalInfoForm" (ngSubmit)="onSubmit()">

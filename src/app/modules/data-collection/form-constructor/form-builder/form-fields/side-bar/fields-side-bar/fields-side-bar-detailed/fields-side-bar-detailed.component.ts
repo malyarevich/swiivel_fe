@@ -12,7 +12,7 @@ import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 
 
 @Component({
-  selector: 'app-v-fields-side-bar-detailed',
+  selector: 'app-fields-side-bar-detailed',
   templateUrl: './fields-side-bar-detailed.component.html',
   styleUrls: ['./fields-side-bar-detailed.component.scss']
 })

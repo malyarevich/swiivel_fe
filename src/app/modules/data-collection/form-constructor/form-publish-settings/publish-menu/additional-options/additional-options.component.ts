@@ -3,7 +3,7 @@ import { IAutomationListItem, IAutomation } from '../../../../model/publish-sett
 import { PublishSettingsAutomationService } from '../../../../services/publish-settings-automation.service';
 
 @Component({
-  selector: "app-v-publish-menu-additional-options",
+  selector: "app-publish-menu-additional-options",
   templateUrl: "./additional-options.component.html",
   styleUrls: ["./additional-options.component.scss"]
 })

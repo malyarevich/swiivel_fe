@@ -4,7 +4,7 @@ import { TEMPLATE_STATUS } from '../../../../enums/template-status';
 import {FormSql} from '../../../../models/data-collection/form.model';
 
 @Component({
-  selector: '[app-v-form-table-tbody]',
+  selector: '[app-form-table-tbody]',
   templateUrl: './form-table-tbody.component.html',
   styleUrls: ['./form-table-tbody.component.scss']
 })

@@ -5,7 +5,7 @@ import { FormService } from "../services/form.service";
 import { FormSql } from "../model/form.model";
 
 @Component({
-  selector: "app-v-form-review",
+  selector: "app-form-review",
   templateUrl: "./form-review.component.html",
   styleUrls: ["./form-review.component.scss"]
 })

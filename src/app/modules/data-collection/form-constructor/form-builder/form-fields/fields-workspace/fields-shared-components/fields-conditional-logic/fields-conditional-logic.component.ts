@@ -13,7 +13,7 @@ const defaultConditional: FieldSettingConditional = {
 };
 
 @Component({
-  selector: 'app-v-fields-conditional-logic',
+  selector: 'app-fields-conditional-logic',
   templateUrl: './fields-conditional-logic.component.html',
   styleUrls: ['./fields-conditional-logic.component.css']
 })

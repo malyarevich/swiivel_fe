@@ -22,7 +22,7 @@ import {pairwise, switchMap, takeUntil} from "rxjs/operators";
 import {v4 as uuid} from 'uuid';
 
 @Component({
-  selector: 'app-v-form-drawing',
+  selector: 'app-form-drawing',
   templateUrl: './form-drawing.component.html',
   styleUrls: ['./form-drawing.component.scss']
 })

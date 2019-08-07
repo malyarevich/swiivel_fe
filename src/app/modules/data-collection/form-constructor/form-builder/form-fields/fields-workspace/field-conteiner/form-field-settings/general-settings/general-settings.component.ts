@@ -3,7 +3,7 @@ import {Field} from "../../../../../../../../../models/data-collection/field.mod
 import {FormBuilder, FormGroup} from "@angular/forms";
 
 @Component({
-  selector: 'app-v-general-settings',
+  selector: 'app-general-settings',
   templateUrl: './general-settings.component.html',
   styleUrls: ['./general-settings.component.css']
 })

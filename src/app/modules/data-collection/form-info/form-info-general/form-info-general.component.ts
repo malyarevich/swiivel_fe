@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormSql} from "../../model/form.model";
 
 @Component({
-  selector: 'app-v-form-info-general',
+  selector: 'app-form-info-general',
   templateUrl: './form-info-general.component.html',
   styleUrls: ['./form-info-general.component.css']
 })

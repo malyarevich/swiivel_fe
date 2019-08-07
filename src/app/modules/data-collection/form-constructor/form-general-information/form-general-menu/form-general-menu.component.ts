@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 
 @Component({
-  selector: 'app-v-form-general-menu',
+  selector: 'app-form-general-menu',
   templateUrl: './form-general-menu.component.html',
   styleUrls: ['./form-general-menu.component.scss']
 })

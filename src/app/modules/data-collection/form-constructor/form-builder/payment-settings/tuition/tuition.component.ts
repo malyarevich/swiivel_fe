@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
 
 @Component({
-  selector: "app-v-payment-settings-tuition",
+  selector: "app-payment-settings-tuition",
   templateUrl: "./tuition.component.html",
   styleUrls: ["./tuition.component.scss"]
 })

@@ -14,7 +14,7 @@ const defaultMultiplier: FieldSettingMultiplier = {
 };
 
 @Component({
-  selector: 'app-v-group-setting-multiplier',
+  selector: 'app-group-setting-multiplier',
   templateUrl: './group-setting-multiplier.component.html',
   styleUrls: ['./group-setting-multiplier.component.css']
 })

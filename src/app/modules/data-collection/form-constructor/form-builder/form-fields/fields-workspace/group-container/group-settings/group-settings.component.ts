@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Form} from "../../../../../../model/form.model";
 
 @Component({
-  selector: 'app-v-group-settings',
+  selector: 'app-group-settings',
   templateUrl: './group-settings.component.html',
   styleUrls: ['./group-settings.component.scss']
 })

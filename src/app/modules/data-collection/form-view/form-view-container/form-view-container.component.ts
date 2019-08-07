@@ -5,7 +5,7 @@ import {ContentDirective} from '../content.directive';
 import {Field} from '../../../../models/data-collection/field.model';
 
 @Component({
-  selector: 'app-v-form-view-container',
+  selector: 'app-form-view-container',
   templateUrl: './form-view-container.component.html',
   styleUrls: ['./form-view-container.component.css']
 })

@@ -6,7 +6,7 @@ import {
 import { PublishSettingsPublishSettingsService } from "../../../../services/publish-settings-publish-settings.service";
 
 @Component({
-  selector: "app-v-publish-settings-online-form",
+  selector: "app-publish-settings-online-form",
   templateUrl: "./publish-settings-online-form.component.html",
   encapsulation: ViewEncapsulation.None,
   styleUrls: ["./publish-settings-online-form.component.scss"]

@@ -73,7 +73,7 @@ import {
 } from "../../../../models/data-collection/form-constructor/form-builder/documents-forms.model";
 
 @Component({
-  selector: "app-v-form-table",
+  selector: "app-form-table",
   templateUrl: "./form-builder.html",
   styleUrls: ["./form-builder.scss"]
 })

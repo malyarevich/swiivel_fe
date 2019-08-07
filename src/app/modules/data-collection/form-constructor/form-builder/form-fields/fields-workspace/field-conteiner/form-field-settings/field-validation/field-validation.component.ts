@@ -19,7 +19,7 @@ export const defaultValidators: IFieldValidators = {
 };
 
 @Component({
-  selector: 'app-v-field-validation',
+  selector: 'app-field-validation',
   templateUrl: './field-validation.component.html',
   styleUrls: ['./field-validation.component.css']
 })

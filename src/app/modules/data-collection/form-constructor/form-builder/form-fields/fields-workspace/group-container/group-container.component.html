@@ -97,18 +97,18 @@
 <!--        </div>-->
 <!--      </li>-->
 <!--      <li class="list-group-item ml-4 mb-3" *ngFor="let field of inputGroup.fields" cdkDrag>-->
-<!--        <app-v-field-container *ngIf="field.type!=113"-->
+<!--        <app-field-container *ngIf="field.type!=113"-->
 <!--                               [inputField]="field"-->
 <!--                               [form]="form"-->
 <!--                               [customFields]="customFields"-->
 <!--                               [sideBar]="sideBar">-->
-<!--        </app-v-field-container>-->
+<!--        </app-field-container>-->
 <!--      </li>-->
 <!--    </ul>-->
 <!--  </div>-->
 
 <!--  <div *ngIf="showGroupSettings">-->
-<!--    <app-v-group-settings [inputGroup] = "inputGroup"></app-v-group-settings>-->
+<!--    <app-group-settings [inputGroup] = "inputGroup"></app-group-settings>-->
 <!--  </div>-->
 
 <!--</div>-->
@@ -212,7 +212,7 @@
 
 
     <div *ngIf="showGroupSettings">
-      <app-v-group-settings [form]="form" [inputGroup] = "inputGroup"></app-v-group-settings>
+      <app-group-settings [form]="form" [inputGroup] = "inputGroup"></app-group-settings>
     </div>
 </div>
 
@@ -240,18 +240,18 @@
           [model]="field"
           *ngFor="let field of inputGroup.fields"
           [ngxDraggable]="idSectionForDragDrop">
-        <app-v-field-container *ngIf="field.type!=113"
+        <app-field-container *ngIf="field.type!=113"
                                [inputField]="field"
                                [form]="form"
                                [customFields]="customFields"
                                [sideBar]="sideBar">
-        </app-v-field-container>
-        <app-v-divider-conteiner
+        </app-field-container>
+        <app-divider-conteiner
           *ngIf="field.type==112"
           [inputDivider]="field"
           [form]="form"
-        ></app-v-divider-conteiner>
-        <app-v-group-container
+        ></app-divider-conteiner>
+        <app-group-container
           *ngIf="field.type==113"
           [inputGroup]="field"
           [nestedLevel]="nestedLevel+1"
@@ -259,7 +259,7 @@
           [form]="form"
           [sideBar]="sideBar"
           [customFields]="customFields"
-        ></app-v-group-container>
+        ></app-group-container>
       </li>
     </ul>
   </div>

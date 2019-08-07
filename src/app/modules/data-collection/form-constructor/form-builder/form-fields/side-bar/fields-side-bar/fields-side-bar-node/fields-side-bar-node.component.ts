@@ -3,7 +3,7 @@ import {Field} from "../../../../../../model/field.model";
 import {SideBarService} from "../../side-bar.service";
 
 @Component({
-  selector: 'app-v-fields-side-bar-node',
+  selector: 'app-fields-side-bar-node',
   templateUrl: './fields-side-bar-node.component.html',
   styleUrls: ['./fields-side-bar-node.component.scss']
 })

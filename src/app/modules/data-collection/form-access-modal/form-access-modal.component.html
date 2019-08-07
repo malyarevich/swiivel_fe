@@ -8,7 +8,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <app-v-form-access *ngIf="formSelected" [formId] = "formSelected"></app-v-form-access>
+        <app-form-access *ngIf="formSelected" [formId] = "formSelected"></app-form-access>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-success" data-dismiss="modal" (click)="saveFormPermissions()">Save</button>

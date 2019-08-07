@@ -3,7 +3,7 @@ import {FormsStatsService} from "../../../services/forms-stats.service";
 import {FormsInvitesRate} from "../../../model/forms-stats.models";
 
 @Component({
-  selector: 'app-v-form-statistic-invites',
+  selector: 'app-form-statistic-invites',
   templateUrl: './form-statistic-invites.component.html',
   styleUrls: ['./form-statistic-invites.component.css']
 })

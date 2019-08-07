@@ -296,7 +296,7 @@
 <!--       (cdkDropListDropped)="drop($event)">-->
 <div class="ngx-dnd-item" *ngFor="let item of form.fields " ngxDraggable>
 <!--<div *ngFor="let item of form.fields " cdkDrag cdkDragLockAxis="y">-->
-    <app-v-section-conteiner
+    <app-section-conteiner
 
       *ngIf="item.type==114"
       [section]="item"
@@ -305,16 +305,16 @@
       [form]="form"
       [customFields]="customFields">
 
-    </app-v-section-conteiner>
+    </app-section-conteiner>
 
   <li class="list-group-item mb-3 p-0"
       *ngIf="item.type==112"
       >
-  <app-v-divider-conteiner
+  <app-divider-conteiner
     *ngIf="item.type==112"
     [form]="form"
     [inputDivider]="item"
-  ></app-v-divider-conteiner>
+  ></app-divider-conteiner>
   </li>
   </div>
 

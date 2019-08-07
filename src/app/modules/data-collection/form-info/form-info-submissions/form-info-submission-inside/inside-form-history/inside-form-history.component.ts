@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-v-inside-form-history',
+  selector: 'app-inside-form-history',
   templateUrl: './inside-form-history.component.html',
   styleUrls: ['./inside-form-history.component.css']
 })

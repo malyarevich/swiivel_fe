@@ -5,7 +5,7 @@ import { E_SIGNATURE_TYPES, SIGNATURE_TYPES } from "../../../../../enums";
 import { SystemSignatureService } from '../../../../../services/signatures/system-signature.service';
 
 @Component({
-  selector: "app-v-payment-settings",
+  selector: "app-payment-settings",
   templateUrl: "./payment-settings.component.html",
   styleUrls: ["./payment-settings.component.scss"]
 })

@@ -5,7 +5,7 @@ import {Form} from "../../../../../model/form.model";
 import {SideBarService} from "../side-bar.service";
 
 @Component({
-  selector: 'app-v-side-bar-field',
+  selector: 'app-side-bar-field',
   templateUrl: './side-bar-field.component.html',
   styleUrls: ['./side-bar-field.component.css']
 })

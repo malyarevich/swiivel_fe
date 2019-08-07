@@ -4,15 +4,15 @@
       <div class="col-12 col-lg-3 rounded">
         <!-- pl-lg-5 -->
         <ng-container *ngIf="data !== undefined">
-          <app-v-publish-menu
+          <app-publish-menu
             [data]="data"
             [activeMenuItem]="activeMenuItem"
-          ></app-v-publish-menu>
+          ></app-publish-menu>
         </ng-container>
       </div>
       <div class="col-12 col-lg-9" *ngIf="activeMenuItem !== undefined">
         <!-- pr-lg-5 -->
-        <app-v-conditions-review
+        <app-conditions-review
           class="d-block app-div-animation"
           [ngClass]="{
             'app-div-show':
@@ -20,8 +20,8 @@
             'app-div-hide':
               activeMenuItem !== publishMenuItems.conditions
           }"
-        ></app-v-conditions-review>
-        <app-v-publish-settings
+        ></app-conditions-review>
+        <app-publish-settings
           [publish_settings]="data['publish_settings']"
           [id]="formId"
           class="d-block app-div-animation"
@@ -31,9 +31,9 @@
             'app-div-hide':
               activeMenuItem !== publishMenuItems.settings
           }"
-        ></app-v-publish-settings>
+        ></app-publish-settings>
 
-        <app-v-automation
+        <app-automation
           [automation]="data.automation"
           [activeMenuItem]="activeMenuItem"
           class="d-block app-div-animation"
@@ -44,9 +44,9 @@
               activeMenuItem !== publishMenuItems.automation
           }"
           [id]="formId"
-        ></app-v-automation>
+        ></app-automation>
 
-        <app-v-redirect-pages
+        <app-redirect-pages
           class="d-block app-div-animation"
           [ngClass]="{
             'app-div-show':
@@ -54,7 +54,7 @@
             'app-div-hide':
               activeMenuItem !== publishMenuItems.redirect
           }"
-        ></app-v-redirect-pages>
+        ></app-redirect-pages>
       </div>
     </div>
   </ng-container>

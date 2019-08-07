@@ -1,7 +1,7 @@
 import {Component, EventEmitter, OnInit, Output, Input} from '@angular/core';
 
 @Component({
-  selector: 'app-v-form-info-table-nav',
+  selector: 'app-form-info-table-nav',
   templateUrl: './form-info-table-nav.component.html',
   styleUrls: ['./form-info-table-nav.component.css']
 })

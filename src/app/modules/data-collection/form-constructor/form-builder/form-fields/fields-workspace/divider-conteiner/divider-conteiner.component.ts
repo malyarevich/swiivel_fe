@@ -6,7 +6,7 @@ import {Form} from "../../../../../model/form.model";
 import {SideBarService} from "../../side-bar/side-bar.service";
 
 @Component({
-  selector: 'app-v-divider-conteiner',
+  selector: 'app-divider-conteiner',
   templateUrl: './divider-conteiner.component.html',
   styleUrls: ['./divider-conteiner.component.scss']
 })

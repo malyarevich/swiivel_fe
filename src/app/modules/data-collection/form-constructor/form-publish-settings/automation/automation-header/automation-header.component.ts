@@ -6,7 +6,7 @@ import {
 } from "../../../../model/publish-settings.model";
 
 @Component({
-  selector: "app-v-automation-header",
+  selector: "app-automation-header",
   templateUrl: "./automation-header.component.html",
   styleUrls: ["./automation-header.component.scss"]
 })

@@ -3,7 +3,7 @@ import { Form } from './model/form.model';
 import { isEmpty } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-v-data-collection',
+  selector: 'app-data-collection',
   templateUrl: './data-collection.component.html'
 })
 export class DataCollectionComponent implements OnInit, OnDestroy {

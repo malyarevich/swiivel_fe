@@ -15,7 +15,7 @@ const defaultSettingOptions: GroupSectionOptions = {
 };
 
 @Component({
-  selector: 'app-v-section-setting-options',
+  selector: 'app-section-setting-options',
   templateUrl: './section-setting-options.component.html',
   styleUrls: ['./section-setting-options.component.scss']
 })

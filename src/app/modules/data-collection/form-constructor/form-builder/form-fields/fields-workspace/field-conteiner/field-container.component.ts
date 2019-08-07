@@ -14,7 +14,7 @@ import {Form} from "../../../../../model/form.model";
 import {SideBarService} from "../../side-bar/side-bar.service";
 import {Section} from "../../../../../../../models/data-collection/section.model";
 @Component({
-  selector: 'app-v-field-container',
+  selector: 'app-field-container',
   templateUrl: './field-container.component.html',
   styleUrls: ['./field-container.component.scss'],
 })

@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Field} from '../../../../../../model/field.model';
 
 @Component({
-  selector: 'app-v-section-settings',
+  selector: 'app-section-settings',
   templateUrl: './section-settings.component.html',
   styleUrls: ['./section-settings.component.scss']
 })

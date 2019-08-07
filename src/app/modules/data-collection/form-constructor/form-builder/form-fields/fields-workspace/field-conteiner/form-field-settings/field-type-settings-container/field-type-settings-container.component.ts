@@ -3,7 +3,7 @@ import {Field} from "../../../../../../../../../models/data-collection/field.mod
 import {FieldTypesModel} from "../../../../../../../../../models/data-collection/field-types.model";
 
 @Component({
-  selector: 'app-v-field-type-settings-container',
+  selector: 'app-field-type-settings-container',
   templateUrl: './field-type-settings-container.component.html',
   styleUrls: ['./field-type-settings-container.component.css']
 })

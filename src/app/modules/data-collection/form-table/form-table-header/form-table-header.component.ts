@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 @Component({
-    selector: '[app-v-form-table-header]',
+    selector: '[app-form-table-header]',
     templateUrl: './form-table-header.component.html',
     styleUrls: ['./form-table-header.component.scss']
 })

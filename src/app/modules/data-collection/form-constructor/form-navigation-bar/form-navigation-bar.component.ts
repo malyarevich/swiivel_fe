@@ -9,7 +9,7 @@ import { ConstructorIsSavingService } from "../../services/constructor-is-saving
 import { GeneralInfoIsFormExistService } from "../../services/general-info-is-form-exist.service";
 
 @Component({
-  selector: "app-v-form-navigation-bar",
+  selector: "app-form-navigation-bar",
   templateUrl: "./form-navigation-bar.component.html",
   styleUrls: ["./form-navigation-bar.component.scss"]
 })

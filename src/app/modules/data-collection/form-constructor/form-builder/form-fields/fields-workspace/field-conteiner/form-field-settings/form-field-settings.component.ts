@@ -3,7 +3,7 @@ import {Form} from "../../../../../../model/form.model";
 import {Field} from "../../../../../../../../models/data-collection/field.model";
 
 @Component({
-  selector: 'app-v-form-field-settings',
+  selector: 'app-form-field-settings',
   templateUrl: './form-field-settings.component.html',
   styleUrls: ['./form-field-settings.component.scss']
 })

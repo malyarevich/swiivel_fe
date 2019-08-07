@@ -1,7 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 
 @Component({
-    selector: 'app-v-form-nav',
+    selector: 'app-form-nav',
     templateUrl: './form-nav.component.html',
     styleUrls: ['./form-nav.component.scss']
 })

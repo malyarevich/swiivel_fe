@@ -13,7 +13,7 @@ const defaultSettings: ITypeFieldSettings = {
 };
 
 @Component({
-  selector: 'app-v-drop-down-list-settings',
+  selector: 'app-drop-down-list-settings',
   templateUrl: './drop-down-list-settings.component.html',
   styleUrls: ['./drop-down-list-settings.component.css']
 })

@@ -6,7 +6,7 @@ import {
 } from "src/app/modules/data-collection/model/publish-settings.model";
 
 @Component({
-  selector: "app-v-automation-logic-area",
+  selector: "app-automation-logic-area",
   templateUrl: "./automation-logic-area.component.html",
   styleUrls: ["./automation-logic-area.component.scss"]
 })

@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {FormPayment} from "./model/form-payment.model";
 
 @Component({
-  selector: 'app-v-form-payment',
+  selector: 'app-form-payment',
   templateUrl: './form-payment.component.html',
   styleUrls: ['./form-payment.component.scss']
 })

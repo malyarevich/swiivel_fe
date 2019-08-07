@@ -2,10 +2,10 @@
   <ng-container
     *ngFor="let automationItem of automation['automation_list']"
   >
-    <app-v-automation-header *ngIf="automationItem !== undefined"
+    <app-automation-header *ngIf="automationItem !== undefined"
       [automation]="automation"
       [automationItem]="automationItem"
-    ></app-v-automation-header>
+    ></app-automation-header>
 
     <div class="section_content app-div-animation"
       [ngClass]="{
@@ -27,16 +27,16 @@
       </div>
 
       <div class="section_content__row">
-        <app-v-automation-template-area
+        <app-automation-template-area
           [templateId]="automationItem['template_id']"
           [automation]="automation"
           class="section_content__template_area"
-        ></app-v-automation-template-area>
-        <app-v-automation-logic-area
+        ></app-automation-template-area>
+        <app-automation-logic-area
           [logicList]="automationItem['logics']"
           [automation]="automation"
           class="section_content__logic_area"
-        ></app-v-automation-logic-area>
+        ></app-automation-logic-area>
       </div>
     </div>
   </ng-container>

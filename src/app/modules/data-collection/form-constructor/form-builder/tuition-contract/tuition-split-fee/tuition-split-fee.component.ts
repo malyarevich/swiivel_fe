@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {TuitionContract} from "../../../../../../models/data-collection/form-constructor/form-builder/tuition-contract.model";
 
 @Component({
-  selector: 'app-v-tuition-split-fee',
+  selector: 'app-tuition-split-fee',
   templateUrl: './tuition-split-fee.component.html',
   styleUrls: ['./tuition-split-fee.component.css']
 })

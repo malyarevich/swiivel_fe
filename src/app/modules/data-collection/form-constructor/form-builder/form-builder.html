@@ -50,15 +50,15 @@
           </div>
         </div>
         <div *ngIf="activeSections.formFields.showSideInfo" class="bg-white rounded mb-3">
-          <app-v-fields-side-bar
+          <app-fields-side-bar
             [sideBar]="newSideBar"
             [idSectionForDragDrop]="idSectionForDragDrop"
             [form]="form"
-          ></app-v-fields-side-bar>
+          ></app-fields-side-bar>
 
           <!--          Old side bar -->
           <!--          <div class="mb-2  " *ngFor="let sideBar of sideBarFields | filter : searchText">-->
-          <!--            <app-v-side-bar-group-->
+          <!--            <app-side-bar-group-->
           <!--              *ngIf="sideBar.type==113"-->
           <!--              [group]="sideBar"-->
           <!--              [existingFields]="existingFields"-->
@@ -68,8 +68,8 @@
           <!--              (onChangeGroupBeing)="onChangeGroupBeing($event, sideBar)"-->
           <!--            >-->
 
-          <!--            </app-v-side-bar-group>-->
-          <!--            <app-v-side-bar-field-->
+          <!--            </app-side-bar-group>-->
+          <!--            <app-side-bar-field-->
           <!--              *ngIf="sideBar.type!=113"-->
           <!--              [field]="sideBar"-->
           <!--              [style]="sideBar.mapped==''"-->
@@ -77,7 +77,7 @@
           <!--              (onChangeFieldBeing)="onChangeFieldBeing($event)"-->
 
           <!--            >-->
-          <!--            </app-v-side-bar-field>-->
+          <!--            </app-side-bar-field>-->
           <!--          </div>-->
           <!--          <div>-->
           <!--            <button-->
@@ -1104,27 +1104,27 @@
       <!--        <li class="list-group-item mb-3 py-0" *ngFor="let field of fields; trackBy: trackByFn" cdkDrag-->
       <!--            cdkDragLockAxis="y"-->
       <!--            [ngClass]="[!field.isValidName||!field.isValid?'list-group-item-warning':'', field.type==113?'app-list-group-item-info':'']">-->
-      <!--          <app-v-group-container *ngIf="field.type==113" [inputGroup]="field"-->
-      <!--                                 [customFields]="customFields"></app-v-group-container>-->
-      <!--          <app-v-field-container *ngIf="field.type!=113"-->
+      <!--          <app-group-container *ngIf="field.type==113" [inputGroup]="field"-->
+      <!--                                 [customFields]="customFields"></app-group-container>-->
+      <!--          <app-field-container *ngIf="field.type!=113"-->
       <!--                                 [customFields]="customFields"-->
       <!--                                 [inputField]="field"-->
       <!--                                 (onChange)="onChange($event, field)"-->
       <!--                                 (onUniq)="onUniq($event)"-->
       <!--                                 (onDelete)="onDelete($event)">-->
-      <!--          </app-v-field-container>-->
+      <!--          </app-field-container>-->
       <!--        </li>-->
 
       <!--      </ul>-->
-      <app-v-fields-workspace
+      <app-fields-workspace
         *ngIf="activeSections.formFields.isActive"
         [form]="form"
         [sideBar]="newSideBar"
         [idSectionForDragDrop]="idSectionForDragDrop"
         [customFields]="customFields"
-      ></app-v-fields-workspace>
+      ></app-fields-workspace>
       <!--  documents-forms-->
-      <app-v-documents-forms
+      <app-documents-forms
         *ngIf="activeSections.documentsForms.isActive"
         [isDocumentsForms]="isDocumentsForms"
         [documentsForms]="documentsForms"
@@ -1134,41 +1134,41 @@
         [formId]="formId"
         [existingFields]="existingFields"
       >
-      </app-v-documents-forms>
+      </app-documents-forms>
       <!--  end  documents-forms-->
 
       <!--  consent-->
-      <app-v-consent
+      <app-consent
         *ngIf="activeSections.consent.isActive"
         [consentInfo]="consentInfo"
-      ></app-v-consent>
+      ></app-consent>
       <!--  end consent-->
 
       <!--  tuition-contract-->
-      <app-v-tuition-contract
+      <app-tuition-contract
         *ngIf="activeSections.tuition.isActive"
         [tuitionContract]="tuitionContract"
-      ></app-v-tuition-contract>
+      ></app-tuition-contract>
       <!--  end tuition-contract-->
 
-      <!--  app-v-payment-settings s-->
-      <app-v-payment-settings
+      <!--  app-payment-settings s-->
+      <app-payment-settings
         *ngIf="activeSections.paymentSettings.isActive"
         [paymentSettings]="paymentSettings"
-      ></app-v-payment-settings>
+      ></app-payment-settings>
       <!--  end terms and conditions-->
 
       <!--  terms and conditions-->
-      <app-v-terms-conditions
+      <app-terms-conditions
         *ngIf="activeSections.termsConditionals.isActive"
         [termsConditions]="termsConditions"
-      ></app-v-terms-conditions>
+      ></app-terms-conditions>
       <!--  end terms and conditions-->
 
       <!--  form-payment -->
       <div class="app-section-wrapper" *ngIf="activeSections.formPayment.isActive">
-        <app-v-form-payment [formPaymentSideBar]="formPaymentSideBar">
-        </app-v-form-payment>
+        <app-form-payment [formPaymentSideBar]="formPaymentSideBar">
+        </app-form-payment>
       </div>
       <!--  end form-payment-->
     </div>

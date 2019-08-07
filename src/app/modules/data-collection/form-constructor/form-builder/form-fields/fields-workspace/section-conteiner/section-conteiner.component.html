@@ -69,7 +69,7 @@
 
 
 <div *ngIf="showSettings">
-  <app-v-section-settings [section]="section"></app-v-section-settings>
+  <app-section-settings [section]="section"></app-section-settings>
 </div>
 
   <div [hidden]="!isExpand"
@@ -100,12 +100,12 @@
       [ngxDraggable]="idSectionForDragDrop"
      >
 
-      <app-v-divider-conteiner
+      <app-divider-conteiner
         *ngIf="field.type==112"
         [inputDivider]="field"
         [form]="form"
-      ></app-v-divider-conteiner>
-      <app-v-group-container
+      ></app-divider-conteiner>
+      <app-group-container
         *ngIf="field.type==113"
         [inputGroup]="field"
         [nestedLevel]="nestedLevel+1"
@@ -113,14 +113,14 @@
         [form]="form"
         [sideBar]="sideBar"
         [customFields]="customFields"
-      ></app-v-group-container>
-      <app-v-field-container
+      ></app-group-container>
+      <app-field-container
         *ngIf="field.type!=113&&field.type!=112"
         [customFields]="customFields"
         [sideBar]="sideBar"
         [inputField]="field"
         [form]="form"
-      ></app-v-field-container>
+      ></app-field-container>
     </li>
   </div>
   </ul>

@@ -37,7 +37,7 @@ import {FinPeriod} from "../../../../models/fin-period.model";
 import { GeneralInfoIsFormExistService } from '../../services/general-info-is-form-exist.service';
 
 @Component({
-  selector: "app-v-form-general-information",
+  selector: "app-form-general-information",
   templateUrl: "./form-general-information.component.html",
   styleUrls: ["./form-general-information.component.css"]
 })

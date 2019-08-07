@@ -3,7 +3,7 @@ import {E_SIGNATURE_TYPES, SIGNATURE_TYPES} from "../../../../../enums";
 import {TermsConditions} from "../../../../../models/data-collection/form-constructor/form-builder/terms-conditions.model";
 
 @Component({
-  selector: 'app-v-terms-conditions',
+  selector: 'app-terms-conditions',
   templateUrl: './terms-conditions.component.html',
   styleUrls: ['./terms-conditions.component.scss']
 })

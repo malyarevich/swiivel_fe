@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-v-inside-account-communication',
+  selector: 'app-inside-account-communication',
   templateUrl: './inside-account-communication.component.html',
   styleUrls: ['./inside-account-communication.component.css']
 })

@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
 
 @Component({
-  selector: "app-v-payment-settings-lunch-fee",
+  selector: "app-payment-settings-lunch-fee",
   templateUrl: "./lunch-fee.component.html",
   styleUrls: ["./lunch-fee.component.scss"]
 })

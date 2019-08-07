@@ -10,7 +10,7 @@ import {dividerStyle} from "./divider";
 import {Section} from "../../../../../../models/data-collection/section.model";
 
 @Component({
-  selector: 'app-v-fields-workspace',
+  selector: 'app-fields-workspace',
   templateUrl: './fields-workspace.component.html',
   styleUrls: ['./fields-workspace.component.scss']
 })

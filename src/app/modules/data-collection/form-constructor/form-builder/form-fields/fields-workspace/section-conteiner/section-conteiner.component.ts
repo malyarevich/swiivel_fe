@@ -5,7 +5,7 @@ import {Form} from "../../../../../model/form.model";
 import {SideBarService} from "../../side-bar/side-bar.service";
 
 @Component({
-  selector: 'app-v-section-conteiner',
+  selector: 'app-section-conteiner',
   templateUrl: './section-conteiner.component.html',
   styleUrls: ['./section-conteiner.component.scss']
 })

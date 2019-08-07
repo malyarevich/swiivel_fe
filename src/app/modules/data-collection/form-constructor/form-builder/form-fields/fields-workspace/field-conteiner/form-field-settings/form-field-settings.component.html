@@ -28,22 +28,22 @@
   <div class="settings-wrapper p-3">
     <div class="row" *ngIf="tab === 'general'">
       <div class="col-sm-4 app-border-right pt-2">
-        <app-v-general-settings [inputField]="inputField"></app-v-general-settings>
+        <app-general-settings [inputField]="inputField"></app-general-settings>
       </div>
     </div>
     <div class="row" *ngIf="tab === 'settings'">
       <div class="col-sm-4 app-border-right pt-2">
-        <app-v-field-type-settings-container [inputField]="inputField"></app-v-field-type-settings-container>
+        <app-field-type-settings-container [inputField]="inputField"></app-field-type-settings-container>
       </div>
       <div class="col-sm-4 app-border-right">
-        <app-v-field-validation [inputField]="inputField"></app-v-field-validation>
+        <app-field-validation [inputField]="inputField"></app-field-validation>
       </div>
       <div class="col-sm-4">
       </div>
     </div>
     <div class="row" *ngIf="tab === 'conditional'">
       <div class="col-sm-4 app-border-right">
-        <app-v-fields-conditional-logic [form]="form" [inputField]="inputField"></app-v-fields-conditional-logic>
+        <app-fields-conditional-logic [form]="form" [inputField]="inputField"></app-fields-conditional-logic>
       </div>
     </div>
   </div>

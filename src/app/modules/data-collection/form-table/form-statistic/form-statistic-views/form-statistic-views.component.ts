@@ -4,7 +4,7 @@ import {FormsStatsService} from "../../../services/forms-stats.service";
 import {FormsViewsRate} from "../../../model/forms-stats.models";
 
 @Component({
-  selector: 'app-v-form-statistic-views',
+  selector: 'app-form-statistic-views',
   templateUrl: './form-statistic-views.component.html',
   styleUrls: ['./form-statistic-views.component.css']
 })

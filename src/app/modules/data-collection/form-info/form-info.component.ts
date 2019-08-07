@@ -4,7 +4,7 @@ import {FormService} from "../services/form.service";
 import {FormSql} from "../model/form.model";
 
 @Component({
-  selector: 'app-v-form-info',
+  selector: 'app-form-info',
   templateUrl: './form-info.component.html',
   styleUrls: ['./form-info.component.css']
 })

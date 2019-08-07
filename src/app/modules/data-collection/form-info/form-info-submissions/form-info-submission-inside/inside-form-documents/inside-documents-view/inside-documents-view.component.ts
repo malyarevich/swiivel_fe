@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-v-inside-documents-view',
+  selector: 'app-inside-documents-view',
   templateUrl: './inside-documents-view.component.html',
   styleUrls: ['./inside-documents-view.component.css']
 })

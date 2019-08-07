@@ -4,7 +4,7 @@ import {TEMPLATE_STATUS} from "../../../../enums/template-status";
 import {FormService} from "../../services/form.service";
 
 @Component({
-  selector: 'app-v-form-info-header',
+  selector: 'app-form-info-header',
   templateUrl: './form-info-header.component.html',
   styleUrls: ['./form-info-header.component.css']
 })

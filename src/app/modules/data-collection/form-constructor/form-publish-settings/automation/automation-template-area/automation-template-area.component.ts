@@ -3,7 +3,7 @@ import { PublishSettingsAutomationService } from "../../../../services/publish-s
 import { IAutomationTemplateListItem, IAutomation } from 'src/app/modules/data-collection/model/publish-settings.model';
 
 @Component({
-  selector: "app-v-automation-template-area",
+  selector: "app-automation-template-area",
   templateUrl: "./automation-template-area.component.html",
   styleUrls: ["./automation-template-area.component.scss"]
 })

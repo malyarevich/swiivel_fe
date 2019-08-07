@@ -56,12 +56,12 @@
       </ng-container>
       <ng-container *ngIf="item.addOptions !== undefined">
         <!-- *ngIf="activeMenuItem === item.value && item.addOptions !== undefined" -->
-        <app-v-publish-menu-additional-options
+        <app-publish-menu-additional-options
           [item]="item"
           [activeMenuItem]="activeMenuItem"
           [automation]="data['automation']"
           (addAutomation)="addNewAutomation($event)"
-        ></app-v-publish-menu-additional-options>
+        ></app-publish-menu-additional-options>
       </ng-container>
     </ng-container>
   </ul>

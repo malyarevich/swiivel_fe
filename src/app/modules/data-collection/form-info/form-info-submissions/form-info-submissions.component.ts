@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-v-form-info-submissions',
+  selector: 'app-form-info-submissions',
   templateUrl: './form-info-submissions.component.html',
   styleUrls: ['./form-info-submissions.component.css']
 })

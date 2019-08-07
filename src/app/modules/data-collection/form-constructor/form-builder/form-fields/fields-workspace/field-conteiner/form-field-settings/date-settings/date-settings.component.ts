@@ -16,7 +16,7 @@ const defaultSettings: ITypeFieldSettings = {
 };
 
 @Component({
-  selector: 'app-v-date-settings',
+  selector: 'app-date-settings',
   templateUrl: './date-settings.component.html',
   styleUrls: ['./date-settings.component.css']
 })

@@ -11,7 +11,7 @@ import { FilesService } from "../../../../services/files.service";
 import {DocumentsFormsModel} from "../../../../../../models/data-collection/form-constructor/form-builder/documents-forms.model";
 
 @Component({
-  selector: "app-v-forms-container",
+  selector: "app-forms-container",
   templateUrl: "./forms-container.component.html",
   styleUrls: ["./forms-container.component.scss"]
 })

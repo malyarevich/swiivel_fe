@@ -5,7 +5,7 @@ import {Location} from "@angular/common";
 import {FormService} from "../services/form.service";
 
 @Component({
-  selector: 'app-v-form-view',
+  selector: 'app-form-view',
   templateUrl: './form-view.component.html',
   styleUrls: ['./form-view.component.css']
 })

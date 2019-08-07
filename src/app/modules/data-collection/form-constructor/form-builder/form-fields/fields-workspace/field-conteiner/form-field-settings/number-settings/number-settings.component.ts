@@ -18,7 +18,7 @@ const defaultSettings: ITypeFieldSettings = {
 };
 
 @Component({
-  selector: 'app-v-number-settings',
+  selector: 'app-number-settings',
   templateUrl: './number-settings.component.html',
   styleUrls: ['./number-settings.component.css']
 })

@@ -6,7 +6,7 @@ import {DocumentsFormsModel} from '../../../../../../models/data-collection/form
 import {FormService} from '../../../../services/form.service';
 
 @Component({
-  selector: 'app-v-documents-container',
+  selector: 'app-documents-container',
   templateUrl: './documents-container.component.html',
   styleUrls: ['./documents-container.component.scss']
 })

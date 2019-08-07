@@ -9,7 +9,7 @@ import {FormSql} from '../../../../models/data-collection/form.model';
 
 
 @Component({
-    selector: 'app-v-form-access',
+    selector: 'app-form-access',
     templateUrl: './form-access.component.html',
     styleUrls: ['./form-access.component.css']
 })
