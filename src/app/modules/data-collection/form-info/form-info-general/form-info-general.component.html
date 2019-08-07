@@ -1,0 +1,44 @@
+<div *ngIf="form" class="row no-gutters h-100">
+
+  <div class="col app-fi-border-r px-4 py-3">
+    <p class="app-text-second">LAST UPDATED</p>
+    <p class="mb-1">
+      <img class="img-responsive mr-1" width="8%" src="assets/images/temp/person-foto-placeholder.png">
+      <span class="font-weight-bold">David Fishman</span>
+      <span class="ml-1">Admin</span>
+    </p>
+    <p class="app-text-second">
+      {{convertDate(form.updated_at) | date:'MMMM d, y'}}
+      {{convertDate(form.updated_at) | date:'shortTime'}}
+    </p>
+  </div>
+
+  <div class="col px-4 py-3">
+    <p class="app-text-second">CREATED</p>
+    <p class="mb-1">
+      <img class="img-responsive mr-1" width="8%" src="assets/images/temp/person-foto-placeholder.png">
+      <span class="font-weight-bold">{{form.owner.full_name}}</span>
+      <span class="ml-1">Admin</span>
+    </p>
+    <p class="app-text-second">
+      {{convertDate(form.created_at) | date:'MMMM d, y'}}
+      {{convertDate(form.created_at) | date:'shortTime'}}
+    </p>
+  </div>
+
+  <div class="col px-4 py-3">
+    <p class="app-text-second">ACCESS</p>
+    <p class="mb-1" *ngIf="form.permissions.length">
+      <img class="img-responsive mr-1" width="8%" src="assets/images/temp/person-foto-placeholder.png">
+      <span class="font-weight-bold mr-1">{{form.permissions[0]?.user.full_name}}</span>
+      <span class="app-text-primary">+{{form.permissions.length - 1}}</span>
+    </p>
+    <p class="app-text-primary app-cursor-pointer">
+      <span data-target="#formAccess" data-toggle="modal">Edit Access</span>
+    </p>
+    <app-form-access-modal (resetFormSelectedEmitter)="resetFormSelected($event)"
+                             [formSelected]="form.id">
+    </app-form-access-modal>
+  </div>
+</div>
+

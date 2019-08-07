@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, ViewEncapsulation } from "@angular/core";
-import { Form } from "../../../modules/vertical-data-collection/model/form.model";
+import { Form } from "../../../modules/data-collection/model/form.model";
 import { E_SIGNATURE_TYPES, SIGNATURE_TYPES } from "../../../enums";
 import { SystemSignatureService } from "../../../services/signatures/system-signature.service";
 import { SignatureCreateResponse } from "../../../models/shared/signatures/signature-create-response.model";

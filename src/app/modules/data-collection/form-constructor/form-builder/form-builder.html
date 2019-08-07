@@ -1,0 +1,1181 @@
+<br/>
+<form class="form-inline">
+  <!-- <button type="button" class="btn btn-outline-secondary text-uppercase form-control" (click)="goBack()">Back</button> -->
+  <!--<div *ngIf="formName.length>3" class="justify-content-end">-->
+  <!-- <div class="justify-content-end">
+    <button type="button" class="btn btn-outline-secondary text-uppercase " (click)="saveForm()">Save</button>
+  </div> -->
+  <div
+    *ngIf="warningVisible"
+    class="alert alert-warning alert-dismissible col-md-4 col-md-offset-1"
+  >
+    <a
+      href="#"
+      class="close"
+      data-dismiss="alert"
+      aria-label="close"
+      (click)="disableWarning()"
+    >&times;</a
+    >
+    <strong>Warning! </strong>{{ showWarningMessage }}
+  </div>
+</form>
+<br/>
+
+<!-- Form builder -->
+<div class="row no-gutters" *ngIf="form !== undefined && !isDataSaving">
+  <div class="col-3 pl-5">
+    <div class="row justify-content-center pb-2">
+      <div class="col-10 bg-white ">
+        <div class="row no-gutters slider-item align-items-center">
+          <div class="col-auto mr-2">
+            <label class="app-switch">
+              <input
+                type="checkbox"
+                [ngModel]="activeSections.formFields.isActive"
+                (ngModelChange)="
+                  activeSections.formFields.isActive = activeSections.formFields.showSideInfo = $event
+                "
+              />
+              <span class="app-slider app-round"></span>
+            </label>
+          </div>
+          <div class="col" (click)="activeSections.formFields.showSideInfo = !activeSections.formFields.showSideInfo">
+            <span class="font-weight-bold side-bar-toggle">FORM FIELDS</span>
+            <i class="fas float-right app-plus-i"
+               [ngClass]="{
+                'fa-sort-down': !activeSections.formFields.showSideInfo,
+                'fa-sort-up': activeSections.formFields.showSideInfo
+              }"></i>
+          </div>
+        </div>
+        <div *ngIf="activeSections.formFields.showSideInfo" class="bg-white rounded mb-3">
+          <app-fields-side-bar
+            [sideBar]="newSideBar"
+            [idSectionForDragDrop]="idSectionForDragDrop"
+            [form]="form"
+          ></app-fields-side-bar>
+
+          <!--          Old side bar -->
+          <!--          <div class="mb-2  " *ngFor="let sideBar of sideBarFields | filter : searchText">-->
+          <!--            <app-side-bar-group-->
+          <!--              *ngIf="sideBar.type==113"-->
+          <!--              [group]="sideBar"-->
+          <!--              [existingFields]="existingFields"-->
+          <!--              [customFields]="customFields"-->
+          <!--              (onDeleteNested)="onDelete($event)"-->
+          <!--              (onChangeFieldBeing)="onChangeFieldBeing($event)"-->
+          <!--              (onChangeGroupBeing)="onChangeGroupBeing($event, sideBar)"-->
+          <!--            >-->
+
+          <!--            </app-side-bar-group>-->
+          <!--            <app-side-bar-field-->
+          <!--              *ngIf="sideBar.type!=113"-->
+          <!--              [field]="sideBar"-->
+          <!--              [style]="sideBar.mapped==''"-->
+          <!--              (deleteCustom)="onDeleteCustom($event)"-->
+          <!--              (onChangeFieldBeing)="onChangeFieldBeing($event)"-->
+
+          <!--            >-->
+          <!--            </app-side-bar-field>-->
+          <!--          </div>-->
+          <!--          <div>-->
+          <!--            <button-->
+          <!--              *ngIf="showAddButton"-->
+          <!--              type="button"-->
+          <!--              class="btn btn-outline-primary form-control p-0 text-left"-->
+          <!--              (click)="showAddButton=false">-->
+          <!--              &nbsp;&nbsp;+ Add New Field-->
+          <!--            </button>-->
+          <!--            <input-->
+          <!--              *ngIf="!showAddButton"-->
+          <!--              (keyup)="nameChange($event)"-->
+          <!--              [ngClass]="!validNewCustomFieldName?'is-invalid':''"-->
+          <!--              class="form-control add-input p-0"-->
+          <!--              autofocus-->
+          <!--              #newField-->
+          <!--              (blur)="addNewCustomField(newField.value, sideBarFields); newField.value=''"-->
+          <!--              (keyup.enter)="addNewCustomField(newField.value, sideBarFields); newField.value=''">-->
+          <!--            <div class="invalid-feedback">-->
+          <!--              We have existing field with the same name!-->
+          <!--            </div>-->
+          <!--          </div>-->
+          <!--        End of  Old side bar-->
+        </div>
+      </div>
+    </div>
+
+    <!--    DOCUMENTS & FORMS-->
+    <div class="row justify-content-center pb-2">
+      <div class="col-10 bg-white ">
+        <div class="row no-gutters slider-item align-items-center">
+          <div class="col-auto mr-2">
+            <label class="app-switch">
+              <input
+                type="checkbox"
+                [ngModel]="activeSections.documentsForms.isActive"
+                (ngModelChange)="
+                  activeSections.documentsForms.isActive = activeSections.documentsForms.showSideInfo = $event
+                "
+              />
+              <span class="app-slider app-round"></span>
+            </label>
+          </div>
+          <div class="col"
+               (click)="activeSections.documentsForms.showSideInfo = !activeSections.documentsForms.showSideInfo">
+            <span class="font-weight-bold side-bar-toggle">DOCUMENTS & FORMS</span>
+            <i class="fas float-right app-plus-i"
+               [ngClass]="{
+                'fa-sort-down': !activeSections.documentsForms.showSideInfo,
+                'fa-sort-up': activeSections.documentsForms.showSideInfo
+              }"></i>
+          </div>
+        </div>
+        <div *ngIf="activeSections.documentsForms.showSideInfo" class="bg-white rounded mb-3 ">
+          <div class="row no-gutters pt-2 align-items-center">
+            <div class="col">
+              <span class="font-weight-bold">Documents</span>
+              <span
+              ><i class="fas fa-question-circle pl-1" title="test"></i
+              ></span>
+            </div>
+            <div class="col-1 align-self-end" (click)="addDocumentItem()">
+              <span><i class="fas fa-plus-square"></i></span>
+            </div>
+            <div
+              class="col-1 align-self-end"
+              (click)="
+                isDocumentsForms.isDocuments = !isDocumentsForms.isDocuments
+              "
+            >
+              <span [hidden]="!isDocumentsForms.isDocuments"
+              ><i class="fas fa-caret-up ml-2"></i
+              ></span>
+              <span [hidden]="isDocumentsForms.isDocuments"
+              ><i class="fas fa-caret-down ml-2"></i
+              ></span>
+            </div>
+          </div>
+
+          <div [hidden]="!isDocumentsForms.isDocuments">
+            <div
+              class="app-consent-item px-3 pt-3 pb-1 mt-3"
+              *ngFor="let document of documents"
+            >
+              <div class="row no-gutters">
+                <div class="col-10">
+                  <span
+                    class="font-weight-bold"
+                    *ngIf="isEditDocumentName !== document.id"
+                    (click)="isEditDocumentName = document.id"
+                  >
+                    {{ document.name }}
+                  </span>
+
+                  <input
+                    type="text"
+                    class="form-control app-consent-name-input"
+                    autofocus
+                    *ngIf="isEditDocumentName === document.id || !document.name"
+                    (input)="isEditDocumentName = document.id"
+                    (blur)="isEditDocumentName = null"
+                    (keyup.enter)="isEditDocumentName = null"
+                    [(ngModel)]="document.name"
+                    placeholder="Document Name"
+                  />
+                </div>
+                <div
+                  class="col-2 text-right"
+                  (click)="removeDocument(document.id)"
+                >
+                  <span class=" mr-3"><i class="fas fa-trash fa-xs"></i></span>
+                </div>
+              </div>
+              <div class="row no-gutters">
+                <div
+                  class="btn-group btn-group-toggle w-100 mt-2"
+                  ngbRadioGroup
+                  [(ngModel)]="document.isUpload"
+                  name="isUpload"
+                >
+                  <label ngbButtonLabel class="btn app-btn-signature">
+                    <input ngbButton type="radio" [value]="true"/> Upload
+                  </label>
+                  <label ngbButtonLabel class="btn app-btn-signature">
+                    <input ngbButton type="radio" [value]="false"/> Download
+                  </label>
+                </div>
+              </div>
+              <div
+                class="col mt-4 p-0 no-gutters align-items-center"
+                ngbRadioGroup
+                [(ngModel)]="document.isPerFamily"
+                name=""
+              >
+                <div class="col-10">
+                  <label ngbButtonLabel class="app-radio-container text-left"
+                  >Needed per Family
+                    <input type="radio" ngbButton [value]="true"/>
+                    <span class="app-radio-checkmark mt-2"></span>
+                  </label>
+                </div>
+                <div class="col-10">
+                  <label ngbButtonLabel class="app-radio-container text-left"
+                  >Needed per Student
+                    <input type="radio" ngbButton [value]="false"/>
+                    <span class="app-radio-checkmark mt-2"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <hr/>
+
+          <div class="row no-gutters pt-2 align-items-center">
+            <div class="col">
+              <span class="font-weight-bold">External section</span>
+              <span
+              ><i class="fas fa-question-circle pl-1" title="test"></i
+              ></span>
+            </div>
+            <div class="col-1 align-self-end" (click)="addFormPDF()">
+              <span><i class="fas fa-plus-square"></i></span>
+            </div>
+            <div
+              class="col-1 align-self-end"
+              (click)="isDocumentsForms.isForms = !isDocumentsForms.isForms"
+            >
+              <span [hidden]="!isDocumentsForms.isForms"
+              ><i class="fas fa-caret-up ml-2"></i
+              ></span>
+              <span [hidden]="isDocumentsForms.isForms"
+              ><i class="fas fa-caret-down ml-2"></i
+              ></span>
+            </div>
+          </div>
+
+          <div [hidden]="!isDocumentsForms.isForms">
+            <div
+              class="app-consent-item px-3 pt-3 pb-2 mt-3"
+              *ngFor="let forms of formsPDF"
+            >
+              <div class="row no-gutters">
+                <div class="col-10">
+                  <span
+                    class="font-weight-bold"
+                    *ngIf="isEditFormPDFName !== forms.id"
+                    (click)="isEditFormPDFName = forms.id"
+                  >
+                    {{ forms.name }}
+                  </span>
+
+                  <input
+                    type="text"
+                    class="form-control app-consent-name-input"
+                    autofocus
+                    *ngIf="isEditFormPDFName === forms.id || !forms.name"
+                    (input)="isEditFormPDFName = forms.id"
+                    (blur)="isEditFormPDFName = null"
+                    (keyup.enter)="isEditFormPDFName = null"
+                    [(ngModel)]="forms.name"
+                    placeholder="Form Name"
+                  />
+                </div>
+                <div
+                  class="col-2 text-right"
+                  (click)="removeFormsPDF(forms.id)"
+                >
+                  <span class=" mr-3"><i class="fas fa-trash fa-xs"></i></span>
+                </div>
+              </div>
+
+              <div class="row no-gutters">
+                <div
+                  class="btn-group btn-group-toggle w-100 mt-2"
+                  ngbRadioGroup
+                  [(ngModel)]="forms.isNew"
+                  name="isNew"
+                >
+                  <label ngbButtonLabel class="btn app-btn-signature">
+                    <input ngbButton type="radio" [value]="false"/> Use
+                    Existing
+                  </label>
+                  <label ngbButtonLabel class="btn app-btn-signature">
+                    <input ngbButton type="radio" [value]="true"/> Create New
+                  </label>
+                </div>
+              </div>
+              <div
+                class="col mt-4 p-0 no-gutters align-items-center"
+                ngbRadioGroup
+                [(ngModel)]="forms.isPerFamily"
+                name=""
+              >
+                <div class="col-10">
+                  <label ngbButtonLabel class="app-radio-container text-left"
+                  >Needed per Family
+                    <input type="radio" ngbButton [value]="true"/>
+                    <span class="app-radio-checkmark mt-2"></span>
+                  </label>
+                </div>
+                <div class="col-10">
+                  <label ngbButtonLabel class="app-radio-container text-left"
+                  >Needed per Student
+                    <input type="radio" ngbButton [value]="false"/>
+                    <span class="app-radio-checkmark mt-2"></span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="col mt-4 p-0">
+                <label class="app-switch">
+                  <input type="checkbox" [(ngModel)]="forms.isFillableOnline"/>
+                  <span class="app-slider app-round"></span>
+                </label>
+                <span class="ml-1">Fillable Online</span>
+              </div>
+              <div class="col p-0">
+                <label class="app-switch">
+                  <input
+                    type="checkbox"
+                    [(ngModel)]="forms.isAllowDownloadUpload"
+                  />
+                  <span class="app-slider app-round"></span>
+                </label>
+                <span class="ml-1">Allow Download/Upload</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--  END  DOCUMENTS & FORMS-->
+
+    <!--CONSENT-->
+    <div class="row justify-content-center pb-2">
+      <div class="col-10 bg-white">
+        <div class="row no-gutters slider-item align-items-center">
+          <div class="col-auto mr-2">
+            <label class="app-switch">
+              <input
+                type="checkbox"
+                [ngModel]="activeSections.consent.isActive"
+                (ngModelChange)="
+                  activeSections.consent.isActive = activeSections.consent.showSideInfo = $event
+                "
+              />
+              <span class="app-slider app-round"></span>
+            </label>
+          </div>
+          <div class="col" (click)=" activeSections.consent.showSideInfo = !activeSections.consent.showSideInfo">
+            <span class="font-weight-bold side-bar-toggle">CONSENT</span>
+            <i class="fas float-right app-plus-i"
+               [ngClass]="{
+                'fa-sort-down': !activeSections.consent.showSideInfo,
+                'fa-sort-up': activeSections.consent.showSideInfo
+              }"></i>
+          </div>
+        </div>
+
+        <div class="row no-gutters">
+          <div class="col" *ngIf="activeSections.consent.showSideInfo">
+            <i (click)="addConsentItem()"
+               class="fas fa-plus-square float-right app-plus-i"
+            ></i>
+          </div>
+        </div>
+
+        <div *ngIf="activeSections.consent.showSideInfo" class="bg-white rounded mb-3 ">
+          <div
+            class="app-consent-item p-3 mt-3"
+            *ngFor="let item of consentInfo.consents; let i = index"
+          >
+            <div class="row no-gutters mb-2">
+              <div class="col-10">
+                <span
+                  class="app-consent-item-title"
+                  *ngIf="isEditConsentName !== i"
+                  (click)="isEditConsentName = i"
+                >
+                  {{ item.title }}
+                </span>
+                <input
+                  type="text"
+                  class="form-control app-consent-name-input"
+                  autofocus
+                  *ngIf="isEditConsentName === i || !item.title"
+                  (input)="isEditConsentName = i"
+                  (blur)="isEditConsentName = null"
+                  (keyup.enter)="isEditConsentName = null"
+                  [(ngModel)]="item.title"
+                  placeholder="Title"
+                />
+              </div>
+              <div class="col-2 text-right pt-2">
+                <span (click)="removeConsentItem(i)" class="app-fb-trash mr-3"
+                ><i class="fas fa-trash"></i
+                ></span>
+                <span class="app-fb-caret-up"
+                ><i class="fas fa-caret-up"></i
+                ></span>
+              </div>
+            </div>
+
+            <div class="row no-gutters align-items-center pt-3">
+              <div class="col-auto mr-2">
+                <label class="app-switch">
+                  <input type="checkbox" [(ngModel)]="item.checkbox.isActive"/>
+                  <span class="app-slider app-round"></span>
+                </label>
+              </div>
+              <div class="col">
+                <span class="font-weight-bold ">CHECKBOX</span>
+              </div>
+            </div>
+
+            <div class="row no-gutters align-items-center pt-3">
+              <div class="col-auto mr-2">
+                <label class="app-switch">
+                  <input
+                    type="checkbox"
+                    [(ngModel)]="item.signature.isRequire"
+                  />
+                  <span class="app-slider app-round"></span>
+                </label>
+              </div>
+              <div class="col">
+                <span class="font-weight-bold ">REQUIRE SIGNATURE</span>
+              </div>
+            </div>
+
+            <ng-container *ngIf="item.signature.isRequire">
+              <div class="row no-gutters">
+                <div
+                  class="btn-group btn-group-toggle w-100 mt-2"
+                  ngbRadioGroup
+                  [name]="'consentSignature' + i"
+                  [(ngModel)]="item.signature.type"
+                  [ngModelOptions]="{ standalone: true }"
+                >
+                  <label ngbButtonLabel class="btn app-btn-signature">
+                    <input
+                      ngbButton
+                      type="radio"
+                      [value]="SIGNATURE_TYPES.ESIGN"
+                    />
+                    E-signature
+                  </label>
+                  <label ngbButtonLabel class="btn app-btn-signature">
+                    <input
+                      ngbButton
+                      type="radio"
+                      [value]="SIGNATURE_TYPES.WET"
+                    />
+                    Wet Signature
+                  </label>
+                </div>
+              </div>
+
+              <div
+                *ngIf="item.signature.type === SIGNATURE_TYPES.ESIGN"
+                class="row no-gutters app-consent-signature px-3 py-3"
+              >
+                <div class="col">
+                  <label class="app-radio-container"
+                  >System
+                    <input
+                      type="radio"
+                      [name]="'eSignatureType' + i"
+                      [value]="E_SIGNATURE_TYPES.SYSTEM"
+                      [(ngModel)]="item.signature.eType"
+                    />
+                    <span class="app-radio-checkmark"></span>
+                  </label>
+                </div>
+                <div class="col">
+                  <label class="app-radio-container"
+                  >External
+                    <span class="pl-2"
+                    ><i class="fas fa-cog app-fb-gear"></i
+                    ></span>
+                    <input
+                      type="radio"
+                      [name]="'eSignatureType' + i"
+                      [value]="E_SIGNATURE_TYPES.EXTERNAL"
+                      [(ngModel)]="item.signature.eType"
+                    />
+                    <span class="app-radio-checkmark"></span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="row px-4 pt-3">
+                <label class="app-checkbox-container">
+                  Both Parents' Signature (when applicable)
+                  <input
+                    type="checkbox"
+                    [(ngModel)]="item.signature.isBothParents"
+                  />
+                  <span class="app-checkbox-checkmark"></span>
+                </label>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--END CONSENT-->
+
+    <!--TUITION CONTRACT-->
+    <div class="row justify-content-center pb-2">
+      <div class="col-10 bg-white ">
+        <div class="row no-gutters slider-item align-items-center">
+          <div class="col-auto mr-2">
+            <label class="app-switch">
+              <input
+                type="checkbox"
+                [ngModel]="activeSections.tuition.isActive"
+                (ngModelChange)="
+                  activeSections.tuition.isActive = activeSections.tuition.showSideInfo = $event
+                "
+              />
+              <span class="app-slider app-round"></span>
+            </label>
+          </div>
+          <div class="col" (click)=" activeSections.tuition.showSideInfo = !activeSections.tuition.showSideInfo">
+            <span
+              class="font-weight-bold side-bar-toggle"
+              (click)="
+                activeSections.tuition.showSideInfo = !activeSections.tuition.showSideInfo
+              "
+            >TUITION CONTRACT</span>
+            <i class="fas float-right app-plus-i"
+               [ngClass]="{
+                'fa-sort-down': !activeSections.tuition.showSideInfo,
+                'fa-sort-up': activeSections.tuition.showSideInfo
+              }"></i>
+          </div>
+        </div>
+        <div *ngIf="activeSections.tuition.showSideInfo" class="bg-white rounded mb-3">
+          <p class="mt-3 font-weight-bold">Table Structure</p>
+          <div class="row no-gutters">
+            <div class="col">
+              <label class="app-radio-container"
+              >Split by Student
+                <input
+                  type="radio"
+                  name="split"
+                  value="student"
+                  [(ngModel)]="tuitionContract.splitBy"
+                />
+                <span class="app-radio-checkmark"></span>
+              </label>
+            </div>
+            <div class="col">
+              <label class="app-radio-container"
+              >Split by Fee
+                <input
+                  type="radio"
+                  name="split"
+                  value="fee"
+                  [(ngModel)]="tuitionContract.splitBy"
+                />
+                <span class="app-radio-checkmark"></span>
+              </label>
+            </div>
+          </div>
+          <hr/>
+          <p class="font-weight-bold">Show Fees</p>
+          <div class="row no-gutters" *ngFor="let item of tuitionContract.fees">
+            <div class="col-6">
+              <label class="app-checkbox-container">
+                <span class="form-payment-side-bar-text">{{
+                  item.name | uppercase
+                }}</span>
+                <input type="checkbox" [(ngModel)]="item.isActive"/>
+                <span class="app-checkbox-checkmark"></span>
+              </label>
+            </div>
+            <div class="col">
+              <label class="app-switch app-switch-top-0 mr-1">
+                <input
+                  type="checkbox"
+                  [disabled]="!item.isActive"
+                  [(ngModel)]="item.isActiveDiscount"
+                />
+                <span class="app-slider app-round"></span>
+              </label>
+              <span>Show Discounts</span>
+            </div>
+          </div>
+          <hr/>
+          <div class="row no-gutters slider-item align-items-center">
+            <div class="col">
+              <label class="app-switch mr-2">
+                <input
+                  type="checkbox"
+                  [(ngModel)]="tuitionContract.signature.isRequire"
+                />
+                <span class="app-slider app-round"></span>
+              </label>
+              <span class="font-weight-bold ">Contract Signature</span>
+            </div>
+          </div>
+          <ng-container *ngIf="tuitionContract.signature.isRequire">
+            <div class="row no-gutters">
+              <div
+                class="btn-group btn-group-toggle w-100 mt-2"
+                ngbRadioGroup
+                name="radioSignature"
+                [(ngModel)]="tuitionContract.signature.type"
+                [ngModelOptions]="{ standalone: true }"
+              >
+                <label ngbButtonLabel class="btn app-btn-signature">
+                  <input
+                    ngbButton
+                    type="radio"
+                    [value]="SIGNATURE_TYPES.ESIGN"
+                  />
+                  E-signature
+                </label>
+                <label ngbButtonLabel class="btn app-btn-signature">
+                  <input ngbButton type="radio" [value]="SIGNATURE_TYPES.WET"/>
+                  Wet Signature
+                </label>
+              </div>
+            </div>
+            <div
+              class="row no-gutters app-tuition-signature px-3 py-3"
+              *ngIf="tuitionContract.signature.type === SIGNATURE_TYPES.ESIGN"
+            >
+              <div class="col">
+                <label class="app-radio-container"
+                >System
+                  <input
+                    type="radio"
+                    name="signatureType"
+                    [value]="E_SIGNATURE_TYPES.SYSTEM"
+                    [(ngModel)]="tuitionContract.signature.eType"
+                  />
+                  <span class="app-radio-checkmark"></span>
+                </label>
+              </div>
+              <div class="col">
+                <label class="app-radio-container"
+                >External
+                  <span class="pl-2"
+                  ><i class="fas fa-cog app-fb-gear"></i
+                  ></span>
+                  <input
+                    type="radio"
+                    name="signatureType"
+                    [value]="E_SIGNATURE_TYPES.EXTERNAL"
+                    [(ngModel)]="tuitionContract.signature.eType"
+                  />
+                  <span class="app-radio-checkmark"></span>
+                </label>
+              </div>
+            </div>
+            <div class="row px-3 pt-3">
+              <label class="app-checkbox-container">
+                Both Parents' Signature (when applicable)
+                <input
+                  type="checkbox"
+                  [(ngModel)]="tuitionContract.signature.isBothParents"
+                />
+                <span class="app-checkbox-checkmark"></span>
+              </label>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+    <!--END TUITION CONTRACT-->
+
+    <!--PAYMENT SETTINGS-->
+    <div class="row justify-content-center pb-2">
+      <div class="col-10 sidebar_item">
+        <div class="row no-gutters align-items-center">
+          <div class="col-auto mr-2">
+            <label class="app-switch">
+              <input
+                type="checkbox"
+                [ngModel]="activeSections.paymentSettings.isActive"
+                (ngModelChange)="
+                  activeSections.paymentSettings.isActive = activeSections.paymentSettings.showSideInfo = $event
+                "
+              />
+              <span class="app-slider app-round"></span>
+            </label>
+          </div>
+          <div class="col"
+               (click)="activeSections.paymentSettings.showSideInfo = !activeSections.paymentSettings.showSideInfo">
+            <span class="font-weight-bold side-bar-toggle">PAYMENT SETTINGS</span>
+            <i
+              class="fas float-right app-plus-i"
+              [ngClass]="{
+                'fa-sort-down': !activeSections.paymentSettings.showSideInfo,
+                'fa-sort-up': activeSections.paymentSettings.showSideInfo
+              }"
+            ></i>
+          </div>
+        </div>
+        <div
+          *ngIf="activeSections.paymentSettings.showSideInfo"
+          class="bg-white rounded mb-3 "
+        >
+          <!-- list -->
+          <div
+            class="app-consent-item p-3 mt-3"
+            *ngFor="
+              let item of paymentSettings?.paymentSettingsItems;
+              let i = index
+            "
+          >
+            <div class="row no-gutters mb-2">
+              <div class="col-10">
+                <span
+                  class="app-consent-item-title"
+                  *ngIf="isEditPaymentSettingsName !== item.id"
+                  (click)="isEditPaymentSettingsName = item.id"
+                >
+                  {{ item.title }}
+                </span>
+                <input
+                  type="text"
+                  class="form-control app-consent-name-input"
+                  autofocus
+                  *ngIf="isEditPaymentSettingsName === item.id || !item.title"
+                  (input)="isEditPaymentSettingsName = item.id"
+                  (blur)="isEditPaymentSettingsName = null"
+                  (keyup.enter)="isEditPaymentSettingsName = null"
+                  [(ngModel)]="item.title"
+                  placeholder="Title"
+                />
+              </div>
+              <div class="col-2 text-right pt-2">
+                <span
+                  (click)="removePaymentSettingsItems(item.id)"
+                  class="app-fb-trash mr-3"
+                ><i class="fas fa-trash"></i
+                ></span>
+              </div>
+            </div>
+
+            <div class="row no-gutters align-items-center pt-3">
+              <div class="col-auto mr-2">
+                <label class="app-switch">
+                  <input type="checkbox" [(ngModel)]="item.checkbox.isActive"/>
+                  <span class="app-slider app-round"></span>
+                </label>
+              </div>
+              <div class="col">
+                <span class="font-weight-bold ">CHECKBOX</span>
+              </div>
+            </div>
+          </div>
+
+          <hr/>
+
+          <div class="row no-gutters align-items-center pt-1">
+            <div class="col-auto mr-2">
+              <label class="app-switch">
+                <input
+                  type="checkbox"
+                  [(ngModel)]="paymentSettings.signature.isRequire"
+                />
+                <span class="app-slider app-round"></span>
+              </label>
+            </div>
+            <div class="col">
+              <span class="font-weight-bold ">REQUIRE SIGNATURE</span>
+            </div>
+          </div>
+
+          <ng-container *ngIf="paymentSettings.signature.isRequire">
+            <div class="row no-gutters">
+              <div
+                class="btn-group btn-group-toggle w-100 mt-2"
+                ngbRadioGroup
+                name="paymentSettingsSignature"
+                [(ngModel)]="paymentSettings.signature.type"
+                [ngModelOptions]="{ standalone: true }"
+              >
+                <label ngbButtonLabel class="btn app-btn-signature">
+                  <input
+                    ngbButton
+                    type="radio"
+                    [value]="SIGNATURE_TYPES.ESIGN"
+                  />
+                  E-signature
+                </label>
+                <label ngbButtonLabel class="btn app-btn-signature">
+                  <input ngbButton type="radio" [value]="SIGNATURE_TYPES.WET"/>
+                  Wet Signature
+                </label>
+              </div>
+            </div>
+
+            <div
+              *ngIf="paymentSettings.signature.type === SIGNATURE_TYPES.ESIGN"
+              class="row no-gutters app-consent-signature px-3 py-3"
+            >
+              <div class="col">
+                <label class="app-radio-container"
+                >System
+                  <input
+                    type="radio"
+                    name="eSignatureType"
+                    [value]="E_SIGNATURE_TYPES.SYSTEM"
+                    [(ngModel)]="paymentSettings.signature.eType"
+                  />
+                  <span class="app-radio-checkmark"></span>
+                </label>
+              </div>
+              <div class="col">
+                <label class="app-radio-container"
+                >External
+                  <span class="pl-2"
+                  ><i class="fas fa-cog app-fb-gear"></i
+                  ></span>
+                  <input
+                    type="radio"
+                    name="eSignatureType"
+                    [value]="E_SIGNATURE_TYPES.EXTERNAL"
+                    [(ngModel)]="paymentSettings.signature.eType"
+                  />
+                  <span class="app-radio-checkmark"></span>
+                </label>
+              </div>
+            </div>
+
+            <div class="row px-4 pt-3">
+              <label class="app-checkbox-container">
+                Both Parents' Signature (when applicable)
+                <input
+                  type="checkbox"
+                  [(ngModel)]="paymentSettings.signature.isBothParents"
+                />
+                <span class="app-checkbox-checkmark"></span>
+              </label>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+    <!--END PAYMENT SETTINGS-->
+
+    <!--TERMS AND CONDITIONS-->
+    <div class="row justify-content-center pb-2">
+      <div class="col-10 bg-white">
+        <div class="row no-gutters slider-item align-items-center">
+          <div class="col-auto mr-2">
+            <label class="app-switch">
+              <input
+                type="checkbox"
+                [ngModel]="activeSections.termsConditionals.isActive"
+                (ngModelChange)="
+                  activeSections.termsConditionals.isActive = activeSections.termsConditionals.showSideInfo = $event
+                "
+              />
+              <span class="app-slider app-round"></span>
+            </label>
+          </div>
+          <div class="col"
+               (click)="activeSections.termsConditionals.showSideInfo = !activeSections.termsConditionals.showSideInfo">
+            <span class="font-weight-bold side-bar-toggle">TERMS AND CONDITIONS</span>
+            <i class="fas float-right app-plus-i"
+               [ngClass]="{
+                'fa-sort-down': !activeSections.termsConditionals.showSideInfo,
+                'fa-sort-up': activeSections.termsConditionals.showSideInfo
+              }"
+            ></i>
+          </div>
+        </div>
+        <div class="row no-gutters">
+          <div class="col">
+            <i *ngIf="activeSections.termsConditionals.showSideInfo"
+               (click)="addTermsConditionsItem()"
+               class="fas fa-plus-square float-right app-plus-i"
+            ></i>
+          </div>
+        </div>
+        <div
+          *ngIf="activeSections.termsConditionals.showSideInfo"
+          class="bg-white rounded mb-3 "
+        >
+          <div
+            class="app-consent-item p-3 mt-3"
+            *ngFor="
+              let item of termsConditions?.termsConditionsItems;
+              let i = index
+            "
+          >
+            <div class="row no-gutters mb-2">
+              <div class="col-10">
+                <span
+                  class="app-consent-item-title"
+                  *ngIf="isEditTermsConditionsName !== item.id"
+                  (click)="isEditTermsConditionsName = item.id"
+                >
+                  {{ item.title }}
+                </span>
+                <input
+                  type="text"
+                  class="form-control app-consent-name-input"
+                  autofocus
+                  *ngIf="isEditTermsConditionsName === item.id || !item.title"
+                  (input)="isEditTermsConditionsName = item.id"
+                  (blur)="isEditTermsConditionsName = null"
+                  (keyup.enter)="isEditTermsConditionsName = null"
+                  [(ngModel)]="item.title"
+                  placeholder="Title"
+                />
+              </div>
+              <div class="col-2 text-right pt-2">
+                <span
+                  (click)="removeTermsConditionsItem(item.id)"
+                  class="app-fb-trash mr-3"
+                ><i class="fas fa-trash"></i
+                ></span>
+              </div>
+            </div>
+
+            <div class="row no-gutters align-items-center pt-3">
+              <div class="col-auto mr-2">
+                <label class="app-switch">
+                  <input type="checkbox" [(ngModel)]="item.checkbox.isActive"/>
+                  <span class="app-slider app-round"></span>
+                </label>
+              </div>
+              <div class="col">
+                <span class="font-weight-bold ">CHECKBOX</span>
+              </div>
+            </div>
+          </div>
+
+          <hr/>
+
+          <div class="row no-gutters align-items-center pt-1">
+            <div class="col-auto mr-2">
+              <label class="app-switch">
+                <input
+                  type="checkbox"
+                  [(ngModel)]="termsConditions.signature.isRequire"
+                />
+                <span class="app-slider app-round"></span>
+              </label>
+            </div>
+            <div class="col">
+              <span class="font-weight-bold ">REQUIRE SIGNATURE</span>
+            </div>
+          </div>
+
+          <ng-container *ngIf="termsConditions.signature.isRequire">
+            <div class="row no-gutters">
+              <div
+                class="btn-group btn-group-toggle w-100 mt-2"
+                ngbRadioGroup
+                name="termsConditionsSignature"
+                [(ngModel)]="termsConditions.signature.type"
+                [ngModelOptions]="{ standalone: true }"
+              >
+                <label ngbButtonLabel class="btn app-btn-signature">
+                  <input
+                    ngbButton
+                    type="radio"
+                    [value]="SIGNATURE_TYPES.ESIGN"
+                  />
+                  E-signature
+                </label>
+                <label ngbButtonLabel class="btn app-btn-signature">
+                  <input ngbButton type="radio" [value]="SIGNATURE_TYPES.WET"/>
+                  Wet Signature
+                </label>
+              </div>
+            </div>
+
+            <div
+              *ngIf="termsConditions.signature.type === SIGNATURE_TYPES.ESIGN"
+              class="row no-gutters app-consent-signature px-3 py-3"
+            >
+              <div class="col">
+                <label class="app-radio-container"
+                >System
+                  <input
+                    type="radio"
+                    name="eSignatureType"
+                    [value]="E_SIGNATURE_TYPES.SYSTEM"
+                    [(ngModel)]="termsConditions.signature.eType"
+                  />
+                  <span class="app-radio-checkmark"></span>
+                </label>
+              </div>
+              <div class="col">
+                <label class="app-radio-container"
+                >External
+                  <span class="pl-2"
+                  ><i class="fas fa-cog app-fb-gear"></i
+                  ></span>
+                  <input
+                    type="radio"
+                    name="eSignatureType"
+                    [value]="E_SIGNATURE_TYPES.EXTERNAL"
+                    [(ngModel)]="termsConditions.signature.eType"
+                  />
+                  <span class="app-radio-checkmark"></span>
+                </label>
+              </div>
+            </div>
+
+            <div class="row px-4 pt-3">
+              <label class="app-checkbox-container">
+                Both Parents' Signature (when applicable)
+                <input
+                  type="checkbox"
+                  [(ngModel)]="termsConditions.signature.isBothParents"
+                />
+                <span class="app-checkbox-checkmark"></span>
+              </label>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+    <!--END TERMS AND CONDITIONS-->
+
+    <!--    FORM PAYMENT-->
+    <div class="row justify-content-center pb-2">
+      <div class="col-10 bg-white ">
+        <div class="row no-gutters slider-item align-items-center">
+          <div class="col-auto mr-2">
+            <label class="app-switch">
+              <input
+                type="checkbox"
+                [ngModel]="activeSections.formPayment.isActive"
+                (ngModelChange)="activeSections.formPayment.isActive = activeSections.formPayment.showSideInfo = $event"
+              />
+              <span class="app-slider app-round"></span>
+            </label>
+          </div>
+          <div class="col"
+               (click)="activeSections.formPayment.showSideInfo = !activeSections.formPayment.showSideInfo">
+            <span class="font-weight-bold side-bar-toggle">FORM PAYMENT</span>
+            <i class="fas float-right app-plus-i"
+               [ngClass]="{
+                'fa-sort-down': !activeSections.formPayment.showSideInfo,
+                'fa-sort-up': activeSections.formPayment.showSideInfo
+              }"
+            ></i>
+          </div>
+        </div>
+        <div *ngIf="activeSections.formPayment.showSideInfo" class="bg-white rounded mb-3 ">
+          <div
+            class="row no-gutters pt-2 align-items-center"
+            *ngFor="let item of formPaymentSideBar"
+          >
+            <div class="col-1">
+              <label class="app-checkbox-container">
+                <input type="checkbox" [(ngModel)]="item.isActive"/>
+                <span class="app-checkbox-checkmark"></span>
+              </label>
+            </div>
+            <div class="col ">
+              <span class="form-payment-side-bar-text">{{ item.name }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--  END  FORM PAYMENT-->
+
+  <div class="col-9 pr-5">
+    <div>
+      <!--      cdkDropList-->
+      <!--      id="workPlaceList"-->
+      <!--      [cdkDropListData]="fields"-->
+      <!--      [cdkDropListConnectedTo]="['ExistingFieldsList', 'CustomFieldsList', '6372c882-3d14-486f-9c1f-52ae8ab928ef']"-->
+      <!--      (cdkDropListDropped)="drop($event)">-->
+      <!--      <ul class="list-group" *ngIf="sections.formFieldsWorkspace">-->
+      <!--        <li class="list-group-item mb-3 py-0" *ngFor="let field of fields; trackBy: trackByFn" cdkDrag-->
+      <!--            cdkDragLockAxis="y"-->
+      <!--            [ngClass]="[!field.isValidName||!field.isValid?'list-group-item-warning':'', field.type==113?'app-list-group-item-info':'']">-->
+      <!--          <app-group-container *ngIf="field.type==113" [inputGroup]="field"-->
+      <!--                                 [customFields]="customFields"></app-group-container>-->
+      <!--          <app-field-container *ngIf="field.type!=113"-->
+      <!--                                 [customFields]="customFields"-->
+      <!--                                 [inputField]="field"-->
+      <!--                                 (onChange)="onChange($event, field)"-->
+      <!--                                 (onUniq)="onUniq($event)"-->
+      <!--                                 (onDelete)="onDelete($event)">-->
+      <!--          </app-field-container>-->
+      <!--        </li>-->
+
+      <!--      </ul>-->
+      <app-fields-workspace
+        *ngIf="activeSections.formFields.isActive"
+        [form]="form"
+        [sideBar]="newSideBar"
+        [idSectionForDragDrop]="idSectionForDragDrop"
+        [customFields]="customFields"
+      ></app-fields-workspace>
+      <!--  documents-forms-->
+      <app-documents-forms
+        *ngIf="activeSections.documentsForms.isActive"
+        [isDocumentsForms]="isDocumentsForms"
+        [documentsForms]="documentsForms"
+        [documents]="documents"
+        [formsPDF]="formsPDF"
+        [attachments]="attachments"
+        [formId]="formId"
+        [existingFields]="existingFields"
+      >
+      </app-documents-forms>
+      <!--  end  documents-forms-->
+
+      <!--  consent-->
+      <app-consent
+        *ngIf="activeSections.consent.isActive"
+        [consentInfo]="consentInfo"
+      ></app-consent>
+      <!--  end consent-->
+
+      <!--  tuition-contract-->
+      <app-tuition-contract
+        *ngIf="activeSections.tuition.isActive"
+        [tuitionContract]="tuitionContract"
+      ></app-tuition-contract>
+      <!--  end tuition-contract-->
+
+      <!--  app-payment-settings s-->
+      <app-payment-settings
+        *ngIf="activeSections.paymentSettings.isActive"
+        [paymentSettings]="paymentSettings"
+      ></app-payment-settings>
+      <!--  end terms and conditions-->
+
+      <!--  terms and conditions-->
+      <app-terms-conditions
+        *ngIf="activeSections.termsConditionals.isActive"
+        [termsConditions]="termsConditions"
+      ></app-terms-conditions>
+      <!--  end terms and conditions-->
+
+      <!--  form-payment -->
+      <div class="app-section-wrapper" *ngIf="activeSections.formPayment.isActive">
+        <app-form-payment [formPaymentSideBar]="formPaymentSideBar">
+        </app-form-payment>
+      </div>
+      <!--  end form-payment-->
+    </div>
+  </div>
+</div>
+
+<!-- Loading spinner -->
+<ng-container *ngIf="form === undefined || isDataSaving">
+  <main-spinner [spinnerText]="spinnerText"></main-spinner>
+</ng-container>

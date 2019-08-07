@@ -21,7 +21,7 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        loadChildren: () => import('../vertical-data-collection/vertical-data-collection.module').then(m => m.VerticalDataCollectionModule),
+        loadChildren: () => import('../data-collection/data-collection.module').then(m => m.DataCollectionModule),
 
       }
     ],

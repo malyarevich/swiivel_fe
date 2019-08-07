@@ -1,0 +1,33 @@
+@import "../automation.component";
+
+.template_area {
+  background-color: $preview-background-color;
+  display: flex;
+  flex-direction: column;
+  min-height: 40rem;
+  padding: 1rem;
+  width: 100%;
+
+  &__controls {
+    @extend .section_content__row;
+
+    align-items: flex-start;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  &__content_box {
+    @extend .section_content__row;
+
+    align-items: flex-start;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  &__content {
+    background-color: $white;
+    border: 1px solid #b6b6b6;
+  }
+}

@@ -1,0 +1,65 @@
+<div class="container-fluid">
+  <ng-container *ngIf="isLoading()">
+    <div class="row mt-5">
+      <div class="col-12 col-lg-3 rounded">
+        <!-- pl-lg-5 -->
+        <ng-container *ngIf="data !== undefined">
+          <app-publish-menu
+            [data]="data"
+            [activeMenuItem]="activeMenuItem"
+          ></app-publish-menu>
+        </ng-container>
+      </div>
+      <div class="col-12 col-lg-9" *ngIf="activeMenuItem !== undefined">
+        <!-- pr-lg-5 -->
+        <app-conditions-review
+          class="d-block app-div-animation"
+          [ngClass]="{
+            'app-div-show':
+              activeMenuItem === publishMenuItems.conditions,
+            'app-div-hide':
+              activeMenuItem !== publishMenuItems.conditions
+          }"
+        ></app-conditions-review>
+        <app-publish-settings
+          [publish_settings]="data['publish_settings']"
+          [id]="formId"
+          class="d-block app-div-animation"
+          [ngClass]="{
+            'app-div-show':
+              activeMenuItem === publishMenuItems.settings,
+            'app-div-hide':
+              activeMenuItem !== publishMenuItems.settings
+          }"
+        ></app-publish-settings>
+
+        <app-automation
+          [automation]="data.automation"
+          [activeMenuItem]="activeMenuItem"
+          class="d-block app-div-animation"
+          [ngClass]="{
+            'app-div-show':
+              activeMenuItem === publishMenuItems.automation,
+            'app-div-hide':
+              activeMenuItem !== publishMenuItems.automation
+          }"
+          [id]="formId"
+        ></app-automation>
+
+        <app-redirect-pages
+          class="d-block app-div-animation"
+          [ngClass]="{
+            'app-div-show':
+              activeMenuItem === publishMenuItems.redirect,
+            'app-div-hide':
+              activeMenuItem !== publishMenuItems.redirect
+          }"
+        ></app-redirect-pages>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="!isLoading()">
+    <main-spinner [spinnerText]="spinnerText"></main-spinner>
+  </ng-container>
+</div>

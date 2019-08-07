@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { ICommand } from "../../../models/vertical-data-collection/v-form-constructor/v-form-builder/component.model";
+import { ICommand } from "../../../models/data-collection/form-constructor/form-builder/component.model";
 
 @Component({
   selector: "app-command-dropdown",

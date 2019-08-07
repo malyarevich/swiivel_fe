@@ -1,0 +1,45 @@
+<ng-container *ngIf="automation !== undefined && activeMenuItem === publishMenuItems.automation">
+  <ng-container
+    *ngFor="let automationItem of automation['automation_list']"
+  >
+    <app-automation-header *ngIf="automationItem !== undefined"
+      [automation]="automation"
+      [automationItem]="automationItem"
+    ></app-automation-header>
+
+    <div class="section_content app-div-animation"
+      [ngClass]="{
+        'app-div-show': !isHideAutomationItemContent[automationItem['_id']],
+        'app-div-hide': isHideAutomationItemContent[automationItem['_id']]
+      }"
+    >
+      <div class="section_content__row mb_125">
+        <div class="section_content__template_title_box">
+          <p class="section_content__template_title">
+            {{ getTemplateName(automationItem['template_id']) }}
+          </p>
+        </div>
+        <div class="section_content__template_button_box">
+          <p class="section_content__template_button">
+            Select Template
+          </p>
+        </div>
+      </div>
+
+      <div class="section_content__row">
+        <app-automation-template-area
+          [templateId]="automationItem['template_id']"
+          [automation]="automation"
+          class="section_content__template_area"
+        ></app-automation-template-area>
+        <app-automation-logic-area
+          [logicList]="automationItem['logics']"
+          [automation]="automation"
+          class="section_content__logic_area"
+        ></app-automation-logic-area>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>
+
+<ng-container *ngIf="automation === undefined"> </ng-container>

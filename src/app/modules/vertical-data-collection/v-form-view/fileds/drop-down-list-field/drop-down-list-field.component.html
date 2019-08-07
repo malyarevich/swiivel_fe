@@ -1,9 +1,0 @@
-<select class="form-control"
-        [(ngModel)]="data.value"
-        [required]="data.options.required"
-        [disabled]="data.options.readonly"
->
-
-
-  <option *ngFor="let item of data.options.items || list" [selected]="data.value" [ngValue]="item">{{item}}</option>
-</select>
