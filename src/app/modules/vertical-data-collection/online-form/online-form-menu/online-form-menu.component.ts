@@ -1,11 +1,10 @@
 import {
   Component,
-  EventEmitter,
   Input,
   OnInit,
-  Output,
   OnDestroy,
-  OnChanges
+  ChangeDetectionStrategy,
+  NgZone
 } from "@angular/core";
 import {
   menuItems,
@@ -15,19 +14,24 @@ import {
 } from "../../../../models/vertical-data-collection/v-form-constructor/online-form/menu-items";
 import { IActiveSections } from "src/app/models/vertical-data-collection/v-form-constructor/v-form-builder/active-section.model";
 import { OnlineFormNavigationService } from "../services/online-form-navigation.service";
-import { Subscription } from "rxjs";
+import { Subscription, BehaviorSubject } from "rxjs";
 
 @Component({
   selector: "app-online-form-menu",
   templateUrl: "./online-form-menu.component.html",
-  styleUrls: ["./online-form-menu.component.scss"]
+  styleUrls: ["./online-form-menu.component.scss"],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class OnlineFormMenuComponent implements OnInit, OnChanges, OnDestroy {
-  @Input() percents: number[];
-  @Input() isStartMenu: boolean;
+export class OnlineFormMenuComponent implements OnInit, OnDestroy {
+  percents: object = {};
+  percentsEmitter$ = new BehaviorSubject<object>(this.percents);
 
-  activeSections: IActiveSections;
+  activeMenuItems: IActiveSections;
+
   onSetActiveMenuItemsSubscription: Subscription;
+  onChangeSectionListOfMenuItemsSubscription: Subscription;
+  onSetSectionPercentsSubscription: Subscription;
+
   hoveredItems = [];
 
   menuItems: IMenuItems[] = menuItems;
@@ -40,35 +44,34 @@ export class OnlineFormMenuComponent implements OnInit, OnChanges, OnDestroy {
   ) {}
 
   ngOnInit() {
-    if (this.isStartMenu) {
-      this.activeSections = this.onlineFormNavigationService.getActiveMainMenuItems();
-      this.onSetActiveMenuItemsSubscription = this.onlineFormNavigationService.onSetActiveMenuItems.subscribe(
-        activeSections => {
-          this.activeSections = activeSections;
-        }
-      );
-      this.initActiveMenuList();
-    }
-  }
-
-  ngOnChanges(): void {
-    if (this.isStartMenu) {
-      this.activeSections = this.onlineFormNavigationService.getActiveMainMenuItems();
-      if (!this.onSetActiveMenuItemsSubscription) {
-        this.onSetActiveMenuItemsSubscription = this.onlineFormNavigationService.onSetActiveMenuItems.subscribe(
-          activeSections => {
-            this.activeSections = activeSections;
-          }
-        );
+    this.onSetActiveMenuItemsSubscription = this.onlineFormNavigationService.onSetActiveMenuItems.subscribe(
+      activeMenuItems => {
+        this.activeMenuItems = activeMenuItems;
+        this.initActiveMenuList();
       }
-      this.initActiveMenuList();
-    }
+    );
+    this.onChangeSectionListOfMenuItemsSubscription = this.onlineFormNavigationService.onChangeSectionListOfMenuItems.subscribe(
+      sectionListOfMenuItems => {
+        this.onlineFormNavigationService.setAtFirstStep();
+      }
+    );
+
+    this.onSetSectionPercentsSubscription = this.onlineFormNavigationService.onSetSectionPercents.subscribe(
+      (percents: object) => {
+        this.percents = { ...percents };
+        this.percentsEmitter$.next(this.percents);
+      }
+    );
+    this.activeMenuItems = this.onlineFormNavigationService.getActiveMainMenuItems();
+    this.initActiveMenuList();
   }
 
   initActiveMenuList() {
     // this.onlineFormNavigationService.setActiveMenuItem(this.onlineFormNavigationService.getMenuItemNameByIndex(0));
-    this.onlineFormNavigationService.setFirstMenuItem();
-    this.onlineFormNavigationService.setFirstSectionItem();
+    if (this.activeMenuItems) {
+      this.onlineFormNavigationService.setFirstMenuItem();
+      this.onlineFormNavigationService.setFirstSectionItem();
+    }
   }
 
   getActiveMenuItem(): string {
@@ -81,7 +84,11 @@ export class OnlineFormMenuComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   isShowMenuItem(itemMenuName) {
-    return this.activeSections[itemMenuName];
+    return this.activeMenuItems[itemMenuName];
+  }
+
+  getPercent(itemName: string): number {
+    return this.percents[itemName];
   }
 
   setHovered(itemName) {
@@ -99,6 +106,12 @@ export class OnlineFormMenuComponent implements OnInit, OnChanges, OnDestroy {
   ngOnDestroy(): void {
     if (this.onSetActiveMenuItemsSubscription) {
       this.onSetActiveMenuItemsSubscription.unsubscribe();
+    }
+    if (this.onChangeSectionListOfMenuItemsSubscription) {
+      this.onChangeSectionListOfMenuItemsSubscription.unsubscribe();
+    }
+    if (this.onSetSectionPercentsSubscription) {
+      this.onSetSectionPercentsSubscription.unsubscribe();
     }
   }
 }

@@ -1,4 +1,10 @@
-import { Component, OnInit, OnDestroy, AfterViewInit } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  AfterViewInit,
+  NgZone
+} from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 import { Form } from "src/app/models/vertical-data-collection/form.model";
@@ -22,18 +28,20 @@ import { IActiveSections } from "src/app/models/vertical-data-collection/v-form-
 export class OnlineFormViewComponent
   implements OnInit, AfterViewInit, OnDestroy {
   form: Form;
-  activeSection: string;
   fg: FormGroup;
 
   activeMainMenuItems: IActiveSections;
+  activeMenuItem: string;
   sectionListOfMenuItems: Array<object[]>;
+
   onActiveMenuItemSubscription: Subscription;
   onChangeSectionListOfMenuItemsSubscription: Subscription;
+  onBothLoadedSubscription: Subscription;
+
   isDisabledSaveButton: boolean;
-  isStartMenu$: Observable<boolean>;
+  isBothLoaded: boolean = false;
   isFirst: boolean = true;
 
-  percents: number[];
   menuItems: IMenuItems[] = menuItems;
   mainMenuNames: IMainMenuNames = mainMenuNames;
 
@@ -44,22 +52,26 @@ export class OnlineFormViewComponent
     private location: Location
   ) {}
 
-  
-
   ngOnInit() {
-    this.percents = [];
     this.getForm();
     this.onActiveMenuItemSubscription = this.onlineFormNavigationService.onActiveMenuItem.subscribe(
       menuItemName => {
-        this.activeSection = menuItemName;
+        this.activeMenuItem = menuItemName;
       }
     );
+
     this.onChangeSectionListOfMenuItemsSubscription = this.onlineFormNavigationService.onChangeSectionListOfMenuItems.subscribe(
       sectionListOfMenuItems => {
         this.sectionListOfMenuItems = sectionListOfMenuItems;
-        console.log(sectionListOfMenuItems);
         // sectionListOfMenuItems.length === Object.keys(this.activeMainMenuItems).length;
         // this.goPreviousStep();
+      }
+    );
+
+    this.onBothLoadedSubscription = this.onlineFormNavigationService.onBothLoaded.subscribe(
+      isBothLoaded => {
+        this.goToFirstStep();
+        this.isBothLoaded = isBothLoaded;
       }
     );
   }
@@ -67,13 +79,6 @@ export class OnlineFormViewComponent
   ngAfterViewInit(): void {
     //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
     //Add 'implements AfterViewInit' to the class.
-    this.isStartMenu$ = this.onlineFormNavigationService.isStartMenu;
-    this.isStartMenu$.subscribe(() => {
-      if (this.isFirst) {
-        this.goToFirstStep();
-        this.isFirst = false;
-      }
-    })
   }
 
   getForm(): void {
@@ -84,10 +89,11 @@ export class OnlineFormViewComponent
       console.log(this.form);
 
       this.activeMainMenuItems = this.getFilteredSections();
-      this.onlineFormNavigationService.setActiveMainMenuItems(this.activeMainMenuItems);
+      this.onlineFormNavigationService.setActiveMainMenuItems(
+        this.activeMainMenuItems
+      );
 
       this.initForm();
-      this.goToFirstStep();
     });
   }
 
@@ -102,7 +108,6 @@ export class OnlineFormViewComponent
         activeMenuList[key] = this.form["activeSections"][key];
       }
     }
-    console.log(<IActiveSections>activeMenuList);
     return <IActiveSections>activeMenuList;
   }
 
@@ -130,12 +135,15 @@ export class OnlineFormViewComponent
   }
 
   goToFirstStep() {
-    console.log(this.sectionListOfMenuItems);
     this.onlineFormNavigationService.setAtFirstStep();
   }
 
   goPreviousStep() {
-    if (this.sectionListOfMenuItems && this.sectionListOfMenuItems.length === Object.keys(this.activeMainMenuItems).length) {
+    if (
+      this.sectionListOfMenuItems &&
+      this.sectionListOfMenuItems.length ===
+        Object.keys(this.activeMainMenuItems).length
+    ) {
       this.onlineFormNavigationService.previousStep();
     }
   }
@@ -178,10 +186,6 @@ export class OnlineFormViewComponent
 
   goBack() {
     this.location.back();
-  }
-
-  setPercent(itemName: string, percent: number) {
-    this.percents[itemName] = percent;
   }
 
   ngOnDestroy(): void {

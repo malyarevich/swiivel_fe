@@ -20,7 +20,6 @@ import { OnlineFormNavigationService } from "../services/online-form-navigation.
 })
 export class OnlineFormConsentComponent implements OnInit {
   @Input() form: Form;
-  @Output() onSetPercent: EventEmitter<number> = new EventEmitter();
 
   percent: number;
   menuItems: IMenuItems[] = menuItems;
@@ -44,13 +43,13 @@ export class OnlineFormConsentComponent implements OnInit {
     this.initSections();
     this.onlineFormNavigationService.onActiveSectionItem.subscribe(
       newActiveSectionId => {
+        //TODO: go to behaviorSubjects 
         this.activeSectionId = newActiveSectionId;
       }
     );
     this.initConsents();
     // TODO: count percent
-    this.percent = 100;
-    this.onSetPercent.emit(this.percent);
+    this.setPercent(100);
   }
 
   initSections() {
@@ -70,6 +69,11 @@ export class OnlineFormConsentComponent implements OnInit {
     this.consents = cloneDeep(this.form.consentInfo.consents).map(item => {
       return { ...item, _id: item.id, name: item.title };
     });
+  }
+
+  setPercent(percent: number) {
+    this.percent = percent;
+    this.onlineFormNavigationService.setSectionPercent(mainMenuNames.consentInfo, percent);
   }
 
   getTime() {

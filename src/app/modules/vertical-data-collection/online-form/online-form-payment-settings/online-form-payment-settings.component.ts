@@ -27,7 +27,6 @@ import { OnlineFormNavigationService } from "../services/online-form-navigation.
 })
 export class OnlineFormPaymentSettingsComponent implements OnInit {
   @Input() form: Form;
-  @Output() onSetPercent: EventEmitter<number> = new EventEmitter();
 
   percent: number;
   menuItems: IMenuItems[] = menuItems;
@@ -52,12 +51,12 @@ export class OnlineFormPaymentSettingsComponent implements OnInit {
     this.initSections();
     this.onlineFormNavigationService.onActiveSectionItem.subscribe(
       newActiveSectionId => {
+        //TODO: go to behaviorSubjects 
         this.activeSectionId = newActiveSectionId;
       }
     );
     // TODO: count percent
-    this.percent = 100;
-    this.onSetPercent.emit(this.percent);
+    this.setPercent(100);
   }
 
   initSections() {
@@ -77,6 +76,11 @@ export class OnlineFormPaymentSettingsComponent implements OnInit {
     return this.menuItems.find(
       o => o.name === this.mainMenuNames.paymentSettings
     ).time;
+  }
+
+  setPercent(percent: number) {
+    this.percent = percent;
+    this.onlineFormNavigationService.setSectionPercent(mainMenuNames.paymentSettings, percent);
   }
 
   onSystemSign() {

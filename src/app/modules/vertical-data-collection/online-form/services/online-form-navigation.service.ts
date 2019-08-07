@@ -13,10 +13,14 @@ import { IActiveSections } from "src/app/models/vertical-data-collection/v-form-
 export class OnlineFormNavigationService {
   @Output() onActiveSectionItem: EventEmitter<string> = new EventEmitter();
   @Output() onActiveMenuItem: EventEmitter<string> = new EventEmitter();
-  @Output() onSetActiveMenuItems:
-    EventEmitter<IActiveSections> = new EventEmitter();
-  @Output() onChangeSectionListOfMenuItems:
-    EventEmitter<Array<object[]>> = new EventEmitter();
+  @Output() onSetActiveMenuItems: EventEmitter<
+    IActiveSections
+  > = new EventEmitter();
+  @Output() onChangeSectionListOfMenuItems: EventEmitter<
+    Array<object[]>
+  > = new EventEmitter();
+  @Output() onBothLoaded: EventEmitter<boolean> = new EventEmitter();
+  @Output() onSetSectionPercents: EventEmitter<object> = new EventEmitter();
   private activeMainMenuItems: IActiveSections;
   //page like a General Information or Documents&Forms:
   private activeMenuItem: string;
@@ -25,16 +29,11 @@ export class OnlineFormNavigationService {
   private activeSectionItem: string;
   private activeSectionItemIndex: number;
   private sectionListOfMenuItems: Array<object[]> = [];
-  private isBothLoaded = new BehaviorSubject<boolean>(false);
-
-  get isStartMenu() {
-    return this.isBothLoaded.asObservable();
-  }
+  private sectionPercents: object = {};
 
   setActiveMainMenuItems(activeMainMenuItems: IActiveSections) {
     this.activeMainMenuItems = activeMainMenuItems;
     this.onSetActiveMenuItems.emit(this.activeMainMenuItems);
-    console.log(this.activeMainMenuItems);
   }
 
   getActiveMainMenuItems(): IActiveSections {
@@ -88,7 +87,7 @@ export class OnlineFormNavigationService {
       this.sectionListOfMenuItems.length ===
         Object.keys(this.activeMainMenuItems).length
     ) {
-      this.isBothLoaded.next(true);
+      this.onBothLoaded.emit(true);
     }
   }
 
@@ -134,7 +133,6 @@ export class OnlineFormNavigationService {
   }
 
   setFirstSectionItem() {
-    
     try {
       if (this.sectionListOfMenuItems) {
         this.setActiveSectionItem(
@@ -209,4 +207,14 @@ export class OnlineFormNavigationService {
       }
     }
   }
+
+  setSectionPercent(key: string, value: number) {
+    this.sectionPercents[key] = value;
+    this.onSetSectionPercents.emit(this.sectionPercents);
+  }
+
+  getSectionPercent(key: string): number {
+    return this.sectionPercents[key] ? this.sectionPercents[key] : -1;
+  }
+
 }
