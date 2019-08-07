@@ -13,7 +13,6 @@ import {
   Host
 } from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
-import {FormUtils} from "../../utils/form.utils";
 import {Form, FormSql} from "../../model/form.model";
 import {isEmpty} from "lodash";
 import {FormService} from "../../services/form.service";
@@ -102,7 +101,6 @@ export class FormGeneralInformationComponent implements OnInit, OnDestroy {
     @Host() vDataCollection: DataCollectionComponent,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private formUtils: FormUtils,
     private formService: FormService,
     private fb: FormBuilder,
     private parserFormatter: NgbDateParserFormatter,
