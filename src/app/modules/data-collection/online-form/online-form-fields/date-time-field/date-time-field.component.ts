@@ -1,8 +1,8 @@
-import { Component, Input, OnInit, OnDestroy } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { NgbDateParserFormatter } from "@ng-bootstrap/ng-bootstrap";
-import { Field } from "../../model/field.model";
 import { FormGroup } from "@angular/forms";
 import { Subscription } from "rxjs";
+import { Field } from "src/app/models/data-collection/field.model";
 
 @Component({
   selector: "app-date-time-field",
@@ -24,7 +24,9 @@ export class DateTimeFieldComponent implements OnInit {
   ngOnInit() {
     if (this.field._id) {
       if (!this.fg.get(this.field._id).value) {
-        this.fg.patchValue({ [this.field._id]: {"year":1970,"month":1,"day":1} });
+        this.fg.patchValue({
+          [this.field._id]: { year: 1970, month: 1, day: 1 }
+        });
       }
 
       this.value = this.fg.get(this.field._id).value;
@@ -54,5 +56,4 @@ export class DateTimeFieldComponent implements OnInit {
       ? this.field.options.placeholder
       : "12/12/2020";
   }
-
 }

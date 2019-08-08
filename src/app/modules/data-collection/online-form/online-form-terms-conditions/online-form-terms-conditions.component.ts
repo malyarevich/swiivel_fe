@@ -1,17 +1,17 @@
-import { Component, Input, OnInit, ViewEncapsulation, Output, EventEmitter } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { cloneDeep } from "lodash";
-import { Form } from "../../model/form.model";
-import { E_SIGNATURE_TYPES, SIGNATURE_TYPES } from "../../../../enums";
-import { SystemSignatureService } from "../services/signatures/system-signature.service";
-import { SignatureCreateResponse } from "../../../../models/shared/signatures/signature-create-response.model";
+import { E_SIGNATURE_TYPES, SIGNATURE_TYPES } from "src/app/enums";
+import { Form } from "src/app/models/data-collection/form.model";
+import { SignatureCreateResponse } from "src/app/models/shared/signatures/signature-create-response.model";
 import {
   menuItems,
   mainMenuNames,
   IMainMenuNames,
   IMenuItems
-} from "../../../../models/data-collection/form-constructor/online-form/menu-items";
-import {TermsConditionsSignature} from "../../../../models/data-collection/form-constructor/form-builder/terms-conditions.model";
-import { OnlineFormNavigationService } from '../services/online-form-navigation.service';
+} from "src/app/models/data-collection/form-constructor/online-form/menu-items";
+import { TermsConditionsSignature } from "src/app/models/data-collection/form-constructor/form-builder/terms-conditions.model";
+import { OnlineFormNavigationService } from "../services/online-form-navigation.service";
+import { SystemSignatureService } from "../services/signatures/system-signature.service";
 
 @Component({
   selector: "app-online-form-terms-conditions",
@@ -41,23 +41,35 @@ export class OnlineFormTermsConditionsComponent implements OnInit {
   ngOnInit() {
     this.signature = cloneDeep(this.form.termsConditions.signature);
     this.initSections();
-    this.onlineFormNavigationService.onActiveSectionItem.subscribe((newActiveSectionId) => {
-      //TODO: go to behaviorSubjects 
-      this.activeSectionId = newActiveSectionId;
-    });
+    this.onlineFormNavigationService.onActiveSectionItem.subscribe(
+      newActiveSectionId => {
+        //TODO: go to behaviorSubjects
+        this.activeSectionId = newActiveSectionId;
+      }
+    );
     // TODO: count percent
     this.setPercent(100);
   }
 
   initSections() {
-    if (this.form.termsConditions && this.form.termsConditions.termsConditionsItems.length > 0) {
-      this.sections = Object.values(this.form.termsConditions.termsConditionsItems).map((item) => {
-        return {_id: item.id, name: item.title }
+    if (
+      this.form.termsConditions &&
+      this.form.termsConditions.termsConditionsItems.length > 0
+    ) {
+      this.sections = Object.values(
+        this.form.termsConditions.termsConditionsItems
+      ).map(item => {
+        return { _id: item["id"], name: item["title"] };
       });
     } else {
-      this.sections = [{_id: "termsConditions", name: "Terms & Conditions section"}];
+      this.sections = [
+        { _id: "termsConditions", name: "Terms & Conditions section" }
+      ];
     }
-    this.onlineFormNavigationService.setSectionItemOfMenuItems(mainMenuNames.termsConditions, this.sections);
+    this.onlineFormNavigationService.setSectionItemOfMenuItems(
+      mainMenuNames.termsConditions,
+      this.sections
+    );
   }
 
   getTime() {
@@ -68,7 +80,10 @@ export class OnlineFormTermsConditionsComponent implements OnInit {
 
   setPercent(percent: number) {
     this.percent = percent;
-    this.onlineFormNavigationService.setSectionPercent(mainMenuNames.termsConditions, percent);
+    this.onlineFormNavigationService.setSectionPercent(
+      mainMenuNames.termsConditions,
+      percent
+    );
   }
 
   onSystemSign() {

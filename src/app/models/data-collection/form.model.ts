@@ -7,6 +7,7 @@ import { FormsPDFModel } from "./form-constructor/form-builder/formsPDF.model";
 import { TermsConditions } from "./form-constructor/form-builder/terms-conditions.model";
 import { ISubMenus } from "./form-constructor/form-publish-settings/publish-settings.model";
 import { IActiveSections } from './form-constructor/form-builder/active-section.model';
+import { DocumentsFormsModel } from './form-constructor/form-builder/documents-forms.model';
 
 export interface Form {
   _id: string;
@@ -21,6 +22,11 @@ export interface Form {
   formDates?: object;
   sidebar?: Field[];
   step?: number;
+  publish_settings?: {
+    state: ISubMenus;
+    online_config: object;
+    pdf_config: object;
+  };
   language?: string, //Need FIXME: (type for languages)
   periodCheckboxGroup?: object,
   tuitionContract?: TuitionContract;
@@ -30,11 +36,15 @@ export interface Form {
   chosen_way_to_create_new_form?: number;
   eligible: string;
   example_form_id?: string;
+  documentsForms?: DocumentsFormsModel;
   documents?: DocumentsModel[];
   forms?: FormsPDFModel[];
   attachments?: object;
   activeSections?: IActiveSections;
-  fieldsData: Map<string, any>;
+  fieldsData?: Map<string, any>;
+  formPeriods?: object;
+  //FIXME: when back-end will complete
+  isOpened?: boolean;
 }
 
 export interface FormSql {
@@ -61,6 +71,7 @@ export interface FormSql {
   updated_at: string;
 }
 
+//TODO: remove it unused interface after refactoring
 interface FormSqlPermissions {
   id: number;
   user: { id: number; full_name: number };

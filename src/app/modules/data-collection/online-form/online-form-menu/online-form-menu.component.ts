@@ -1,20 +1,18 @@
 import {
   Component,
-  Input,
   OnInit,
   OnDestroy,
-  ChangeDetectionStrategy,
-  NgZone
+  ChangeDetectionStrategy
 } from "@angular/core";
+import { Subscription, BehaviorSubject } from "rxjs";
 import {
   menuItems,
   mainMenuNames,
   IMainMenuNames,
   IMenuItems
-} from "../../../../models/data-collection/form-constructor/online-form/menu-items";
+} from "src/app/models/data-collection/form-constructor/online-form/menu-items";
 import { IActiveSections } from "src/app/models/data-collection/form-constructor/form-builder/active-section.model";
 import { OnlineFormNavigationService } from "../services/online-form-navigation.service";
-import { Subscription, BehaviorSubject } from "rxjs";
 
 @Component({
   selector: "app-online-form-menu",

@@ -1,14 +1,13 @@
 import { Field } from "./field.model";
-import { Permissions } from "../../../services/permission/permissions.model";
 import { ConsentInfo } from "../../../models/data-collection/form-constructor/form-builder/consent.model";
 import { DocumentsModel } from "../form-constructor/form-builder/documents-forms/model/documents.model";
 import { FormsPDFModel } from "../form-constructor/form-builder/documents-forms/model/formsPDF.model";
 import { ISubMenus } from "../model/publish-settings.model";
 import { PaymentSettings } from "../../../models/data-collection/form-constructor/form-builder/payment-settings.model";
-import {IActiveSections} from "../../../models/data-collection/form-constructor/form-builder/active-section.model";
-import {TuitionContract} from "../../../models/data-collection/form-constructor/form-builder/tuition-contract.model";
-import {TermsConditions} from "../../../models/data-collection/form-constructor/form-builder/terms-conditions.model";
-import {DocumentsFormsModel} from "../../../models/data-collection/form-constructor/form-builder/documents-forms.model";
+import { IActiveSections } from "../../../models/data-collection/form-constructor/form-builder/active-section.model";
+import { TuitionContract } from "../../../models/data-collection/form-constructor/form-builder/tuition-contract.model";
+import { TermsConditions } from "../../../models/data-collection/form-constructor/form-builder/terms-conditions.model";
+import { DocumentsFormsModel } from "../../../models/data-collection/form-constructor/form-builder/documents-forms.model";
 
 export interface Form {
   _id: string;

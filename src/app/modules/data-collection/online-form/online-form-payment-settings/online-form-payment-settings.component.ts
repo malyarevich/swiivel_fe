@@ -1,23 +1,15 @@
-import {
-  Component,
-  Input,
-  OnInit,
-  ViewEncapsulation,
-  Output,
-  EventEmitter
-} from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { cloneDeep } from "lodash";
-import { Form } from "../../model/form.model";
-import { E_SIGNATURE_TYPES, SIGNATURE_TYPES } from "../../../../enums";
-// import {PaymentSettingsSignature} from "../../../data-collection/v-form-constructor/v-form-builder/v-terms-conditions/model/payment-settings.model";
+import { Form } from "src/app/models/data-collection/form.model";
+import { E_SIGNATURE_TYPES, SIGNATURE_TYPES } from "src/app/enums";
 import { SystemSignatureService } from "../services/signatures/system-signature.service";
-import { SignatureCreateResponse } from "../../../../models/shared/signatures/signature-create-response.model";
+import { SignatureCreateResponse } from "src/app/models/shared/signatures/signature-create-response.model";
 import {
   menuItems,
   mainMenuNames,
   IMainMenuNames,
   IMenuItems
-} from "../../../../models/data-collection/form-constructor/online-form/menu-items";
+} from "src/app/models/data-collection/form-constructor/online-form/menu-items";
 import { OnlineFormNavigationService } from "../services/online-form-navigation.service";
 
 @Component({
@@ -35,7 +27,6 @@ export class OnlineFormPaymentSettingsComponent implements OnInit {
   SIGNATURE_TYPES = SIGNATURE_TYPES;
   E_SIGNATURE_TYPES = E_SIGNATURE_TYPES;
 
-  // signature: PaymentSettingsSignature;
   signature: any;
 
   sections: object[];
@@ -51,7 +42,7 @@ export class OnlineFormPaymentSettingsComponent implements OnInit {
     this.initSections();
     this.onlineFormNavigationService.onActiveSectionItem.subscribe(
       newActiveSectionId => {
-        //TODO: go to behaviorSubjects 
+        //TODO: go to behaviorSubjects
         this.activeSectionId = newActiveSectionId;
       }
     );
@@ -60,16 +51,24 @@ export class OnlineFormPaymentSettingsComponent implements OnInit {
   }
 
   initSections() {
-    if (this.form.paymentSettings && this.form.paymentSettings.paymentSettingsItems.length > 0) {
+    if (
+      this.form.paymentSettings &&
+      this.form.paymentSettings.paymentSettingsItems.length > 0
+    ) {
       this.sections = Object.values(
         this.form.paymentSettings.paymentSettingsItems
       ).map(item => {
-        return { _id: item.id, name: item.title };
+        return { _id: item["id"], name: item["title"] };
       });
     } else {
-      this.sections = [{ _id: "paymentSettings", name: "Payment Settings section" }];
+      this.sections = [
+        { _id: "paymentSettings", name: "Payment Settings section" }
+      ];
     }
-    this.onlineFormNavigationService.setSectionItemOfMenuItems(mainMenuNames.paymentSettings, this.sections);
+    this.onlineFormNavigationService.setSectionItemOfMenuItems(
+      mainMenuNames.paymentSettings,
+      this.sections
+    );
   }
 
   getTime() {
@@ -80,7 +79,10 @@ export class OnlineFormPaymentSettingsComponent implements OnInit {
 
   setPercent(percent: number) {
     this.percent = percent;
-    this.onlineFormNavigationService.setSectionPercent(mainMenuNames.paymentSettings, percent);
+    this.onlineFormNavigationService.setSectionPercent(
+      mainMenuNames.paymentSettings,
+      percent
+    );
   }
 
   onSystemSign() {

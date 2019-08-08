@@ -4,7 +4,7 @@ import { FormBuilderComponent } from './form-constructor/form-builder/form-build
 import { RouterModule, Routes } from '@angular/router';
 import { FormService } from './services/form.service';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { FieldContainerComponent } from './form-constructor/form-builder/form-fields/fields-workspace/field-conteiner/field-container.component';
+import { FieldContainerComponent } from './form-constructor/form-builder/form-fields/fields-workspace/field-container/field-container.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormTableComponent } from './form-table/form-table.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -22,7 +22,7 @@ import { FilterPipe } from './form-constructor/form-builder/form-fields/side-bar
 import { SideBarFieldComponent } from './form-constructor/form-builder/form-fields/side-bar/side-bar-field/side-bar-field.component';
 import { FormGeneralMenuComponent } from './form-constructor/form-general-information/form-general-menu/form-general-menu.component';
 import { ClarityModule } from '@clr/angular';
-import { FormFieldSettingsComponent } from './form-constructor/form-builder/form-fields/fields-workspace/field-conteiner/form-field-settings/form-field-settings.component';
+import { FormFieldSettingsComponent } from './form-constructor/form-builder/form-fields/fields-workspace/field-container/form-field-settings/form-field-settings.component';
 import { SideBarGroupComponent } from './form-constructor/form-builder/form-fields/side-bar/side-bar-group/side-bar-group.component';
 import { GeneralDirectivesModule } from '../../utils/directives/general-directives.module';
 import { TuitionContractComponent } from './form-constructor/form-builder/tuition-contract/tuition-contract.component';
@@ -51,6 +51,7 @@ import { FormInfoGeneralComponent } from './form-info/form-info-general/form-inf
 import { FormInfoTableNavComponent } from './form-info/form-info-table-nav/form-info-table-nav.component';
 import { FormInfoNavComponent } from './form-info/form-info-nav/form-info-nav.component';
 import { FormInfoSubmissionsComponent } from './form-info/form-info-submissions/form-info-submissions.component';
+import { NgxDnDModule } from '@swimlane/ngx-dnd';
 import { FormInfoSubmissionInsideComponent } from './form-info/form-info-submissions/form-info-submission-inside/form-info-submission-inside.component';
 import { InsideFormDocumentsComponent } from './form-info/form-info-submissions/form-info-submission-inside/inside-form-documents/inside-form-documents.component';
 import { InsideFormViewComponent } from './form-info/form-info-submissions/form-info-submission-inside/inside-form-documents/inside-form-view/inside-form-view.component';
@@ -63,12 +64,11 @@ import { FieldsSideBarComponent } from './form-constructor/form-builder/form-fie
 import { FieldsSideBarNodeComponent } from './form-constructor/form-builder/form-fields/side-bar/fields-side-bar/fields-side-bar-node/fields-side-bar-node.component';
 import { FieldsSideBarDetailedComponent } from './form-constructor/form-builder/form-fields/side-bar/fields-side-bar/fields-side-bar-detailed/fields-side-bar-detailed.component';
 import { FieldsWorkspaceComponent } from './form-constructor/form-builder/form-fields/fields-workspace/fields-workspace.component';
-import { SectionConteinerComponent } from './form-constructor/form-builder/form-fields/fields-workspace/section-conteiner/section-conteiner.component';
+import { SectionContainerComponent } from './form-constructor/form-builder/form-fields/fields-workspace/section-container/section-container.component';
 import { FinanceService } from '../../services/finance/finance.service';
-import { DividerConteinerComponent } from './form-constructor/form-builder/form-fields/fields-workspace/divider-conteiner/divider-conteiner.component';
-import { NgxDnDModule } from '@swimlane/ngx-dnd';
+import { DividerContainerComponent } from './form-constructor/form-builder/form-fields/fields-workspace/divider-container/divider-container.component';
 import { FieldTypePipe } from './form-constructor/form-builder/form-fields/side-bar/field-type.pipe';
-import { SectionSettingsComponent } from './form-constructor/form-builder/form-fields/fields-workspace/section-conteiner/section-settings/section-settings.component';
+import { SectionSettingsComponent } from './form-constructor/form-builder/form-fields/fields-workspace/section-container/section-settings/section-settings.component';
 import { SharedRedComponentsModule } from '../../shared/components/sharedRedComponents.module';
 import { SaveFormService } from './services/save-form.service';
 import { FormPeriodsService } from './services/form-periods.service';
@@ -92,21 +92,21 @@ import { ConstructorDraftService } from './services/constructor-draft.service';
 import { GroupSettingMultiplierComponent } from './form-constructor/form-builder/form-fields/fields-workspace/group-container/group-settings/group-setting-multiplier/group-setting-multiplier.component';
 import { FieldsConditionalLogicComponent } from './form-constructor/form-builder/form-fields/fields-workspace/fields-shared-components/fields-conditional-logic/fields-conditional-logic.component';
 import { GroupSettingOptionsComponent } from './form-constructor/form-builder/form-fields/fields-workspace/group-container/group-settings/group-setting-options/group-setting-options.component';
-import { SectionSettingOptionsComponent } from './form-constructor/form-builder/form-fields/fields-workspace/section-conteiner/section-settings/section-setting-options/section-setting-options.component';
+import { SectionSettingOptionsComponent } from './form-constructor/form-builder/form-fields/fields-workspace/section-container/section-settings/section-setting-options/section-setting-options.component';
 import { FieldsSettingVisibilityComponent } from './form-constructor/form-builder/form-fields/fields-workspace/fields-shared-components/fields-setting-visibility/fields-setting-visibility.component';
 import { FieldsSettingSupportTextComponent } from './form-constructor/form-builder/form-fields/fields-workspace/fields-shared-components/fields-setting-support-text/fields-setting-support-text.component';
 import { FieldsSettingPresetComponent } from './form-constructor/form-builder/form-fields/fields-workspace/fields-shared-components/fields-setting-preset/fields-setting-preset.component';
 import { FieldsSettingOptionCheckboxesComponent } from './form-constructor/form-builder/form-fields/fields-workspace/fields-shared-components/fields-setting-option-checkboxes/fields-setting-option-checkboxes.component';
-import { ShortTextSettingsComponent } from './form-constructor/form-builder/form-fields/fields-workspace/field-conteiner/form-field-settings/short-text-settings/short-text-settings.component';
-import { FieldTypeSettingsContainerComponent } from './form-constructor/form-builder/form-fields/fields-workspace/field-conteiner/form-field-settings/field-type-settings-container/field-type-settings-container.component';
-import { DropDownListSettingsComponent } from './form-constructor/form-builder/form-fields/fields-workspace/field-conteiner/form-field-settings/drop-down-list-settings/drop-down-list-settings.component';
-import { EmailSettingsComponent } from './form-constructor/form-builder/form-fields/fields-workspace/field-conteiner/form-field-settings/email-settings/email-settings.component';
-import { FieldValidationComponent } from './form-constructor/form-builder/form-fields/fields-workspace/field-conteiner/form-field-settings/field-validation/field-validation.component';
-import { LongTextSettingsComponent } from './form-constructor/form-builder/form-fields/fields-workspace/field-conteiner/form-field-settings/long-text-settings/long-text-settings.component';
-import { PhoneNumberSettingsComponent } from './form-constructor/form-builder/form-fields/fields-workspace/field-conteiner/form-field-settings/phone-number-settings/phone-number-settings.component';
-import { GeneralSettingsComponent } from './form-constructor/form-builder/form-fields/fields-workspace/field-conteiner/form-field-settings/general-settings/general-settings.component';
-import { NumberSettingsComponent } from './form-constructor/form-builder/form-fields/fields-workspace/field-conteiner/form-field-settings/number-settings/number-settings.component';
-import { DateSettingsComponent } from './form-constructor/form-builder/form-fields/fields-workspace/field-conteiner/form-field-settings/date-settings/date-settings.component';
+import { ShortTextSettingsComponent } from './form-constructor/form-builder/form-fields/fields-workspace/field-container/form-field-settings/short-text-settings/short-text-settings.component';
+import { FieldTypeSettingsContainerComponent } from './form-constructor/form-builder/form-fields/fields-workspace/field-container/form-field-settings/field-type-settings-container/field-type-settings-container.component';
+import { DropDownListSettingsComponent } from './form-constructor/form-builder/form-fields/fields-workspace/field-container/form-field-settings/drop-down-list-settings/drop-down-list-settings.component';
+import { EmailSettingsComponent } from './form-constructor/form-builder/form-fields/fields-workspace/field-container/form-field-settings/email-settings/email-settings.component';
+import { FieldValidationComponent } from './form-constructor/form-builder/form-fields/fields-workspace/field-container/form-field-settings/field-validation/field-validation.component';
+import { LongTextSettingsComponent } from './form-constructor/form-builder/form-fields/fields-workspace/field-container/form-field-settings/long-text-settings/long-text-settings.component';
+import { PhoneNumberSettingsComponent } from './form-constructor/form-builder/form-fields/fields-workspace/field-container/form-field-settings/phone-number-settings/phone-number-settings.component';
+import { GeneralSettingsComponent } from './form-constructor/form-builder/form-fields/fields-workspace/field-container/form-field-settings/general-settings/general-settings.component';
+import { NumberSettingsComponent } from './form-constructor/form-builder/form-fields/fields-workspace/field-container/form-field-settings/number-settings/number-settings.component';
+import { DateSettingsComponent } from './form-constructor/form-builder/form-fields/fields-workspace/field-container/form-field-settings/date-settings/date-settings.component';
 import {FormStatisticModule} from './form-statistic/form-statistic.module';
 import {FormAccessModalModule} from './form-access-modal/form-access-modal.module';
 import {FormsStatsService} from './services/forms-stats.service';
@@ -231,8 +231,8 @@ const routes: Routes = [
     FieldsSideBarNodeComponent,
     FieldsSideBarDetailedComponent,
     FieldsWorkspaceComponent,
-    SectionConteinerComponent,
-    DividerConteinerComponent,
+    SectionContainerComponent,
+    DividerContainerComponent,
     FieldTypePipe,
     SectionSettingsComponent,
     GroupSettingMultiplierComponent,

@@ -7,9 +7,9 @@ import {
   NgbDatepickerI18nHebrew,
   NgbDateStruct
 } from "@ng-bootstrap/ng-bootstrap";
-import { Field } from "../../model/field.model";
 import { FormGroup } from "@angular/forms";
 import { Subscription } from "rxjs";
+import { Field } from "src/app/models/data-collection/field.model";
 
 //TODO: Refactoring of the class
 @Component({

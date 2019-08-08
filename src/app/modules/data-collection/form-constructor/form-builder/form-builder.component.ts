@@ -5,18 +5,15 @@ import {
   ViewChild,
   ElementRef,
   OnDestroy,
-  Host,
-
+  Host
 } from "@angular/core";
-
 import { FormService } from "../../services/form.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { v4 as uuid } from "uuid";
 import { cloneDeep, isEmpty } from "lodash";
 import { Location } from "@angular/common";
 import { FieldsService } from "../../services/fields.service";
-import { Field } from "../../model/field.model";
-import { Form } from "../../model/form.model";
+import { Form } from "src/app/models/data-collection/form.model";
 import {
   FormPayment,
   TYPE_NAME
@@ -25,52 +22,42 @@ import {
   ConsentInfo,
   consentInfoDefault,
   consentItemDefault
-} from "../../../../models/data-collection/form-constructor/form-builder/consent.model";
-import {
-  documentItemDefault,
-  DocumentSideBar,
-  DocumentsModel
-} from "./documents-forms/model/documents.model";
+} from "src/app/models/data-collection/form-constructor/form-builder/consent.model";
 import { GeneralInfoIsValidService } from "../../services/general-info-is-valid.service";
-import {
-  formPDFItemDefault,
-  FormsPDFModel
-} from "./documents-forms/model/formsPDF.model";
 import { FilesService } from "../../services/files.service";
-
-import { E_SIGNATURE_TYPES, SIGNATURE_TYPES } from "../../../../enums";
+import { E_SIGNATURE_TYPES, SIGNATURE_TYPES } from "src/app/enums";
 import {
   PaymentSettings,
   paymentSettingsDefault,
   paymentSettingsItemDefault
-} from "../../../../models/data-collection/form-constructor/form-builder/payment-settings.model";
-import { FinanceService } from "../../../../services/finance/finance.service";
-import {
-  FeeTemplate,
-  FeeTemplatesData
-} from "../../../../models/fee-templates.model";
+} from "src/app/models/data-collection/form-constructor/form-builder/payment-settings.model";
+import { FinanceService } from "src/app/services/finance/finance.service";
 import { DataCollectionComponent } from "../../data-collection.component";
 import { Observable, Subscription } from "rxjs";
 import { SaveFormService } from "../../services/save-form.service";
 import { FormBuilderIsSavedService } from "../../services/form-builder-is-saved.service";
 import { ConstructorIsSavingService } from "../../services/constructor-is-saving.service";
-import {Fee} from "../../../../models/fee.model";
+import { Fee } from "src/app/models/fee.model";
 import {
   activeSectionsDefault,
   IActiveSections
-} from "../../../../models/data-collection/form-constructor/form-builder/active-section.model";
+} from "src/app/models/data-collection/form-constructor/form-builder/active-section.model";
 import {
   TuitionContract,
   tuitionContractDefault
-} from "../../../../models/data-collection/form-constructor/form-builder/tuition-contract.model";
+} from "src/app/models/data-collection/form-constructor/form-builder/tuition-contract.model";
 import {
   TermsConditions,
-  termsConditionsDefault, termsConditionsItemDefault
-} from "../../../../models/data-collection/form-constructor/form-builder/terms-conditions.model";
+  termsConditionsDefault,
+  termsConditionsItemDefault
+} from "src/app/models/data-collection/form-constructor/form-builder/terms-conditions.model";
 import {
   documentsFormsDefault,
   DocumentsFormsModel
-} from "../../../../models/data-collection/form-constructor/form-builder/documents-forms.model";
+} from "src/app/models/data-collection/form-constructor/form-builder/documents-forms.model";
+import { Field } from 'src/app/models/data-collection/field.model';
+import { DocumentSideBar, DocumentsModel, documentItemDefault } from 'src/app/models/data-collection/form-constructor/form-builder/documents.model';
+import { FormsPDFModel, formPDFItemDefault } from 'src/app/models/data-collection/form-constructor/form-builder/formsPDF.model';
 
 @Component({
   selector: "app-form-table",
@@ -219,7 +206,8 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
   isDataSaving: boolean = false;
   spinnerText: string = "Data is loading...";
 
-  @ViewChild("addCustomFieldInput", { static: false }) addCustomFieldInput: ElementRef;
+  @ViewChild("addCustomFieldInput", { static: false })
+  addCustomFieldInput: ElementRef;
   constructor(
     @Host() vDataCollection: DataCollectionComponent,
     private formService: FormService,
@@ -239,11 +227,11 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
   ngOnInit() {
     window.scrollTo(0, 0);
     // if (VFormBuilderComponent.countSaveFormService < 1) {
-      this.saveFormSubscription = this.saveFormService.onSaveForm.subscribe(
-        () => {
-          this.saveForm();
-        }
-      );
+    this.saveFormSubscription = this.saveFormService.onSaveForm.subscribe(
+      () => {
+        this.saveForm();
+      }
+    );
     // }
     FormBuilderComponent.countSaveFormService++;
 
@@ -262,7 +250,7 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
   }
 
   addDocumentItem() {
-    let documentItem = cloneDeep(documentItemDefault);
+    let documentItem: DocumentsModel = cloneDeep(documentItemDefault);
     documentItem.id = uuid();
     this.documents.push(documentItem);
   }
@@ -330,7 +318,7 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
       this.paymentSettings = form.paymentSettings || paymentSettingsDefault;
       this.eligible = form.eligible;
       this.documentsForms = form.documentsForms || documentsFormsDefault;
-      this.documents = form.documents || [];
+      this.documents = form.documents;
       this.formsPDF = form.forms || [];
       this.attachments = form.attachments || {};
       this.activeSections = form.activeSections || activeSectionsDefault;
@@ -642,11 +630,9 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
   // Tuition Contract
 
   loadMasterFees() {
-    this.financeService
-      .getMasterFees()
-      .subscribe((res) => {
-        this.masterFees = res.fees;
-      });
+    this.financeService.getMasterFees().subscribe(res => {
+      this.masterFees = res.fees;
+    });
   }
 
   initFeeToTuitionContract() {

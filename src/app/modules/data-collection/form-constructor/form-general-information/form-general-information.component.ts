@@ -1,39 +1,33 @@
 import {
-  AfterViewInit,
   Component,
   ElementRef,
-  HostListener,
-  Input,
-  OnChanges,
   OnDestroy,
   OnInit,
   ViewChild,
-  Output,
-  EventEmitter,
   Host
 } from "@angular/core";
-import {ActivatedRoute, Router} from "@angular/router";
-import {Form, FormSql} from "../../model/form.model";
-import {isEmpty} from "lodash";
-import {FormService} from "../../services/form.service";
+import { ActivatedRoute, Router } from "@angular/router";
 import {
   FormBuilder,
   FormControl,
   FormGroup,
   Validators
 } from "@angular/forms";
-import {NgbDateParserFormatter} from "@ng-bootstrap/ng-bootstrap";
-import {requireCheckboxesToBeCheckedValidator} from "../../../../utils/validators/require-checkboxes-to-be-checked.validator";
-import {GeneralInfoIsValidService} from "../../services/general-info-is-valid.service";
-import {menuItemModel} from "./menu";
-import {SaveFormService} from "../../services/save-form.service";
-import {GeneralInfoIsSavedService} from "../../services/general-info-is-saved.service";
-import {ConstructorIsSavingService} from "../../services/constructor-is-saving.service";
-import {DataCollectionComponent} from "../../data-collection.component";
-import {Subscription} from "rxjs";
-import {FormPeriodsService} from "../../services/form-periods.service";
-import {FinPeriod} from "../../../../models/fin-period.model";
-import { GeneralInfoIsFormExistService } from '../../services/general-info-is-form-exist.service';
+import { Subscription } from "rxjs";
+import { NgbDateParserFormatter } from "@ng-bootstrap/ng-bootstrap";
+import { isEmpty } from "lodash";
+import { requireCheckboxesToBeCheckedValidator } from "src/app/utils/validators/require-checkboxes-to-be-checked.validator";
+import { Form, FormSql } from "src/app/models/data-collection/form.model";
+import { FinPeriod } from "src/app/models/fin-period.model";
+import { menuItemModel } from "./menu";
+import { GeneralInfoIsValidService } from "../../services/general-info-is-valid.service";
+import { SaveFormService } from "../../services/save-form.service";
+import { GeneralInfoIsSavedService } from "../../services/general-info-is-saved.service";
+import { ConstructorIsSavingService } from "../../services/constructor-is-saving.service";
+import { DataCollectionComponent } from "../../data-collection.component";
+import { FormService } from "../../services/form.service";
+import { FormPeriodsService } from "../../services/form-periods.service";
+import { GeneralInfoIsFormExistService } from "../../services/general-info-is-form-exist.service";
 
 @Component({
   selector: "app-form-general-information",
@@ -45,7 +39,8 @@ export class FormGeneralInformationComponent implements OnInit, OnDestroy {
   @ViewChild("basicInfo", { static: false }) basicInfo: ElementRef;
   @ViewChild("period", { static: false }) period: ElementRef;
   @ViewChild("formDates", { static: false }) formDates: ElementRef;
-  @ViewChild("eligibleAccounts", { static: false }) eligibleAccounts: ElementRef;
+  @ViewChild("eligibleAccounts", { static: false })
+  eligibleAccounts: ElementRef;
 
   static countSaveFormService: number = 0;
   saveFormSubscription: Subscription;
@@ -109,7 +104,7 @@ export class FormGeneralInformationComponent implements OnInit, OnDestroy {
     private constructorIsSavingService: ConstructorIsSavingService,
     private generalInfoIsSavedService: GeneralInfoIsSavedService,
     private saveFormService: SaveFormService,
-    private formPeriodsService: FormPeriodsService,
+    private formPeriodsService: FormPeriodsService
   ) {
     this.vDataCollection = vDataCollection;
   }
@@ -146,7 +141,7 @@ export class FormGeneralInformationComponent implements OnInit, OnDestroy {
       !this.isDataSaving
     );
   }
-  
+
   // onFormChanges() {
   //   this.generalInfoForm.valueChanges.subscribe(val => {
   //     // console.log("rerender");
@@ -158,9 +153,9 @@ export class FormGeneralInformationComponent implements OnInit, OnDestroy {
     Object.keys(formGroup.controls).forEach(field => {
       const control = formGroup.get(field);
       if (control instanceof FormControl) {
-        control.markAsTouched({onlySelf: true});
+        control.markAsTouched({ onlySelf: true });
       } else if (control instanceof FormGroup) {
-        control.markAsTouched({onlySelf: true});
+        control.markAsTouched({ onlySelf: true });
         this.validateAllFormFields(control);
       }
     });
@@ -177,8 +172,8 @@ export class FormGeneralInformationComponent implements OnInit, OnDestroy {
     if (this.isValidBasicFormInfoFields()) {
       this.nextStep(this.menu.period);
     } else {
-      this.generalInfoForm.get("name").markAsTouched({onlySelf: true});
-      this.generalInfoForm.get("language").markAsTouched({onlySelf: true});
+      this.generalInfoForm.get("name").markAsTouched({ onlySelf: true });
+      this.generalInfoForm.get("language").markAsTouched({ onlySelf: true });
     }
   }
 
@@ -193,7 +188,7 @@ export class FormGeneralInformationComponent implements OnInit, OnDestroy {
     } else {
       this.generalInfoForm
         .get("periodCheckboxGroup")
-        .markAsTouched({onlySelf: true});
+        .markAsTouched({ onlySelf: true });
     }
   }
 
@@ -212,8 +207,8 @@ export class FormGeneralInformationComponent implements OnInit, OnDestroy {
     ) {
       this.nextStep(this.menu.eligible);
     } else {
-      this.generalInfoForm.get("startDate").markAsTouched({onlySelf: true});
-      this.generalInfoForm.get("endDate").markAsTouched({onlySelf: true});
+      this.generalInfoForm.get("startDate").markAsTouched({ onlySelf: true });
+      this.generalInfoForm.get("endDate").markAsTouched({ onlySelf: true });
     }
   }
 
@@ -313,9 +308,9 @@ export class FormGeneralInformationComponent implements OnInit, OnDestroy {
     this.vDataCollection.deleteDraftForm(this.draftId);
   }
 
-  composeForm() {
+  composeForm(): Form {
     if (this.formId !== "" && this.generalInfoForm.valid) {
-      return {
+      return <Form>{
         _id: this.formId,
         name: this.generalInfoForm.value.name,
         fields: this.fields,
@@ -337,7 +332,7 @@ export class FormGeneralInformationComponent implements OnInit, OnDestroy {
         chosen_way_to_create_new_form: this.formTypeCreation
       };
     } else {
-      return;
+      return <Form>null;
     }
   }
 
@@ -361,7 +356,7 @@ export class FormGeneralInformationComponent implements OnInit, OnDestroy {
     }
   }
 
-  formPreparing() {    
+  formPreparing() {
     this.generalInfoForm = new FormGroup({
       name: new FormControl("", {
         validators: Validators.compose([
@@ -396,7 +391,9 @@ export class FormGeneralInformationComponent implements OnInit, OnDestroy {
               name: form.name,
               language: form.language ? form.language : "english",
               endDate: this.parserFormatter.parse(form.formDates["endDate"]),
-              startDate: this.parserFormatter.parse(form.formDates["startDate"]),
+              startDate: this.parserFormatter.parse(
+                form.formDates["startDate"]
+              ),
               periodCheckboxGroup: form.formPeriods ? form.formPeriods : {},
               eligible: form.eligible
             });
@@ -406,22 +403,28 @@ export class FormGeneralInformationComponent implements OnInit, OnDestroy {
         error => console.log(error, "error")
       );
     }
-    
+
     this.onFormStatusChanges();
     // this.onFormChanges();
   }
 
   initPeriods() {
-    this.formPeriodsService.getAll().subscribe((res) => {
+    this.formPeriodsService.getAll().subscribe(res => {
       this.periods = res;
       if (this.periods.length) {
         let group = {};
-        this.periods.map(period => group[period.id] = new FormControl(false));
-        let periodCheckboxGroup = new FormGroup(group, requireCheckboxesToBeCheckedValidator());
-        this.generalInfoForm.setControl('periodCheckboxGroup', periodCheckboxGroup);
+        this.periods.map(period => (group[period.id] = new FormControl(false)));
+        let periodCheckboxGroup = new FormGroup(
+          group,
+          requireCheckboxesToBeCheckedValidator()
+        );
+        this.generalInfoForm.setControl(
+          "periodCheckboxGroup",
+          periodCheckboxGroup
+        );
       }
       // this.isFormPrepared = true;
-      
+
       this.formInit();
     });
   }
@@ -435,7 +438,7 @@ export class FormGeneralInformationComponent implements OnInit, OnDestroy {
   }
 
   onScrollTo(target) {
-    this[target].nativeElement.scrollIntoView({behavior: "smooth"});
+    this[target].nativeElement.scrollIntoView({ behavior: "smooth" });
   }
 
   setActiveSection(value) {
@@ -488,7 +491,7 @@ export class FormGeneralInformationComponent implements OnInit, OnDestroy {
     this.saveDraftForm();
     if (
       this.router.routerState.snapshot.url.indexOf("general-information") >
-      -1 ||
+        -1 ||
       this.router.routerState.snapshot.url.indexOf("form-builder") > -1 ||
       this.router.routerState.snapshot.url.indexOf("publish-settings") > -1
     ) {

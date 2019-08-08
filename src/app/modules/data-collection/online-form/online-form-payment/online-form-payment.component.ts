@@ -1,23 +1,15 @@
-import {
-  Component,
-  Input,
-  OnInit,
-  ViewEncapsulation,
-  Output,
-  EventEmitter
-} from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { cloneDeep } from "lodash";
-import { Form } from "../../model/form.model";
-import { E_SIGNATURE_TYPES, SIGNATURE_TYPES } from "../../../../enums";
-// import {PaymentSettingsSignature} from "../../../data-collection/v-form-constructor/v-form-builder/v-terms-conditions/model/payment-settings.model";
-import { SystemSignatureService } from "../services/signatures/system-signature.service";
-import { SignatureCreateResponse } from "../../../../models/shared/signatures/signature-create-response.model";
+import { E_SIGNATURE_TYPES, SIGNATURE_TYPES } from "src/app/enums";
+import { Form } from "src/app/models/data-collection/form.model";
+import { SignatureCreateResponse } from "src/app/models/shared/signatures/signature-create-response.model";
 import {
   menuItems,
   mainMenuNames,
   IMainMenuNames,
   IMenuItems
-} from "../../../../models/data-collection/form-constructor/online-form/menu-items";
+} from "src/app/models/data-collection/form-constructor/online-form/menu-items";
+import { SystemSignatureService } from "../services/signatures/system-signature.service";
 import { OnlineFormNavigationService } from "../services/online-form-navigation.service";
 
 @Component({
@@ -51,7 +43,7 @@ export class OnlineFormPaymentComponent implements OnInit {
     this.initSections();
     this.onlineFormNavigationService.onActiveSectionItem.subscribe(
       newActiveSectionId => {
-        //TODO: go to behaviorSubjects 
+        //TODO: go to behaviorSubjects
         this.activeSectionId = newActiveSectionId;
       }
     );
@@ -65,12 +57,18 @@ export class OnlineFormPaymentComponent implements OnInit {
     } else {
       this.sections = [{ _id: "payment", name: "Payment section" }];
     }
-    this.onlineFormNavigationService.setSectionItemOfMenuItems(mainMenuNames.payment, this.sections);
+    this.onlineFormNavigationService.setSectionItemOfMenuItems(
+      mainMenuNames.payment,
+      this.sections
+    );
   }
 
   setPercent(percent: number) {
     this.percent = percent;
-    this.onlineFormNavigationService.setSectionPercent(mainMenuNames.payment, percent);
+    this.onlineFormNavigationService.setSectionPercent(
+      mainMenuNames.payment,
+      percent
+    );
   }
 
   getTime() {

@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Form } from './model/form.model';
-import { isEmpty } from 'rxjs/operators';
+import { Form } from 'src/app/models/data-collection/form.model';
 
 @Component({
   selector: 'app-data-collection',

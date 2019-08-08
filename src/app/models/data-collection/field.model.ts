@@ -17,8 +17,10 @@ export interface Field {
   isActive?: boolean,
   prefix?: string,
   settings?: FieldSettings;
-  conditional?: FieldSettingConditional,
-  typeSettings?: ITypeFieldSettings,
+  conditional?: FieldSettingConditional;
+  typeSettings?: ITypeFieldSettings;
+  //TODO: fix type of width
+  width?: any;
 }
 
 

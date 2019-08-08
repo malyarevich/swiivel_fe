@@ -1,24 +1,18 @@
-import {
-  Component,
-  Input,
-  OnInit,
-  AfterViewInit
-} from "@angular/core";
-import { generalSectionsNames } from "../model/general-info-section-name.model";
+import { Component, Input, OnInit, AfterViewInit } from "@angular/core";
+import { FormGroup } from "@angular/forms";
+import { Subscription } from "rxjs";
 import { Field } from "src/app/models/data-collection/field.model";
 import {
   menuItems,
   mainMenuNames,
   IMainMenuNames,
   IMenuItems
-} from "../../../../models/data-collection/form-constructor/online-form/menu-items";
-import { Subscription } from "rxjs";
+} from "src/app/models/data-collection/form-constructor/online-form/menu-items";
 import {
   OnlineFormService,
   hasRequiredField
 } from "./../services/online-form.service";
-import { FormGroup, AbstractControl } from "@angular/forms";
-import { OnlineFormNavigationService } from "../services/online-form-navigation.service";
+import { OnlineFormNavigationService } from "./../services/online-form-navigation.service";
 
 @Component({
   selector: "app-online-form-general-info",
@@ -38,8 +32,6 @@ export class OnlineFormGeneralInfoComponent implements OnInit, AfterViewInit {
   fg: FormGroup;
   onValueChangeSubscription: Subscription;
 
-  readonly generalSectionsNames = generalSectionsNames;
-
   constructor(
     private onlineFormService: OnlineFormService,
     private onlineFormNavigationService: OnlineFormNavigationService
@@ -49,7 +41,7 @@ export class OnlineFormGeneralInfoComponent implements OnInit, AfterViewInit {
     this.initSections();
     this.onlineFormNavigationService.onActiveSectionItem.subscribe(
       newActiveSectionId => {
-        //TODO: go to behaviorSubjects 
+        //TODO: go to behaviorSubjects
         this.activeSectionId = newActiveSectionId;
       }
     );
@@ -82,7 +74,10 @@ export class OnlineFormGeneralInfoComponent implements OnInit, AfterViewInit {
         { _id: "generalInfo", name: "General Information", type: 114 }
       ];
     }
-    this.onlineFormNavigationService.setSectionItemOfMenuItems(mainMenuNames.generalInfo, this.sections);
+    this.onlineFormNavigationService.setSectionItemOfMenuItems(
+      mainMenuNames.generalInfo,
+      this.sections
+    );
   }
 
   calcPercent(list: object) {
@@ -102,7 +97,10 @@ export class OnlineFormGeneralInfoComponent implements OnInit, AfterViewInit {
 
   setPercent(percent: number) {
     this.percent = percent;
-    this.onlineFormNavigationService.setSectionPercent(mainMenuNames.generalInfo, percent);
+    this.onlineFormNavigationService.setSectionPercent(
+      mainMenuNames.generalInfo,
+      percent
+    );
   }
 
   getTime() {

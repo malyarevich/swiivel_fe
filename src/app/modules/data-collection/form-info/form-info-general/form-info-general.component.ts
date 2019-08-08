@@ -1,23 +1,20 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormSql} from "../../model/form.model";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { FormSql } from "src/app/models/data-collection/form.model";
 
 @Component({
-  selector: 'app-form-info-general',
-  templateUrl: './form-info-general.component.html',
-  styleUrls: ['./form-info-general.component.css']
+  selector: "app-form-info-general",
+  templateUrl: "./form-info-general.component.html",
+  styleUrls: ["./form-info-general.component.css"]
 })
 export class FormInfoGeneralComponent implements OnInit {
   @Input() form: FormSql;
   @Output() updatedFormInfoEmitter = new EventEmitter();
 
-  constructor() {
-  }
+  constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
-  resetFormSelected()
-  {
+  resetFormSelected() {
     this.updatedFormInfoEmitter.emit();
   }
 
@@ -25,5 +22,4 @@ export class FormInfoGeneralComponent implements OnInit {
   convertDate(date) {
     return date.replace(/\s/g, "T");
   }
-
 }

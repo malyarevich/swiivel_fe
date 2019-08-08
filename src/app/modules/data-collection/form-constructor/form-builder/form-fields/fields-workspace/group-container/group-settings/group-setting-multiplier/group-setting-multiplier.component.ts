@@ -1,12 +1,15 @@
-import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
-import {Field, FieldSettingMultiplier} from "../../../../../../../../../models/data-collection/field.model";
-import {cloneDeep, isEmpty} from 'lodash';
-import {Form} from "../../../../../../../model/form.model";
-import {FieldsService} from "../../../../../../../services/fields.service";
+import { Component, Input, OnInit } from "@angular/core";
+import { cloneDeep, isEmpty } from "lodash";
+import { Form } from "src/app/models/data-collection/form.model";
+import {
+  Field,
+  FieldSettingMultiplier
+} from "src/app/models/data-collection/field.model";
+import { FieldsService } from 'src/app/modules/data-collection/services/fields.service';
 
 const defaultMultiplier: FieldSettingMultiplier = {
   enabled: false,
-  mapped_type: 'multiple',
+  mapped_type: "multiple",
   mapping_field: "amount_of_students_in_family",
   prefill: true,
   limit: false,
@@ -14,17 +17,16 @@ const defaultMultiplier: FieldSettingMultiplier = {
 };
 
 @Component({
-  selector: 'app-group-setting-multiplier',
-  templateUrl: './group-setting-multiplier.component.html',
-  styleUrls: ['./group-setting-multiplier.component.css']
+  selector: "app-group-setting-multiplier",
+  templateUrl: "./group-setting-multiplier.component.html",
+  styleUrls: ["./group-setting-multiplier.component.css"]
 })
-
 export class GroupSettingMultiplierComponent implements OnInit {
   @Input() inputGroup: Field;
   @Input() form: Form;
-  manualMultiplierOptions: {name: string, value: string}[] = [];
+  manualMultiplierOptions: { name: string; value: string }[] = [];
 
-  constructor(private vFieldsService: FieldsService) { }
+  constructor(private vFieldsService: FieldsService) {}
 
   ngOnInit() {
     this.initMultiplier();
@@ -32,14 +34,14 @@ export class GroupSettingMultiplierComponent implements OnInit {
   }
 
   initMultiplier() {
-    if(isEmpty(this.inputGroup.settings.multiplier)) {
-      this.inputGroup.settings['multiplier'] = cloneDeep(defaultMultiplier);
+    if (isEmpty(this.inputGroup.settings.multiplier)) {
+      this.inputGroup.settings["multiplier"] = cloneDeep(defaultMultiplier);
     }
   }
 
   getFieldsRecursive(fields) {
-    this.manualMultiplierOptions = this.vFieldsService.getFieldsRecursive(fields);
+    this.manualMultiplierOptions = this.vFieldsService.getFieldsRecursive(
+      fields
+    );
   }
-
-
 }

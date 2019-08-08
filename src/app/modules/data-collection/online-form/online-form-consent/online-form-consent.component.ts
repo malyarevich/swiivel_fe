@@ -1,16 +1,16 @@
 import { Component, Input, OnInit, Output, EventEmitter } from "@angular/core";
 import { cloneDeep } from "lodash";
-import { ConsentItemInfo } from "../../../../models/data-collection/form-constructor/form-builder/consent.model";
-import { E_SIGNATURE_TYPES, SIGNATURE_TYPES } from "../../../../enums";
-import { Form } from "../../model/form.model";
-import { SystemSignatureService } from "../services/signatures/system-signature.service";
-import { SignatureCreateResponse } from "../../../../models/shared/signatures/signature-create-response.model";
+import { E_SIGNATURE_TYPES, SIGNATURE_TYPES } from "src/app/enums";
+import { Form } from "src/app/models/data-collection/form.model";
+import { SignatureCreateResponse } from "src/app/models/shared/signatures/signature-create-response.model";
+import { ConsentItemInfo } from "src/app/models/data-collection/form-constructor/form-builder/consent.model";
 import {
   menuItems,
   mainMenuNames,
   IMainMenuNames,
   IMenuItems
-} from "../../../../models/data-collection/form-constructor/online-form/menu-items";
+} from "src/app/models/data-collection/form-constructor/online-form/menu-items";
+import { SystemSignatureService } from "../services/signatures/system-signature.service";
 import { OnlineFormNavigationService } from "../services/online-form-navigation.service";
 
 @Component({
@@ -43,7 +43,7 @@ export class OnlineFormConsentComponent implements OnInit {
     this.initSections();
     this.onlineFormNavigationService.onActiveSectionItem.subscribe(
       newActiveSectionId => {
-        //TODO: go to behaviorSubjects 
+        //TODO: go to behaviorSubjects
         this.activeSectionId = newActiveSectionId;
       }
     );
@@ -56,13 +56,16 @@ export class OnlineFormConsentComponent implements OnInit {
     if (this.form.consentInfo && this.form.consentInfo.consents.length > 0) {
       this.sections = Object.values(this.form.consentInfo.consents).map(
         item => {
-          return { _id: item.id, name: item.title };
+          return { _id: item["id"], name: item["title"] };
         }
       );
     } else {
       this.sections = [{ _id: "consentInfo", name: "Consent section" }];
     }
-    this.onlineFormNavigationService.setSectionItemOfMenuItems(mainMenuNames.consentInfo, this.sections);
+    this.onlineFormNavigationService.setSectionItemOfMenuItems(
+      mainMenuNames.consentInfo,
+      this.sections
+    );
   }
 
   initConsents() {
@@ -73,7 +76,10 @@ export class OnlineFormConsentComponent implements OnInit {
 
   setPercent(percent: number) {
     this.percent = percent;
-    this.onlineFormNavigationService.setSectionPercent(mainMenuNames.consentInfo, percent);
+    this.onlineFormNavigationService.setSectionPercent(
+      mainMenuNames.consentInfo,
+      percent
+    );
   }
 
   getTime() {

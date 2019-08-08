@@ -1,11 +1,11 @@
-import { Component, Input, OnInit, Output, EventEmitter } from "@angular/core";
-import { Form } from "../../model/form.model";
+import { Component, Input, OnInit } from "@angular/core";
 import {
   menuItems,
   mainMenuNames,
   IMainMenuNames,
   IMenuItems
-} from "../../../../models/data-collection/form-constructor/online-form/menu-items";
+} from "src/app/models/data-collection/form-constructor/online-form/menu-items";
+import { Form } from "src/app/models/data-collection/form.model";
 import { OnlineFormNavigationService } from "../services/online-form-navigation.service";
 
 @Component({
@@ -45,7 +45,7 @@ export class OnlineFormDocumentsFormsComponent implements OnInit {
     this.initSections();
     this.onlineFormNavigationService.onActiveSectionItem.subscribe(
       newActiveSectionId => {
-        //TODO: go to behaviorSubjects 
+        //TODO: go to behaviorSubjects
         this.activeSectionId = newActiveSectionId;
       }
     );
@@ -61,12 +61,18 @@ export class OnlineFormDocumentsFormsComponent implements OnInit {
     } else {
       this.sections = [{ _id: "documentsForms", name: "Documents & Forms" }];
     }
-    this.onlineFormNavigationService.setSectionItemOfMenuItems(mainMenuNames.documentsForms, this.sections);
+    this.onlineFormNavigationService.setSectionItemOfMenuItems(
+      mainMenuNames.documentsForms,
+      this.sections
+    );
   }
 
   setPercent(percent: number) {
     this.percent = percent;
-    this.onlineFormNavigationService.setSectionPercent(mainMenuNames.documentsForms, percent);
+    this.onlineFormNavigationService.setSectionPercent(
+      mainMenuNames.documentsForms,
+      percent
+    );
   }
 
   getTime() {

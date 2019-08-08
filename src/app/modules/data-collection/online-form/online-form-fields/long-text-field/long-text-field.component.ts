@@ -1,7 +1,6 @@
-import { Component, Input, OnInit, OnDestroy } from "@angular/core";
-import { Field } from "../../model/field.model";
+import { Component, Input, OnInit } from "@angular/core";
 import { FormGroup } from "@angular/forms";
-import { Subscription } from "rxjs";
+import { Field } from "src/app/models/data-collection/field.model";
 
 @Component({
   selector: "app-long-text-field",
@@ -16,5 +15,4 @@ export class LongTextFieldComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {}
-
 }

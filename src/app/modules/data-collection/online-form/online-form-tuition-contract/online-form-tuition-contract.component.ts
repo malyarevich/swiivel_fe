@@ -1,21 +1,20 @@
-import { Component, Input, OnInit, Output, EventEmitter } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { cloneDeep } from "lodash";
 import {
   E_SIGNATURE_TYPES,
   SIGNATURE_TYPES,
   TUITION_CONTRACT_SPLIT_TYPES
-} from "../../../../enums";
-import { SystemSignatureService } from "../services/signatures/system-signature.service";
-import { SignatureCreateResponse } from "../../../../models/shared/signatures/signature-create-response.model";
-import { Form } from "../../model/form.model";
+} from "src/app/enums";
+import { Form } from "src/app/models/data-collection/form.model";
 import {
   menuItems,
   mainMenuNames,
   IMainMenuNames,
   IMenuItems
-} from "../../../../models/data-collection/form-constructor/online-form/menu-items";
-import {TuitionContractSignature} from "../../../../models/data-collection/form-constructor/form-builder/tuition-contract.model";
-import { OnlineFormNavigationService } from '../services/online-form-navigation.service';
+} from "src/app/models/data-collection/form-constructor/online-form/menu-items";
+import { TuitionContractSignature } from "src/app/models/data-collection/form-constructor/form-builder/tuition-contract.model";
+import { SystemSignatureService } from "../services/signatures/system-signature.service";
+import { OnlineFormNavigationService } from "../services/online-form-navigation.service";
 
 @Component({
   selector: "app-online-form-tuition-contract",
@@ -46,31 +45,47 @@ export class OnlineFormTuitionContractComponent implements OnInit {
   ngOnInit() {
     this.signature = cloneDeep(this.form.tuitionContract.signature);
     this.initSections();
-    this.onlineFormNavigationService.onActiveSectionItem.subscribe((newActiveSectionId) => {
-      //TODO: go to behaviorSubjects 
-      this.activeSectionId = newActiveSectionId;
-    });
+    this.onlineFormNavigationService.onActiveSectionItem.subscribe(
+      newActiveSectionId => {
+        //TODO: go to behaviorSubjects
+        this.activeSectionId = newActiveSectionId;
+      }
+    );
     // TODO: count percent
     this.setPercent(100);
   }
 
   initSections() {
     if (this.form.tuitionContract) {
-      this.sections = [{_id: this.form.tuitionContract.sectionName, name: this.form.tuitionContract.sectionName}];
+      this.sections = [
+        {
+          _id: this.form.tuitionContract.sectionName,
+          name: this.form.tuitionContract.sectionName
+        }
+      ];
     } else {
-      this.sections = [{_id: "tuitionContract", name: "Tuition Contract section"}];
+      this.sections = [
+        { _id: "tuitionContract", name: "Tuition Contract section" }
+      ];
     }
-    this.onlineFormNavigationService.setSectionItemOfMenuItems(mainMenuNames.tuitionContract, this.sections);
+    this.onlineFormNavigationService.setSectionItemOfMenuItems(
+      mainMenuNames.tuitionContract,
+      this.sections
+    );
   }
 
   getTime() {
-    return this.menuItems.find(o => o.name === this.mainMenuNames.tuitionContract)
-      .time;
+    return this.menuItems.find(
+      o => o.name === this.mainMenuNames.tuitionContract
+    ).time;
   }
 
   setPercent(percent: number) {
     this.percent = percent;
-    this.onlineFormNavigationService.setSectionPercent(mainMenuNames.documentsForms, percent);
+    this.onlineFormNavigationService.setSectionPercent(
+      mainMenuNames.documentsForms,
+      percent
+    );
   }
 
   onSystemSign() {}

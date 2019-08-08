@@ -1,19 +1,24 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {Form} from '../../../model/form.model';
-import {DocumentsModel} from '../../../form-constructor/form-builder/documents-forms/model/documents.model';
-import {FilesService} from '../../services/files.service';
-import {Subscription} from 'rxjs';
-import {HttpEventType} from '@angular/common/http';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnDestroy,
+  OnInit
+} from "@angular/core";
+import { HttpEventType } from "@angular/common/http";
+import { Subscription } from "rxjs";
+import { Form } from "src/app/models/data-collection/form.model";
+import { DocumentsModel } from "src/app/models/data-collection/form-constructor/form-builder/documents.model";
+import { FilesService } from "../../services/files.service";
 
 @Component({
-  selector: 'app-online-documents',
-  templateUrl: './online-documents.component.html',
-  styleUrls: ['./online-documents.component.scss'],
+  selector: "app-online-documents",
+  templateUrl: "./online-documents.component.html",
+  styleUrls: ["./online-documents.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-
 export class OnlineDocumentsComponent implements OnInit, OnDestroy {
-
   @Input() form: Form;
 
   constructor(
@@ -26,8 +31,10 @@ export class OnlineDocumentsComponent implements OnInit, OnDestroy {
   ngOnInit() {}
 
   openForPreview(document: DocumentsModel) {
-    if (!document.data) { return; }
-    window.open(this.form.attachments[document.data].link, '_self');
+    if (!document.data) {
+      return;
+    }
+    window.open(this.form.attachments[document.data].link, "_self");
   }
 
   downloadFile(document: DocumentsModel) {
@@ -41,37 +48,38 @@ export class OnlineDocumentsComponent implements OnInit, OnDestroy {
 
   getAcceptedFormats(document: DocumentsModel, type?: string) {
     const formats = [];
-    const data = document.dataTypeAllowed;
+    //TODO: fix it <any>
+    const data = <any>document.dataTypeAllowed;
     if (type) {
       switch (type) {
-        case 'documents':
+        case "documents":
           if (data.isDocuments) {
             data.documents.forEach(item => {
               if (item.isAllow) {
                 formats.push(item.name);
               }
             });
-            return formats.join(', ');
+            return formats.join(", ");
           }
           break;
-        case 'images':
+        case "images":
           if (data.isImages) {
             data.images.forEach(item => {
               if (item.isAllow) {
                 formats.push(item.name);
               }
             });
-            return formats.join(', ');
+            return formats.join(", ");
           }
           break;
-        case 'videoAudio':
+        case "videoAudio":
           if (data.isVideoAudio) {
             data.videoAudio.forEach(item => {
               if (item.isAllow) {
                 formats.push(item.name);
               }
             });
-            return formats.join(', ');
+            return formats.join(", ");
           }
       }
     } else {
@@ -108,11 +116,12 @@ export class OnlineDocumentsComponent implements OnInit, OnDestroy {
       document.selectedFile = file;
       document.fileUploading = true;
       const formData = new FormData();
-      formData.append('id', document.id);
-      formData.append('type', 'document');
-      formData.append('original_name', file.name);
-      formData.append('file', file, file.name);
-      this.uploadSubscription = this.fileService.uploadFileToServer(this.form._id, formData)
+      formData.append("id", document.id);
+      formData.append("type", "document");
+      formData.append("original_name", file.name);
+      formData.append("file", file, file.name);
+      this.uploadSubscription = this.fileService
+        .uploadFileToServer(this.form._id, formData)
         .subscribe(event => {
           if (event.type === HttpEventType.UploadProgress) {
             document.uploaded = event.loaded;
@@ -126,7 +135,7 @@ export class OnlineDocumentsComponent implements OnInit, OnDestroy {
         });
     } else {
       console.log(file);
-      alert('File type does not supported');
+      alert("File type does not supported");
     }
   }
 
@@ -142,12 +151,14 @@ export class OnlineDocumentsComponent implements OnInit, OnDestroy {
   }
 
   getCountPages(document: DocumentsModel) {
-    if (document.selectedFile.type === 'application/pdf') {
+    if (document.selectedFile.type === "application/pdf") {
       const reader = new FileReader();
       reader.readAsBinaryString(document.selectedFile);
       reader.onloadend = () => {
-        if (typeof reader.result === 'string') {
-          document.countPages = reader.result.match(new RegExp(/\/Type[\s]*\/Page[^s]/g)).length;
+        if (typeof reader.result === "string") {
+          document.countPages = reader.result.match(
+            new RegExp(/\/Type[\s]*\/Page[^s]/g)
+          ).length;
           this.detectorRef.markForCheck();
         }
       };
@@ -158,13 +169,13 @@ export class OnlineDocumentsComponent implements OnInit, OnDestroy {
     if (document.data) {
       return this.form.attachments[document.data].name;
     }
-    return 'File is not exist...';
+    return "File is not exist...";
   }
 
   getDocumentPages(document: DocumentsModel): string {
     if (document.data) {
       const pages = this.form.attachments[document.data].numberOfPages;
-      return String( '(' + pages + ' pages)');
+      return String("(" + pages + " pages)");
     }
   }
 
@@ -173,5 +184,4 @@ export class OnlineDocumentsComponent implements OnInit, OnDestroy {
       this.uploadSubscription.unsubscribe();
     }
   }
-
 }
