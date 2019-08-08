@@ -6,16 +6,12 @@ import { FormService } from './services/form.service';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { FieldContainerComponent } from './form-constructor/form-builder/form-fields/fields-workspace/field-conteiner/field-container.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FormTableComponent } from './form-table/form-table.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { FormNavComponent } from './form-table/form-nav/form-nav.component';
 import { FieldsService } from './services/fields.service';
 import { DataCollectionComponent } from './data-collection.component';
 import { FormNavigationBarComponent } from './form-constructor/form-navigation-bar/form-navigation-bar.component';
 import { FormPublishSettingsComponent } from './form-constructor/form-publish-settings/form-publish-settings.component';
 import { routes as constructorRoutes } from './form-constructor/constructor-routing.module';
-import {FormTableHeaderModule, ProgressBarModule} from '../../shared/components';
-import { FormTableTbodyComponent } from './form-table/form-table-tbody/form-table-tbody.component';
 import { FormGeneralInformationComponent } from './form-constructor/form-general-information/form-general-information.component';
 import { GroupContainerComponent } from './form-constructor/form-builder/form-fields/fields-workspace/group-container/group-container.component';
 import { FilterPipe } from './form-constructor/form-builder/form-fields/side-bar/filter.pipe';
@@ -44,20 +40,6 @@ import { PublishMenuComponent } from './form-constructor/form-publish-settings/p
 import { VPublishMenuComponentAdditionalOptions } from './form-constructor/form-publish-settings/publish-menu/additional-options/additional-options.component';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { FormDrawingComponent } from './form-constructor/form-builder/documents-forms/forms-container/form-drawing/form-drawing.component';
-import { FormInfoComponent } from './form-info/form-info.component';
-import { FormInfoHeaderComponent } from './form-info/form-info-header/form-info-header.component';
-import { FormInfoStatsComponent } from './form-info/form-info-stats/form-info-stats.component';
-import { FormInfoGeneralComponent } from './form-info/form-info-general/form-info-general.component';
-import { FormInfoTableNavComponent } from './form-info/form-info-table-nav/form-info-table-nav.component';
-import { FormInfoNavComponent } from './form-info/form-info-nav/form-info-nav.component';
-import { FormInfoSubmissionsComponent } from './form-info/form-info-submissions/form-info-submissions.component';
-import { FormInfoSubmissionInsideComponent } from './form-info/form-info-submissions/form-info-submission-inside/form-info-submission-inside.component';
-import { InsideFormDocumentsComponent } from './form-info/form-info-submissions/form-info-submission-inside/inside-form-documents/inside-form-documents.component';
-import { InsideFormViewComponent } from './form-info/form-info-submissions/form-info-submission-inside/inside-form-documents/inside-form-view/inside-form-view.component';
-import { InsideDocumentsViewComponent } from './form-info/form-info-submissions/form-info-submission-inside/inside-form-documents/inside-documents-view/inside-documents-view.component';
-import { InsideAccountCommunicationComponent } from './form-info/form-info-submissions/form-info-submission-inside/inside-account-communication/inside-account-communication.component';
-import { InsideMissingFieldsComponent } from './form-info/form-info-submissions/form-info-submission-inside/inside-missing-fields/inside-missing-fields.component';
-import { InsideFormHistoryComponent } from './form-info/form-info-submissions/form-info-submission-inside/inside-form-history/inside-form-history.component';
 import { TermsConditionsComponent } from './form-constructor/form-builder/terms-conditions/terms-conditions.component';
 import { FieldsSideBarComponent } from './form-constructor/form-builder/form-fields/side-bar/fields-side-bar/fields-side-bar.component';
 import { FieldsSideBarNodeComponent } from './form-constructor/form-builder/form-fields/side-bar/fields-side-bar/fields-side-bar-node/fields-side-bar-node.component';
@@ -107,8 +89,6 @@ import { PhoneNumberSettingsComponent } from './form-constructor/form-builder/fo
 import { GeneralSettingsComponent } from './form-constructor/form-builder/form-fields/fields-workspace/field-conteiner/form-field-settings/general-settings/general-settings.component';
 import { NumberSettingsComponent } from './form-constructor/form-builder/form-fields/fields-workspace/field-conteiner/form-field-settings/number-settings/number-settings.component';
 import { DateSettingsComponent } from './form-constructor/form-builder/form-fields/fields-workspace/field-conteiner/form-field-settings/date-settings/date-settings.component';
-import {FormStatisticModule} from './form-statistic/form-statistic.module';
-import {FormAccessModalModule} from './form-access-modal/form-access-modal.module';
 import {FormsStatsService} from './services/forms-stats.service';
 
 const routes: Routes = [
@@ -146,7 +126,12 @@ const routes: Routes = [
       },
       {
         path: 'form-info/:id',
-        component: FormInfoComponent
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('./form-info/form-info.module').then(m => m.FormInfoModule)
+          }
+        ]
       },
     ]
   }
@@ -156,8 +141,6 @@ const routes: Routes = [
   declarations: [
     FormBuilderComponent,
     FieldContainerComponent,
-    // FormTableComponent,
-    // FormNavComponent,
     DataCollectionComponent,
     FormNavigationBarComponent,
     FormGeneralInformationComponent,
@@ -199,22 +182,6 @@ const routes: Routes = [
     PublishMenuComponent,
     VPublishMenuComponentAdditionalOptions,
     FormDrawingComponent,
-    FormInfoComponent,
-    FormInfoHeaderComponent,
-    // FormTableTbodyComponent,
-    FormInfoStatsComponent,
-    FormInfoGeneralComponent,
-    FormInfoTableNavComponent,
-    FormInfoNavComponent,
-    FormInfoSubmissionsComponent,
-    FormInfoSubmissionInsideComponent,
-    InsideFormDocumentsComponent,
-    InsideFormViewComponent,
-    InsideDocumentsViewComponent,
-    InsideAccountCommunicationComponent,
-    InsideMissingFieldsComponent,
-    InsideFormHistoryComponent,
-    // PaymentSettings
     PaymentSettingsComponent,
     VPaymentSettingsTableComponent,
     VPaymentSettingsDormitoryFeeComponent,
@@ -266,10 +233,6 @@ const routes: Routes = [
     GeneralDirectivesModule,
     PdfViewerModule,
     SharedRedComponentsModule,
-    FormTableHeaderModule,
-    ProgressBarModule,
-    // FormStatisticModule,
-    FormAccessModalModule,
   ],
   providers: [
     FormService,
