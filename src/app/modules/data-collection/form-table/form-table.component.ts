@@ -1,8 +1,8 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {FormService} from "../services/form.service";
-import {FormSearchParams} from "../../../models/form-search-params";
-import {TEMPLATE_STATUS} from "../../../enums/template-status";
-import {FormSql} from "../../../models/data-collection/form.model";
+import {FormService} from '../services/form.service';
+import {FormSearchParams} from '../../../models/form-search-params';
+import {TEMPLATE_STATUS} from '../../../enums/template-status';
+import {FormSql} from '../../../models/data-collection/form.model';
 
 @Component({
   selector: 'app-form-table',
@@ -86,7 +86,7 @@ export class FormTableComponent implements OnInit {
     },
   ];
 
-  constructor(private vFormService: FormService) {
+  constructor(private formService: FormService) {
   }
 
   ngOnInit() {
@@ -95,8 +95,8 @@ export class FormTableComponent implements OnInit {
 
 
   getAllForm(): void {
-    this.vFormService.getFormsList(this.params).subscribe(forms => {
-      this.forms = forms.data
+    this.formService.getFormsList(this.params).subscribe(forms => {
+      this.forms = forms.data;
     });
   }
 
@@ -104,17 +104,17 @@ export class FormTableComponent implements OnInit {
     const {field, order, value} = data;
     this.params.sort = {field, order};
     this.params.search[field] = value;
-    this.getAllForm()
+    this.getAllForm();
   }
 
-  //Global search by all fields
+  // Global search by all fields
   setSearchValue(value) {
     this.params.value = value;
     this.getAllForm();
   }
 
   removeForm(id: string): void {
-    this.vFormService.deleteForm(id).subscribe(res => res);
+    this.formService.deleteForm(id).subscribe(res => res);
     this.forms = this.forms.filter((form => form.mongo_id != id));
   }
 
@@ -124,7 +124,7 @@ export class FormTableComponent implements OnInit {
   }
 
   addSelectedIds(id) {
-    let index = this.formsSelectedIds.indexOf(id);
+    const index = this.formsSelectedIds.indexOf(id);
     if (index === -1) {
       this.formsSelectedIds.push(id);
     } else {
@@ -137,27 +137,27 @@ export class FormTableComponent implements OnInit {
   }
 
   doBulkAction(type) {
-    if (!this.formsSelectedIds.length) return;
-    if (type === 'delete') this.bulkDelete();
-    if (type === 'archive') this.bulkArchive();
+    if (!this.formsSelectedIds.length) { return; }
+    if (type === 'delete') { this.bulkDelete(); }
+    if (type === 'archive') { this.bulkArchive(); }
   }
 
   bulkDelete() {
-    this.vFormService.bulkDeleteForms(this.formsSelectedIds).subscribe(res => {
+    this.formService.bulkDeleteForms(this.formsSelectedIds).subscribe(res => {
       this.getAllForm();
       this.formsSelectedIds = [];
     });
   }
 
   bulkArchive() {
-    this.vFormService.changeStatus(this.formsSelectedIds, TEMPLATE_STATUS.STATUS_ARCHIVED).subscribe(res => {
+    this.formService.changeStatus(this.formsSelectedIds, TEMPLATE_STATUS.STATUS_ARCHIVED).subscribe(res => {
       this.getAllForm();
       this.formsSelectedIds = [];
     });
   }
 
   changeStatus(id, status) {
-    this.vFormService.changeStatus(id, status).subscribe(res => {
+    this.formService.changeStatus(id, status).subscribe(res => {
       this.getAllForm();
     });
   }
@@ -174,5 +174,5 @@ export class FormTableComponent implements OnInit {
   setFormSelected(id: any) {
     this.formSelected = id;
   }
-  
+
 }

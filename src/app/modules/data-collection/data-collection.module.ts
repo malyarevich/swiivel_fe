@@ -109,6 +109,7 @@ import { NumberSettingsComponent } from './form-constructor/form-builder/form-fi
 import { DateSettingsComponent } from './form-constructor/form-builder/form-fields/fields-workspace/field-conteiner/form-field-settings/date-settings/date-settings.component';
 import {FormStatisticModule} from './form-statistic/form-statistic.module';
 import {FormAccessModalModule} from './form-access-modal/form-access-modal.module';
+import {FormsStatsService} from './services/forms-stats.service';
 
 const routes: Routes = [
   {
@@ -117,7 +118,12 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: FormTableComponent
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('./form-table/form-table.module').then(m => m.FormTableModule)
+          }
+        ]
       },
       {
         path: 'v-form-constructor',
@@ -150,8 +156,8 @@ const routes: Routes = [
   declarations: [
     FormBuilderComponent,
     FieldContainerComponent,
-    FormTableComponent,
-    FormNavComponent,
+    // FormTableComponent,
+    // FormNavComponent,
     DataCollectionComponent,
     FormNavigationBarComponent,
     FormGeneralInformationComponent,
@@ -195,7 +201,7 @@ const routes: Routes = [
     FormDrawingComponent,
     FormInfoComponent,
     FormInfoHeaderComponent,
-    FormTableTbodyComponent,
+    // FormTableTbodyComponent,
     FormInfoStatsComponent,
     FormInfoGeneralComponent,
     FormInfoTableNavComponent,
@@ -262,7 +268,7 @@ const routes: Routes = [
     SharedRedComponentsModule,
     FormTableHeaderModule,
     ProgressBarModule,
-    FormStatisticModule,
+    // FormStatisticModule,
     FormAccessModalModule,
   ],
   providers: [
@@ -277,6 +283,7 @@ const routes: Routes = [
     PublishSettingsRemoteService,
     PublishSettingsAutomationService,
     PublishSettingsPublishSettingsService,
+    FormsStatsService,
   ]
 })
 export class DataCollectionModule {}
