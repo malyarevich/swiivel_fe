@@ -5,7 +5,7 @@ import { Component, Input, OnInit } from "@angular/core";
   templateUrl: "./school-custom-default.component.html",
   styleUrls: ["./school-custom-default.component.scss"]
 })
-export class VPaymentSettingsTableSchoolCustomDefaultComponent implements OnInit {
+export class PaymentSettingsTableSchoolCustomDefaultComponent implements OnInit {
   @Input() optionValues: object = {};
   @Input() isSelected: boolean = false;
 

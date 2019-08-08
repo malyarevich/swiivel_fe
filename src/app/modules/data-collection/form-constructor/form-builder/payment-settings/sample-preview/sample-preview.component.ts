@@ -5,7 +5,7 @@ import { Component, Input, OnInit } from "@angular/core";
   templateUrl: "./sample-preview.component.html",
   styleUrls: ["./sample-preview.component.scss"]
 })
-export class VPaymentSettingsSamplePreviewComponent implements OnInit {
+export class PaymentSettingsSamplePreviewComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {}

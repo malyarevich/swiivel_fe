@@ -63,14 +63,14 @@ import {SectionSettingsComponent} from './form-constructor/form-builder/form-fie
 import {SaveFormService} from './services/save-form.service';
 import {FormPeriodsService} from './services/form-periods.service';
 import {PaymentSettingsComponent} from './form-constructor/form-builder/payment-settings/payment-settings.component';
-import {VPaymentSettingsTableComponent} from './form-constructor/form-builder/payment-settings/table/table.component';
-import {VPaymentSettingsDormitoryFeeComponent} from './form-constructor/form-builder/payment-settings/dormitory-fee/dormitory-fee.component';
-import {VPaymentSettingsLunchFeeComponent} from './form-constructor/form-builder/payment-settings/lunch-fee/lunch-fee.component';
-import {VPaymentSettingsRegistrationComponent} from './form-constructor/form-builder/payment-settings/registration/registration.component';
-import {VPaymentSettingsSamplePreviewComponent} from './form-constructor/form-builder/payment-settings/sample-preview/sample-preview.component';
-import {VPaymentSettingsScholarshipComponent} from './form-constructor/form-builder/payment-settings/scholarship/scholarship.component';
-import {VPaymentSettingsTuitionComponent} from './form-constructor/form-builder/payment-settings/tuition/tuition.component';
-import {VPaymentSettingsTableSchoolCustomDefaultComponent} from './form-constructor/form-builder/payment-settings/table/school-custom-default/school-custom-default.component';
+import {PaymentSettingsTableComponent} from './form-constructor/form-builder/payment-settings/table/table.component';
+import {PaymentSettingsDormitoryFeeComponent} from './form-constructor/form-builder/payment-settings/dormitory-fee/dormitory-fee.component';
+import {PaymentSettingsLunchFeeComponent} from './form-constructor/form-builder/payment-settings/lunch-fee/lunch-fee.component';
+import {PaymentSettingsRegistrationComponent} from './form-constructor/form-builder/payment-settings/registration/registration.component';
+import {PaymentSettingsSamplePreviewComponent} from './form-constructor/form-builder/payment-settings/sample-preview/sample-preview.component';
+import {PaymentSettingsScholarshipComponent} from './form-constructor/form-builder/payment-settings/scholarship/scholarship.component';
+import {PaymentSettingsTuitionComponent} from './form-constructor/form-builder/payment-settings/tuition/tuition.component';
+import {PaymentSettingsTableSchoolCustomDefaultComponent} from './form-constructor/form-builder/payment-settings/table/school-custom-default/school-custom-default.component';
 import {AutomationHeaderComponent} from './form-constructor/form-publish-settings/automation/automation-header/automation-header.component';
 import {AutomationLogicAreaComponent} from './form-constructor/form-publish-settings/automation/automation-logic-area/automation-logic-area.component';
 import {AutomationTemplateAreaComponent} from './form-constructor/form-publish-settings/automation/automation-template-area/automation-template-area.component';
@@ -139,15 +139,15 @@ import {DateSettingsComponent} from './form-constructor/form-builder/form-fields
     VPublishMenuComponentAdditionalOptions,
     FormDrawingComponent,
     PaymentSettingsComponent,
-    VPaymentSettingsTableComponent,
-    VPaymentSettingsDormitoryFeeComponent,
-    VPaymentSettingsLunchFeeComponent,
-    VPaymentSettingsRegistrationComponent,
-    VPaymentSettingsSamplePreviewComponent,
-    VPaymentSettingsScholarshipComponent,
-    VPaymentSettingsTuitionComponent,
+    PaymentSettingsTableComponent,
+    PaymentSettingsDormitoryFeeComponent,
+    PaymentSettingsLunchFeeComponent,
+    PaymentSettingsRegistrationComponent,
+    PaymentSettingsSamplePreviewComponent,
+    PaymentSettingsScholarshipComponent,
+    PaymentSettingsTuitionComponent,
     // PaymentSettingsTable
-    VPaymentSettingsTableSchoolCustomDefaultComponent,
+    PaymentSettingsTableSchoolCustomDefaultComponent,
 
     TermsConditionsComponent,
     FieldsSideBarComponent,
