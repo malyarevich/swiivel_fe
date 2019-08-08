@@ -1,5 +1,4 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
 import {Permissions} from '../../../../services/permission/permissions.model';
 import {User} from '../../../login/rest';
 import {PermissionService} from '../../../../services/permission/permission.service';
@@ -25,7 +24,6 @@ export class FormAccessComponent implements OnInit, OnDestroy {
     error: string;
 
     constructor(
-        private route: ActivatedRoute,
         private vFormService: FormService,
         private permissionService: PermissionService,
         private userService: UserService,

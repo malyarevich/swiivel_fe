@@ -9,8 +9,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormTableComponent } from './form-table/form-table.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormNavComponent } from './form-table/form-nav/form-nav.component';
-import { FormAccessComponent } from './form-access-modal/form-access/form-access.component';
-import { FormAccessModalComponent } from './form-access-modal/form-access-modal.component';
 import { FieldsService } from './services/fields.service';
 import { DataCollectionComponent } from './data-collection.component';
 import { FormNavigationBarComponent } from './form-constructor/form-navigation-bar/form-navigation-bar.component';
@@ -110,6 +108,7 @@ import { GeneralSettingsComponent } from './form-constructor/form-builder/form-f
 import { NumberSettingsComponent } from './form-constructor/form-builder/form-fields/fields-workspace/field-conteiner/form-field-settings/number-settings/number-settings.component';
 import { DateSettingsComponent } from './form-constructor/form-builder/form-fields/fields-workspace/field-conteiner/form-field-settings/date-settings/date-settings.component';
 import {FormStatisticModule} from './form-statistic/form-statistic.module';
+import {FormAccessModalModule} from './form-access-modal/form-access-modal.module';
 
 const routes: Routes = [
   {
@@ -140,7 +139,7 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'v-form-info/:id',
+        path: 'form-info/:id',
         component: FormInfoComponent
       },
     ]
@@ -153,8 +152,6 @@ const routes: Routes = [
     FieldContainerComponent,
     FormTableComponent,
     FormNavComponent,
-    FormAccessComponent,
-    FormAccessModalComponent,
     DataCollectionComponent,
     FormNavigationBarComponent,
     FormGeneralInformationComponent,
@@ -266,6 +263,7 @@ const routes: Routes = [
     FormTableHeaderModule,
     ProgressBarModule,
     FormStatisticModule,
+    FormAccessModalModule,
   ],
   providers: [
     FormService,

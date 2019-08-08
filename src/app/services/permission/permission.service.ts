@@ -7,9 +7,7 @@ import {Permissions, UserLoggedPermissions} from "./permissions.model";
 import {HttpClient} from "@angular/common/http";
 import {isArray} from "util";
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable()
 export class PermissionService {
 
     userLogged: UserLogged;
