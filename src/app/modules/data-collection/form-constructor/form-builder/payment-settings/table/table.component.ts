@@ -5,7 +5,7 @@ import { Component, Input, OnInit } from "@angular/core";
   templateUrl: "./table.component.html",
   styleUrls: ["./table.component.scss"]
 })
-export class VPaymentSettingsTableComponent implements OnInit {
+export class PaymentSettingsTableComponent implements OnInit {
   @Input() tableTitle: string = 'Bais Medrash Winter Dormitory Fee';
 
   constructor() {}

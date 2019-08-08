@@ -5,7 +5,7 @@ import { Component, Input, OnInit } from "@angular/core";
   templateUrl: "./lunch-fee.component.html",
   styleUrls: ["./lunch-fee.component.scss"]
 })
-export class VPaymentSettingsLunchFeeComponent implements OnInit {
+export class PaymentSettingsLunchFeeComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {}
