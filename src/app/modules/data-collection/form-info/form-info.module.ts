@@ -4,6 +4,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {FormsModule} from '@angular/forms';
 
 import {FormInfoRoutingModule} from './form-info-routing.module';
+import {FormAccessModalModule} from '../form-access-modal/form-access-modal.module';
+import {FormTableHeaderModule, ProgressBarModule} from '../../../shared/components';
 
 import {FormInfoComponent} from './form-info.component';
 import {FormInfoHeaderComponent} from './form-info-header/form-info-header.component';
@@ -19,9 +21,8 @@ import {InsideDocumentsViewComponent} from './form-info-submissions/form-info-su
 import {InsideAccountCommunicationComponent} from './form-info-submissions/form-info-submission-inside/inside-account-communication/inside-account-communication.component';
 import {InsideMissingFieldsComponent} from './form-info-submissions/form-info-submission-inside/inside-missing-fields/inside-missing-fields.component';
 import {InsideFormHistoryComponent} from './form-info-submissions/form-info-submission-inside/inside-form-history/inside-form-history.component';
-import {FormAccessModalModule} from '../form-access-modal/form-access-modal.module';
-import {FormTableHeaderModule, ProgressBarModule} from '../../../shared/components';
 
+import {FormsStatsService} from '../services/forms-stats.service';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,7 @@ import {FormTableHeaderModule, ProgressBarModule} from '../../../shared/componen
     ProgressBarModule,
   ],
   exports: [FormInfoComponent],
-  providers: []
+  providers: [FormsStatsService]
 })
 export class FormInfoModule {
 }
