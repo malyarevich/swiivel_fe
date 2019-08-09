@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import {AfterContentChecked, ChangeDetectorRef, Component, OnInit} from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { GeneralInfoIsValidService } from "../../services/general-info-is-valid.service";
 import { SaveFormService } from "../../services/save-form.service";
@@ -13,7 +13,7 @@ import { GeneralInfoIsFormExistService } from "../../services/general-info-is-fo
   templateUrl: "./form-navigation-bar.component.html",
   styleUrls: ["./form-navigation-bar.component.scss"]
 })
-export class FormNavigationBarComponent implements OnInit {
+export class FormNavigationBarComponent implements OnInit, AfterContentChecked {
   isGeneralSaved: boolean = undefined;
   isBuilderSaved: boolean = undefined;
   isPublishSaved: boolean = undefined;
@@ -30,7 +30,8 @@ export class FormNavigationBarComponent implements OnInit {
     private generalInfoIsSavedService: GeneralInfoIsSavedService,
     private formBuilderIsSavedService: FormBuilderIsSavedService,
     private publishSettingsIsSavedService: PublishSettingsIsSavedService,
-    private saveFormService: SaveFormService
+    private saveFormService: SaveFormService,
+    private cd: ChangeDetectorRef,
   ) {
     this.generalInfoIsValidService.onIsValid.subscribe(
       val => (this.isGeneralInfoValid = val)
@@ -101,5 +102,9 @@ export class FormNavigationBarComponent implements OnInit {
   saveForm() {
     // console.log("SaveAction");
     this.saveFormService.onSaveForm.emit();
+  }
+
+  ngAfterContentChecked() {
+    this.cd.detectChanges();
   }
 }
