@@ -1,4 +1,9 @@
 <ng-container *ngIf="forms !== undefined">
+  <app-form-access-modal
+    (resetFormSelectedEmitter)="resetFormSelected($event)"
+    [formSelected]="formSelected"
+  >
+  </app-form-access-modal>
   <tr
     *ngFor="let item of forms; let isRowEven = even"
     class="tbody__tr"
@@ -50,11 +55,6 @@
             <span class="invite__text"> Invite Users</span>
           </a>
         </ng-container>
-        <app-form-access-modal
-          (resetFormSelectedEmitter)="resetFormSelected($event)"
-          [formSelected]="formSelected"
-        >
-        </app-form-access-modal>
       </div>
     </td>
 
