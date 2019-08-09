@@ -18,7 +18,7 @@ export const routes: Routes = [
         ]
       },
       {
-        path: 'v-form-constructor',
+        path: 'form-constructor',
         children: [
           {
             path: '',
@@ -28,7 +28,7 @@ export const routes: Routes = [
         ]
       },
       {
-        path: 'v-form-constructor/:id',
+        path: 'form-constructor/:id',
         children: [
           {
             path: '',

@@ -264,7 +264,7 @@ export class FormGeneralInformationComponent implements OnInit, OnDestroy {
 
     this.formService.sendForm(form).subscribe((res: any) => {
       this.router.navigate([
-        `/data-collection/v-form-constructor/${res.id}/form-builder`
+        `/data-collection/form-constructor/${res.id}/form-builder`
       ]);
     });
   }
