@@ -66,9 +66,6 @@ MIT
 @angular/router
 MIT
 
-@clr/angular
-MIT
-
 @ng-bootstrap/ng-bootstrap
 MIT
 The MIT License (MIT)
