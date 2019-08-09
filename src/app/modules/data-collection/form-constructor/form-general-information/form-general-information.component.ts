@@ -119,7 +119,7 @@ export class FormGeneralInformationComponent implements OnInit, OnDestroy {
     );
     // }
     FormGeneralInformationComponent.countSaveFormService++;
-    this.activatedRoute.parent.params.subscribe((params: Params) => {
+    this.activatedRoute.parent.parent.parent.parent.params.subscribe((params: Params) => {
       this.formId = params.hasOwnProperty('id') ? params.id : '';
     });
     this.draftId = this.formId + "_general-information";

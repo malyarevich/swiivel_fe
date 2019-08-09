@@ -9,10 +9,8 @@ import {FormConstructorRoutingModule} from './form-constructor-routing.module';
 import {SharedRedComponentsModule} from '../../../shared/components/sharedRedComponents.module';
 import {GeneralDirectivesModule} from '../../../utils/directives/general-directives.module';
 
-import {FilterPipe} from './form-builder/form-fields/side-bar/filter.pipe';
 import {FieldTypePipe} from './form-builder/form-fields/side-bar/field-type.pipe';
 
-import {FormPeriodsService} from '../services/form-periods.service';
 import {PublishSettingsService} from '../services/publish-settings.service';
 import {PublishSettingsRemoteService} from '../services/publish-settings-remote.service';
 import {PublishSettingsAutomationService} from '../services/publish-settings-automation.service';
@@ -23,10 +21,8 @@ import {SaveFormService} from '../services/save-form.service';
 import {ConstructorDraftService} from '../services/constructor-draft.service';
 
 import {FormNavigationBarComponent} from './form-navigation-bar/form-navigation-bar.component';
-import {FormGeneralInformationComponent} from './form-general-information/form-general-information.component';
 import {FormBuilderComponent} from './form-builder/form-builder.component';
 import {FormPublishSettingsComponent} from './form-publish-settings/form-publish-settings.component';
-import {FormGeneralMenuComponent} from './form-general-information/form-general-menu/form-general-menu.component';
 import {FormFieldSettingsComponent} from './form-builder/form-fields/fields-workspace/field-container/form-field-settings/form-field-settings.component';
 import {GroupContainerComponent} from './form-builder/form-fields/fields-workspace/group-container/group-container.component';
 import {SideBarFieldComponent} from './form-builder/form-fields/side-bar/side-bar-field/side-bar-field.component';
@@ -88,19 +84,17 @@ import {GeneralSettingsComponent} from './form-builder/form-fields/fields-worksp
 import {NumberSettingsComponent} from './form-builder/form-fields/fields-workspace/field-container/form-field-settings/number-settings/number-settings.component';
 import {DateSettingsComponent} from './form-builder/form-fields/fields-workspace/field-container/form-field-settings/date-settings/date-settings.component';
 import {FieldContainerComponent} from './form-builder/form-fields/fields-workspace/field-container/field-container.component';
+import {FilterPipeModule} from '../../../shared/pipes';
 
 
 @NgModule({
   declarations: [
     FormNavigationBarComponent,
-    FormGeneralInformationComponent,
     FormBuilderComponent,
     FormPublishSettingsComponent,
-    FormGeneralMenuComponent,
     FormFieldSettingsComponent,
     FieldContainerComponent,
     GroupContainerComponent,
-    FilterPipe,
     SideBarFieldComponent,
     FormFieldSettingsComponent,
     SideBarGroupComponent,
@@ -176,6 +170,7 @@ import {FieldContainerComponent} from './form-builder/form-fields/fields-workspa
     GeneralDirectivesModule,
     SharedRedComponentsModule,
     FormConstructorRoutingModule,
+    FilterPipeModule,
   ],
   exports: [],
   providers: [
@@ -183,7 +178,6 @@ import {FieldContainerComponent} from './form-builder/form-fields/fields-workspa
     FinanceService,
     SaveFormService,
     ConstructorDraftService,
-    FormPeriodsService,
     PublishSettingsService,
     PublishSettingsRemoteService,
     PublishSettingsAutomationService,

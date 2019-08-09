@@ -12,7 +12,13 @@ export const routes: Routes = [
     children: [
       {
         path: 'general-information',
-        component: FormGeneralInformationComponent
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('./form-general-information/form-general-information.module')
+              .then(m => m.FormGeneralInformationModule)
+          }
+        ]
       },
       {
         path: 'form-builder',
