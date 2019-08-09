@@ -6,7 +6,7 @@ import {
   ViewChild,
   Host
 } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
+import {ActivatedRoute, Params, Router} from "@angular/router";
 import {
   FormBuilder,
   FormControl,
@@ -119,9 +119,8 @@ export class FormGeneralInformationComponent implements OnInit, OnDestroy {
     );
     // }
     FormGeneralInformationComponent.countSaveFormService++;
-    this.activatedRoute.parent.url.subscribe(urlPath => {
-      const url = urlPath[urlPath.length - 1].path;
-      this.formId = url != "v-form-constructor" ? url : "";
+    this.activatedRoute.parent.params.subscribe((params: Params) => {
+      this.formId = params.hasOwnProperty('id') ? params.id : '';
     });
     this.draftId = this.formId + "_general-information";
     this.formPreparing(); // in this branch -> this.formInit();

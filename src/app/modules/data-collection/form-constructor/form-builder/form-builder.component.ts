@@ -8,7 +8,7 @@ import {
   Host
 } from "@angular/core";
 import { FormService } from "../../services/form.service";
-import { ActivatedRoute, Router } from "@angular/router";
+import {ActivatedRoute, Params, Router} from "@angular/router";
 import { v4 as uuid } from "uuid";
 import { cloneDeep, isEmpty } from "lodash";
 import { Location } from "@angular/common";
@@ -236,9 +236,8 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
     FormBuilderComponent.countSaveFormService++;
 
     this.formBuilderIsSavedService.setIsSaved(false);
-    this.route.parent.url.subscribe(urlPath => {
-      const url = urlPath[urlPath.length - 1].path;
-      this.formId = url != "v-form-constructor" ? url : "";
+    this.route.parent.params.subscribe((params: Params) => {
+      this.formId = params.hasOwnProperty('id') ? params.id : '';
     });
     this.draftId = this.formId + "_form-builder";
     this.loadMasterFees();

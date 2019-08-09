@@ -1,8 +1,6 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {DataCollectionComponent} from './data-collection.component';
-import {FormNavigationBarComponent} from './form-constructor/form-navigation-bar/form-navigation-bar.component';
-import {routes as constructorRoutes} from './form-constructor/constructor-routing.module';
 
 export const routes: Routes = [
   {
@@ -14,26 +12,38 @@ export const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren: () => import('./form-table/form-table.module').then(m => m.FormTableModule)
+            loadChildren: () => import('./form-table/form-table.module')
+              .then(m => m.FormTableModule)
           }
         ]
       },
       {
         path: 'v-form-constructor',
-        component: FormNavigationBarComponent,
-        children: constructorRoutes
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('./form-constructor/form-constructor.module')
+              .then(m => m.FormConstructorModule)
+          }
+        ]
       },
       {
         path: 'v-form-constructor/:id',
-        component: FormNavigationBarComponent,
-        children: constructorRoutes
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('./form-constructor/form-constructor.module')
+              .then(m => m.FormConstructorModule)
+          }
+        ]
       },
       {
         path: 'online-form/:id',
         children: [
           {
             path: '',
-            loadChildren: () => import('./online-form/online-form.module').then(m => m.OnlineFormModule)
+            loadChildren: () => import('./online-form/online-form.module')
+              .then(m => m.OnlineFormModule)
           }
         ]
       },
@@ -42,7 +52,8 @@ export const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren: () => import('./form-info/form-info.module').then(m => m.FormInfoModule)
+            loadChildren: () => import('./form-info/form-info.module')
+              .then(m => m.FormInfoModule)
           }
         ]
       },

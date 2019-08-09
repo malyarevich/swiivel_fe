@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
+import {ActivatedRoute, Params, Router} from "@angular/router";
 import * as cloneDeep from "lodash/cloneDeep";
 import { PublishMenuItems } from "../../model/publish-menu-items";
 
@@ -92,10 +92,9 @@ export class FormPublishSettingsComponent implements OnInit {
 
     this.prepareSaving();
 
-    this.onURLSubscription = this.route.parent.url.subscribe(urlPath => {
-      const url = urlPath[urlPath.length - 1].path;
-      this.formId = url != "v-form-constructor" ? url : "";
-      this.draftId = this.formId + "_publish-setting";
+    this.onURLSubscription = this.route.parent.params.subscribe((params: Params) => {
+      this.formId = params.hasOwnProperty('id') ? params.id : '';
+      this.draftId = this.formId + '_publish-setting';
 
       this.initPage();
     });
