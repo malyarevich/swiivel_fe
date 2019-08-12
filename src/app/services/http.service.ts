@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpEventType, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 
 import { Observable, BehaviorSubject, throwError, of } from 'rxjs';
 import { catchError, timeout, finalize,  } from 'rxjs/operators';
@@ -20,10 +20,9 @@ export class HttpService {
     return this.errorSubject.asObservable();
   }
 
-  static setAuthLoadHeaders(token: string, userAgentId: string, stage?: string) {
+  static setAuthLoadHeaders(token: string) {
     let headers = new HttpHeaders();
     headers = headers.set('Authorization', `Bearer ${token}`);
-    headers = headers.set('UserAgentId', userAgentId);
     return headers;
   }
   static setAuthHeader(token: string, headers?: HttpHeaders) {
