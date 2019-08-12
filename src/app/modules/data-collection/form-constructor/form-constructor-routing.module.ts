@@ -32,7 +32,13 @@ export const routes: Routes = [
       },
       {
         path: 'publish-settings',
-        component: FormPublishSettingsComponent
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('./form-publish-settings/form-publish-settings.module')
+              .then(m => m.FormPublishSettingsModule)
+          }
+        ]
       },
       {
         path: '',

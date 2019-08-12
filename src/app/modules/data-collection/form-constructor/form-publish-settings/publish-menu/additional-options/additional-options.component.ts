@@ -7,7 +7,7 @@ import { PublishSettingsAutomationService } from '../../../../services/publish-s
   templateUrl: "./additional-options.component.html",
   styleUrls: ["./additional-options.component.scss"]
 })
-export class VPublishMenuComponentAdditionalOptions implements OnInit {
+export class PublishMenuComponentAdditionalOptions implements OnInit {
   @Input() item: object;
   @Input() activeMenuItem: string;
   @Input() automation: IAutomation;
