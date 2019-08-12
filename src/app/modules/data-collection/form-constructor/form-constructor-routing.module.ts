@@ -22,7 +22,13 @@ export const routes: Routes = [
       },
       {
         path: 'form-builder',
-        component: FormBuilderComponent
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('./form-builder/form-builder.module')
+              .then(m => m.FormBuilderModule)
+          }
+        ]
       },
       {
         path: 'publish-settings',

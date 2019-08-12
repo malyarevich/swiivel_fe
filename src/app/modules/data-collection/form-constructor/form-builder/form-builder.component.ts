@@ -236,7 +236,7 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
     FormBuilderComponent.countSaveFormService++;
 
     this.formBuilderIsSavedService.setIsSaved(false);
-    this.route.parent.params.subscribe((params: Params) => {
+    this.route.parent.parent.parent.parent.params.subscribe((params: Params) => {
       this.formId = params.hasOwnProperty('id') ? params.id : '';
     });
     this.draftId = this.formId + "_form-builder";
