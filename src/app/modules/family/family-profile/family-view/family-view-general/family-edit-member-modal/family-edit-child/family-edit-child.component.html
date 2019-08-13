@@ -7,7 +7,10 @@
                                 [avatar]="familyPerson.person.avatar ? getAvatarUrl : ''"
                                 [size]="'9em'">
       </app-person-avatar-change>
-      <app-toggle-checkbox-field [formControlName]="'student'" label="Student"></app-toggle-checkbox-field>
+      <app-toggle-checkbox-field>
+        <span class="label">Student</span>
+        <input type="checkbox" formControlName="student">
+      </app-toggle-checkbox-field>
     </div>
     <div class="col-9 mt-3">
 
@@ -106,7 +109,10 @@
           </label>
         </div>
         <div class="col-4 pl-4">
-          <app-toggle-checkbox-field [formControlName]="'deceased'" label="Deceased"></app-toggle-checkbox-field>
+          <app-toggle-checkbox-field>
+            <span class="label">Deceased</span>
+            <input type="checkbox" formControlName="deceased">
+          </app-toggle-checkbox-field>
         </div>
       </div>
       <div *ngIf="familyChildForm.value.deceased" class="row no-gutters pt-2">
@@ -274,5 +280,3 @@
     </div>
   </div>
 </form>
-
-

@@ -29,7 +29,9 @@
     </div>
   </div>
   <div>
-    <app-toggle-checkbox-field [formControlName]="'isSeparateFields'"
-                               label="Allow Date as 3 separate fields"></app-toggle-checkbox-field>
+    <app-toggle-checkbox-field>
+      <span class="label">Allow Date as 3 separate fields</span>
+      <input type="checkbox" formControlName="isSeparateFields"/>
+    </app-toggle-checkbox-field>
   </div>
 </form>
