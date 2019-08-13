@@ -321,8 +321,15 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
       this.formsPDF = form.forms || [];
       this.attachments = form.attachments || {};
       this.activeSections = form.activeSections || activeSectionsDefault;
-      this.newSideBar = form.sidebar.length ? form.sidebar : this.newSideBar;
+      this.newSideBar = this.initSideBar(form);
     }
+  }
+
+  initSideBar(form) {
+    if (form.hasOwnProperty('sidebar')) {
+      return form.sidebar.length ? form.sidebar : this.newSideBar;
+    }
+    return this.newSideBar;
   }
 
   formInit(): void {
