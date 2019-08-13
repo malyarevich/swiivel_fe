@@ -20,7 +20,10 @@
   </div>
   <hr>
   <div>
-    <app-toggle-checkbox-field [formControlName]="'isInputMask'" label="INPUT MASK"></app-toggle-checkbox-field>
+    <app-toggle-checkbox-field>
+      <span class="label">INPUT MASK</span>
+      <input type="checkbox" formControlName="isInputMask"/>
+    </app-toggle-checkbox-field>
   </div>
   <div class="mb-4 text-right">
     <app-tool-tip-question [placement]="'right-bottom'">
@@ -29,11 +32,15 @@
         <p class="mb-0 text-left">Regex is allowed</p>
       </div>
     </app-tool-tip-question>
+
     <app-input-field [formControlName]="'inputMask'" label="Input Mask"></app-input-field>
   </div>
   <hr>
   <div>
-    <app-toggle-checkbox-field [formControlName]="'isDefaultValue'" label="DEFAULT VALUE"></app-toggle-checkbox-field>
+    <app-toggle-checkbox-field>
+      <span class="label">DEFAULT VALUE</span>
+      <input type="checkbox" formControlName="isDefaultValue"/>
+    </app-toggle-checkbox-field>
   </div>
   <div>
     <app-input-field [formControlName]="'defaultValue'" label="Default Value"></app-input-field>
