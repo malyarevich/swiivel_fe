@@ -9,21 +9,27 @@
     </div>
   </div>
   <div>
-    <app-toggle-checkbox-field label="Validate Email"
-                               [formControlName]="'validateEmail'"></app-toggle-checkbox-field>
+    <app-toggle-checkbox-field>
+      <span class="label">Validate Email</span>
+      <input type="checkbox" formControlName="validateEmail"/>
+    </app-toggle-checkbox-field>
   </div>
   <div>
-    <app-toggle-checkbox-field label="Confirmation Text Box"
-                               [formControlName]="'confirmationTextBox'"></app-toggle-checkbox-field>
+    <app-toggle-checkbox-field>
+      <span class="label">Confirmation Text Box</span>
+      <input type="checkbox" formControlName="confirmationTextBox"/>
+    </app-toggle-checkbox-field>
   </div>
   <hr>
   <div class="mb-3">
-    <app-toggle-checkbox-field label="EMAIL BLOCKS"
-                               [formControlName]="'emailBlocks'"></app-toggle-checkbox-field>
+    <app-toggle-checkbox-field>
+      <span class="label">EMAIL BLOCKS</span>
+      <input type="checkbox" formControlName="emailBlocks"/>
+    </app-toggle-checkbox-field>
   </div>
   <div class="mb-2">
     <app-checkbox-field label="Disallow Free Email Address"
-                        [formControlName]="'emailBlocks'"></app-checkbox-field>
+      [formControlName]="'emailBlocks'"></app-checkbox-field>
   </div>
   <div>
     <p class="app-text-second mb-1">Email Domains to Block</p>

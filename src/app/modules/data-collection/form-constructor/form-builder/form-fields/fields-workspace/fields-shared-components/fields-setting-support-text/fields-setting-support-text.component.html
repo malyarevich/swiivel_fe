@@ -1,7 +1,10 @@
 <div [formGroup]="parentForm">
   <div class="row no-gutters pt-3">
     <div class="col">
-      <app-toggle-checkbox-field label="SUPPORT TEXT" [formControlName]="'isSupportText'"></app-toggle-checkbox-field>
+      <app-toggle-checkbox-field>
+        <span class="label">SUPPORT TEXT</span>
+        <input type="checkbox" formControlName="isSupportText"/>
+      </app-toggle-checkbox-field>
     </div>
   </div>
   <div [hidden]="!parentForm.get('isSupportText').value">
