@@ -12,6 +12,13 @@ import {AuthService} from './services/auth';
 import {PermissionService} from './services/permission/permission.service';
 import {AppComponent} from './app.component';
 import {LoginModule} from './modules/login';
+import {InterceptorsConfig, InterceptorsModule} from '@app/utils';
+import {environment} from '../environments/environment';
+
+export const interceptorsConfig: InterceptorsConfig = {
+  baseUrl: environment.apiCore,
+  storageTokenKey: 'token'
+};
 
 @NgModule({
   declarations: [
@@ -27,7 +34,8 @@ import {LoginModule} from './modules/login';
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument(),
-    SharedStoreModule
+    SharedStoreModule,
+    InterceptorsModule.forRoot(interceptorsConfig),
   ],
   providers: [
     PermissionService,

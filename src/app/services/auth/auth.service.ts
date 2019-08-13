@@ -1,7 +1,7 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {User} from '../../store';
+import {User} from '@app/store';
 import {environment} from '../../../environments/environment';
 
 @Injectable()
@@ -14,7 +14,7 @@ export class AuthService {
   }
 
   public login(username: string, password: string): Observable<User> {
-    return this.http.post(environment.apiCore + '/login', {username, password});
+    return this.http.post('/login', {username, password});
   }
 
   public logout(): void {
