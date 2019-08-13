@@ -1,6 +1,5 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Permissions} from '../../../../services/permission/permissions.model';
-import {User} from '../../../login/rest';
 import {PermissionService} from '../../../../services/permission/permission.service';
 import {UserService} from '../../../../services/user/user.service';
 import {FormService} from '../../services/form.service';
@@ -59,7 +58,7 @@ export class FormAccessComponent implements OnInit, OnDestroy {
             this.error = 'User ' + user.username + ' already exists in the list';
             return;
         }
-        if (this.selectedUsers.find(item => item.id == user.id)) {
+        if (this.selectedUsers.find(item => item.id === user.id)) {
             this.error = 'User ' + user.username + ' already selected';
             return;
         }
@@ -81,28 +80,28 @@ export class FormAccessComponent implements OnInit, OnDestroy {
         this.resetSelectedUsers();
     }
 
-    setPermission($event, user_id, permissionType) {
-        const permission = this.permissions.find(item => item.user_id === user_id);
+    setPermission($event, userId, permissionType) {
+        const permission = this.permissions.find(item => item.user_id === userId);
         permission[permissionType] = $event ? 1 : 0;
     }
 
     saveFormPermissions(): void {
-        this.permissionService.savePermissions(this.permissions).subscribe(
-            (res) => {
-            }
-        );
+        // this.permissionService.savePermissions(this.permissions).subscribe(
+        //     (res) => {
+        //     }
+        // );
     }
 
     deleteUserPermissions(permissions) {
-        if (!permissions.id) {
-            this.permissions = this.permissions.filter((item) => item.user_id != permissions.user_id);
-            return;
-        }
-        this.permissionService.deletePermissions(permissions.id).subscribe(
-            () => {
-                this.permissions = this.permissions.filter((item) => item.user_id != permissions.user_id);
-            }
-        );
+        // if (!permissions.id) {
+        //     this.permissions = this.permissions.filter((item) => item.user_id !== permissions.user_id);
+        //     return;
+        // }
+        // this.permissionService.deletePermissions(permissions.id).subscribe(
+        //     () => {
+        //         this.permissions = this.permissions.filter((item) => item.user_id !== permissions.user_id);
+        //     }
+        // );
     }
 
     ngOnDestroy() {

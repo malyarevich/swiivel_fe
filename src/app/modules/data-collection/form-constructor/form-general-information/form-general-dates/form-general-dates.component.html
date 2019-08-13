@@ -1,0 +1,44 @@
+<div class="justify-content-md-center mb-3 text-center">
+  <span class="pt-4 app-step-title">3. FORM DATES</span>
+</div>
+<div class="justify-content-md-center mb-3 text-center">
+  <h4 class="pt-3 text-center font-weight-bold">When would you like this form to be available for
+    accounts?</h4>
+</div>
+<div class="row justify-content-center mb-5" [formGroup]="generalInfoForm">
+
+  <div class="input-group col-4">
+    <input class="form-control"
+           placeholder="Start Date"
+           name="dp1"
+           formControlName="startDate"
+           ngbDatepicker
+           [ngClass]="generalInfoForm.get('startDate').touched&&generalInfoForm.get('startDate').invalid?'is-invalid':''"
+           id="d1"
+           #d1="ngbDatepicker"
+    >
+    <div class="input-group-append">
+      <button class="btn btn-outline-secondary calendar" (click)="d1.toggle()" type="button">
+        <i class="far fa-calendar"></i>
+      </button>
+    </div>
+  </div>
+
+
+  <div class="input-group col-4">
+    <input class="form-control"
+           placeholder="End Date"
+           name="dp2"
+           [ngClass]="generalInfoForm.get('endDate').touched&&generalInfoForm.get('endDate').invalid?'is-invalid':''"
+           formControlName="endDate"
+           [minDate]="generalInfoForm.value.startDate"
+           ngbDatepicker
+           #d2="ngbDatepicker"
+    >
+    <div class="input-group-append">
+      <button class="btn btn-outline-secondary calendar" (click)="d2.toggle()" type="button">
+        <i class="far fa-calendar"></i>
+      </button>
+    </div>
+  </div>
+</div>

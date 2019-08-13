@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {}
 
-  openRestoreView (mode) {
+  openRestoreView(mode) {
     this.isOpen = mode;
   }
 }

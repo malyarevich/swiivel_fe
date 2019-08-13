@@ -1,11 +1,8 @@
-import { Component, OnInit, Output, EventEmitter, Input, ChangeDetectionStrategy } from '@angular/core';
-import { select, Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-
-// import { Go } from '../../utils/store/router-store';
-import { Logout } from '../../../login/store/index';
-import { menuItems, IMenuItems } from '../header/header.component';
-
+import {Component, OnInit, Output, EventEmitter, Input, ChangeDetectionStrategy} from '@angular/core';
+import {Store} from '@ngrx/store';
+import {Observable} from 'rxjs';
+import {menuItems, IMenuItems} from '../header';
+import {LogoutRequestAction} from '../../../../store/auth-store';
 
 @Component({
   selector: 'app-header-top',
@@ -13,33 +10,26 @@ import { menuItems, IMenuItems } from '../header/header.component';
   styleUrls: ['./header-top.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
+
 export class HeaderTopComponent implements OnInit {
   public user: Observable<any>;
   public menuItems: IMenuItems[];
   @Input() menu = false;
   @Output() toggleSideMenu = new EventEmitter<boolean>();
 
-  constructor(private readonly store: Store<any>) {}
+  constructor(
+    private readonly store$: Store<any>
+  ) {}
 
   ngOnInit() {
-      // this.user = this.store.pipe(select('users'));
-      this.menuItems = menuItems;
+    this.menuItems = menuItems;
   }
 
-  toggleMenu () {
+  toggleMenu() {
     this.toggleSideMenu.emit(true);
   }
 
-  // goToIndex (): void {
-  //     // this.store.dispatch(new Go(['/']));
-  // }
-
-  // goToProfile (data: any): void {
-  //     const {user} = data;
-  //     // this.store.dispatch(new Go(['/users/id/', user.id]));
-  // }
-
-  logOut (): void {
-      this.store.dispatch(new Logout());
+  logOut(): void {
+    this.store$.dispatch(new LogoutRequestAction());
   }
 }

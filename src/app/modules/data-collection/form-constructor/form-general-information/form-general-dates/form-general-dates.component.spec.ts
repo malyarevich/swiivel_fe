@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { HeaderComponent } from './header.component';
+import { FormGeneralDatesComponent } from './form-general-dates.component';
 
-describe('HeaderComponent', () => {
-  let component: HeaderComponent;
-  let fixture: ComponentFixture<HeaderComponent>;
+describe('FormGeneralDatesComponent', () => {
+  let component: FormGeneralDatesComponent;
+  let fixture: ComponentFixture<FormGeneralDatesComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HeaderComponent ]
+      declarations: [ FormGeneralDatesComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HeaderComponent);
+    fixture = TestBed.createComponent(FormGeneralDatesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

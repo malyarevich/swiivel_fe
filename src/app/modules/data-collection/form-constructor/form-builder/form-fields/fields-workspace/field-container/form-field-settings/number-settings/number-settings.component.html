@@ -29,7 +29,10 @@
     </div>
   </div>
   <div>
-    <app-toggle-checkbox-field [formControlName]="'isCurrency'" label="Currency"></app-toggle-checkbox-field>
+    <app-toggle-checkbox-field>
+      <span class="label">Currency</span>
+      <input type="checkbox" formControlName="isCurrency"/>
+    </app-toggle-checkbox-field>
   </div>
   <div class="mb-4">
     <app-select-field [formControlName]="'currency'"
@@ -37,7 +40,10 @@
   </div>
   <hr class="mb-1">
   <div class="mb-2">
-    <app-toggle-checkbox-field [formControlName]="'isDisplay'" label="DISPLAY"></app-toggle-checkbox-field>
+    <app-toggle-checkbox-field>
+      <span class="label">DISPLAY</span>
+      <input type="checkbox" formControlName="isDisplay"/>
+    </app-toggle-checkbox-field>
   </div>
 
   <div class="row no-gutters">
@@ -69,4 +75,3 @@
     </div>
   </div>
 </form>
-

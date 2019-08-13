@@ -1,6 +1,8 @@
 <form [formGroup]="validatorsForm" *ngIf="inputField.type !== fieldTypes.emptyLineField">
   <div class="d-flex justify-content-start align-items-center">
-    <app-toggle-checkbox-field [formControlName]="'isValidator'"></app-toggle-checkbox-field>
+    <app-toggle-checkbox-field>
+      <input type="checkbox" formControlName="isValidator"/>
+    </app-toggle-checkbox-field>
     <p class="app-text-small app-text-extra-bold mb-0 ml-1">VALIDATE</p>
   </div>
   <div [hidden]="!validatorsForm.get('isValidator').value">
