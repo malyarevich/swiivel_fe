@@ -1,7 +1,13 @@
 <div class="row no-gutters">
   <div class="col">
-    <app-toggle-checkbox-field [label]="'FIELD MULTIPLIER OPTION'"
+    <!-- <app-toggle-checkbox-field [label]="'FIELD MULTIPLIER OPTION'"
                                [(ngModel)]="inputGroup.settings.multiplier.enabled">
+    </app-toggle-checkbox-field> -->
+    <app-toggle-checkbox-field>
+      <span class="label">FIELD MULTIPLIER OPTION</span>
+      <input type="checkbox"
+             [value]="inputGroup.settings.multiplier.enabled"
+             [checked]="inputGroup.settings.multiplier.enabled">
     </app-toggle-checkbox-field>
   </div>
 </div>

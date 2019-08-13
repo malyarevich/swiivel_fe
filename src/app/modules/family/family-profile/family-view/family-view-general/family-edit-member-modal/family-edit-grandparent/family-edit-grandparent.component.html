@@ -29,7 +29,10 @@
       </div>
       <div class="row no-gutters pt-2">
         <div class="offset-8 col-4 pl-4">
-          <app-toggle-checkbox-field [formControlName]="'deceased'" label="Deceased"></app-toggle-checkbox-field>
+          <app-toggle-checkbox-field>
+            <span class="label">Deceased</span>
+            <input type="checkbox" formControlName="deceased">
+          </app-toggle-checkbox-field>
         </div>
       </div>
       <div *ngIf="familyGrandParentForm.value.deceased" class="row no-gutters pt-2">
@@ -106,5 +109,3 @@
     </div>
   </div>
 </form>
-
-

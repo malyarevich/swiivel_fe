@@ -1,0 +1,42 @@
+<h4 class="my-2 text-center font-weight-bold">Choose the way you want to create a new form</h4>
+<div class="pt-4 row pb-4">
+  <div class="btn-group btn-group-toggle w-100" ngbRadioGroup name="radioBasic"
+       [ngModel]="formTypeCreation" (ngModelChange)="setTypeCreation($event)">
+
+    <label ngbButtonLabel class="btn btn-primary mr-2 ">
+      <input ngbButton type="radio" [value]="0"> Create New Form
+    </label>
+
+    <label ngbButtonLabel class="btn btn-primary  ml-2 mr-2">
+      <input ngbButton type="radio" [value]="1"> Duplicate Existing Form
+    </label>
+
+    <label ngbButtonLabel class="btn btn-primary">
+      <input ngbButton type="radio" [value]="2" disabled> Use Template
+    </label>
+
+  </div>
+</div>
+
+<div *ngIf="formTypeCreation==1" class=" pt-4 row">
+  <div class="col app-fb-scroll-container">
+    <label for="searchExistingForm">Search Existing Form</label>
+    <input type="text"
+           class="form-control"
+           id="searchExistingForm"
+           placeholder="" [(ngModel)]="searchText">
+    <ul class="list-group mt-2">
+      <li *ngFor="let form of formsDuplicate | filter : searchText"
+          class="list-group-item  rounded mt-1 mb-2 "
+          (click)="useDuplicate(form.mongo_id)"
+          [ngClass]="form.mongo_id==formDuplicateId?'list-group-item-primary':'list-group-item-secondary'"
+      >{{form.name}}
+      </li>
+    </ul>
+  </div>
+  <div class="col color-custom-grey rounded mb-2 mt-4 mr-3 ml-3 justify-content-center">
+    <div class="vertical-center ">
+      <p class="">Please select the form you want to use as a duplicate</p>
+    </div>
+  </div>
+</div>
