@@ -3,21 +3,25 @@ import {Observable} from 'rxjs';
 import {Router} from '@angular/router';
 import {tap} from 'rxjs/operators';
 
-
 export class StorageTokenInterceptor implements HttpInterceptor {
   constructor(
     private readonly router: Router
   ) {}
 
+  private token: string;
+
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const user = JSON.parse(localStorage.getItem('user'));
-    if (user.access_token) {
-      request = request.clone({
-        setHeaders: {
-          'x-access-token': `${user.access_token}`
-        }
-      });
+    const user = localStorage.getItem('user');
+    if (user) {
+      this.token = JSON.parse(user).access_token;
+    } else {
+      this.token = 'token';
     }
+    request = request.clone({
+      setHeaders: {
+        'x-access-token': `${this.token}`
+      }
+    });
     return next.handle(request)
       .pipe(
         tap((event: HttpEvent<any>) => {
@@ -27,10 +31,10 @@ export class StorageTokenInterceptor implements HttpInterceptor {
           if (err instanceof HttpErrorResponse) {
             if (err.status === 401) {
               localStorage.removeItem('user');
-              this.router.navigate(['login']);
+              this.router.navigate(['/login']);
             }
           }
-      })
-    );
+        })
+      );
   }
 }

@@ -2,7 +2,6 @@ import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {User} from '@app/store';
-import {environment} from '../../../environments/environment';
 
 @Injectable()
 
@@ -14,6 +13,7 @@ export class AuthService {
   }
 
   public login(username: string, password: string): Observable<User> {
+    console.log('login');
     return this.http.post('/login', {username, password});
   }
 

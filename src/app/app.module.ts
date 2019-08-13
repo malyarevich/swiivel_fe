@@ -8,17 +8,11 @@ import {EffectsModule} from '@ngrx/effects';
 import {SharedStoreModule} from './store';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {AppRoutingModule} from './app-routing.module';
-import {AuthService} from './services/auth';
-import {PermissionService} from './services/permission/permission.service';
+import {AuthService} from '@services/auth';
+import {PermissionService} from '@services/permission/permission.service';
 import {AppComponent} from './app.component';
-import {LoginModule} from './modules/login';
-import {InterceptorsConfig, InterceptorsModule} from '@app/utils';
-import {environment} from '../environments/environment';
-
-export const interceptorsConfig: InterceptorsConfig = {
-  baseUrl: environment.apiCore,
-  storageTokenKey: 'token'
-};
+import {LoginModule} from '@modules/login';
+import {InterceptorsModule} from '@app/utils';
 
 @NgModule({
   declarations: [
@@ -35,7 +29,7 @@ export const interceptorsConfig: InterceptorsConfig = {
     EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument(),
     SharedStoreModule,
-    InterceptorsModule.forRoot(interceptorsConfig),
+    InterceptorsModule.forRoot(),
   ],
   providers: [
     PermissionService,
