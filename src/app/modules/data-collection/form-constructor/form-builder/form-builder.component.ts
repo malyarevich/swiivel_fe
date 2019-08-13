@@ -308,6 +308,7 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
 
   setLocalForm(form: Form): void {
     if (!isEmpty(form)) {
+      console.log(form);
       this.form = form;
       this.formName = form.name;
       this.fields = this.form.fields = form.fields || [];

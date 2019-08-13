@@ -10,6 +10,7 @@ import {SharedRedComponentsModule} from '../../../../shared/components/sharedRed
 import {FormPeriodsService} from '../../services/form-periods.service';
 import { FormGeneralBasicInfoComponent } from './form-general-basic-info/form-general-basic-info.component';
 import { FormGeneralWayCreateComponent } from './form-general-way-create/form-general-way-create.component';
+import { FormGeneralDatesComponent } from './form-general-dates/form-general-dates.component';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { FormGeneralWayCreateComponent } from './form-general-way-create/form-ge
     FormGeneralMenuComponent,
     FormGeneralBasicInfoComponent,
     FormGeneralWayCreateComponent,
+    FormGeneralDatesComponent,
   ],
   imports: [
     CommonModule,
