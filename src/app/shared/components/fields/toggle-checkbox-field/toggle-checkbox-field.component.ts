@@ -1,7 +1,7 @@
 import {
   Component,
   OnInit,
-  // Input,
+  Input,
   // forwardRef
 } from '@angular/core';
 // import {
@@ -23,7 +23,7 @@ export class ToggleCheckboxFieldComponent implements OnInit {
   // @Input() disabled: boolean;
   // @Input() id: string;
   // @Input() label = '';
-  // @Input() isInvalid = false;
+  @Input() isInvalid = false;
   //
   isSelected: boolean;
 
