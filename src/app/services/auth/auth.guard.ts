@@ -1,40 +1,34 @@
-import { Injectable } from '@angular/core';
-import { CanLoad, Route, CanActivate, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
-import { AuthService } from './auth.service';
-import { Observable } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {CanActivate, RouterStateSnapshot, ActivatedRouteSnapshot, Router} from '@angular/router';
+import {Store} from '@ngrx/store';
+import {Observable, of} from 'rxjs';
+import {map, switchMap} from 'rxjs/operators';
+import * as moment from 'moment';
 
-export const ROUTE_NOT_AUTHENTICATED = 'ROUTE_NOT_AUTHENTICATED';
+@Injectable({
+  providedIn: 'root'
+})
 
-@Injectable()
-export class AuthGuard implements CanLoad, CanActivate {
-    constructor(
-        private readonly authService: AuthService,
-    ) {}
+export class AuthGuard implements CanActivate {
 
-    canActivate(route: ActivatedRouteSnapshot, routerState: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-        if (!this.authService.token) {
-            throw makeCancelingError(new Error(ROUTE_NOT_AUTHENTICATED));
+  constructor(
+    private readonly store: Store<any>,
+    private readonly router: Router
+  ) {
+  }
+
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
+    return this.store.select('auth').pipe(
+      map(auth => auth.user),
+      switchMap((user) => {
+        if (user && user.expires_at > moment().unix()) {
+          return of(true);
         } else {
-            return true;
+          this.router.navigate(['/login']);
+          return of(false);
         }
-    }
+      })
+    );
+  }
 
-    canLoad(route: Route): boolean {
-        return true;
-    }
-}
-
-/**
- * Copied over from Angular Router
- * @see https://goo.gl/8qUsNa
- */
-export const NAVIGATION_CANCELING_ERROR = 'ngNavigationCancelingError';
-
-/**
- * Similar to navigationCancelingError
- * @see https://goo.gl/nNd9TX
- */
-export function makeCancelingError(error: Error) {
-    (error as any)[NAVIGATION_CANCELING_ERROR] = true;
-    return error;
 }

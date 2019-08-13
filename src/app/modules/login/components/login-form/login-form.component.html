@@ -5,7 +5,6 @@
   <app-input-container label="Username">
     <input type="text" placeholder="Username" formControlName="username" class="formInput" autocomplete="new-password">
   </app-input-container>
-
   <section class="passwordWrapper">
     <app-input-container label="Password">
       <input [type]="shape === 'eye' ? 'password' : 'text'" placeholder="Password" formControlName="password"
@@ -15,11 +14,9 @@
          [src]="shape === 'eye' ? '/assets/images/password/eye.svg' : '/assets/images/password/eye_off.svg'"
          (click)="changeField()">
   </section>
-
   <span class="smallText" (click)="changeView()">
     Forgot password?
   </span>
-
   <button [disabled]="!form.valid" type="submit" class="btn app-btn-warning mt-4">
     Log In
   </button>

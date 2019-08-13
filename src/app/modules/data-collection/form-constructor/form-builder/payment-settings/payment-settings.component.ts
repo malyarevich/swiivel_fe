@@ -23,7 +23,7 @@ export class PaymentSettingsComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    this.signature = cloneDeep(this.paymentSettings.signature);
+    // this.signature = cloneDeep(this.paymentSettings.signature);
   }
 
   onChangePaymentOptionsContent(innerHTML: string) {

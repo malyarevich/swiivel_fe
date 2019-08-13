@@ -19,7 +19,7 @@ export class FormAccessModalComponent implements OnInit {
 
     saveFormPermissions() {
         this.formAccessComponent.saveFormPermissions();
-        this.resetFormSelected()
+        this.resetFormSelected();
     }
 
     resetFormSelected() {
