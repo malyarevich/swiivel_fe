@@ -4,7 +4,7 @@ import {
   OnDestroy,
   OnInit,
   ViewChild,
-  Host
+  Host, ViewEncapsulation
 } from "@angular/core";
 import {ActivatedRoute, Params, Router} from "@angular/router";
 import {
@@ -30,31 +30,28 @@ import { FormPeriodsService } from "../../services/form-periods.service";
 import { GeneralInfoIsFormExistService } from "../../services/general-info-is-form-exist.service";
 
 @Component({
-  selector: "app-form-general-information",
-  templateUrl: "./form-general-information.component.html",
-  styleUrls: ["./form-general-information.component.css"]
+  selector: 'app-form-general-information',
+  templateUrl: './form-general-information.component.html',
+  styleUrls: ['./form-general-information.component.css'],
 })
 export class FormGeneralInformationComponent implements OnInit, OnDestroy {
   @ViewChild("generalInfo", { static: false }) generalInfo: ElementRef;
   @ViewChild("basicInfo", { static: false }) basicInfo: ElementRef;
   @ViewChild("period", { static: false }) period: ElementRef;
   @ViewChild("formDates", { static: false }) formDates: ElementRef;
-  @ViewChild("eligibleAccounts", { static: false })
-  eligibleAccounts: ElementRef;
+  @ViewChild("eligibleAccounts", { static: false }) eligibleAccounts: ElementRef;
 
   static countSaveFormService: number = 0;
   saveFormSubscription: Subscription;
 
-  searchText: string;
   formId: string = "";
-  formDublicateId: string = "";
+  formDuplicateId = '';
+  formTypeCreation = 0;
   startDate;
   fields = [];
   generalInfoForm: FormGroup;
-  formsDublicate: FormSql[];
   isOnSubmit: boolean = false;
   activeSection: number = 1;
-  formTypeCreation: number = 0;
   menu = {
     basic: <menuItemModel>{
       title: "Basic Form Information",
@@ -124,11 +121,8 @@ export class FormGeneralInformationComponent implements OnInit, OnDestroy {
     });
     this.draftId = this.formId + "_general-information";
     this.formPreparing(); // in this branch -> this.formInit();
-    // this.formInit();
-    this.getAllForm();
     this.isLoaded = true;
     this.constructorIsSavingService.setIsSaving(this.isDataSaving);
-    // console.log(this.formId !== "");
     this.generalInfoIsFormExistService.setIsExist(this.formId !== "");
   }
 
@@ -140,13 +134,6 @@ export class FormGeneralInformationComponent implements OnInit, OnDestroy {
       !this.isDataSaving
     );
   }
-
-  // onFormChanges() {
-  //   this.generalInfoForm.valueChanges.subscribe(val => {
-  //     // console.log("rerender");
-  //     // console.log(this.generalInfoForm.value);
-  //   });
-  // }
 
   validateAllFormFields(formGroup: FormGroup) {
     Object.keys(formGroup.controls).forEach(field => {
@@ -160,24 +147,23 @@ export class FormGeneralInformationComponent implements OnInit, OnDestroy {
     });
   }
 
-  isValidBasicFormInfoFields(): boolean {
-    return !(
-      this.generalInfoForm.get("name").invalid ||
-      this.generalInfoForm.get("language").invalid
-    );
-  }
-
   validateBasicFormInfoFields(): void {
     if (this.isValidBasicFormInfoFields()) {
       this.nextStep(this.menu.period);
     } else {
-      this.generalInfoForm.get("name").markAsTouched({ onlySelf: true });
-      this.generalInfoForm.get("language").markAsTouched({ onlySelf: true });
+      this.generalInfoForm.get('name').markAsTouched({ onlySelf: true });
+      this.generalInfoForm.get('language').markAsTouched({ onlySelf: true });
     }
   }
 
+  isValidBasicFormInfoFields(): boolean {
+    return !(
+      this.generalInfoForm.get('name').invalid ||
+      this.generalInfoForm.get('language').invalid
+    );
+  }
+
   isValidPeriodFields(): boolean {
-    // console.log(this.generalInfoForm.get('name').invalid);
     return !this.generalInfoForm.get("periodCheckboxGroup").invalid;
   }
 
@@ -211,14 +197,11 @@ export class FormGeneralInformationComponent implements OnInit, OnDestroy {
     }
   }
 
-  useDublicate(form: FormSql) {
-    this.formDublicateId = form.mongo_id;
+  setDuplicatedFormId(id: string) {
+    this.formDuplicateId = id;
   }
-
-  getAllForm(): void {
-    this.formService.getFormsList().subscribe(forms => {
-      this.formsDublicate = forms.data;
-    });
+  setFormTypeCreation(type) {
+    this.formTypeCreation = type;
   }
 
   onSubmit() {
@@ -258,7 +241,7 @@ export class FormGeneralInformationComponent implements OnInit, OnDestroy {
       formPeriods: this.generalInfoForm.value.periodCheckboxGroup,
       eligible: this.generalInfoForm.value.eligible,
       step: 0,
-      example_form_id: this.formDublicateId,
+      example_form_id: this.formDuplicateId,
       chosen_way_to_create_new_form: this.formTypeCreation
     };
 
@@ -325,8 +308,8 @@ export class FormGeneralInformationComponent implements OnInit, OnDestroy {
         formPeriods: this.generalInfoForm.value.periodCheckboxGroup,
         eligible: this.generalInfoForm.value.eligible,
         step: 0,
-        example_form_id: this.formDublicateId
-          ? this.formDublicateId
+        example_form_id: this.formDuplicateId
+          ? this.formDuplicateId
           : undefined,
         chosen_way_to_create_new_form: this.formTypeCreation
       };
@@ -426,14 +409,6 @@ export class FormGeneralInformationComponent implements OnInit, OnDestroy {
 
       this.formInit();
     });
-  }
-
-  getDayparting() {
-    let hrs = new Date().getHours();
-    if (hrs >= 6 && hrs < 11) return "morning";
-    if (hrs >= 11 && hrs < 19) return "afternoon";
-    if (hrs >= 19 && hrs <= 23) return "evening";
-    return "night";
   }
 
   onScrollTo(target) {

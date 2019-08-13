@@ -8,12 +8,16 @@ import {FormGeneralMenuComponent} from './form-general-menu/form-general-menu.co
 import {FilterPipeModule} from '../../../../shared/pipes';
 import {SharedRedComponentsModule} from '../../../../shared/components/sharedRedComponents.module';
 import {FormPeriodsService} from '../../services/form-periods.service';
+import { FormGeneralBasicInfoComponent } from './form-general-basic-info/form-general-basic-info.component';
+import { FormGeneralWayCreateComponent } from './form-general-way-create/form-general-way-create.component';
 
 
 @NgModule({
   declarations: [
     FormGeneralInformationComponent,
     FormGeneralMenuComponent,
+    FormGeneralBasicInfoComponent,
+    FormGeneralWayCreateComponent,
   ],
   imports: [
     CommonModule,
