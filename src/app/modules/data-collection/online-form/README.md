@@ -4,16 +4,20 @@ This module can to use for the form template's view or for the end user's form.
 
 ## Content
 
- [Online-Form and Online-View](#online-form-and-online-view-readme)
-- [Content](#content)
-- [Modes](#modes)
-  - [FormTemplate'sView](#form-templates-view)
-  - [EndUser'sForm](#end-users-form)
-- [Navigation](#navigation)
-  - [Menu](#menu)
-  - [Tabs](#tabs)
-  - [Routing and Controls](#routing-and-controls)
-- [Installation](#installation)
+[Online-Form and Online-View](#online-form-and-online-view-readme)
+
+- [Online-Form and Online-View Readme](#online-form-and-online-view-readme)
+  - [Content](#content)
+  - [Modes](#modes)
+    - [**Form Template's View**](#form-templates-view)
+    - [**End User's Form**](#end-users-form)
+  - [Navigation](#navigation)
+    - [**Menu**](#menu)
+    - [**Tabs**](#tabs)
+    - [**Routing and Controls**](#routing-and-controls)
+  - [Models](#models)
+- [Technical details](#technical-details)
+  - [General Information](#general-information)
 
 <hr />
 
@@ -51,13 +55,13 @@ Tabs show the section for each Menu Items.
 
 ### **Routing and Controls**
 
-1) Routing by iterator works top to bottom and inside left to right.
+1. Routing by iterator works top to bottom and inside left to right.
 
-2) Iterator walks only by enabled Menu items and inside by all section.
+2. Iterator walks only by enabled Menu items and inside by all section.
 
-3) After click to Menu item system call the function, that activate first section inside Menu Item.
+3. After click to Menu item system call the function, that activate first section inside Menu Item.
 
-4) In situation if Menu Item has no section, then system create empty section by initialization process.
+4. In situation if Menu Item has no section, then system create empty section by initialization process.
 
 <hr />
 
@@ -69,93 +73,47 @@ All models stored at /app/models/data-collection/online-form/
 
 <hr />
 
-## General Information
-
-<hr />
-
 ![altForPic](/pic.png)
 
-## Installation
+# Technical details
 
-Download to your project directory, add `README.md`, and commit:
+Main point in this module - `online-form-view`, it init screen by 3 section `online-form-nav`(top navigation), `online-form-menu`(page menu) and `content`(concent, documents-forms, general-info, payment, payment-settings, terms-conditions, tuition-contract).
 
-```sh
-# Write installation here
+The each page by content has a **section(s)** (this need for navigation - by iteration in `service/online-form-navigation`).
+
+## General Information
+
+Each `section` could has `group` and `field`. `code_type: 114`
+Each `group` could has `group` and `field`. `code_type: 113`
+Each `field` could be:
+
+```js
+[101, ShortTextFieldComponent],
+  [102, LongTextFieldComponent],
+  [103, NumberTextFieldComponent],
+  [104, MultipleOptionsFieldComponent],
+  [105, DropDownListFieldComponent],
+  [106, DateTimeFieldComponent],
+  [107, TimeFieldComponent],
+  [108, EmailFieldComponent],
+  [109, PhoneNumberFieldComponent],
+  [110, HebrewDateFieldComponent],
+  [111, LabelFieldComponent],
+  [112, EmptyLineFieldComponent];
 ```
 
-## Usage
+New component should be declare in the `online-form.module` file at the:
 
-Replace the contents of `README.md` with your project's:
-
-- Name
-- Description
-- Installation instructions
-- Usage instructions
-- Support instructions
-- Contributing instructions
-
-## Examples
-
-**Example 01**
-
-```sh
-# Write Example 01 here
+```ts
+@NgModule({
+  imports: [
+    ...
+    DynamicModule.withComponents([
+      ...
+      <New_Type_Component>
+    ])
+  ]
+})
 ```
 
-**Example 02**
-
-```sh
-# Write Example 02 here
-```
-
-Feel free to remove any sections that aren't applicable to your project.
-
-## Support
-
-Please [open an issue](../../issues/new) for support.
-
-## Contributing
-
-Please contribute using [Github Flow](https://guides.github.com/introduction/flow/). Create a branch, add commits, and [open a pull request](../../compare?expand=1).
-Contributing
-
-1. Fork it!
-2. Create your feature branch: git checkout -b my-new-feature
-3. Commit your changes: git commit -m 'Add some feature'
-4. Push to the branch: git push origin my-new-feature
-5. Submit a pull request :D
-
-## History
-
-See [Releases](../../releases) for detailed changelog.
-
-## Author
-
-| [![twitter/oseunando](https://avatars6.githubusercontent.com/u/1318271?v=4&s=120)](http://twitter.com/oseunando "Follow @oseunando on Twitter") |
-| ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Fernando Moreira](http://twitter.com/oseunando)                                                                                                |
-
-## License
-
-```
-WWWWWW||WWWWWW
- W W W||W W W
-      ||
-    ( OO )__________
-     /  |           \
-    /o o|    MIT     \
-    \___/||_||__||_|| *
-         || ||  || ||
-        _||_|| _||_||
-       (__|__|(__|__|
-```
-
-Code is under [MIT License](/LICENSE) - © Fernando Moreira
-
-## Buy me a coffee?
-
-It will encourage me to keep it going, fix whatever bugs you find and spend time making it better :D
-
-<a href="https://www.paypal.me/nandomoreira/5">
-  <img src="https://img.shields.io/badge/Buy%20me%20a%20coffee%3F-US%24%205-blue.svg" alt="Buy me a coffee? - https://www.paypal.me/nandomoreira/5">
-</a>
+Also, need add to `IFormField`(interface) this component and add to `componentFieldsMap`(Map of fields component) in the `online-form.service`

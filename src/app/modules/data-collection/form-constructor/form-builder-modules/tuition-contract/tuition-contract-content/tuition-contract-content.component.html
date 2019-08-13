@@ -1,0 +1,8 @@
+<p>tuition-contract-content works!</p>
+
+      <!--  tuition-contract-->
+      <app-tuition-contract
+        *ngIf="tuitionStateService.isActive"
+        [tuitionContract]="tuitionContract"
+      ></app-tuition-contract>
+      <!--  end tuition-contract-->

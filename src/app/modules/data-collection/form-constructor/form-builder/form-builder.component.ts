@@ -90,7 +90,6 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
   customFields: Field[];
   existingFields: Field[];
   sideBarFields: Field[];
-  tuitionContract: TuitionContract = tuitionContractDefault;
   consentInfo: ConsentInfo = consentInfoDefault;
   termsConditions: TermsConditions = termsConditionsDefault;
   paymentSettings: PaymentSettings = paymentSettingsDefault;
@@ -219,7 +218,6 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
     private constructorIsSavingService: ConstructorIsSavingService,
     private formBuilderIsSavedService: FormBuilderIsSavedService,
     private fileService: FilesService,
-    private readonly financeService: FinanceService,
     private saveFormService: SaveFormService
   ) {
     this.vDataCollection = vDataCollection;
@@ -240,7 +238,6 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
       this.formId = params.hasOwnProperty('id') ? params.id : '';
     });
     this.draftId = this.formId + "_form-builder";
-    this.loadMasterFees();
     this.loadBasicFields();
     // this.loadSideBar();
     this.loadSideBarNew();
@@ -311,7 +308,6 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
       this.form = form;
       this.formName = form.name;
       this.fields = this.form.fields = form.fields || [];
-      this.tuitionContract = form.tuitionContract || tuitionContractDefault;
       this.consentInfo = form.consentInfo || consentInfoDefault;
       this.termsConditions = form.termsConditions || termsConditionsDefault;
       this.paymentSettings = form.paymentSettings || paymentSettingsDefault;
@@ -343,9 +339,6 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
             this.initFormFieldsToSideBar(this.newSideBar, this.fields);
           }
 
-          if (!isEmpty(this.masterFees)) {
-            this.initFeeToTuitionContract();
-          }
         }
       );
     }
@@ -373,7 +366,6 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
       forms: this.formsPDF,
       name: this.formName,
       sidebar: this.newSideBar,
-      tuitionContract: this.tuitionContract,
       consentInfo: this.consentInfo,
       termsConditions: this.termsConditions,
       paymentSettings: this.paymentSettings,
@@ -628,40 +620,6 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
 
   // Tuition Contract
 
-  loadMasterFees() {
-    this.financeService.getMasterFees().subscribe(res => {
-      this.masterFees = res.fees;
-    });
-  }
-
-  initFeeToTuitionContract() {
-    this.addFeeToTuitionContract();
-    // this.deleteFeeFromTuitionContract()
-  }
-
-  addFeeToTuitionContract() {
-    this.masterFees.map((fee: Fee) => {
-      let { id, name, amount, description } = fee;
-      let tuitionFee = {
-        id,
-        name,
-        amount,
-        description,
-        isActive: false,
-        isActiveDiscount: false
-      };
-
-      if (!this.existFeeToTuitionContract(tuitionFee.id))
-        this.tuitionContract.fees.push(tuitionFee);
-    });
-  }
-
-  existFeeToTuitionContract(feeTemplateId) {
-    return (
-      this.tuitionContract.fees.findIndex(fee => fee.id === feeTemplateId) !==
-      -1
-    );
-  }
   //End Tuition Contract
 
   // ngOnDestroy(): void {

@@ -1,4 +1,4 @@
-<br/>
+<br />
 <form class="form-inline">
   <!-- <button type="button" class="btn btn-outline-secondary text-uppercase form-control" (click)="goBack()">Back</button> -->
   <!--<div *ngIf="formName.length>3" class="justify-content-end">-->
@@ -15,17 +15,21 @@
       data-dismiss="alert"
       aria-label="close"
       (click)="disableWarning()"
-    >&times;</a
+      >&times;</a
     >
     <strong>Warning! </strong>{{ showWarningMessage }}
   </div>
 </form>
-<br/>
+<br />
 
 <!-- Form builder -->
 <div class="row no-gutters" *ngIf="form !== undefined && !isDataSaving">
   <div class="col-3 pl-5">
-    <div class="row justify-content-center pb-2">
+    <!-- FORM FIELDS -->
+    <div
+      class="row justify-content-center pb-2"
+      *ngFor="let sidebarItem of sidebarList"
+    >
       <div class="col-10 bg-white ">
         <div class="row no-gutters slider-item align-items-center">
           <div class="col-auto mr-2">
@@ -40,16 +44,27 @@
               <span class="app-slider app-round"></span>
             </label>
           </div>
-          <div class="col" (click)="activeSections.formFields.showSideInfo = !activeSections.formFields.showSideInfo">
+          <div
+            class="col"
+            (click)="
+              activeSections.formFields.showSideInfo = !activeSections
+                .formFields.showSideInfo
+            "
+          >
             <span class="font-weight-bold side-bar-toggle">FORM FIELDS</span>
-            <i class="fas float-right app-plus-i"
-               [ngClass]="{
+            <i
+              class="fas float-right app-plus-i"
+              [ngClass]="{
                 'fa-sort-down': !activeSections.formFields.showSideInfo,
                 'fa-sort-up': activeSections.formFields.showSideInfo
-              }"></i>
+              }"
+            ></i>
           </div>
         </div>
-        <div *ngIf="activeSections.formFields.showSideInfo" class="bg-white rounded mb-3">
+        <div
+          *ngIf="activeSections.formFields.showSideInfo"
+          class="bg-white rounded mb-3"
+        >
           <app-fields-side-bar
             [sideBar]="newSideBar"
             [idSectionForDragDrop]="idSectionForDragDrop"
@@ -105,6 +120,8 @@
       </div>
     </div>
 
+    <!-- END FORM FIELDS -->
+
     <!--    DOCUMENTS & FORMS-->
     <div class="row justify-content-center pb-2">
       <div class="col-10 bg-white ">
@@ -121,22 +138,34 @@
               <span class="app-slider app-round"></span>
             </label>
           </div>
-          <div class="col"
-               (click)="activeSections.documentsForms.showSideInfo = !activeSections.documentsForms.showSideInfo">
-            <span class="font-weight-bold side-bar-toggle">DOCUMENTS & FORMS</span>
-            <i class="fas float-right app-plus-i"
-               [ngClass]="{
+          <div
+            class="col"
+            (click)="
+              activeSections.documentsForms.showSideInfo = !activeSections
+                .documentsForms.showSideInfo
+            "
+          >
+            <span class="font-weight-bold side-bar-toggle"
+              >DOCUMENTS & FORMS</span
+            >
+            <i
+              class="fas float-right app-plus-i"
+              [ngClass]="{
                 'fa-sort-down': !activeSections.documentsForms.showSideInfo,
                 'fa-sort-up': activeSections.documentsForms.showSideInfo
-              }"></i>
+              }"
+            ></i>
           </div>
         </div>
-        <div *ngIf="activeSections.documentsForms.showSideInfo" class="bg-white rounded mb-3 ">
+        <div
+          *ngIf="activeSections.documentsForms.showSideInfo"
+          class="bg-white rounded mb-3 "
+        >
           <div class="row no-gutters pt-2 align-items-center">
             <div class="col">
               <span class="font-weight-bold">Documents</span>
               <span
-              ><i class="fas fa-question-circle pl-1" title="test"></i
+                ><i class="fas fa-question-circle pl-1" title="test"></i
               ></span>
             </div>
             <div class="col-1 align-self-end" (click)="addDocumentItem()">
@@ -149,10 +178,10 @@
               "
             >
               <span [hidden]="!isDocumentsForms.isDocuments"
-              ><i class="fas fa-caret-up ml-2"></i
+                ><i class="fas fa-caret-up ml-2"></i
               ></span>
               <span [hidden]="isDocumentsForms.isDocuments"
-              ><i class="fas fa-caret-down ml-2"></i
+                ><i class="fas fa-caret-down ml-2"></i
               ></span>
             </div>
           </div>
@@ -199,10 +228,10 @@
                   name="isUpload"
                 >
                   <label ngbButtonLabel class="btn app-btn-signature">
-                    <input ngbButton type="radio" [value]="true"/> Upload
+                    <input ngbButton type="radio" [value]="true" /> Upload
                   </label>
                   <label ngbButtonLabel class="btn app-btn-signature">
-                    <input ngbButton type="radio" [value]="false"/> Download
+                    <input ngbButton type="radio" [value]="false" /> Download
                   </label>
                 </div>
               </div>
@@ -214,15 +243,15 @@
               >
                 <div class="col-10">
                   <label ngbButtonLabel class="app-radio-container text-left"
-                  >Needed per Family
-                    <input type="radio" ngbButton [value]="true"/>
+                    >Needed per Family
+                    <input type="radio" ngbButton [value]="true" />
                     <span class="app-radio-checkmark mt-2"></span>
                   </label>
                 </div>
                 <div class="col-10">
                   <label ngbButtonLabel class="app-radio-container text-left"
-                  >Needed per Student
-                    <input type="radio" ngbButton [value]="false"/>
+                    >Needed per Student
+                    <input type="radio" ngbButton [value]="false" />
                     <span class="app-radio-checkmark mt-2"></span>
                   </label>
                 </div>
@@ -230,13 +259,13 @@
             </div>
           </div>
 
-          <hr/>
+          <hr />
 
           <div class="row no-gutters pt-2 align-items-center">
             <div class="col">
               <span class="font-weight-bold">External section</span>
               <span
-              ><i class="fas fa-question-circle pl-1" title="test"></i
+                ><i class="fas fa-question-circle pl-1" title="test"></i
               ></span>
             </div>
             <div class="col-1 align-self-end" (click)="addFormPDF()">
@@ -247,10 +276,10 @@
               (click)="isDocumentsForms.isForms = !isDocumentsForms.isForms"
             >
               <span [hidden]="!isDocumentsForms.isForms"
-              ><i class="fas fa-caret-up ml-2"></i
+                ><i class="fas fa-caret-up ml-2"></i
               ></span>
               <span [hidden]="isDocumentsForms.isForms"
-              ><i class="fas fa-caret-down ml-2"></i
+                ><i class="fas fa-caret-down ml-2"></i
               ></span>
             </div>
           </div>
@@ -298,11 +327,11 @@
                   name="isNew"
                 >
                   <label ngbButtonLabel class="btn app-btn-signature">
-                    <input ngbButton type="radio" [value]="false"/> Use
+                    <input ngbButton type="radio" [value]="false" /> Use
                     Existing
                   </label>
                   <label ngbButtonLabel class="btn app-btn-signature">
-                    <input ngbButton type="radio" [value]="true"/> Create New
+                    <input ngbButton type="radio" [value]="true" /> Create New
                   </label>
                 </div>
               </div>
@@ -314,15 +343,15 @@
               >
                 <div class="col-10">
                   <label ngbButtonLabel class="app-radio-container text-left"
-                  >Needed per Family
-                    <input type="radio" ngbButton [value]="true"/>
+                    >Needed per Family
+                    <input type="radio" ngbButton [value]="true" />
                     <span class="app-radio-checkmark mt-2"></span>
                   </label>
                 </div>
                 <div class="col-10">
                   <label ngbButtonLabel class="app-radio-container text-left"
-                  >Needed per Student
-                    <input type="radio" ngbButton [value]="false"/>
+                    >Needed per Student
+                    <input type="radio" ngbButton [value]="false" />
                     <span class="app-radio-checkmark mt-2"></span>
                   </label>
                 </div>
@@ -330,7 +359,7 @@
 
               <div class="col mt-4 p-0">
                 <label class="app-switch">
-                  <input type="checkbox" [(ngModel)]="forms.isFillableOnline"/>
+                  <input type="checkbox" [(ngModel)]="forms.isFillableOnline" />
                   <span class="app-slider app-round"></span>
                 </label>
                 <span class="ml-1">Fillable Online</span>
@@ -369,25 +398,37 @@
               <span class="app-slider app-round"></span>
             </label>
           </div>
-          <div class="col" (click)=" activeSections.consent.showSideInfo = !activeSections.consent.showSideInfo">
+          <div
+            class="col"
+            (click)="
+              activeSections.consent.showSideInfo = !activeSections.consent
+                .showSideInfo
+            "
+          >
             <span class="font-weight-bold side-bar-toggle">CONSENT</span>
-            <i class="fas float-right app-plus-i"
-               [ngClass]="{
+            <i
+              class="fas float-right app-plus-i"
+              [ngClass]="{
                 'fa-sort-down': !activeSections.consent.showSideInfo,
                 'fa-sort-up': activeSections.consent.showSideInfo
-              }"></i>
+              }"
+            ></i>
           </div>
         </div>
 
         <div class="row no-gutters">
           <div class="col" *ngIf="activeSections.consent.showSideInfo">
-            <i (click)="addConsentItem()"
-               class="fas fa-plus-square float-right app-plus-i"
+            <i
+              (click)="addConsentItem()"
+              class="fas fa-plus-square float-right app-plus-i"
             ></i>
           </div>
         </div>
 
-        <div *ngIf="activeSections.consent.showSideInfo" class="bg-white rounded mb-3 ">
+        <div
+          *ngIf="activeSections.consent.showSideInfo"
+          class="bg-white rounded mb-3 "
+        >
           <div
             class="app-consent-item p-3 mt-3"
             *ngFor="let item of consentInfo.consents; let i = index"
@@ -415,10 +456,10 @@
               </div>
               <div class="col-2 text-right pt-2">
                 <span (click)="removeConsentItem(i)" class="app-fb-trash mr-3"
-                ><i class="fas fa-trash"></i
+                  ><i class="fas fa-trash"></i
                 ></span>
                 <span class="app-fb-caret-up"
-                ><i class="fas fa-caret-up"></i
+                  ><i class="fas fa-caret-up"></i
                 ></span>
               </div>
             </div>
@@ -426,7 +467,7 @@
             <div class="row no-gutters align-items-center pt-3">
               <div class="col-auto mr-2">
                 <label class="app-switch">
-                  <input type="checkbox" [(ngModel)]="item.checkbox.isActive"/>
+                  <input type="checkbox" [(ngModel)]="item.checkbox.isActive" />
                   <span class="app-slider app-round"></span>
                 </label>
               </div>
@@ -484,7 +525,7 @@
               >
                 <div class="col">
                   <label class="app-radio-container"
-                  >System
+                    >System
                     <input
                       type="radio"
                       [name]="'eSignatureType' + i"
@@ -496,9 +537,9 @@
                 </div>
                 <div class="col">
                   <label class="app-radio-container"
-                  >External
+                    >External
                     <span class="pl-2"
-                    ><i class="fas fa-cog app-fb-gear"></i
+                      ><i class="fas fa-cog app-fb-gear"></i
                     ></span>
                     <input
                       type="radio"
@@ -528,171 +569,7 @@
     </div>
     <!--END CONSENT-->
 
-    <!--TUITION CONTRACT-->
-    <div class="row justify-content-center pb-2">
-      <div class="col-10 bg-white ">
-        <div class="row no-gutters slider-item align-items-center">
-          <div class="col-auto mr-2">
-            <label class="app-switch">
-              <input
-                type="checkbox"
-                [ngModel]="activeSections.tuition.isActive"
-                (ngModelChange)="
-                  activeSections.tuition.isActive = activeSections.tuition.showSideInfo = $event
-                "
-              />
-              <span class="app-slider app-round"></span>
-            </label>
-          </div>
-          <div class="col" (click)=" activeSections.tuition.showSideInfo = !activeSections.tuition.showSideInfo">
-            <span
-              class="font-weight-bold side-bar-toggle"
-              (click)="
-                activeSections.tuition.showSideInfo = !activeSections.tuition.showSideInfo
-              "
-            >TUITION CONTRACT</span>
-            <i class="fas float-right app-plus-i"
-               [ngClass]="{
-                'fa-sort-down': !activeSections.tuition.showSideInfo,
-                'fa-sort-up': activeSections.tuition.showSideInfo
-              }"></i>
-          </div>
-        </div>
-        <div *ngIf="activeSections.tuition.showSideInfo" class="bg-white rounded mb-3">
-          <p class="mt-3 font-weight-bold">Table Structure</p>
-          <div class="row no-gutters">
-            <div class="col">
-              <label class="app-radio-container"
-              >Split by Student
-                <input
-                  type="radio"
-                  name="split"
-                  value="student"
-                  [(ngModel)]="tuitionContract.splitBy"
-                />
-                <span class="app-radio-checkmark"></span>
-              </label>
-            </div>
-            <div class="col">
-              <label class="app-radio-container"
-              >Split by Fee
-                <input
-                  type="radio"
-                  name="split"
-                  value="fee"
-                  [(ngModel)]="tuitionContract.splitBy"
-                />
-                <span class="app-radio-checkmark"></span>
-              </label>
-            </div>
-          </div>
-          <hr/>
-          <p class="font-weight-bold">Show Fees</p>
-          <div class="row no-gutters" *ngFor="let item of tuitionContract.fees">
-            <div class="col-6">
-              <label class="app-checkbox-container">
-                <span class="form-payment-side-bar-text">{{
-                  item.name | uppercase
-                }}</span>
-                <input type="checkbox" [(ngModel)]="item.isActive"/>
-                <span class="app-checkbox-checkmark"></span>
-              </label>
-            </div>
-            <div class="col">
-              <label class="app-switch app-switch-top-0 mr-1">
-                <input
-                  type="checkbox"
-                  [disabled]="!item.isActive"
-                  [(ngModel)]="item.isActiveDiscount"
-                />
-                <span class="app-slider app-round"></span>
-              </label>
-              <span>Show Discounts</span>
-            </div>
-          </div>
-          <hr/>
-          <div class="row no-gutters slider-item align-items-center">
-            <div class="col">
-              <label class="app-switch mr-2">
-                <input
-                  type="checkbox"
-                  [(ngModel)]="tuitionContract.signature.isRequire"
-                />
-                <span class="app-slider app-round"></span>
-              </label>
-              <span class="font-weight-bold ">Contract Signature</span>
-            </div>
-          </div>
-          <ng-container *ngIf="tuitionContract.signature.isRequire">
-            <div class="row no-gutters">
-              <div
-                class="btn-group btn-group-toggle w-100 mt-2"
-                ngbRadioGroup
-                name="radioSignature"
-                [(ngModel)]="tuitionContract.signature.type"
-                [ngModelOptions]="{ standalone: true }"
-              >
-                <label ngbButtonLabel class="btn app-btn-signature">
-                  <input
-                    ngbButton
-                    type="radio"
-                    [value]="SIGNATURE_TYPES.ESIGN"
-                  />
-                  E-signature
-                </label>
-                <label ngbButtonLabel class="btn app-btn-signature">
-                  <input ngbButton type="radio" [value]="SIGNATURE_TYPES.WET"/>
-                  Wet Signature
-                </label>
-              </div>
-            </div>
-            <div
-              class="row no-gutters app-tuition-signature px-3 py-3"
-              *ngIf="tuitionContract.signature.type === SIGNATURE_TYPES.ESIGN"
-            >
-              <div class="col">
-                <label class="app-radio-container"
-                >System
-                  <input
-                    type="radio"
-                    name="signatureType"
-                    [value]="E_SIGNATURE_TYPES.SYSTEM"
-                    [(ngModel)]="tuitionContract.signature.eType"
-                  />
-                  <span class="app-radio-checkmark"></span>
-                </label>
-              </div>
-              <div class="col">
-                <label class="app-radio-container"
-                >External
-                  <span class="pl-2"
-                  ><i class="fas fa-cog app-fb-gear"></i
-                  ></span>
-                  <input
-                    type="radio"
-                    name="signatureType"
-                    [value]="E_SIGNATURE_TYPES.EXTERNAL"
-                    [(ngModel)]="tuitionContract.signature.eType"
-                  />
-                  <span class="app-radio-checkmark"></span>
-                </label>
-              </div>
-            </div>
-            <div class="row px-3 pt-3">
-              <label class="app-checkbox-container">
-                Both Parents' Signature (when applicable)
-                <input
-                  type="checkbox"
-                  [(ngModel)]="tuitionContract.signature.isBothParents"
-                />
-                <span class="app-checkbox-checkmark"></span>
-              </label>
-            </div>
-          </ng-container>
-        </div>
-      </div>
-    </div>
-    <!--END TUITION CONTRACT-->
+    <app-tuition-contract-sidebar></app-tuition-contract-sidebar>
 
     <!--PAYMENT SETTINGS-->
     <div class="row justify-content-center pb-2">
@@ -710,9 +587,16 @@
               <span class="app-slider app-round"></span>
             </label>
           </div>
-          <div class="col"
-               (click)="activeSections.paymentSettings.showSideInfo = !activeSections.paymentSettings.showSideInfo">
-            <span class="font-weight-bold side-bar-toggle">PAYMENT SETTINGS</span>
+          <div
+            class="col"
+            (click)="
+              activeSections.paymentSettings.showSideInfo = !activeSections
+                .paymentSettings.showSideInfo
+            "
+          >
+            <span class="font-weight-bold side-bar-toggle"
+              >PAYMENT SETTINGS</span
+            >
             <i
               class="fas float-right app-plus-i"
               [ngClass]="{
@@ -759,7 +643,7 @@
                 <span
                   (click)="removePaymentSettingsItems(item.id)"
                   class="app-fb-trash mr-3"
-                ><i class="fas fa-trash"></i
+                  ><i class="fas fa-trash"></i
                 ></span>
               </div>
             </div>
@@ -767,7 +651,7 @@
             <div class="row no-gutters align-items-center pt-3">
               <div class="col-auto mr-2">
                 <label class="app-switch">
-                  <input type="checkbox" [(ngModel)]="item.checkbox.isActive"/>
+                  <input type="checkbox" [(ngModel)]="item.checkbox.isActive" />
                   <span class="app-slider app-round"></span>
                 </label>
               </div>
@@ -777,7 +661,7 @@
             </div>
           </div>
 
-          <hr/>
+          <hr />
 
           <div class="row no-gutters align-items-center pt-1">
             <div class="col-auto mr-2">
@@ -812,7 +696,7 @@
                   E-signature
                 </label>
                 <label ngbButtonLabel class="btn app-btn-signature">
-                  <input ngbButton type="radio" [value]="SIGNATURE_TYPES.WET"/>
+                  <input ngbButton type="radio" [value]="SIGNATURE_TYPES.WET" />
                   Wet Signature
                 </label>
               </div>
@@ -824,7 +708,7 @@
             >
               <div class="col">
                 <label class="app-radio-container"
-                >System
+                  >System
                   <input
                     type="radio"
                     name="eSignatureType"
@@ -836,9 +720,9 @@
               </div>
               <div class="col">
                 <label class="app-radio-container"
-                >External
+                  >External
                   <span class="pl-2"
-                  ><i class="fas fa-cog app-fb-gear"></i
+                    ><i class="fas fa-cog app-fb-gear"></i
                   ></span>
                   <input
                     type="radio"
@@ -883,11 +767,19 @@
               <span class="app-slider app-round"></span>
             </label>
           </div>
-          <div class="col"
-               (click)="activeSections.termsConditionals.showSideInfo = !activeSections.termsConditionals.showSideInfo">
-            <span class="font-weight-bold side-bar-toggle">TERMS AND CONDITIONS</span>
-            <i class="fas float-right app-plus-i"
-               [ngClass]="{
+          <div
+            class="col"
+            (click)="
+              activeSections.termsConditionals.showSideInfo = !activeSections
+                .termsConditionals.showSideInfo
+            "
+          >
+            <span class="font-weight-bold side-bar-toggle"
+              >TERMS AND CONDITIONS</span
+            >
+            <i
+              class="fas float-right app-plus-i"
+              [ngClass]="{
                 'fa-sort-down': !activeSections.termsConditionals.showSideInfo,
                 'fa-sort-up': activeSections.termsConditionals.showSideInfo
               }"
@@ -896,9 +788,10 @@
         </div>
         <div class="row no-gutters">
           <div class="col">
-            <i *ngIf="activeSections.termsConditionals.showSideInfo"
-               (click)="addTermsConditionsItem()"
-               class="fas fa-plus-square float-right app-plus-i"
+            <i
+              *ngIf="activeSections.termsConditionals.showSideInfo"
+              (click)="addTermsConditionsItem()"
+              class="fas fa-plus-square float-right app-plus-i"
             ></i>
           </div>
         </div>
@@ -938,7 +831,7 @@
                 <span
                   (click)="removeTermsConditionsItem(item.id)"
                   class="app-fb-trash mr-3"
-                ><i class="fas fa-trash"></i
+                  ><i class="fas fa-trash"></i
                 ></span>
               </div>
             </div>
@@ -946,7 +839,7 @@
             <div class="row no-gutters align-items-center pt-3">
               <div class="col-auto mr-2">
                 <label class="app-switch">
-                  <input type="checkbox" [(ngModel)]="item.checkbox.isActive"/>
+                  <input type="checkbox" [(ngModel)]="item.checkbox.isActive" />
                   <span class="app-slider app-round"></span>
                 </label>
               </div>
@@ -956,7 +849,7 @@
             </div>
           </div>
 
-          <hr/>
+          <hr />
 
           <div class="row no-gutters align-items-center pt-1">
             <div class="col-auto mr-2">
@@ -991,7 +884,7 @@
                   E-signature
                 </label>
                 <label ngbButtonLabel class="btn app-btn-signature">
-                  <input ngbButton type="radio" [value]="SIGNATURE_TYPES.WET"/>
+                  <input ngbButton type="radio" [value]="SIGNATURE_TYPES.WET" />
                   Wet Signature
                 </label>
               </div>
@@ -1003,7 +896,7 @@
             >
               <div class="col">
                 <label class="app-radio-container"
-                >System
+                  >System
                   <input
                     type="radio"
                     name="eSignatureType"
@@ -1015,9 +908,9 @@
               </div>
               <div class="col">
                 <label class="app-radio-container"
-                >External
+                  >External
                   <span class="pl-2"
-                  ><i class="fas fa-cog app-fb-gear"></i
+                    ><i class="fas fa-cog app-fb-gear"></i
                   ></span>
                   <input
                     type="radio"
@@ -1055,30 +948,41 @@
               <input
                 type="checkbox"
                 [ngModel]="activeSections.formPayment.isActive"
-                (ngModelChange)="activeSections.formPayment.isActive = activeSections.formPayment.showSideInfo = $event"
+                (ngModelChange)="
+                  activeSections.formPayment.isActive = activeSections.formPayment.showSideInfo = $event
+                "
               />
               <span class="app-slider app-round"></span>
             </label>
           </div>
-          <div class="col"
-               (click)="activeSections.formPayment.showSideInfo = !activeSections.formPayment.showSideInfo">
+          <div
+            class="col"
+            (click)="
+              activeSections.formPayment.showSideInfo = !activeSections
+                .formPayment.showSideInfo
+            "
+          >
             <span class="font-weight-bold side-bar-toggle">FORM PAYMENT</span>
-            <i class="fas float-right app-plus-i"
-               [ngClass]="{
+            <i
+              class="fas float-right app-plus-i"
+              [ngClass]="{
                 'fa-sort-down': !activeSections.formPayment.showSideInfo,
                 'fa-sort-up': activeSections.formPayment.showSideInfo
               }"
             ></i>
           </div>
         </div>
-        <div *ngIf="activeSections.formPayment.showSideInfo" class="bg-white rounded mb-3 ">
+        <div
+          *ngIf="activeSections.formPayment.showSideInfo"
+          class="bg-white rounded mb-3 "
+        >
           <div
             class="row no-gutters pt-2 align-items-center"
             *ngFor="let item of formPaymentSideBar"
           >
             <div class="col-1">
               <label class="app-checkbox-container">
-                <input type="checkbox" [(ngModel)]="item.isActive"/>
+                <input type="checkbox" [(ngModel)]="item.isActive" />
                 <span class="app-checkbox-checkmark"></span>
               </label>
             </div>
@@ -1145,10 +1049,8 @@
       <!--  end consent-->
 
       <!--  tuition-contract-->
-      <app-tuition-contract
-        *ngIf="activeSections.tuition.isActive"
-        [tuitionContract]="tuitionContract"
-      ></app-tuition-contract>
+      <app-tuition-contract-content 
+      *ngIf="activeSections.tuition.isActive"></app-tuition-contract-content>
       <!--  end tuition-contract-->
 
       <!--  app-payment-settings s-->
@@ -1166,7 +1068,10 @@
       <!--  end terms and conditions-->
 
       <!--  form-payment -->
-      <div class="app-section-wrapper" *ngIf="activeSections.formPayment.isActive">
+      <div
+        class="app-section-wrapper"
+        *ngIf="activeSections.formPayment.isActive"
+      >
         <app-form-payment [formPaymentSideBar]="formPaymentSideBar">
         </app-form-payment>
       </div>

@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {E_SIGNATURE_TYPES, SIGNATURE_TYPES, TUITION_CONTRACT_SPLIT_TYPES} from "../../../../../enums";
-import {TuitionContract} from "../../../../../models/data-collection/form-constructor/form-builder/tuition-contract.model";
+import {E_SIGNATURE_TYPES, SIGNATURE_TYPES, TUITION_CONTRACT_SPLIT_TYPES} from "src/app/enums";
+import {TuitionContract} from "src/app/models/data-collection/form-constructor/form-builder/tuition-contract.model";
 
 @Component({
   selector: 'app-tuition-contract',

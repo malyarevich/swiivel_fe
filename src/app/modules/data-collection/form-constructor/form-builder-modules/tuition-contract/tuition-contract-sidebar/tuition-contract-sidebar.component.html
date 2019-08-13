@@ -1,0 +1,106 @@
+<!--TUITION CONTRACT-->
+<div class="row justify-content-center pb-2">
+  <div class="col-10 bg-white ">
+    <div class="row no-gutters slider-item align-items-center">
+      <div class="col-auto mr-2">
+        <label class="app-switch">
+          <input
+            type="checkbox"
+            [checked]="getIsActiveSection()"
+            (change)="toggleIsActiveSection()"
+          />
+          <span class="app-slider app-round"></span>
+        </label>
+      </div>
+      <div
+        class="col"
+        (click)="toggleIsActiveSidebar()"
+      >
+        <span
+          class="font-weight-bold side-bar-toggle"
+          (click)="toggleIsActiveSidebar()"
+          >TUITION CONTRACT</span
+        >
+        <i
+          class="fas float-right app-plus-i"
+          [ngClass]="{
+            'fa-sort-down': !activeSection,
+            'fa-sort-up': activeSection
+          }"
+        ></i>
+      </div>
+    </div>
+    <div *ngIf="true" class="bg-white rounded mb-3">
+      <!-- <div *ngIf="activeSections.tuition.showSideInfo" class="bg-white rounded mb-3"> -->
+      <p class="mt-3 font-weight-bold">Table Structure</p>
+      <!-- <div class="row no-gutters">
+            <div class="col">
+              <label class="app-radio-container"
+              >Split by Student
+                <input
+                  type="radio"
+                  name="split"
+                  value="student"
+                  [(ngModel)]="tuitionContract.splitBy"
+                />
+                <span class="app-radio-checkmark"></span>
+              </label>
+            </div>
+            <div class="col">
+              <label class="app-radio-container"
+              >Split by Fee
+                <input
+                  type="radio"
+                  name="split"
+                  value="fee"
+                  [(ngModel)]="tuitionContract.splitBy"
+                />
+                <span class="app-radio-checkmark"></span>
+              </label>
+            </div>
+          </div>
+          <hr/>
+          <p class="font-weight-bold">Show Fees</p>
+          <div class="row no-gutters" *ngFor="let item of tuitionContract.fees">
+            <div class="col-6">
+              <label class="app-checkbox-container">
+                <span class="form-payment-side-bar-text">{{
+                  item.name | uppercase
+                }}</span>
+                <input type="checkbox" [(ngModel)]="item.isActive"/>
+                <span class="app-checkbox-checkmark"></span>
+              </label>
+            </div>
+            <div class="col">
+              <label class="app-switch app-switch-top-0 mr-1">
+                <input
+                  type="checkbox"
+                  [disabled]="!item.isActive"
+                  [(ngModel)]="item.isActiveDiscount"
+                />
+                <span class="app-slider app-round"></span>
+              </label>
+              <span>Show Discounts</span>
+            </div>
+          </div> -->
+      <hr />
+      <div class="row no-gutters slider-item align-items-center">
+        <div class="col">
+          <label class="app-switch mr-2">
+            <input
+              type="checkbox"
+              (change)="changeIsRequire()"
+              [checked]="isRequiredSignature"
+            />
+            <span class="app-slider app-round"></span>
+          </label>
+          <span class="font-weight-bold ">Contract Signature</span>
+        </div>
+      </div>
+      <ng-container *ngIf="isRequiredSignature">
+        <app-signature-sidebar></app-signature-sidebar>
+      </ng-container>
+    </div>
+  </div>
+</div>
+<!--END TUITION CONTRACT-->

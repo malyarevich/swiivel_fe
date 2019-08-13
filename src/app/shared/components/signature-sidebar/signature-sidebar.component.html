@@ -1,0 +1,69 @@
+<p>signature-sidebar works!</p>
+<div class="row no-gutters">
+    <div
+      class="btn-group btn-group-toggle w-100 mt-2"
+      ngbRadioGroup
+      name="radioSignature"
+      (change)="changeSignatureType($event)"
+    >
+      <label ngbButtonLabel class="btn app-btn-signature">
+        <input
+          ngbButton
+          type="radio"
+          [value]="SIGNATURE_TYPES.ESIGN"
+          [checked]="signature.type === SIGNATURE_TYPES.ESIGN" 
+        />
+        E-signature
+      </label>
+      <label ngbButtonLabel class="btn app-btn-signature">
+        <input ngbButton type="radio" [value]="SIGNATURE_TYPES.WET" 
+        [checked]="signature.type === SIGNATURE_TYPES.WET" />
+        Wet Signature
+      </label>
+    </div>
+  </div>
+  <div
+    class="row no-gutters app-tuition-signature px-3 py-3"
+    *ngIf="signature.type === SIGNATURE_TYPES.ESIGN"
+  >
+    <div class="col">
+      <label class="app-radio-container"
+      >System
+        <input
+          type="radio"
+          name="signatureType"
+          [value]="E_SIGNATURE_TYPES.SYSTEM"
+          [checked]="signature.eType === E_SIGNATURE_TYPES.SYSTEM" 
+          (change)="changeSignatureEType($event)"
+        />
+        <span class="app-radio-checkmark"></span>
+      </label>
+    </div>
+    <div class="col">
+      <label class="app-radio-container"
+      >External
+        <span class="pl-2"
+        ><i class="fas fa-cog app-fb-gear"></i
+        ></span>
+        <input
+          type="radio"
+          name="signatureType"
+          [value]="E_SIGNATURE_TYPES.EXTERNAL"
+          (change)="changeSignatureEType($event)"
+          [checked]="signature.eType === E_SIGNATURE_TYPES.EXTERNAL" 
+        />
+        <span class="app-radio-checkmark"></span>
+      </label>
+    </div>
+  </div>
+  <div class="row px-3 pt-3">
+    <label class="app-checkbox-container">
+      Both Parents' Signature (when applicable)
+      <input
+        type="checkbox"
+        (change)="changeSignatureIsBoth()"
+        [checked]="signature.isBothParents"
+      />
+      <span class="app-checkbox-checkmark"></span>
+    </label>
+  </div>
