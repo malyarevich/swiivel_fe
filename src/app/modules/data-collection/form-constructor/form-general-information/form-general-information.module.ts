@@ -11,6 +11,7 @@ import {FormPeriodsService} from '../../services/form-periods.service';
 import { FormGeneralBasicInfoComponent } from './form-general-basic-info/form-general-basic-info.component';
 import { FormGeneralWayCreateComponent } from './form-general-way-create/form-general-way-create.component';
 import { FormGeneralDatesComponent } from './form-general-dates/form-general-dates.component';
+import { FormGeneralEligibleComponent } from './form-general-eligible/form-general-eligible.component';
 
 
 @NgModule({
@@ -20,6 +21,7 @@ import { FormGeneralDatesComponent } from './form-general-dates/form-general-dat
     FormGeneralBasicInfoComponent,
     FormGeneralWayCreateComponent,
     FormGeneralDatesComponent,
+    FormGeneralEligibleComponent,
   ],
   imports: [
     CommonModule,
