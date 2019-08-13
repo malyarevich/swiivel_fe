@@ -19,7 +19,10 @@
                      label="Input Mask"></app-input-field>
   </div>
   <div>
-    <app-toggle-checkbox-field label="DEFAULT VALUE" [formControlName]="'isDefaultValue'"></app-toggle-checkbox-field>
+    <app-toggle-checkbox-field>
+      <span class="label">DEFAULT VALUE</span>
+      <input type="checkbox" formControlName="isDefaultValue"/>
+    </app-toggle-checkbox-field>
   </div>
   <div>
     <app-input-field [formControlName]="'defaultValue'"

@@ -1,4 +1,4 @@
-@import '../../../../../styles/variables/colors';
+@import './variables/colors';
 
 .app-shared-switch {
   position: relative;
@@ -8,12 +8,7 @@
   height: 17px;
 }
 
-/* Hide default HTML checkbox */
-.app-shared-switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
+
 
 /* The slider */
 .app-shared-slider {
@@ -40,15 +35,22 @@
   transition: .4s;
 }
 
-input:checked + .app-shared-slider {
+/* Hide default HTML checkbox */
+:host ::ng-deep .app-shared-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+:host ::ng-deep input:checked + .app-shared-slider {
   background-color: $element-base-color;
 }
 
-input:focus + .app-shared-slider {
+:host ::ng-deep input:focus + .app-shared-slider {
   box-shadow: 0 0 1px $element-base-color;
 }
 
-input:checked + .app-shared-slider:before {
+:host ::ng-deep input:checked + .app-shared-slider:before {
   -webkit-transform: translateX(13px);
   -ms-transform: translateX(13px);
   transform: translateX(13px);

@@ -73,8 +73,10 @@
     </i>
   </div>
   <div>
-    <app-toggle-checkbox-field label="SELECTED BY DEFAULT"
-                               [formControlName]="'isSelectedDefault'"></app-toggle-checkbox-field>
+    <app-toggle-checkbox-field>
+      <span class="label">SELECTED BY DEFAULT</span>
+      <input type="checkbox" formControlName="isSelectedDefault"/>
+    </app-toggle-checkbox-field>
   </div>
   <div>
     <app-select-field [formControlName]="'selectedDefault'"

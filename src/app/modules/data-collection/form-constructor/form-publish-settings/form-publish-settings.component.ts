@@ -92,7 +92,7 @@ export class FormPublishSettingsComponent implements OnInit {
 
     this.prepareSaving();
 
-    this.onURLSubscription = this.route.parent.params.subscribe((params: Params) => {
+    this.onURLSubscription = this.route.parent.parent.parent.parent.params.subscribe((params: Params) => {
       this.formId = params.hasOwnProperty('id') ? params.id : '';
       this.draftId = this.formId + '_publish-setting';
 
