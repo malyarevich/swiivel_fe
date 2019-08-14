@@ -5,10 +5,10 @@
     <app-publish-settings-online-form
       class="d-block app-div-animation"
       [ngClass]="{
-        'app-div-show': publish_settings.state.settings['online'],
-        'app-div-hide': !publish_settings.state.settings['online']
+        'app-div-show': publishSettings.state.settings['online'],
+        'app-div-hide': !publishSettings.state.settings['online']
       }"
-      [onlineConfig]="publish_settings.online_config"
+      [onlineConfig]="publishSettings.online_config"
     ></app-publish-settings-online-form>
   </ng-container>
   <!-- END: Online Form -->
@@ -18,10 +18,10 @@
     <app-publish-settings-pdf-form
       class="d-block app-div-animation"
       [ngClass]="{
-        'app-div-show': publish_settings.state.settings['pdf'],
-        'app-div-hide': !publish_settings.state.settings['pdf']
+        'app-div-show': publishSettings.state.settings['pdf'],
+        'app-div-hide': !publishSettings.state.settings['pdf']
       }"
-      [pdfConfig]="publish_settings.pdf_config"
+      [pdfConfig]="publishSettings.pdf_config"
     ></app-publish-settings-pdf-form>
   </ng-container>
   <!-- END: PDF Form -->

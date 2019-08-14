@@ -1,13 +1,13 @@
-import { Injectable } from "@angular/core";
-import { map } from "rxjs/operators";
-import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
-import { Observable } from "rxjs";
+import { Injectable } from '@angular/core';
+import { map } from 'rxjs/operators';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import {
   IAutomation,
   IAutomationTemplateListItem,
   IAutomationLogicListItem,
   IData
-} from "../model/publish-settings.model";
+} from '../model/publish-settings.model';
 
 @Injectable()
 export class PublishSettingsRemoteService {
@@ -25,7 +25,6 @@ export class PublishSettingsRemoteService {
   }
 
   sendData(data: IData, id: string) {
-    // console.log( JSON.stringify(data));
     return this.http
       .post(`/proxy/forms/publish-settings/${id}`, data)
       .pipe(map(response => response));
