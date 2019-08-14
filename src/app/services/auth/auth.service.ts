@@ -13,7 +13,6 @@ export class AuthService {
   }
 
   public login(username: string, password: string): Observable<User> {
-    console.log('login');
     return this.http.post('/login', {username, password});
   }
 
