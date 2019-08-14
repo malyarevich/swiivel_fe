@@ -1,14 +1,14 @@
-import { Component, OnInit, Input } from "@angular/core";
-import { PublishSettingsAutomationService } from "../../../../services/publish-settings-automation.service";
+import { Component, OnInit, Input } from '@angular/core';
+import { PublishSettingsAutomationService } from '../../../../services/publish-settings-automation.service';
 import {
   IAutomationListItem,
   IAutomation
-} from "../../../../model/publish-settings.model";
+} from '../../../../model/publish-settings.model';
 
 @Component({
-  selector: "app-automation-header",
-  templateUrl: "./automation-header.component.html",
-  styleUrls: ["./automation-header.component.scss"]
+  selector: 'app-automation-header',
+  templateUrl: './automation-header.component.html',
+  styleUrls: ['./automation-header.component.scss']
 })
 export class AutomationHeaderComponent implements OnInit {
   @Input() automationItem: IAutomationListItem;
@@ -23,27 +23,27 @@ export class AutomationHeaderComponent implements OnInit {
 
   ngOnInit() {
     this.createdBy =
-      this.automationItem["created_by"] !== undefined
-        ? `${this.automationItem["created_by"]["full_name"]} ${
-            this.automationItem["created_by"]["created_at"]
+      this.automationItem['created_by'] !== undefined
+        ? `${this.automationItem['created_by']['full_name']} ${
+            this.automationItem['created_by']['created_at']
           }`
         : `You (not yet created)`;
 
     this.updatedBy =
-      this.automationItem["created_by"] !== undefined
-        ? `${this.automationItem["updated_by"]["full_name"]} ${
-            this.automationItem["updated_by"]["updated_at"]
+      this.automationItem['created_by'] !== undefined
+        ? `${this.automationItem['updated_by']['full_name']} ${
+            this.automationItem['updated_by']['updated_at']
           }`
         : `You (not yet updated)`;
   }
 
   onChangeAutomationName(_id: number, name: string) {
-    const obj: object = {"_id": _id, "name": name};
+    const obj: object = {'_id': _id, 'name': name};
     this.automationService.changeAutomationItemName(obj);
   }
 
   onChangeAutomationType(_id: number, type_id: string) {
-    const obj: object = {"_id": _id, "type_id": parseInt(type_id, 10)};
+    const obj: object = {'_id': _id, 'type_id': parseInt(type_id, 10)};
     this.automationService.changeAutomationItemType(obj);
   }
 

@@ -13,6 +13,7 @@ import {PermissionService} from '@services/permission/permission.service';
 import {AppComponent} from './app.component';
 import {LoginModule} from '@modules/login';
 import {InterceptorsModule} from '@app/utils';
+import {environment} from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,7 @@ import {InterceptorsModule} from '@app/utils';
     LoginModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
-    StoreDevtoolsModule.instrument(),
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
     SharedStoreModule,
     InterceptorsModule.forRoot(),
   ],

@@ -1,12 +1,4 @@
-import { EventEmitter, Injectable } from "@angular/core";
-import { map } from "rxjs/operators";
-import { Observable } from "rxjs";
-import {
-  IAutomation,
-  IAutomationTemplateListItem,
-  IAutomationLogicListItem,
-  IData
-} from "../model/publish-settings.model";
+import { EventEmitter, Injectable } from '@angular/core';
 
 @Injectable()
 export class PublishSettingsService {
