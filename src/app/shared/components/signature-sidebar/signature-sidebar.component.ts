@@ -1,5 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { ISignature } from 'src/app/models/data-collection/signature.model';
+import {
+  E_SIGNATURE_TYPES,
+  SIGNATURE_TYPES,
+  TUITION_CONTRACT_SPLIT_TYPES
+} from "src/app/enums";
 
 @Component({
   selector: "app-signature-sidebar",
@@ -9,6 +14,7 @@ import { ISignature } from 'src/app/models/data-collection/signature.model';
 export class SignatureSidebarComponent implements OnInit {
   @Input() signature: ISignature;
   @Output() onChangeSignature: EventEmitter<ISignature> = new EventEmitter;
+  SIGNATURE_TYPES = SIGNATURE_TYPES;
 
   constructor() {}
 
