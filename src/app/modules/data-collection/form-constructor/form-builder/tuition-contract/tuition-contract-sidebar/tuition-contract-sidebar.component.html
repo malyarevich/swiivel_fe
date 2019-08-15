@@ -7,7 +7,7 @@
           <input
             type="checkbox"
             [checked]="getIsActiveSection()"
-            (change)="toggleIsActiveSection()"
+            (change)="toggleIsActiveSection(); dependSidebar()"
           />
           <span class="app-slider app-round"></span>
         </label>
@@ -18,30 +18,30 @@
       >
         <span
           class="font-weight-bold side-bar-toggle"
-          (click)="toggleIsActiveSidebar()"
           >TUITION CONTRACT</span
         >
         <i
           class="fas float-right app-plus-i"
           [ngClass]="{
-            'fa-sort-down': !activeSection,
-            'fa-sort-up': activeSection
+            'fa-sort-down': !getIsActiveSidebar(),
+            'fa-sort-up': getIsActiveSidebar()
           }"
         ></i>
       </div>
     </div>
-    <div *ngIf="true" class="bg-white rounded mb-3">
+    <div *ngIf="getIsActiveSidebar()" class="bg-white rounded mb-3">
       <!-- <div *ngIf="activeSections.tuition.showSideInfo" class="bg-white rounded mb-3"> -->
       <p class="mt-3 font-weight-bold">Table Structure</p>
-      <!-- <div class="row no-gutters">
+        <div class="row no-gutters">
             <div class="col">
               <label class="app-radio-container"
               >Split by Student
                 <input
                   type="radio"
                   name="split"
-                  value="student"
-                  [(ngModel)]="tuitionContract.splitBy"
+                  [value]="TUITION_CONTRACT_SPLIT_TYPES.STUDENT"
+                  [checked]="(getSplitBy() === TUITION_CONTRACT_SPLIT_TYPES.STUDENT || !getSplitBy())"
+                  (change)="setSplitBy($event.target.value)"
                 />
                 <span class="app-radio-checkmark"></span>
               </label>
@@ -52,8 +52,9 @@
                 <input
                   type="radio"
                   name="split"
-                  value="fee"
-                  [(ngModel)]="tuitionContract.splitBy"
+                  [value]="TUITION_CONTRACT_SPLIT_TYPES.FEE"
+                  [checked]="getSplitBy() === TUITION_CONTRACT_SPLIT_TYPES.FEE"
+                  (change)="setSplitBy($event.target.value)"
                 />
                 <span class="app-radio-checkmark"></span>
               </label>
@@ -61,7 +62,7 @@
           </div>
           <hr/>
           <p class="font-weight-bold">Show Fees</p>
-          <div class="row no-gutters" *ngFor="let item of tuitionContract.fees">
+          <!-- <div class="row no-gutters" *ngFor="let item of getTuitionFees()">
             <div class="col-6">
               <label class="app-checkbox-container">
                 <span class="form-payment-side-bar-text">{{
