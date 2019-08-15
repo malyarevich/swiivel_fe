@@ -2,8 +2,9 @@
 
 .app-period-split-bar {
   display: flex;
-  padding: 0 15px;
+  padding: 0 15px 5px;
   background-color: white;
+  position: relative;
 
   .app-period-split-bar__header {
     min-width: 115px;
@@ -13,7 +14,7 @@
   .app-period-split-bar__splitset {
     display: flex;
     width: 100%;
-    max-width: 1025px;
+    max-width: 853px;
 
     .app-period-split-bar__scale {
       display: flex;
@@ -46,7 +47,13 @@
       .app-period-split-bar__add_split--ico {
         font-size: 14px;
       }
+
+      &.app-period-split-bar__add_split--error {
+        background-color: $soft-red;
+        border: 1px dashed $error-color;
+      }
     }
+
 
     .app-period-split-bar__scale--cell {
       width: 6px;
@@ -129,6 +136,7 @@
 
   .app-period-split-bar__add {
     width: 100%;
+    max-width: 853px;
     height: 23px;
     margin: 0 0 20px;
     cursor: pointer;
@@ -159,6 +167,12 @@
     position: absolute;
     top: 18px;
     right: -30px;
+  }
+
+  .app-period-split-bar__error {
+    position: absolute;
+    top: 30px;
+    right: 0;
   }
 }
 

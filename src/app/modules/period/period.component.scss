@@ -1,4 +1,48 @@
 .app-period {
-  padding: 30px;
 
+  .app-period__content {
+    margin: 0 15px;
+    padding: 15px;
+    background-color: white;
+  }
+
+  .app-period__header {
+    display: flex;
+    justify-content: space-between;
+
+    .app-period__header--text {
+      font: 800 13px/15px 'NunitoSans-Bold';
+      text-transform: uppercase;
+    }
+  }
+
+  .app-period__table {
+    width: 100%;
+
+    .app-period__row {
+      //display: flex;
+      //flex-wrap: wrap;
+    }
+
+    .app-period__cell--name {
+      width: 20%;
+    }
+
+    .app-period__cell--date,
+    .app-period__cell--duration {
+      width: 8%;
+    }
+
+    .app-period__cell--type {
+      width: 26%;
+    }
+
+    .app-period__cell--edit {
+      width: 30%;
+    }
+  }
+
+  .app-period__split-sets {
+    display: flex;
+  }
 }

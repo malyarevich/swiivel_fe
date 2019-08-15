@@ -1,0 +1,19 @@
+<div class="app-period-error">
+  <div class="app-period-error__sign">
+    <i class="fa fa-exclamation app-period-error__sign--ico"></i>
+  </div>
+  <div class="app-period-error__header">{{ header }}</div>
+  <div class="app-period-error__error">
+    <div *ngIf="isString(errors)">
+      {{ errors }}
+    </div>
+    <div *ngIf="!isString(errors)">
+      <div *ngFor="let error of errors">
+        {{ error }}
+      </div>
+    </div>
+  </div>
+  <div class="app-period-error__cross" (click)="onCloseError()">
+    <i class="fa fa-times app-period-error__cross--ico"></i>
+  </div>
+</div>

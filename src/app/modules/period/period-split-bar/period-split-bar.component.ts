@@ -1,11 +1,13 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
+import * as moment from 'moment';
+
 import { PeriodState } from '../store/period.reducer';
 import { PeriodSplitSet } from '../../../models/period/period.model';
-import { Observable } from 'rxjs';
-import { Store } from '@ngrx/store';
-import * as moment from 'moment';
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import { ChangeSplitSet} from '../store/period.actions';
+import { PeriodService } from '../services/period.service';
+import {ChangePeriodError} from '../store/period.actions';
 
 interface PeriodScaleItem {
   isSelected?: boolean;
@@ -31,24 +33,27 @@ interface PeriodScale {
   styleUrls: ['./period-split-bar.component.scss']
 })
 
-export class PeriodSplitBarComponent implements OnInit {
-  periodSubscribe: Observable<PeriodState>;
-  periodScale: PeriodScale;
-  periodSplitSet: PeriodSplitSet[];
-  activePeriodSet: PeriodSplitSet;
+export class PeriodSplitBarComponent implements OnInit, OnDestroy {
   // todo тут надо что-то одно оставить
   @Input() splitSetId: number;
   @Input() viewId: number;
 
-  constructor(public store: Store<PeriodState>) {
-    this.periodSubscribe = store.select('state');
-  }
+  public periodScale: PeriodScale;
+  public periodSplitSet: PeriodSplitSet[];
+  public activePeriodSet: PeriodSplitSet;
+  public savePeriodError: { text: string, isOpen: boolean };
+  private subscription = new Subscription();
+
+  constructor(public store: Store<PeriodState>, public periodService: PeriodService) {}
 
   ngOnInit(): void {
-    this.periodSubscribe.subscribe(periodStore => {
-      this.periodSplitSet = periodStore.splitsSet;
-      this.activePeriodSet = periodStore.splitsSet.find((set) => set.split_set_id === this.splitSetId);
-      this.initScale();
+    this.subscription = this.periodService.getPeriodStore().subscribe(periodStore => {
+      this.periodSplitSet = periodStore.period.split_sets;
+      this.activePeriodSet = periodStore.period.split_sets.find((set) => set.split_set_id === this.splitSetId);
+      if ( this.activePeriodSet && this.activePeriodSet.splits) {
+        this.initScale();
+      }
+      this.savePeriodError = periodStore.savePeriodError;
     });
 
     this.periodScale = {
@@ -114,58 +119,19 @@ export class PeriodSplitBarComponent implements OnInit {
         }
       });
     }
-    this.updateSplitSet(this.activePeriodSet.split_set_id, this.activePeriodSet);
+    this.periodService.updateSplitSet(this.activePeriodSet);
   }
 
   getColor(): string {
     return this.viewId % 2 === 0 ? '#C87F13' : '#1079C4';
   }
 
-  onChangeSplitName(evt: string, id: number): void {
-    this.activePeriodSet.splits.map((split) => {
-      if (split.split_id === id) {
-        split.name = evt;
-      }
-    });
-    this.updateSplitSet(this.activePeriodSet.split_set_id, this.activePeriodSet);
-  }
-
-  // todo возможно onAdd & onCreate это в одну функцию
-  onAddSplit(): void {
-    const startDate = moment(this.activePeriodSet.splits.slice(-1).pop().date_to, 'DD-MM-YYYY').add(1, 'days').toDate();
-    const previousSetIndex = this.activePeriodSet.splits && this.activePeriodSet.splits.length ?
-      this.activePeriodSet.splits.slice(-1).pop().split_id : 1;
-
-    this.activePeriodSet.splits.push({
-      name: previousSetIndex + 1 + ' split',
-      date_from: startDate,
-      date_to: moment(startDate, 'DD-MM-YYYY').add(31, 'days').toDate(),
-      split_id: previousSetIndex + 1,
-      duration: 31
-    });
-    this.updateSplitSet(this.activePeriodSet.split_set_id, this.activePeriodSet);
+  onChangeSplitName(name: string, id: number): void {
+    this.periodService.setSplitName(this.activePeriodSet, name, id);
   }
 
   onCreateSplit(): void {
-    const previousSetIndex = this.activePeriodSet.splits && this.activePeriodSet.splits.length ?
-      this.activePeriodSet.splits.slice(-1).pop().split_id : 0;
-
-    this.activePeriodSet.splits.push({
-      name: previousSetIndex + 1 + ' split',
-      date_from: new Date(),
-      date_to: moment(new Date(), 'DD-MM-YYYY').add(31  , 'days').toDate(),
-      split_id: previousSetIndex + 1,
-      duration: 31
-    });
-    this.updateSplitSet(this.activePeriodSet.split_set_id, this.activePeriodSet);
-    console.log(this.activePeriodSet);
-  }
-
-  updateSplitSet(updatedSplitSetIndex: number, updatedSplitSet: PeriodSplitSet): void {
-    this.store.dispatch(new ChangeSplitSet( {
-      index: updatedSplitSetIndex,
-      splitSet: updatedSplitSet
-    }));
+    this.periodService.createSplit(this.activePeriodSet);
   }
 
   onPenClick(id: number): void {
@@ -200,5 +166,22 @@ export class PeriodSplitBarComponent implements OnInit {
     } else {
       return 0;
     }
+  }
+
+  onCloseSplitSetError(): void {
+    this.activePeriodSet.error.isBarErrorOpen = false;
+    this.periodService.updateSplitSet(this.activePeriodSet);
+  };
+
+  hasShownSplitSetError(splitSet: PeriodSplitSet): boolean {
+    return splitSet.error && splitSet.error.text && splitSet.error.text.length && splitSet.error.isBarErrorOpen;
+  }
+
+  onCloseSavePeriodError(): void {
+    this.store.dispatch(new ChangePeriodError({text: this.savePeriodError.text, isOpen: false }));
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }
