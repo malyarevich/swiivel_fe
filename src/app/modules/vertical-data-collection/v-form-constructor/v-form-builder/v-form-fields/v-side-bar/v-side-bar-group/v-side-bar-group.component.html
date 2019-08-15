@@ -41,17 +41,17 @@
         <app-v-side-bar-group
           [nestedLevel]="nestedLevel + 1"
           [group]="field"
-          [form]="form[parentFormIndex] ? form[parentFormIndex].fields : form"
+          [form]="getForm()"
           [idSectionForDragDrop]="idSectionForDragDrop"
         ></app-v-side-bar-group>
       </div>
       <div class="ml-2">
-        {{nestedLevel}}
         <app-v-side-bar-field
           *ngIf="field.type !== 113"
           [nestedLevel]="nestedLevel"
+          [group]="field"
           [field]="field"
-          [form]="form[parentFormIndex] ? form[parentFormIndex].fields : form"
+          [form]="getForm()"
           [style]="field.mapped === ''"
         ></app-v-side-bar-field>
       </div>

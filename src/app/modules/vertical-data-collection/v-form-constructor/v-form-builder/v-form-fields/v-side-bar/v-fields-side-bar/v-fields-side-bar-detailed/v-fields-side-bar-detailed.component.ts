@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Field} from '../../../../../../model/field.model';
 import {crumbs} from '../index';
 import {SideBarService} from '../../side-bar.service';
@@ -12,7 +12,8 @@ import {cloneDeep} from 'lodash';
 @Component({
   selector: 'app-v-fields-side-bar-detailed',
   templateUrl: './v-fields-side-bar-detailed.component.html',
-  styleUrls: ['./v-fields-side-bar-detailed.component.scss']
+  styleUrls: ['./v-fields-side-bar-detailed.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class VFieldsSideBarDetailedComponent implements OnInit,  OnDestroy {
@@ -54,6 +55,15 @@ export class VFieldsSideBarDetailedComponent implements OnInit,  OnDestroy {
     this.initFormFieldsToSideBar([this.section], this.form.fields);
     this.getRoleList();
     this.loadBasicFields();
+  }
+
+  getForm() {
+    const index = this.form.fields.findIndex(field => field.name === this.section.name);
+    if (!this.form.fields[index]) {
+      return [];
+    } else {
+      return this.form.fields[index].fields;
+    }
   }
 
   returnToTree() {
@@ -101,7 +111,9 @@ export class VFieldsSideBarDetailedComponent implements OnInit,  OnDestroy {
 
   addField(modal) {
     this.validateAllFormFields(this.fieldsAddGroup);
-    if (!this.fieldsAddGroup.valid) { return; }
+    if (!this.fieldsAddGroup.valid) {
+      return;
+    }
     this.fieldsAddGroup.clearValidators();
     const newField: Field = cloneDeep(this.customFields.find(field => field.name === this.fieldsAddGroup.value.fieldType));
     newField.name = this.fieldsAddGroup.value.fieldsName;
@@ -110,12 +122,6 @@ export class VFieldsSideBarDetailedComponent implements OnInit,  OnDestroy {
     this.section.fields.push(newField);
     this.fieldsAddGroup.reset();
     modal.close();
-  }
-
-  deleteCustomField(name) {
-    this.section.fields = this.section.fields.filter((field) => {
-      return field.name !== name;
-    });
   }
 
   modalClose(modal) {

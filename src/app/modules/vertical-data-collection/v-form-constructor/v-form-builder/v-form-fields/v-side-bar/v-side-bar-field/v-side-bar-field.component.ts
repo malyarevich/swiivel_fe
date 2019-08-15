@@ -1,11 +1,12 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
 import {Field} from '../../../../../model/field.model';
 import {SideBarService} from '../side-bar.service';
 
 @Component({
   selector: 'app-v-side-bar-field',
   templateUrl: './v-side-bar-field.component.html',
-  styleUrls: ['./v-side-bar-field.component.css']
+  styleUrls: ['./v-side-bar-field.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class VSideBarFieldComponent implements OnInit {
@@ -21,9 +22,11 @@ export class VSideBarFieldComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    if (this.nestedLevel === 2) {
-      this.form = this.form.find(form => form.type === 113).fields;
-    }
+  }
+
+  deleteCustomField() {
+    const index = this.group.findIndex(field => field.name === this.field.name);
+    this.group.splice(index, 1);
   }
 
 }

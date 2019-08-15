@@ -16,7 +16,7 @@
     <span class="app-text-extra-bold">{{section.name}}</span>
   </div>
   <div class="col-1">
-    <button class="btn btn-sm " (click)="showNested=!showNested">
+    <button class="btn btn-sm " (click)="showNested = !showNested">
       <i class="fas dragable-i {{showNested ? 'fa-caret-up' : 'fa-caret-down'}}"></i>
     </button>
   </div>
@@ -25,23 +25,23 @@
   <div class="ngx-dnd-container" direction="vertical" [copy]="true" [model]="section.fields" ngxDroppable>
     <div
       class="my-3 ml-3"
-      *ngFor="let field of section?.fields | filter: searchText; let i = index" [model]="field"
+      *ngFor="let field of section?.fields | filter: searchText" [model]="field"
       [ngxDraggable]="idSectionForDragDrop"
     >
       <app-v-side-bar-group
-        [group]="field"
-        [parentFormIndex]="i"
-        [form]="form.fields[1] ? form.fields[1].fields : []"
+        *ngIf="field.type === 113"
         [nestedLevel]="nestedLevel + 1"
+        [group]="field"
+        [form]="getForm()"
         [idSectionForDragDrop]="idSectionForDragDrop"
       ></app-v-side-bar-group>
       <app-v-side-bar-field
         *ngIf="field.type !== 113"
-        [field]="field"
-        [form]="form.fields[1]"
         [nestedLevel]="nestedLevel + 1"
+        [group]="section?.fields"
+        [field]="field"
+        [form]="getForm()"
         [style]="field.mapped === ''"
-        (deleteCustom)="deleteCustomField($event)"
       ></app-v-side-bar-field>
     </div>
   </div>

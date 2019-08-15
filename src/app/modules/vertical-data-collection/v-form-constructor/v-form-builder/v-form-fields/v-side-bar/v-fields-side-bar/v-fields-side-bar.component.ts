@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {SideBarService} from '../side-bar.service';
 import {isEmpty} from 'lodash';
 import {Form} from '../../../../../model/form.model';
@@ -6,7 +6,8 @@ import {Form} from '../../../../../model/form.model';
 @Component({
   selector: 'app-v-fields-side-bar',
   templateUrl: './v-fields-side-bar.component.html',
-  styleUrls: ['./v-fields-side-bar.component.css']
+  styleUrls: ['./v-fields-side-bar.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class VFieldsSideBarComponent implements OnInit, OnDestroy {
