@@ -3,7 +3,12 @@
 <div class="row align-items-center no-gutters">
   <div class="col-1 pb-1">
     <label [for]="section.name" class="app-checkbox-container">
-      <input [id]="section.name" type="checkbox" [(ngModel)]="section.exist" (ngModelChange)="onBeingChange($event)" />
+      <input
+        type="checkbox"
+        [id]="section.name"
+        [ngModel]="section.exist"
+        (change)="sideBarService.onSectionToggle($event, section, form.fields)"
+      />
       <span class="app-checkbox-checkmark"></span>
     </label>
   </div>
@@ -20,28 +25,24 @@
   <div class="ngx-dnd-container" direction="vertical" [copy]="true" [model]="section.fields" ngxDroppable>
     <div
       class="my-3 ml-3"
-      *ngFor="let field of section.fields | filter: searchText; let i = index" [model]="field"
+      *ngFor="let field of section?.fields | filter: searchText; let i = index" [model]="field"
       [ngxDraggable]="idSectionForDragDrop"
     >
-      {{field.name}}
       <app-v-side-bar-group
-        [group]="section"
-        [section]="section.fields[i]"
-        [form]="form.fields[1].fields[i]"
+        [group]="field"
+        [parentFormIndex]="i"
+        [form]="form.fields[1] ? form.fields[1].fields : []"
         [nestedLevel]="nestedLevel + 1"
         [idSectionForDragDrop]="idSectionForDragDrop"
       ></app-v-side-bar-group>
-<!--      <app-v-side-bar-field-->
-<!--        *ngIf="field.type !== 113"-->
-<!--        [field]="field"-->
-<!--        [section]="section.fields[i]"-->
-<!--        [group]="section"-->
-<!--        [form]="form"-->
-<!--        [nestedLevel]="nestedLevel + 1"-->
-<!--        [style]="field.mapped === ''"-->
-
-<!--        (deleteCustom)="deleteCustomField($event)"-->
-<!--      ></app-v-side-bar-field>-->
+      <app-v-side-bar-field
+        *ngIf="field.type !== 113"
+        [field]="field"
+        [form]="form.fields[1]"
+        [nestedLevel]="nestedLevel + 1"
+        [style]="field.mapped === ''"
+        (deleteCustom)="deleteCustomField($event)"
+      ></app-v-side-bar-field>
     </div>
   </div>
   <div class="my-3 ml-3">

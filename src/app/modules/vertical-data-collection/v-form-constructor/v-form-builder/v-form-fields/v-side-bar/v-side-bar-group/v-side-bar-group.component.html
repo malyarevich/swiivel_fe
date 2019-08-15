@@ -1,11 +1,10 @@
 <div class="row no-gutters align-items-center">
   <div class="col-1 pb-2">
-    <label [for]="group.name.split(' ').join('-')" class="app-checkbox-container">
+    <label class="app-checkbox-container">
       <input
         type="checkbox"
-        [id]="group.name.split(' ').join('-')"
         [ngModel]="group.exist"
-        (ngModelChange)="onChangeGroup($event, group)"
+        (change)="sideBarService.onGroupToggle($event, group, form)"
       />
     <span class="app-checkbox-checkmark"></span>
   </label>
@@ -34,27 +33,26 @@
   >
     <div
       class="my-1"
-      *ngFor="let field of section.fields; let i = index"
+      *ngFor="let field of group.fields"
       [model]="field"
       [ngxDraggable]="idSectionForDragDrop"
     >
       <div *ngIf="field.type === 113" class="ml-2 border-open-setting">
         <app-v-side-bar-group
-          [sideBar]="sideBar"
-          [group]="field"
-          [form]="form.fields[i]"
           [nestedLevel]="nestedLevel + 1"
-          [section]="field"
+          [group]="field"
+          [form]="form[parentFormIndex] ? form[parentFormIndex].fields : form"
           [idSectionForDragDrop]="idSectionForDragDrop"
         ></app-v-side-bar-group>
       </div>
       <div class="ml-2">
+        {{nestedLevel}}
         <app-v-side-bar-field
           *ngIf="field.type !== 113"
+          [nestedLevel]="nestedLevel"
           [field]="field"
-          [form]="form.fields"
+          [form]="form[parentFormIndex] ? form[parentFormIndex].fields : form"
           [style]="field.mapped === ''"
-          (fieldChanged)="onFieldChanged()"
         ></app-v-side-bar-field>
       </div>
     </div>

@@ -1,7 +1,12 @@
 <div class="row no-gutters align-items-center">
   <div class="col-1 pb-2">
     <label [for]="field.mapped" class="app-checkbox-container">
-      <input type="checkbox" [id]="field.mapped" [(ngModel)]="field.exist" (ngModelChange)="onFieldToggle()" />
+      <input
+        type="checkbox"
+        [id]="field.mapped"
+        [(ngModel)]="field.exist"
+        (change)="sideBarService.onFieldToggle(field, form)"
+      />
       <span class="app-checkbox-checkmark"></span>
     </label>
   </div>
@@ -17,7 +22,9 @@
       <span class="side-bar-item-font" [title]="style?'Custom':'Existing'">{{field.name}}</span>
     </div>
     <div *ngIf="style" class="col-1">
-      <span><i class="fas fa-trash dragable-i fa-xs app-cursor-pointer" (click)="deleteCustomField(field.name)"></i></span>
+      <span>
+        <i class="fas fa-trash dragable-i fa-xs app-cursor-pointer" (click)="deleteCustomField(field.name)"></i>
+      </span>
     </div>
   </div>
 </div>

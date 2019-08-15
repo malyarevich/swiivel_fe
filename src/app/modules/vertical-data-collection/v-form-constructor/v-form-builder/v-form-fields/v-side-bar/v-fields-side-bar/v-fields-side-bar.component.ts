@@ -26,7 +26,6 @@ export class VFieldsSideBarComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.sideBarService.sectionSubject.subscribe(data => {
       this.sectionDetailed = data;
-      console.log('sectionDetailed', this.sectionDetailed);
       this.isTree = isEmpty(this.sectionDetailed);
     });
   }

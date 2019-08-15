@@ -101,12 +101,12 @@
      >
 
       <app-v-divider-conteiner
-        *ngIf="field.type==112"
+        *ngIf="field.type === 112"
         [inputDivider]="field"
         [form]="form"
       ></app-v-divider-conteiner>
       <app-v-group-container
-        *ngIf="field.type==113"
+        *ngIf="field.type === 113"
         [inputGroup]="field"
         [nestedLevel]="nestedLevel+1"
         [idSectionForDragDrop]="idSectionForDragDrop"
@@ -115,7 +115,7 @@
         [customFields]="customFields"
       ></app-v-group-container>
       <app-v-field-container
-        *ngIf="field.type!=113&&field.type!=112"
+        *ngIf="![112, 113].includes(field.type)"
         [customFields]="customFields"
         [sideBar]="sideBar"
         [inputField]="field"

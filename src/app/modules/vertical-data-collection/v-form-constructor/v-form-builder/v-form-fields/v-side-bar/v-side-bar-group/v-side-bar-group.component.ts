@@ -1,5 +1,4 @@
-import {AfterViewInit, Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {Field} from '../../../../../model/field.model';
+import {Component, Input, OnInit} from '@angular/core';
 import {SideBarService} from '../side-bar.service';
 
 @Component({
@@ -8,15 +7,13 @@ import {SideBarService} from '../side-bar.service';
   styleUrls: ['./v-side-bar-group.component.scss']
 })
 
-export class VSideBarGroupComponent implements OnInit, AfterViewInit, OnDestroy {
+export class VSideBarGroupComponent implements OnInit {
 
-  @Input() idSectionForDragDrop: string[];
-  @Input() group: Field;
-  @Input() section: Field;
+  @Input() group: any;
   @Input() form: any;
-  @Input() sideBar: Field;
-
+  @Input() parentFormIndex: number;
   @Input() nestedLevel: number;
+  @Input() idSectionForDragDrop: string[];
 
   public showNested = true;
 
@@ -24,35 +21,7 @@ export class VSideBarGroupComponent implements OnInit, AfterViewInit, OnDestroy 
     private sideBarService: SideBarService
   ) {}
 
-  ngOnInit() {}
-
-  ngAfterViewInit() {
-    // console.log(this.sideBar);
+  ngOnInit(): void {
   }
 
-  onChangeGroup(event: boolean) {
-    this.group.exist = event;
-    if (this.group.exist) {
-      this.group.fields.forEach(field => field.exist = true);
-      // this.sideBarService.onChangeGroup(this.group, this.form);
-    } else {
-      this.group.fields.forEach(field => field.exist = false);
-      console.log(this.form);;
-    }
-    console.log(this.group);
-    console.log(this.form);
-  }
-
-  onFieldChanged() {
-    if (this.group.fields.some(field => field.exist)) {
-      this.group.exist = true;
-    } else {
-      this.group.exist = false;
-    }
-  }
-
-  ngOnDestroy(): void {
-    this.group.exist = false;
-
-  }
 }
