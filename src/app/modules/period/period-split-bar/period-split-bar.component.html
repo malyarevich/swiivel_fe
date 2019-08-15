@@ -1,0 +1,89 @@
+<div class="app-period-split-bar">
+  <div class="app-period-split-bar__header">
+    <app-input-editable-field
+      [(ngModel)]="activePeriodSet.name"
+      [inputStyle]="'header'"
+      [inputColor]="getColor()"
+    ></app-input-editable-field>
+  </div>
+  <div *ngIf="getSplitSetLength()" class="app-period-split-bar__splitset">
+    <div
+      class="app-period-split-bar__scale"
+      cdkDropList
+      cdkDropListOrientation="horizontal"
+      (cdkDropListDropped)="dropItem($event)">
+      <div
+        *ngFor="let cellItem of periodScale.items; let i = index"
+        class="app-period-split-bar__scale--cell"
+        [ngClass]="{
+        'app-period-split-bar__scale--yellow': this.viewId % 2 === 0,
+        'app-period-split-bar__scale--blue': this.viewId % 2 === 1}"
+        [ngStyle] = "{'z-index': getIndex(cellItem)}"
+        cdkDrag
+        cdkDragLockAxis="x"
+        cdkDragBoundary=".app-period-bar__scale"
+        [cdkDragDisabled]="!cellItem.isExtreme"
+        id="{{ cellItem.splitId }}">
+        <div *ngIf="cellItem.extremeDate" class="app-period-split-bar--date">{{ cellItem.extremeDate }}</div>
+        <app-carets
+          *ngIf="cellItem.isExtreme"
+          class="app-period-bar__cell--extreme"
+          cdkDragHandle
+        ></app-carets>
+        <div
+          *ngIf="cellItem.label && cellItem.slitDuration > 10 && !cellItem.isLabelEdit"
+          class="app-period-split-bar--label"
+          [ngClass]="{
+          'app-period-split-bar--label--yellow': this.viewId % 2 === 0,
+          'app-period-split-bar--label--blue': this.viewId % 2 === 1}"
+          [ngStyle] = "{'width': getWidth(cellItem.label)}"
+        > {{ cellItem.label }}</div>
+        <input
+          *ngIf="cellItem.label && cellItem.slitDuration > 10 && cellItem.isLabelEdit"
+          class="app-period-split-bar--input"
+          [(ngModel)]="cellItem.label"
+          [ngStyle] = "{'width': getWidth(cellItem.label)}"
+          (ngModelChange)="onChangeSplitName($event, cellItem.splitId)"
+        />
+        <i
+          *ngIf="cellItem.isPen"
+          class="fas fa-pen app-period-split-bar__ico"
+          [ngStyle] = "{'color' : getColor()}"
+          (click)="onPenClick(i)"></i>
+        <div class="app-period-split-bar__settings" *ngIf="cellItem.isInfoOpen">
+          <app-period-split-settings
+            [splitSetId]="splitSetId"
+            [splitId]="cellItem.splitId"
+            [periodScaleItemId]="i"
+            (closeInfo)="onCloseInfo($event)"></app-period-split-settings>
+        </div>
+      </div>
+    </div>
+    <div
+      class="app-period-split-bar__add_split"
+      [ngClass]="{
+      'app-period-split-bar__add_split--error': hasShownSplitSetError(activePeriodSet)}"
+      (click)="onCreateSplit()">
+      <i class="fa fa-plus app-period-split-bar__add_split--ico"></i>
+    </div>
+  </div>
+  <div *ngIf="!getSplitSetLength()" class="app-period-split-bar__add" (click)="onCreateSplit()">
+    + Create first split
+  </div>
+  <div
+    *ngIf="hasShownSplitSetError(activePeriodSet)"
+    class="app-period-split-bar__error">
+      <app-period-error
+        [errors]="activePeriodSet.error.text"
+        (closeError)="onCloseSplitSetError()">
+      </app-period-error>
+  </div>
+  <div
+    *ngIf="savePeriodError && savePeriodError.text && savePeriodError.isOpen"
+    class="app-period-split-bar__error">
+    <app-period-error
+      [errors]="savePeriodError.text"
+      (closeError)="onCloseSavePeriodError()">
+    </app-period-error>
+  </div>
+</div>

@@ -13,7 +13,7 @@
           [style]="'short'"
           [width]="'57px'"
           [isInvalid]="activeSplit.date_from > activeSplit.date_to"
-          (ngModelChange)="onChangeSplitDate()"
+          (ngModelChange)="onChangeSplitDate('dateFrom')"
         ></app-datepicker-field>
       </div>
       <div class="app-period-split-settings__col--duration">
@@ -37,7 +37,7 @@
           [style]="'short'"
           [width]="'57px'"
           [isInvalid]="activeSplit.date_from > activeSplit.date_to"
-          (ngModelChange)="onChangeSplitDate()"
+          (ngModelChange)="onChangeSplitDate('dateTo')"
         ></app-datepicker-field>
       </div>
     </div>

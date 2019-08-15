@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TableThead } from './tableThead.model';
 import { SORT_ORDER } from '../../../enums/sort-order';
 
@@ -9,9 +9,13 @@ import { SORT_ORDER } from '../../../enums/sort-order';
 })
 export class TableTheadComponent implements OnInit {
   @Input() columns: TableThead[];
-  @Input() backround: string;
+  @Input() background: string;
   @Input() isSortable?: boolean = true;
+  @Input() width?: string = null;
   @Output() sortFilter: EventEmitter<any> = new EventEmitter<any>();
+  @Output() searchValueEvent: EventEmitter<{value: any, name: string}> = new EventEmitter<{value: any, name: string}>();
+
+  public searchValue: string = null;
 
   constructor() { }
 
@@ -35,5 +39,9 @@ export class TableTheadComponent implements OnInit {
 
       this.sortFilter.emit(sortFilter);
     }
+  }
+
+  onSearch(updatedValue, index): void {
+    this.searchValueEvent.emit({ value: updatedValue, name: this.columns[index].id });
   }
 }

@@ -1,0 +1,47 @@
+@import '../../../../styles/variables/colors';
+
+.app-period-error {
+  width: 317px;
+  min-height: 65px;
+  position: relative;
+  display: flex;
+  padding: 15px 0;
+  background-color: $dark-purple;
+  border-radius: 5px;
+  border-left: 5px solid $error-color;
+
+  .app-period-error__sign{
+    width: 31px;
+    padding: 3px 12px;
+
+    .app-period-error__sign--ico {
+      color: $error-color;
+    }
+  }
+
+  .app-period-error__header {
+    color: $error-color;
+    text-transform: uppercase;
+  }
+
+  .app-period-error__error {
+    padding: 0 25px 0 0;
+    color: white;
+  }
+
+  .app-period-error__cross {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 16px;
+    height: 16px;
+
+    .app-period-error__cross--ico {
+      color: white;
+    }
+  }
+
+  .app-period-error__cross:hover {
+    cursor: pointer;
+  }
+}

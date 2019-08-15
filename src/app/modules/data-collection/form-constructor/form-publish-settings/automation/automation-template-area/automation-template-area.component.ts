@@ -1,11 +1,11 @@
-import { Component, OnInit, Input } from "@angular/core";
-import { PublishSettingsAutomationService } from "../../../../services/publish-settings-automation.service";
-import { IAutomationTemplateListItem, IAutomation } from 'src/app/modules/data-collection/model/publish-settings.model';
+import { Component, OnInit, Input } from '@angular/core';
+import { PublishSettingsAutomationService } from '../../../../services/publish-settings-automation.service';
+import { IAutomation } from 'src/app/modules/data-collection/model/publish-settings.model';
 
 @Component({
-  selector: "app-automation-template-area",
-  templateUrl: "./automation-template-area.component.html",
-  styleUrls: ["./automation-template-area.component.scss"]
+  selector: 'app-automation-template-area',
+  templateUrl: './automation-template-area.component.html',
+  styleUrls: ['./automation-template-area.component.scss']
 })
 export class AutomationTemplateAreaComponent implements OnInit {
   @Input() templateId: number;

@@ -89,6 +89,23 @@
     }
   }
 
+  &.app-select-field-thead {
+
+    .ng-select::ng-deep {
+
+      .ng-select-container {
+        min-height: 26px;
+      }
+    }
+
+    .ng-select::ng-deep .ng-select-single {
+      .ng-select-container {
+        color: red;
+        height: 26px;
+      }
+    }
+  }
+
   &.app-select-field-has-error {
     .ng-select::ng-deep {
 
