@@ -23,7 +23,7 @@ export class PeriodSplitInformationComponent implements OnInit, OnDestroy {
   public viewSplits: PeriodSplit[] = [];
   public periodDuration: number = 0;
   public splitUnits: string[] = ['months', 'weeks', 'days', 'equal parts'];
-  private splitInformationForm: FormGroup;
+  public splitInformationForm: FormGroup;
   private sortingParam: { name: string, order: string } = { name: null, order: null };
   private subscription = new Subscription();
 
