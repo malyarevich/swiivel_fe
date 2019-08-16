@@ -28,7 +28,6 @@
     <!-- FORM FIELDS -->
     <div
       class="row justify-content-center pb-2"
-      *ngFor="let sidebarItem of sidebarList"
     >
       <div class="col-10 bg-white ">
         <div class="row no-gutters slider-item align-items-center">
@@ -1049,8 +1048,7 @@
       <!--  end consent-->
 
       <!--  tuition-contract-->
-      <app-tuition-contract-content 
-      *ngIf="activeSections.tuition.isActive"></app-tuition-contract-content>
+      <app-tuition-contract-content></app-tuition-contract-content>
       <!--  end tuition-contract-->
 
       <!--  app-payment-settings s-->

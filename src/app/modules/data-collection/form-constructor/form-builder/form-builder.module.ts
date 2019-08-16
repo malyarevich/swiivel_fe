@@ -58,7 +58,7 @@ import { FormDrawingComponent } from "./documents-forms/forms-container/form-dra
 import { PdfViewerModule } from "ng2-pdf-viewer";
 import { FieldsService } from "../../services/fields.service";
 import { FinanceService } from "../../../../services/finance/finance.service";
-import { TuitionContractModule } from "../form-builder-modules/tuition-contract/tuition-contract.module";
+import { TuitionContractModule } from "./tuition-contract/tuition-contract.module";
 import { SectionHeaderModule } from "src/app/shared/components";
 import { SignatureSidebarModule } from "src/app/shared/components";
 

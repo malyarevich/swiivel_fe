@@ -1,0 +1,122 @@
+<div class="app-period-split-information">
+  <div class="app-period-split-information__header" [ngStyle]="{'background-color': getBkgColor()}">
+    <div class="app-period-split-information__header--input">
+      <app-input-field
+        [(ngModel)]="activeSplitSet.name"
+        [label]="'Split Name'">
+      </app-input-field>
+    </div>
+    <div class="app-period-split-information__header--icons">
+      <i class="fas fa-trash app-period-split-information--trash" (click)="onDeleteClick()"></i>
+      <i class="fas fa-cog app-period-split-information--cog"></i>
+    </div>
+  </div>
+  <form
+    class="app-period-split-information__modification"
+    [formGroup]="splitInformationForm">
+    <div class="app-period-split-information__modification--field-container">
+      <div class="app-period-split-information__modification--split-unit">
+        <p class="app-period-split-information__modification--label">Split Into</p>
+        <div class="app-period-split-information__modification--select">
+          <app-select-field
+            [value]="splitUnits[0]"
+            [items]="splitUnits"
+            [formControlName]="'splitUnit'"
+            [style]="'thead'"
+          ></app-select-field>
+        </div>
+      </div>
+      <div class="app-period-split-information__modification--split-amount">
+        <div class="app-period-split-information__modification--input">
+          <app-input-field
+            fieldType="table"
+            [formControlName]="'splitAmount'">
+          </app-input-field>
+        </div>
+        <p class="app-period-split-information__modification--label">splits of</p>
+      </div>
+      <div class="app-period-split-information__modification--split-duration">
+        <div class="app-period-split-information__modification--input">
+          <app-input-field
+            fieldType="table"
+            [formControlName]="'splitDuration'">
+          </app-input-field>
+        </div>
+        <p class="app-period-split-information__modification--label">
+          {{ this.splitInformationForm.get('splitUnit').value  }} each
+        </p>
+      </div>
+    </div>
+    <button
+      class="app-period-split-information__modification--button"
+      *ngIf="!activeSplitSet.splits || !(activeSplitSet.splits && activeSplitSet.splits.length)"
+      (click)="onCreateSplit()">
+      Create Split
+    </button>
+    <button
+      class="app-period-split-information__modification--button"
+      *ngIf="activeSplitSet.splits && activeSplitSet.splits.length"
+      (click)="onModifySplit()">
+      Modify Split
+    </button>
+  </form>
+  <div class="app-period-split-information__information">
+    <h3 class="app-period-split-information__information--header">split information</h3>
+    <table class="app-period-split-information__table">
+      <thead
+        app-table-thead
+        [columns]="splitSetTableColumns"
+        (sortFilter)="onSortSplits($event)"
+        (searchValueEvent)="onSearch($event)">
+      </thead>
+      <tbody *ngIf="viewSplits && viewSplits.length">
+      <tr class="app-period-split-information__row"
+          *ngFor="let split of viewSplits; let i = index"
+          [ngStyle]="{'background-color': getRowColor(i)}">
+        <td class="app-period-split-information__cell">
+          <app-input-field
+            [(ngModel)]="split.name"
+            (ngModelChange)="onChangeName($event, split.split_id)"
+            [style] = "'cell'"
+          ></app-input-field>
+        </td>
+        <td class="app-period-split-information__cell">
+          <app-datepicker-field
+            [(ngModel)]="split.date_from"
+            (ngModelChange)="onChangeDate(split, 'dateFrom')"
+            [dateInputFormat]="'MM/DD'"
+            [width]="'92px'"
+            [style] = "'cell'"
+          ></app-datepicker-field>
+        </td>
+        <td class="app-period-split-information__cell">
+          <app-datepicker-field
+            [(ngModel)]="split.date_to"
+            (ngModelChange)="onChangeDate(split, 'dateTo')"
+            [dateInputFormat]="'MM/DD'"
+            [width]="'92px'"
+            [style] = "'cell'"
+          ></app-datepicker-field>
+        </td>
+        <td class="app-period-split-information__cell">
+          <input
+            class="app-period-split-information__field"
+            type="number"
+            [(ngModel)]="split.duration"
+            (ngModelChange)="onChangeDuration(split.split_id)"
+          />
+        </td>
+        <td class="app-period-split-information__cell">
+          <i class="fas fa-trash app-period-split-information--trash" (click)="onDeleteSplit(split.split_id)"></i>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <div *ngIf="hasShownSplitSetError(activeSplitSet)"
+         class="app-period-split-information__error">
+      <app-period-error [errors]="activeSplitSet.error.text" (closeError)="onCloseSplitSetError()"></app-period-error>
+    </div>
+    <button class="app-period-split-information__information--button" (click)="onSplitCreate()">Crete Split Row</button>
+  </div>
+</div>
+
