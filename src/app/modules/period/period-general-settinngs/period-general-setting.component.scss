@@ -3,9 +3,44 @@
 .app-period-general-settings {
 
    .app-period-general-settings__container {
-     padding: 20px 15px;
-     background-color: white;
+     margin: 0 0 20px;
+
+     .app-period-general-settings__split-set-info {
+       margin: 0 0 10px;
+       background-color: white;
+     }
    }
+
+  .app-period-general-settings__header{
+    display: flex;
+    justify-content: space-between;
+    margin: 0;
+    padding: 20px 15px 0;
+    background-color: white;
+
+    .app-period-general-settings__header-text{
+      font: 800 13px/15px 'NunitoSans-Bold';
+      text-transform: uppercase;
+      margin: auto 0;
+    }
+
+    .app-period-general-settings__header-button {
+      width: 165px;
+      height: 30px;
+      font-size: 12px;
+      line-height: 15px;
+      background-color: $purple;
+      color: white;
+      border-radius: 3px;
+      align-items: center;
+      vertical-align: middle;
+    }
+
+    .app-period-general-settings__header-button:hover {
+      background-color: $hover-purple;
+    }
+
+  }
 
   .app-period-general-settings__add {
     font: 10px/11px 'NunitoSans-Bold';
@@ -15,6 +50,45 @@
 
   .app-period-general-settings__add:hover {
     opacity: 0.6;
+  }
+
+  .app-period-general-settings__buttons {
+    display: flex;
+    justify-content: flex-end;
+
+    .app-period-general-settings__button--cancel {
+      width: 80px;
+      height: 30px;
+      box-sizing: border-box;
+      margin: 0 15px 0 0;
+      font: 800 12px/15px 'NunitoSans-Bold';
+      background-color: $bkg-gray;
+      color: $purple;
+      border-radius: 3px;
+      border: 1px solid $purple;
+      align-items: center;
+      vertical-align: middle;
+    }
+
+    .app-period-general-settings__button--cancel:hover {
+      background-color: $soft-gray;
+    }
+
+    .app-period-general-settings__button--create {
+      width: 115px;
+      height: 30px;
+      margin: 0 15px 0 0;
+      font: 800 12px/15px 'NunitoSans-Bold';
+      background-color: $purple;
+      color: white;
+      border-radius: 3px;
+      align-items: center;
+      vertical-align: middle;
+    }
+
+    .app-period-general-settings__button--create:hover {
+      background-color: $hover-purple;
+    }
   }
 
 }

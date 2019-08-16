@@ -1,11 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
+import * as moment from 'moment';
+
 import { PeriodState } from '../store/period.reducer';
 import { Period } from '../../../models/period/period.model';
-import { Observable } from 'rxjs';
-import { Store } from '@ngrx/store';
-import * as moment from 'moment';
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { ChangePeriod } from '../store/period.actions';
+import { PeriodService } from '../services/period.service';
 
 interface PeriodScaleItem {
   id?: number;
@@ -29,17 +31,15 @@ interface PeriodScale {
   styleUrls: ['./period-bar.component.scss']
 })
 
-export class PeriodBarComponent implements OnInit {
-  periodSubscribe: Observable<PeriodState>;
-  period: Period;
-  periodScale: PeriodScale;
+export class PeriodBarComponent implements OnInit, OnDestroy {
+  public period: Period;
+  public periodScale: PeriodScale;
+  private subscription = new Subscription();
 
-  constructor(public store: Store<PeriodState>) {
-    this.periodSubscribe = store.select('state');
-  }
+  constructor(public store: Store<PeriodState>, public periodService: PeriodService) {}
 
   ngOnInit(): void {
-    this.periodSubscribe.subscribe(periodStore => {
+    this.subscription = this.periodService.getPeriodStore().subscribe(periodStore => {
       this.period = periodStore.period;
       this.initScale();
     });
@@ -50,6 +50,7 @@ export class PeriodBarComponent implements OnInit {
       label: this.period.name,
       duration: this.period.duration > 366 ? 366 : this.period.duration
     };
+
    this.initScale();
   }
 
@@ -67,7 +68,7 @@ export class PeriodBarComponent implements OnInit {
 
     if (this.periodScale.items && this.period && this.period.duration && this.period.duration > 0) {
       this.periodScale.items[0].isLowExtreme = true;
-      this.periodScale.items[this.period.duration - 1].isHighExtreme = true;
+      this.periodScale.items[this.periodScale.duration - 1].isHighExtreme = true;
     }
   }
 
@@ -77,9 +78,11 @@ export class PeriodBarComponent implements OnInit {
         id: index,
         label: moment()
           .month(moment(this.period.date_from, 'DD-MM-YYYY').add(index,  'days').month()).format('MMMM').slice(0, 3),
+        isLowExtreme: false,
+        isHighExtreme: false
       });
     } else {
-      this.periodScale.items.push({id: index});
+      this.periodScale.items.push({ id: index, isLowExtreme: false, isHighExtreme: false });
     }
 
     this.periodScale.items[index].isSelected = (
@@ -95,7 +98,8 @@ export class PeriodBarComponent implements OnInit {
             name: this.periodScale.label,
             date_from: this.period.date_from,
             date_to: moment(this.period.date_from, 'DD-MM-YYYY').add(evt.currentIndex + 1, 'days').toDate(),
-            duration: evt.currentIndex + 2
+            duration: evt.currentIndex + 2,
+            split_sets: this.period.split_sets
           }
         ));
       } else if (element.className.includes('app-period-bar__cell--low-extreme')) {
@@ -104,7 +108,8 @@ export class PeriodBarComponent implements OnInit {
             name: this.periodScale.label,
             date_from: moment(this.period.date_from, 'DD-MM-YYYY').add(evt.currentIndex, 'days').toDate(),
             date_to: this.period.date_to,
-            duration: tempDuration - evt.currentIndex + 1
+            duration: tempDuration - evt.currentIndex + 1,
+            split_sets: this.period.split_sets
           }
         ));
       }
@@ -120,8 +125,13 @@ export class PeriodBarComponent implements OnInit {
         name: evt,
         date_from: this.period.date_from,
         date_to: this.period.date_to,
-        duration: this.period.duration
+        duration: this.period.duration,
+        split_sets: this.period.split_sets
       }
     ));
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

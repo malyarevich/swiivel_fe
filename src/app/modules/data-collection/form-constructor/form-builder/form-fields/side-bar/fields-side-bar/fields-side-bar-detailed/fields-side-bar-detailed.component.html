@@ -1,0 +1,174 @@
+<div class="mb-3 app-text-second app-text-extra-bold crump" (click)="returnToTree()">
+  <span>{{crumbs[section.name]}}</span></div>
+<div class="row align-items-center no-gutters">
+  <div class="col-1 pb-1">
+    <label [for]="section.name" class="app-checkbox-container">
+      <input
+        type="checkbox"
+        [id]="section.name"
+        [ngModel]="section.exist"
+        (change)="sideBarService.onSectionToggle($event, section, form.fields)"
+      />
+      <span class="app-checkbox-checkmark"></span>
+    </label>
+  </div>
+  <div class="col">
+    <span class="app-text-extra-bold">{{section.name}}</span>
+  </div>
+  <div class="col-1">
+    <button class="btn btn-sm " (click)="showNested = !showNested">
+      <i class="fas dragable-i {{showNested ? 'fa-caret-up' : 'fa-caret-down'}}"></i>
+    </button>
+  </div>
+</div>
+<div [hidden]="!showNested">
+  <div class="ngx-dnd-container" direction="vertical" [copy]="true" [model]="section.fields" ngxDroppable>
+    <div
+      class="my-3 ml-3"
+      *ngFor="let field of section?.fields | filter: searchText" [model]="field"
+      [ngxDraggable]="idSectionForDragDrop"
+    >
+      <app-side-bar-group
+        *ngIf="field.type === 113"
+        [nestedLevel]="nestedLevel + 1"
+        [group]="field"
+        [form]="getForm()"
+        [idSectionForDragDrop]="idSectionForDragDrop"
+      ></app-side-bar-group>
+      <app-side-bar-field
+        *ngIf="field.type !== 113"
+        [nestedLevel]="nestedLevel + 1"
+        [group]="section?.fields"
+        [field]="field"
+        [form]="getForm()"
+        [style]="field.mapped === ''"
+      ></app-side-bar-field>
+    </div>
+  </div>
+  <div class="my-3 ml-3">
+    <button
+      type="button"
+      class="btn btn-outline-primary form-control p-0 text-left" (click)="openModal(addFieldModal)"
+    >
+      &nbsp;&nbsp;+ Add New Field
+    </button>
+  </div>
+</div>
+
+
+<ng-template #addFieldModal let-modal>
+  <div class="row no-gutters align-items-center text-center mt-4">
+    <div class="offset-1 col-10 text-center">
+      <h4 class=" app-text-extra-bold " id="modal-basic-title">Adding New Field</h4>
+    </div>
+    <div class="col justify-content-end pr-3">
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+  </div>
+  <div class="modal-body">
+    <div class="">
+      <div class="text-center font-weight-bold">
+        <span>Please enter field name and select field type, role and section</span></div>
+    </div>
+    <form [formGroup]="fieldsAddGroup" (ngSubmit)="addField(modal)">
+      <div class="row mt-2">
+        <div class="col  form-group app-input-container"
+             [ngClass]="{'app-input-fill': fieldNameId.value}">
+          <label for="fieldNameID" class="app-input-label">Field Name</label>
+          <input
+            type="text"
+            #fieldNameId
+            formControlName="fieldsName"
+            class="app-input form-control"
+            id="fieldNameID"
+            [ngClass]="fieldsAddGroup.get('fieldsName').touched && fieldsAddGroup.get('fieldsName').invalid ? 'is-invalid' : ''"
+            placeholder="Field Name"
+          />
+          <div class="invalid-feedback">
+            Field name is required and contain min 3 and max 50 symbols
+          </div>
+        </div>
+        <div class="col form-group app-input-container"
+             [ngClass]="{'app-input-fill': fieldTypeID.value}">
+          <label for="fieldType" class="app-input-label">Field Type</label>
+          <select
+            class="app-input form-control"
+            name="fieldType"
+            #fieldTypeID
+            [ngClass]="fieldsAddGroup.get('fieldType').touched && fieldsAddGroup.get('fieldType').invalid ? 'is-invalid' : ''"
+            formControlName="fieldType"
+            id="fieldType"
+          >
+            <option value="" disabled [selected]="true">Field Type</option>
+            <ng-container *ngFor="let field of customFields">
+              <!--Hide not active field types-->
+              <option *ngIf="field.type !== 104 && field.type !== 107 && field.type !== 110 && field.type !== 111 && field.type !== 112"
+              >{{field.name}}
+              </option>
+            </ng-container>
+          </select>
+          <div class="invalid-feedback">
+            Field type is required!
+          </div>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-6 form-group app-input-container"
+             [ngClass]="{'app-input-fill': fieldRoleID.value}">
+          <label for="fieldRole" class="app-input-label">Field Role</label>
+          <select
+            class="app-input form-control"
+            name="fieldRole"
+            #fieldRoleID
+            formControlName="fieldRole"
+            [ngClass]="fieldsAddGroup.get('fieldRole').touched && fieldsAddGroup.get('fieldRole').invalid ? 'is-invalid' : ''"
+            id="fieldRole"
+          >
+            <option value="" disabled [selected]="true">Field Role</option>
+            <option *ngFor="let role of roleList"
+
+            >{{role}}
+            </option>
+          </select>
+          <div class="invalid-feedback">
+            Field relation is required!
+          </div>
+        </div>
+        <!--<div class="col form-group app-input-container"-->
+             <!--[ngClass]="{'app-input-fill': sectionRelateTypeID.value}">-->
+          <!--<label for="sectionRelate" class="app-input-label">Section Relate</label>-->
+          <!--<select class="app-input form-control"-->
+                  <!--name="sectionRelate"-->
+                  <!--#sectionRelateTypeID-->
+                  <!--formControlName="sectionRelate"-->
+                  <!--[ngClass]="fieldsAddGroup.get('sectionRelate').touched&&fieldsAddGroup.get('sectionRelate').invalid?'is-invalid':''"-->
+                  <!--id="sectionRelate">-->
+            <!--<option *ngIf="form.fields.length>0" value="" disabled [selected]="true">Section Relate</option>-->
+            <!--<option *ngIf="form.fields.length==0" value="" disabled [selected]="true">Please add at least one section-->
+            <!--</option>-->
+            <!--<ng-container *ngFor="let section of form.fields">-->
+            <!--<option *ngIf="section.type===114"-->
+            <!--&gt;{{section.name}}-->
+            <!--</option>-->
+            <!--</ng-container>-->
+          <!--</select>-->
+          <!--<div class="invalid-feedback">-->
+            <!--Field section is required!-->
+          <!--</div>-->
+        <!--</div>-->
+      </div>
+      <div class="row mt-4">
+        <div class="col-2 offset-8">
+          <button type="button" class="btn app-btn-outline-primary form-control" (click)="modalClose(modal)">Cancel
+          </button>
+        </div>
+        <div class="col-2">
+          <button type="submit" class="btn app-btn-primary form-control">OK</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-template>

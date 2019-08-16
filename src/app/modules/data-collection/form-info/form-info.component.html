@@ -1,0 +1,39 @@
+<app-form-info-nav></app-form-info-nav>
+<div class="container-fluid">
+  <app-form-info-header
+    [form]="form"
+    (updatedFormInfoEmitter)="onUpdateFormInfo($event)"
+  >
+  </app-form-info-header>
+
+  <div class="row justify-content-between">
+    <div class="col-sm-6">
+      <div class="app-form-table-block-wrapper h-100">
+        <app-form-info-stats [form]="form"></app-form-info-stats>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="app-form-table-block-wrapper h-100">
+        <app-form-info-general
+          [form]="form"
+          (updatedFormInfoEmitter)="onUpdateFormInfo($event)"
+        >
+        </app-form-info-general>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-12 app-form-table-block-wrapper mt-3">
+    <app-form-info-table-nav
+      [formId]="formId"
+      (activeTabEmitter)="setActiveTab($event)"
+      (searchValueEmitter)="setSearchValue($event)"
+      (bulkActionEmitter)="doBulkAction($event)"
+    >
+    </app-form-info-table-nav>
+
+    <app-form-info-submissions
+      *ngIf="activeTab === 'submission'"
+    ></app-form-info-submissions>
+  </div>
+</div>

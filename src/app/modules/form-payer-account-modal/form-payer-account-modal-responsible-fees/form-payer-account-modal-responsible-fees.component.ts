@@ -326,7 +326,6 @@ export class FormPayerAccountModalResponsibleFeesComponent implements OnInit, On
   }
 
   onSortSplits(event, feeId): void {
-    console.log(event);
     if (event.order === 'DESC') {
       this.fees.forEach((fee) => {
         if (fee.type === 'splits' && fee.id === feeId) {

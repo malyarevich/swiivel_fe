@@ -1,0 +1,20 @@
+<!-- <div *ngIf="isDocumentsForms.isDocuments"> -->
+<div>
+  <app-documents-container
+    [formId]="formId"
+    [documentsForms]="documentsForms"
+    [documents]="documents"
+    [attachments]="attachments"
+  >
+  </app-documents-container>
+</div>
+
+<!-- <div *ngIf="isDocumentsForms.isForms"> -->
+<div>
+  <app-forms-container
+    [existingFields]="existingFields"
+    [formsPDF]="formsPDF"
+    [documentsForms]="documentsForms"
+  >
+  </app-forms-container>
+</div>

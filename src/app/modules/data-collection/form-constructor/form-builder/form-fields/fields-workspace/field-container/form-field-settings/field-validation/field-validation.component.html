@@ -1,0 +1,39 @@
+<form [formGroup]="validatorsForm" *ngIf="inputField.type !== fieldTypes.emptyLineField">
+  <div class="d-flex justify-content-start align-items-center">
+    <app-toggle-checkbox-field>
+      <input type="checkbox" formControlName="isValidator"/>
+    </app-toggle-checkbox-field>
+    <p class="app-text-small app-text-extra-bold mb-0 ml-1">VALIDATE</p>
+  </div>
+  <div [hidden]="!validatorsForm.get('isValidator').value">
+    <div class="mb-3">
+      <app-select-field [formControlName]="'rule'" [items]="validationRules"
+                        label="Validat. Criteria"></app-select-field>
+    </div>
+    <div class="row no-gutters mb-4">
+      <div class="col-6 pr-2">
+        <app-input-field [formControlName]="'minChar'"
+                         label="Min Char"
+                         type="number"
+                         [min]="1"></app-input-field>
+      </div>
+      <div class="col-6 pl-2">
+        <app-input-field [formControlName]="'maxChar'"
+                         label="Max Char"
+                         type="number"
+                         [min]="1"></app-input-field>
+      </div>
+    </div>
+
+    <p class="mb-3">If is Data isn't Valid, then</p>
+    <div class="mb-2">
+      <app-checkbox-field [formControlName]="'isErrorMessage'" label="Error Message"></app-checkbox-field>
+    </div>
+    <div class="mb-2">
+      <app-checkbox-field [formControlName]="'isProhibitDataEntry'" label="Prohibit of Data Entry"></app-checkbox-field>
+    </div>
+    <div [hidden]="!validatorsForm.get('isErrorMessage').value">
+      <app-input-field [formControlName]="'errorText'" label="Text"></app-input-field>
+    </div>
+  </div>
+</form>

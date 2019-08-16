@@ -1,0 +1,133 @@
+<!--Section Header-->
+<!--<div class="app-section-wrapper app-section-header mt-2  row align-items-center no-gutters"-->
+     <!--[ngClass]="showSettings?'border-open-setting':''">-->
+
+  <!--<div class="col-4 row align-items-center no-gutters">-->
+    <!--<div class="col-1 row align-items-center no-gutters">-->
+          <!--<span class="app-fb-section-icon-white">-->
+            <!--<i class="fas fa-ellipsis-v"></i>-->
+            <!--<i class="fas fa-ellipsis-v"></i>-->
+          <!--</span>-->
+    <!--</div>-->
+    <!--<div class="col-10 ml-3" [ngClass]="{'app-input-fill': section.name}">-->
+      <!--<label class="app-input-label" for="section-name">Section Name</label>-->
+      <!--<input-->
+        <!--id="section-name"-->
+        <!--type="text"-->
+        <!--class="app-input"-->
+        <!--[(ngModel)]="section.name"-->
+        <!--placeholder="Section Name">-->
+    <!--</div>-->
+  <!--</div>-->
+
+
+  <!--<div class="col-2 pl-4 app-input-container w-100" [ngClass]="{'app-input-fill': sectionWidth}">-->
+    <!--<label class="app-input-label" for="section-width">Section Width</label>-->
+    <!--<input-->
+      <!--id="section-width"-->
+      <!--type="text"-->
+      <!--class="app-input"-->
+      <!--[(ngModel)]="sectionWidth"-->
+      <!--placeholder="Section Name">-->
+  <!--</div>-->
+
+
+  <!--<div class="col-1 offset-5   row align-items-center no-gutters justify-content-end">-->
+    <!--<div class="col" (click)="showSettings=!showSettings">-->
+      <!--<span class="app-fb-section-icon-white">-->
+        <!--<i class="fas fa-cog dragable-i pr-2"></i>-->
+      <!--</span>-->
+    <!--</div>-->
+    <!--<div class="col" (click)="isShow=!isShow">-->
+        <!--<span class="app-fb-section-icon-white">-->
+          <!--<i *ngIf="isShow" class="fas  fa-caret-down dragable-y"></i>-->
+          <!--<i *ngIf="!isShow" class="fas  fa-caret-up dragable-y"></i>-->
+        <!--</span>-->
+    <!--</div>-->
+    <!--<div class="col" (click)="removeSection(section)">-->
+        <!--<span class="app-fb-section-icon-white">-->
+          <!--<i class="fas  fa-times dragable-y"></i>-->
+        <!--</span>-->
+    <!--</div>-->
+  <!--</div>-->
+
+<!--</div>-->
+<!--End Section Header-->
+
+<!--Section Header-->
+<app-section-header
+  [sectionName]="section.name"
+  [sectionWidth]="section.width"
+  [isExpand]="isExpand"
+  (onChangeSectionName)="changeSectionName($event)"
+  (onChangeSectionWidth)="changeSectionWidth($event)"
+  (onToggleExpand)="toggleExpand()"
+  (onToggleSettings)="toggleSettings()"
+  (onRemoveSection)="removeSection(section)"
+></app-section-header>
+<!--End Section Header-->
+
+
+<div *ngIf="showSettings">
+  <app-section-settings [section]="section"></app-section-settings>
+</div>
+
+  <div [hidden]="!isExpand"
+>
+
+<!--    <ngx-dnd-container-->
+<!--      [model]="section.fields">-->
+<!--    </ngx-dnd-container>-->
+  <ul
+    class="list-group "
+
+
+  >
+    <div class="ngx-dnd-container"
+         [ngxDroppable]="section._id"
+         [model]="section.fields"
+         (drop)="dropAdd($event)"
+      direction="vertical">
+    <li *ngIf="section.fields.length==0" class="list-group-item empty-section mb-3 py-0 ">
+      <div class="text-center">        <span class="empty-section-text">Drag and Drop Fields Onto the Section</span>
+      </div>
+    </li>
+
+    <li
+      class="list-group-item mb-3 p-0 ngx-dnd-item"
+      [model]="field"
+      *ngFor="let field of section.fields; "
+      [ngxDraggable]="idSectionForDragDrop"
+     >
+
+      <app-divider-container
+        *ngIf="field.type==112"
+        [inputDivider]="field"
+        [form]="form"
+      ></app-divider-container>
+      <app-group-container
+        *ngIf="field.type==113"
+        [inputGroup]="field"
+        [nestedLevel]="nestedLevel+1"
+        [idSectionForDragDrop]="idSectionForDragDrop"
+        [form]="form"
+        [sideBar]="sideBar"
+        [customFields]="customFields"
+      ></app-group-container>
+      <app-field-container
+        *ngIf="field.type!=113&&field.type!=112"
+        [customFields]="customFields"
+        [sideBar]="sideBar"
+        [inputField]="field"
+        [form]="form"
+      ></app-field-container>
+    </li>
+  </div>
+  </ul>
+</div>
+
+
+<div class="">
+    <hr class="hr-text" [attr.data-content]="getEndOfSection()">
+
+</div>

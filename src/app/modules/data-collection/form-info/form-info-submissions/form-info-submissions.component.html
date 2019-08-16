@@ -1,0 +1,108 @@
+<table class="table">
+  <thead app-form-table-header [cols]="cols" (searchDataEmitter)="setSearch($event)"></thead>
+
+  <tbody>
+
+  <tr>
+    <td class="align-middle">
+      <p class="font-weight-bold mb-0">Figueroa,</p>
+      <p class="app-form-table-second-color mb-0">Rachel, David, George, Calvin</p>
+    </td>
+
+    <td style="max-width: 250px" class="align-middle">
+      <span class="pr-2">
+        <img class="img-responsive mr-1" width="7%" src="assets/images/temp/person-foto-placeholder.png">
+        David Fishman
+      </span>
+      <span class="pr-2">
+        <img class="img-responsive mr-1" width="7%" src="assets/images/temp/person-foto-placeholder.png">
+        Adam Doe
+      </span>
+      <span class="pr-2">
+        <img class="img-responsive mr-1" width="7%" src="assets/images/temp/person-foto-placeholder.png">
+        Aaron Fishman
+      </span>
+      <span class="pr-2">
+        <img class="img-responsive mr-1" width="7%" src="assets/images/temp/person-foto-placeholder.png">
+        Gavin Tyler
+      </span>
+      <span class="app-text-primary">+2</span>
+    </td>
+
+    <td nowrap class="align-middle">{{convertDate('2019-03-25 15:50:52') | date:'dd-MM-yyyy'}}
+      <span class="app-form-table-second-color"> {{convertDate('2019-03-25 15:50:52') | date:'shortTime'}}</span>
+    </td>
+
+
+    <td nowrap class="align-middle">
+      <p class="mb-0">1. General Information</p>
+      <app-progress-bar [value]="30" [total]="100"
+                        [showValue]="false"
+                        [backgroundColor]="'#FAD793'"
+                        [backgroundValue]="'#F8BC45'"
+                        [height]="'0.5em'">
+      </app-progress-bar>
+    </td>
+
+
+    <td nowrap class="align-middle"><span class="text-danger">34 Missing Fields</span></td>
+
+    <td nowrap class="text-right align-middle">
+      <i class="fas fa-user fa-lg app-form-table-icon mr-4"></i>
+      <i class="fas fa-share fa-lg app-form-table-icon mr-4"></i>
+      <span (click)="showRowInfo = !showRowInfo">
+        <i *ngIf="!showRowInfo" class="fas fa-chevron-down fa-lg app-form-table-icon"></i>
+        <i *ngIf="showRowInfo" class="fas fa-chevron-up fa-lg app-form-table-icon"></i>
+      </span>
+    </td>
+  </tr>
+  <tr *ngIf="showRowInfo">
+    <td class="app-fi-submission-inside" colspan="6">
+      <app-form-info-submission-inside></app-form-info-submission-inside>
+    </td>
+  </tr>
+
+  <tr>
+    <td class="align-middle">
+      <p class="font-weight-bold mb-0">Alvarez,</p>
+      <p class="app-form-table-second-color mb-0">Rachel, David</p>
+    </td>
+
+    <td style="max-width: 250px" class="align-middle">
+      <span class="pr-2">
+        <img class="img-responsive mr-1" width="7%" src="assets/images/temp/person-foto-placeholder.png">
+        David Fishman
+      </span>
+      <span class="pr-2">
+        <img class="img-responsive mr-1" width="7%" src="assets/images/temp/person-foto-placeholder.png">
+        Aaron Fishman
+      </span>
+    </td>
+
+    <td class="align-middle">{{convertDate('2019-04-11 10:50:52') | date:'dd-MM-yyyy'}}
+      <span class="app-form-table-second-color"> {{convertDate('2019-04-11 10:50:52') | date:'shortTime'}}</span>
+    </td>
+
+    <td class="align-middle">
+      <p class="mb-0">2. Student(s)</p>
+      <app-progress-bar [value]="70" [total]="100"
+                        [showValue]="false"
+                        [backgroundColor]="'#FAD793'"
+                        [backgroundValue]="'#F8BC45'"
+                        [height]="'0.5em'">
+      </app-progress-bar>
+    </td>
+
+    <td class="align-middle"><span class="text-danger">5 Missing Fields</span></td>
+
+    <td nowrap class="text-right align-middle">
+      <i class="fas fa-user fa-lg app-form-table-icon mr-4"></i>
+      <i class="fas fa-share fa-lg app-form-table-icon mr-4"></i>
+      <div class="d-inline-block">
+        <i class="fas fa-chevron-down fa-lg app-form-table-icon"></i>
+      </div>
+    </td>
+  </tr>
+
+  </tbody>
+</table>

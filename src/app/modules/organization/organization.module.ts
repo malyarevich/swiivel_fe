@@ -27,7 +27,7 @@ import {UserService} from '../../services/user/user.service';
     StoreModule.forFeature('person', fromPerson.reducer),
     EffectsModule.forFeature([PersonEffects]),
   ],
-  providers: [PersonService, UserService]
+  providers: [PersonService]
 })
 export class OrganizationModule {
 }

@@ -47,9 +47,6 @@ import { CommandDropdownComponent } from './command-dropdown/command-dropdown.co
 import { ExtendedFieldComponent } from './fields/extended-field/extended-field.component';
 import { SignaturesComponent } from './signatures/signatures.component';
 
-// form builder
-import { SectionHeaderComponent } from './form-builder/section-header/section-header.component';
-
 // multi icons
 import { CaretsComponent } from './multi-icons/carets/carets.component';
 import { ToolTipQuestionComponent } from './tool-tip-question/tool-tip-question.component';
@@ -91,8 +88,6 @@ import { ToolTipQuestionComponent } from './tool-tip-question/tool-tip-question.
     ToggleCheckboxFieldComponent,
     // complex
     SignaturesComponent,
-    // form builder
-    SectionHeaderComponent,
     // multi icons
     CaretsComponent,
   ],
@@ -143,8 +138,6 @@ import { ToolTipQuestionComponent } from './tool-tip-question/tool-tip-question.
     ToolTipQuestionComponent,
     // complex
     SignaturesComponent,
-    // form builder
-    SectionHeaderComponent,
     // multi icons
     CaretsComponent
   ],

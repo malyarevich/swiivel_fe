@@ -1,0 +1,32 @@
+<form [formGroup]="shortTextSettingsForm">
+  <p class="app-text-small app-text-extra-bold">FIELD SIZE & MASK</p>
+  <div class="row no-gutters mb-3">
+    <div class="col-6 pr-2">
+      <app-input-field [formControlName]="'minSizeChar'"
+                       label="Min Field Size"
+                       type="number"
+                       [min]="1"></app-input-field>
+    </div>
+    <div class="col-6 pl-2">
+      <app-input-field [formControlName]="'maxSizeChar'"
+                       label="Max Field Size"
+                       type="number"
+                       [min]="1"></app-input-field>
+    </div>
+  </div>
+  <div class="mb-2">
+    <app-input-field [formControlName]="'inputMask'"
+                     label="Input Mask"></app-input-field>
+  </div>
+  <div>
+    <app-toggle-checkbox-field>
+      <span class="label">DEFAULT VALUE</span>
+      <input type="checkbox" formControlName="isDefaultValue"/>
+    </app-toggle-checkbox-field>
+  </div>
+  <div>
+    <app-input-field [formControlName]="'defaultValue'"
+                     label="Default Value"></app-input-field>
+  </div>
+
+</form>

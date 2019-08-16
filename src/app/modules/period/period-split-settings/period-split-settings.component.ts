@@ -1,32 +1,33 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { PeriodState } from '../store/period.reducer';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { PeriodSplit, PeriodSplitSet } from '../../../models/period/period.model';
-import { ChangeSplitSet } from '../store/period.actions';
+import { Subscription } from 'rxjs';
 import * as moment from 'moment';
+
+import { PeriodSplit, PeriodSplitSet } from '../../../models/period/period.model';
+import { PeriodState } from '../store/period.reducer';
+import { PeriodService } from '../services/period.service';
 
 @Component({
   selector: 'app-period-split-settings',
   templateUrl: './period-split-settings.component.html',
   styleUrls: ['./period-split-settings.scss']
 })
-export class PeriodSplitSettingsComponent implements OnInit {
-  periodSubscribe: Observable<PeriodState>;
-  activeSplitSet: PeriodSplitSet;
-  activeSplit: PeriodSplit;
+
+export class PeriodSplitSettingsComponent implements OnInit, OnDestroy {
   @Input() splitSetId: number;
   @Input() splitId: number;
   @Input() periodScaleItemId: number;
   @Output() closeInfo: EventEmitter<number> = new EventEmitter<number>();
 
-  constructor(public store: Store<PeriodState>) {
-    this.periodSubscribe = store.select('state');
-  }
+  public activeSplitSet: PeriodSplitSet;
+  public activeSplit: PeriodSplit;
+  private subscription = new Subscription();
+
+  constructor(public store: Store<PeriodState>, public periodService: PeriodService) {}
 
   ngOnInit(): void {
-    this.periodSubscribe.subscribe(periodStore => {
-      this.activeSplitSet = periodStore.splitsSet.find((set) => set.split_set_id === this.splitSetId);
+    this.subscription = this.periodService.getPeriodStore().subscribe(periodStore => {
+      this.activeSplitSet = periodStore.period.split_sets.find((set) => set.split_set_id === this.splitSetId);
       if (this.activeSplitSet) {
         this.activeSplit = this.activeSplitSet.splits.find((split) => split.split_id === this.splitId);
       }
@@ -37,64 +38,41 @@ export class PeriodSplitSettingsComponent implements OnInit {
     this.closeInfo.emit(this.periodScaleItemId);
   }
 
-  onChangeSplitDate(): void {
-    const splitIndex = this.activeSplitSet.splits.indexOf(this.activeSplitSet.splits.find((split) => split.split_id === this.splitId));
-    const activeSplitDuration = moment(this.activeSplit.date_to).diff(moment(this.activeSplit.date_from), 'days') + 1;
-    if (activeSplitDuration  > 7) {
-      this.activeSplitSet.splits[splitIndex] = {
-        name: this.activeSplit.name,
-        date_from: this.activeSplit.date_from,
-        date_to: this.activeSplit.date_to,
-        split_id: this.activeSplit.split_id,
-        duration: activeSplitDuration
-      };
-      this.updateSplitSet(this.splitSetId, this.activeSplitSet);
-    }
-  }
-
-  updateSplitSet(updatedSplitSetIndex: number, updatedSplitSet: PeriodSplitSet): void {
-    this.store.dispatch(new ChangeSplitSet( {
-      index: updatedSplitSetIndex,
-      splitSet: updatedSplitSet
-    }));
+  onChangeSplitDate(date: string): void {
+    this.periodService.changeSplitDate(this.activeSplitSet, this.activeSplit, this.splitId, date);
   }
 
   onDeleteClick(): void {
-    const splitIndex = this.activeSplitSet.splits.indexOf(this.activeSplitSet.splits.find((split) => split.split_id === this.splitId));
-    if (this.activeSplitSet.splits[splitIndex + 1]) {
-      this.activeSplitSet.splits[splitIndex + 1].date_from = this.activeSplitSet.splits[splitIndex].date_from;
-      this.activeSplitSet.splits[splitIndex + 1].duration += this.activeSplitSet.splits[splitIndex].duration;
-    }
-    this.activeSplitSet.splits.splice(splitIndex, 1);
-    this.updateSplitSet(this.splitSetId, this.activeSplitSet);
+    this.periodService.deleteSplit(this.activeSplitSet, this.splitId);
   }
 
   onCopyClick(): void {
-    console.log('copy');
+    const splitIndex = this.activeSplitSet.splits.indexOf(this.activeSplitSet.splits.find((split) => split.split_id === this.splitId));
+    const copySplit = this.activeSplitSet.splits[splitIndex];
+    this.activeSplitSet.splits.splice(splitIndex, 0,
+      {
+        name: copySplit.name,
+        date_from: moment(copySplit.date_to, 'DD-MM-YYYY').add(1, 'days').toDate(),
+        date_to: moment(copySplit.date_to, 'DD-MM-YYYY').add(1 + copySplit.duration, 'days').toDate(),
+        split_id: this.activeSplitSet.splits.slice(-1).pop().split_id + 1,
+        duration: copySplit.duration
+      }
+    );
+    this.activeSplitSet.splits.map((split) => {
+      if (this.activeSplitSet.splits.indexOf(split) > splitIndex + 1) {
+          const previousSplit =  this.activeSplitSet.splits[this.activeSplitSet.splits.indexOf(split) - 1];
+          split.date_from = moment(previousSplit.date_to, 'DD-MM-YYYY').add(1, 'days').toDate();
+          split.date_from = moment(previousSplit.date_to, 'DD-MM-YYYY').add(1 + split.duration, 'days').toDate();
+      }
+    });
+    this.periodService.updateSplitSet(this.activeSplitSet);
   }
 
   onChangeSplitDuration(): void {
-    console.log('change duration');
-    const splitIndex = this.activeSplitSet.splits.indexOf(this.activeSplitSet.splits.find((split) => split.split_id === this.splitId));
-    // if (splitIndex) {
-    //   this.activeSplitSet.splits[splitIndex].duration =
-    // }
-    // if (this.activeSplitSet.splits[splitIndex + 1]) {
-    //     if (this.activeSplit.duration < this.splitInitialDuration){
-    //       //
-    //     }
-    // }
+    this.periodService.changeSplitDuration(this.activeSplitSet, this.splitId);
+  }
 
-    // const activeSplitDuration = moment(this.activeSplit.date_to).diff(moment(this.activeSplit.date_from), 'days') + 1;
-    // if (activeSplitDuration  > 7) {
-    //   this.activeSplitSet.splits[splitIndex] = {
-    //     name: this.activeSplit.name,
-    //     date_from: this.activeSplit.date_from,
-    //     date_to: this.activeSplit.date_to,
-    //     split_id: this.activeSplit.split_id,
-    //     duration: activeSplitDuration
-    //   };
-    //   this.updateSplitSet(this.splitSetId, this.activeSplitSet);
-    // }
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

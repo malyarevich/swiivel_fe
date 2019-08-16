@@ -1,0 +1,65 @@
+.list-group-item-secondary {
+    background-color: #ebebeb !important;
+}
+
+.color-custom-grey {
+    background-color: #f9f9f9;
+}
+
+.test {
+    vertical-align: middle;
+}
+
+.vertical-center {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.app-step-title {
+    color: #535353;
+}
+
+.app-btn-primary {
+    background: #3552a7;
+    color: white;
+}
+
+.btn-primary {
+    background: #e0e6ff;
+    border-color: white !important;
+    color: #4e67b4;
+}
+
+label.btn.btn-primary.active {
+    background: #ffb915;
+    color: #ffffff;
+}
+
+.app-fb-scroll-container {
+    height: 37em;
+    overflow-y: auto;
+}
+
+.hidden-dev {
+    height: 0;
+    margin: 0;
+    padding: 0 !important;
+}
+
+.invalid-feedback {
+    display: block;
+    opacity: 0;
+}
+
+.form-control.is-invalid ~ .invalid-feedback,
+.form-control.is-invalid ~ .invalid-tooltip,
+.was-validated .form-control:invalid ~ .invalid-feedback,
+.was-validated .form-control:invalid ~ .invalid-tooltip {
+    opacity: 1;
+}
+
+.hidden_block {
+    opacity: 0;
+}

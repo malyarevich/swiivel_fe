@@ -1,0 +1,73 @@
+<div class="row no-gutters">
+  <div class="col">
+    <!-- <app-toggle-checkbox-field [label]="'FIELD MULTIPLIER OPTION'"
+                               [(ngModel)]="inputGroup.settings.multiplier.enabled">
+    </app-toggle-checkbox-field> -->
+    <app-toggle-checkbox-field>
+      <span class="label">FIELD MULTIPLIER OPTION</span>
+      <input type="checkbox"
+             [value]="inputGroup.settings.multiplier.enabled"
+             [checked]="inputGroup.settings.multiplier.enabled">
+    </app-toggle-checkbox-field>
+  </div>
+</div>
+<div [hidden]="!inputGroup.settings.multiplier.enabled">
+  <div class="row no-gutters pt-4">
+    <div class="col">
+      <label class="app-radio-container">Mapped multiples
+        <input type="radio" name="mapped_type" [value]="'multiple'"
+               [(ngModel)]="inputGroup.settings.multiplier.mapped_type">
+        <span class="app-radio-checkmark"></span>
+      </label>
+    </div>
+    <div class="col">
+      <label class="app-radio-container">Manual selection
+        <input type="radio" name="mapped_type" [value]="'manual'"
+               [(ngModel)]="inputGroup.settings.multiplier.mapped_type">
+        <span class="app-radio-checkmark"></span>
+      </label>
+    </div>
+  </div>
+  <ng-container *ngIf="inputGroup.settings.multiplier.mapped_type === 'multiple'">
+    <div class="form-group app-input-container app-input-fill">
+      <label class="app-input-label" for="multiple">This Field is Mapping to</label>
+      <select class="app-input" id="multiple"
+              [(ngModel)]="inputGroup.settings.multiplier.mapping_field">
+        <option value="amount_of_students_in_family">"Amount of Students in Family"</option>
+      </select>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="inputGroup.settings.multiplier.mapped_type === 'manual'">
+    <div class="form-group app-input-container app-input-fill">
+      <label class="app-input-label" for="manual">This Field is Mapping to</label>
+      <select class="app-input" id="manual"
+              [(ngModel)]="inputGroup.settings.multiplier.mapping_field">
+        <option *ngFor='let item of manualMultiplierOptions'
+                [value]="item.value">{{item.name | titlecase}}
+        </option>
+      </select>
+    </div>
+  </ng-container>
+
+  <div class="pt-3">
+    <app-checkbox-field
+      label="Prefill with system information"
+      [(ngModel)]="inputGroup.settings.multiplier.prefill">
+    </app-checkbox-field>
+  </div>
+  <div class="pt-2">
+    <app-checkbox-field
+      label="Limit. amount to"
+      [(ngModel)]="inputGroup.settings.multiplier.limit">
+    </app-checkbox-field>
+  </div>
+  <div class="form-group app-input-container w-75">
+    <app-input-field
+      [disabled]="!inputGroup.settings.multiplier.limit"
+      [(ngModel)]="inputGroup.settings.multiplier.limit_amount"
+      type="number"
+      [min]="1">
+    </app-input-field>
+  </div>
+</div>

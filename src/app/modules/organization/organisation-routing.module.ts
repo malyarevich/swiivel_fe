@@ -16,12 +16,12 @@ export const routes: Routes = [
     children: personRoutes,
   },
   {
-    path: 'vertical-data-collection',
+    path: 'data-collection',
     component: LayoutComponent,
     children: [
       {
         path: '',
-        loadChildren: () => import('../vertical-data-collection/vertical-data-collection.module').then(m => m.VerticalDataCollectionModule),
+        loadChildren: () => import('../data-collection/data-collection.module').then(m => m.DataCollectionModule),
 
       }
     ],

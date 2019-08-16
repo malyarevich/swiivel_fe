@@ -1,0 +1,68 @@
+<div>
+  <ul class="list-group bg-white">
+    <ng-container *ngFor="let item of menuItems; let indexMenu = index">
+      <li
+        class="list-group-item app-form-publish-menu-item"
+        [ngClass]="{
+          'app-form-publish-menu-item-active': activeMenuItem === item.value
+        }"
+        (click)="setActiveItem(item.value)"
+      >
+        {{ indexMenu + 1 }}. {{ item.title | uppercase }}
+      </li>
+      <ng-container
+        *ngIf="
+          activeMenuItem === item.value &&
+          item.stateSub !== undefined
+        "
+      >
+        <li
+          *ngFor="let subMenu of item.stateSub; let indexSub = index"
+          class="list-group-item app-form-publish-menu-item"
+        >
+          <div class="row no-gutters slider-item align-items-center">
+            <div class="col-auto mr-2">
+              <label class="app-switch">
+                <input
+                  type="checkbox"
+                  id="switch{{ i }}_{{ indexSub }}"
+                  name="switch{{ i }}_{{ indexSub }}"
+                  [ngModel]="
+                    data['publish_settings']['state'][item.value][subMenu.type]
+                  "
+                  (ngModelChange)="
+                    data['publish_settings']['state'][item.value][
+                      subMenu.type
+                    ] = data['publish_settings']['state'][item.value][
+                      subMenu.type
+                    ] = $event
+                  "
+                />
+                <span class="app-slider app-round"></span>
+              </label>
+            </div>
+            <div class="col">
+              <label class="switch_label" for="switch{{ i }}_{{ indexSub }}">
+                <span
+                  class="font-weight-bold side-bar-toggle"
+                  (click)="toggleSubMenu(item.value, subMenu.type)"
+                >
+                  {{ subMenu.name }}
+                </span>
+              </label>
+            </div>
+          </div>
+        </li>
+      </ng-container>
+      <ng-container *ngIf="item.addOptions !== undefined">
+        <!-- *ngIf="activeMenuItem === item.value && item.addOptions !== undefined" -->
+        <app-publish-menu-additional-options
+          [item]="item"
+          [activeMenuItem]="activeMenuItem"
+          [automation]="data['automation']"
+          (addAutomation)="addNewAutomation($event)"
+        ></app-publish-menu-additional-options>
+      </ng-container>
+    </ng-container>
+  </ul>
+</div>

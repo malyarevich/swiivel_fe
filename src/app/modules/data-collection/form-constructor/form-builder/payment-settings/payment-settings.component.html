@@ -1,0 +1,48 @@
+<!--Section Header-->
+<app-section-header
+  [sectionName]="paymentSettings.sectionName"
+  [sectionWidth]="paymentSettings.sectionWidth"
+  [isExpand]="isExpand"
+  (onChangeSectionName)="changeSectionName($event)"
+  (onChangeSectionWidth)="changeSectionWidth($event)"
+  (onToggleExpand)="toggleExpand()"
+></app-section-header>
+<!--End Section Header-->
+
+<div [ngClass]="{
+    'app-div-show': isExpand,
+    'app-div-hide': !isExpand
+  }">
+  <div class="app-section-content-wrapper">
+    <!-- *ngFor="let item of paymentSettings.paymentSettingsItems" -->
+    <extended-field
+      [content]="this.paymentSettings.paymentOptionsContent"
+      (changeContent)="onChangePaymentOptionsContent($event)"
+      fieldTitle="Payment Options"
+    ></extended-field>
+
+    <!-- Bais Medrash Winter Dormitory Fee -->
+    <app-payment-settings-dormitory-fee></app-payment-settings-dormitory-fee>
+    <!-- Registration -->
+    <app-payment-settings-registration></app-payment-settings-registration>
+    <!-- Tuition -->
+    <app-payment-settings-tuition></app-payment-settings-tuition>
+    <!-- Scholarship -->
+    <app-payment-settings-scholarship></app-payment-settings-scholarship>
+    <!-- Lunch Fee -->
+    <app-payment-settings-lunch-fee></app-payment-settings-lunch-fee>
+    <!-- Text -->
+    <extended-field
+      fieldTitle="Text"
+      content="some content"></extended-field>
+
+    <!--SIGNATURE-->
+    <ng-container *ngIf="paymentSettings.signature.isRequire">
+      <app-signatures [signature]="paymentSettings.signature"></app-signatures>
+    </ng-container>
+    <!--END SIGNATURE-->
+
+    <!-- Sample Preview -->
+    <app-payment-settings-sample-preview></app-payment-settings-sample-preview>
+  </div>
+</div>

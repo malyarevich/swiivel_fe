@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
-import { Section } from '../../../../models/vertical-data-collection/section.model';
+import { Section } from '../../../../models/data-collection/section.model';
 
 /**Help for use
  * Example for base usage:

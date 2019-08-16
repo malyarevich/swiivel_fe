@@ -1,77 +1,54 @@
-import {
-    Component,
-    OnInit,
-    Output,
-    EventEmitter,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    OnDestroy
-} from '@angular/core';
+import {Component, OnInit, Output, EventEmitter, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Store} from '@ngrx/store';
 import {Subject} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
-
-import {Login, Effects} from '../../store';
+import {Store} from '@ngrx/store';
+import {LoginRequestAction} from '../../../../store';
 
 @Component({
-    selector: 'app-login-form',
-    templateUrl: './login-form.component.html',
-    styleUrls: ['./login-form.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+  selector: 'app-login-form',
+  templateUrl: './login-form.component.html',
+  styleUrls: ['./login-form.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
+
 export class LoginFormComponent implements OnInit, OnDestroy {
-    public form: FormGroup;
-    public shape = 'eye';
-    public destroy$: Subject<boolean> = new Subject<boolean>();
 
-    @Output() goToRestore = new EventEmitter<boolean>();
+  @Output() goToRestore = new EventEmitter<boolean>();
+  public form: FormGroup;
+  public componentDestroyed$: Subject<boolean> = new Subject<boolean>();
+  public shape = 'eye';
 
-    constructor(
-        private readonly fb: FormBuilder,
-        private readonly store: Store<any>,
-        private readonly effects: Effects,
-        private readonly ch: ChangeDetectorRef
-    ) {
+  constructor(
+    private readonly formBuilder: FormBuilder,
+    private readonly changeDetectorRef: ChangeDetectorRef,
+    private readonly store$: Store<any>
+  ) {
+  }
+
+  ngOnInit() {
+    this.form = this.formBuilder.group({
+      username: ['', [Validators.required]],
+      password: ['', [Validators.required]],
+    });
+  }
+
+  changeField(): void {
+    this.shape = this.shape === 'eye' ? 'eye-hide' : 'eye';
+  }
+
+  changeView(): void {
+    this.goToRestore.emit(false);
+  }
+
+  logIn() {
+    const {valid, value} = this.form;
+    if (valid) {
+      this.store$.dispatch(new LoginRequestAction(value));
     }
+  }
 
-    ngOnInit() {
-        this.form = this.fb.group({
-            username: ['', [Validators.required]],
-            password: ['', [Validators.required]],
-        });
-
-        this.effects.status$.pipe(takeUntil(this.destroy$)).subscribe((res) => {
-            const {error} = res;
-            const keys = Object.keys(error);
-            keys.forEach((key) => {
-                if (this.form.controls[key]) {
-                    this.form.controls[key].setErrors({'server': error[key]});
-                    this.form.controls[key].markAsTouched();
-                }
-            });
-
-            this.ch.markForCheck();
-        });
-    }
-
-    changeField(): void {
-        this.shape = this.shape === 'eye' ? 'eye-hide' : 'eye';
-    }
-
-    changeView(): void {
-        this.goToRestore.emit(false);
-    }
-
-    logIn() {
-        const {valid, value} = this.form;
-        if (valid) {
-            this.store.dispatch(new Login(value));
-        }
-    }
-
-    ngOnDestroy(): void {
-        this.destroy$.next(true);
-        this.destroy$.unsubscribe();
-    }
+  ngOnDestroy(): void {
+    this.componentDestroyed$.next(true);
+    this.componentDestroyed$.unsubscribe();
+  }
 }
