@@ -1,8 +1,6 @@
-import { EventEmitter, Injectable } from "@angular/core";
+import { EventEmitter, Injectable } from '@angular/core';
 
-@Injectable({
-  providedIn: "root"
-})
+@Injectable()
 export class PublishSettingsAutomationService {
   onAddAutomationItem: EventEmitter<any> = new EventEmitter();
   onRemoveAutomationItem: EventEmitter<number> = new EventEmitter();
@@ -27,10 +25,10 @@ export class PublishSettingsAutomationService {
   changeAutomationItemType(value: object) {
     this.onChangeAutomationItemType.emit(value);
   }
-  
+
   toggleAutomationItemContent(id: number) {
     this.isHideAutomationItemContent[id] = !this.isHideAutomationItemContent[id];
-    const obj = {"id": id, "value": this.isHideAutomationItemContent[id]};
+    const obj = {id, value: this.isHideAutomationItemContent[id]};
     this.onSwitchAutomationItemContent.emit(obj);
   }
 

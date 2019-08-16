@@ -1,7 +1,7 @@
-import { Period, PeriodSplitSet } from '../../../models/period/period.model';
+import { Period } from '../../../models/period/period.model';
 
 export interface PeriodState {
+  periods: Period[];
   period: Period;
-  splitSet: PeriodSplitSet[];
+  savePeriodError: { text: string, isOpen: boolean };
 }
-

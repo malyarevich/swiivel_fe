@@ -3,23 +3,23 @@ import {
   OnInit,
   ViewEncapsulation,
   Input
-} from "@angular/core";
+} from '@angular/core';
 import {
   FormControl,
   FormGroup,
   Validators
-} from "@angular/forms";
+} from '@angular/forms';
 import {
   IPdfStructure,
   PublishSettingsEntity
-} from "../../../../model/publish-settings.model";
-import { PublishSettingsPublishSettingsService } from "../../../../services/publish-settings-publish-settings.service";
+} from '../../../../model/publish-settings.model';
+import { PublishSettingsPublishSettingsService } from '../../../../services/publish-settings-publish-settings.service';
 
 @Component({
-  selector: "app-publish-settings-pdf-form",
-  templateUrl: "./publish-settings-pdf-form.component.html",
+  selector: 'app-publish-settings-pdf-form',
+  templateUrl: './publish-settings-pdf-form.component.html',
   encapsulation: ViewEncapsulation.None,
-  styleUrls: ["./publish-settings-pdf-form.component.scss"]
+  styleUrls: ['./publish-settings-pdf-form.component.scss']
 })
 export class PublishSettingsPdfFormComponent implements OnInit {
   @Input() pdfConfig: IPdfStructure;
@@ -28,8 +28,8 @@ export class PublishSettingsPdfFormComponent implements OnInit {
   providers = PublishSettingsEntity.providers;
 
   defaultMailFormControls = {
-    ProviderName: new FormControl({ value: 0, name: "Provider Name" }, Validators.required),
-    AccountNumber: new FormControl("", {
+    ProviderName: new FormControl({ value: 0, name: 'Provider Name' }, Validators.required),
+    AccountNumber: new FormControl('', {
       validators: Validators.compose([
         Validators.required,
         Validators.minLength(3),
@@ -37,16 +37,16 @@ export class PublishSettingsPdfFormComponent implements OnInit {
       ])
     }),
     Email: new FormControl(
-      "",
+      '',
       Validators.compose([
         Validators.required,
-        Validators.pattern("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$")
+        Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
       ])
     ),
-    EmailSubject: new FormControl("", Validators.required),
-    EmailBody: new FormControl("", Validators.required),
+    EmailSubject: new FormControl('', Validators.required),
+    EmailBody: new FormControl('', Validators.required),
     FormCheckbox: new FormControl(false, Validators.required),
-    CoverLetter: new FormControl("", Validators.required)
+    CoverLetter: new FormControl('', Validators.required)
   };
 
   pdfMailForm: FormGroup = new FormGroup(this.defaultMailFormControls);
@@ -56,7 +56,7 @@ export class PublishSettingsPdfFormComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    if (this.pdfConfig["form_value"]) {
+    if (this.pdfConfig['form_value']) {
       this.loadForm();
     }
 

@@ -3,6 +3,12 @@
   background: white;
   padding: 15px 10px;
 
+  .app-period-duration-setting__header {
+    font: 800 13px/15px 'NunitoSans-Bold';
+    text-transform: uppercase;
+    margin: 0 0 15px;
+  }
+
   .app-period-duration-setting__name {
     margin: 0 0 10px;
   }
@@ -12,8 +18,9 @@
     justify-content: space-between;
   }
 
-  .mat-calendar-body-cell-content {
-    border: 1px solid #0C133D;
+  .app-period-duration-setting__error {
+    color: red;
+    margin: 0;
   }
 
 }

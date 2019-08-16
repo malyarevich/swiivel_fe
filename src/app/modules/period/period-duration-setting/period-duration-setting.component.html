@@ -1,9 +1,11 @@
 <div class="app-period-duration-setting">
+  <h2 class="app-period-duration-setting__header">Period Settings</h2>
   <div class="app-period-duration-setting__name">
     <app-input-field
       [(ngModel)]="period.name"
       label="Period Name"
       (ngModelChange)="onChangePeriod()"
+      [isInvalid]="!period.name"
     ></app-input-field>
   </div>
 
@@ -24,5 +26,14 @@
       (ngModelChange)="onChangePeriod()"
     ></app-datepicker-field>
   </div>
-  <pre>{{ period | json }}</pre>
+  <div
+    *ngIf="period.error"
+    class="app-period-duration-setting__error"
+  >
+    <p
+      *ngFor="let error of period.error"
+      class="app-period-duration-setting__error">
+        {{ error }}
+    </p>
+  </div>
 </div>

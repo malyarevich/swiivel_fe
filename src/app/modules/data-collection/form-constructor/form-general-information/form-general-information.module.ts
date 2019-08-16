@@ -12,6 +12,7 @@ import { FormGeneralBasicInfoComponent } from './form-general-basic-info/form-ge
 import { FormGeneralWayCreateComponent } from './form-general-way-create/form-general-way-create.component';
 import { FormGeneralDatesComponent } from './form-general-dates/form-general-dates.component';
 import { FormGeneralEligibleComponent } from './form-general-eligible/form-general-eligible.component';
+import { FormGeneralPeriodComponent } from './form-general-period/form-general-period.component';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { FormGeneralEligibleComponent } from './form-general-eligible/form-gener
     FormGeneralWayCreateComponent,
     FormGeneralDatesComponent,
     FormGeneralEligibleComponent,
+    FormGeneralPeriodComponent,
   ],
   imports: [
     CommonModule,

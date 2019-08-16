@@ -1,6 +1,6 @@
 <tr
   class="app-table-thead-tr"
-  [ngStyle]="{'background': backround}"
+  [ngStyle]="{'background': background }"
 >
   <th
     class="app-table-thead-th"
@@ -17,7 +17,7 @@
       }"
     >
       <div class="app-table-thead-th__title">
-        {{col.title}}&nbsp;&nbsp;
+        {{ col.title }}&nbsp;&nbsp;
       </div>
       <div
         *ngIf="col.sort"
@@ -43,7 +43,15 @@
     </div>
     <app-search-field
       *ngIf="col.search"
-    >
+      [ngModel]="searchValue"
+      (ngModelChange)="onSearch($event, colIndex)">
     </app-search-field>
+    <app-datepicker-field
+      *ngIf="col.dateSearch"
+      [style]="'thead'"
+      [isValidatable]="false"
+      [ngModel]="searchValue"
+      (ngModelChange)="onSearch($event, colIndex)"
+    ></app-datepicker-field>
   </th>
 </tr>

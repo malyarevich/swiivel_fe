@@ -8,6 +8,18 @@
   width: auto;
   position: relative;
 
+  &.app-input-field-cell {
+    min-height: 25px;
+    max-height: 25px;
+
+    input {
+      width: 92px;
+      min-height: 25px;
+      max-height: 25px;
+      padding: 5px 10px;
+    }
+  }
+
   &.app-input-field-table {
     min-height: 24px;
     max-height: 24px;
