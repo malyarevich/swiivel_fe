@@ -1,0 +1,77 @@
+.app-input-field-container {
+  border: none;
+  border-radius: 0;
+  color: #151515;
+  padding: 0;
+  min-height: 40px;
+  max-height: 40px;
+  width: auto;
+  position: relative;
+
+  .app-input-field-label {
+    position: absolute;
+    color: #909090;
+    transform-origin: 0 0;
+    z-index: 1;
+    top: 11px;
+    left: 11px;
+    font-size: 10px;
+  }
+
+  ::ng-deep input {
+    border: 1px solid #b6b6b6;
+    border-radius: 3px;
+    width: 100%;
+    min-height: 40px;
+    padding: 0 10px;
+    font-size: 12px;
+
+    &:focus {
+      border-color: #80bdff;
+      outline: 0;
+      box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25);
+    }
+  }
+
+  .app-input-field-error-icon {
+    color: #fff;
+    background: #e65757;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    text-align: center;
+    line-height: 7px;
+    position: absolute;
+    right: 11px;
+    top: 11px;
+    padding: 4px 0;
+  }
+
+  &.app-input-field-has-error {
+    .app-input-field-label {
+      color: #e65757;
+    }
+
+    ::ng-deep input {
+      border-color: #e65757;
+    }
+  }
+
+  &.app-input-field-value {
+    .app-input-field-label {
+      top: 1px;
+    }
+
+    ::ng-deep input {
+      padding-top: 10px;
+    }
+  }
+
+  ::ng-deep .error {
+    width: 100%;
+    margin-top: .25rem;
+    font-size: 80%;
+    color: #e65757;
+  }
+
+}
