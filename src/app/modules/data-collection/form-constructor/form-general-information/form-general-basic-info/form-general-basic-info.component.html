@@ -12,8 +12,9 @@
     <app-input-field-container
       [value]="generalInfoForm.get('name').value"
       [isInvalid]="generalInfoForm.get('name').touched&&generalInfoForm.get('name').invalid?'is-invalid':''">
-      <span class="label">Form Name</span>
-      <input type="text"
+      <span class="label" (click)="nameInput.focus()">Form Name</span>
+      <input #nameInput
+             type="text"
              formControlName="name"
              id="formName">
       <div class="error">
