@@ -9,6 +9,11 @@ import {FormGroup} from '@angular/forms';
 export class FormGeneralBasicInfoComponent implements OnInit {
   @Input() generalInfoForm: FormGroup;
 
+  languages = [
+    {label: 'English', value: 'english'},
+    {label: 'Hebrew', value: 'hebrew'}
+  ];
+
   constructor() {
   }
 

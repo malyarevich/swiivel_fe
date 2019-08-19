@@ -50,6 +50,8 @@ import { SignaturesComponent } from './signatures/signatures.component';
 // multi icons
 import { CaretsComponent } from './multi-icons/carets/carets.component';
 import { ToolTipQuestionComponent } from './tool-tip-question/tool-tip-question.component';
+import {CheckboxFieldContainerComponent, InputFieldContainerComponent} from '@app/shared/components/field-containers';
+import {SelectFieldContainerComponent} from '@app/shared/components/field-containers/select-field-container/select-field-container.component';
 
 @NgModule({
   declarations: [
@@ -90,6 +92,10 @@ import { ToolTipQuestionComponent } from './tool-tip-question/tool-tip-question.
     SignaturesComponent,
     // multi icons
     CaretsComponent,
+    // field containers
+    CheckboxFieldContainerComponent,
+    InputFieldContainerComponent,
+    SelectFieldContainerComponent,
   ],
   imports: [
     CommonModule,
@@ -139,7 +145,11 @@ import { ToolTipQuestionComponent } from './tool-tip-question/tool-tip-question.
     // complex
     SignaturesComponent,
     // multi icons
-    CaretsComponent
+    CaretsComponent,
+    // field containers
+    CheckboxFieldContainerComponent,
+    InputFieldContainerComponent,
+    SelectFieldContainerComponent,
   ],
 })
 export class SharedRedComponentsModule {}

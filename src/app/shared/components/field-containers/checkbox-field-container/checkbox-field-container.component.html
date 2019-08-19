@@ -1,0 +1,15 @@
+<div
+  class="app-checkbox-field"
+  [ngClass]="{'app-checkbox-field-has-error': isInvalid}"
+>
+  <label
+    class="app-checkbox-field-label"
+    [ngClass]="{'app-checkbox-field-label__text': hasMargin}"
+  >
+    <div>
+      <ng-content select=".label"></ng-content>
+    </div>
+    <ng-content select="input"></ng-content>
+    <div class="app-checkbox-field-checkmark"></div>
+  </label>
+</div>

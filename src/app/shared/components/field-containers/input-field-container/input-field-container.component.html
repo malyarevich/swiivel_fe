@@ -1,0 +1,13 @@
+<div class="app-input-field-container"
+     [ngClass]="{
+    'app-input-field-has-error': isInvalid,
+    'app-input-field-value': value && label.children.length !== 0
+  }"
+>
+  <label #label class="app-input-field-label">
+    <ng-content select=".label"></ng-content>
+  </label>
+  <ng-content select="input"></ng-content>
+  <ng-content *ngIf="isInvalid" select=".error"></ng-content>
+  <div *ngIf="isInvalid" class="app-input-field-error-icon">x</div>
+</div>
