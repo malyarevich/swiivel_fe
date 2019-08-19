@@ -22,6 +22,7 @@ export class FieldsSideBarNodeComponent implements OnInit {
 
   nodeAction(node: Field) {
     if (node.type !== 114) {
+      node.isActive = !node.isActive;
       return;
     }
     this.sideBarService.sectionSubject.next(node);
