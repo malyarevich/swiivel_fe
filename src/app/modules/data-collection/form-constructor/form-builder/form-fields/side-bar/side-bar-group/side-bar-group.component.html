@@ -38,22 +38,22 @@
       [ngxDraggable]="idSectionForDragDrop"
     >
       <div *ngIf="field.type === 113" class="ml-2 border-open-setting">
-        <app-v-side-bar-group
+        <app-side-bar-group
           [nestedLevel]="nestedLevel + 1"
           [group]="field"
           [form]="getForm()"
           [idSectionForDragDrop]="idSectionForDragDrop"
-        ></app-v-side-bar-group>
+        ></app-side-bar-group>
       </div>
       <div class="ml-2">
-        <app-v-side-bar-field
+        <app-side-bar-field
           *ngIf="field.type !== 113"
           [nestedLevel]="nestedLevel"
           [group]="field"
           [field]="field"
           [form]="getForm()"
           [style]="field.mapped === ''"
-        ></app-v-side-bar-field>
+        ></app-side-bar-field>
       </div>
     </div>
   </div>

@@ -2,10 +2,9 @@
   <span>{{crumbs[section.name]}}</span></div>
 <div class="row align-items-center no-gutters">
   <div class="col-1 pb-1">
-    <label [for]="section.name" class="app-checkbox-container">
+    <label class="app-checkbox-container">
       <input
         type="checkbox"
-        [id]="section.name"
         [ngModel]="section.exist"
         (change)="sideBarService.onSectionToggle($event, section, form.fields)"
       />

@@ -1,15 +1,16 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from "@angular/core";
-import { SideBarService } from "../../side-bar/side-bar.service";
-import { Form } from "src/app/models/data-collection/form.model";
-import { Section } from "src/app/models/data-collection/section.model";
-import { Field } from "src/app/models/data-collection/field.model";
+import { AfterViewInit, ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
+import { SideBarService } from '../../side-bar/side-bar.service';
+import { Form } from 'src/app/models/data-collection/form.model';
+import { Section } from 'src/app/models/data-collection/section.model';
+import { Field } from 'src/app/models/data-collection/field.model';
 
 @Component({
-  selector: "app-group-container",
-  templateUrl: "./group-container.component.html",
-  styleUrls: ["./group-container.component.scss"]
+  selector: 'app-group-container',
+  templateUrl: './group-container.component.html',
+  styleUrls: ['./group-container.component.scss']
 })
-export class GroupContainerComponent implements OnInit {
+
+export class GroupContainerComponent implements OnInit, AfterViewInit {
   @Input() form: Form;
   @Input() customFields: Field[];
   @Input() inputGroup: Field;
@@ -18,11 +19,11 @@ export class GroupContainerComponent implements OnInit {
 
   @Input() idSectionForDragDrop: string[];
   warningCheckExistingLabelString =
-    "Pay attention that we already have existing field with the same name";
+    'Pay attention that we already have existing field with the same name';
   warningCheckUniqString =
-    "Pay attention that there are unique Field with the same name or mapped to the same field!";
+    'Pay attention that there are unique Field with the same name or mapped to the same field!';
 
-  showGroupSettings: boolean = false;
+  showGroupSettings = false;
 
   objectKeys = Object.keys;
   list: object;
@@ -31,7 +32,9 @@ export class GroupContainerComponent implements OnInit {
     private sideBarService: SideBarService,
     private cd: ChangeDetectorRef
   ) {}
-  showNested: boolean = true;
+
+  showNested = true;
+
   ngOnInit() {
     this.list = Section.sectionWidth;
   }
@@ -71,7 +74,6 @@ export class GroupContainerComponent implements OnInit {
 
   ngAfterViewInit(): void {
     this.idSectionForDragDrop.push(this.inputGroup._id);
-
     this.cd.detectChanges();
   }
 }

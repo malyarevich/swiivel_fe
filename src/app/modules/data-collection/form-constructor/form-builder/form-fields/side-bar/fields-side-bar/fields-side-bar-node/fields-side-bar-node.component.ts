@@ -5,8 +5,10 @@ import {SideBarService} from '../../side-bar.service';
 @Component({
   selector: 'app-fields-side-bar-node',
   templateUrl: './fields-side-bar-node.component.html',
-  styleUrls: ['./fields-side-bar-node.component.scss']
+  styleUrls: ['./fields-side-bar-node.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
+
 export class FieldsSideBarNodeComponent implements OnInit {
 
   @Input() sideBar: Field[];

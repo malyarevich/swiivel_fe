@@ -1,53 +1,36 @@
-import { Component, Input, OnDestroy, OnInit } from "@angular/core";
-import { SideBarService } from "../side-bar.service";
-import { Form } from "src/app/models/data-collection/form.model";
-import { Field } from "src/app/models/data-collection/field.model";
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { SideBarService } from '../side-bar.service';
 
 @Component({
-  selector: "app-side-bar-group",
-  templateUrl: "./side-bar-group.component.html",
-  styleUrls: ["./side-bar-group.component.scss"]
+  selector: 'app-side-bar-group',
+  templateUrl: './side-bar-group.component.html',
+  styleUrls: ['./side-bar-group.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SideBarGroupComponent implements OnInit, OnDestroy {
-  showNested: boolean = true;
-  @Input() idSectionForDragDrop: string[];
-  @Input() group: Field;
-  @Input() rootGroup: Field;
-  @Input() section: Field;
-  @Input() form: Form;
-  @Input() sideBar: Field;
-  @Input() customFields: Field[];
-  @Input() existingFields: Field[];
+
+export class SideBarGroupComponent implements OnInit {
+
+  @Input() group: any;
+  @Input() form: any;
   @Input() nestedLevel: number;
+  @Input() idSectionForDragDrop: string[];
 
-  constructor(private sideBarService: SideBarService) {}
+  public showNested = true;
 
-  ngOnInit() {}
+  constructor(
+    private sideBarService: SideBarService
+  ) {}
 
-  onBeingChange(event: boolean, entity: Field, destination: Field) {
-    if (event) {
-      if (this.rootGroup && this.nestedLevel > 1) {
-        this.sideBarService.onChangeGroupBeing(
-          entity,
-          destination,
-          this.form,
-          this.rootGroup
-        );
-      } else {
-        this.sideBarService.onChangeGroupBeing(entity, destination, this.form);
-      }
+  ngOnInit() {
+  }
 
-      this.section.exist = true;
+  getForm() {
+    const index = this.form.findIndex(field => field.name === this.group.name);
+    if (!this.form[index]) {
+      return [];
     } else {
-      this.sideBarService.onFieldDelete(entity, this.form.fields);
+      return  this.form[index].fields;
     }
-    if (this.rootGroup && this.nestedLevel > 1) this.rootGroup.exist = event;
-    entity.exist = event;
-
-    this.sideBarService.changeAllGroupAndNested(event, entity);
   }
 
-  ngOnDestroy(): void {
-    this.group.exist = false;
-  }
 }

@@ -180,7 +180,7 @@
     </div>
   </div>
   <div *ngIf="showGroupSettings">
-    <app-v-group-settings [form]="form" [inputGroup]="inputGroup"></app-v-group-settings>
+    <app-group-settings [form]="form" [inputGroup]="inputGroup"></app-group-settings>
   </div>
 </div>
   <div [hidden]="!showNested">
@@ -212,11 +212,11 @@
           [customFields]="customFields"
           [sideBar]="sideBar"
         ></app-field-container>
-        <app-divider-conteiner
+        <app-divider-container
           *ngIf="field.type === 112"
           [inputDivider]="field"
           [form]="form"
-        ></app-divider-conteiner>
+        ></app-divider-container>
         <app-group-container
           *ngIf="field.type === 113"
           [inputGroup]="field"

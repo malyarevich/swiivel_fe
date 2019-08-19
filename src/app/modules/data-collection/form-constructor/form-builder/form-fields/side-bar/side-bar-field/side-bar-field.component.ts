@@ -1,63 +1,33 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  OnInit,
-  Output
-} from "@angular/core";
-import { SideBarService } from "../side-bar.service";
-import { Form } from "src/app/models/data-collection/form.model";
-import { Field } from "src/app/models/data-collection/field.model";
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { Field } from 'src/app/models/data-collection/field.model';
+import { SideBarService } from '../side-bar.service';
 
 @Component({
-  selector: "app-side-bar-field",
-  templateUrl: "./side-bar-field.component.html",
-  styleUrls: ["./side-bar-field.component.css"]
+  selector: 'app-side-bar-field',
+  templateUrl: './side-bar-field.component.html',
+  styleUrls: ['./side-bar-field.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SideBarFieldComponent implements OnInit, OnDestroy {
-  @Input() group: Field;
-  @Input() rootGroup: Field;
+
+export class SideBarFieldComponent implements OnInit {
+
   @Input() field: Field;
-  @Input() section: Field;
-  @Input() form: Form;
+  @Input() group: Field[];
+  @Input() form: Field[];
   @Input() nestedLevel: number;
   @Input() style: boolean;
-  @Output() onChangeFieldBeing = new EventEmitter<any>();
-  @Output() deleteCustom = new EventEmitter<any>();
+
   constructor(
-    private sideBarService: SideBarService,
-    private cd: ChangeDetectorRef
+    private sideBarService: SideBarService
   ) {}
 
-  ngOnInit() {}
-
-  ngAfterViewInit(): void {
-    this.cd.detectChanges();
+  ngOnInit() {
   }
 
-  onFieldToggle(event: boolean): void {
-    if (event) {
-      this.sideBarService.onChangeGroupBeing(
-        this.field,
-        this.section,
-        this.form,
-        this.group,
-        this.rootGroup
-      );
-      this.section.exist = true;
-    } else {
-      this.sideBarService.onFieldDelete(this.field, this.form.fields);
-    }
-    this.field.exist = event;
+  deleteCustomField() {
+    const index = this.group.findIndex(field => field.name === this.field.name);
+    this.group.splice(index, 1);
   }
 
-  deleteCustomField(name: string) {
-    this.deleteCustom.emit(name);
-  }
-
-  ngOnDestroy(): void {
-    this.field.exist = false;
-  }
 }
+

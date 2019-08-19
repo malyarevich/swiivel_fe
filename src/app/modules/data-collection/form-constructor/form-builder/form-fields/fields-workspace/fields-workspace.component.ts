@@ -1,19 +1,20 @@
-import {AfterViewInit, ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
-import {Form} from '../../../../model/form.model';
-import {Field} from '../../../../model/field.model';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { AfterViewInit, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { v4 as uuid } from 'uuid';
 import { range } from 'lodash';
-import {FormBuilder, FormGroup, FormControl, Validators} from '@angular/forms';
-import {v4 as uuid} from 'uuid';
-import {SideBarService} from '../v-side-bar/side-bar.service';
-import {dividerStyle} from './divider';
-import {Section} from '../../../../../../models/vertical-data-collection/section.model';
+import { Field } from '../../../../model/field.model';
+import { SideBarService } from '../side-bar/side-bar.service';
+import { dividerStyle } from './divider';
+import { Form } from '@models/data-collection/form.model';
+import { Section } from '@models/data-collection/section.model';
 
 @Component({
-  selector: "app-fields-workspace",
-  templateUrl: "./fields-workspace.component.html",
-  styleUrls: ["./fields-workspace.component.scss"]
+  selector: 'app-fields-workspace',
+  templateUrl: './fields-workspace.component.html',
+  styleUrls: ['./fields-workspace.component.scss']
 })
+
 export class FieldsWorkspaceComponent implements OnInit, AfterViewInit {
 
   sectionAddGroup: FormGroup = new FormGroup({
@@ -78,7 +79,7 @@ export class FieldsWorkspaceComponent implements OnInit, AfterViewInit {
 
   openModal(content) {
     this.modalService
-      .open(content, { size: "lg", ariaLabelledBy: "modal-basic-title" })
+      .open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title' })
       .result.then(
         result => {},
         reason => {
@@ -99,12 +100,11 @@ export class FieldsWorkspaceComponent implements OnInit, AfterViewInit {
       options: { size: this.sectionAddGroup.value.sectionSize },
       prefix: this.sectionAddGroup.value.sectionName
         .toLowerCase()
-        .split(" ")
-        .join("_"),
+        .split(' ')
+        .join('_'),
       fields: []
     };
     this.form.fields.push(newSection);
-    // this.idSectionForDragDrop = this.sideBarService.getIdOfSection(this.form.fields);
     this.sectionAddGroup.reset();
     modal.close();
   }
@@ -121,19 +121,18 @@ export class FieldsWorkspaceComponent implements OnInit, AfterViewInit {
       options: { size: 4 },
       prefix: this.groupAddGroup.value.groupName
         .toLowerCase()
-        .split(" ")
-        .join("_"),
+        .split(' ')
+        .join('_'),
       fields: []
     };
     this.form.fields.forEach(section => {
       if (
-        section.name == this.groupAddGroup.value.sectionRelate.name &&
-        section.prefix == this.groupAddGroup.value.sectionRelate.prefix
+        section.name === this.groupAddGroup.value.sectionRelate.name &&
+        section.prefix === this.groupAddGroup.value.sectionRelate.prefix
       ) {
         section.fields.push(newGroup);
       }
     });
-    // this.idSectionForDragDrop = this.sideBarService.getIdOfSection(this.form.fields);
     this.groupAddGroup.reset();
     modal.close();
   }
@@ -148,13 +147,13 @@ export class FieldsWorkspaceComponent implements OnInit, AfterViewInit {
       type: 112,
       options: { dividerStyle: this.dividerAddGroup.value.dividerStyle }
     };
-    if (this.dividerAddGroup.value.sectionRelate.name == 'workspace') {
+    if (this.dividerAddGroup.value.sectionRelate.name === 'workspace') {
       this.form.fields.push(newDivider);
     } else {
       this.form.fields.forEach(section => {
         if (
-          section.name == this.dividerAddGroup.value.sectionRelate.name &&
-          section.prefix == this.dividerAddGroup.value.sectionRelate.prefix
+          section.name === this.dividerAddGroup.value.sectionRelate.name &&
+          section.prefix === this.dividerAddGroup.value.sectionRelate.prefix
         ) {
           console.log(newDivider, 'section');
           section.fields.push(newDivider);
