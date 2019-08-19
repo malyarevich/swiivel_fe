@@ -347,7 +347,7 @@ export class FormGeneralInformationComponent implements OnInit, OnDestroy {
           Validators.maxLength(50)
         ])
       }),
-      language: new FormControl(),
+      language: new FormControl('english'),
       // periodCheckboxGroup: new FormControl(),
       endDate: new FormControl(new Date(1971, 10, 10), Validators.required),
       startDate: new FormControl(new Date(1971, 10, 10), Validators.required),

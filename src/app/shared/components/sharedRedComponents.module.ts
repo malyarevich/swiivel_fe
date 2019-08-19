@@ -51,6 +51,7 @@ import { SignaturesComponent } from './signatures/signatures.component';
 import { CaretsComponent } from './multi-icons/carets/carets.component';
 import { ToolTipQuestionComponent } from './tool-tip-question/tool-tip-question.component';
 import {CheckboxFieldContainerComponent, InputFieldContainerComponent} from '@app/shared/components/field-containers';
+import {SelectFieldContainerComponent} from '@app/shared/components/field-containers/select-field-container/select-field-container.component';
 
 @NgModule({
   declarations: [
@@ -94,6 +95,7 @@ import {CheckboxFieldContainerComponent, InputFieldContainerComponent} from '@ap
     // field containers
     CheckboxFieldContainerComponent,
     InputFieldContainerComponent,
+    SelectFieldContainerComponent,
   ],
   imports: [
     CommonModule,
@@ -147,6 +149,7 @@ import {CheckboxFieldContainerComponent, InputFieldContainerComponent} from '@ap
     // field containers
     CheckboxFieldContainerComponent,
     InputFieldContainerComponent,
+    SelectFieldContainerComponent,
   ],
 })
 export class SharedRedComponentsModule {}
