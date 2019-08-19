@@ -1,5 +1,5 @@
 export interface Period {
-  name:string,
-  vadue:string,
-  isChecked: boolean
+  name: string;
+  value: string;
+  isChecked: boolean;
 }

@@ -97,60 +97,48 @@
 <!--        </div>-->
 <!--      </li>-->
 <!--      <li class="list-group-item ml-4 mb-3" *ngFor="let field of inputGroup.fields" cdkDrag>-->
-<!--        <app-field-container *ngIf="field.type!=113"-->
+<!--        <app-v-field-container *ngIf="field.type!=113"-->
 <!--                               [inputField]="field"-->
 <!--                               [form]="form"-->
 <!--                               [customFields]="customFields"-->
 <!--                               [sideBar]="sideBar">-->
-<!--        </app-field-container>-->
+<!--        </app-v-field-container>-->
 <!--      </li>-->
 <!--    </ul>-->
 <!--  </div>-->
 
 <!--  <div *ngIf="showGroupSettings">-->
-<!--    <app-group-settings [inputGroup] = "inputGroup"></app-group-settings>-->
+<!--    <app-v-group-settings [inputGroup] = "inputGroup"></app-v-group-settings>-->
 <!--  </div>-->
 
 <!--</div>-->
 
 <div class="py-3 group-bc" [ngClass]="{'app-setting-show': showGroupSettings}" xmlns="http://www.w3.org/1999/html">
   <div class="row align-items-center no-gutters">
-
     <div class="col-3 ">
       <div class="row align-items-center no-gutters ml-2">
         <div class="col-3">
           <div class="row align-items-center no-gutters" cdkDragHandle>
-            <!--            <div *ngIf="inputField.isValidName" >-->
-            <!--              <span><i class="fas fa-ellipsis-v dragable-i"></i></span>-->
-            <!--              <span><i class="fas fa-ellipsis-v dragable-i"></i></span>-->
-            <!--               </div>-->
-            <!--            <div *ngIf="!inputField.isValidName">-->
-            <!--                   <span  aria-hidden="true" [title]="warningCheckExistingLabelString"><i-->
-            <!--                     class="fas fa-exclamation-triangle"></i></span>-->
-            <!--            </div>-->
-
-            <!--            <div *ngIf="inputField.isValid" class=" rectangle"></div>-->
-            <!--            <div *ngIf="!inputField.isValid" class="ml-2">-->
-            <!--              <span aria-hidden="true" [title]="warningCheckUniqString"><i-->
-            <!--              class="fas fa-exclamation-circle"></i></span>-->
-            <!--            </div>-->
             <div>
               <span><i class="fas fa-ellipsis-v dragable-i"></i></span>
               <span><i class="fas fa-ellipsis-v dragable-i"></i></span>
             </div>
-            <div  class="ml-2"><span class="rectangle"><i class="fas fa-clone"></i></span></div>
+            <div class="ml-2">
+              <span class="rectangle">
+                <i class="fas fa-clone"></i>
+              </span>
+            </div>
           </div>
         </div>
-
         <div class="col-9 justify-content-center" >
-          <!--          <label class="has-float-label">-->
-          <!--            <input class="form-control " (ngModelChange)="nameChange($event)" [disabled]="inputField.mapped!=''&& inputField.hasOwnProperty('mapped')"-->
-          <!--                   [ngModel]="inputField.name">-->
-          <!--            <span class="spanForLabel">Field Label</span>-->
-          <!--          </label>-->
-          <div class=""><span class="app-text-extra-bold align-self-center">{{inputGroup.name | titlecase}}</span></div>
-          <div class=""><span class="field-type-span mb-2">Field Group</span></div>
-
+          <div class="">
+            <span class="app-text-extra-bold align-self-center">
+              {{inputGroup.name | titlecase}}
+            </span>
+          </div>
+          <div class="">
+            <span class="field-type-span mb-2">Field Group</span>
+          </div>
         </div>
       </div>
     </div>
@@ -160,101 +148,79 @@
           <div class="  app-input-container"
                [ngClass]="{'app-input-fill': sizeID.value}" >
             <label for="groupWidth" class="app-input-label">Group Width</label>
-            <select class="app-input form-control"
-                    #sizeID
-                    id="groupWidth"
-                    [(ngModel)]="inputGroup.width"
+            <select
+              class="app-input form-control"
+              #sizeID
+              id="groupWidth"
+              [(ngModel)]="inputGroup.width"
             >
-              <option *ngFor="let key of objectKeys(list)"
-                      [value]="list[key]['type']"
-                      [selected]="list[key]['type'] === inputGroup.width"
-              >{{ list[key]["label"] }}</option>
+              <option
+                *ngFor="let key of objectKeys(list)"
+                [value]="list[key]['type']"
+                [selected]="list[key]['type'] === inputGroup.width"
+              >
+                {{ list[key]["label"] }}
+              </option>
             </select>
-
           </div>
         </div>
       </div>
-<!--    </div>  -->
-<!--    <div class="col-3 ">-->
-<!--      <div class="row align-items-center ">-->
-<!--        <div class="col-6">-->
-<!--          <div class="  app-input-container"-->
-<!--               [ngClass]="{'app-input-fill': sizeID.value}" >-->
-<!--            <label for="groupSize" class="app-input-label">Field Width</label>-->
-<!--            <select class="app-input form-control"-->
-<!--                    #sizeID-->
-<!--                    id="groupSize"-->
-
-<!--            >-->
-<!--              <option *ngFor="let width of size" [value]="width" [selected]="width==3"-->
-<!--              >{{width}} Columns</option>-->
-<!--            </select>-->
-
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
     </div>
-
     <div class="col-2  row align-items-center offset-4">
       <div  class=" col d-flex justify-content-end" >
-        <i class="fas fa-cog dragable-i" (click)="showGroupSettings=!showGroupSettings"></i>
+        <i class="fas fa-cog dragable-i" (click)="showGroupSettings = !showGroupSettings"></i>
       </div>
-      <div  class=" col d-flex justify-content-end" >
+      <div class=" col d-flex justify-content-end" >
         <i class="fas fa-times dragable-i" (click)="removeGroup(inputGroup)"></i>
       </div>
-      <div  class="border-left col d-flex " (click)="showNested=!showNested">
-                    <i *ngIf="showNested" class="fas  fa-caret-down dragable-y"></i>
-                    <i *ngIf="!showNested" class="fas  fa-caret-up dragable-y"></i>
+      <div  class="border-left col d-flex " (click)="showNested = !showNested">
+        <i *ngIf="showNested" class="fas  fa-caret-down dragable-y"></i>
+        <i *ngIf="!showNested" class="fas  fa-caret-up dragable-y"></i>
       </div>
     </div>
-
   </div>
-
-
-    <div *ngIf="showGroupSettings">
-      <app-group-settings [form]="form" [inputGroup] = "inputGroup"></app-group-settings>
-    </div>
+  <div *ngIf="showGroupSettings">
+    <app-group-settings [form]="form" [inputGroup]="inputGroup"></app-group-settings>
+  </div>
 </div>
-
-  <div [hidden]="!showNested"
->
-
+  <div [hidden]="!showNested">
     <ul
       class="list-group ngx-dnd-container drop-zone"
       [ngxDroppable]="inputGroup._id"
       [model]="inputGroup.fields"
       (drop)="dropAdd($event)"
       direction="vertical"
-
     >
-      <li *ngIf="inputGroup.fields.length==0"
-          class="list-group-item empty-group p-0 "
-      [ngClass]="nestedLevel==1?'margin-for-nested':''"
+      <li
+        *ngIf="inputGroup.fields.length === 0"
+        class="list-group-item empty-group p-0 "
+        [ngClass]="nestedLevel === 1 ? 'margin-for-nested' : ''"
       >
-        <div class="text-center">        <span class="empty-group-text">Drag and Drop Fields Onto the Group</span>
+        <div class="text-center">
+          <span class="empty-group-text">Drag and Drop Fields Onto the Group</span>
         </div>
       </li>
       <li class="list-group-item p-0 ngx-dnd-item"
-          [ngClass]="nestedLevel==1?'margin-for-nested':''"
-
+          [ngClass]="nestedLevel === 1 ? 'margin-for-nested' : ''"
           [model]="field"
           *ngFor="let field of inputGroup.fields"
           [ngxDraggable]="idSectionForDragDrop">
-        <app-field-container *ngIf="field.type!=113"
-                               [inputField]="field"
-                               [form]="form"
-                               [customFields]="customFields"
-                               [sideBar]="sideBar">
-        </app-field-container>
+        <app-field-container
+          *ngIf="field.type !== 113"
+          [inputField]="field"
+          [form]="form"
+          [customFields]="customFields"
+          [sideBar]="sideBar"
+        ></app-field-container>
         <app-divider-container
-          *ngIf="field.type==112"
+          *ngIf="field.type === 112"
           [inputDivider]="field"
           [form]="form"
         ></app-divider-container>
         <app-group-container
-          *ngIf="field.type==113"
+          *ngIf="field.type === 113"
           [inputGroup]="field"
-          [nestedLevel]="nestedLevel+1"
+          [nestedLevel]="nestedLevel + 1"
           [idSectionForDragDrop]="idSectionForDragDrop"
           [form]="form"
           [sideBar]="sideBar"

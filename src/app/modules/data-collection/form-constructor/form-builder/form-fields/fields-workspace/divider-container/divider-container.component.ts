@@ -1,14 +1,14 @@
-import { Component, Input, OnInit } from "@angular/core";
-import { range } from "lodash";
-import { Colors, dividersColor, dividerStyle } from "../divider";
-import { SideBarService } from "../../side-bar/side-bar.service";
-import { Form } from "src/app/models/data-collection/form.model";
-import { Field } from "src/app/models/data-collection/field.model";
+import { Component, Input, OnInit } from '@angular/core';
+import { range } from 'lodash';
+import { Colors, dividersColor, dividerStyle } from '../divider';
+import { SideBarService } from '../../side-bar/side-bar.service';
+import { Form } from 'src/app/models/data-collection/form.model';
+import { Field } from 'src/app/models/data-collection/field.model';
 
 @Component({
-  selector: "app-divider-container",
-  templateUrl: "./divider-container.component.html",
-  styleUrls: ["./divider-container.component.scss"]
+  selector: 'app-divider-container',
+  templateUrl: './divider-container.component.html',
+  styleUrls: ['./divider-container.component.scss']
 })
 export class DividerContainerComponent implements OnInit {
   @Input() inputDivider: Field;

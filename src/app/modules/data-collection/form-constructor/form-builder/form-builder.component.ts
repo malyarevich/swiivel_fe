@@ -64,6 +64,7 @@ import { FormsPDFModel, formPDFItemDefault } from 'src/app/models/data-collectio
   templateUrl: "./form-builder.html",
   styleUrls: ["./form-builder.scss"]
 })
+
 export class FormBuilderComponent implements OnInit, OnDestroy {
   @Input() saveEvents: Observable<void>;
 
@@ -207,6 +208,7 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
 
   @ViewChild("addCustomFieldInput", { static: false })
   addCustomFieldInput: ElementRef;
+
   constructor(
     @Host() vDataCollection: DataCollectionComponent,
     private formService: FormService,
@@ -222,6 +224,7 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
   ) {
     this.vDataCollection = vDataCollection;
   }
+
   ngOnInit() {
     window.scrollTo(0, 0);
     // if (VFormBuilderComponent.countSaveFormService < 1) {
@@ -282,7 +285,7 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
       (fields: Field[]) => {
         this.sideBarFields = fields;
         this.sideBarFields.forEach(field => {
-          if (field.type == 113) {
+          if (field.type === 113) {
             field.fields.forEach(f => (f.exist = false));
           }
           field.exist = false;
@@ -295,10 +298,8 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
 
   loadSideBarNew() {
     this.fieldsService.getExistingSideBarList2().subscribe(
-      data => {
-        this.newSideBar = data;
-      },
-      error => console.log(error, "error"),
+      data => this.newSideBar = data,
+      error => console.log(error, 'error'),
       () => this.formInit()
     );
   }
@@ -345,7 +346,6 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
           if (!isEmpty(this.fields)) {
             this.initFormFieldsToSideBar(this.newSideBar, this.fields);
           }
-
         }
       );
     }
@@ -354,9 +354,10 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
   initFormFieldsToSideBar(sideBar: Field[], workArea: Field[]) {
     sideBar.forEach(sideBarField => {
       workArea.forEach(field => {
-        if (sideBarField.name == field.name) {
-          if (field.type == 113)
+        if (sideBarField.name === field.name) {
+          if (field.type === 113) {
             this.initFormFieldsToSideBar(sideBarField.fields, field.fields);
+          }
           sideBarField.exist = true;
         }
       });

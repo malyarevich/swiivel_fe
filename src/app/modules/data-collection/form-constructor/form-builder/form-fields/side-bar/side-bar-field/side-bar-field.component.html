@@ -1,24 +1,29 @@
-<div class="row no-gutters  align-items-center" >
+<div class="row no-gutters align-items-center">
   <div class="col-1 pb-2">
     <label class="app-checkbox-container">
-    <input
-      type="checkbox" [(ngModel)]="field.exist" (ngModelChange)="onFieldToggle($event)">
-      <!--type="checkbox" [(ngModel)]="field.exist" (ngModelChange)="onBeingChange($event)">-->
-<!--      type="checkbox" [ngModel]="field.exist" (ngModelChange)="onBeingChange($event)">-->
-    <span class="app-checkbox-checkmark"></span>
-  </label>
+      <input
+        type="checkbox"
+        [(ngModel)]="field.exist"
+        (change)="sideBarService.onFieldToggle(field, form)"
+      />
+      <span class="app-checkbox-checkmark"></span>
+    </label>
   </div>
-  <div class="col-10   row align-items-center no-gutters" [ngClass]="style?'side-bar-item-custom':'side-bar-item'" [ngClass]="nestedLevel?'offset-1 ':''">
-<!--  <div class="col-10  row align-items-center no-gutters" [ngClass]="style?'side-bar-item-custom':'side-bar-item'" placement="right" [ngbTooltip]="field.prefix+'\'s'">-->
+  <div
+    class="col-10 row align-items-center no-gutters"
+    [ngClass]="{'side-bar-item-custom': style, 'side-bar-item': !style, 'offset-1': nestedLevel}"
+  >
     <div class="col-2 ">
-      <span class="v-eclipse-padding"><i class="fas fa-ellipsis-v dragable-i "></i></span>
+      <span class="v-eclipse-padding"><i class="fas fa-ellipsis-v dragable-i"></i></span>
       <span class="v-eclipse-padding"><i class="fas fa-ellipsis-v  dragable-i"></i></span>
     </div>
     <div class="col">
-      <span class="side-bar-item-font" [title]="style?'Custom':'Existing'">{{field.name}}</span>
+      <span class="side-bar-item-font" [title]="style ? 'Custom' : 'Existing'">{{field.name}}</span>
     </div>
     <div *ngIf="style" class="col-1">
-      <span><i class="fas fa-trash dragable-i fa-xs app-cursor-pointer" (click)="deleteCustomField(field.name)"></i></span>
+      <span>
+        <i class="fas fa-trash dragable-i fa-xs app-cursor-pointer" (click)="deleteCustomField()"></i>
+      </span>
     </div>
   </div>
 </div>

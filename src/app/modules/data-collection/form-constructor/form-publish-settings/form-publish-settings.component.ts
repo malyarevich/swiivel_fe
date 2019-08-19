@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
-import {ActivatedRoute, Params, Router} from "@angular/router";
-import * as cloneDeep from "lodash/cloneDeep";
+import { ActivatedRoute, Params, Router } from "@angular/router";
+import { cloneDeep } from 'lodash';
 import { PublishMenuItems } from "../../model/publish-menu-items";
 
 import { SaveFormService } from "../../services/save-form.service";
@@ -63,7 +63,7 @@ export class FormPublishSettingsComponent implements OnInit {
   // Menu state
   activeMenuItem: string;
   publishMenuItems = PublishMenuItems;
-  isSavedOnServer: boolean = true;
+  isSavedOnServer = true;
 
   // Tabs information
   data: IData;
@@ -133,7 +133,7 @@ export class FormPublishSettingsComponent implements OnInit {
             this.loadData(data);
           },
           error => {
-            console.error(error, "error");
+            console.error(error, 'error');
           },
           () => {
             this.initServices();
@@ -190,7 +190,7 @@ export class FormPublishSettingsComponent implements OnInit {
         this.activeMenuItem = activeMenuItem;
       },
       error => {
-        console.error(error, "error");
+        console.error(error, 'error');
       },
       () => {}
     );
@@ -202,7 +202,7 @@ export class FormPublishSettingsComponent implements OnInit {
         this.setPublishSettingsState(state);
       },
       error => {
-        console.error(error, "error");
+        console.error(error, 'error');
       },
       () => {}
     );
@@ -211,7 +211,7 @@ export class FormPublishSettingsComponent implements OnInit {
         this.savePublishSettings(state);
       },
       error => {
-        console.error(error, "error");
+        console.error(error, 'error');
       },
       () => {}
     );
@@ -221,7 +221,7 @@ export class FormPublishSettingsComponent implements OnInit {
         this.toggleOnlineCheckbox(key);
       },
       error => {
-        console.error(error, "error");
+        console.error(error, 'error');
       },
       () => {}
     );
@@ -230,7 +230,7 @@ export class FormPublishSettingsComponent implements OnInit {
         this.togglePdfCheckbox(key);
       },
       error => {
-        console.error(error, "error");
+        console.error(error, 'error');
       },
       () => {}
     );
@@ -239,7 +239,7 @@ export class FormPublishSettingsComponent implements OnInit {
         this.updateFormValue(value);
       },
       error => {
-        console.error(error, "error");
+        console.error(error, 'error');
       },
       () => {}
     );
@@ -251,7 +251,7 @@ export class FormPublishSettingsComponent implements OnInit {
         this.addAutomationItem();
       },
       error => {
-        console.error(error, "error");
+        console.error(error, 'error');
       },
       () => {}
     );
@@ -261,7 +261,7 @@ export class FormPublishSettingsComponent implements OnInit {
         this.removeAutomationItem(itemId);
       },
       error => {
-        console.error(error, "error");
+        console.error(error, 'error');
       },
       () => {}
     );
@@ -271,7 +271,7 @@ export class FormPublishSettingsComponent implements OnInit {
         this.changeAutomationItemName(obj["_id"], obj["name"]);
       },
       error => {
-        console.error(error, "error");
+        console.error(error, 'error');
       },
       () => {}
     );
@@ -281,7 +281,7 @@ export class FormPublishSettingsComponent implements OnInit {
         this.changeAutomationItemType(obj["_id"], obj["type_id"]);
       },
       error => {
-        console.error(error, "error");
+        console.error(error, 'error');
       },
       () => {}
     );
@@ -302,7 +302,7 @@ export class FormPublishSettingsComponent implements OnInit {
     this.data.publish_settings.pdf_config[key] = !this.data.publish_settings.pdf_config[key];
   }
 
-  updateFormValue(formValue: IPdfConfig["form_value"]) {
+  updateFormValue(formValue: IPdfConfig['form_value']) {
     this.isSavedOnServer = false;
     this.data.publish_settings.pdf_config["form_value"] = formValue;
   }
@@ -362,7 +362,7 @@ export class FormPublishSettingsComponent implements OnInit {
 
   savePage() {
     if (this.data !== undefined && !this.isDataSaving) {
-      this.spinnerText = "Data is saving...";
+      this.spinnerText = 'Data is saving...';
       this.isDataSaving = true;
       this.constructorIsSavingService.setIsSaving(this.isDataSaving);
 
@@ -378,14 +378,14 @@ export class FormPublishSettingsComponent implements OnInit {
             this.constructorIsSavingService.setIsSaving(this.isDataSaving);
 
             if (this.isDataSaving) {
-              this.spinnerText = "Other tabs are saving...";
+              this.spinnerText = 'Other tabs are saving...';
             } else {
-              this.spinnerText = "Data is loading...";
+              this.spinnerText = 'Data is loading...';
             }
             this.isSavedOnServer = true;
           },
           error => {
-            console.error(error, "error");
+            console.error(error, 'error');
             this.isSavedOnServer = true;
           },
           () => {}
@@ -404,7 +404,7 @@ export class FormPublishSettingsComponent implements OnInit {
       {
         ...{ _id: ++this.maxAddedId },
         ...AutomationEntity.defaultAutomation.automation_list[0]
-      } //concat ES6
+      } // concat ES6
     );
   }
 

@@ -1,33 +1,24 @@
-import {
-  AfterViewInit,
-  ChangeDetectorRef,
-  Component,
-  Input,
-  OnInit
-} from "@angular/core";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { range } from "lodash";
-import {
-  FormBuilder,
-  FormGroup,
-  FormControl,
-  Validators
-} from "@angular/forms";
-import { v4 as uuid } from "uuid";
-import { SideBarService } from "../side-bar/side-bar.service";
-import { dividerStyle } from "./divider";
-import { Form } from "src/app/models/data-collection/form.model";
-import { Section } from "src/app/models/data-collection/section.model";
-import { Field } from "src/app/models/data-collection/field.model";
+import { AfterViewInit, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { v4 as uuid } from 'uuid';
+import { range } from 'lodash';
+import { Field } from '../../../../model/field.model';
+import { SideBarService } from '../side-bar/side-bar.service';
+import { dividerStyle } from './divider';
+import { Form } from '@models/data-collection/form.model';
+import { Section } from '@models/data-collection/section.model';
 
 @Component({
-  selector: "app-fields-workspace",
-  templateUrl: "./fields-workspace.component.html",
-  styleUrls: ["./fields-workspace.component.scss"]
+  selector: 'app-fields-workspace',
+  templateUrl: './fields-workspace.component.html',
+  styleUrls: ['./fields-workspace.component.scss']
 })
+
 export class FieldsWorkspaceComponent implements OnInit, AfterViewInit {
+
   sectionAddGroup: FormGroup = new FormGroup({
-    sectionName: new FormControl("", {
+    sectionName: new FormControl('', {
       validators: Validators.compose([
         Validators.required,
         Validators.minLength(3),
@@ -38,7 +29,7 @@ export class FieldsWorkspaceComponent implements OnInit, AfterViewInit {
   });
 
   dividerAddGroup: FormGroup = new FormGroup({
-    dividerName: new FormControl("", {
+    dividerName: new FormControl('', {
       validators: Validators.compose([
         Validators.required,
         Validators.minLength(3),
@@ -50,7 +41,7 @@ export class FieldsWorkspaceComponent implements OnInit, AfterViewInit {
   });
 
   groupAddGroup: FormGroup = new FormGroup({
-    groupName: new FormControl("", {
+    groupName: new FormControl('', {
       validators: Validators.compose([
         Validators.required,
         Validators.minLength(3),
@@ -88,7 +79,7 @@ export class FieldsWorkspaceComponent implements OnInit, AfterViewInit {
 
   openModal(content) {
     this.modalService
-      .open(content, { size: "lg", ariaLabelledBy: "modal-basic-title" })
+      .open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title' })
       .result.then(
         result => {},
         reason => {
@@ -99,58 +90,56 @@ export class FieldsWorkspaceComponent implements OnInit, AfterViewInit {
 
   addSection(modal) {
     this.validateAllFormFields(this.sectionAddGroup);
-    if (!this.sectionAddGroup.valid) return;
+    if (!this.sectionAddGroup.valid) { return; }
     this.sectionAddGroup.clearValidators();
     const newSection: Field = {
       _id: uuid(),
       name: this.sectionAddGroup.value.sectionName,
-      width: "full",
+      width: 'full',
       type: 114,
       options: { size: this.sectionAddGroup.value.sectionSize },
       prefix: this.sectionAddGroup.value.sectionName
         .toLowerCase()
-        .split(" ")
-        .join("_"),
+        .split(' ')
+        .join('_'),
       fields: []
     };
     this.form.fields.push(newSection);
-    // this.idSectionForDragDrop = this.sideBarService.getIdOfSection(this.form.fields);
     this.sectionAddGroup.reset();
     modal.close();
   }
 
   addGroup(modal) {
     this.validateAllFormFields(this.groupAddGroup);
-    if (!this.groupAddGroup.valid) return;
+    if (!this.groupAddGroup.valid) { return; }
     this.groupAddGroup.clearValidators();
     const newGroup: Field = {
       _id: uuid(),
       name: this.groupAddGroup.value.groupName,
-      width: "full",
+      width: 'full',
       type: 113,
       options: { size: 4 },
       prefix: this.groupAddGroup.value.groupName
         .toLowerCase()
-        .split(" ")
-        .join("_"),
+        .split(' ')
+        .join('_'),
       fields: []
     };
     this.form.fields.forEach(section => {
       if (
-        section.name == this.groupAddGroup.value.sectionRelate.name &&
-        section.prefix == this.groupAddGroup.value.sectionRelate.prefix
+        section.name === this.groupAddGroup.value.sectionRelate.name &&
+        section.prefix === this.groupAddGroup.value.sectionRelate.prefix
       ) {
         section.fields.push(newGroup);
       }
     });
-    // this.idSectionForDragDrop = this.sideBarService.getIdOfSection(this.form.fields);
     this.groupAddGroup.reset();
     modal.close();
   }
 
   addDivider(modal) {
     this.validateAllFormFields(this.dividerAddGroup);
-    if (!this.dividerAddGroup.valid) return;
+    if (!this.dividerAddGroup.valid) { return; }
     this.dividerAddGroup.clearValidators();
     const newDivider: Field = {
       _id: uuid(),
@@ -158,16 +147,15 @@ export class FieldsWorkspaceComponent implements OnInit, AfterViewInit {
       type: 112,
       options: { dividerStyle: this.dividerAddGroup.value.dividerStyle }
     };
-    if (this.dividerAddGroup.value.sectionRelate.name == "workspace") {
+    if (this.dividerAddGroup.value.sectionRelate.name === 'workspace') {
       this.form.fields.push(newDivider);
     } else {
       this.form.fields.forEach(section => {
         if (
-          section.name == this.dividerAddGroup.value.sectionRelate.name &&
-          section.prefix == this.dividerAddGroup.value.sectionRelate.prefix
+          section.name === this.dividerAddGroup.value.sectionRelate.name &&
+          section.prefix === this.dividerAddGroup.value.sectionRelate.prefix
         ) {
-          console.log(newDivider, "section");
-
+          console.log(newDivider, 'section');
           section.fields.push(newDivider);
         }
       });
