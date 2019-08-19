@@ -25,12 +25,11 @@
   <div class="col">
     <app-select-field-container>
       <ng-select
-      [formControlName]="'language'"
+      formControlName="language"
       [items]="languages"
       bindLabel="label"
       bindValue="value"
-      placeholder="Form Language"
-      >
+      placeholder="Form Language">
       </ng-select>
     </app-select-field-container>
   </div>
