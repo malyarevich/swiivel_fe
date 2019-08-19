@@ -8,6 +8,17 @@ import {FormGroup} from '@angular/forms';
 })
 export class FormGeneralEligibleComponent implements OnInit {
   @Input() generalInfoForm: FormGroup;
+
+  eligibleAccounts = [
+    {label: 'All Families', value: 'allFamilies'},
+    {label: 'All Parents', value: 'allParents'},
+    {label: 'All Students', value: 'allStudents'},
+    {label: 'New Families', value: 'newFamilies'},
+    {label: 'New Students', value: 'newStudents'},
+    {label: 'Specific Grades', value: 'specificGrades'},
+    {label: 'I have more detailed requirements', value: 'moreDetailed'},
+  ];
+
   constructor() { }
 
   ngOnInit() {

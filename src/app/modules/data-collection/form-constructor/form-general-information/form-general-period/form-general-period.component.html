@@ -9,12 +9,10 @@
 
     <div class="row justify-content-between pt-3 mt-4 mx-5">
       <div class="form-group col-6" *ngFor="let period of periods">
-        <label class="app-checkbox-container" [for]="period.id">{{period.name}} ({{period.date_from}} -
-          {{period.date_to}})
-          <input type="checkbox" class="form-check-input" [id]="period.id" [formControlName]="period.id">
-          <span class="app-checkbox-checkmark"
-                [ngClass]="{'app-checkmark-is-invalid' : isInvalidCheckboxGroup('periodCheckboxGroup')}"></span>
-        </label>
+        <app-checkbox-field-container [isInvalid]="isInvalidCheckboxGroup('periodCheckboxGroup')">
+          <span class="label">{{period.name}} ({{period.date_from}} - {{period.date_to}})</span>
+          <input type="checkbox" [id]="period.id" [formControlName]="period.id">
+        </app-checkbox-field-container>
       </div>
     </div>
     <div
