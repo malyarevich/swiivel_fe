@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
 import * as moment from 'moment';
 
 import { ChangePeriod } from '../store/period.actions';
-import { Period } from '../../../models/period/period.model';
+import { Period } from 'src/app/models/period/period.model';
 import { PeriodState } from '../store/period.state';
 import { PeriodService } from '../services/period.service';
 

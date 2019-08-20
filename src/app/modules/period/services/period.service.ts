@@ -5,10 +5,11 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as moment from 'moment';
 
-import {ChangePeriodError, ChangeSplitSet, OpenCreatePeriodPage, ValidatePeriod} from '../store/period.actions';
-import { PeriodState } from '../store/period.reducer';
-import { PeriodSplit, PeriodSplitSet } from '../../../models/period/period.model';
+import { ChangePeriodError, ChangeSplitSet, OpenCreatePeriodPage, ValidatePeriod } from '../store/period.actions';
+import { PeriodState } from '../store/period.state';
+import { Period, PeriodSplit, PeriodSplitSet } from 'src/app/models/period/period.model';
 import { PeriodErrorEnum } from '../period-error.enum';
+import { PeriodTableTypeEnum } from '../period-table-type.enum';
 
 const API_URL = 'http://fin.red.dev.codeblue.ventures/api/v1';
 const httpOptions = {
@@ -17,6 +18,8 @@ const httpOptions = {
     'Authorization': 'Bearer 123'
   })
 };
+
+const splitTypeColor = ['#CD690E', '#1AA6D2', '#6A23DD', '#DB2869', '#2AAF5F', '#1E68D7'];
 
 @Injectable()
 export class PeriodService {
@@ -166,7 +169,6 @@ export class PeriodService {
   }
 
   createPeriod(period: PeriodState): Observable<any> {
-    console.log('create');
     this.store.dispatch(new ChangePeriodError({ text: null, isOpen: false }));
     const dataSplitSets = [];
 
@@ -194,7 +196,6 @@ export class PeriodService {
     return this.http.post(`${API_URL}/periods`, data, httpOptions)
       .pipe(
         map((response) => {
-          console.log(response);
           return response;
         })
       );
@@ -204,7 +205,6 @@ export class PeriodService {
     return this.http.get(`${API_URL}/periods`, httpOptions)
       .pipe(
         map((response) => {
-          console.log(response);
           return response;
         })
       );
@@ -258,5 +258,70 @@ export class PeriodService {
       }
     });
     return splitError;
+  }
+
+  convertGetPeriodResponse(periods: Period[]): any {
+      const periodsData = [];
+
+      periods.map((period) => {
+        const splitSetsData = [];
+        const splitTypes = [];
+
+        period.split_sets.map((splitSet) => {
+          let splitsLength = null;
+
+          if (splitSet.splits && splitSet.splits.length) {
+            splitsLength = splitSet.splits.length;
+            splitSet.splits.map((split) => {
+              split.type = { name: splitSet.name + ' ' + splitsLength, color: this.getSplitTypeColor(period.split_sets.indexOf(splitSet))};
+            });
+          }
+          splitSetsData.push({
+            name: splitSet.name,
+            splits: splitSet.splits,
+            split_set_id: splitSet.id,
+            period_id: period.id,
+            isViewed: false,
+            type: { name: splitSet.name + ' ' + splitsLength, color: this.getSplitTypeColor(period.split_sets.indexOf(splitSet)) },
+            dataTableType: PeriodTableTypeEnum.SPLIT_SET,
+          });
+
+          splitTypes.push({ name: splitSet.name + ' ' + splitsLength, color: this.getSplitTypeColor(period.split_sets.indexOf(splitSet))});
+        });
+
+        const periodData = {
+          name: period.name,
+          date_from: period.date_from,
+          date_to: period.date_to,
+          dataTableType: PeriodTableTypeEnum.PERIOD,
+          period_id: period.id,
+          open: true,
+          type: splitTypes,
+          bkgColor: periods.indexOf(period) % 2 === 0 ? '#FFFFFF' : '#FAFAFA'
+      };
+
+        periodsData.push(periodData);
+
+        periodsData.push(
+          {
+            dataTableType: PeriodTableTypeEnum.SPLIT_SET,
+            splitSets: splitSetsData,
+            open: true,
+            period_id: period.id,
+            isAllSelected: true,
+            selectedSplitSetId: null,
+          });
+      });
+      console.log(periodsData);
+      return periodsData;
+  }
+
+  getSplitTypeColor(index: number): string {
+      if (index > 6) {
+        // todo: возвращать каждый index-овый
+        return 'black';
+      } else {
+        return splitTypeColor[index];
+      }
   }
 }

@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { Action, Store } from '@ngrx/store';
+import { Action } from '@ngrx/store';
 import { Observable, of, throwError } from 'rxjs';
-import {catchError, map, switchMap} from 'rxjs/operators';
+import { catchError, map, mergeMap, switchMap } from 'rxjs/operators';
 
-import { PeriodState } from './period.reducer';
 import {
   ChangePeriodError,
   CreatePeriodRequest,
@@ -18,22 +17,22 @@ import { PeriodService } from '../services/period.service';
 export class PeriodEffect {
 
   constructor(private actions$: Actions,
-              private periodService: PeriodService,
-              private periodStore$: Store<PeriodState>) {}
+              private periodService: PeriodService) {}
 
   @Effect() createPeriod$: Observable<Action> = this.actions$
     .pipe(
       ofType<CreatePeriodRequest>(PeriodActionTypes.CreatePeriodRequest),
-      switchMap((action) => {
-        return this.periodService.createPeriod(action.payload);
+      mergeMap((action) => {
+        return this.periodService.createPeriod(action.payload).pipe(
+          map( res => new ChangePeriodError({ text: null, isOpen: false })),
+          catchError(err => {
+            console.log('error saving period', err);
+            throwError(err);
+            return of(new ChangePeriodError({ text: err.error.errors, isOpen: true }));
+          })
+        );
       }),
-      map( res => new ChangePeriodError({ text: null, isOpen: false })),
-      catchError(err => {
-        console.log('error saving period', err);
-        throwError(err);
-        return of(new ChangePeriodError({ text: err.error.errors, isOpen: true }));
-      }
-    ));
+    );
 
   @Effect() getPeriods$: Observable<Action> = this.actions$
     .pipe(
@@ -41,7 +40,11 @@ export class PeriodEffect {
       switchMap(() => {
         return this.periodService.getPeriods();
       }),
-      map( res => new GetPeriodsResponse(res)),
+      map( res => {
+        console.log(res);
+        // this.periodService.convertGetPeriodResponse(res);
+        return new GetPeriodsResponse(res);
+      }),
       catchError(err => {
         console.log('error periods request', err);
         return throwError(err);
@@ -61,3 +64,4 @@ export class PeriodEffect {
   //     })
   //   );
 }
+

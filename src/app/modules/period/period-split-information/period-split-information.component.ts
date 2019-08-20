@@ -5,8 +5,8 @@ import { Subscription } from 'rxjs';
 import * as moment from 'moment';
 
 import { DeleteSplitSet } from '../store/period.actions';
-import { PeriodSplit, PeriodSplitSet } from '../../../models/period/period.model';
-import { PeriodState } from '../store/period.reducer';
+import { PeriodSplit, PeriodSplitSet } from 'src/app//models/period/period.model';
+import { PeriodState } from '../store/period.state';
 import { PeriodService } from '../services/period.service';
 
 @Component({
@@ -23,7 +23,7 @@ export class PeriodSplitInformationComponent implements OnInit, OnDestroy {
   public viewSplits: PeriodSplit[] = [];
   public periodDuration: number = 0;
   public splitUnits: string[] = ['months', 'weeks', 'days', 'equal parts'];
-  public splitInformationForm: FormGroup;
+  private splitInformationForm: FormGroup;
   private sortingParam: { name: string, order: string } = { name: null, order: null };
   private subscription = new Subscription();
 
@@ -241,7 +241,7 @@ export class PeriodSplitInformationComponent implements OnInit, OnDestroy {
       } else if (evt.value) {
         this.viewSplits = this.activeSplitSet.splits.filter((split) => {
           return moment(moment(split[evt.name])).isSame(moment(evt.value), 'day');
-          });
+        });
       }
     } else {
       this.viewSplits = this.getSortedSplits(this.activeSplitSet.splits, this.sortingParam.order, this.sortingParam.name);
@@ -249,12 +249,12 @@ export class PeriodSplitInformationComponent implements OnInit, OnDestroy {
   }
 
   onCloseSplitSetError(): void {
-    this.activeSplitSet.error.isBarErrorOpen = false;
+    this.activeSplitSet.error.isTableErrorOpen = false;
     this.periodService.updateSplitSet(this.activeSplitSet);
   };
 
   hasShownSplitSetError(splitSet: PeriodSplitSet): boolean {
-    return splitSet.error && splitSet.error.text && splitSet.error.text.length && splitSet.error.isBarErrorOpen;
+    return splitSet.error && splitSet.error.text && splitSet.error.text.length && splitSet.error.isTableErrorOpen;
   }
 
   ngOnDestroy(): void {
