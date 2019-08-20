@@ -5,8 +5,8 @@
   <h4 class="pt-3 text-center font-weight-bold">Who should be filling out this form?</h4>
 </div>
 <div [formGroup]="generalInfoForm" class="pl-5">
-  <div class="row offset-1 col-10 justify-content-start pl-5">
-    <div class="form-group col-4" *ngFor="let item of eligibleAccounts">
+  <div class="row offset-1 col-10 app-eligible-container">
+    <div class="app-eligible-item" *ngFor="let item of eligibleAccounts">
       <app-checkbox-field-container>
         <span class="label">{{item.label}}</span>
         <input type="radio"
@@ -27,8 +27,8 @@
       <h4 class="pt-3 text-center font-weight-bold">Who should be filling out this form?</h4>
     </div>
 
-    <div class="row justify-content-start px-5 mx-5">
-      <div class="form-group col-2" *ngFor="let item of grades">
+    <div class="row app-eligible-container px-5 mx-5">
+      <div class="app-eligible-grade-item" *ngFor="let item of grades">
         <app-checkbox-field-container>
           <span class="label">{{item.label}}</span>
           <input type="checkbox"

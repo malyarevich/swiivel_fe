@@ -352,8 +352,6 @@ export class FormGeneralInformationComponent implements OnInit, OnDestroy {
       endDate: new FormControl(new Date(1971, 10, 10), Validators.required),
       startDate: new FormControl(new Date(1971, 10, 10), Validators.required),
       eligible: new FormControl("allParents", Validators.required)
-
-      // allParent: new FormControl('Y')
     });
 
     this.initPeriods();
@@ -418,19 +416,6 @@ export class FormGeneralInformationComponent implements OnInit, OnDestroy {
   setActiveSection(value) {
     this.activeSection = value.target;
     this.onScrollTo(value.scrollTarget);
-  }
-
-  isInvalidCheckboxGroup(groupName: string): boolean {
-    return (
-      this.generalInfoForm.controls[groupName].touched &&
-      this.generalInfoForm.controls[groupName].errors &&
-      this.generalInfoForm.controls[groupName].errors
-        .requireOneCheckboxToBeChecked
-    );
-  }
-
-  addHiddenClass(isNeedToHide: boolean): string {
-    return isNeedToHide ? "hidden_block" : "";
   }
 
   onFormStatusChanges(): void {
