@@ -4,30 +4,30 @@ import {
   OnDestroy,
   OnInit,
   ViewChild,
-  Host, ViewEncapsulation
-} from "@angular/core";
-import {ActivatedRoute, Params, Router} from "@angular/router";
+  Host,
+} from '@angular/core';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 import {
   FormBuilder,
   FormControl,
   FormGroup,
   Validators
-} from "@angular/forms";
-import { Subscription } from "rxjs";
-import { NgbDateParserFormatter } from "@ng-bootstrap/ng-bootstrap";
-import { isEmpty } from "lodash";
-import { requireCheckboxesToBeCheckedValidator } from "src/app/utils/validators/require-checkboxes-to-be-checked.validator";
-import { Form, FormSql } from "src/app/models/data-collection/form.model";
-import { FinPeriod } from "src/app/models/fin-period.model";
-import { menuItemModel } from "./menu";
-import { GeneralInfoIsValidService } from "../../services/general-info-is-valid.service";
-import { SaveFormService } from "../../services/save-form.service";
-import { GeneralInfoIsSavedService } from "../../services/general-info-is-saved.service";
-import { ConstructorIsSavingService } from "../../services/constructor-is-saving.service";
-import { DataCollectionComponent } from "../../data-collection.component";
-import { FormService } from "../../services/form.service";
-import { FormPeriodsService } from "../../services/form-periods.service";
-import { GeneralInfoIsFormExistService } from "../../services/general-info-is-form-exist.service";
+} from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
+import { isEmpty } from 'lodash';
+import { requireCheckboxesToBeCheckedValidator } from 'src/app/utils/validators/require-checkboxes-to-be-checked.validator';
+import { Form } from '@models/data-collection/form.model';
+import { FinPeriod } from '@models/fin-period.model';
+import { menuItemModel } from './menu';
+import { GeneralInfoIsValidService } from '../../services/general-info-is-valid.service';
+import { SaveFormService } from '../../services/save-form.service';
+import { GeneralInfoIsSavedService } from '../../services/general-info-is-saved.service';
+import { ConstructorIsSavingService } from '../../services/constructor-is-saving.service';
+import { DataCollectionComponent } from '../../data-collection.component';
+import { FormService } from '../../services/form.service';
+import { FormPeriodsService } from '../../services/form-periods.service';
+import { GeneralInfoIsFormExistService } from '../../services/general-info-is-form-exist.service';
 
 @Component({
   selector: 'app-form-general-information',
@@ -35,57 +35,57 @@ import { GeneralInfoIsFormExistService } from "../../services/general-info-is-fo
   styleUrls: ['./form-general-information.component.css'],
 })
 export class FormGeneralInformationComponent implements OnInit, OnDestroy {
-  @ViewChild("generalInfo", { static: false }) generalInfo: ElementRef;
-  @ViewChild("basicInfo", { static: false }) basicInfo: ElementRef;
-  @ViewChild("period", { static: false }) period: ElementRef;
-  @ViewChild("formDates", { static: false }) formDates: ElementRef;
-  @ViewChild("eligibleAccounts", { static: false }) eligibleAccounts: ElementRef;
+  @ViewChild('generalInfo', { static: false }) generalInfo: ElementRef;
+  @ViewChild('basicInfo', { static: false }) basicInfo: ElementRef;
+  @ViewChild('period', { static: false }) period: ElementRef;
+  @ViewChild('formDates', { static: false }) formDates: ElementRef;
+  @ViewChild('eligibleAccounts', { static: false }) eligibleAccounts: ElementRef;
 
   static countSaveFormService: number = 0;
   saveFormSubscription: Subscription;
 
-  formId: string = "";
+  formId = '';
   formDuplicateId = '';
   formTypeCreation = 0;
   startDate;
   fields = [];
   generalInfoForm: FormGroup;
-  isOnSubmit: boolean = false;
-  activeSection: number = 1;
+  isOnSubmit = false;
+  activeSection = 1;
   menu = {
     basic: <menuItemModel>{
-      title: "Basic Form Information",
+      title: 'Basic Form Information',
       target: 1,
       isActive: true,
-      scrollTarget: "basicInfo"
+      scrollTarget: 'basicInfo'
     },
     period: <menuItemModel>{
-      title: "Period",
+      title: 'Period',
       target: 2,
       isActive: false,
-      scrollTarget: "period"
+      scrollTarget: 'period'
     },
     dates: <menuItemModel>{
-      title: "Form Dates",
+      title: 'Form Dates',
       target: 3,
       isActive: false,
-      scrollTarget: "formDates"
+      scrollTarget: 'formDates'
     },
     eligible: <menuItemModel>{
-      title: "Eligible Accounts",
+      title: 'Eligible Accounts',
       target: 4,
       isActive: false,
-      scrollTarget: "eligibleAccounts"
+      scrollTarget: 'eligibleAccounts'
     }
   };
   vDataCollection: DataCollectionComponent;
   draftId: string;
   // isFormPrepared = false;
 
-  isSubmitted: boolean = false;
-  isDataSaving: boolean = false;
-  spinnerText: string = "Data is loading...";
-  isLoaded: boolean = false;
+  isSubmitted = false;
+  isDataSaving = false;
+  spinnerText = 'Data is loading...';
+  isLoaded = false;
 
   periods: [FinPeriod];
 
@@ -119,11 +119,11 @@ export class FormGeneralInformationComponent implements OnInit, OnDestroy {
     this.activatedRoute.parent.parent.parent.parent.params.subscribe((params: Params) => {
       this.formId = params.hasOwnProperty('id') ? params.id : '';
     });
-    this.draftId = this.formId + "_general-information";
+    this.draftId = this.formId + '_general-information';
     this.formPreparing(); // in this branch -> this.formInit();
     this.isLoaded = true;
     this.constructorIsSavingService.setIsSaving(this.isDataSaving);
-    this.generalInfoIsFormExistService.setIsExist(this.formId !== "");
+    this.generalInfoIsFormExistService.setIsExist(this.formId !== '');
   }
 
   isFormReady() {
@@ -164,7 +164,7 @@ export class FormGeneralInformationComponent implements OnInit, OnDestroy {
   }
 
   isValidPeriodFields(): boolean {
-    return !this.generalInfoForm.get("periodCheckboxGroup").invalid;
+    return !this.generalInfoForm.get('periodCheckboxGroup').invalid;
   }
 
   validatePeriodFields(): void {
@@ -172,15 +172,15 @@ export class FormGeneralInformationComponent implements OnInit, OnDestroy {
       this.nextStep(this.menu.dates);
     } else {
       this.generalInfoForm
-        .get("periodCheckboxGroup")
+        .get('periodCheckboxGroup')
         .markAsTouched({ onlySelf: true });
     }
   }
 
   isValidDatesFields(): boolean {
     return !(
-      this.generalInfoForm.get("startDate").invalid ||
-      this.generalInfoForm.get("endDate").invalid
+      this.generalInfoForm.get('startDate').invalid ||
+      this.generalInfoForm.get('endDate').invalid
     );
   }
 
@@ -192,8 +192,8 @@ export class FormGeneralInformationComponent implements OnInit, OnDestroy {
     ) {
       this.nextStep(this.menu.eligible);
     } else {
-      this.generalInfoForm.get("startDate").markAsTouched({ onlySelf: true });
-      this.generalInfoForm.get("endDate").markAsTouched({ onlySelf: true });
+      this.generalInfoForm.get('startDate').markAsTouched({ onlySelf: true });
+      this.generalInfoForm.get('endDate').markAsTouched({ onlySelf: true });
     }
   }
 
@@ -262,7 +262,7 @@ export class FormGeneralInformationComponent implements OnInit, OnDestroy {
       if (form === undefined) {
         return;
       }
-      this.spinnerText = "Data is saving...";
+      this.spinnerText = 'Data is saving...';
       this.isDataSaving = true;
       this.constructorIsSavingService.setIsSaving(this.isDataSaving);
       this.formService.sendForm(form).subscribe((res: any) => {
@@ -271,9 +271,9 @@ export class FormGeneralInformationComponent implements OnInit, OnDestroy {
         this.isDataSaving = !this.saveFormService.getSavingStatus();
         this.constructorIsSavingService.setIsSaving(this.isDataSaving);
         if (this.isDataSaving) {
-          this.spinnerText = "Other tabs are saving...";
+          this.spinnerText = 'Other tabs are saving...';
         } else {
-          this.spinnerText = "Data is loading...";
+          this.spinnerText = 'Data is loading...';
         }
       });
     }
@@ -281,7 +281,7 @@ export class FormGeneralInformationComponent implements OnInit, OnDestroy {
 
   public saveDraftForm(): void {
     // console.log("SAVE draft");
-    if (this.formId !== "" && this.generalInfoForm.valid) {
+    if (this.formId !== '' && this.generalInfoForm.valid) {
       this.vDataCollection.setDraftForm(this.draftId, this.composeForm());
     }
   }
@@ -291,7 +291,7 @@ export class FormGeneralInformationComponent implements OnInit, OnDestroy {
   }
 
   composeForm(): Form {
-    if (this.formId !== "" && this.generalInfoForm.valid) {
+    if (this.formId !== '' && this.generalInfoForm.valid) {
       return <Form>{
         _id: this.formId,
         name: this.generalInfoForm.value.name,
@@ -327,8 +327,8 @@ export class FormGeneralInformationComponent implements OnInit, OnDestroy {
         language: form.language
           ? form.language
           : this.generalInfoForm.value.language,
-        endDate: this.parserFormatter.parse(form.formDates["endDate"]),
-        startDate: this.parserFormatter.parse(form.formDates["startDate"]),
+        endDate: this.parserFormatter.parse(form.formDates['endDate']),
+        startDate: this.parserFormatter.parse(form.formDates['startDate']),
         periodCheckboxGroup: form.formPeriods
           ? form.formPeriods
           : this.generalInfoForm.value.periodCheckboxGroup,
@@ -340,7 +340,7 @@ export class FormGeneralInformationComponent implements OnInit, OnDestroy {
 
   formPreparing() {
     this.generalInfoForm = new FormGroup({
-      name: new FormControl("", {
+      name: new FormControl('', {
         validators: Validators.compose([
           Validators.required,
           Validators.minLength(3),
@@ -348,13 +348,31 @@ export class FormGeneralInformationComponent implements OnInit, OnDestroy {
         ])
       }),
       language: new FormControl('english'),
-      // periodCheckboxGroup: new FormControl(),
+      periodCheckboxGroup: new FormControl(),
       endDate: new FormControl(new Date(1971, 10, 10), Validators.required),
       startDate: new FormControl(new Date(1971, 10, 10), Validators.required),
-      eligible: new FormControl("allParents", Validators.required)
+      eligible: new FormControl('allParents', Validators.required)
     });
 
     this.initPeriods();
+  }
+
+  initPeriods() {
+    this.formPeriodsService.getAll().subscribe(res => {
+      this.periods = res;
+      if (this.periods.length) {
+        const group = {};
+        this.periods.map(period => (group[period.id] = new FormControl(false)));
+        this.generalInfoForm.setControl(
+          'periodCheckboxGroup',
+          new FormGroup(
+            group,
+            requireCheckboxesToBeCheckedValidator()
+          )
+        );
+      }
+      this.formInit();
+    });
   }
 
   formInit() {
@@ -369,10 +387,10 @@ export class FormGeneralInformationComponent implements OnInit, OnDestroy {
             this.fields = form.fields;
             this.generalInfoForm.patchValue({
               name: form.name,
-              language: form.language ? form.language : "english",
-              endDate: this.parserFormatter.parse(form.formDates["endDate"]),
+              language: form.language ? form.language : 'english',
+              endDate: this.parserFormatter.parse(form.formDates['endDate']),
               startDate: this.parserFormatter.parse(
-                form.formDates["startDate"]
+                form.formDates['startDate']
               ),
               periodCheckboxGroup: form.formPeriods ? form.formPeriods : {},
               eligible: form.eligible
@@ -380,7 +398,7 @@ export class FormGeneralInformationComponent implements OnInit, OnDestroy {
             this.menu.dates.isActive = this.menu.eligible.isActive = this.menu.period.isActive = true;
           }
         },
-        error => console.log(error, "error")
+        error => console.log(error, 'error')
       );
     }
 
@@ -388,29 +406,8 @@ export class FormGeneralInformationComponent implements OnInit, OnDestroy {
     // this.onFormChanges();
   }
 
-  initPeriods() {
-    this.formPeriodsService.getAll().subscribe(res => {
-      this.periods = res;
-      if (this.periods.length) {
-        let group = {};
-        this.periods.map(period => (group[period.id] = new FormControl(false)));
-        let periodCheckboxGroup = new FormGroup(
-          group,
-          requireCheckboxesToBeCheckedValidator()
-        );
-        this.generalInfoForm.setControl(
-          "periodCheckboxGroup",
-          periodCheckboxGroup
-        );
-      }
-      // this.isFormPrepared = true;
-
-      this.formInit();
-    });
-  }
-
   onScrollTo(target) {
-    this[target].nativeElement.scrollIntoView({ behavior: "smooth" });
+    this[target].nativeElement.scrollIntoView({ behavior: 'smooth' });
   }
 
   setActiveSection(value) {
@@ -421,10 +418,10 @@ export class FormGeneralInformationComponent implements OnInit, OnDestroy {
   onFormStatusChanges(): void {
     this.generalInfoForm.statusChanges.subscribe(val => {
       switch (val) {
-        case "VALID":
+        case 'VALID':
           this.generalInfoIsValidService.setIsValid(true);
           break;
-        case "INVALID":
+        case 'INVALID':
           this.generalInfoIsValidService.setIsValid(false);
           break;
       }
@@ -449,10 +446,10 @@ export class FormGeneralInformationComponent implements OnInit, OnDestroy {
     }
     this.saveDraftForm();
     if (
-      this.router.routerState.snapshot.url.indexOf("general-information") >
+      this.router.routerState.snapshot.url.indexOf('general-information') >
         -1 ||
-      this.router.routerState.snapshot.url.indexOf("form-builder") > -1 ||
-      this.router.routerState.snapshot.url.indexOf("publish-settings") > -1
+      this.router.routerState.snapshot.url.indexOf('form-builder') > -1 ||
+      this.router.routerState.snapshot.url.indexOf('publish-settings') > -1
     ) {
       // this.saveDraftForm();
     }
