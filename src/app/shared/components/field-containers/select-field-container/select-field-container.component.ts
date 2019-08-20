@@ -17,7 +17,7 @@ import { COMMON_ERRORS } from '@enums/index';
 export class SelectFieldContainerComponent implements OnDestroy, AfterContentInit , AfterContentChecked {
   public errors = [];
   private _sub: Subscription;
-  @ContentChild(FormControlName, {static: false}) private formControl: FormControl;
+  @ContentChild(FormControlName, {static: false}) public formControl: FormControl;
   classes = {
     'app-select-field-container': true
   }
