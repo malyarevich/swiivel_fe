@@ -26,5 +26,11 @@
     <button class="app-period-general-settings__button--cancel" (click)="onCancel()">Cancel</button>
     <button class="app-period-general-settings__button--create" (click)="onCreate()">Create Period</button>
   </div>
-  <app-period-cancel-popup *ngIf="isPopupShown"></app-period-cancel-popup>
+  <div class="app-period-general-settings-popup">
+    <app-period-cancel-popup
+      *ngIf="isPopupShown"
+      (cancelExit)="isPopupShown = !isPopupShown"
+      (acceptExit)="goToPeriodPage()"
+    ></app-period-cancel-popup>
+  </div>
 </div>

@@ -1,15 +1,23 @@
 @import '../../../../styles/variables/colors';
 
 .app-period-general-settings {
+  position: relative;
 
-   .app-period-general-settings__container {
-     margin: 0 0 20px;
+  .app-period-general-settings-popup {
+    position: absolute;
+    top: -120px;
+    right: -20px;
+    z-index: 4;
+  }
 
-     .app-period-general-settings__split-set-info {
-       margin: 0 0 10px;
-       background-color: white;
-     }
-   }
+  .app-period-general-settings__container {
+    margin: 0 0 20px;
+
+    .app-period-general-settings__split-set-info {
+      margin: 0 0 10px;
+      background-color: white;
+    }
+  }
 
   .app-period-general-settings__header{
     display: flex;

@@ -22,6 +22,7 @@ import { reducer } from './store/period.reducer';
 import { PeriodEffect } from './store/period.effect';
 import { PeriodErrorComponent } from './period-error/period-error.component';
 import { PeriodCancelPopupComponent } from './period-cancel-popup/period-cancel-popup.component';
+import { PeriodTableComponent } from '@modules/period/period-table/period-table.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { PeriodCancelPopupComponent } from './period-cancel-popup/period-cancel-
     PeriodDurationSettingComponent,
     PeriodGeneralSettingComponent,
     PeriodPageHeaderComponent,
-    PeriodCancelPopupComponent
+    PeriodCancelPopupComponent,
+    PeriodTableComponent
   ],
   imports: [
     DragDropModule,
