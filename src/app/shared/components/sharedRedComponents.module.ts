@@ -24,6 +24,7 @@ import { ToggleFieldComponent } from './fields/toggle-field/toggle-field.compone
 // components
 import { BadgeComponent } from './badge/badge.component';
 import { BadgeDropdownComponent } from './badge-dropdown/badge-dropdown.component';
+import { BorderedLabelComponent } from './bordered-label/bordered-label.component';
 import { DataTableComponent } from './data-table/data-table.component';
 import { DataTableHeaderComponent } from './data-table/data-table-header/data-table-header.component';
 import { DataTableHeaderTitleComponent } from './data-table/data-table-header/data-table-header-title/data-table-header-title.component';
@@ -73,6 +74,7 @@ import { InputLabel } from './input-container/label';
     // components
     BadgeComponent,
     BadgeDropdownComponent,
+    BorderedLabelComponent,
     CommandDropdownComponent,
     DataTableComponent,
     DataTableHeaderComponent,
@@ -134,6 +136,7 @@ import { InputLabel } from './input-container/label';
     // components
     BadgeComponent,
     BadgeDropdownComponent,
+    BorderedLabelComponent,
     CommandDropdownComponent,
     DataTableComponent,
     MainSpinnerComponent,

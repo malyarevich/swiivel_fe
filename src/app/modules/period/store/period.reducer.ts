@@ -1,13 +1,14 @@
 import * as moment from 'moment';
 
-import { Period } from '../../../models/period/period.model';
+import { Period } from 'src/app/models/period/period.model';
 import { PeriodActions, PeriodActionTypes } from './period.actions';
+import { PeriodState } from './period.state';
 
-export interface PeriodState {
-  periods: Period[];
-  period: Period;
-  savePeriodError?: { text: string, isOpen: boolean };
-}
+// export interface PeriodState {
+//   periods: Period[];
+//   period: Period;
+//   savePeriodError?: { text: string, isOpen: boolean };
+// }
 
 export const initialState: PeriodState = {
   periods: [],

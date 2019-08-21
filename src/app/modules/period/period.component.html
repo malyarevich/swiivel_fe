@@ -15,50 +15,6 @@
       <h2 class="app-period__header--text">List of Periods</h2>
       <div class="app-period__header--search">Search</div>
     </div>
-    <table class="app-period__table">
-      <thead
-        app-table-thead
-        [columns]="periodTableColumns">
-      </thead>
-      <tbody>
-        <tr class="app-period__row" *ngFor="let period of periods">
-          <td class="app-period__cell app-period__cell--name">
-            {{ period.name }}
-          </td>
-          <td class="app-period__cell app-period__cell--date">
-            {{ period.date_from }}
-          </td>
-          <td class="app-period__cell app-period__cell--duration">
-            {{ period.duration }}
-          </td>
-          <td class="app-period__cell app-period__cell--date">
-            {{ period.date_to }}
-          </td>
-          <td class="app-period__cell app-period__cell--type">
-            {{ period.type }}
-          </td>
-          <td class="app-period__cell app-period__cell--edit">
-            edit
-            delete
-            hide/show
-          </td>
-          <td class="app-period__cell--split-sets" colspan="7">
-            test
-            <!--<div class="app-period__split-sets">-->
-              <!--<div>all</div>-->
-              <!--<div *ngFor="let splitSet of period.split_sets">-->
-                <!--{{ splitSet.name }}-->
-              <!--</div>-->
-            <!--</div>-->
-            <!--<table>-->
-              <!--<thead-->
-                <!--app-table-thead-->
-                <!--[columns]="splitsTableColumns"-->
-              <!--&gt;</thead>-->
-            <!--</table>-->
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <app-period-table [periods]="periods"></app-period-table>
   </div>
 </div>

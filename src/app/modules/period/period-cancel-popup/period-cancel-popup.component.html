@@ -1,5 +1,23 @@
-<div class="app-period-cancel-popup">
- <div claas="app-period-cancel-popup__container">
-   cancel
- </div>
+<div class="app-period-cancel-popup" (click)="onCancel()">
+  <div class="app-period-cancel-popup__container">
+    <div class="app-period-cancel-popup__content">
+      <p class="app-period-cancel-popup__text">
+        Are you sure you want to get out of this period? All data will be lost.
+      </p>
+      <div class="app-period-cancel-popup__buttons">
+        <button
+          class="app-period-cancel__button app-period-cancel-popup__button--cancel"
+          (click)="onCancel()">Cancel
+        </button>
+        <button
+          class="app-period-cancel__button app-period-cancel-popup__button--ok"
+          (click)="onAccept()"
+        >Ok
+        </button>
+      </div>
+    </div>
+    <div class="app-period-cancel-popup__cross" (click)="onCancel()">
+      <i class="fa fa-times app-period-cancel-popup--ico"></i>
+    </div>
+  </div>
 </div>

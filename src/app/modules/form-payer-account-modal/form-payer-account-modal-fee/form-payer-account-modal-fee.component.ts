@@ -99,13 +99,7 @@ export class FormPayerAccountModalFeeComponent implements OnInit {
   }
 
   onUpdateFee(fees): void {
-    console.log(fees);
     this.updateFee.emit(fees);
   }
-
-  // onSort(event): void {
-  //
-  //   // console.log(this.fees);
-  // }
 
 }

@@ -19,11 +19,6 @@
   .app-period__table {
     width: 100%;
 
-    .app-period__row {
-      //display: flex;
-      //flex-wrap: wrap;
-    }
-
     .app-period__cell--name {
       width: 20%;
     }
@@ -40,9 +35,9 @@
     .app-period__cell--edit {
       width: 30%;
     }
-  }
 
-  .app-period__split-sets {
-    display: flex;
+    .app-period__cell--split-sets {
+
+    }
   }
 }

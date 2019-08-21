@@ -3,8 +3,8 @@ import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import * as moment from 'moment';
 
-import { PeriodSplit, PeriodSplitSet } from '../../../models/period/period.model';
-import { PeriodState } from '../store/period.reducer';
+import { PeriodSplit, PeriodSplitSet } from 'src/app/models/period/period.model';
+import { PeriodState } from '../store/period.state';
 import { PeriodService } from '../services/period.service';
 
 @Component({

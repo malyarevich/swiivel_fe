@@ -4,8 +4,8 @@ import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import * as moment from 'moment';
 
-import { PeriodState } from '../store/period.reducer';
-import { PeriodSplitSet } from '../../../models/period/period.model';
+import { PeriodState } from '../store/period.state';
+import { PeriodSplitSet } from 'src/app/models/period/period.model';
 import { PeriodService } from '../services/period.service';
 import {ChangePeriodError} from '../store/period.actions';
 
