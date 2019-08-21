@@ -12,6 +12,7 @@ import {FormService} from '../../services/form.service';
 import {TEMPLATE_STATUS} from '@enums/template-status';
 import {FormSql} from '@models/data-collection/form.model';
 import {uniq} from 'lodash';
+import {RowSelectedService} from '@modules/data-collection/form-table/services/row-selected.service';
 
 @Component({
   selector: '[app-form-table-tbody]',
@@ -25,15 +26,13 @@ export class FormTableTbodyComponent implements OnInit {
   @Input() changedStatuses: any;
   @Input() formsSelectedIds: number[];
 
-  @Output() addSelectedIdsEmitter: any = new EventEmitter();
   @Output() setFormSelectedEmitter: any = new EventEmitter();
   @Output() resetFormSelectedEmitter: any = new EventEmitter();
   @Output() getAllFormEmitter: any = new EventEmitter();
 
   checkedRows: Array<any> = [];
-  formsSelectedIndexes: number[] = [];
 
-  constructor(private vFormService: FormService) {
+  constructor(private vFormService: FormService, private rowSelectedService: RowSelectedService) {
   }
 
   ngOnInit() {
@@ -68,28 +67,7 @@ export class FormTableTbodyComponent implements OnInit {
   }
 
   addSelectedIndexes(event, i: number) {
-    if (event.shiftKey) {
-      const lastIndex = this.formsSelectedIndexes[this.formsSelectedIndexes.length - 1];
-      if (lastIndex < i) {
-        for (let j = lastIndex + 1; j <= i; j++) {
-          this.formsSelectedIndexes.push(j);
-        }
-      }
-      if (lastIndex > i) {
-        for (let k = lastIndex - 1; k >= i; k--) {
-          this.formsSelectedIndexes.push(k);
-        }
-      }
-      this.formsSelectedIndexes = uniq(this.formsSelectedIndexes);
-    } else {
-      const index = this.formsSelectedIndexes.indexOf(i);
-      if (index === -1) {
-        this.formsSelectedIndexes.push(i);
-      } else {
-        this.formsSelectedIndexes.splice(index, 1);
-      }
-    }
-    this.addSelectedIdsEmitter.emit(this.formsSelectedIndexes);
+    this.rowSelectedService.addSelectedIndexes(event, i);
   }
 
   isSelectedRow(id: number) {

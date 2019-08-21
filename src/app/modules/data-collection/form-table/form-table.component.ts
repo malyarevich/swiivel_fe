@@ -1,9 +1,9 @@
-import {ChangeDetectorRef, Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {FormService} from '../services/form.service';
-import {FormSearchParams} from '../../../models/form-search-params';
-import {TEMPLATE_STATUS} from '../../../enums/template-status';
-import {FormSql} from '../../../models/data-collection/form.model';
-import {FormTableTbodyComponent} from '@modules/data-collection/form-table/form-table-tbody/form-table-tbody.component';
+import {FormSearchParams} from '@models/form-search-params';
+import {TEMPLATE_STATUS} from '@app/enums';
+import {FormSql} from '@models/data-collection/form.model';
+import {RowSelectedService} from '@modules/data-collection/form-table/services/row-selected.service';
 
 @Component({
   selector: 'app-form-table',
@@ -12,7 +12,6 @@ import {FormTableTbodyComponent} from '@modules/data-collection/form-table/form-
   encapsulation: ViewEncapsulation.None,
 })
 export class FormTableComponent implements OnInit {
-  @ViewChild(FormTableTbodyComponent, { static: false }) formTableTbodyComponent: FormTableTbodyComponent;
 
   forms: FormSql[];
   formSelected: number;
@@ -88,17 +87,19 @@ export class FormTableComponent implements OnInit {
     },
   ];
 
-  constructor(private formService: FormService) {
+  constructor(private formService: FormService, private rowSelectedService: RowSelectedService) {
   }
 
   ngOnInit() {
     this.getAllForm();
+    this.addSelectedIds();
   }
 
 
   getAllForm(): void {
     this.formService.getFormsList(this.params).subscribe(forms => {
       this.forms = forms.data;
+      this.rowSelectedService.removeSelectedIndexes();
     });
   }
 
@@ -125,9 +126,11 @@ export class FormTableComponent implements OnInit {
     this.getAllForm();
   }
 
-  addSelectedIds(indexes) {
-    this.formsSelectedIds = indexes.map((index) => {
-      if (this.forms[index]) { return this.forms[index].id; }
+  addSelectedIds() {
+    this.rowSelectedService.selectedIndexes.subscribe((indexes) => {
+      this.formsSelectedIds = indexes.map((index) => {
+        if (this.forms[index]) { return this.forms[index].id; }
+      });
     });
   }
 
@@ -139,15 +142,12 @@ export class FormTableComponent implements OnInit {
 
   bulkDelete() {
     this.formService.bulkDeleteForms(this.formsSelectedIds).subscribe(res => {
-      this.formsSelectedIds = [];
       this.getAllForm();
     });
   }
 
   bulkArchive() {
     this.formService.changeStatus(this.formsSelectedIds, TEMPLATE_STATUS.STATUS_ARCHIVED).subscribe(res => {
-      this.formsSelectedIds = [];
-      this.formTableTbodyComponent.formsSelectedIndexes = [];
       this.getAllForm();
     });
   }
