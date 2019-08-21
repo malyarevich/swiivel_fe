@@ -1,7 +1,18 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormService } from '../../services/form.service';
-import { TEMPLATE_STATUS } from '../../../../enums/template-status';
-import {FormSql} from '../../../../models/data-collection/form.model';
+import {
+  AfterContentChecked,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild
+} from '@angular/core';
+import {FormService} from '../../services/form.service';
+import {TEMPLATE_STATUS} from '@enums/template-status';
+import {FormSql} from '@models/data-collection/form.model';
+import {uniq} from 'lodash';
+import {RowSelectedService} from '@modules/data-collection/form-table/services/row-selected.service';
 
 @Component({
   selector: '[app-form-table-tbody]',
@@ -15,15 +26,17 @@ export class FormTableTbodyComponent implements OnInit {
   @Input() changedStatuses: any;
   @Input() formsSelectedIds: number[];
 
-  @Output() addSelectedIdsEmitter: any = new EventEmitter();
   @Output() setFormSelectedEmitter: any = new EventEmitter();
   @Output() resetFormSelectedEmitter: any = new EventEmitter();
   @Output() getAllFormEmitter: any = new EventEmitter();
 
   checkedRows: Array<any> = [];
-  constructor(private vFormService: FormService) {}
 
-  ngOnInit() {}
+  constructor(private vFormService: FormService, private rowSelectedService: RowSelectedService) {
+  }
+
+  ngOnInit() {
+  }
 
   getStringPublishSettings(publish_settings: any) {
     if (publish_settings == undefined) {
@@ -34,8 +47,8 @@ export class FormTableTbodyComponent implements OnInit {
         ? ''
         : 'Paper'
       : publish_settings.state.settings.pdf === false
-      ? 'Online'
-      : 'Online, Paper';
+        ? 'Online'
+        : 'Online, Paper';
   }
 
   // TODO: Create directive ConvertData for Safari browser
@@ -53,12 +66,12 @@ export class FormTableTbodyComponent implements OnInit {
     };
   }
 
-  addSelectedIds(id: number) {
-    this.addSelectedIdsEmitter.emit(id);
+  addSelectedIndexes(event, i: number) {
+    this.rowSelectedService.addSelectedIndexes(event, i);
   }
 
-  isCheckedRow(id: number) {
-    return this.formsSelectedIds.find(item => item === id);
+  isSelectedRow(id: number) {
+    if (this.formsSelectedIds.length) return this.formsSelectedIds.find(item => item === id);
   }
 
   setFormSelected(id: number) {

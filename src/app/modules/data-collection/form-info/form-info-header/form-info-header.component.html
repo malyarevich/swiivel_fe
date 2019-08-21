@@ -8,7 +8,7 @@
       <button type="button" class="btn app-btn-status px-1 py-0 app-dropdown-toggle"
               *ngIf="form.status === templateStatuses.STATUS_CLOSED"
               [ngClass]="getClassByStatus(form.status)"
-              appClickStopPropagation>
+              app-click-stop-propagation>
               <span *ngIf="form.status !== templateStatuses.STATUS_REVIEW" class="font-weight-bold app-text-small">
                 {{form.status | titlecase}}
               </span>
@@ -19,7 +19,7 @@
               [ngClass]="getClassByStatus(form.status)"
               id="dropdownBasic1"
               ngbDropdownToggle
-              appClickStopPropagation>
+              app-click-stop-propagation>
               <span *ngIf="form.status === templateStatuses.STATUS_REVIEW" class="font-weight-bold app-text-small">{{'In ' + form.status | titlecase}}
                 <i class="fas fa-hourglass-start"></i>
               </span>
@@ -32,7 +32,7 @@
         <button *ngFor="let status of changedStatuses"
                 (click)="changeStatus(form.id, status)"
                 ngbDropdownItem
-                appClickStopPropagation>
+                app-click-stop-propagation>
           {{status | titlecase}}
         </button>
       </div>
@@ -45,7 +45,7 @@
               <!--[ngClass]="getClassByStatus(form.status)"-->
               <!--id="dropdownBasic1"-->
               <!--ngbDropdownToggle-->
-              <!--appClickStopPropagation>-->
+              <!--app-click-stop-propagation>-->
         <!--<ng-template [ngIf]="form.status === STATUS_REVIEW" [ngIfElse]="chevron">-->
               <!--<span>{{'In ' + form.status | titlecase}}-->
                 <!--<i class="fas fa-hourglass-start"></i>-->
@@ -61,7 +61,7 @@
         <!--<button *ngFor="let status of statuses"-->
                 <!--(click)="changeStatus(form.id, status)"-->
                 <!--ngbDropdownItem-->
-                <!--appClickStopPropagation>-->
+                <!--app-click-stop-propagation>-->
           <!--{{status | titlecase}}-->
         <!--</button>-->
       <!--</div>-->

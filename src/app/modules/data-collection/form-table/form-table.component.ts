@@ -1,8 +1,9 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {FormService} from '../services/form.service';
-import {FormSearchParams} from '../../../models/form-search-params';
-import {TEMPLATE_STATUS} from '../../../enums/template-status';
-import {FormSql} from '../../../models/data-collection/form.model';
+import {FormSearchParams} from '@models/form-search-params';
+import {TEMPLATE_STATUS} from '@app/enums';
+import {FormSql} from '@models/data-collection/form.model';
+import {RowSelectedService} from '@modules/data-collection/form-table/services/row-selected.service';
 
 @Component({
   selector: 'app-form-table',
@@ -86,17 +87,19 @@ export class FormTableComponent implements OnInit {
     },
   ];
 
-  constructor(private formService: FormService) {
+  constructor(private formService: FormService, private rowSelectedService: RowSelectedService) {
   }
 
   ngOnInit() {
     this.getAllForm();
+    this.addSelectedIds();
   }
 
 
   getAllForm(): void {
     this.formService.getFormsList(this.params).subscribe(forms => {
       this.forms = forms.data;
+      this.rowSelectedService.removeSelectedIndexes();
     });
   }
 
@@ -123,17 +126,12 @@ export class FormTableComponent implements OnInit {
     this.getAllForm();
   }
 
-  addSelectedIds(id) {
-    const index = this.formsSelectedIds.indexOf(id);
-    if (index === -1) {
-      this.formsSelectedIds.push(id);
-    } else {
-      this.formsSelectedIds.splice(index, 1);
-    }
-  }
-
-  isCheckedRow(id) {
-    return this.formsSelectedIds.find(item => item === id);
+  addSelectedIds() {
+    this.rowSelectedService.selectedIndexes.subscribe((indexes) => {
+      this.formsSelectedIds = indexes.map((index) => {
+        if (this.forms[index]) { return this.forms[index].id; }
+      });
+    });
   }
 
   doBulkAction(type) {
@@ -145,14 +143,12 @@ export class FormTableComponent implements OnInit {
   bulkDelete() {
     this.formService.bulkDeleteForms(this.formsSelectedIds).subscribe(res => {
       this.getAllForm();
-      this.formsSelectedIds = [];
     });
   }
 
   bulkArchive() {
     this.formService.changeStatus(this.formsSelectedIds, TEMPLATE_STATUS.STATUS_ARCHIVED).subscribe(res => {
       this.getAllForm();
-      this.formsSelectedIds = [];
     });
   }
 
