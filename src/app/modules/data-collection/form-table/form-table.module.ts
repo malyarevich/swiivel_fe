@@ -12,6 +12,7 @@ import {FormTableHeaderModule} from '@app/shared/components';
 import {FormAccessModalModule} from '../form-access-modal/form-access-modal.module';
 import {ClickStopPropagationDirective} from '@app/utils/directives/click-stop-propagation.directive';
 import {RowSelectedService} from '@modules/data-collection/form-table/services/row-selected.service';
+import {GeneralDirectivesModule} from '@app/utils/directives/general-directives.module';
 
 
 @NgModule({
@@ -19,7 +20,6 @@ import {RowSelectedService} from '@modules/data-collection/form-table/services/r
     FormTableComponent,
     FormNavComponent,
     FormTableTbodyComponent,
-    ClickStopPropagationDirective,
   ],
   imports: [
     CommonModule,
@@ -30,6 +30,7 @@ import {RowSelectedService} from '@modules/data-collection/form-table/services/r
     SharedRedComponentsModule,
     FormTableHeaderModule,
     FormAccessModalModule,
+    GeneralDirectivesModule
   ],
   exports: [FormTableComponent],
   providers: [RowSelectedService]
