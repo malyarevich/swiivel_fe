@@ -1,7 +1,17 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormService } from '../../services/form.service';
-import { TEMPLATE_STATUS } from '../../../../enums/template-status';
-import {FormSql} from '../../../../models/data-collection/form.model';
+import {
+  AfterContentChecked,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild
+} from '@angular/core';
+import {FormService} from '../../services/form.service';
+import {TEMPLATE_STATUS} from '@enums/template-status';
+import {FormSql} from '@models/data-collection/form.model';
+import {uniq} from 'lodash';
 
 @Component({
   selector: '[app-form-table-tbody]',
@@ -21,9 +31,13 @@ export class FormTableTbodyComponent implements OnInit {
   @Output() getAllFormEmitter: any = new EventEmitter();
 
   checkedRows: Array<any> = [];
-  constructor(private vFormService: FormService) {}
+  formsSelectedIndexes: number[] = [];
 
-  ngOnInit() {}
+  constructor(private vFormService: FormService) {
+  }
+
+  ngOnInit() {
+  }
 
   getStringPublishSettings(publish_settings: any) {
     if (publish_settings == undefined) {
@@ -34,8 +48,8 @@ export class FormTableTbodyComponent implements OnInit {
         ? ''
         : 'Paper'
       : publish_settings.state.settings.pdf === false
-      ? 'Online'
-      : 'Online, Paper';
+        ? 'Online'
+        : 'Online, Paper';
   }
 
   // TODO: Create directive ConvertData for Safari browser
@@ -53,12 +67,33 @@ export class FormTableTbodyComponent implements OnInit {
     };
   }
 
-  addSelectedIds(id: number) {
-    this.addSelectedIdsEmitter.emit(id);
+  addSelectedIndexes(event, i: number) {
+    if (event.shiftKey) {
+      const lastIndex = this.formsSelectedIndexes[this.formsSelectedIndexes.length - 1];
+      if (lastIndex < i) {
+        for (let j = lastIndex + 1; j <= i; j++) {
+          this.formsSelectedIndexes.push(j);
+        }
+      }
+      if (lastIndex > i) {
+        for (let k = lastIndex - 1; k >= i; k--) {
+          this.formsSelectedIndexes.push(k);
+        }
+      }
+      this.formsSelectedIndexes = uniq(this.formsSelectedIndexes);
+    } else {
+      const index = this.formsSelectedIndexes.indexOf(i);
+      if (index === -1) {
+        this.formsSelectedIndexes.push(i);
+      } else {
+        this.formsSelectedIndexes.splice(index, 1);
+      }
+    }
+    this.addSelectedIdsEmitter.emit(this.formsSelectedIndexes);
   }
 
-  isCheckedRow(id: number) {
-    return this.formsSelectedIds.find(item => item === id);
+  isSelectedRow(id: number) {
+    if (this.formsSelectedIds.length) return this.formsSelectedIds.find(item => item === id);
   }
 
   setFormSelected(id: number) {

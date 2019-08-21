@@ -5,11 +5,11 @@
   >
   </app-form-access-modal>
   <tr
-    *ngFor="let item of forms; let isRowEven = even"
+    *ngFor="let item of forms; let i = index; let isRowEven = even"
     class="tbody__tr"
-    (click)="addSelectedIds(item.id)"
+    (click)="addSelectedIndexes($event, i)"
     [ngClass]="{
-      'checked-row': isCheckedRow(item.id),
+      'checked-row': isSelectedRow(item.id),
       'tbody__tr--even': isRowEven,
       'tbody__tr--odd': !isRowEven
     }"
@@ -88,6 +88,7 @@
     <!--Change status button-->
     <td class="tbody__td">
       <div
+        app-click-stop-propagation
         ngbDropdown
         class="tbody__cell_container tbody__cell_container--column"
       >
@@ -96,7 +97,6 @@
           class="btn app-btn-status app-dropdown-toggle status_button"
           *ngIf="item.status === templateStatuses.STATUS_CLOSED"
           [ngClass]="getClassByStatus(item.status)"
-          appClickStopPropagation
         >
           <span
             *ngIf="item.status !== templateStatuses.STATUS_REVIEW"
@@ -116,7 +116,6 @@
           [ngClass]="getClassByStatus(item.status)"
           id="dropdownBasic1"
           ngbDropdownToggle
-          appClickStopPropagation
         >
           <span
             *ngIf="item.status === templateStatuses.STATUS_REVIEW"
@@ -154,7 +153,6 @@
             *ngFor="let status of changedStatuses"
             (click)="changeStatus(item.id, status)"
             ngbDropdownItem
-            appClickStopPropagation
           >
             {{ status | titlecase }}
           </button>
@@ -176,7 +174,6 @@
             control_button--left_rounded"
           routerLink="form-constructor/{{ item.mongo_id }}"
           routerLinkActive="active"
-          appClickStopPropagation
         >
           <p class="status_button__text"><i class="fas fa-pen"></i> Edit</p>
         </button>
@@ -189,7 +186,7 @@
             control_button--right_rounded"
           routerLink="online-form/{{ item.mongo_id }}"
           routerLinkActive="active"
-          appClickStopPropagation
+          app-click-stop-propagation
         >
           <span class="status_button__text"
             ><i class="far fa-eye"></i> View</span
@@ -197,7 +194,7 @@
         </button>
         <div>
           <button
-            appClickStopPropagation
+            app-click-stop-propagation
             class="btn app-btn-sml mr-2 "
             placement="top"
             ngbPopover="This feature is under development"
@@ -209,7 +206,7 @@
           </button>
 
           <button
-            appClickStopPropagation
+            app-click-stop-propagation
             class="btn app-btn-sml mr-2 "
             placement="left"
             ngbPopover="This feature is under development"
@@ -221,7 +218,7 @@
           </button>
 
           <button
-            appClickStopPropagation
+            app-click-stop-propagation
             class="btn app-btn-sml mr-2 "
             placement="left"
             ngbPopover="This feature is under development"
@@ -231,7 +228,7 @@
           </button>
 
           <button
-            appClickStopPropagation
+            app-click-stop-propagation
             class="btn app-btn-sml "
             placement="left"
             ngbPopover="This feature is under development"
@@ -248,7 +245,7 @@
         type="button"
         class="btn btn-outline-danger py-0 px-1 mr-2 "
         (click)="removeForm(item.mongo_id)"
-        appClickStopPropagation
+        app-click-stop-propagation
       >
         <span class="app-text-small font-weight-bold"
           ><i class="fas fa-trash-alt"></i> Delete</span
