@@ -33,7 +33,7 @@ export class FieldsSideBarDetailedComponent implements OnInit,  OnDestroy {
   @Input() idSectionForDragDrop: string[];
 
   @Input() section: Field;
-  @Input() form;
+  @Input() form: Field[];
 
   nestedLevel = 0;
   showNested = true;
@@ -51,17 +51,33 @@ export class FieldsSideBarDetailedComponent implements OnInit,  OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.initFormFieldsToSideBar([this.section], this.form.fields);
+    this.initFormFieldsToSideBar([this.section], this.form);
     this.getRoleList();
     this.loadBasicFields();
   }
 
-  getForm() {
-    const index = this.form.fields.findIndex(field => field.name === this.section.name);
-    if (!this.form.fields[index]) {
-      return [];
+  onSectionToggle(event) {
+    const value = event.target.checked;
+    this.sideBarService.changeExistGroupFields(this.section, value);
+    const index = this.form.findIndex((form: Field) => form.name === this.section.name);
+    if (index > -1) {
+      this.form.splice(index, 1);
     } else {
-      return this.form.fields[index].fields;
+      this.form.push(this.sideBarService.getForm(this.section));
+    }
+  }
+
+  onFieldToggle() {
+    this.section.exist = this.section.fields.some((field: Field) => field.exist);
+    const index = this.form.findIndex((form: Field) => form.name === this.section.name);
+    if (this.section.exist) {
+      if (index > -1) {
+        this.form[index] = this.sideBarService.getForm(this.section);
+      } else {
+        this.form.push(this.sideBarService.getForm(this.section));
+      }
+    } else {
+      this.form.splice(index, 1);
     }
   }
 
