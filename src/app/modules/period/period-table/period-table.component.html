@@ -1,0 +1,113 @@
+<div class="app-period-table">
+  <table class="app-period-table__table">
+    <thead
+    app-table-thead
+    [columns]="periodTableColumns">
+    </thead>
+    <tbody>
+      <tr
+        class="app-period-table__row"
+        [ngStyle]="{'background-color': item.open ? '#EBEEFF' : item.bkgColor}"
+        *ngFor="let item of periodsData; let i = index">
+        <td *ngIf="item.dataTableType === 'period'" class="app-period-table__cell app-period-table__cell--name">
+          {{ item.name }}
+        </td>
+        <td *ngIf="item.dataTableType === 'period'" class="app-period-table__cell">
+          {{ item.date_from }}
+        </td>
+        <td *ngIf="item.dataTableType === 'period'" class="app-period-table__cell">
+          {{ item.duration }}
+        </td>
+        <td *ngIf="item.dataTableType === 'period'"  class="app-period-table__cell">
+          {{ item.date_to }}
+        </td>
+        <td *ngIf="item.dataTableType === 'period'" class="app-period-table__cell">
+          <div class="app-period-table__cell--types">
+            <app-bordered-label
+              class="app-period-table__cell--type"
+              *ngFor="let type of item.type"
+              [label]="type.name"
+              [color]="type.color"
+            ></app-bordered-label>
+          </div>
+        </td>
+        <td *ngIf="item.dataTableType === 'period'" class="app-period-table__cell app-period-table__cell--last">
+          <button class="app-period-table__button">
+            <i class="fas fa-pen app-period-table__button--pen"></i>
+            <p class="app-period-table__button--label">Edit</p>
+          </button>
+          <button class="app-period-table__trash">
+            <i class="fas fa-trash app-period-table__trash-ico"></i>
+          </button>
+        <div class="app-period-table__arrow">
+          <i
+            class="fas app-period-table__arrow--ico"
+            [ngClass]="{ 'fa-sort-down app-period-table__arrow--ico--selected': item.open, 'fa-sort-up': !item.open}"
+            (click)="onOpenRow(item.period_id)"
+          ></i>
+        </div>
+        </td>
+        <td *ngIf="item.dataTableType === 'split_set' && item.open" class="app-period-table__cell--split-set" colspan="6">
+          <div class="app-period__table__split_set">
+            <h2 class="app-period__table__split_set--header">Splits types</h2>
+            <ul class="app-period__table__split_set--list">
+              <li class="app-period__table__split_set--item"
+                  [ngClass]="{ 'app-period__table__split_set--selected-item': item.isAllSelected }"
+                  (click)="selectAll(item.period_id)">all</li>
+              <li
+                *ngFor="let splitSet of item.splitSets"
+                class="app-period__table__split_set--item"
+                [ngClass]="{
+                  'app-period__table__split_set--selected-item': item.selectedSplitSetId === splitSet.split_set_id
+                }"
+                (click)="selectSplitSet(splitSet.split_set_id, item.period_id)">
+                {{ splitSet.name }}
+              </li>
+            </ul>
+            <table class="app-period-table__split-table">
+              <thead
+                app-table-thead
+                [columns]="splitsTableColumns"
+              ></thead>
+              <tbody *ngIf="item.selectedSplitSetId">
+                <tr class="app-period__split-row" *ngFor="let split of getSplits(item.period_id)">
+                  <td class="app-period-table__split-cell app-period-table__cell--name">{{ split.name }}</td>
+                  <td class="app-period-table__split-cell">{{ split.date_from }}</td>
+                  <td class="app-period-table__split-cell">{{ split.duration }}</td>
+                  <td class="app-period-table__split-cell">{{ split.date_to }}</td>
+                  <td class="app-period-table__split-cell">
+                    <div class="app-period-table__split--types">
+                      <app-bordered-label
+                        class="app-period-table__cell--type"
+                        [label]="split.type.name"
+                        [color]="split.type.color"
+                      ></app-bordered-label>
+                    </div>
+                  </td>
+                </tr>
+                </tbody>
+                <tbody *ngIf="item.isAllSelected">
+                <tr *ngFor="let splits of getSplits(item.period_id)">
+                  <td>{{ split.name }}</td>
+                  <td>{{ split.date_from }}</td>
+                  <td>{{ split.duration }}</td>
+                  <td>{{ split.date_to }}</td>
+                  <td>
+                    <div class="app-period-table__split--types">
+                      <app-bordered-label
+                        class="app-period-table__cell--type"
+                        *ngFor="let type of split.type"
+                        [label]="type.name"
+                        [color]="type.color"
+                      ></app-bordered-label>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

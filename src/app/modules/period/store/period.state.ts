@@ -1,4 +1,4 @@
-import { Period } from '../../../models/period/period.model';
+import { Period, PeriodTable, SplitSetTable } from 'src/app/models/period/period.model';
 
 export interface PeriodState {
   periods: Period[];

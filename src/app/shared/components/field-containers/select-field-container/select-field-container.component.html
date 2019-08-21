@@ -1,12 +1,7 @@
-<div
-  class="app-select-field-container"
-  [ngClass]="{
-    'app-select-field-has-error': isInvalid,
-    'app-select-field-remove-clear-btn': !showClearBtn,
-    'app-select-field__no-label': hideLabel
-  }"
->
-  <ng-content select="ng-select"></ng-content>
-  <ng-content *ngIf="isInvalid" select=".error"></ng-content>
-  <div *ngIf="isInvalid" class="app-select-field-error-icon">x</div>
+<div [ngClass]="classes">
+  <ng-content></ng-content>
+  <ng-container *ngIf="formControl.invalid">
+    <div class="error" *ngFor="let error of errors"></div>
+    <div class="app-select-field-error-icon">x</div>
+  </ng-container>
 </div>

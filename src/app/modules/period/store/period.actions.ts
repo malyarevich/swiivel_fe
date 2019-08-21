@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
-import { Period, PeriodSplitSet } from '../../../models/period/period.model';
-import { GetPeriodResponse } from '../../../models/period/get-period-response';
+import { Period, PeriodSplitSet } from 'src/app/models/period/period.model';
+import { GetPeriodResponse } from 'src/app//models/period/get-period-response';
 
 export enum PeriodActionTypes {
   AddPeriod = '[Period] Add Period',
@@ -38,7 +38,8 @@ export class ChangePeriod implements Action {
 export class CreatePeriodRequest implements Action {
   readonly type = PeriodActionTypes.CreatePeriodRequest;
 
-  constructor(public payload: any) {}
+  constructor(public payload: any) {
+  }
 }
 
 export class CreatePeriodResponse implements Action {

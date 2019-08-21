@@ -24,6 +24,7 @@ import { ToggleFieldComponent } from './fields/toggle-field/toggle-field.compone
 // components
 import { BadgeComponent } from './badge/badge.component';
 import { BadgeDropdownComponent } from './badge-dropdown/badge-dropdown.component';
+import { BorderedLabelComponent } from './bordered-label/bordered-label.component';
 import { DataTableComponent } from './data-table/data-table.component';
 import { DataTableHeaderComponent } from './data-table/data-table-header/data-table-header.component';
 import { DataTableHeaderTitleComponent } from './data-table/data-table-header/data-table-header-title/data-table-header-title.component';
@@ -52,6 +53,8 @@ import { CaretsComponent } from './multi-icons/carets/carets.component';
 import { ToolTipQuestionComponent } from './tool-tip-question/tool-tip-question.component';
 import {CheckboxFieldContainerComponent, InputFieldContainerComponent} from '@app/shared/components/field-containers';
 import {SelectFieldContainerComponent} from '@app/shared/components/field-containers/select-field-container/select-field-container.component';
+import { InputContainerComponent } from './input-container/input-container.component';
+import { InputLabel } from './input-container/label';
 
 @NgModule({
   declarations: [
@@ -71,6 +74,7 @@ import {SelectFieldContainerComponent} from '@app/shared/components/field-contai
     // components
     BadgeComponent,
     BadgeDropdownComponent,
+    BorderedLabelComponent,
     CommandDropdownComponent,
     DataTableComponent,
     DataTableHeaderComponent,
@@ -93,6 +97,8 @@ import {SelectFieldContainerComponent} from '@app/shared/components/field-contai
     // multi icons
     CaretsComponent,
     // field containers
+    InputContainerComponent,
+    InputLabel,
     CheckboxFieldContainerComponent,
     InputFieldContainerComponent,
     SelectFieldContainerComponent,
@@ -130,6 +136,7 @@ import {SelectFieldContainerComponent} from '@app/shared/components/field-contai
     // components
     BadgeComponent,
     BadgeDropdownComponent,
+    BorderedLabelComponent,
     CommandDropdownComponent,
     DataTableComponent,
     MainSpinnerComponent,
@@ -150,6 +157,9 @@ import {SelectFieldContainerComponent} from '@app/shared/components/field-contai
     CheckboxFieldContainerComponent,
     InputFieldContainerComponent,
     SelectFieldContainerComponent,
+
+    InputContainerComponent,
+    InputLabel
   ],
 })
 export class SharedRedComponentsModule {}

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-period-cancel-popup',
@@ -16,4 +16,11 @@ export class PeriodCancelPopupComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  onCancel(): void {
+    this.cancelExit.emit();
+  }
+
+  onAccept(): void {
+    this.acceptExit.emit();
+  }
 }
