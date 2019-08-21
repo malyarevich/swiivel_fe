@@ -1,21 +1,21 @@
 <p>List of Users ({{permissions.length || 0}})</p>
 <div *ngIf="error" class="alert alert-danger">{{error}}</div>
-<button appClickStopPropagation class="btn btn-primary btn-sm" *ngIf="!showInvite" (click)="showInvite=true">Invite Users</button>
+<button app-click-stop-propagation class="btn btn-primary btn-sm" *ngIf="!showInvite" (click)="showInvite=true">Invite Users</button>
 <section *ngIf="showInvite">
     <div class="row">
         <div class="col-sm-6">
             <div><span *ngFor="let user of selectedUsers">{{user.username}} - {{user.role.role_name}} </span></div>
-            <input appClickStopPropagation class="form-control" #searchUsers [(ngModel)]="name" (focus)="filterUsers(searchUsers.value)"
+            <input app-click-stop-propagation class="form-control" #searchUsers [(ngModel)]="name" (focus)="filterUsers(searchUsers.value)"
                    (input)="filterUsers(searchUsers.value)">
-            <div appClickStopPropagation *ngFor="let user of filteredUsers" (click)="selectUsers(user)">
+            <div app-click-stop-propagation *ngFor="let user of filteredUsers" (click)="selectUsers(user)">
                 <ul class="list-group">
                     <li class="list-group-item">{{user.username}}, {{user.role.role_name}}</li>
                 </ul>
             </div>
         </div>
         <div class="col-sm-6">
-            <button appClickStopPropagation class="btn btn-outline-danger btn-sm" (click)="resetSelectedUsers(); showInvite=false">Cancel</button>
-            <button appClickStopPropagation class="btn btn-success btn-sm ml-1" (click)="addUsersToList(); showInvite=false">Add to list</button>
+            <button app-click-stop-propagation class="btn btn-outline-danger btn-sm" (click)="resetSelectedUsers(); showInvite=false">Cancel</button>
+            <button app-click-stop-propagation class="btn btn-success btn-sm ml-1" (click)="addUsersToList(); showInvite=false">Add to list</button>
         </div>
     </div>
 </section>
@@ -37,12 +37,12 @@
         <tr *ngFor="let item of permissions">
             <td>{{getUsername(item.user_id)}}</td>
             <td>{{getRole(item.user_id)}}</td>
-            <td><input appClickStopPropagation type="checkbox" [ngModel]="item.view" (ngModelChange) = "setPermission($event, item.user_id, 'view')"></td>
-            <td><input appClickStopPropagation type="checkbox" [ngModel]="item.edit" (ngModelChange) = "setPermission($event, item.user_id, 'edit')"></td>
-            <td><input appClickStopPropagation type="checkbox" [ngModel]="item.delete" (ngModelChange) = "setPermission($event, item.user_id, 'delete')"></td>
-            <td><input appClickStopPropagation type="checkbox" [ngModel]="item.access" (ngModelChange) = "setPermission($event, item.user_id, 'access')"></td>
+            <td><input app-click-stop-propagation type="checkbox" [ngModel]="item.view" (ngModelChange) = "setPermission($event, item.user_id, 'view')"></td>
+            <td><input app-click-stop-propagation type="checkbox" [ngModel]="item.edit" (ngModelChange) = "setPermission($event, item.user_id, 'edit')"></td>
+            <td><input app-click-stop-propagation type="checkbox" [ngModel]="item.delete" (ngModelChange) = "setPermission($event, item.user_id, 'delete')"></td>
+            <td><input app-click-stop-propagation type="checkbox" [ngModel]="item.access" (ngModelChange) = "setPermission($event, item.user_id, 'access')"></td>
             <td>
-                <button appClickStopPropagation class="btn btn-default btn-sm" (click)="deleteUserPermissions(item)">Delete</button>
+                <button app-click-stop-propagation class="btn btn-default btn-sm" (click)="deleteUserPermissions(item)">Delete</button>
             </td>
         </tr>
         </tbody>
