@@ -15,76 +15,34 @@ export class SideBarService {
 
   public sectionSubject: BehaviorSubject<object> = new BehaviorSubject({});
 
-  public onSectionToggle(event, section: Field, form: Field[]): void {
-    section.exist = event.target.checked;
-    this.onFieldToggle(section, form);
-    const index = form.findIndex(el => el.name === section.name);
-    section.fields.forEach((group: Field, groupIndex: number) => {
-      group.exist = section.exist;
-      if (form[index]) {
-        this.addExistingData(group, form[index].fields);
-      }
-      if (group.type === 113) {
-        group.fields.forEach((field: Field, fieldIndex: number) => {
-          field.exist = section.exist;
-          if (form[index]) {
-            this.addExistingData(field, form[index].fields[groupIndex].fields);
-          }
-          if (field.type === 113) {
-            field.fields.forEach((innerField: Field) => {
-              innerField.exist = section.exist;
-              if (form[index]) {
-                this.addExistingData(innerField, form[index].fields[groupIndex].fields[fieldIndex].fields);
-              }
-            });
-          }
-        });
-      }
-    });
-  }
-
-  public onGroupToggle(event, group: Field, form: Field[]): void {
-    group.exist = event.target.checked;
-    this.onFieldToggle(group, form);
-    const index = form.findIndex(el => el.name === group.name);
-    group.fields.forEach((field: Field, fieldIndex: number) => {
-      field.exist = group.exist;
-      if (form[index]) {
-        this.addExistingData(field, form[index].fields);
-      }
+  public changeExistGroupFields(group: Field, exist: boolean) {
+    group.fields.forEach((field: Field, i) => {
+      field.exist = exist;
       if (field.type === 113) {
-        field.fields.forEach((innerField: Field) => {
-          innerField.exist = group.exist;
-          if (form[index]) {
-            this.addExistingData(innerField, form[index].fields[fieldIndex].fields);
-          }
-        });
+        return this.changeExistGroupFields(group.fields[i], exist);
       }
     });
   }
 
-  public onFieldToggle(field: Field, form: Field[]): void {
-    const index = form.findIndex(el => el.name === field.name);
-    if (index > -1) {
-      form.splice(index, 1);
-    } else {
-      this.addExistingField(field, form);
+  public getForm(section: Field): Field {
+    const newSection = cloneDeep(section);
+    this.renderForm(newSection);
+    return newSection;
+  }
+
+  public renderForm(group: Field) {
+    if (group.exist) {
+      group.fields = group.fields.filter((field: Field) => field.exist === true);
+      group.fields.forEach((field: Field) => {
+        if (field.type !== 113) {
+          field._id = uuid();
+          field.isValid = true;
+          field.isValidName = true;
+        } else {
+          return this.renderForm(field);
+        }
+      });
     }
-  }
-
-  public addExistingField(field: Field, form: Field[]): void {
-    const newField = cloneDeep(field);
-    newField._id = uuid();
-    newField.isValid = true;
-    newField.isValidName = true;
-    form.push(newField);
-  }
-
-  public addExistingData(field: Field, form: Field[]): void {
-    const newField = form.find(el => el.name === field.name);
-    newField._id = uuid();
-    newField.isValid = true;
-    newField.isValidName = true;
   }
 
   replaceExistinField(field: Field, fields: Field[]) {
