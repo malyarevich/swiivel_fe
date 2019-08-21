@@ -5,8 +5,8 @@
     <label class="app-checkbox-container">
       <input
         type="checkbox"
-        [ngModel]="section.exist"
-        (change)="sideBarService.onSectionToggle($event, section, form.fields)"
+        [(ngModel)]="section.exist"
+        (change)="onSectionToggle($event)"
       />
       <span class="app-checkbox-checkmark"></span>
     </label>
@@ -31,16 +31,16 @@
         *ngIf="field.type === 113"
         [nestedLevel]="nestedLevel + 1"
         [group]="field"
-        [form]="getForm()"
         [idSectionForDragDrop]="idSectionForDragDrop"
+        (fieldToggle)="onFieldToggle()"
       ></app-side-bar-group>
       <app-side-bar-field
         *ngIf="field.type !== 113"
         [nestedLevel]="nestedLevel + 1"
-        [group]="section?.fields"
         [field]="field"
-        [form]="getForm()"
+        [group]="section?.fields"
         [style]="field.mapped === ''"
+        (fieldToggle)="onFieldToggle()"
       ></app-side-bar-field>
     </div>
   </div>
