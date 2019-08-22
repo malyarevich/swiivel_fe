@@ -1,0 +1,94 @@
+@import 'index.scss';
+
+:host {
+    @extend %flex-all-center;
+
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+}
+
+h1{
+    color: $title-color;
+    font-size: 28px;
+    font-weight: bold;
+    line-height: 30px;
+    margin-bottom: 6vw;
+    text-align: center;
+}
+
+.loginFormWrapper {
+    z-index: 2;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 371px;
+
+    @media (max-width: 500px) {
+        width: 90%;
+    }
+
+    .formWrapper {
+        position: relative;
+        width: 371px;
+        min-height: 390px;
+        .customForm {
+          width: 100%;
+          padding: 30px 30px;
+          background-color: $white;
+          box-shadow: 0 0 30px 2px rgba(0,0,0,0.1);
+          text-align: start;
+
+          @media (max-width: 500px) {
+            width: 100%;
+          }
+
+          h2 {
+            color: $sub-title-color;
+            font-size: 21px;
+            font-weight: bold;
+            line-height: 29px;
+            text-align: center;
+            margin-bottom: 32px;
+          }
+
+          .formInput{
+            @extend %form-input;
+            padding: .25rem .4rem;
+          }
+
+          .smallText{
+            color: $title-color;
+            font-size: 12px;
+            line-height: 14px;
+            margin-bottom: 50px;
+            cursor: pointer;
+            transition: all .2s ease;
+          }
+          .smallText:hover {
+            color: darken(($title-color), 20%);
+          }
+
+          button {
+            //@extend %common-btn;
+            //margin: 0 0 40px 0;
+            width: 100%;
+            border-radius: 0;
+          }
+
+          .passwordWrapper{
+            position: relative;
+            margin-top: 20px;
+
+            img {
+              position: absolute;
+              top: 50%;
+              right: 5%;
+              cursor: pointer
+            }
+          }
+        }
+
+    }
+}
