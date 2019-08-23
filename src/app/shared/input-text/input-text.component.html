@@ -1,0 +1,8 @@
+<label class="controlLabel">
+  <ng-content select=".label"></ng-content>
+</label>
+<input type="text" [formControl]="control"/>
+<span class="icon">x</span>
+<span *ngFor="let error of errors" class="errorSubtext">
+  {{error}}
+</span>

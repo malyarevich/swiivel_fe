@@ -1,19 +1,19 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { InputContainerComponent } from './input-container/input-container.component';
+import { InputTextComponent } from './input-text/input-text.component';
 
 @NgModule({
   imports:      [
-    CommonModule
+    CommonModule,
+    ReactiveFormsModule
   ],
   declarations: [
-    InputContainerComponent
+    InputTextComponent
   ],
   exports: [
     CommonModule,
-    ReactiveFormsModule,
-    InputContainerComponent,
+    InputTextComponent
   ]
 })
 export class SharedModule { }

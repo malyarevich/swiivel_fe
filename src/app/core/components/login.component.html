@@ -4,15 +4,14 @@
       <h2 class="text-center">Login</h2>
       <h5 class="text-center app-text-primary mt-5">Welcome to the ABC School</h5>
       <h6 class="text-center mb-5">Please login for starting</h6>
-      <app-input-container>
+      <sw-input-text formControlName="username">
         <span class="label">Username</span>
-        <input type="text" placeholder="Username" formControlName="username" class="formInput" autocomplete="new-password">
-      </app-input-container>
+      </sw-input-text>
       <section class="passwordWrapper">
-        <app-input-container>
+        <sw-input-text formControlName="password">
           <span class="label">Password</span>
-          <input [type]="inputType" placeholder="Password" formControlName="password" class="formInput" autocomplete="new-password">
-        </app-input-container>
+    
+        </sw-input-text>
         <img [attr.title]="iconText" [attr.src]="iconUrl" (click)="changeField($event)">
       </section>
       <a routerLink="/restore-password" class="smallText">
