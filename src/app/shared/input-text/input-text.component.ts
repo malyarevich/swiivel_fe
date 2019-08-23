@@ -32,7 +32,11 @@ export class InputTextComponent implements OnInit, ControlValueAccessor {
     this.control.setValue(obj, {emitEvent: false});
   }
 
-  constructor() { }
+  constructor() {
+    this.control.valueChanges.subscribe((value) => {
+      this.onChange(value);
+    });
+  }
 
   ngOnInit() {
   }
