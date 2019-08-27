@@ -14,14 +14,24 @@
       box-sizing: border-box;
       border-radius: 0.1875rem;
       padding: 0.5rem 0.625rem 0.4375rem 0.625rem;
+      & + .placeholder {
+        font-size: 0.625rem;
+        transform: translateY(-0.5rem);
+      }
+      &.empty {
+        & + .placeholder {
+          font-size: 0.75rem;
+          transform: translateY(0);
+        }
+      }
     }
     .placeholder {
       position: absolute;
       top: 0.5625rem;
       left: 0.625rem;
       font-family: $nunito-sans-regular;
-      font-size: 0.75rem;
       color: $gray-color;
+      transition: all .4s ease-in-out;
     }
   }
 }
