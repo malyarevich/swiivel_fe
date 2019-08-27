@@ -6,12 +6,17 @@ import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
+
 export class DashboardComponent implements OnInit {
+
   form: FormGroup;
-  constructor(private fb: FormBuilder) {
+
+  constructor(
+    private fb: FormBuilder
+  ) {
     this.form = this.fb.group({
-      'short': new FormControl('short text')
-    })
+      short: new FormControl('short text')
+    });
   }
 
   ngOnInit() {
