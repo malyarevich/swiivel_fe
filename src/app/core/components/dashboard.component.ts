@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
+import { FieldService } from '@core/field.service';
+import fields from '@app/shared/fields';
+
 
 @Component({
   selector: 'app-dashboard',
@@ -8,13 +11,17 @@ import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 })
 export class DashboardComponent implements OnInit {
   form: FormGroup;
-  constructor(private fb: FormBuilder) {
-    this.form = this.fb.group({
-      'short': new FormControl('short text')
-    })
+  fields = fields;
+  constructor(
+    private fs: FieldService
+  ) {
+    this.form = this.fs.toForm(fields);
   }
 
   ngOnInit() {
+    this.form.valueChanges.subscribe((value) => {
+      console.log(`Value changed`, value);
+    });
   }
 
 }

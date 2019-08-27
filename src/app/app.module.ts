@@ -13,6 +13,7 @@ import { SharedModule } from '@shared/shared.module';
 import { AuthGuard } from '@core/auth.guard';
 import { AuthService } from '@core/auth.service';
 import { DashboardComponent } from '@core/components/dashboard.component';
+import { FieldService } from '@core/field.service';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { DashboardComponent } from '@core/components/dashboard.component';
   ],
   providers: [
     AuthGuard,
-    AuthService
+    AuthService,
+    FieldService
   ],
   bootstrap: [AppComponent]
 })
