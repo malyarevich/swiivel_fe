@@ -1,8 +1,8 @@
-<label class="controlLabel">
-  <ng-content select=".label"></ng-content>
-</label>
-<input type="text" [formControl]="control"/>
-<span class="icon">x</span>
-<span *ngFor="let error of errors" class="errorSubtext">
-  {{error}}
-</span>
+<div class="input_text">
+  <input type="text" class="input_text__input" [formControl]="control" />
+  <ng-content select="span" *ngIf="!control.value"></ng-content>
+</div>
+
+<!--<span *ngFor="let error of errors" class="errorSubtext">-->
+<!--  {{error}}-->
+<!--</span>-->

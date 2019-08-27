@@ -1,4 +1,4 @@
-import { Component, OnInit, forwardRef, ChangeDetectionStrategy } from '@angular/core';
+import { Component, forwardRef, ChangeDetectionStrategy } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
@@ -14,31 +14,34 @@ import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/f
     }
   ]
 })
-export class InputTextComponent implements OnInit, ControlValueAccessor {
-  onChange: Function;
-  control: FormControl = new FormControl();
-  errors: [];
 
-  setDisabledState?(isDisabled: boolean): void {
-    if (isDisabled) this.control.disable({emitEvent: false});
-    else this.control.enable({emitEvent: false});
-  }
-  registerOnTouched(fn: any): void {
-  }
-  registerOnChange(fn: any): void {
-    this.onChange = fn;
-  }
-  writeValue(obj: any): void {
-    this.control.setValue(obj, {emitEvent: false});
-  }
+export class InputTextComponent implements ControlValueAccessor {
+
+  private control: FormControl = new FormControl();
+  private onChange: any;
+  private errors: [];
 
   constructor() {
-    this.control.valueChanges.subscribe((value) => {
-      this.onChange(value);
-    });
+    this.control.valueChanges.subscribe(value => this.onChange(value));
   }
 
-  ngOnInit() {
+  public setDisabledState(isDisabled: boolean): void {
+    if (isDisabled) {
+      this.control.disable({emitEvent: false});
+    } else {
+      this.control.enable({emitEvent: false});
+    }
+  }
+
+  public registerOnTouched(fn: any): void {
+  }
+
+  public registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+
+  public writeValue(obj: any): void {
+    this.control.setValue(obj, {emitEvent: false});
   }
 
 }
