@@ -1,5 +1,5 @@
-import { Component, OnInit, forwardRef, ChangeDetectionStrategy } from '@angular/core';
-import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Component, OnInit, forwardRef, ChangeDetectionStrategy, ViewChild, ElementRef, Renderer2 } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
   selector: 'sw-input-text',
@@ -15,30 +15,34 @@ import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/f
   ]
 })
 export class InputTextComponent implements OnInit, ControlValueAccessor {
-  onChange: Function;
-  control: FormControl = new FormControl();
+  onChange: Function = (_: string) => {};
+  onTouched: Function;
   errors: [];
+  @ViewChild('input', {static: true}) input: ElementRef;
 
   setDisabledState?(isDisabled: boolean): void {
-    if (isDisabled) this.control.disable({emitEvent: false});
-    else this.control.enable({emitEvent: false});
+    this.renderer.setProperty(this.input.nativeElement, 'disabled', isDisabled);
   }
   registerOnTouched(fn: any): void {
+    this.onTouched = fn;
   }
   registerOnChange(fn: any): void {
     this.onChange = fn;
   }
   writeValue(obj: any): void {
-    this.control.setValue(obj, {emitEvent: false});
+    this.renderer.setProperty(this.input.nativeElement, 'value', obj);
   }
 
-  constructor() {
-    this.control.valueChanges.subscribe((value) => {
-      this.onChange(value);
-    });
+  constructor(private renderer: Renderer2) {
+
   }
 
   ngOnInit() {
+  }
+
+
+  changed(event: Event) {
+    this.onChange(this.input.nativeElement.value);
   }
 
 }
