@@ -1,49 +1,27 @@
 @import "index";
 
-:host {
-    @extend %flex;
-    margin: 10px 0;
-    width: 100%;
-}
-
-.formControl{
+::ng-deep {
+  .input_text {
     width: 100%;
     position: relative;
-
-    .controlLabel{
-        color: $element-base-color;
-        font-size: 0.85em;
-        font-weight: bold;
-        letter-spacing: 0.31px;
-        line-height: 11px;
+    &__input {
+      width: 100%;
+      background: $white;
+      font-family: $nunito-sans-regular;
+      font-size: 0.75rem;
+      color: $black;
+      border: 1px solid $soft-gray;
+      box-sizing: border-box;
+      border-radius: 0.1875rem;
+      padding: 0.5rem 0.625rem 0.4375rem 0.625rem;
     }
-
-    .icon {
-        position: absolute;
-        top: calc(50% + 10px);
-        left: 0;
-        z-index: 1;
-        transform: translateY(-50%);
-
-        &.last {
-            top: 50%;
-            left: 92%;
-            transform: translate(-50%, -50%);
-        }
+    .placeholder {
+      position: absolute;
+      top: 0.5625rem;
+      left: 0.625rem;
+      font-family: $nunito-sans-regular;
+      font-size: 0.75rem;
+      color: $gray-color;
     }
-}
-
-.inputCtrl{
-    @extend %flex;
-
-    justify-content: space-between;
-}
-
-.errorSubtext{
-    color: $invalid-color;
-    font-size: 9px;
-    font-weight: bold;
-    letter-spacing: 0.31px;
-    line-height: 11px;
-    text-transform: uppercase;
+  }
 }
