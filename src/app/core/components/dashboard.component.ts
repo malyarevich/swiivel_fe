@@ -9,13 +9,17 @@ import fields from '@app/shared/fields';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
+
 export class DashboardComponent implements OnInit {
+
   form: FormGroup;
-  fields = fields;
+
   constructor(
-    private fs: FieldService
+    private fb: FormBuilder
   ) {
-    this.form = this.fs.toForm(fields);
+    this.form = this.fb.group({
+      short: new FormControl('short text')
+    });
   }
 
   ngOnInit() {
