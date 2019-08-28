@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
+import { FieldService } from '@core/field.service';
+import fields from '@app/shared/fields';
+
 
 @Component({
   selector: 'app-dashboard',
@@ -20,6 +23,9 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.form.valueChanges.subscribe((value) => {
+      console.log(`Value changed`, value);
+    });
   }
 
 }
