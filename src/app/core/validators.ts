@@ -2,14 +2,14 @@ import { ValidatorFn, FormControl, ValidationErrors } from '@angular/forms';
 import { isEmail, isURL, isDecimal } from 'validator';
 
 export function emailValidator(): ValidatorFn {
-    return (c: FormControl): ValidationErrors => {
+    return (c: FormControl): ValidationErrors | null => {
         const value = c.value && typeof c.value === 'string' ? c.value.trim() : c.value;
         return isEmail(value) ? null : { emailValidator: true };
     }
 }
 
 export function alphabeticValidator(): ValidatorFn {
-    return (c: FormControl): ValidationErrors => {
+    return (c: FormControl): ValidationErrors | null => {
         const value = c.value && typeof c.value === 'string' ? c.value.trim() : c.value;
         const regexp = new RegExp(/^[a-zA-Z ]*$/, 'gm');
         return regexp.test(value) ? null : { alphabeticValidator: true };
@@ -17,7 +17,7 @@ export function alphabeticValidator(): ValidatorFn {
 }
 
 export function alphanumericValidator(): ValidatorFn {
-    return (c: FormControl): ValidationErrors => {
+    return (c: FormControl): ValidationErrors | null => {
         const value = c.value && typeof c.value === 'string' ? c.value.trim() : c.value;
         const regexp = new RegExp(/^[a-zA-Z0-9 ]*$/, 'gm');
         return regexp.test(value) ? null : { alphanumericValidator: true };
@@ -25,7 +25,7 @@ export function alphanumericValidator(): ValidatorFn {
 }
 
 export function numericValidator(): ValidatorFn {
-    return (c: FormControl): ValidationErrors => {
+    return (c: FormControl): ValidationErrors | null => {
         const value = c.value && typeof c.value === 'string' ? c.value.trim() : c.value;
         const regexp = new RegExp(/^[0-9]*$/, 'gm');
         return regexp.test(value) ? null : { numericValidator: true };
@@ -33,14 +33,14 @@ export function numericValidator(): ValidatorFn {
 }
 
 export function urlValidator(): ValidatorFn {
-    return (c: FormControl): ValidationErrors => {
+    return (c: FormControl): ValidationErrors | null => {
         const value = c.value && typeof c.value === 'string' ? c.value.trim() : c.value;
         return isURL(value) ? null : { urlValidator: true };
     }
 }
 
 export function minValueValidator(min: number): ValidatorFn {
-    return (c: FormControl): ValidationErrors => {
+    return (c: FormControl): ValidationErrors | null => {
         const value = c.value && typeof c.value === 'string' ? c.value.trim() : c.value;
         const err = {
             minValueValidator: {
@@ -54,7 +54,7 @@ export function minValueValidator(min: number): ValidatorFn {
 }
 
 export function maxValueValidator(max: number): ValidatorFn {
-    return (c: FormControl): ValidationErrors => {
+    return (c: FormControl): ValidationErrors | null => {
         const value = c.value && typeof c.value === 'string' ? c.value.trim() : c.value;
         const err = {
             maxValueValidator: {
@@ -70,7 +70,7 @@ export function maxValueValidator(max: number): ValidatorFn {
 }
 
 export function rangeValueValidator(params: { min?: number, max?: number }): ValidatorFn {
-    return (c: FormControl): ValidationErrors => {
+    return (c: FormControl): ValidationErrors | null => {
         const value = c.value && typeof c.value === 'string' ? c.value.trim() : c.value;
         const err = {
             numberValidator: {
@@ -90,5 +90,41 @@ export function rangeValueValidator(params: { min?: number, max?: number }): Val
         } else {
             return null;
         }
+    }
+}
+
+export function dropdownMinLengthValidator(minLength: number): ValidatorFn {
+    return (c: FormControl): ValidationErrors | null => {
+        const value = c.value;
+        return (Array.isArray(value) && value.length < minLength) ? {
+            dropdownMinLengthValidator: {
+                currentLength: value.length,
+                minLength
+            }
+        } : null;
+    }
+}
+
+export function dropdownMaxLengthValidator(maxLength: number): ValidatorFn {
+    return (c: FormControl): ValidationErrors | null => {
+        const value = c.value;
+        return (Array.isArray(value) && value.length > maxLength) ? {
+            dropdownMaxLengthValidator: {
+                currentLength: value.length,
+                maxLength
+            }
+        } : null;
+    }
+}
+
+export function dropdownLengthValidator(length: number): ValidatorFn {
+    return (c: FormControl): ValidationErrors | null => {
+        const value = c.value;
+        return (Array.isArray(value) && value.length !== length) ? {
+            dropdownLengthValidator: {
+                currentLength: value.length,
+                givenLength: length
+            }
+        } : null;
     }
 }
