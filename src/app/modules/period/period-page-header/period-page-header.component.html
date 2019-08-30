@@ -1,16 +1,12 @@
-<div class="row no-gutters app-period-page-header pr-3 bg-white">
-  <div class="col-10">
+<div class="app-period-page-header">
+  <div class="app-period-page-header__title">
     <div
       *ngIf="isBackArrowEnable"
-      class="d-inline-block back p-3 mr-3 app-cursor-pointer"
+      class="app-period-page-header__title--arrow"
       [routerLink]="link">
-      <i class="fas fa-chevron-left"></i>
+      <i class="fas fa-chevron-left app-period-page-header__title--arrow-ico"></i>
     </div>
-    <span>{{ titleHeader }}</span>
+    <h2 class="app-period-page-header__title--text">{{ titleHeader }}</h2>
   </div>
-  <div class="col-2 pt-2 app-period-page-header__button-container">
-    <button class="btn app-btn-outline-primary" type="button" (click)="onClick()">
-      {{ buttonText }}
-    </button>
-  </div>
+  <div>Search</div>
 </div>

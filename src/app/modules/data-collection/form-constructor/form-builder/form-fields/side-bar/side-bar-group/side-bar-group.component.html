@@ -3,9 +3,9 @@
     <label class="app-checkbox-container">
       <input
         type="checkbox"
-        [(ngModel)]="group.exist"
-        (change)="onGroupToggle($event)"
+        [ngModel]="group.exist"
       />
+      <!--(change)="sideBarService.onGroupToggle($event, group, form)"-->
     <span class="app-checkbox-checkmark"></span>
   </label>
   </div>

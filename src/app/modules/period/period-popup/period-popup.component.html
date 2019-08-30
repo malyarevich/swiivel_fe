@@ -1,0 +1,23 @@
+<div class="app-period-popup" (click)="onCancel()">
+  <div class="app-period-popup__container">
+    <div class="app-period-popup__content">
+      <p class="app-period-popup__text">
+        {{ text }}
+      </p>
+      <div class="app-period-popup__buttons">
+        <button
+          class="app-period-popup__button app-period-popup__button--cancel"
+          (click)="onCancel()">Cancel
+        </button>
+        <button
+          class="app-period-popup__button app-period-popup__button--ok"
+          (click)="onAccept()"
+        >Ok
+        </button>
+      </div>
+    </div>
+    <div class="app-period-popup__cross" (click)="onCancel()">
+      <i class="fa fa-times app-period-popup--ico"></i>
+    </div>
+  </div>
+</div>

@@ -4,10 +4,13 @@ import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import * as moment from 'moment';
 
-import { DeleteSplitSet } from '../store/period.actions';
+import { SortService } from '@app/shared/services/sort/sort.service';
+import { PeriodService } from '@modules/period/services/period.service';
+
 import { PeriodSplit, PeriodSplitSet } from 'src/app//models/period/period.model';
-import { PeriodState } from '../store/period.state';
-import { PeriodService } from '../services/period.service';
+
+import { DeleteSplitSet } from '@modules/period/store/period.actions';
+import { PeriodState } from '@modules/period/store/period.state';
 
 @Component({
   selector: 'app-period-split-information',
@@ -71,7 +74,7 @@ export class PeriodSplitInformationComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscription = this.periodService.getPeriodStore().subscribe(periodStore => {
-      this.activeSplitSet = periodStore.period.split_sets.find((set) => set.split_set_id === this.splitSetId);
+      this.activeSplitSet = periodStore.period.split_sets.find((set) => set.id === this.splitSetId);
       this.periodDuration = periodStore.period.duration;
       if (this.activeSplitSet && this.activeSplitSet.splits) {
         this.viewSplits = this.getSortedSplits(this.activeSplitSet.splits, this.sortingParam.order, this.sortingParam.name);
@@ -103,10 +106,7 @@ export class PeriodSplitInformationComponent implements OnInit, OnDestroy {
       if (order === 'DESC') {
         viewSplits.sort((referenceSplit, compareSplit) => {
           if (name === 'name') {
-            return referenceSplit.name.localeCompare(compareSplit.name, 'en', {
-              numeric: true,
-              sensitivity: 'base'
-            });
+            return SortService.nameDescCompare(referenceSplit, compareSplit);
           } else {
             return referenceSplit[name] > compareSplit[name] ? 1 : -1;
           }
@@ -114,10 +114,7 @@ export class PeriodSplitInformationComponent implements OnInit, OnDestroy {
       } else if (order === 'ASC') {
         viewSplits.sort((referenceSplit, compareSplit) => {
           if (name === 'name') {
-            return compareSplit.name.localeCompare(referenceSplit.name, 'en', {
-              numeric: true,
-              sensitivity: 'base'
-            });
+            return SortService.nameAscCompare(referenceSplit, compareSplit);
           } else {
             return referenceSplit[name] < compareSplit[name] ? 1 : -1;
           }
@@ -128,7 +125,7 @@ export class PeriodSplitInformationComponent implements OnInit, OnDestroy {
   }
 
   onDeleteClick(): void {
-    this.store.dispatch(new DeleteSplitSet( { index: this.activeSplitSet.split_set_id }));
+    this.store.dispatch(new DeleteSplitSet( { index: this.activeSplitSet.id }));
   }
 
   onCreateSplit(): void {
@@ -144,7 +141,7 @@ export class PeriodSplitInformationComponent implements OnInit, OnDestroy {
           date_from: previousSplit ? moment(previousSplit.date_to, 'DD-MM-YYYY').add(1, 'days').toDate() : new Date(),
           date_to: previousSplit ? moment(previousSplit.date_to, 'DD-MM-YYYY').add(unit * duration, 'days').toDate() :
             moment(new Date(), 'DD-MM-YYYY').add(unit * duration, 'days').toDate(),
-          split_id: i + 1,
+          id: i + 1,
           duration: this.splitInformationForm.get('splitUnit').value === 'equal parts' ? unit : (unit * amount)
         });
       }
@@ -176,7 +173,7 @@ export class PeriodSplitInformationComponent implements OnInit, OnDestroy {
               date_from: previousSplit ? moment(previousSplit.date_to, 'DD-MM-YYYY').add(1, 'days').toDate() : new Date(),
               date_to: previousSplit ? moment(previousSplit.date_to, 'DD-MM-YYYY').add(unit * amount, 'days').toDate() :
                 moment(new Date(), 'DD-MM-YYYY').add(unit * duration, 'days').toDate(),
-              split_id: previousSplit ? previousSplit.split_id + 1 : 0,
+              id: previousSplit ? previousSplit.id + 1 : 0,
               duration: unit * duration
             });
           }
@@ -217,7 +214,7 @@ export class PeriodSplitInformationComponent implements OnInit, OnDestroy {
   }
 
   onChangeDate(activeSplit: PeriodSplit, date: string): void {
-    this.periodService.changeSplitDate(this.activeSplitSet, activeSplit, activeSplit.split_id, date);
+    this.periodService.changeSplitDate(this.activeSplitSet, activeSplit, activeSplit.id, date);
   }
 
   onChangeDuration(splitId: number): void {
@@ -251,7 +248,7 @@ export class PeriodSplitInformationComponent implements OnInit, OnDestroy {
   onCloseSplitSetError(): void {
     this.activeSplitSet.error.isTableErrorOpen = false;
     this.periodService.updateSplitSet(this.activeSplitSet);
-  };
+  }
 
   hasShownSplitSetError(splitSet: PeriodSplitSet): boolean {
     return splitSet.error && splitSet.error.text && splitSet.error.text.length && splitSet.error.isTableErrorOpen;

@@ -1,7 +1,41 @@
+@import '../../../styles/variables/colors';
+
 .app-period {
+  margin: 0 15px;
+
+  .app-period__header-page {
+    height: 60px;
+    display: flex;
+
+    .app-period__header-page--text {
+      margin: auto 0;
+      font: 800 18px/20px 'NunitoSans-Bold';
+    }
+
+    .app-period__header-page__button-container {
+      display: flex;
+      justify-content: flex-end;
+      flex-grow: 1;
+
+      .app-period__header-page__button {
+        width: 118px;
+        height: 30px;
+        margin: auto 0;
+        font: 800 12px/15px 'NunitoSans-Bold';
+        background-color: $purple;
+        color: white;
+        border-radius: 3px;
+        align-items: center;
+        vertical-align: middle;
+      }
+
+      .app-period__header-page__button:hover {
+        background-color: $hover-purple;
+      }
+    }
+  }
 
   .app-period__content {
-    margin: 0 15px;
     padding: 15px;
     background-color: white;
   }
@@ -9,10 +43,12 @@
   .app-period__header {
     display: flex;
     justify-content: space-between;
+    margin: 0 0 25px 0;
 
     .app-period__header--text {
       font: 800 13px/15px 'NunitoSans-Bold';
       text-transform: uppercase;
+      margin: 0;
     }
   }
 

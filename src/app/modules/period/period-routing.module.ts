@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PeriodComponent } from './period.component';
 import { PeriodCreateComponent } from './period-create/period-create.component';
+import { PeriodEditComponent } from './period-edit/period-edit.component';
 
 export const routes: Routes = [
   {
@@ -11,6 +12,10 @@ export const routes: Routes = [
   {
     path: 'create',
     component: PeriodCreateComponent
+  },
+  {
+    path: 'edit',
+    component: PeriodEditComponent
   }
 ];
 

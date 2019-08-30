@@ -1,14 +1,6 @@
 import * as moment from 'moment';
-
-import { Period } from 'src/app/models/period/period.model';
 import { PeriodActions, PeriodActionTypes } from './period.actions';
 import { PeriodState } from './period.state';
-
-// export interface PeriodState {
-//   periods: Period[];
-//   period: Period;
-//   savePeriodError?: { text: string, isOpen: boolean };
-// }
 
 export const initialState: PeriodState = {
   periods: [],
@@ -19,18 +11,19 @@ export const initialState: PeriodState = {
     duration: 366,
     split_sets: [{
       name: 'Financial',
-      split_set_id: 1,
+      id: 1,
       error: { text: null, isBarErrorOpen: false, isTableErrorOpen: false },
       splits: [{
         name: '1 split',
         date_from: new Date(),
         date_to: moment(new Date(), 'DD-MM-YYYY').add(30, 'days').toDate(),
-        split_id: 1,
+        id: 1,
         duration: 31
       }]
     }],
   },
-  savePeriodError: { text: null, isOpen: false }
+  savePeriodError: { text: null, isOpen: false },
+  editPeriodId: null
 };
 
 export function reducer(state = initialState, action: PeriodActions): PeriodState {
@@ -42,21 +35,18 @@ export function reducer(state = initialState, action: PeriodActions): PeriodStat
       return { ...state, period: { ...action.payload} };
     }
     case PeriodActionTypes.GetPeriodsResponse: {
-      return { ...state, periods: action.payload.data.periods };
+      return { ...state, periods: action.payload };
     }
     case PeriodActionTypes.AddSplitSet: {
-      // return { ...state, splitsSet: [...state.splitsSet, action.payload] };
       return { ...state, period: { ...state.period, split_sets: [...state.period.split_sets, action.payload] } };
     }
     case PeriodActionTypes.ChangeSplitSet: {
       const updatedSplitSet =
-        [...state.period.split_sets].map((set) => set.split_set_id === action.payload.index ? action.payload.splitSet : set);
-      // return { ...state, splitsSet: updatedSplitSet };
+        [...state.period.split_sets].map((set) => set.id === action.payload.index ? action.payload.splitSet : set);
       return { ...state, period: { ...state.period, split_sets : updatedSplitSet } };
     }
     case PeriodActionTypes.DeleteSplitSet: {
-      const updatedSplitSet =  [...state.period.split_sets].filter(item => item.split_set_id !== action.payload.index);
-      // return { ...state, splitsSet: updatedSplitSet};
+      const updatedSplitSet =  [...state.period.split_sets].filter(item => item.id !== action.payload.index);
       return { ...state, period: { ...state.period, split_sets : updatedSplitSet } };
     }
     case PeriodActionTypes.ValidatePeriod: {
@@ -64,6 +54,9 @@ export function reducer(state = initialState, action: PeriodActions): PeriodStat
     }
     case PeriodActionTypes.ChangePeriodError: {
       return { ...state, savePeriodError: action.payload };
+    }
+    case PeriodActionTypes.ChangeEditPeriodId: {
+      return { ...state, editPeriodId: action.payload };
     }
     default: {
       return state;

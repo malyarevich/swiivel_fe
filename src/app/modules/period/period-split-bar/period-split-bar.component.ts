@@ -4,21 +4,23 @@ import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import * as moment from 'moment';
 
-import { PeriodState } from '../store/period.state';
 import { PeriodSplitSet } from 'src/app/models/period/period.model';
-import { PeriodService } from '../services/period.service';
-import {ChangePeriodError} from '../store/period.actions';
+
+import { PeriodService } from '@modules/period/services/period.service';
+
+import { ChangePeriodError } from '@modules/period/store/period.actions';
+import { PeriodState } from '@modules/period/store/period.state';
 
 interface PeriodScaleItem {
-  isSelected?: boolean;
-  isExtreme?: boolean;
-  extremeDate?: string;
-  label?: string;
   splitId: number;
   slitDuration: number;
   isPen: boolean;
   isInfoOpen?: boolean;
   isLabelEdit?: boolean;
+  label?: string;
+  isSelected?: boolean;
+  isExtreme?: boolean;
+  extremeDate?: string;
 }
 
 interface PeriodScale {
@@ -34,7 +36,6 @@ interface PeriodScale {
 })
 
 export class PeriodSplitBarComponent implements OnInit, OnDestroy {
-  // todo тут надо что-то одно оставить
   @Input() splitSetId: number;
   @Input() viewId: number;
 
@@ -49,7 +50,7 @@ export class PeriodSplitBarComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscription = this.periodService.getPeriodStore().subscribe(periodStore => {
       this.periodSplitSet = periodStore.period.split_sets;
-      this.activePeriodSet = periodStore.period.split_sets.find((set) => set.split_set_id === this.splitSetId);
+      this.activePeriodSet = periodStore.period.split_sets.find((set) => set.id === this.splitSetId);
       if ( this.activePeriodSet && this.activePeriodSet.splits) {
         this.initScale();
       }
@@ -83,13 +84,12 @@ export class PeriodSplitBarComponent implements OnInit, OnDestroy {
     this.activePeriodSet.splits.map((item) => {
       for (let i = 0; i < item.duration; i++) {
         this.periodScale.items.push({
-          id: i,
-          isExtreme: i === item.duration - 1 ? true : false,
+          isExtreme: i === item.duration - 1,
           extremeDate: i === item.duration - 1 ? moment(item.date_to, 'DD-MM-YYYY').format('MM/DD') : null,
           label: i === 2 ? item.name : null,
-          splitId: item.split_id,
+          splitId: item.id,
           slitDuration: i === 2 ? item.duration : null,
-          isPen: i === item.duration - 5 ? true : false,
+          isPen: i === item.duration - 5,
           isInfoOpen: false,
           isLabelEdit: false
         });
@@ -97,23 +97,22 @@ export class PeriodSplitBarComponent implements OnInit, OnDestroy {
   }
 
   dropItem(evt: CdkDragDrop<string[]>): void {
-    console.log(evt.previousIndex, evt.currentIndex );
     if (evt.currentIndex < evt.previousIndex) {
       this.activePeriodSet.splits.map((item) => {
-        if (item.split_id === parseInt(evt.item.element.nativeElement.id, 10)) {
+        if (item.id === parseInt(evt.item.element.nativeElement.id, 10)) {
           item.date_to = moment(item.date_to, 'DD-MM-YYYY').subtract(evt.currentIndex - evt.previousIndex, 'days').toDate();
           item.duration = item.duration - (evt.previousIndex - evt.currentIndex);
-        } else if (item.split_id === parseInt(evt.item.element.nativeElement.id, 10) + 1) {
+        } else if (item.id === parseInt(evt.item.element.nativeElement.id, 10) + 1) {
           item.date_from = moment(item.date_from, 'DD-MM-YYYY').subtract(evt.currentIndex - evt.previousIndex, 'days').toDate();
           item.duration = item.duration + (evt.previousIndex - evt.currentIndex);
         }
       });
     } else {
       this.activePeriodSet.splits.map((item) => {
-        if (item.split_id === parseInt(evt.item.element.nativeElement.id, 10)) {
+        if (item.id === parseInt(evt.item.element.nativeElement.id, 10)) {
           item.date_to = moment(item.date_to, 'DD-MM-YYYY').add(evt.currentIndex - evt.previousIndex, 'days').toDate();
           item.duration = item.duration + (evt.currentIndex - evt.previousIndex);
-        } else if (item.split_id === parseInt(evt.item.element.nativeElement.id, 10) + 1) {
+        } else if (item.id === parseInt(evt.item.element.nativeElement.id, 10) + 1) {
           item.date_from = moment(item.date_from, 'DD-MM-YYYY').add(evt.currentIndex - evt.previousIndex, 'days').toDate();
           item.duration = item.duration - (evt.currentIndex - evt.previousIndex);
         }

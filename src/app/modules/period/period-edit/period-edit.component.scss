@@ -1,0 +1,19 @@
+.app-period-edit {
+  height: 100vh;
+  padding: 30px 20px;
+
+  .app-period-edit-container {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .app-period-edit-left-panel {
+    width: 320px;
+    margin: 0 20px 0 0;
+  }
+
+  .app-period-edit-right-panel {
+    flex-grow: 1;
+  }
+
+}

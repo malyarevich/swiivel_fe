@@ -14,6 +14,7 @@ import {
   FormPayerAccountModalResponsibleFeesComponent
 } from './form-payer-account-modal-responsible-fees/form-payer-account-modal-responsible-fees.component';
 import { FormPayerAccountModalPaymentComponent } from './forn-payer-account-modal-payment/form-payer-account-modal-payment.component';
+import { SortService } from '@app/shared/services/sort/sort.service';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { FormPayerAccountModalPaymentComponent } from './forn-payer-account-moda
   providers: [
     PersonService,
     PayersService,
-    RecipientService
+    RecipientService,
+    SortService
   ],
   entryComponents: []
 })

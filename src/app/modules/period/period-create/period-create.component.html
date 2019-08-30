@@ -1,8 +1,6 @@
 <app-period-page-header
   [titleHeader]="'CREATE PERIOD'"
   [isBackArrowEnable] = "true"
-  [buttonText]="'Save & exit'"
-  [isCreate]="true"
   [link]="'/period'"
 ></app-period-page-header>
 
@@ -12,7 +10,7 @@
       <app-period-duration-setting></app-period-duration-setting>
     </div>
     <div class="app-period-create-right-panel">
-      <app-period-general-setting></app-period-general-setting>
+      <app-period-general-setting [mode]="'create'"></app-period-general-setting>
     </div>
   </div>
 </div>

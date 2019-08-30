@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 
+import { SortService } from '../../shared/services/sort/sort.service'
 import { SharedRedComponentsModule } from '../../shared/components/sharedRedComponents.module';
 import { PeriodRoutingModule } from './period-routing.module';
 import { PeriodPageHeaderComponent } from './period-page-header/period-page-header.component';
@@ -21,8 +22,9 @@ import { PeriodComponent } from './period.component';
 import { reducer } from './store/period.reducer';
 import { PeriodEffect } from './store/period.effect';
 import { PeriodErrorComponent } from './period-error/period-error.component';
-import { PeriodCancelPopupComponent } from './period-cancel-popup/period-cancel-popup.component';
+import { PeriodPopupComponent } from './period-popup/period-popup.component';
 import { PeriodTableComponent } from '@modules/period/period-table/period-table.component';
+import { PeriodEditComponent } from './period-edit/period-edit.component';
 
 @NgModule({
   declarations: [
@@ -36,8 +38,9 @@ import { PeriodTableComponent } from '@modules/period/period-table/period-table.
     PeriodDurationSettingComponent,
     PeriodGeneralSettingComponent,
     PeriodPageHeaderComponent,
-    PeriodCancelPopupComponent,
-    PeriodTableComponent
+    PeriodPopupComponent,
+    PeriodTableComponent,
+    PeriodEditComponent
   ],
   imports: [
     DragDropModule,
@@ -53,7 +56,7 @@ import { PeriodTableComponent } from '@modules/period/period-table/period-table.
     PeriodComponent
   ],
   providers: [
-    PeriodService
+    PeriodService, SortService
   ],
   entryComponents: []
 })

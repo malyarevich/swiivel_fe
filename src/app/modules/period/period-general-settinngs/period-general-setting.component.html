@@ -9,7 +9,7 @@
     <app-period-bar></app-period-bar>
     <div *ngIf="this.splitSet" class="app-period-general-settings__split-sets">
       <div *ngFor="let set of splitSet; let i = index" class="app-period-general-settings__split-set">
-        <app-period-split-bar [splitSetId]="splitSet[i].split_set_id" [viewId]="i"></app-period-split-bar>
+        <app-period-split-bar [splitSetId]="splitSet[i].id" [viewId]="i"></app-period-split-bar>
       </div>
     </div>
   </div>
@@ -17,20 +17,23 @@
   <div class="app-period-general-settings__container">
     <div *ngIf="this.splitSet">
       <div *ngFor="let set of splitSet; let i = index" class="app-period-general-settings__split-set-info">
-        <app-period-split-information [splitSetId]="splitSet[i].split_set_id" [viewId]="i"></app-period-split-information>
+        <app-period-split-information [splitSetId]="splitSet[i].id" [viewId]="i"></app-period-split-information>
       </div>
     </div>
   </div>
 
   <div class="app-period-general-settings__buttons">
     <button class="app-period-general-settings__button--cancel" (click)="onCancel()">Cancel</button>
-    <button class="app-period-general-settings__button--create" (click)="onCreate()">Create Period</button>
+    <button class="app-period-general-settings__button--create" (click)="onModify()">
+      {{ mode === 'create' ? 'Create Period' : 'Update Period' }}
+    </button>
   </div>
   <div class="app-period-general-settings-popup">
-    <app-period-cancel-popup
+    <app-period-popup
       *ngIf="isPopupShown"
-      (cancelExit)="isPopupShown = !isPopupShown"
-      (acceptExit)="goToPeriodPage()"
-    ></app-period-cancel-popup>
+      [text]="'Are you sure you want to get out of this period? All data will be lost.'"
+      (cancel)="isPopupShown = !isPopupShown"
+      (accept)="goToPeriodPage()"
+    ></app-period-popup>
   </div>
 </div>

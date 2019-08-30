@@ -1,14 +1,12 @@
 <div class="app-period">
-  <app-period-page-header
-    [titleHeader]="'Period Management'"
-    [link]="'/period/create'"
-    [isBackArrowEnable]="false"
-    [buttonText]="'Add Period'"
-  ></app-period-page-header>
-
-  <h1>Periods</h1>
-
-  <button routerLink="/period/create">Create Period</button>
+  <div class="app-period__header-page">
+    <h2 class="app-period__header-page--text">Period Management</h2>
+    <div class="app-period__header-page__button-container">
+      <button class="app-period__header-page__button" type="button" (click)="onAddPeriod()">
+        Create Period
+      </button>
+    </div>
+  </div>
 
   <div class="app-period__content">
     <div class="app-period__header">
