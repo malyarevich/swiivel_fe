@@ -3,9 +3,8 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 
-import { PeriodService } from '../services/period.service';
-import { PeriodState } from '../store/period.state';
-import { CreatePeriodRequest } from '../store/period.actions';
+import { PeriodService } from '@modules/period/services/period.service';
+import { PeriodState } from '@modules/period/store/period.state';
 
 @Component({
   selector: 'app-period-page-header',
@@ -16,8 +15,6 @@ import { CreatePeriodRequest } from '../store/period.actions';
 export class PeriodPageHeaderComponent implements OnInit, OnDestroy {
   @Input() titleHeader: string;
   @Input() isBackArrowEnable = true;
-  @Input() isCreate = false;
-  @Input() buttonText: string;
   @Input() link?: string;
 
   public period: PeriodState;
@@ -29,19 +26,6 @@ export class PeriodPageHeaderComponent implements OnInit, OnDestroy {
     this.subscription = this.periodService.getPeriodStore().subscribe(periodStore => {
       this.period = periodStore;
     });
-  }
-
-  onClick(): void {
-    if (this.isCreate) {
-      this.periodService.validatePeriod(this.period);
-      this.periodService.validateSplitSet(this.period);
-      if (!this.periodService.isError(this.period)) {
-        this.store.dispatch(new CreatePeriodRequest(this.period));
-      }
-    }
-    if (this.link && !this.isCreate) {
-      this.router.navigate([this.link]);
-    }
   }
 
   ngOnDestroy(): void {

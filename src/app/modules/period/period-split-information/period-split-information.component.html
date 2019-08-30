@@ -30,6 +30,7 @@
         <div class="app-period-split-information__modification--input">
           <app-input-field
             fieldType="table"
+            type="'number'"
             [formControlName]="'splitAmount'">
           </app-input-field>
         </div>
@@ -38,6 +39,7 @@
       <div class="app-period-split-information__modification--split-duration">
         <div class="app-period-split-information__modification--input">
           <app-input-field
+            type="'number'"
             fieldType="table"
             [formControlName]="'splitDuration'">
           </app-input-field>
@@ -76,8 +78,8 @@
         <td class="app-period-split-information__cell">
           <app-input-field
             [(ngModel)]="split.name"
-            (ngModelChange)="onChangeName($event, split.split_id)"
-            [style] = "'cell'"
+            (ngModelChange)="onChangeName($event, split.id)"
+            [style]="'cell'"
           ></app-input-field>
         </td>
         <td class="app-period-split-information__cell">
@@ -86,7 +88,7 @@
             (ngModelChange)="onChangeDate(split, 'dateFrom')"
             [dateInputFormat]="'MM/DD'"
             [width]="'92px'"
-            [style] = "'cell'"
+            [style]="'cell'"
           ></app-datepicker-field>
         </td>
         <td class="app-period-split-information__cell">
@@ -95,7 +97,7 @@
             (ngModelChange)="onChangeDate(split, 'dateTo')"
             [dateInputFormat]="'MM/DD'"
             [width]="'92px'"
-            [style] = "'cell'"
+            [style]="'cell'"
           ></app-datepicker-field>
         </td>
         <td class="app-period-split-information__cell">
@@ -103,11 +105,11 @@
             class="app-period-split-information__field"
             type="number"
             [(ngModel)]="split.duration"
-            (ngModelChange)="onChangeDuration(split.split_id)"
+            (ngModelChange)="onChangeDuration(split.id)"
           />
         </td>
         <td class="app-period-split-information__cell">
-          <i class="fas fa-trash app-period-split-information--trash" (click)="onDeleteSplit(split.split_id)"></i>
+          <i class="fas fa-trash app-period-split-information--trash" (click)="onDeleteSplit(split.id)"></i>
         </td>
       </tr>
       </tbody>

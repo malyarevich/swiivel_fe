@@ -4,10 +4,12 @@ import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import * as moment from 'moment';
 
-import { PeriodState } from '../store/period.state';
 import { Period } from 'src/app/models/period/period.model';
-import { ChangePeriod } from '../store/period.actions';
-import { PeriodService } from '../services/period.service';
+
+import { PeriodService } from '@modules/period/services/period.service';
+
+import { PeriodState } from '@modules/period/store/period.state';
+import { ChangePeriod } from '@modules/period/store/period.actions';
 
 interface PeriodScaleItem {
   id?: number;
@@ -51,7 +53,7 @@ export class PeriodBarComponent implements OnInit, OnDestroy {
       duration: this.period.duration > 366 ? 366 : this.period.duration
     };
 
-   this.initScale();
+    this.initScale();
   }
 
   initScale(): void {
@@ -92,6 +94,7 @@ export class PeriodBarComponent implements OnInit, OnDestroy {
 
   dropItem(evt: CdkDragDrop<string[]>): void {
     const elements = Array.prototype.slice.call(evt.item.element.nativeElement.children);
+
     elements.map((element) => {
       if (element.className.includes('app-period-bar__cell--high-extreme')) {
         this.store.dispatch(new ChangePeriod({

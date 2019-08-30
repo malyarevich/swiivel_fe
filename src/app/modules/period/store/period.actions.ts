@@ -1,20 +1,21 @@
 import { Action } from '@ngrx/store';
 import { Period, PeriodSplitSet } from 'src/app/models/period/period.model';
-import { GetPeriodResponse } from 'src/app//models/period/get-period-response';
 
 export enum PeriodActionTypes {
   AddPeriod = '[Period] Add Period',
   ChangePeriod = '[Period] Change Period',
   OpenCreatePeriodPage  = '[Period] Open Create Period Page',
   CreatePeriodRequest = '[Period] Create Period Request',
-  CreatePeriodResponse = '[Period] Create Period Response',
   ChangePeriodError = '[Period] Change Period Error',
   GetPeriodsRequest = '[Period] Get Periods Request',
   GetPeriodsResponse = '[Period] Get Periods Response',
   AddSplitSet  = '[Period] Add split Set',
   ValidatePeriod = '[Period] Validate period',
   ChangeSplitSet = '[Period] Change split',
-  DeleteSplitSet = '[Period] Delete split'
+  DeleteSplitSet = '[Period] Delete split',
+  ChangeEditPeriodId = '[Period] Edit Period',
+  DeletePeriod = '[Period] Delete period',
+  UpdateExistingPeriodRequest = '[Period] Update existing period'
 }
 
 export class AddPeriod implements Action {
@@ -42,10 +43,11 @@ export class CreatePeriodRequest implements Action {
   }
 }
 
-export class CreatePeriodResponse implements Action {
-  readonly type = PeriodActionTypes.CreatePeriodResponse;
+export class UpdateExistingPeriodRequest implements Action {
+  readonly type = PeriodActionTypes.UpdateExistingPeriodRequest;
 
-  constructor(public payload: any) {}
+  constructor(public payload: any) {
+  }
 }
 
 export class ChangePeriodError implements Action {
@@ -63,7 +65,7 @@ export class GetPeriodsRequest implements Action {
 export class GetPeriodsResponse implements Action {
   readonly type = PeriodActionTypes.GetPeriodsResponse;
 
-  constructor(public payload: GetPeriodResponse) {}
+  constructor(public payload: Period[]) {}
 }
 
 export class ValidatePeriod implements Action {
@@ -90,16 +92,30 @@ export class DeleteSplitSet implements Action {
   constructor(public payload: { index: number }) {}
 }
 
+export class DeletePeriod implements Action {
+  readonly type = PeriodActionTypes.DeletePeriod;
+
+  constructor(public payload: number) {}
+}
+
+export class ChangeEditPeriodId implements Action {
+  readonly type = PeriodActionTypes.ChangeEditPeriodId;
+
+  constructor(public payload: number) {}
+}
+
 export type PeriodActions =
   AddPeriod
   | AddSplitSet
   | ChangePeriod
   | ChangeSplitSet
   | DeleteSplitSet
+  | DeletePeriod
   | CreatePeriodRequest
-  | CreatePeriodResponse
+  | ChangeEditPeriodId
   | OpenCreatePeriodPage
   | ValidatePeriod
   | GetPeriodsRequest
   | GetPeriodsResponse
-  | ChangePeriodError;
+  | ChangePeriodError
+  | UpdateExistingPeriodRequest;

@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { Fee } from '../../../models/fee.model';
 import { FeeSplits } from '../../../models/feeSplits.model';
+import { SortService } from '@app/shared/services/sort/sort.service';
 
 @Component({
   selector: 'app-form-payer-account-modal-responsible-fees',
@@ -76,7 +77,7 @@ export class FormPayerAccountModalResponsibleFeesComponent implements OnInit, On
     splits: 'splits'
   };
 
-  constructor() { }
+  constructor(public sortService: SortService) { }
 
   ngOnInit() {
   }
@@ -279,49 +280,13 @@ export class FormPayerAccountModalResponsibleFeesComponent implements OnInit, On
   }
 
   onSortFee(event): void {
-    if (event.order === 'DESC') {
-      this.fees.forEach((fee) => {
-        if (fee.type === 'fee') {
-          this.fees.forEach((compareFee) => {
-            let temporaryFee = null;
-            let temporarySplit = null;
-            let compareSplit = null;
-            if (compareFee.type === 'fee' && fee[event.id] < compareFee[event.id]) {
-              temporaryFee = fee;
-              temporarySplit = this.fees[this.fees.findIndex(indexFee => indexFee.id === fee.id) + 1];
-              compareSplit = this.fees[this.fees.findIndex(indexFee => indexFee.id === compareFee.id) + 1];
-
-              this.fees[this.fees.findIndex(indexFee => indexFee.id === fee.id) + 1] = compareSplit;
-              this.fees[this.fees.findIndex(indexFee => indexFee.id === fee.id)] = compareFee;
-
-              this.fees[this.fees.findIndex(indexFee => indexFee.id === compareFee.id) + 1] = temporarySplit;
-              this.fees[this.fees.findIndex(indexFee => indexFee.id === compareFee.id)] = temporaryFee;
-            }
-          });
-        }
-      });
-    } else if (event.order === 'ASC') {
-      this.fees.forEach((fee) => {
-        if (fee.type === 'fee') {
-          this.fees.forEach((compareFee) => {
-            let temporaryFee = null;
-            let temporarySplit = null;
-            let compareSplit = null;
-            if (compareFee.type === 'fee' && compareFee[event.id] > fee[event.id]) {
-              temporaryFee = fee;
-              temporarySplit = this.fees[this.fees.findIndex(indexFee => indexFee.id === fee.id) + 1];
-              compareSplit = this.fees[this.fees.findIndex(indexFee => indexFee.id === compareFee.id) + 1];
-
-              this.fees[this.fees.findIndex(indexFee => indexFee.id === compareFee.id) + 1] = temporarySplit;
-              this.fees[this.fees.findIndex(indexFee => indexFee.id === compareFee.id)] = temporaryFee;
-
-              this.fees[this.fees.findIndex(indexFee => indexFee.id === fee.id) + 1] = compareSplit;
-              this.fees[this.fees.findIndex(indexFee => indexFee.id === fee.id)] = compareFee;
-            }
-          });
-        }
-      });
-    }
+    this.fees = this.sortService.getComplexSort(
+      this.fees,
+      event,
+      'fee',
+      'type',
+      'id'
+    );
     this.updateFees();
   }
 
@@ -331,10 +296,7 @@ export class FormPayerAccountModalResponsibleFeesComponent implements OnInit, On
         if (fee.type === 'splits' && fee.id === feeId) {
           this.fees[this.fees.indexOf(fee)].splits.sort((referenceSplit, compareSplit) => {
             if (event.id === 'name') {
-              return referenceSplit.name.localeCompare(compareSplit.name, 'en', {
-                numeric: true,
-                sensitivity: 'base'
-              });
+              return SortService.nameDescCompare(referenceSplit, compareSplit);
             } else {
               return referenceSplit[event.id] > compareSplit[event.id] ? 1 : -1;
             }
@@ -346,10 +308,7 @@ export class FormPayerAccountModalResponsibleFeesComponent implements OnInit, On
         if (fee.type === 'splits' && fee.id === feeId) {
           this.fees[this.fees.indexOf(fee)].splits.sort((referenceSplit, compareSplit) => {
             if (event.id === 'name') {
-              return compareSplit.name.localeCompare(referenceSplit.name, 'en', {
-                numeric: true,
-                sensitivity: 'base'
-              });
+              return SortService.nameAscCompare(referenceSplit, compareSplit);
             } else {
               return referenceSplit[event.id] < compareSplit[event.id] ? 1 : -1;
             }

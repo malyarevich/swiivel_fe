@@ -1,9 +1,51 @@
+@import '../../../../styles/variables/colors';
+
 .app-period-page-header {
+  display: flex;
+  height: 40px;
+  background-color: $table-row-odd-background-color;
+
+  .app-period-page-header__title {
+    display: flex;
+
+    .app-period-page-header__title--arrow {
+      display: flex;
+      width: 3%;
+      margin: 0 15px 0 0;
+      color: gray;
+      border-right: 1px solid $bkg-gray;
+      border-top: 1px solid $bkg-gray;
+
+      .app-period-page-header__title--arrow-ico {
+        margin: auto;
+      }
+    }
+
+    .app-period-page-header__title--arrow:hover {
+      cursor: pointer;
+      opacity: 0.8;
+    }
+
+    .app-period-page-header__title--text {
+      margin: auto 0;
+      font-size: 11px;
+      line-height: 15px;
+      letter-spacing: 0.37px;
+      text-transform: uppercase;
+      color: gray;
+    }
+  }
+
+  .app-period-page-header__title {
+    display: flex;
+    width: 80%;
+  }
 
   .app-period-page-header__button-container {
     display: flex;
     justify-content: flex-end;
     align-items: baseline;
+    width: 20%;
   }
 
 }

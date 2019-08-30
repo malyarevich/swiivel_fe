@@ -1,0 +1,17 @@
+<app-period-page-header
+  [titleHeader]="'EDIT PERIOD'"
+  [isBackArrowEnable] = "true"
+  [link]="'/period'"
+></app-period-page-header>
+
+<div class="app-period-edit">
+  <div class="app-period-edit-container">
+    <div class="app-period-edit-left-panel">
+      <app-period-duration-setting></app-period-duration-setting>
+    </div>
+    <div class="app-period-edit-right-panel">
+      <app-period-general-setting [mode]="'update'"></app-period-general-setting>
+    </div>
+  </div>
+</div>
+

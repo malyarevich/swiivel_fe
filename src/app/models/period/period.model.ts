@@ -12,16 +12,15 @@ export interface Period {
 export interface PeriodSplitSet {
   name: string;
   splits?: PeriodSplit[];
-  split_set_id: number;
+  id: number;
   error?: { text: string[], isBarErrorOpen: boolean, isTableErrorOpen: boolean };
-  id?: number;
 }
 
 export interface PeriodSplit {
   name: string;
   date_from: Date;
   date_to: Date;
-  split_id: number;
+  id: number;
   duration?: number;
   type?: { name: string, color: string };
 }
@@ -36,6 +35,7 @@ export interface PeriodTable {
   duration?: number;
   type?: { name: string, color: string };
   bkgColor?: string;
+  sortingSplitSetParams?: { name: string, order: string };
 }
 
 export interface SplitSetTable {
@@ -43,7 +43,7 @@ export interface SplitSetTable {
   splitSets: {
     name: string,
     splits?: PeriodSplit[],
-    split_set_id: number,
+    id: number,
   };
   open: boolean;
   period_id: number;

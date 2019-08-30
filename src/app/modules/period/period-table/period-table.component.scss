@@ -1,6 +1,14 @@
 @import '../../../../styles/variables/colors';
 
 .app-period-table {
+  position: relative;
+
+  .app-period-table__popup {
+    position: absolute;
+    top: -160px;
+    right: -20px;
+    z-index: 4;
+  }
 
   .app-period-table__table {
 
@@ -24,9 +32,37 @@
           font-weight: 800;
         }
 
-        &.app-period-table__cell--last {
+        &.app-period-table__cell--controls {
           display: flex;
           justify-content: flex-end;
+          padding: 15px 10px 15px 5px;
+        }
+
+        &.app-period-table__cell--arrow {
+          position: relative;
+          padding: 0;
+          border-left: 1px solid $soft-gray;
+
+          .app-period-table__arrow--ico {
+            position: absolute;
+            top: 37%;
+            left: 30%;
+            color: gray;
+            font-size: 20px;
+          }
+
+          .app-period-table__arrow--ico--selected {
+            position: absolute;
+            top: 25%;
+            left: 30%;
+            color: $element-base-color;
+          }
+
+          .app-period-table__arrow--ico:hover {
+            cursor: pointer;
+            opacity: 0.7;
+          }
+
         }
 
         .app-period-table__button {
@@ -64,33 +100,6 @@
           }
 
           .app-period-table__trash-ico:hover {
-            opacity: 0.7;
-          }
-        }
-
-        .app-period-table__arrow {
-          display: flex;
-          width: 47px;
-          height: 100%;
-          position: relative;
-
-          .app-period-table__arrow--ico {
-            position: absolute;
-            top: 4px;
-            left: 16px;
-            color: gray;
-            font-size: 20px;
-          }
-
-          .app-period-table__arrow--ico--selected {
-            position: absolute;
-            top: -4px;
-            left: 16px;
-            color: $element-base-color;
-          }
-
-          .app-period-table__arrow--ico:hover {
-            cursor: pointer;
             opacity: 0.7;
           }
         }
@@ -141,8 +150,40 @@
             padding: 10px 0 10px 5px;
           }
 
+          .app-period-table__split-cell--name {
+            font-weight: 800;
+          }
+
           .app-period-table__split--types {
             display: flex;
+          }
+        }
+
+        .app-period-table__all-split-table {
+          width: 100%;
+          margin: 0 0 5px;
+
+          .app-period-table__all-split-table--row {
+            background-color: white;
+            padding: 0 0 0 10px;
+            border-bottom: 1px solid #e7e7e7;
+
+            .app-period-table__all-split-table--cel-name {
+              width: 22%;
+              padding: 10px 0 10px 5px;
+              font-weight: 800;
+            }
+
+            .app-period-table__all-split-table--cel-date,
+            .app-period-table__all-split-table--cel-duration {
+              width: 9%;
+              padding: 10px 0 10px 5px;
+            }
+
+            .app-period-table__all-split-table--cel-types {
+              display: flex;
+              padding: 10px 0 10px 5px;
+            }
           }
         }
       }
