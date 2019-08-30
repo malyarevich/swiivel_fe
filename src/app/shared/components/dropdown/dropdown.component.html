@@ -1,0 +1,26 @@
+<div class="dropdown" (click)="$event.stopPropagation()">
+  <!--  <div class="dropdown__value">{{selectedItem | json}}</div>-->
+
+  <ng-content select=".value"></ng-content>
+  <ng-content select=".placeholder"></ng-content>
+  <ng-template #droplist>
+    <ng-content select="div.options"></ng-content>
+  </ng-template>
+
+  <div class="dropdown__value_wrapper">
+    <!--    <span class="placeholder">Form</span>-->
+<!--    <ng-content select=".value"></ng-content>-->
+<!--    <ng-content select=".placeholder"></ng-content>-->
+  </div>
+  <!--  <div class="dropdown__select">-->
+  <!--    <div class="dropdown__title">{{dropdownList.title}}</div>-->
+  <!--    <div class="dropdown__select_list" *ngFor="let list of dropdownList.data">-->
+  <!--      <div class="dropdown__select_list_title">{{list.title}} ({{list.data.length}})</div>-->
+  <!--      <div class="dropdown__select_list_item" *ngFor="let listItem of list.data">-->
+  <!--        {{listItem.title}}-->
+  <!--      </div>-->
+  <!--    </div>-->
+  <!--  </div>-->
+</div>
+
+<div class="overlay" *ngIf="dropdownActive" (click)="dropdownActive = false"></div>

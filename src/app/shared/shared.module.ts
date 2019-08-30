@@ -1,19 +1,28 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { InputTextComponent } from './input-text/input-text.component';
+import { InputTextComponent } from './components/input-text/input-text.component';
+import { DropdownComponent } from './components/dropdown/dropdown.component';
 
 @NgModule({
-  imports:      [
+  imports: [
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   declarations: [
-    InputTextComponent
+    InputTextComponent,
+    DropdownComponent,
+  ],
+  entryComponents: [
+    DropdownComponent
   ],
   exports: [
     CommonModule,
-    InputTextComponent
+    InputTextComponent,
+    DropdownComponent
   ]
 })
-export class SharedModule { }
+
+export class SharedModule {
+}
+
