@@ -72,23 +72,20 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   constructor(
     private fb: FormBuilder,
-    private popup: Popup
   ) {
     this.form = this.fb.group({
       short: new FormControl('short text'),
-      dropdown: new FormControl('dropdown')
+      dropdown: new FormControl([])
     });
+    this.form.get('dropdown').valueChanges.subscribe(v => {
+      console.log( v);
+    })
   }
 
   ngOnInit() {
   }
 
   ngAfterViewInit(): void {
-    this.popup.open({
-      origin: null,
-      content: this.template,
-      panelClass: ''
-    });
 
   }
 

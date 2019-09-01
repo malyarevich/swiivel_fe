@@ -3,14 +3,8 @@
     <span class="placeholder">Placeholder</span>
   </sw-input-text>
 
-  <ng-template #template>
-    <sw-dropdown>
-      <input type="text" class="value" [value]="form.controls.dropdown.value" readonly />
-      <span class="placeholder">Form</span>
-      <div class="options">
-        <div class="option" *ngFor="let option of dropdownOptions">{{option.title}}</div>
-      </div>
+    <sw-dropdown formControlName="dropdown" [dropdownList]="dropdownOptions">
+
     </sw-dropdown>
-  </ng-template>
 
 </form>

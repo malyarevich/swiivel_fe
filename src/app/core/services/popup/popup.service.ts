@@ -4,7 +4,7 @@ import { PortalInjector, ComponentPortal } from '@angular/cdk/portal';
 import { PopupRef, PopupContent } from './popup.ref';
 import { PopupComponent } from './popup.component';
 
-export interface PopupParams<T> {
+export type PopupParams<T> = {
   width?: string | number;
   height?: string | number;
   panelClass?: string;
@@ -65,9 +65,9 @@ export class Popup {
       .flexibleConnectedTo(origin)
       .withPositions(this.getPositions())
       .withFlexibleDimensions()
-      .withViewportMargin(5)
+      // .withViewportMargin(5)
       // .withScrollableContainers()
-      .withPush(true);
+      .withPush(false);
       return positionStrategy;
     }
   }
@@ -85,12 +85,12 @@ export class Popup {
         overlayX: 'start',
         overlayY: 'top',
       },
-      {
-        originX : 'center',
-        originY : 'bottom',
-        overlayX: 'center',
-        overlayY: 'top',
-      },
+      // {
+      //   originX : 'center',
+      //   originY : 'bottom',
+      //   overlayX: 'center',
+      //   overlayY: 'top',
+      // },
       {
         originX : 'end',
         originY : 'bottom',
