@@ -2,7 +2,7 @@ import {
   AfterContentInit,
   Component,
   Input, OnDestroy,
-  OnInit, ViewChild, ElementRef, forwardRef,
+  OnInit, ViewChild, ElementRef, forwardRef, ViewEncapsulation, ChangeDetectorRef,
 } from '@angular/core';
 
 import {Subject} from 'rxjs';
@@ -19,29 +19,33 @@ const DROPDOWN_CONTROL_ACCESSOR = {
   selector: 'sw-dropdown',
   templateUrl: './dropdown.component.html',
   styleUrls: ['./dropdown.component.scss'],
-  providers: [DROPDOWN_CONTROL_ACCESSOR]
+  providers: [DROPDOWN_CONTROL_ACCESSOR],
 })
 
-export class DropdownComponent implements OnInit, ControlValueAccessor, OnDestroy {
+export class DropdownComponent implements OnInit, ControlValueAccessor {
 
   private _ref;
   private _onChange: Function;
-  private control: FormControl = new FormControl([]);
+  private control: FormControl = new FormControl('');
 
   public value;
+  public multi: boolean = false;
+  public dropdownActive: boolean = false;
 
+  @Input() opts;
+  @Input() placeholder: string = 'Placeholder';
   @Input() dropdownList: any;
-  @Input() nested = false;
+  @Input() panelClass: string = 'dropdown-overlay';
   @ViewChild('droplist', { static: false }) droplist;
   @ViewChild('holder', { static: false, read: ElementRef }) holder: ElementRef;
 
-  private dropdownActive = false;
 
   constructor(
-    private popup: Popup
+    private popup: Popup,
+    private cdr: ChangeDetectorRef
   ) {
     this.control.valueChanges.subscribe(v => {
-      console.log('New value', v);
+      console.log('New value', v, this.dropdownActive);
     })
   }
 
@@ -54,11 +58,9 @@ export class DropdownComponent implements OnInit, ControlValueAccessor, OnDestro
   }
 
   registerOnTouched(fn: Function) {
-    console.log('toched');
   }
 
   registerOnChange(fn: Function) {
-    console.log('on change set');
     this._onChange = fn;
   }
 
@@ -67,15 +69,17 @@ export class DropdownComponent implements OnInit, ControlValueAccessor, OnDestro
   }
 
   showPopup() {
+    this.dropdownActive = true;
     this._ref = this.popup.open({
       origin: this.holder,
       content: this.droplist,
-      panelClass: ''
+      panelClass: this.panelClass
+    });
+    this._ref.afterClosed$.subscribe((result) => {
+      this.dropdownActive = false;
+      console.log(result);
+      this.cdr.markForCheck();
     })
-    console.log(this._ref);
-  }
-
-  ngOnDestroy(): void {
   }
 
 }

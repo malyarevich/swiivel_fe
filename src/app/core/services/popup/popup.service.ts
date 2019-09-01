@@ -65,7 +65,7 @@ export class Popup {
       .flexibleConnectedTo(origin)
       .withPositions(this.getPositions())
       .withFlexibleDimensions()
-      // .withViewportMargin(5)
+      .withViewportMargin(5)
       // .withScrollableContainers()
       .withPush(false);
       return positionStrategy;
@@ -91,12 +91,12 @@ export class Popup {
       //   overlayX: 'center',
       //   overlayY: 'top',
       // },
-      {
-        originX : 'end',
-        originY : 'bottom',
-        overlayX: 'end',
-        overlayY: 'top',
-      },
+      // {
+      //   originX : 'end',
+      //   originY : 'bottom',
+      //   overlayX: 'end',
+      //   overlayY: 'top',
+      // },
       // {
       //   originX : 'start',
       //   originY : 'bottom',

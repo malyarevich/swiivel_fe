@@ -1,5 +1,5 @@
 <div class="input_text">
-  <input type="text" class="input_text__input" [formControl]="control" [ngClass]="{'empty': !control.value}" />
+  <input type="text" class="input_text__input" [formControl]="control" [ngClass]="{'empty': !control.value}" [readonly]="readonly"/>
   <ng-content select=".placeholder"></ng-content>
 </div>
 

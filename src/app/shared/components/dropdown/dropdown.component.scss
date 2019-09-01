@@ -1,17 +1,1 @@
 @import "index";
-
-::ng-deep {
-  .dropdown {
-    .value {
-      width: 100%;
-      height: 2.1875rem;
-      background: $white;
-      border: 1px solid $soft-gray;
-      box-sizing: border-box;
-      border-radius: 3px;
-      &:focus {
-        border: 1px solid $purple;
-      }
-    }
-  }
-}

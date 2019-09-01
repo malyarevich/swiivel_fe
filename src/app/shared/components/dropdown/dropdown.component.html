@@ -1,12 +1,15 @@
-<div class="overlay" *ngIf="dropdownActive" (click)="dropdownActive = false"></div>
-
-<sw-input-text FormControl="control"></sw-input-text>
-<button (click)="showPopup()" #holder>asdasd</button>
+<sw-input-text [ngClass]="{'active': dropdownActive}" #holder [formControl]="control" [readonly]="false" (click)="showPopup()">
+  <span class="placeholder">{{placeholder}}</span>
+</sw-input-text>
+<!-- <button (click)="showPopup()" #holder>asdasd</button> -->
 <ng-template #droplist>
   <div class="dropdown-list">
     <ng-container *ngFor="let item of dropdownList">
-      <div class="list-item" (click)="select(item)">
-        {{item.title}}
+      <div class="item selected" (click)="select(item)">
+        <div class="main-checkbox" *ngIf="multi">
+          <div class="check"></div>
+        </div>
+        <span class="text">{{item.title}}</span>
       </div>
     </ng-container>
     

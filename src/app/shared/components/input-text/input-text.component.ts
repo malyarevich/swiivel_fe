@@ -1,4 +1,4 @@
-import { Component, forwardRef, ChangeDetectionStrategy, ViewEncapsulation } from '@angular/core';
+import { Component, forwardRef, ChangeDetectionStrategy, ViewEncapsulation, Input } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
@@ -21,6 +21,8 @@ export class InputTextComponent implements ControlValueAccessor {
   private control: FormControl = new FormControl();
   private onChange: any;
   private errors: [];
+
+  @Input() readonly: boolean = false;
 
   constructor() {
     this.control.valueChanges.subscribe(value => this.onChange(value));
