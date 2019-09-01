@@ -1,4 +1,4 @@
-import { Component, forwardRef, ChangeDetectionStrategy } from '@angular/core';
+import { Component, forwardRef, ChangeDetectionStrategy, ViewEncapsulation } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
@@ -12,7 +12,8 @@ import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/f
       useExisting: forwardRef(() => InputTextComponent),
       multi: true
     }
-  ]
+  ],
+  encapsulation: ViewEncapsulation.ShadowDom
 })
 
 export class InputTextComponent implements ControlValueAccessor {

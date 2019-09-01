@@ -1,6 +1,6 @@
 @import "index";
 
-::ng-deep {
+:host {
   .input_text {
     width: 100%;
     position: relative;
