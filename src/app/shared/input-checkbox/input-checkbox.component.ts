@@ -1,0 +1,50 @@
+import {ChangeDetectionStrategy, Component, ElementRef, forwardRef, Renderer2, ViewChild, ViewEncapsulation} from '@angular/core';
+import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+
+@Component({
+  selector: 'sw-input-checkbox',
+  templateUrl: './input-checkbox.component.html',
+  styleUrls: ['./input-checkbox.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => InputCheckboxComponent),
+      multi: true
+    }
+  ]
+})
+
+export class InputCheckboxComponent implements ControlValueAccessor {
+
+  @ViewChild('input', {static: true}) input: ElementRef;
+
+  private onChange: (value: boolean) => void;
+  private onTouched: () => void;
+
+  constructor(
+    private renderer: Renderer2
+  ) {}
+
+  public setDisabledState(isDisabled: boolean): void {
+    this.renderer.setProperty(this.input.nativeElement, 'disabled', isDisabled);
+  }
+
+  public registerOnTouched(fn: any): void {
+    this.onTouched = fn;
+  }
+
+  public registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+
+  public writeValue(value: boolean): void {
+    this.renderer.setProperty(this.input.nativeElement, 'checked', value);
+  }
+
+  public onInputChange() {
+    this.onChange(this.input.nativeElement.checked);
+  }
+
+}

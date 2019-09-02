@@ -19,7 +19,8 @@ export class DashboardComponent implements OnInit {
   ) {
     this.form = this.fb.group({
       short: new FormControl('short text'),
-      toggle: new FormControl(true)
+      toggle: new FormControl(true),
+      checkbox: new FormControl(true),
     });
   }
 
