@@ -1,0 +1,52 @@
+@import "index";
+
+.input_toggle {
+  margin: 0;
+  cursor: pointer;
+  #input_toggle {
+    display: none;
+    &:checked {
+      & + .input_toggle__slider {
+        &:before {
+          transform: translateX(14px);
+        }
+      }
+    }
+  }
+  &__slider {
+    width: 30px;
+    height: 12px;
+    display: inline-block;
+    position: relative;
+    background-color: $light-purple;
+    border: 1px solid $medium-purple;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: .4s;
+    margin: 0 10px -2px 0;
+    &:before {
+      content: "";
+      width: 14px;
+      height: 14px;
+      position: absolute;
+      top: -2px;
+      background: $element-base-color;
+      transition: .4s;
+    }
+    &.round {
+      border-radius: 100px;
+      &:before {
+        border-radius: 50%;
+      }
+    }
+    & + .label {
+      font-family: $nunito-sans-regular;
+      font-weight: 800;
+      font-size: 11px;
+      line-height: 15px;
+      letter-spacing: 0.37px;
+      text-transform: uppercase;
+      color: $black;
+    }
+  }
+}
