@@ -1,2 +1,7 @@
 @import 'flex';
 @import 'form-components';
+
+@mixin font($color: #000, $size: 12px, $lh: 15px, $weight: 400, $family: 'NunitoSans-Regular') {
+  font: $weight $size $lh $family;
+  color: $color;
+}

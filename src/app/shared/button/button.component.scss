@@ -1,0 +1,50 @@
+@import 'index';
+
+:host {
+    .button {
+        border-radius: 3px;
+        background-color: $button-color;
+        outline: none;
+        border: none;
+        color: #ffffff;
+        padding: 7px 20px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: nowrap;
+        span {
+            font-family: "Nunito Sans";
+            font-style: normal;
+            font-weight: bold;
+            font-size: 12px;
+            line-height: 15px;
+        }
+    }
+}
+
+:host(.btn-with-icon) {
+    .button {
+        padding: 3px 3px 3px 20px;
+        span {
+            margin-right: 3px;
+        }
+        @extend %icon-for-button;
+    }
+}
+
+:host(.outline-btn) {
+    .button {
+        background-color: inherit;
+        border: 1px solid $button-color;
+        box-sizing: border-box;
+        color: $button-color;
+    }
+}
+
+:host(.icon-btn) {
+    .button {
+        padding: 3px;
+        @extend %icon-for-button;
+    }
+}

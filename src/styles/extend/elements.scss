@@ -57,3 +57,25 @@
   font-weight: bold;
   text-transform: uppercase;
 }
+
+sw-input-toggle {
+  span {
+    &.input_label {
+      font-family: "Nunito Sans";
+      font-weight: bold;
+      font-size: 12px;
+      color: $black;
+    }
+  }
+}
+
+sw-input-checkbox {
+  span {
+    &.input_label {
+      font-family: "Nunito Sans";
+      font-weight: bold;
+      font-size: 12px;
+      color: $black;
+    }
+  }
+}
