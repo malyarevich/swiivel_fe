@@ -58,12 +58,14 @@
   text-transform: uppercase;
 }
 
-span {
-  &.input_toggle_label,
-  &.input_checkbox_label {
-    font-family: $nunito-sans-regular;
-    font-weight: bold;
-    font-size: 12px;
-    color: $black;
+sw-input-toggle {
+  span {
+    &.input_toggle_label,
+    &.input_checkbox_label {
+      font-family: $nunito-sans-regular;
+      font-weight: bold;
+      font-size: 12px;
+      color: $black;
+    }
   }
 }
