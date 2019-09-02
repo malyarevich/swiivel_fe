@@ -1,16 +1,24 @@
-import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Store } from '@ngrx/store';
+import {ChangeDetectionStrategy, Component, Input, OnChanges, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {Store} from '@ngrx/store';
 import * as moment from 'moment';
 
-import { SortService } from '@app/shared/services/sort/sort.service';
+import {SortService} from '@app/shared/services/sort/sort.service';
 
-import { Period, PeriodSplit, PeriodTable } from 'src/app/models/period/period.model';
+import {Period, PeriodSplit, PeriodTable} from 'src/app/models/period/period.model';
 
-import { PeriodService } from '@modules/period/services/period.service';
-import { PeriodTableTypeEnum } from '@modules/period/period-table-type.enum';
-import { ChangeEditPeriodId, DeletePeriod } from '@modules/period/store/period.actions';
-import { PeriodState } from '@modules/period/store/period.state';
+import {PeriodService} from '@modules/period/services/period.service';
+import {PeriodTableTypeEnum} from '@modules/period/period-table-type.enum';
+import {ChangeEditPeriodId, DeletePeriod} from '@modules/period/store/period.actions';
+import {PeriodState} from '@modules/period/store/period.state';
+
+interface OnSearchParamModel {
+  name: string;
+  date_from: string;
+  date_to: string;
+  duration: string;
+  type: string;
+}
 
 @Component({
   selector: 'app-period-table',
@@ -20,11 +28,14 @@ import { PeriodState } from '@modules/period/store/period.state';
 })
 
 export class PeriodTableComponent implements OnInit, OnChanges {
-  @Input() periods: Period[];
-
+  @Input() periods: Period[] | null;
+  @Input() isLoading: boolean;
   public isPopupShown: boolean = false;
+  public deletePeriodId: number = null;
   public periodsData = [];
   public purePeriodData = [];
+  public onSearchParam: OnSearchParamModel = { name: null, date_from: null, date_to: null, duration: null, type: null };
+
   public periodTableColumns = [
     {
       id: 'name',
@@ -119,7 +130,7 @@ export class PeriodTableComponent implements OnInit, OnChanges {
 
   onOpenRow(periodId: number): void {
     this.periodsData.map((item) => {
-      item.period_id === periodId ? item.open = !item.open : item.open = false;
+        item.period_id === periodId ? item.open = !item.open : item.open = false;
       }
     );
   }
@@ -159,7 +170,6 @@ export class PeriodTableComponent implements OnInit, OnChanges {
         } else {
           period.splitSets.map((item) => {
             if (item.id === period.selectedSplitSetId) {
-              console.log('select', item);
               returnValue = item.splits;
             }
           });
@@ -196,8 +206,8 @@ export class PeriodTableComponent implements OnInit, OnChanges {
 
   onSortSplitSet(event: any, periodId: number): void {
     this.periodsData.map((period) => {
-      if (period.period_id === periodId) {
-         period.sortingSplitSetParams = { name: event.id, order: event.order };
+        if (period.period_id === periodId) {
+          period.sortingSplitSetParams = { name: event.id, order: event.order };
         }
       }
     );
@@ -218,29 +228,46 @@ export class PeriodTableComponent implements OnInit, OnChanges {
     return filterData;
   }
 
+  getFilterData(periodsData: any, param: string): any {
+    const filterData = [];
+    periodsData.map((item) => {
+      if (param === 'name' &&
+        item.dataTableType === PeriodTableTypeEnum.PERIOD &&
+        item[param].toLowerCase().includes(this.onSearchParam[param].toLowerCase())) {
+        this.pushItemToFilterValue(filterData, item);
+      } else if (param === 'duration' &&
+        item.dataTableType === PeriodTableTypeEnum.PERIOD &&
+        parseInt(item[param], 10) === parseInt(this.onSearchParam[param], 10)) {
+        this.pushItemToFilterValue(filterData, item);
+      } else if ((param === 'date_from' || param === 'date_to') &&
+        item.dataTableType === PeriodTableTypeEnum.PERIOD &&
+        moment(moment(item[param])).isSame(moment(this.onSearchParam[param]), 'day')) {
+        this.pushItemToFilterValue(filterData, item);
+      } else if (param === 'type' && item.dataTableType === PeriodTableTypeEnum.PERIOD) {
+        item.type.map((type) => {
+          if (type.name.toLowerCase().includes(this.onSearchParam[param].toLowerCase())) {
+            this.pushItemToFilterValue(filterData, item);
+          }
+        });
+      }
+    });
+    return filterData;
+  }
+
   onSearchPeriod(event): void {
-    // todo: возможно переделать алгоритм отображения
+    if (this.onSearchParam.hasOwnProperty(event.name)) {
+      event.value ? this.onSearchParam[event.name] = event.value : this.onSearchParam[event.name] = null;
+    }
     let filterData = [];
-    if (event.value) {
-      this.purePeriodData.map((item) => {
-        if (event.name === 'name' &&
-          item.dataTableType === PeriodTableTypeEnum.PERIOD &&
-          item[event.name].toLowerCase().includes(event.value.toLowerCase())) {
-          this.pushItemToFilterValue(filterData, item);
-        } else if (event.name === 'duration' &&
-          item.dataTableType === PeriodTableTypeEnum.PERIOD &&
-          parseInt(item[event.name], 10) === parseInt(event.value, 10)) {
-          this.pushItemToFilterValue(filterData, item);
-        } else if ((event.name === 'date_from' || event.name === 'date_to')  &&
-          item.dataTableType === PeriodTableTypeEnum.PERIOD &&
-          moment(moment(item[event.name])).isSame(moment(event.value), 'day')) {
-          this.pushItemToFilterValue(filterData, item);
-        } else if (event.name === 'type' && item.dataTableType === PeriodTableTypeEnum.PERIOD) {
-          item.type.map((type) => {
-            if (type.name.toLowerCase().includes(event.value.toLowerCase())) {
-              this.pushItemToFilterValue(filterData, item);
-            }
-          });
+
+    if (!!Object.values(this.onSearchParam).find((value) => value)) {
+      Object.keys(this.onSearchParam).map((param) => {
+        if (this.onSearchParam[param]) {
+          if (filterData.length) {
+            filterData = this.getFilterData(filterData, param);
+          } else {
+            filterData = this.getFilterData(this.purePeriodData, param);
+          }
         }
       });
     } else {
@@ -254,8 +281,18 @@ export class PeriodTableComponent implements OnInit, OnChanges {
     this.router.navigate(['/period/edit']);
   }
 
-  onDeletePeriod(): void {
-    console.log('delete');
-    // this.store.dispatch(new DeletePeriod(periodId));
+  onDeletePeriod(periodId: number): void {
+    this.isPopupShown = true;
+    this.deletePeriodId = periodId;
+  }
+
+  onDeletePeriodAccept(): void {
+    this.store.dispatch(new DeletePeriod(this.deletePeriodId));
+    this.deletePeriodId = null;
+  }
+
+  onCancelDeletePeriod(): void {
+    this.isPopupShown = !this.isPopupShown;
+    this.deletePeriodId = null;
   }
 }

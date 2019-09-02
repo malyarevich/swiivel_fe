@@ -23,7 +23,8 @@ export const initialState: PeriodState = {
     }],
   },
   savePeriodError: { text: null, isOpen: false },
-  editPeriodId: null
+  editPeriodId: null,
+  isPeriodsLoading: false
 };
 
 export function reducer(state = initialState, action: PeriodActions): PeriodState {
@@ -57,6 +58,9 @@ export function reducer(state = initialState, action: PeriodActions): PeriodStat
     }
     case PeriodActionTypes.ChangeEditPeriodId: {
       return { ...state, editPeriodId: action.payload };
+    }
+    case PeriodActionTypes.LoadPeriods: {
+      return { ...state, isPeriodsLoading: action.payload };
     }
     default: {
       return state;

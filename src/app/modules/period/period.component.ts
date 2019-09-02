@@ -17,11 +17,13 @@ import { PeriodService } from '@modules/period/services/period.service';
 
 export class PeriodComponent implements OnInit, OnDestroy  {
   public periods: Period[] = [];
+  public isLoading: boolean = false;
   private subscription = new Subscription();
 
   constructor(public store: Store<PeriodState>, public periodService: PeriodService, public router: Router) {
     this.subscription = this.periodService.getPeriodStore().subscribe((periodStore) => {
       this.periods = periodStore.periods;
+      this.isLoading = periodStore.isPeriodsLoading;
     });
   }
 

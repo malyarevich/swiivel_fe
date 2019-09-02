@@ -5,4 +5,5 @@ export interface PeriodState {
   period: Period;
   savePeriodError: { text: string, isOpen: boolean };
   editPeriodId: number;
+  isPeriodsLoading: boolean;
 }

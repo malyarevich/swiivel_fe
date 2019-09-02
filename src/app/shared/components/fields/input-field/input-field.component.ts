@@ -16,7 +16,7 @@ import { ControlValueAccessor, NgControl } from '@angular/forms';
 })
 export class InputFieldComponent implements OnInit, ControlValueAccessor {
   @Input() disabled: boolean;
-  @Input() fieldType: 'table' = null;
+  @Input() fieldType: 'static' | 'table' = null;
   @Input() id: string;
   @Input() label = '';
   @Input() pattern: string;
