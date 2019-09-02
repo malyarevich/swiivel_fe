@@ -8,7 +8,8 @@ import {
   forwardRef, HostBinding, HostListener, OnDestroy, OnInit, QueryList,
   Renderer2,
   ViewChild,
-  ViewChildren
+  ViewChildren,
+  Input
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import {ButtonComponent} from '@shared/button/button.component';
@@ -19,7 +20,7 @@ import {takeUntil} from 'rxjs/operators';
   selector: 'sw-input-buttons-group',
   templateUrl: './input-buttons-group.component.html',
   styleUrls: ['./input-buttons-group.component.scss'],
-  // changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -30,24 +31,29 @@ import {takeUntil} from 'rxjs/operators';
 })
 
 export class InputButtonsGroupComponent implements AfterContentInit, ControlValueAccessor, OnDestroy {
-
+  @Input('options') buttons;
   @ViewChild('input', {static: false}) input: ElementRef;
 
-  @ContentChildren(ButtonComponent, {descendants: true}) buttons: QueryList<ButtonComponent>;
+  // @ContentChildren(ButtonComponent, {descendants: true}) buttons: QueryList<ButtonComponent>;
 
   private componentLoaded: Subject<void> = new Subject<void>();
   private componentDestroyed: Subject<boolean> = new Subject<boolean>();
 
-  private onChange: (value: boolean) => void;
+  private onChange: (value: any) => void;
   private onTouched: () => void;
+  private value: any;
 
   constructor(
-    private cd: ChangeDetectorRef,
+    private cdr: ChangeDetectorRef,
     private renderer: Renderer2
   ) {}
 
+  isActive(value: any) {
+    return value === this.value;
+  }
+
   ngAfterContentInit(): void {
-    this.componentLoaded.next();
+    // this.componentLoaded.next();
     // console.log(this.buttons);
 
     // this.input.nativeElement.querySelectorAll('button').forEach(button => {
@@ -69,19 +75,19 @@ export class InputButtonsGroupComponent implements AfterContentInit, ControlValu
     // });
   // }
 
-  @HostListener('click', ['$event.srcElement'])
-  onButtonClicked(selectedButton) {
-    this.input.nativeElement.querySelectorAll('button').forEach(button => {
-      if (button === selectedButton) {
-        button.classList.add('active');
-      } else {
-        button.classList.remove('active');
-      }
-    });
-  }
+  // @HostListener('click', ['$event.srcElement'])
+  // onButtonClicked(selectedButton) {
+  //   this.input.nativeElement.querySelectorAll('button').forEach(button => {
+  //     if (button === selectedButton) {
+  //       button.classList.add('active');
+  //     } else {
+  //       button.classList.remove('active');
+  //     }
+  //   });
+  // }
 
   public setDisabledState(isDisabled: boolean): void {
-    this.renderer.setProperty(this.input.nativeElement, 'disabled', isDisabled);
+    // this.renderer.setProperty(this.input.nativeElement, 'disabled', isDisabled);
   }
 
   public registerOnTouched(fn: any): void {
@@ -93,17 +99,19 @@ export class InputButtonsGroupComponent implements AfterContentInit, ControlValu
   }
 
   public writeValue(value: any): void {
-    this.componentLoaded
-      .pipe(takeUntil(this.componentDestroyed))
-      .subscribe(() => {
-        const button = this.buttons.find(data => data.value === value);
-        // button.classList
-        // console.log(button);
-        console.log(this.buttons);
-        button.activeClass = 'active';
-        this.cd.markForCheck();
-        // console.log(button);
-      });
+    this.value = value;
+    this.cdr.markForCheck();
+    // this.componentLoaded
+    //   .pipe(takeUntil(this.componentDestroyed))
+    //   .subscribe(() => {
+    //     const button = this.buttons.find(data => data.value === value);
+    //     // button.classList
+    //     // console.log(button);
+    //     console.log(this.buttons);
+    //     button.activeClass = 'active';
+    //     this.cd.markForCheck();
+    //     // console.log(button);
+    //   });
     // this.setActive(value);
     // this.input.nativeElement.querySelectorAll('button').forEach(button => {
     //   if (button.value === value) {
@@ -120,8 +128,10 @@ export class InputButtonsGroupComponent implements AfterContentInit, ControlValu
     // });
   }
 
-  public onInputChange() {
-    this.onChange(this.input.nativeElement.checked);
+  public onInputChange(value: any) {
+    this.onChange(value);
+    this.cdr.markForCheck();
+    // this.onChange(this.input.nativeElement.checked);
   }
 
   ngOnDestroy(): void {
@@ -129,4 +139,3 @@ export class InputButtonsGroupComponent implements AfterContentInit, ControlValu
   }
 
 }
-

@@ -1,3 +1,9 @@
 <div class="input_buttons_group" #input>
-  <ng-content select="sw-button"></ng-content>
+  <sw-button
+    class="input_button_group"
+    *ngFor="let button of buttons"
+    [class.active]="isActive(button.value)"
+    (click)="onInputChange(button.value)">
+    {{button.label}}
+  </sw-button>
 </div>
