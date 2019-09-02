@@ -1,5 +1,6 @@
 import { ValidatorFn, FormControl, ValidationErrors } from '@angular/forms';
 import { isEmail, isURL, isDecimal } from 'validator';
+import * as glibphone from 'google-libphonenumber';
 
 function checkValue(value) {
     return (value && typeof value === 'string') ? value.trim() : value;
@@ -129,5 +130,22 @@ export function multipleLengthValidator(length: number): ValidatorFn {
                 givenLength: length
             }
         } : null;
+    }
+}
+
+export function phoneNumberValidator(): ValidatorFn {
+    return (c: FormControl): ValidationErrors | null => {
+        const value = checkValue(c.value);
+        const err = { phoneNumberValidator: true };
+        const phoneUtil = glibphone.PhoneNumberUtil.getInstance();
+
+        try {
+            const phoneNumber = phoneUtil.parse(value, 'US');
+            const isValidNumber = phoneUtil.isValidNumber(phoneNumber)
+            return isValidNumber ? null : err;
+        } catch (error) {
+            // console.log('phoneNumberValidator error', error)
+            return err;
+        }
     }
 }
