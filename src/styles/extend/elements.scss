@@ -59,7 +59,8 @@
 }
 
 span {
-  &.input_label {
+  &.input_toggle_label,
+  &.input_checkbox_label {
     font-family: $nunito-sans-regular;
     font-weight: bold;
     font-size: 12px;
