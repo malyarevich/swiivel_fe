@@ -11,8 +11,10 @@
   <div class="app-period__content">
     <div class="app-period__header">
       <h2 class="app-period__header--text">List of Periods</h2>
-      <div class="app-period__header--search">Search</div>
+      <div class="app-period__header--search">
+        <app-search-field [placeholder]="'Search'"></app-search-field>
+      </div>
     </div>
-    <app-period-table [periods]="periods"></app-period-table>
+    <app-period-table [periods]="periods" [isLoading]="isLoading"></app-period-table>
   </div>
 </div>

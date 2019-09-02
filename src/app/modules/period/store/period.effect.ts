@@ -8,7 +8,7 @@ import {
   ChangePeriodError,
   CreatePeriodRequest, DeletePeriod,
   GetPeriodsRequest,
-  GetPeriodsResponse,
+  GetPeriodsResponse, LoadPeriods,
   PeriodActionTypes, UpdateExistingPeriodRequest
 } from './period.actions';
 import { PeriodService } from '../services/period.service';
@@ -49,7 +49,7 @@ export class PeriodEffect {
             return new ChangePeriodError({ text: null, isOpen: false });
           }),
           catchError(err => {
-            console.log('error saving period', err);
+            console.log('error update period', err);
             throwError(err);
             return of(new ChangePeriodError({ text: err.error.errors, isOpen: true }));
           })
@@ -63,12 +63,13 @@ export class PeriodEffect {
       switchMap(() => {
         return this.periodService.getPeriods();
       }),
-      map( res => {
-        return new GetPeriodsResponse(this.periodService.convertGetPeriodResponse(res.data.periods));
+      switchMap( res => {
+        return [new LoadPeriods(false), new GetPeriodsResponse(this.periodService.convertGetPeriodResponse(res.data.periods))];
       }),
       catchError(err => {
         console.log('error periods request', err);
-        return throwError(err);
+        throwError(err);
+        return of(new LoadPeriods(false));
       })
     );
 
@@ -79,7 +80,7 @@ export class PeriodEffect {
         return this.periodService.deletePeriod(action.payload).pipe(
           map( res => new GetPeriodsRequest()),
           catchError(err => {
-            console.log('error saving period', err);
+            console.log('error delete period', err);
             return throwError(err);
           })
         );

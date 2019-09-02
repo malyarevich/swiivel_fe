@@ -1,5 +1,7 @@
 <div class="app-period-duration-setting">
+
   <h2 class="app-period-duration-setting__header">Period Settings</h2>
+
   <div class="app-period-duration-setting__name">
     <app-input-field
       [(ngModel)]="period.name"
@@ -26,14 +28,11 @@
       (ngModelChange)="onChangePeriod()"
     ></app-datepicker-field>
   </div>
-  <div
-    *ngIf="period.error"
-    class="app-period-duration-setting__error"
-  >
-    <p
-      *ngFor="let error of period.error"
-      class="app-period-duration-setting__error">
-        {{ error }}
+
+  <div *ngIf="period.error" class="app-period-duration-setting__error">
+    <p *ngFor="let error of period.error" class="app-period-duration-setting__error">
+      {{ error }}
     </p>
   </div>
+
 </div>

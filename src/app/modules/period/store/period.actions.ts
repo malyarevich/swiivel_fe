@@ -3,25 +3,32 @@ import { Period, PeriodSplitSet } from 'src/app/models/period/period.model';
 
 export enum PeriodActionTypes {
   AddPeriod = '[Period] Add Period',
+  AddSplitSet  = '[Period] Add split Set',
   ChangePeriod = '[Period] Change Period',
-  OpenCreatePeriodPage  = '[Period] Open Create Period Page',
   CreatePeriodRequest = '[Period] Create Period Request',
   ChangePeriodError = '[Period] Change Period Error',
-  GetPeriodsRequest = '[Period] Get Periods Request',
-  GetPeriodsResponse = '[Period] Get Periods Response',
-  AddSplitSet  = '[Period] Add split Set',
-  ValidatePeriod = '[Period] Validate period',
+  ChangeEditPeriodId = '[Period] Edit Period',
   ChangeSplitSet = '[Period] Change split',
   DeleteSplitSet = '[Period] Delete split',
-  ChangeEditPeriodId = '[Period] Edit Period',
   DeletePeriod = '[Period] Delete period',
-  UpdateExistingPeriodRequest = '[Period] Update existing period'
+  GetPeriodsRequest = '[Period] Get Periods Request',
+  GetPeriodsResponse = '[Period] Get Periods Response',
+  OpenCreatePeriodPage  = '[Period] Open Create Period Page',
+  ValidatePeriod = '[Period] Validate period',
+  UpdateExistingPeriodRequest = '[Period] Update existing period',
+  LoadPeriods = '[Period] Load periods'
 }
 
 export class AddPeriod implements Action {
   readonly type = PeriodActionTypes.AddPeriod;
 
   constructor(public payload: Period[]) {}
+}
+
+export class LoadPeriods implements Action {
+  readonly type = PeriodActionTypes.LoadPeriods;
+
+  constructor(public payload: boolean) {}
 }
 
 export class OpenCreatePeriodPage implements Action {
@@ -118,4 +125,5 @@ export type PeriodActions =
   | GetPeriodsRequest
   | GetPeriodsResponse
   | ChangePeriodError
-  | UpdateExistingPeriodRequest;
+  | UpdateExistingPeriodRequest
+  | LoadPeriods;

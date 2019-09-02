@@ -7,7 +7,7 @@ import * as moment from 'moment';
 
 import { Period, PeriodSplit, PeriodSplitSet } from 'src/app/models/period/period.model';
 
-import { ChangePeriodError, ChangeSplitSet, OpenCreatePeriodPage, ValidatePeriod } from '@modules/period/store/period.actions';
+import {ChangePeriodError, ChangeSplitSet, LoadPeriods, OpenCreatePeriodPage, ValidatePeriod} from '@modules/period/store/period.actions';
 import { PeriodErrorEnum } from '@modules/period/period-error.enum';
 import { PeriodState } from '@modules/period/store/period.state';
 import { PeriodTableTypeEnum } from '@modules/period/period-table-type.enum';
@@ -40,6 +40,15 @@ export class PeriodService {
 
   static getDuration(from: Date, to: Date): number {
     return moment(to).diff(moment(from), 'days');
+  }
+
+  static comparePeriod(comparePeriod, referencePeriod): boolean {
+    return (comparePeriod.name === referencePeriod.name &&
+      comparePeriod.date_from === referencePeriod.date_from &&
+      comparePeriod.date_to === referencePeriod.date_to &&
+      comparePeriod.duration === referencePeriod.duration &&
+      comparePeriod.splitSets === referencePeriod.splitSets
+    );
   }
 
   setSplitName(activePeriodSet: PeriodSplitSet, name: string, splitId: number): void {
@@ -241,6 +250,7 @@ export class PeriodService {
   }
 
   getPeriods(): Observable<any> {
+    this.store.dispatch(new LoadPeriods(true));
     return this.http.get(`${API_URL}/periods`, httpOptions)
       .pipe(
         map((response) => {

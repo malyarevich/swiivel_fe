@@ -22,7 +22,7 @@ export class DatePickerFieldComponent implements OnInit, ControlValueAccessor {
   @Input() isInvalid = false;
   @Input() isValidatable: boolean = true;
   @Input() width?: number = null;
-  @Input() dateInputFormat?: string = 'MMMM DD, YYYY';
+  @Input() dateInputFormat?: string = 'DD/MM/YYYY';
   @Input() style?: string = null;
   @Output() onChangeField = new EventEmitter();
 

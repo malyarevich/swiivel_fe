@@ -10,7 +10,7 @@
   .app-period-popup__container {
     display: flex;
     width: 340px;
-    height: 115px;
+    min-height: 70px;
     margin: 0 auto;
     padding: 0 0 15px 15px;
     border-radius: 3px;

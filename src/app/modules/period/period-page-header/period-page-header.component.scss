@@ -1,9 +1,17 @@
 @import '../../../../styles/variables/colors';
 
 .app-period-page-header {
+  position: relative;
   display: flex;
   height: 40px;
   background-color: $table-row-odd-background-color;
+
+  .app-period-page-header__popup {
+    position: absolute;
+    z-index: 3;
+    top: -40px;
+    right: 1px;
+  }
 
   .app-period-page-header__title {
     display: flex;
@@ -46,6 +54,16 @@
     justify-content: flex-end;
     align-items: baseline;
     width: 20%;
+  }
+
+  .app-period-page-header__search-container {
+    display: flex;
+    flex-grow: 2;
+    justify-content: flex-end;
+
+    .app-period-page-header__search {
+      margin: 5px 15px 0 0;
+    }
   }
 
 }

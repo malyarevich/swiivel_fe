@@ -3,10 +3,22 @@
     <div
       *ngIf="isBackArrowEnable"
       class="app-period-page-header__title--arrow"
-      [routerLink]="link">
+      (click)="checkChanges()">
       <i class="fas fa-chevron-left app-period-page-header__title--arrow-ico"></i>
     </div>
     <h2 class="app-period-page-header__title--text">{{ titleHeader }}</h2>
   </div>
-  <div>Search</div>
+  <div class="app-period-page-header__search-container">
+    <div class="app-period-page-header__search">
+      <app-search-field [placeholder]="'Search'"></app-search-field>
+    </div>
+  </div>
+  <div class="app-period-page-header__popup">
+    <app-period-popup
+      *ngIf="isPopupShown"
+      [text]="'Are you sure you want to get out of this period?'"
+      (cancel)="isPopupShown = !isPopupShown"
+      (accept)="goToLink()"
+    ></app-period-popup>
+  </div>
 </div>

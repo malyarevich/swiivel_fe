@@ -1,4 +1,5 @@
 <div class="app-period-split-bar">
+
   <div class="app-period-split-bar__header">
     <app-input-editable-field
       [(ngModel)]="activePeriodSet.name"
@@ -6,12 +7,15 @@
       [inputColor]="getColor()"
     ></app-input-editable-field>
   </div>
+
   <div *ngIf="getSplitSetLength()" class="app-period-split-bar__splitset">
+
     <div
       class="app-period-split-bar__scale"
       cdkDropList
       cdkDropListOrientation="horizontal"
       (cdkDropListDropped)="dropItem($event)">
+
       <div
         *ngFor="let cellItem of periodScale.items; let i = index"
         class="app-period-split-bar__scale--cell"
@@ -24,6 +28,7 @@
         cdkDragBoundary=".app-period-bar__scale"
         [cdkDragDisabled]="!cellItem.isExtreme"
         id="{{ cellItem.splitId }}">
+
         <div *ngIf="cellItem.extremeDate" class="app-period-split-bar--date">{{ cellItem.extremeDate }}</div>
         <app-carets
           *ngIf="cellItem.isExtreme"
@@ -36,8 +41,9 @@
           [ngClass]="{
           'app-period-split-bar--label--yellow': this.viewId % 2 === 0,
           'app-period-split-bar--label--blue': this.viewId % 2 === 1}"
-          [ngStyle] = "{'width': getWidth(cellItem.label)}"
-        > {{ cellItem.label }}</div>
+          [ngStyle] = "{'width': getWidth(cellItem.label)}">
+          {{ cellItem.label }}
+        </div>
         <input
           *ngIf="cellItem.label && cellItem.slitDuration > 10 && cellItem.isLabelEdit"
           class="app-period-split-bar--input"
@@ -58,7 +64,9 @@
             (closeInfo)="onCloseInfo($event)"></app-period-split-settings>
         </div>
       </div>
+
     </div>
+
     <div
       class="app-period-split-bar__add_split"
       [ngClass]="{
@@ -66,10 +74,12 @@
       (click)="onCreateSplit()">
       <i class="fa fa-plus app-period-split-bar__add_split--ico"></i>
     </div>
+
   </div>
   <div *ngIf="!getSplitSetLength()" class="app-period-split-bar__add" (click)="onCreateSplit()">
     + Create first split
   </div>
+
   <div
     *ngIf="hasShownSplitSetError(activePeriodSet)"
     class="app-period-split-bar__error">
@@ -78,6 +88,7 @@
         (closeError)="onCloseSplitSetError()">
       </app-period-error>
   </div>
+
   <div
     *ngIf="savePeriodError && savePeriodError.text && savePeriodError.isOpen"
     class="app-period-split-bar__error">
@@ -86,4 +97,5 @@
       (closeError)="onCloseSavePeriodError()">
     </app-period-error>
   </div>
+
 </div>

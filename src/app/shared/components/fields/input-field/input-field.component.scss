@@ -40,6 +40,27 @@
     }
   }
 
+  &.app-input-field-static {
+    min-height: 29px;
+    max-height: 29px;
+
+    input {
+      min-height: 29px;
+      max-height: 29px;
+      padding: 0 10px;
+      font-size: 12px;
+    }
+
+    input[type='number'] {
+      -moz-appearance:textfield;
+    }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+    }
+  }
+
   .app-input-field-label {
     position: absolute;
     color: #909090;
