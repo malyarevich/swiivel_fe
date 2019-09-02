@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { FieldService } from '@core/field.service';
 import fields from '@app/shared/fields';
 
@@ -18,7 +18,9 @@ export class DashboardComponent implements OnInit {
     private fb: FormBuilder
   ) {
     this.form = this.fb.group({
-      short: new FormControl('short text')
+      short: new FormControl('short text'),
+      toggle: new FormControl(true),
+      checkbox: new FormControl(true),
     });
   }
 
