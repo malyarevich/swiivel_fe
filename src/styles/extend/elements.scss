@@ -57,3 +57,25 @@
   font-weight: bold;
   text-transform: uppercase;
 }
+
+sw-input-toggle {
+  span {
+    &.input_label {
+      font-family: $nunito-sans-regular;
+      font-weight: bold;
+      font-size: 12px;
+      color: $black;
+    }
+  }
+}
+
+sw-input-checkbox {
+  span {
+    &.input_label {
+      font-family: $nunito-sans-regular;
+      font-weight: bold;
+      font-size: 12px;
+      color: $black;
+    }
+  }
+}
