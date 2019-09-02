@@ -1,4 +1,4 @@
-import { Component, OnInit, forwardRef, ChangeDetectionStrategy, ViewChild, ElementRef, Renderer2 } from '@angular/core';
+import { Component, OnInit, forwardRef, ChangeDetectionStrategy, ViewChild, ElementRef, Renderer2, ViewEncapsulation } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
@@ -12,7 +12,8 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
       useExisting: forwardRef(() => InputTextComponent),
       multi: true
     }
-  ]
+  ],
+  encapsulation: ViewEncapsulation.ShadowDom
 })
 export class InputTextComponent implements OnInit, ControlValueAccessor {
   onChange: Function = (_: string) => {};
