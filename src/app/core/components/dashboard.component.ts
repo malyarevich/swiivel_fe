@@ -4,7 +4,7 @@ import { FieldService } from '@core/field.service';
 import fields from '@app/shared/fields';
 
 
-const TEST_FIELD_SERVICE = true;
+const TEST_FIELD_SERVICE = false;
 
 @Component({
   selector: 'app-dashboard',
