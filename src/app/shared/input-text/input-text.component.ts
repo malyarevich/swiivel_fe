@@ -39,7 +39,6 @@ export class InputTextComponent implements ControlValueAccessor {
   }
 
   public onInputChange() {
-    console.log(this.control);
     this.onChange(this.input.nativeElement.value);
   }
 
