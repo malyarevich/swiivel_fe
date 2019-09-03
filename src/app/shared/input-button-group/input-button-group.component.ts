@@ -63,7 +63,7 @@ export class InputButtonGroupComponent implements ControlValueAccessor {
 
   public onInputChange(value: any) {
     this.onChange(value);
-    this.writeValue(value);
+    this.value = value;
     this.cdk.markForCheck();
   }
 
