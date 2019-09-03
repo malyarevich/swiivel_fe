@@ -1,4 +1,4 @@
-import { Component, OnInit, forwardRef, ChangeDetectionStrategy, ViewChild, ElementRef, Renderer2, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, forwardRef, ChangeDetectionStrategy, ViewChild, ElementRef, Renderer2, ViewEncapsulation, Input } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
@@ -20,6 +20,7 @@ export class InputTextComponent implements OnInit, ControlValueAccessor {
   onTouched: Function;
   errors: [];
   @ViewChild('input', {static: true}) input: ElementRef;
+  @Input() readonly: boolean;
 
   setDisabledState?(isDisabled: boolean): void {
     this.renderer.setProperty(this.input.nativeElement, 'disabled', isDisabled);
