@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, forwardRef } from '@angular/core';
+import { Component, OnInit, Input, forwardRef, OnChanges } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { SelectionModel } from '@angular/cdk/collections';
 
@@ -23,14 +23,17 @@ export class MultiSelectComponent implements OnInit, ControlValueAccessor {
   public _multiple: boolean = true;
   public _mode: string = 'none';
 
-  @Input()
-  multi(m: boolean) {
+  @Input() set multi(m: boolean) {
+    if (m === true) this._mode = 'checkbox';
     this._multiple = m;
     this._sm = new SelectionModel(this._multiple);    
   }
   // Type can be 'radio', 'checkbox', 'none'. Defaults to 'none';
-  @Input()
-  type(t: string) {
+  @Input() set mode(t: string) {
+    if (t === 'radio') {
+      this._multiple = false;
+      this._sm = new SelectionModel(this._multiple);  
+    } 
     this._mode = t;
   }
   @Input() list: any;

@@ -71,9 +71,8 @@
   }
 }
 
-:host(.col) {
+:host(.column) {
   .items-container {
     flex-direction: column;
-    
   }
 }

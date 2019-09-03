@@ -1,21 +1,9 @@
-<sw-input-text [class.active]="dropdownActive" #holder [formControl]="_control" (click)="showPopup()">
-  <span class="placeholder">{{placeholder}}</span>
+<sw-input-text #holder [formControl]="_inputControl" (click)="showPopup()">
+    <span class="placeholder">{{ placeholder }}</span>
 </sw-input-text>
-<!-- <button (click)="showPopup()" #holder>asdasd</button> -->
 <ng-template #droplist>
   <div class="dropdown-list">
-
-    <ng-container *ngFor="let item of dropdownList">
-      <div class="item selected" (click)="select(item)">
-        <div class="main-checkbox" *ngIf="multi">
-          <div class="check"></div>
-        </div>
-        <span class="text">{{item.title}}</span>
-      </div>
-    </ng-container>
-    
+    <sw-multi-select class="column" [mode]="'checkbox'" [list]="list" [formControl]="_dropdownControl">
+    </sw-multi-select>
   </div>
-
 </ng-template>
-
-<sw-multi-select class="col" [type]="'radio'" [list]="list" [formControl]="_control"></sw-multi-select>

@@ -11,7 +11,6 @@ const DROPDOWN_CONTROL_ACCESSOR = {
 @Component({
   selector: 'sw-dropdown-input',
   templateUrl: './dropdown-input.component.html',
-  styleUrls: ['./dropdown-input.component.scss'],
   providers: [DROPDOWN_CONTROL_ACCESSOR]
 })
 export class DropdownInputComponent implements OnInit, ControlValueAccessor {
@@ -19,25 +18,26 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
   private _ref;
   private _onChange: Function;
   private _onTouched: Function;
-  public _control: FormControl = new FormControl('');
+  private _dropdownList: any;
 
-  public value;
-  public multi: boolean = true;
+  public _inputControl: FormControl = new FormControl('');
+  public _dropdownControl: FormControl = new FormControl([]);
   public dropdownActive: boolean = false;
-  public list = [
-    {title: '1 short ssss'},
-    {title: '2 short sfvvad'},
-    {title: '3 shorasa'},
-    {title: '4 asdaks okapsd '},
-    {title: '5 asdokaposkdpao '},
-    {title: '6asdk  askmd ask m'},
-    {title: '7 okaoweas as mas '},
-    {title: '8 asd;alsd malamdwe'},
-    {title: '9 dsad plwerls ss'}
-  ];
+  public list: any;
+  public _disable: boolean = false;
 
   @Input() opts;
-  @Input() dropdownList: any;
+  @Input() multi: boolean = true;
+  @Input() 
+  set disable(opt: boolean) {
+    this._disable = opt;
+    this._inputControl.disable();
+  }
+  @Input() 
+  set dropdownList(list) {
+    this.list = list;
+    this._dropdownList = list;
+  };
   @Input() placeholder: string = 'Placeholder';
   @Input() panelClass: string = 'dropdown-overlay';
   @ViewChild('droplist', { static: false }) droplist;
@@ -48,9 +48,13 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
     private popup: Popup,
     private cdr: ChangeDetectorRef
   ) {
-    this._control.valueChanges.subscribe(v => {
-      console.log('New value', v, this.dropdownActive);
-    })
+    this._dropdownControl.valueChanges.subscribe(v => {
+      this._onChange(v);
+      this._onTouched();
+    });
+    this._inputControl.valueChanges.subscribe(v => {
+      this.list = this.filterList(v);
+    });
   }
 
   ngOnInit(): void {
@@ -58,7 +62,7 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
   }
 
   writeValue(v): void {
-    this.value = v;
+    this._dropdownControl.setValue(v, { emitEvent: false });
   }
 
   registerOnTouched(fn: Function): void {
@@ -69,11 +73,22 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
     this._onChange = fn;
   }
 
+  filterList(s: string) {
+    if (this._dropdownList) {
+      const result = this._dropdownList.filter((o) => {
+        return o['title'].toString().toLowerCase().indexOf(s.toLowerCase()) != -1;
+      });
+      return result;
+    }
+  }
+
   select(item): void {
     this._onChange(item);
   }
 
   showPopup(): void {
+    if (this._disable === true) return ;
+    
     this.dropdownActive = true;
     this._ref = this.popup.open({
       origin: this.holder,
@@ -83,7 +98,6 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
     this._ref.afterClosed$.subscribe((result) => {
       this.dropdownActive = false;
       this._onTouched();
-      console.log(result);
       this.cdr.markForCheck();
     })
   }
