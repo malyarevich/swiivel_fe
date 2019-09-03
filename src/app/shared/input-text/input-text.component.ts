@@ -7,7 +7,7 @@ import {
   Renderer2,
   ViewEncapsulation,
   Input,
-  Injector, OnInit
+  Injector, OnInit, Optional, Self
 } from '@angular/core';
 import {ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, NgControl} from '@angular/forms';
 
@@ -16,13 +16,6 @@ import {ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, NgControl} from '@
   templateUrl: './input-text.component.html',
   styleUrls: ['./input-text.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => InputTextComponent),
-      multi: true
-    }
-  ]
 })
 
 export class InputTextComponent implements OnInit, ControlValueAccessor {
@@ -31,19 +24,22 @@ export class InputTextComponent implements OnInit, ControlValueAccessor {
 
   @ViewChild('input', {static: true}) input: ElementRef;
 
-  private ngControl: NgControl;
+  // private ngControl: NgControl;
   private onChange: (value: any) => void;
   private onTouched: () => void;
   private errors: [];
-
+  // fc: any;
   constructor(
-    private inj: Injector,
+    @Optional() @Self() public ngControl: NgControl,
     private renderer: Renderer2
   ) {
+    this.ngControl.valueAccessor = this;
   }
 
   ngOnInit(): void {
-    this.ngControl = this.inj.get(NgControl);
+    this.ngControl.statusChanges.subscribe((status) => {
+      console.log(`Status changed ${status}`)
+    })
   }
 
   public setDisabledState(isDisabled: boolean): void {
@@ -63,7 +59,6 @@ export class InputTextComponent implements OnInit, ControlValueAccessor {
   }
 
   public onInputChange() {
-    console.log(this.ngControl);
     this.onChange(this.input.nativeElement.value);
   }
 

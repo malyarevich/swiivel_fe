@@ -1,4 +1,4 @@
-<div class="input_text">
+<div class="input_text" [class.invalid]="ngControl.invalid">
   <input type="text" class="input_text__input" (blur)="onTouched()" (input)="onInputChange()"
     [class.empty]="!input.value" #input />
   <ng-content select="span.placeholder"></ng-content>
