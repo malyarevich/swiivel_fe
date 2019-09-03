@@ -6,7 +6,7 @@ import { InputTextComponent } from './input-text/input-text.component';
 import { InputNumberComponent } from './input-number/input-number.component';
 import { InputToggleComponent } from './input-toggle/input-toggle.component';
 import { InputCheckboxComponent } from './input-checkbox/input-checkbox.component';
-import { InputButtonsGroupComponent } from './input-buttons-group/input-buttons-group.component';
+import { InputButtonGroupComponent } from './input-button-group/input-button-group.component';
 import {ButtonComponent} from '@shared/button/button.component';
 
 @NgModule({
@@ -20,7 +20,7 @@ import {ButtonComponent} from '@shared/button/button.component';
     InputNumberComponent,
     InputToggleComponent,
     InputCheckboxComponent,
-    InputButtonsGroupComponent,
+    InputButtonGroupComponent,
     ButtonComponent,
   ],
   exports: [
@@ -30,7 +30,7 @@ import {ButtonComponent} from '@shared/button/button.component';
     InputNumberComponent,
     InputToggleComponent,
     InputCheckboxComponent,
-    InputButtonsGroupComponent,
+    InputButtonGroupComponent,
     ButtonComponent,
   ]
 })
