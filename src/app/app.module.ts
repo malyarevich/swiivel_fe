@@ -14,6 +14,7 @@ import { AuthGuard } from '@core/auth.guard';
 import { AuthService } from '@core/auth.service';
 import { DashboardComponent } from '@core/components/dashboard.component';
 import { FieldService } from '@core/field.service';
+import { FormCreatorModule } from './form-creator/form-creator.module';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { FieldService } from '@core/field.service';
     ReactiveFormsModule,
     AppRoutingModule,
     SharedModule,
+    FormCreatorModule,
   ],
   providers: [
     AuthGuard,
