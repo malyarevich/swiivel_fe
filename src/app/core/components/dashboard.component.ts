@@ -18,7 +18,8 @@ export class DashboardComponent implements OnInit {
     private fb: FormBuilder
   ) {
     this.form = this.fb.group({
-      short: new FormControl('short text')
+      short: new FormControl('short text'),
+      dropdown: new FormControl([])
     });
   }
 

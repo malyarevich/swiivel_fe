@@ -14,6 +14,8 @@ import { AuthGuard } from '@core/auth.guard';
 import { AuthService } from '@core/auth.service';
 import { DashboardComponent } from '@core/components/dashboard.component';
 import { FieldService } from '@core/field.service';
+import { PopupComponent } from '@core/components/popup/popup.component';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,8 @@ import { FieldService } from '@core/field.service';
     LoginComponent,
     RestorePasswordComponent,
     MainComponent,
-    DashboardComponent
+    DashboardComponent,
+    PopupComponent
   ],
   imports: [
     BrowserModule,
@@ -30,6 +33,10 @@ import { FieldService } from '@core/field.service';
     ReactiveFormsModule,
     AppRoutingModule,
     SharedModule,
+    OverlayModule
+  ],
+  entryComponents: [
+    PopupComponent
   ],
   providers: [
     AuthGuard,

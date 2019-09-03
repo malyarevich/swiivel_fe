@@ -1,0 +1,79 @@
+
+:host {
+  .items-container {
+    display: flex;
+    .item {
+      margin-bottom: 15px;
+      display: flex;
+      flex-direction: row;
+      .text {
+        font-size: 12px;
+        line-height: 15px;
+      }
+      .checkbox-wrap {
+        display: none;        
+        width: 15px;
+        height: 15px;
+        border: 1px solid #4350A2;
+        margin-right: 10px;
+        text-align: center;
+        overflow: hidden;
+        position: relative;
+        .checkbox-center {
+          position: absolute;
+          height: 10px;
+          width: 5px;
+          display: inline-block;
+          overflow:hidden;
+        }
+        &.checkbox {
+          display: block;
+          border-radius: 3px;
+          .checkbox-center {
+            border-bottom: 2px solid #fff;
+            border-right: 2px solid #fff;
+            border-radius: 1px;
+            top: 0.1rem;
+            left: 0.3rem;
+            transform: rotate(45deg);
+          }
+        }
+        &.radio-button {
+          display: block;
+          border-radius: 50%;
+          .checkbox-center {
+            border-radius: 50%;
+            width: 9px;
+            height: 9px;
+            top: 2px;
+            left: 2px;
+          }
+        }
+      }
+      &.selected {
+        .text {
+          font-weight: bold;
+          font-family: "NunitoSans-Bold";
+        }
+        .checkbox-wrap.checkbox {
+          background-color: #4350A2;
+        }
+        .checkbox-wrap.radio-button {
+          .checkbox-center {
+            background-color: #4350A2;
+          }
+        }
+      }
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+:host(.col) {
+  .items-container {
+    flex-direction: column;
+    
+  }
+}
