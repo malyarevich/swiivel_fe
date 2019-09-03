@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, Type } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { PopupRef, PopupContent } from './popup.ref';
 
 @Component({
@@ -6,7 +6,7 @@ import { PopupRef, PopupContent } from './popup.ref';
   styleUrls: ['./popup.component.scss']
 })
 export class PopupComponent implements OnInit {
-  renderMethod: 'template' | 'component' | 'text' = 'component';
+  renderMethod: 'template' | 'component' = 'component';
   content: PopupContent;
   context;
 
@@ -15,10 +15,6 @@ export class PopupComponent implements OnInit {
 
   ngOnInit() {
     this.content = this.popupRef.content;
-
-    if (typeof this.content === 'string') {
-      this.renderMethod = 'text';
-    }
 
     if (this.content instanceof TemplateRef) {
       this.renderMethod = 'template';
