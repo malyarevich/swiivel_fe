@@ -14,7 +14,9 @@
         & + .input_toggle__slider {
           background-color: $light-purple;
           &:before {
-            transform: translateX(14px);
+            background-color: $element-base-color;
+            border: 1px solid $element-base-color;
+            transform: translateX(16px);
           }
         }
       }
@@ -35,7 +37,9 @@
         height: 14px;
         position: absolute;
         top: -2px;
-        background: $element-base-color;
+        left: -1px;
+        background-color: $white;
+        border: 1px solid $medium-purple;
         transition: .4s;
       }
       &.round {

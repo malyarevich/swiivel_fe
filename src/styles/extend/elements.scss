@@ -79,3 +79,22 @@ sw-input-checkbox {
     }
   }
 }
+
+sw-input-button-group {
+  .input_button_group {
+    display: flex;
+    align-items: center;
+    .input_button {
+      &:first-of-type {
+        button {
+          border-radius: 4px 0 0 4px!important;
+        }
+      }
+      &:last-of-type {
+        button {
+          border-radius: 0 4px 4px 0!important;
+        }
+      }
+    }
+  }
+}
