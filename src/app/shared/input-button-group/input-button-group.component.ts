@@ -1,4 +1,14 @@
-import { ChangeDetectorRef, Component, forwardRef, Renderer2, Input, ChangeDetectionStrategy, ViewChild, ElementRef } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  forwardRef,
+  Renderer2,
+  Input,
+  ChangeDetectionStrategy,
+  ViewChild,
+  ElementRef,
+  AfterContentInit
+} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
@@ -34,7 +44,8 @@ export class InputButtonGroupComponent implements ControlValueAccessor {
   }
 
   public setDisabledState(isDisabled: boolean): void {
-    this.renderer.setProperty(this.input.nativeElement, 'disabled', isDisabled);
+    const stateValue = isDisabled ? 'none' : 'inherit';
+    this.renderer.setStyle(this.input.nativeElement, 'pointer-events', stateValue);
   }
 
   public registerOnTouched(fn: any): void {
