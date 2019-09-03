@@ -1,45 +1,25 @@
-import {
-  Component,
-  forwardRef,
-  ChangeDetectionStrategy,
-  ViewChild,
-  ElementRef,
-  Renderer2,
-  ViewEncapsulation,
-  Input,
-  Injector, OnInit, Optional, Self
-} from '@angular/core';
-import {ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, NgControl} from '@angular/forms';
+import { Component, ChangeDetectionStrategy, ViewChild, ElementRef, Renderer2, Input, Optional, Self } from '@angular/core';
+import { ControlValueAccessor, NgControl } from '@angular/forms';
 
 @Component({
   selector: 'sw-input-text',
   templateUrl: './input-text.component.html',
   styleUrls: ['./input-text.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class InputTextComponent implements OnInit, ControlValueAccessor {
-
-  @Input() placeholder: string;
+export class InputTextComponent implements ControlValueAccessor {
 
   @ViewChild('input', {static: true}) input: ElementRef;
 
-  // private ngControl: NgControl;
   private onChange: (value: any) => void;
   private onTouched: () => void;
-  private errors: [];
-  // fc: any;
+
   constructor(
-    @Optional() @Self() public ngControl: NgControl,
+    @Optional() @Self() public control: NgControl,
     private renderer: Renderer2
   ) {
-    this.ngControl.valueAccessor = this;
-  }
-
-  ngOnInit(): void {
-    this.ngControl.statusChanges.subscribe((status) => {
-      console.log(`Status changed ${status}`)
-    })
+    this.control.valueAccessor = this;
   }
 
   public setDisabledState(isDisabled: boolean): void {
@@ -59,6 +39,7 @@ export class InputTextComponent implements OnInit, ControlValueAccessor {
   }
 
   public onInputChange() {
+    console.log(this.control);
     this.onChange(this.input.nativeElement.value);
   }
 

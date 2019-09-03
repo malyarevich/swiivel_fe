@@ -1,10 +1,7 @@
-<div class="input_text" [class.invalid]="ngControl.invalid">
+<div class="input_text">
   <input type="text" class="input_text__input" (blur)="onTouched()" (input)="onInputChange()"
-    [class.empty]="!input.value" #input />
+    [class.empty]="!control.value" [class.invalid]="control.invalid" #input/>
   <ng-content select="span.placeholder"></ng-content>
-  <i *ngIf="ngControl.control.errors" class="input_text__error"></i>
+  <i *ngIf="control.errors" class="input_text__error_icon"></i>
+  <span *ngIf="control.errors?.required" class="input_text__error_message">Field required</span>
 </div>
-
-<!--<span *ngFor="let error of errors" class="errorSubtext">-->
-<!--  {{error}}-->
-<!--</span>-->
