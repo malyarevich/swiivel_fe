@@ -6,8 +6,7 @@ import {
   Input,
   ChangeDetectionStrategy,
   ViewChild,
-  ElementRef,
-  AfterContentInit
+  ElementRef
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
@@ -35,7 +34,7 @@ export class InputButtonGroupComponent implements ControlValueAccessor {
   private value: any;
 
   constructor(
-    private cdk: ChangeDetectorRef,
+    private cdr: ChangeDetectorRef,
     private renderer: Renderer2
   ) {}
 
@@ -58,13 +57,13 @@ export class InputButtonGroupComponent implements ControlValueAccessor {
 
   public writeValue(value: any): void {
     this.value = value;
-    this.cdk.markForCheck();
+    this.cdr.markForCheck();
   }
 
   public onInputChange(value: any) {
     this.onChange(value);
     this.value = value;
-    this.cdk.markForCheck();
+    this.cdr.markForCheck();
   }
 
 }
