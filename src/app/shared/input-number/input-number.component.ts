@@ -1,21 +1,20 @@
-import { Component, OnInit, forwardRef, ChangeDetectionStrategy, ViewChild, ElementRef, Renderer2, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, forwardRef, ChangeDetectionStrategy, ViewChild, ElementRef, Renderer2 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
-  selector: 'sw-input-text',
-  templateUrl: './input-text.component.html',
-  styleUrls: ['./input-text.component.scss'],
+  selector: 'sw-input-number',
+  templateUrl: './input-number.component.html',
+  styleUrls: ['./input-number.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => InputTextComponent),
+      useExisting: forwardRef(() => InputNumberComponent),
       multi: true
     }
-  ],
-  encapsulation: ViewEncapsulation.ShadowDom
+  ]
 })
-export class InputTextComponent implements OnInit, ControlValueAccessor {
+export class InputNumberComponent implements OnInit, ControlValueAccessor {
   onChange: Function = (_: string) => {};
   onTouched: Function;
   errors: [];

@@ -57,3 +57,44 @@
   font-weight: bold;
   text-transform: uppercase;
 }
+
+sw-input-toggle {
+  span {
+    &.input_label {
+      font-family: "Nunito Sans";
+      font-weight: bold;
+      font-size: 12px;
+      color: $black;
+    }
+  }
+}
+
+sw-input-checkbox {
+  span {
+    &.input_label {
+      font-family: "Nunito Sans";
+      font-weight: bold;
+      font-size: 12px;
+      color: $black;
+    }
+  }
+}
+
+sw-input-button-group {
+  .input_button_group {
+    display: flex;
+    align-items: center;
+    .input_button {
+      &:first-of-type {
+        button {
+          border-radius: 4px 0 0 4px!important;
+        }
+      }
+      &:last-of-type {
+        button {
+          border-radius: 0 4px 4px 0!important;
+        }
+      }
+    }
+  }
+}
