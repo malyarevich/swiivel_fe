@@ -1,5 +1,15 @@
-import { Component, OnInit, forwardRef, ChangeDetectionStrategy, ViewChild, ElementRef, Renderer2, ViewEncapsulation } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import {
+  Component,
+  forwardRef,
+  ChangeDetectionStrategy,
+  ViewChild,
+  ElementRef,
+  Renderer2,
+  ViewEncapsulation,
+  Input,
+  Injector, OnInit
+} from '@angular/core';
+import {ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, NgControl} from '@angular/forms';
 
 @Component({
   selector: 'sw-input-text',
@@ -12,37 +22,48 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
       useExisting: forwardRef(() => InputTextComponent),
       multi: true
     }
-  ],
-  encapsulation: ViewEncapsulation.ShadowDom
+  ]
 })
+
 export class InputTextComponent implements OnInit, ControlValueAccessor {
-  onChange: Function = (_: string) => {};
-  onTouched: Function;
-  errors: [];
+
+  @Input() placeholder: string;
+
   @ViewChild('input', {static: true}) input: ElementRef;
 
-  setDisabledState?(isDisabled: boolean): void {
+  private ngControl: NgControl;
+  private onChange: (value: any) => void;
+  private onTouched: () => void;
+  private errors: [];
+
+  constructor(
+    private inj: Injector,
+    private renderer: Renderer2
+  ) {
+  }
+
+  ngOnInit(): void {
+    this.ngControl = this.inj.get(NgControl);
+  }
+
+  public setDisabledState(isDisabled: boolean): void {
     this.renderer.setProperty(this.input.nativeElement, 'disabled', isDisabled);
   }
-  registerOnTouched(fn: any): void {
+
+  public registerOnTouched(fn: any): void {
     this.onTouched = fn;
   }
-  registerOnChange(fn: any): void {
+
+  public registerOnChange(fn: any): void {
     this.onChange = fn;
   }
-  writeValue(obj: any): void {
+
+  public writeValue(obj: any): void {
     this.renderer.setProperty(this.input.nativeElement, 'value', obj);
   }
 
-  constructor(private renderer: Renderer2) {
-
-  }
-
-  ngOnInit() {
-  }
-
-
-  changed(event: Event) {
+  public onInputChange() {
+    console.log(this.ngControl);
     this.onChange(this.input.nativeElement.value);
   }
 
