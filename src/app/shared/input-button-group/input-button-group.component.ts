@@ -35,7 +35,7 @@ export class InputButtonGroupComponent implements ControlValueAccessor {
   private value: any;
 
   constructor(
-    private changeDetectorRef: ChangeDetectorRef,
+    private cdk: ChangeDetectorRef,
     private renderer: Renderer2
   ) {}
 
@@ -58,13 +58,13 @@ export class InputButtonGroupComponent implements ControlValueAccessor {
 
   public writeValue(value: any): void {
     this.value = value;
-    this.changeDetectorRef.markForCheck();
+    this.cdk.markForCheck();
   }
 
   public onInputChange(value: any) {
     this.onChange(value);
     this.writeValue(value);
-    this.changeDetectorRef.markForCheck();
+    this.cdk.markForCheck();
   }
 
 }
