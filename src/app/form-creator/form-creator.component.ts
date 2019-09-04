@@ -6,10 +6,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./form-creator.component.scss']
 })
 export class FormCreatorComponent implements OnInit {
-
+  workarea;
+  sections = [];
   constructor() { }
 
   ngOnInit() {
+  }
+
+  switchWorkarea(workarea) {
+    this.workarea = workarea;
   }
 
 }

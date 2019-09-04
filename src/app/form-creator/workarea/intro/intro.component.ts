@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'sw-intro',
+  selector: 'sw-form-creator-workarea-intro',
   templateUrl: './intro.component.html',
   styleUrls: ['./intro.component.scss']
 })
-export class IntroComponent implements OnInit {
+export class WorkareaIntroComponent implements OnInit {
 
   constructor() { }
 

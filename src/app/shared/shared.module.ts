@@ -23,6 +23,7 @@ import { ButtonComponent } from './button/button.component';
   ],
   exports: [
     CommonModule,
+    ReactiveFormsModule,
     InputDynamicComponent,
     InputTextComponent,
     InputNumberComponent,

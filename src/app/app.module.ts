@@ -29,14 +29,14 @@ import { FormCreatorModule } from './form-creator/form-creator.module';
     BrowserAnimationsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    AppRoutingModule,
     SharedModule,
     FormCreatorModule,
+    AppRoutingModule,
   ],
   providers: [
     AuthGuard,
     AuthService,
-    FieldService
+    FieldService,
   ],
   bootstrap: [AppComponent]
 })
