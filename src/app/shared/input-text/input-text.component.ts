@@ -26,12 +26,8 @@ export class InputTextComponent implements ControlValueAccessor {
     private renderer: Renderer2
   ) {}
 
-  public isEmpty(value: any): boolean {
-    if (value && value.toString().trim().length > 0) {
-      return false;
-    } else {
-      return true;
-    }
+  public isEmpty(value: string): boolean {
+    return !(value && value.trim().length > 0);
   }
 
   public setDisabledState(isDisabled: boolean): void {
