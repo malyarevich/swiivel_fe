@@ -5,8 +5,7 @@
     (blur)="onTouched()"
     (input)="onChange(input.value)"
     [class.empty]="isEmpty(input.value)"
-    #input
-  />
-  <ng-content select="span.placeholder"></ng-content>
+    #input/>
+  <ng-content></ng-content>
   <i class="input_text__error_icon"></i>
 </div>
