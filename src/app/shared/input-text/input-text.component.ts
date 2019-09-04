@@ -1,11 +1,18 @@
-import { Component, ChangeDetectionStrategy, ViewChild, ElementRef, Renderer2, Input, Optional, Self } from '@angular/core';
-import { ControlValueAccessor, NgControl } from '@angular/forms';
+import { Component, ChangeDetectionStrategy, ViewChild, ElementRef, Renderer2, forwardRef } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
   selector: 'sw-input-text',
   templateUrl: './input-text.component.html',
   styleUrls: ['./input-text.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => InputTextComponent),
+      multi: true
+    }
+  ]
 })
 
 export class InputTextComponent implements ControlValueAccessor {
@@ -16,10 +23,15 @@ export class InputTextComponent implements ControlValueAccessor {
   private onTouched: () => void;
 
   constructor(
-    @Optional() @Self() public control: NgControl,
     private renderer: Renderer2
-  ) {
-    this.control.valueAccessor = this;
+  ) {}
+
+  public isEmpty(value: any): boolean {
+    if (value && value.toString().trim().length > 0) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   public setDisabledState(isDisabled: boolean): void {
@@ -36,10 +48,6 @@ export class InputTextComponent implements ControlValueAccessor {
 
   public writeValue(obj: any): void {
     this.renderer.setProperty(this.input.nativeElement, 'value', obj);
-  }
-
-  public onInputChange() {
-    this.onChange(this.input.nativeElement.value);
   }
 
 }

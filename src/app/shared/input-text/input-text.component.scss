@@ -15,20 +15,16 @@
       border: 1px solid $soft-gray;
       box-sizing: border-box;
       border-radius: 3px;
-      padding-left: 10px;
       outline: none;
       &:focus {
         border: 1px solid $purple;
-      }
-      &.invalid {
-        border: 1px solid $error-color;
       }
     }
     &__error {
       &_icon {
         width: 13px;
         height: 13px;
-        display: block;
+        display: none;
         position: absolute;
         top: 10px;
         right: 10px;
@@ -43,20 +39,24 @@
           position: absolute;
           left: 3px;
           top: 5.5px;
-          background-color: $white
-        }
-        &:before {
+          background-color: $white;
           transform: rotate(45deg);
         }
         &:after {
           transform: rotate(-45deg);
         }
       }
-      &_message {
-        font-size: 12px;
-        line-height: 13px;
-        color: $error-color;
-      }
+    }
+  }
+}
+
+:host(.ng-invalid) {
+  .input_text {
+    &__input {
+      border: 1px solid $error-color;
+    }
+    &__error_icon {
+      display: block;
     }
   }
 }
