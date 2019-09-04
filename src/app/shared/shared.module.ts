@@ -12,11 +12,12 @@ import { InputTextComponent } from './input-text/input-text.component';
 import { InputToggleComponent } from './input-toggle/input-toggle.component';
 // Headers
 import { PageHeaderComponent} from './headers/page-header/page-header.component';
+import { BlockHeaderComponent} from './headers/block-header/block-header.component';
 
 @NgModule({
-  imports:      [
+  imports: [
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   declarations: [
     // Buttons
@@ -30,6 +31,7 @@ import { PageHeaderComponent} from './headers/page-header/page-header.component'
     InputToggleComponent,
     // Headers
     PageHeaderComponent,
+    BlockHeaderComponent,
   ],
   exports: [
     CommonModule,
@@ -43,7 +45,8 @@ import { PageHeaderComponent} from './headers/page-header/page-header.component'
     InputTextComponent,
     InputToggleComponent,
     // Headers
-    PageHeaderComponent
+    PageHeaderComponent,
+    BlockHeaderComponent,
   ]
 })
 export class SharedModule { }
