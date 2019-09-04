@@ -11,6 +11,7 @@ export type PopupParams<T> = {
   origin: HTMLElement | ElementRef;
   content: PopupContent;
   data?: T;
+  location?: string;
 }
 
 @Injectable({
@@ -24,15 +25,15 @@ export class Popup {
     private injector: Injector
   ) {}
 
-  open<T>({ origin, content, data, width, height, panelClass }: PopupParams<T>): PopupRef<T> {
-    const overlayRef = this.overlay.create(this.getOverlayConfig({ origin, width, height, panelClass }));
+  open<T>({ origin, content, data, width, height, panelClass, location }: PopupParams<T>): PopupRef<T> {
+    const overlayRef = this.overlay.create(this.getOverlayConfig({ origin, width, height, panelClass, location }));
     const popupRef = new PopupRef<T>(overlayRef, content, data);
     const injector = this.createInjector(popupRef, this.injector);
     overlayRef.attach(new ComponentPortal(PopupComponent, null, injector));
     return popupRef;
   }
 
-  private getOverlayConfig({ origin, width, height, panelClass }): OverlayConfig {
+  private getOverlayConfig({ origin, width, height, panelClass, location }): OverlayConfig {
     let ss, bc;
     if (panelClass === 'fullpage-panel') {
       ss = this.overlay.scrollStrategies.block();
@@ -50,12 +51,12 @@ export class Popup {
       height,
       backdropClass: bc,
       panelClass,
-      positionStrategy: this.getOverlayPosition(origin, panelClass),
+      positionStrategy: this.getOverlayPosition(origin, panelClass, location),
       scrollStrategy: ss
     });
   }
 
-  private getOverlayPosition(origin: HTMLElement, panelClass): PositionStrategy {
+  private getOverlayPosition(origin: HTMLElement, panelClass, location): PositionStrategy {
     if (panelClass === 'fullpage-panel' || panelClass === 'centered-panel') {
       const positionStrategy = this.overlay.position().global()
         .centerHorizontally().centerVertically();
@@ -63,10 +64,9 @@ export class Popup {
     } else {
       const positionStrategy = this.overlay.position()
       .flexibleConnectedTo(origin)
-      .withPositions(this.getPositions())
+      .withPositions(this.getPositions(location))
       .withFlexibleDimensions()
       .withViewportMargin(5)
-      // .withScrollableContainers()
       .withPush(false);
       return positionStrategy;
     }
@@ -77,33 +77,32 @@ export class Popup {
     return new PortalInjector(injector, tokens);
   }
 
-  private getPositions(): ConnectionPositionPair[] {
-    return [
-      {
-        originX : 'start',
-        originY : 'bottom',
-        overlayX: 'start',
-        overlayY: 'top',
-      },
-      // {
-      //   originX : 'center',
-      //   originY : 'bottom',
-      //   overlayX: 'center',
-      //   overlayY: 'top',
-      // },
-      // {
-      //   originX : 'end',
-      //   originY : 'bottom',
-      //   overlayX: 'end',
-      //   overlayY: 'top',
-      // },
-      // {
-      //   originX : 'start',
-      //   originY : 'bottom',
-      //   overlayX: 'center',
-      //   overlayY: 'top',
-      // },
-    ];
+  private getPositions(location): ConnectionPositionPair[] {
+    let result: ConnectionPositionPair[] = [{
+      originX: 'start',
+      originY: 'bottom',
+      overlayX: 'start',
+      overlayY: 'top',
+    }];
+    switch (location) {
+      case 'start':
+        result = [{
+          originX: 'start',
+          originY: 'bottom',
+          overlayX: 'start',
+          overlayY: 'top',
+        }];
+        break;
+      case 'center':
+        result = [{
+          originX: 'start',
+          originY: 'bottom',
+          overlayX: 'center',
+          overlayY: 'top',
+        }];
+        break;
+    }
+    return result;
   }
 
 }

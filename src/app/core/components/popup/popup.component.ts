@@ -2,8 +2,7 @@ import { Component, OnInit, TemplateRef } from '@angular/core';
 import { PopupRef, PopupContent } from './popup.ref';
 
 @Component({
-  templateUrl: './popup.component.html',
-  styleUrls: ['./popup.component.scss']
+  templateUrl: './popup.component.html'
 })
 export class PopupComponent implements OnInit {
   renderMethod: 'template' | 'component' = 'component';

@@ -1,8 +1,4 @@
-<div class="popup">
-  <ng-container *ngIf="renderMethod === 'template'">
-    <ng-container *ngTemplateOutlet="content; context: context"></ng-container>
-  </ng-container>
-  <ng-container *ngIf="renderMethod === 'component'">
-    <ng-container *ngComponentOutlet="content"></ng-container>
-  </ng-container>
+<div class="popup" style="width: 100%">
+  <ng-container *ngComponentOutlet="!context ? content : template"></ng-container>
+  <ng-template #template *ngTemplateOutlet=" content; context: context"></ng-template>
 </div>
