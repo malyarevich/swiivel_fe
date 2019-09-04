@@ -2,7 +2,8 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 // Buttons
-import { ButtonComponent } from './button/button.component';
+import { ButtonComponent } from './buttons/button/button.component';
+import { IconButtonComponent } from './buttons/icon-button/icon-button.component';
 // Inputs
 import { InputButtonGroupComponent } from './input-button-group/input-button-group.component';
 import { InputCheckboxComponent } from './input-checkbox/input-checkbox.component';
@@ -22,6 +23,7 @@ import { BlockHeaderComponent} from './headers/block-header/block-header.compone
   declarations: [
     // Buttons
     ButtonComponent,
+    IconButtonComponent,
     // Inputs
     InputButtonGroupComponent,
     InputCheckboxComponent,
@@ -37,6 +39,7 @@ import { BlockHeaderComponent} from './headers/block-header/block-header.compone
     CommonModule,
     // Buttons
     ButtonComponent,
+    IconButtonComponent,
     // Inputs
     InputButtonGroupComponent,
     InputCheckboxComponent,

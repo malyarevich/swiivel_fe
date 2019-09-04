@@ -10,7 +10,6 @@ import fields from '@app/shared/fields';
 })
 
 export class DashboardComponent implements OnInit {
-
   form: FormGroup;
 
   buttons = [
