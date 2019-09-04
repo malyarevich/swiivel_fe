@@ -14,7 +14,7 @@ import { numericValidator } from '@core/validators';
 export class DashboardComponent implements OnInit {
   form: FormGroup;
 
-  buttons = [
+  buttonsOptions = [
     {
       label: 'Upload',
       value: 'upload-value'
@@ -29,6 +29,13 @@ export class DashboardComponent implements OnInit {
     }
   ];
 
+  numberOptions = {
+    type: 'decimal',
+    places: 3
+    // type: 'Percentage',
+    // type: 'Currency'
+  };
+
   constructor(
     private fb: FormBuilder
   ) {
@@ -37,7 +44,7 @@ export class DashboardComponent implements OnInit {
       toggle: new FormControl(true),
       checkbox: new FormControl(true),
       buttonGroup: new FormControl('upload-value'),
-      number: new FormControl(123456, numericValidator)
+      number: new FormControl(123456)
     });
   }
 
