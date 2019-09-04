@@ -1,8 +1,11 @@
-<label class="controlLabel">
-  <ng-content select=".label"></ng-content>
+<label class="input_number">
+  <input
+    type="number"
+    class="input_number__input"
+    (blur)="onTouched()"
+    (input)="onChange(input.value)"
+    [class.empty]="!input.value"
+    #input
+  />
+  <ng-content></ng-content>
 </label>
-<input type="number" #input (blur)="onTouched()" (input)="changed(input.value)"/>
-<span class="icon">x</span>
-<span *ngFor="let error of errors" class="errorSubtext">
-  {{error}}
-</span>

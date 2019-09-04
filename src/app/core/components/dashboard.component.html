@@ -1,6 +1,6 @@
 <form [formGroup]="form">
   <sw-input-text formControlName="short">
-    <span class="placeholder">Placeholder</span>
+    <span class="input_label">Placeholder</span>
   </sw-input-text>
 
   <sw-input-toggle formControlName="toggle">
@@ -12,5 +12,9 @@
   </sw-input-checkbox>
 
   <sw-input-button-group formControlName="buttonGroup" [options]="buttons"></sw-input-button-group>
+
+  <sw-input-number formControlName="number">
+    <span class="input_label">default value</span>
+  </sw-input-number>
 
 </form>

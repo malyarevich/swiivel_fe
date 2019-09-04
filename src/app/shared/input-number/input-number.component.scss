@@ -1,49 +1,33 @@
 @import "index";
 
-:host {
-    @extend %flex;
-    margin: 10px 0;
+.input_number {
+  width: 100%;
+  position: relative;
+  margin: 0;
+  &__input {
     width: 100%;
-}
-
-.formControl{
-    width: 100%;
-    position: relative;
-
-    .controlLabel{
-        color: $element-base-color;
-        font-size: 0.85em;
-        font-weight: bold;
-        letter-spacing: 0.31px;
-        line-height: 11px;
+    height: 35px;
+    background: $white;
+    border: 1px solid $soft-gray;
+    box-sizing: border-box;
+    border-radius: 3px;
+    padding: 15px 10px 5px 10px;
+    -moz-appearance: textfield;
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
     }
-
-    .icon {
-        position: absolute;
-        top: calc(50% + 10px);
-        left: 0;
-        z-index: 1;
-        transform: translateY(-50%);
-
-        &.last {
-            top: 50%;
-            left: 92%;
-            transform: translate(-50%, -50%);
-        }
+    &:focus {
+      border: 1px solid $purple;
     }
+  }
 }
 
-.inputCtrl{
-    @extend %flex;
-
-    justify-content: space-between;
-}
-
-.errorSubtext{
-    color: $invalid-color;
-    font-size: 9px;
-    font-weight: bold;
-    letter-spacing: 0.31px;
-    line-height: 11px;
-    text-transform: uppercase;
+:host(.ng-invalid) {
+  .input_number {
+    &__input {
+      border: 1px solid $error-color;
+    }
+  }
 }

@@ -3,6 +3,8 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { FieldService } from '@core/field.service';
 import fields from '@app/shared/fields';
 
+import { numericValidator } from '@core/validators';
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -34,7 +36,8 @@ export class DashboardComponent implements OnInit {
       short: new FormControl('short text', Validators.required),
       toggle: new FormControl(true),
       checkbox: new FormControl(true),
-      buttonGroup: new FormControl('upload-value')
+      buttonGroup: new FormControl('upload-value'),
+      number: new FormControl(123456, numericValidator)
     });
   }
 
