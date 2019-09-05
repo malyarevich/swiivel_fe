@@ -161,6 +161,7 @@ select {
 
 div.dropdown-overlay {
   overflow: auto;
+  min-width: 100px;
   max-height: 500px;
   margin-top: 5px;
   background-color: #fff;
@@ -168,8 +169,59 @@ div.dropdown-overlay {
   padding-right: 0px;
   border-radius: 3px;
   box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2);
-  // @include scroll(4px);
-  div.dropdown-list {
-    padding: 10px;
+}
+
+div.dropdown_items_container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  &__item {
+    width: 100%;
+    padding: 8px 10px;
+    display: flex;
+    flex-direction: row;
+    .text {
+      line-height: 15px;
+    }
+    &.selected {
+      .text {
+        font-weight: bold;
+        color: #4350A2;
+      }
+    }
+    &:hover {
+      background-color: #E4E7FF;
+    }
+  }
+}
+
+div.checkbox_container {
+  display: block;
+  width: 15px;
+  height: 15px;
+  border: 1px solid #4350A2;
+  border-radius: 3px;
+  margin-right: 10px;
+  text-align: center;
+  overflow: hidden;
+  position: relative;
+  &__checkbox {
+    display: none;
+    position: absolute;
+    height: 10px;
+    width: 5px;
+    overflow:hidden;
+    border-bottom: 2px solid #fff;
+    border-right: 2px solid #fff;
+    border-radius: 1px;
+    top: 0.1rem;
+    left: 0.3rem;
+    transform: rotate(45deg);
+  }
+  &.selected {
+    background-color: #4350A2;
+    .checkbox_container__checkbox {
+      display: inline-block;
+    }
   }
 }

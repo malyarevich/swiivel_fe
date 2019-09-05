@@ -1,9 +1,22 @@
-<sw-input-text #holder [formControl]="_inputControl" (click)="showPopup()">
-    <span class="placeholder">{{ placeholder }}</span>
-</sw-input-text>
+<div #holder class="dropdown_input_container" [class.active]="dropdownActive" [class.empty]="!dropdownActive && !value?.length > 0" (click)="showPopup()">
+  <ng-content select="span.placeholder"></ng-content>
+  <ng-container *ngFor="let item of value">
+    <div class="dropdown_input_container__input" [class.many]="_multiple"> 
+        <span class="text"> {{ item.title }} </span>
+        <i class="fas fa-times" (click)="remove(item, $event)"></i>
+    </div>
+  </ng-container>
+</div>
+
 <ng-template #droplist>
-  <div class="dropdown-list">
-    <sw-multi-select class="column" [mode]="'checkbox'" [list]="list" [formControl]="_dropdownControl">
-    </sw-multi-select>
+  <div class="dropdown_items_container">
+    <ng-container *ngFor="let item of _dropdownList">
+      <div class="dropdown_items_container__item" [class.selected]="isSelected(item)" (click)="select(item)">
+        <div class="checkbox_container" *ngIf="_multiple" [class.selected]="isSelected(item)">
+          <div class="checkbox_container__checkbox"></div>
+        </div>
+        <span class="text">{{item.title}}</span>
+      </div>
+    </ng-container>
   </div>
 </ng-template>

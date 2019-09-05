@@ -11,6 +11,8 @@
     <span class="input_label">default value</span>
   </sw-input-checkbox>
 
-  <sw-dropdown-input formControlName="dropdown" [dropdownList]="dropdownList"></sw-dropdown-input>
+  <sw-dropdown-input formControlName="dropdown" [multiple]="true" [options]="dropdownList">
+    <span class="placeholder">Placeholder</span>    
+  </sw-dropdown-input>
 
 </form>

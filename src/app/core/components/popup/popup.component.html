@@ -1,4 +1,4 @@
 <div class="popup" style="width: 100%">
   <ng-container *ngComponentOutlet="!context ? content : template"></ng-container>
-  <ng-template #template *ngTemplateOutlet=" content; context: context"></ng-template>
+  <ng-template #template *ngTemplateOutlet="content; context: context"></ng-template>
 </div>
