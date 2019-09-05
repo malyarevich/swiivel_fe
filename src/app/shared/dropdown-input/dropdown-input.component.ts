@@ -1,8 +1,7 @@
 import { Component, OnInit, forwardRef, Input, ViewChild, ChangeDetectorRef, ElementRef, ChangeDetectionStrategy } from '@angular/core';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl } from '@angular/forms';
+import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { Popup } from '@app/core/popup.service';
 import { SelectionModel } from '@angular/cdk/collections';
-import { pull } from 'lodash';
 
 const DROPDOWN_CONTROL_ACCESSOR = {
   provide: NG_VALUE_ACCESSOR,
@@ -25,10 +24,8 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
   onChange: Function;
   onTouched: Function;
   dropdownList: any[];
-  dropdownActive: boolean = false;
-  _disable: boolean = false;
+  disable: boolean = false;
   _multiple: boolean = false;
-  value: any;
   
   @Input() panelClass: string = 'dropdown-overlay';
   @Input() 
@@ -38,16 +35,13 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
   }
   @Input()
   set options(opts: any[]) {
-    this.dropdownList = opts === undefined ? null : opts;
-  }
-  @Input() 
-  set disable(opt: boolean) {
-    this._disable = opt === undefined ? false : opt;
+    if (opts) {
+      this.dropdownList = opts;
+    }
   }
 
   @ViewChild('droplist', { static: false }) droplist;
   @ViewChild('holder', { static: false, read: ElementRef }) holder: ElementRef;
-
 
   constructor(
     private popup: Popup,
@@ -60,13 +54,17 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
     this._sm = new SelectionModel(this._multiple);  
   }
 
+  get value() {
+    return this._sm.selected;
+  }
+
+  get active() {
+    return !!this._ref;
+  }
+    
   writeValue(items: any[]): void {
-    if (items) {
-      this._sm.select(...items.map(opt => opt.value));
-      this.setValue();
-    } else {
-      this.value = [];
-    }
+    this._sm.select(...items);
+    this.cdr.markForCheck();
   }
 
   registerOnTouched(fn: Function): void {
@@ -77,57 +75,47 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
     this.onChange = fn;
   }
 
+  setDisabledState(isDisabled: boolean): void {
+    this.disable = isDisabled;
+  }
+
   isSelected(item) {
-    const selected = this._sm.selected.find(option => option.title === item.title);
+    const selected = this._sm.selected.find(option => option === item);
     return selected;
   }
 
   isEmpty() {
-    return !this.dropdownActive && this._sm.isEmpty();
+    return !this.active && this._sm.isEmpty();
   }
 
   select(item): void {
-    const selected = this._sm.selected.find((s) => (s == item));
-        
-    if (selected) {
-      this._sm.deselect(selected);
-    }
-    else {
-      this._sm.select(item);
-    }
+    this._sm.toggle(item);
     if (!this._multiple) this._ref.close();
-    this.setValue();
     this.onChange(this._sm.selected);
-    this.onTouched()
-  }
-
-  setValue() {
-    this.value = this._sm.selected;
     this.cdr.markForCheck();
   }
   
-  remove(item, event: MouseEvent) {
+  remove(item, event?: Event) {
     if (event) {
       event.preventDefault();
       event.stopImmediatePropagation();
     }
-    pull(this.value, item);
     this._sm.deselect(item);
     this.onChange(this._sm.selected);
     this.cdr.markForCheck();
+    return false;
   }
 
   showPopup(): void {
-    if (this._disable === true) return ;
+    if (!!this.disable) return ;
     
-    this.dropdownActive = true;
     this._ref = this.popup.open({
       origin: this.holder,
       content: this.droplist,
       panelClass: this.panelClass
     });
     this._ref.afterClosed$.subscribe((result) => {
-      this.dropdownActive = false;
+      this._ref = null;
       this.onTouched();
       this.cdr.markForCheck();
     })
