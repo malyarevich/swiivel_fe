@@ -1,8 +1,11 @@
 <div class="input_text">
-  <input type="text" #input (blur)="onTouched()" class="input_text__input" (input)="changed(input.value)" [class.empty]="!input.value"/>
-  <ng-content select="span"></ng-content>
+  <input
+    type="text"
+    class="input_text__input"
+    (blur)="onTouched()"
+    (input)="onChange(input.value)"
+    [class.empty]="isEmpty(input.value)"
+    #input/>
+  <ng-content></ng-content>
+  <i class="input_text__error_icon"></i>
 </div>
-
-<!--<span *ngFor="let error of errors" class="errorSubtext">-->
-<!--  {{error}}-->
-<!--</span>-->

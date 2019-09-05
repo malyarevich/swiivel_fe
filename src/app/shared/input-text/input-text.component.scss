@@ -8,34 +8,54 @@
       width: 100%;
       height: 35px;
       background: $white;
-      font-family: $nunito-sans-regular;
       font-size: 12px;
       line-height: 15px;
       color: $black;
       border: 1px solid $soft-gray;
       box-sizing: border-box;
       border-radius: 3px;
-      padding: 15px 10px 5px 10px;
       outline: none;
-      & + .placeholder {
-        font-size: 10px;
-        transform: translateY(-10px);
+      &:focus {
+        border: 1px solid $purple;
       }
-      &.empty {
-        & + .placeholder {
-          font-size: 12px;
-          transform: translateY(0);
+    }
+    &__error {
+      &_icon {
+        width: 13px;
+        height: 13px;
+        display: none;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        border-radius: 50%;
+        background-color: $error-color;
+        &:before,
+        &:after {
+          content: "";
+          width: 7px;
+          height: 2px;
+          border-radius: 2px;
+          position: absolute;
+          left: 3px;
+          top: 5.5px;
+          background-color: $white;
+          transform: rotate(45deg);
+        }
+        &:after {
+          transform: rotate(-45deg);
         }
       }
     }
-    .placeholder {
-      position: absolute;
-      top: 15px;
-      left: 10px;
-      line-height: 15px;
-      font-family: $nunito-sans-regular;
-      color: $gray-color;
-      transition: all .4s ease-in-out;
+  }
+}
+
+:host(.ng-invalid) {
+  .input_text {
+    &__input {
+      border: 1px solid $error-color;
+    }
+    &__error_icon {
+      display: block;
     }
   }
 }

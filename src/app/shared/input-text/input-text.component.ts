@@ -1,4 +1,4 @@
-import { Component, OnInit, forwardRef, ChangeDetectionStrategy, ViewChild, ElementRef, Renderer2, ViewEncapsulation } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ViewChild, ElementRef, Renderer2, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
@@ -12,38 +12,38 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
       useExisting: forwardRef(() => InputTextComponent),
       multi: true
     }
-  ],
-  encapsulation: ViewEncapsulation.ShadowDom
+  ]
 })
-export class InputTextComponent implements OnInit, ControlValueAccessor {
-  onChange: Function = (_: string) => {};
-  onTouched: Function;
-  errors: [];
+
+export class InputTextComponent implements ControlValueAccessor {
+
   @ViewChild('input', {static: true}) input: ElementRef;
 
-  setDisabledState?(isDisabled: boolean): void {
+  private onChange: (value: any) => void;
+  private onTouched: () => void;
+
+  constructor(
+    private renderer: Renderer2
+  ) {}
+
+  public isEmpty(value: string): boolean {
+    return !(value && value.trim().length > 0);
+  }
+
+  public setDisabledState(isDisabled: boolean): void {
     this.renderer.setProperty(this.input.nativeElement, 'disabled', isDisabled);
   }
-  registerOnTouched(fn: any): void {
+
+  public registerOnTouched(fn: any): void {
     this.onTouched = fn;
   }
-  registerOnChange(fn: any): void {
+
+  public registerOnChange(fn: any): void {
     this.onChange = fn;
   }
-  writeValue(obj: any): void {
+
+  public writeValue(obj: any): void {
     this.renderer.setProperty(this.input.nativeElement, 'value', obj);
-  }
-
-  constructor(private renderer: Renderer2) {
-
-  }
-
-  ngOnInit() {
-  }
-
-
-  changed(event: Event) {
-    this.onChange(this.input.nativeElement.value);
   }
 
 }

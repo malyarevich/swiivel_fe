@@ -1,0 +1,26 @@
+@import "../styles/variables/colors";
+
+.small-button {
+  padding: 2px 7px;
+  color: #fff;
+  background: $element-base-color;
+  border-radius: 5px;
+  font: 800 10px/13px 'NunitoSans-Bold';
+
+  &:hover,
+  &:focus {
+    background: $hover-purple
+  }
+
+  &:active {
+    opacity: 0.8;
+  }
+
+  .small-button__icon {
+    font-size: 11px;
+
+    &.small-button__icon--text{
+      margin: 0 3px 0 0;
+    }
+  }
+}
