@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { PopupRef, PopupContent } from './popup.ref';
 
 @Component({
@@ -8,6 +8,8 @@ export class PopupComponent implements OnInit {
   renderMethod: 'template' | 'component' = 'component';
   content: PopupContent;
   context;
+
+  @ViewChild('template', {static: false}) template;
 
   constructor(private popupRef: PopupRef) {
   }

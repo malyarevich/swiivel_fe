@@ -19,8 +19,8 @@ export class InputTextComponent implements ControlValueAccessor {
 
   @ViewChild('input', {static: true}) input: ElementRef;
 
-  private onChange: (value: any) => void;
-  private onTouched: () => void;
+  onChange: (value: any) => void;
+  onTouched: () => void;
 
   constructor(
     private renderer: Renderer2
