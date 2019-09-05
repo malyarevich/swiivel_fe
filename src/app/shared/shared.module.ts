@@ -6,15 +6,19 @@ import { ButtonComponent } from './buttons/button/button.component';
 import { IconButtonComponent } from './buttons/icon-button/icon-button.component';
 import { SmallButtonComponent } from './buttons/small-button/small-button.component';
 // Inputs
-import { InputButtonGroupComponent } from './input-button-group/input-button-group.component';
-import { InputCheckboxComponent } from './input-checkbox/input-checkbox.component';
-import { InputDynamicComponent } from './input-dynamic/input-dynamic.component';
-import { InputNumberComponent } from './input-number/input-number.component';
-import { InputTextComponent } from './input-text/input-text.component';
-import { InputToggleComponent } from './input-toggle/input-toggle.component';
+import { InputButtonGroupComponent } from './inputs/input-button-group/input-button-group.component';
+import { InputCheckboxComponent } from './inputs/input-checkbox/input-checkbox.component';
+import { InputDynamicComponent } from './inputs/input-dynamic/input-dynamic.component';
+import { InputNumberComponent } from './inputs/input-number/input-number.component';
+import { InputTextComponent } from './inputs/input-text/input-text.component';
+import { InputToggleComponent } from './inputs/input-toggle/input-toggle.component';
+import { DropdownInputComponent } from './inputs/dropdown-input/dropdown-input.component';
+
 // Headers
 import { PageHeaderComponent} from './headers/page-header/page-header.component';
 import { BlockHeaderComponent} from './headers/block-header/block-header.component';
+// Others
+import { UserItemComponent } from './user-item/user-item.component';
 
 @NgModule({
   imports: [
@@ -33,9 +37,12 @@ import { BlockHeaderComponent} from './headers/block-header/block-header.compone
     InputNumberComponent,
     InputTextComponent,
     InputToggleComponent,
+    DropdownInputComponent,
     // Headers
     PageHeaderComponent,
     BlockHeaderComponent,
+    // Others
+    UserItemComponent,
   ],
   exports: [
     CommonModule,
@@ -50,9 +57,12 @@ import { BlockHeaderComponent} from './headers/block-header/block-header.compone
     InputNumberComponent,
     InputTextComponent,
     InputToggleComponent,
+    DropdownInputComponent,
     // Headers
     PageHeaderComponent,
     BlockHeaderComponent,
+    // Others
+    UserItemComponent,
   ]
 })
 export class SharedModule { }

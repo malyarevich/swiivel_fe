@@ -36,3 +36,9 @@
     }
   }
 }
+
+:host(.active) {
+  .input_text .input_text__input {
+    border: 1px solid #4350A2;
+  }
+}

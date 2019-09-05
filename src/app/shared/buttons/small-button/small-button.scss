@@ -1,11 +1,11 @@
-@import "../styles/variables/colors";
+@import 'index';
 
 .small-button {
   padding: 2px 7px;
   color: #fff;
   background: $element-base-color;
   border-radius: 5px;
-  font: 800 10px/13px 'NunitoSans-Bold';
+  font: 800 10px/13px $nunito-sans-bold;
 
   &:hover,
   &:focus {
