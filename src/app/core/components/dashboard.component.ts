@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { FieldService } from '@core/field.service';
 import fields from '@app/shared/fields';
 import * as vs from '@core/validators';
@@ -65,7 +65,7 @@ export class DashboardComponent implements OnInit {
       dropdown: new FormControl([]),
       number: new FormControl(123456, Validators.required),
       phone: new FormControl('', vs.phoneNumberValidator()),
-      email: new FormControl('', vs.emailValidator())
+      email: new FormControl('', vs.emailValidator()),
     });
   }
 
@@ -82,5 +82,4 @@ export class DashboardComponent implements OnInit {
       console.log(`Value changed`, value);
     });
   }
-
 }

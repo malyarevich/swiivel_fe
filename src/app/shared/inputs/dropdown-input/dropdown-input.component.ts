@@ -16,6 +16,7 @@ const DROPDOWN_CONTROL_ACCESSOR = {
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [DROPDOWN_CONTROL_ACCESSOR]
 })
+
 export class DropdownInputComponent implements OnInit, ControlValueAccessor {
 
   private _ref;

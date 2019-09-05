@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 // Buttons
+import { DropdownButtonComponent } from './buttons/dropdown-button/dropdown-button.component'
 import { ButtonComponent } from './buttons/button/button.component';
 import { IconButtonComponent } from './buttons/icon-button/icon-button.component';
 import { SmallButtonComponent } from './buttons/small-button/small-button.component';
@@ -23,6 +24,7 @@ import { InputEmailComponent } from './inputs/input-email/input-email.component'
 // Others
 import { UserItemComponent } from './user-item/user-item.component';
 
+
 @NgModule({
   imports: [
     CommonModule,
@@ -30,6 +32,7 @@ import { UserItemComponent } from './user-item/user-item.component';
   ],
   declarations: [
     // Buttons
+    DropdownButtonComponent,
     ButtonComponent,
     IconButtonComponent,
     SmallButtonComponent,
@@ -52,6 +55,7 @@ import { UserItemComponent } from './user-item/user-item.component';
   exports: [
     CommonModule,
     // Buttons
+    DropdownButtonComponent,
     ButtonComponent,
     IconButtonComponent,
     SmallButtonComponent,
