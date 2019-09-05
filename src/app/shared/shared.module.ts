@@ -17,6 +17,8 @@ import { DropdownInputComponent } from './inputs/dropdown-input/dropdown-input.c
 // Headers
 import { PageHeaderComponent} from './headers/page-header/page-header.component';
 import { BlockHeaderComponent} from './headers/block-header/block-header.component';
+// Others
+import { UserItemComponent } from './user-item/user-item.component';
 
 @NgModule({
   imports: [
@@ -39,6 +41,8 @@ import { BlockHeaderComponent} from './headers/block-header/block-header.compone
     // Headers
     PageHeaderComponent,
     BlockHeaderComponent,
+    // Others
+    UserItemComponent,
   ],
   exports: [
     CommonModule,
@@ -57,6 +61,8 @@ import { BlockHeaderComponent} from './headers/block-header/block-header.compone
     // Headers
     PageHeaderComponent,
     BlockHeaderComponent,
+    // Others
+    UserItemComponent,
   ]
 })
 export class SharedModule { }
