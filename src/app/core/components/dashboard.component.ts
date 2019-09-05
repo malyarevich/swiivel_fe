@@ -32,8 +32,6 @@ export class DashboardComponent implements OnInit {
   numberOptions = {
     type: 'decimal',
     places: 3
-    // type: 'Percentage',
-    // type: 'Currency'
   };
 
   constructor(
