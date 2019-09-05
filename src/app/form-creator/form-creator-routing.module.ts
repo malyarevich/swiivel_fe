@@ -7,12 +7,12 @@ import { MainComponent } from '@app/core/components/main.component';
 
 const routes: Routes = [
   {
-    path: 'form-creator',
+    path: '',
     component: MainComponent,
     canActivate: [AuthGuard],
     canActivateChild: [AuthGuard],
     children: [
-      { path: '',  component: FormCreatorComponent, pathMatch: 'full' },
+      { path: 'form-creator',  component: FormCreatorComponent, pathMatch: 'full' },
     ]
   },
   // {

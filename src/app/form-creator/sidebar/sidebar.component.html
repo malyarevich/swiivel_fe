@@ -1,2 +1,2 @@
-<p>sidebar works!</p>
-<button type="button" (click)="onSwitch('fields')">Fields</button>
+<sw-form-creator-sidebar-section *ngFor="let section of sections" [section]="section" (activate)="onSwitch($event)">
+</sw-form-creator-sidebar-section>

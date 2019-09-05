@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { SidebarIntroComponent } from './sidebar/intro.component';
+import { SidebarFieldsComponent } from './sidebar/fields.component';
 
 @Component({
   selector: 'sw-form-creator',
@@ -7,7 +9,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FormCreatorComponent implements OnInit {
   workarea;
-  sections = [];
+  sections = [
+    {name: 'Introduction', component: SidebarIntroComponent, active: true},
+    {name: 'Fields', component: SidebarFieldsComponent}
+  ];
   constructor() { }
 
   ngOnInit() {
