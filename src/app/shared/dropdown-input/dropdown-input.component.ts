@@ -20,15 +20,15 @@ const DROPDOWN_CONTROL_ACCESSOR = {
 export class DropdownInputComponent implements OnInit, ControlValueAccessor {
 
   private _ref;
-  private _onChange: Function;
-  private _onTouched: Function;
   private _sm: SelectionModel<any>;
   
-  public _dropdownList: any[];
-  public dropdownActive: boolean = false;
-  public _disable: boolean = false;
-  public _multiple: boolean = false;
-  public value: any;
+  onChange: Function;
+  onTouched: Function;
+  dropdownList: any[];
+  dropdownActive: boolean = false;
+  _disable: boolean = false;
+  _multiple: boolean = false;
+  value: any;
   
   @Input() panelClass: string = 'dropdown-overlay';
   @Input() 
@@ -38,7 +38,7 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
   }
   @Input()
   set options(opts: any[]) {
-    this._dropdownList = opts;
+    this.dropdownList = opts === undefined ? null : opts;
   }
   @Input() 
   set disable(opt: boolean) {
@@ -70,16 +70,20 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
   }
 
   registerOnTouched(fn: Function): void {
-    this._onTouched = fn;
+    this.onTouched = fn;
   }
 
   registerOnChange(fn: Function): void {
-    this._onChange = fn;
+    this.onChange = fn;
   }
 
   isSelected(item) {
     const selected = this._sm.selected.find(option => option.title === item.title);
     return selected;
+  }
+
+  isEmpty() {
+    return !this.dropdownActive && this._sm.isEmpty();
   }
 
   select(item): void {
@@ -91,14 +95,15 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
     else {
       this._sm.select(item);
     }
+    if (!this._multiple) this._ref.close();
     this.setValue();
-    this._onChange(this._sm.selected);
-    this._onTouched();
-    this.cdr.markForCheck();
+    this.onChange(this._sm.selected);
+    this.onTouched()
   }
 
   setValue() {
     this.value = this._sm.selected;
+    this.cdr.markForCheck();
   }
   
   remove(item, event: MouseEvent) {
@@ -108,7 +113,7 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
     }
     pull(this.value, item);
     this._sm.deselect(item);
-    this._onChange(this._sm.selected);
+    this.onChange(this._sm.selected);
     this.cdr.markForCheck();
   }
 
@@ -123,7 +128,7 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
     });
     this._ref.afterClosed$.subscribe((result) => {
       this.dropdownActive = false;
-      this._onTouched();
+      this.onTouched();
       this.cdr.markForCheck();
     })
   }

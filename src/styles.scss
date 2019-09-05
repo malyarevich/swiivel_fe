@@ -200,8 +200,9 @@ div.checkbox_container {
   text-align: center;
   overflow: hidden;
   position: relative;
-  &__checkbox {
+  &::after {
     display: none;
+    content: '';
     position: absolute;
     height: 10px;
     width: 5px;
@@ -215,7 +216,7 @@ div.checkbox_container {
   }
   &.selected {
     background-color: #4350A2;
-    .checkbox_container__checkbox {
+    &::after {
       display: inline-block;
     }
   }

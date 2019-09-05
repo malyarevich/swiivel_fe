@@ -1,19 +1,19 @@
-<div #holder class="dropdown_input_container" [class.active]="dropdownActive" [class.empty]="!dropdownActive && !value?.length > 0" (click)="showPopup()">
+<div #holder class="dropdown_input_container" [class.active]="dropdownActive" [class.empty]="isEmpty()"
+  (click)="showPopup()">
   <ng-content select="span.placeholder"></ng-content>
   <ng-container *ngFor="let item of value">
-    <div class="dropdown_input_container__input" [class.many]="_multiple"> 
-        <span class="text"> {{ item.title }} </span>
-        <i class="fas fa-times" (click)="remove(item, $event)"></i>
+    <div class="dropdown_input_container__input" [class.many]="_multiple">
+      <span class="text"> {{ item.title }} </span>
+      <i class="fas fa-times" (click)="remove(item, $event)"></i>
     </div>
   </ng-container>
 </div>
 
 <ng-template #droplist>
   <div class="dropdown_items_container">
-    <ng-container *ngFor="let item of _dropdownList">
+    <ng-container *ngFor="let item of dropdownList">
       <div class="dropdown_items_container__item" [class.selected]="isSelected(item)" (click)="select(item)">
         <div class="checkbox_container" *ngIf="_multiple" [class.selected]="isSelected(item)">
-          <div class="checkbox_container__checkbox"></div>
         </div>
         <span class="text">{{item.title}}</span>
       </div>
