@@ -3,10 +3,12 @@
     type="number"
     class="input_number__input"
     (blur)="onTouched()"
-    (input)="onInputChange($event)"
+    (keydown)="onKeyDown($event)"
+    (input)="onInputChange(input.value)"
     [class.empty]="!input.value"
     #input
   />
-  <span *ngIf="options.currency" class="input_number__currency_symbol">{{options.currency}}</span>
   <ng-content></ng-content>
+  <i *ngIf="options.type === 'currency'" class="input_number_icon currency">$</i>
+  <i *ngIf="options.type === 'percentage'" class="input_number_icon percent">%</i>
 </label>

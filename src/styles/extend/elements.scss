@@ -62,7 +62,7 @@
   padding: 15px 10px 5px 10px;
   &.empty {
     padding: 10px;
-    & + span {
+    & ~ span {
       &.input_label {
         position: absolute;
         top: 9px;
@@ -70,7 +70,7 @@
       }
     }
   }
-  & + span {
+  & ~ span {
     &.input_label {
       position: absolute;
       top: 2px;
