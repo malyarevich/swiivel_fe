@@ -14,6 +14,8 @@ import { AuthGuard } from '@core/auth.guard';
 import { AuthService } from '@core/auth.service';
 import { DashboardComponent } from '@core/components/dashboard.component';
 import { FieldService } from '@core/field.service';
+import { PopupComponent } from '@core/components/popup/popup.component';
+import { OverlayModule } from '@angular/cdk/overlay';
 // todo: delete after routing
 import { DataCollectionComponent } from '@app/modules/data-collection/data-collection.component';
 
@@ -24,6 +26,7 @@ import { DataCollectionComponent } from '@app/modules/data-collection/data-colle
     RestorePasswordComponent,
     MainComponent,
     DashboardComponent,
+    PopupComponent,
     DataCollectionComponent
   ],
   imports: [
@@ -33,6 +36,10 @@ import { DataCollectionComponent } from '@app/modules/data-collection/data-colle
     ReactiveFormsModule,
     AppRoutingModule,
     SharedModule,
+    OverlayModule
+  ],
+  entryComponents: [
+    PopupComponent
   ],
   providers: [
     AuthGuard,

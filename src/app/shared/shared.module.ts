@@ -12,6 +12,8 @@ import { InputDynamicComponent } from './input-dynamic/input-dynamic.component';
 import { InputNumberComponent } from './input-number/input-number.component';
 import { InputTextComponent } from './input-text/input-text.component';
 import { InputToggleComponent } from './input-toggle/input-toggle.component';
+import { DropdownInputComponent } from './dropdown-input/dropdown-input.component';
+
 // Headers
 import { PageHeaderComponent} from './headers/page-header/page-header.component';
 import { BlockHeaderComponent} from './headers/block-header/block-header.component';
@@ -33,6 +35,7 @@ import { BlockHeaderComponent} from './headers/block-header/block-header.compone
     InputNumberComponent,
     InputTextComponent,
     InputToggleComponent,
+    DropdownInputComponent,
     // Headers
     PageHeaderComponent,
     BlockHeaderComponent,
@@ -50,6 +53,7 @@ import { BlockHeaderComponent} from './headers/block-header/block-header.compone
     InputNumberComponent,
     InputTextComponent,
     InputToggleComponent,
+    DropdownInputComponent,
     // Headers
     PageHeaderComponent,
     BlockHeaderComponent,

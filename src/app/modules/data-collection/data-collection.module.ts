@@ -7,7 +7,7 @@ import { DataCollectionComponent } from './data-collection.component';
 
 @NgModule({
   declarations: [
-    DataCollectionComponent,
+    // DataCollectionComponent,
   ],
   imports: [
     CommonModule,

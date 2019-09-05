@@ -12,6 +12,27 @@ import fields from '@app/shared/fields';
 export class DashboardComponent implements OnInit {
   form: FormGroup;
 
+  dropdownList = [
+    {
+      id: 1, title: 'Test 1'
+    },
+    {
+      id: 2, title: 'Test 2'
+    },
+    {
+      id: 3, title: 'Test 3'
+    },
+    {
+      id: 4, title: 'Test 4'
+    },
+    {
+      id: 5, title: 'Test 5'
+    },
+    {
+      id: 6, title: 'Test 6'
+    }
+  ];
+
   buttons = [
     {
       label: 'Upload',
@@ -34,7 +55,8 @@ export class DashboardComponent implements OnInit {
       short: new FormControl('short text', Validators.required),
       toggle: new FormControl(true),
       checkbox: new FormControl(true),
-      buttonGroup: new FormControl('upload-value')
+      buttonGroup: new FormControl('upload-value'),
+      dropdown: new FormControl([]),
     });
   }
 
