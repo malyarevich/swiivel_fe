@@ -9,13 +9,21 @@ import { FormControl } from '@angular/forms';
 export class SectionComponent implements OnInit {
   @Input() section;
   @Output() activate = new EventEmitter<string>();
-  @HostBinding('class.expanded') get isExpanded() {
-    return !!this.section.active;
-  };
-  @HostListener('click', ['$event'])
+  @Output() collapseAll = new EventEmitter<boolean>();
+  //   return !!this.section.active;
+  // };
+  // @HostListener('click', ['$event'])
   onClick(event: Event) {
-    event.preventDefault();
     this.activate.next(this.section.name.toLowerCase())
+  }
+  toggleSection() {
+    if (!this.section.expanded) {
+      this.collapseAll.next(true);
+      this.activate.next(this.section.name.toLowerCase());
+      this.section.expanded = true;
+    } else {
+      this.section.expanded = false;
+    }
   }
   control: FormControl = new FormControl();
   constructor() {
@@ -23,6 +31,9 @@ export class SectionComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.control.valueChanges.subscribe((value) => {
+      this.activate.next(this.section.name)
+    })
   }
 
 }

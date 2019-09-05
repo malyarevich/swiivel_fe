@@ -1,4 +1,7 @@
-.example-tree-node {
-  display: flex;
-  align-items: center;
+:host {
+  display: block;
+  .example-tree-node {
+    display: flex;
+    align-items: center;
+  }
 }

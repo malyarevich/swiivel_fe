@@ -13,11 +13,26 @@ export class FieldService {
     // for (let field of fields) {
       let res = flatMapDeep(fields, (field) => {
         field.level = level;
-        if (field.type === FieldType.GROUP || field.type === FieldType.SECTION) {
+        if (field.type === FieldType.SECTION || field.type === FieldType.GROUP) {
           if (field.fields && field.fields.length > 0) {
             field.expandable = true;
-            return this.toFlatTree(field.fields, level++);
+            let children = this.toFlatTree(field.fields, level+1);
+            field.fields = null;
+            children.push(field);
+            return children;
+          } else {
+            return field;
           }
+        // } else if (field.type === FieldType.GROUP) {
+        //   if (field.fields && field.fields.length > 0) {
+        //     field.expandable = true;
+        //     let children = this.toFlatTree(field.fields, level+1);
+        //     field.fields = null;
+        //     children.push(field);
+        //     return children;
+        //   } else {
+        //     return field;
+        //   }
         } else {
           return field;
         }
