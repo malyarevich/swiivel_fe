@@ -18,7 +18,7 @@ export class SmallButtonComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.iconClass = 'fas ' + this.icon;
+    this.iconClass = 'fas ' + this.icon + ' small-button__icon';
   }
 
   public onButtonClick(): void {

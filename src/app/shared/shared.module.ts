@@ -5,7 +5,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ButtonComponent } from './buttons/button/button.component';
 import { IconButtonComponent } from './buttons/icon-button/icon-button.component';
 import { SmallButtonComponent } from './buttons/small-button/small-button.component';
-import { MultiSelectComponent } from './multi-select/multi-select.component';
 // Inputs
 import { InputButtonGroupComponent } from './input-button-group/input-button-group.component';
 import { InputCheckboxComponent } from './input-checkbox/input-checkbox.component';
@@ -29,7 +28,6 @@ import { BlockHeaderComponent} from './headers/block-header/block-header.compone
     ButtonComponent,
     IconButtonComponent,
     SmallButtonComponent,
-    MultiSelectComponent,
     // Inputs
     InputButtonGroupComponent,
     InputCheckboxComponent,
@@ -48,7 +46,6 @@ import { BlockHeaderComponent} from './headers/block-header/block-header.compone
     ButtonComponent,
     IconButtonComponent,
     SmallButtonComponent,
-    MultiSelectComponent,
     // Inputs
     InputButtonGroupComponent,
     InputCheckboxComponent,

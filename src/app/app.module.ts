@@ -16,6 +16,8 @@ import { DashboardComponent } from '@core/components/dashboard.component';
 import { FieldService } from '@core/field.service';
 import { PopupComponent } from '@core/components/popup/popup.component';
 import { OverlayModule } from '@angular/cdk/overlay';
+// todo: delete after routing
+import { DataCollectionComponent } from '@app/modules/data-collection/data-collection.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,8 @@ import { OverlayModule } from '@angular/cdk/overlay';
     RestorePasswordComponent,
     MainComponent,
     DashboardComponent,
-    PopupComponent
+    PopupComponent,
+    DataCollectionComponent
   ],
   imports: [
     BrowserModule,

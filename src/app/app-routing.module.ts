@@ -6,6 +6,8 @@ import { LoginComponent } from '@core/components/login.component';
 import { RestorePasswordComponent } from '@core/components/restore-password.component';
 import { AuthGuard } from '@core/auth.guard';
 import { DashboardComponent } from '@core/components/dashboard.component';
+import { DataCollectionComponent } from '@app/modules/data-collection/data-collection.component';
+import { routes as dataCollectionRoutes } from './modules/data-collection/data-collection-routing.module';
 
 const routes: Routes = [
   {
@@ -15,6 +17,12 @@ const routes: Routes = [
   {
     path: 'restore-password',
     component: RestorePasswordComponent
+  },
+  // todo: delete after work routing
+  {
+    path: 'data-collection',
+    component: DataCollectionComponent,
+    children: dataCollectionRoutes
   },
   {
     path: '',
