@@ -1,0 +1,7 @@
+<div class="user-item">
+  <div
+    class="user-item__image"
+    [ngStyle]="{'background-image': userItem.avatar ? 'url(' + userItem.avatar + ')' : '' }">
+  </div>
+  <p class="user-item__text">{{ userItem.name }}</p>
+</div>
