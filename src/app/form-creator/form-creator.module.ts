@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {ScrollingModule} from '@angular/cdk/scrolling';
+import {CdkTreeModule} from '@angular/cdk/tree';
+
 import { SharedModule } from '@shared/shared.module';
 
 
@@ -20,6 +22,7 @@ import { SidebarFieldsComponent } from './sidebar/fields.component';
     CommonModule,
     FormCreatorRoutingModule,
     ScrollingModule,
+    CdkTreeModule,
     SharedModule
   ],
   entryComponents: [

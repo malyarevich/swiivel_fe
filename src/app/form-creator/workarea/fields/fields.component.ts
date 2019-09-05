@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { fields, sidebar } from '@shared/fields';
+import { FieldService } from '@app/core/field.service';
+import {FlatTreeControl} from '@angular/cdk/tree';
+import { ArrayDataSource } from '@angular/cdk/collections';
+
 
 @Component({
   selector: 'sw-form-creator-workarea-fields',
@@ -6,10 +11,35 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./fields.component.scss']
 })
 export class WorkareaFieldsComponent implements OnInit {
+  treeControl = new FlatTreeControl<any>(node => node.level, node => !!node.expandable);
+  fieldsTree = this.fs.toFlatTree(sidebar);
+  treeSource = new ArrayDataSource(this.fieldsTree);
+  constructor(private fs: FieldService) {
 
-  constructor() { }
+  }
 
   ngOnInit() {
+    console.table(this.fs.toFlatTree(sidebar));
+    console.table(sidebar);
+
+  }
+
+  hasChild = (_: number, node: any) => node.expandable;
+
+  getParentNode(node: any) {
+    const nodeIndex = this.fieldsTree.indexOf(node);
+
+    for (let i = nodeIndex - 1; i >= 0; i--) {
+      if (this.fieldsTree.level === node.level - 1) {
+        return this.fieldsTree;
+      }
+    }
+
+    return null;
+  }
+  shouldRender(node: any) {
+    const parent = this.getParentNode(node);
+    return !parent || parent.isExpanded;
   }
 
 }

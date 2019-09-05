@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { FieldType } from '@app/shared/fields.enum';
+import { flatMapDeep } from 'lodash';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,25 @@ import { FieldType } from '@app/shared/fields.enum';
 export class FieldService {
 
   constructor() { }
-
+  toFlatTree(fields: any[], level = 0) {
+    // for (let field of fields) {
+      let res = flatMapDeep(fields, (field) => {
+        field.level = level;
+        if (field.type === FieldType.GROUP || field.type === FieldType.SECTION) {
+          if (field.fields && field.fields.length > 0) {
+            field.expandable = true;
+            return this.toFlatTree(field.fields, level++);
+          }
+        } else {
+          return field;
+        }
+      });
+      // if (field.type === FieldType.GROUP || field.type === FieldType.SECTION) {
+      // console.table(res)
+      return res;
+      // }
+    // }
+  }
   fromArray(fields: any[], recursive?): FormGroup | any[] {
     let form = {};
     for (let field of fields) {
