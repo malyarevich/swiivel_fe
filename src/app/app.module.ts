@@ -14,6 +14,8 @@ import { AuthGuard } from '@core/auth.guard';
 import { AuthService } from '@core/auth.service';
 import { DashboardComponent } from '@core/components/dashboard.component';
 import { FieldService } from '@core/field.service';
+// todo: delete after routing
+import { DataCollectionComponent } from '@app/modules/data-collection/data-collection.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,8 @@ import { FieldService } from '@core/field.service';
     LoginComponent,
     RestorePasswordComponent,
     MainComponent,
-    DashboardComponent
+    DashboardComponent,
+    DataCollectionComponent
   ],
   imports: [
     BrowserModule,
