@@ -1,6 +1,6 @@
 import { Component, OnInit, forwardRef, Input, ViewChild, ChangeDetectorRef, ElementRef, ChangeDetectionStrategy } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-import { Popup } from '@app/core/popup.service';
+import { Popup } from '@core/popup.service';
 import { SelectionModel } from '@angular/cdk/collections';
 
 const DROPDOWN_CONTROL_ACCESSOR = {
@@ -20,15 +20,15 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
 
   private _ref;
   private _sm: SelectionModel<any>;
-  
+
   onChange: Function;
   onTouched: Function;
   dropdownList: any[];
   disable: boolean = false;
   _multiple: boolean = false;
-  
+
   @Input() panelClass: string = 'dropdown-overlay';
-  @Input() 
+  @Input()
   set multiple(opt: boolean) {
     this._multiple = opt === undefined ? false : opt;
     this._sm = new SelectionModel(this._multiple);
@@ -51,7 +51,7 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
   }
 
   ngOnInit(): void {
-    this._sm = new SelectionModel(this._multiple);  
+    this._sm = new SelectionModel(this._multiple);
   }
 
   get value() {
@@ -61,7 +61,7 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
   get active() {
     return !!this._ref;
   }
-    
+
   writeValue(items: any[]): void {
     this._sm.select(...items);
     this.cdr.markForCheck();
@@ -94,7 +94,7 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
     this.onChange(this._sm.selected);
     this.cdr.markForCheck();
   }
-  
+
   remove(item, event?: Event) {
     if (event) {
       event.preventDefault();
@@ -108,7 +108,7 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
 
   showPopup(): void {
     if (!!this.disable) return ;
-    
+
     this._ref = this.popup.open({
       origin: this.holder,
       content: this.droplist,
