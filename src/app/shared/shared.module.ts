@@ -17,6 +17,9 @@ import { DropdownInputComponent } from './inputs/dropdown-input/dropdown-input.c
 // Headers
 import { PageHeaderComponent} from './headers/page-header/page-header.component';
 import { BlockHeaderComponent} from './headers/block-header/block-header.component';
+import { InputPhoneNumberComponent } from './input-phone-number/input-phone-number.component';
+import { InputEmailComponent } from './input-email/input-email.component';
+
 // Others
 import { UserItemComponent } from './user-item/user-item.component';
 
@@ -38,6 +41,8 @@ import { UserItemComponent } from './user-item/user-item.component';
     InputTextComponent,
     InputToggleComponent,
     DropdownInputComponent,
+    InputPhoneNumberComponent,
+    InputEmailComponent,
     // Headers
     PageHeaderComponent,
     BlockHeaderComponent,
@@ -58,6 +63,8 @@ import { UserItemComponent } from './user-item/user-item.component';
     InputTextComponent,
     InputToggleComponent,
     DropdownInputComponent,
+    InputPhoneNumberComponent,
+    InputEmailComponent,
     // Headers
     PageHeaderComponent,
     BlockHeaderComponent,

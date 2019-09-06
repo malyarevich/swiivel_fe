@@ -125,21 +125,19 @@ sw-input-button-group {
   }
 }
 
-sw-dropdown-input {
+
+sw-dropdown-input,
+sw-input-phone-number,
+sw-input-email {
+  .phone_number,
+  .email,
   .dropdown_input_container {
-    .placeholder {
-      position: absolute;
-      top: 2px;
-      left: 9px;
-      font-size: 10px;
-      color: $gray-color;
-      transition: all 0.2s ease-in-out;
-    }
+    @extend %placeholder;
     &.empty {
       padding: 10px;
       .placeholder {
         position: absolute;
-        top: 7px;
+        top: 8px;
         font-size: 12px;
       }
     }
