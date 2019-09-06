@@ -35,7 +35,7 @@ import { FormCreatorModule } from './form-creator/form-creator.module';
     MainComponent,
     DashboardComponent,
     PopupComponent,
-    DataCollectionComponent
+    DataCollectionComponent,
   ],
   imports: [
     BrowserModule,
