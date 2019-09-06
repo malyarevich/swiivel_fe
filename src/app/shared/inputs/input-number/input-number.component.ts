@@ -46,13 +46,6 @@ export class InputNumberComponent implements ControlValueAccessor {
     this.renderer.setProperty(this.input.nativeElement, 'value', obj);
   }
 
-  public onKeyDown(e: KeyboardEvent) {
-    const keyCodes = [69, 107, 109, 187, 189];
-    if (keyCodes.includes(e.keyCode)) {
-      e.preventDefault();
-    }
-  }
-
   public onInputChange(value: any): void {
     let regexp: RegExp;
     switch (this.options.type) {
