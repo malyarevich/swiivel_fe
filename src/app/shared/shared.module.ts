@@ -17,6 +17,7 @@ import { DropdownInputComponent } from './dropdown-input/dropdown-input.componen
 // Headers
 import { PageHeaderComponent} from './headers/page-header/page-header.component';
 import { BlockHeaderComponent} from './headers/block-header/block-header.component';
+import { InputPhoneNumberComponent } from './input-phone-number/input-phone-number.component';
 
 @NgModule({
   imports: [
@@ -36,6 +37,7 @@ import { BlockHeaderComponent} from './headers/block-header/block-header.compone
     InputTextComponent,
     InputToggleComponent,
     DropdownInputComponent,
+    InputPhoneNumberComponent,
     // Headers
     PageHeaderComponent,
     BlockHeaderComponent,
@@ -54,6 +56,7 @@ import { BlockHeaderComponent} from './headers/block-header/block-header.compone
     InputTextComponent,
     InputToggleComponent,
     DropdownInputComponent,
+    InputPhoneNumberComponent,
     // Headers
     PageHeaderComponent,
     BlockHeaderComponent,

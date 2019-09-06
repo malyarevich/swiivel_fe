@@ -1,3 +1,5 @@
+@import "variables/colors";
+
 %common-btn {
   appearance: none;
   color: #FFFFFF;
@@ -110,5 +112,44 @@
     font-size: 17px;
     width: 24px;
     height: 24px;
+  }
+}
+
+%placeholder {
+  .placeholder {
+    z-index: 3;
+    position: absolute;
+    top: 2px;
+    left: 10px;
+    font-size: 10px;
+    color: $gray-color;
+    transition: all 0.2s ease-in-out;
+  }
+}
+
+%input-error-icon {
+  width: 13px;
+  height: 13px;
+  z-index: 3;
+  display: none;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border-radius: 50%;
+  background-color: $error-color;
+  &:before,
+  &:after {
+    content: "";
+    width: 7px;
+    height: 2px;
+    border-radius: 2px;
+    position: absolute;
+    left: 3px;
+    top: 5.5px;
+    background-color: $white;
+    transform: rotate(45deg);
+  }
+  &:after {
+    transform: rotate(-45deg);
   }
 }
