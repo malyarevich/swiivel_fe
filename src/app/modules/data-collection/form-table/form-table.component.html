@@ -11,5 +11,17 @@
   </div>
   <div class="app-form-table__table">
     <sw-block-header [header]="'forms'"></sw-block-header>
+    <div>
+      <div *ngFor="let form of forms">
+      <button [ngClass]="{ 'button-red': form.isSelected}" (click)="selectForm(form.id)">{{ form.name }}</button>
+      </div>
+    </div>
+    <div>
+      <div *ngFor="let selectedForm of selectedForms"> {{ selectedForm.name }}</div>
+    <button (click)="shareForms()">Share</button>
+    <button (click)="archiveForms()">Archive</button>
+    <button (click)="exportFormsPDF()">Export PDF</button>
+      <button (click)="exportFormsZIP()">Export PDF</button>
+    </div>
   </div>
 </div>
