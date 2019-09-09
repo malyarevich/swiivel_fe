@@ -2,26 +2,36 @@ import { Component, OnInit, forwardRef, ChangeDetectionStrategy, ViewChild, Elem
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
-  selector: 'sw-input-text',
-  templateUrl: './input-text.component.html',
-  styleUrls: ['./input-text.component.scss'],
+  selector: 'sw-input-textarea',
+  templateUrl: './input-textarea.component.html',
+  styleUrls: ['./input-textarea.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => InputTextComponent),
+      useExisting: forwardRef(() => InputTextareaComponent),
       multi: true
     }
   ],
 })
-export class InputTextComponent implements OnInit, ControlValueAccessor {
+export class InputTextareaComponent implements OnInit, ControlValueAccessor {
   onChange: Function = (_: string) => {};
   onTouched: Function;
-  errors: [];
   @ViewChild('input', {static: true}) input: ElementRef;
-  @Input() readonly: boolean;
+  @Input() rows: number = 4;
+  @Input() cols: number = 30;
+  @Input('readonly') set readonly(isReadonly: boolean) {
+    if (!!isReadonly) {
+      this.renderer.setAttribute(this.input.nativeElement, 'readonly', 'readonly');
+    } else {
+      this.renderer.removeAttribute(this.input.nativeElement, 'readonly');
+    }
+    console.log(isReadonly);
+    console.log(this.input.nativeElement);
+  }
 
   setDisabledState?(isDisabled: boolean): void {
+    console.log('disable t');
     this.renderer.setProperty(this.input.nativeElement, 'disabled', isDisabled);
   }
   registerOnTouched(fn: any): void {
@@ -42,7 +52,7 @@ export class InputTextComponent implements OnInit, ControlValueAccessor {
   }
 
 
-  changed(event: Event) {
+  changed(event?: Event) {
     this.onChange(this.input.nativeElement.value);
   }
 

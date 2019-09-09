@@ -17,7 +17,7 @@ export interface IMenuItems {
 })
 export class MainComponent implements OnInit {
   menuItems: IMenuItems[] = [
-    {route: '/', label: 'Dashboard', icon: 'fa-th'},
+    {route: '/dashboard', label: 'Dashboard', icon: 'fa-th'},
     {route: '/bus', label: 'Bus', icon: 'fa-bus'},
     {route: '/payer-accounts', label: 'Payer Accounts', icon: 'fa-wallet'},
     {route: '/persons', label: 'Persons', icon: 'fa-user'},

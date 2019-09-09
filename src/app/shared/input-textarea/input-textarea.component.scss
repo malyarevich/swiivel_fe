@@ -1,0 +1,48 @@
+@import "index";
+
+:host {
+  .input_text {
+    width: 100%;
+    position: relative;
+    &__input {
+      width: 100%;
+      height: 35px;
+      background: $white;
+      font-family: "Nunito Sans";
+      font-size: 12px;
+      line-height: 15px;
+      color: $black;
+      border: 1px solid $soft-gray;
+      box-sizing: border-box;
+      border-radius: 3px;
+      padding: 15px 10px 5px 10px;
+      outline: none;
+      & + .placeholder {
+        font-size: 10px;
+        transform: translateY(-10px);
+      }
+      &.empty {
+        & + .placeholder {
+          font-size: 12px;
+          transform: translateY(0);
+        }
+      }
+    }
+    .placeholder {
+      position: absolute;
+      top: 15px;
+      left: 10px;
+      line-height: 15px;
+      font-family: "Nunito Sans";
+      color: $gray-color;
+      transition: all .4s ease-in-out;
+      touch-action: none;
+    }
+  }
+}
+
+:host(.active) {
+  .input_text .input_text__input {
+    border: 1px solid #4350A2;
+  }
+}

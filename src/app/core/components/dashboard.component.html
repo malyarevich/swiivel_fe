@@ -12,4 +12,15 @@
     <span class="input_label">default value</span>
   </sw-input-checkbox>
 
+  <sw-input-textarea formControlName="longText" [rows]="textarea.rows" [cols]="textarea.cols" [readonly]="!textarea.editable">
+    <span class="placeholder">default text</span>
+  </sw-input-textarea>
+  <sw-input-toggle [formControl]="longTextDisabled">
+    <span class="input_label">Disabled</span>
+  </sw-input-toggle>
 </form>
+<sw-input-toggle [(ngModel)]="textarea.editable">
+  <span class="input_label">Editable</span>
+</sw-input-toggle>
+<button type="button" (click)="changeTextarea()">Change textarea value</button>
+<button type="button" (click)="changeTextarea(true)">Change textarea size</button>

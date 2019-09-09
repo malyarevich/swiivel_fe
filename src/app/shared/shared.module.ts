@@ -7,6 +7,7 @@ import { InputNumberComponent } from './input-number/input-number.component';
 import { InputToggleComponent } from './input-toggle/input-toggle.component';
 import { InputCheckboxComponent } from './input-checkbox/input-checkbox.component';
 import { ButtonComponent } from './button/button.component';
+import { InputTextareaComponent } from './input-textarea/input-textarea.component';
 
 @NgModule({
   imports:      [
@@ -16,6 +17,7 @@ import { ButtonComponent } from './button/button.component';
   declarations: [
     InputDynamicComponent,
     InputTextComponent,
+    InputTextareaComponent,
     InputNumberComponent,
     InputToggleComponent,
     InputCheckboxComponent,
@@ -28,6 +30,7 @@ import { ButtonComponent } from './button/button.component';
     InputTextComponent,
     InputNumberComponent,
     InputToggleComponent,
+    InputTextareaComponent,
     InputCheckboxComponent,
     ButtonComponent
   ]
