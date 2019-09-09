@@ -1,4 +1,4 @@
-<div class="input_text">
+<div class="input_textarea">
   <textarea #input [rows]="rows" [cols]="cols" (blur)="onTouched()" class="input_textarea__input" (input)="changed($event)" [class.empty]="!input.value"></textarea>
   <ng-content select="span"></ng-content>
 </div>

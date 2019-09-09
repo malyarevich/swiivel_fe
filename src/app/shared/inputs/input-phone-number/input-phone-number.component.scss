@@ -3,6 +3,9 @@
 :host {
   .phone_number {
     @extend %input-field-container;
+    &:focus-within {
+      border-color: $button-color;
+    }
     &__input {
       @extend %input-field-style;
     }
