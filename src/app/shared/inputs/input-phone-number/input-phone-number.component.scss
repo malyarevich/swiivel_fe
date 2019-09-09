@@ -1,0 +1,22 @@
+@import "index";
+
+:host {
+  .phone_number {
+    @extend %input-field-container;
+    &__input {
+      @extend %input-field-style;
+    }
+    &__error_icon {
+      @extend %input-error-icon;
+    }
+  }
+}
+
+:host(.ng-invalid) {
+  .phone_number {
+    border: 1px solid $error-color;
+    &__error_icon {
+      display: block;
+    }
+  }
+}

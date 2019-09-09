@@ -1,13 +1,10 @@
 import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 
-
 export interface IMenuItems {
   route: string;
   label: string;
   icon: string;
 }
-
-
 
 @Component({
   selector: 'app-main',
@@ -15,6 +12,7 @@ export interface IMenuItems {
   styleUrls : ['./main.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
+
 export class MainComponent implements OnInit {
   menuItems: IMenuItems[] = [
     {route: '/dashboard', label: 'Dashboard', icon: 'fa-th'},

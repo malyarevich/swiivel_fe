@@ -14,7 +14,11 @@ import { AuthGuard } from '@core/auth.guard';
 import { AuthService } from '@core/auth.service';
 import { DashboardComponent } from '@core/components/dashboard.component';
 import { FieldService } from '@core/field.service';
+import { PopupComponent } from '@core/components/popup/popup.component';
+import { OverlayModule } from '@angular/cdk/overlay';
 import { FormCreatorModule } from './form-creator/form-creator.module';
+// todo: delete after routing
+import { DataCollectionComponent } from '@app/modules/data-collection/data-collection.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +26,9 @@ import { FormCreatorModule } from './form-creator/form-creator.module';
     LoginComponent,
     RestorePasswordComponent,
     MainComponent,
-    DashboardComponent
+    DashboardComponent,
+    PopupComponent,
+    DataCollectionComponent
   ],
   imports: [
     BrowserModule,
@@ -31,8 +37,12 @@ import { FormCreatorModule } from './form-creator/form-creator.module';
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
+    OverlayModule,
     FormCreatorModule,
     AppRoutingModule,
+  ],
+  entryComponents: [
+    PopupComponent
   ],
   providers: [
     AuthGuard,
