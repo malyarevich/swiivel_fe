@@ -60,7 +60,7 @@ export class DashboardComponent implements OnInit {
       checkbox: new FormControl(true),
       buttonGroup: new FormControl('upload-value'),
       dropdown: new FormControl([]),
-      number: new FormControl(123456),
+      number: new FormControl(123456, Validators.required),
       phone: new FormControl('', vs.phoneNumberValidator()),
       email: new FormControl('', vs.emailValidator())
     });
