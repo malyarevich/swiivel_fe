@@ -13,7 +13,7 @@ import { InputNumberComponent } from './inputs/input-number/input-number.compone
 import { InputTextComponent } from './inputs/input-text/input-text.component';
 import { InputToggleComponent } from './inputs/input-toggle/input-toggle.component';
 import { DropdownInputComponent } from './inputs/dropdown-input/dropdown-input.component';
-import { InputTextareaComponent } from './input-textarea/input-textarea.component';
+import { InputTextareaComponent } from './inputs/input-textarea/input-textarea.component';
 
 // Headers
 import { PageHeaderComponent} from './headers/page-header/page-header.component';
