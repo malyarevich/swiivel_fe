@@ -2,7 +2,7 @@ export enum FieldType {
   SHORT_TEXT = 101,
   LONG_TEXT = 102,
   NUMBER = 103,
-  MULTIPLE = 104,
+  MULTIPLE = 104 || 105,
   DATE = 106,
   EMAIL = 108,
   PHONE_NUMBER = 109,

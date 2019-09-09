@@ -19,8 +19,8 @@ export class InputToggleComponent implements ControlValueAccessor {
 
   @ViewChild('input', {static: true}) input: ElementRef;
 
-  private onChange: (value: boolean) => void;
-  private onTouched: () => void;
+  private onChange: Function = (value) => {};
+  private onTouched: Function = () => {};
 
   constructor(
     private renderer: Renderer2

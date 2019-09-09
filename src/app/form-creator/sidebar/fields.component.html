@@ -1,0 +1,8 @@
+<sw-input-text [formControl]="filter"></sw-input-text>
+<cdk-tree [dataSource]="treeSource" [treeControl]="treeControl">
+  <cdk-tree-node *cdkTreeNodeDef="let node" cdkTreeNodePadding
+    [style.display]="shouldRender(node) ? 'flex' : 'none'"
+    class="example-tree-node">
+    <sw-input-checkbox></sw-input-checkbox> {{node.name}}
+  </cdk-tree-node>
+</cdk-tree>

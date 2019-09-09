@@ -1,4 +1,5 @@
 <form [formGroup]="form">
+  <sw-input-dynamic [fields]="fields" *ngIf="!!fields"></sw-input-dynamic>
   <sw-input-text formControlName="short">
     <span class="placeholder">Placeholder</span>
   </sw-input-text>

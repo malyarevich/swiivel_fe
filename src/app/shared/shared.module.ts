@@ -70,6 +70,7 @@ import { UserItemComponent } from './user-item/user-item.component';
     BlockHeaderComponent,
     // Others
     UserItemComponent,
+    ReactiveFormsModule,
   ]
 })
 export class SharedModule { }

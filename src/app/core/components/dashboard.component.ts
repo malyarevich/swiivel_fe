@@ -4,6 +4,8 @@ import { FieldService } from '@core/field.service';
 import fields from '@app/shared/fields';
 import * as vs from '@core/validators';
 
+const TEST_FIELD_SERVICE = false;
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -12,6 +14,7 @@ import * as vs from '@core/validators';
 
 export class DashboardComponent implements OnInit {
   form: FormGroup;
+  fields;
 
   dropdownList = [
     {
@@ -50,7 +53,8 @@ export class DashboardComponent implements OnInit {
   ];
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private fs: FieldService
   ) {
     this.form = this.fb.group({
       short: new FormControl('short text', Validators.required),
@@ -64,6 +68,13 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (TEST_FIELD_SERVICE) {
+      this.fields = this.fs.fromArray(fields);
+      let dform = this.fb.array(this.fields.map(field => field.control));
+      dform.valueChanges.subscribe((value) => {
+        console.log(`Dynamic form fields value changed`, value)
+      });
+    }
     this.form.valueChanges.subscribe((value) => {
       console.log('Phone input', this.form.get('phone').valid);
       console.log(`Value changed`, value);

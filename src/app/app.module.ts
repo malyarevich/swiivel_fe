@@ -16,6 +16,7 @@ import { DashboardComponent } from '@core/components/dashboard.component';
 import { FieldService } from '@core/field.service';
 import { PopupComponent } from '@core/components/popup/popup.component';
 import { OverlayModule } from '@angular/cdk/overlay';
+import { FormCreatorModule } from './form-creator/form-creator.module';
 // todo: delete after routing
 import { DataCollectionComponent } from '@app/modules/data-collection/data-collection.component';
 
@@ -34,9 +35,9 @@ import { DataCollectionComponent } from '@app/modules/data-collection/data-colle
     BrowserAnimationsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    AppRoutingModule,
     SharedModule,
-    OverlayModule
+    FormCreatorModule,
+    AppRoutingModule,
   ],
   entryComponents: [
     PopupComponent
@@ -44,7 +45,7 @@ import { DataCollectionComponent } from '@app/modules/data-collection/data-colle
   providers: [
     AuthGuard,
     AuthService,
-    FieldService
+    FieldService,
   ],
   bootstrap: [AppComponent]
 })

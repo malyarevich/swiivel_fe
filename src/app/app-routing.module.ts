@@ -30,8 +30,18 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     canActivateChild: [AuthGuard],
     children: [
-      { path: '',  component: DashboardComponent, pathMatch: 'full' },
-    ]
+      {
+        path: '',  component: DashboardComponent, pathMatch: 'full'
+      },
+      {
+        path: 'form-creator',
+        loadChildren: () => {
+          return import('./form-creator/form-creator.module').then(mod => {
+            return mod.FormCreatorModule;
+          });
+        }
+      }
+    ],
   },
   {
     path: '**',
