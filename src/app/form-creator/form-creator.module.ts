@@ -15,6 +15,7 @@ import { WorkareaFieldsComponent } from './workarea/fields/fields.component';
 import { SectionComponent } from './sidebar/section.component';
 import { SidebarIntroComponent } from './sidebar/intro.component';
 import { SidebarFieldsComponent } from './sidebar/fields.component';
+import { SettingsModule } from './workarea/fields/settings/settings.module';
 
 @NgModule({
   declarations: [FormCreatorComponent, SidebarComponent, WorkareaComponent, WorkareaIntroComponent, WorkareaFieldsComponent, SectionComponent, SidebarIntroComponent, SidebarFieldsComponent],
@@ -25,7 +26,8 @@ import { SidebarFieldsComponent } from './sidebar/fields.component';
     ReactiveFormsModule,
     ScrollingModule,
     CdkTreeModule,
-    SharedModule
+    SharedModule,
+    SettingsModule
   ],
   entryComponents: [
     SidebarIntroComponent,
