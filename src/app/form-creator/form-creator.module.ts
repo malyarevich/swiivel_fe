@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {ScrollingModule} from '@angular/cdk/scrolling';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {CdkTreeModule} from '@angular/cdk/tree';
 
 import { SharedModule } from '@shared/shared.module';
-
 
 import { FormCreatorRoutingModule } from './form-creator-routing.module';
 import { FormCreatorComponent } from './form-creator.component';
@@ -21,6 +21,8 @@ import { SidebarFieldsComponent } from './sidebar/fields.component';
   imports: [
     CommonModule,
     FormCreatorRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
     ScrollingModule,
     CdkTreeModule,
     SharedModule

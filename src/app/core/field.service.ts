@@ -10,8 +10,9 @@ export class FieldService {
 
   constructor() { }
   toFlatTree(fields: any[], level = 0) {
+    // fields = fields.slice();
     // for (let field of fields) {
-      let res = flatMapDeep(fields, (field) => {
+      let res = flatMapDeep(fields.slice(), (field) => {
         field.level = level;
         if (field.type === FieldType.SECTION || field.type === FieldType.GROUP) {
           if (field.fields && field.fields.length > 0) {
