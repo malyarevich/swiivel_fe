@@ -11,35 +11,39 @@ import { ArrayDataSource } from '@angular/cdk/collections';
   styleUrls: ['./fields.component.scss']
 })
 export class WorkareaFieldsComponent implements OnInit {
-  treeControl = new FlatTreeControl<any>(node => node.level, node => !!node.expandable);
-  fieldsTree = this.fs.toFlatTree(sidebar);
+  treeControl = new FlatTreeControl<any>(node => node.level, field => field.type === 113 || field.type === 114);
+  fieldsTree = this.fs.toFlatTree(sidebar.slice()).reverse();
   treeSource = new ArrayDataSource(this.fieldsTree);
   constructor(private fs: FieldService) {
 
   }
 
   ngOnInit() {
-    console.table(this.fs.toFlatTree(sidebar));
-    console.table(sidebar);
+  }
 
+  toggleNode(node) {
+    node.expanded = !node.expanded;
+    return node.expanded;
   }
 
   hasChild = (_: number, node: any) => node.expandable;
 
   getParentNode(node: any) {
-    const nodeIndex = this.fieldsTree.indexOf(node);
+    const parentNode = this.fieldsTree.filter(field => field.type === 113 || field.type === 114).find((field) => {
+      return field.prefix === node.prefix;
+    })
+    // for (let i = nodeIndex - 1; i >= 0; i--) {
+    //   if (this.fieldsTree.level === node.level - 1) {
+    //     return this.fieldsTree;
+    //   }
+    // }
 
-    for (let i = nodeIndex - 1; i >= 0; i--) {
-      if (this.fieldsTree.level === node.level - 1) {
-        return this.fieldsTree;
-      }
-    }
-
-    return null;
+    return parentNode;
   }
+
   shouldRender(node: any) {
     const parent = this.getParentNode(node);
-    return !parent || parent.isExpanded;
+    return !parent || !parent.expanded;
   }
 
 }

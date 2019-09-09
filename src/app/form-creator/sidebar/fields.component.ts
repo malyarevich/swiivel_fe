@@ -4,7 +4,6 @@ import { FieldService } from '@app/core/field.service';
 import {FlatTreeControl} from '@angular/cdk/tree';
 import { ArrayDataSource } from '@angular/cdk/collections';
 import { FormControl } from '@angular/forms';
-import { FieldType } from '@app/shared/fields.enum';
 
 
 @Component({
@@ -13,8 +12,8 @@ import { FieldType } from '@app/shared/fields.enum';
   styleUrls: ['./fields.component.scss']
 })
 export class SidebarFieldsComponent implements OnInit {
-  treeControl = new FlatTreeControl<any>(node => node.level, node => !!node.expandable);
-  fieldsTree = this.fs.toFlatTree(sidebar).reverse();
+  treeControl = new FlatTreeControl<any>(node => node.level, field => field.type === 113 || field.type === 114);
+  fieldsTree = this.fs.toFlatTree(sidebar.slice()).reverse();
   treeSource = new ArrayDataSource(this.fieldsTree);
   filter: FormControl = new FormControl();
   constructor(private fs: FieldService) {
@@ -42,7 +41,9 @@ export class SidebarFieldsComponent implements OnInit {
   }
   shouldRender(node: any) {
     const parent = this.getParentNode(node);
-    return !parent || !parent.expanded;
+    const should = !parent || !parent.expanded;
+    console.log(should);
+    return should
   }
 
 }
