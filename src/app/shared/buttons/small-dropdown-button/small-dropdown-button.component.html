@@ -1,0 +1,14 @@
+<div class="small-dropdown-button">
+  <button
+    class="small-dropdown-button__button"
+    [ngStyle]="{'background': getButtonColor()}"
+    (click)="changeDropdownVisible()">
+    {{ selectedItem }}
+    <i [ngClass]="getIconClass()"></i>
+  </button>
+  <ul class="small-dropdown-button__list" *ngIf=isDropDownOpen>
+    <li *ngFor="let item of items">
+      <button [ngClass]="getListButtonClass(item)" (click)="selectItem(item)">{{ item }}</button>
+    </li>
+  </ul>
+</div>

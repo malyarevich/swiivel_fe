@@ -38,10 +38,12 @@ export class DashboardComponent implements OnInit {
     }
   ];
 
+  dropDownListCollection = ['Active', 'Archived', 'In Review'];
+
   buttonsOptions = [
     {
       label: 'Upload',
-      value: 'upload-value'
+      value: 'upload-va lue'
     },
     {
       label: 'Download',
