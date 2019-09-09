@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { FieldService } from '@core/field.service';
 import fields from '@app/shared/fields';
+import * as vs from '@core/validators';
 
 import { numericValidator } from '@core/validators';
 
@@ -59,12 +60,15 @@ export class DashboardComponent implements OnInit {
       checkbox: new FormControl(true),
       buttonGroup: new FormControl('upload-value'),
       dropdown: new FormControl([]),
-      number: new FormControl(123456)
+      number: new FormControl(123456),
+      phone: new FormControl('', vs.phoneNumberValidator()),
+      email: new FormControl('', vs.emailValidator())
     });
   }
 
   ngOnInit() {
     this.form.valueChanges.subscribe((value) => {
+      console.log('Phone input', this.form.get('phone').valid);
       console.log(`Value changed`, value);
     });
   }
