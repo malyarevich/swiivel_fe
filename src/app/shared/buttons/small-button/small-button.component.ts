@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import { IconsEnum } from '@shared/icons.enum';
+import { IconsEnum } from '@shared/enums/icons.enum';
 
 @Component({
   selector: 'sw-small-button',
