@@ -1,5 +1,6 @@
 import {Component, forwardRef, ChangeDetectionStrategy, ViewChild, ElementRef, Renderer2, Input} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Decimal } from 'decimal.js';
 
 @Component({
   selector: 'sw-input-number',
@@ -16,18 +17,28 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 })
 
 export class InputNumberComponent implements ControlValueAccessor {
+  oldValue;
+  prefix = {
+    'usd': '$',
+    'cad': 'C$',
+    'percent': '%',
+    'integer': ''
+  }
+  @Input() type: 'usd' | 'cad' | 'percent' | 'integer' = 'integer';
 
-  @Input() options: any;
 
   @ViewChild('input', {static: true}) input: ElementRef;
 
-  private value: any;
   private onChange: (value: any) => void;
   private onTouched: () => void;
 
   constructor(
     private renderer: Renderer2
   ) {}
+
+  get icon() {
+    return this.prefix[this.type];
+  }
 
   public setDisabledState(isDisabled: boolean): void {
     this.renderer.setProperty(this.input.nativeElement, 'disabled', isDisabled);
@@ -41,30 +52,66 @@ export class InputNumberComponent implements ControlValueAccessor {
     this.onChange = fn;
   }
 
-  public writeValue(obj: any): void {
-    this.value = obj;
-    this.renderer.setProperty(this.input.nativeElement, 'value', obj);
+  public writeValue(value: string | number): void {
+    this.renderer.setProperty(this.input.nativeElement, 'value', value);
+  }
+  onBlur(event?: Event) {
+    this.onTouched();
   }
 
-  public onInputChange(value: any): void {
-    let regexp: RegExp;
-    switch (this.options.type) {
-      case 'decimal':
-        regexp = new RegExp('\\d*\\.?\\d{0,' + this.options.places + '}');
-        break;
-      case 'percentage':
-        regexp = new RegExp('\\d{0,3}');
-        break;
-      case 'currency':
-        regexp = new RegExp('\\d*\\.?\\d{0,2}');
-        break;
+  isEmpty(value) {
+    return !(value && value.valueOf().length > 0);
+  }
+
+  setValue(value) {
+    this.onChange(value);
+    this.renderer.setProperty(this.input.nativeElement, 'value', value.valueOf());
+    this.oldValue = value;
+  }
+
+  resetValue() {
+    this.onChange(null);
+    this.renderer.setProperty(this.input.nativeElement, 'value', '');
+    this.oldValue = null;
+  }
+
+  revertValue() {
+    if (this.oldValue) {
+      this.renderer.setProperty(this.input.nativeElement, 'value', this.oldValue);
     }
-    const result = regexp.exec(value);
-    if (this.value !== result[0]) {
-      this.value = result[0];
-      this.onChange(this.value);
+  }
+
+  onInput(event: Event) {
+    let newValue = this.input.nativeElement.value.replace(/[^0-9\.]+/g, '');
+    try {
+      if (newValue.length > 0) {
+        newValue = new Decimal(newValue);
+        if (!newValue.isNaN()) {
+          if (this.type === 'integer') {
+            if (newValue.isInt() === false) {
+              if (this.oldValue) {
+                this.revertValue();
+              } else {
+                this.resetValue();
+              }
+            } else {
+              this.setValue(newValue);
+            }
+
+          } else {
+            this.setValue(newValue);
+          }
+        }
+      } else {
+        this.resetValue();
+      }
+    } catch (error) {
+      if (this.oldValue) {
+        this.revertValue();
+      } else {
+        console.error(error);
+      }
     }
-    this.renderer.setProperty(this.input.nativeElement, 'value', this.value);
   }
 
 }

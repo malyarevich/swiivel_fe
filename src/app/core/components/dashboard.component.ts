@@ -35,7 +35,7 @@ export class DashboardComponent implements OnInit {
     }
   ];
 
-  buttons = [
+  buttonsOptions = [
     {
       label: 'Upload',
       value: 'upload-value'
@@ -49,11 +49,6 @@ export class DashboardComponent implements OnInit {
       value: 'delete-value'
     }
   ];
-
-  numberOptions = {
-    type: 'decimal',
-    places: 3
-  };
 
   constructor(
     private fb: FormBuilder
