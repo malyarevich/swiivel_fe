@@ -27,13 +27,7 @@ export class DropdownSettingComponent implements OnInit {
     }
   ];
 
-  fieldsType = [
-    { title: 'Text' },
-    { title: 'Number' },
-    { title: 'Date/Time' },
-    { title: 'Phone Number' }
-  ]
-
+  fieldsType = ['Text', 'Number', 'Date/Time', 'Phone Number'].map(t => { return { title: t } });
   form: FormGroup;
 
   constructor(
@@ -42,27 +36,20 @@ export class DropdownSettingComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
-      showDefaultOptions: new FormControl(false, {updateOn: 'change'}),
-      defaultOption: new FormControl([], {updateOn: 'change'}),
-      type: new FormControl([], {updateOn: 'change'}),
-      multiple: new FormControl(false, {updateOn: 'change'}),
-      options: new FormArray([
-        new FormGroup({
-          title: new FormControl('', {updateOn: 'blur'})
-        })
-      ])
-    })
+      showDefaultOptions: new FormControl(false),
+      defaultOption: new FormControl([]),
+      type: new FormControl([]),
+      multiple: new FormControl(false),
+      options: new FormArray([])
+    });
+    this.addOption();
     this.form.valueChanges.subscribe(v => {
       this.prepareForm(v);
-    })
+    });
   }
 
   get options() {
     return <FormArray>this.form.get('options');
-  }
-
-  get optionsValue() {
-    return this.form.get('options').value;
   }
 
   setFormValue(obj: any) {
@@ -73,27 +60,21 @@ export class DropdownSettingComponent implements OnInit {
       options,
       type,
       defaultOption,
-      showDefaultOptions: defaultOption ? true : false
+      showDefaultOptions: !!defaultOption
     })
   }
 
-  showOptions() {
-    return this.form.get('showDefaultOptions').value;
-  }
-
   addOption(): void {
-    (<FormArray>this.options).push(
+    this.options.push(
       new FormGroup({
         title: new FormControl('', {updateOn: 'blur'})
       })
-    )
+    );
   }
 
   removeOption(i: number): void {
-    if (i >= 0) {
-      (<FormArray>this.options).removeAt(i);
-      if (i === 0 && this.options.value.length === 0) this.addOption();
-    }
+    if (i === 0) this.options.at(i).reset();
+    else this.options.removeAt(i);
   }
 
   prepareForm(value) {

@@ -6,7 +6,8 @@
           <span class="input_label">Select by default</span>
         </sw-input-toggle>
       </div>
-      <sw-dropdown-input *ngIf="showOptions()" class="settings-field" formControlName="defaultOption" [multiple]="false" [options]="optionsValue">
+      <sw-dropdown-input *ngIf="this.form.get('showDefaultOptions').value" class="settings-field"
+        formControlName="defaultOption" [multiple]="false" [options]="options.value">
       </sw-dropdown-input>
     </section>
     <section>
