@@ -16,6 +16,7 @@ import { RestorePasswordComponent } from '@core/components/restore-password.comp
 import { FieldService } from '@core/field.service';
 import { HttpService } from '@core/http.service';
 import { SharedModule } from '@shared/shared.module';
+import { FormCreatorModule } from './form-creator/form-creator.module';
 
 export function onInit(authService: AuthService) {
   return () => authService.load();
@@ -25,7 +26,6 @@ import { OverlayModule } from '@angular/cdk/overlay';
 // todo: delete after routing
 import { DataCollectionComponent } from '@app/modules/data-collection/data-collection.component';
 import { PopupComponent } from '@core/components/popup/popup.component';
-import { FormCreatorModule } from './form-creator/form-creator.module';
 
 @NgModule({
   declarations: [
