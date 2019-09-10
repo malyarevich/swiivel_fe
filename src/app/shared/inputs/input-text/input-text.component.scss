@@ -1,0 +1,44 @@
+@import "index";
+
+:host {
+  .input_text {
+    width: 100%;
+    position: relative;
+    margin: 0;
+    &__input {
+      width: 100%;
+      height: 35px;
+      background: $white;
+      font-size: 12px;
+      line-height: 15px;
+      color: $black;
+      border: 1px solid $soft-gray;
+      box-sizing: border-box;
+      border-radius: 3px;
+      outline: none;
+      &:focus {
+        border: 1px solid $purple;
+      }
+    }
+    &__error_icon {
+      display: none;
+    }
+  }
+}
+
+:host(.ng-invalid) {
+  .input_text {
+    &__input {
+      border: 1px solid $error-color;
+    }
+    &__error_icon {
+      display: block;
+    }
+  }
+}
+
+:host(.active) {
+  .input_text .input_text__input {
+    border: 1px solid #4350A2;
+  }
+}
