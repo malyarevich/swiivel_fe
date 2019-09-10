@@ -31,7 +31,7 @@ export class WorkareaFieldsComponent implements OnInit {
   getParentNode(node: any) {
     const parentNode = this.fieldsTree.filter(field => field.type === 113 || field.type === 114).find((field) => {
       return field.prefix === node.prefix;
-    })
+    });
     // for (let i = nodeIndex - 1; i >= 0; i--) {
     //   if (this.fieldsTree.level === node.level - 1) {
     //     return this.fieldsTree;

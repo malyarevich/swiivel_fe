@@ -1,31 +1,31 @@
-import { NgModule, APP_INITIALIZER } from '@angular/core';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MainComponent } from '@core/components/main.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { MainComponent } from '@core/components/main.component';
 
-import { LoginComponent } from '@core/components/login.component';
-import { RestorePasswordComponent } from '@core/components/restore-password.component';
-import { SharedModule } from '@shared/shared.module';
 import { AuthGuard } from '@core/auth.guard';
+import { AuthInterceptor } from '@core/auth.interceptor';
 import { AuthService } from '@core/auth.service';
 import { DashboardComponent } from '@core/components/dashboard.component';
+import { LoginComponent } from '@core/components/login.component';
+import { RestorePasswordComponent } from '@core/components/restore-password.component';
 import { FieldService } from '@core/field.service';
 import { HttpService } from '@core/http.service';
-import { AuthInterceptor } from '@core/auth.interceptor';
+import { SharedModule } from '@shared/shared.module';
 
 export function onInit(authService: AuthService) {
   return () => authService.load();
 }
 
-import { PopupComponent } from '@core/components/popup/popup.component';
 import { OverlayModule } from '@angular/cdk/overlay';
-import { FormCreatorModule } from './form-creator/form-creator.module';
 // todo: delete after routing
 import { DataCollectionComponent } from '@app/modules/data-collection/data-collection.component';
+import { PopupComponent } from '@core/components/popup/popup.component';
+import { FormCreatorModule } from './form-creator/form-creator.module';
 
 @NgModule({
   declarations: [

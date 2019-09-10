@@ -7,9 +7,13 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./section.component.scss']
 })
 export class SectionComponent implements OnInit {
+  constructor() {
+
+  }
   @Input() section;
   @Output() activate = new EventEmitter<string>();
   @Output() collapseAll = new EventEmitter<boolean>();
+  control: FormControl = new FormControl();
   //   return !!this.section.active;
   // };
   // @HostListener('click', ['$event'])
@@ -22,10 +26,6 @@ export class SectionComponent implements OnInit {
       this.section.expanded = false;
     }
   }
-  control: FormControl = new FormControl();
-  constructor() {
-
-  }
   @HostListener('click', ['$event'])
   onClick(event: Event) {
     event.preventDefault();
@@ -34,8 +34,8 @@ export class SectionComponent implements OnInit {
 
   ngOnInit() {
     this.control.valueChanges.subscribe((value) => {
-      this.activate.next(this.section.name)
-    })
+      this.activate.next(this.section.name);
+    });
   }
 
 }

@@ -80,7 +80,7 @@ export class InputNumberComponent implements ControlValueAccessor {
     }
   }
 
-  onInput(event: Event) {
+  changed(event: Event) {
     let newValue = this.input.nativeElement.value.replace(/[^0-9\.]+/g, '');
     try {
       if (newValue.length > 0) {

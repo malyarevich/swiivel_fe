@@ -1,5 +1,5 @@
-import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'sw-dropdown-setting',
@@ -32,7 +32,7 @@ export class DropdownSettingComponent implements OnInit {
     { title: 'Number' },
     { title: 'Date/Time' },
     { title: 'Phone Number' }
-  ]
+  ];
 
   form: FormGroup;
 
@@ -51,14 +51,14 @@ export class DropdownSettingComponent implements OnInit {
           title: new FormControl('', {updateOn: 'blur'})
         })
       ])
-    })
+    });
     this.form.valueChanges.subscribe(v => {
       this.prepareForm(v);
-    })
+    });
   }
 
   get options() {
-    return <FormArray>this.form.get('options');
+    return this.form.get('options') as FormArray;
   }
 
   get optionsValue() {
@@ -74,7 +74,7 @@ export class DropdownSettingComponent implements OnInit {
       type,
       defaultOption,
       showDefaultOptions: defaultOption ? true : false
-    })
+    });
   }
 
   showOptions() {
@@ -82,17 +82,17 @@ export class DropdownSettingComponent implements OnInit {
   }
 
   addOption(): void {
-    (<FormArray>this.options).push(
+    (this.options as FormArray).push(
       new FormGroup({
         title: new FormControl('', {updateOn: 'blur'})
       })
-    )
+    );
   }
 
   removeOption(i: number): void {
     if (i >= 0) {
-      (<FormArray>this.options).removeAt(i);
-      if (i === 0 && this.options.value.length === 0) this.addOption();
+      (this.options as FormArray).removeAt(i);
+      if (i === 0 && this.options.value.length === 0) { this.addOption(); }
     }
   }
 
