@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ElementRef, forwardRef, Renderer2, ViewChild, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, forwardRef, Input, Renderer2, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Decimal } from 'decimal.js';
 
@@ -19,11 +19,11 @@ import { Decimal } from 'decimal.js';
 export class InputNumberComponent implements ControlValueAccessor {
   oldValue;
   prefix = {
-    'usd': '$',
-    'cad': 'C$',
-    'percent': '%',
-    'integer': ''
-  }
+    usd: '$',
+    cad: 'C$',
+    percent: '%',
+    integer: ''
+  };
   @Input() type: 'usd' | 'cad' | 'percent' | 'integer' = 'integer';
 
 

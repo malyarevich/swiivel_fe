@@ -1,5 +1,5 @@
-<label class="email" [class.empty]="isEmpty()">
+<div class="email" [class.empty]="isEmpty()" (click)="focusInput()">
   <ng-content></ng-content>
-  <input #input class="email__input" type="text" (blur)="_onTouched()" (input)="onChange(input.value)" />
+  <input #input class="email__input" type="text" (focus)="onFocus()" (blur)="_onTouched()" (input)="onChange(input.value)" />
   <i class="email__error_icon"></i>
-</label>
+</div>

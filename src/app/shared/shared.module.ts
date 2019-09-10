@@ -17,8 +17,8 @@ import { InputToggleComponent } from './inputs/input-toggle/input-toggle.compone
 // Headers
 import { BlockHeaderComponent} from './headers/block-header/block-header.component';
 import { PageHeaderComponent} from './headers/page-header/page-header.component';
-import { InputEmailComponent } from './input-email/input-email.component';
-import { InputPhoneNumberComponent } from './input-phone-number/input-phone-number.component';
+import { InputEmailComponent } from './inputs/input-email/input-email.component';
+import { InputPhoneNumberComponent } from './inputs/input-phone-number/input-phone-number.component';
 
 // Others
 import { InputTextareaComponent } from './inputs/input-textarea/input-textarea.component';

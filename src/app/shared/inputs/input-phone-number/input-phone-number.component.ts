@@ -18,6 +18,7 @@ export class InputPhoneNumberComponent implements OnInit, ControlValueAccessor {
 
   onChange: Function;
   onTouched: Function;
+  focus = false;
 
   @ViewChild('input', {static: true}) input: ElementRef;
 
@@ -44,11 +45,20 @@ export class InputPhoneNumberComponent implements OnInit, ControlValueAccessor {
     this.renderer.setProperty(this.input.nativeElement, 'disabled', isDisabled);
   }
 
+  focusInput(): void {
+    if (this.input) { this.input.nativeElement.focus(); }
+  }
+
+  onFocus(): void {
+    this.focus = true;
+  }
+
   isEmpty(): boolean {
-    return !this.input.nativeElement.value;
+    return !this.focus && !this.input.nativeElement.value;
   }
 
   _onTouched(): void {
+    this.focus = false;
     this.onTouched();
   }
 
