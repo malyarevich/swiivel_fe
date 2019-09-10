@@ -1,4 +1,5 @@
 import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
+import { Router } from '@angular/router';
 
 
 export interface IMenuItems {
@@ -25,8 +26,12 @@ export class MainComponent implements OnInit {
     {route: '/period', label: 'Period', icon: 'fa-calendar'},
     {route: '/data-collection', label: 'Data Collection', icon: 'fa-file'},
   ]
-  constructor() {}
+  constructor(private router: Router) {}
   ngOnInit(): void {}
   toggleMenu() {}
-  logOut() {}
+  logOut() {
+    window.localStorage.clear();
+    window.sessionStorage.clear();
+    this.router.navigate(['/login'])
+  }
 }
