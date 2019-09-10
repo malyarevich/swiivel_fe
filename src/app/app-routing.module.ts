@@ -30,12 +30,27 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     canActivateChild: [AuthGuard],
     children: [
-      { path: '',  component: DashboardComponent, pathMatch: 'full' },
-    ]
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: '/dashboard',
+      },
+      {
+        path: 'dashboard',  component: DashboardComponent, pathMatch: 'prefix'
+      },
+      {
+        path: 'form-creator',
+        loadChildren: () => {
+          return import('./form-creator/form-creator.module').then(mod => {
+            return mod.FormCreatorModule;
+          });
+        }
+      }
+    ],
   },
   {
     path: '**',
-    redirectTo: '/',
+    redirectTo: '/dashboard',
   }
 ];
 
