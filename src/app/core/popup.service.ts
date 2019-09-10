@@ -1,10 +1,10 @@
-import { Injectable, Injector, ElementRef } from '@angular/core';
-import { Overlay, ConnectionPositionPair, PositionStrategy, OverlayConfig } from '@angular/cdk/overlay';
-import { PortalInjector, ComponentPortal } from '@angular/cdk/portal';
-import { PopupRef, PopupContent } from '@core/components/popup/popup.ref';
+import { ConnectionPositionPair, Overlay, OverlayConfig, PositionStrategy } from '@angular/cdk/overlay';
+import { ComponentPortal, PortalInjector } from '@angular/cdk/portal';
+import { ElementRef, Injectable, Injector } from '@angular/core';
 import { PopupComponent } from '@core/components/popup/popup.component';
+import { PopupContent, PopupRef } from '@core/components/popup/popup.ref';
 
-export type PopupParams<T> = {
+export interface PopupParams<T> {
   width?: string | number;
   height?: string | number;
   panelClass?: string;

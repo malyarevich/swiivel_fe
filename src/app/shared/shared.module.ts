@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ButtonComponent } from './buttons/button/button.component';
 import { IconButtonComponent } from './buttons/icon-button/icon-button.component';
 import { SmallButtonComponent } from './buttons/small-button/small-button.component';
+import { DropdownInputComponent } from './inputs/dropdown-input/dropdown-input.component';
 // Inputs
 import { InputButtonGroupComponent } from './inputs/input-button-group/input-button-group.component';
 import { InputCheckboxComponent } from './inputs/input-checkbox/input-checkbox.component';
@@ -12,13 +13,13 @@ import { InputDynamicComponent } from './inputs/input-dynamic/input-dynamic.comp
 import { InputNumberComponent } from './inputs/input-number/input-number.component';
 import { InputTextComponent } from './inputs/input-text/input-text.component';
 import { InputToggleComponent } from './inputs/input-toggle/input-toggle.component';
-import { DropdownInputComponent } from './inputs/dropdown-input/dropdown-input.component';
+import { InputTextareaComponent } from './inputs/input-textarea/input-textarea.component';
 
 // Headers
-import { PageHeaderComponent} from './headers/page-header/page-header.component';
 import { BlockHeaderComponent} from './headers/block-header/block-header.component';
-import { InputPhoneNumberComponent } from './input-phone-number/input-phone-number.component';
-import { InputEmailComponent } from './input-email/input-email.component';
+import { PageHeaderComponent} from './headers/page-header/page-header.component';
+import { InputEmailComponent } from './inputs/input-email/input-email.component';
+import { InputPhoneNumberComponent } from './inputs/input-phone-number/input-phone-number.component';
 
 // Others
 import { UserItemComponent } from './user-item/user-item.component';
@@ -43,6 +44,7 @@ import { UserItemComponent } from './user-item/user-item.component';
     DropdownInputComponent,
     InputPhoneNumberComponent,
     InputEmailComponent,
+    InputTextareaComponent,
     // Headers
     PageHeaderComponent,
     BlockHeaderComponent,
@@ -65,6 +67,7 @@ import { UserItemComponent } from './user-item/user-item.component';
     DropdownInputComponent,
     InputPhoneNumberComponent,
     InputEmailComponent,
+    InputTextareaComponent,
     // Headers
     PageHeaderComponent,
     BlockHeaderComponent,

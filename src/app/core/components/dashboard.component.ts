@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import { FieldService } from '@core/field.service';
 import fields from '@app/shared/fields';
+import { FieldService } from '@core/field.service';
 import * as vs from '@core/validators';
 
+import { numericValidator } from '@core/validators';
 const TEST_FIELD_SERVICE = false;
 
 @Component({
@@ -13,6 +14,12 @@ const TEST_FIELD_SERVICE = false;
 })
 
 export class DashboardComponent implements OnInit {
+  textarea = {
+    rows: undefined,
+    cols: undefined,
+    editable: true
+  };
+  longTextDisabled = new FormControl(false);
   form: FormGroup;
   fields;
 
@@ -70,15 +77,24 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     if (TEST_FIELD_SERVICE) {
       this.fields = this.fs.fromArray(fields);
-      let dform = this.fb.array(this.fields.map(field => field.control));
+      const dform = this.fb.array(this.fields.map(field => field.control));
       dform.valueChanges.subscribe((value) => {
-        console.log(`Dynamic form fields value changed`, value)
+        console.log(`Dynamic form fields value changed`, value);
       });
     }
     this.form.valueChanges.subscribe((value) => {
       console.log('Phone input', this.form.get('phone').valid);
       console.log(`Value changed`, value);
     });
+  }
+
+  changeTextarea(size = false) {
+    if (size) {
+      this.textarea.rows = 10;
+      this.textarea.cols = 50;
+    } else {
+      this.form.get('longText').setValue('Changed long text\nmultiline');
+    }
   }
 
 }

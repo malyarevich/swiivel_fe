@@ -15,7 +15,7 @@ import { PhoneSettingComponent } from './phone-setting/phone-setting.component';
 })
 export class SettingsComponent implements OnInit {
 
-  type: number = 104;
+  type = 104;
 
   components = [
     { type: 101, component: TextSettingComponent, title: 'Short Text Field Settings' },

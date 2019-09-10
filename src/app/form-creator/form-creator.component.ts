@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { SidebarIntroComponent } from './sidebar/intro.component';
 import { SidebarFieldsComponent } from './sidebar/fields.component';
+import { SidebarIntroComponent } from './sidebar/intro.component';
 
 @Component({
   selector: 'sw-form-creator',

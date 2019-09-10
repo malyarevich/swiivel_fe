@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, FormArray } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'sw-dropdown-setting',
@@ -49,7 +49,7 @@ export class DropdownSettingComponent implements OnInit {
   }
 
   get options() {
-    return <FormArray>this.form.get('options');
+    return this.form.get('options') as FormArray;
   }
 
   setFormValue(obj: any) {

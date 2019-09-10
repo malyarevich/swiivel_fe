@@ -1,30 +1,28 @@
-import { Component, OnInit, forwardRef, Renderer2, ViewChild, ElementRef, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, forwardRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
-export const PHONE_CONTROL_ACCESSOR = {
+export const EMAIL_CONTROL_ACCESSOR = {
   provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => InputPhoneNumberComponent),
+  useExisting: forwardRef(() => InputEmailComponent),
   multi: true
 };
 
 @Component({
-  selector: 'sw-input-phone-number',
-  templateUrl: './input-phone-number.component.html',
-  styleUrls: ['./input-phone-number.component.scss'],
-  providers: [PHONE_CONTROL_ACCESSOR],
+  selector: 'sw-input-email',
+  templateUrl: './input-email.component.html',
+  styleUrls: ['./input-email.component.scss'],
+  providers: [EMAIL_CONTROL_ACCESSOR],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class InputPhoneNumberComponent implements OnInit, ControlValueAccessor {
+export class InputEmailComponent implements OnInit, ControlValueAccessor {
 
   onChange: Function;
   onTouched: Function;
-  focus: boolean = false;
+  focus = false;
 
   @ViewChild('input', {static: true}) input: ElementRef;
 
-  constructor(
-    private renderer: Renderer2
-  ) { }
+  constructor(private renderer: Renderer2) { }
 
   ngOnInit() {
   }
@@ -45,8 +43,8 @@ export class InputPhoneNumberComponent implements OnInit, ControlValueAccessor {
     this.renderer.setProperty(this.input.nativeElement, 'disabled', isDisabled);
   }
 
-  focusInput() : void{
-    if (this.input) this.input.nativeElement.focus();
+  focusInput(): void {
+    if (this.input) { this.input.nativeElement.focus(); }
   }
 
   onFocus(): void {

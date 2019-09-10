@@ -1,12 +1,12 @@
 import {
+  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  ElementRef,
   forwardRef,
-  Renderer2,
   Input,
-  ChangeDetectionStrategy,
-  ViewChild,
-  ElementRef
+  Renderer2,
+  ViewChild
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
