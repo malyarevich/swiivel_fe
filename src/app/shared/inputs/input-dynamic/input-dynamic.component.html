@@ -5,12 +5,15 @@
   </ng-container>
   <ng-template #inputs>
     <ng-container [ngSwitch]="field.type">
-      <sw-input-text *ngSwitchCase="101" [formControl]="field.control">
-        <span class="label">{{field.name}}</span>
+      <sw-input-text *ngSwitchCase="101" [formControl]="field.control" [readonly]="field.options.readonly">
+        <span class="placeholder">{{field.name}}</span>
       </sw-input-text>
       <sw-input-number *ngSwitchCase="103" [formControl]="field.control">
         <span class="label">{{field.name}}</span>
       </sw-input-number>
+      <select *ngSwitchCase="105" [formControl]="field.control">
+        <option [value]="option" *ngFor="let option of field.options.items">{{option}}</option>
+      </select>
     </ng-container>
   </ng-template>
 </div> -->
