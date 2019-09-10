@@ -13,6 +13,12 @@ const TEST_FIELD_SERVICE = false;
 })
 
 export class DashboardComponent implements OnInit {
+  textarea = {
+    rows: undefined,
+    cols: undefined,
+    editable: true
+  }
+  longTextDisabled = new FormControl(false);
   form: FormGroup;
   fields;
 
@@ -63,7 +69,8 @@ export class DashboardComponent implements OnInit {
       buttonGroup: new FormControl('upload-value'),
       dropdown: new FormControl([]),
       phone: new FormControl('', vs.phoneNumberValidator()),
-      email: new FormControl('', vs.emailValidator())
+      email: new FormControl('', vs.emailValidator()),
+      longText: new FormControl('Long text\n wrew', Validators.required),
     });
   }
 
@@ -75,10 +82,26 @@ export class DashboardComponent implements OnInit {
         console.log(`Dynamic form fields value changed`, value)
       });
     }
+    this.longTextDisabled.valueChanges.subscribe((isDisabled) => {
+      if (!!isDisabled) {
+        this.form.get('longText').disable();
+      } else {
+        this.form.get('longText').enable();
+      }
+    });
     this.form.valueChanges.subscribe((value) => {
       console.log('Phone input', this.form.get('phone').valid);
       console.log(`Value changed`, value);
     });
+  }
+
+  changeTextarea(size = false) {
+    if (size) {
+      this.textarea.rows = 10;
+      this.textarea.cols = 50;
+    } else {
+      this.form.get('longText').setValue('Changed long text\nmultiline')
+    }
   }
 
 }
