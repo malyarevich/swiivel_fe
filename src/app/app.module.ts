@@ -22,6 +22,10 @@ export function onInit(authService: AuthService) {
   return () => authService.load();
 }
 
+import { PopupComponent } from '@core/components/popup/popup.component';
+import { OverlayModule } from '@angular/cdk/overlay';
+// todo: delete after routing
+import { DataCollectionComponent } from '@app/modules/data-collection/data-collection.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +33,9 @@ export function onInit(authService: AuthService) {
     LoginComponent,
     RestorePasswordComponent,
     MainComponent,
-    DashboardComponent
+    DashboardComponent,
+    PopupComponent,
+    DataCollectionComponent
   ],
   imports: [
     BrowserModule,
@@ -39,6 +45,10 @@ export function onInit(authService: AuthService) {
     SharedModule,
     FormCreatorModule,
     AppRoutingModule,
+    OverlayModule
+  ],
+  entryComponents: [
+    PopupComponent
   ],
   providers: [
     HttpService,

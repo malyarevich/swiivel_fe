@@ -1,0 +1,5 @@
+<button
+  [ngClass]="{'icon-button icon-button--s': size === sizes.SMALL}"
+  (click)="onButtonClick()">
+  <i [ngClass]="'icon-button__icon'" class="{{ iconClass }}"></i>
+</button>

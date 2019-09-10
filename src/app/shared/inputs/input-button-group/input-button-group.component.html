@@ -1,0 +1,11 @@
+<div class="input_button_group" #input>
+  <sw-button
+    class="input_button"
+    *ngFor="let button of buttons"
+    [value]="button.value"
+    [class.active]="isActive(button.value)"
+    (click)="onInputChange(button.value)"
+  >
+    {{button.label}}
+  </sw-button>
+</div>
