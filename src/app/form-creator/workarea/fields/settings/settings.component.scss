@@ -10,7 +10,7 @@
   border-bottom-right-radius: 3px;
   &__row {
     flex-wrap: nowrap;
-    &_title {
+    .section_title {
       font: 800 14px/20px $nunito-sans;
       margin-bottom: 10px;
     }

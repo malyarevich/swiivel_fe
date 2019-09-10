@@ -143,3 +143,52 @@ sw-input-email {
     }
   }
 }
+
+.field_settings_container {
+  padding: 10px;
+  section {
+    margin-bottom: 15px;
+    .title {
+      font-weight: 800;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .options_container {
+      .option {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: center;
+        width: 100%;
+        .controls {
+          visibility: hidden;
+          color: #A4A4A4;
+          margin-left: 5px;
+          display: flex;
+          flex-direction: row;
+          flex-wrap: nowrap;
+          i {
+            text-align: center;
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+            &:not(:last-of-type) {
+              margin-right: 5px;
+            }
+          }
+        }
+        &:not(:last-of-type) {
+          margin-bottom: 5px;
+        }
+        &:hover {
+          .controls {
+            visibility: unset;
+          }
+        }
+      }
+    }
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+  }
+}

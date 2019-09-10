@@ -1,1 +1,47 @@
-<p>dropdown-setting works!</p>
+<div class="field_settings_container">
+  <form [formGroup]="form">
+    <section>
+      <div class="title">
+        <sw-input-toggle formControlName="showDefaultOptions">
+          <span class="input_label">Select by default</span>
+        </sw-input-toggle>
+      </div>
+      <sw-dropdown-input *ngIf="this.form.get('showDefaultOptions').value" class="settings-field"
+        formControlName="defaultOption" [multiple]="false" [options]="options.value">
+      </sw-dropdown-input>
+    </section>
+    <section>
+      <div class="title">
+        Field Type
+      </div>
+      <sw-dropdown-input formControlName="type" class="settings-field" [multiple]="false" [options]="fieldsType">
+      </sw-dropdown-input>
+    </section>
+    <section>
+      <div class="title">
+        Number of selections
+      </div>
+      <sw-input-button-group formControlName="multiple" [options]="buttons"></sw-input-button-group>
+    </section>
+    <section>
+      <div class="title">
+        Options
+      </div>
+      <div class="options_container" formArrayName="options">
+        <div class="option" *ngFor="let option of options.controls; let i = index">
+          <ng-container [formGroupName]="i">
+            <sw-input-text class="settings-field" formControlName="title">
+            </sw-input-text>
+            <div class="controls">
+              <i class="fas fa-plus" (click)="addOption()"></i>
+              <i class="fas fa-trash" (click)="removeOption(i)"></i>
+              <i class="dragdrop fas fa-ellipsis-v"></i>
+            </div>
+          </ng-container>
+
+        </div>
+      </div>
+    </section>
+  </form>
+
+</div>

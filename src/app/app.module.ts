@@ -38,6 +38,7 @@ import { DataCollectionComponent } from '@app/modules/data-collection/data-colle
     SharedModule,
     FormCreatorModule,
     AppRoutingModule,
+    OverlayModule,
   ],
   entryComponents: [
     PopupComponent

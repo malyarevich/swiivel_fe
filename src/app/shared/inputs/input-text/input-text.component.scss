@@ -65,3 +65,10 @@
     border: 1px solid #4350A2;
   }
 }
+
+:host(.settings-field) {
+  .input_text__input {
+    height: 25px;
+    padding: 5px 10px;
+  }
+}
