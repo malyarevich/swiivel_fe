@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiService } from '@core/api.service';
 import { User } from '@models/auth';
+import { AuthService } from '@core/auth.service';
 // import { Subject } from 'rxjs';
 
 @Component({
@@ -14,7 +15,7 @@ export class LoginComponent implements OnDestroy {
   public form: FormGroup;
   public inputType = 'password';
   public iconPath = '/assets/images/password/';
-  constructor(private fb: FormBuilder, private api: ApiService, private router: Router) {
+  constructor(private fb: FormBuilder, private api: ApiService, private router: Router, private auth: AuthService) {
     this.form = this.fb.group({
       username: ['', [Validators.required]],
       password: ['', [Validators.required]],
@@ -41,7 +42,7 @@ export class LoginComponent implements OnDestroy {
     if (this.form.valid) {
       this.api.login(this.form.value).subscribe((user: User) => {
         if (user) {
-          localStorage.setItem('user', JSON.stringify(user));
+          this.auth.setUser(user);
           this.router.navigate(['/']);
         }
       }, (error) => {

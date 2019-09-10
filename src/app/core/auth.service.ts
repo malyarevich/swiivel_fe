@@ -77,17 +77,29 @@ export class AuthService {
   }
 
   load() {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       let token = window.sessionStorage.getItem(`token`);
       if (token) {
         this.tokenSubject$.next(token);
-        return resolve(true)
+        return resolve(true);
       }
       token = localStorage.getItem('token');
       if (!token) {
-        let user = localStorage.getItem('user');
-        if (user) return resolve(true);
+        let userStr = localStorage.getItem('user');
+        if (userStr) {
+          try {
+            let user: User = JSON.parse(userStr);
+            // if (user.access_token) this.tokenSubject$.next(token);
+            this.setUser(user)
+            return resolve(true);
+          } catch (error) {
+            return resolve(null);
+          }
+        }
         resolve(null);
+      } else {
+        this.tokenSubject$.next(token);
+        return resolve(true)
       }
     });
   }
