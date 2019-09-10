@@ -7,6 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CheckboxSettingComponent implements OnInit {
 
+  showDefaultValue: boolean = false;
+  defaultValue: any;
+
+  options = [
+    { title: 'Yes', value: true },
+    { title: 'No', value: false }
+  ];
+
   constructor() { }
 
   ngOnInit() {
