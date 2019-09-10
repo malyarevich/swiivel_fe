@@ -9,6 +9,7 @@ import { NumberSettingComponent } from './number-setting/number-setting.componen
 import { PhoneSettingComponent } from './phone-setting/phone-setting.component';
 import { TextSettingComponent } from './text-setting/text-setting.component';
 import { DateSettingComponent } from './date-setting/date-setting.component';
+import { SharedModule } from '@app/shared/shared.module';
 
 
 
@@ -25,7 +26,8 @@ import { DateSettingComponent } from './date-setting/date-setting.component';
     DateSettingComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    SharedModule
   ],
   exports: [
     SettingsComponent

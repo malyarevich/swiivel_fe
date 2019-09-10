@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SettingsComponent implements OnInit {
 
-  type: number = 101;
+  type: number = 104;
 
   constructor() { }
 
@@ -32,7 +32,7 @@ export class SettingsComponent implements OnInit {
       case 106:
         title = 'English Date Settings';
         break;
-      case 106:
+      case 107:
         title = 'Checkbox Field Settings';
         break;
       case 108:
