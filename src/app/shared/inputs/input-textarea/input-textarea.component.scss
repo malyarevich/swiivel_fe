@@ -1,0 +1,30 @@
+@import "index";
+
+:host {
+  .input_textarea {
+    width: 100%;
+    position: relative;
+    &__input {
+      background: $white;
+      font-family: "Nunito Sans";
+      font-size: 12px;
+      line-height: 15px;
+      color: $black;
+      border: 1px solid $soft-gray;
+      box-sizing: border-box;
+      border-radius: 3px;
+      padding: 15px 10px 5px 10px;
+      outline: none;
+      resize: none;
+      &:focus-within {
+        border-color: $button-color;
+      }
+    }
+  }
+}
+
+:host(.ng-invalid) {
+  .input_textarea {
+    border: 1px solid $error-color;
+  }
+}

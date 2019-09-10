@@ -183,3 +183,14 @@ sw-input-number {
     }
   }
 }
+
+sw-input-textarea {
+  .input_textarea {
+    @extend %placeholder;
+    .input_label {
+      position: absolute;
+      top: 0;
+      font-size: 12px;
+    }
+  }
+}
