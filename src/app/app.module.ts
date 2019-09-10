@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -15,7 +15,7 @@ import { AuthService } from '@core/auth.service';
 import { DashboardComponent } from '@core/components/dashboard.component';
 import { FieldService } from '@core/field.service';
 import { HttpService } from '@core/http.service';
-import { AuthInterceptor } from './core/auth.interceptor';
+import { AuthInterceptor } from '@core/auth.interceptor';
 
 export function onInit(authService: AuthService) {
   return () => authService.load();

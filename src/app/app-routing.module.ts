@@ -1,12 +1,12 @@
 import {NgModule} from '@angular/core';
-import {Routes, RouterModule} from '@angular/router';
-import { environment } from '@env/environment';
-import { MainComponent } from '@core/components/main.component';
-import { LoginComponent } from '@core/components/login.component';
-import { RestorePasswordComponent } from '@core/components/restore-password.component';
+import {RouterModule, Routes} from '@angular/router';
+import { DataCollectionComponent } from '@app/modules/data-collection/data-collection.component';
 import { AuthGuard } from '@core/auth.guard';
 import { DashboardComponent } from '@core/components/dashboard.component';
-import { DataCollectionComponent } from '@app/modules/data-collection/data-collection.component';
+import { LoginComponent } from '@core/components/login.component';
+import { MainComponent } from '@core/components/main.component';
+import { RestorePasswordComponent } from '@core/components/restore-password.component';
+import { environment } from '@env/environment';
 import { routes as dataCollectionRoutes } from './modules/data-collection/data-collection-routing.module';
 
 const routes: Routes = [

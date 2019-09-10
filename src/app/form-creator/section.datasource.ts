@@ -1,10 +1,10 @@
 import { CollectionViewer, DataSource } from '@angular/cdk/collections';
-import { BehaviorSubject, Observable, of, Subject, throwError } from 'rxjs';
 import { ApiService } from '@core/api.service';
+import { BehaviorSubject, Observable, of, Subject, throwError } from 'rxjs';
 
-import { catchError, retry, timeout, tap, finalize, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { has } from 'lodash';
+import { catchError, debounceTime, distinctUntilChanged, finalize, retry, tap, timeout } from 'rxjs/operators';
 
 export class PropertiesDataSource implements DataSource<any> {
   private sectionsSubject = new BehaviorSubject<any[]>([]);
@@ -65,8 +65,8 @@ export class PropertiesDataSource implements DataSource<any> {
    //     });
    //     this.propertiesSubject.next(properties);
      // } else {
-     this.count = 0;
-     this.sectionsSubject.next([]);
+   this.count = 0;
+   this.sectionsSubject.next([]);
 
  }
 
@@ -80,6 +80,6 @@ export class PropertiesDataSource implements DataSource<any> {
     if (error.error instanceof ErrorEvent) {
     // A client-side or network error occurred. Handle it accordingly.
     } else {}
-      return throwError(error);
+    return throwError(error);
     }
   }

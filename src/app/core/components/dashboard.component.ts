@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import { FieldService } from '@core/field.service';
 import fields from '@app/shared/fields';
+import { FieldService } from '@core/field.service';
 import * as vs from '@core/validators';
 
 import { numericValidator } from '@core/validators';
@@ -18,7 +18,7 @@ export class DashboardComponent implements OnInit {
     rows: undefined,
     cols: undefined,
     editable: true
-  }
+  };
   longTextDisabled = new FormControl(false);
   form: FormGroup;
   fields;
@@ -78,9 +78,9 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     if (TEST_FIELD_SERVICE) {
       this.fields = this.fs.fromArray(fields);
-      let dform = this.fb.array(this.fields.map(field => field.control));
+      const dform = this.fb.array(this.fields.map(field => field.control));
       dform.valueChanges.subscribe((value) => {
-        console.log(`Dynamic form fields value changed`, value)
+        console.log(`Dynamic form fields value changed`, value);
       });
     }
     this.longTextDisabled.valueChanges.subscribe((isDisabled) => {
@@ -101,7 +101,7 @@ export class DashboardComponent implements OnInit {
       this.textarea.rows = 10;
       this.textarea.cols = 50;
     } else {
-      this.form.get('longText').setValue('Changed long text\nmultiline')
+      this.form.get('longText').setValue('Changed long text\nmultiline');
     }
   }
 

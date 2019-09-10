@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, HostBinding, HostListener, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, HostBinding, HostListener, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -13,9 +13,6 @@ export class SectionComponent implements OnInit {
   //   return !!this.section.active;
   // };
   // @HostListener('click', ['$event'])
-  onClick(event: Event) {
-    this.activate.next(this.section.name.toLowerCase())
-  }
   toggleSection() {
     if (!this.section.expanded) {
       this.collapseAll.next(true);
@@ -28,6 +25,11 @@ export class SectionComponent implements OnInit {
   control: FormControl = new FormControl();
   constructor() {
 
+  }
+  @HostListener('click', ['$event'])
+  onClick(event: Event) {
+    event.preventDefault();
+    this.activate.next(this.section.name.toLowerCase());
   }
 
   ngOnInit() {

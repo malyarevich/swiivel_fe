@@ -1,4 +1,4 @@
-import { Component, OnInit, forwardRef, ChangeDetectionStrategy, ViewChild, ElementRef, Renderer2, ViewEncapsulation, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, forwardRef, Input, OnInit, Renderer2, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
@@ -15,11 +15,6 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   ],
 })
 export class InputTextareaComponent implements OnInit, ControlValueAccessor {
-  onChange: Function = (_: string) => {};
-  onTouched: Function;
-  @ViewChild('input', {static: true}) input: ElementRef;
-  @Input() rows: number = 4;
-  @Input() cols: number = 30;
   @Input('readonly') set readonly(isReadonly: boolean) {
     if (!!isReadonly) {
       this.renderer.setAttribute(this.input.nativeElement, 'readonly', 'readonly');
@@ -27,6 +22,15 @@ export class InputTextareaComponent implements OnInit, ControlValueAccessor {
       this.renderer.removeAttribute(this.input.nativeElement, 'readonly');
     }
   }
+
+  constructor(private renderer: Renderer2) {
+
+  }
+  onTouched: Function;
+  @ViewChild('input', {static: true}) input: ElementRef;
+  @Input() rows = 4;
+  @Input() cols = 30;
+  onChange: Function = (_: string) => {};
 
   setDisabledState?(isDisabled: boolean): void {
     this.renderer.setProperty(this.input.nativeElement, 'disabled', isDisabled);
@@ -39,10 +43,6 @@ export class InputTextareaComponent implements OnInit, ControlValueAccessor {
   }
   writeValue(obj: any): void {
     this.renderer.setProperty(this.input.nativeElement, 'value', obj);
-  }
-
-  constructor(private renderer: Renderer2) {
-
   }
 
   ngOnInit() {

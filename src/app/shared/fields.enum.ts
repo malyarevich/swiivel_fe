@@ -13,46 +13,46 @@ export enum FieldType {
 }
 
 export enum FieldWidth {
-  FULL = "full",
-  THREE_QUARTER = "three-quarter",
-  HALF = "half",
-  QUARTER = "quarter"
+  FULL = 'full',
+  THREE_QUARTER = 'three-quarter',
+  HALF = 'half',
+  QUARTER = 'quarter'
 }
 
 export interface BaseField {
-  type: number,
-  name: string,
-  _id?: string,
-  prefix?: string,
-  exist?: boolean,
-  isActive?: boolean,
-  isValid?: boolean,
-  isValidName?: boolean,
-  mapped?: string,
-  width?: FieldWidth,
-  fields?: BaseField[]
+  type: number;
+  name: string;
+  _id?: string;
+  prefix?: string;
+  exist?: boolean;
+  isActive?: boolean;
+  isValid?: boolean;
+  isValidName?: boolean;
+  mapped?: string;
+  width?: FieldWidth;
+  fields?: BaseField[];
 }
 export interface GroupField extends BaseField {
-  fields: [],
-  options: [],
+  fields: [];
+  options: [];
   settings?: {
     multiplier?: [],
     options?: []
-  }
+  };
 }
 export interface SectionField extends BaseField {
-  fields: [],
-  options: [],
+  fields: [];
+  options: [];
   settings?: {
     multiplier?: [],
     options?: []
-  }
+  };
 }
 export interface InputField extends BaseField {
-  mapped: string,
-  prefix: string,
-  constraints: [],
-  validators: [],
+  mapped: string;
+  prefix: string;
+  constraints: [];
+  validators: [];
 }
 export interface TextField extends InputField {
   options: {
@@ -68,7 +68,7 @@ export interface TextField extends InputField {
     autoComplete: boolean,
     size: number,
     default: string,
-  }
+  };
 }
 
 export interface TextareaField extends InputField {
@@ -88,7 +88,7 @@ export interface TextareaField extends InputField {
     autoComplete: boolean,
     size: number,
     default: string,
-  }
+  };
 }
 
 export interface NumberField extends InputField {
@@ -107,10 +107,10 @@ export interface NumberField extends InputField {
     autoComplete: boolean,
     size: number,
     default: string,
-  }
+  };
 }
 export interface OtherField extends InputField {
   options: {
     [key: string]: any
-  }
+  };
 }
