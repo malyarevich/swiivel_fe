@@ -1,4 +1,4 @@
-import { NgModule, APP_INITIALIZER } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -14,7 +14,6 @@ import { AuthGuard } from '@core/auth.guard';
 import { AuthService } from '@core/auth.service';
 import { DashboardComponent } from '@core/components/dashboard.component';
 import { FieldService } from '@core/field.service';
-import { FormCreatorModule } from './form-creator/form-creator.module';
 import { HttpService } from '@core/http.service';
 import { AuthInterceptor } from './core/auth.interceptor';
 
@@ -24,6 +23,7 @@ export function onInit(authService: AuthService) {
 
 import { PopupComponent } from '@core/components/popup/popup.component';
 import { OverlayModule } from '@angular/cdk/overlay';
+import { FormCreatorModule } from './form-creator/form-creator.module';
 // todo: delete after routing
 import { DataCollectionComponent } from '@app/modules/data-collection/data-collection.component';
 
@@ -52,7 +52,6 @@ import { DataCollectionComponent } from '@app/modules/data-collection/data-colle
     PopupComponent
   ],
   providers: [
-    HttpService,
     AuthGuard,
     AuthService,
     FieldService,

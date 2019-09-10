@@ -1,6 +1,6 @@
 <div #holder class="dropdown_input_container" [class.active]="active" [class.empty]="isEmpty()"
   (click)="showPopup()">
-  <ng-content></ng-content>
+  <ng-content select="span.placeholder"></ng-content>
   <div class="dropdown_input_container__input" *ngFor="let item of value" [class.many]="_multiple">
     <span class="text"> {{ item.title }} </span>
     <i class="fas fa-times" (click)="remove(item, $event)"></i>

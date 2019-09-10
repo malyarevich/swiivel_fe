@@ -1,2 +1,7 @@
-<sw-input-toggle></sw-input-toggle><span>{{section.name}}</span>
-<ng-container *ngComponentOutlet="section.component"></ng-container>
+<div class="header">
+  <sw-input-toggle [formControl]="control"></sw-input-toggle>
+  <span (click)="toggleSection()">{{section.name}}</span>
+</div>
+<div class="content" [class.expanded]="section.expanded">
+  <ng-container *ngComponentOutlet="section.component"></ng-container>
+</div>

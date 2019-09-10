@@ -1,5 +1,0 @@
-<label class="phone_number" [class.empty]="isEmpty()">
-  <ng-content></ng-content>
-  <input #input class="phone_number__input" type="tel" (blur)="_onTouched()" (input)="onChange(input.value)" />
-  <i class="phone_number__error_icon"></i>
-</label>

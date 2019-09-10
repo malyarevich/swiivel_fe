@@ -1,6 +1,5 @@
-import {Component, forwardRef, ChangeDetectionStrategy, ViewChild, ElementRef, Renderer2, Input} from '@angular/core';
+import { Component, OnInit, forwardRef, ChangeDetectionStrategy, ViewChild, ElementRef, Renderer2 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { Decimal } from 'decimal.js';
 
 @Component({
   selector: 'sw-input-number',
@@ -15,103 +14,35 @@ import { Decimal } from 'decimal.js';
     }
   ]
 })
-
-export class InputNumberComponent implements ControlValueAccessor {
-  oldValue;
-  prefix = {
-    'usd': '$',
-    'cad': 'C$',
-    'percent': '%',
-    'integer': ''
-  }
-  @Input() type: 'usd' | 'cad' | 'percent' | 'integer' = 'integer';
-
-
+export class InputNumberComponent implements OnInit, ControlValueAccessor {
+  onChange: Function = (_: string) => {};
+  onTouched: Function;
+  errors: [];
   @ViewChild('input', {static: true}) input: ElementRef;
 
-  private onChange: (value: any) => void;
-  private onTouched: () => void;
-
-  constructor(
-    private renderer: Renderer2
-  ) {}
-
-  get icon() {
-    return this.prefix[this.type];
-  }
-
-  public setDisabledState(isDisabled: boolean): void {
+  setDisabledState?(isDisabled: boolean): void {
     this.renderer.setProperty(this.input.nativeElement, 'disabled', isDisabled);
   }
-
-  public registerOnTouched(fn: any): void {
+  registerOnTouched(fn: any): void {
     this.onTouched = fn;
   }
-
-  public registerOnChange(fn: any): void {
+  registerOnChange(fn: any): void {
     this.onChange = fn;
   }
-
-  public writeValue(value: string | number): void {
-    this.renderer.setProperty(this.input.nativeElement, 'value', value);
-  }
-  onBlur(event?: Event) {
-    this.onTouched();
+  writeValue(obj: any): void {
+    this.renderer.setProperty(this.input.nativeElement, 'value', obj);
   }
 
-  isEmpty(value) {
-    return !(value && value.valueOf().length > 0);
+  constructor(private renderer: Renderer2) {
+
   }
 
-  setValue(value) {
-    this.onChange(value);
-    this.renderer.setProperty(this.input.nativeElement, 'value', value.valueOf());
-    this.oldValue = value;
+  ngOnInit() {
   }
 
-  resetValue() {
-    this.onChange(null);
-    this.renderer.setProperty(this.input.nativeElement, 'value', '');
-    this.oldValue = null;
-  }
 
-  revertValue() {
-    if (this.oldValue) {
-      this.renderer.setProperty(this.input.nativeElement, 'value', this.oldValue);
-    }
-  }
-
-  onInput(event: Event) {
-    let newValue = this.input.nativeElement.value.replace(/[^0-9\.]+/g, '');
-    try {
-      if (newValue.length > 0) {
-        newValue = new Decimal(newValue);
-        if (!newValue.isNaN()) {
-          if (this.type === 'integer') {
-            if (newValue.isInt() === false) {
-              if (this.oldValue) {
-                this.revertValue();
-              } else {
-                this.resetValue();
-              }
-            } else {
-              this.setValue(newValue);
-            }
-
-          } else {
-            this.setValue(newValue);
-          }
-        }
-      } else {
-        this.resetValue();
-      }
-    } catch (error) {
-      if (this.oldValue) {
-        this.revertValue();
-      } else {
-        console.error(error);
-      }
-    }
+  changed(event: Event) {
+    this.onChange(this.input.nativeElement.value);
   }
 
 }

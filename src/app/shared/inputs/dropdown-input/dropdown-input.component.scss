@@ -48,3 +48,10 @@
     }
   }
 }
+
+:host(.settings-field) {
+  .dropdown_input_container {
+    min-height: 25px;
+    padding: 7px 10px;
+  }
+}

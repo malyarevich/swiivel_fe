@@ -1,33 +1,49 @@
 @import "index";
 
 :host {
-  .input_number {
-    @extend %input-field-container;
-    &__input {
-      @extend %input-field-style;
-      &:not(.integer) {
-        padding-left: 25px;
-      }
-    }
-    &_icon {
-      position: absolute;
-      left: 10px;
-      top: 13px;
-      font-size: 12px;
-      font-style: inherit;
-      font-weight: bold;
-    }
-    &__error_icon {
-      @extend %input-error-icon;
-    }
-  }
+    @extend %flex;
+    margin: 10px 0;
+    width: 100%;
 }
 
-:host(.ng-invalid) {
-  .input_number {
-    border: 1px solid $error-color;
-    &__error_icon {
-      display: block;
+.formControl{
+    width: 100%;
+    position: relative;
+
+    .controlLabel{
+        color: $element-base-color;
+        font-size: 0.85em;
+        font-weight: bold;
+        letter-spacing: 0.31px;
+        line-height: 11px;
     }
-  }
+
+    .icon {
+        position: absolute;
+        top: calc(50% + 10px);
+        left: 0;
+        z-index: 1;
+        transform: translateY(-50%);
+
+        &.last {
+            top: 50%;
+            left: 92%;
+            transform: translate(-50%, -50%);
+        }
+    }
+}
+
+.inputCtrl{
+    @extend %flex;
+
+    justify-content: space-between;
+}
+
+.errorSubtext{
+    color: $invalid-color;
+    font-size: 9px;
+    font-weight: bold;
+    letter-spacing: 0.31px;
+    line-height: 11px;
+    text-transform: uppercase;
 }
