@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, HostBinding, HostListener, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, HostBinding, HostListener, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -7,19 +7,19 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./section.component.scss']
 })
 export class SectionComponent implements OnInit {
-  @Input() section;
-  @Output() activate = new EventEmitter<string>();
   @HostBinding('class.expanded') get isExpanded() {
     return !!this.section.active;
-  };
+  }
+  constructor() {
+
+  }
+  @Input() section;
+  @Output() activate = new EventEmitter<string>();
+  control: FormControl = new FormControl();
   @HostListener('click', ['$event'])
   onClick(event: Event) {
     event.preventDefault();
-    this.activate.next(this.section.name.toLowerCase())
-  }
-  control: FormControl = new FormControl();
-  constructor() {
-
+    this.activate.next(this.section.name.toLowerCase());
   }
 
   ngOnInit() {

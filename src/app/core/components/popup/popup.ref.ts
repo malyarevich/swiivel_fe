@@ -1,8 +1,8 @@
-import { OverlayRef } from '@angular/cdk/overlay';
-import { Subject } from 'rxjs';
-import { PopupParams } from '@core/popup.service';
-import { TemplateRef, Type } from '@angular/core';
 import { ESCAPE } from '@angular/cdk/keycodes';
+import { OverlayRef } from '@angular/cdk/overlay';
+import { TemplateRef, Type } from '@angular/core';
+import { PopupParams } from '@core/popup.service';
+import { Subject } from 'rxjs';
 
 export interface PopupCloseEvent<T = any> {
   type: 'backdropClick' | 'close' | 'escKey';

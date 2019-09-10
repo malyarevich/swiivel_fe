@@ -1,4 +1,4 @@
-import { animate, state, style, transition, trigger, group } from '@angular/animations';
+import { animate, group, state, style, transition, trigger } from '@angular/animations';
 
 export function fadeInFromVoid() {
     return trigger('fadeInFromVoid', [

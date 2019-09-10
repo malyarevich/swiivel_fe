@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { FormCreatorComponent } from './form-creator.component';
+import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '@app/core/auth.guard';
 import { MainComponent } from '@app/core/components/main.component';
+import { FormCreatorComponent } from './form-creator.component';
 
 
 const routes: Routes = [

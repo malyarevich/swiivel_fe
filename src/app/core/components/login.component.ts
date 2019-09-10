@@ -1,9 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiService } from '@core/api.service';
-import { User } from '@models/auth';
 import { AuthService } from '@core/auth.service';
+import { User } from '@models/auth';
 import { first } from 'rxjs/operators';
 // import { Subject } from 'rxjs';
 

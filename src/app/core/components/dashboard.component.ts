@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import { FieldService } from '@core/field.service';
 import fields from '@app/shared/fields';
+import { FieldService } from '@core/field.service';
 import * as vs from '@core/validators';
 
 const TEST_FIELD_SERVICE = false;
@@ -70,9 +70,9 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     if (TEST_FIELD_SERVICE) {
       this.fields = this.fs.fromArray(fields);
-      let dform = this.fb.array(this.fields.map(field => field.control));
+      const dform = this.fb.array(this.fields.map(field => field.control));
       dform.valueChanges.subscribe((value) => {
-        console.log(`Dynamic form fields value changed`, value)
+        console.log(`Dynamic form fields value changed`, value);
       });
     }
     this.form.valueChanges.subscribe((value) => {

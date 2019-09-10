@@ -1,4 +1,4 @@
-import { Component, OnInit, forwardRef, Renderer2, ViewChild, ElementRef, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, forwardRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 export const PHONE_CONTROL_ACCESSOR = {
@@ -18,7 +18,7 @@ export class InputPhoneNumberComponent implements OnInit, ControlValueAccessor {
 
   onChange: Function;
   onTouched: Function;
-  focus: boolean = false;
+  focus = false;
 
   @ViewChild('input', {static: true}) input: ElementRef;
 
@@ -45,8 +45,8 @@ export class InputPhoneNumberComponent implements OnInit, ControlValueAccessor {
     this.renderer.setProperty(this.input.nativeElement, 'disabled', isDisabled);
   }
 
-  focusInput() : void{
-    if (this.input) this.input.nativeElement.focus();
+  focusInput(): void {
+    if (this.input) { this.input.nativeElement.focus(); }
   }
 
   onFocus(): void {

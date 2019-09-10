@@ -17,16 +17,16 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 export class InputToggleComponent implements ControlValueAccessor {
 
-  @ViewChild('input', {static: true}) input: ElementRef;
-
-  private onChange: Function = (value) => {
-    console.log('onc')
-  };
-  private onTouched: () => void;
-
   constructor(
     private renderer: Renderer2
   ) {}
+
+  @ViewChild('input', {static: true}) input: ElementRef;
+  private onTouched: () => void;
+
+  private onChange: Function = (value) => {
+    console.log('onc');
+  }
 
   public setDisabledState(isDisabled: boolean): void {
     this.renderer.setProperty(this.input.nativeElement, 'disabled', isDisabled);

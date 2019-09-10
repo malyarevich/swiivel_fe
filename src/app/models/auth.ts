@@ -22,7 +22,7 @@ export interface User {
         full: number
       }}
     ]
-  }
+  };
 }
 
 export interface Email {

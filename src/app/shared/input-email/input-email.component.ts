@@ -1,5 +1,5 @@
-import { Component, OnInit, Renderer2, ViewChild, ElementRef, forwardRef, ChangeDetectionStrategy } from '@angular/core';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, ElementRef, forwardRef, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 export const EMAIL_CONTROL_ACCESSOR = {
   provide: NG_VALUE_ACCESSOR,
@@ -18,7 +18,7 @@ export class InputEmailComponent implements OnInit, ControlValueAccessor {
 
   onChange: Function;
   onTouched: Function;
-  focus: boolean = false;
+  focus = false;
 
   @ViewChild('input', {static: true}) input: ElementRef;
 
@@ -44,7 +44,7 @@ export class InputEmailComponent implements OnInit, ControlValueAccessor {
   }
 
   focusInput(): void {
-    if (this.input) this.input.nativeElement.focus();
+    if (this.input) { this.input.nativeElement.focus(); }
   }
 
   onFocus(): void {

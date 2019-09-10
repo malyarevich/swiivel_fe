@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'sw-form-creator-workarea',
@@ -7,8 +7,8 @@ import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WorkareaComponent implements OnInit {
-  _workarea: string = 'intro';
-  @Input() set workarea(area: string ){
+  _workarea = 'intro';
+  @Input() set workarea(area: string ) {
     if (area) {
       this._workarea = area;
     }

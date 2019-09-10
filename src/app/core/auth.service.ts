@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
-import { BehaviorSubject, Subject, Observable } from 'rxjs';
 import { User } from '@app/models/auth';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { ApiService } from './api.service';
 
 
@@ -19,12 +19,12 @@ export class AuthService {
   get isOccupied() {
     return this.occupied$.asObservable();
   }
-  set occupied(value:boolean) {
+  set occupied(value: boolean) {
     this.occupied$.next(value);
   }
 
   private oldToken: string;
-  set request (count: number) {
+  set request(count: number) {
     if (count === 0) {
       this.requestsCounter++;
     }
@@ -46,17 +46,17 @@ export class AuthService {
         this.saveUser(user);
         this.saveToken(user.access_token);
       }
-    })
+    });
   }
-  get events$ () {
+  get events$() {
     return this.eventSubject$;
   }
   set event(eventObj: any) {
     this.eventSubject$.next(eventObj);
   }
   get redirect() {
-    if (!this.redirectUrl && !window.sessionStorage.getItem('redirect') && window.location.pathname !== '/login') window.sessionStorage.setItem('redirect', window.location.pathname);
-    if (!this.redirectUrl) this.redirectUrl = window.sessionStorage.getItem('redirect');
+    if (!this.redirectUrl && !window.sessionStorage.getItem('redirect') && window.location.pathname !== '/login') { window.sessionStorage.setItem('redirect', window.location.pathname); }
+    if (!this.redirectUrl) { this.redirectUrl = window.sessionStorage.getItem('redirect'); }
     if (!this.redirectUrl) {
       this.redirectUrl = '/';
     }
@@ -85,12 +85,12 @@ export class AuthService {
       }
       token = localStorage.getItem('token');
       if (!token) {
-        let userStr = localStorage.getItem('user');
+        const userStr = localStorage.getItem('user');
         if (userStr) {
           try {
-            let user: User = JSON.parse(userStr);
+            const user: User = JSON.parse(userStr);
             // if (user.access_token) this.tokenSubject$.next(token);
-            this.setUser(user)
+            this.setUser(user);
             return resolve(true);
           } catch (error) {
             return resolve(null);
@@ -99,7 +99,7 @@ export class AuthService {
         resolve(null);
       } else {
         this.tokenSubject$.next(token);
-        return resolve(true)
+        return resolve(true);
       }
     });
   }
@@ -131,17 +131,14 @@ export class AuthService {
     return this.userSubject$.getValue();
   }
 
-  public saveToken(token: string, session?:boolean) {
-    if (session) return sessionStorage.setItem('token', token);
-    else return localStorage.setItem('token', token);
+  public saveToken(token: string, session?: boolean) {
+    if (session) { return sessionStorage.setItem('token', token); } else { return localStorage.setItem('token', token); }
   }
-  public saveUser(user: User, session?:boolean) {
-    if (session) return sessionStorage.setItem('user', JSON.stringify(user));
-    else return localStorage.setItem('user', JSON.stringify(user));
+  public saveUser(user: User, session?: boolean) {
+    if (session) { return sessionStorage.setItem('user', JSON.stringify(user)); } else { return localStorage.setItem('user', JSON.stringify(user)); }
   }
   public removeToken(session?: boolean) {
-    if (session) return sessionStorage.removeItem('token');
-    else return localStorage.removeItem('token');
+    if (session) { return sessionStorage.removeItem('token'); } else { return localStorage.removeItem('token'); }
   }
 
   public clearStorage() {

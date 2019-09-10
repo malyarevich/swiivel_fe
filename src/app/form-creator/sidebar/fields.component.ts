@@ -1,4 +1,4 @@
-import { Component, OnInit, HostBinding } from '@angular/core';
+import { Component, HostBinding, OnInit } from '@angular/core';
 
 @Component({
   selector: 'sw-fields',
@@ -6,7 +6,7 @@ import { Component, OnInit, HostBinding } from '@angular/core';
   styleUrls: ['./fields.component.scss']
 })
 export class SidebarFieldsComponent implements OnInit {
-  
+
   constructor() { }
 
   ngOnInit() {

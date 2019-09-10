@@ -1,4 +1,4 @@
-import { Component, OnInit, forwardRef, ChangeDetectionStrategy, ViewChild, ElementRef, Renderer2 } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, forwardRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
@@ -15,10 +15,14 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   ]
 })
 export class InputNumberComponent implements OnInit, ControlValueAccessor {
-  onChange: Function = (_: string) => {};
+
+  constructor(private renderer: Renderer2) {
+
+  }
   onTouched: Function;
   errors: [];
   @ViewChild('input', {static: true}) input: ElementRef;
+  onChange: Function = (_: string) => {};
 
   setDisabledState?(isDisabled: boolean): void {
     this.renderer.setProperty(this.input.nativeElement, 'disabled', isDisabled);
@@ -31,10 +35,6 @@ export class InputNumberComponent implements OnInit, ControlValueAccessor {
   }
   writeValue(obj: any): void {
     this.renderer.setProperty(this.input.nativeElement, 'value', obj);
-  }
-
-  constructor(private renderer: Renderer2) {
-
   }
 
   ngOnInit() {

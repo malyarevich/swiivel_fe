@@ -1,8 +1,8 @@
+import { HttpErrorResponse, HttpEvent, HttpEventType, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import { Injectable, Injector } from '@angular/core';
-import { HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse, HttpEventType, HttpEvent} from '@angular/common/http';
 
-import { Observable, throwError, empty, pipe, zip, range, timer } from 'rxjs';
-import { tap, retryWhen, mergeMap, map, finalize } from 'rxjs/operators';
+import { empty, Observable, pipe, range, throwError, timer, zip } from 'rxjs';
+import { finalize, map, mergeMap, retryWhen, tap } from 'rxjs/operators';
 
 import { AuthService } from './auth.service';
 
@@ -22,16 +22,16 @@ const backoff = (maxTries, ms) => {
      )
    )
  );
-}
+};
 
-const addAuthHeader = function (request: HttpRequest<any>, token: string) {
+const addAuthHeader = (request: HttpRequest<any>, token: string) => {
   return request.clone({ setHeaders: { 'x-access-token': token}});
-}
+};
 
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  retries = 1
+  retries = 1;
   counter = 0;
   inprogress = {};
   guestPaths = guestUrls.map((url) => `/api/v1${url}`);
@@ -39,7 +39,7 @@ export class AuthInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const guestPath = this.guestPaths.includes(req.url);
     if (guestPath) {
-      return next.handle(req)
+      return next.handle(req);
     } else {
       if (this.auth.token) {
         req = addAuthHeader(req, this.auth.token);
@@ -58,10 +58,10 @@ export class AuthInterceptor implements HttpInterceptor {
           }
         ),
         finalize(() => {
-          this.counter++
-          if (req.body) console.table(req.body)
+          this.counter++;
+          if (req.body) { console.table(req.body); }
         }),
-      )
+      );
     }
   }
 }
