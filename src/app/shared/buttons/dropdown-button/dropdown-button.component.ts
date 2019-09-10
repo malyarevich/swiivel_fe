@@ -13,13 +13,13 @@ export class DropdownButtonComponent {
   @Input() items: [any];
   @Output() changeField = new EventEmitter();
 
-  public isDropDownOpen = false;
+  public opened = false;
   public IconsEnum = IconsEnum;
 
   constructor() {}
 
   selectItem(item: any): void {
     this.changeField.emit(item);
-    this.isDropDownOpen = false;
+    this.opened = false;
   }
 }

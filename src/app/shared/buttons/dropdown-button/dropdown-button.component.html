@@ -1,15 +1,15 @@
 <button
   class="dropdown-button__button"
-  [class.dropdown-button__button--opened]="isDropDownOpen"
-  (click)="isDropDownOpen = !isDropDownOpen"
+  [class.dropdown-button__button--opened]="opened"
+  (click)="opened = !opened"
 >
   {{ title }}
   <i
     class="dropdown-button__button--icon fas"
-    [ngClass]="isDropDownOpen ? IconsEnum.ARROW_UP : IconsEnum.ARROW_DOWN"
+    [ngClass]="opened ? IconsEnum.ARROW_UP : IconsEnum.ARROW_DOWN"
   ></i>
 </button>
-<ul class="dropdown-button__list" *ngIf=isDropDownOpen>
+<ul class="dropdown-button__list" *ngIf=opened>
   <li *ngFor="let item of items">
     <button class="dropdown-button__item-button" (click)="selectItem(item)">{{ item }}</button>
   </li>
