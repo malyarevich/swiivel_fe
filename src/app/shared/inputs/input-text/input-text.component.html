@@ -1,4 +1,4 @@
-<div class="input_text">
+<label class="input_text">
   <input
     type="text"
     class="input_text__input"
@@ -7,5 +7,5 @@
     [class.empty]="isEmpty(input.value)"
     #input/>
   <ng-content></ng-content>
-  <i class="input_text__error_icon"></i>
-</div>
+  <i class="error input_text__error_icon"></i>
+</label>
