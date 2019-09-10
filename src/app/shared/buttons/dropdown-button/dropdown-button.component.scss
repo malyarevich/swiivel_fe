@@ -1,7 +1,6 @@
 @import 'index';
 
-.dropdown-button {
-  width: 120px;
+:host {
   position: relative;
 
   .dropdown-button__button {
@@ -38,7 +37,7 @@
 
   .dropdown-button__list {
     position: absolute;
-    width: 120px;
+    width: 100%;
     top: 32px;
     margin: 0;
     padding: 0;

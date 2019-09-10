@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { IconsEnum } from '@shared/enums/icons.enum';
 
 @Component({
@@ -8,34 +8,18 @@ import { IconsEnum } from '@shared/enums/icons.enum';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class DropdownButtonComponent implements OnInit {
-  @Input() title?: string;
+export class DropdownButtonComponent {
+  @Input() title = 'Button title';
   @Input() items: [any];
-  @Output() onChangeField = new EventEmitter();
+  @Output() changeField = new EventEmitter();
 
   public isDropDownOpen = false;
+  public IconsEnum = IconsEnum;
 
-  constructor() {
-  }
-
-  ngOnInit() {
-  }
-
-  changeDropdownVisible(): void {
-    this.isDropDownOpen = !this.isDropDownOpen;
-  }
+  constructor() {}
 
   selectItem(item: any): void {
-    this.onChangeField.emit(item);
-    this.isDropDownOpen = !this.isDropDownOpen;
-  }
-
-  getIconClass(): string {
-    const arrowClass = this.isDropDownOpen ? IconsEnum.ARROW_UP : IconsEnum.ARROW_DOWN;
-    return 'fas ' + arrowClass + ' dropdown-button__button--icon';
-  }
-
-  getButtonClass(): string {
-    return this.isDropDownOpen ? 'dropdown-button__button dropdown-button__button--opened' : 'dropdown-button__button';
+    this.changeField.emit(item);
+    this.isDropDownOpen = false;
   }
 }

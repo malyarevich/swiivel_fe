@@ -1,11 +1,16 @@
-<div class="dropdown-button">
-  <button [ngClass]="getButtonClass()" (click)="changeDropdownVisible()">
-    {{ title }}
-    <i [ngClass]="getIconClass()"></i>
-  </button>
-  <ul class="dropdown-button__list" *ngIf=isDropDownOpen>
-    <li *ngFor="let item of items">
-      <button class="dropdown-button__item-button" (click)="selectItem(item)">{{ item }}</button>
-    </li>
-  </ul>
-</div>
+<button
+  class="dropdown-button__button"
+  [class.dropdown-button__button--opened]="isDropDownOpen"
+  (click)="isDropDownOpen = !isDropDownOpen"
+>
+  {{ title }}
+  <i
+    class="dropdown-button__button--icon fas"
+    [ngClass]="isDropDownOpen ? IconsEnum.ARROW_UP : IconsEnum.ARROW_DOWN"
+  ></i>
+</button>
+<ul class="dropdown-button__list" *ngIf=isDropDownOpen>
+  <li *ngFor="let item of items">
+    <button class="dropdown-button__item-button" (click)="selectItem(item)">{{ item }}</button>
+  </li>
+</ul>
