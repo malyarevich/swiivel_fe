@@ -1,7 +1,7 @@
 <form [formGroup]="form">
   <sw-input-dynamic [fields]="fields" *ngIf="!!fields"></sw-input-dynamic>
   <sw-input-text formControlName="short">
-    <span class="placeholder">Placeholder</span>
+    <span class="input_label">Placeholder</span>
   </sw-input-text>
 
   <sw-input-toggle formControlName="toggle">
@@ -12,4 +12,33 @@
     <span class="input_label">default value</span>
   </sw-input-checkbox>
 
+  <sw-input-button-group formControlName="buttonGroup" [options]="buttonsOptions"></sw-input-button-group>
+
+  <sw-input-number formControlName="number">
+    <span class="input_label">default value</span>
+  </sw-input-number>
+
+  <sw-dropdown-input formControlName="dropdown" [multiple]="true" [options]="dropdownList">
+    <span class="input_label">Placeholder</span>
+  </sw-dropdown-input>
+
+  <sw-input-phone-number formControlName="phone">
+    <span class="input_label">Placeholder</span>
+  </sw-input-phone-number>
+
+  <sw-input-email formControlName="email">
+    <span class="input_label">Placeholder</span>
+  </sw-input-email>
+  <sw-input-textarea formControlName="longText" [rows]="textarea.rows" [cols]="textarea.cols"
+    [readonly]="!textarea.editable">
+    <span class="input_label">default text</span>
+  </sw-input-textarea>
+  <sw-input-toggle [formControl]="longTextDisabled">
+    <span class="input_label">Disabled</span>
+  </sw-input-toggle>
 </form>
+<sw-input-toggle [(ngModel)]="textarea.editable">
+  <span class="input_label">Editable</span>
+</sw-input-toggle>
+<button type="button" (click)="changeTextarea()">Change textarea value</button>
+<button type="button" (click)="changeTextarea(true)">Change textarea size</button>

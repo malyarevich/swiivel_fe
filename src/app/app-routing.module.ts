@@ -1,11 +1,13 @@
 import {NgModule} from '@angular/core';
-import {Routes, RouterModule} from '@angular/router';
-import { environment } from '@env/environment';
-import { MainComponent } from '@core/components/main.component';
-import { LoginComponent } from '@core/components/login.component';
-import { RestorePasswordComponent } from '@core/components/restore-password.component';
+import {RouterModule, Routes} from '@angular/router';
+import { DataCollectionComponent } from '@app/modules/data-collection/data-collection.component';
 import { AuthGuard } from '@core/auth.guard';
 import { DashboardComponent } from '@core/components/dashboard.component';
+import { LoginComponent } from '@core/components/login.component';
+import { MainComponent } from '@core/components/main.component';
+import { RestorePasswordComponent } from '@core/components/restore-password.component';
+import { environment } from '@env/environment';
+import { routes as dataCollectionRoutes } from './modules/data-collection/data-collection-routing.module';
 
 const routes: Routes = [
   {
@@ -16,6 +18,12 @@ const routes: Routes = [
     path: 'restore-password',
     component: RestorePasswordComponent
   },
+  // todo: delete after work routing
+  {
+    path: 'data-collection',
+    component: DataCollectionComponent,
+    children: dataCollectionRoutes
+  },
   {
     path: '',
     component: MainComponent,
@@ -23,7 +31,12 @@ const routes: Routes = [
     canActivateChild: [AuthGuard],
     children: [
       {
-        path: '',  component: DashboardComponent, pathMatch: 'full'
+        path: '',
+        pathMatch: 'full',
+        redirectTo: '/dashboard',
+      },
+      {
+        path: 'dashboard',  component: DashboardComponent, pathMatch: 'prefix'
       },
       {
         path: 'form-creator',
@@ -37,7 +50,7 @@ const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: '/',
+    redirectTo: '/dashboard',
   }
 ];
 

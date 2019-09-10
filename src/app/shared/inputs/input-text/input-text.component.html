@@ -1,0 +1,11 @@
+<label class="input_text">
+  <input
+    type="text"
+    class="input_text__input"
+    (blur)="onTouched()"
+    (input)="onChange(input.value)"
+    [class.empty]="isEmpty(input.value)"
+    #input/>
+  <ng-content></ng-content>
+  <i class="error input_text__error_icon"></i>
+</label>

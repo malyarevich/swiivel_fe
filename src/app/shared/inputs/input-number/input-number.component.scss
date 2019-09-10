@@ -1,0 +1,33 @@
+@import "index";
+
+:host {
+  .input_number {
+    @extend %input-field-container;
+    &__input {
+      @extend %input-field-style;
+      &:not(.integer) {
+        padding-left: 25px;
+      }
+    }
+    &_icon {
+      position: absolute;
+      left: 10px;
+      top: 13px;
+      font-size: 12px;
+      font-style: inherit;
+      font-weight: bold;
+    }
+    &__error_icon {
+      @extend %input-error-icon;
+    }
+  }
+}
+
+:host(.ng-invalid) {
+  .input_number {
+    border: 1px solid $error-color;
+    &__error_icon {
+      display: block;
+    }
+  }
+}

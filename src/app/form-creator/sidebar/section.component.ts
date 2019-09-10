@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, HostBinding, HostListener, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, HostBinding, HostListener, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -7,15 +7,16 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./section.component.scss']
 })
 export class SectionComponent implements OnInit {
+  control: FormControl = new FormControl();
   @Input() section;
-  @Output() activate = new EventEmitter<string>();
   @Output() collapseAll = new EventEmitter<boolean>();
-  //   return !!this.section.active;
-  // };
-  // @HostListener('click', ['$event'])
+  @Output() activate = new EventEmitter<string>();
+  @HostListener('click', ['$event'])
   onClick(event: Event) {
-    this.activate.next(this.section.name.toLowerCase())
+    event.preventDefault();
+    this.activate.next(this.section.name.toLowerCase());
   }
+
   toggleSection() {
     if (!this.section.expanded) {
       this.collapseAll.next(true);
@@ -25,11 +26,9 @@ export class SectionComponent implements OnInit {
       this.section.expanded = false;
     }
   }
-  control: FormControl = new FormControl();
   constructor() {
 
   }
-
   ngOnInit() {
     this.control.valueChanges.subscribe((value) => {
       this.activate.next(this.section.name)

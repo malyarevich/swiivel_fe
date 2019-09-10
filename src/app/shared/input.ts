@@ -1,4 +1,4 @@
-import { Type, Exclude, Expose, Transform, plainToClass} from 'class-transformer';
+import { Exclude, Expose, plainToClass, Transform, Type} from 'class-transformer';
 
 @Exclude()
 export class Field {

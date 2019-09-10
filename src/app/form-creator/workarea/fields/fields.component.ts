@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { fields, sidebar } from '@shared/fields';
-import { FieldService } from '@app/core/field.service';
-import {FlatTreeControl} from '@angular/cdk/tree';
 import { ArrayDataSource } from '@angular/cdk/collections';
+import {FlatTreeControl} from '@angular/cdk/tree';
+import { Component, OnInit } from '@angular/core';
+import { FieldService } from '@app/core/field.service';
+import { fields, sidebar } from '@shared/fields';
 
 
 @Component({

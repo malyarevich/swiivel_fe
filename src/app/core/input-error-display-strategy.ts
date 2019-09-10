@@ -1,5 +1,5 @@
-import { FormControl } from '@angular/forms';
 import { InjectionToken } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 /**
  * Strategy to display control error, for example display errors only when control is dirty or form is submitted

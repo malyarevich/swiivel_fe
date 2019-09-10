@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 
-import { Observable, BehaviorSubject, throwError, of } from 'rxjs';
-import { catchError, timeout, finalize,  } from 'rxjs/operators';
+import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
+import { catchError, finalize, timeout,  } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
 
@@ -25,12 +25,12 @@ export class HttpService {
 
   static setAuthLoadHeaders(token: string) {
     let headers = new HttpHeaders();
-    headers = headers.set('Authorization', `Bearer ${token}`);
+    headers = headers.set('X-Access-Token', `Bearer ${token}`);
     return headers;
   }
   static setAuthHeader(token: string, headers?: HttpHeaders) {
     if (!headers) { headers = new HttpHeaders(); }
-    return headers.set('Authorization', `Bearer ${token}`);
+    return headers.set('X-Access-Token', `Bearer ${token}`);
   }
   static setFormMultipart(headers?: HttpHeaders) {
     if (!headers) { headers = new HttpHeaders(); }

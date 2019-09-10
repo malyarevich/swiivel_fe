@@ -1,5 +1,5 @@
-import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
-
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import { Router } from '@angular/router';
 
 export interface IMenuItems {
   route: string;
@@ -7,14 +7,13 @@ export interface IMenuItems {
   icon: string;
 }
 
-
-
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
   styleUrls : ['./main.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
+
 export class MainComponent implements OnInit {
   menuItems: IMenuItems[] = [
     {route: '/', label: 'Dashboard', icon: 'fa-th'},
@@ -24,9 +23,13 @@ export class MainComponent implements OnInit {
     {route: '/family', label: 'Family', icon: 'fa-cog'},
     {route: '/period', label: 'Period', icon: 'fa-calendar'},
     {route: '/data-collection', label: 'Data Collection', icon: 'fa-file'},
-  ]
-  constructor() {}
+  ];
+  constructor(private router: Router) {}
   ngOnInit(): void {}
   toggleMenu() {}
-  logOut() {}
+  logOut() {
+    window.localStorage.clear();
+    window.sessionStorage.clear();
+    this.router.navigate(['/login']);
+  }
 }
