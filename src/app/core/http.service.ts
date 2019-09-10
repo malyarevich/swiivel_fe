@@ -25,12 +25,12 @@ export class HttpService {
 
   static setAuthLoadHeaders(token: string) {
     let headers = new HttpHeaders();
-    headers = headers.set('X-Access-Token', `Bearer ${token}`);
+    headers = headers.set('Authorization', `Bearer ${token}`);
     return headers;
   }
   static setAuthHeader(token: string, headers?: HttpHeaders) {
     if (!headers) { headers = new HttpHeaders(); }
-    return headers.set('X-Access-Token', `Bearer ${token}`);
+    return headers.set('Authorization', `Bearer ${token}`);
   }
   static setFormMultipart(headers?: HttpHeaders) {
     if (!headers) { headers = new HttpHeaders(); }

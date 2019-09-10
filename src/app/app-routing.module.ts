@@ -31,12 +31,7 @@ const routes: Routes = [
     canActivateChild: [AuthGuard],
     children: [
       {
-        path: '',
-        pathMatch: 'full',
-        redirectTo: '/dashboard',
-      },
-      {
-        path: 'dashboard',  component: DashboardComponent, pathMatch: 'prefix'
+        path: '',  component: DashboardComponent, pathMatch: 'full'
       },
       {
         path: 'form-creator',
@@ -50,7 +45,7 @@ const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: '/dashboard',
+    redirectTo: '/',
   }
 ];
 

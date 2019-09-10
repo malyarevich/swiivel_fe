@@ -15,6 +15,11 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   ],
 })
 export class InputTextareaComponent implements OnInit, ControlValueAccessor {
+  onChange: Function = (_: string) => {};
+  onTouched: Function;
+  @ViewChild('input', {static: true}) input: ElementRef;
+  @Input() rows: number = 4;
+  @Input() cols: number = 30;
   @Input('readonly') set readonly(isReadonly: boolean) {
     if (!!isReadonly) {
       this.renderer.setAttribute(this.input.nativeElement, 'readonly', 'readonly');
@@ -26,11 +31,6 @@ export class InputTextareaComponent implements OnInit, ControlValueAccessor {
   constructor(private renderer: Renderer2) {
 
   }
-  onTouched: Function;
-  @ViewChild('input', {static: true}) input: ElementRef;
-  @Input() rows = 4;
-  @Input() cols = 30;
-  onChange: Function = (_: string) => {};
 
   setDisabledState?(isDisabled: boolean): void {
     this.renderer.setProperty(this.input.nativeElement, 'disabled', isDisabled);

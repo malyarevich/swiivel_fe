@@ -58,73 +58,36 @@
   text-transform: uppercase;
 }
 
-%standart-input-label {
-  padding: 15px 10px 5px 10px;
-  &.empty {
-    padding: 10px;
-    & ~ span {
-      &.input_label {
-        position: absolute;
-        top: 9px;
-        font-size: 12px;
-      }
-    }
-  }
-  & ~ span {
-    &.input_label {
-      position: absolute;
-      top: 2px;
-      left: 10px;
-      font-size: 10px;
-      color: $gray-color;
-      transition: all 0.2s ease-in-out;
-    }
-  }
-}
-
-i {
-  &.error {
-    width: 13px;
-    height: 13px;
-    display: block;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    border-radius: 50%;
-    background-color: $error-color;
-    &:before,
-    &:after {
-      content: "";
-      width: 7px;
-      height: 2px;
-      border-radius: 2px;
-      position: absolute;
-      left: 3px;
-      top: 5.5px;
-      background-color: $white;
-      transform: rotate(45deg);
-    }
-    &:after {
-      transform: rotate(-45deg);
-    }
-  }
-}
-
 sw-input-text {
   .input_text__input {
-    @extend %standart-input-label;
-  }
-}
-
-sw-input-number {
-  .input_number__input {
-    @extend %standart-input-label;
+    padding: 15px 10px 5px 10px;
+    &.empty {
+      padding: 10px;
+      & + span {
+        &.placeholder {
+          position: absolute;
+          top: 9px;
+          font-size: 12px;
+        }
+      }
+    }
+    & + span {
+      &.placeholder {
+        position: absolute;
+        top: 2px;
+        left: 10px;
+        font-size: 10px;
+        color: $gray-color;
+        transition: all 0.2s ease-in-out;
+      }
+    }
   }
 }
 
 sw-input-toggle {
   span {
     &.input_label {
+      font-family: "Nunito Sans";
       font-weight: bold;
       font-size: 12px;
       color: $black;
@@ -135,6 +98,7 @@ sw-input-toggle {
 sw-input-checkbox {
   span {
     &.input_label {
+      font-family: "Nunito Sans";
       font-weight: bold;
       font-size: 12px;
       color: $black;
@@ -164,21 +128,17 @@ sw-input-button-group {
 
 sw-dropdown-input,
 sw-input-phone-number,
-sw-input-email,
-sw-input-number {
+sw-input-email {
   .phone_number,
   .email,
-  .dropdown_input_container,
-  .input_number {
+  .dropdown_input_container {
     @extend %placeholder;
     &.empty {
-      &:not(:focus-within) {
-        padding: 10px;
-        .input_label {
-          position: absolute;
-          top: 8px;
-          font-size: 12px;
-        }
+      padding: 10px;
+      .placeholder {
+        position: absolute;
+        top: 8px;
+        font-size: 12px;
       }
     }
   }
@@ -191,6 +151,55 @@ sw-input-textarea {
       position: absolute;
       top: 0;
       font-size: 12px;
+    }
+  }
+}
+
+.field_settings_container {
+  padding: 10px;
+  section {
+    margin-bottom: 15px;
+    .title {
+      font-weight: 800;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .options_container {
+      .option {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: center;
+        width: 100%;
+        .controls {
+          visibility: hidden;
+          color: #A4A4A4;
+          margin-left: 5px;
+          display: flex;
+          flex-direction: row;
+          flex-wrap: nowrap;
+          i {
+            text-align: center;
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+            &:not(:last-of-type) {
+              margin-right: 5px;
+            }
+          }
+        }
+        &:not(:last-of-type) {
+          margin-bottom: 5px;
+        }
+        &:hover {
+          .controls {
+            visibility: unset;
+          }
+        }
+      }
+    }
+    &:last-of-type {
+      margin-bottom: 0;
     }
   }
 }

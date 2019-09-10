@@ -1,7 +1,7 @@
 <form [formGroup]="form">
   <sw-input-dynamic [fields]="fields" *ngIf="!!fields"></sw-input-dynamic>
   <sw-input-text formControlName="short">
-    <span class="input_label">Placeholder</span>
+    <span class="placeholder">Placeholder</span>
   </sw-input-text>
 
   <sw-input-toggle formControlName="toggle">
@@ -12,22 +12,18 @@
     <span class="input_label">default value</span>
   </sw-input-checkbox>
 
-  <sw-input-button-group formControlName="buttonGroup" [options]="buttonsOptions"></sw-input-button-group>
-
-  <sw-input-number formControlName="number">
-    <span class="input_label">default value</span>
-  </sw-input-number>
+  <sw-input-button-group formControlName="buttonGroup" [options]="buttons"></sw-input-button-group>
 
   <sw-dropdown-input formControlName="dropdown" [multiple]="true" [options]="dropdownList">
-    <span class="input_label">Placeholder</span>
+    <span class="placeholder">Placeholder</span>
   </sw-dropdown-input>
 
   <sw-input-phone-number formControlName="phone">
-    <span class="input_label">Placeholder</span>
+    <span class="placeholder">Placeholder</span>
   </sw-input-phone-number>
 
   <sw-input-email formControlName="email">
-    <span class="input_label">Placeholder</span>
+    <span class="placeholder">Placeholder</span>
   </sw-input-email>
   <sw-input-textarea formControlName="longText" [rows]="textarea.rows" [cols]="textarea.cols"
     [readonly]="!textarea.editable">

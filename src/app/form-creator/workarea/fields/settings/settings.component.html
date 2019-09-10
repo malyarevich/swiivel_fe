@@ -1,0 +1,45 @@
+<div class="container settings_container">
+  <div class="row no-gutters settings_container__row">
+    <div class="col-4" style="margin-right: 15px;">
+      <div class="settings_container__row_title">
+        {{ getSectionTitle() }}
+      </div>
+      <div [ngSwitch]="type" class="field_setting_wrap">
+        <div *ngSwitchCase="101">
+          <sw-text-setting></sw-text-setting>
+        </div>
+        <div *ngSwitchCase="102">
+          <sw-longtext-setting></sw-longtext-setting>
+        </div>
+        <div *ngSwitchCase="103">
+          <sw-number-setting></sw-number-setting>
+        </div>
+        <div *ngSwitchCase="104 || 105">
+          <sw-dropdown-setting></sw-dropdown-setting>
+        </div>
+        <div *ngSwitchCase="106 || 110">
+          <sw-date-setting></sw-date-setting>
+        </div>
+        <div *ngSwitchCase="107">
+          <sw-checkbox-setting></sw-checkbox-setting>
+        </div>
+        <div *ngSwitchCase="108">
+          <sw-email-setting></sw-email-setting>
+        </div>
+        <div *ngSwitchCase="109">
+          <sw-phone-setting></sw-phone-setting>
+        </div>
+        <div *ngSwitchCase="113">group</div>
+        <div *ngSwitchCase="114">section</div>
+      </div>
+    </div>
+    <div class="col-8">
+      <div class="settings_container__row_title">
+        Logic Builder
+      </div>
+      <div class="field_setting_wrap">
+        asd
+      </div>
+    </div>
+  </div>
+</div>

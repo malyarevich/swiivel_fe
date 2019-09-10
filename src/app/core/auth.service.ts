@@ -1,10 +1,9 @@
+// import {HttpClient} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { User } from '@app/models/auth';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { ApiService } from './api.service';
-
-
 
 @Injectable({
   providedIn: 'root'
@@ -106,7 +105,7 @@ export class AuthService {
 
   public login(username: string, password: string): Observable<User> {
     return this.api.login({username, password}).subscribe((user: User) => {
-      this.setUser(user);
+      this.userSubject$.next(user);
       return user;
     }, (error) => {
       console.error(error);

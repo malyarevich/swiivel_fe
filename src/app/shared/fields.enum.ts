@@ -4,6 +4,7 @@ export enum FieldType {
   NUMBER = 103,
   MULTIPLE = 104 || 105,
   DATE = 106,
+  CHECKBOX = 107,
   EMAIL = 108,
   PHONE_NUMBER = 109,
   HEBREW_DATE = 110,

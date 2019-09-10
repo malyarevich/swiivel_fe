@@ -52,7 +52,6 @@ import { PopupComponent } from '@core/components/popup/popup.component';
     PopupComponent
   ],
   providers: [
-    HttpService,
     AuthGuard,
     AuthService,
     FieldService,
