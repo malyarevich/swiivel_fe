@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, ViewChild, ElementRef, Renderer2, forwardRef } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ViewChild, ElementRef, Renderer2, forwardRef, Input } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
@@ -18,6 +18,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 export class InputTextComponent implements ControlValueAccessor {
 
   @ViewChild('input', {static: true}) input: ElementRef;
+  @Input() readonly: boolean;
 
   onChange: (value: any) => void;
   onTouched: () => void;
