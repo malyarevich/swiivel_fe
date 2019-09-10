@@ -21,6 +21,7 @@ import { InputEmailComponent } from './input-email/input-email.component';
 import { InputPhoneNumberComponent } from './input-phone-number/input-phone-number.component';
 
 // Others
+import { InputTextareaComponent } from './inputs/input-textarea/input-textarea.component';
 import { UserItemComponent } from './user-item/user-item.component';
 
 @NgModule({
@@ -43,6 +44,7 @@ import { UserItemComponent } from './user-item/user-item.component';
     DropdownInputComponent,
     InputPhoneNumberComponent,
     InputEmailComponent,
+    InputTextareaComponent,
     // Headers
     PageHeaderComponent,
     BlockHeaderComponent,
@@ -65,6 +67,7 @@ import { UserItemComponent } from './user-item/user-item.component';
     DropdownInputComponent,
     InputPhoneNumberComponent,
     InputEmailComponent,
+    InputTextareaComponent,
     // Headers
     PageHeaderComponent,
     BlockHeaderComponent,
