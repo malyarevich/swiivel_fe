@@ -26,12 +26,9 @@ export class InputTextareaComponent implements OnInit, ControlValueAccessor {
     } else {
       this.renderer.removeAttribute(this.input.nativeElement, 'readonly');
     }
-    console.log(isReadonly);
-    console.log(this.input.nativeElement);
   }
 
   setDisabledState?(isDisabled: boolean): void {
-    console.log('disable t');
     this.renderer.setProperty(this.input.nativeElement, 'disabled', isDisabled);
   }
   registerOnTouched(fn: any): void {
