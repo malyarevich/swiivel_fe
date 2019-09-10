@@ -17,11 +17,12 @@ import { DropdownInputComponent } from './inputs/dropdown-input/dropdown-input.c
 // Headers
 import { PageHeaderComponent} from './headers/page-header/page-header.component';
 import { BlockHeaderComponent} from './headers/block-header/block-header.component';
-import { InputPhoneNumberComponent } from './input-phone-number/input-phone-number.component';
-import { InputEmailComponent } from './input-email/input-email.component';
+import { InputPhoneNumberComponent } from './inputs/input-phone-number/input-phone-number.component';
+import { InputEmailComponent } from './inputs/input-email/input-email.component';
 
 // Others
 import { UserItemComponent } from './user-item/user-item.component';
+import { InputTextareaComponent } from './inputs/input-textarea/input-textarea.component';
 
 @NgModule({
   imports: [
@@ -43,6 +44,7 @@ import { UserItemComponent } from './user-item/user-item.component';
     DropdownInputComponent,
     InputPhoneNumberComponent,
     InputEmailComponent,
+    InputTextareaComponent,
     // Headers
     PageHeaderComponent,
     BlockHeaderComponent,
@@ -65,6 +67,7 @@ import { UserItemComponent } from './user-item/user-item.component';
     DropdownInputComponent,
     InputPhoneNumberComponent,
     InputEmailComponent,
+    InputTextareaComponent,
     // Headers
     PageHeaderComponent,
     BlockHeaderComponent,
