@@ -164,6 +164,21 @@ sw-input-textarea {
       text-transform: uppercase;
       margin-bottom: 10px;
     }
+    .row_container {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: space-between;
+      &:not(:last-of-type) {
+        margin-bottom: 5px;
+      }
+      &__input {
+        width: 100%;
+        &:not(:last-of-type) {
+          margin-right: 5px;
+        }
+      }
+    }
     .options_container {
       .option {
         display: flex;

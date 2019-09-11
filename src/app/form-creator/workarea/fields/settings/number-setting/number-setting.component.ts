@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'sw-number-setting',
@@ -6,10 +7,45 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./number-setting.component.scss']
 })
 export class NumberSettingComponent implements OnInit {
+  
+  form: FormGroup;
+  validatorsOptions = ['Alphabetic', 'Alphanumeric'].map(t => { return { title: t } });
 
-  constructor() { }
+  @Input()
+  set settings(obj: any) {
+    if (obj) {
+      this.form.patchValue(obj);
+    }
+  }
+  @Output() fieldSettings = new EventEmitter();
+
+  constructor(
+    private fb: FormBuilder
+  ) { }
 
   ngOnInit() {
+    this.form = this.fb.group({
+      showDefaultValue: new FormControl(false),
+      showValidators: new FormControl(false),
+      defaultValue: new FormControl([]),
+      columnWide: new FormControl([]),
+      rowHeigth: new FormControl([]),
+      validators: new FormGroup({
+        min: new FormControl(null),
+        max: new FormControl(null),
+        validator: new FormControl([])
+      })
+    });
+    this.form.valueChanges.subscribe(v => {
+      this.fieldSettings.emit({
+        defaultValue: v['defaultValue'],
+        columnWide: v['columnWide'],
+        rowHeigth: v['rowHeigth'],
+        validators: v['validators']
+      });
+    });
   }
+
+
 
 }
