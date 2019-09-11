@@ -35,7 +35,7 @@ import { PopupComponent } from '@core/components/popup/popup.component';
     MainComponent,
     DashboardComponent,
     PopupComponent,
-    DataCollectionComponent
+    DataCollectionComponent,
   ],
   imports: [
     BrowserModule,
