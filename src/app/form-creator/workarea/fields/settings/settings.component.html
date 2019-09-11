@@ -1,20 +1,14 @@
 <div class="container settings_container">
   <div class="row no-gutters settings_container__row">
-    <div class="col-4" style="margin-right: 15px;">
-      <ng-container [ngSwitch]="type">
-        <div *ngFor="let component of components">
-          <div *ngSwitchCase="component.type">
-            <div class="section_title">
-              {{ component.title }}
-            </div>
-            <div class="field_setting_wrap">
-              <ng-container *ngComponentOutlet="component.component"></ng-container>
-            </div>
-          </div>
-        </div>
-      </ng-container>
+    <div class="col-5" style="margin-right: 15px;">
+      <div class="section_title">
+        {{ component?.title }}
+      </div>
+      <div class="field_setting_wrap">
+        <ng-container *ngComponentOutlet="component?.component"></ng-container>
+      </div>
     </div>
-    <div class="col-8">
+    <div class="col-7">
       <div class="section_title">
         Logic Builder
       </div>

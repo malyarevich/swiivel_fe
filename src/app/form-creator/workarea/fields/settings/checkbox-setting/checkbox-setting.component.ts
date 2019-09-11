@@ -8,12 +8,12 @@ import { FormControl } from '@angular/forms';
 export class CheckboxSettingComponent implements OnInit {
 
   showDefaultValue: boolean = false;
-  default = new FormControl([]);
+  defaultValue = new FormControl([]);
 
   @Input()
   set settings(obj: any) {
     if (obj) {
-      this.default.setValue([this.options.find(o => o.value === obj['default'])]);
+      this.defaultValue.setValue([this.options.find(o => o.value === obj['defaultValue'])]);
     }
   }
   @Output() fieldSettings = new EventEmitter();
@@ -26,7 +26,7 @@ export class CheckboxSettingComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.default.valueChanges.subscribe(v => {
+    this.defaultValue.valueChanges.subscribe(v => {
       this.fieldSettings.emit(...v);
     });
   }
