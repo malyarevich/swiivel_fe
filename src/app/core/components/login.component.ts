@@ -41,10 +41,9 @@ export class LoginComponent implements OnDestroy {
   }
   onSubmit(): void {
     if (this.form.valid) {
-      const {user, password} = this.form.value;
-      this.auth.login(user, password).pipe(first()).subscribe((user: User) => {
+      const {username, password} = this.form.value;
+      this.auth.login(username, password).then((user: User) => {
         if (user) {
-          localStorage.setItem('user', JSON.stringify(user));
           this.router.navigate(['/']);
         }
       }, (error) => {

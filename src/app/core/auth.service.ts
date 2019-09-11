@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { User } from '@app/models/auth';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { ApiService } from './api.service';
+import { first } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -103,13 +104,14 @@ export class AuthService {
     });
   }
 
-  public login(username: string, password: string): Observable<User> {
-    return this.api.login({username, password}).subscribe((user: User) => {
-      this.userSubject$.next(user);
-      return user;
-    }, (error) => {
-      console.error(error);
-      return error;
+  public login(username: string, password: string): Promise<User> {
+    return new Promise((resolve, reject) => {
+      this.api.login({username, password}).pipe(first()).subscribe((user: User) => {
+        this.userSubject$.next(user);
+        resolve(user);
+      }, (error) => {
+        reject(error);
+      });
     });
   }
 
@@ -134,6 +136,7 @@ export class AuthService {
     if (session) { return sessionStorage.setItem('token', token); } else { return localStorage.setItem('token', token); }
   }
   public saveUser(user: User, session?: boolean) {
+    console.log(user)
     if (session) { return sessionStorage.setItem('user', JSON.stringify(user)); } else { return localStorage.setItem('user', JSON.stringify(user)); }
   }
   public removeToken(session?: boolean) {
