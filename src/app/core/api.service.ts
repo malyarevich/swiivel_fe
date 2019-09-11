@@ -48,7 +48,7 @@ export class DataCollectionService {
       }
     };
 
-    return this.http.post(`${API_URL}/proxy/form-builder/form-templates`, options).pipe(
+    return this.http.post(`/proxy/form-builder/form-templates`, options).pipe(
       map(response => {
         console.log(response);
         return response;
