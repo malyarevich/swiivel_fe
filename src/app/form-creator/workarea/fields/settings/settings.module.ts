@@ -10,6 +10,7 @@ import { NumberSettingComponent } from './number-setting/number-setting.componen
 import { PhoneSettingComponent } from './phone-setting/phone-setting.component';
 import { SettingsComponent } from './settings.component';
 import { TextSettingComponent } from './text-setting/text-setting.component';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -27,7 +28,18 @@ import { TextSettingComponent } from './text-setting/text-setting.component';
   ],
   imports: [
     CommonModule,
-    SharedModule
+    SharedModule,
+    FormsModule
+  ],
+  entryComponents: [
+    DropdownSettingComponent,
+    EmailSettingComponent,
+    CheckboxSettingComponent,
+    LongtextSettingComponent,
+    NumberSettingComponent,
+    PhoneSettingComponent,
+    TextSettingComponent,
+    DateSettingComponent
   ],
   exports: [
     SettingsComponent

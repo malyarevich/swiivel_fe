@@ -161,6 +161,7 @@ sw-input-textarea {
 
 .field_settings_container {
   padding: 10px;
+  min-height: 150px;
   section {
     margin-bottom: 15px;
     .title {
@@ -181,6 +182,9 @@ sw-input-textarea {
         width: 100%;
         &:not(:last-of-type) {
           margin-right: 5px;
+        }
+        &.small {
+          width: 50%;
         }
       }
     }

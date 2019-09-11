@@ -1,23 +1,29 @@
 <cdk-tree [dataSource]="treeSource" [treeControl]="treeControl">
-  <!-- This is the tree node template for leaf nodes -->
-  <cdk-tree-node *cdkTreeNodeDef="let node" cdkTreeNodePadding
-                 [style.display]="shouldRender(node) ? 'flex' : 'none'"
-                 class="example-tree-node">
+  <cdk-tree-node *cdkTreeNodeDef="let node" cdkTreeNodePadding [style.display]="shouldRender(node) ? 'flex' : 'none'"
+    class="example-tree-node">
     <!-- use a disabled button to provide padding for tree leaf -->
-    <sw-input-checkbox [(ngModel)]="node.exist"></sw-input-checkbox>{{node.name}}
+    <div class="field">
+      <sw-input-checkbox [(ngModel)]="node.exist"></sw-input-checkbox>{{node.name}}
+    </div>
+
+    <div class="settings">
+      <sw-settings [type]="node.type"></sw-settings>
+    </div>
   </cdk-tree-node>
   <!-- This is the tree node template for expandable nodes -->
   <cdk-tree-node *cdkTreeNodeDef="let node; when: hasChild" cdkTreeNodePadding
-                 [style.display]="shouldRender(node) ? 'flex' : 'none'"
-                 class="example-tree-node">
-    <sw-input-checkbox [(ngModel)]="node.exist"></sw-input-checkbox>
-    {{node.name}}
-    <button cdkTreeNodeToggle
-            [attr.aria-label]="'toggle ' + node.filename"
-            (click)="node.expanded = !node.expanded"
-            [style.visibility]="node.expandable ? 'visible' : 'hidden'">
-      expand
-    </button>
+    [style.display]="shouldRender(node) ? 'flex' : 'none'" class="example-tree-node">
+    <div class="field">
+      <sw-input-checkbox [(ngModel)]="node.exist"></sw-input-checkbox>
+      {{node.name}}
+      <button cdkTreeNodeToggle [attr.aria-label]="'toggle ' + node.filename" (click)="toggleNode(node)"
+        [style.visibility]="node.expandable ? 'visible' : 'hidden'">
+        expand
+      </button>
+    </div>
+    <div class="settings">
+      <sw-settings [type]="node.type"></sw-settings>
+    </div>
 
   </cdk-tree-node>
 </cdk-tree>
