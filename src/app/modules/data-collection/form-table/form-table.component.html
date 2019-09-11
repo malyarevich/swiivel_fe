@@ -24,11 +24,6 @@
       <button (click)="exportFormsZIP()">Export PDF</button>
     </div>
     <div>
-      <sw-blue-link-label
-        *ngFor="let selectedForm of selectedForms"
-        [label]="selectedForm.sharedUrl"
-        (labelClick)="onCopyLink($event)">
-      </sw-blue-link-label>
     </div>
   </div>
 </div>
