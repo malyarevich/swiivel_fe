@@ -1,1 +1,19 @@
-<p>email-setting works!</p>
+<div class="field_settings_container">
+    <section>
+      <div class="title">
+        <sw-input-toggle [(ngModel)]="showDefaultValue">
+          <span class="input_label">Select by default</span>
+        </sw-input-toggle>
+      </div>
+      <sw-input-text *ngIf="showDefaultValue" class="settings-field" [formControl]="defaultValue">
+      </sw-input-text>
+    </section>
+    <section>
+      <div class="title">
+        General
+      </div>
+      <sw-input-toggle class="second" [formControl]="askForConfirm">
+        <span class="input_label">Ask for confirmation</span>
+      </sw-input-toggle>
+    </section>
+</div>
