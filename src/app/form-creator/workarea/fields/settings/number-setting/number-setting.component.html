@@ -20,7 +20,7 @@
           </sw-dropdown-input>
         </div>
         <div class="row_container__input small">
-          <sw-input-number class="settings-field" formControlName="places">
+          <sw-input-number formControlName="places">
             <span class="input_label">Places</span>
           </sw-input-number>
         </div>
@@ -35,12 +35,12 @@
       <ng-container *ngIf="form.get('showValidators').value" formGroupName="validators">
         <div class="row_container">
           <div class="row_container__input">
-            <sw-input-number class="settings-field" formControlName="min">
+            <sw-input-number formControlName="min">
               <span class="input_label">Min Value</span>
             </sw-input-number>
           </div>
           <div class="row_container__input">
-            <sw-input-number class="settings-field" formControlName="max">
+            <sw-input-number formControlName="max">
               <span class="input_label">Max Value</span>
             </sw-input-number>
           </div>

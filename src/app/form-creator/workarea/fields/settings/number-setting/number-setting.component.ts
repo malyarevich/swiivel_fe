@@ -9,7 +9,7 @@ import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 export class NumberSettingComponent implements OnInit {
   
   form: FormGroup;
-  validatorsOptions = ['Alphabetic', 'Alphanumeric'].map(t => { return { title: t } });
+  validatorsOptions = ['Decimal Place', 'Percentage', 'Currency US', 'Currency Canada'].map(t => { return { title: t } });
 
   @Input()
   set settings(obj: any) {
