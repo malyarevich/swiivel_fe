@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SettingsComponent implements OnInit {
 
-  type = 102;
+  type = 103;
 
   constructor() { }
 
