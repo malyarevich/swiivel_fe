@@ -9,15 +9,14 @@ import { emailValidator } from '@app/core/validators';
 })
 export class EmailSettingComponent implements OnInit {
 
-  showDefaultValue: boolean = false;
   form: FormGroup;
   
   @Input()
   set settings(obj: any) {
     if (obj) {
-      if (!!obj['default'] === true) this.showDefaultValue = true;
       this.form.patchValue({
-        defaultValue: obj['default'] || '',
+        showDefaultValue: !!obj['defaultValue'],
+        defaultValue: obj['defaultValue'] || '',
         askForConfirm: !!obj['askForConfirm']
       });
     }
@@ -30,20 +29,14 @@ export class EmailSettingComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
-      defaultValue: new FormControl('', emailValidator()),
+      showDefaultValue: new FormControl(false),
+      defaultValue: new FormControl('', { updateOn: 'blur'}),
       askForConfirm: new FormControl(false),
     });
     this.form.valueChanges.subscribe(v => {
+      delete v.showDefaultValue;
       this.fieldSettings.emit(v);
     })
-  }
-
-  get defaultValue() {
-    return this.form.get('defaultValue');
-  }
-
-  get askForConfirm() {
-    return this.form.get('askForConfirm');
   }
 
 }

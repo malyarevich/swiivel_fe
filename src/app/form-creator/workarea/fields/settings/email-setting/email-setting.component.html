@@ -1,19 +1,21 @@
 <div class="field_settings_container">
+  <form [formGroup]="form">
     <section>
       <div class="title">
-        <sw-input-toggle [(ngModel)]="showDefaultValue">
+        <sw-input-toggle formControlName="showDefaultValue">
           <span class="input_label">default value</span>
         </sw-input-toggle>
       </div>
-      <sw-input-text *ngIf="showDefaultValue" class="settings-field" [formControl]="defaultValue">
+      <sw-input-text *ngIf="form.get('showDefaultValue').value" class="settings-field" formControlName="defaultValue">
       </sw-input-text>
     </section>
     <section>
       <div class="title">
         General
       </div>
-      <sw-input-toggle class="second" [formControl]="askForConfirm">
+      <sw-input-toggle class="second" formControlName="askForConfirm">
         <span class="input_label">Ask for confirmation</span>
       </sw-input-toggle>
     </section>
+  </form>
 </div>
