@@ -1,1 +1,30 @@
-<p>phone-setting works!</p>
+<div class="field_settings_container">
+  <form [formGroup]="form">
+    <section>
+      <div class="title">
+        <sw-input-toggle formControlName="showDefaultValue">
+          <span class="input_label">default value</span>
+        </sw-input-toggle>
+      </div>
+      <sw-input-phone-number *ngIf="form.get('showDefaultValue').value" class="settings-field" formControlName="defaultValue">
+      </sw-input-phone-number>
+    </section>
+    <section>
+      <div class="title">
+        <sw-input-toggle formControlName="showValidators">
+          <span class="input_label">validate</span>
+        </sw-input-toggle>
+      </div>
+      <ng-container *ngIf="form.get('showValidators').value" formGroupName="validators">
+        <div class="row_container">
+            <sw-input-checkbox class="phone" formControlName="min">
+              <span class="input_label">Cell Phone</span>
+            </sw-input-checkbox>
+            <sw-input-checkbox class="settings-field" formControlName="verifyPhone">
+              <span class="input_label">Verify By Sending SMS</span>
+            </sw-input-checkbox>
+        </div>
+      </ng-container>
+    </section>
+  </form>
+</div>
