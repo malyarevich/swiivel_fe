@@ -81,7 +81,7 @@ export class InputNumberComponent implements ControlValueAccessor {
   }
 
   changed(event: Event) {
-    const newValue = this.input.nativeElement.value.replace(/[^0-9\.]+/g, '');
+    let newValue = this.input.nativeElement.value.replace(/[^0-9\.]+/g, '');
     try {
       if (newValue.length > 0) {
         newValue = new Decimal(newValue);
