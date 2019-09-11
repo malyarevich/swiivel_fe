@@ -1,4 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { TextSettingComponent } from './text-setting/text-setting.component';
+import { LongtextSettingComponent } from './longtext-setting/longtext-setting.component';
+import { NumberSettingComponent } from './number-setting/number-setting.component';
+import { DropdownSettingComponent } from './dropdown-setting/dropdown-setting.component';
+import { DateSettingComponent } from './date-setting/date-setting.component';
+import { CheckboxSettingComponent } from './checkbox-setting/checkbox-setting.component';
+import { EmailSettingComponent } from './email-setting/email-setting.component';
+import { PhoneSettingComponent } from './phone-setting/phone-setting.component';
+
+const components = [
+  { type: 101, component: TextSettingComponent, title: 'Short Text Field Settings' },
+  { type: 102, component: LongtextSettingComponent, title: 'Long Text Field Settings' },
+  { type: 103, component: NumberSettingComponent, title: 'Number Field Settings' },
+  { type: 104, component: DropdownSettingComponent, title: 'Dropdown Settings' },
+  { type: 106, component: DateSettingComponent, title: 'English Date Settings' },
+  { type: 107, component: CheckboxSettingComponent, title: 'Checkbox Field Settings' },
+  { type: 108, component: EmailSettingComponent, title: 'Email Settings' },
+  { type: 109, component: PhoneSettingComponent, title: 'Phone Number Settings' },
+  { type: 110, component: DateSettingComponent, title: 'Hebrew Date Settings' },
+];
 
 @Component({
   selector: 'sw-settings',
@@ -7,48 +27,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SettingsComponent implements OnInit {
 
-  type = 103;
+  component: any;
+
+  @Input() 
+  set type(t: number) {
+    if (t) {
+      this.component = components.find(c => c.type === t);
+    }
+  }
 
   constructor() { }
 
   ngOnInit() {
-  }
-
-  getSectionTitle() {
-    let title: string;
-    switch (this.type) {
-      case 101:
-        title = 'Short Text Field Settings';
-        break;
-      case 102:
-        title = 'Long Text Field Settings';
-        break;
-      case 103:
-        title = 'Number Field Settings';
-        break;
-      case 104:
-        title = 'Dropdown Settings';
-        break;
-      case 106:
-        title = 'English Date Settings';
-        break;
-      case 107:
-        title = 'Checkbox Field Settings';
-        break;
-      case 108:
-        title = 'Email Settings';
-        break;
-      case 109:
-        title = 'Phone Number Settings';
-        break;
-      case 110:
-        title = 'Hebrew Date Settings';
-        break;
-      default:
-        title = 'Settings';
-        break;
-    }
-    return title;
   }
 
 }
