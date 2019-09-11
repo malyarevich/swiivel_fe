@@ -93,7 +93,7 @@ export class FormTableComponent implements OnInit {
   }
 
   onCopyLink(label: string): void {
-    navigator['clipboard'].writeText(label)
+    navigator.clipboard.writeText(label)
       .then(() => {
         console.log('Text copied to clipboard', label);
       })

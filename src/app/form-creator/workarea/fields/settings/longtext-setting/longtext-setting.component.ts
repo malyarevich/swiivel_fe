@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'sw-longtext-setting',
@@ -9,7 +9,7 @@ import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 export class LongtextSettingComponent implements OnInit {
 
   form: FormGroup;
-  validatorsOptions = ['Alphabetic', 'Alphanumeric'].map(t => { return { title: t } });
+  validatorsOptions = ['Alphabetic', 'Alphanumeric'].map(t => ({ title: t }));
 
   @Input()
   set settings(obj: any) {
@@ -38,10 +38,10 @@ export class LongtextSettingComponent implements OnInit {
     });
     this.form.valueChanges.subscribe(v => {
       this.fieldSettings.emit({
-        defaultValue: v['defaultValue'],
-        columnWide: v['columnWide'],
-        rowHeigth: v['rowHeigth'],
-        validators: v['validators']
+        defaultValue: v.defaultValue,
+        columnWide: v.columnWide,
+        rowHeigth: v.rowHeigth,
+        validators: v.validators
       });
     });
   }

@@ -182,6 +182,9 @@ sw-input-textarea {
         &:not(:last-of-type) {
           margin-right: 5px;
         }
+        &.small {
+          width: 50%;
+        }
       }
     }
     .options_container {
