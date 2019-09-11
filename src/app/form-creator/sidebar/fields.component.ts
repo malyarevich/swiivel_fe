@@ -27,7 +27,6 @@ export class SidebarFieldsComponent implements OnInit {
 
   getParentNode(node: any) {
     const nodeIndex = this.fieldsTree.indexOf(node);
-    console.log(nodeIndex, node);
     const parentNode = this.fieldsTree.filter(field => field.type === 113 || field.type === 114).find((field) => {
       return field.prefix === node.prefix;
     });
@@ -42,7 +41,6 @@ export class SidebarFieldsComponent implements OnInit {
   shouldRender(node: any) {
     const parent = this.getParentNode(node);
     const should = !parent || !parent.expanded;
-    console.log(should);
     return should;
   }
 

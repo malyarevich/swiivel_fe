@@ -26,9 +26,10 @@ export class SectionComponent implements OnInit {
       this.section.expanded = false;
     }
   }
-  @HostListener('click', ['$event'])
+  // @HostListener('click', ['$event'])
   onClick(event: Event) {
-    event.preventDefault();
+    console.dir(event.target);
+    // event.preventDefault();
     this.activate.next(this.section.name.toLowerCase());
   }
 
