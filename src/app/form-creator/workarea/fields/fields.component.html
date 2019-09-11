@@ -2,7 +2,14 @@
   <cdk-tree-node *cdkTreeNodeDef="let node" cdkTreeNodePadding [style.display]="shouldRender(node) ? 'flex' : 'none'"
     class="example-tree-node">
     <!-- use a disabled button to provide padding for tree leaf -->
-    <sw-input-checkbox [(ngModel)]="node.exist"></sw-input-checkbox>{{node.name}}
+    <div class="field">
+      <sw-input-checkbox [(ngModel)]="node.exist"></sw-input-checkbox>{{node.name}}
+    </div>
+
+    <div class="settings">
+      {{ node.type }}
+      <sw-settings [type]="node.type"></sw-settings>
+    </div>
   </cdk-tree-node>
   <!-- This is the tree node template for expandable nodes -->
   <cdk-tree-node *cdkTreeNodeDef="let node; when: hasChild" cdkTreeNodePadding
@@ -16,7 +23,7 @@
       </button>
     </div>
     <div class="settings">
-      <sw-settings [type]="107"></sw-settings>
+      <sw-settings [type]="node.type"></sw-settings>
     </div>
 
   </cdk-tree-node>

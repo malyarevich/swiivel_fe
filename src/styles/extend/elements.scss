@@ -128,17 +128,21 @@ sw-input-button-group {
 
 sw-dropdown-input,
 sw-input-phone-number,
-sw-input-email {
+sw-input-email,
+sw-input-number {
   .phone_number,
   .email,
-  .dropdown_input_container {
+  .dropdown_input_container,
+  .input_number {
     @extend %placeholder;
     &.empty {
-      padding: 10px;
-      .placeholder {
-        position: absolute;
-        top: 8px;
-        font-size: 12px;
+      &:not(:focus-within) {
+        padding: 10px;
+        .input_label {
+          position: absolute;
+          top: 8px;
+          font-size: 12px;
+        }
       }
     }
   }
@@ -164,6 +168,21 @@ sw-input-textarea {
       font-weight: 800;
       text-transform: uppercase;
       margin-bottom: 10px;
+    }
+    .row_container {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: space-between;
+      &:not(:last-of-type) {
+        margin-bottom: 5px;
+      }
+      &__input {
+        width: 100%;
+        &:not(:last-of-type) {
+          margin-right: 5px;
+        }
+      }
     }
     .options_container {
       .option {
