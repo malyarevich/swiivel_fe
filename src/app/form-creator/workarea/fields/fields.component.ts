@@ -12,7 +12,7 @@ import { fields, sidebar } from '@shared/fields';
 })
 export class WorkareaFieldsComponent implements OnInit {
   treeControl = new FlatTreeControl<any>(node => node.level, field => field.type === 113 || field.type === 114);
-  fieldsTree = this.fs.toFlatTree(sidebar.slice()).reverse();
+  fieldsTree = this.fs.toFlatTree(fields.slice()).reverse();
   treeSource = new ArrayDataSource(this.fieldsTree);
   constructor(private fs: FieldService) {
 
@@ -21,14 +21,10 @@ export class WorkareaFieldsComponent implements OnInit {
   ngOnInit() {
   }
 
-  toggleNode(node) {
-    node.expanded = !node.expanded;
-    return node.expanded;
-  }
-
   hasChild = (_: number, node: any) => node.expandable;
 
   getParentNode(node: any) {
+    const nodeIndex = this.fieldsTree.indexOf(node);
     const parentNode = this.fieldsTree.filter(field => field.type === 113 || field.type === 114).find((field) => {
       return field.prefix === node.prefix;
     });
@@ -40,10 +36,10 @@ export class WorkareaFieldsComponent implements OnInit {
 
     return parentNode;
   }
-
   shouldRender(node: any) {
     const parent = this.getParentNode(node);
-    return !parent || !parent.expanded;
+    const should = !parent || !parent.expanded;
+    return should;
   }
 
 }
