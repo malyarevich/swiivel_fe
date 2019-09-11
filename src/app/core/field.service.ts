@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { FieldType } from '@shared/enums/fields.enum';
+import { FieldType } from '@shared/fields.enum';
 import { flatMapDeep } from 'lodash';
 
 @Injectable({
