@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 
 import { User } from '@app/models/auth';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { ApiService } from './api.service';
 import { first } from 'rxjs/operators';
+import { ApiService } from './api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -136,7 +136,7 @@ export class AuthService {
     if (session) { return sessionStorage.setItem('token', token); } else { return localStorage.setItem('token', token); }
   }
   public saveUser(user: User, session?: boolean) {
-    console.log(user)
+    console.log(user);
     if (session) { return sessionStorage.setItem('user', JSON.stringify(user)); } else { return localStorage.setItem('user', JSON.stringify(user)); }
   }
   public removeToken(session?: boolean) {
