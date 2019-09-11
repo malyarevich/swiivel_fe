@@ -26,8 +26,7 @@ export class CheckboxSettingComponent implements OnInit {
   ];
 
   constructor(
-    private fb: FormBuilder,
-    private cdr: ChangeDetectorRef
+    private fb: FormBuilder
   ) { }
 
   ngOnInit() {
@@ -37,7 +36,6 @@ export class CheckboxSettingComponent implements OnInit {
     });
     this.form.valueChanges.subscribe(v => {
       this.fieldSettings.emit(v.defaultValue);
-      this.cdr.markForCheck();
     });
   }
 
