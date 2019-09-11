@@ -10,8 +10,6 @@ export class FieldService {
 
   constructor() { }
   toFlatTree(fields: any[], level = 0) {
-    // fields = fields.slice();
-    // for (let field of fields) {
       const res = flatMapDeep(fields.slice(), (field) => {
         field.level = level;
         if (field.type === FieldType.SECTION || field.type === FieldType.GROUP) {
@@ -24,25 +22,11 @@ export class FieldService {
           } else {
             return field;
           }
-        // } else if (field.type === FieldType.GROUP) {
-        //   if (field.fields && field.fields.length > 0) {
-        //     field.expandable = true;
-        //     let children = this.toFlatTree(field.fields, level+1);
-        //     field.fields = null;
-        //     children.push(field);
-        //     return children;
-        //   } else {
-        //     return field;
-        //   }
         } else {
           return field;
         }
       });
-      // if (field.type === FieldType.GROUP || field.type === FieldType.SECTION) {
-      // console.table(res)
       return res;
-      // }
-    // }
   }
   fromArray(fields: any[], recursive?): FormGroup | any[] {
     const form = {};
@@ -72,11 +56,6 @@ export class FieldService {
             }
           }
         }
-        // if (field.validators && field.validators.length > 0) {
-        //   for (let validator of field.validators) {
-        //     validators.push(validator);
-        //   }
-        // }
         form[key] = new FormControl(state, validators);
         field.control = form[key];
       }

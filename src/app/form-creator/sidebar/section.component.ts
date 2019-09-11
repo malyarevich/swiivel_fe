@@ -8,7 +8,6 @@ import { FormControl } from '@angular/forms';
 })
 export class SectionComponent implements OnInit {
   constructor() {
-
   }
   @Input() section;
   @Output() activate = new EventEmitter<string>();
