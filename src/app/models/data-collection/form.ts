@@ -1,5 +1,3 @@
-import { ISubMenus } from './publish-settings.model';
-
 export interface Form {
   id: number;
   mongo_id: string;
@@ -22,10 +20,17 @@ export interface Form {
   created_at: string;
   updated_at: string;
   isSelected?: boolean;
-  sharedUrl?: string;
 }
 
 interface FormPermissions {
   id: number;
   user: { id: number; full_name: number };
 }
+
+export interface ISubMenus {
+  settings?: {
+    online: boolean;
+    pdf: boolean;
+  };
+}
+

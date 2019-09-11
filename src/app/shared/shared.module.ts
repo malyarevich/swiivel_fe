@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { BlueLinkLabelComponent } from '@shared/labels/blue-link-label/blue-link-label.component';
+
 // Buttons
 import { ButtonComponent } from './buttons/button/button.component';
 import { IconButtonComponent } from './buttons/icon-button/icon-button.component';
@@ -23,7 +25,6 @@ import { InputPhoneNumberComponent } from './inputs/input-phone-number/input-pho
 // Others
 import { InputTextareaComponent } from './inputs/input-textarea/input-textarea.component';
 import { UserItemComponent } from './user-item/user-item.component';
-import { BlueLinkLabelComponent } from '@shared/labels/blue-link-label/blue-link-label.component';
 
 @NgModule({
   imports: [

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'sw-blue-link-label',
@@ -8,12 +8,12 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 export class BlueLinkLabelComponent {
   @Input() label = 'label';
-  @Output() labelClick: EventEmitter<any> = new EventEmitter<any>();
+  @Output() labelClick: EventEmitter<string> = new EventEmitter<string>();
 
   constructor() {
   }
 
-  public clickOnLabel(deletedId: number): void {
-    this.labelClick.emit();
+  public clickOnLabel(): void {
+    this.labelClick.emit(this.label);
   }
 }

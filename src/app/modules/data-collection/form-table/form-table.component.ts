@@ -24,7 +24,10 @@ export class FormTableComponent implements OnInit {
   // todo: возможно это вынести в сервис
   static convertFormsData(forms: Form[]): Form[] {
     console.log(forms);
-    forms.map((form) => form.isSelected = false);
+    forms.map((form) => {
+      form.isSelected = false;
+      form.sharedUrl = `http://red.dev.codeblue.ventures/api/v1/data-collection/online-form/${form.mongo_id}`;
+    });
     return forms;
   }
 
@@ -67,7 +70,6 @@ export class FormTableComponent implements OnInit {
   }
 
   archiveForms(): void {
-    this.generateUrl();
   }
 
   exportFormsPDF(): void {
@@ -76,12 +78,6 @@ export class FormTableComponent implements OnInit {
 
   exportFormsZIP(): void {
 
-  }
-
-  generateUrl(): void {
-    this.selectedForms.map((form) => {
-      form.sharedUrl = `http://red.dev.codeblue.ventures/api/v1/data-collection/online-form/${form.mongo_id}`;
-    });
   }
 
   getSelectedIds(): number[] {
@@ -94,5 +90,15 @@ export class FormTableComponent implements OnInit {
     const ids = [];
     this.selectedForms.map((form) => ids.push(form.mongo_id));
     return ids;
+  }
+
+  onCopyLink(label: string): void {
+    navigator.clipboard.writeText(label)
+      .then(() => {
+        console.log('Text copied to clipboard', label);
+      })
+      .catch(err => {
+        console.error('Could not copy text: ', err);
+      });
   }
 }
