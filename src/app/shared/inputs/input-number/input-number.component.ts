@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, ElementRef, forwardRef, Input, Renderer2, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-// import { Decimal } from 'decimal.js';
+import { Decimal } from 'decimal.js';
 
 @Component({
   selector: 'sw-input-number',
@@ -84,7 +84,7 @@ export class InputNumberComponent implements ControlValueAccessor {
     const newValue = this.input.nativeElement.value.replace(/[^0-9\.]+/g, '');
     try {
       if (newValue.length > 0) {
-        // newValue = new Decimal(newValue);
+        newValue = new Decimal(newValue);
         if (!newValue.isNaN()) {
           if (this.type === 'integer') {
             if (newValue.isInt() === false) {
