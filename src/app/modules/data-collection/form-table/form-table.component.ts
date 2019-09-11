@@ -21,7 +21,6 @@ export class FormTableComponent implements OnInit {
   public forms: Form[] = null;
   public selectedForms: Form[] = [];
 
-
   // todo: возможно это вынести в сервис
   static convertFormsData(forms: Form[]): Form[] {
     console.log(forms);
@@ -35,7 +34,6 @@ export class FormTableComponent implements OnInit {
   ngOnInit() {
     this.getAllForm();
   }
-
 
   getAllForm(): void {
     this.dataCollectionService.getFormsList(this.params).subscribe(forms => {
@@ -69,6 +67,7 @@ export class FormTableComponent implements OnInit {
   }
 
   archiveForms(): void {
+    this.generateUrl();
   }
 
   exportFormsPDF(): void {
@@ -77,6 +76,12 @@ export class FormTableComponent implements OnInit {
 
   exportFormsZIP(): void {
 
+  }
+
+  generateUrl(): void {
+    this.selectedForms.map((form) => {
+      form.sharedUrl = `http://red.dev.codeblue.ventures/api/v1/data-collection/online-form/${form.mongo_id}`;
+    });
   }
 
   getSelectedIds(): number[] {

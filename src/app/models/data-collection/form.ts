@@ -22,6 +22,7 @@ export interface Form {
   created_at: string;
   updated_at: string;
   isSelected?: boolean;
+  sharedUrl?: string;
 }
 
 interface FormPermissions {

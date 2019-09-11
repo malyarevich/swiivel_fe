@@ -23,6 +23,7 @@ import { InputPhoneNumberComponent } from './inputs/input-phone-number/input-pho
 // Others
 import { InputTextareaComponent } from './inputs/input-textarea/input-textarea.component';
 import { UserItemComponent } from './user-item/user-item.component';
+import { BlueLinkLabelComponent } from '@shared/labels/blue-link-label/blue-link-label.component';
 
 @NgModule({
   imports: [
@@ -50,6 +51,7 @@ import { UserItemComponent } from './user-item/user-item.component';
     BlockHeaderComponent,
     // Others
     UserItemComponent,
+    BlueLinkLabelComponent,
   ],
   exports: [
     CommonModule,
@@ -74,6 +76,7 @@ import { UserItemComponent } from './user-item/user-item.component';
     // Others
     UserItemComponent,
     ReactiveFormsModule,
+    BlueLinkLabelComponent,
   ]
 })
 export class SharedModule { }

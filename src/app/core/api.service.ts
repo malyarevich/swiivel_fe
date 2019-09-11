@@ -4,6 +4,7 @@ import {ApiResponse, LoginData} from '@models/api';
 import {FormSearchParams} from '@models/form-search-params';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 const API_URL = 'http://red.dev.codeblue.ventures/api/v1';
 
@@ -38,21 +39,25 @@ export class ApiService {
 
 export class DataCollectionService {
 
-  constructor(private http: HttpService) {}
+  constructor(private http: HttpClient) {}
 
   getFormsList(requestParams?: FormSearchParams): Observable<any> {
-
     const options = {
       body: {
         params: requestParams
       }
     };
 
-    return this.http.post(`${API_URL}/proxy/form-builder/form-templates`, options).pipe(
+    return this.http.post(`${API_URL}/proxy/form-builder/form-templates`, options, {
+      headers: new HttpHeaders({
+        'x-access-token': JSON.parse(localStorage.getItem('user')).access_token,
+        'Content-Type': 'application/json',
+      })}).pipe(
       map(response => {
         console.log(response);
         return response;
       })
     );
   }
+
 }
