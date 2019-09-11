@@ -27,22 +27,18 @@ export class NumberSettingComponent implements OnInit {
     this.form = this.fb.group({
       showDefaultValue: new FormControl(false),
       showValidators: new FormControl(false),
-      defaultValue: new FormControl([]),
-      columnWide: new FormControl([]),
-      rowHeigth: new FormControl([]),
+      defaultValue: new FormControl(null),
+      format: new FormControl([]),
+      places: new FormControl(null),
       validators: new FormGroup({
         min: new FormControl(null),
-        max: new FormControl(null),
-        validator: new FormControl([])
+        max: new FormControl(null)
       })
     });
     this.form.valueChanges.subscribe(v => {
-      this.fieldSettings.emit({
-        defaultValue: v['defaultValue'],
-        columnWide: v['columnWide'],
-        rowHeigth: v['rowHeigth'],
-        validators: v['validators']
-      });
+      delete v.showDefaultValue;
+      delete v.showValidators;
+      this.fieldSettings.emit(v);
     });
   }
 
