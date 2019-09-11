@@ -13,15 +13,22 @@
     <sw-block-header [header]="'forms'"></sw-block-header>
     <div>
       <div *ngFor="let form of forms">
-      <button [ngClass]="{ 'button-red': form.isSelected}" (click)="selectForm(form.id)">{{ form.name }}</button>
+        <button [ngClass]="{ 'button-red': form.isSelected}" (click)="selectForm(form.id)">{{ form.name }}</button>
       </div>
     </div>
     <div>
       <div *ngFor="let selectedForm of selectedForms"> {{ selectedForm.name }}</div>
-    <button (click)="shareForms()">Share</button>
-    <button (click)="archiveForms()">Archive</button>
-    <button (click)="exportFormsPDF()">Export PDF</button>
+      <button (click)="shareForms()">Share</button>
+      <button (click)="archiveForms()">Archive</button>
+      <button (click)="exportFormsPDF()">Export PDF</button>
       <button (click)="exportFormsZIP()">Export PDF</button>
+    </div>
+    <div>
+      <sw-blue-link-label
+        *ngFor="let selectedForm of selectedForms"
+        [label]="selectedForm.sharedUrl"
+        (labelClick)="onCopyLink($event)">
+      </sw-blue-link-label>
     </div>
   </div>
 </div>

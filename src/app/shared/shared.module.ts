@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { BlueLinkLabelComponent } from '@shared/labels/blue-link-label/blue-link-label.component';
+
 // Buttons
 import { ButtonComponent } from './buttons/button/button.component';
 import { IconButtonComponent } from './buttons/icon-button/icon-button.component';
@@ -50,6 +52,7 @@ import { UserItemComponent } from './user-item/user-item.component';
     BlockHeaderComponent,
     // Others
     UserItemComponent,
+    BlueLinkLabelComponent,
   ],
   exports: [
     CommonModule,
@@ -74,6 +77,7 @@ import { UserItemComponent } from './user-item/user-item.component';
     // Others
     UserItemComponent,
     ReactiveFormsModule,
+    BlueLinkLabelComponent,
   ]
 })
 export class SharedModule { }

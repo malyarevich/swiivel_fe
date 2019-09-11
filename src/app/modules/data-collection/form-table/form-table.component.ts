@@ -21,11 +21,13 @@ export class FormTableComponent implements OnInit {
   public forms: Form[] = null;
   public selectedForms: Form[] = [];
 
-
   // todo: возможно это вынести в сервис
   static convertFormsData(forms: Form[]): Form[] {
     console.log(forms);
-    forms.map((form) => form.isSelected = false);
+    forms.map((form) => {
+      form.isSelected = false;
+      form.sharedUrl = `http://red.dev.codeblue.ventures/api/v1/data-collection/online-form/${form.mongo_id}`;
+    });
     return forms;
   }
 
@@ -35,7 +37,6 @@ export class FormTableComponent implements OnInit {
   ngOnInit() {
     this.getAllForm();
   }
-
 
   getAllForm(): void {
     this.dataCollectionService.getFormsList(this.params).subscribe(forms => {
@@ -89,5 +90,15 @@ export class FormTableComponent implements OnInit {
     const ids = [];
     this.selectedForms.map((form) => ids.push(form.mongo_id));
     return ids;
+  }
+
+  onCopyLink(label: string): void {
+    navigator['clipboard'].writeText(label)
+      .then(() => {
+        console.log('Text copied to clipboard', label);
+      })
+      .catch(err => {
+        console.error('Could not copy text: ', err);
+      });
   }
 }
