@@ -14,7 +14,13 @@ export class TextSettingComponent implements OnInit {
   @Input()
   set settings(obj: any) {
     if (obj) {
-      this.form.patchValue(obj);
+      this.form.patchValue({
+        showDefaultValue: !!obj['defaultValue'],
+        showValidators: !!obj['validators'],
+        allowList: obj['allowList'],
+        defaultValue: obj['defaultValue'],
+        validators: obj['validators']
+      });
     }
   }
   @Output() fieldSettings = new EventEmitter();
