@@ -1,12 +1,15 @@
 <div class="field_settings_container">
-  <section>
-    <div class="title">
-      <sw-input-toggle [(ngModel)]="showDefaultValue">
-        <span class="input_label">Default value</span>
-      </sw-input-toggle>
-    </div>
-    <sw-dropdown-input *ngIf="showDefaultValue" class="settings-field" [formControl]="default" [multiple]="false"
-      [options]="options">
-    </sw-dropdown-input>
-  </section>
+  <form [formGroup]="form">
+    <section>
+      <div class="title">
+        <sw-input-toggle formControlName="showDefaultValue">
+          <span class="input_label">Default value</span>
+        </sw-input-toggle>
+      </div>
+      <sw-dropdown-input *ngIf="form.get('showDefaultValue').value" class="settings-field" formControlName="defaultValue" [multiple]="false"
+        [options]="options">
+      </sw-dropdown-input>
+    </section>
+  </form>
+
 </div>

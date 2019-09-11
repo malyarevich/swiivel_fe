@@ -1,5 +1,5 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { Component, OnInit, Output, EventEmitter, Input, ChangeDetectorRef } from '@angular/core';
+import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'sw-checkbox-setting',
@@ -7,13 +7,15 @@ import { FormControl } from '@angular/forms';
 })
 export class CheckboxSettingComponent implements OnInit {
 
-  showDefaultValue: boolean = false;
-  defaultValue = new FormControl([]);
+  form: FormGroup;
 
   @Input()
   set settings(obj: any) {
     if (obj) {
-      this.defaultValue.setValue([this.options.find(o => o.value === obj['defaultValue'])]);
+      this.form.patchValue({
+        defaultValue: [this.options.find(o => o.value === obj['defaultValue'])],
+        showDefaultValue: !!obj['defaultValue']
+      });
     }
   }
   @Output() fieldSettings = new EventEmitter();
@@ -23,11 +25,19 @@ export class CheckboxSettingComponent implements OnInit {
     { title: 'No', value: false }
   ];
 
-  constructor() { }
+  constructor(
+    private fb: FormBuilder,
+    private cdr: ChangeDetectorRef
+  ) { }
 
   ngOnInit() {
-    this.defaultValue.valueChanges.subscribe(v => {
-      this.fieldSettings.emit(...v);
+    this.form = this.fb.group({
+      defaultValue: new FormControl([]),
+      showDefaultValue: new FormControl(false)
+    });
+    this.form.valueChanges.subscribe(v => {
+      this.fieldSettings.emit(v.defaultValue);
+      this.cdr.markForCheck();
     });
   }
 
