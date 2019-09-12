@@ -11,6 +11,7 @@ import { PhoneSettingComponent } from './phone-setting/phone-setting.component';
 import { SettingsComponent } from './settings.component';
 import { TextSettingComponent } from './text-setting/text-setting.component';
 import { FormsModule } from '@angular/forms';
+import { GroupSettingsComponent } from './group-settings/group-settings.component';
 
 
 
@@ -24,7 +25,8 @@ import { FormsModule } from '@angular/forms';
     NumberSettingComponent,
     PhoneSettingComponent,
     TextSettingComponent,
-    DateSettingComponent
+    DateSettingComponent,
+    GroupSettingsComponent
   ],
   imports: [
     CommonModule,
@@ -39,7 +41,8 @@ import { FormsModule } from '@angular/forms';
     NumberSettingComponent,
     PhoneSettingComponent,
     TextSettingComponent,
-    DateSettingComponent
+    DateSettingComponent,
+    GroupSettingsComponent
   ],
   exports: [
     SettingsComponent

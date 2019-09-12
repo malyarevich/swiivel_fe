@@ -1,6 +1,6 @@
 <div class="container settings_container">
   <div class="row no-gutters settings_container__row">
-    <div class="col-5" style="margin-right: 15px;">
+    <div [class]="getClass('settings')" style="margin-right: 15px;">
       <div class="section_title">
         {{ title }}
       </div>
@@ -10,7 +10,7 @@
         
       </div>
     </div>
-    <div class="col-7">
+    <div [class]="getClass('logic')">
       <div class="section_title">
         Logic Builder
       </div>

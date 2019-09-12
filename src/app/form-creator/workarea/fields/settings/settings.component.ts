@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ComponentRef, ComponentFactory, ComponentFactoryResolver, ViewChild, ViewContainerRef, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, ComponentRef, ComponentFactory, ComponentFactoryResolver, ViewChild, ViewContainerRef, AfterViewInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { TextSettingComponent } from './text-setting/text-setting.component';
 import { LongtextSettingComponent } from './longtext-setting/longtext-setting.component';
 import { NumberSettingComponent } from './number-setting/number-setting.component';
@@ -7,6 +7,7 @@ import { DateSettingComponent } from './date-setting/date-setting.component';
 import { CheckboxSettingComponent } from './checkbox-setting/checkbox-setting.component';
 import { EmailSettingComponent } from './email-setting/email-setting.component';
 import { PhoneSettingComponent } from './phone-setting/phone-setting.component';
+import { GroupSettingsComponent } from './group-settings/group-settings.component';
 
 const components = [
   { type: 101, component: TextSettingComponent, title: 'Short Text Field Settings' },
@@ -19,6 +20,7 @@ const components = [
   { type: 108, component: EmailSettingComponent, title: 'Email Settings' },
   { type: 109, component: PhoneSettingComponent, title: 'Phone Number Settings' },
   { type: 110, component: DateSettingComponent, title: 'Hebrew Date Settings' },
+  { type: 113, component: GroupSettingsComponent, title: 'Settings' },
 ];
 
 @Component({
@@ -33,7 +35,7 @@ export class SettingsComponent implements OnInit, AfterViewInit, OnDestroy {
   title: string;
   _field: any;
 
-  @Input() 
+  @Input()
   set field(f: any) {
     this._field = f;
   }
@@ -52,9 +54,26 @@ export class SettingsComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
+  getClass(t: string): string {
+    let res: string;
+    switch (t) {
+      case 'settings':
+        if (this.type === 113 || this.type === 114) res = 'col-7'
+        else res = 'col-5';
+        break;
+      case 'logic':
+        if (this.type === 113 || this.type === 114) res = 'col-5'
+        else res = 'col-7';
+        break;
+    }
+    return res;
+  }
+
   private initSettings(f: any): void {
     const c = components.find(c => c.type === f.type);
     if (c) {
+      console.log('CCCC,', c)
+      this.type = c.type;
       this.title = c.title;
       const factory: ComponentFactory<any> = this.resolver.resolveComponentFactory(c.component);
       if (this.container) {
