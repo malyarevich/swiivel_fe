@@ -2,10 +2,8 @@ import {Injectable} from '@angular/core';
 import {HttpService} from '@app/core/http.service';
 import {ApiResponse, LoginData} from '@models/api';
 import {FormSearchParams} from '@models/form-search-params';
-import {Observable} from 'rxjs';
+import {Observable, throwError} from 'rxjs';
 import {map} from 'rxjs/operators';
-
-const API_URL = 'http://red.dev.codeblue.ventures/api/v1';
 
 @Injectable({
   providedIn: 'root'
@@ -50,9 +48,20 @@ export class DataCollectionService {
 
     return this.http.post(`/proxy/form-builder/form-templates`, options).pipe(
       map(response => {
-        console.log(response);
         return response;
       })
     );
   }
+
+  archiveForms(archivedIds: number[]): Observable<any> {
+    return this.http.post(`/proxy/form-builder/form-template/archived`, { ids: archivedIds })
+      .pipe(map(response => {
+        if (response.status === 1) {
+          return response.data;
+        }
+        throwError('Archive form error');
+      })
+    );
+  }
 }
+

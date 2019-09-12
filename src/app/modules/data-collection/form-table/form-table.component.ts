@@ -2,6 +2,13 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEnca
 import { DataCollectionService } from '@app/core/api.service';
 import { Form } from '@models/data-collection/form';
 
+enum FormsActions {
+  SHARE,
+  DUPLICATE,
+  EXPORT,
+  ARCHIVE
+}
+
 @Component({
   selector: 'app-form-table',
   templateUrl: './form-table.component.html',
@@ -20,6 +27,9 @@ export class FormTableComponent implements OnInit {
   };
   public forms: Form[] = null;
   public selectedForms: Form[] = [];
+  public popupForms: Form[] = [];
+  public action: FormsActions;
+  public actionTypes = FormsActions;
 
   // todo: возможно это вынести в сервис
   static convertFormsData(forms: Form[]): Form[] {
@@ -40,9 +50,7 @@ export class FormTableComponent implements OnInit {
 
   getAllForm(): void {
     this.dataCollectionService.getFormsList(this.params).subscribe(forms => {
-      console.log(forms.data);
       this.forms = FormTableComponent.convertFormsData(forms.data.data);
-      console.log(this.forms);
       this.cd.detectChanges();
     });
   }
@@ -69,7 +77,16 @@ export class FormTableComponent implements OnInit {
   shareForms(): void {
   }
 
+  bulkArchiveForms(): void {
+    this.action = FormsActions.ARCHIVE;
+    this.popupForms = this.selectedForms;
+  }
+
   archiveForms(): void {
+    this.dataCollectionService.archiveForms(this.getSelectedIds())
+      .subscribe(() => {
+        this.getAllForm();
+      });
   }
 
   exportFormsPDF(): void {
@@ -82,13 +99,7 @@ export class FormTableComponent implements OnInit {
 
   getSelectedIds(): number[] {
     const ids = [];
-    this.selectedForms.map((form) => ids.push(form.id));
-    return ids;
-  }
-
-  getSelectedMongoIds(): number[] {
-    const ids = [];
-    this.selectedForms.map((form) => ids.push(form.mongo_id));
+    this.popupForms.map((form) => ids.push(form.id));
     return ids;
   }
 
@@ -102,3 +113,4 @@ export class FormTableComponent implements OnInit {
       });
   }
 }
+

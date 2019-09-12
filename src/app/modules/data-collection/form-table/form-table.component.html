@@ -17,13 +17,21 @@
       </div>
     </div>
     <div>
-      <div *ngFor="let selectedForm of selectedForms"> {{ selectedForm.name }}</div>
-      <button (click)="shareForms()">Share</button>
-      <button (click)="archiveForms()">Archive</button>
-      <button (click)="exportFormsPDF()">Export PDF</button>
-      <button (click)="exportFormsZIP()">Export PDF</button>
+      <div>
+        <h4>Popup</h4>
+        <div *ngFor="let popupForm of popupForms">{{ popupForm.name }}</div>
+        <button *ngIf="action === actionTypes.ARCHIVE" (click)="archiveForms()">Archive</button>
+      </div>
+      <div>
+        <h4>bulks</h4>
+        <button (click)="shareForms()">Share</button>
+        <button (click)="bulkArchiveForms()">Archive</button>
+        <button (click)="exportFormsPDF()">Export PDF</button>
+        <button (click)="exportFormsZIP()">Export PDF</button>
+      </div>
     </div>
     <div>
     </div>
   </div>
 </div>
+
