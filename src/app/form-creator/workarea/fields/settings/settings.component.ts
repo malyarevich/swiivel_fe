@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ComponentRef, ComponentFactory, ComponentFactoryResolver, ViewChild, ViewContainerRef, AfterViewInit, OnDestroy } from '@angular/core';
 import { TextSettingComponent } from './text-setting/text-setting.component';
 import { LongtextSettingComponent } from './longtext-setting/longtext-setting.component';
 import { NumberSettingComponent } from './number-setting/number-setting.component';
@@ -13,6 +13,7 @@ const components = [
   { type: 102, component: LongtextSettingComponent, title: 'Long Text Field Settings' },
   { type: 103, component: NumberSettingComponent, title: 'Number Field Settings' },
   { type: 104, component: DropdownSettingComponent, title: 'Dropdown Settings' },
+  { type: 105, component: DropdownSettingComponent, title: 'Dropdown Settings' },
   { type: 106, component: DateSettingComponent, title: 'English Date Settings' },
   { type: 107, component: CheckboxSettingComponent, title: 'Checkbox Field Settings' },
   { type: 108, component: EmailSettingComponent, title: 'Email Settings' },
@@ -25,20 +26,49 @@ const components = [
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.scss']
 })
-export class SettingsComponent implements OnInit {
+export class SettingsComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  component: any;
+  component: ComponentRef<any>;
+  type: number;
+  title: string;
+  _field: any;
 
   @Input() 
-  set type(t: number) {
-    if (t) {
-      this.component = components.find(c => c.type === t);
+  set field(f: any) {
+    this._field = f;
+  }
+  @ViewChild("container", { read: ViewContainerRef, static: false }) container;
+
+  constructor(
+    private resolver: ComponentFactoryResolver
+  ) { }
+
+  ngOnInit() {
+  }
+
+  ngAfterViewInit(): void {
+    if (this._field) {
+      this.initSettings(this._field);
     }
   }
 
-  constructor() { }
+  private initSettings(f: any): void {
+    const c = components.find(c => c.type === f.type);
+    if (c) {
+      this.title = c.title;
+      const factory: ComponentFactory<any> = this.resolver.resolveComponentFactory(c.component);
+      if (this.container) {
+        this.component = this.container.createComponent(factory);
+        this.component.instance.settings = f;
+        this.component.instance.fieldSettings.subscribe(v => {
+          console.log('fieldSettings', v);
+        });
+      }
+    }
+  }
 
-  ngOnInit() {
+  ngOnDestroy(): void {
+    if (this.component) this.component.destroy();
   }
 
 }

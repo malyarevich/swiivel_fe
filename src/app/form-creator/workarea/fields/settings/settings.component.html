@@ -2,10 +2,12 @@
   <div class="row no-gutters settings_container__row">
     <div class="col-5" style="margin-right: 15px;">
       <div class="section_title">
-        {{ component?.title }}
+        {{ title }}
       </div>
       <div class="field_setting_wrap">
-        <ng-container *ngComponentOutlet="component?.component"></ng-container>
+        <!-- <ng-container [ngComponentOutlet]="component"></ng-container> -->
+        <ng-template #container></ng-template>
+        
       </div>
     </div>
     <div class="col-7">
