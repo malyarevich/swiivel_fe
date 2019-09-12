@@ -13,7 +13,6 @@ export class TextSettingComponent implements OnInit {
 
   @Input()
   set settings(obj: any) {
-    console.log('OBJ', obj)
     if (obj) {
       this.form.patchValue({
         showDefaultValue: !!obj['defaultValue'],

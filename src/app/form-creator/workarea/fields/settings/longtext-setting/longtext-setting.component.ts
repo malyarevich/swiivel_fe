@@ -21,9 +21,7 @@ export class LongtextSettingComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder
-  ) { }
-
-  ngOnInit() {
+  ) {
     this.form = this.fb.group({
       showDefaultValue: new FormControl(false),
       showValidators: new FormControl(false),
@@ -36,6 +34,9 @@ export class LongtextSettingComponent implements OnInit {
         validator: new FormControl([])
       })
     });
+  }
+
+  ngOnInit() {
     this.form.valueChanges.subscribe(v => {
       this.fieldSettings.emit({
         defaultValue: v.defaultValue,
