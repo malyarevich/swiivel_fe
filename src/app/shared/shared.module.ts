@@ -25,6 +25,7 @@ import { InputPhoneNumberComponent } from './inputs/input-phone-number/input-pho
 // Others
 import { InputTextareaComponent } from './inputs/input-textarea/input-textarea.component';
 import { UserItemComponent } from './user-item/user-item.component';
+import { RadioGroupComponent } from './inputs/radio-group/radio-group.component';
 
 @NgModule({
   imports: [
@@ -53,6 +54,7 @@ import { UserItemComponent } from './user-item/user-item.component';
     // Others
     UserItemComponent,
     BlueLinkLabelComponent,
+    RadioGroupComponent,
   ],
   exports: [
     CommonModule,
@@ -71,6 +73,7 @@ import { UserItemComponent } from './user-item/user-item.component';
     InputPhoneNumberComponent,
     InputEmailComponent,
     InputTextareaComponent,
+    RadioGroupComponent,
     // Headers
     PageHeaderComponent,
     BlockHeaderComponent,

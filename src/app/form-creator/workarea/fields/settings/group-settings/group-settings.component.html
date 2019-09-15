@@ -1,31 +1,45 @@
 <div class="field_settings_container">
-  <!-- <form [formGroup]="form"> -->
-    <!-- <section>
-      <div class="title">
-        <sw-input-toggle formControlName="showDefaultValue">
-          <span class="input_label">default value</span>
-        </sw-input-toggle>
-      </div>
-      <sw-input-phone-number *ngIf="form.get('showDefaultValue').value" class="settings-field"
-        formControlName="defaultValue">
-      </sw-input-phone-number>
-    </section>
-    <section>
-      <div class="title">
-        <sw-input-toggle formControlName="showValidators">
-          <span class="input_label">validate</span>
-        </sw-input-toggle>
-      </div>
-      <ng-container *ngIf="form.get('showValidators').value" formGroupName="validators">
-        <div class="row_container">
-          <sw-input-checkbox class="phone" formControlName="phone">
-            <span class="input_label">Cell Phone</span>
-          </sw-input-checkbox>
-          <sw-input-checkbox class="settings-field" formControlName="verifyPhone">
-            <span class="input_label">Verify By Sending SMS</span>
-          </sw-input-checkbox>
+  <form [formGroup]="form">
+
+    <div class="container">
+
+      <div class="row">
+
+        <div class="col-6" style="padding: 0;">
+          <section>
+            <div class="title">
+              Group Options
+            </div>
+            <div class="row_container">
+              <sw-input-checkbox class="phone" formControlName="required">
+                <span class="input_label">Required</span>
+              </sw-input-checkbox>
+              <sw-input-checkbox class="settings-field" formControlName="hideLabel">
+                <span class="input_label">Hide Label</span>
+              </sw-input-checkbox>
+            </div>
+          </section>
+          <section>
+            <div class="title">
+              <sw-input-toggle formControlName="showHint">
+                <span class="input_label">Hint</span>
+              </sw-input-toggle>
+            </div>
+            <sw-input-phone-number *ngIf="form.get('showHint').value" class="settings-field" formControlName="hint">
+            </sw-input-phone-number>
+          </section>
+          <section>
+              <sw-radio-group class="flex-row" [options]="displayOptions" formControlName="displayStrategy"></sw-radio-group>
+          </section>
         </div>
-      </ng-container>
-    </section> -->
-  <!-- </form> -->
+
+        <div class="col-6" style="padding: 0;">
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </form>
 </div>
