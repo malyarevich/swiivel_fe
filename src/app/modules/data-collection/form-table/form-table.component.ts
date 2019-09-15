@@ -101,4 +101,8 @@ export class FormTableComponent implements OnInit {
         console.error('Could not copy text: ', err);
       });
   }
+
+  deleteItem(id) {
+    console.log(id);
+  }
 }
