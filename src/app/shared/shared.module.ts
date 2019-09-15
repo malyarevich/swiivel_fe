@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { BlueLinkLabelComponent } from '@shared/labels/blue-link-label/blue-link-label.component';
 
 // Buttons
 import { ButtonComponent } from './buttons/button/button.component';
@@ -23,8 +22,9 @@ import { InputEmailComponent } from './inputs/input-email/input-email.component'
 import { InputPhoneNumberComponent } from './inputs/input-phone-number/input-phone-number.component';
 
 // Others
-import { InputTextareaComponent } from './inputs/input-textarea/input-textarea.component';
+import { LabelComponent } from './label/label.component';
 import { UserItemComponent } from './user-item/user-item.component';
+import { InputTextareaComponent } from './inputs/input-textarea/input-textarea.component';
 
 @NgModule({
   imports: [
@@ -51,8 +51,8 @@ import { UserItemComponent } from './user-item/user-item.component';
     PageHeaderComponent,
     BlockHeaderComponent,
     // Others
+    LabelComponent,
     UserItemComponent,
-    BlueLinkLabelComponent,
   ],
   exports: [
     CommonModule,
@@ -75,9 +75,9 @@ import { UserItemComponent } from './user-item/user-item.component';
     PageHeaderComponent,
     BlockHeaderComponent,
     // Others
+    LabelComponent,
     UserItemComponent,
     ReactiveFormsModule,
-    BlueLinkLabelComponent,
   ]
 })
 export class SharedModule { }

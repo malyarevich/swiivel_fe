@@ -1,0 +1,11 @@
+<div
+  class="label"
+  [ngClass]="{'label--link': deleted}"
+>
+  <ng-content></ng-content>
+  <i
+    *ngIf="deleted"
+    class="fas fa-times label__delete-icon"
+    (click)="delete()"
+  ></i>
+</div>
