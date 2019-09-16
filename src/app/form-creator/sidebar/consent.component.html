@@ -7,13 +7,13 @@
         </div>
         <div class="consent_section__item_header_controls">
           <i class="fas fa-trash" (click)="removeItem(i)"></i>
-          <i class="fas fa-caret-down blue" *ngIf="!isOpenForms; else up" (click)="showForms()"></i>
+          <i class="fas fa-caret-down blue" *ngIf="!isOpenItems[i]; else up" (click)="openItem(i)"></i>
           <ng-template #up>
-            <i class="fas fa-caret-up blue" (click)="hideForms()"></i>
+            <i class="fas fa-caret-up blue" (click)="hideItem(i)"></i>
           </ng-template>
         </div>
       </div>
-      <div class="consent_section__item_content">
+      <div class="consent_section__item_content" *ngIf="isOpenItems[i]">
         <div class="consent_section__item_content_input">
           <sw-input-toggle formControlName="checkbox">
             <span class="input_label">Checkbox</span>
