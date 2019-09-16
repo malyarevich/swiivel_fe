@@ -58,12 +58,12 @@ export class SettingsComponent implements OnInit, AfterViewInit, OnDestroy {
     let res: string;
     switch (t) {
       case 'settings':
-        if (this.type === 113 || this.type === 114) res = 'col-7'
-        else res = 'col-5';
+        if (this.type === 113 || this.type === 114) res = 'col-8'
+        else res = 'col-4';
         break;
       case 'logic':
-        if (this.type === 113 || this.type === 114) res = 'col-5'
-        else res = 'col-7';
+        if (this.type === 113 || this.type === 114) res = 'col-4'
+        else res = 'col-8';
         break;
     }
     return res;
@@ -72,7 +72,7 @@ export class SettingsComponent implements OnInit, AfterViewInit, OnDestroy {
   private initSettings(f: any): void {
     const c = components.find(c => c.type === f.type);
     if (c) {
-      console.log('CCCC,', c)
+      // console.log('CCCC,', c)
       this.type = c.type;
       this.title = c.title;
       const factory: ComponentFactory<any> = this.resolver.resolveComponentFactory(c.component);

@@ -1,11 +1,7 @@
 <div class="field_settings_container">
   <form [formGroup]="form">
-
-    <div class="container">
-
-      <div class="row">
-
-        <div class="col-6" style="padding: 0;">
+      <div class="group_row">
+        <div class="group_col">
           <section>
             <div class="title">
               Group Options
@@ -29,17 +25,59 @@
             </sw-input-phone-number>
           </section>
           <section>
-              <sw-radio-group class="flex-row" [options]="displayOptions" formControlName="displayStrategy"></sw-radio-group>
+            <sw-radio-group class="flex-row" [options]="displayOptions" formControlName="displayStrategy">
+            </sw-radio-group>
           </section>
         </div>
-
-        <div class="col-6" style="padding: 0;">
-
+        <div class="group_col">
+          <section>
+            <div class="title">
+              <sw-input-toggle formControlName="repeatGroup">
+                <span class="input_label">Repeat This Group</span>
+              </sw-input-toggle>
+            </div>
+            <sw-radio-group class="flex-row" *ngIf="form.get('repeatGroup').value" [options]="repeatOptions"
+              formControlName="repeatStrategy">
+            </sw-radio-group>
+          </section>
+          <section *ngIf="form.get('repeatStrategy').value === 'For Each Student in Family'">
+            <sw-input-checkbox class="settings-field"
+              formControlName="prefill">
+              <span class="input_label">Prefill with System Information</span>
+            </sw-input-checkbox>
+          </section>
+          <ng-container *ngIf="form.get('repeatStrategy').value === 'Other'">
+            <section>
+              <div class="title">
+                Online Form
+              </div>
+              <div class="row_container">
+                <div class="row_container__input">
+                  <sw-input-number formControlName="minRep">
+                    <span class="input_label">Min Repetitions</span>
+                  </sw-input-number>
+                </div>
+                <div class="row_container__input">
+                  <sw-input-number formControlName="maxRep">
+                    <span class="input_label">Max Repetitions</span>
+                  </sw-input-number>
+                </div>
+              </div>
+            </section>
+            <section>
+              <div class="title">
+                PDF Form
+              </div>
+              <div class="row_container">
+                <div class="row_container__input small">
+                  <sw-input-number formControlName="numOfRep">
+                    <span class="input_label">Number of Repetitions</span>
+                  </sw-input-number>
+                </div>
+              </div>
+            </section>
+          </ng-container>
         </div>
-
       </div>
-
-    </div>
-
   </form>
 </div>

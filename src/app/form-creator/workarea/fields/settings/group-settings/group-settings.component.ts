@@ -9,19 +9,25 @@ import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 export class GroupSettingsComponent implements OnInit {
 
   form: FormGroup;
-
   displayOptions = ['Directly Displayed', 'Pop Up'];
+  repeatOptions = ['For Each Student in Family', 'Other'];
 
   @Input()
   set settings(obj: any) {
     if (obj) {
-      // this.form.patchValue({
-      //   showDefaultValue: !!obj['defaultValue'],
-      //   showValidators: !!obj['validators'],
-      //   allowList: obj['allowList'],
-      //   defaultValue: obj['defaultValue'] || null,
-      //   validators: obj['validators']
-      // });
+      this.form.patchValue({
+        required: obj['required'],
+        hideLabel: obj['hideLabel'],
+        showHint: !!obj['hint'],
+        hint: obj['hint'],
+        displayStrategy: obj['displayStrategy'],
+        repeatGroup: obj['repeatGroup'],
+        repeatStrategy: obj['repeatStrategy'],
+        prefill: obj['prefill'],
+        minRep: obj['minRep'],
+        maxRep: obj['maxRep'],
+        numOfRep: obj['numOfRep']
+      });
     }
   }
   @Output() fieldSettings = new EventEmitter();
@@ -35,10 +41,24 @@ export class GroupSettingsComponent implements OnInit {
       showHint: new FormControl(false),
       hint: new FormControl(''),
       displayStrategy: new FormControl(null),
+      repeatGroup: new FormControl(false),
+      repeatStrategy: new FormControl(null),
+      prefill: new FormControl(false),
+      minRep: new FormControl(),
+      maxRep: new FormControl(),
+      numOfRep: new FormControl()
     });
   }
 
   ngOnInit() {
+    this.form.valueChanges.subscribe(v => {
+      this.prepareForm(v);
+    });
+  }
+
+  prepareForm(value) {
+    delete value.showHint;
+    this.fieldSettings.emit(value);
   }
 
 }

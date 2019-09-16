@@ -22,6 +22,7 @@
         border: 1px solid #4350A2;
       }
       &.selected {
+        font-weight: 800;
         &::before {
           content: '';
           top: 3px;
@@ -40,5 +41,9 @@
 :host(.flex-row) {
   .radio_group {
     flex-direction: row;
+    &__item {
+      margin-right: 10px;
+      margin-bottom: 0;
+    }
   }
 }
