@@ -1,0 +1,29 @@
+@import "index";
+
+.label {
+  position: relative;
+  display: inline-flex;
+  margin: 0 5px 0 0;
+  padding: 2px 8px;
+  border-radius: 3px;
+  background: $lightblue-color;
+  color: $button-color;
+
+  &.label--link {
+    padding: 2px 13px 2px 8px;
+  }
+
+  .label__delete-icon {
+    position: relative;
+    z-index: 2;
+    top: 3px;
+    right: -9px;
+    font-size: 13px;
+    color: $cross-gray;
+    cursor: pointer;
+  }
+
+  .label__delete-icon:hover {
+    color: $icon-gray-hover;
+  }
+}
