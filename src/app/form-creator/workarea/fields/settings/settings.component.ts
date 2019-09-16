@@ -8,6 +8,7 @@ import { CheckboxSettingComponent } from './checkbox-setting/checkbox-setting.co
 import { EmailSettingComponent } from './email-setting/email-setting.component';
 import { PhoneSettingComponent } from './phone-setting/phone-setting.component';
 import { GroupSettingsComponent } from './group-settings/group-settings.component';
+import { SectionSettingsComponent } from './section-settings/section-settings.component';
 
 const components = [
   { type: 101, component: TextSettingComponent, title: 'Short Text Field Settings' },
@@ -21,6 +22,7 @@ const components = [
   { type: 109, component: PhoneSettingComponent, title: 'Phone Number Settings' },
   { type: 110, component: DateSettingComponent, title: 'Hebrew Date Settings' },
   { type: 113, component: GroupSettingsComponent, title: 'Settings' },
+  { type: 114, component: SectionSettingsComponent, title: 'Settings' },
 ];
 
 @Component({
@@ -58,11 +60,11 @@ export class SettingsComponent implements OnInit, AfterViewInit, OnDestroy {
     let res: string;
     switch (t) {
       case 'settings':
-        if (this.type === 113 || this.type === 114) res = 'col-8'
+        if (this.type === 113) res = 'col-8'
         else res = 'col-4';
         break;
       case 'logic':
-        if (this.type === 113 || this.type === 114) res = 'col-4'
+        if (this.type === 113) res = 'col-4'
         else res = 'col-8';
         break;
     }

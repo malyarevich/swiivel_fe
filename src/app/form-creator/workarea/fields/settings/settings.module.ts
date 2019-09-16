@@ -12,6 +12,7 @@ import { SettingsComponent } from './settings.component';
 import { TextSettingComponent } from './text-setting/text-setting.component';
 import { FormsModule } from '@angular/forms';
 import { GroupSettingsComponent } from './group-settings/group-settings.component';
+import { SectionSettingsComponent } from './section-settings/section-settings.component';
 
 
 
@@ -26,7 +27,8 @@ import { GroupSettingsComponent } from './group-settings/group-settings.componen
     PhoneSettingComponent,
     TextSettingComponent,
     DateSettingComponent,
-    GroupSettingsComponent
+    GroupSettingsComponent,
+    SectionSettingsComponent
   ],
   imports: [
     CommonModule,
@@ -42,7 +44,8 @@ import { GroupSettingsComponent } from './group-settings/group-settings.componen
     PhoneSettingComponent,
     TextSettingComponent,
     DateSettingComponent,
-    GroupSettingsComponent
+    GroupSettingsComponent,
+    SectionSettingsComponent
   ],
   exports: [
     SettingsComponent

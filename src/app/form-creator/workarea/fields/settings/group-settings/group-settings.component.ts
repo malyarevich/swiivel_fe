@@ -19,7 +19,7 @@ export class GroupSettingsComponent implements OnInit {
         required: obj['required'],
         hideLabel: obj['hideLabel'],
         showHint: !!obj['hint'],
-        hint: obj['hint'],
+        hint: obj['hint'] || '',
         displayStrategy: obj['displayStrategy'],
         repeatGroup: obj['repeatGroup'],
         repeatStrategy: obj['repeatStrategy'],
