@@ -38,9 +38,7 @@ export class DropdownSettingComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder
-  ) { }
-
-  ngOnInit() {
+  ) {
     this.form = this.fb.group({
       showDefaultOptions: new FormControl(false, {updateOn: 'change'}),
       defaultOption: new FormControl([], {updateOn: 'change'}),
@@ -52,6 +50,9 @@ export class DropdownSettingComponent implements OnInit {
         })
       ])
     });
+  }
+
+  ngOnInit() {
     this.form.valueChanges.subscribe(v => {
       this.prepareForm(v);
     });
@@ -66,11 +67,11 @@ export class DropdownSettingComponent implements OnInit {
   }
 
   setFormValue(obj: any) {
-    const { multiple, options, type, defaultOption } = obj;
+    const { multiple, fieldOpt, type, defaultOption } = obj;
 
     this.form.patchValue({
       multiple,
-      options,
+      fieldOpt: fieldOpt ? fieldOpt : [],
       type,
       defaultOption,
       showDefaultOptions: defaultOption ? true : false
