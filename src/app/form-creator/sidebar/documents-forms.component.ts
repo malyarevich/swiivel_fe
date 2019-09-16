@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'sw-documents-forms',
@@ -29,10 +30,64 @@ export class DocumentsFormsComponent implements OnInit {
   ];
   radioGroup = ['Needed Per Family', 'Needed Per Student'];
 
+  form: FormGroup;
 
-  constructor() { }
+  constructor(
+    private fb: FormBuilder
+  ) {
+    this.form = this.fb.group({
+      documents: new FormArray([]),
+      forms: new FormArray([])
+    })
+  }
 
   ngOnInit() {
+  }
+
+  get documents(): FormArray {
+    return this.form.get('documents') as FormArray;
+  }
+
+  get forms(): FormArray {
+    return this.form.get('forms') as FormArray;
+  }
+
+  addItem(addTo: string): void {
+    switch (addTo) {
+      case 'documents':
+        this.documents.push(
+          new FormGroup({
+            name: new FormControl('', { updateOn: 'blur' }),
+            chooseDocumentAction: new FormControl('Upload'),
+            requirements: new FormControl(null),
+          })
+        );
+        break;
+      case 'forms':
+        this.forms.push(
+          new FormGroup({
+            name: new FormControl('', { updateOn: 'blur' }),
+            chooseForm: new FormControl(null),
+            requirements: new FormControl(null),
+            filledOnline: new FormControl(false),
+            allowUpload: new FormControl(false)
+          })
+        );
+        break;
+    }
+  }
+
+  removeItem(from: string, index: number) {
+    if (from && from !== '' && index >= 0) {
+      switch (from) {
+        case 'documents':
+          this.documents.removeAt(index);
+          break;
+        case 'forms':
+          this.forms.removeAt(index);
+          break;
+      }
+    }
   }
 
 }
