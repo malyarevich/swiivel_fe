@@ -1,5 +1,5 @@
-import {ScrollingModule} from '@angular/cdk/scrolling';
-import {CdkTreeModule} from '@angular/cdk/tree';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { CdkTreeModule } from '@angular/cdk/tree';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -16,9 +16,19 @@ import { WorkareaFieldsComponent } from './workarea/fields/fields.component';
 import { SettingsModule } from './workarea/fields/settings/settings.module';
 import { WorkareaIntroComponent } from './workarea/intro/intro.component';
 import { WorkareaComponent } from './workarea/workarea.component';
+import { DocumentsFormsComponent } from './sidebar/documents-forms.component';
 
 @NgModule({
-  declarations: [FormCreatorComponent, SidebarComponent, WorkareaComponent, WorkareaIntroComponent, WorkareaFieldsComponent, SectionComponent, SidebarIntroComponent, SidebarFieldsComponent],
+  declarations: [FormCreatorComponent,
+    SidebarComponent,
+    WorkareaComponent,
+    WorkareaIntroComponent,
+    WorkareaFieldsComponent,
+    SectionComponent,
+    SidebarIntroComponent,
+    SidebarFieldsComponent,
+    DocumentsFormsComponent
+  ],
   imports: [
     CommonModule,
     FormCreatorRoutingModule,
@@ -31,7 +41,8 @@ import { WorkareaComponent } from './workarea/workarea.component';
   ],
   entryComponents: [
     SidebarIntroComponent,
-    SidebarFieldsComponent
+    SidebarFieldsComponent,
+    DocumentsFormsComponent
   ]
 })
 export class FormCreatorModule { }
