@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { SidebarFieldsComponent } from './sidebar/fields.component';
 import { SidebarIntroComponent } from './sidebar/intro.component';
-import { DocumentsFormsComponent } from './sidebar/documents-forms.component';
+import { SidebarDocumentsFormsComponent } from './sidebar/documents-forms.component';
+import { SidebarConsentComponent } from './sidebar/consent.component';
 
 @Component({
   selector: 'sw-form-creator',
@@ -13,8 +14,8 @@ export class FormCreatorComponent implements OnInit {
   sections = [
     {name: 'Packet Introduction', component: SidebarIntroComponent, active: true},
     {name: 'Form Fields', component: SidebarFieldsComponent},
-    {name: 'Additional Documents', component: DocumentsFormsComponent},
-    {name: 'CONSENT', component: SidebarFieldsComponent},
+    {name: 'Additional Documents', component: SidebarDocumentsFormsComponent},
+    {name: 'CONSENT', component: SidebarConsentComponent},
     {name: 'TUITION CONTRACT', component: SidebarFieldsComponent},
     {name: 'PAYMENT SETTINGS', component: SidebarFieldsComponent},
     {name: 'TERMS AND CONDITIONS', component: SidebarFieldsComponent},

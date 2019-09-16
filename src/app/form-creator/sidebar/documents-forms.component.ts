@@ -6,7 +6,7 @@ import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
   templateUrl: './documents-forms.component.html',
   styleUrls: ['./documents-forms.component.scss']
 })
-export class DocumentsFormsComponent implements OnInit {
+export class SidebarDocumentsFormsComponent implements OnInit {
 
   documentBut = [
     {
