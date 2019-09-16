@@ -1,1 +1,71 @@
-<p>documents-forms works!</p>
+<section class="documents_section">
+  <div class="documents_section__header">
+    <div class="documents_section__header_text">
+      Documents
+    </div>
+    <div class="documents_section__header_controls">
+      <i class="fas fa-plus-square"></i>
+      <i class="fas fa-caret-down"></i>
+    </div>
+  </div>
+  <div class="documents_section__item">
+    <div class="documents_section__item_header">
+      <div class="documents_section__item_header_text">
+        Elementary School Calendar
+      </div>
+      <div class="documents_section__item_header_controls">
+        <i class="fas fa-trash"></i>
+      </div>
+    </div>
+
+    <div class="documents_section__item_content">
+      <div class="documents_section__item_content_input">
+        <sw-input-button-group [options]="documentBut"></sw-input-button-group>
+      </div>
+      <div class="documents_section__item_content_input">
+        <sw-radio-group [options]="radioGroup"></sw-radio-group>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="forms_section">
+  <div class="forms_section__header">
+    <div class="forms_section__header_text">
+      Forms
+    </div>
+    <div class="forms_section__header_controls">
+      <i class="fas fa-plus-square"></i>
+      <i class="fas fa-caret-down"></i>
+    </div>
+  </div>
+  <div class="forms_section__item">
+    <div class="forms_section__item_header">
+      <div class="forms_section__item_header_text">
+        Elementary School Calendar
+      </div>
+      <div class="forms_section__item_header_controls">
+        <i class="fas fa-trash"></i>
+      </div>
+    </div>
+
+    <div class="forms_section__item_content">
+      <div class="forms_section__item_content_input">
+        <sw-input-button-group [options]="formBut"></sw-input-button-group>
+      </div>
+      <div class="forms_section__item_content_input">
+        <sw-radio-group [options]="radioGroup"></sw-radio-group>
+      </div>
+      <div class="forms_section__item_content_input">
+        <sw-input-toggle>
+          <span class="input_label">Fillable Online</span>
+        </sw-input-toggle>
+      </div>
+      <div class="forms_section__item_content_input">
+        <sw-input-toggle>
+          <span class="input_label">Allow Download/Upload</span>
+        </sw-input-toggle>
+      </div>
+    </div>
+  </div>
+</section>

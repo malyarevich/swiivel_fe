@@ -1,0 +1,72 @@
+@import "index";
+
+:host {
+  width: 100%;
+  .documents_section,
+  .forms_section {
+    width: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    margin-top: 15px;
+    &__header {
+      width: 100%;
+      display: flex;
+      flex-flow: row nowrap;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 15px;
+      &_text {
+        text-transform: uppercase;
+        font: 800 12px/15px $nunito-sans;
+      }
+      &_controls {
+        color: #4350A2;
+        i {
+          font-size: 16px;
+          margin-left: 10px;
+        }
+      }
+    }
+    &__item {
+      background-color: #F3F3F3;
+      border: 1px solid #E3E3E3;
+      border-radius: 3px;
+      padding: 10px;
+      &_header {
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        &_text {
+          font: 800 14px/20px $nunito-sans;
+        }
+        &_controls {
+          color: #909090;
+          i {
+            font-size: 12px;
+            margin-left: 10px;
+          }
+        }
+      }
+      &_content_input {
+        &:not(:last-of-type) {
+          margin-bottom: 10px;
+        }
+      }
+      &:not(:last-of-type) {
+        margin-bottom: 10px;
+      }
+    }
+  }
+  .documents_section:after {
+    content: '';
+    width: 100%;
+    height: 1px;
+    margin: 15px 0;
+    background: #E1E1E1;
+  }
+  .forms_section {
+    margin: 0;
+  }
+}

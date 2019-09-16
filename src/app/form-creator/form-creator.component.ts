@@ -13,7 +13,7 @@ export class FormCreatorComponent implements OnInit {
   sections = [
     {name: 'Packet Introduction', component: SidebarIntroComponent, active: true},
     {name: 'Form Fields', component: SidebarFieldsComponent},
-    {name: 'Documents & Forms', component: DocumentsFormsComponent},
+    {name: 'Additional Documents', component: DocumentsFormsComponent},
     {name: 'CONSENT', component: SidebarFieldsComponent},
     {name: 'TUITION CONTRACT', component: SidebarFieldsComponent},
     {name: 'PAYMENT SETTINGS', component: SidebarFieldsComponent},
