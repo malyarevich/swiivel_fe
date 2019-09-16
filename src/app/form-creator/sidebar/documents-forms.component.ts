@@ -29,7 +29,8 @@ export class DocumentsFormsComponent implements OnInit {
     }
   ];
   radioGroup = ['Needed Per Family', 'Needed Per Student'];
-
+  isOpenDocuments: boolean = false;
+  isOpenForms: boolean = false;
   form: FormGroup;
 
   constructor(
@@ -44,6 +45,22 @@ export class DocumentsFormsComponent implements OnInit {
   ngOnInit() {
   }
 
+  showDocuments() {
+    this.isOpenDocuments = true;
+  }
+
+  hideDocuments() {
+    this.isOpenDocuments = false;
+  }
+
+  showForms() {
+    this.isOpenForms = true;
+  }
+
+  hideForms() {
+    this.isOpenForms = false;
+  }
+
   get documents(): FormArray {
     return this.form.get('documents') as FormArray;
   }
@@ -55,6 +72,7 @@ export class DocumentsFormsComponent implements OnInit {
   addItem(addTo: string): void {
     switch (addTo) {
       case 'documents':
+        if (!this.isOpenDocuments) this.isOpenDocuments = true;
         this.documents.push(
           new FormGroup({
             name: new FormControl('', { updateOn: 'blur' }),
@@ -64,6 +82,7 @@ export class DocumentsFormsComponent implements OnInit {
         );
         break;
       case 'forms':
+        if (!this.isOpenForms) this.isOpenForms = true;
         this.forms.push(
           new FormGroup({
             name: new FormControl('', { updateOn: 'blur' }),
