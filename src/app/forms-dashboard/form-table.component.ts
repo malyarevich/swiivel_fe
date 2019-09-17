@@ -5,6 +5,7 @@ import { DialogComponent } from '@shared/popup/dialog.component';
 import { DataCollectionService } from './data-collection.service';
 import { FormsDataSource } from './form-table.datasource';
 import { DateTime } from 'luxon';
+import { pick } from 'lodash';
 
 @Component({
   selector: 'app-form-table',
@@ -71,6 +72,36 @@ export class FormTableComponent implements OnInit {
     this.filterForm.valueChanges.subscribe(value => {
       this.dataSource.filter(value);
     });
+  }
+
+  getUserInfo(obj: any) {
+    const user = pick(obj, ['full_name', 'role.role_name']);
+    return { name: user['full_name'], role: user['role']['role_name']};
+  }
+
+  getStatusColor(status: string): string {
+    let color: string;
+    switch (status) {
+      case 'archived':
+        color = 'gray';
+        break;
+      case 'active':
+        color = 'green';
+        break;
+      case 'draft':
+        color = 'lite-gray';
+        break;
+      case 'in review':
+        color = 'yellow';
+        break;
+      case 'closed':
+        color = 'gray';
+        break;
+      default:
+        color = 'gray';
+        break;
+    }
+    return color;
   }
 
   getDate(date: Date) {

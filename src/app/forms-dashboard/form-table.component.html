@@ -11,7 +11,8 @@
       </div>
       <div class="app-form-table__controls">
         <sw-dropdown [options]="bulkOptions" #bulk="dropdown" (selected)="bulkAction($event)">
-          <sw-button [icon]="bulk.isOpened ? 'fas fa-chevron-up' : 'fas fa-chevron-down'" [style]="'gray'">Bulk Actions</sw-button>
+          <sw-button [icon]="bulk.isOpened ? 'fas fa-chevron-up' : 'fas fa-chevron-down'" [style]="'gray'">Bulk Actions
+          </sw-button>
         </sw-dropdown>
       </div>
     </div>
@@ -24,7 +25,8 @@
     </div>
     <div>
       <div class="link-filters">
-        <a *ngFor="let filter of linkFilters" [class.active]="activeLinkFilter === filter" (click)="filterByLink(filter)">{{filter.title}}</a>
+        <a *ngFor="let filter of linkFilters" [class.active]="activeLinkFilter === filter"
+          (click)="filterByLink(filter)">{{filter.title}}</a>
       </div>
       <div class="table">
 
@@ -39,7 +41,7 @@
                     Form Name
                     <div class="header_container__title_icons">
                       <i class="fas icon"
-                         [ngClass]="{'up': sort[0] === 'name' && sort[1] === false, 'down': sort[0] === 'name' && sort[1] === true}"></i>
+                        [ngClass]="{'up': sort[0] === 'name' && sort[1] === false, 'down': sort[0] === 'name' && sort[1] === true}"></i>
                     </div>
                   </div>
                   <div class="header_container__filter">
@@ -48,7 +50,7 @@
                 </div>
               </th>
               <td cdk-cell *cdkCellDef="let form">
-                {{form.name}}
+                <span class="text">{{ form.name }}</span>
               </td>
             </ng-container>
 
@@ -60,7 +62,7 @@
                     type
                     <div class="header_container__title_icons">
                       <i class="fas icon"
-                         [ngClass]="{'up': sort[0] === 'type' && sort[1] === false, 'down': sort[0] === 'type' && sort[1] === true}"></i>
+                        [ngClass]="{'up': sort[0] === 'type' && sort[1] === false, 'down': sort[0] === 'type' && sort[1] === true}"></i>
                     </div>
                   </div>
                   <div class="header_container__filter">
@@ -69,7 +71,8 @@
                 </div>
               </th>
               <td cdk-cell *cdkCellDef="let form">
-                {{form.type}}
+                <span class="main-text">{{ form.type }}</span>
+                <span class="second-text"></span>
               </td>
             </ng-container>
 
@@ -81,7 +84,7 @@
                     access
                     <div class="header_container__title_icons">
                       <i class="fas icon"
-                         [ngClass]="{'up': sort[0] === 'access' && sort[1] === false, 'down': sort[0] === 'access' && sort[1] === true}"></i>
+                        [ngClass]="{'up': sort[0] === 'access' && sort[1] === false, 'down': sort[0] === 'access' && sort[1] === true}"></i>
                     </div>
                   </div>
                   <div class="header_container__filter">
@@ -102,7 +105,7 @@
                     created by
                     <div class="header_container__title_icons">
                       <i class="fas icon"
-                         [ngClass]="{'up': sort[0] === 'createdBy' && sort[1] === false, 'down': sort[0] === 'createdBy' && sort[1] === true}"></i>
+                        [ngClass]="{'up': sort[0] === 'createdBy' && sort[1] === false, 'down': sort[0] === 'createdBy' && sort[1] === true}"></i>
                     </div>
                   </div>
                   <div class="header_container__filter">
@@ -111,8 +114,7 @@
                 </div>
               </th>
               <td cdk-cell *cdkCellDef="let form">
-                <span class="date">{{getDate(form.created_at)}}</span>
-                <span class="time">{{getTime(form.created_at)}}</span>
+                <sw-user-item [userItem]="getUserInfo(form.owner)"></sw-user-item>
               </td>
             </ng-container>
 
@@ -124,7 +126,7 @@
                     update date
                     <div class="header_container__title_icons">
                       <i class="fas icon"
-                         [ngClass]="{'up': sort[0] === 'updatedAt' && sort[1] === false, 'down': sort[0] === 'updatedAt' && sort[1] === true}"></i>
+                        [ngClass]="{'up': sort[0] === 'updatedAt' && sort[1] === false, 'down': sort[0] === 'updatedAt' && sort[1] === true}"></i>
                     </div>
                   </div>
                   <div class="header_container__filter">
@@ -146,7 +148,7 @@
                     status
                     <div class="header_container__title_icons">
                       <i class="fas icon"
-                         [ngClass]="{'up': sort[0] === 'status' && sort[1] === false, 'down': sort[0] === 'status' && sort[1] === true}"></i>
+                        [ngClass]="{'up': sort[0] === 'status' && sort[1] === false, 'down': sort[0] === 'status' && sort[1] === true}"></i>
                     </div>
                   </div>
                   <div class="header_container__filter">
@@ -155,22 +157,38 @@
                 </div>
               </th>
               <td cdk-cell *cdkCellDef="let form">
-                {{form.status}}
+                <sw-dropdown [options]="bulkOptions" #bulk="dropdown" (selected)="bulkAction($event)">
+                  <sw-small-button [ngClass]="{'icon-end': true}" [class]="getStatusColor(form.status)"
+                    [text]="form.status" icon="fa-caret-down"></sw-small-button>
+                </sw-dropdown>
               </td>
             </ng-container>
 
             <ng-container cdkColumnDef="actions">
-              <th cdk-header-cell *cdkHeaderCellDef>
-                asd
-              </th>
+              <th cdk-header-cell *cdkHeaderCellDef></th>
               <td cdk-cell *cdkCellDef="let form">
-                asd
+                <div class="item">
+                  <sw-small-button text="Edit" icon="fa-pen"></sw-small-button>
+                </div>
+                <div class="item">
+                  <sw-small-button text="View" icon="fa-eye"></sw-small-button>
+                </div>
+                <div class="item">
+                  <i class="fas fa-share-alt"></i>
+                </div>
+                <div class="item">
+                  <i class="fas fa-download"></i>
+                </div>
+                <div class="item">
+                  <i class="far fa-copy"></i>
+                </div>
+
               </td>
             </ng-container>
 
             <tr cdk-header-row class="filters-row" *cdkHeaderRowDef="displayedColumns; sticky: true"></tr>
-            <tr cdk-row #data *cdkRowDef="let user; columns: displayedColumns;"
-                [style.visibility]="showSpinner ? 'collapse' : 'visible'">>
+            <tr cdk-row class="table-row" #data *cdkRowDef="let user; columns: displayedColumns;"
+              [style.visibility]="showSpinner ? 'collapse' : 'visible'">>
             </tr>
 
 
