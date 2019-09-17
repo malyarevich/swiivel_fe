@@ -84,6 +84,7 @@
     .cdk-column-type {
       .main-text {
         font: 800 12px/13px $nunito-sans;
+        text-transform: capitalize;
       }
       .second-text {
         font: 400 10px/13px $nunito-sans;
