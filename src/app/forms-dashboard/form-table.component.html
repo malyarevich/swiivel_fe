@@ -157,7 +157,7 @@
                 </div>
               </th>
               <td cdk-cell *cdkCellDef="let form">
-                <sw-dropdown [options]="bulkOptions" #bulk="dropdown" (selected)="bulkAction($event)">
+                <sw-dropdown [options]="statusesOptions" #bulk="dropdown" (selected)="''">
                   <sw-small-button [ngClass]="{'icon-end': true}" [class]="getStatusColor(form.status)"
                     [text]="form.status" icon="fa-caret-down"></sw-small-button>
                 </sw-dropdown>

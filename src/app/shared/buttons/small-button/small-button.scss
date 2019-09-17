@@ -10,6 +10,7 @@
     font: 800 10px/13px $nunito-sans-bold;
     text-transform: capitalize;
     display: flex;
+    outline: none;
     &:hover,
     &:focus {
       background: $hover-purple
