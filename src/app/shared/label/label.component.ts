@@ -13,10 +13,10 @@ import {
 })
 
 export class LabelComponent implements OnInit {
-  @Input() id ? = null;
+  @Input() id = null;
   @Output() deleteLabel: EventEmitter<any> = new EventEmitter<any>();
 
-  private deleted = false;
+  deleted = false;
 
   constructor() {}
 
