@@ -2,6 +2,8 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEnca
 import { DataCollectionService } from '../data-collection.service';
 import { Form } from '@models/data-collection/form';
 import { DialogComponent } from '@shared/popup/dialog.component';
+import { DataSource } from '@angular/cdk/table';
+import { FormsDataSource } from './form-table.datasource';
 
 
 @Component({
@@ -22,7 +24,8 @@ export class FormTableComponent implements OnInit {
     sort: {},
     filter: {},
   };
-  public forms: Form[] = null;
+  public dataSource: FormsDataSource = new FormsDataSource(this.dataCollectionService);
+  // public forms: Form[] = null;
   public selectedForms: Form[] = [];
 
   public displayedColumns: string[] = ['name', 'type', 'access', 'createdBy', 'updatedAt', 'status', 'actions'];
@@ -41,41 +44,13 @@ export class FormTableComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getAllForm();
-    console.log(this.dialog)
+    this.dataSource.loadFormsList(this.params);
   }
 
   bulkAction(selectedIndex) {
     console.log(this.bulkOptions[selectedIndex]);
   }
 
-  getAllForm(): void {
-    this.dataCollectionService.getFormsList(this.params).subscribe(forms => {
-      console.log(forms);
-      this.forms = FormTableComponent.convertFormsData(forms.data);
-      console.log(this.forms);
-      this.cd.detectChanges();
-    });
-  }
-
-  selectForm(id: number): void {
-    this.selectedForms = [];
-    this.forms.map((form) => {
-      if (form.id === id) {
-        form.isSelected = !form.isSelected;
-      }
-    });
-    this.updateSelectForms();
-  }
-
-  updateSelectForms(): void {
-    this.selectedForms = [];
-    this.forms.map((form) => {
-      if (form.isSelected) {
-        this.selectedForms.push(form);
-      }
-    });
-  }
 
   shareForms(): void {
     this.dialog.open();

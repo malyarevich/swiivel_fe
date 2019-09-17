@@ -15,11 +15,6 @@
       <sw-button [icon]="bulk.isOpened ? 'fas fa-chevron-up' : 'fas fa-chevron-down'">Bulk Actions</sw-button>
     </sw-dropdown>
     <div>
-      <div *ngFor="let form of forms">
-        <button [ngClass]="{ 'button-red': form.isSelected}" (click)="selectForm(form.id)">{{ form.name }}</button>
-      </div>
-    </div>
-    <div>
       <div *ngFor="let selectedForm of selectedForms"> {{ selectedForm.name }}</div>
       <button (click)="shareForms()">Share</button>
       <button (click)="archiveForms()">Archive</button>
@@ -41,13 +36,13 @@
 
   <form>
 
-    <table #table cdk-table>
+    <table #table cdk-table [dataSource]="dataSource">
 
       <ng-container cdkColumnDef="name">
         <th cdk-header-cell *cdkHeaderCellDef>
-          asd
+
         </th>
-        <td cdk-cell *cdkCellDef="let form"></td>
+        <td cdk-cell *cdkCellDef="let form">{{form.name}}</td>
       </ng-container>
 
 
