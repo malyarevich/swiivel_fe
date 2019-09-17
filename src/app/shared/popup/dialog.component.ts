@@ -12,17 +12,9 @@ import { isString, isObjectLike } from 'lodash';
 })
 export class DialogComponent {
   private _ref = null;
-  items = [];
-  selectedIndex = null;
-  @Output() selected = new EventEmitter<number>();
+  @Output() closed = new EventEmitter<boolean>();
   @Input() title = 'Dialog title';
   @Input() action = 'Dialog button';
-
-
-
-
-
-
 
   @ViewChild('list', { static: false }) list;
   @ViewChild('holder', { static: false, read: ElementRef }) holder: ElementRef;
@@ -43,7 +35,20 @@ export class DialogComponent {
     else this.showPopup();
   }
 
-  showPopup(): void {
+  close(action?: boolean) {
+    console.log(action)
+    this._ref.close({click: !!action});
+  }
+
+  open() {
+    if (!this.isOpened) {
+      this.showPopup();
+    } else {
+      console.error('Dialog already opened');
+    }
+  }
+
+  private showPopup(): void {
     this._ref = this.popup.open({
       origin: this.holder,
       content: this.list,
@@ -51,6 +56,8 @@ export class DialogComponent {
     });
     this._ref.afterClosed$.subscribe((result) => {
       this._ref = null;
+      console.log(result)
+      this.closed.emit(result);
       this.cdr.markForCheck();
     });
   }

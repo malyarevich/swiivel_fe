@@ -135,6 +135,15 @@ select {
 .cdk-overlay-container {
   position: fixed;
   z-index: 1000;
+  .centered-panel {
+    display: flex;
+    flex-flow: row;
+    height: 100vh;
+    width: 100vw;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
 }
 
 .cdk-global-overlay-wrapper, .cdk-overlay-container {

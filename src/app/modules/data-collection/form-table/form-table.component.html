@@ -34,4 +34,7 @@
     (deleteLabel)="deleteItem(123)"
   >123
   </sw-label>
+  <sw-dialog #dialog title="Bulk share" action="Share items (4)" (closed)="dialogClosed($event)">
+    <h1>test</h1>
+  </sw-dialog>
 </div>

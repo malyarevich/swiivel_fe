@@ -4,15 +4,17 @@
 <ng-template #list>
   <div class="dialog_container">
     <div class="dialog_header">
-      <div class="dialog_title"></div>
-      <div class="dialog_close"></div>
+      <div class="dialog_title">{{title}}</div>
+      <div class="dialog_close">
+        <i class="fa fas-times" (click)="close(false)"></i>
+      </div>
     </div>
     <div class="dialog_body">
       <ng-content></ng-content>
     </div>
     <div class="dialog_footer">
-      <button type="button">Cancel</button>
-      <button type="button">{{action}}</button>
+      <button type="button" (click)="close(false)">Cancel</button>
+      <button type="button" (click)="close(true)">{{action}}</button>
     </div>
   </div>
 </ng-template>
