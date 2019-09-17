@@ -187,8 +187,7 @@
             </ng-container>
 
             <tr cdk-header-row class="filters-row" *cdkHeaderRowDef="displayedColumns; sticky: true"></tr>
-            <tr cdk-row class="table-row" #data *cdkRowDef="let user; columns: displayedColumns;"
-              [style.visibility]="showSpinner ? 'collapse' : 'visible'">>
+            <tr cdk-row class="table-row" [class.selected]="rowSelected(form)" #data *cdkRowDef="let form; columns: displayedColumns;" (click)="selectRow(form)">
             </tr>
 
 

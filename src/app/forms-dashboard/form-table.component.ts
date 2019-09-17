@@ -6,6 +6,7 @@ import { DataCollectionService } from './data-collection.service';
 import { FormsDataSource } from './form-table.datasource';
 import { DateTime } from 'luxon';
 import { pick } from 'lodash';
+import { SelectionModel } from '@angular/cdk/collections';
 
 
 @Component({
@@ -18,19 +19,6 @@ import { pick } from 'lodash';
 })
 export class FormTableComponent implements OnInit {
 
-  constructor(
-    public dataCollectionService: DataCollectionService,
-    private cd: ChangeDetectorRef,
-    private fb: FormBuilder) {
-    this.filterForm = this.fb.group({
-      name: [null],
-      type: [null],
-      access: [null],
-      createdBy: [null],
-      updatedAt: [null],
-      status: [null]
-    });
-  }
   @ViewChild('dialog', { static: true }) dialog: DialogComponent;
   bulkOptions = ['Share', 'Export PDF', 'Archive'];
   public params = {
@@ -58,6 +46,7 @@ export class FormTableComponent implements OnInit {
   filterForm: FormGroup;
   sort = ['name', true];
   statusesOptions: string[] = ['Active', 'Drafts', 'In Review', 'Closed', 'Archived'];
+  _sm: SelectionModel<any>;
 
   // todo: возможно это вынести в сервис
   static convertFormsData(forms: Form[]): Form[] {
@@ -69,7 +58,22 @@ export class FormTableComponent implements OnInit {
     return forms;
   }
 
+  constructor(
+    public dataCollectionService: DataCollectionService,
+    private cd: ChangeDetectorRef,
+    private fb: FormBuilder) {
+    this.filterForm = this.fb.group({
+      name: [null],
+      type: [null],
+      access: [null],
+      createdBy: [null],
+      updatedAt: [null],
+      status: [null]
+    });
+  }
+
   ngOnInit() {
+    this._sm = new SelectionModel(true);
     this.dataSource.loadFormsList(this.params);
     this.filterForm.valueChanges.subscribe(value => {
       this.dataSource.filter(value);
@@ -133,6 +137,16 @@ export class FormTableComponent implements OnInit {
     } else {
       this.sort = [field, true];
     }
+  }
+
+  selectRow(row: any) {
+    if (row) {
+      this._sm.toggle(row);
+    }
+  }
+
+  rowSelected(row: any) {
+    return this._sm.isSelected(row);
   }
 
   filterByLink(filter) {
