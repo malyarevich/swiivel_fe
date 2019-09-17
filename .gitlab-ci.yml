@@ -5,7 +5,7 @@ build:
     before_script:
         - npm i
     script:
-        - ng build --prod --aot=false --build-optimizer=false
+        - npm run build
     artifacts:
         expire_in: 1 day
         paths:
