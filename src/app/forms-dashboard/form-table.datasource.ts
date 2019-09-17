@@ -1,10 +1,8 @@
-import { CollectionViewer, DataSource } from '@angular/cdk/collections';
-import { BehaviorSubject, Observable, of } from 'rxjs';
-
-import { catchError, finalize } from 'rxjs/operators';
 import { DataCollectionService } from './data-collection.service';
-
-
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { DataSource } from '@angular/cdk/table';
+import { CollectionViewer } from '@angular/cdk/collections';
+import { catchError, finalize } from 'rxjs/operators';
 
 export class FormsDataSource implements DataSource<any> {
   private formsSubject = new BehaviorSubject<any[]>([]);
@@ -15,6 +13,13 @@ export class FormsDataSource implements DataSource<any> {
 
   constructor(private data: DataCollectionService) {
     this.dataSubject.subscribe((data) => {
+      data = data.map(form => {
+        form.created_at = new Date(form.created_at);
+        if (form.updated_at) {
+          form.updated_at = new Date(form.updated_at);
+        }
+        return form;
+      })
       this.formsSubject.next(data);
     });
   }

@@ -32,15 +32,3 @@ export class ApiService {
     return this.http.post('/sign-in', { email, password, uuid });
   }
 }
-
-export class DataCollectionService extends ApiService {
-  getFormsList(requestParams?: FormSearchParams): Observable<any> {
-    return this.http
-      .post(`/proxy/form-builder/form-templates`, {
-        params: requestParams
-      })
-      .pipe(
-        map(response => response.data)
-      );
-  }
-}

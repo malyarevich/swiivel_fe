@@ -111,7 +111,8 @@
                 </div>
               </th>
               <td cdk-cell *cdkCellDef="let form">
-                asd
+                <span class="date">{{getDate(form.created_at)}}</span>
+                <span class="time">{{getTime(form.created_at)}}</span>
               </td>
             </ng-container>
 
@@ -132,7 +133,8 @@
                 </div>
               </th>
               <td cdk-cell *cdkCellDef="let form">
-                asd
+                <span class="date">{{getDate(form.updated_at)}}</span>
+                <span class="time">{{getTime(form.updated_at)}}</span>
               </td>
             </ng-container>
 
