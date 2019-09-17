@@ -13,7 +13,7 @@ const API_URL = 'http://red.dev.codeblue.ventures/api/v1';
 
 export class ApiService {
 
-  constructor(private http: HttpService) {}
+  constructor(protected http: HttpService) {}
 
   public login(data: LoginData): any {
     return this.http.post('/login', {...data}).pipe(

@@ -51,8 +51,8 @@ export class FormTableComponent implements OnInit {
 
   getAllForm(): void {
     this.dataCollectionService.getFormsList(this.params).subscribe(forms => {
-      console.log(forms.data);
-      this.forms = FormTableComponent.convertFormsData(forms.data.data);
+      console.log(forms);
+      this.forms = FormTableComponent.convertFormsData(forms.data);
       console.log(this.forms);
       this.cd.detectChanges();
     });
