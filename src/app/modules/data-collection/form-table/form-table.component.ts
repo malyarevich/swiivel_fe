@@ -25,6 +25,8 @@ export class FormTableComponent implements OnInit {
   public forms: Form[] = null;
   public selectedForms: Form[] = [];
 
+  public displayedColumns: string[] = ['name', 'type', 'access', 'createdBy', 'updatedAt', 'status', 'actions'];
+
   // todo: возможно это вынести в сервис
   static convertFormsData(forms: Form[]): Form[] {
     console.log(forms);
