@@ -36,8 +36,7 @@ export class DialogComponent {
   }
 
   close(action?: boolean) {
-    console.log(action)
-    this._ref.close({click: !!action});
+    this._ref.close({action: !!action});
   }
 
   open() {
@@ -55,9 +54,10 @@ export class DialogComponent {
       panelClass: 'centered-panel'
     });
     this._ref.afterClosed$.subscribe((result) => {
+      let cancelled = true;
+      if (result.data && !!result.data.action) cancelled = false;
       this._ref = null;
-      console.log(result)
-      this.closed.emit(result);
+      this.closed.emit(!cancelled);
       this.cdr.markForCheck();
     });
   }
