@@ -14,6 +14,7 @@ import { InputDynamicComponent } from './inputs/input-dynamic/input-dynamic.comp
 import { InputNumberComponent } from './inputs/input-number/input-number.component';
 import { InputTextComponent } from './inputs/input-text/input-text.component';
 import { InputToggleComponent } from './inputs/input-toggle/input-toggle.component';
+import { InputTextareaComponent } from './inputs/input-textarea/input-textarea.component';
 
 // Headers
 import { BlockHeaderComponent} from './headers/block-header/block-header.component';
@@ -24,7 +25,7 @@ import { InputPhoneNumberComponent } from './inputs/input-phone-number/input-pho
 // Others
 import { LabelComponent } from './label/label.component';
 import { UserItemComponent } from './user-item/user-item.component';
-import { InputTextareaComponent } from './inputs/input-textarea/input-textarea.component';
+import { RadioGroupComponent } from './inputs/radio-group/radio-group.component';
 
 @NgModule({
   imports: [
@@ -53,6 +54,7 @@ import { InputTextareaComponent } from './inputs/input-textarea/input-textarea.c
     // Others
     LabelComponent,
     UserItemComponent,
+    RadioGroupComponent,
   ],
   exports: [
     CommonModule,
@@ -71,6 +73,7 @@ import { InputTextareaComponent } from './inputs/input-textarea/input-textarea.c
     InputPhoneNumberComponent,
     InputEmailComponent,
     InputTextareaComponent,
+    RadioGroupComponent,
     // Headers
     PageHeaderComponent,
     BlockHeaderComponent,

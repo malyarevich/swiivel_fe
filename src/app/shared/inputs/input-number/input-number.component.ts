@@ -63,7 +63,7 @@ export class InputNumberComponent implements ControlValueAccessor {
   }
 
   setValue(value) {
-    this.onChange(value);
+    this.onChange(value.valueOf());
     this.renderer.setProperty(this.input.nativeElement, 'value', value.valueOf());
     this.oldValue = value;
   }

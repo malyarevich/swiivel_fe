@@ -25,9 +25,7 @@ export class PhoneSettingComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder
-  ) { }
-
-  ngOnInit() {
+  ) {
     this.form = this.fb.group({
       showDefaultValue: new FormControl(false),
       showValidators: new FormControl(false),
@@ -37,6 +35,9 @@ export class PhoneSettingComponent implements OnInit {
         verifyPhone: new FormControl(false),
       })
     });
+  }
+
+  ngOnInit() {
     this.form.valueChanges.subscribe(v => {
       delete v.showDefaultValue;
       delete v.showValidators;
