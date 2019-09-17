@@ -54,6 +54,11 @@ export class FormTableComponent implements OnInit {
   public activeLinkFilter = this.linkFilters[0];
 
   public displayedColumns: string[] = ['name', 'type', 'access', 'createdBy', 'updatedAt', 'status', 'actions'];
+  public sharedUrlForms: string[] = [];
+
+  static createSharedurl(id: string) {
+    return `${window.location.href}/f/${id}`;
+  }
 
   filterForm: FormGroup;
   sort = ['name', true];
@@ -153,8 +158,11 @@ export class FormTableComponent implements OnInit {
   }
 
   archiveForms(): void {
+    this.dataCollectionService.archiveForms(this.getSelectedIds())
+      .subscribe(() => {
+        // this.getAllForm();
+      });
   }
-
   exportFormsPDF(): void {
 
   }
@@ -185,7 +193,28 @@ export class FormTableComponent implements OnInit {
       });
   }
 
-  deleteItem(id) {
-    console.log(id);
+  deleteItem(id: number): void {
+  //   this.selectForm(id);
+  }
+
+  exportPDF(mongoId: string) {
+    this.dataCollectionService
+      .exportPDFForm(mongoId)
+      .subscribe(res => {
+        console.log('Start form download');
+      });
+  }
+
+  openPopupShareForm(id: string): void {
+    this.sharedUrlForms = [FormTableComponent.createSharedurl(id)];
+  }
+
+  duplicateForm(form: Form): void {
+    console.log('duplicate');
+    this.dataCollectionService
+      .duplicateForm(form.mongo_id)
+      .subscribe(() => {
+        // this.getAllForm();
+      });
   }
 }

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpService } from '@app/core/http.service';
 import { ApiResponse, LoginData } from '@models/api';
 import { FormSearchParams } from '@models/form-search-params';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Injectable({

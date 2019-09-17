@@ -1,4 +1,9 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 import { IconsEnum } from '@shared/icons.enum';
 import { SizesEnum } from '@shared/sizes.enum';
 
@@ -8,23 +13,16 @@ import { SizesEnum } from '@shared/sizes.enum';
   styleUrls: ['./icon-button.scss']
 })
 
-export class IconButtonComponent implements OnInit {
+export class IconButtonComponent {
   @Input() icon: IconsEnum;
   @Input() size ? = SizesEnum.SMALL;
-  @Output() onClick: EventEmitter<any> = new EventEmitter<any>();
+  @Output() click: EventEmitter<any> = new EventEmitter<any>();
 
-  public iconClass: string;
   public sizes = SizesEnum;
 
-  constructor() {
-  }
+  constructor() {}
 
-  public ngOnInit(): void {
-    this.iconClass = 'fas ' + this.icon;
+  public buttonClick(): void {
+    this.click.emit();
   }
-
-  public onButtonClick(): void {
-    this.onClick.emit();
-  }
-
 }
