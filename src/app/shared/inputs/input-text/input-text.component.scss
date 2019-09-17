@@ -87,3 +87,13 @@
   }
  
 }
+:host(.no_styles) {
+  .input_text__input {
+    border: none;
+    background-color: inherit;
+    height: 100%;
+    padding: 0;
+    font: 800 14px/20px $nunito-sans;
+  }
+ 
+}
