@@ -52,6 +52,11 @@ export class FormTableComponent implements OnInit {
   public activeLinkFilter = this.linkFilters[0];
 
   public displayedColumns: string[] = ['name', 'type', 'access', 'createdBy', 'updatedAt', 'status', 'actions'];
+  public sharedUrlForms: string[] = [];
+
+  static createSharedurl(id: string) {
+    return `${window.location.href}/f/${id}`;
+  }
 
   filterForm: FormGroup;
   sort = ['name', true];
@@ -134,9 +139,7 @@ export class FormTableComponent implements OnInit {
 
   onCopyLink(label: string): void {
     navigator.clipboard.writeText(label)
-      .then(() => {
-        console.log('Text copied to clipboard', label);
-      })
+      .then(() => {})
       .catch(err => {
         console.error('Could not copy text: ', err);
       });
@@ -152,5 +155,9 @@ export class FormTableComponent implements OnInit {
       .subscribe(res => {
         console.log('Start form download');
       });
+  }
+
+  openPopupShareForm(id: string): void {
+    this.sharedUrlForms = [FormTableComponent.createSharedurl(id)];
   }
 }
