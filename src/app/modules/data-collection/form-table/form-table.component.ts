@@ -13,7 +13,7 @@ import { DialogComponent } from '@shared/popup/dialog.component';
   providers: [DataCollectionService]
 })
 export class FormTableComponent implements OnInit {
-  @ViewChild('dialog', {static: true}) dialog: DialogComponent;
+  @ViewChild('dialog', { static: true }) dialog: DialogComponent;
   bulkOptions = ['Share', 'Export PDF', 'Archive'];
   public params = {
     page: 1,
@@ -37,7 +37,8 @@ export class FormTableComponent implements OnInit {
     return forms;
   }
 
-  filterForm: FormGroup
+  filterForm: FormGroup;
+  sort = ['name', true];
 
   constructor(
     public dataCollectionService: DataCollectionService,
@@ -56,6 +57,24 @@ export class FormTableComponent implements OnInit {
   ngOnInit() {
     this.getAllForm();
     console.log(this.dialog)
+  }
+
+  sortBy(field: string) {
+    if (this.sort[0] === field) {
+      switch (this.sort[1]) {
+        case true:
+          this.sort = [field, false];
+          break;
+        case false:
+          this.sort = [field, null];
+          break;
+        default:
+          this.sort = [field, true];
+          break;
+      }
+    } else {
+      this.sort = [field, true];
+    }
   }
 
   bulkAction(selectedIndex) {

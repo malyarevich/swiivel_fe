@@ -46,11 +46,11 @@
       <ng-container cdkColumnDef="name">
         <th cdk-header-cell *cdkHeaderCellDef>
           <div class="header_container">
-            <div class="header_container__title">
+            <div class="header_container__title" (click)="sortBy('name')">
               Form Name
               <div class="header_container__title_icons">
-                <i class="fas fa-caret-up up"></i>
-                <i class="fas fa-caret-down down"></i>
+                <i class="fas icon"
+                  [ngClass]="{'up': sort[0] === 'name' && sort[1] === false, 'down': sort[0] === 'name' && sort[1] === true}"></i>
               </div>
             </div>
             <div class="header_container__filter">
@@ -67,11 +67,11 @@
       <ng-container cdkColumnDef="type">
         <th cdk-header-cell *cdkHeaderCellDef>
           <div class="header_container">
-            <div class="header_container__title">
+            <div class="header_container__title" (click)="sortBy('type')">
               type
               <div class="header_container__title_icons">
-                <i class="fas fa-caret-up up"></i>
-                <i class="fas fa-caret-down down"></i>
+                  <i class="fas icon"
+                  [ngClass]="{'up': sort[0] === 'type' && sort[1] === false, 'down': sort[0] === 'type' && sort[1] === true}"></i>
               </div>
             </div>
             <div class="header_container__filter">
@@ -88,11 +88,11 @@
       <ng-container cdkColumnDef="access">
         <th cdk-header-cell *cdkHeaderCellDef>
           <div class="header_container">
-            <div class="header_container__title">
+            <div class="header_container__title" (click)="sortBy('access')">
               access
               <div class="header_container__title_icons">
-                <i class="fas fa-caret-up up"></i>
-                <i class="fas fa-caret-down down"></i>
+                  <i class="fas icon"
+                  [ngClass]="{'up': sort[0] === 'access' && sort[1] === false, 'down': sort[0] === 'access' && sort[1] === true}"></i>
               </div>
             </div>
             <div class="header_container__filter">
@@ -109,11 +109,11 @@
       <ng-container cdkColumnDef="createdBy">
         <th cdk-header-cell *cdkHeaderCellDef>
           <div class="header_container">
-            <div class="header_container__title">
+            <div class="header_container__title" (click)="sortBy('createdBy')">
               created by
               <div class="header_container__title_icons">
-                <i class="fas fa-caret-up up"></i>
-                <i class="fas fa-caret-down down"></i>
+                  <i class="fas icon"
+                  [ngClass]="{'up': sort[0] === 'createdBy' && sort[1] === false, 'down': sort[0] === 'createdBy' && sort[1] === true}"></i>
               </div>
             </div>
             <div class="header_container__filter">
@@ -130,11 +130,11 @@
       <ng-container cdkColumnDef="updatedAt">
         <th cdk-header-cell *cdkHeaderCellDef>
           <div class="header_container">
-            <div class="header_container__title">
+            <div class="header_container__title" (click)="sortBy('updatedAt')">
               update date
               <div class="header_container__title_icons">
-                <i class="fas fa-caret-up up"></i>
-                <i class="fas fa-caret-down down"></i>
+                  <i class="fas icon"
+                  [ngClass]="{'up': sort[0] === 'updatedAt' && sort[1] === false, 'down': sort[0] === 'updatedAt' && sort[1] === true}"></i>
               </div>
             </div>
             <div class="header_container__filter">
@@ -151,11 +151,11 @@
       <ng-container cdkColumnDef="status">
         <th cdk-header-cell *cdkHeaderCellDef>
           <div class="header_container">
-            <div class="header_container__title">
+            <div class="header_container__title" (click)="sortBy('status')">
               status
               <div class="header_container__title_icons">
-                <i class="fas fa-caret-up up"></i>
-                <i class="fas fa-caret-down down"></i>
+                  <i class="fas icon"
+                  [ngClass]="{'up': sort[0] === 'status' && sort[1] === false, 'down': sort[0] === 'status' && sort[1] === true}"></i>
               </div>
             </div>
             <div class="header_container__filter">
