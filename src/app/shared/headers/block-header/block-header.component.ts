@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'sw-block-header',
@@ -6,13 +6,6 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./block-header.scss']
 })
 
-export class BlockHeaderComponent implements OnInit {
-  @Input() header: string;
-
-  constructor() {
-  }
-
-  ngOnInit(): void {
-  }
-
+export class BlockHeaderComponent {
+  constructor() {}
 }

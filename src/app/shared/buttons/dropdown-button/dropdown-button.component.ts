@@ -1,16 +1,24 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { Popup } from '@core/popup.service';
 import { isObjectLike, isString } from 'lodash';
 
-
 @Component({
-  selector: 'sw-dropdown',
+  selector: 'sw-dropdown-button',
   exportAs: 'dropdown',
-  templateUrl: './dropdown.component.html',
-  styleUrls: ['dropdown.component.scss'],
+  templateUrl: './dropdown-button.component.html',
+  styleUrls: ['dropdown-button.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DropdownComponent {
+export class DropdownButtonComponent {
   private _ref = null;
   items = [];
   selectedIndex = null;
@@ -20,8 +28,6 @@ export class DropdownComponent {
     let selectedValue;
     if (isString(val)) {
       selectedValue = val;
-    } else if (isFinite(val)) {
-      this.selectedIndex = val;
     } else if (isObjectLike(val)) {
       if ('title' in val) {
         selectedValue = val.title;
@@ -31,8 +37,11 @@ export class DropdownComponent {
     }
     if (selectedValue) {
       const index = this.items.indexOf(selectedValue);
-      if (index !== 1) { this.selectedIndex = index; }
-      else { this.selectedIndex = null; }
+      if (index !== 1) {
+        this.selectedIndex = index;
+      } else {
+        this.selectedIndex = null;
+      }
     }
   }
 
@@ -55,18 +64,13 @@ export class DropdownComponent {
     }
   }
 
-
-
-
   @ViewChild('list', { static: false }) list;
   @ViewChild('holder', { static: false, read: ElementRef }) holder: ElementRef;
 
   constructor(
     private popup: Popup,
     private cdr: ChangeDetectorRef
-  ) {
-
-  }
+  ) {}
 
   isSelected(i) {
     return this.selectedIndex === i;
@@ -84,8 +88,11 @@ export class DropdownComponent {
   }
 
   toggle() {
-    if (this._ref) { this._ref.close(); }
-    else { this.showPopup(); }
+    if (this._ref) {
+      this._ref.close();
+    } else {
+      this.showPopup();
+    }
   }
 
   showPopup(): void {
@@ -94,7 +101,7 @@ export class DropdownComponent {
       content: this.list,
       panelClass: this.panelClass
     });
-    this._ref.afterClosed$.subscribe((result) => {
+    this._ref.afterClosed$.subscribe(() => {
       this._ref = null;
       this.cdr.markForCheck();
     });

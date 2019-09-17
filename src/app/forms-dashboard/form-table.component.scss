@@ -14,39 +14,38 @@
     padding: 15px;
     background: #fff;
   }
-  .link-filters {
-    a {
-      font-family: Nunito Sans;
-      font-style: normal;
-      font-weight: normal;
-      font-size: 12px;
-      line-height: 16px;
-      /* identical to box height, or 133% */
 
+  .app-form-table__tabs {
+    display: flex;
+    margin: 0 0 15px 0;
+  }
 
-      color: #909090;
-      cursor: pointer;
-      &.active {
-        font-family: Nunito Sans;
-        font-style: normal;
-        font-weight: bold;
-        font-size: 12px;
-        line-height: 13px;
-        /* identical to box height, or 108% */
+  .app-form-table__tab {
+    margin: 0 25px 0 0;
+    padding: 0;
+    color: $gray-color;
+    font: 700 12px/15px $nunito-sans;
+    border: none;
+    border-bottom: 2px solid transparent;
+    border-radius: 0;
+    background: transparent;
 
+    &:hover, &:focus, &:active {
+      border-bottom: 2px solid $hover-purple;
+      color: $hover-purple;
+    }
 
-        color: #4350A2;
-        border-bottom: 10px solid #4350A2;
-        border-bottom-left-radius: 5px;
-        border-bottom-right-radius: 5px;
-        box-sizing: border-box;
-        // border-radius: 10px;
-      }
+    .app-form-table--activated {
+      border-bottom: 2px solid $button-color;
+      color: $button-color;
     }
   }
-  .button-red {
-    background: red;
+
+  .app-form-table__controls div.dropdown-overlay {
+    min-width: 120px;
   }
+
+
 }
 
 .table {

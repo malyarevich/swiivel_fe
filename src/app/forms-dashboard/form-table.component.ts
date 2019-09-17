@@ -1,10 +1,17 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  ViewChild,
+  ViewEncapsulation,
+} from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { DataCollectionService } from '@core/api.service';
 import { Form } from '@models/data-collection/form';
 import { DialogComponent } from '@shared/popup/dialog.component';
-import { DataCollectionService } from '@core/api.service';
-import { FormsDataSource } from './form-table.datasource';
 
+import { FormsDataSource } from './form-table.datasource';
 
 @Component({
   selector: 'app-form-table',
@@ -14,7 +21,42 @@ import { FormsDataSource } from './form-table.datasource';
   encapsulation: ViewEncapsulation.None,
   providers: [DataCollectionService]
 })
+
 export class FormTableComponent implements OnInit {
+  @ViewChild('dialog', { static: true }) dialog: DialogComponent;
+
+  public bulkOptions = ['Share', 'Export PDF', 'Archive'];
+
+
+  public dataSource: FormsDataSource = new FormsDataSource(this.dataCollectionService);
+  public params = {
+    page: 1,
+    limit: 200,
+    search: {},
+    sort: {},
+    filter: {},
+  };
+  // public forms: Form[] = null;
+  public selectedForms: Form[] = [];
+  public linkFilters = [
+    { title: 'All', value: null },
+    { title: 'Active', value: 'active' },
+    { title: 'Drafts', value: 'draft' },
+    { title: 'In Review', value: 'reviewed' },
+    { title: 'Closed', value: 'closed' },
+    { title: 'Archived', value: 'archived' },
+  ];
+  public activeLinkFilter = this.linkFilters[0];
+
+  public displayedColumns: string[] = ['name', 'type', 'access', 'createdBy', 'updatedAt', 'status', 'actions'];
+  public sharedUrlForms: string[] = [];
+
+  static createSharedurl(id: string) {
+    return `${window.location.href}/f/${id}`;
+  }
+
+  filterForm: FormGroup;
+  sort = ['name', true];
 
   constructor(
     public dataCollectionService: DataCollectionService,
@@ -28,47 +70,6 @@ export class FormTableComponent implements OnInit {
       updatedAt: [null],
       status: [null]
     });
-  }
-  @ViewChild('dialog', { static: true }) dialog: DialogComponent;
-  bulkOptions = ['Share', 'Export PDF', 'Archive'];
-  public params = {
-    page: 1,
-    limit: 200,
-    search: {},
-    sort: {},
-    filter: {},
-  };
-  public dataSource: FormsDataSource = new FormsDataSource(this.dataCollectionService);
-  // public forms: Form[] = null;
-  public selectedForms: Form[] = [];
-  public linkFilters = [
-    { title: 'All', value: null },
-    { title: 'Active', value: 'active' },
-    { title: 'Drafts', value: 'draft' },
-    { title: 'In Review', value: 'reviewed' },
-    { title: 'Closed', value: 'closed' },
-    { title: 'Archived', value: 'archived' },
-  ]
-  public activeLinkFilter = this.linkFilters[0];
-
-  public displayedColumns: string[] = ['name', 'type', 'access', 'createdBy', 'updatedAt', 'status', 'actions'];
-  public sharedUrlForms: string[] = [];
-
-  static createSharedurl(id: string) {
-    return `${window.location.href}/f/${id}`;
-  }
-
-  filterForm: FormGroup;
-  sort = ['name', true];
-
-  // todo: возможно это вынести в сервис
-  static convertFormsData(forms: Form[]): Form[] {
-    console.log(forms);
-    forms.map((form) => {
-      form.isSelected = false;
-      form.sharedUrl = `http://red.dev.codeblue.ventures/api/v1/data-collection/online-form/${form.mongo_id}`;
-    });
-    return forms;
   }
 
   ngOnInit() {

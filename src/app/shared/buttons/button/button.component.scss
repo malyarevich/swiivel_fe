@@ -3,18 +3,20 @@
 :host {
   .button {
     border-radius: 3px;
-    background-color: $button-color;
+    background: $button-color;
     outline: none;
     border: none;
-    color: #ffffff;
-    padding: 7px 20px;
+    color: #fff;
+    padding: 7px 15px;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
     flex-wrap: nowrap;
+
     &--gray {
       background: $gray;
+      border: 1px solid $icon-gray;
       span, i {
         color: $icon-gray;
       }
@@ -22,6 +24,7 @@
         margin: 0 10px 0 0;
       }
     }
+
     &--white {
       box-sizing: content-box;
       padding: 6px 19px;
@@ -31,6 +34,7 @@
         color:  $button-color;
       }
     }
+
     span {
       font-style: normal;
       font-weight: bold;

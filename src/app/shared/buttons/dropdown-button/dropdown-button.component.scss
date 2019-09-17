@@ -1,10 +1,4 @@
-@import "index";
-
-:host {
-  .button {
-    background: gray;
-  }
-}
+@import 'index';
 
 .dropdown_items_container {
   width: 100%;
@@ -14,7 +8,7 @@
   box-sizing: border-box;
   border-radius: 3px;
   position: relative;
-  background-color: #fff;
+  background: #fff;
 
   .item {
     width: 100%;
