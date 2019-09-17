@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { DataCollectionService } from '../data-collection.service';
 import { Form } from '@models/data-collection/form';
+import { FormGroup, FormBuilder } from '@angular/forms';
+
 import { DialogComponent } from '@shared/popup/dialog.component';
 import { DataSource } from '@angular/cdk/table';
 import { FormsDataSource } from './form-table.datasource';
@@ -40,7 +42,20 @@ export class FormTableComponent implements OnInit {
     return forms;
   }
 
-  constructor(public dataCollectionService: DataCollectionService, private cd: ChangeDetectorRef) {
+  filterForm: FormGroup
+
+  constructor(
+    public dataCollectionService: DataCollectionService,
+    private cd: ChangeDetectorRef,
+    private fb: FormBuilder) {
+    this.filterForm = this.fb.group({
+      name: [null],
+      type: [null],
+      access: [null],
+      createdBy: [null],
+      updatedAt: [null],
+      status: [null]
+    })
   }
 
   ngOnInit() {
