@@ -1,10 +1,17 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
-import { DataCollectionService } from '../data-collection.service';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  ViewChild,
+  ViewEncapsulation,
+} from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+
+import { DataCollectionService } from '@app/core/api.service';
 import { Form } from '@models/data-collection/form';
-import { FormGroup, FormBuilder } from '@angular/forms';
 import { DialogComponent } from '@shared/popup/dialog.component';
 import { FormsDataSource } from './form-table.datasource';
-
 
 @Component({
   selector: 'app-form-table',
@@ -12,33 +19,51 @@ import { FormsDataSource } from './form-table.datasource';
   styleUrls: ['./form-table.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  providers: [DataCollectionService]
+  providers: [ DataCollectionService ],
 })
+
 export class FormTableComponent implements OnInit {
   @ViewChild('dialog', { static: true }) dialog: DialogComponent;
-  bulkOptions = ['Share', 'Export PDF', 'Archive'];
-  public params = {
+
+  public activeTabId: number = 0;
+  public bulkOptions = ['Share', 'Export PDF', 'Archive'];
+  public dataSource: FormsDataSource = new FormsDataSource(this.dataCollectionService);
+  public displayedColumns: string[] = ['name', 'type', 'access', 'createdBy', 'updatedAt', 'status', 'actions'];
+  public forms: Form[] = null;
+  public params: any = {
     page: 1,
     limit: 200,
     search: {},
     sort: {},
     filter: {},
   };
-  public dataSource: FormsDataSource = new FormsDataSource(this.dataCollectionService);
-  // public forms: Form[] = null;
   public selectedForms: Form[] = [];
-
-  public displayedColumns: string[] = ['name', 'type', 'access', 'createdBy', 'updatedAt', 'status', 'actions'];
-
-  // todo: возможно это вынести в сервис
-  static convertFormsData(forms: Form[]): Form[] {
-    console.log(forms);
-    forms.map((form) => {
-      form.isSelected = false;
-      form.sharedUrl = `http://red.dev.codeblue.ventures/api/v1/data-collection/online-form/${form.mongo_id}`;
-    });
-    return forms;
-  }
+  public tabs = [
+    {
+      title: 'All',
+      type: 'all',
+    },
+    {
+      title: 'Active',
+      type: 'active',
+    },
+    {
+      title: 'Draft',
+      type: 'draft',
+    },
+    {
+      title: 'In Review',
+      type: 'review',
+    },
+    {
+      title: 'Closed',
+      type: 'closed',
+    },
+    {
+      title: 'Archived',
+      type: 'archived',
+    },
+  ];
 
   filterForm: FormGroup;
   sort = ['name', true];
@@ -46,7 +71,8 @@ export class FormTableComponent implements OnInit {
   constructor(
     public dataCollectionService: DataCollectionService,
     private cd: ChangeDetectorRef,
-    private fb: FormBuilder) {
+    private fb: FormBuilder,
+    ) {
     this.filterForm = this.fb.group({
       name: [null],
       type: [null],
@@ -54,14 +80,32 @@ export class FormTableComponent implements OnInit {
       createdBy: [null],
       updatedAt: [null],
       status: [null]
-    })
+    });
   }
 
   ngOnInit() {
+    this.getAllForm();
     this.dataSource.loadFormsList(this.params);
     this.filterForm.valueChanges.subscribe(value => {
       this.dataSource.filter(value);
     });
+  }
+
+  getAllForm(): void {
+    this.dataCollectionService.getFormsList(this.params).subscribe(forms => {
+      this.forms = forms.data;
+      this.cd.detectChanges();
+    });
+  }
+
+  selectForm(id: number): void {
+    this.selectedForms = [];
+    this.forms.map((form) => {
+      if (form.id === id) {
+        form.isSelected = !form.isSelected;
+      }
+    });
+    this.updateSelectForms();
   }
 
   sortBy(field: string) {
@@ -86,6 +130,14 @@ export class FormTableComponent implements OnInit {
     console.log(this.bulkOptions[selectedIndex]);
   }
 
+  updateSelectForms(): void {
+    this.selectedForms = [];
+    this.forms.map((form) => {
+      if (form.isSelected) {
+        this.selectedForms.push(form);
+      }
+    });
+  }
 
   shareForms(): void {
     this.dialog.open();
@@ -130,5 +182,19 @@ export class FormTableComponent implements OnInit {
 
   deleteItem(id) {
     console.log(id);
+  }
+
+  clickTab(tabId: number): void {
+    if (tabId !== this.activeTabId) {
+      this.activeTabId = tabId;
+
+      if (tabId === 0) {
+        delete this.params.filter.status;
+      } else {
+        this.params.filter.status = this.tabs[tabId].type;
+      }
+
+      this.getAllForm();
+    }
   }
 }

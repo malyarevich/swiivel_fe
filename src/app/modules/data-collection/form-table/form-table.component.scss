@@ -1,18 +1,44 @@
-@import 'index';
+@import "index";
 
 .app-form-table {
   padding: 15px;
 
-  .app-form-table__header {
+  &__header {
     display: flex;
     justify-content: space-between;
     height: 30px;
     padding-bottom: 10px;
   }
 
-  .app-form-table__table {
+  &__table {
     padding: 15px;
     background: #fff;
+  }
+
+  &__tabs {
+    display: flex;
+    margin: 0 0 15px 0;
+  }
+
+  &__tab {
+    margin: 0 25px 0 0;
+    padding: 0;
+    color: $gray-color;
+    font: 700 12px/15px $nunito-sans;
+    border: none;
+    border-bottom: 2px solid transparent;
+    border-radius: 0;
+    background: transparent;
+
+    &:hover, &:focus, &:active {
+      border-bottom: 2px solid $hover-purple;
+      color: $hover-purple;
+    }
+
+    &--activated {
+      border-bottom: 2px solid $button-color;
+      color: $button-color;
+    }
   }
 
   .button-red {
@@ -69,7 +95,7 @@
           }
         }
       }
-      
+
     }
   }
 
