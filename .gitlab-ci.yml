@@ -22,4 +22,4 @@ deploy:
         - echo "$SSH_PRIVATE_KEY" >> ~/.ssh/id_rsa
         - chmod 600 ~/.ssh/id_rsa
         - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
-        - rsync -rav --delete --rsync-path="sudo rsync" dist/ zang@35.211.160.56:~/dist
+        - rsync -rav --delete --rsync-path="sudo rsync" dist/ zang@35.211.160.56:/var/www/app-fe/dist/
