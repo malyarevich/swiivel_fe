@@ -43,65 +43,137 @@
             <div class="header_container__title">
               Form Name
               <div class="header_container__title_icons">
-                <i class="fas fa-caret-up"></i>
-                <i class="fas fa-caret-down"></i>
+                <i class="fas fa-caret-up up"></i>
+                <i class="fas fa-caret-down down"></i>
               </div>
+            </div>
+            <div class="header_container__filter">
+              <sw-input-text class="filter-field"></sw-input-text>
             </div>
           </div>
         </th>
-        <td cdk-cell *cdkCellDef="let form"></td>
+        <td cdk-cell *cdkCellDef="let form">
+          asd
+        </td>
       </ng-container>
 
 
       <ng-container cdkColumnDef="type">
         <th cdk-header-cell *cdkHeaderCellDef>
-          asd
+          <div class="header_container">
+            <div class="header_container__title">
+              type
+              <div class="header_container__title_icons">
+                <i class="fas fa-caret-up up"></i>
+                <i class="fas fa-caret-down down"></i>
+              </div>
+            </div>
+            <div class="header_container__filter">
+              <sw-input-text class="filter-field"></sw-input-text>
+            </div>
+          </div>
         </th>
-        <td cdk-cell *cdkCellDef="let form"></td>
+        <td cdk-cell *cdkCellDef="let form">
+          asd
+        </td>
       </ng-container>
 
 
       <ng-container cdkColumnDef="access">
         <th cdk-header-cell *cdkHeaderCellDef>
-          asd
+          <div class="header_container">
+            <div class="header_container__title">
+              access
+              <div class="header_container__title_icons">
+                <i class="fas fa-caret-up up"></i>
+                <i class="fas fa-caret-down down"></i>
+              </div>
+            </div>
+            <div class="header_container__filter">
+              <sw-input-text class="filter-field"></sw-input-text>
+            </div>
+          </div>
         </th>
-        <td cdk-cell *cdkCellDef="let form"></td>
+        <td cdk-cell *cdkCellDef="let form">
+          asd
+        </td>
       </ng-container>
 
 
       <ng-container cdkColumnDef="createdBy">
         <th cdk-header-cell *cdkHeaderCellDef>
-          asd
+          <div class="header_container">
+            <div class="header_container__title">
+              created by
+              <div class="header_container__title_icons">
+                <i class="fas fa-caret-up up"></i>
+                <i class="fas fa-caret-down down"></i>
+              </div>
+            </div>
+            <div class="header_container__filter">
+              <sw-input-text class="filter-field"></sw-input-text>
+            </div>
+          </div>
         </th>
-        <td cdk-cell *cdkCellDef="let form"></td>
+        <td cdk-cell *cdkCellDef="let form">
+          asd
+        </td>
       </ng-container>
 
 
       <ng-container cdkColumnDef="updatedAt">
         <th cdk-header-cell *cdkHeaderCellDef>
-          asd
+          <div class="header_container">
+            <div class="header_container__title">
+              update date
+              <div class="header_container__title_icons">
+                <i class="fas fa-caret-up up"></i>
+                <i class="fas fa-caret-down down"></i>
+              </div>
+            </div>
+            <div class="header_container__filter">
+              <sw-input-text class="filter-field"></sw-input-text>
+            </div>
+          </div>
         </th>
-        <td cdk-cell *cdkCellDef="let form"></td>
+        <td cdk-cell *cdkCellDef="let form">
+          asd
+        </td>
       </ng-container>
 
 
       <ng-container cdkColumnDef="status">
         <th cdk-header-cell *cdkHeaderCellDef>
-          asd
+          <div class="header_container">
+            <div class="header_container__title">
+              status
+              <div class="header_container__title_icons">
+                <i class="fas fa-caret-up up"></i>
+                <i class="fas fa-caret-down down"></i>
+              </div>
+            </div>
+            <div class="header_container__filter">
+              <sw-input-text class="filter-field"></sw-input-text>
+            </div>
+          </div>
         </th>
-        <td cdk-cell *cdkCellDef="let form"></td>
+        <td cdk-cell *cdkCellDef="let form">
+          asd
+        </td>
       </ng-container>
 
       <ng-container cdkColumnDef="actions">
-          <th cdk-header-cell *cdkHeaderCellDef>
-            asd
-          </th>
-          <td cdk-cell *cdkCellDef="let form"></td>
-        </ng-container>
+        <th cdk-header-cell *cdkHeaderCellDef>
+          asd
+        </th>
+        <td cdk-cell *cdkCellDef="let form">
+          asd
+        </td>
+      </ng-container>
 
       <tr cdk-header-row class="filters-row" *cdkHeaderRowDef="displayedColumns; sticky: true"></tr>
       <tr cdk-row #data *cdkRowDef="let user; columns: displayedColumns;"
-          [style.visibility]="showSpinner ? 'collapse' : 'visible'">>
+        [style.visibility]="showSpinner ? 'collapse' : 'visible'">>
       </tr>
 
 
