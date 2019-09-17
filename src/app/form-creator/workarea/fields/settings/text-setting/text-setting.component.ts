@@ -18,7 +18,7 @@ export class TextSettingComponent implements OnInit {
         showDefaultValue: !!obj['defaultValue'],
         showValidators: !!obj['validators'],
         allowList: obj['allowList'],
-        defaultValue: obj['defaultValue'],
+        defaultValue: obj['defaultValue'] || null,
         validators: obj['validators']
       });
     }
@@ -27,20 +27,22 @@ export class TextSettingComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder
-  ) { }
-
-  ngOnInit() {
+  ) {
     this.form = this.fb.group({
       showDefaultValue: new FormControl(false),
       showValidators: new FormControl(false),
       allowList: new FormControl(false),
       defaultValue: new FormControl(null),
       validators: new FormGroup({
-        min: new FormControl(null),
-        max: new FormControl(null),
-        validator: new FormControl([])
+        minChar: new FormControl(null),
+        maxChar: new FormControl(null),
+        criteria: new FormControl([])
       })
     });
+  }
+
+  ngOnInit() {
+    
     this.form.valueChanges.subscribe(v => {
       delete v.showDefaultValue;
       delete v.showValidators;

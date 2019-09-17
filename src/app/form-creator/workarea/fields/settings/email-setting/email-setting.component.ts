@@ -25,14 +25,15 @@ export class EmailSettingComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder
-  ) { }
-
-  ngOnInit() {
+  ) {
     this.form = this.fb.group({
       showDefaultValue: new FormControl(false),
       defaultValue: new FormControl('', { updateOn: 'blur'}),
       askForConfirm: new FormControl(false),
     });
+  }
+
+  ngOnInit() {
     this.form.valueChanges.subscribe(v => {
       delete v.showDefaultValue;
       this.fieldSettings.emit(v);

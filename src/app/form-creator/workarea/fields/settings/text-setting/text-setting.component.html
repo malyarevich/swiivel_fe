@@ -24,19 +24,19 @@
       <ng-container *ngIf="form.get('showValidators').value" formGroupName="validators">
         <div class="row_container">
           <div class="row_container__input">
-            <sw-dropdown-input formControlName="validator" [multiple]="false" [options]="validatorsOptions">
+            <sw-dropdown-input formControlName="criteria" [multiple]="false" [options]="validatorsOptions">
               <span class="input_label">Validate Criteria</span>
             </sw-dropdown-input>
           </div>
         </div>
         <div class="row_container">
           <div class="row_container__input">
-            <sw-input-number formControlName="min">
+            <sw-input-number formControlName="minChar">
               <span class="input_label">Min Character</span>
             </sw-input-number>
           </div>
           <div class="row_container__input">
-            <sw-input-number formControlName="max">
+            <sw-input-number formControlName="maxChar">
               <span class="input_label">Max Character</span>
             </sw-input-number>
           </div>

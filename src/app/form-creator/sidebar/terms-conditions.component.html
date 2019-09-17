@@ -1,0 +1,30 @@
+<form [formGroup]="form">
+  <section class="terms_conditions_section" formArrayName="items">
+    <div class="terms_conditions_section__item" *ngFor="let item of items.controls; let i = index" [formGroupName]="i">
+      <div class="terms_conditions_section__item_header">
+        <div class="terms_conditions_section__item_header_name">
+          <sw-input-text class="no_styles" formControlName="name"></sw-input-text>
+        </div>
+        <div class="terms_conditions_section__item_header_controls">
+          <i class="fas fa-trash" (click)="removeItem(i)"></i>
+        </div>
+      </div>
+      <div class="terms_conditions_section__item_content">
+        <div class="terms_conditions_section__item_content_input">
+          <sw-input-toggle formControlName="checkbox">
+            <span class="input_label">Checkbox</span>
+          </sw-input-toggle>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="terms_conditions_signature_section">
+    <div class="terms_conditions_signature_section__title">
+      Signature
+    </div>
+    <div class="terms_conditions_signature_section__content">
+      <sw-input-button-group [options]="buttonOptions" formControlName="signature">
+      </sw-input-button-group>
+    </div>
+  </section>
+</form>
