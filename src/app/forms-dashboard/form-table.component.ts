@@ -142,7 +142,7 @@ export class FormTableComponent implements OnInit {
       });
   }
 
-  deleteItem(id) {
-    console.log(id);
+  deleteItem(id: number): void {
+  //   this.selectForm(id);
   }
 }

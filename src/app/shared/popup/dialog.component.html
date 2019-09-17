@@ -4,17 +4,26 @@
 <ng-template #list>
   <div class="dialog_container">
     <div class="dialog_header">
-      <div class="dialog_title">{{title}}</div>
+      <div class="dialog_title">
+        <div class="dialog_title__text">{{ title }}</div>
+          <sw-input-toggle>
+            <span>Select All</span>
+          </sw-input-toggle>
+      </div>
       <div class="dialog_close">
-        <i class="fa fas-times" (click)="close(false)"></i>
+        <i class="fas fa-times" (click)="close(false)"></i>
       </div>
     </div>
     <div class="dialog_body">
       <ng-content></ng-content>
     </div>
     <div class="dialog_footer">
-      <button type="button" (click)="close(false)">Cancel</button>
-      <button type="button" (click)="close(true)">{{action}}</button>
+      <div class="dialog_footer__button">
+        <sw-button (click)="close(false)" [style]="'white'">Cancel</sw-button>
+      </div>
+      <div class="dialog_footer__button">
+        <sw-button (click)="close(true)">{{ action }}</sw-button>
+      </div>
     </div>
   </div>
 </ng-template>
