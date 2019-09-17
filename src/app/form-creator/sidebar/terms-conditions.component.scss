@@ -2,7 +2,7 @@
 
 :host {
   width: 100%;
-  .consent_section {
+  .terms_conditions_section {
     width: 100%;
     display: flex;
     flex-flow: column nowrap;
@@ -40,6 +40,19 @@
       &:not(:last-of-type) {
         margin-bottom: 10px;
       }
+    }
+    &:after {
+      content: '';
+      width: 100%;
+      height: 1px;
+      margin: 20px 0px 10px 0px;
+      background: #E1E1E1;
+    }
+  }
+  .terms_conditions_signature_section {
+    &__title {
+      font: 800 14px/20px $nunito-sans;
+      margin-bottom: 5px;
     }
   }
 }

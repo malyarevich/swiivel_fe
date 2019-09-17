@@ -18,6 +18,7 @@ import { WorkareaIntroComponent } from './workarea/intro/intro.component';
 import { WorkareaComponent } from './workarea/workarea.component';
 import { SidebarDocumentsFormsComponent } from './sidebar/documents-forms.component';
 import { SidebarConsentComponent } from './sidebar/consent.component';
+import { SidebarTermsConditionsComponent } from './sidebar/terms-conditions.component';
 
 @NgModule({
   declarations: [FormCreatorComponent,
@@ -30,6 +31,7 @@ import { SidebarConsentComponent } from './sidebar/consent.component';
     SidebarFieldsComponent,
     SidebarDocumentsFormsComponent,
     SidebarConsentComponent,
+    SidebarTermsConditionsComponent,
   ],
   imports: [
     CommonModule,
@@ -45,7 +47,8 @@ import { SidebarConsentComponent } from './sidebar/consent.component';
     SidebarIntroComponent,
     SidebarFieldsComponent,
     SidebarDocumentsFormsComponent,
-    SidebarConsentComponent
+    SidebarConsentComponent,
+    SidebarTermsConditionsComponent,
   ]
 })
 export class FormCreatorModule { }

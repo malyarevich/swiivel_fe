@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormArray, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
 
 @Component({
-  selector: 'sw-consent',
-  templateUrl: './consent.component.html',
-  styleUrls: ['./consent.component.scss']
+  selector: 'sw-terms-conditions',
+  templateUrl: './terms-conditions.component.html',
+  styleUrls: ['./terms-conditions.component.scss']
 })
-export class SidebarConsentComponent implements OnInit {
-  
+export class SidebarTermsConditionsComponent implements OnInit {
+
   form: FormGroup;
-  isOpenItems: boolean[] = [];
   buttonOptions = [
     {
       label: 'Any Parent',
@@ -25,6 +24,7 @@ export class SidebarConsentComponent implements OnInit {
     private fb: FormBuilder
   ) {
     this.form = this.fb.group({
+      signature: new FormControl(''),
       items: new FormArray([])
     });
   }
@@ -39,14 +39,10 @@ export class SidebarConsentComponent implements OnInit {
   }
 
   addItem(): void {
-    this.isOpenItems.push(true);
     this.items.push(
       new FormGroup({
         name: new FormControl('', { updateOn: 'blur' }),
         checkbox: new FormControl(false),
-        button: new FormControl(false),
-        requireSignature: new FormControl(false),
-        signature: new FormControl([])
       })
     );
   }
@@ -54,16 +50,7 @@ export class SidebarConsentComponent implements OnInit {
   removeItem(index: number) {
     if (index >= 0) {
       this.items.removeAt(index);
-      this.isOpenItems.splice(index, 1);
     }
-  }
-
-  openItem(index: number) {
-    if (index >= 0) this.isOpenItems[index] = true;
-  }
-
-  hideItem(index: number) {
-    if (index >= 0) this.isOpenItems[index] = false;
   }
 
 }

@@ -51,6 +51,18 @@ export class GroupSettingsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.form.get('repeatGroup').valueChanges.subscribe(v => {
+      if (v === false) {
+        this.form.patchValue({
+          repeatStrategy: null,
+          prefill: false,
+          minRep: null,
+          maxRep: null,
+          numOfRep: null
+        });
+      }
+    });
+
     this.form.valueChanges.subscribe(v => {
       this.prepareForm(v);
     });

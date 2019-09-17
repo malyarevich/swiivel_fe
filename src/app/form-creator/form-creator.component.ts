@@ -3,6 +3,7 @@ import { SidebarFieldsComponent } from './sidebar/fields.component';
 import { SidebarIntroComponent } from './sidebar/intro.component';
 import { SidebarDocumentsFormsComponent } from './sidebar/documents-forms.component';
 import { SidebarConsentComponent } from './sidebar/consent.component';
+import { SidebarTermsConditionsComponent } from './sidebar/terms-conditions.component';
 
 @Component({
   selector: 'sw-form-creator',
@@ -18,7 +19,7 @@ export class FormCreatorComponent implements OnInit {
     {name: 'CONSENT', component: SidebarConsentComponent},
     {name: 'TUITION CONTRACT', component: SidebarFieldsComponent},
     {name: 'PAYMENT SETTINGS', component: SidebarFieldsComponent},
-    {name: 'TERMS AND CONDITIONS', component: SidebarFieldsComponent},
+    {name: 'TERMS AND CONDITIONS', component: SidebarTermsConditionsComponent},
     {name: 'FORM PAYMENT', component: SidebarFieldsComponent},
   ];
   constructor() { }
@@ -26,7 +27,7 @@ export class FormCreatorComponent implements OnInit {
   ngOnInit() {
   }
 
-  switchWorkarea(workarea) {
+  switchWorkarea(workarea: string) {
     this.workarea = workarea;
   }
 

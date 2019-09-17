@@ -48,7 +48,8 @@ import { SectionSettingsComponent } from './section-settings/section-settings.co
     SectionSettingsComponent
   ],
   exports: [
-    SettingsComponent
+    SettingsComponent,
+    GroupSettingsComponent
   ]
 })
 export class SettingsModule { }

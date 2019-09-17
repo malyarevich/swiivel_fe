@@ -1,52 +1,52 @@
 <div class="field_settings_container">
   <form [formGroup]="form">
-      <div class="group_row">
-        <div class="group_col">
-          <section>
-            <div class="title">
-              Group Options
-            </div>
-            <div class="row_container">
-              <sw-input-checkbox class="phone" formControlName="required">
-                <span class="input_label">Required</span>
-              </sw-input-checkbox>
-              <sw-input-checkbox class="settings-field" formControlName="hideLabel">
-                <span class="input_label">Hide Label</span>
-              </sw-input-checkbox>
-            </div>
-          </section>
-          <section>
-            <div class="title">
-              <sw-input-toggle formControlName="showHint">
-                <span class="input_label">Hint</span>
-              </sw-input-toggle>
-            </div>
-            <sw-input-phone-number *ngIf="form.get('showHint').value" class="settings-field" formControlName="hint">
-            </sw-input-phone-number>
-          </section>
-          <section>
-            <sw-radio-group class="flex-row" [options]="displayOptions" formControlName="displayStrategy">
-            </sw-radio-group>
-          </section>
-        </div>
-        <div class="group_col">
-          <section>
-            <div class="title">
-              <sw-input-toggle formControlName="repeatGroup">
-                <span class="input_label">Repeat This Group</span>
-              </sw-input-toggle>
-            </div>
-            <sw-radio-group class="flex-row" *ngIf="form.get('repeatGroup').value" [options]="repeatOptions"
-              formControlName="repeatStrategy">
-            </sw-radio-group>
-          </section>
-          <section *ngIf="form.get('repeatStrategy').value === 'For Each Student in Family'">
-            <sw-input-checkbox class="settings-field"
-              formControlName="prefill">
+    <div class="group_row">
+      <div class="group_col">
+        <section>
+          <div class="title">
+            Group Options
+          </div>
+          <div class="row_container" style="justify-content: flex-start">
+            <sw-input-checkbox formControlName="required" style="margin-right: 20px;">
+              <span class="input_label">Required</span>
+            </sw-input-checkbox>
+            <sw-input-checkbox class="settings-field" formControlName="hideLabel">
+              <span class="input_label">Hide Label</span>
+            </sw-input-checkbox>
+          </div>
+        </section>
+        <section>
+          <div class="title">
+            <sw-input-toggle formControlName="showHint">
+              <span class="input_label">Hint</span>
+            </sw-input-toggle>
+          </div>
+          <sw-input-phone-number *ngIf="form.get('showHint').value" class="settings-field" formControlName="hint">
+          </sw-input-phone-number>
+        </section>
+        <section>
+          <sw-radio-group class="flex-row" [options]="displayOptions" formControlName="displayStrategy">
+          </sw-radio-group>
+        </section>
+      </div>
+      <div class="group_col">
+        <section>
+          <div class="title">
+            <sw-input-toggle formControlName="repeatGroup">
+              <span class="input_label">Repeat This Group</span>
+            </sw-input-toggle>
+          </div>
+          <sw-radio-group class="flex-row" *ngIf="form.get('repeatGroup').value" [options]="repeatOptions"
+            formControlName="repeatStrategy">
+          </sw-radio-group>
+        </section>
+        <section *ngIf="form.get('repeatGroup').value" [ngSwitch]="form.get('repeatStrategy').value">
+          <div *ngSwitchCase="'For Each Student in Family'">
+            <sw-input-checkbox class="settings-field" formControlName="prefill">
               <span class="input_label">Prefill with System Information</span>
             </sw-input-checkbox>
-          </section>
-          <ng-container *ngIf="form.get('repeatStrategy').value === 'Other'">
+          </div>
+          <div *ngSwitchCase="'Other'">
             <section>
               <div class="title">
                 Online Form
@@ -76,8 +76,9 @@
                 </div>
               </div>
             </section>
-          </ng-container>
-        </div>
+          </div>
+        </section>
       </div>
+    </div>
   </form>
 </div>
