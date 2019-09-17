@@ -62,6 +62,7 @@ export class FormTableComponent implements OnInit {
 
   filterForm: FormGroup;
   sort = ['name', true];
+  statusesOptions: string[] = ['Active', 'Drafts', 'In Review', 'Closed', 'Archived'];
 
   // todo: возможно это вынести в сервис
   static convertFormsData(forms: Form[]): Form[] {

@@ -7,9 +7,10 @@
     background: $element-base-color;
     border-radius: 5px;
     border: none;
-    font: 800 10px/13px $nunito-sans-bold;
+    font: 600 10px/13px $nunito-sans-bold;
     text-transform: capitalize;
     display: flex;
+    outline: none;
     &:hover,
     &:focus {
       background: $hover-purple

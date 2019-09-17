@@ -155,7 +155,10 @@
                 </div>
               </th>
               <td cdk-cell *cdkCellDef="let form">
-                {{form.status}}
+                <sw-dropdown [options]="statusesOptions" #bulk="dropdown" (selected)="''">
+                  <sw-small-button [ngClass]="{'icon-end': true}" [class]="getStatusColor(form.status)"
+                    [text]="form.status" icon="fa-caret-down"></sw-small-button>
+                </sw-dropdown>
               </td>
             </ng-container>
 
