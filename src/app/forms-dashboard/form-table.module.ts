@@ -17,8 +17,7 @@ import {CdkTableModule} from '@angular/cdk/table';
     FormTableRoutingModule,
     SharedModule,
     CdkTableModule,
-    SharedModule
   ],
-  exports: [FormTableComponent],
+  entryComponents: [FormTableComponent],
 })
 export class FormTableModule {}

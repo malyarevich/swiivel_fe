@@ -25,6 +25,7 @@ export function onInit(authService: AuthService) {
 import { OverlayModule } from '@angular/cdk/overlay';
 // todo: delete after routing
 import { PopupComponent } from '@core/components/popup/popup.component';
+import { FormTableModule } from './forms-dashboard/form-table.module';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { PopupComponent } from '@core/components/popup/popup.component';
     FormsModule,
     SharedModule,
     FormCreatorModule,
+    FormTableModule,
     AppRoutingModule,
     OverlayModule
   ],
