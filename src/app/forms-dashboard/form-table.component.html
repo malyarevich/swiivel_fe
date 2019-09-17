@@ -21,21 +21,6 @@
       </div>
     </div>
     <div>
-      <div class="app-form-table__tabs">
-        <button
-          class="app-form-table__tab"
-          [ngClass]="{'app-form-table__tab--activated': activeTabId === i}"
-          *ngFor="let tab of tabs; let i = index"
-          (click)="clickTab(i)"
-        >
-          {{ tab['title'] }}
-        </button>
-      </div>
-      <div *ngFor="let form of forms">
-        <button [ngClass]="{ 'button-red': form.isSelected}" (click)="selectForm(form.id)">{{ form.name }}</button>
-      </div>
-    </div>
-    <div>
       <div *ngFor="let selectedForm of selectedForms"> {{ selectedForm.name }}</div>
       <button (click)="shareForms()">Share</button>
       <button (click)="archiveForms()">Archive</button>
