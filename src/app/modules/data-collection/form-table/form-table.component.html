@@ -11,6 +11,9 @@
   </div>
   <div class="app-form-table__table">
     <sw-block-header [header]="'forms'"></sw-block-header>
+    <sw-dropdown [options]="bulkOptions" #bulk="dropdown" (selected)="bulkAction($event)">
+      <sw-button [icon]="bulk.isOpened ? 'fas fa-chevron-up' : 'fas fa-chevron-down'">Bulk Actions</sw-button>
+    </sw-dropdown>
     <div>
       <div *ngFor="let form of forms">
         <button [ngClass]="{ 'button-red': form.isSelected}" (click)="selectForm(form.id)">{{ form.name }}</button>
@@ -29,6 +32,9 @@
   <sw-label>123</sw-label>
   <sw-label (deleteLabel)="deleteItem(123)">123
   </sw-label>
+  <sw-dialog #dialog title="Bulk share" action="Share items (4)" (closed)="dialogClosed($event)">
+    <h1>test</h1>
+  </sw-dialog>
 </div>
 
 <div class="table">

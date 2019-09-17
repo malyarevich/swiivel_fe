@@ -15,6 +15,8 @@ import { InputNumberComponent } from './inputs/input-number/input-number.compone
 import { InputTextComponent } from './inputs/input-text/input-text.component';
 import { InputToggleComponent } from './inputs/input-toggle/input-toggle.component';
 
+import { DropdownComponent } from './dropdown/dropdown.component';
+import { DialogComponent } from './popup/dialog.component';
 // Headers
 import { BlockHeaderComponent} from './headers/block-header/block-header.component';
 import { PageHeaderComponent} from './headers/page-header/page-header.component';
@@ -47,6 +49,8 @@ import { InputTextareaComponent } from './inputs/input-textarea/input-textarea.c
     InputPhoneNumberComponent,
     InputEmailComponent,
     InputTextareaComponent,
+    DropdownComponent,
+    DialogComponent,
     // Headers
     PageHeaderComponent,
     BlockHeaderComponent,
@@ -71,6 +75,8 @@ import { InputTextareaComponent } from './inputs/input-textarea/input-textarea.c
     InputPhoneNumberComponent,
     InputEmailComponent,
     InputTextareaComponent,
+    DropdownComponent,
+    DialogComponent,
     // Headers
     PageHeaderComponent,
     BlockHeaderComponent,

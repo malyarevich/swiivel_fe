@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { DataCollectionService } from '../data-collection.service';
 import { Form } from '@models/data-collection/form';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { DialogComponent } from '@shared/popup/dialog.component';
 
 @Component({
   selector: 'app-form-table',
@@ -12,6 +13,8 @@ import { FormGroup, FormBuilder } from '@angular/forms';
   providers: [DataCollectionService]
 })
 export class FormTableComponent implements OnInit {
+  @ViewChild('dialog', {static: true}) dialog: DialogComponent;
+  bulkOptions = ['Share', 'Export PDF', 'Archive'];
   public params = {
     page: 1,
     limit: 200,
@@ -52,6 +55,11 @@ export class FormTableComponent implements OnInit {
 
   ngOnInit() {
     this.getAllForm();
+    console.log(this.dialog)
+  }
+
+  bulkAction(selectedIndex) {
+    console.log(this.bulkOptions[selectedIndex]);
   }
 
   getAllForm(): void {
@@ -83,6 +91,11 @@ export class FormTableComponent implements OnInit {
   }
 
   shareForms(): void {
+    this.dialog.open();
+  }
+
+  dialogClosed(action?: boolean) { // false means "Cancel"
+    console.debug(`Dialog cancelled: ${!action}`)
   }
 
   archiveForms(): void {
