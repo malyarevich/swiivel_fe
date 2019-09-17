@@ -15,6 +15,21 @@
       <sw-button [icon]="bulk.isOpened ? 'fas fa-chevron-up' : 'fas fa-chevron-down'">Bulk Actions</sw-button>
     </sw-dropdown>
     <div>
+      <div class="app-form-table__tabs">
+        <button
+          class="app-form-table__tab"
+          [ngClass]="{'app-form-table__tab--activated': activeTabId === i}"
+          *ngFor="let tab of tabs; let i = index"
+          (click)="clickTab(i)"
+        >
+          {{ tab['title'] }}
+        </button>
+      </div>
+      <div *ngFor="let form of forms">
+        <button [ngClass]="{ 'button-red': form.isSelected}" (click)="selectForm(form.id)">{{ form.name }}</button>
+      </div>
+    </div>
+    <div>
       <div *ngFor="let selectedForm of selectedForms"> {{ selectedForm.name }}</div>
       <button (click)="shareForms()">Share</button>
       <button (click)="archiveForms()">Archive</button>
@@ -176,12 +191,11 @@
     </div>
   </div>
   <sw-label>123</sw-label>
-  <sw-label (deleteLabel)="deleteItem(123)">123
+  <sw-label
+    (deleteLabel)="deleteItem(123)"
+  >123
   </sw-label>
   <sw-dialog #dialog title="Bulk share" action="Share items (4)" (closed)="dialogClosed($event)">
     <h1>test</h1>
   </sw-dialog>
-
-
-
 </div>
