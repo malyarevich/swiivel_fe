@@ -1,11 +1,12 @@
 <button
   type="button"
   class="button"
-  [ngClass]="{ 'button--gray': style === 'gray' }"
+  [ngClass]="{ 'button--gray': style === 'gray', 'button--white': style === 'white' }"
   [name]="name"
-  [value]="value">
-    <span class="text">
-        <ng-content></ng-content>
-    </span>
-    <i [ngClass]="_iconClass"></i>
+  [value]="value"
+>
+  <span class="text">
+    <ng-content></ng-content>
+  </span>
+  <i [ngClass]="_iconClass"></i>
 </button>
