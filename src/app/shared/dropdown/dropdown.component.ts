@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, ViewChild, EventEmitter, Output } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { Popup } from '@core/popup.service';
-import { isString, isObjectLike } from 'lodash';
+import { isObjectLike, isString } from 'lodash';
 
 
 @Component({
@@ -29,9 +29,9 @@ export class DropdownComponent {
       }
     }
     if (selectedValue) {
-      let index = this.items.indexOf(selectedValue);
-      if (index !== 1) this.selectedIndex = index;
-      else this.selectedIndex = null;
+      const index = this.items.indexOf(selectedValue);
+      if (index !== 1) { this.selectedIndex = index; }
+      else { this.selectedIndex = null; }
     }
   }
 
@@ -52,7 +52,7 @@ export class DropdownComponent {
       }
       this.cdr.markForCheck();
     }
-  };
+  }
 
 
 
@@ -83,8 +83,8 @@ export class DropdownComponent {
   }
 
   toggle() {
-    if (this._ref) this._ref.close();
-    else this.showPopup();
+    if (this._ref) { this._ref.close(); }
+    else { this.showPopup(); }
   }
 
   showPopup(): void {

@@ -13,21 +13,21 @@ import { InputCheckboxComponent } from './inputs/input-checkbox/input-checkbox.c
 import { InputDynamicComponent } from './inputs/input-dynamic/input-dynamic.component';
 import { InputNumberComponent } from './inputs/input-number/input-number.component';
 import { InputTextComponent } from './inputs/input-text/input-text.component';
-import { InputToggleComponent } from './inputs/input-toggle/input-toggle.component';
 import { InputTextareaComponent } from './inputs/input-textarea/input-textarea.component';
+import { InputToggleComponent } from './inputs/input-toggle/input-toggle.component';
 
 import { DropdownComponent } from './dropdown/dropdown.component';
-import { DialogComponent } from './popup/dialog.component';
 // Headers
 import { BlockHeaderComponent} from './headers/block-header/block-header.component';
 import { PageHeaderComponent} from './headers/page-header/page-header.component';
 import { InputEmailComponent } from './inputs/input-email/input-email.component';
 import { InputPhoneNumberComponent } from './inputs/input-phone-number/input-phone-number.component';
+import { DialogComponent } from './popup/dialog.component';
 
 // Others
+import { RadioGroupComponent } from './inputs/radio-group/radio-group.component';
 import { LabelComponent } from './label/label.component';
 import { UserItemComponent } from './user-item/user-item.component';
-import { RadioGroupComponent } from './inputs/radio-group/radio-group.component';
 
 @NgModule({
   imports: [

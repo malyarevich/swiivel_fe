@@ -1,5 +1,5 @@
-import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
-import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { emailValidator } from '@app/core/validators';
 
 @Component({
@@ -10,14 +10,14 @@ import { emailValidator } from '@app/core/validators';
 export class EmailSettingComponent implements OnInit {
 
   form: FormGroup;
-  
+
   @Input()
   set settings(obj: any) {
     if (obj) {
       this.form.patchValue({
-        showDefaultValue: !!obj['defaultValue'],
-        defaultValue: obj['defaultValue'] || '',
-        askForConfirm: !!obj['askForConfirm']
+        showDefaultValue: !!obj.defaultValue,
+        defaultValue: obj.defaultValue || '',
+        askForConfirm: !!obj.askForConfirm
       });
     }
   }
@@ -37,7 +37,7 @@ export class EmailSettingComponent implements OnInit {
     this.form.valueChanges.subscribe(v => {
       delete v.showDefaultValue;
       this.fieldSettings.emit(v);
-    })
+    });
   }
 
 }

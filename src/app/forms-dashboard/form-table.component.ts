@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
-import { DataCollectionService } from './data-collection.service';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Form } from '@models/data-collection/form';
-import { FormGroup, FormBuilder } from '@angular/forms';
 import { DialogComponent } from '@shared/popup/dialog.component';
+import { DataCollectionService } from './data-collection.service';
 import { FormsDataSource } from './form-table.datasource';
 
 
@@ -15,6 +15,20 @@ import { FormsDataSource } from './form-table.datasource';
   providers: [DataCollectionService]
 })
 export class FormTableComponent implements OnInit {
+
+  constructor(
+    public dataCollectionService: DataCollectionService,
+    private cd: ChangeDetectorRef,
+    private fb: FormBuilder) {
+    this.filterForm = this.fb.group({
+      name: [null],
+      type: [null],
+      access: [null],
+      createdBy: [null],
+      updatedAt: [null],
+      status: [null]
+    });
+  }
   @ViewChild('dialog', { static: true }) dialog: DialogComponent;
   bulkOptions = ['Share', 'Export PDF', 'Archive'];
   public params = {
@@ -30,6 +44,9 @@ export class FormTableComponent implements OnInit {
 
   public displayedColumns: string[] = ['name', 'type', 'access', 'createdBy', 'updatedAt', 'status', 'actions'];
 
+  filterForm: FormGroup;
+  sort = ['name', true];
+
   // todo: возможно это вынести в сервис
   static convertFormsData(forms: Form[]): Form[] {
     console.log(forms);
@@ -38,23 +55,6 @@ export class FormTableComponent implements OnInit {
       form.sharedUrl = `http://red.dev.codeblue.ventures/api/v1/data-collection/online-form/${form.mongo_id}`;
     });
     return forms;
-  }
-
-  filterForm: FormGroup;
-  sort = ['name', true];
-
-  constructor(
-    public dataCollectionService: DataCollectionService,
-    private cd: ChangeDetectorRef,
-    private fb: FormBuilder) {
-    this.filterForm = this.fb.group({
-      name: [null],
-      type: [null],
-      access: [null],
-      createdBy: [null],
-      updatedAt: [null],
-      status: [null]
-    })
   }
 
   ngOnInit() {
@@ -92,7 +92,7 @@ export class FormTableComponent implements OnInit {
   }
 
   dialogClosed(action?: boolean) { // false means "Cancel"
-    console.debug(`Dialog cancelled: ${!action}`)
+    console.debug(`Dialog cancelled: ${!action}`);
   }
 
   archiveForms(): void {

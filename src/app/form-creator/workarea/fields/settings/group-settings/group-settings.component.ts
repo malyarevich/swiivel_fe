@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'sw-group-settings',
@@ -16,17 +16,17 @@ export class GroupSettingsComponent implements OnInit {
   set settings(obj: any) {
     if (obj) {
       this.form.patchValue({
-        required: obj['required'],
-        hideLabel: obj['hideLabel'],
-        showHint: !!obj['hint'],
-        hint: obj['hint'] || '',
-        displayStrategy: obj['displayStrategy'],
-        repeatGroup: obj['repeatGroup'],
-        repeatStrategy: obj['repeatStrategy'],
-        prefill: obj['prefill'],
-        minRep: obj['minRep'],
-        maxRep: obj['maxRep'],
-        numOfRep: obj['numOfRep']
+        required: obj.required,
+        hideLabel: obj.hideLabel,
+        showHint: !!obj.hint,
+        hint: obj.hint || '',
+        displayStrategy: obj.displayStrategy,
+        repeatGroup: obj.repeatGroup,
+        repeatStrategy: obj.repeatStrategy,
+        prefill: obj.prefill,
+        minRep: obj.minRep,
+        maxRep: obj.maxRep,
+        numOfRep: obj.numOfRep
       });
     }
   }

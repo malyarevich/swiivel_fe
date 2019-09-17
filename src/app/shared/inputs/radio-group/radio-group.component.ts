@@ -1,6 +1,6 @@
-import { Component, OnInit, Input, forwardRef } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { SelectionModel } from '@angular/cdk/collections';
+import { Component, forwardRef, Input, OnInit } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 const RADIOGROUP_CONTROL_ACCESSOR = {
   provide: NG_VALUE_ACCESSOR,
@@ -21,7 +21,7 @@ export class RadioGroupComponent implements OnInit, ControlValueAccessor {
   onTouched: Function;
   private _sm: SelectionModel<any>;
 
-  @Input() 
+  @Input()
   set options(opt: any[]) {
     if (opt) {
       this._options = opt;
@@ -46,7 +46,7 @@ export class RadioGroupComponent implements OnInit, ControlValueAccessor {
   }
 
   writeValue(item): void {
-    if (item) this._sm.select(item);
+    if (item) { this._sm.select(item); }
   }
 
   registerOnChange(fn: Function): void {
@@ -56,5 +56,5 @@ export class RadioGroupComponent implements OnInit, ControlValueAccessor {
   registerOnTouched(fn: Function): void {
     this.onTouched = fn;
   }
- 
+
 }
