@@ -115,8 +115,11 @@ export class FormTableComponent implements OnInit {
   }
 
   archiveForms(): void {
+    this.dataCollectionService.archiveForms(this.getSelectedIds())
+      .subscribe(() => {
+        // this.getAllForm();
+      });
   }
-
   exportFormsPDF(): void {
 
   }
@@ -166,8 +169,7 @@ export class FormTableComponent implements OnInit {
     this.dataCollectionService
       .duplicateForm(form.mongo_id)
       .subscribe(() => {
-        this.getAllForm();
+        // this.getAllForm();
       });
   }
-
 }

@@ -34,6 +34,17 @@ export class ApiService {
 }
 
 export class DataCollectionService extends ApiService {
+  archiveForms(archivedIds: number[]): Observable<any> {
+    return this.http.post(`/proxy/form-builder/form-template/archived`, { ids: archivedIds })
+      .pipe(map(response => {
+          if (response.status === 1) {
+            return response.data;
+          }
+          throwError('Archive form error');
+        })
+      );
+  }
+
   duplicateForm(id: string): Observable<any> {
     return this.http.post(`/proxy/form-builder/form-template/duplicate`, {
       example_form_id: id,
