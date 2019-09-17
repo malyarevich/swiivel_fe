@@ -41,6 +41,15 @@ export class FormTableComponent implements OnInit {
   public dataSource: FormsDataSource = new FormsDataSource(this.dataCollectionService);
   // public forms: Form[] = null;
   public selectedForms: Form[] = [];
+  public linkFilters = [
+    { title: 'All', value: null },
+    { title: 'Active', value: 'active' },
+    { title: 'Drafts', value: 'draft' },
+    { title: 'In Review', value: 'reviewed' },
+    { title: 'Closed', value: 'closed' },
+    { title: 'Archived', value: 'archived' },
+  ]
+  public activeLinkFilter = this.linkFilters[0];
 
   public displayedColumns: string[] = ['name', 'type', 'access', 'createdBy', 'updatedAt', 'status', 'actions'];
 
@@ -80,6 +89,11 @@ export class FormTableComponent implements OnInit {
     } else {
       this.sort = [field, true];
     }
+  }
+
+  filterByLink(filter) {
+    this.activeLinkFilter = filter;
+    this.filterForm.get('status').setValue(filter.value);
   }
 
   bulkAction(selectedIndex) {

@@ -22,6 +22,9 @@
       <button (click)="exportFormsZIP()">Export PDF</button>
     </div>
     <div>
+      <div class="link-filters">
+        <a *ngFor="let filter of linkFilters" [class.active]="activeLinkFilter === filter" (click)="filterByLink(filter)">{{filter.title}}</a>
+      </div>
       <div class="table">
 
         <form [formGroup]="filterForm">

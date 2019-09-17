@@ -14,7 +14,36 @@
     padding: 15px;
     background: #fff;
   }
+  .link-filters {
+    a {
+      font-family: Nunito Sans;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 12px;
+      line-height: 16px;
+      /* identical to box height, or 133% */
 
+
+      color: #909090;
+      cursor: pointer;
+      &.active {
+        font-family: Nunito Sans;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 12px;
+        line-height: 13px;
+        /* identical to box height, or 108% */
+
+
+        color: #4350A2;
+        border-bottom: 10px solid #4350A2;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+        box-sizing: border-box;
+        // border-radius: 10px;
+      }
+    }
+  }
   .button-red {
     background: red;
   }
@@ -69,7 +98,7 @@
           }
         }
       }
-      
+
     }
   }
 
