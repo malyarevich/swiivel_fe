@@ -3,34 +3,17 @@
 :host {
   .button {
     border-radius: 3px;
-    background-color: $button-color;
+    background: $button-color;
     outline: none;
     border: none;
-    color: #ffffff;
-    padding: 7px 20px;
+    color: #fff;
+    padding: 7px 16px;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
     flex-wrap: nowrap;
-    &--gray {
-      background: $gray;
-      span, i {
-        color: $icon-gray;
-      }
-      span {
-        margin: 0 10px 0 0;
-      }
-    }
-    &--white {
-      box-sizing: content-box;
-      padding: 6px 19px;
-      background: #fff;
-      border: 1px solid $button-color;
-      span, i {
-        color:  $button-color;
-      }
-    }
+
     span {
       font-style: normal;
       font-weight: bold;
@@ -70,7 +53,7 @@
   .button {
     font-size: 12px;
     color: $black;
-    background-color: $dark-grey;
+    background: $dark-grey;
     border: 1px solid $soft-gray;
     border-radius: 0;
     margin-left: -1px;
@@ -89,5 +72,13 @@
   width: 100%;
   .button {
     width: 100%;
+  }
+}
+
+:host {
+  button:disabled {
+    background: $gray;
+    border: 1px solid $icon-gray;
+    color: $icon-gray;
   }
 }

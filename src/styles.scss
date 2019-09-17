@@ -162,7 +162,7 @@ div.centered-panel {
   max-height: 500px;
   background-color: #fff;
   border: 1px solid #4350A2;
-  padding-right: 0px;
+  padding-right: 0;
   border-radius: 3px;
   box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2);
   z-index: 1000;
@@ -175,7 +175,19 @@ div.dropdown-overlay {
   margin-top: 5px;
   background-color: #fff;
   border: 1px solid #4350A2;
-  padding-right: 0px;
+  padding-right: 0;
+  border-radius: 3px;
+  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2);
+}
+
+div.app-form-table-dropdown-overlay {
+  overflow: auto;
+  min-width: 120px;
+  max-height: 500px;
+  margin-top: 5px;
+  background-color: #fff;
+  border: 1px solid #4350A2;
+  padding-right: 0;
   border-radius: 3px;
   box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2);
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'sw-page-header',
@@ -6,13 +6,6 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./page-header.scss']
 })
 
-export class PageHeaderComponent implements OnInit {
-  @Input() header: string;
-
-  constructor() {
-  }
-
-  ngOnInit(): void {
-  }
-
+export class PageHeaderComponent {
+  constructor() {}
 }

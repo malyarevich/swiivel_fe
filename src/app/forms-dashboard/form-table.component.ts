@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Form } from '@models/data-collection/form';
 import { DialogComponent } from '@shared/popup/dialog.component';
@@ -17,9 +23,11 @@ import { SelectionModel } from '@angular/cdk/collections';
   providers: [DataCollectionService]
 })
 export class FormTableComponent implements OnInit {
-
   @ViewChild('dialog', { static: true }) dialog: DialogComponent;
-  bulkOptions = ['Share', 'Export PDF', 'Archive'];
+
+  public bulkOptions = ['Share', 'Export PDF', 'Archive'];
+  public disabledBulkBtn = false;
+  public dataSource: FormsDataSource = new FormsDataSource(this.dataCollectionService);
   public params = {
     page: 1,
     limit: 200,
@@ -27,7 +35,6 @@ export class FormTableComponent implements OnInit {
     sort: {},
     filter: {},
   };
-  public dataSource: FormsDataSource = new FormsDataSource(this.dataCollectionService);
   // public forms: Form[] = null;
   public selectedForms: Form[] = [];
   public linkFilters = [
@@ -37,7 +44,7 @@ export class FormTableComponent implements OnInit {
     { title: 'In Review', value: 'reviewed' },
     { title: 'Closed', value: 'closed' },
     { title: 'Archived', value: 'archived' },
-  ]
+  ];
   public activeLinkFilter = this.linkFilters[0];
 
   public displayedColumns: string[] = ['name', 'type', 'access', 'createdBy', 'updatedAt', 'status', 'actions'];
@@ -198,10 +205,8 @@ export class FormTableComponent implements OnInit {
   }
 
   onCopyLink(label: string): void {
-    navigator['clipboard'].writeText(label)
-      .then(() => {
-        console.log('Text copied to clipboard', label);
-      })
+    navigator.clipboard.writeText(label)
+      .then(() => {})
       .catch(err => {
         console.error('Could not copy text: ', err);
       });

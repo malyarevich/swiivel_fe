@@ -4,6 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 // Buttons
 import { ButtonComponent } from './buttons/button/button.component';
+import { DropdownButtonComponent } from './buttons/dropdown-button/dropdown-button.component';
 import { IconButtonComponent } from './buttons/icon-button/icon-button.component';
 import { SmallButtonComponent } from './buttons/small-button/small-button.component';
 import { DropdownInputComponent } from './inputs/dropdown-input/dropdown-input.component';
@@ -16,7 +17,6 @@ import { InputTextComponent } from './inputs/input-text/input-text.component';
 import { InputTextareaComponent } from './inputs/input-textarea/input-textarea.component';
 import { InputToggleComponent } from './inputs/input-toggle/input-toggle.component';
 
-import { DropdownComponent } from './dropdown/dropdown.component';
 // Headers
 import { BlockHeaderComponent} from './headers/block-header/block-header.component';
 import { PageHeaderComponent} from './headers/page-header/page-header.component';
@@ -37,6 +37,7 @@ import { UserItemComponent } from './user-item/user-item.component';
   declarations: [
     // Buttons
     ButtonComponent,
+    DropdownButtonComponent,
     IconButtonComponent,
     SmallButtonComponent,
     // Inputs
@@ -50,7 +51,6 @@ import { UserItemComponent } from './user-item/user-item.component';
     InputPhoneNumberComponent,
     InputEmailComponent,
     InputTextareaComponent,
-    DropdownComponent,
     DialogComponent,
     // Headers
     PageHeaderComponent,
@@ -77,7 +77,7 @@ import { UserItemComponent } from './user-item/user-item.component';
     InputPhoneNumberComponent,
     InputEmailComponent,
     InputTextareaComponent,
-    DropdownComponent,
+    DropdownButtonComponent,
     DialogComponent,
     RadioGroupComponent,
     // Headers

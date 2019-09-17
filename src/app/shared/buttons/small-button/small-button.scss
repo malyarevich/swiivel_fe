@@ -15,14 +15,14 @@
     &:focus {
       background: $hover-purple
     }
-  
+
     &:active {
       opacity: 0.8;
     }
-  
+
     .small-button__icon {
       font-size: 11px;
-  
+
       &.small-button__icon--text{
         margin-right: 3px;
       }

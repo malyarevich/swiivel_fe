@@ -1,0 +1,20 @@
+<div
+  #holder
+  (click)="toggle()"
+  [ngClass]="{'dropdown-disabled': disabled}"
+>
+  <ng-content></ng-content>
+</div>
+
+<ng-template #list>
+  <div class="dropdown_items_container">
+    <div
+      class="item"
+      *ngFor="let item of items; let i = index;"
+      [class.selected]="isSelected(i)"
+      (click)="select(i)"
+    >
+      {{ item }}
+    </div>
+  </div>
+</ng-template>

@@ -1,32 +1,66 @@
 <div class="app-form-table">
   <div class="app-form-table__header">
     <div class="app-form-table__text">
-      <sw-page-header [header]="'Data Collection'"></sw-page-header>
+      <sw-page-header>
+        Data Collection
+      </sw-page-header>
     </div>
   </div>
   <div class="app-form-table__table">
     <div class="app-form-table__header">
       <div class="app-form-table__text">
-        <sw-block-header [header]="'forms'"></sw-block-header>
+        <sw-block-header>
+          forms
+        </sw-block-header>
       </div>
       <div class="app-form-table__controls">
-        <sw-dropdown [options]="bulkOptions" #bulk="dropdown" (selected)="bulkAction($event)">
-          <sw-button [icon]="bulk.isOpened ? 'fas fa-chevron-up' : 'fas fa-chevron-down'" [style]="'gray'">Bulk Actions
-          </sw-button>
-        </sw-dropdown>
+        <div
+          class="app-form-table__controls-bulk"
+        >
+          <sw-dropdown-button
+            [options]="bulkOptions"
+            #bulk="dropdown"
+            (selected)="bulkAction($event)"
+            [panelClass]="'app-form-table-dropdown-overlay'"
+            [disabled]="disabledBulkBtn"
+          >
+            <sw-button
+              [disabled]="disabledBulkBtn"
+            >
+              <span class="app-form-table__controls-bulk-btn-text">Bulk Actions</span>
+              <i
+                class="fas fa-chevron-down"
+                [ngClass]="{'fa-chevron-up': bulk.isOpened}"
+              ></i>
+            </sw-button>
+          </sw-dropdown-button>
+        </div>
+
       </div>
     </div>
-    <div>
-      <div *ngFor="let selectedForm of selectedForms"> {{ selectedForm.name }}</div>
-      <button (click)="shareForms()">Share</button>
-      <button (click)="archiveForms()">Archive</button>
-      <button (click)="exportFormsPDF()">Export PDF</button>
-      <button (click)="exportFormsZIP()">Export PDF</button>
-    </div>
+    <!--<div>-->
+      <!--<div class="app-form-table__tabs">-->
+        <!--<button-->
+          <!--*ngFor="let filter of linkFilters"-->
+          <!--class="app-form-table__tab"-->
+          <!--[ngClass]="{'app-form-table__tab&#45;&#45;activated': activeLinkFilter === filter}"-->
+          <!--(click)="filterByLink(filter)"-->
+        <!--&gt;-->
+          <!--{{filter.title}}-->
+        <!--</button>-->
+      <!--</div>-->
+    <!--</div>-->
+    <!--<div>-->
+      <!--<div *ngFor="let selectedForm of selectedForms"> {{ selectedForm.name }}</div>-->
+      <!--<button (click)="shareForms()">Share</button>-->
+      <!--<button (click)="archiveForms()">Archive</button>-->
+      <!--<button (click)="exportFormsPDF()">Export PDF</button>-->
+      <!--<button (click)="exportFormsZIP()">Export PDF</button>-->
+    <!--</div>-->
     <div>
       <div class="link-filters">
         <a *ngFor="let filter of linkFilters" [class.active]="activeLinkFilter === filter"
-          (click)="filterByLink(filter)">{{filter.title}}</a>
+           (click)="filterByLink(filter)">{{filter.title}}</a>
       </div>
       <div class="table">
 
@@ -157,10 +191,10 @@
                 </div>
               </th>
               <td cdk-cell *cdkCellDef="let form">
-                <sw-dropdown [options]="statusesOptions" #bulk="dropdown" (selected)="''">
+                <sw-dropdown-button [options]="statusesOptions" #bulk="dropdown" (selected)="''">
                   <sw-small-button [ngClass]="{'icon-end': true}" [class]="getStatusColor(form.status)"
                     [text]="form.status" icon="fa-caret-down"></sw-small-button>
-                </sw-dropdown>
+                </sw-dropdown-button>
               </td>
             </ng-container>
 
@@ -199,9 +233,6 @@
       </div>
     </div>
   </div>
-  <sw-label>123</sw-label>
-  <sw-label (deleteLabel)="deleteItem(123)">123
-  </sw-label>
   <sw-dialog #dialog title="Bulk share" action="Share items (4)" (closed)="dialogClosed($event)">
     <h1>test</h1>
   </sw-dialog>

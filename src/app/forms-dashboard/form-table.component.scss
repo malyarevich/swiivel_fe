@@ -14,6 +14,7 @@
     padding: 15px;
     background: #fff;
   }
+
   .link-filters {
     padding: 15px 0;
     a {
@@ -39,15 +40,39 @@
       }
     }
   }
-  .button-red {
-    background: red;
+
+  .app-form-table__tabs {
+    display: flex;
+    margin: 0 0 15px 0;
+  }
+
+  .app-form-table__tab {
+    margin: 0 25px 0 0;
+    padding: 0;
+    color: $gray-color;
+    font: 700 12px/15px $nunito-sans;
+    border: none;
+    border-bottom: 2px solid transparent;
+    border-radius: 0;
+    background: transparent;
+
+    &:hover, &:focus, &:active {
+      border-bottom: 2px solid $hover-purple;
+      color: $hover-purple;
+    }
+
+    .app-form-table--activated {
+      border-bottom: 2px solid $button-color;
+      color: $button-color;
+    }
+  }
+
+  .app-form-table__controls-bulk-btn-text {
+    margin: 0 10px 0 0;
   }
 }
 
 .table {
-  .cdk-table {
-    width: 100%;
-  }
   .filters-row {
     background: #F2F2F2;
     box-shadow: inset 0px -1px 0px #E7E7E7;
@@ -89,10 +114,14 @@
               left: 0;
             }
             &.up {
-              &::after { visibility: hidden; }
+              &::after {
+                visibility: hidden;
+              }
             }
             &.down {
-              &::before { visibility: hidden; }
+              &::before {
+                visibility: hidden;
+              }
             }
           }
         }
@@ -129,7 +158,9 @@
       flex-flow: row nowrap;
       .item {
         color: #A4A4A4;
-        &:not(:last-of-type) { margin-right: 10px; }
+        &:not(:last-of-type) {
+          margin-right: 10px;
+        }
       }
     }
     .cdk-column-updatedAt {
@@ -146,14 +177,21 @@
 
   .cdk-header-cell {
     padding: 10px 3px;
-    &:first-of-type { padding-left: 15px; }
-    &:last-of-type { padding-right: 15px; }
+    &:first-of-type {
+      padding-left: 15px;
+    }
+    &:last-of-type {
+      padding-right: 15px;
+    }
   }
 
   .cdk-cell {
     padding: 6px 3px;
-    &:first-of-type { padding-left: 15px; }
-    &:last-of-type { padding-right: 15px; }
+    &:first-of-type {
+      padding-left: 15px;
+    }
+    &:last-of-type {
+      padding-right: 15px;
+    }
   }
-
 }
