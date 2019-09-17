@@ -3,8 +3,6 @@ import { NgModule } from '@angular/core';
 
 import { DataCollectionRoutingModule } from './data-collection-routing.module';
 
-import { DataCollectionService } from '@core/api.service';
-import { DataCollectionComponent } from './data-collection.component';
 
 @NgModule({
   declarations: [

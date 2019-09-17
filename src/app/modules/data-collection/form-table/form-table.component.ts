@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { DataCollectionService } from '@app/core/api.service';
+import { DataCollectionService } from '../data-collection.service';
 import { Form } from '@models/data-collection/form';
 
 @Component({

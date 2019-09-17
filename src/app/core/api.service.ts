@@ -34,25 +34,3 @@ export class ApiService {
     return this.http.post('/sign-in', { email, password, uuid });
   }
 }
-
-
-export class DataCollectionService {
-
-  constructor(private http: HttpService) {}
-
-  getFormsList(requestParams?: FormSearchParams): Observable<any> {
-
-    const options = {
-      body: {
-        params: requestParams
-      }
-    };
-
-    return this.http.post(`/proxy/form-builder/form-templates`, options).pipe(
-      map(response => {
-        console.log(response);
-        return response;
-      })
-    );
-  }
-}
