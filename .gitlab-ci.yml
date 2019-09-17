@@ -1,0 +1,25 @@
+build:
+    only: [development]
+    stage: build
+    image: trion/ng-cli
+    before_script:
+        - npm ci
+    script:
+        - ng build --prod
+    artifacts:
+        expire_in: 1 day
+        paths:
+            - dist/
+
+
+deploy:
+    only: [development]
+    stage: deploy
+    image: alpine
+    script:
+        - apk add --no-cache rsync openssh
+        - mkdir -p ~/.ssh
+        - echo "$SSH_PRIVATE_KEY" >> ~/.ssh/id_dsa
+        - chmod 600 ~/.ssh/id_dsa
+        - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+        - rsync -rav --delete dist/ zang@35.211.160.56:~/dist
