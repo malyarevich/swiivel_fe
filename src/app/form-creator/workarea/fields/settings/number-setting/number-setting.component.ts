@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'sw-number-setting',
@@ -7,9 +7,9 @@ import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
   styleUrls: ['./number-setting.component.scss']
 })
 export class NumberSettingComponent implements OnInit {
-  
+
   form: FormGroup;
-  validatorsOptions = ['Decimal Place', 'Percentage', 'Currency US', 'Currency Canada'].map(t => { return { title: t } });
+  validatorsOptions = ['Decimal Place', 'Percentage', 'Currency US', 'Currency Canada'].map(t => ({ title: t }));
 
   @Input()
   set settings(obj: any) {

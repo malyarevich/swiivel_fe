@@ -2,7 +2,7 @@ import { CollectionViewer, DataSource } from '@angular/cdk/collections';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 
 import { catchError, finalize } from 'rxjs/operators';
-import { DataCollectionService } from '../data-collection.service';
+import { DataCollectionService } from './data-collection.service';
 
 
 
@@ -42,11 +42,11 @@ export class FormsDataSource implements DataSource<any> {
 
   filter(filters) {
     let unfiltered = this.dataSubject.getValue().slice();
-    if ('type' in filters && filters['type'] !== null && filters['type'].length > 0) {
-      unfiltered = unfiltered.filter(form => form.type === filters['type'])
+    if ('type' in filters && filters.type !== null && filters.type.length > 0) {
+      unfiltered = unfiltered.filter(form => form.type === filters.type);
     }
-    if ('status' in filters && filters['status'] !== null && filters['status'].length > 0) {
-      unfiltered = unfiltered.filter(form => form.status === filters['status'])
+    if ('status' in filters && filters.status !== null && filters.status.length > 0) {
+      unfiltered = unfiltered.filter(form => form.status === filters.status);
     }
     this.formsSubject.next(unfiltered);
   }

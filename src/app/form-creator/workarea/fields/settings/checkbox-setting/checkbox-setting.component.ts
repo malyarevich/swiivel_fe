@@ -1,5 +1,5 @@
-import { Component, OnInit, Output, EventEmitter, Input, ChangeDetectorRef } from '@angular/core';
-import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'sw-checkbox-setting',
@@ -13,8 +13,8 @@ export class CheckboxSettingComponent implements OnInit {
   set settings(obj: any) {
     if (obj) {
       this.form.patchValue({
-        defaultValue: [this.options.find(o => o.value === obj['defaultValue'])],
-        showDefaultValue: !!obj['defaultValue']
+        defaultValue: [this.options.find(o => o.value === obj.defaultValue)],
+        showDefaultValue: !!obj.defaultValue
       });
     }
   }

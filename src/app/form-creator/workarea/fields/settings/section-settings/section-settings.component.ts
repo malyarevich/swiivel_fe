@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'sw-section-settings',
@@ -15,9 +15,9 @@ export class SectionSettingsComponent implements OnInit {
   set settings(obj: any) {
     if (obj) {
       this.form.patchValue({
-        showHint: !!obj['hint'],
-        hint: obj['hint'] || '',
-        displayStrategy: obj['displayStrategy'],
+        showHint: !!obj.hint,
+        hint: obj.hint || '',
+        displayStrategy: obj.displayStrategy,
       });
     }
   }
@@ -43,5 +43,5 @@ export class SectionSettingsComponent implements OnInit {
     delete value.showHint;
     this.fieldSettings.emit(value);
   }
-  
+
 }

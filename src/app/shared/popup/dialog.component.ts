@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, ViewChild, EventEmitter, Output } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { Popup } from '@core/popup.service';
-import { isString, isObjectLike } from 'lodash';
+import { isObjectLike, isString } from 'lodash';
 
 
 @Component({
@@ -31,8 +31,8 @@ export class DialogComponent {
   }
 
   toggle() {
-    if (this._ref) this._ref.close();
-    else this.showPopup();
+    if (this._ref) { this._ref.close(); }
+    else { this.showPopup(); }
   }
 
   close(action?: boolean) {
@@ -55,7 +55,7 @@ export class DialogComponent {
     });
     this._ref.afterClosed$.subscribe((result) => {
       let cancelled = true;
-      if (result.data && !!result.data.action) cancelled = false;
+      if (result.data && !!result.data.action) { cancelled = false; }
       this._ref = null;
       this.closed.emit(!cancelled);
       this.cdr.markForCheck();

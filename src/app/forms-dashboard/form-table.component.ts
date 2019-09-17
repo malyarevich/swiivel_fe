@@ -1,11 +1,10 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
-import { DataCollectionService } from '../data-collection.service';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Form } from '@models/data-collection/form';
-import { FormGroup, FormBuilder } from '@angular/forms';
 import { DialogComponent } from '@shared/popup/dialog.component';
+import { DataCollectionService } from './data-collection.service';
 import { FormsDataSource } from './form-table.datasource';
-import { pick } from 'lodash';
-
+import { DateTime } from 'luxon';
 
 @Component({
   selector: 'app-form-table',
@@ -16,33 +15,6 @@ import { pick } from 'lodash';
   providers: [DataCollectionService]
 })
 export class FormTableComponent implements OnInit {
-  @ViewChild('dialog', { static: true }) dialog: DialogComponent;
-  bulkOptions = ['Share', 'Export PDF', 'Archive'];
-  public params = {
-    page: 1,
-    limit: 200,
-    search: {},
-    sort: {},
-    filter: {},
-  };
-  public dataSource: FormsDataSource = new FormsDataSource(this.dataCollectionService);
-  // public forms: Form[] = null;
-  public selectedForms: Form[] = [];
-
-  public displayedColumns: string[] = ['name', 'type', 'access', 'createdBy', 'updatedAt', 'status', 'actions'];
-
-  // todo: возможно это вынести в сервис
-  static convertFormsData(forms: Form[]): Form[] {
-    console.log(forms);
-    forms.map((form) => {
-      form.isSelected = false;
-      form.sharedUrl = `http://red.dev.codeblue.ventures/api/v1/data-collection/online-form/${form.mongo_id}`;
-    });
-    return forms;
-  }
-
-  filterForm: FormGroup;
-  sort = ['name', true];
 
   constructor(
     public dataCollectionService: DataCollectionService,
@@ -55,7 +27,43 @@ export class FormTableComponent implements OnInit {
       createdBy: [null],
       updatedAt: [null],
       status: [null]
-    })
+    });
+  }
+  @ViewChild('dialog', { static: true }) dialog: DialogComponent;
+  bulkOptions = ['Share', 'Export PDF', 'Archive'];
+  public params = {
+    page: 1,
+    limit: 200,
+    search: {},
+    sort: {},
+    filter: {},
+  };
+  public dataSource: FormsDataSource = new FormsDataSource(this.dataCollectionService);
+  // public forms: Form[] = null;
+  public selectedForms: Form[] = [];
+  public linkFilters = [
+    { title: 'All', value: null },
+    { title: 'Active', value: 'active' },
+    { title: 'Drafts', value: 'draft' },
+    { title: 'In Review', value: 'reviewed' },
+    { title: 'Closed', value: 'closed' },
+    { title: 'Archived', value: 'archived' },
+  ]
+  public activeLinkFilter = this.linkFilters[0];
+
+  public displayedColumns: string[] = ['name', 'type', 'access', 'createdBy', 'updatedAt', 'status', 'actions'];
+
+  filterForm: FormGroup;
+  sort = ['name', true];
+
+  // todo: возможно это вынести в сервис
+  static convertFormsData(forms: Form[]): Form[] {
+    console.log(forms);
+    forms.map((form) => {
+      form.isSelected = false;
+      form.sharedUrl = `http://red.dev.codeblue.ventures/api/v1/data-collection/online-form/${form.mongo_id}`;
+    });
+    return forms;
   }
 
   ngOnInit() {
@@ -63,32 +71,16 @@ export class FormTableComponent implements OnInit {
     this.filterForm.valueChanges.subscribe(value => {
       this.dataSource.filter(value);
     });
-    console.log(this.dataSource);
   }
 
-  getStatusColor(status: string): string {
-    let color: string;
-    switch (status) {
-      case 'archived':
-        color = 'gray';
-        break;
-      case 'active':
-        color = 'green';
-        break;
-      case 'draft':
-        color = 'lite-gray';
-        break;
-      case 'in review':
-        color = 'yellow';
-        break;
-      case 'closed':
-        color = 'gray';
-        break;
-      default:
-        color = 'gray';
-        break;
-    }
-    return color;
+  getDate(date: Date) {
+    let dt = DateTime.fromJSDate(date);
+    return dt.toFormat("LL-dd-yyyy");
+  }
+
+  getTime(date: Date) {
+    let dt = DateTime.fromJSDate(date);
+    return dt.toFormat("t").toLowerCase();
   }
 
   sortBy(field: string) {
@@ -109,9 +101,9 @@ export class FormTableComponent implements OnInit {
     }
   }
 
-  getUserInfo(obj: any) {
-    const user = pick(obj, ['full_name', 'role.role_name']);
-    return { name: user['full_name'], role: user['role']['role_name']};
+  filterByLink(filter) {
+    this.activeLinkFilter = filter;
+    this.filterForm.get('status').setValue(filter.value);
   }
 
   bulkAction(selectedIndex) {
@@ -124,7 +116,7 @@ export class FormTableComponent implements OnInit {
   }
 
   dialogClosed(action?: boolean) { // false means "Cancel"
-    console.debug(`Dialog cancelled: ${!action}`)
+    console.debug(`Dialog cancelled: ${!action}`);
   }
 
   archiveForms(): void {
@@ -151,7 +143,7 @@ export class FormTableComponent implements OnInit {
   }
 
   onCopyLink(label: string): void {
-    navigator.clipboard.writeText(label)
+    navigator['clipboard'].writeText(label)
       .then(() => {
         console.log('Text copied to clipboard', label);
       })

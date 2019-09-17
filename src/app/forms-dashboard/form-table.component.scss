@@ -14,20 +14,47 @@
     padding: 15px;
     background: #fff;
   }
+  .link-filters {
+    a {
+      font-family: Nunito Sans;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 12px;
+      line-height: 16px;
+      /* identical to box height, or 133% */
 
+
+      color: #909090;
+      cursor: pointer;
+      &.active {
+        font-family: Nunito Sans;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 12px;
+        line-height: 13px;
+        /* identical to box height, or 108% */
+
+
+        color: #4350A2;
+        border-bottom: 10px solid #4350A2;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+        box-sizing: border-box;
+        // border-radius: 10px;
+      }
+    }
+  }
   .button-red {
     background: red;
   }
 }
 
 .table {
-  .cdk-table {
-    width: 100%;
-  }
   .filters-row {
     background: #F2F2F2;
     box-shadow: inset 0px -1px 0px #E7E7E7;
     border-radius: 5px;
+
     .header_container {
       &__title {
         display: flex;
@@ -71,43 +98,12 @@
           }
         }
       }
+
     }
   }
 
-  .table-row {
-    .cdk-column-name {
-      .text {
-        color: #4350A2;
-        font: 800 12px/13px $nunito-sans;
-      }
-    }
-    .cdk-column-type {
-      .main-text {
-        font: 800 12px/13px $nunito-sans;
-        text-transform: capitalize;
-      }
-      .second-text {
-        font: 400 10px/13px $nunito-sans;
-      }
-    }
-    .cdk-column-actions {
-      display: flex;
-      flex-flow: row nowrap;
-      .item {
-        color: #A4A4A4;
-        &:not(:last-of-type) { margin-right: 10px; }
-      }
-    }
-  }
-  
   .cdk-header-cell {
     padding: 10px 3px;
-    &:first-of-type { padding-left: 15px; }
-    &:last-of-type { padding-right: 15px; }
-  }
-
-  .cdk-cell {
-    padding: 6px 3px;
     &:first-of-type { padding-left: 15px; }
     &:last-of-type { padding-right: 15px; }
   }

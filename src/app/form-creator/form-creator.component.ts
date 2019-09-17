@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { SidebarConsentComponent } from './sidebar/consent.component';
+import { SidebarDocumentsFormsComponent } from './sidebar/documents-forms.component';
 import { SidebarFieldsComponent } from './sidebar/fields.component';
 import { SidebarIntroComponent } from './sidebar/intro.component';
-import { SidebarDocumentsFormsComponent } from './sidebar/documents-forms.component';
-import { SidebarConsentComponent } from './sidebar/consent.component';
 import { SidebarTermsConditionsComponent } from './sidebar/terms-conditions.component';
 
 @Component({
