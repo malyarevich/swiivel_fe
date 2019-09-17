@@ -111,7 +111,6 @@ export class FormTableComponent implements OnInit {
 
   getUserInfo(obj: any) {
     const user = pick(obj, ['full_name', 'role.role_name']);
-    console.log(user)
     return { name: user['full_name'], role: user['role']['role_name']};
   }
 
