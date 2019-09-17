@@ -3,7 +3,7 @@ build:
     stage: build
     image: trion/ng-cli
     before_script:
-        - npm ci
+        - npm i
     script:
         - ng build --prod
     artifacts:
