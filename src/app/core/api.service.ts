@@ -43,4 +43,20 @@ export class DataCollectionService extends ApiService {
         map(response => response.data)
       );
   }
+
+  exportPDFForm(mongoId: string): Observable<any> {
+    return this.http.get(
+      `/proxy/form-builder/pdf-export/${mongoId}`,
+      {responseType: 'blob'})
+      .pipe(
+        map(response => {
+          const downloadURL = window.URL.createObjectURL(new Blob([response], {type: 'application/pdf'}));
+          const link = document.createElement('a');
+
+          link.href = downloadURL;
+          link.download = `form-${mongoId}.pdf`;
+          link.click();
+        })
+      );
+  }
 }

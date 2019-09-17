@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChil
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Form } from '@models/data-collection/form';
 import { DialogComponent } from '@shared/popup/dialog.component';
-import { DataCollectionService } from './data-collection.service';
+import { DataCollectionService } from '@core/api.service';
 import { FormsDataSource } from './form-table.datasource';
 
 
@@ -144,5 +144,13 @@ export class FormTableComponent implements OnInit {
 
   deleteItem(id: number): void {
   //   this.selectForm(id);
+  }
+
+  exportPDF(mongoId: string) {
+    this.dataCollectionService
+      .exportPDFForm(mongoId)
+      .subscribe(res => {
+        console.log('Start form download');
+      });
   }
 }
