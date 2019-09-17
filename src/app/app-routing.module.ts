@@ -1,13 +1,11 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import { DataCollectionComponent } from '@app/modules/data-collection/data-collection.component';
 import { AuthGuard } from '@core/auth.guard';
 import { DashboardComponent } from '@core/components/dashboard.component';
 import { LoginComponent } from '@core/components/login.component';
 import { MainComponent } from '@core/components/main.component';
 import { RestorePasswordComponent } from '@core/components/restore-password.component';
 import { environment } from '@env/environment';
-import { routes as dataCollectionRoutes } from './modules/data-collection/data-collection-routing.module';
 
 const routes: Routes = [
   {
@@ -17,12 +15,6 @@ const routes: Routes = [
   {
     path: 'restore-password',
     component: RestorePasswordComponent
-  },
-  // todo: delete after work routing
-  {
-    path: 'data-collection',
-    component: DataCollectionComponent,
-    children: dataCollectionRoutes
   },
   {
     path: '',
@@ -43,6 +35,14 @@ const routes: Routes = [
         loadChildren: () => {
           return import('./form-creator/form-creator.module').then(mod => {
             return mod.FormCreatorModule;
+          });
+        }
+      },
+      {
+        path: 'forms-dashboard',
+        loadChildren: () => {
+          return import('./forms-dashboard/form-table.module').then(mod => {
+            return mod.FormTableModule;
           });
         }
       }

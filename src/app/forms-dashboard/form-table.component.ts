@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
-import { DataCollectionService } from '../data-collection.service';
+import { DataCollectionService } from './data-collection.service';
 import { Form } from '@models/data-collection/form';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { DialogComponent } from '@shared/popup/dialog.component';

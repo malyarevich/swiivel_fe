@@ -24,7 +24,6 @@ export function onInit(authService: AuthService) {
 
 import { OverlayModule } from '@angular/cdk/overlay';
 // todo: delete after routing
-import { DataCollectionComponent } from '@app/modules/data-collection/data-collection.component';
 import { PopupComponent } from '@core/components/popup/popup.component';
 
 @NgModule({
@@ -35,7 +34,6 @@ import { PopupComponent } from '@core/components/popup/popup.component';
     MainComponent,
     DashboardComponent,
     PopupComponent,
-    DataCollectionComponent,
   ],
   imports: [
     BrowserModule,
