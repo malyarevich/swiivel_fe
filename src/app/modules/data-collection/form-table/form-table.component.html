@@ -70,7 +70,7 @@
               </div>
             </div>
             <div class="header_container__filter">
-              <sw-input-text class="filter-field"></sw-input-text>
+              <sw-input-text class="filter-field" [formControl]="filterForm.get('type')"></sw-input-text>
             </div>
           </div>
         </th>
@@ -154,7 +154,7 @@
               </div>
             </div>
             <div class="header_container__filter">
-              <sw-input-text class="filter-field"></sw-input-text>
+              <sw-input-text class="filter-field" [formControl]="filterForm.get('status')"></sw-input-text>
             </div>
           </div>
         </th>

@@ -4,7 +4,6 @@ import { Form } from '@models/data-collection/form';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
 import { DialogComponent } from '@shared/popup/dialog.component';
-import { DataSource } from '@angular/cdk/table';
 import { FormsDataSource } from './form-table.datasource';
 
 
@@ -60,6 +59,9 @@ export class FormTableComponent implements OnInit {
 
   ngOnInit() {
     this.dataSource.loadFormsList(this.params);
+    this.filterForm.valueChanges.subscribe(value => {
+      this.dataSource.filter(value);
+    });
   }
 
   bulkAction(selectedIndex) {
