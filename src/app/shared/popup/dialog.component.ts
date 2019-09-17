@@ -49,7 +49,7 @@ export class DialogComponent {
 
   private showPopup(): void {
     this._ref = this.popup.open({
-      origin: this.holder,
+      origin: null,
       content: this.list,
       panelClass: 'centered-panel'
     });
