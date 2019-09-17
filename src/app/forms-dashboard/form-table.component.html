@@ -3,16 +3,11 @@
     <div class="app-form-table__text">
       <sw-page-header [header]="'Data Collection'"></sw-page-header>
     </div>
-    <div class="app-form-table__controls">
-      Edit
-      Share
-      View
-    </div>
   </div>
   <div class="app-form-table__table">
     <div class="app-form-table__header">
       <div class="app-form-table__text">
-      <sw-block-header [header]="'forms'"></sw-block-header>
+        <sw-block-header [header]="'forms'"></sw-block-header>
       </div>
       <div class="app-form-table__controls">
         <sw-dropdown [options]="bulkOptions" #bulk="dropdown" (selected)="bulkAction($event)">
@@ -44,7 +39,7 @@
                     Form Name
                     <div class="header_container__title_icons">
                       <i class="fas icon"
-                        [ngClass]="{'up': sort[0] === 'name' && sort[1] === false, 'down': sort[0] === 'name' && sort[1] === true}"></i>
+                         [ngClass]="{'up': sort[0] === 'name' && sort[1] === false, 'down': sort[0] === 'name' && sort[1] === true}"></i>
                     </div>
                   </div>
                   <div class="header_container__filter">
@@ -64,8 +59,8 @@
                   <div class="header_container__title" (click)="sortBy('type')">
                     type
                     <div class="header_container__title_icons">
-                        <i class="fas icon"
-                        [ngClass]="{'up': sort[0] === 'type' && sort[1] === false, 'down': sort[0] === 'type' && sort[1] === true}"></i>
+                      <i class="fas icon"
+                         [ngClass]="{'up': sort[0] === 'type' && sort[1] === false, 'down': sort[0] === 'type' && sort[1] === true}"></i>
                     </div>
                   </div>
                   <div class="header_container__filter">
@@ -85,8 +80,8 @@
                   <div class="header_container__title" (click)="sortBy('access')">
                     access
                     <div class="header_container__title_icons">
-                        <i class="fas icon"
-                        [ngClass]="{'up': sort[0] === 'access' && sort[1] === false, 'down': sort[0] === 'access' && sort[1] === true}"></i>
+                      <i class="fas icon"
+                         [ngClass]="{'up': sort[0] === 'access' && sort[1] === false, 'down': sort[0] === 'access' && sort[1] === true}"></i>
                     </div>
                   </div>
                   <div class="header_container__filter">
@@ -106,8 +101,8 @@
                   <div class="header_container__title" (click)="sortBy('createdBy')">
                     created by
                     <div class="header_container__title_icons">
-                        <i class="fas icon"
-                        [ngClass]="{'up': sort[0] === 'createdBy' && sort[1] === false, 'down': sort[0] === 'createdBy' && sort[1] === true}"></i>
+                      <i class="fas icon"
+                         [ngClass]="{'up': sort[0] === 'createdBy' && sort[1] === false, 'down': sort[0] === 'createdBy' && sort[1] === true}"></i>
                     </div>
                   </div>
                   <div class="header_container__filter">
@@ -127,8 +122,8 @@
                   <div class="header_container__title" (click)="sortBy('updatedAt')">
                     update date
                     <div class="header_container__title_icons">
-                        <i class="fas icon"
-                        [ngClass]="{'up': sort[0] === 'updatedAt' && sort[1] === false, 'down': sort[0] === 'updatedAt' && sort[1] === true}"></i>
+                      <i class="fas icon"
+                         [ngClass]="{'up': sort[0] === 'updatedAt' && sort[1] === false, 'down': sort[0] === 'updatedAt' && sort[1] === true}"></i>
                     </div>
                   </div>
                   <div class="header_container__filter">
@@ -148,8 +143,8 @@
                   <div class="header_container__title" (click)="sortBy('status')">
                     status
                     <div class="header_container__title_icons">
-                        <i class="fas icon"
-                        [ngClass]="{'up': sort[0] === 'status' && sort[1] === false, 'down': sort[0] === 'status' && sort[1] === true}"></i>
+                      <i class="fas icon"
+                         [ngClass]="{'up': sort[0] === 'status' && sort[1] === false, 'down': sort[0] === 'status' && sort[1] === true}"></i>
                     </div>
                   </div>
                   <div class="header_container__filter">
@@ -173,7 +168,7 @@
 
             <tr cdk-header-row class="filters-row" *cdkHeaderRowDef="displayedColumns; sticky: true"></tr>
             <tr cdk-row #data *cdkRowDef="let user; columns: displayedColumns;"
-              [style.visibility]="showSpinner ? 'collapse' : 'visible'">>
+                [style.visibility]="showSpinner ? 'collapse' : 'visible'">>
             </tr>
 
 
@@ -185,9 +180,7 @@
     </div>
   </div>
   <sw-label>123</sw-label>
-  <sw-label
-    (deleteLabel)="deleteItem(123)"
-  >123
+  <sw-label (deleteLabel)="deleteItem(123)">123
   </sw-label>
   <sw-dialog #dialog title="Bulk share" action="Share items (4)" (closed)="dialogClosed($event)">
     <h1>test</h1>

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpService } from '@app/core/http.service';
 import { ApiResponse, LoginData } from '@models/api';
 import { FormSearchParams } from '@models/form-search-params';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -34,6 +34,30 @@ export class ApiService {
 }
 
 export class DataCollectionService extends ApiService {
+  archiveForms(archivedIds: number[]): Observable<any> {
+    return this.http.post(`/proxy/form-builder/form-template/archived`, { ids: archivedIds })
+      .pipe(map(response => {
+          if (response.status === 1) {
+            return response.data;
+          }
+          throwError('Archive form error');
+        })
+      );
+  }
+
+  duplicateForm(id: string): Observable<any> {
+    return this.http.post(`/proxy/form-builder/form-template/duplicate`, {
+      example_form_id: id,
+    })
+      .pipe(map(response => {
+          if (response.status === 1) {
+            return response;
+          }
+          throwError('Duplicate form error');
+        })
+      );
+  }
+
   getFormsList(requestParams?: FormSearchParams): Observable<any> {
     return this.http
       .post(`/proxy/form-builder/form-templates`, {
@@ -41,6 +65,22 @@ export class DataCollectionService extends ApiService {
       })
       .pipe(
         map(response => response.data)
+      );
+  }
+
+  exportPDFForm(mongoId: string): Observable<any> {
+    return this.http.get(
+      `/proxy/form-builder/pdf-export/${mongoId}`,
+      {responseType: 'blob'})
+      .pipe(
+        map(response => {
+          const downloadURL = window.URL.createObjectURL(new Blob([response], {type: 'application/pdf'}));
+          const link = document.createElement('a');
+
+          link.href = downloadURL;
+          link.download = `form-${mongoId}.pdf`;
+          link.click();
+        })
       );
   }
 }
