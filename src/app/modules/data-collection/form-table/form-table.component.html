@@ -108,7 +108,7 @@
                 </div>
               </th>
               <td cdk-cell *cdkCellDef="let form">
-                asd
+                <sw-user-item [userItem]="getUserInfo(form.owner)"></sw-user-item>
               </td>
             </ng-container>
 

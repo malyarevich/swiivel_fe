@@ -2,6 +2,7 @@
 
 .user-item {
   display: inline-flex;
+  align-items: center;
   margin: 0 6px 0 0;
 
   .user-item__image {
@@ -18,5 +19,11 @@
   .user-item__text {
     margin: 0;
     font: 800 12px/15px $nunito-sans-regular;
+  }
+
+  .user-item__role {
+    margin: 0 0 0 3px;
+    color: #909090;
+    font: 400 10px/12px $nunito-sans;
   }
 }

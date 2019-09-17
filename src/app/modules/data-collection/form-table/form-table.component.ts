@@ -4,6 +4,7 @@ import { Form } from '@models/data-collection/form';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { DialogComponent } from '@shared/popup/dialog.component';
 import { FormsDataSource } from './form-table.datasource';
+import { pick } from 'lodash';
 
 
 @Component({
@@ -65,7 +66,7 @@ export class FormTableComponent implements OnInit {
     console.log(this.dataSource);
   }
 
-  getStatusColor(status: string) {
+  getStatusColor(status: string): string {
     let color: string;
     switch (status) {
       case 'archived':
@@ -106,6 +107,12 @@ export class FormTableComponent implements OnInit {
     } else {
       this.sort = [field, true];
     }
+  }
+
+  getUserInfo(obj: any) {
+    const user = pick(obj, ['full_name', 'role.role_name']);
+    console.log(user)
+    return { name: user['full_name'], role: user['role']['role_name']};
   }
 
   bulkAction(selectedIndex) {
