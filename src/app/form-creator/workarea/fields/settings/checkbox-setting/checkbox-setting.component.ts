@@ -27,13 +27,14 @@ export class CheckboxSettingComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder
-  ) { }
-
-  ngOnInit() {
+  ) {
     this.form = this.fb.group({
       defaultValue: new FormControl([]),
       showDefaultValue: new FormControl(false)
     });
+  }
+
+  ngOnInit() {
     this.form.valueChanges.subscribe(v => {
       this.fieldSettings.emit(v.defaultValue);
     });

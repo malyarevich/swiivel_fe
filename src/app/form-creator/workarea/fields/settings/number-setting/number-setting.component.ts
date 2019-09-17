@@ -21,9 +21,7 @@ export class NumberSettingComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder
-  ) { }
-
-  ngOnInit() {
+  ) {
     this.form = this.fb.group({
       showDefaultValue: new FormControl(false),
       showValidators: new FormControl(false),
@@ -35,6 +33,9 @@ export class NumberSettingComponent implements OnInit {
         max: new FormControl(null)
       })
     });
+  }
+
+  ngOnInit() {
     this.form.valueChanges.subscribe(v => {
       delete v.showDefaultValue;
       delete v.showValidators;
