@@ -1,0 +1,18 @@
+<div #holder (click)="toggle()">
+</div>
+
+<ng-template #list>
+  <div class="dialog_container">
+    <div class="dialog_header">
+      <div class="dialog_title"></div>
+      <div class="dialog_close"></div>
+    </div>
+    <div class="dialog_body">
+      <ng-content></ng-content>
+    </div>
+    <div class="dialog_footer">
+      <button type="button">Cancel</button>
+      <button type="button">{{action}}</button>
+    </div>
+  </div>
+</ng-template>

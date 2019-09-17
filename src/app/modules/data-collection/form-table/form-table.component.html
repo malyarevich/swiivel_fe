@@ -11,6 +11,9 @@
   </div>
   <div class="app-form-table__table">
     <sw-block-header [header]="'forms'"></sw-block-header>
+    <sw-dropdown [options]="bulkOptions" #bulk="dropdown" (selected)="bulkAction($event)">
+      <sw-button [icon]="bulk.isOpened ? 'fas fa-chevron-up' : 'fas fa-chevron-down'">Bulk Actions</sw-button>
+    </sw-dropdown>
     <div>
       <div *ngFor="let form of forms">
         <button [ngClass]="{ 'button-red': form.isSelected}" (click)="selectForm(form.id)">{{ form.name }}</button>

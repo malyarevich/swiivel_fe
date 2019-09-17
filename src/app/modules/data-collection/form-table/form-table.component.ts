@@ -11,6 +11,7 @@ import { Form } from '@models/data-collection/form';
   providers: [DataCollectionService]
 })
 export class FormTableComponent implements OnInit {
+  bulkOptions = ['Share', 'Export PDF', 'Archive'];
   public params = {
     page: 1,
     limit: 200,
@@ -36,6 +37,10 @@ export class FormTableComponent implements OnInit {
 
   ngOnInit() {
     this.getAllForm();
+  }
+
+  bulkAction(selectedIndex) {
+    console.log(this.bulkOptions[selectedIndex]);
   }
 
   getAllForm(): void {

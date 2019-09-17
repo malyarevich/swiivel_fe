@@ -1,6 +1,6 @@
-<button type="button" class="button" [value]="value">
+<button type="button" class="button" [name]="name" [value]="value">
     <span class="text">
         <ng-content></ng-content>
     </span>
-    <i [ngClass]="icon"></i>
+    <i [ngClass]="_iconClass"></i>
 </button>

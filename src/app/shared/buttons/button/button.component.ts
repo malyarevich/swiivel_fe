@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'sw-button',
@@ -7,11 +7,15 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 
 export class ButtonComponent implements OnInit {
-
+  _iconClass: string;
+  @Input() name: string;
   @Input() value: any;
-  @Input() icon: string;
+  @Input() set icon(icon: string) {
+    this._iconClass = icon;
+    this.cdr.markForCheck()
+  }
 
-  constructor() { }
+  constructor(private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
   }
