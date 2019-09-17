@@ -7,6 +7,7 @@ import { FormsDataSource } from './form-table.datasource';
 import { DateTime } from 'luxon';
 import { pick } from 'lodash';
 
+
 @Component({
   selector: 'app-form-table',
   templateUrl: './form-table.component.html',
@@ -74,44 +75,45 @@ export class FormTableComponent implements OnInit {
     });
   }
 
+
   getUserInfo(obj: any) {
     const user = pick(obj, ['full_name', 'role.role_name']);
     return { name: user['full_name'], role: user['role']['role_name']};
   }
-
   getStatusColor(status: string): string {
     let color: string;
     switch (status) {
       case 'archived':
         color = 'gray';
         break;
-      case 'active':
+        case 'active':
         color = 'green';
         break;
-      case 'draft':
+        case 'draft':
         color = 'lite-gray';
         break;
-      case 'in review':
+        case 'in review':
         color = 'yellow';
         break;
-      case 'closed':
+        case 'closed':
         color = 'gray';
         break;
-      default:
+        default:
         color = 'gray';
         break;
+      }
+      return color;
     }
-    return color;
-  }
+
 
   getDate(date: Date) {
     let dt = DateTime.fromJSDate(date);
-    return dt.toFormat("LL-dd-yyyy");
+    return dt.setLocale('en-US').toFormat("LL-dd-yyyy");
   }
 
   getTime(date: Date) {
     let dt = DateTime.fromJSDate(date);
-    return dt.toFormat("t").toLowerCase();
+    return dt.setLocale('en-US').toFormat("t").toLowerCase();
   }
 
   sortBy(field: string) {
