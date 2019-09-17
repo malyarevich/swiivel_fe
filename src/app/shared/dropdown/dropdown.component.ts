@@ -7,6 +7,7 @@ import { isString, isObjectLike } from 'lodash';
   selector: 'sw-dropdown',
   exportAs: 'dropdown',
   templateUrl: './dropdown.component.html',
+  styleUrls: ['dropdown.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DropdownComponent {

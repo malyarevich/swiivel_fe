@@ -68,11 +68,21 @@ export class FormTableComponent implements OnInit {
   filterForm: FormGroup;
   sort = ['name', true];
 
+  // todo: возможно это вынести в сервис
+  static convertFormsData(forms: Form[]): Form[] {
+    console.log(forms);
+    forms.map((form) => {
+      form.isSelected = false;
+      form.sharedUrl = `http://red.dev.codeblue.ventures/api/v1/data-collection/online-form/${form.mongo_id}`;
+    });
+    return forms;
+  }
+
   constructor(
     public dataCollectionService: DataCollectionService,
     private cd: ChangeDetectorRef,
     private fb: FormBuilder,
-    ) {
+  ) {
     this.filterForm = this.fb.group({
       name: [null],
       type: [null],

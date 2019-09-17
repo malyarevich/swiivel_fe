@@ -10,10 +10,16 @@
     </div>
   </div>
   <div class="app-form-table__table">
-    <sw-block-header [header]="'forms'"></sw-block-header>
-    <sw-dropdown [options]="bulkOptions" #bulk="dropdown" (selected)="bulkAction($event)">
-      <sw-button [icon]="bulk.isOpened ? 'fas fa-chevron-up' : 'fas fa-chevron-down'">Bulk Actions</sw-button>
-    </sw-dropdown>
+    <div class="app-form-table__header">
+      <div class="app-form-table__text">
+      <sw-block-header [header]="'forms'"></sw-block-header>
+      </div>
+      <div class="app-form-table__controls">
+        <sw-dropdown [options]="bulkOptions" #bulk="dropdown" (selected)="bulkAction($event)">
+          <sw-button [icon]="bulk.isOpened ? 'fas fa-chevron-up' : 'fas fa-chevron-down'" [style]="'gray'">Bulk Actions</sw-button>
+        </sw-dropdown>
+      </div>
+    </div>
     <div>
       <div class="app-form-table__tabs">
         <button

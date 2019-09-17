@@ -1,4 +1,9 @@
-<button type="button" class="button" [name]="name" [value]="value">
+<button
+  type="button"
+  class="button"
+  [ngClass]="{ 'button--gray': style === 'gray' }"
+  [name]="name"
+  [value]="value">
     <span class="text">
         <ng-content></ng-content>
     </span>
