@@ -111,8 +111,7 @@
                 </div>
               </th>
               <td cdk-cell *cdkCellDef="let form">
-                <span class="date">{{getDate(form.created_at)}}</span>
-                <span class="time">{{getTime(form.created_at)}}</span>
+                <sw-user-item [userItem]="getUserInfo(form.owner)"></sw-user-item>
               </td>
             </ng-container>
 

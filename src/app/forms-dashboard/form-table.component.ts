@@ -14,7 +14,6 @@ import { SelectionModel } from '@angular/cdk/collections';
   templateUrl: './form-table.component.html',
   styleUrls: ['./form-table.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
   providers: [DataCollectionService]
 })
 export class FormTableComponent implements OnInit {
