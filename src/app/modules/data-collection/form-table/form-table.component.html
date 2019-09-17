@@ -39,7 +39,15 @@
 
       <ng-container cdkColumnDef="name">
         <th cdk-header-cell *cdkHeaderCellDef>
-          asd
+          <div class="header_container">
+            <div class="header_container__title">
+              Form Name
+              <div class="header_container__title_icons">
+                <i class="fas fa-caret-up"></i>
+                <i class="fas fa-caret-down"></i>
+              </div>
+            </div>
+          </div>
         </th>
         <td cdk-cell *cdkCellDef="let form"></td>
       </ng-container>
