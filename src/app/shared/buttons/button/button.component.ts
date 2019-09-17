@@ -10,6 +10,7 @@ export class ButtonComponent implements OnInit {
   _iconClass: string;
   @Input() name: string;
   @Input() value: any;
+  @Input() style ? = 'purple';
   @Input() set icon(icon: string) {
     this._iconClass = icon;
     this.cdr.markForCheck();

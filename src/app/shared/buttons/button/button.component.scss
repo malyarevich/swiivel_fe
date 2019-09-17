@@ -13,6 +13,15 @@
     align-items: center;
     justify-content: center;
     flex-wrap: nowrap;
+    &--gray {
+      background: $gray;
+      span, i {
+        color: $icon-gray;
+      }
+      span {
+        margin: 0 10px 0 0;
+      }
+    }
     span {
       font-style: normal;
       font-weight: bold;
