@@ -45,6 +45,9 @@
 }
 
 .table {
+  .cdk-table {
+    width: 100%;
+  }
   .filters-row {
     background: #F2F2F2;
     box-shadow: inset 0px -1px 0px #E7E7E7;
@@ -52,6 +55,7 @@
 
     .header_container {
       &__title {
+        width: fit-content;
         display: flex;
         align-items: center;
         color: #151515;
@@ -98,6 +102,10 @@
   }
 
   .table-row {
+
+    &:nth-child(even) {
+      background: #FAFAFA;
+    }
     .cdk-column-name {
       .text {
         color: #4350A2;
