@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpService } from '@app/core/http.service';
 import { ApiResponse, LoginData } from '@models/api';
 import { FormSearchParams } from '@models/form-search-params';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -34,6 +34,19 @@ export class ApiService {
 }
 
 export class DataCollectionService extends ApiService {
+  duplicateForm(id: string): Observable<any> {
+    return this.http.post(`/proxy/form-builder/form-template/duplicate`, {
+      example_form_id: id,
+    })
+      .pipe(map(response => {
+          if (response.status === 1) {
+            return response;
+          }
+          throwError('Duplicate form error');
+        })
+      );
+  }
+
   getFormsList(requestParams?: FormSearchParams): Observable<any> {
     return this.http
       .post(`/proxy/form-builder/form-templates`, {

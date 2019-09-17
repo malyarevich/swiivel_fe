@@ -160,4 +160,14 @@ export class FormTableComponent implements OnInit {
   openPopupShareForm(id: string): void {
     this.sharedUrlForms = [FormTableComponent.createSharedurl(id)];
   }
+
+  duplicateForm(form: Form): void {
+    console.log('duplicate');
+    this.dataCollectionService
+      .duplicateForm(form.mongo_id)
+      .subscribe(() => {
+        this.getAllForm();
+      });
+  }
+
 }
