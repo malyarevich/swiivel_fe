@@ -21,11 +21,13 @@
 }
 
 .table {
+  .cdk-table {
+    width: 100%;
+  }
   .filters-row {
     background: #F2F2F2;
     box-shadow: inset 0px -1px 0px #E7E7E7;
     border-radius: 5px;
-
     .header_container {
       &__title {
         display: flex;
@@ -69,12 +71,42 @@
           }
         }
       }
-      
     }
   }
 
+  .table-row {
+    .cdk-column-name {
+      .text {
+        color: #4350A2;
+        font: 800 12px/13px $nunito-sans;
+      }
+    }
+    .cdk-column-type {
+      .main-text {
+        font: 800 12px/13px $nunito-sans;
+      }
+      .second-text {
+        font: 400 10px/13px $nunito-sans;
+      }
+    }
+    .cdk-column-actions {
+      display: flex;
+      flex-flow: row nowrap;
+      .item {
+        color: #A4A4A4;
+        &:not(:last-of-type) { margin-right: 10px; }
+      }
+    }
+  }
+  
   .cdk-header-cell {
     padding: 10px 3px;
+    &:first-of-type { padding-left: 15px; }
+    &:last-of-type { padding-right: 15px; }
+  }
+
+  .cdk-cell {
+    padding: 6px 3px;
     &:first-of-type { padding-left: 15px; }
     &:last-of-type { padding-right: 15px; }
   }

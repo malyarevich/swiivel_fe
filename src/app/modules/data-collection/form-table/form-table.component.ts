@@ -62,6 +62,32 @@ export class FormTableComponent implements OnInit {
     this.filterForm.valueChanges.subscribe(value => {
       this.dataSource.filter(value);
     });
+    console.log(this.dataSource);
+  }
+
+  getStatusColor(status: string) {
+    let color: string;
+    switch (status) {
+      case 'archived':
+        color = 'gray';
+        break;
+      case 'active':
+        color = 'green';
+        break;
+      case 'draft':
+        color = 'lite-gray';
+        break;
+      case 'in review':
+        color = 'yellow';
+        break;
+      case 'closed':
+        color = 'gray';
+        break;
+      default:
+        color = 'gray';
+        break;
+    }
+    return color;
   }
 
   sortBy(field: string) {
