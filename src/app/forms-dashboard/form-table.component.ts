@@ -173,6 +173,10 @@ export class FormTableComponent implements OnInit {
     }
   }
 
+  exportFormPDF(): void {
+
+  }
+
   openSharePopup(mongoId: string) {
     this.popupTitle = 'Share';
     this.popupActionBtnText = 'Copy Link';
@@ -189,9 +193,6 @@ export class FormTableComponent implements OnInit {
       .subscribe(() => {
         // this.getAllForm();
       });
-  }
-  exportFormsPDF(): void {
-
   }
 
   exportFormsZIP(): void {
@@ -216,13 +217,7 @@ export class FormTableComponent implements OnInit {
   //   this.selectForm(id);
   }
 
-  exportPDF(mongoId: string) {
-    this.dataCollectionService
-      .exportPDFForm(mongoId)
-      .subscribe(res => {
-        console.log('Start form download');
-      });
-  }
+
 
   duplicateForm(form: Form): void {
     console.log('duplicate');
@@ -233,6 +228,14 @@ export class FormTableComponent implements OnInit {
       });
   }
 
+
+  onExportPDF(mongoId: string) {
+    this.dataCollectionService
+      .exportPDFForm(mongoId)
+      .subscribe(() => {
+        console.log('Start form download');
+      });
+  }
 
   onCopyLink(label: string): void {
     navigator.clipboard.writeText(label)

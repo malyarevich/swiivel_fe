@@ -212,7 +212,11 @@
                   </sw-icon-button>
                 </div>
                 <div class="item">
-                  <i class="fas fa-download"></i>
+                  <sw-icon-button
+                    [icon]="'fa-download'"
+                    (click)="onExportPDF(form.mongo_id)"
+                  >
+                  </sw-icon-button>
                 </div>
                 <div class="item">
                   <i class="far fa-copy"></i>
