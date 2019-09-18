@@ -14,7 +14,6 @@ import { DateTime } from 'luxon';
 import { pick } from 'lodash';
 import { SelectionModel } from '@angular/cdk/collections';
 
-
 @Component({
   selector: 'app-form-table',
   templateUrl: './form-table.component.html',
@@ -25,18 +24,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 export class FormTableComponent implements OnInit {
   @ViewChild('dialog', { static: true }) dialog: DialogComponent;
 
-  public bulkOptions = ['Share', 'Export PDF', 'Archive'];
-  public disabledBulkBtn = false;
-  public dataSource: FormsDataSource = new FormsDataSource(this.dataCollectionService);
-  public params = {
-    page: 1,
-    limit: 200,
-    search: {},
-    sort: {},
-    filter: {},
-  };
-  // public forms: Form[] = null;
-  public selectedForms: Form[] = [];
+  // TABS
   public tabsArray = [
     { title: 'All', value: null },
     { title: 'Active', value: 'active' },
@@ -47,10 +35,28 @@ export class FormTableComponent implements OnInit {
   ];
   public activeTab = this.tabsArray[0];
 
-  public displayedColumns: string[] = ['name', 'type', 'access', 'createdBy', 'updatedAt', 'status', 'actions'];
-  public sharedUrlForms: string[] = [];
+  // BULK BUTTON
+  public bulkOptions = ['Share', 'Export PDF', 'Archive'];
+  public disabledBulkBtn = false;
 
-  static createSharedurl(id: string) {
+  // TABLE DATA
+  public dataSource: FormsDataSource = new FormsDataSource(this.dataCollectionService);
+  public displayedColumns: string[] = ['name', 'type', 'access', 'createdBy', 'updatedAt', 'status', 'actions'];
+  public params = {
+    page: 1,
+    limit: 200,
+    search: {},
+    sort: {},
+    filter: {},
+  };
+  public selectedForms: Form[] = [];
+
+  // POPUP
+  public popupTitle = '';
+  public popupActionBtnText = '';
+  public popupContentArray: {title: string, canRemove?: boolean}[] = [];
+
+  static createSharedUrl(id: string) {
     return `${window.location.href}/f/${id}`;
   }
 
@@ -58,16 +64,6 @@ export class FormTableComponent implements OnInit {
   sort = ['name', true];
   statusesOptions: string[] = ['Active', 'Drafts', 'In Review', 'Closed', 'Archived'];
   _sm: SelectionModel<any>;
-
-  // todo: возможно это вынести в сервис
-  static convertFormsData(forms: Form[]): Form[] {
-    console.log(forms);
-    forms.map((form) => {
-      form.isSelected = false;
-      form.sharedUrl = `http://red.dev.codeblue.ventures/api/v1/data-collection/online-form/${form.mongo_id}`;
-    });
-    return forms;
-  }
 
   constructor(
     public dataCollectionService: DataCollectionService,
@@ -169,13 +165,23 @@ export class FormTableComponent implements OnInit {
     console.log(this.bulkOptions[selectedIndex]);
   }
 
+  // POPUP LOGICS
+  popupClosed(action?: boolean) {
+    switch (this.popupTitle) {
+      case 'Share':
+        this.onCopyLink(this.popupContentArray[0].title);
+    }
+  }
 
-  shareForms(): void {
+  openSharePopup(mongoId: string) {
+    this.popupTitle = 'Share';
+    this.popupActionBtnText = 'Copy Link';
+    this.popupContentArray = [{ title: FormTableComponent.createSharedUrl(mongoId) }];
     this.dialog.open();
   }
 
-  dialogClosed(action?: boolean) { // false means "Cancel"
-    console.debug(`Dialog cancelled: ${!action}`);
+  shareForms(): void {
+    this.dialog.open();
   }
 
   archiveForms(): void {
@@ -204,13 +210,7 @@ export class FormTableComponent implements OnInit {
     return ids;
   }
 
-  onCopyLink(label: string): void {
-    navigator.clipboard.writeText(label)
-      .then(() => {})
-      .catch(err => {
-        console.error('Could not copy text: ', err);
-      });
-  }
+
 
   deleteItem(id: number): void {
   //   this.selectForm(id);
@@ -224,16 +224,21 @@ export class FormTableComponent implements OnInit {
       });
   }
 
-  openPopupShareForm(id: string): void {
-    this.sharedUrlForms = [FormTableComponent.createSharedurl(id)];
-  }
-
   duplicateForm(form: Form): void {
     console.log('duplicate');
     this.dataCollectionService
       .duplicateForm(form.mongo_id)
       .subscribe(() => {
         // this.getAllForm();
+      });
+  }
+
+
+  onCopyLink(label: string): void {
+    navigator.clipboard.writeText(label)
+      .then(() => {})
+      .catch(err => {
+        console.error('Could not copy text: ', err);
       });
   }
 }
