@@ -1,4 +1,4 @@
-import { Component, EventEmitter, HostBinding, HostListener, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, DoCheck } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -6,36 +6,40 @@ import { FormControl } from '@angular/forms';
   templateUrl: './section.component.html',
   styleUrls: ['./section.component.scss']
 })
-export class SectionComponent implements OnInit {
-  constructor() {
-  }
+export class SectionComponent implements OnInit, DoCheck {
+  
+  control: FormControl = new FormControl(false);
+
   @Input() section;
   @Output() activate = new EventEmitter<string>();
   @Output() collapseAll = new EventEmitter<boolean>();
-  control: FormControl = new FormControl();
-  //   return !!this.section.active;
-  // };
-  // @HostListener('click', ['$event'])
+  
+  constructor() {}
+  
+  ngOnInit() {
+    this.control.valueChanges.subscribe((value: boolean) => {
+      this.toggleSection();
+    });
+  }
+  
+  ngDoCheck(): void {
+    if (this.control.value !== this.section.active) this.control.setValue(this.section.active);
+  }
+  
   toggleSection() {
-    if (!this.section.expanded) {
+    if (this.control.value) {
       this.collapseAll.next(true);
-      this.activate.next(this.section.name.toLowerCase());
       this.section.expanded = true;
+      this.section.active = true;
+      this.activate.next(this.section.name.toLowerCase());
     } else {
+      this.section.active = false;
       this.section.expanded = false;
     }
   }
-  // @HostListener('click', ['$event'])
-  onClick(event: Event) {
-    console.dir(event.target);
-    // event.preventDefault();
-    this.activate.next(this.section.name.toLowerCase());
-  }
 
-  ngOnInit() {
-    this.control.valueChanges.subscribe((value) => {
-      this.activate.next(this.section.name);
-    });
-  }
-
+  // onClick(event: Event) {
+  //   console.dir(event.target);
+  //   this.activate.next(this.section.name.toLowerCase());
+  // }
 }
