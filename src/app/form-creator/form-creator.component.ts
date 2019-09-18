@@ -14,14 +14,14 @@ export class FormCreatorComponent implements OnInit {
 
   workarea: string;
   sections = [
-    {name: 'Packet Introduction', component: SidebarIntroComponent, active: true, expanded: true},
-    {name: 'Form Fields', component: SidebarFieldsComponent, active: false, expanded: false},
-    {name: 'Additional Documents', component: SidebarDocumentsFormsComponent, active: false, expanded: false},
-    {name: 'CONSENT', component: SidebarConsentComponent, active: false, expanded: false},
-    {name: 'TUITION CONTRACT', component: SidebarFieldsComponent, active: false, expanded: false},
-    {name: 'PAYMENT SETTINGS', component: SidebarFieldsComponent, active: false, expanded: false},
-    {name: 'TERMS AND CONDITIONS', component: SidebarTermsConditionsComponent, active: false, expanded: false},
-    {name: 'FORM PAYMENT', component: SidebarFieldsComponent, active: false, expanded: false},
+    {name: 'Packet Introduction', workarea: 'intro', component: SidebarIntroComponent, active: true, expanded: true},
+    {name: 'Form Fields', workarea: 'fields', component: SidebarFieldsComponent, active: false, expanded: false},
+    {name: 'Additional Documents', workarea: 'addDocs', component: SidebarDocumentsFormsComponent, active: false, expanded: false},
+    {name: 'CONSENT', workarea: 'consent', component: SidebarConsentComponent, active: false, expanded: false},
+    {name: 'TUITION CONTRACT', workarea: '', component: SidebarFieldsComponent, active: false, expanded: false},
+    {name: 'PAYMENT SETTINGS', workarea: '', component: SidebarFieldsComponent, active: false, expanded: false},
+    {name: 'TERMS AND CONDITIONS', workarea: 'tac', component: SidebarTermsConditionsComponent, active: false, expanded: false},
+    {name: 'FORM PAYMENT', workarea: '', component: SidebarFieldsComponent, active: false, expanded: false},
   ];
 
   constructor() { }

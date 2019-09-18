@@ -31,7 +31,7 @@ export class SectionComponent implements OnInit, DoCheck {
       this.collapseAll.next(true);
       this.section.expanded = true;
       this.section.active = true;
-      this.activate.next(this.section.name.toLowerCase());
+      this.activate.next(this.section.workarea);
     } else {
       this.section.active = false;
       this.section.expanded = false;
