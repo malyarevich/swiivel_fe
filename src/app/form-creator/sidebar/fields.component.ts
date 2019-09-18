@@ -25,6 +25,11 @@ export class SidebarFieldsComponent implements OnInit {
 
   hasChild = (_: number, node: any) => node.expandable;
 
+  getIcon(expanded: boolean): string {
+    console.log('show icon', expanded ? 'fa-caret-up' : 'fa-caret-down')
+    return expanded ? 'fa-caret-up' : 'fa-caret-down';
+  }
+
   getParentNode(node: any) {
     const nodeIndex = this.fieldsTree.indexOf(node);
     const parentNode = this.fieldsTree.filter(field => field.type === 113 || field.type === 114).find((field) => {

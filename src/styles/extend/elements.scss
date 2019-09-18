@@ -96,6 +96,11 @@ sw-input-toggle {
 }
 
 sw-input-checkbox {
+  i.dragdrop {
+    margin-right: 10px;
+    color: #A4A4A4;
+    font-size: 15px;
+  }
   span {
     &.input_label {
       font-family: "Nunito Sans";
