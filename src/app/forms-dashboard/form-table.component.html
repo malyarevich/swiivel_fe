@@ -246,12 +246,12 @@
         *ngIf="canLabelsRemove"
         (deleteLabel)="deleteLabel(i, popupTitle)"
       >
-        {{ label }}
+        {{ label.title }}
       </sw-label>
       <sw-label
         *ngIf="!canLabelsRemove"
       >
-        {{ label }}
+        {{ label.title }}
       </sw-label>
     </span>
   </sw-dialog>

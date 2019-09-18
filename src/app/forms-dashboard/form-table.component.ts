@@ -48,7 +48,7 @@ export class FormTableComponent implements OnInit {
   // POPUP
   public popupTitle = '';
   public popupActionBtnText = '';
-  public popupContentArray: string[] = [];
+  public popupContentArray: {title: string, id?: number|string}[] = [];
   public canLabelsRemove = false;
 
   public icons = IconsEnum;
@@ -164,6 +164,10 @@ export class FormTableComponent implements OnInit {
     switch (this.bulkOptions[selectedIndex]) {
       case 'Share':
         this.openSharePopup();
+        break;
+      case 'Archive':
+        this.openArchivePopup();
+        break;
     }
   }
 
@@ -172,9 +176,15 @@ export class FormTableComponent implements OnInit {
     if (action) {
       switch (this.popupTitle) {
         case 'Share':
-          this.onCopyLink(this.popupContentArray.join(', '));
+          this.onCopyLink(this.popupContentArray.map(({ title }) => title).join(', '));
+          break;
+        case 'Archive':
+          this.archiveForms(this.popupContentArray.map(({ id }) => id));
+          break;
       }
     }
+    this._sm.clear();
+    this.disabledBulkBtn = true;
   }
 
   popupSetActionBtnTextAndLogicRemoved(type: string) {
@@ -188,24 +198,34 @@ export class FormTableComponent implements OnInit {
           this.popupActionBtnText = `Copy Link`;
         }
         break;
+      case 'Archive':
+        if (this.popupContentArray.length > 1) {
+          this.canLabelsRemove = true;
+          this.popupActionBtnText = `Archive (${this.popupContentArray.length})`;
+        } else {
+          this.canLabelsRemove = false;
+          this.popupActionBtnText = `Archive`;
+        }
+        break;
     }
   }
 
   onShareLink(form): void {
     this._sm.clear();
+    this.disabledBulkBtn = true;
     this.openSharePopup(form);
   }
 
-  openSharePopup(form?: Form): void {
+  openSharePopup(form?: Form) {
     this.popupTitle = 'Share';
 
     if (form ) {
       this.popupContentArray = [];
-      this.popupContentArray.push(FormTableComponent.createSharedUrl(form.mongo_id));
+      this.popupContentArray.push({ title: FormTableComponent.createSharedUrl(form.mongo_id) });
     } else {
       this.popupContentArray = [];
       this._sm.selected.forEach((item: Form) => {
-        this.popupContentArray.push(FormTableComponent.createSharedUrl(item.mongo_id));
+        this.popupContentArray.push({ title: FormTableComponent.createSharedUrl(item.mongo_id) });
       });
     }
 
@@ -216,23 +236,27 @@ export class FormTableComponent implements OnInit {
     }
   }
 
-  archiveForms(): void {
-    this.dataCollectionService.archiveForms(this.getSelectedIds())
+  openArchivePopup() {
+    this.popupTitle = 'Archive';
+
+    this.popupContentArray = [];
+    this._sm.selected.forEach((item: Form) => {
+      this.popupContentArray.push({ title: item.name, id: item.id });
+    });
+
+    this.popupSetActionBtnTextAndLogicRemoved(this.popupTitle);
+
+    if (this.popupContentArray.length) {
+      this.dialog.open();
+    }
+  }
+
+  archiveForms(ids: number[]): void {
+    this.dataCollectionService
+      .archiveForms(ids)
       .subscribe(() => {
-        // this.getAllForm();
+        this.dataSource.loadFormsList(this.params);
       });
-  }
-
-  getSelectedIds(): number[] {
-    const ids = [];
-    // this.selectedForms.map((form) => ids.push(form.id));
-    return ids;
-  }
-
-  getSelectedMongoIds(): number[] {
-    const ids = [];
-    // this.selectedForms.map((form) => ids.push(form.mongo_id));
-    return ids;
   }
 
   deleteLabel(index: number, popupTitle: string): void {
