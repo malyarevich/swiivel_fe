@@ -20,6 +20,7 @@ development_build:
     - development
   stage: build
   image: trion/ng-cli
+  before_script: []
   script:
     - npm i
     - npm run build
