@@ -180,7 +180,7 @@
                   </div>
                 </div>
               </th>
-              <td cdk-cell *cdkCellDef="let form" (click)="$event.stopPropagation()">
+              <td cdk-cell *cdkCellDef="let form">
                 <sw-dropdown-button [options]="statusesOptions" #bulk="dropdown" (selected)="''">
                   <sw-small-button [ngClass]="{'icon-end': true}" [class]="getStatusColor(form.status)"
                     [text]="form.status" icon="fa-caret-down"></sw-small-button>
@@ -191,7 +191,7 @@
             <ng-container cdkColumnDef="actions">
               <th cdk-header-cell *cdkHeaderCellDef>
               </th>
-              <td cdk-cell *cdkCellDef="let form" (click)="$event.stopPropagation()">
+              <td cdk-cell *cdkCellDef="let form">
                 <div class="item">
                   <sw-small-button text="Edit" icon="fa-pen"></sw-small-button>
                 </div>
@@ -224,7 +224,7 @@
 
             <tr cdk-header-row class="filters-row" *cdkHeaderRowDef="displayedColumns; sticky: true"></tr>
             <tr cdk-row class="table-row" [class.selected]="rowSelected(form)" #data
-              *cdkRowDef="let form; columns: displayedColumns;" (click)="selectRow(form)">
+              *cdkRowDef="let form; columns: displayedColumns;" (click)="selectRow(form, $event)">
             </tr>
 
 

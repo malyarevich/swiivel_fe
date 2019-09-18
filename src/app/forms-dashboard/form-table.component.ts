@@ -146,18 +146,24 @@ export class FormTableComponent implements OnInit {
     }
   }
 
-  selectRow(row: any) {
-    if (this.selectedForms.has(row)) {
-      this.selectedForms.delete(row);
+  selectRow(row: any, e: Event) {
+    if (e && e.target && (e.target['tagName'] === 'BUTTON' || e.target['parentElement']['tagName'] === 'BUTTON')) {
+      e.stopPropagation();
     } else {
-      this.selectedForms.add(row);
+      if (row) {
+        this._sm.toggle(row);
+      }
+      this.disabledBulkBtn = this._sm.selected.length === 0;
     }
+    // if (this.selectedForms.has(row)) {
+    //   this.selectedForms.delete(row);
+    // } else {
+    //   this.selectedForms.add(row);
+    // }
 
-    this.disabledBulkBtn = this.selectedForms.size ? false : true;
+    // this.disabledBulkBtn = this.selectedForms.size ? false : true;
 
-    if (row) {
-      this._sm.toggle(row);
-    }
+    
   }
 
   rowSelected(row: any) {
