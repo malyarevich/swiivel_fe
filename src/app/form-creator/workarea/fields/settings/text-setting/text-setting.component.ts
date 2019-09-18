@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter, ɵConsole } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output, ɵConsole } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'sw-text-setting',
@@ -15,11 +15,11 @@ export class TextSettingComponent implements OnInit {
   set settings(obj: any) {
     if (obj) {
       this.form.patchValue({
-        showDefaultValue: !!obj['defaultValue'],
-        showValidators: !!obj['validators'],
-        allowList: obj['allowList'],
-        defaultValue: obj['defaultValue'] || null,
-        validators: obj['validators']
+        showDefaultValue: !!obj.defaultValue,
+        showValidators: !!obj.validators,
+        allowList: obj.allowList,
+        defaultValue: obj.defaultValue || null,
+        validators: obj.validators
       });
     }
   }
@@ -42,7 +42,6 @@ export class TextSettingComponent implements OnInit {
   }
 
   ngOnInit() {
-    
     this.form.valueChanges.subscribe(v => {
       delete v.showDefaultValue;
       delete v.showValidators;

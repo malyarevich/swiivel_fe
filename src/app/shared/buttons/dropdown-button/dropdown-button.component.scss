@@ -1,0 +1,30 @@
+@import 'index';
+
+.dropdown-disabled {
+  pointer-events: none;
+}
+
+.dropdown_items_container {
+  width: 100%;
+  min-height: 35px;
+  padding: 0;
+  border: 1px solid $soft-gray;
+  box-sizing: border-box;
+  border-radius: 3px;
+  position: relative;
+  background: #fff;
+
+  .item {
+    width: 100%;
+    padding: 10px;
+
+    &:hover {
+      cursor: pointer;
+      background: $light-purple;
+    }
+  }
+
+  &.active {
+    border-color: #4350A2;
+  }
+}

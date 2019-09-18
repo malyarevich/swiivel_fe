@@ -1,14 +1,14 @@
-import { Component, OnInit, Input, ComponentRef, ComponentFactory, ComponentFactoryResolver, ViewChild, ViewContainerRef, AfterViewInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
-import { TextSettingComponent } from './text-setting/text-setting.component';
+import { AfterViewInit, ChangeDetectorRef, Component, ComponentFactory, ComponentFactoryResolver, ComponentRef, Input, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { CheckboxSettingComponent } from './checkbox-setting/checkbox-setting.component';
+import { DateSettingComponent } from './date-setting/date-setting.component';
+import { DropdownSettingComponent } from './dropdown-setting/dropdown-setting.component';
+import { EmailSettingComponent } from './email-setting/email-setting.component';
+import { GroupSettingsComponent } from './group-settings/group-settings.component';
 import { LongtextSettingComponent } from './longtext-setting/longtext-setting.component';
 import { NumberSettingComponent } from './number-setting/number-setting.component';
-import { DropdownSettingComponent } from './dropdown-setting/dropdown-setting.component';
-import { DateSettingComponent } from './date-setting/date-setting.component';
-import { CheckboxSettingComponent } from './checkbox-setting/checkbox-setting.component';
-import { EmailSettingComponent } from './email-setting/email-setting.component';
 import { PhoneSettingComponent } from './phone-setting/phone-setting.component';
-import { GroupSettingsComponent } from './group-settings/group-settings.component';
 import { SectionSettingsComponent } from './section-settings/section-settings.component';
+import { TextSettingComponent } from './text-setting/text-setting.component';
 
 const components = [
   { type: 101, component: TextSettingComponent, title: 'Short Text Field Settings' },
@@ -41,7 +41,7 @@ export class SettingsComponent implements OnInit, AfterViewInit, OnDestroy {
   set field(f: any) {
     this._field = f;
   }
-  @ViewChild("container", { read: ViewContainerRef, static: false }) container;
+  @ViewChild('container', { read: ViewContainerRef, static: false }) container;
 
   constructor(
     private resolver: ComponentFactoryResolver
@@ -60,12 +60,12 @@ export class SettingsComponent implements OnInit, AfterViewInit, OnDestroy {
     let res: string;
     switch (t) {
       case 'settings':
-        if (this.type === 113) res = 'col-8'
-        else res = 'col-4';
+        if (this.type === 113) { res = 'col-8'; }
+        else { res = 'col-4'; }
         break;
       case 'logic':
-        if (this.type === 113) res = 'col-4'
-        else res = 'col-8';
+        if (this.type === 113) { res = 'col-4'; }
+        else { res = 'col-8'; }
         break;
     }
     return res;
@@ -95,7 +95,7 @@ export class SettingsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.component) this.component.destroy();
+    if (this.component) { this.component.destroy(); }
   }
 
 }

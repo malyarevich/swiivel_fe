@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'sw-phone-setting',
@@ -14,10 +14,10 @@ export class PhoneSettingComponent implements OnInit {
   set settings(obj: any) {
     if (obj) {
       this.form.patchValue({
-        showDefaultValue: !!obj['defaultValue'],
-        showValidators: !!obj['validators'],
-        defaultValue: obj['defaultValue'],
-        validators: obj['validators'] || []
+        showDefaultValue: !!obj.defaultValue,
+        showValidators: !!obj.validators,
+        defaultValue: obj.defaultValue,
+        validators: obj.validators || []
       });
     }
   }

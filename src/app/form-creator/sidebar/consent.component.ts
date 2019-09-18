@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormArray, FormBuilder } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'sw-consent',
@@ -7,7 +7,6 @@ import { FormGroup, FormControl, FormArray, FormBuilder } from '@angular/forms';
   styleUrls: ['./consent.component.scss']
 })
 export class SidebarConsentComponent implements OnInit {
-  
   form: FormGroup;
   isOpenItems: boolean[] = [];
   buttonOptions = [
@@ -59,11 +58,11 @@ export class SidebarConsentComponent implements OnInit {
   }
 
   openItem(index: number) {
-    if (index >= 0) this.isOpenItems[index] = true;
+    if (index >= 0) { this.isOpenItems[index] = true; }
   }
 
   hideItem(index: number) {
-    if (index >= 0) this.isOpenItems[index] = false;
+    if (index >= 0) { this.isOpenItems[index] = false; }
   }
 
 }

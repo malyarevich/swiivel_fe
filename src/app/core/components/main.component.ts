@@ -16,13 +16,13 @@ export interface IMenuItems {
 
 export class MainComponent implements OnInit {
   menuItems: IMenuItems[] = [
-    {route: '/', label: 'Dashboard', icon: 'fa-th'},
+    {route: '/dashboard', label: 'Dashboard', icon: 'fa-th'},
     {route: '/bus', label: 'Bus', icon: 'fa-bus'},
     {route: '/payer-accounts', label: 'Payer Accounts', icon: 'fa-wallet'},
     {route: '/persons', label: 'Persons', icon: 'fa-user'},
     {route: '/family', label: 'Family', icon: 'fa-cog'},
     {route: '/period', label: 'Period', icon: 'fa-calendar'},
-    {route: '/data-collection', label: 'Data Collection', icon: 'fa-file'},
+    {route: '/forms-dashboard', label: 'Data Collection', icon: 'fa-file'},
   ];
   constructor(private router: Router) {}
   ngOnInit(): void {}

@@ -1,11 +1,9 @@
-import {Injectable} from '@angular/core';
-import {HttpService} from '@app/core/http.service';
-import {ApiResponse, LoginData} from '@models/api';
-import {FormSearchParams} from '@models/form-search-params';
-import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
-
-const API_URL = 'http://red.dev.codeblue.ventures/api/v1';
+import { Injectable } from '@angular/core';
+import { HttpService } from '@app/core/http.service';
+import { ApiResponse, LoginData } from '@models/api';
+import { FormSearchParams } from '@models/form-search-params';
+import { Observable, throwError } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +11,7 @@ const API_URL = 'http://red.dev.codeblue.ventures/api/v1';
 
 export class ApiService {
 
-  constructor(private http: HttpService) {}
+  constructor(protected http: HttpService) {}
 
   public login(data: LoginData): any {
     return this.http.post('/login', {...data}).pipe(

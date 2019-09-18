@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'sw-button',
@@ -6,14 +6,11 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./button.component.scss']
 })
 
-export class ButtonComponent implements OnInit {
-
+export class ButtonComponent {
+  @Input() disabled: boolean;
+  @Input() name: string;
   @Input() value: any;
-  @Input() icon: string;
+  @Input() style ? = 'purple';
 
   constructor() { }
-
-  ngOnInit() {
-  }
-
 }

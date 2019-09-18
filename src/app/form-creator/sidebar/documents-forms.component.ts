@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'sw-documents-forms',
@@ -39,7 +39,7 @@ export class SidebarDocumentsFormsComponent implements OnInit {
     this.form = this.fb.group({
       documents: new FormArray([]),
       forms: new FormArray([])
-    })
+    });
   }
 
   ngOnInit() {
@@ -72,7 +72,7 @@ export class SidebarDocumentsFormsComponent implements OnInit {
   addItem(addTo: string): void {
     switch (addTo) {
       case 'documents':
-        if (!this.isOpenDocuments) this.isOpenDocuments = true;
+        if (!this.isOpenDocuments) { this.isOpenDocuments = true; }
         this.documents.push(
           new FormGroup({
             name: new FormControl('', { updateOn: 'blur' }),
@@ -82,7 +82,7 @@ export class SidebarDocumentsFormsComponent implements OnInit {
         );
         break;
       case 'forms':
-        if (!this.isOpenForms) this.isOpenForms = true;
+        if (!this.isOpenForms) { this.isOpenForms = true; }
         this.forms.push(
           new FormGroup({
             name: new FormControl('', { updateOn: 'blur' }),

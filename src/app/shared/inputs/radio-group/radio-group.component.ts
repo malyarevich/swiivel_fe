@@ -21,7 +21,7 @@ export class RadioGroupComponent implements OnInit, ControlValueAccessor {
   onTouched: Function;
   private _sm: SelectionModel<any>;
 
-  @Input() 
+  @Input()
   set options(opt: any[]) {
     if (opt) {
       this._options = opt;
@@ -56,5 +56,4 @@ export class RadioGroupComponent implements OnInit, ControlValueAccessor {
   registerOnTouched(fn: Function): void {
     this.onTouched = fn;
   }
- 
 }
