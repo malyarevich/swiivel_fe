@@ -219,15 +219,13 @@ export class FormTableComponent implements OnInit {
 
 
 
-  duplicateForm(form: Form): void {
-    console.log('duplicate');
+  onDuplicateForm(mongoId: string): void {
     this.dataCollectionService
-      .duplicateForm(form.mongo_id)
+      .duplicateForm(mongoId)
       .subscribe(() => {
-        // this.getAllForm();
+        this.dataSource.loadFormsList(this.params);
       });
   }
-
 
   onExportPDF(mongoId: string) {
     this.dataCollectionService
