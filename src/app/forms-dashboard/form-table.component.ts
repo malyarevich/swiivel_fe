@@ -165,6 +165,9 @@ export class FormTableComponent implements OnInit {
       case 'Share':
         this.openSharePopup();
         break;
+      case 'Export PDF':
+        this.openExportPopup();
+        break;
       case 'Archive':
         this.openArchivePopup();
         break;
@@ -177,6 +180,9 @@ export class FormTableComponent implements OnInit {
       switch (this.popupTitle) {
         case 'Share':
           this.onCopyLink(this.popupContentArray.map(({ title }) => title).join(', '));
+          break;
+        case 'Export PDF':
+          this.onExportZIP(this.popupContentArray.map(({ id }) => id).join(','));
           break;
         case 'Archive':
           this.archiveForms(this.popupContentArray.map(({ id }) => id));
@@ -198,13 +204,13 @@ export class FormTableComponent implements OnInit {
           this.popupActionBtnText = `Copy Link`;
         }
         break;
-      case 'Archive':
+      default:
         if (this.popupContentArray.length > 1) {
           this.canLabelsRemove = true;
-          this.popupActionBtnText = `Archive (${this.popupContentArray.length})`;
+          this.popupActionBtnText = `${type} (${this.popupContentArray.length})`;
         } else {
           this.canLabelsRemove = false;
-          this.popupActionBtnText = `Archive`;
+          this.popupActionBtnText = `${type}`;
         }
         break;
     }
@@ -251,6 +257,21 @@ export class FormTableComponent implements OnInit {
     }
   }
 
+  openExportPopup() {
+    this.popupTitle = 'Export PDF';
+
+    this.popupContentArray = [];
+    this._sm.selected.forEach((item: Form) => {
+      this.popupContentArray.push({ title: item.name, id: item.mongo_id });
+    });
+
+    this.popupSetActionBtnTextAndLogicRemoved(this.popupTitle);
+
+    if (this.popupContentArray.length) {
+      this.dialog.open();
+    }
+  }
+
   archiveForms(ids: number[]): void {
     this.dataCollectionService
       .archiveForms(ids)
@@ -277,7 +298,15 @@ export class FormTableComponent implements OnInit {
     this.dataCollectionService
       .exportPDFForm(mongoId)
       .subscribe(() => {
-        console.log('Start form download');
+        console.log('Start pdf download');
+      });
+  }
+
+  onExportZIP(mongoIds: string) {
+    this.dataCollectionService
+      .exportPDFFormZIP(mongoIds)
+      .subscribe(() => {
+        console.log('Start zip download');
       });
   }
 

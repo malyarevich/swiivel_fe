@@ -51,4 +51,20 @@ export class DataCollectionService extends ApiService {
         })
       );
   }
+
+  exportPDFFormZIP(mongoIds: string): Observable<any> {
+    return this.http.get(
+      `/proxy/form-builder/bulk-pdf-export?ids=${mongoIds}`,
+      {responseType: 'blob'})
+      .pipe(
+        map(response => {
+          const downloadURL = window.URL.createObjectURL(new Blob([response], {type: 'application/zip'}));
+          const link = document.createElement('a');
+
+          link.href = downloadURL;
+          link.download = `forms.zip`;
+          link.click();
+        })
+      );
+  }
 }
