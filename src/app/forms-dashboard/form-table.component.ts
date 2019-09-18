@@ -37,7 +37,7 @@ export class FormTableComponent implements OnInit {
 
   // BULK BUTTON
   public bulkOptions = ['Share', 'Export PDF', 'Archive'];
-  public disabledBulkBtn = false;
+  public disabledBulkBtn = true;
 
   // TABLE DATA
   public dataSource: FormsDataSource = new FormsDataSource(this.dataCollectionService);
@@ -49,7 +49,7 @@ export class FormTableComponent implements OnInit {
     sort: {},
     filter: {},
   };
-  public selectedForms: Form[] = [];
+  public selectedForms = new Set();
 
   // POPUP
   public popupTitle = '';
@@ -147,6 +147,14 @@ export class FormTableComponent implements OnInit {
   }
 
   selectRow(row: any) {
+    if (this.selectedForms.has(row)) {
+      this.selectedForms.delete(row);
+    } else {
+      this.selectedForms.add(row);
+    }
+
+    this.disabledBulkBtn = this.selectedForms.size ? false : true;
+
     if (row) {
       this._sm.toggle(row);
     }
@@ -201,13 +209,13 @@ export class FormTableComponent implements OnInit {
 
   getSelectedIds(): number[] {
     const ids = [];
-    this.selectedForms.map((form) => ids.push(form.id));
+    // this.selectedForms.map((form) => ids.push(form.id));
     return ids;
   }
 
   getSelectedMongoIds(): number[] {
     const ids = [];
-    this.selectedForms.map((form) => ids.push(form.mongo_id));
+    // this.selectedForms.map((form) => ids.push(form.mongo_id));
     return ids;
   }
 
