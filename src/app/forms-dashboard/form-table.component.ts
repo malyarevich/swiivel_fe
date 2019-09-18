@@ -48,7 +48,7 @@ export class FormTableComponent implements OnInit {
   // POPUP
   public popupTitle = '';
   public popupActionBtnText = '';
-  public popupContentArray: {title: string, id?: number|string}[] = [];
+  public popupContentArray: {title: string, id?: any}[] = [];
   public canLabelsRemove = false;
 
   public icons = IconsEnum;
