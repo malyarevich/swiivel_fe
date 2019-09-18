@@ -38,18 +38,18 @@
 
       </div>
     </div>
-    <!--<div>-->
-      <!--<div class="app-form-table__tabs">-->
-        <!--<button-->
-          <!--*ngFor="let filter of linkFilters"-->
-          <!--class="app-form-table__tab"-->
-          <!--[ngClass]="{'app-form-table__tab&#45;&#45;activated': activeLinkFilter === filter}"-->
-          <!--(click)="filterByLink(filter)"-->
-        <!--&gt;-->
-          <!--{{filter.title}}-->
-        <!--</button>-->
-      <!--</div>-->
-    <!--</div>-->
+    <div>
+      <div class="app-form-table__tabs">
+        <button
+          *ngFor="let tab of tabsArray"
+          class="app-form-table__tab"
+          [ngClass]="{'app-form-table__tab--activated': activeTab == tab}"
+          (click)="clickTab(tab)"
+        >
+          {{tab.title}}
+        </button>
+      </div>
+    </div>
     <!--<div>-->
       <!--<div *ngFor="let selectedForm of selectedForms"> {{ selectedForm.name }}</div>-->
       <!--<button (click)="shareForms()">Share</button>-->
@@ -58,10 +58,6 @@
       <!--<button (click)="exportFormsZIP()">Export PDF</button>-->
     <!--</div>-->
     <div>
-      <div class="link-filters">
-        <a *ngFor="let filter of linkFilters" [class.active]="activeLinkFilter === filter"
-           (click)="filterByLink(filter)">{{filter.title}}</a>
-      </div>
       <div class="table">
 
         <form [formGroup]="filterForm">

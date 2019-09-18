@@ -37,7 +37,7 @@ export class FormTableComponent implements OnInit {
   };
   // public forms: Form[] = null;
   public selectedForms: Form[] = [];
-  public linkFilters = [
+  public tabsArray = [
     { title: 'All', value: null },
     { title: 'Active', value: 'active' },
     { title: 'Drafts', value: 'draft' },
@@ -45,7 +45,7 @@ export class FormTableComponent implements OnInit {
     { title: 'Closed', value: 'closed' },
     { title: 'Archived', value: 'archived' },
   ];
-  public activeLinkFilter = this.linkFilters[0];
+  public activeTab = this.tabsArray[0];
 
   public displayedColumns: string[] = ['name', 'type', 'access', 'createdBy', 'updatedAt', 'status', 'actions'];
   public sharedUrlForms: string[] = [];
@@ -160,8 +160,8 @@ export class FormTableComponent implements OnInit {
     return this._sm.isSelected(row);
   }
 
-  filterByLink(filter) {
-    this.activeLinkFilter = filter;
+  clickTab(filter) {
+    this.activeTab = filter;
     this.filterForm.get('status').setValue(filter.value);
   }
 
