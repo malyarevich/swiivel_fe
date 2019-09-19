@@ -279,11 +279,7 @@ export class FormTableComponent implements OnInit {
   }
 
   archiveForms(ids: number[]): void {
-    this.dataCollectionService
-      .archiveForms(ids)
-      .subscribe(() => {
-        this.dataSource.loadFormsList(this.params);
-      });
+    this.changeStatus(this.statusesOptions.indexOf('Archived'), ids);
   }
 
   deleteLabel(index: number, popupTitle: string): void {
@@ -324,11 +320,11 @@ export class FormTableComponent implements OnInit {
       });
   }
 
-  changeStatus(statusId: number, form: Form): void {
+  changeStatus(statusId: number, ids: number[]): void {
     this.statusArray.forEach((item) => {
       if (item.title === this.statusesOptions[statusId]) {
         this.dataCollectionService
-          .changeStatus([form.id], item.value)
+          .changeStatus(ids, item.value)
           .subscribe(() => {
             this.dataSource.loadFormsList(this.params);
           });

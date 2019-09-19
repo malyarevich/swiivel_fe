@@ -187,7 +187,7 @@
                 <sw-dropdown-select
                   [options]="statusesOptions"
                   #bulk="dropdown"
-                  (selected)="changeStatus($event, form)"
+                  (selected)="changeStatus($event, [form.id])"
                 >
                   <sw-small-button
                     [ngClass]="{'icon-end': true}"
