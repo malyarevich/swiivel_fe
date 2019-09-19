@@ -78,6 +78,7 @@
 :host {
   button:disabled {
     background: $gray;
+    padding: 6px 16px;
     border: 1px solid $icon-gray;
     color: $icon-gray;
   }
