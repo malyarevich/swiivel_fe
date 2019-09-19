@@ -4,4 +4,5 @@ export enum IconsEnum {
   EYE = 'fa-eye',
   PEN = 'fa-pen',
   SHARE = 'fa-share-alt',
+  CARET_DOWN = 'fa-caret-down'
 }

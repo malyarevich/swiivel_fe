@@ -41,7 +41,7 @@
     <div>
       <div class="app-form-table__tabs">
         <button
-          *ngFor="let tab of tabsArray"
+          *ngFor="let tab of statusArray"
           class="app-form-table__tab"
           [ngClass]="{'app-form-table__tab--activated': activeTab == tab}"
           (click)="clickTab(tab)"
@@ -181,9 +181,17 @@
                 </div>
               </th>
               <td cdk-cell *cdkCellDef="let form">
-                <sw-dropdown-button [options]="statusesOptions" #bulk="dropdown" (selected)="''">
-                  <sw-small-button [ngClass]="{'icon-end': true}" [class]="getStatusColor(form.status)"
-                    [text]="form.status" icon="fa-caret-down"></sw-small-button>
+                <sw-dropdown-button
+                  [options]="statusesOptions"
+                  #bulk="dropdown"
+                  (selected)="changeStatus($event, form)"
+                >
+                  <sw-small-button
+                    [ngClass]="{'icon-end': true}"
+                    [class]="getStatusColor(form.status)"
+                    [text]="form.status"
+                    [icon]="icons.CARET_DOWN"
+                  ></sw-small-button>
                 </sw-dropdown-button>
               </td>
             </ng-container>
