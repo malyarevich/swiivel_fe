@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { SidebarConsentComponent } from './sidebar/consent.component';
 import { SidebarDocumentsFormsComponent } from './sidebar/documents-forms.component';
 import { SidebarFieldsComponent } from './sidebar/fields.component';
@@ -8,7 +8,8 @@ import { SidebarTermsConditionsComponent } from './sidebar/terms-conditions.comp
 @Component({
   selector: 'sw-form-creator',
   templateUrl: './form-creator.component.html',
-  styleUrls: ['./form-creator.component.scss']
+  styleUrls: ['./form-creator.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FormCreatorComponent implements OnInit {
 

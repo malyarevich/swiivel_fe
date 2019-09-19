@@ -1,3 +1,4 @@
+<sw-input-text [formControl]="filter"></sw-input-text>
 <cdk-tree [dataSource]="treeSource" [treeControl]="treeControl">
 
   <!-- This is the tree node template for leaf nodes -->
@@ -42,7 +43,7 @@ draggable="true"
       </sw-input-checkbox>
       <sw-icon-button [icon]="getIcon(node.expanded)" cdkTreeNodeToggle [attr.aria-label]="'toggle ' + node.filename"
       (click)="node.expanded = !node.expanded" [style.visibility]="node.expandable ? 'visible' : 'hidden'">
-          
+
       </sw-icon-button>
       <!-- <button cdkTreeNodeToggle [attr.aria-label]="'toggle ' + node.filename" (click)="node.expanded = !node.expanded"
         [style.visibility]="node.expandable ? 'visible' : 'hidden'">

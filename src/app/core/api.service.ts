@@ -31,4 +31,12 @@ export class ApiService {
   signin(email: string, password: string, uuid: string) {
     return this.http.post('/sign-in', { email, password, uuid });
   }
+
+  getSidebarFields() {
+    return this.http.get('/proxy/sidebar-fields').pipe(
+      map((response: ApiResponse) => {
+        if (response.status === 1) { return response.data; }
+      })
+    );
+  }
 }
