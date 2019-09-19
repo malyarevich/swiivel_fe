@@ -17,7 +17,7 @@
         <div
           class="app-form-table__controls-bulk"
         >
-          <sw-dropdown-button
+          <sw-dropdown-select
             [options]="bulkOptions"
             #bulk="dropdown"
             (selected)="bulkAction($event)"
@@ -33,7 +33,7 @@
                 [ngClass]="{'fa-chevron-up': bulk.isOpened}"
               ></i>
             </sw-button>
-          </sw-dropdown-button>
+          </sw-dropdown-select>
         </div>
 
       </div>
@@ -181,7 +181,7 @@
                 </div>
               </th>
               <td cdk-cell *cdkCellDef="let form">
-                <sw-dropdown-button
+                <sw-dropdown-select
                   [options]="statusesOptions"
                   #bulk="dropdown"
                   (selected)="changeStatus($event, form)"
@@ -192,7 +192,7 @@
                     [text]="form.status"
                     [icon]="icons.CARET_DOWN"
                   ></sw-small-button>
-                </sw-dropdown-button>
+                </sw-dropdown-select>
               </td>
             </ng-container>
 

@@ -12,13 +12,13 @@ import { Popup } from '@core/popup.service';
 import { isObjectLike, isString } from 'lodash';
 
 @Component({
-  selector: 'sw-dropdown-button',
+  selector: 'sw-dropdown-select',
   exportAs: 'dropdown',
-  templateUrl: './dropdown-button.component.html',
-  styleUrls: ['dropdown-button.component.scss'],
+  templateUrl: './dropdown-select.component.html',
+  styleUrls: ['dropdown-select.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DropdownButtonComponent {
+export class DropdownSelectComponent {
   private _ref = null;
   items = [];
   selectedIndex = null;
