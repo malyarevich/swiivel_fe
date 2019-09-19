@@ -7,9 +7,15 @@ import {
   Input,
   Output,
   ViewChild,
+  ViewChildren,
+  QueryList,
+  HostListener,
 } from '@angular/core';
 import { Popup } from '@core/popup.service';
 import { isObjectLike, isString } from 'lodash';
+import { SelectOptionDirective } from './option.directive';
+import { ActiveDescendantKeyManager } from '@angular/cdk/a11y';
+import { DOWN_ARROW, UP_ARROW, ENTER, ESCAPE } from '@angular/cdk/keycodes';
 
 @Component({
   selector: 'sw-dropdown-select',
@@ -22,9 +28,52 @@ export class DropdownSelectComponent {
   private _ref = null;
   items = [];
   selectedIndex = null;
+
+  @ViewChildren(SelectOptionDirective) selectOptions: QueryList<SelectOptionDirective>;
+  keyManager: ActiveDescendantKeyManager<SelectOptionDirective>;
+
   @Output() selected = new EventEmitter<number>();
+  @Output() selectedValue = new EventEmitter<any>();
   @Input() panelClass = 'dropdown-overlay';
   @Input() disabled = false;
+  @HostListener('keydown', ['$event'])
+  onKeyDown(event: KeyboardEvent) {
+    event.stopImmediatePropagation();
+    if (event) {
+      if (event.keyCode === ENTER) {
+        event.preventDefault();
+        if (this.keyManager && this.keyManager.activeItem) {
+          this.selectedValue.emit(this.keyManager.activeItem.option);
+        }
+        this.close();
+        this.cdr.markForCheck();
+      } else if (this.keyManager && event.keyCode === UP_ARROW){
+        this.keyManager.setPreviousItemActive();
+        this.cdr.markForCheck();
+      } else if (event.keyCode === DOWN_ARROW) {
+        if (this.keyManager) {
+          if (this._ref) {
+            if (this.keyManager.activeItem === null) {
+              this.keyManager.setActiveItem(0);
+              this.cdr.markForCheck()
+            } else {
+              this.keyManager.setNextItemActive();
+              this.cdr.markForCheck();
+            }
+          } else {
+            this.showPopup()
+          }
+        }
+      } else if (event.keyCode === ESCAPE) {
+        this.selectedValue.emit(null);
+        this.close();
+      }
+    }
+
+    // if (event.keyCode === DOWN_ARROW || event.keyCode === UP_ARROW) {
+    //
+    // }
+ }
   @Input() set value(val: any) {
     let selectedValue;
     if (isString(val)) {
@@ -109,8 +158,11 @@ export class DropdownSelectComponent {
         content: this.list,
         panelClass: this.panelClass
       });
+      this.keyManager = new ActiveDescendantKeyManager(this.selectOptions).withWrap().withTypeAhead();
+
       this._ref.afterClosed$.subscribe(() => {
         this._ref = null;
+        this.keyManager = null;
         this.cdr.markForCheck();
       });
     }

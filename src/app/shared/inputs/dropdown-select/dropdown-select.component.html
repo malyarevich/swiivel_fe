@@ -10,6 +10,8 @@
     <div
       class="item"
       *ngFor="let item of items; let i = index;"
+      swSelectOption
+      [option]="item"
       [class.selected]="isSelected(i)"
       (click)="select(i)"
     >

@@ -52,8 +52,23 @@ export class InputSuggestComponent implements ControlValueAccessor {
     });
   }
 
-  setValue(value) {
-    let selectedOption = this.filteredOptions[value];
+  onSelected(index) {
+    let selectedOption = this.filteredOptions[index];
+    this.setValue(selectedOption);
+  }
+
+  onSelectedValue(value) {
+    if (value === null) {
+      this.control.reset();
+    } else {
+      let selectedOption = this.filteredOptions.find(option => option.title === value || option.value === value);
+      if (selectedOption) {
+        this.setValue(selectedOption);
+      }
+    }
+  }
+
+  setValue(selectedOption) {
     this.control.setValue(selectedOption.title);
     this.onChange(selectedOption.value);
   }

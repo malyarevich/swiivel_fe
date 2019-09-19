@@ -30,6 +30,7 @@ import { DialogComponent } from './popup/dialog.component';
 import { RadioGroupComponent } from './inputs/radio-group/radio-group.component';
 import { LabelComponent } from './label/label.component';
 import { UserItemComponent } from './user-item/user-item.component';
+import { SelectOptionDirective } from './inputs/dropdown-select/option.directive';
 
 @NgModule({
   imports: [
@@ -62,6 +63,8 @@ import { UserItemComponent } from './user-item/user-item.component';
     LabelComponent,
     UserItemComponent,
     RadioGroupComponent,
+    // Directives
+    SelectOptionDirective,
   ],
   exports: [
     CommonModule,
@@ -91,6 +94,8 @@ import { UserItemComponent } from './user-item/user-item.component';
     LabelComponent,
     UserItemComponent,
     ReactiveFormsModule,
+    // Directives
+    SelectOptionDirective,
   ]
 })
 export class SharedModule { }
