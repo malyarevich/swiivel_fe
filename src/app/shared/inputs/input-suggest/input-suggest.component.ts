@@ -17,15 +17,13 @@ import { DropdownSelectComponent } from '../dropdown-select/dropdown-select.comp
 })
 
 export class InputSuggestComponent implements ControlValueAccessor {
-  // @HostListener('blur', ['$event.target'])
   onBlur(e) {
     this.dropdown.close();
   }
-  // @ViewChild('input', {static: true}) input: ElementRef;
   @ViewChild('dropdown', {static: true}) dropdown: DropdownSelectComponent;
   @Input() readonly: boolean;
-  @Input() options: string[] = [];
-  filteredOptions: string[];
+  @Input() options: any[] = [];
+  filteredOptions: any[];
   control = new FormControl();
 
   onChange: (value: any) => void;
@@ -37,16 +35,16 @@ export class InputSuggestComponent implements ControlValueAccessor {
 
     this.control.valueChanges.subscribe((value) => {
       if (this.options.length > 0 && value) {
-        if (value.trim().length > 0) {
-          this.filteredOptions = this.options.filter((option) => option.toLowerCase().includes(value.toLowerCase()));
+        if (value.toString().length > 0) {
+          this.filteredOptions = this.options.filter((option) => option['title'].toLowerCase().includes(value.toString().toLowerCase()));
         } else {
           this.filteredOptions = this.options;
-          // this.dropdown.close()
         }
         if (this.filteredOptions.length > 0) {
           if (!this.dropdown.isOpened) this.dropdown.showPopup();
         }
       } else {
+        this.filteredOptions = this.options;
         this.dropdown.close()
       }
       if (this.onChange) this.onChange(value);
@@ -55,8 +53,9 @@ export class InputSuggestComponent implements ControlValueAccessor {
   }
 
   setValue(value) {
-    console.log('sv', value)
-    this.control.setValue(value);
+    let selectedOption = this.filteredOptions[value];
+    this.control.setValue(selectedOption.title);
+    this.onChange(selectedOption.value);
   }
 
   public isEmpty(value: string): boolean {
@@ -65,7 +64,6 @@ export class InputSuggestComponent implements ControlValueAccessor {
 
   public setDisabledState(isDisabled: boolean): void {
     this.control.disable();
-    // this.renderer.setProperty(this.input.nativeElement, 'disabled', isDisabled);
   }
 
   public registerOnTouched(fn: any): void {
@@ -78,7 +76,6 @@ export class InputSuggestComponent implements ControlValueAccessor {
 
   public writeValue(obj: any): void {
     this.control.setValue(obj);
-    // this.renderer.setProperty(this.input.nativeElement, 'value', obj);
   }
 
 }

@@ -2,6 +2,6 @@
   [options]="filteredOptions"
   #dropdown="dropdown"
   (selected)="setValue($event)"
-  panelClass="app-form-table-dropdown-overlay">
-  <sw-input-text [formControl]="control" (blur)="onBlur($event)"></sw-input-text>
+  [panelClass]="'app-form-table-dropdown-overlay'">
+  <sw-input-text [formControl]="control" ></sw-input-text>
 </sw-dropdown-select>

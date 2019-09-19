@@ -7,6 +7,7 @@ import {
   Input,
   Output,
   ViewChild,
+  ContentChild,
 } from '@angular/core';
 import { Popup } from '@core/popup.service';
 import { isObjectLike, isString } from 'lodash';
@@ -82,7 +83,7 @@ export class DropdownSelectComponent {
   select(i): void {
     this.selectedIndex = i;
     this.selected.emit(this.selectedIndex);
-    this._ref.close();
+    if (this._ref) this._ref.close();
     this.cdr.markForCheck();
   }
 
