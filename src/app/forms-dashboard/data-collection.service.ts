@@ -12,17 +12,6 @@ export class DataCollectionService extends ApiService {
     );
   }
 
-  archiveForms(archivedIds: number[]): Observable<any> {
-    return this.http.post(`/proxy/form-builder/form-template/archived`, {ids: archivedIds})
-      .pipe(map(response => {
-          if (response.status === 1) {
-            return response.data;
-          }
-          throwError('Archive form error');
-        })
-      );
-  }
-
   changeStatus(updatedIds: number[], updatedStatus: string): Observable<any> {
     return this.http.post(`/proxy/form-builder/form-template/status`, {ids: updatedIds, status: updatedStatus})
       .pipe(map(response => {

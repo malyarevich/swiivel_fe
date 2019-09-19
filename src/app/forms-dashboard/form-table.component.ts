@@ -1,6 +1,7 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Form } from '@models/data-collection/form';
 import { IconsEnum } from '@shared/icons.enum';
 import { DialogComponent } from '@shared/popup/dialog.component';
@@ -64,6 +65,7 @@ export class FormTableComponent implements OnInit {
 
   constructor(
     public dataCollectionService: DataCollectionService,
+    public router: Router,
     private cd: ChangeDetectorRef,
     private fb: FormBuilder) {
     this.filterForm = this.fb.group({
@@ -277,11 +279,7 @@ export class FormTableComponent implements OnInit {
   }
 
   archiveForms(ids: number[]): void {
-    this.dataCollectionService
-      .archiveForms(ids)
-      .subscribe(() => {
-        this.dataSource.loadFormsList(this.params);
-      });
+    this.changeStatus(this.statusesOptions.indexOf('Archived'), ids);
   }
 
   deleteLabel(index: number, popupTitle: string): void {
@@ -293,8 +291,8 @@ export class FormTableComponent implements OnInit {
   onDuplicateForm(mongoId: string): void {
     this.dataCollectionService
       .duplicateForm(mongoId)
-      .subscribe(() => {
-        this.dataSource.loadFormsList(this.params);
+      .subscribe((res) => {
+        this.goToEditPage(res.data._id);
       });
   }
 
@@ -322,15 +320,27 @@ export class FormTableComponent implements OnInit {
       });
   }
 
-  changeStatus(statusId: number, form: Form): void {
+  changeStatus(statusId: number, ids: number[]): void {
     this.statusArray.forEach((item) => {
       if (item.title === this.statusesOptions[statusId]) {
         this.dataCollectionService
-          .changeStatus([form.id], item.value)
+          .changeStatus(ids, item.value)
           .subscribe(() => {
             this.dataSource.loadFormsList(this.params);
           });
       }
     });
+  }
+
+  goToEditPage(mongoId: string): void {
+    this.router.navigate([`forms-dashboard/form-constructor/${mongoId}`]).then();
+  }
+
+  goToViewPage(mongoId: string): void {
+    this.router.navigate([`forms-dashboard/online-form/${mongoId}`]).then();
+  }
+
+  createForm(): void {
+    this.router.navigate(['forms-dashboard/form-constructor']).then();
   }
 }

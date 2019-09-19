@@ -14,6 +14,9 @@
         </sw-block-header>
       </div>
       <div class="app-form-table__controls">
+        <div class="app-form-table__controls-button">
+          <sw-button (click)="createForm()">Create New Form</sw-button>
+        </div>
         <div
           class="app-form-table__controls-bulk"
         >
@@ -184,7 +187,7 @@
                 <sw-dropdown-select
                   [options]="statusesOptions"
                   #bulk="dropdown"
-                  (selected)="changeStatus($event, form)"
+                  (selected)="changeStatus($event, [form.id])"
                 >
                   <sw-small-button
                     [ngClass]="{'icon-end': true}"
@@ -201,10 +204,20 @@
               </th>
               <td cdk-cell *cdkCellDef="let form">
                 <div class="item">
-                  <sw-small-button text="Edit" [icon]="icons.PEN"></sw-small-button>
+                  <sw-small-button
+                    text="Edit"
+                    [icon]="icons.PEN"
+                    (onClick)="goToEditPage(form.mongo_id)"
+                  >
+                  </sw-small-button>
                 </div>
                 <div class="item">
-                  <sw-small-button text="View" [icon]="icons.EYE"></sw-small-button>
+                  <sw-small-button
+                    text="View"
+                    [icon]="icons.EYE"
+                    (onClick)="goToViewPage(form.mongo_id)"
+                  >
+                  </sw-small-button>
                 </div>
                 <div class="item">
                   <sw-icon-button
