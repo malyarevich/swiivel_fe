@@ -232,7 +232,7 @@
 
             <tr cdk-header-row class="filters-row" *cdkHeaderRowDef="displayedColumns; sticky: true"></tr>
             <tr cdk-row class="table-row" [class.selected]="rowSelected(form)" #data
-              *cdkRowDef="let form; columns: displayedColumns;" (click)="selectRow(form)">
+              *cdkRowDef="let form; columns: displayedColumns;" (click)="selectRow(form, $event)">
             </tr>
 
 
