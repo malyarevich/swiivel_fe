@@ -11,4 +11,35 @@
     }
   }
 
+  .section-tree-node {
+    display: flex;
+    flex-flow: column nowrap;
+    .field {
+      padding: 10px 15px;
+      background: #50597A;
+      border-radius: 5px;
+      z-index: 5;
+      display: flex;
+      flex-flow: row nowrap;
+      align-items: center;
+      justify-content: space-between;
+      .main-container {
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+        .drag-icon {
+          width: 25px;
+          text-align: center;
+          margin-right: 10px;
+          .dragdrop {
+            color: #fff;
+          }
+        }
+      }
+    }
+    .settings {
+      margin-top: -5px;
+    }
+  }
+
 }

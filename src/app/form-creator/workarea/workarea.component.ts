@@ -7,7 +7,7 @@ import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WorkareaComponent implements OnInit {
-  _workarea = 'default';
+  _workarea = 'fields';
   @Input() set workarea(area: string) {
     if (area) {
       this._workarea = area;

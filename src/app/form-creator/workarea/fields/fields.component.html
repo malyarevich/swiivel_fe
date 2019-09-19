@@ -1,6 +1,6 @@
 <cdk-tree [dataSource]="treeSource" [treeControl]="treeControl">
-  <cdk-tree-node *cdkTreeNodeDef="let node" cdkTreeNodePadding [style.display]="shouldRender(node) ? 'flex' : 'none'"
-    class="example-tree-node">
+  <cdk-tree-node *cdkTreeNodeDef="let node" cdkTreeNodePadding cdkTreeNodePaddingIndent="15px"
+    [style.display]="shouldRender(node) ? 'flex' : 'none'" class="field-workarea-node">
     <!-- use a disabled button to provide padding for tree leaf -->
     <div class="field">
       <sw-input-checkbox [(ngModel)]="node.exist"></sw-input-checkbox>{{node.name}}
@@ -11,11 +11,35 @@
     </div>
   </cdk-tree-node>
   <!-- This is the tree node template for expandable nodes -->
-  <cdk-tree-node *cdkTreeNodeDef="let node; when: hasChild" cdkTreeNodePadding
-    [style.display]="shouldRender(node) ? 'flex' : 'none'" class="example-tree-node">
+  <cdk-tree-node *cdkTreeNodeDef="let node; when: hasChild" cdkTreeNodePadding cdkTreeNodePaddingIndent="15px"
+    [style.display]="shouldRender(node) ? 'flex' : 'none'" class="group-tree-node"
+    [ngClass]="{'group-tree-node': node.type === 113, 'section-tree-node': node.type === 114}">
     <div class="field">
-      <sw-input-checkbox [(ngModel)]="node.exist"></sw-input-checkbox>
-      {{node.name}}
+      <div class="main-container">
+        <div class="drag-icon">
+          <i class="dragdrop fas fa-ellipsis-v" cdkDragHandle></i>
+        </div>
+        <sw-input-text [(ngModel)]="node.name" style="margin-right: 10px;">
+          <span class="placeholder">Section Name</span>
+        </sw-input-text>
+        <sw-dropdown-input style="margin-right: 10px;">
+          <span class="input_label">Section Width</span>
+        </sw-dropdown-input>
+      </div>
+
+      <div class="actions">
+        <div class="icon">
+          
+        </div>
+        <div class="icon">
+          
+        </div>
+        <div class="icon">
+          
+        </div>
+      </div>
+
+
       <button cdkTreeNodeToggle [attr.aria-label]="'toggle ' + node.filename" (click)="toggleNode(node)"
         [style.visibility]="node.expandable ? 'visible' : 'hidden'">
         expand

@@ -142,7 +142,7 @@ sw-input-number {
     @extend %placeholder;
     &.empty {
       &:not(:focus-within) {
-        padding: 10px;
+        padding: 5px 10px;
         .input_label {
           position: absolute;
           top: 8px;
@@ -150,6 +150,9 @@ sw-input-number {
         }
       }
     }
+  }
+  .dropdown_input_container {
+    min-width: 120px;
   }
 }
 
