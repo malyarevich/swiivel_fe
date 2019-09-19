@@ -62,6 +62,8 @@ export class DropdownSelectComponent {
         console.error('Unknown option type');
       }
       this.cdr.markForCheck();
+    } else {
+      this.close();
     }
   }
 
@@ -96,16 +98,22 @@ export class DropdownSelectComponent {
     }
   }
 
+  close(): void {
+    if (this._ref) this._ref.close();
+  }
+
   showPopup(): void {
-    this._ref = this.popup.open({
-      origin: this.holder,
-      content: this.list,
-      panelClass: this.panelClass
-    });
-    this._ref.afterClosed$.subscribe(() => {
-      this._ref = null;
-      this.cdr.markForCheck();
-    });
+    if (this.items.length > 0) {
+      this._ref = this.popup.open({
+        origin: this.holder,
+        content: this.list,
+        panelClass: this.panelClass
+      });
+      this._ref.afterClosed$.subscribe(() => {
+        this._ref = null;
+        this.cdr.markForCheck();
+      });
+    }
   }
 
 }

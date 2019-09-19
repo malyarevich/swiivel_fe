@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ElementRef, forwardRef, Input, Renderer2, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, forwardRef, Input, Renderer2, ViewChild, EventEmitter, Output } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
@@ -19,6 +19,7 @@ export class InputTextComponent implements ControlValueAccessor {
 
   @ViewChild('input', {static: true}) input: ElementRef;
   @Input() readonly: boolean;
+  @Output() blur = new EventEmitter<any>();
 
   onChange: (value: any) => void;
   onTouched: () => void;
@@ -33,6 +34,11 @@ export class InputTextComponent implements ControlValueAccessor {
 
   public setDisabledState(isDisabled: boolean): void {
     this.renderer.setProperty(this.input.nativeElement, 'disabled', isDisabled);
+  }
+
+  public onBlur(event: Event) {
+    this.onTouched();
+    this.blur.emit(event);
   }
 
   public registerOnTouched(fn: any): void {

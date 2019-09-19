@@ -2,7 +2,7 @@
   <input
     type="text"
     class="input_text__input"
-    (blur)="onTouched()"
+    (blur)="onBlur($event)"
     (input)="onChange(input.value)"
     [class.empty]="isEmpty(input.value)"
     #input/>

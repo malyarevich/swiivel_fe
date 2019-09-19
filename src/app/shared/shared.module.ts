@@ -13,6 +13,8 @@ import { InputCheckboxComponent } from './inputs/input-checkbox/input-checkbox.c
 import { InputDynamicComponent } from './inputs/input-dynamic/input-dynamic.component';
 import { InputNumberComponent } from './inputs/input-number/input-number.component';
 import { InputTextComponent } from './inputs/input-text/input-text.component';
+import { InputSuggestComponent } from './inputs/input-suggest/input-suggest.component';
+
 import { InputTextareaComponent } from './inputs/input-textarea/input-textarea.component';
 import { InputToggleComponent } from './inputs/input-toggle/input-toggle.component';
 import { DropdownSelectComponent } from './inputs/dropdown-select/dropdown-select.component';
@@ -46,6 +48,7 @@ import { UserItemComponent } from './user-item/user-item.component';
     InputDynamicComponent,
     InputNumberComponent,
     InputTextComponent,
+    InputSuggestComponent,
     InputToggleComponent,
     DropdownInputComponent,
     InputPhoneNumberComponent,
@@ -72,6 +75,7 @@ import { UserItemComponent } from './user-item/user-item.component';
     InputDynamicComponent,
     InputNumberComponent,
     InputTextComponent,
+    InputSuggestComponent,
     InputToggleComponent,
     DropdownInputComponent,
     InputPhoneNumberComponent,
