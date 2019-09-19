@@ -11,7 +11,6 @@ import { ApiService } from './api.service';
 })
 export class AuthService {
   private redirectUrl: string;
-  private tokenSubject$: BehaviorSubject<string> = new BehaviorSubject(null);
   private userSubject$: BehaviorSubject<any> = new BehaviorSubject(null);
   private eventSubject$: Subject<any> = new Subject();
   private requestsCounter = 0;
@@ -23,7 +22,6 @@ export class AuthService {
     this.occupied$.next(value);
   }
 
-  private oldToken: string;
   set request(count: number) {
     if (count === 0) {
       this.requestsCounter++;
@@ -36,17 +34,12 @@ export class AuthService {
 
   constructor(private api: ApiService) {
     this.redirect;
-    this.tokenSubject$.subscribe((token) => {
-      if (token && token !== this.oldToken) {
-        this.saveToken(token, true);
-      }
-    });
     this.userSubject$.subscribe((user) => {
       if (user) {
         this.saveUser(user);
-        this.saveToken(user.access_token);
       }
     });
+    // if ()
   }
   get events$() {
     return this.eventSubject$;
@@ -78,28 +71,12 @@ export class AuthService {
 
   load() {
     return new Promise((resolve, reject) => {
-      let token = window.sessionStorage.getItem(`token`);
-      if (token) {
-        this.tokenSubject$.next(token);
+      let savedUser = this.loadUser();
+      if (savedUser) {
+        this.setUser(savedUser);
         return resolve(true);
-      }
-      token = localStorage.getItem('token');
-      if (!token) {
-        const userStr = localStorage.getItem('user');
-        if (userStr) {
-          try {
-            const user: User = JSON.parse(userStr);
-            // if (user.access_token) this.tokenSubject$.next(token);
-            this.setUser(user);
-            return resolve(true);
-          } catch (error) {
-            return resolve(null);
-          }
-        }
-        resolve(null);
       } else {
-        this.tokenSubject$.next(token);
-        return resolve(true);
+        resolve(null);
       }
     });
   }
@@ -119,11 +96,12 @@ export class AuthService {
     this.userSubject$.next(user);
   }
 
-  get token$() {
-    return this.tokenSubject$.asObservable();
-  }
   get token() {
-    return this.tokenSubject$.getValue();
+    if (this.user && this.user.access_token) {
+      return this.user.access_token;
+    } else {
+      return null;
+    }
   }
   get $user() {
     return this.userSubject$.asObservable();
@@ -132,22 +110,27 @@ export class AuthService {
     return this.userSubject$.getValue();
   }
 
-  public saveToken(token: string, session?: boolean) {
-    if (session) { return sessionStorage.setItem('token', token); } else { return localStorage.setItem('token', token); }
+  public loadUser() {
+    const userStr = localStorage.getItem('user');
+    if (userStr) {
+      try {
+        const user: User = JSON.parse(userStr);
+        return user;
+      } catch (error) {
+        return null;
+      }
+    } else {
+      return null;
+    }
   }
   public saveUser(user: User, session?: boolean) {
-    console.log(user);
     if (session) { return sessionStorage.setItem('user', JSON.stringify(user)); } else { return localStorage.setItem('user', JSON.stringify(user)); }
   }
-  public removeToken(session?: boolean) {
-    if (session) { return sessionStorage.removeItem('token'); } else { return localStorage.removeItem('token'); }
-  }
+
 
   public clearStorage() {
-    sessionStorage.removeItem('token');
     sessionStorage.removeItem('user');
     sessionStorage.removeItem('redirect');
-    localStorage.removeItem('token');
     localStorage.removeItem('user');
   }
 
@@ -155,6 +138,5 @@ export class AuthService {
   public signout() { // should send signout request to backend?
     this.clearStorage();
     this.userSubject$.next(null);
-    this.tokenSubject$.next(null);
   }
 }
