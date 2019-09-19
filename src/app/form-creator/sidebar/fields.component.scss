@@ -1,0 +1,15 @@
+@import "index";
+
+:host {
+  .field-tree-node {
+    background: #fff;
+    border-radius: 5px;
+    &__content {
+      width: 100%;
+      padding: 10px 0;
+      display: flex;
+      flex-flow: row nowrap;
+      box-shadow: inset 0px -1px 0px #E7E7E7;
+    }
+  }
+}

@@ -1,5 +1,6 @@
 <label class="input_checkbox">
   <input type="checkbox" (change)="onInputChange()" #input />
   <i class="input_checkbox__icon"></i>
+  <ng-content select="i.dragdrop"></ng-content>
   <ng-content select="span"></ng-content>
 </label>
