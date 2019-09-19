@@ -15,47 +15,33 @@
       box-sizing: border-box;
       border-radius: 3px;
       outline: none;
+      padding: 10px;
+      padding-top: 15px;
       &:focus {
         border: 1px solid $purple;
       }
     }
-    &__error {
-      &_icon {
-        width: 13px;
-        height: 13px;
-        display: none;
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        border-radius: 50%;
-        background-color: $error-color;
-        &:before,
-        &:after {
-          content: "";
-          width: 7px;
-          height: 2px;
-          border-radius: 2px;
-          position: absolute;
-          left: 3px;
-          top: 5.5px;
-          background-color: $white;
-          transform: rotate(45deg);
-        }
-        &:after {
-          transform: rotate(-45deg);
-        }
-      }
+    i {
+      display: none;
     }
   }
 }
 
-:host(.ng-invalid) {
+:host(.ng-invalid.ng-dirty) {
   .input_text {
     &__input {
       border: 1px solid $error-color;
     }
-    &__error_icon {
+    i {
+        width: 13px;
+        height: 13px;
+        display: block;
+        position: absolute;
+        top: 13px;
+        right: 10px;
+        // color: $gray-color;
       display: block;
+      color: $error-color;
     }
   }
 }
@@ -71,10 +57,6 @@
     height: 25px;
     padding: 5px 10px;
   }
-  .input_text__error_icon {
-    top: 6px;
-    right: 6px;
-  }
 }
 
 :host(.no_styles) {
@@ -85,5 +67,5 @@
     padding: 0;
     font: 800 14px/20px $nunito-sans;
   }
- 
+
 }
