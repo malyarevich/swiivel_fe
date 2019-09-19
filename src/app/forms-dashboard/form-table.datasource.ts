@@ -63,4 +63,24 @@ export class FormsDataSource implements DataSource<any> {
     this.formsSubject.next(unfiltered);
   }
 
+  sort(sort) {
+    console.log(sort);
+    let unsorted = this.dataSubject.getValue().slice();
+    if (sort[1] !== null) {
+      unsorted.sort((a, b) => {
+        if (a[sort[0]] > b[sort[0]]) {
+          return -1;
+      }
+      if (b[sort[0]] > a[sort[0]]) {
+          return 1;
+      }
+      return 0;
+    });
+      if (sort[1] === false) {
+        unsorted.reverse();
+      }
+    }
+    this.formsSubject.next(unsorted);
+  }
+
 }

@@ -146,11 +146,11 @@
             <ng-container cdkColumnDef="updatedAt">
               <th cdk-header-cell *cdkHeaderCellDef>
                 <div class="header_container">
-                  <div class="header_container__title" (click)="sortBy('updatedAt')">
+                  <div class="header_container__title" (click)="sortBy('updated_at')">
                     update date
                     <div class="header_container__title_icons">
                       <i class="fas icon"
-                        [ngClass]="{'up': sort[0] === 'updatedAt' && sort[1] === false, 'down': sort[0] === 'updatedAt' && sort[1] === true}"></i>
+                        [ngClass]="{'up': sort[0] === 'updated_at' && sort[1] === false, 'down': sort[0] === 'updated_at' && sort[1] === true}"></i>
                     </div>
                   </div>
                   <div class="header_container__filter">

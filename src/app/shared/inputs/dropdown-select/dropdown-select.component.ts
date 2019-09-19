@@ -7,7 +7,6 @@ import {
   Input,
   Output,
   ViewChild,
-  ContentChild,
 } from '@angular/core';
 import { Popup } from '@core/popup.service';
 import { isObjectLike, isString } from 'lodash';

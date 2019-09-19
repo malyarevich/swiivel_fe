@@ -132,6 +132,7 @@ export class FormTableComponent implements OnInit {
     } else {
       this.sort = [field, true];
     }
+    this.dataSource.sort(this.sort);
   }
 
   selectRow(row: any, e: Event) {
@@ -151,7 +152,7 @@ export class FormTableComponent implements OnInit {
 
     // this.disabledBulkBtn = this.selectedForms.size ? false : true;
 
-    
+
   }
 
   rowSelected(row: any) {
