@@ -193,28 +193,28 @@
               </th>
               <td cdk-cell *cdkCellDef="let form">
                 <div class="item">
-                  <sw-small-button text="Edit" icon="fa-pen"></sw-small-button>
+                  <sw-small-button text="Edit" [icon]="icons.PEN"></sw-small-button>
                 </div>
                 <div class="item">
-                  <sw-small-button text="View" icon="fa-eye"></sw-small-button>
+                  <sw-small-button text="View" [icon]="icons.EYE"></sw-small-button>
                 </div>
                 <div class="item">
                   <sw-icon-button
-                    [icon]="'fa-share-alt'"
-                    (click)="openSharePopup(form.mongo_id)"
+                    [icon]="icons.SHARE"
+                    (click)="onShareLink(form)"
                   >
                   </sw-icon-button>
                 </div>
                 <div class="item">
                   <sw-icon-button
-                    [icon]="'fa-download'"
+                    [icon]="icons.DOWNLOAD"
                     (click)="onExportPDF(form.mongo_id)"
                   >
                   </sw-icon-button>
                 </div>
                 <div class="item">
                   <sw-icon-button
-                    [icon]="'fa-copy'"
+                    [icon]="icons.COPY"
                     (click)="onDuplicateForm(form.mongo_id)"
                   >
                   </sw-icon-button>
@@ -241,12 +241,18 @@
     [action]="popupActionBtnText"
     (closed)="popupClosed($event)"
   >
-    <div>
+    <span *ngFor="let label of popupContentArray; let i = index">
       <sw-label
-        *ngFor="let label of popupContentArray"
+        *ngIf="canLabelsRemove"
+        (deleteLabel)="deleteLabel(i, popupTitle)"
       >
-        {{label.title}}
+        {{ label.title }}
       </sw-label>
-    </div>
+      <sw-label
+        *ngIf="!canLabelsRemove"
+      >
+        {{ label.title }}
+      </sw-label>
+    </span>
   </sw-dialog>
 </div>
