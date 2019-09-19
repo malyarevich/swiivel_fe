@@ -19,15 +19,6 @@ export class SidebarFieldsComponent implements OnInit {
   treeSource = new TreeDataSource();
   filter: FormControl = new FormControl();
 
-  dragNode: any;
-  @ViewChild('emptyItem', {static: false}) emptyItem: ElementRef;
-  dragNodeExpandOverNode: any;
-  dragNodeExpandOverTime: number;
-  dragNodeExpandOverWaitTimeMs: number;
-  dragNodeExpandOverArea: string;
-
-  checklistSelection = new SelectionModel<any>(true);
-
   constructor(private fs: FieldService, private api: ApiService) {
     this.api.getSidebarFields().subscribe((sidebar) => {
       this.sidebar = sidebar;
@@ -69,86 +60,5 @@ export class SidebarFieldsComponent implements OnInit {
     const should = !parent || parent.expanded;
     return should;
   }
-
-
-
-  handleDragStart(event, node) {
-    // Required by Firefox (https://stackoverflow.com/questions/19055264/why-doesnt-html5-drag-and-drop-work-in-firefox)
-    event.dataTransfer.setData('foo', 'bar');
-    event.dataTransfer.setDragImage(this.emptyItem.nativeElement, 0, 0);
-    this.dragNode = node;
-    this.treeControl.collapse(node);
-  }
-
-  handleDragOver(event, node) {
-    event.preventDefault();
-
-    // Handle node expand
-    if (node === this.dragNodeExpandOverNode) {
-      if (this.dragNode !== node && !this.treeControl.isExpanded(node)) {
-        if ((new Date().getTime() - this.dragNodeExpandOverTime) > this.dragNodeExpandOverWaitTimeMs) {
-          this.treeControl.expand(node);
-        }
-      }
-    } else {
-      this.dragNodeExpandOverNode = node;
-      this.dragNodeExpandOverTime = new Date().getTime();
-    }
-
-    // Handle drag area
-    const percentageX = event.offsetX / event.target.clientWidth;
-    const percentageY = event.offsetY / event.target.clientHeight;
-    if (percentageY < 0.25) {
-      this.dragNodeExpandOverArea = 'above';
-    } else if (percentageY > 0.75) {
-      this.dragNodeExpandOverArea = 'below';
-    } else {
-      this.dragNodeExpandOverArea = 'center';
-    }
-  }
-
-  handleDragEnd(event) {
-    this.dragNode = null;
-    this.dragNodeExpandOverNode = null;
-    this.dragNodeExpandOverTime = 0;
-  }
-
-  descendantsAllSelected(node): boolean {
-    const descendants = this.treeControl.getDescendants(node);
-    return descendants.every(child => this.checklistSelection.isSelected(child));
-  }
-
-  descendantsPartiallySelected(node): boolean {
-    const descendants = this.treeControl.getDescendants(node);
-    const result = descendants.some(child => this.checklistSelection.isSelected(child));
-    return result && !this.descendantsAllSelected(node);
-  }
-
-  todoItemSelectionToggle(node): void {
-    this.checklistSelection.toggle(node);
-    const descendants = this.treeControl.getDescendants(node);
-    this.checklistSelection.isSelected(node)
-      ? this.checklistSelection.select(...descendants)
-      : this.checklistSelection.deselect(...descendants);
-  }
-
-  // handleDrop(event, node) {
-  //   event.preventDefault();
-  //   if (node !== this.dragNode) {
-  //     let newItem: any;
-  //     if (this.dragNodeExpandOverArea === 'above') {
-  //       newItem = this.database.copyPasteItemAbove(this.flatNodeMap.get(this.dragNode), this.flatNodeMap.get(node));
-  //     } else if (this.dragNodeExpandOverArea === 'below') {
-  //       newItem = this.database.copyPasteItemBelow(this.flatNodeMap.get(this.dragNode), this.flatNodeMap.get(node));
-  //     } else {
-  //       newItem = this.database.copyPasteItem(this.flatNodeMap.get(this.dragNode), this.flatNodeMap.get(node));
-  //     }
-  //     this.database.deleteItem(this.flatNodeMap.get(this.dragNode));
-  //     this.treeControl.expandDescendants(this.nestedNodeMap.get(newItem));
-  //   }
-  //   this.dragNode = null;
-  //   this.dragNodeExpandOverNode = null;
-  //   this.dragNodeExpandOverTime = 0;
-  // }
 
 }

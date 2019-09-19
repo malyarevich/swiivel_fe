@@ -1,24 +1,13 @@
 <sw-input-text [formControl]="filter"></sw-input-text>
-<cdk-tree [dataSource]="treeSource" [treeControl]="treeControl">
+<cdk-tree [dataSource]="treeSource" [treeControl]="treeControl" cdkDropList >
+    <!-- (cdkDropListDropped)="drop($event)" -->
 
   <!-- This is the tree node template for leaf nodes -->
   <cdk-tree-node *cdkTreeNodeDef="let node" cdkTreeNodePadding cdkTreeNodePaddingIndent="15px"
-    [style.display]="shouldRender(node) ? 'flex' : 'none'" class="field-tree-node"
-    >
-    <div class="field-tree-node__content" 
-    [ngClass]="{'drop-above': dragNodeExpandOverArea === 'above' && dragNodeExpandOverNode === node,
-    'drop-below': dragNodeExpandOverArea === 'below' && dragNodeExpandOverNode === node,
-    'drop-center': dragNodeExpandOverArea === 'center' && dragNodeExpandOverNode === node}"
-draggable="true"
-(dragstart)="handleDragStart($event, node);"
-(dragover)="handleDragOver($event, node);"
-(drop)="handleDrop($event, node);"
-(dragend)="handleDragEnd($event);">
-<!-- [checked]="descendantsAllSelected(node)" -->
-<!-- [indeterminate]="descendantsPartiallySelected(node)"
-(change)="todoItemSelectionToggle(node)" -->
+    [style.display]="shouldRender(node) ? 'flex' : 'none'" class="field-tree-node" cdkDrag [cdkDragData]="node">
+    <div class="field-tree-node__content">
       <sw-input-checkbox [(ngModel)]="node.exist">
-        <i class="dragdrop fas fa-ellipsis-v"></i>
+        <i class="dragdrop fas fa-ellipsis-v" cdkDragHandle></i>
         <span class="input_label">{{node.name}}</span>
       </sw-input-checkbox>
     </div>
@@ -27,31 +16,18 @@ draggable="true"
 
   <!-- This is the tree node template for expandable nodes -->
   <cdk-tree-node *cdkTreeNodeDef="let node; when: hasChild" cdkTreeNodePadding cdkTreeNodePaddingIndent="15px"
-    [style.display]="shouldRender(node) ? 'flex' : 'none'" class="field-tree-node">
-    <div class="field-tree-node__content"
-    [ngClass]="{'drop-above': dragNodeExpandOverArea === 'above' && dragNodeExpandOverNode === node,
-    'drop-below': dragNodeExpandOverArea === 'below' && dragNodeExpandOverNode === node,
-    'drop-center': dragNodeExpandOverArea === 'center' && dragNodeExpandOverNode === node}"
-draggable="true"
-(dragstart)="handleDragStart($event, node);"
-(dragover)="handleDragOver($event, node);"
-(drop)="handleDrop($event, node);"
-(dragend)="handleDragEnd($event);">
+    [style.display]="shouldRender(node) ? 'flex' : 'none'" class="field-tree-node" cdkDrag [cdkDragData]="node">
+    <div class="field-tree-node__content">
       <sw-input-checkbox [(ngModel)]="node.exist">
-        <i class="dragdrop fas fa-ellipsis-v"></i>
+        <i class="dragdrop fas fa-ellipsis-v" cdkDragHandle></i>
         <span class="input_label">{{node.name}}</span>
       </sw-input-checkbox>
       <sw-icon-button [icon]="getIcon(node.expanded)" cdkTreeNodeToggle [attr.aria-label]="'toggle ' + node.filename"
       (click)="node.expanded = !node.expanded" [style.visibility]="node.expandable ? 'visible' : 'hidden'">
 
       </sw-icon-button>
-      <!-- <button cdkTreeNodeToggle [attr.aria-label]="'toggle ' + node.filename" (click)="node.expanded = !node.expanded"
-        [style.visibility]="node.expandable ? 'visible' : 'hidden'">
-        expand
-      </button> -->
     </div>
 
 
   </cdk-tree-node>
 </cdk-tree>
-<span #emptyItem></span>

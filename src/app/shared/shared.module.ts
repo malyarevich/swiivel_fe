@@ -28,6 +28,7 @@ import { DialogComponent } from './popup/dialog.component';
 import { RadioGroupComponent } from './inputs/radio-group/radio-group.component';
 import { LabelComponent } from './label/label.component';
 import { UserItemComponent } from './user-item/user-item.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   imports: [
@@ -87,6 +88,7 @@ import { UserItemComponent } from './user-item/user-item.component';
     LabelComponent,
     UserItemComponent,
     ReactiveFormsModule,
+    DragDropModule
   ]
 })
 export class SharedModule { }
