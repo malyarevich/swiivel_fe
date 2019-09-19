@@ -295,8 +295,8 @@ export class FormTableComponent implements OnInit {
   onDuplicateForm(mongoId: string): void {
     this.dataCollectionService
       .duplicateForm(mongoId)
-      .subscribe(() => {
-        this.dataSource.loadFormsList(this.params);
+      .subscribe((res) => {
+        this.goToEditPage(res.data._id);
       });
   }
 
