@@ -18,10 +18,10 @@ export class FormCreatorComponent implements OnInit {
     {name: 'Form Fields', workarea: 'fields', component: SidebarFieldsComponent, active: false, expanded: false},
     {name: 'Additional Documents', workarea: 'addDocs', component: SidebarDocumentsFormsComponent, active: false, expanded: false},
     {name: 'CONSENT', workarea: 'consent', component: SidebarConsentComponent, active: false, expanded: false},
-    {name: 'TUITION CONTRACT', workarea: '', component: SidebarFieldsComponent, active: false, expanded: false},
-    {name: 'PAYMENT SETTINGS', workarea: '', component: SidebarFieldsComponent, active: false, expanded: false},
+    {name: 'TUITION CONTRACT', workarea: '', component: null, active: false, expanded: false},
+    {name: 'PAYMENT SETTINGS', workarea: '', component: null, active: false, expanded: false},
     {name: 'TERMS AND CONDITIONS', workarea: 'tac', component: SidebarTermsConditionsComponent, active: false, expanded: false},
-    {name: 'FORM PAYMENT', workarea: '', component: SidebarFieldsComponent, active: false, expanded: false},
+    {name: 'FORM PAYMENT', workarea: '', component: null, active: false, expanded: false},
   ];
 
   constructor() { }
