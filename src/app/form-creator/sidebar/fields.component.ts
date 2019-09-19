@@ -1,9 +1,10 @@
-import { ArrayDataSource } from '@angular/cdk/collections';
+import { ArrayDataSource, DataSource } from '@angular/cdk/collections';
 import {FlatTreeControl} from '@angular/cdk/tree';
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { FieldService } from '@app/core/field.service';
-import { fields, sidebar } from '@shared/fields';
+import { ApiService } from '@app/core/api.service';
+import { TreeDataSource } from '../tree.datasource';
 
 
 @Component({
@@ -13,15 +14,29 @@ import { fields, sidebar } from '@shared/fields';
 })
 export class SidebarFieldsComponent implements OnInit {
   treeControl = new FlatTreeControl<any>(node => node.level, field => field.type === 113 || field.type === 114);
-  fieldsTree = this.fs.toFlatTree(sidebar.slice()).reverse();
-  treeSource = new ArrayDataSource(this.fieldsTree);
+  sidebar: any[] = [];
+  fieldsTree: any[];
+  treeSource = new TreeDataSource();
   filter: FormControl = new FormControl();
-  
-  constructor(private fs: FieldService) {
 
+  constructor(private fs: FieldService, private api: ApiService) {
+    this.api.getSidebarFields().subscribe((sidebar) => {
+      this.sidebar = sidebar;
+      this.fieldsTree = this.fs.toFlatTree(this.sidebar.slice());
+      this.fieldsTree.reverse();
+      this.treeSource.data = this.fieldsTree;
+    })
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.filter.valueChanges.subscribe((filter: string) => {
+      if (filter && filter.length > 0) {
+        this.treeSource.data = this.fieldsTree.filter(field => field.name.includes(filter));
+      } else {
+        this.treeSource.data = this.fieldsTree;
+      }
+    });
+  }
 
   hasChild = (_: number, node: any) => node.expandable;
 
@@ -29,12 +44,7 @@ export class SidebarFieldsComponent implements OnInit {
     return expanded ? 'fa-caret-up' : 'fa-caret-down';
   }
 
-  // getParentNode(node: any) {
-  //   const parentNode = this.fieldsTree.filter(field => field.type === 113 || field.type === 114).find((field) => {
-  //     return field.prefix === node.prefix;
-  //   });
-  //   return parentNode;
-  // }
+
   getParentNode(node: any) {
     const nodeIndex = this.fieldsTree.indexOf(node);
 

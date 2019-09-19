@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { SidebarConsentComponent } from './sidebar/consent.component';
 import { SidebarDocumentsFormsComponent } from './sidebar/documents-forms.component';
 import { SidebarFieldsComponent } from './sidebar/fields.component';
@@ -8,7 +8,8 @@ import { SidebarTermsConditionsComponent } from './sidebar/terms-conditions.comp
 @Component({
   selector: 'sw-form-creator',
   templateUrl: './form-creator.component.html',
-  styleUrls: ['./form-creator.component.scss']
+  styleUrls: ['./form-creator.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FormCreatorComponent implements OnInit {
 
@@ -18,10 +19,10 @@ export class FormCreatorComponent implements OnInit {
     {name: 'Form Fields', workarea: 'fields', component: SidebarFieldsComponent, active: false, expanded: false},
     {name: 'Additional Documents', workarea: 'addDocs', component: SidebarDocumentsFormsComponent, active: false, expanded: false},
     {name: 'CONSENT', workarea: 'consent', component: SidebarConsentComponent, active: false, expanded: false},
-    {name: 'TUITION CONTRACT', workarea: '', component: SidebarFieldsComponent, active: false, expanded: false},
-    {name: 'PAYMENT SETTINGS', workarea: '', component: SidebarFieldsComponent, active: false, expanded: false},
+    {name: 'TUITION CONTRACT', workarea: '', component: SidebarIntroComponent, active: false, expanded: false},
+    {name: 'PAYMENT SETTINGS', workarea: '', component: SidebarIntroComponent, active: false, expanded: false},
     {name: 'TERMS AND CONDITIONS', workarea: 'tac', component: SidebarTermsConditionsComponent, active: false, expanded: false},
-    {name: 'FORM PAYMENT', workarea: '', component: SidebarFieldsComponent, active: false, expanded: false},
+    {name: 'FORM PAYMENT', workarea: '', component: SidebarIntroComponent, active: false, expanded: false},
   ];
 
   constructor() { }
