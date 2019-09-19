@@ -23,6 +23,17 @@ export class DataCollectionService extends ApiService {
       );
   }
 
+  changeStatus(updatedIds: number[], updatedStatus: string): Observable<any> {
+    return this.http.post(`/proxy/form-builder/form-template/status`, {ids: updatedIds, status: updatedStatus})
+      .pipe(map(response => {
+          if (response.status === 1) {
+            return response.data;
+          }
+          throwError('Change status form error');
+        })
+      );
+  }
+
   duplicateForm(id: string): Observable<any> {
     return this.http.post(`/proxy/form-builder/form-template/duplicate`, {
       example_form_id: id,

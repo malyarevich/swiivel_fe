@@ -20,15 +20,15 @@ export class FormTableComponent implements OnInit {
   @ViewChild('dialog', { static: true }) dialog: DialogComponent;
 
   // TABS
-  public tabsArray = [
+  public statusArray = [
     { title: 'All', value: null },
     { title: 'Active', value: 'active' },
     { title: 'Drafts', value: 'draft' },
-    { title: 'In Review', value: 'reviewed' },
+    { title: 'In Review', value: 'review' },
     { title: 'Closed', value: 'closed' },
     { title: 'Archived', value: 'archived' },
   ];
-  public activeTab = this.tabsArray[0];
+  public activeTab = this.statusArray[0];
 
   // BULK BUTTON
   public bulkOptions = ['Share', 'Export PDF', 'Archive'];
@@ -84,36 +84,27 @@ export class FormTableComponent implements OnInit {
     });
   }
 
-
   getUserInfo(obj: any) {
     const user = pick(obj, ['full_name', 'role.role_name']);
     return { name: user['full_name'], role: user['role']['role_name']};
   }
+
   getStatusColor(status: string): string {
-    let color: string;
     switch (status) {
       case 'archived':
-        color = 'gray';
-        break;
-        case 'active':
-        color = 'green';
-        break;
-        case 'draft':
-        color = 'lite-gray';
-        break;
-        case 'in review':
-        color = 'yellow';
-        break;
-        case 'closed':
-        color = 'gray';
-        break;
-        default:
-        color = 'gray';
-        break;
-      }
-      return color;
+        return 'gray';
+      case 'active':
+        return 'green';
+      case 'draft':
+        return 'lite-gray';
+      case 'review':
+        return 'yellow';
+      case 'closed':
+        return 'gray';
+      default:
+        return 'gray';
     }
-
+  }
 
   getDate(date: Date) {
     let dt = DateTime.fromJSDate(date);
@@ -316,5 +307,17 @@ export class FormTableComponent implements OnInit {
       .catch(err => {
         console.error('Could not copy text: ', err);
       });
+  }
+
+  changeStatus(statusId: number, form: Form): void {
+    this.statusArray.forEach((item) => {
+      if (item.title === this.statusesOptions[statusId]) {
+        this.dataCollectionService
+          .changeStatus([form.id], item.value)
+          .subscribe(() => {
+            this.dataSource.loadFormsList(this.params);
+          });
+      }
+    });
   }
 }
