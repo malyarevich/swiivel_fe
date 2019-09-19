@@ -11,17 +11,19 @@ import { SidebarTermsConditionsComponent } from './sidebar/terms-conditions.comp
   styleUrls: ['./form-creator.component.scss']
 })
 export class FormCreatorComponent implements OnInit {
-  workarea;
+
+  workarea: string;
   sections = [
-    {name: 'Packet Introduction', component: SidebarIntroComponent, active: true},
-    {name: 'Form Fields', component: SidebarFieldsComponent},
-    {name: 'Additional Documents', component: SidebarDocumentsFormsComponent},
-    {name: 'CONSENT', component: SidebarConsentComponent},
-    {name: 'TUITION CONTRACT', component: SidebarFieldsComponent},
-    {name: 'PAYMENT SETTINGS', component: SidebarFieldsComponent},
-    {name: 'TERMS AND CONDITIONS', component: SidebarTermsConditionsComponent},
-    {name: 'FORM PAYMENT', component: SidebarFieldsComponent},
+    {name: 'Packet Introduction', workarea: 'intro', component: SidebarIntroComponent, active: true, expanded: true},
+    {name: 'Form Fields', workarea: 'fields', component: SidebarFieldsComponent, active: false, expanded: false},
+    {name: 'Additional Documents', workarea: 'addDocs', component: SidebarDocumentsFormsComponent, active: false, expanded: false},
+    {name: 'CONSENT', workarea: 'consent', component: SidebarConsentComponent, active: false, expanded: false},
+    {name: 'TUITION CONTRACT', workarea: '', component: SidebarFieldsComponent, active: false, expanded: false},
+    {name: 'PAYMENT SETTINGS', workarea: '', component: SidebarFieldsComponent, active: false, expanded: false},
+    {name: 'TERMS AND CONDITIONS', workarea: 'tac', component: SidebarTermsConditionsComponent, active: false, expanded: false},
+    {name: 'FORM PAYMENT', workarea: '', component: SidebarFieldsComponent, active: false, expanded: false},
   ];
+
   constructor() { }
 
   ngOnInit() {

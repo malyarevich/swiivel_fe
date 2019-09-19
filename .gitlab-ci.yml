@@ -1,25 +1,40 @@
-build:
-    only: [development]
-    stage: build
-    image: trion/ng-cli
-    before_script:
-        - npm i
-    script:
-        - npm run build
-    artifacts:
-        expire_in: 1 day
-        paths:
-            - dist/
+stages:
+  - build
+  - deploy
 
+variables:
+  DEVELOPMENT_SERVER_USERNAME: devops
+  DEVELOPMENT_SERVER_IP: 35.211.160.56
+  
+image: alpine
 
-deploy:
-    only: [development]
-    stage: deploy
-    image: alpine
-    script:
-        - apk add --no-cache rsync openssh
-        - mkdir -p ~/.ssh
-        - echo "$SSH_PRIVATE_KEY" >> ~/.ssh/id_rsa
-        - chmod 600 ~/.ssh/id_rsa
-        - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
-        - rsync -rav --delete --rsync-path="sudo rsync" dist/ zang@35.211.160.56:/var/www/app-fe/dist/
+before_script:
+  - apk add --no-cache openssh
+  - mkdir -p ~/.ssh
+  - echo "$SSH_PRIVATE_KEY" >> ~/.ssh/id_rsa
+  - chmod 600 ~/.ssh/id_rsa
+  - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+
+development_build:
+  only: 
+    - development
+    - master
+  stage: build
+  image: trion/ng-cli
+  before_script: []
+  script:
+    - npm i
+    - npm run build
+  artifacts:
+    expire_in: 1 day
+    paths:
+      - dist/
+        
+development_deploy:
+  only: 
+    - development
+    - master
+  stage: deploy
+  script:
+    - apk add --no-cache rsync
+    - rsync -rav --delete --rsync-path="sudo rsync" dist/ $DEVELOPMENT_SERVER_USERNAME@$DEVELOPMENT_SERVER_IP:/var/www/app-fe/dist/

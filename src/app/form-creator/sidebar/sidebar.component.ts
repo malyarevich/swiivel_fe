@@ -10,20 +10,20 @@ import { FieldService } from '@app/core/field.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SidebarComponent implements OnInit {
+
   @Input() sections: any[];
   @Output() switch = new EventEmitter<string>();
   @Output() exist = new EventEmitter<boolean>();
-  constructor(private fs: FieldService) {
-  }
 
-  ngOnInit() {
+  constructor(private fs: FieldService) { }
 
-  }
+  ngOnInit() { }
 
   onCollapseAll(collapse: boolean) {
     if (!!collapse) {
       this.sections = this.sections.map((section) => {
         section.expanded = false;
+        section.active = false;
         return section;
       });
     }
