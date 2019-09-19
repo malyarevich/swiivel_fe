@@ -47,9 +47,16 @@ export class FormsDataSource implements DataSource<any> {
 
   filter(filters) {
     let unfiltered = this.dataSubject.getValue().slice();
+    if ('name' in filters && filters.name !== null && filters.name.length > 0) {
+      unfiltered = unfiltered.filter(form => form.name.includes(filters.name));
+    }
     if ('type' in filters && filters.type !== null && filters.type.length > 0) {
       unfiltered = unfiltered.filter(form => form.type === filters.type);
     }
+    if ('createdBy' in filters && filters.createdBy !== null && filters.createdBy.length > 0) {
+      unfiltered = unfiltered.filter(form => form.owner.full_name.includes(filters.createdBy));
+    }
+
     if ('status' in filters && filters.status !== null && filters.status.length > 0) {
       unfiltered = unfiltered.filter(form => form.status === filters.status);
     }
