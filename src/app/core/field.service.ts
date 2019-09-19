@@ -15,6 +15,7 @@ export class FieldService {
         if (field.type === FieldType.SECTION || field.type === FieldType.GROUP) {
           if (field.fields && field.fields.length > 0) {
             field.expandable = true;
+            field.expanded = false;
             const children = this.toFlatTree(field.fields, level + 1);
             field.fields = null;
             children.push(field);

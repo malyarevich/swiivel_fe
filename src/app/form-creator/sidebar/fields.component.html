@@ -20,8 +20,9 @@
         <i class="dragdrop fas fa-ellipsis-v"></i>
         <span class="input_label">{{node.name}}</span>
       </sw-input-checkbox>
-      <sw-icon-button [icon]="getIcon(node.expanded)" cdkTreeNodeToggle [attr.aria-label]="'toggle ' + node.filename" (click)="node.expanded = !node.expanded"
-      [style.visibility]="node.expandable ? 'visible' : 'hidden'">
+      <sw-icon-button [icon]="getIcon(node.expanded)" cdkTreeNodeToggle [attr.aria-label]="'toggle ' + node.filename"
+      (click)="node.expanded = !node.expanded" [style.visibility]="node.expandable ? 'visible' : 'hidden'">
+          
       </sw-icon-button>
       <!-- <button cdkTreeNodeToggle [attr.aria-label]="'toggle ' + node.filename" (click)="node.expanded = !node.expanded"
         [style.visibility]="node.expandable ? 'visible' : 'hidden'">
