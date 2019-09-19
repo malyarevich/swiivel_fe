@@ -1,4 +1,4 @@
-import { ArrayDataSource, DataSource, SelectionModel } from '@angular/cdk/collections';
+import { ArrayDataSource, DataSource } from '@angular/cdk/collections';
 import {FlatTreeControl} from '@angular/cdk/tree';
 import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 import { FormControl } from '@angular/forms';
