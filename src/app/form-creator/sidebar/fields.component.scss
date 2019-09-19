@@ -12,4 +12,17 @@
       box-shadow: inset 0px -1px 0px #E7E7E7;
     }
   }
+  .drop-above {
+    border-top: 10px solid #dddddd;
+    margin-top: -10px;
+  }
+  
+  .drop-below {
+    border-bottom: 10px solid #dddddd;
+    margin-bottom: -10px;
+  }
+  
+  .drop-center {
+    background-color: #dddddd;
+  }
 }

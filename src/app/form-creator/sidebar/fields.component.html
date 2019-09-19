@@ -2,8 +2,20 @@
 
   <!-- This is the tree node template for leaf nodes -->
   <cdk-tree-node *cdkTreeNodeDef="let node" cdkTreeNodePadding cdkTreeNodePaddingIndent="15px"
-    [style.display]="shouldRender(node) ? 'flex' : 'none'" class="field-tree-node">
-    <div class="field-tree-node__content">
+    [style.display]="shouldRender(node) ? 'flex' : 'none'" class="field-tree-node"
+    >
+    <div class="field-tree-node__content" 
+    [ngClass]="{'drop-above': dragNodeExpandOverArea === 'above' && dragNodeExpandOverNode === node,
+    'drop-below': dragNodeExpandOverArea === 'below' && dragNodeExpandOverNode === node,
+    'drop-center': dragNodeExpandOverArea === 'center' && dragNodeExpandOverNode === node}"
+draggable="true"
+(dragstart)="handleDragStart($event, node);"
+(dragover)="handleDragOver($event, node);"
+(drop)="handleDrop($event, node);"
+(dragend)="handleDragEnd($event);">
+<!-- [checked]="descendantsAllSelected(node)" -->
+<!-- [indeterminate]="descendantsPartiallySelected(node)"
+(change)="todoItemSelectionToggle(node)" -->
       <sw-input-checkbox [(ngModel)]="node.exist">
         <i class="dragdrop fas fa-ellipsis-v"></i>
         <span class="input_label">{{node.name}}</span>
@@ -15,7 +27,15 @@
   <!-- This is the tree node template for expandable nodes -->
   <cdk-tree-node *cdkTreeNodeDef="let node; when: hasChild" cdkTreeNodePadding cdkTreeNodePaddingIndent="15px"
     [style.display]="shouldRender(node) ? 'flex' : 'none'" class="field-tree-node">
-    <div class="field-tree-node__content">
+    <div class="field-tree-node__content"
+    [ngClass]="{'drop-above': dragNodeExpandOverArea === 'above' && dragNodeExpandOverNode === node,
+    'drop-below': dragNodeExpandOverArea === 'below' && dragNodeExpandOverNode === node,
+    'drop-center': dragNodeExpandOverArea === 'center' && dragNodeExpandOverNode === node}"
+draggable="true"
+(dragstart)="handleDragStart($event, node);"
+(dragover)="handleDragOver($event, node);"
+(drop)="handleDrop($event, node);"
+(dragend)="handleDragEnd($event);">
       <sw-input-checkbox [(ngModel)]="node.exist">
         <i class="dragdrop fas fa-ellipsis-v"></i>
         <span class="input_label">{{node.name}}</span>
@@ -33,3 +53,4 @@
 
   </cdk-tree-node>
 </cdk-tree>
+<span #emptyItem></span>
