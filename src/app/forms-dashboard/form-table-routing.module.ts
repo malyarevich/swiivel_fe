@@ -1,8 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { FormTableComponent } from './form-table.component';
-import { MainComponent } from '@app/core/components/main.component';
 import { AuthGuard } from '@app/core/auth.guard';
+import { MainComponent } from '@app/core/components/main.component';
+import { FormConstructorComponent } from '@app/forms-dashboard/form-constructor/form-constructor.component';
+import { FormTableComponent } from '@app/forms-dashboard/form-table.component';
+import { OnlineFormComponent } from '@app/forms-dashboard/online-form/online-form.component';
 
 export const routes: Routes = [
   {
@@ -12,6 +14,8 @@ export const routes: Routes = [
     canActivateChild: [AuthGuard],
     children: [
       { path: 'forms-dashboard',  component: FormTableComponent, pathMatch: 'full' },
+      { path: 'forms-dashboard/form-constructor/:mongo_id', component: FormConstructorComponent, pathMatch: 'full'},
+      { path: 'forms-dashboard/online-form/:mongo_id', component: OnlineFormComponent, pathMatch: 'full'}
     ]
   },
 ];

@@ -1,6 +1,7 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Form } from '@models/data-collection/form';
 import { IconsEnum } from '@shared/icons.enum';
 import { DialogComponent } from '@shared/popup/dialog.component';
@@ -64,6 +65,7 @@ export class FormTableComponent implements OnInit {
 
   constructor(
     public dataCollectionService: DataCollectionService,
+    public router: Router,
     private cd: ChangeDetectorRef,
     private fb: FormBuilder) {
     this.filterForm = this.fb.group({
@@ -332,5 +334,13 @@ export class FormTableComponent implements OnInit {
           });
       }
     });
+  }
+
+  goToEditPage(mongoId: string): void {
+    this.router.navigate([`forms-dashboard/form-constructor/${mongoId}`]).then();
+  }
+
+  goToViewPage(mongoId: string): void {
+    this.router.navigate([`forms-dashboard/online-form/${mongoId}`]).then();
   }
 }
