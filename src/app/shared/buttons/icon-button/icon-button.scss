@@ -5,6 +5,7 @@
   background: transparent;
   border: none;
   text-align: center;
+  outline: none;
 
   &:hover,
   &:focus {
@@ -23,5 +24,27 @@
     .icon-button__icon {
       font-size: 14px;
     }
+  }
+}
+
+:host(.field-creator) {
+  .icon-button {
+    color: #fff;
+    opacity: 0.6;
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+
+:host(.field-creator.blue) {
+  .icon-button {
+    color: $button-color;
+  }
+}
+
+:host(.field-creator.active) {
+  .icon-button {
+    opacity: 1;
   }
 }

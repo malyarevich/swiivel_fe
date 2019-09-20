@@ -1,3 +1,5 @@
+@import "index";
+
 :host {
   .example-tree-node {
     display: flex;
@@ -11,13 +13,84 @@
     }
   }
 
+  .group-tree-node {
+    .field {
+      background: #EBEEFF;
+      border: 1px solid rgba(67, 80, 162, 0.2);
+      box-sizing: border-box;
+      .name-container {
+        width: 250px;
+        .main-text {
+          font-style: normal;
+          font: 800 12px/15px $nunito-sans;
+        }
+        .hint {
+          font-style: normal;
+          font: 400 10px/13px $nunito-sans;
+        }
+      }
+      .dragdrop {
+        color: #A4A4A4;
+      }
+      &.active {
+        border: 1px solid #4350A2;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+    }
+  }
+
   .section-tree-node {
+    .field {
+      background: #50597A;
+      .dragdrop {
+        color: #fff;
+      }
+    }
+  }
+
+  .field-workarea-node {
+    .field {
+      background: #fff;
+      border: 1px solid rgba(67, 80, 162, 0.2);
+      box-sizing: border-box;
+      padding: 10px 15px;
+      .name-container {
+        width: 300px;
+        .main-text {
+          font-style: normal;
+          font: 800 12px/15px $nunito-sans;
+        }
+        .hint {
+          font-style: normal;
+          font: 400 10px/13px $nunito-sans;
+        }
+      }
+      .dragdrop {
+        color: #A4A4A4;
+      }
+      .input {
+        margin-left: 25px;
+        &:first-of-type {
+          margin-left: 20px;
+        }
+      }
+      &.active {
+        border: 1px solid #4350A2;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+    }
+  }
+
+  .section-tree-node,
+  .group-tree-node,
+  .field-workarea-node {
     display: flex;
     flex-flow: column nowrap;
     .field {
-      padding: 10px 15px;
-      background: #50597A;
-      border-radius: 5px;
+      padding-left: 15px;
+      border-radius: 3px;
       z-index: 5;
       display: flex;
       flex-flow: row nowrap;
@@ -32,6 +105,21 @@
           text-align: center;
           margin-right: 10px;
           .dragdrop {
+            font-size: 18px;
+          }
+        }
+      }
+      .actions {
+        display: flex;
+        align-items: center;
+        flex-flow: row nowrap;
+        .icon {
+          margin-left: 15px;
+          &.dragdrop {
+            padding: 15px;
+            border-left: 1px solid #C9CEEC;
+          }
+          &.active {
             color: #fff;
           }
         }

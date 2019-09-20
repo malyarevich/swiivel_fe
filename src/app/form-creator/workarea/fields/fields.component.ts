@@ -42,4 +42,8 @@ export class WorkareaFieldsComponent implements OnInit {
     return should;
   }
 
+  getIcon(expanded: boolean): string {
+    return expanded ? 'fa-caret-up' : 'fa-caret-down';
+  }
+
 }
