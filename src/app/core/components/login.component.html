@@ -5,10 +5,10 @@
       <h5 class="text-center app-text-primary mt-5">Welcome to the ABC School</h5>
       <h6 class="text-center mb-5">Please login for starting</h6>
       <h6 class="text-center app-text-primary">{{form.get('password').getError('incorrect')}}</h6>
-      <sw-input-text formControlName="username" [autofocus]="focusUsername" autocomplete="username">
+      <sw-input-text formControlName="username" [autofocus]="focusUsername" autocomplete="username" data-e2e="username">
         <span class="label">Username</span>
       </sw-input-text>
-      <sw-input-text formControlName="password" [type]="inputType" autocomplete="current-password" #password>
+      <sw-input-text formControlName="password" [type]="inputType" autocomplete="current-password" #password data-e2e="password">
         <span class="label">Password</span>
         <i class="fa"
           [ngClass]="inputType === 'password' ? 'fa-eye' : 'fa-eye-slash'"
