@@ -4,6 +4,7 @@
   .field-tree-node {
     background: #fff;
     border-radius: 5px;
+    display: block;
     &__content {
       width: 100%;
       padding: 10px 0;
@@ -11,6 +12,9 @@
       flex-flow: row nowrap;
       justify-content: space-between;
       box-shadow: inset 0px -1px 0px #E7E7E7;
+    }
+    .field-tree-node {
+      padding-left: 15px;
     }
   }
   .drop-above {
@@ -26,4 +30,8 @@
   .drop-center {
     background-color: #dddddd;
   }
+  .field-tree-invisible {
+    display: none;
+  }
+  
 }

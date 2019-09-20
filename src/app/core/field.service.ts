@@ -2,13 +2,26 @@ import { Injectable } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FieldType } from '@shared/fields.enum';
 import { flatMapDeep } from 'lodash';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FieldService {
 
+  private sidebarSubject = new BehaviorSubject<any>(null);
+  private siddebar$ = this.sidebarSubject.asObservable();
+
   constructor() { }
+
+  set sidebar(field) {
+    this.sidebarSubject.next(this.toNestedTree(field));
+  }
+
+  get sidebar() {
+    return this.siddebar$
+  }
+
   toFlatTree(fields: any[], level = 0) {
       const res = flatMapDeep(fields.slice(), (field) => {
         field.level = level;
@@ -27,6 +40,16 @@ export class FieldService {
         }
       });
       return res;
+  }
+  toNestedTree(fields: any): any {
+    console.log('toNestedTree', fields)
+    const res = flatMapDeep(fields, (field) => {
+      if (field.type === FieldType.SECTION || field.type === FieldType.GROUP) {
+        field.expandable = true;
+      } 
+      return field;
+    });
+    return res;
   }
   fromArray(fields: any[], recursive?): FormGroup | any[] {
     const form = {};

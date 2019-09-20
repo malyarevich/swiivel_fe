@@ -3,31 +3,31 @@
     <!-- (cdkDropListDropped)="drop($event)" -->
 
   <!-- This is the tree node template for leaf nodes -->
-  <cdk-tree-node *cdkTreeNodeDef="let node" cdkTreeNodePadding cdkTreeNodePaddingIndent="15px"
-    [style.display]="shouldRender(node) ? 'flex' : 'none'" class="field-tree-node" cdkDrag [cdkDragData]="node">
+  <cdk-nested-tree-node *cdkTreeNodeDef="let node"
+    class="field-tree-node" cdkDrag [cdkDragData]="node">
     <div class="field-tree-node__content">
-      <sw-input-checkbox [(ngModel)]="node.exist">
+      <sw-input-checkbox [(ngModel)]="node.isActive" (ngModelChange)="onChange($event)">
         <i class="dragdrop fas fa-ellipsis-v" cdkDragHandle></i>
         <span class="input_label">{{node.name}}</span>
       </sw-input-checkbox>
     </div>
     <!-- use a disabled button to provide padding for tree leaf -->
-  </cdk-tree-node>
+  </cdk-nested-tree-node>
 
   <!-- This is the tree node template for expandable nodes -->
-  <cdk-tree-node *cdkTreeNodeDef="let node; when: hasChild" cdkTreeNodePadding cdkTreeNodePaddingIndent="15px"
-    [style.display]="shouldRender(node) ? 'flex' : 'none'" class="field-tree-node" cdkDrag [cdkDragData]="node">
+  <cdk-nested-tree-node *cdkTreeNodeDef="let node; when: hasChild"
+     class="field-tree-node" cdkDrag [cdkDragData]="node">
     <div class="field-tree-node__content">
-      <sw-input-checkbox [(ngModel)]="node.exist">
+      <sw-input-checkbox [(ngModel)]="node.isActive" (ngModelChange)="onChange($event)">
         <i class="dragdrop fas fa-ellipsis-v" cdkDragHandle></i>
         <span class="input_label">{{node.name}}</span>
       </sw-input-checkbox>
-      <sw-icon-button [icon]="getIcon(node.expanded)" cdkTreeNodeToggle [attr.aria-label]="'toggle ' + node.filename"
-      (click)="node.expanded = !node.expanded" [style.visibility]="node.expandable ? 'visible' : 'hidden'">
-
+      <sw-icon-button [icon]="getIcon(treeControl.isExpanded(node))" cdkTreeNodeToggle [attr.aria-label]="'toggle ' + node.name">
       </sw-icon-button>
     </div>
 
-
-  </cdk-tree-node>
+    <div [class.field-tree-invisible]="!treeControl.isExpanded(node)">
+        <ng-container cdkTreeNodeOutlet></ng-container>
+      </div>
+  </cdk-nested-tree-node>
 </cdk-tree>

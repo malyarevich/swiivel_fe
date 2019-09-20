@@ -28,5 +28,8 @@ export class TreeDataSource implements DataSource<any> {
   set data(data: any) {
     this.dataSubject.next(data);
   }
+  get data() {
+    return this.dataSubject.getValue();
+  }
   
  }
