@@ -40,8 +40,12 @@ export class InputSuggestComponent implements ControlValueAccessor {
         } else {
           this.filteredOptions = this.options;
         }
-        if (this.filteredOptions.length > 0) {
+        if (this.filteredOptions.length > 1) {
           if (!this.dropdown.isOpened) this.dropdown.showPopup();
+        } else if (this.filteredOptions.length === 1) {
+          if (this.filteredOptions[0].title === value) {
+            this.onChange(this.filteredOptions[0].value);
+          }
         }
       } else {
         this.filteredOptions = this.options;

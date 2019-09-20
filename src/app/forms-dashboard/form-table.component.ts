@@ -173,7 +173,7 @@ export class FormTableComponent implements OnInit {
 
   clickTab(filter) {
     this.activeTab = filter;
-    this.filterForm.get('status').setValue(filter.value);
+    this.filterForm.get('status').setValue(filter.title, {emitEvent: false});
   }
 
   bulkAction(selectedIndex) {
