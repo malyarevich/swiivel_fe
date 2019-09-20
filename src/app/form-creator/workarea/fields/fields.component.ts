@@ -1,24 +1,28 @@
 import { ArrayDataSource } from '@angular/cdk/collections';
 import {FlatTreeControl} from '@angular/cdk/tree';
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { FieldService } from '@app/core/field.service';
 import { fields, sidebar } from '@shared/fields';
 import { ApiService } from '@app/core/api.service';
 import { TreeDataSource } from '@app/form-creator/tree.datasource';
+import { FormCreatorService } from '@app/form-creator/form-creator.service';
+import { Subject } from 'rxjs';
 
 
 @Component({
   selector: 'sw-form-creator-workarea-fields',
   templateUrl: './fields.component.html',
-  styleUrls: ['./fields.component.scss']
+  styleUrls: ['./fields.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WorkareaFieldsComponent implements OnInit {
+  destroyed$ = new Subject();
   treeControl = new FlatTreeControl<any>(node => node.level, field => field.type === 113 || field.type === 114);
   sidebar: any[] = [];
   fieldsTree: any[];
   treeSource = new TreeDataSource();
 
-  constructor(private fs: FieldService, private api: ApiService, private cdr: ChangeDetectorRef) {
+  constructor(private fs: FieldService, private api: ApiService,private service: FormCreatorService, private cdr: ChangeDetectorRef) {
     this.api.getSidebarFields().subscribe((sidebar) => {
       this.sidebar = sidebar;
       this.fieldsTree = this.fs.toFlatTree(this.sidebar.slice());
@@ -35,9 +39,15 @@ export class WorkareaFieldsComponent implements OnInit {
     //     this.treeSource.data = this.fieldsTree;
     //   }
     // });
+    if (this.service.fields) {
+      this.cdr.detectChanges();
+    }
   }
 
-  hasChild = (_: number, node: any) => node.expandable;
+
+  ngOnDestroy() {
+    this.destroyed$.complete();
+  }
 
   getIcon(expanded: boolean): string {
     return expanded ? 'fa-caret-up' : 'fa-caret-down';

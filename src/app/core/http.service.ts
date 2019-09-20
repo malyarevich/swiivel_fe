@@ -1,9 +1,10 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
-import { catchError, finalize, timeout,  } from 'rxjs/operators';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { catchError, finalize, timeout, map,  } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { ApiResponse } from '@app/models/api';
 
 
 @Injectable({
@@ -23,15 +24,6 @@ export class HttpService {
     return this.errorSubject.asObservable();
   }
 
-  static setAuthLoadHeaders(token: string) {
-    let headers = new HttpHeaders();
-    headers = headers.set('Authorization', `Bearer ${token}`);
-    return headers;
-  }
-  static setAuthHeader(token: string, headers?: HttpHeaders) {
-    if (!headers) { headers = new HttpHeaders(); }
-    return headers.set('Authorization', `Bearer ${token}`);
-  }
   static setFormMultipart(headers?: HttpHeaders) {
     if (!headers) { headers = new HttpHeaders(); }
     return headers.set('Content-Type', `multipart/form-data;`);
@@ -42,6 +34,13 @@ export class HttpService {
     return this.http.post(this.apiUrl + url, data)
       .pipe(
         timeout(this.apiTimeout),
+        map((response: ApiResponse) => {
+          if (response.status === 1) {
+            return response.data;
+          } else {
+            throw new HttpErrorResponse({error: response.errors, status: response.status});
+          }
+        }),
         catchError(this.handleError),
         finalize(() => this.endRequest())
       );
@@ -55,14 +54,31 @@ export class HttpService {
       reportProgress: true,
       observe: 'events'
     }).pipe(
+      map((response: any) => {
+        if (response.status === 1) {
+          return response.data;
+        } else {
+          throw new HttpErrorResponse({error: response.errors, status: response.status});
+        }
+      }),
       catchError(this.handleError),
       finalize(() => this.endRequest())
     );
   }
   'get'(url: string, options?: any, requestTimeout?: number): Observable<any> {
-    return this.http.get(this.apiUrl + url, options)
+    return this.http.get<Object>(this.apiUrl + url, {
+      responseType: "json",
+      ...options
+    })
       .pipe(
         timeout(requestTimeout || this.apiTimeout),
+        map((response: any) => {
+          if (response.status === 1) {
+            return response.data;
+          } else {
+            throw new HttpErrorResponse({error: response.errors, status: response.status});
+          }
+        }),
         catchError((error) => this.handleError(error)),
         finalize(() => this.endRequest())
       );
@@ -72,6 +88,13 @@ export class HttpService {
     return this.http.put(this.apiUrl + url, data)
       .pipe(
         timeout(this.apiTimeout),
+        map((response: ApiResponse) => {
+          if (response.status === 1) {
+            return response.data;
+          } else {
+            throw new HttpErrorResponse({error: response.errors, status: response.status});
+          }
+        }),
         catchError(this.handleError),
         finalize(() => this.endRequest())
       );
@@ -83,6 +106,13 @@ export class HttpService {
       reportProgress: true,
       observe: 'events'
     }).pipe(
+      map((response: any) => {
+        if (response.status === 1) {
+          return response.data;
+        } else {
+          throw new HttpErrorResponse({error: response.errors, status: response.status});
+        }
+      }),
       catchError(this.handleError),
       finalize(() => this.endRequest())
     );
@@ -120,6 +150,9 @@ export class HttpService {
       // A client-side or network error occurred. Handle it accordingly.
 
     } else {
+      if ('errors' in error) {
+        console.error(`Bad response`, error);
+      }
       let shouldThrow = true;
       if (!this.errorSubject) { this.errorSubject = new BehaviorSubject(null); }
       if (error.status === 0) {

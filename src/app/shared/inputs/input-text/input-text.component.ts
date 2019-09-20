@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, ElementRef, forwardRef, Input, Renderer2, ViewChild } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, ElementRef, forwardRef, Input, Renderer2, ViewChild, EventEmitter, Output, AfterViewInit, HostBinding } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'sw-input-text',
@@ -16,16 +16,32 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 })
 
 export class InputTextComponent implements ControlValueAccessor {
-
+  @Input() set autofocus(_value: boolean) {
+    this.focus();
+  }
+  @Input() set autocomplete(value: string) {
+    this._autocomplete = value;
+  }
+  public _autocomplete: string = null;
+  public _type = 'text';
   @ViewChild('input', {static: true}) input: ElementRef;
+  @Input() set type(inputType: string) {
+    this._type = inputType;
+  }
   @Input() readonly: boolean;
+  @Output() blur = new EventEmitter<any>();
 
   onChange: (value: any) => void;
   onTouched: () => void;
 
   constructor(
-    private renderer: Renderer2
-  ) {}
+    private renderer: Renderer2,
+  ) {
+  }
+
+  public focus() {
+    this.renderer.selectRootElement(this.input.nativeElement).focus();
+  }
 
   public isEmpty(value: string): boolean {
     return !(value && value.trim().length > 0);
@@ -33,6 +49,11 @@ export class InputTextComponent implements ControlValueAccessor {
 
   public setDisabledState(isDisabled: boolean): void {
     this.renderer.setProperty(this.input.nativeElement, 'disabled', isDisabled);
+  }
+
+  public onBlur(event: Event) {
+    this.onTouched();
+    this.blur.emit(event);
   }
 
   public registerOnTouched(fn: any): void {

@@ -1,8 +1,7 @@
 <div
   #holder
   (click)="toggle()"
-  [ngClass]="{'dropdown-disabled': disabled}"
->
+  [ngClass]="{'dropdown-disabled': disabled}">
   <ng-content></ng-content>
 </div>
 
@@ -11,6 +10,8 @@
     <div
       class="item"
       *ngFor="let item of items; let i = index;"
+      swSelectOption
+      [option]="item"
       [class.selected]="isSelected(i)"
       (click)="select(i)"
     >

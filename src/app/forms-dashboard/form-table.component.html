@@ -14,10 +14,13 @@
         </sw-block-header>
       </div>
       <div class="app-form-table__controls">
+        <div class="app-form-table__controls-button">
+          <sw-button routerLink="/form-creator">Create New Form</sw-button>
+        </div>
         <div
           class="app-form-table__controls-bulk"
         >
-          <sw-dropdown-button
+          <sw-dropdown-select
             [options]="bulkOptions"
             #bulk="dropdown"
             (selected)="bulkAction($event)"
@@ -33,7 +36,7 @@
                 [ngClass]="{'fa-chevron-up': bulk.isOpened}"
               ></i>
             </sw-button>
-          </sw-dropdown-button>
+          </sw-dropdown-select>
         </div>
 
       </div>
@@ -146,11 +149,11 @@
             <ng-container cdkColumnDef="updatedAt">
               <th cdk-header-cell *cdkHeaderCellDef>
                 <div class="header_container">
-                  <div class="header_container__title" (click)="sortBy('updatedAt')">
+                  <div class="header_container__title" (click)="sortBy('updated_at')">
                     update date
                     <div class="header_container__title_icons">
                       <i class="fas icon"
-                        [ngClass]="{'up': sort[0] === 'updatedAt' && sort[1] === false, 'down': sort[0] === 'updatedAt' && sort[1] === true}"></i>
+                        [ngClass]="{'up': sort[0] === 'updated_at' && sort[1] === false, 'down': sort[0] === 'updated_at' && sort[1] === true}"></i>
                     </div>
                   </div>
                   <div class="header_container__filter">
@@ -176,15 +179,15 @@
                     </div>
                   </div>
                   <div class="header_container__filter">
-                    <sw-input-text class="filter-field" formControlName="status"></sw-input-text>
+                    <sw-input-suggest class="filter-field" formControlName="status" [options]="statusArray"></sw-input-suggest>
                   </div>
                 </div>
               </th>
               <td cdk-cell *cdkCellDef="let form">
-                <sw-dropdown-button
+                <sw-dropdown-select
                   [options]="statusesOptions"
                   #bulk="dropdown"
-                  (selected)="changeStatus($event, form)"
+                  (selected)="changeStatus($event, [form.id])"
                 >
                   <sw-small-button
                     [ngClass]="{'icon-end': true}"
@@ -192,7 +195,7 @@
                     [text]="form.status"
                     [icon]="icons.CARET_DOWN"
                   ></sw-small-button>
-                </sw-dropdown-button>
+                </sw-dropdown-select>
               </td>
             </ng-container>
 
@@ -201,10 +204,20 @@
               </th>
               <td cdk-cell *cdkCellDef="let form">
                 <div class="item">
-                  <sw-small-button text="Edit" [icon]="icons.PEN"></sw-small-button>
+                  <sw-small-button
+                    text="Edit"
+                    [icon]="icons.PEN"
+                    (onClick)="goToEditPage(form.mongo_id)"
+                  >
+                  </sw-small-button>
                 </div>
                 <div class="item">
-                  <sw-small-button text="View" [icon]="icons.EYE"></sw-small-button>
+                  <sw-small-button
+                    text="View"
+                    [icon]="icons.EYE"
+                    (onClick)="goToViewPage(form.mongo_id)"
+                  >
+                  </sw-small-button>
                 </div>
                 <div class="item">
                   <sw-icon-button
@@ -230,7 +243,7 @@
               </td>
             </ng-container>
 
-            <tr cdk-header-row class="filters-row" *cdkHeaderRowDef="displayedColumns; sticky: true"></tr>
+            <tr cdk-header-row class="filters-row" *cdkHeaderRowDef="displayedColumns;"></tr>
             <tr cdk-row class="table-row" [class.selected]="rowSelected(form)" #data
               *cdkRowDef="let form; columns: displayedColumns;" (click)="selectRow(form, $event)">
             </tr>

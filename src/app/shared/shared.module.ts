@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-
+import { RouterModule } from '@angular/router';
+import { CdkTreeModule } from '@angular/cdk/tree';
 // Buttons
 import { ButtonComponent } from './buttons/button/button.component';
-import { DropdownButtonComponent } from './buttons/dropdown-button/dropdown-button.component';
 import { IconButtonComponent } from './buttons/icon-button/icon-button.component';
 import { SmallButtonComponent } from './buttons/small-button/small-button.component';
 import { DropdownInputComponent } from './inputs/dropdown-input/dropdown-input.component';
@@ -14,8 +14,11 @@ import { InputCheckboxComponent } from './inputs/input-checkbox/input-checkbox.c
 import { InputDynamicComponent } from './inputs/input-dynamic/input-dynamic.component';
 import { InputNumberComponent } from './inputs/input-number/input-number.component';
 import { InputTextComponent } from './inputs/input-text/input-text.component';
+import { InputSuggestComponent } from './inputs/input-suggest/input-suggest.component';
+
 import { InputTextareaComponent } from './inputs/input-textarea/input-textarea.component';
 import { InputToggleComponent } from './inputs/input-toggle/input-toggle.component';
+import { DropdownSelectComponent } from './inputs/dropdown-select/dropdown-select.component';
 
 // Headers
 import { BlockHeaderComponent} from './headers/block-header/block-header.component';
@@ -28,17 +31,21 @@ import { DialogComponent } from './popup/dialog.component';
 import { RadioGroupComponent } from './inputs/radio-group/radio-group.component';
 import { LabelComponent } from './label/label.component';
 import { UserItemComponent } from './user-item/user-item.component';
+import { SelectOptionDirective } from './inputs/dropdown-select/option.directive';
+import { MainComponent } from './main.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   imports: [
     CommonModule,
+    RouterModule,
     ReactiveFormsModule,
+    CdkTreeModule
   ],
   declarations: [
     // Buttons
     ButtonComponent,
-    DropdownButtonComponent,
+    DropdownSelectComponent,
     IconButtonComponent,
     SmallButtonComponent,
     // Inputs
@@ -47,6 +54,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     InputDynamicComponent,
     InputNumberComponent,
     InputTextComponent,
+    InputSuggestComponent,
     InputToggleComponent,
     DropdownInputComponent,
     InputPhoneNumberComponent,
@@ -60,6 +68,9 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     LabelComponent,
     UserItemComponent,
     RadioGroupComponent,
+    // Directives
+    SelectOptionDirective,
+    MainComponent,
   ],
   exports: [
     CommonModule,
@@ -73,12 +84,13 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     InputDynamicComponent,
     InputNumberComponent,
     InputTextComponent,
+    InputSuggestComponent,
     InputToggleComponent,
     DropdownInputComponent,
     InputPhoneNumberComponent,
     InputEmailComponent,
     InputTextareaComponent,
-    DropdownButtonComponent,
+    DropdownSelectComponent,
     DialogComponent,
     RadioGroupComponent,
     // Headers
@@ -88,7 +100,11 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     LabelComponent,
     UserItemComponent,
     ReactiveFormsModule,
-    DragDropModule
+    // Directives
+    SelectOptionDirective,
+    MainComponent,
+    DragDropModule,
+    CdkTreeModule
   ]
 })
 export class SharedModule { }

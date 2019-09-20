@@ -3,24 +3,24 @@
 .app-form-table {
   padding: 15px;
 
-  .app-form-table__header {
+  &__header {
     display: flex;
     justify-content: space-between;
     height: 30px;
     padding-bottom: 10px;
   }
 
-  .app-form-table__table {
+  &__table {
     padding: 15px;
     background: #fff;
   }
 
-  .app-form-table__tabs {
+  &__tabs {
     display: flex;
     margin: 0 0 15px 0;
   }
 
-  .app-form-table__tab {
+  &__tab {
     margin: 0 25px 0 0;
     padding: 0;
     color: $gray-color;
@@ -41,7 +41,15 @@
     }
   }
 
-  .app-form-table__controls-bulk-btn-text {
+  &__controls {
+    display: flex;
+  }
+
+  &__controls-button {
+    margin: 0 10px 0 0;
+  }
+
+  &__controls-bulk-btn-text {
     margin: 0 10px 0 0;
   }
 }

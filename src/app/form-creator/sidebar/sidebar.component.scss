@@ -1,3 +1,13 @@
 :host {
   flex: 0.25;
+  div.header {
+    display: flex;
+    flex-flow: row nowrap;
+  }
+  div.content {
+    display: none;
+    &.expanded {
+      display: flex;
+    }
+  }
 }

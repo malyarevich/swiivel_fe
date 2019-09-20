@@ -4,16 +4,18 @@
       <h2 class="text-center">Login</h2>
       <h5 class="text-center app-text-primary mt-5">Welcome to the ABC School</h5>
       <h6 class="text-center mb-5">Please login for starting</h6>
-      <sw-input-text formControlName="username">
+      <h6 class="text-center app-text-primary">{{form.get('password').getError('incorrect')}}</h6>
+      <sw-input-text formControlName="username" [autofocus]="focusUsername" autocomplete="username">
         <span class="label">Username</span>
       </sw-input-text>
-      <section class="passwordWrapper">
-        <sw-input-text formControlName="password">
-          <span class="label">Password</span>
-    
+      <sw-input-text formControlName="password" [type]="inputType" autocomplete="current-password" #password>
+        <span class="label">Password</span>
+        <i class="fa"
+          [ngClass]="inputType === 'password' ? 'fa-eye' : 'fa-eye-slash'"
+          (click)="toggleInputType($event);password.focus()"
+          [attr.title]="iconText"
+          *ngIf="form.get('password').valid && form.get('password').dirty"></i>
         </sw-input-text>
-        <img [attr.title]="iconText" [attr.src]="iconUrl" (click)="changeField($event)">
-      </section>
       <a routerLink="/restore-password" class="smallText">
         Forgot password?
       </a>

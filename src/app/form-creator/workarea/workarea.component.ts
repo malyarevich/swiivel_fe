@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, ChangeDetectorRef } from '@angular/core';
+import { FormCreatorService } from '../form-creator.service';
 
 @Component({
   selector: 'sw-form-creator-workarea',
@@ -16,9 +17,14 @@ export class WorkareaComponent implements OnInit {
   get workarea(): string {
     return this._workarea;
   }
-  constructor() { }
+  constructor(private service: FormCreatorService, private cdr: ChangeDetectorRef) {
+  }
 
   ngOnInit() {
+    this.service.section$.subscribe(section => {
+      this._workarea = section;
+      this.cdr.markForCheck();
+    });
   }
 
 }
