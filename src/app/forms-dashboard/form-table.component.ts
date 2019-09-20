@@ -9,6 +9,7 @@ import { pick } from 'lodash';
 import { DateTime } from 'luxon';
 import { DataCollectionService } from './data-collection.service';
 import { FormsDataSource } from './form-table.datasource';
+import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-form-table',
@@ -81,8 +82,16 @@ export class FormTableComponent implements OnInit {
   ngOnInit() {
     this._sm = new SelectionModel(true);
     this.dataSource.loadFormsList(this.params);
-    this.filterForm.valueChanges.subscribe(value => {
-      this.dataSource.filter(value);
+    this.filterForm.valueChanges.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      map(value => {
+        Object.keys(value).forEach(key => value[key] === null && delete value[key])
+        return value;
+      })
+    ).subscribe(value => {
+      this.params.filter = {...value};
+      this.dataSource.loadFormsList(this.params);
     });
   }
 
@@ -134,7 +143,8 @@ export class FormTableComponent implements OnInit {
     } else {
       this.sort = [field, true];
     }
-    this.dataSource.sort(this.sort);
+    this.params.sort[field] = this.sort[1];
+    this.dataSource.loadFormsList(this.params);
   }
 
   selectRow(row: any, e: Event) {
