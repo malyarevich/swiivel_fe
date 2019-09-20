@@ -14,11 +14,7 @@ export class ApiService {
   constructor(protected http: HttpService) {}
 
   public login(data: LoginData): any {
-    return this.http.post('/login', {...data}).pipe(
-      map((response: ApiResponse) => {
-        if (response.status === 1) { return response.data; }
-      })
-    );
+    return this.http.post('/login', {...data});
   }
   forgotPassword(email: string) {
     return this.http.post('/forgot-password', { email });

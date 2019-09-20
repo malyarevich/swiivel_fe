@@ -4,6 +4,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
+import { TreeModule } from 'angular-tree-component';
+
 import { AppComponent } from './app.component';
 
 import { AuthGuard } from '@core/auth.guard';
@@ -33,6 +35,7 @@ import { PopupComponent } from '@core/components/popup/popup.component';
     PopupComponent,
   ],
   imports: [
+    TreeModule.forRoot(),
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
