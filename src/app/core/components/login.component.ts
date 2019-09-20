@@ -11,6 +11,7 @@ import { User } from '@models/auth';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginComponent {
+  public focusUsername: any = true;
   public form: FormGroup;
   public inputType = 'password';
   public iconText = 'Show password';
@@ -19,7 +20,6 @@ export class LoginComponent {
       username: ['', [Validators.required]],
       password: ['', [Validators.required]],
     });
-    // this.form.valueChanges
   }
 
   toggleInputType(event: Event) {
@@ -40,11 +40,18 @@ export class LoginComponent {
       const {username, password} = this.form.value;
       this.auth.login(username, password).then((user: User) => {
         if (user) {
-          this.router.navigate(['/']);
+          let redirect = this.auth.redirect;
+          if (redirect) {
+            this.auth.clearRedirect();
+            this.router.navigateByUrl(redirect);
+          } else {
+            this.router.navigate(['/'])
+          }
         }
       }, (error) => {
         if (error.error.status === 0) {
           this.form.get('password').setErrors({incorrect: error.error.errors}, {emitEvent: true});
+          this.focusUsername = new Date();
           this.cdr.markForCheck()
           console.error(error.error.errors);
         }
