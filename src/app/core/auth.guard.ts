@@ -1,30 +1,30 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, CanLoad, Route, Router,
-  RouterStateSnapshot, UrlSegment, UrlTree } from '@angular/router';
+  RouterStateSnapshot, UrlSegment } from '@angular/router';
 import { AuthService } from '@core/auth.service';
-import { Observable } from 'rxjs';
 
 
 
 @Injectable()
-export class AuthGuard implements CanLoad, CanActivate, CanActivateChild {
-    canActivateChild(childRoute: ActivatedRouteSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
-      if (this.auth.user) { return true; } else {
-        this.router.navigate(['/login']);
-        return false;
-      }
-    }
+export class AuthGuard implements  CanActivate, CanActivateChild, CanLoad {
   constructor(private auth: AuthService, private router: Router) { }
-  canLoad(route: Route, segments: UrlSegment[]): Observable<boolean> | Promise<boolean> | boolean {
-    if (this.auth.user) { return true; } else {
-      this.router.navigate(['/login']);
-      return false;
-    }
+
+  canLoad(_route: Route, _segments: UrlSegment[]) {
+    return this.isAllowed();
   }
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    if (this.auth.user) { return true; } else {
-      this.router.navigate(['/login']);
-      return false;
-    }
+  canActivateChild(_route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    return this.isAllowed() ? true : this.toLogin(state.url);
+  }
+  canActivate(_route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    return this.isAllowed() ? true : this.toLogin(state.url);
+  }
+
+  isAllowed(): boolean {
+    return !!this.auth.user;
+  }
+
+  toLogin(from?: string) {
+    if (from) this.auth.redirect = from;
+    return this.router.parseUrl('/login');
   }
 }

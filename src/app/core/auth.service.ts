@@ -1,8 +1,7 @@
-// import {HttpClient} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { User } from '@app/models/auth';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { ApiService } from './api.service';
 
@@ -33,13 +32,11 @@ export class AuthService {
   }
 
   constructor(private api: ApiService) {
-    this.redirect;
     this.userSubject$.subscribe((user) => {
       if (user) {
         this.saveUser(user);
       }
     });
-    // if ()
   }
   get events$() {
     return this.eventSubject$;
@@ -48,20 +45,10 @@ export class AuthService {
     this.eventSubject$.next(eventObj);
   }
   get redirect() {
-    if (!this.redirectUrl && !window.sessionStorage.getItem('redirect') && window.location.pathname !== '/login') { window.sessionStorage.setItem('redirect', window.location.pathname); }
-    if (!this.redirectUrl) { this.redirectUrl = window.sessionStorage.getItem('redirect'); }
-    if (!this.redirectUrl) {
-      this.redirectUrl = '/';
-    }
     return this.redirectUrl;
   }
   set redirect(url: string) {
-    if (url !== '/login') {
-      this.redirectUrl = url;
-      if (window.sessionStorage) {
-        window.sessionStorage.setItem('redirect', this.redirectUrl);
-      }
-    }
+    this.redirectUrl = url;
   }
 
   clearRedirect() {
@@ -70,7 +57,7 @@ export class AuthService {
   }
 
   load() {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve, _reject) => {
       let savedUser = this.loadUser();
       if (savedUser) {
         this.setUser(savedUser);
@@ -130,7 +117,6 @@ export class AuthService {
 
   public clearStorage() {
     sessionStorage.removeItem('user');
-    sessionStorage.removeItem('redirect');
     localStorage.removeItem('user');
   }
 
