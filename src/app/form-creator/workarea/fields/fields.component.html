@@ -39,7 +39,7 @@
       <div class="actions">
         <div class="icon">
           <sw-icon-button icon="fa-cog" class="field-creator blue" [class.active]="node.showSettings"
-            (click)="node.showSettings = !node.showSettings">
+            (click)="settingsTogle(node)">
           </sw-icon-button>
         </div>
         <div class="icon">
@@ -91,7 +91,7 @@
       <div class="actions">
         <div class="icon">
           <sw-icon-button icon="fa-cog" class="field-creator" [class.blue]="node.type === 113"
-            [class.active]="node.showSettings" (click)="node.showSettings = !node.showSettings">
+            [class.active]="node.showSettings" (click)="settingsTogle(node)">
           </sw-icon-button>
         </div>
         <div class="icon">
