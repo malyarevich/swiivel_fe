@@ -33,10 +33,6 @@ export class ApiService {
   }
 
   getSidebarFields() {
-    return this.http.get('/proxy/sidebar-fields').pipe(
-      map((response: ApiResponse) => {
-        if (response.status === 1) { return response.data; }
-      })
-    );
+    return this.http.get('/proxy/sidebar-fields');
   }
 }

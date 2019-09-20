@@ -11,16 +11,18 @@ export class FormsDataSource implements DataSource<any> {
   public count = 0;
   public $loading = this.loadingSubject.asObservable();
 
-  constructor(private data: DataCollectionService) {
+  constructor(private dataService: DataCollectionService) {
     this.dataSubject.subscribe((data) => {
-      data = data.map(form => {
-        form.created_at = new Date(form.created_at);
-        if (form.updated_at) {
-          form.updated_at = new Date(form.updated_at);
-        }
-        return form;
-      })
-      this.formsSubject.next(data);
+      if (data) {
+        data = data.map(form => {
+          form.created_at = new Date(form.created_at);
+          if (form.updated_at) {
+            form.updated_at = new Date(form.updated_at);
+          }
+          return form;
+        })
+        this.formsSubject.next(data);
+      }
     });
   }
 
@@ -35,7 +37,7 @@ export class FormsDataSource implements DataSource<any> {
 
   loadFormsList(params = { page: 0, limit: 10, search: {}, filter: {}, sort: {} }) {
     this.loadingSubject.next(true);
-    this.data.getFormsList(params).pipe(
+    this.dataService.getFormsList(params).pipe(
       catchError(() => of([])),
       finalize(() => this.loadingSubject.next(false))
     ).subscribe(forms => {

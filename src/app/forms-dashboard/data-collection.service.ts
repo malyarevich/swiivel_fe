@@ -5,11 +5,7 @@ import { map } from 'rxjs/operators';
 
 export class DataCollectionService extends ApiService {
   getFormsList(requestParams?: FormSearchParams): Observable<any> {
-    return this.http.post(`/proxy/form-builder/form-templates`, {body: requestParams}).pipe(
-      map(response => {
-        return response.data;
-      })
-    );
+    return this.http.post(`/proxy/form-builder/form-templates`, {body: requestParams});
   }
 
   changeStatus(updatedIds: number[], updatedStatus: string): Observable<any> {

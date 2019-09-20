@@ -1,14 +1,15 @@
 import { ArrayDataSource } from '@angular/cdk/collections';
 import {FlatTreeControl} from '@angular/cdk/tree';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FieldService } from '@app/core/field.service';
-import { fields, sidebar } from '@shared/fields';
+import { fields } from '@shared/fields';
 
 
 @Component({
   selector: 'sw-form-creator-workarea-fields',
   templateUrl: './fields.component.html',
-  styleUrls: ['./fields.component.scss']
+  styleUrls: ['./fields.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WorkareaFieldsComponent implements OnInit {
   treeControl = new FlatTreeControl<any>(node => node.level, field => field.type === 113 || field.type === 114);
@@ -24,7 +25,6 @@ export class WorkareaFieldsComponent implements OnInit {
   hasChild = (_: number, node: any) => node.expandable;
 
   getParentNode(node: any) {
-    const nodeIndex = this.fieldsTree.indexOf(node);
     const parentNode = this.fieldsTree.filter(field => field.type === 113 || field.type === 114).find((field) => {
       return field.prefix === node.prefix;
     });
