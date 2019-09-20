@@ -86,7 +86,7 @@ export class FormTableComponent implements OnInit {
       debounceTime(300),
       distinctUntilChanged(),
       map(value => {
-        Object.keys(value).forEach(key => value[key] === null && delete value[key])
+        Object.keys(value).forEach(key => (value[key] === null || value[key] === '') && delete value[key])
         return value;
       })
     ).subscribe(value => {

@@ -36,7 +36,7 @@ export class InputSuggestComponent implements ControlValueAccessor {
     this.control.valueChanges.subscribe((value) => {
       if (this.options.length > 0 && value) {
         if (value.toString().length > 0) {
-          this.filteredOptions = this.options.filter((option) => option['title'].toLowerCase().includes(value.toString().toLowerCase()));
+          this.filteredOptions = this.options.filter((option) => option['title'].toLowerCase().startsWith(value.toString().toLowerCase()));
         } else {
           this.filteredOptions = this.options;
         }
