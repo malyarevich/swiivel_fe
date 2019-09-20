@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-
+import { RouterModule } from '@angular/router';
 // Buttons
 import { ButtonComponent } from './buttons/button/button.component';
 import { IconButtonComponent } from './buttons/icon-button/icon-button.component';
@@ -31,10 +31,12 @@ import { RadioGroupComponent } from './inputs/radio-group/radio-group.component'
 import { LabelComponent } from './label/label.component';
 import { UserItemComponent } from './user-item/user-item.component';
 import { SelectOptionDirective } from './inputs/dropdown-select/option.directive';
+import { MainComponent } from './main.component';
 
 @NgModule({
   imports: [
     CommonModule,
+    RouterModule,
     ReactiveFormsModule,
   ],
   declarations: [
@@ -65,6 +67,7 @@ import { SelectOptionDirective } from './inputs/dropdown-select/option.directive
     RadioGroupComponent,
     // Directives
     SelectOptionDirective,
+    MainComponent,
   ],
   exports: [
     CommonModule,
@@ -96,6 +99,7 @@ import { SelectOptionDirective } from './inputs/dropdown-select/option.directive
     ReactiveFormsModule,
     // Directives
     SelectOptionDirective,
+    MainComponent
   ]
 })
 export class SharedModule { }

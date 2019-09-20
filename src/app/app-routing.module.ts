@@ -3,9 +3,9 @@ import {RouterModule, Routes} from '@angular/router';
 import { AuthGuard } from '@core/auth.guard';
 import { DashboardComponent } from '@core/components/dashboard.component';
 import { LoginComponent } from '@core/components/login.component';
-import { MainComponent } from '@core/components/main.component';
 import { RestorePasswordComponent } from '@core/components/restore-password.component';
 import { environment } from '@env/environment';
+import { MainComponent } from './shared/main.component';
 
 const routes: Routes = [
   {
@@ -18,39 +18,24 @@ const routes: Routes = [
   },
   {
     path: '',
-    component: MainComponent,
     canActivate: [AuthGuard],
-    canActivateChild: [AuthGuard],
+    component: MainComponent,
     children: [
-      {
-        path: '',
-        pathMatch: 'full',
-        redirectTo: '/dashboard',
-      },
-      {
-        path: 'dashboard',  component: DashboardComponent, pathMatch: 'prefix'
-      },
-      {
-        path: 'form-creator',
-        loadChildren: () => {
-          return import('./form-creator/form-creator.module').then(mod => {
-            return mod.FormCreatorModule;
-          });
-        }
-      },
-      {
-        path: 'forms-dashboard',
-        loadChildren: () => {
-          return import('./forms-dashboard/form-table.module').then(mod => {
-            return mod.FormTableModule;
-          });
-        }
-      }
-    ],
+      { path: 'dashboard', component: DashboardComponent, pathMatch: 'prefix'},
+      { path: '', redirectTo: '/dashboard', pathMatch: 'full'}
+    ]
+  },
+  {
+    path: 'form-creator',
+    loadChildren: () => import('./form-creator/form-creator.module').then(m => m.FormCreatorModule)
+  },
+  {
+    path: 'forms-dashboard',
+    loadChildren: () => import('./forms-dashboard/form-table.module').then(m => m.FormTableModule)
   },
   {
     path: '**',
-    redirectTo: '/',
+    redirectTo: '/dashboard',
   }
 ];
 

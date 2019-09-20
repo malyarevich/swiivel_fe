@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '@app/core/auth.guard';
-import { MainComponent } from '@app/core/components/main.component';
+import { MainComponent } from '@shared/main.component';
 import { FormCreatorComponent } from './form-creator.component';
 
 
@@ -12,15 +12,9 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     canActivateChild: [AuthGuard],
     children: [
-      { path: 'form-creator',  component: FormCreatorComponent, pathMatch: 'full' },
+      { path: '',  component: FormCreatorComponent },
     ]
   },
-  // {
-  //   path: 'form-creator',
-  //   component: FormCreatorComponent,
-  //   canActivate: [AuthGuard],
-  //   canActivateChild: [AuthGuard],
-  // },
 ];
 
 @NgModule({

@@ -339,8 +339,4 @@ export class FormTableComponent implements OnInit {
   goToViewPage(mongoId: string): void {
     this.router.navigate([`forms-dashboard/online-form/${mongoId}`]).then();
   }
-
-  createForm(): void {
-    this.router.navigate(['forms-dashboard/form-constructor']).then();
-  }
 }

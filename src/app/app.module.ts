@@ -3,7 +3,6 @@ import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MainComponent } from '@core/components/main.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
@@ -16,7 +15,6 @@ import { RestorePasswordComponent } from '@core/components/restore-password.comp
 import { FieldService } from '@core/field.service';
 import { HttpService } from '@core/http.service';
 import { SharedModule } from '@shared/shared.module';
-import { FormCreatorModule } from './form-creator/form-creator.module';
 
 export function onInit(authService: AuthService) {
   return () => authService.load();
@@ -25,14 +23,12 @@ export function onInit(authService: AuthService) {
 import { OverlayModule } from '@angular/cdk/overlay';
 // todo: delete after routing
 import { PopupComponent } from '@core/components/popup/popup.component';
-import { FormTableModule } from './forms-dashboard/form-table.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RestorePasswordComponent,
-    MainComponent,
     DashboardComponent,
     PopupComponent,
   ],
@@ -43,13 +39,11 @@ import { FormTableModule } from './forms-dashboard/form-table.module';
     ReactiveFormsModule,
     FormsModule,
     SharedModule,
-    FormCreatorModule,
-    FormTableModule,
     AppRoutingModule,
     OverlayModule
   ],
   entryComponents: [
-    PopupComponent
+    PopupComponent,
   ],
   providers: [
     AuthGuard,
