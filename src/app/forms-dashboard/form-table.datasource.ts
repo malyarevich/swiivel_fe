@@ -3,6 +3,7 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { DataSource } from '@angular/cdk/table';
 import { CollectionViewer } from '@angular/cdk/collections';
 import { catchError, finalize } from 'rxjs/operators';
+import { FormSearchParams } from '@app/models/form-search-params';
 
 export class FormsDataSource implements DataSource<any> {
   private formsSubject = new BehaviorSubject<any[]>([]);
@@ -35,7 +36,7 @@ export class FormsDataSource implements DataSource<any> {
     this.loadingSubject.complete();
   }
 
-  loadFormsList(params = { page: 0, limit: 10, search: {}, filter: {}, sort: {} }) {
+  loadFormsList(params: FormSearchParams = { page: 0, limit: 10 }) {
     this.loadingSubject.next(true);
     this.dataService.getFormsList(params).pipe(
       catchError(() => of([])),
