@@ -80,6 +80,10 @@
       <tree-node-drop-slot [dropIndex]="node.index + 1" [node]="node.parent">
       </tree-node-drop-slot>
 
+      <div class="section-footer" *ngIf="node?.data?.type === 114">
+        <span class="text">End of the {{ node?.data?.name }} Section</span>
+      </div>
+
     </div>
   </ng-template>
 </tree-root>

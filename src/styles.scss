@@ -556,4 +556,29 @@ tree-root.workarea {
     }
   
   }
+  .section-footer {
+    // display: none;
+    margin: 20px 0;
+    color: #909090;
+    width: 100%;
+    position: relative;
+    .text {
+      font: 800 10px/13px $nunito-sans;
+      position: absolute;
+      top: 4px;
+      left: 50px;
+      z-index: 3;
+      padding: 0 10px;
+      background: #F3F3F3;
+    }
+    &::before {
+      content: '';
+      left: 0;
+      right: 0;
+      top: 9px;
+      height: 2px;
+      background: #A4A4A4;
+      position: absolute;
+    }
+  }
 }
