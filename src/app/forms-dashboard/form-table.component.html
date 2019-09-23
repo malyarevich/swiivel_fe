@@ -42,9 +42,9 @@
       </div>
     </div>
     <div>
-      <div class="app-form-table__tabs">
+      <div class="app-form-table__tabs" data-e2e="alltabs">
         <button
-          *ngFor="let tab of statusArray"
+          *ngFor="let tab of statusArgiyray"
           class="app-form-table__tab"
           [ngClass]="{'app-form-table__tab--activated': activeTab == tab}"
           (click)="clickTab(tab)"
