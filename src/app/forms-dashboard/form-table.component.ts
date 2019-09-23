@@ -304,7 +304,7 @@ export class FormTableComponent implements OnInit {
     this.dataCollectionService
       .duplicateForm(mongoId)
       .subscribe((res) => {
-        this.router.navigate([`forms-dashboard/form-constructor/${res._id}`]).then();
+        this.goToEditPage(res.data._id);
       });
   }
 
@@ -343,4 +343,17 @@ export class FormTableComponent implements OnInit {
       }
     });
   }
+
+  goToEditPage(mongoId: string): void {
+    this.router.navigate([`forms-dashboard/form-constructor/${mongoId}`]).then();
+  }
+
+  goToViewPage(mongoId: string): void {
+    this.router.navigate([`forms-dashboard/online-form/${mongoId}`]).then();
+  }
+
+  createForm(): void {
+    this.router.navigate(['forms-dashboard/form-constructor']).then();
+  }
+
 }

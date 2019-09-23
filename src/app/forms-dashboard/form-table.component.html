@@ -207,7 +207,7 @@
                   <sw-small-button
                     text="Edit"
                     [icon]="icons.PEN"
-                    [routerLink]="['/forms-dashboard/form-constructor/', mongoId]"
+                    (onClick)="goToEditPage(form.mongo_id)"
                   >
                   </sw-small-button>
                 </div>
@@ -215,7 +215,7 @@
                   <sw-small-button
                     text="View"
                     [icon]="icons.EYE"
-                    [routerLink]="['/forms-dashboard/online-form/', mongoId]"
+                    (onClick)="goToViewPage(form.mongo_id)"
                   >
                   </sw-small-button>
                 </div>
