@@ -1,1 +1,98 @@
-<tree-root [nodes]="fields" [options]="options" #tree></tree-root>
+<tree-root [nodes]="fields" [options]="options" #tree class="workarea">
+  <ng-template #treeNodeFullTemplate let-node let-index="index" let-templates="templates">
+    <div [class]="node.getClass()" [class.tree-node]="true"
+      [class.tree-node-expanded]="node.isExpanded && node.hasChildren"
+      [class.tree-node-collapsed]="node.isCollapsed && node.hasChildren" [class.tree-node-leaf]="node.isLeaf"
+      [class.tree-node-active]="node.isActive" [class.tree-node-focused]="node.isFocused" [treeDrag]="node"
+      [treeDragEnabled]="true">
+
+      <!-- <tree-node-drop-slot *ngIf="index === 0" [dropIndex]="node.index" [node]="node.parent">
+      </tree-node-drop-slot> -->
+
+      <div [class]="getClass(node?.data?.type)">
+        <!-- <tree-node-wrapper [node]="node" [index]="index" [templates]="templates">
+            </tree-node-wrapper> -->
+        <div class="draghandler">
+          <i class="dragdrop fas fa-ellipsis-v" cdkDragHandle></i>
+        </div>
+
+        <div class="node-title">
+          <div class="node-title_input">
+            <sw-input-text>
+              <span class="placeholder">Section Name</span>
+            </sw-input-text>
+          </div>
+
+          <div class="node-title_text">
+            <div class="name">
+              <sw-input-text class="no_styles small" [(ngModel)]="node.data.name"></sw-input-text>
+            </div>
+            <div class="hint-type">
+              {{getHint(node)}}
+            </div>
+          </div>
+        </div>
+
+
+
+
+        <sw-dropdown-input style="margin-right: 10px;">
+          <span class="input_label">Field Width</span>
+        </sw-dropdown-input>
+
+
+        <div class="inputs-wrap">
+          <div class="input">
+            <sw-input-checkbox>
+              <span class="input_label">Required</span>
+            </sw-input-checkbox>
+          </div>
+          <div class="input">
+            <sw-input-checkbox>
+              <span class="input_label">Hide Label</span>
+            </sw-input-checkbox>
+          </div>
+          <div class="input">
+            <sw-input-checkbox>
+              <span class="input_label">Read–Only</span>
+            </sw-input-checkbox>
+          </div>
+          <div class="input">
+            <sw-input-checkbox>
+              <span class="input_label">Unique</span>
+            </sw-input-checkbox>
+          </div>
+        </div>
+
+
+        <!-- {{ node.data | json}} -->
+
+        <div class="actions">
+
+          <div class="icon">
+            <sw-icon-button icon="fa-cog" class="field-creator" [class.active]="node.showSettings"
+              (click)="settingsTogle(node)">
+            </sw-icon-button>
+          </div>
+
+          <div class="icon last">
+            <sw-icon-button icon="fa-times" class="field-creator" (click)="node.isActive = !node.isActive">
+            </sw-icon-button>
+          </div>
+
+          <div class="expander-btn">
+            <tree-node-expander [node]="node"></tree-node-expander>
+          </div>
+
+        </div>
+
+      </div>
+
+      <tree-node-children [node]="node" [templates]="templates">
+      </tree-node-children>
+
+      <!-- <tree-node-drop-slot [dropIndex]="node.index + 1" [node]="node.parent">
+      </tree-node-drop-slot> -->
+    </div>
+  </ng-template>
+</tree-root>
