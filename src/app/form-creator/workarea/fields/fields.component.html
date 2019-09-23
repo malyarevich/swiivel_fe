@@ -6,8 +6,8 @@
       [class.tree-node-active]="node.isActive" [class.tree-node-focused]="node.isFocused" [treeDrag]="node"
       [treeDragEnabled]="true">
 
-      <!-- <tree-node-drop-slot *ngIf="index === 0" [dropIndex]="node.index" [node]="node.parent">
-      </tree-node-drop-slot> -->
+      <tree-node-drop-slot *ngIf="index === 0" [dropIndex]="node.index" [node]="node.parent">
+      </tree-node-drop-slot>
 
       <div [class]="getClass(node?.data?.type)">
         <!-- <tree-node-wrapper [node]="node" [index]="index" [templates]="templates">
@@ -91,8 +91,8 @@
       <tree-node-children [node]="node" [templates]="templates">
       </tree-node-children>
 
-      <!-- <tree-node-drop-slot [dropIndex]="node.index + 1" [node]="node.parent">
-      </tree-node-drop-slot> -->
+      <tree-node-drop-slot [dropIndex]="node.index + 1" [node]="node.parent">
+      </tree-node-drop-slot>
     </div>
   </ng-template>
 </tree-root>
