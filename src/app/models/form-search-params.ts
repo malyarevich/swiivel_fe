@@ -1,7 +1,12 @@
 export class FormSearchParams {
-    page?: number;
-    limit?: number;
-    search?: object;
-    sort?: object;
-    filter?: object;
+    page?: number = 0;
+    limit?: number = 15;
+    search?: string;
+    sort?: {
+      order: 'asc' | 'desc',
+      field: 'string'
+    };
+    filter?: {
+      [key: string]: string
+    };
 }
