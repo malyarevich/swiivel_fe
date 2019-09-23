@@ -1,42 +1,58 @@
-<div class="header" (click)="onClick('intro', $event)">
-  <sw-input-toggle [formControl]="sections?.get('intro')"></sw-input-toggle>
-  <span>Introduction</span>
+<div class="sidebar_section" [class.expanded]="isExpanded('intro')">
+  <div class="sidebar_section__header" (click)="onClick('intro', $event)">
+    <sw-input-toggle [formControl]="sections?.get('intro')"></sw-input-toggle>
+    <span>Introduction</span>
+  </div>
 </div>
 
-<div class="header" (click)="onClick('fields', $event)">
-  <sw-input-toggle [formControl]="sections?.get('fields')"></sw-input-toggle>
-  <span>Fields</span>
-</div>
-<div class="content" [class.expanded]="isExpanded('fields')">
-  <tree-root [nodes]="sidebarFields" [options]="sidebarOptions" #tree>
-    <ng-template #treeNodeFullTemplate
-      let-node
-      let-index="index"
-      let-templates="templates">
-      <div
-        [class]="node.getClass()"
-        [class.tree-node]="true"
-        [class.tree-node-expanded]="node.isExpanded && node.hasChildren"
-        [class.tree-node-collapsed]="node.isCollapsed && node.hasChildren"
-        [class.tree-node-leaf]="node.isLeaf"
-        [class.tree-node-active]="node.isActive"
-        [class.tree-node-focused]="node.isFocused">
 
-        <tree-node-drop-slot
-          *ngIf="index === 0"
-          [dropIndex]="node.index"
-          [node]="node.parent">
-        </tree-node-drop-slot>
+<div class="sidebar_section" [class.expanded]="isExpanded('fields')">
+  <div class="sidebar_section__header" (click)="onClick('fields', $event)">
+    <sw-input-toggle [formControl]="sections?.get('fields')"></sw-input-toggle>
+    <span>Form Fields</span>
+  </div>
+  <div class="sidebar_section__content">
+    <span class="title">System Fields</span>
+    <div class="search-wrap">
+      <input class="search" id="filter" #filter (keyup)="tree.treeModel.filterNodes(filter.value)" placeholder="Search"/>
+      <i class="icon fas fa-search"></i>
+    </div>
+    <tree-root [nodes]="sidebarFields" [options]="sidebarOptions" #tree>
+      <ng-template #treeNodeFullTemplate let-node let-index="index" let-templates="templates">
+        <div [class]="node.getClass()" [class.tree-node]="true"
+          [class.tree-node-expanded]="node.isExpanded && node.hasChildren"
+          [class.tree-node-collapsed]="node.isCollapsed && node.hasChildren" [class.tree-node-leaf]="node.isLeaf"
+          [class.tree-node-active]="node.isActive" [class.tree-node-focused]="node.isFocused" [treeDrag]="node"
+          [treeDragEnabled]="true">
 
-        <tree-node-wrapper [node]="node" [index]="index" [templates]="templates">
-        </tree-node-wrapper>
+          <!-- <tree-node-drop-slot *ngIf="index === 0" [dropIndex]="node.index" [node]="node.parent">
+          </tree-node-drop-slot> -->
+          <div class="node-wrap">
+            <!-- <tree-node-wrapper [node]="node" [index]="index" [templates]="templates">
+            </tree-node-wrapper> -->
 
-        <tree-node-children [node]="node" [templates]="templates">
-        </tree-node-children>
-        <tree-node-drop-slot [dropIndex]="node.index + 1" [node]="node.parent">
-        </tree-node-drop-slot>
-      </div>
-    </ng-template>
-  </tree-root>
+            <tree-node-checkbox [node]="node">
+            </tree-node-checkbox>
 
+
+            <div class="draghandler">
+              <i class="dragdrop fas fa-ellipsis-v" cdkDragHandle></i>
+            </div>
+
+            <tree-node-content [node]="node"></tree-node-content>
+
+            <tree-node-expander [node]="node"></tree-node-expander>
+          </div>
+
+
+          <tree-node-children [node]="node" [templates]="templates">
+          </tree-node-children>
+
+          <!-- <tree-node-drop-slot [dropIndex]="node.index + 1" [node]="node.parent">
+          </tree-node-drop-slot> -->
+        </div>
+      </ng-template>
+    </tree-root>
+
+  </div>
 </div>

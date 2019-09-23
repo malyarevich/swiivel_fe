@@ -69,3 +69,9 @@
   }
 
 }
+
+:host(.no_styles.small) {
+  .input_text__input {
+    font: 800 12px/15px $nunito-sans;
+  }
+}

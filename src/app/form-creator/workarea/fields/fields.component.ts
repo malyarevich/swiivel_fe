@@ -59,5 +59,26 @@ export class WorkareaFieldsComponent implements AfterViewInit, OnInit, OnDestroy
 
   }
 
+  getClass(type: number) {
+    let styleClass = 'workarea-node-wrap ';
+    switch (type) {
+      case 114:
+        styleClass += 'section-tree-node';
+        break;
+      case 113:
+        styleClass += 'group-tree-node';
+        break;
+      default:
+        styleClass += 'field-workarea-node';
+        break;
+    }
+    return styleClass;
+  }
+
+  getHint(node: any) {
+    console.log('Node Hint', node);
+    return 'Group type'
+  }
+
 
 }
