@@ -1,5 +1,8 @@
+@import "index";
+
 :host {
   flex: 0.25;
+  
   div.header {
     display: flex;
     flex-flow: row nowrap;
