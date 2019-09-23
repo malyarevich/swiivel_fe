@@ -13,12 +13,17 @@
   </div>
   <div class="sidebar_section__content">
     <span class="title">System Fields</span>
+    <div class="search-wrap">
+      <input class="search" id="filter" #filter (keyup)="tree.treeModel.filterNodes(filter.value)" placeholder="Search"/>
+      <i class="icon fas fa-search"></i>
+    </div>
     <tree-root [nodes]="sidebarFields" [options]="sidebarOptions" #tree>
       <ng-template #treeNodeFullTemplate let-node let-index="index" let-templates="templates">
         <div [class]="node.getClass()" [class.tree-node]="true"
           [class.tree-node-expanded]="node.isExpanded && node.hasChildren"
           [class.tree-node-collapsed]="node.isCollapsed && node.hasChildren" [class.tree-node-leaf]="node.isLeaf"
-          [class.tree-node-active]="node.isActive" [class.tree-node-focused]="node.isFocused" [treeDrag]="node" [treeDragEnabled]="true">
+          [class.tree-node-active]="node.isActive" [class.tree-node-focused]="node.isFocused" [treeDrag]="node"
+          [treeDragEnabled]="true">
 
           <!-- <tree-node-drop-slot *ngIf="index === 0" [dropIndex]="node.index" [node]="node.parent">
           </tree-node-drop-slot> -->
