@@ -1,5 +1,4 @@
 import { ScrollingModule } from '@angular/cdk/scrolling';
-import { CdkTreeModule } from '@angular/cdk/tree';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -20,8 +19,14 @@ import { SettingsModule } from './workarea/fields/settings/settings.module';
 import { WorkareaIntroComponent } from './workarea/intro/intro.component';
 import { WorkareaComponent } from './workarea/workarea.component';
 
+import { TreeModule } from 'angular-tree-component';
+import { FormCreatorService } from './form-creator.service';
+
+
 @NgModule({
-  declarations: [FormCreatorComponent,
+  declarations: [
+
+    FormCreatorComponent,
     SidebarComponent,
     WorkareaComponent,
     WorkareaIntroComponent,
@@ -35,11 +40,11 @@ import { WorkareaComponent } from './workarea/workarea.component';
   ],
   imports: [
     CommonModule,
+    TreeModule,
     FormCreatorRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     ScrollingModule,
-    CdkTreeModule,
     SharedModule,
     SettingsModule
   ],
@@ -49,6 +54,7 @@ import { WorkareaComponent } from './workarea/workarea.component';
     SidebarDocumentsFormsComponent,
     SidebarConsentComponent,
     SidebarTermsConditionsComponent,
-  ]
+  ],
+  providers: [FormCreatorService]
 })
 export class FormCreatorModule { }

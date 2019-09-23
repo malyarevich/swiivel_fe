@@ -1,36 +1,30 @@
-<sw-input-text [formControl]="filter"></sw-input-text>
-<cdk-tree [dataSource]="treeSource" [treeControl]="treeControl">
+<tree-root [nodes]="fields" [options]="options" #tree>
+  <ng-template #treeNodeFullTemplate
+    let-node
+    let-index="index"
+    let-templates="templates">
+    <div
+      [class]="node.getClass()"
+      [class.tree-node]="true"
+      [class.tree-node-expanded]="node.isExpanded && node.hasChildren"
+      [class.tree-node-collapsed]="node.isCollapsed && node.hasChildren"
+      [class.tree-node-leaf]="node.isLeaf"
+      [class.tree-node-active]="node.isActive"
+      [class.tree-node-focused]="node.isFocused">
 
-  <!-- This is the tree node template for leaf nodes -->
-  <cdk-tree-node *cdkTreeNodeDef="let node" cdkTreeNodePadding cdkTreeNodePaddingIndent="15px"
-    [style.display]="shouldRender(node) ? 'flex' : 'none'" class="field-tree-node">
-    <div class="field-tree-node__content">
-      <sw-input-checkbox [(ngModel)]="node.exist">
-        <i class="dragdrop fas fa-ellipsis-v"></i>
-        <span class="input_label">{{node.name}}</span>
-      </sw-input-checkbox>
+      <tree-node-drop-slot
+        *ngIf="index === 0"
+        [dropIndex]="node.index"
+        [node]="node.parent">
+      </tree-node-drop-slot>
+
+      <tree-node-wrapper [node]="node" [index]="index" [templates]="templates">
+      </tree-node-wrapper>
+
+      <tree-node-children [node]="node" [templates]="templates">
+      </tree-node-children>
+      <tree-node-drop-slot [dropIndex]="node.index + 1" [node]="node.parent">
+      </tree-node-drop-slot>
     </div>
-    <!-- use a disabled button to provide padding for tree leaf -->
-  </cdk-tree-node>
-
-  <!-- This is the tree node template for expandable nodes -->
-  <cdk-tree-node *cdkTreeNodeDef="let node; when: hasChild" cdkTreeNodePadding cdkTreeNodePaddingIndent="15px"
-    [style.display]="shouldRender(node) ? 'flex' : 'none'" class="field-tree-node">
-    <div class="field-tree-node__content">
-      <sw-input-checkbox [(ngModel)]="node.exist">
-        <i class="dragdrop fas fa-ellipsis-v"></i>
-        <span class="input_label">{{node.name}}</span>
-      </sw-input-checkbox>
-      <sw-icon-button [icon]="getIcon(node.expanded)" cdkTreeNodeToggle [attr.aria-label]="'toggle ' + node.filename"
-      (click)="node.expanded = !node.expanded" [style.visibility]="node.expandable ? 'visible' : 'hidden'">
-
-      </sw-icon-button>
-      <!-- <button cdkTreeNodeToggle [attr.aria-label]="'toggle ' + node.filename" (click)="node.expanded = !node.expanded"
-        [style.visibility]="node.expandable ? 'visible' : 'hidden'">
-        expand
-      </button> -->
-    </div>
-
-
-  </cdk-tree-node>
-</cdk-tree>
+  </ng-template>
+</tree-root>

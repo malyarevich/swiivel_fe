@@ -4,6 +4,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
+import { TreeModule } from 'angular-tree-component';
+
 import { AppComponent } from './app.component';
 
 import { AuthGuard } from '@core/auth.guard';
@@ -14,7 +16,6 @@ import { LoginComponent } from '@core/components/login.component';
 import { RestorePasswordComponent } from '@core/components/restore-password.component';
 import { FieldService } from '@core/field.service';
 import { HttpService } from '@core/http.service';
-import { UtilsService } from '@core/utils.service';
 import { SharedModule } from '@shared/shared.module';
 
 export function onInit(authService: AuthService) {
@@ -22,6 +23,7 @@ export function onInit(authService: AuthService) {
 }
 
 import { OverlayModule } from '@angular/cdk/overlay';
+// todo: delete after routing
 import { PopupComponent } from '@core/components/popup/popup.component';
 
 @NgModule({
@@ -33,6 +35,7 @@ import { PopupComponent } from '@core/components/popup/popup.component';
     PopupComponent,
   ],
   imports: [
+    TreeModule.forRoot(),
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
@@ -49,7 +52,6 @@ import { PopupComponent } from '@core/components/popup/popup.component';
     AuthGuard,
     AuthService,
     FieldService,
-    UtilsService,
     { provide: APP_INITIALIZER, useFactory: onInit, multi: true, deps: [AuthService, HttpService]},
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
