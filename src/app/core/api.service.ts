@@ -31,4 +31,8 @@ export class ApiService {
   getSidebarFields() {
     return this.http.get('/proxy/sidebar-fields');
   }
+
+  public download(url: string) {
+    return this.http.getFile(url)
+  }
 }

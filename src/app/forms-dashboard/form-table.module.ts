@@ -8,6 +8,7 @@ import { FormTableComponent} from './form-table.component';
 import { OnlineFormComponent } from '@app/online-form/online-form.component';
 
 import { CdkTableModule } from '@angular/cdk/table';
+import { DataCollectionService } from './data-collection.service';
 
 
 @NgModule({
@@ -24,5 +25,8 @@ import { CdkTableModule } from '@angular/cdk/table';
     CdkTableModule,
   ],
   entryComponents: [FormTableComponent],
+  providers: [
+    DataCollectionService,
+  ]
 })
 export class FormTableModule {}

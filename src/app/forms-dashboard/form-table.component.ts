@@ -1,5 +1,5 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild, Renderer2, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Form } from '@models/data-collection/form';
@@ -10,15 +10,17 @@ import { DateTime } from 'luxon';
 import { DataCollectionService } from './data-collection.service';
 import { FormsDataSource } from './form-table.datasource';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import { FormSearchParams } from '@app/models/form-search-params';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-form-table',
   templateUrl: './form-table.component.html',
   styleUrls: ['./form-table.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [DataCollectionService]
 })
 export class FormTableComponent implements OnInit {
+  @ViewChild('link', {static: false}) link: ElementRef;
   @ViewChild('dialog', { static: true }) dialog: DialogComponent;
 
   // TABS
@@ -39,12 +41,9 @@ export class FormTableComponent implements OnInit {
   // TABLE DATA
   public dataSource: FormsDataSource = new FormsDataSource(this.dataCollectionService);
   public displayedColumns: string[] = ['name', 'type', 'access', 'createdBy', 'updatedAt', 'status', 'actions'];
-  public params = {
+  public params: FormSearchParams = {
     page: 1,
     limit: 200,
-    search: {},
-    sort: {},
-    filter: {},
   };
 
   // POPUP
@@ -58,17 +57,26 @@ export class FormTableComponent implements OnInit {
   static createSharedUrl(id: string) {
     return `${window.location.href}/f/${id}`;
   }
-
+  download: {
+    url: SafeResourceUrl;
+    filename: string;
+  } = {
+    url: null,
+    filename: null
+  }
   filterForm: FormGroup;
   sort = ['name', true];
+
   statusesOptions: string[] = ['Active', 'Drafts', 'In Review', 'Closed', 'Archived'];
   _sm: SelectionModel<any>;
 
   constructor(
     public dataCollectionService: DataCollectionService,
     public router: Router,
-    private cd: ChangeDetectorRef,
-    private fb: FormBuilder) {
+    private cdr: ChangeDetectorRef,
+    private fb: FormBuilder,
+    private sanitizer: DomSanitizer,
+    private renderer: Renderer2) {
     this.filterForm = this.fb.group({
       name: [null],
       type: [null],
@@ -306,24 +314,45 @@ export class FormTableComponent implements OnInit {
       });
   }
 
+  clearLink(url) {
+    this.download = {
+      url: null,
+      filename: null
+    }
+    window.URL.revokeObjectURL(url);
+    this.cdr.markForCheck();
+  }
+
   onExportPDF(mongoId: string) {
     this.dataCollectionService
       .exportPDFForm(mongoId)
-      .subscribe(() => {
-        console.log('Start pdf download');
+      .subscribe((url) => {
+        this.download = {
+          url: this.sanitizer.bypassSecurityTrustResourceUrl(url),
+          filename: `form-${mongoId}.pdf`
+        };
+        this.cdr.detectChanges();
+        this.renderer.selectRootElement(this.link.nativeElement).click();
+        this.clearLink(url);
       });
   }
 
   onExportZIP(mongoIds: string) {
     this.dataCollectionService
       .exportPDFFormZIP(mongoIds)
-      .subscribe(() => {
-        console.log('Start zip download');
+      .subscribe((url) => {
+        this.download = {
+          url: this.sanitizer.bypassSecurityTrustResourceUrl(url),
+          filename: `forms.zip`
+        };
+        this.cdr.detectChanges();
+        this.renderer.selectRootElement(this.link.nativeElement).click()
+        this.clearLink(url);
       });
   }
 
   onCopyLink(label: string): void {
-    navigator.clipboard.writeText(label)
+    navigator['clipboard'].writeText(label)
       .then(() => {})
       .catch(err => {
         console.error('Could not copy text: ', err);

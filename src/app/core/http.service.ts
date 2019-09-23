@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
@@ -83,14 +83,16 @@ export class HttpService {
         finalize(() => this.endRequest())
       );
   }
-  'getFile'(url: string, options?: any, requestTimeout?: number): Observable<any> {
-    return this.http.get<Object>(`${this.apiUrl}${url}`, { responseType: 'blob', ...options })
-      .pipe(
-        timeout(requestTimeout || this.apiTimeout),
-        map((response: any) => response),
-        catchError((error) => this.handleError(error)),
-        finalize(() => this.endRequest())
-      );
+  'getFile'(url: string, options?, requestTimeout = this.apiTimeout): any {
+    return this.http.get(this.apiUrl + url, {
+      observe: 'body',
+      responseType: 'blob',
+      ...options
+    }).pipe(
+      timeout(requestTimeout),
+      catchError((error) => this.handleError(error)),
+      finalize(() => this.endRequest())
+    );
   }
   'put'(url: string, data: object): Observable<any> {
     this.requestSubject.next('Updating data');

@@ -53,6 +53,7 @@
         </button>
       </div>
     </div>
+    <a [href]="download.url" [download]="download.filename" #link></a>
 
     <div>
       <div class="table">
@@ -229,7 +230,7 @@
                 <div class="item">
                   <sw-icon-button
                     [icon]="icons.DOWNLOAD"
-                    (click)="onExportPDF(form.mongo_id)"
+                    (click)="onExportPDF(form.mongo_id, link)"
                   >
                   </sw-icon-button>
                 </div>
