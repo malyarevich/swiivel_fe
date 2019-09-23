@@ -11,12 +11,9 @@ export class DataCollectionService extends ApiService {
   changeStatus(updatedIds: number[], updatedStatus: string): Observable<any> {
     return this.http.post(`/proxy/form-builder/form-template/status`, {ids: updatedIds, status: updatedStatus})
       .pipe(map(response => {
-          if (response.status === 1) {
-            return response.data;
-          }
-          throwError('Change status form error');
-        })
-      );
+        return response.data;
+        throwError('Change status form error');
+      }));
   }
 
   duplicateForm(id: string): Observable<any> {
@@ -24,18 +21,12 @@ export class DataCollectionService extends ApiService {
       example_form_id: id,
     })
       .pipe(map(response => {
-          if (response.status === 1) {
-            return response;
-          }
-          throwError('Duplicate form error');
-        })
-      );
+        return response;
+      }));
   }
 
   exportPDFForm(mongoId: string): Observable<any> {
-    return this.http.get(
-      `/proxy/form-builder/pdf-export/${mongoId}`,
-      {responseType: 'blob'})
+    return this.http.getFile(`/proxy/form-builder/pdf-export/${mongoId}`)
       .pipe(
         map(response => {
           const downloadURL = window.URL.createObjectURL(new Blob([response], {type: 'application/pdf'}));
@@ -49,9 +40,7 @@ export class DataCollectionService extends ApiService {
   }
 
   exportPDFFormZIP(mongoIds: string): Observable<any> {
-    return this.http.get(
-      `/proxy/form-builder/bulk-pdf-export?ids=${mongoIds}`,
-      {responseType: 'blob'})
+    return this.http.getFile(`/proxy/form-builder/bulk-pdf-export?ids=${mongoIds}`)
       .pipe(
         map(response => {
           const downloadURL = window.URL.createObjectURL(new Blob([response], {type: 'application/zip'}));

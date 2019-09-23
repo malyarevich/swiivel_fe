@@ -67,7 +67,7 @@ export class HttpService {
   }
   'get'(url: string, options?: any, requestTimeout?: number): Observable<any> {
     return this.http.get<Object>(this.apiUrl + url, {
-      responseType: "json",
+      responseType: 'json',
       ...options
     })
       .pipe(
@@ -79,6 +79,15 @@ export class HttpService {
             throw new HttpErrorResponse({error: response.errors, status: response.status});
           }
         }),
+        catchError((error) => this.handleError(error)),
+        finalize(() => this.endRequest())
+      );
+  }
+  'getFile'(url: string, options?: any, requestTimeout?: number): Observable<any> {
+    return this.http.get<Object>(`${this.apiUrl}${url}`, { responseType: 'blob', ...options })
+      .pipe(
+        timeout(requestTimeout || this.apiTimeout),
+        map((response: any) => response),
         catchError((error) => this.handleError(error)),
         finalize(() => this.endRequest())
       );
