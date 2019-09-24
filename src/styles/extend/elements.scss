@@ -172,6 +172,28 @@ sw-input-number {
   }
 }
 
+sw-dropdown-input.settings-field {
+  .dropdown_input_container {
+    .input_label {
+      display: none;
+      width: calc(100% - 28px);
+      p {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+    &.empty {
+      &:not(:focus-within) {
+        .input_label {
+          display: flex;
+          top: 2px;
+        }
+      }
+    }
+  }
+}
+
 sw-input-textarea {
   .input_textarea {
     @extend %placeholder;
