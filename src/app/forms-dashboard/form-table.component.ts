@@ -151,7 +151,14 @@ export class FormTableComponent implements OnInit {
     } else {
       this.sort = [field, true];
     }
-    this.params.sort[field] = this.sort[1];
+    if (!this.params.sort) {
+      this.params.sort = {
+        field: null,
+        order: null
+      };
+    }
+    this.params.sort.field = field;
+    this.params.sort.order = !!this.sort[1] ? 'asc' : 'desc';
     this.dataSource.loadFormsList(this.params);
   }
 

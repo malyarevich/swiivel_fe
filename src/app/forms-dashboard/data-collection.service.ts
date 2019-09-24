@@ -2,10 +2,27 @@ import { ApiService } from '@app/core/api.service';
 import { FormSearchParams } from '@app/models/form-search-params';
 import { Observable, throwError } from 'rxjs';
 import { map, first } from 'rxjs/operators';
+import { HttpParams } from '@angular/common/http';
 
 export class DataCollectionService extends ApiService {
   getFormsList(requestParams?: FormSearchParams): Observable<any> {
-    return this.http.post(`/proxy/form-builder/form-templates`, {params: requestParams});
+    if (!requestParams) requestParams = {page: 1, limit: 150};
+    let params = new HttpParams();
+    if ('filter' in requestParams) {
+      for (const filter of Object.keys(requestParams.filter)) {
+        params = params.append(`filter[${filter}]`, requestParams.filter[filter]);
+      }
+    }
+    if ('sort' in requestParams) {
+      params.append(`sort[${requestParams.sort.field}]`, requestParams.sort.order);
+    }
+    if ('page' in requestParams) {
+      params.append('page', requestParams.page.toString());
+    }
+    if ('limit' in requestParams) {
+      params.append('limit', requestParams.limit.toString());
+    }
+    return this.http.get(`/proxy/form-builder/form-templates`, {params});
   }
 
   changeStatus(updatedIds: number[], updatedStatus: string): Observable<any> {

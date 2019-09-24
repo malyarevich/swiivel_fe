@@ -3,8 +3,8 @@ export class FormSearchParams {
     limit?: number = 15;
     search?: string;
     sort?: {
-      order: 'asc' | 'desc',
-      field: 'string'
+      order: string,
+      field: string
     };
     filter?: {
       [key: string]: string
