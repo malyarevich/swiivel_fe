@@ -14,7 +14,8 @@
   <div class="sidebar_section__content">
     <span class="title">System Fields</span>
     <div class="search-wrap">
-      <input class="search" id="filter" #filter (keyup)="tree.treeModel.filterNodes(filter.value)" placeholder="Search"/>
+      <input class="search" id="filter" #filter (keyup)="tree.treeModel.filterNodes(filter.value)"
+        placeholder="Search" />
       <i class="icon fas fa-search"></i>
     </div>
     <tree-root [nodes]="sidebarFields" [options]="sidebarOptions" #tree>
@@ -47,6 +48,30 @@
 
           <tree-node-children [node]="node" [templates]="templates">
           </tree-node-children>
+
+          <div class="custom-field">
+            <div class="custom-field__inputs">
+              <sw-input-text class="settings-field">
+                <span class="placeholder">Name</span>
+              </sw-input-text>
+              <sw-dropdown-input class="settings-field"></sw-dropdown-input>
+              <sw-dropdown-input class="settings-field"></sw-dropdown-input>
+            </div>
+            <div class="custom-field__actions">
+              <sw-button class="outline-btn full_width narrow" style="margin-right: 5px;"
+                (click)="addCustomField(node)">
+                <span class="text">Cancel</span>
+              </sw-button>
+              <sw-button class="full_width narrow" (click)="addCustomField(node)">
+                <span class="text">Create Field</span>
+              </sw-button>
+            </div>
+            <div class="custom-field__show-btn">
+              <sw-button class="outline-btn full_width narrow" (click)="addCustomField(node)">
+                <span class="text">Create New Field</span>
+              </sw-button>
+            </div>
+          </div>
 
           <!-- <tree-node-drop-slot [dropIndex]="node.index + 1" [node]="node.parent">
           </tree-node-drop-slot> -->

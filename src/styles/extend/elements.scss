@@ -84,6 +84,25 @@ sw-input-text {
   }
 }
 
+sw-input-text.settings-field{
+  .input_text__input {
+    padding: 6px 10px 4px 10px;
+    &.empty {
+      & + span {
+        &.placeholder {
+          display: flex;
+          top: 4px;
+        }
+      }
+    }
+    & + span {
+      &.placeholder {
+        display: none;
+      }
+    }
+  }
+}
+
 sw-input-toggle {
   span {
     &.input_label {

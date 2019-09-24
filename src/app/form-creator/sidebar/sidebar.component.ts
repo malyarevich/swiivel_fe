@@ -40,6 +40,7 @@ export class SidebarComponent implements OnInit {
       }
    }
   };
+  showCreatorFields: any;
   constructor(private service: FormCreatorService, private fb: FormBuilder, private api: ApiService) {
     this.api.getSidebarFields().subscribe((fields) => {
       this.sidebarFields = fields;
@@ -67,6 +68,13 @@ export class SidebarComponent implements OnInit {
   }
 
   ngOnInit() { }
+
+  addCustomField(node: any) {
+    console.log(node);
+    if (node && node.level && node.index) {
+      this.showCreatorFields[node.level][node.index] = true;
+    }
+  }
 
 
 }

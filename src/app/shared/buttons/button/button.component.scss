@@ -75,6 +75,13 @@
   }
 }
 
+:host(.narrow) {
+  .button {
+    height: 25px;
+    padding: 0 16px;
+  }
+}
+
 :host {
   button:disabled {
     background: $gray;
