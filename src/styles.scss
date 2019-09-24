@@ -162,7 +162,7 @@ div.centered-panel {
   min-width: 100px;
   max-height: 500px;
   background-color: #fff;
-  border: 1px solid #4350A2;
+  // border: 1px solid #4350A2;
   padding-right: 0;
   border-radius: 3px;
   box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2);
@@ -380,6 +380,17 @@ div.sidebar_section {
           margin-right: 10px;
           // height: 15px;
         }
+        .del-icon {
+          color: #A4A4A4;
+          margin-left: auto;
+          visibility: hidden;
+          i { font-size: 14px }
+        }
+        &:hover {
+          .del-icon {
+            visibility: unset;
+          }
+        }
       }
     }
   }
@@ -394,7 +405,7 @@ div.sidebar_section {
 }
 
 tree-node-expander {
-  margin-left: auto;
+  margin-left: 10px;
   .toggle-children-wrapper {
     padding: 0;
     .toggle-children {

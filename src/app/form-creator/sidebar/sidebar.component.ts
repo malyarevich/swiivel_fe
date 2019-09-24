@@ -1,8 +1,10 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormCreatorService } from '../form-creator.service';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { ApiService } from '@app/core/api.service';
 import { TREE_ACTIONS, TreeNode } from 'angular-tree-component';
+import { Popup } from '@app/core/popup.service';
+import { PopupRef } from '@app/core/components/popup/popup.ref';
 
 @Component({
   selector: 'sw-form-creator-sidebar',
@@ -41,7 +43,12 @@ export class SidebarComponent implements OnInit {
    }
   };
   showCreatorFields: any;
-  constructor(private service: FormCreatorService, private fb: FormBuilder, private api: ApiService) {
+  ref: PopupRef;
+  delFieldName: string;
+  delInput: FormControl = new FormControl('MIDDLE NAME');
+  @ViewChild('deletePop', { static: false }) deletePop;
+  constructor(private service: FormCreatorService, private fb: FormBuilder, private api: ApiService,
+    private popup: Popup) {
     this.api.getSidebarFields().subscribe((fields) => {
       this.sidebarFields = fields;
     })
@@ -76,5 +83,30 @@ export class SidebarComponent implements OnInit {
     }
   }
 
+  openDeletePop(node: any) {
+    if (!node && !node.data) return ;
+    
+    this.delInput.reset();
+    this.delFieldName = node.data.name.toUpperCase();
+    this.ref = this.popup.open({
+      origin: null,
+      content: this.deletePop,
+      panelClass: 'centered-panel'
+    });
+    this.ref.afterClosed$.subscribe(result => {
+      this.ref = null;
+    });
+  }
+
+  close()  {
+    this.ref.close();
+  }
+
+  deleteNode() {
+    if (this.delFieldName === this.delInput.value) {
+      console.log('Delete field', this.delFieldName);
+    }
+    this.close();
+  }
 
 }
