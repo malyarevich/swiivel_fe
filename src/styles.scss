@@ -469,7 +469,7 @@ tree-node-checkbox {
       cursor: default;
     }
     &:focus {
-      border-color: #4350A2;
+        border-color: #4350A2;
       }
     }
     input[type=checkbox]:checked,
@@ -493,15 +493,15 @@ tree-node-checkbox {
     }
     
     input[type=checkbox]:indeterminate:after {
-    content: "\2022";
-    color: transparent;
-    background-color: #fff;
-    width: 11px;
-    height: 3px;
-    font-family: iwp;
-    position: absolute;
-    left: 11%;
-    top: 42%;
+      content: "\2022";
+      color: transparent;
+      background-color: #fff;
+      width: 11px;
+      height: 3px;
+      font-family: iwp;
+      position: absolute;
+      left: 11%;
+      top: 42%;
     }
 }
 
