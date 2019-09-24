@@ -32,6 +32,7 @@ import { LabelComponent } from './label/label.component';
 import { UserItemComponent } from './user-item/user-item.component';
 import { SelectOptionDirective } from './inputs/dropdown-select/option.directive';
 import { MainComponent } from './main.component';
+import { ComponentIdDirective } from './inputs/e2e.directive';
 
 @NgModule({
   imports: [
@@ -67,6 +68,7 @@ import { MainComponent } from './main.component';
     RadioGroupComponent,
     // Directives
     SelectOptionDirective,
+    ComponentIdDirective,
     MainComponent,
   ],
   exports: [
@@ -99,7 +101,9 @@ import { MainComponent } from './main.component';
     ReactiveFormsModule,
     // Directives
     SelectOptionDirective,
-    MainComponent
+    ComponentIdDirective,
+    MainComponent,
+
   ]
 })
 export class SharedModule { }
