@@ -59,6 +59,10 @@ export class DashboardComponent implements OnInit {
     }
   ];
 
+  fileOptions = {
+    acceptedFormats: ['.jpg', '.svg', '.pdf']
+  };
+
   constructor(
     private fb: FormBuilder,
     private fs: FieldService
@@ -72,6 +76,7 @@ export class DashboardComponent implements OnInit {
       phone: new FormControl('', vs.phoneNumberValidator()),
       email: new FormControl('', vs.emailValidator()),
       longText: new FormControl('Long text\n wrew', Validators.required),
+      file: new FormControl(null, Validators.required),
     });
   }
 

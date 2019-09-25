@@ -1,0 +1,38 @@
+@import "index";
+
+:host {
+  .input_file {
+    width: 100%;
+    position: relative;
+    height: 35px;
+    background: $white;
+    font-size: 12px;
+    line-height: 15px;
+    color: $black;
+    border: 1px solid $soft-gray;
+    box-sizing: border-box;
+    border-radius: 3px;
+    outline: none;
+    padding: 15px 10px 10px 10px;
+    cursor: pointer;
+    &__input {
+      display: none;
+    }
+    &__icon {
+      display: block;
+      position: absolute;
+      top: -1px;
+      right: -1px;
+      width: 35px;
+      height: 35px;
+      background: $orange-fill-color url("../../../../assets/images/icons/upload-icon.svg") no-repeat center center;
+      border-radius: 0 3px 3px 0;
+    }
+  }
+}
+
+:host(.ng-invalid.ng-touched) {
+  .input_file {
+    border: 1px solid $error-color;
+  }
+}
