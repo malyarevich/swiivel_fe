@@ -1,0 +1,93 @@
+@import "./root-styles.scss";
+
+input.ng-dirty.ng-invalid,
+input.validation_error,
+select.ng-dirty.ng-invalid,
+select.validation_error {
+  border: 1px solid $error-color;
+}
+
+input.validation_required,
+select.validation_required {
+  border: 1px solid $softgray-color;
+}
+
+.error_icon {
+  cursor: pointer;
+  align-items: center;
+  border-radius: 50%;
+  background-color: $error-color;
+  display: flex;
+  justify-content: center;
+  height: 1.1rem;
+  opacity: 0;
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  transition: all 0.5s ease-in-out;
+  width: 1.1rem;
+
+  & > i {
+    color: $white;
+  }
+}
+
+.validation_icon {
+  cursor: pointer;
+  align-items: center;
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  height: 0.5rem;
+  opacity: 0;
+  position: absolute;
+  right: 0.5rem;
+  top: 0.5rem;
+  transition: all 0.5s ease-in-out;
+  width: 0.5rem;
+
+  & > i {
+    color: $error-color;
+    font-size: 0.5rem;
+  }
+}
+
+input.ng-dirty.ng-invalid + .error_icon,
+.error_icon.validation_error {
+  opacity: 1;
+}
+
+.validation_icon.validation_required {
+  opacity: 1;
+}
+
+
+.error_msg {
+  color: $error-color;
+  font-family: Nunito Sans;
+font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.1rem;
+  padding-top: 0.5rem;
+}
+
+.form-group {
+  margin-bottom: 0;
+}
+
+.form-control:disabled, 
+.form-control[readonly] {
+  cursor: text;
+  background-color: $white;
+}
+
+input.app-input.form-control,
+select.app-input.form-control {
+  &:focus,
+  &:active,
+  &:target {
+    background-color: #fffcf2;
+    border: 1px solid $orange-fill-color;
+    border-radius: 0.25rem;
+  }
+}

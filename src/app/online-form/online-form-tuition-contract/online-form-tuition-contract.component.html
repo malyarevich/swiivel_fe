@@ -1,0 +1,43 @@
+<div class="content_section__main content_section__main--center">
+  <div>
+    <!--Title-->
+    <h2 class="content_section__article_title">
+      FEES CONTRACT
+    </h2>
+
+    <!--Table-->
+    <article
+      class="app-fb-tuition-table content_section__article"
+      *ngIf="
+        form.tuitionContract.splitBy === 'student'
+      "
+    >
+      <sw-tuition-contract-by-student
+        [tuitionContract]="form.tuitionContract"
+      ></sw-tuition-contract-by-student>
+    </article>
+    <article
+      class="content_section__article"
+      *ngIf="form.tuitionContract.splitBy === 'fee'"
+    >
+      <div>
+        <sw-tuition-contract-by-fee
+          [tuitionContract]="form.tuitionContract"
+        ></sw-tuition-contract-by-fee>
+      </div>
+    </article>
+
+    <!--Text-->
+    <h2 class="content_section__article_title">CONTRACT TEXT:</h2>
+    <article class="content_section__article">
+      <div
+        class="content_section__article_text"
+        [innerHTML]="form.tuitionContract.text"
+      ></div>
+    </article>
+
+    <sw-online-form-signatures
+      [signature]="signature"
+    ></sw-online-form-signatures>
+  </div>
+</div>
