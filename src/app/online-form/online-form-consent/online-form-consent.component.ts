@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from "@angular/core";
-import { FormGroup } from "@angular/forms";
+import { FormGroup, FormControl } from "@angular/forms";
 import { cloneDeep } from "lodash";
 import { Form } from "@app/models/data-collection/form";
 import {
@@ -37,4 +37,9 @@ export class OnlineFormConsentComponent implements OnInit {
       return { ...item, _id: item.id, name: item.title };
     });
   }
+
+  isShowConsent(consentIndex: number): boolean {
+    return this.currentPosition['tab'] === consentIndex;
+  }
+
 }

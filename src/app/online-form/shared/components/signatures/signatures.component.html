@@ -1,5 +1,6 @@
+
 <!--SIGNATURE-->
-<div *ngIf="signature?.isRequire" class="content_section__additional_fields">
+<div *ngIf="signature?.isRequire" class="content_section__additional_fields" [formGroup]="fg">
   <!--E-SIGN SIGNATURE-->
   <ng-container *ngIf="signature.type === SIGNATURE_TYPES.ESIGN">
     <!--EXTERNAL SIGNATURE-->
@@ -11,8 +12,9 @@
         <textarea
           class="app-input form-control content_section__textarea"
           rows="2"
-          placeholder="Parent's Signature"
-          [disabled]="true"
+          [formControlName]="sourcePage + '_external_parent'"
+          [placeholder]="placeholderText['parent']"
+          [disabled]="isDisabled"
         ></textarea>
       </div>
 
@@ -23,21 +25,23 @@
         <textarea
           class="app-input form-control content_section__textarea"
           rows="2"
-          placeholder="Father's Signature"
-          [disabled]="true"
+          [formControlName]="sourcePage + '_external_father'"
+          [placeholder]="placeholderText['father']"
+          [disabled]="isDisabled"
         ></textarea>
         <textarea
           class="app-input form-control content_section__textarea"
           rows="2"
-          placeholder="Mother's Signature"
-          [disabled]="true"
+          [formControlName]="sourcePage + '_external_mother'"
+          [placeholder]="placeholderText['mother']"
+          [disabled]="isDisabled"
         ></textarea>
       </div>
 
       <div class="content_section__controls_container">
         <button
           class="btn app-btn-primary content_section__button"
-          [disabled]="true"
+          [disabled]="isDisabled"
         >
           Accept
         </button>
@@ -49,67 +53,27 @@
       <div class="content_section__inputs_container">
         <ng-container *ngIf="!signature.isBothParents">
           <div class="content_section__checkbox_container">
-            <input
-              class="content_section__checkbox"
-              type="checkbox"
-              id="system_signature_parents"
-            />
-
-            <label
-              tabindex="1"
-              for="system_signature_parents"
-              class="content_section__checkbox_label"
-            >
-              <span
-                class="app-checkbox-checkmark
-                      content_section__checkbox_checkmark"
-              ></span>
-              Parent's Signature
-            </label>
+            
+            <sw-input-checkbox [formControlName]="sourcePage + '_system_parent'">
+              <span class="input_label"> {{ placeholderText['parent'] }}</span>
+            </sw-input-checkbox>
+        
           </div>
           <!-- /.content_section__checkbox_container -->
         </ng-container>
 
         <ng-container *ngIf="signature.isBothParents">
           <div class="content_section__checkbox_container">
-            <input
-              class="content_section__checkbox"
-              type="checkbox"
-              id="system_signature_fathers"
-            />
-
-            <label
-              tabindex="1"
-              for="system_signature_fathers"
-              class="content_section__checkbox_label"
-            >
-              <span
-                class="app-checkbox-checkmark
-                  content_section__checkbox_checkmark"
-              ></span>
-              Father's Signature
-            </label>
+            <sw-input-checkbox [formControlName]="sourcePage + '_system_father'">
+              <span class="input_label"> {{ placeholderText['father'] }}</span>
+            </sw-input-checkbox>
           </div>
           <!-- /.content_section__checkbox_container -->
 
           <div class="content_section__checkbox_container">
-            <input
-              class="content_section__checkbox"
-              type="checkbox"
-              id="system_signature_mothers"
-            />
-
-            <label
-              tabindex="1"
-              for="system_signature_mothers"
-              class="content_section__checkbox_label"
-            >
-              <span
-                class="app-checkbox-checkmark
-                  content_section__checkbox_checkmark"
-              ></span>
-              Mother's Signature
-            </label>
+            <sw-input-checkbox [formControlName]="sourcePage + '_system_mother'">
+              <span class="input_label"> {{ placeholderText['mother'] }}</span>
+            </sw-input-checkbox>
           </div>
           <!-- /.content_section__checkbox_container -->
         </ng-container>
@@ -119,7 +83,7 @@
       <div class="content_section__controls_container">
         <button
           class="btn app-btn-primary content_section__button"
-          [disabled]="true"
+          [disabled]="isDisabled"
         >
           Accept
         </button>
@@ -128,7 +92,7 @@
   </ng-container>
 
   <!--WET SIGNATURE-->
-  <ng-container *ngIf="signature.type === SIGNATURE_TYPES.WET">
+  <ng-container *ngIf="signature.type === 'SIGNATURE_TYPES.WET'">
     <div
       class="content_section__inputs_container p-0"
       *ngIf="!signature.isBothParents"
@@ -136,8 +100,9 @@
       <textarea
         class="app-input form-control content_section__textarea"
         rows="2"
-        placeholder="Parent's Signature"
-        [disabled]="true"
+        [formControlName]="sourcePage + '_wet_parent'"
+        [placeholder]="placeholderText['parent']"
+        [disabled]="isDisabled"
       ></textarea>
     </div>
 
@@ -148,22 +113,24 @@
       <textarea
         class="app-input form-control content_section__textarea"
         rows="2"
-        placeholder="Father's Signature"
-        [disabled]="true"
+        [formControlName]="sourcePage + '_wet_father'"
+        [placeholder]="placeholderText['father']"
+        [disabled]="isDisabled"
       ></textarea>
 
       <textarea
         class="app-input form-control content_section__textarea"
         rows="2"
-        placeholder="Mother's Signature"
-        [disabled]="true"
+        [formControlName]="sourcePage + '_wet_mother'"
+        [placeholder]="placeholderText['mother']"
+        [disabled]="isDisabled"
       ></textarea>
     </div>
 
     <div class="content_section__controls_container">
       <button
         class="btn app-btn-primary content_section__button"
-        [disabled]="true"
+        [disabled]="isDisabled"
       >
         Accept
       </button>

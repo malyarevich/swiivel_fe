@@ -5,7 +5,7 @@ import {
   OnDestroy
 } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import { FormGroup } from "@angular/forms";
+import { FormGroup, FormControl } from "@angular/forms";
 import { BehaviorSubject, Observable, Subscription } from "rxjs";
 import { Form } from "@app/models/data-collection/form";
 import { OnlineFormService } from "./services/online-form.service";
@@ -65,6 +65,7 @@ export class OnlineFormComponent implements OnInit {
       this.initNavigation();
       this.initPercents();
       this.initPosition();
+      this.initFormControls();
       if (this.onlineFormService.getFormGroup()) {
         this._isReady$.next(true);
       }
@@ -92,17 +93,16 @@ export class OnlineFormComponent implements OnInit {
   }
 
   initConsentInfo(): any[] {
-    const tabs = [];
-    // if (this.form.consentInfo && this.form.consentInfo.consents.length > 0) {
-    //     this.sections = Object.values(this.form.consentInfo.consents).map(
-    //       item => {
-    //         return { _id: item["id"], name: item["title"] };
-    //       }
-    //     );
-    //   } else {
-    //     this.sections = [{ _id: "consentInfo", name: "Consent section" }];
-    //   }
-    tabs.push({ _id: mainMenuNames.consentInfo, name: "Consent section" });
+    let tabs = [];
+    if (this.form.consentInfo && this.form.consentInfo.consents.length > 0) {
+      tabs = Object.values(this.form.consentInfo.consents).map(
+        item => {
+          return { _id: item["id"], name: item["title"] };
+        }
+      );
+    } else {
+      tabs.push({ _id: mainMenuNames.consentInfo, name: "Consent section" });
+    }
     return tabs;
   }
 
@@ -279,6 +279,42 @@ export class OnlineFormComponent implements OnInit {
         tab: 0
       };
     }
+  }
+
+  initConsentFormControls() {
+    if (this.form.consentInfo && this.form.consentInfo.consents.length > 0) {
+      const consentKeys = [
+        '_agree',
+        '_external_parent',
+        '_external_father',
+        '_external_mother',
+        '_system_parent',
+        '_system_father',
+        '_system_mother',
+        '_wet_parent',
+        '_wet_father',
+        '_wet_mother'
+      ];
+
+      consentKeys.forEach(key => {
+        Object.values(this.form.consentInfo.consents).forEach(item => {
+          if (item["id"]) {
+            // const aValidators = !this.field.options.readonly ? Validators.compose(this.getComposed()) : {};
+            this.fg.addControl(item["id"] + key, new FormControl(
+              {
+                value: this.form.fieldsData[item["id"] + key],
+                disabled: false
+              },
+              // aValidators
+            ));
+          }
+        })
+      })
+    }
+  }
+
+  initFormControls() {
+    this.initConsentFormControls();
   }
 
   goToPage(pageName) {
