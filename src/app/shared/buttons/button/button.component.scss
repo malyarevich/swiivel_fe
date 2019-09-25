@@ -14,9 +14,24 @@
     justify-content: center;
     flex-wrap: nowrap;
 
+    &:hover,
+    &:focus {
+      background: $hover-purple;
+    }
+
+    &:disabled:hover,
+    &:disabled:focus {
+      background: $gray;
+    }
+
     &--gray {
       background: $background-color;
       color: $gray-color;
+
+      &:hover,
+      &:focus {
+        background: $gray;
+      }
     }
 
     &--white {
@@ -24,6 +39,11 @@
       background: #fff;
       color: $button-color;
       border: 1px solid $button-color;
+
+      &:hover,
+      &:focus {
+        background: $background-color;
+      }
     }
 
     span {
