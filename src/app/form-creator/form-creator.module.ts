@@ -19,7 +19,7 @@ import { SettingsModule } from './workarea/fields/settings/settings.module';
 import { WorkareaIntroComponent } from './workarea/intro/intro.component';
 import { WorkareaComponent } from './workarea/workarea.component';
 
-import { TreeModule } from 'angular-tree-component';
+import { CdkTreeModule } from '@angular/cdk/tree';
 import { FormCreatorService } from './form-creator.service';
 
 
@@ -40,7 +40,7 @@ import { FormCreatorService } from './form-creator.service';
   ],
   imports: [
     CommonModule,
-    TreeModule,
+    CdkTreeModule,
     FormCreatorRoutingModule,
     FormsModule,
     ReactiveFormsModule,

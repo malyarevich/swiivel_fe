@@ -7,11 +7,11 @@ import { catchError, debounceTime, distinctUntilChanged, finalize, retry, tap, t
 
 export class TreeDataSource implements DataSource<any> {
   private dataSubject = new BehaviorSubject<any[]>([]);
-  private loadingSections = new BehaviorSubject<boolean>(false);
+  // private loadingSections = new BehaviorSubject<boolean>(false);
   public count = 0;
   public sections;
   public data$ = this.dataSubject.asObservable();
-  public loadingSections$ = this.loadingSections.asObservable();
+  // public loadingSections$ = this.loadingSections.asObservable();
   public filters;
 
 
@@ -23,7 +23,7 @@ export class TreeDataSource implements DataSource<any> {
 
   disconnect(): void {
     this.dataSubject.complete();
-    this.loadingSections.complete();
+    // this.loadingSections.complete();
   }
   set data(data: any) {
     this.dataSubject.next(data);
@@ -31,5 +31,5 @@ export class TreeDataSource implements DataSource<any> {
   get data() {
     return this.dataSubject.getValue();
   }
-  
+
  }

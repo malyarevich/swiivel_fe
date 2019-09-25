@@ -1,9 +1,10 @@
 import { NestedTreeControl} from '@angular/cdk/tree';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ApiService } from '@app/core/api.service';
-import { IActionMapping, TreeComponent } from 'angular-tree-component';
 import { FormCreatorService } from '../form-creator.service';
+import { FieldService } from '@app/core/field.service';
+import { TreeDataSource } from '../tree.datasource';
 
 
 
