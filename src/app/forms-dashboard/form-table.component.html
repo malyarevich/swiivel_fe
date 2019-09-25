@@ -30,7 +30,7 @@
       </div>
     </div>
     <div>
-      <div class="app-form-table__tabs">
+      <div class="app-form-table__tabs" data-e2e ="alltabs">
         <button *ngFor="let tab of statusArray" class="app-form-table__tab"
           [ngClass]="{'app-form-table__tab--activated': activeTab == tab}" (click)="clickTab(tab)">
           {{tab.title}}
@@ -182,25 +182,25 @@
               <th cdk-header-cell *cdkHeaderCellDef>
               </th>
               <td cdk-cell *cdkCellDef="let form">
-                <div class="item">
+                <div class="item" data-e2e="Editbutton">
                   <sw-small-button text="Edit" [icon]="icons.PEN"
                     [routerLink]="['/forms-dashboard/form-constructor/', form.mongo_id]">
                   </sw-small-button>
                 </div>
-                <div class="item">
+                <div class="item" data-e2e="Viewbutton">
                   <sw-small-button text="View" [icon]="icons.EYE"
                     [routerLink]="['/forms-dashboard/online-form/', form.mongo_id]">
                   </sw-small-button>
                 </div>
-                <div class="item">
+                <div class="item" data-e2e="Sharebutton">
                   <sw-icon-button [icon]="icons.SHARE" (click)="onShareLink(form)">
                   </sw-icon-button>
                 </div>
-                <div class="item">
+                <div class="item" data-e2e="Downloadbutton">
                   <sw-icon-button [icon]="icons.DOWNLOAD" (click)="onExportPDF(form.mongo_id)">
                   </sw-icon-button>
                 </div>
-                <div class="item">
+                <div class="item" data-e2e="Copybutton">
                   <sw-icon-button [icon]="icons.COPY" (click)="onDuplicateForm(form.mongo_id)">
                   </sw-icon-button>
                 </div>
@@ -209,7 +209,7 @@
 
             <ng-container cdkColumnDef="paginator">
               <td cdk-footer-cell *cdkFooterCellDef [attr.colspan]="displayedColumns.length">
-                <div class="wrapper">
+                <div class="wrapper" data-e2e="paginatorname">
                   <sw-paginator [size]="totalItems" (pageChange)="changePage($event)"></sw-paginator>
                 </div>
               </td>
