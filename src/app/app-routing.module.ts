@@ -26,6 +26,10 @@ const routes: Routes = [
     ]
   },
   {
+    path: 'online-form',
+    loadChildren: () => import('./online-form/online-form.module').then(m => m.OnlineFormModule)
+  },
+  {
     path: 'form-creator',
     loadChildren: () => import('./form-creator/form-creator.module').then(m => m.FormCreatorModule)
   },
