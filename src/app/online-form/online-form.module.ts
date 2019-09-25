@@ -2,15 +2,20 @@ import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { DynamicModule } from "ng-dynamic-component";
 import { PdfViewerModule } from "ng2-pdf-viewer";
-import { OnlineFormComponent } from "./online-form.component";
-import { SharedModule } from "@shared/shared.module";
+//Modules
 import { OnlineFormRoutingModule } from "./online-form-routing.module";
+import { SharedModule } from "@shared/shared.module";
+//Services
 import { OnlineFormService } from "./services/online-form.service";
 import { FilesService } from "./services/files.service";
+//MainComponent(Smart)
+import { OnlineFormComponent } from "./online-form.component";
+//MainComponent(dump)
 import { OnlineFormNavComponent } from "./online-form-nav/online-form-nav.component";
+import { OnlineFormMenuComponent } from "./online-form-menu/online-form-menu.component";
 import { OnlineFormViewComponent } from "./online-form-view/online-form-view.component";
 import { OnlineFormControlsComponent } from "./online-form-controls/online-form-controls.component";
-import { OnlineFormMenuComponent } from "./online-form-menu/online-form-menu.component";
+//UtilsComponents
 import { ContentNavComponent } from "./shared/components/content-nav/content-nav.component";
 import { PdfLoaderComponent } from "./shared/components/pdf-loader/pdf-loader.component";
 import { ProgressBarComponent } from "./shared/components/progress-bar/progress-bar.component";
