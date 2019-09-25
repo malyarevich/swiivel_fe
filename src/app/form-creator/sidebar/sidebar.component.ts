@@ -1,8 +1,9 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormCreatorService } from '../form-creator.service';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { ApiService } from '@app/core/api.service';
 import { TREE_ACTIONS, TreeNode } from 'angular-tree-component';
+import { Popup } from '@app/core/popup.service';
 
 @Component({
   selector: 'sw-form-creator-sidebar',
@@ -23,24 +24,29 @@ export class SidebarComponent implements OnInit {
     allowDrag: true,
     actionMapping: {
       mouse: {
-       checkboxClick: (tree, node: TreeNode, $event) => {
-           TREE_ACTIONS.TOGGLE_SELECTED(tree, node, $event);
-           if (node.isSelected) {
-             if (node.isRoot) {
-               node.expandAll();
-             }
-             this.service.addField(node);
-           } else {
-             if (node.isRoot) {
-               node.collapseAll();
-             }
-             this.service.removeField(node);
-           }
-       }
+        checkboxClick: (tree, node: TreeNode, $event) => {
+          TREE_ACTIONS.TOGGLE_SELECTED(tree, node, $event);
+          if (node.isSelected) {
+            if (node.isRoot) {
+              node.expandAll();
+            }
+            this.service.addField(node);
+          } else {
+            if (node.isRoot) {
+              node.collapseAll();
+            }
+            this.service.removeField(node);
+          }
+        }
       }
-   }
+    }
   };
-  constructor(private service: FormCreatorService, private fb: FormBuilder, private api: ApiService) {
+  delFieldName: string;
+  delInput: FormControl = new FormControl('MIDDLE NAME');
+  ref: any;
+  @ViewChild('deletePop', { static: false }) deletePop;
+
+  constructor(private service: FormCreatorService, private fb: FormBuilder, private api: ApiService, private popup: Popup) {
     this.api.getSidebarFields().subscribe((fields) => {
       this.sidebarFields = fields;
     })
@@ -67,6 +73,33 @@ export class SidebarComponent implements OnInit {
   }
 
   ngOnInit() { }
+
+  openDeletePop(node: any) {
+    if (!node && !node.data) return;
+
+    this.delInput.reset();
+    this.delFieldName = node.data.name.toUpperCase();
+    this.ref = this.popup.open({
+      origin: null,
+      content: this.deletePop,
+      panelClass: 'centered-panel'
+    });
+    this.ref.afterClosed$.subscribe(result => {
+      this.ref = null;
+    });
+  }
+
+  closePop() {
+    this.ref.close();
+  }
+
+  deleteNode() {
+    if (this.delFieldName === this.delInput.value) {
+      console.log('Delete field', this.delFieldName);
+    }
+    this.closePop();
+  }
+
 
 
 }
