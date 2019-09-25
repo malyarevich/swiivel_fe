@@ -184,12 +184,12 @@
               <td cdk-cell *cdkCellDef="let form">
                 <div class="item" data-e2e="Editbutton">
                   <sw-small-button text="Edit" [icon]="icons.PEN"
-                    [routerLink]="['/forms-dashboard/form-constructor/', mongoId]">
+                    [routerLink]="['/forms-dashboard/form-constructor/', form.mongo_id]">
                   </sw-small-button>
                 </div>
                 <div class="item" data-e2e="Viewbutton">
                   <sw-small-button text="View" [icon]="icons.EYE"
-                    [routerLink]="['/forms-dashboard/online-form/', mongoId]">
+                    [routerLink]="['/forms-dashboard/online-form/', form.mongo_id]">
                   </sw-small-button>
                 </div>
                 <div class="item" data-e2e="Sharebutton">
@@ -197,7 +197,7 @@
                   </sw-icon-button>
                 </div>
                 <div class="item" data-e2e="Downloadbutton">
-                  <sw-icon-button [icon]="icons.DOWNLOAD" (click)="onExportPDF(form.mongo_id, link)">
+                  <sw-icon-button [icon]="icons.DOWNLOAD" (click)="onExportPDF(form.mongo_id)">
                   </sw-icon-button>
                 </div>
                 <div class="item" data-e2e="Copybutton">

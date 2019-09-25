@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { SharedModule } from '@shared/shared.module';
 
+import { WorkareaConsentComponent } from '@app/form-creator/workarea/consent/consent.component';
 import { FormCreatorRoutingModule } from './form-creator-routing.module';
 import { FormCreatorComponent } from './form-creator.component';
 import { SidebarConsentComponent } from './sidebar/consent.component';
@@ -29,6 +30,7 @@ import { FormCreatorService } from './form-creator.service';
     FormCreatorComponent,
     SidebarComponent,
     WorkareaComponent,
+    WorkareaConsentComponent,
     WorkareaIntroComponent,
     WorkareaFieldsComponent,
     SectionComponent,
@@ -50,6 +52,7 @@ import { FormCreatorService } from './form-creator.service';
   ],
   entryComponents: [
     SidebarIntroComponent,
+    WorkareaConsentComponent,
     SidebarFieldsComponent,
     SidebarDocumentsFormsComponent,
     SidebarConsentComponent,

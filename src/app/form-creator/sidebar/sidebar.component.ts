@@ -43,13 +43,14 @@ export class SidebarComponent implements OnInit {
   constructor(private service: FormCreatorService, private fb: FormBuilder, private api: ApiService) {
     this.api.getSidebarFields().subscribe((fields) => {
       this.sidebarFields = fields;
-    })
+    });
     this.service.section$.subscribe(section => {
       this.expandedSection = section;
     });
     this.sections = this.fb.group({
       intro: [null],
-      fields: [null]
+      fields: [null],
+      consent: [null]
     });
     this.sections.valueChanges.subscribe(value => {
       this.service.sections = value;

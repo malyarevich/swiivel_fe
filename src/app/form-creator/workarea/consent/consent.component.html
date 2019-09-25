@@ -1,0 +1,139 @@
+<div class="consent-header">
+  <div class="consent-header__bubbles">
+    <i class="fas fa-grip-vertical consent-header__bubbles-ico"></i>
+  </div>
+  <form class="consent-header__sections" [formGroup]="form">
+    <div class="consent-header__section-name">
+      <sw-input-text formControlName="sectionName">
+        <span class="placeholder">Section Name</span>
+      </sw-input-text>
+    </div>
+    <div class="consent-header__section-width">
+      <!--change for drop down-->
+      <sw-input-text formControlName="sectionWidth">
+        <span class="placeholder">Section Width</span>
+      </sw-input-text>
+      <sw-dropdown-select></sw-dropdown-select>
+    </div>
+  </form>
+  <div class="consent-header__controls">
+    <div class="consent-header__controls-ico-container">
+      <div class="consent-header__controls-ico">
+        <sw-icon-button [icon]="icons.SETTINGS"></sw-icon-button>
+      </div>
+    </div>
+    <div class="consent-header__controls-ico">
+      <sw-icon-button [icon]="icons.CROSS"></sw-icon-button>
+    </div>
+    <div class="consent-header__controls-arrow-container">
+      <div class="consent-header__controls-arrow">
+        <sw-icon-button
+          *ngIf="isShown"
+          [icon]="icons.CARET_DOWN"
+          [color]="colors.WHITE"
+          (click)="changeIsShown()"
+        >
+        </sw-icon-button>
+        <sw-icon-button
+          *ngIf="!isShown"
+          [icon]="icons.CARET_UP"
+          [color]="colors.WHITE"
+          (click)="changeIsShown()"
+        >
+        </sw-icon-button>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="isShown">
+  <div class="consent-item">
+    <div class="consent-item__bubbles">
+      <i class="fas fa-grip-vertical consent-item__bubbles-ico"></i>
+    </div>
+    <div class="consent-item__fields">
+      <div class="consent-item__fields-name">
+        <sw-input-text>
+          <span class="placeholder">Document Name</span>
+        </sw-input-text>
+      </div>
+      <div class="consent-item__fields-text">
+        <sw-input-textarea
+          [rows]="textarea.rows"
+          [cols]="textarea.cols"
+          [readonly]="!textarea.editable">
+          <span class="input_label">Text</span>
+        </sw-input-textarea>
+      </div>
+      <div class="consent-item__fields-signatures">
+        <div class="consent-item__fields-signature">
+          <sw-input-textarea
+            [rows]="textarea.rows"
+            [cols]="textarea.cols"
+            [readonly]="!textarea.editable">
+            <span class="input_label">Father's signature</span>
+          </sw-input-textarea>
+        </div>
+        <div class="consent-item__fields-signature">
+          <sw-input-textarea
+            [rows]="textarea.rows"
+            [cols]="textarea.cols"
+            [readonly]="!textarea.editable">
+            <span class="input_label">Mother's signature</span>
+          </sw-input-textarea>
+        </div>
+      </div>
+      <div class="consent-item__fields-button">
+        <sw-input-text [style]="'button_type'"></sw-input-text>
+      </div>
+    </div>
+  </div>
+  <div class="consent-item">
+    <div class="consent-item__bubbles">
+      <i class="fas fa-grip-vertical consent-item__bubbles-ico"></i>
+    </div>
+    <div class="consent-item__fields">
+      <div class="consent-item__fields-name">
+        <sw-input-text>
+          <span class="placeholder">Document Name</span>
+        </sw-input-text>
+      </div>
+      <div class="consent-item__fields-text">
+        <sw-input-textarea
+          [rows]="textarea.rows"
+          [cols]="textarea.cols"
+          [readonly]="!textarea.editable">
+          <span class="input_label">Text</span>
+        </sw-input-textarea>
+      </div>
+      <div class="consent-item__fields-checkbox-container">
+        <div class="consent-item__fields-checkbox">
+          <sw-input-checkbox></sw-input-checkbox>
+        </div>
+        <sw-input-text>
+          <span class="placeholder">Checkbox Text</span>
+        </sw-input-text>
+      </div>
+      <div class="consent-item__fields-signatures">
+        <div class="consent-item__fields-signature">
+          <sw-input-textarea
+            [rows]="textarea.rows"
+            [cols]="textarea.cols"
+            [readonly]="!textarea.editable">
+            <span class="input_label">Parents's signature</span>
+          </sw-input-textarea>
+        </div>
+      </div>
+      <div class="consent-item__fields-button">
+        <sw-input-text [style]="'button_type'"></sw-input-text>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="consent__buttons">
+  <div class="consent__button">
+    <sw-button [style]="colors.GRAY">Back to Previous Step</sw-button>
+  </div>
+  <div class="consent__button">
+    <sw-button>Save & Go Next Step</sw-button>
+  </div>
+</div>

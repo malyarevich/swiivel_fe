@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ElementRef, forwardRef, Input, OnInit, Renderer2, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, forwardRef, Input, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
@@ -26,11 +26,11 @@ export class InputTextareaComponent implements OnInit, ControlValueAccessor {
   constructor(private renderer: Renderer2) {
 
   }
-  onTouched: Function;
+  onTouched: () => void;
   @ViewChild('input', {static: true}) input: ElementRef;
   @Input() rows = 4;
   @Input() cols = 30;
-  onChange: Function = (_: string) => {};
+  onChange: (_: string) => void;
 
   setDisabledState?(isDisabled: boolean): void {
     this.renderer.setProperty(this.input.nativeElement, 'disabled', isDisabled);
