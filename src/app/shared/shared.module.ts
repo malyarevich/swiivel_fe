@@ -36,6 +36,7 @@ import { UserItemComponent } from './user-item/user-item.component';
 import { SelectOptionDirective } from './inputs/dropdown-select/option.directive';
 import { MainComponent } from './main.component';
 import { ComponentIdDirective } from './inputs/e2e.directive';
+import { PaginatorComponent } from './paginator/paginator.component';
 
 @NgModule({
   imports: [
@@ -73,6 +74,7 @@ import { ComponentIdDirective } from './inputs/e2e.directive';
     SelectOptionDirective,
     ComponentIdDirective,
     MainComponent,
+    PaginatorComponent,
     // Bars
     DocumentApprovalBarComponent,
   ],
@@ -108,6 +110,7 @@ import { ComponentIdDirective } from './inputs/e2e.directive';
     SelectOptionDirective,
     ComponentIdDirective,
     MainComponent,
+    PaginatorComponent,
     // Bars
     DocumentApprovalBarComponent,
   ]

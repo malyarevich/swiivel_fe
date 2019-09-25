@@ -14,13 +14,13 @@ export class DataCollectionService extends ApiService {
       }
     }
     if ('sort' in requestParams) {
-      params.append(`sort[${requestParams.sort.field}]`, requestParams.sort.order);
+      params = params.append(`sort[${requestParams.sort.field}]`, requestParams.sort.order);
     }
     if ('page' in requestParams) {
-      params.append('page', requestParams.page.toString());
+      params = params.append('page', requestParams.page.toString());
     }
     if ('limit' in requestParams) {
-      params.append('limit', requestParams.limit.toString());
+      params = params.append('limit', requestParams.limit.toString());
     }
     return this.http.get(`/proxy/form-builder/form-templates`, {params});
   }

@@ -9,7 +9,7 @@ export class FormsDataSource implements DataSource<any> {
   private formsSubject = new BehaviorSubject<any[]>([]);
   private dataSubject = new BehaviorSubject<any[]>([]);
   private loadingSubject = new BehaviorSubject<boolean>(false);
-  public count = 0;
+  private countData: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   public $loading = this.loadingSubject.asObservable();
 
   constructor(private dataService: DataCollectionService) {
@@ -27,6 +27,10 @@ export class FormsDataSource implements DataSource<any> {
     });
   }
 
+  get count$() {
+    return this.countData.asObservable();
+  }
+
   connect(_collectionViewer: CollectionViewer): Observable<any[]> {
     return this.formsSubject.asObservable();
   }
@@ -34,6 +38,7 @@ export class FormsDataSource implements DataSource<any> {
   disconnect(_collectionViewer: CollectionViewer): void {
     this.formsSubject.complete();
     this.loadingSubject.complete();
+    this.countData.complete();
   }
 
   loadFormsList(params: FormSearchParams = { page: 0, limit: 10 }) {
@@ -43,7 +48,7 @@ export class FormsDataSource implements DataSource<any> {
       finalize(() => this.loadingSubject.next(false))
     ).subscribe(forms => {
       this.loadingSubject.next(false);
-      this.count = parseInt(forms.total);
+      this.countData.next(parseInt(forms.total));
       this.dataSubject.next(forms.data);
     });
   }

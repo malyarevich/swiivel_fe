@@ -16,6 +16,7 @@ import { isObjectLike, isString } from 'lodash';
 import { SelectOptionDirective } from './option.directive';
 import { ActiveDescendantKeyManager } from '@angular/cdk/a11y';
 import { DOWN_ARROW, UP_ARROW, ENTER, ESCAPE } from '@angular/cdk/keycodes';
+import { isNumber } from 'util';
 
 @Component({
   selector: 'sw-dropdown-select',
@@ -98,6 +99,8 @@ export class DropdownSelectComponent {
   @Input() set options(opts: any[]) {
     if (opts && opts.length > 0) {
       if (isString(opts[0])) {
+        this.items = opts;
+      } else if (isNumber(opts[0])) {
         this.items = opts;
       } else if (isObjectLike(opts[0])) {
         this.items = opts.map((opt) => {

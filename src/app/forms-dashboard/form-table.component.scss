@@ -178,4 +178,15 @@
       padding-right: 15px;
     }
   }
+
+  .cdk-footer-cell {
+    &.cdk-column-paginator {
+      .wrapper {
+        margin-top: 7px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
 }

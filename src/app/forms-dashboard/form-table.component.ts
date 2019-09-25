@@ -43,7 +43,7 @@ export class FormTableComponent implements OnInit {
   public displayedColumns: string[] = ['name', 'type', 'access', 'createdBy', 'updatedAt', 'status', 'actions'];
   public params: FormSearchParams = {
     page: 1,
-    limit: 200,
+    limit: 10,
   };
 
   // POPUP
@@ -53,6 +53,7 @@ export class FormTableComponent implements OnInit {
   public canLabelsRemove = false;
 
   public icons = IconsEnum;
+  totalItems: number;
 
   static createSharedUrl(id: string) {
     return `${window.location.href}/f/${id}`;
@@ -89,6 +90,9 @@ export class FormTableComponent implements OnInit {
 
   ngOnInit() {
     this._sm = new SelectionModel(true);
+    this.dataSource.count$.subscribe( count => {
+      this.totalItems = count;
+    });
     this.dataSource.loadFormsList(this.params);
     this.filterForm.valueChanges.pipe(
       debounceTime(300),
@@ -160,6 +164,14 @@ export class FormTableComponent implements OnInit {
     this.params.sort.field = field;
     this.params.sort.order = !!this.sort[1] ? 'asc' : 'desc';
     this.dataSource.loadFormsList(this.params);
+  }
+
+  changePage(event) {
+    if (event) {
+      this.params.limit = event.limit;
+      this.params.page = event.page;
+      this.dataSource.loadFormsList(this.params);
+    }
   }
 
   selectRow(row: any, e: Event) {
