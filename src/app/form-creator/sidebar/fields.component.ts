@@ -1,9 +1,10 @@
 import { NestedTreeControl} from '@angular/cdk/tree';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ApiService } from '@app/core/api.service';
-import { IActionMapping, TreeComponent } from 'angular-tree-component';
 import { FormCreatorService } from '../form-creator.service';
+import { FieldService } from '@app/core/field.service';
+import { TreeDataSource } from '../tree.datasource';
 
 
 
@@ -15,16 +16,18 @@ import { FormCreatorService } from '../form-creator.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SidebarFieldsComponent implements OnInit {
-  treeControl = new NestedTreeControl<any>(node => node.fields);
+  treeControl = new NestedTreeControl<any>(node => node.children);
   sidebar: any[] = [];
   fieldsTree: any[];
-  treeSource = new TreeDataSource();
+  treeSource: TreeDataSource;
   filter: FormControl = new FormControl();
 
   constructor(private fs: FieldService, private api: ApiService) {
     this.api.getSidebarFields().subscribe((sidebar) => {
       this.sidebar = sidebar;
       this.fs.sidebar = sidebar;
+      this.treeSource = new TreeDataSource(this.sidebar);
+      
       // this.fieldsTree.reverse();
       // this.treeSource.data = this.fieldsTree;
     })

@@ -107,7 +107,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     LabelComponent,
     UserItemComponent,
     ReactiveFormsModule,
-    DragDropModule
+    DragDropModule,
     // Directives
     SelectOptionDirective,
     ComponentIdDirective,

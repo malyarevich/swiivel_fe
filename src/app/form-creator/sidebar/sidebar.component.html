@@ -14,45 +14,44 @@
   <div class="sidebar_section__content">
     <span class="title">System Fields</span>
     <div class="search-wrap">
-      <input class="search" id="filter" #filter (keyup)="tree.treeModel.filterNodes(filter.value)" placeholder="Search"/>
+      <input class="search" id="filter" #filter placeholder="Search"/>
       <i class="icon fas fa-search"></i>
     </div>
-    <tree-root [nodes]="sidebarFields" [options]="sidebarOptions" #tree>
-      <ng-template #treeNodeFullTemplate let-node let-index="index" let-templates="templates">
-        <div [class]="node.getClass()" [class.tree-node]="true"
-          [class.tree-node-expanded]="node.isExpanded && node.hasChildren"
-          [class.tree-node-collapsed]="node.isCollapsed && node.hasChildren" [class.tree-node-leaf]="node.isLeaf"
-          [class.tree-node-active]="node.isActive" [class.tree-node-focused]="node.isFocused" [treeDrag]="node"
-          [treeDragEnabled]="true">
 
-          <!-- <tree-node-drop-slot *ngIf="index === 0" [dropIndex]="node.index" [node]="node.parent">
-          </tree-node-drop-slot> -->
-          <div class="node-wrap">
-            <!-- <tree-node-wrapper [node]="node" [index]="index" [templates]="templates">
-            </tree-node-wrapper> -->
+    <cdk-tree [dataSource]="sidebarFields" [treeControl]="treeControl" cdkDropList >
+        <!-- (cdkDropListDropped)="drop($event)" -->
 
-            <tree-node-checkbox [node]="node">
-            </tree-node-checkbox>
-
-
-            <div class="draghandler">
-              <i class="dragdrop fas fa-ellipsis-v" cdkDragHandle></i>
-            </div>
-
-            <tree-node-content [node]="node"></tree-node-content>
-
-            <tree-node-expander [node]="node"></tree-node-expander>
-          </div>
-
-
-          <tree-node-children [node]="node" [templates]="templates">
-          </tree-node-children>
-
-          <!-- <tree-node-drop-slot [dropIndex]="node.index + 1" [node]="node.parent">
-          </tree-node-drop-slot> -->
+      <!-- This is the tree node template for leaf nodes -->
+      <cdk-nested-tree-node *cdkTreeNodeDef="let node"
+        class="field-tree-node" cdkDrag [cdkDragData]="node">
+        <div class="field-tree-node__content">
+          <sw-input-checkbox (inputClick)="onCheckBoxClick(node, $event)">
+            <i class="dragdrop fas fa-ellipsis-v" cdkDragHandle></i>
+            <span class="input_label">{{node.name}}</span>
+          </sw-input-checkbox>
         </div>
-      </ng-template>
-    </tree-root>
+        <!-- use a disabled button to provide padding for tree leaf -->
+      </cdk-nested-tree-node>
+
+      <!-- This is the tree node template for expandable nodes -->
+      <cdk-nested-tree-node *cdkTreeNodeDef="let node; when: hasChild"
+         class="field-tree-node" cdkDrag [cdkDragData]="node">
+        <div class="field-tree-node__content">
+          <sw-input-checkbox (inputClick)="onCheckBoxClick(node, $event)">
+            <i class="dragdrop fas fa-ellipsis-v" cdkDragHandle></i>
+            <span class="input_label">{{node.name}}</span>
+          </sw-input-checkbox>
+          <sw-icon-button [icon]="getIcon(treeControl.isExpanded(node))" cdkTreeNodeToggle [attr.aria-label]="'toggle ' + node.name">
+          </sw-icon-button>
+        </div>
+
+
+        <div [class.field-tree-invisible]="!treeControl.isExpanded(node)">
+            <ng-container cdkTreeNodeOutlet></ng-container>
+          </div>
+      </cdk-nested-tree-node>
+    </cdk-tree>
+
 
   </div>
 </div>
