@@ -6,7 +6,7 @@ import {
 } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { FormGroup } from "@angular/forms";
-import { BehaviorSubject, Observable } from "rxjs";
+import { BehaviorSubject, Observable, Subscription } from "rxjs";
 import { Form } from "@app/models/data-collection/form";
 import { OnlineFormService } from "./services/online-form.service";
 import {
@@ -31,6 +31,7 @@ export class OnlineFormComponent implements OnInit {
   pagesPercents: object[] = [];
   currentPosition: object = {};
 
+  saveFormSubscription: Subscription;
   _isReady$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(
@@ -303,8 +304,8 @@ export class OnlineFormComponent implements OnInit {
     } else if (currentPageIndex !== 0) {
       this.currentPosition = {
         ...this.currentPosition,
-        page: this.formNavigationState[currentPageIndex - 1]['page'],
-        tab: (this.formNavigationState[currentPageIndex - 1]['tabs'].length - 1)
+        page: this.formNavigationState[currentPageIndex - 1]["page"],
+        tab: this.formNavigationState[currentPageIndex - 1]["tabs"].length - 1
       };
     }
   }
@@ -321,15 +322,15 @@ export class OnlineFormComponent implements OnInit {
     const currentPageIndex = this.formNavigationState.findIndex(page => {
       return page["page"] === this.currentPosition["page"];
     });
-    if (currentPage["tabs"].length > (this.currentPosition["tab"] + 1)) {
+    if (currentPage["tabs"].length > this.currentPosition["tab"] + 1) {
       this.currentPosition = {
         ...this.currentPosition,
         tab: this.currentPosition["tab"] + 1
       };
-    } else if ((currentPageIndex + 1) < this.formNavigationState.length) {
+    } else if (currentPageIndex + 1 < this.formNavigationState.length) {
       this.currentPosition = {
         ...this.currentPosition,
-        page: this.formNavigationState[currentPageIndex + 1]['page'],
+        page: this.formNavigationState[currentPageIndex + 1]["page"],
         tab: 0
       };
     } else {
@@ -339,13 +340,21 @@ export class OnlineFormComponent implements OnInit {
   }
 
   saveAndNextStep() {
-    //TODO: save at server
-    //TODO: observer for next
-    this.goToNextStep();
+    this.onlineFormService
+      .sendForm({
+        fieldsData: this.fg.value,
+        pagesPercents: this.pagesPercents
+      })
+      .subscribe(() => {
+        this.goToNextStep();
+      });
     // console.log("saveAndNextStep");
   }
 
   ngOnDestroy(): void {
     this._isReady$.unsubscribe();
+    if (this.saveFormSubscription) {
+      this.saveFormSubscription.unsubscribe();
+    }
   }
 }
