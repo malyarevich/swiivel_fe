@@ -25,6 +25,8 @@
       <sw-icon-button [icon]="getIcon(treeControl.isExpanded(node))" cdkTreeNodeToggle [attr.aria-label]="'toggle ' + node.name">
       </sw-icon-button>
     </div>
+  </ng-template>
+</tree-root>
 
     <div [class.field-tree-invisible]="!treeControl.isExpanded(node)">
         <ng-container cdkTreeNodeOutlet></ng-container>

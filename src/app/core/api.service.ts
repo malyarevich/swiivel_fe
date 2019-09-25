@@ -14,11 +14,7 @@ export class ApiService {
   constructor(protected http: HttpService) {}
 
   public login(data: LoginData): any {
-    return this.http.post('/login', {...data}).pipe(
-      map((response: ApiResponse) => {
-        if (response.status === 1) { return response.data; }
-      })
-    );
+    return this.http.post('/login', {...data});
   }
   forgotPassword(email: string) {
     return this.http.post('/forgot-password', { email });
@@ -33,10 +29,10 @@ export class ApiService {
   }
 
   getSidebarFields() {
-    return this.http.get('/proxy/sidebar-fields').pipe(
-      map((response: ApiResponse) => {
-        if (response.status === 1) { return response.data; }
-      })
-    );
+    return this.http.get('/proxy/sidebar-fields');
+  }
+
+  public download(url: string) {
+    return this.http.getFile(url)
   }
 }

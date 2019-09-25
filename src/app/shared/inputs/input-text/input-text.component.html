@@ -1,11 +1,12 @@
 <div class="input_text">
   <input
-    type="text"
+    [type]="_type"
     class="input_text__input"
-    (blur)="onTouched()"
+    (blur)="onBlur($event)"
     (input)="onChange(input.value)"
     [class.empty]="isEmpty(input.value)"
+    [attr.autocomplete]="_autocomplete"
     #input/>
   <ng-content></ng-content>
-  <i class="input_text__error_icon"></i>
+  <i class="fa fa-times-circle"></i>
 </div>

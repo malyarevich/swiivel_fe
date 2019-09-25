@@ -1,6 +1,7 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild, Renderer2, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Form } from '@models/data-collection/form';
 import { IconsEnum } from '@shared/icons.enum';
 import { DialogComponent } from '@shared/popup/dialog.component';
@@ -8,15 +9,18 @@ import { pick } from 'lodash';
 import { DateTime } from 'luxon';
 import { DataCollectionService } from './data-collection.service';
 import { FormsDataSource } from './form-table.datasource';
+import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import { FormSearchParams } from '@app/models/form-search-params';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-form-table',
   templateUrl: './form-table.component.html',
   styleUrls: ['./form-table.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [DataCollectionService]
 })
 export class FormTableComponent implements OnInit {
+  @ViewChild('link', {static: false}) link: ElementRef;
   @ViewChild('dialog', { static: true }) dialog: DialogComponent;
 
   // TABS
@@ -37,12 +41,9 @@ export class FormTableComponent implements OnInit {
   // TABLE DATA
   public dataSource: FormsDataSource = new FormsDataSource(this.dataCollectionService);
   public displayedColumns: string[] = ['name', 'type', 'access', 'createdBy', 'updatedAt', 'status', 'actions'];
-  public params = {
+  public params: FormSearchParams = {
     page: 1,
-    limit: 200,
-    search: {},
-    sort: {},
-    filter: {},
+    limit: 10,
   };
 
   // POPUP
@@ -52,20 +53,31 @@ export class FormTableComponent implements OnInit {
   public canLabelsRemove = false;
 
   public icons = IconsEnum;
+  totalItems: number;
 
   static createSharedUrl(id: string) {
     return `${window.location.href}/f/${id}`;
   }
-
+  download: {
+    url: SafeResourceUrl;
+    filename: string;
+  } = {
+    url: null,
+    filename: null
+  }
   filterForm: FormGroup;
   sort = ['name', true];
+
   statusesOptions: string[] = ['Active', 'Drafts', 'In Review', 'Closed', 'Archived'];
   _sm: SelectionModel<any>;
 
   constructor(
     public dataCollectionService: DataCollectionService,
-    private cd: ChangeDetectorRef,
-    private fb: FormBuilder) {
+    public router: Router,
+    private cdr: ChangeDetectorRef,
+    private fb: FormBuilder,
+    private sanitizer: DomSanitizer,
+    private renderer: Renderer2) {
     this.filterForm = this.fb.group({
       name: [null],
       type: [null],
@@ -78,9 +90,20 @@ export class FormTableComponent implements OnInit {
 
   ngOnInit() {
     this._sm = new SelectionModel(true);
+    this.dataSource.count$.subscribe( count => {
+      this.totalItems = count;
+    });
     this.dataSource.loadFormsList(this.params);
-    this.filterForm.valueChanges.subscribe(value => {
-      this.dataSource.filter(value);
+    this.filterForm.valueChanges.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      map(value => {
+        Object.keys(value).forEach(key => (value[key] === null || value[key] === '') && delete value[key])
+        return value;
+      })
+    ).subscribe(value => {
+      this.params.filter = {...value};
+      this.dataSource.loadFormsList(this.params);
     });
   }
 
@@ -132,6 +155,23 @@ export class FormTableComponent implements OnInit {
     } else {
       this.sort = [field, true];
     }
+    if (!this.params.sort) {
+      this.params.sort = {
+        field: null,
+        order: null
+      };
+    }
+    this.params.sort.field = field;
+    this.params.sort.order = !!this.sort[1] ? 'asc' : 'desc';
+    this.dataSource.loadFormsList(this.params);
+  }
+
+  changePage(event) {
+    if (event) {
+      this.params.limit = event.limit;
+      this.params.page = event.page;
+      this.dataSource.loadFormsList(this.params);
+    }
   }
 
   selectRow(row: any, e: Event) {
@@ -151,7 +191,7 @@ export class FormTableComponent implements OnInit {
 
     // this.disabledBulkBtn = this.selectedForms.size ? false : true;
 
-    
+
   }
 
   rowSelected(row: any) {
@@ -160,7 +200,7 @@ export class FormTableComponent implements OnInit {
 
   clickTab(filter) {
     this.activeTab = filter;
-    this.filterForm.get('status').setValue(filter.value);
+    this.filterForm.get('status').setValue(filter.title, {emitEvent: false});
   }
 
   bulkAction(selectedIndex) {
@@ -276,11 +316,7 @@ export class FormTableComponent implements OnInit {
   }
 
   archiveForms(ids: number[]): void {
-    this.dataCollectionService
-      .archiveForms(ids)
-      .subscribe(() => {
-        this.dataSource.loadFormsList(this.params);
-      });
+    this.changeStatus(this.statusesOptions.indexOf('Archived'), ids);
   }
 
   deleteLabel(index: number, popupTitle: string): void {
@@ -292,40 +328,61 @@ export class FormTableComponent implements OnInit {
   onDuplicateForm(mongoId: string): void {
     this.dataCollectionService
       .duplicateForm(mongoId)
-      .subscribe(() => {
-        this.dataSource.loadFormsList(this.params);
+      .subscribe((res) => {
+        this.router.navigate([`forms-dashboard/form-constructor/${res._id}`]).then();
       });
+  }
+
+  clearLink(url) {
+    this.download = {
+      url: null,
+      filename: null
+    }
+    window.URL.revokeObjectURL(url);
+    this.cdr.markForCheck();
   }
 
   onExportPDF(mongoId: string) {
     this.dataCollectionService
       .exportPDFForm(mongoId)
-      .subscribe(() => {
-        console.log('Start pdf download');
+      .subscribe((url) => {
+        this.download = {
+          url: this.sanitizer.bypassSecurityTrustResourceUrl(url),
+          filename: `form-${mongoId}.pdf`
+        };
+        this.cdr.detectChanges();
+        this.renderer.selectRootElement(this.link.nativeElement).click();
+        this.clearLink(url);
       });
   }
 
   onExportZIP(mongoIds: string) {
     this.dataCollectionService
       .exportPDFFormZIP(mongoIds)
-      .subscribe(() => {
-        console.log('Start zip download');
+      .subscribe((url) => {
+        this.download = {
+          url: this.sanitizer.bypassSecurityTrustResourceUrl(url),
+          filename: `forms.zip`
+        };
+        this.cdr.detectChanges();
+        this.renderer.selectRootElement(this.link.nativeElement).click()
+        this.clearLink(url);
       });
   }
 
   onCopyLink(label: string): void {
-    navigator.clipboard.writeText(label)
+    navigator['clipboard'].writeText(label)
       .then(() => {})
       .catch(err => {
         console.error('Could not copy text: ', err);
       });
   }
 
-  changeStatus(statusId: number, form: Form): void {
+  changeStatus(statusId: number, ids: number[]): void {
     this.statusArray.forEach((item) => {
       if (item.title === this.statusesOptions[statusId]) {
         this.dataCollectionService
-          .changeStatus([form.id], item.value)
+          .changeStatus(ids, item.value)
           .subscribe(() => {
             this.dataSource.loadFormsList(this.params);
           });
