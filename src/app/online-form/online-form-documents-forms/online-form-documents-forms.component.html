@@ -1,0 +1,10 @@
+<div>
+  <app-online-documents
+    *ngIf="isDocumentsTab()"
+    [form]="form"
+  ></app-online-documents>
+  <app-online-pdf-forms
+    *ngIf="isExternalTab()"
+    [form]="form"
+  ></app-online-pdf-forms>
+</div>
