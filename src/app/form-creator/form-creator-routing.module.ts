@@ -12,6 +12,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     canActivateChild: [AuthGuard],
     children: [
+      { path: ':mongo_id',  component: FormCreatorComponent },
       { path: '',  component: FormCreatorComponent },
     ]
   },

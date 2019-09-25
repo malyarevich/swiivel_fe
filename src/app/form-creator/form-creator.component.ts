@@ -4,6 +4,7 @@ import { SidebarDocumentsFormsComponent } from './sidebar/documents-forms.compon
 import { SidebarFieldsComponent } from './sidebar/fields.component';
 import { SidebarIntroComponent } from './sidebar/intro.component';
 import { SidebarTermsConditionsComponent } from './sidebar/terms-conditions.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'sw-form-creator',
@@ -25,9 +26,19 @@ export class FormCreatorComponent implements OnInit {
     {name: 'FORM PAYMENT', workarea: '', component: SidebarIntroComponent, active: false, expanded: false},
   ];
 
-  constructor() { }
+  constructor(private route: ActivatedRoute) {
+
+   }
 
   ngOnInit() {
+    this.route.paramMap.subscribe(params => {
+      if (params.has('mongo_id')) {
+        console.info(`Edit form with ID ${params.get('mongo_id')}`);
+      } else {
+        console.info(`Create New Form`)
+      }
+    });
+    // console.log(route)
   }
 
   switchWorkarea(workarea: string) {

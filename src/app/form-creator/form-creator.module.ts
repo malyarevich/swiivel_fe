@@ -22,6 +22,7 @@ import { WorkareaComponent } from './workarea/workarea.component';
 
 import { TreeModule } from 'angular-tree-component';
 import { FormCreatorService } from './form-creator.service';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
@@ -42,13 +43,15 @@ import { FormCreatorService } from './form-creator.service';
   ],
   imports: [
     CommonModule,
+    // RouterModule,
     TreeModule,
     FormCreatorRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     ScrollingModule,
     SharedModule,
-    SettingsModule
+    SettingsModule,
+
   ],
   entryComponents: [
     SidebarIntroComponent,
