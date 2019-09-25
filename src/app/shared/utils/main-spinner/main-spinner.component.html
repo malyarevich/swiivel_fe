@@ -1,0 +1,11 @@
+<div class="position-relative w-100 h-50">
+  <div class="main_spinner">
+    <div class="main_spinner__box">
+      <div class="main_spinner__logo">i!</div>
+      <svg class="main_spinner__spinner" viewBox="25 25 50 50">
+        <circle class="main_spinner__path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
+      </svg>
+      <h2 *ngIf="spinnerText !== ''" class="main_spinner__additional_label">{{spinnerText}}</h2>
+    </div>    
+  </div>
+</div>

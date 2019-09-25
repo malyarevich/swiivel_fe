@@ -1,0 +1,44 @@
+<ng-container *ngIf="isReady$ | async">
+
+  <sw-online-form-nav
+    [formName]="form?.name"
+    (actionEmitter)="onAction($event)"
+  ></sw-online-form-nav>
+
+  <div class="container-fluid app-of-background online_form_container">
+
+    <div class="online_form_container__nav">
+      <sw-online-form-menu
+        [form]="form"
+        [pagesPercents]="pagesPercents"
+        [formNavigationState]="formNavigationState"
+        [currentPosition]="currentPosition"
+        (onGoToPage)="goToPage($event)"
+      ></sw-online-form-menu>
+    </div>
+
+    <div class="online_form_container__wrapper">
+      <div class="online_form_container__content">
+        <sw-online-form-view
+          [form]="form"
+          [fg]="fg"
+          [formNavigationState]="formNavigationState"
+          [currentPosition]="currentPosition"
+          [formErrors]="formErrors"
+          (onGoToTab)="goToTab($event)"
+        ></sw-online-form-view>
+      </div>
+
+      <div class="online_form_container__control_block">
+        <sw-online-form-controls
+        (previousStepEmitter)="goPreviousStep()"
+        (saveAndNextStepEmitter)="saveAndNextStep()"
+        ></sw-online-form-controls>
+      </div>
+    </div>
+
+  </div>
+</ng-container>
+<ng-container *ngIf="!isReady$ | async">
+  <sw-main-spinner class="spinner_box"></sw-main-spinner>
+</ng-container>

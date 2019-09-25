@@ -1,5 +1,6 @@
 export interface Form {
   id: number;
+  _id: any;
   mongo_id: string;
   name: string;
   link: string;
@@ -21,6 +22,10 @@ export interface Form {
   updated_at: string;
   isSelected?: boolean;
   sharedUrl?: string;
+  fields?: any;
+  attachments?: any;
+  consentInfo?: any;
+  paymentSettings?: any;
 }
 
 interface FormPermissions {

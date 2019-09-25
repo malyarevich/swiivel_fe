@@ -65,6 +65,8 @@ import { ComponentIdDirective } from './inputs/e2e.directive';
     // Headers
     PageHeaderComponent,
     BlockHeaderComponent,
+    // Utils
+    MainSpinnerComponent,
     // Others
     LabelComponent,
     UserItemComponent,
@@ -100,6 +102,8 @@ import { ComponentIdDirective } from './inputs/e2e.directive';
     // Headers
     PageHeaderComponent,
     BlockHeaderComponent,
+    // Utils
+    MainSpinnerComponent,
     // Others
     LabelComponent,
     UserItemComponent,
