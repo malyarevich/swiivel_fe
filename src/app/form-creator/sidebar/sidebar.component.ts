@@ -4,6 +4,8 @@ import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { ApiService } from '@app/core/api.service';
 import { TREE_ACTIONS, TreeNode } from 'angular-tree-component';
 import { Popup } from '@app/core/popup.service';
+import { NestedTreeControl } from '@angular/cdk/tree';
+import { TreeDataSource } from '../tree.datasource';
 
 @Component({
   selector: 'sw-form-creator-sidebar',
@@ -12,6 +14,8 @@ import { Popup } from '@app/core/popup.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SidebarComponent implements OnInit {
+  treeControl = new NestedTreeControl<any>(node => node.fields);
+  treeSource = new TreeDataSource();
   expandedSection: string;
   sections: FormGroup;
   sidebarFields = [];
@@ -48,7 +52,8 @@ export class SidebarComponent implements OnInit {
 
   constructor(private service: FormCreatorService, private fb: FormBuilder, private api: ApiService, private popup: Popup) {
     this.api.getSidebarFields().subscribe((fields) => {
-      this.sidebarFields = fields;
+      console.log('Get fields', fields);
+      this.treeSource = fields;
     })
     this.service.section$.subscribe(section => {
       this.expandedSection = section;
@@ -73,6 +78,12 @@ export class SidebarComponent implements OnInit {
   }
 
   ngOnInit() { }
+
+  hasChild = (_: number, node: any) => !!node.fields && node.fields.length > 0;
+
+  getIcon(expanded: boolean): string {
+    return expanded ? 'fa-caret-up' : 'fa-caret-down';
+  }
 
   openDeletePop(node: any) {
     if (!node && !node.data) return;
