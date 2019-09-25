@@ -1,6 +1,9 @@
-<div class="content_section__main content_section__main--center">
-  <ng-container *ngFor="let item of consents">
-    <div *ngIf="item.id === activeConsentId">
+<div
+  class="content_section__main content_section__main--center"
+  [formGroup]="fg"
+>
+  <ng-container *ngFor="let item of consents; let consentIndex = index">
+    <div *ngIf="isShowConsent(consentIndex)">
       <!--Title-->
       <h2 class="content_section__article_title">
         {{ item.title }}
@@ -20,36 +23,24 @@
       </article>
 
       <!--Checkbox-->
-      <!-- <div
+      <div
         *ngIf="item.checkbox.isActive"
         class="content_section__additional_fields"
       >
         <div class="content_section__inputs_container">
           <div class="content_section__checkbox_container p-0">
-            <input
-              class="content_section__checkbox"
-              type="checkbox"
-              id="item.checkbox.id"
-              [(ngModel)]="item.checkbox.checked"
-              [disabled]="true"
-            />
-
-            <label
-              tabindex="indexItem"
-              for="item.id"
-              class="content_section__checkbox_label py-0"
-            >
-              <span
-                class="app-checkbox-checkmark
-                  content_section__checkbox_checkmark"
-              ></span>
-              {{ item.checkbox.text }}
-            </label>
+            <sw-input-checkbox [formControlName]="item._id + '_agree'">
+              <span class="input_label"> {{ item.checkbox.text }}</span>
+            </sw-input-checkbox>
           </div>
         </div>
-      </div> -->
+      </div>
 
-      <sw-online-form-signatures [signature]="item.signature"></sw-online-form-signatures>
+      <sw-online-form-signatures
+        [fg]="fg"
+        [sourcePage]="item._id"
+        [signature]="item.signature"
+      ></sw-online-form-signatures>
       <!--SIGNATURE-->
       <!-- <app-signatures
           [signature]="item.signature"
