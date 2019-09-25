@@ -26,6 +26,8 @@ import { InputEmailComponent } from './inputs/input-email/input-email.component'
 import { InputPhoneNumberComponent } from './inputs/input-phone-number/input-phone-number.component';
 import { DialogComponent } from './popup/dialog.component';
 
+// Utils
+import { MainSpinnerComponent } from './utils/main-spinner/main-spinner.component';
 // Bars
 import { DocumentApprovalBarComponent } from '@shared/bars/document-approval-bar.component';
 
@@ -66,6 +68,8 @@ import { PaginatorComponent } from './paginator/paginator.component';
     // Headers
     PageHeaderComponent,
     BlockHeaderComponent,
+    // Utils
+    MainSpinnerComponent,
     // Others
     LabelComponent,
     UserItemComponent,
@@ -102,6 +106,8 @@ import { PaginatorComponent } from './paginator/paginator.component';
     // Headers
     PageHeaderComponent,
     BlockHeaderComponent,
+    // Utils
+    MainSpinnerComponent,
     // Others
     LabelComponent,
     UserItemComponent,
