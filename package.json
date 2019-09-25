@@ -34,8 +34,6 @@
     "google-libphonenumber": "^3.2.3",
     "luxon": "^1.17.3",
     "map-factory": "^3.8.1",
-    "ng-dynamic-component": "^5.0.0",
-    "ng2-pdf-viewer": "^5.3.4",
     "rxjs": "~6.5.2",
     "tslib": "^1.9.0",
     "validator": "^11.1.0",
