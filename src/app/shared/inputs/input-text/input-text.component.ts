@@ -1,5 +1,15 @@
-import { ChangeDetectionStrategy, Component, ElementRef, forwardRef, Input, Renderer2, ViewChild, EventEmitter, Output, AfterViewInit, HostBinding } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl, FormControl } from '@angular/forms';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  EventEmitter,
+  forwardRef,
+  Input,
+  Output,
+  Renderer2,
+  ViewChild } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { SizesEnum } from '@shared/sizes.enum';
 
 @Component({
   selector: 'sw-input-text',
@@ -24,9 +34,13 @@ export class InputTextComponent implements ControlValueAccessor {
   }
   public _autocomplete: string = null;
   public _type = 'text';
+  public _style = 'button';
   @ViewChild('input', {static: true}) input: ElementRef;
   @Input() set type(inputType: string) {
     this._type = inputType;
+  }
+  @Input() set style(styleType: string) {
+    this._style = styleType;
   }
   @Input() readonly: boolean;
   @Output() blur = new EventEmitter<any>();

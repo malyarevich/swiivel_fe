@@ -5,6 +5,7 @@
     width: 100%;
     position: relative;
     &__input {
+      width: 100%;
       background: $white;
       font-family: "Nunito Sans";
       font-size: 12px;
@@ -25,6 +26,7 @@
 
 :host(.ng-invalid) {
   .input_textarea__input {
+    width: 100%;
     border: 1px solid $error-color;
   }
 }

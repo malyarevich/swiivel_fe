@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ColorsEnum } from '@shared/colors.enum';
+import {ColorsEnum} from '@shared/colors.enum';
 
 @Component({
   selector: 'sw-button',
@@ -12,6 +12,7 @@ export class ButtonComponent {
   @Input() name: string;
   @Input() value: any;
   @Input() style ? = 'purple';
+
   public colors = ColorsEnum;
 
   constructor() { }
