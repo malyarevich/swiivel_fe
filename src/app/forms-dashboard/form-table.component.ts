@@ -54,6 +54,7 @@ export class FormTableComponent implements OnInit {
 
   public icons = IconsEnum;
   totalItems: number;
+  showSpinner: boolean;
 
   static createSharedUrl(id: string) {
     return `${window.location.href}/f/${id}`;
@@ -104,6 +105,9 @@ export class FormTableComponent implements OnInit {
     ).subscribe(value => {
       this.params.filter = {...value};
       this.dataSource.loadFormsList(this.params);
+    });
+    this.dataSource.$loading.subscribe((loading: boolean) => {
+      this.showSpinner = loading;
     });
   }
 
