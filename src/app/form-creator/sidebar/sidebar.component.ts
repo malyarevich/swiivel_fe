@@ -8,6 +8,10 @@ import { NestedTreeControl } from '@angular/cdk/tree';
 import { TreeDataSource } from '../tree.datasource';
 import { SelectionModel } from '@angular/cdk/collections';
 
+import { SidebarDocumentsFormsComponent } from './documents-forms.component';
+import { SidebarConsentComponent } from './consent.component';
+import { SidebarTermsConditionsComponent } from './terms-conditions.component';
+
 @Component({
   selector: 'sw-form-creator-sidebar',
   templateUrl: './sidebar.component.html',
@@ -15,42 +19,48 @@ import { SelectionModel } from '@angular/cdk/collections';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SidebarComponent implements OnInit {
+  components = {
+    addDocsComponent: SidebarDocumentsFormsComponent,
+    consent: SidebarConsentComponent,
+    tac: SidebarTermsConditionsComponent
+  }
   treeControl = new NestedTreeControl<any>(node => node.fields);
   checklistSelection = new SelectionModel<any>(true);
   treeSource = new TreeDataSource();
   expandedSection: string;
   sections: FormGroup;
-  sidebarFields = [];
-  sidebarOptions = {
-    idField: 'mongo_id',
-    childrenField: 'fields',
-    displayField: 'name',
-    useCheckbox: true,
-    allowDrop: false,
-    allowDrag: true,
-    actionMapping: {
-      mouse: {
-        checkboxClick: (tree, node: TreeNode, $event) => {
-          TREE_ACTIONS.TOGGLE_SELECTED(tree, node, $event);
-          if (node.isSelected) {
-            if (node.isRoot) {
-              node.expandAll();
-            }
-            this.service.addField(node);
-          } else {
-            if (node.isRoot) {
-              node.collapseAll();
-            }
-            this.service.removeField(node);
-          }
-        }
-      }
-    }
-  };
   delFieldName: string;
-  delInput: FormControl = new FormControl('MIDDLE NAME');
+  delInput: FormControl = new FormControl(null);
   ref: any;
   @ViewChild('deletePop', { static: false }) deletePop;
+
+  // sidebarFields = [];
+  // sidebarOptions = {
+  //   idField: 'mongo_id',
+  //   childrenField: 'fields',
+  //   displayField: 'name',
+  //   useCheckbox: true,
+  //   allowDrop: false,
+  //   allowDrag: true,
+  //   actionMapping: {
+  //     mouse: {
+  //       checkboxClick: (tree, node: TreeNode, $event) => {
+  //         TREE_ACTIONS.TOGGLE_SELECTED(tree, node, $event);
+  //         if (node.isSelected) {
+  //           if (node.isRoot) {
+  //             node.expandAll();
+  //           }
+  //           this.service.addField(node);
+  //         } else {
+  //           if (node.isRoot) {
+  //             node.collapseAll();
+  //           }
+  //           this.service.removeField(node);
+  //         }
+  //       }
+  //     }
+  //   }
+  // };
 
   constructor(private service: FormCreatorService, private fb: FormBuilder, private api: ApiService, private popup: Popup) {
     this.api.getSidebarFields().subscribe((fields) => {
@@ -62,7 +72,10 @@ export class SidebarComponent implements OnInit {
     });
     this.sections = this.fb.group({
       intro: [null],
-      fields: [null]
+      fields: [null],
+      addDocs: [null],
+      consent: [null],
+      tac: [null]
     });
     this.sections.valueChanges.subscribe(value => {
       this.service.sections = value;
