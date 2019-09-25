@@ -6,6 +6,7 @@ import { TREE_ACTIONS, TreeNode } from 'angular-tree-component';
 import { Popup } from '@app/core/popup.service';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { TreeDataSource } from '../tree.datasource';
+import { SelectionModel } from '@angular/cdk/collections';
 
 @Component({
   selector: 'sw-form-creator-sidebar',
@@ -15,6 +16,7 @@ import { TreeDataSource } from '../tree.datasource';
 })
 export class SidebarComponent implements OnInit {
   treeControl = new NestedTreeControl<any>(node => node.fields);
+  checklistSelection = new SelectionModel<any>(true);
   treeSource = new TreeDataSource();
   expandedSection: string;
   sections: FormGroup;
@@ -109,6 +111,37 @@ export class SidebarComponent implements OnInit {
       console.log('Delete field', this.delFieldName);
     }
     this.closePop();
+  }
+
+  filterTree(filter: string) {
+    console.log('filterTree', filter, this.treeControl);
+  }
+
+  toggleParentNode(node: any): void {
+    this.checklistSelection.toggle(node);
+    const descendants = this.treeControl.getDescendants(node);
+    this.checklistSelection.isSelected(node)
+      ? this.checklistSelection.select(...descendants)
+      : this.checklistSelection.deselect(...descendants);
+  }
+
+  descendantsAllSelected(node: any): boolean {
+    const descendants = this.treeControl.getDescendants(node);
+    return descendants.every(child => this.checklistSelection.isSelected(child));
+  }
+
+  descendantsPartiallySelected(node: any): boolean {
+    const descendants = this.treeControl.getDescendants(node);
+    const result = descendants.some(child => this.checklistSelection.isSelected(child));
+    return result && !this.descendantsAllSelected(node);
+  }
+
+  toggleNode(node: any) {
+    this.checklistSelection.toggle(node);
+  }
+
+  isSelectedNode(node: any) {
+    return this.checklistSelection.isSelected(node);
   }
 
 
