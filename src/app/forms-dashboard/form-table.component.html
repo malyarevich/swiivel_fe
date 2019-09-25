@@ -17,24 +17,12 @@
         <div class="app-form-table__controls-button">
           <sw-button routerLink="/form-creator">Create New Form</sw-button>
         </div>
-        <div
-          class="app-form-table__controls-bulk"
-        >
-          <sw-dropdown-select
-            [options]="bulkOptions"
-            #bulk="dropdown"
-            (selected)="bulkAction($event)"
-            [panelClass]="'app-form-table-dropdown-overlay'"
-            [disabled]="disabledBulkBtn"
-          >
-            <sw-button
-              [disabled]="disabledBulkBtn"
-            >
+        <div class="app-form-table__controls-bulk">
+          <sw-dropdown-select [options]="bulkOptions" #bulk="dropdown" (selected)="bulkAction($event)"
+            [panelClass]="'app-form-table-dropdown-overlay'" [disabled]="disabledBulkBtn">
+            <sw-button [disabled]="disabledBulkBtn">
               <span class="app-form-table__controls-bulk-btn-text">Bulk Actions</span>
-              <i
-                class="fas fa-chevron-down"
-                [ngClass]="{'fa-chevron-up': bulk.isOpened}"
-              ></i>
+              <i class="fas fa-chevron-down" [ngClass]="{'fa-chevron-up': bulk.isOpened}"></i>
             </sw-button>
           </sw-dropdown-select>
         </div>
@@ -180,22 +168,16 @@
                     </div>
                   </div>
                   <div class="header_container__filter">
-                    <sw-input-suggest class="filter-field" formControlName="status" [options]="statusArray"></sw-input-suggest>
+                    <sw-input-suggest class="filter-field" formControlName="status" [options]="statusArray">
+                    </sw-input-suggest>
                   </div>
                 </div>
               </th>
               <td cdk-cell *cdkCellDef="let form">
-                <sw-dropdown-select
-                  [options]="statusesOptions"
-                  #bulk="dropdown"
-                  (selected)="changeStatus($event, [form.id])"
-                >
-                  <sw-small-button
-                    [ngClass]="{'icon-end': true}"
-                    [class]="getStatusColor(form.status)"
-                    [text]="form.status"
-                    [icon]="icons.CARET_DOWN"
-                  ></sw-small-button>
+                <sw-dropdown-select [options]="statusesOptions" #bulk="dropdown"
+                  (selected)="changeStatus($event, [form.id])">
+                  <sw-small-button [ngClass]="{'icon-end': true}" [class]="getStatusColor(form.status)"
+                    [text]="form.status" [icon]="icons.CARET_DOWN"></sw-small-button>
                 </sw-dropdown-select>
               </td>
             </ng-container>
@@ -205,49 +187,44 @@
               </th>
               <td cdk-cell *cdkCellDef="let form">
                 <div class="item">
-                  <sw-small-button
-                    text="Edit"
-                    [icon]="icons.PEN"
-                    [routerLink]="['/forms-dashboard/form-constructor/', mongoId]"
-                  >
+                  <sw-small-button text="Edit" [icon]="icons.PEN"
+                    [routerLink]="['/forms-dashboard/form-constructor/', mongoId]">
                   </sw-small-button>
                 </div>
                 <div class="item">
-                  <sw-small-button
-                    text="View"
-                    [icon]="icons.EYE"
-                    [routerLink]="['/forms-dashboard/online-form/', mongoId]"
-                  >
+                  <sw-small-button text="View" [icon]="icons.EYE"
+                    [routerLink]="['/forms-dashboard/online-form/', mongoId]">
                   </sw-small-button>
                 </div>
                 <div class="item">
-                  <sw-icon-button
-                    [icon]="icons.SHARE"
-                    (click)="onShareLink(form)"
-                  >
+                  <sw-icon-button [icon]="icons.SHARE" (click)="onShareLink(form)">
                   </sw-icon-button>
                 </div>
                 <div class="item">
-                  <sw-icon-button
-                    [icon]="icons.DOWNLOAD"
-                    (click)="onExportPDF(form.mongo_id, link)"
-                  >
+                  <sw-icon-button [icon]="icons.DOWNLOAD" (click)="onExportPDF(form.mongo_id, link)">
                   </sw-icon-button>
                 </div>
                 <div class="item">
-                  <sw-icon-button
-                    [icon]="icons.COPY"
-                    (click)="onDuplicateForm(form.mongo_id)"
-                  >
+                  <sw-icon-button [icon]="icons.COPY" (click)="onDuplicateForm(form.mongo_id)">
                   </sw-icon-button>
                 </div>
               </td>
             </ng-container>
 
+            <ng-container cdkColumnDef="paginator">
+              <td cdk-footer-cell *cdkFooterCellDef [attr.colspan]="displayedColumns.length">
+                <div class="wrapper">
+                  <sw-paginator [size]="totalItems" (pageChange)="changePage($event)"></sw-paginator>
+                </div>
+              </td>
+            </ng-container>
+
+
             <tr cdk-header-row class="filters-row" *cdkHeaderRowDef="displayedColumns;"></tr>
             <tr cdk-row class="table-row" [class.selected]="rowSelected(form)" #data
               *cdkRowDef="let form; columns: displayedColumns;" (click)="selectRow(form, $event)">
             </tr>
+            <tr cdk-footer-row *cdkFooterRowDef="['paginator']"></tr>
 
 
           </table>
@@ -257,22 +234,12 @@
       </div>
     </div>
   </div>
-  <sw-dialog
-    #dialog
-    [title]="popupTitle"
-    [action]="popupActionBtnText"
-    (closed)="popupClosed($event)"
-  >
+  <sw-dialog #dialog [title]="popupTitle" [action]="popupActionBtnText" (closed)="popupClosed($event)">
     <span *ngFor="let label of popupContentArray; let i = index">
-      <sw-label
-        *ngIf="canLabelsRemove"
-        (deleteLabel)="deleteLabel(i, popupTitle)"
-      >
+      <sw-label *ngIf="canLabelsRemove" (deleteLabel)="deleteLabel(i, popupTitle)">
         {{ label.title }}
       </sw-label>
-      <sw-label
-        *ngIf="!canLabelsRemove"
-      >
+      <sw-label *ngIf="!canLabelsRemove">
         {{ label.title }}
       </sw-label>
     </span>
