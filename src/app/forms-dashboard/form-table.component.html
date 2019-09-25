@@ -30,13 +30,9 @@
       </div>
     </div>
     <div>
-      <div class="app-form-table__tabs" data-e2e="alltabs">
-        <button
-          *ngFor="let tab of statusArray"
-          class="app-form-table__tab"
-          [ngClass]="{'app-form-table__tab--activated': activeTab == tab}"
-          (click)="clickTab(tab)"
-        >
+      <div class="app-form-table__tabs">
+        <button *ngFor="let tab of statusArray" class="app-form-table__tab"
+          [ngClass]="{'app-form-table__tab--activated': activeTab == tab}" (click)="clickTab(tab)">
           {{tab.title}}
         </button>
       </div>
@@ -219,10 +215,24 @@
               </td>
             </ng-container>
 
+            <ng-container cdkColumnDef="spinner">
+              <td cdk-footer-cell *cdkFooterCellDef [attr.colspan]="displayedColumns.length">
+                <div class="app_loading">
+                  <div class="app_loading__logo">i!</div>
+                  <svg class="app_loading__spinner" viewBox="25 25 50 50">
+                    <circle class="app_loading__path" cx="50" cy="50" r="20" fill="none" stroke-width="2"
+                      stroke-miterlimit="10" />
+                  </svg>
+                </div>
+              </td>
+            </ng-container>
 
             <tr cdk-header-row class="filters-row" *cdkHeaderRowDef="displayedColumns;"></tr>
             <tr cdk-row class="table-row" [class.selected]="rowSelected(form)" #data
-              *cdkRowDef="let form; columns: displayedColumns;" (click)="selectRow(form, $event)">
+              *cdkRowDef="let form; columns: displayedColumns;" [hidden]="showSpinner"
+              (click)="selectRow(form, $event)">
+            </tr>
+            <tr cdk-footer-row *cdkFooterRowDef="['spinner']" [hidden]="!showSpinner">
             </tr>
             <tr cdk-footer-row *cdkFooterRowDef="['paginator']"></tr>
 
