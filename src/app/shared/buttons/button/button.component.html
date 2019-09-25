@@ -1,5 +1,9 @@
 <button
   type="button"
+  [ngClass]="{
+  'button--gray': style === colors.GRAY,
+  'button--white': style === colors.WHITE
+  }"
   class="button"
   [name]="name"
   [value]="value"
