@@ -1,5 +1,5 @@
 <cdk-tree [dataSource]="treeSource" [treeControl]="treeControl">
-  <cdk-tree-node *cdkTreeNodeDef="let node" cdkTreeNodePadding cdkTreeNodePaddingIndent="15px"
+  <cdk-nested-tree-node *cdkTreeNodeDef="let node" cdkTreeNodePadding cdkTreeNodePaddingIndent="15px"
     [style.display]="shouldRender(node) ? 'flex' : 'none'" class="field-workarea-node">
     <!-- use a disabled button to provide padding for tree leaf -->
     <div class="field" [class.active]="node.showSettings">
@@ -52,9 +52,9 @@
     <div class="settings" *ngIf="node.showSettings">
       <sw-settings [field]="node"></sw-settings>
     </div>
-  </cdk-tree-node>
+  </cdk-nested-tree-node>
   <!-- This is the tree node template for expandable nodes -->
-  <cdk-tree-node *cdkTreeNodeDef="let node; when: hasChild" cdkTreeNodePadding cdkTreeNodePaddingIndent="10px"
+  <cdk-nested-tree-node *cdkTreeNodeDef="let node; when: hasChild" cdkTreeNodePadding cdkTreeNodePaddingIndent="10px"
     [style.display]="shouldRender(node) ? 'flex' : 'none'"
     [ngClass]="{'group-tree-node': node.type === 113, 'section-tree-node': node.type === 114}">
     <div class="field" [class.active]="node.showSettings">
@@ -113,5 +113,5 @@
       <sw-settings [field]="node"></sw-settings>
     </div>
 
-  </cdk-tree-node>
+  </cdk-nested-tree-node>
 </cdk-tree>

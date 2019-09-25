@@ -1,5 +1,5 @@
 import { ArrayDataSource } from '@angular/cdk/collections';
-import {FlatTreeControl} from '@angular/cdk/tree';
+import {FlatTreeControl, NestedTreeControl} from '@angular/cdk/tree';
 import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy, AfterViewInit, OnDestroy, ViewChild } from '@angular/core';
 import { FieldService } from '@app/core/field.service';
 import { fields, sidebar } from '@shared/fields';
@@ -30,13 +30,14 @@ export class WorkareaFieldsComponent implements AfterViewInit, OnInit, OnDestroy
   destroyed$ = new Subject();
   fieldsTree: any[];
   treeSource = new TreeDataSource();
+  treeControl = new NestedTreeControl<any>(node => node.fields);
 
   constructor(private service: FormCreatorService, private api: ApiService, private cdr: ChangeDetectorRef) {
     this.api.getSidebarFields().subscribe((sidebar) => {
       // this.sidebar = sidebar;
       // this.fieldsTree = this.fs.toFlatTree(this.sidebar.slice());
-      this.fieldsTree.reverse();
-      this.treeSource.data = this.fieldsTree;
+      this.treeSource = sidebar;
+      this.cdr.markForCheck();
     })
   }
 
@@ -67,6 +68,9 @@ export class WorkareaFieldsComponent implements AfterViewInit, OnInit, OnDestroy
     // })
 
   }
+
+  hasChild = (_: number, node: any) => !!node.fields && node.fields.length > 0;
+
   getIcon(expanded: boolean): string {
     return expanded ? 'fa-caret-up' : 'fa-caret-down';
   }
