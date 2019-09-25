@@ -26,6 +26,9 @@ import { InputEmailComponent } from './inputs/input-email/input-email.component'
 import { InputPhoneNumberComponent } from './inputs/input-phone-number/input-phone-number.component';
 import { DialogComponent } from './popup/dialog.component';
 
+// Bars
+import { DocumentApprovalBarComponent } from '@shared/bars/document-approval-bar.component';
+
 // Others
 import { RadioGroupComponent } from './inputs/radio-group/radio-group.component';
 import { LabelComponent } from './label/label.component';
@@ -70,6 +73,8 @@ import { ComponentIdDirective } from './inputs/e2e.directive';
     SelectOptionDirective,
     ComponentIdDirective,
     MainComponent,
+    // Bars
+    DocumentApprovalBarComponent,
   ],
   exports: [
     CommonModule,
@@ -103,7 +108,8 @@ import { ComponentIdDirective } from './inputs/e2e.directive';
     SelectOptionDirective,
     ComponentIdDirective,
     MainComponent,
-
+    // Bars
+    DocumentApprovalBarComponent,
   ]
 })
 export class SharedModule { }

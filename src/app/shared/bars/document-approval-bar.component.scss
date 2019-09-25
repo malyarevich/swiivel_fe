@@ -1,0 +1,76 @@
+@import 'index';
+
+.document-approval-bar {
+  display: flex;
+  padding: 12px 10px 12px 0;
+  background: #fff;
+
+  &__icon-container {
+    display: flex;
+    width: 50px;
+    height: 50px;
+  }
+
+  &__icon {
+    margin: auto;
+    color: $gray-color;
+    font-size: 30px;
+  }
+
+  &__text {
+    margin: 0 15px 0 0;
+  }
+
+  &__name {
+    margin: 7px 0 0 0;
+    font: 800 14px/20px $nunito-sans;
+  }
+
+  &__document-name {
+    margin: 0;
+    font: 500 12px/13px $nunito-sans;
+    color: $text-gray;
+  }
+
+  &__status {
+    height: 15px;
+    padding: 1px 8px;
+    margin: 8px 0 0;
+    border-radius: 100px;
+    font: 500 10px/13px $nunito-sans;
+    color: #fff;
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: flex-end;
+    flex-grow: 2;
+  }
+
+  &__button {
+    margin: 9px 10px 9px 0;
+  }
+
+  &__button:nth-of-type(2) {
+    margin: 9px 20px 9px 0;
+  }
+
+  &__button:nth-of-type(4) {
+    margin: 9px 30px 9px 0;
+    position: relative;
+  }
+
+  &__button:nth-of-type(4)::after {
+    position: absolute;
+    content: "";
+    width: 1px;
+    height: 33px;
+    background: $gray-color;
+    top: 0;
+    right: -15px;
+  }
+}
+
+.button_ico {
+  margin: 0 5px 0 0;
+}
