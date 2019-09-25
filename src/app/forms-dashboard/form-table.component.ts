@@ -2,6 +2,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild, Renderer2, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { UtilsService } from '@core/utils.service';
 import { Form } from '@models/data-collection/form';
 import { IconsEnum } from '@shared/icons.enum';
 import { DialogComponent } from '@shared/popup/dialog.component';
@@ -77,6 +78,7 @@ export class FormTableComponent implements OnInit {
     public router: Router,
     private cdr: ChangeDetectorRef,
     private fb: FormBuilder,
+    public utilsService: UtilsService,
     private sanitizer: DomSanitizer,
     private renderer: Renderer2) {
     this.filterForm = this.fb.group({
@@ -375,10 +377,10 @@ export class FormTableComponent implements OnInit {
   }
 
   onCopyLink(label: string): void {
-    navigator['clipboard'].writeText(label)
-      .then(() => {})
-      .catch(err => {
-        console.error('Could not copy text: ', err);
+    this.utilsService.copyTextToClipboard(label)
+      .then(() =>  {})
+      .catch(() => {
+        console.log('Could not copy text');
       });
   }
 
