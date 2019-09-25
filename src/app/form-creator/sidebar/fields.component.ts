@@ -1,15 +1,18 @@
 import { NestedTreeControl} from '@angular/cdk/tree';
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { FieldService } from '@app/core/field.service';
 import { ApiService } from '@app/core/api.service';
-import { TreeDataSource } from '../tree.datasource';
+import { IActionMapping, TreeComponent } from 'angular-tree-component';
+import { FormCreatorService } from '../form-creator.service';
+
+
 
 
 @Component({
   selector: 'sw-form-creator-sidebar-fields',
   templateUrl: './fields.component.html',
-  styleUrls: ['./fields.component.scss']
+  styleUrls: ['./fields.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SidebarFieldsComponent implements OnInit {
   treeControl = new NestedTreeControl<any>(node => node.fields);

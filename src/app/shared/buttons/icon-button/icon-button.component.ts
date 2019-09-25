@@ -1,9 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-} from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { IconsEnum } from '@shared/icons.enum';
 import { SizesEnum } from '@shared/sizes.enum';
 

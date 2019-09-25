@@ -1,0 +1,29 @@
+<div class="document-approval-bar">
+  <div class="document-approval-bar__icon-container">
+    <i class="fas fa-file document-approval-bar__icon"></i>
+  </div>
+  <div class="document-approval-bar__text">
+    <p class="document-approval-bar__name">{{ document.name }}</p>
+    <p class="document-approval-bar__document-name">{{ document.documentName }}</p>
+  </div>
+  <div class="document-approval-bar__status" [ngStyle]="{'background' : getStatusColor(document.status)}">
+  {{ document.status }}
+  </div>
+  <div class="document-approval-bar__buttons">
+    <div class="document-approval-bar__button">
+      <sw-button [style]="colors.WHITE"> <i class="fas fa-step-forward button_ico"></i>Skip</sw-button>
+    </div>
+    <div class="document-approval-bar__button">
+      <sw-button [style]="colors.WHITE">Need Further Review</sw-button>
+    </div>
+    <div class="document-approval-bar__button">
+      <sw-button>Reject</sw-button>
+    </div>
+    <div class="document-approval-bar__button">
+      <sw-button>Approve</sw-button>
+    </div>
+    <div class="document-approval-bar__button">
+      <sw-button [disabled]="true">Save</sw-button>
+    </div>
+  </div>
+</div>
