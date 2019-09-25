@@ -25,6 +25,12 @@
       display: none;
     }
   }
+
+  .input_text__button {
+    color: white;
+    background: $button-color;
+    text-align: center;
+  }
 }
 
 :host(.ng-invalid.ng-dirty) {

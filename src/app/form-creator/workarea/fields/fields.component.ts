@@ -7,7 +7,6 @@ import { Subject } from 'rxjs';
 
 // import { fields } from '@shared/fields';
 
-
 @Component({
   selector: 'sw-form-creator-workarea-fields',
   templateUrl: './fields.component.html',
@@ -40,7 +39,7 @@ export class WorkareaFieldsComponent implements AfterViewInit, OnInit, OnDestroy
     }
   }
   ngOnDestroy() {
-    this.service.fields = this.tree.treeModel.getState()
+    this.service.fields = this.tree.treeModel.getState();
     this.destroyed$.complete();
   }
 
@@ -55,7 +54,7 @@ export class WorkareaFieldsComponent implements AfterViewInit, OnInit, OnDestroy
         this.tree.treeModel.update();
         this.cdr.markForCheck();
       }
-    })
+    });
 
   }
 
@@ -77,7 +76,7 @@ export class WorkareaFieldsComponent implements AfterViewInit, OnInit, OnDestroy
 
   getHint(node: any) {
     console.log('Node Hint', node);
-    return 'Group type'
+    return 'Group type';
   }
 
 

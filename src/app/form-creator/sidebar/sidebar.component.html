@@ -56,3 +56,10 @@
 
   </div>
 </div>
+
+<div class="sidebar_section" [class.expanded]="isExpanded('consent')">
+  <div class="sidebar_section__header" (click)="onClick('consent', $event)">
+    <sw-input-toggle [formControl]="sections?.get('consent')"></sw-input-toggle>
+    <span>Consent</span>
+  </div>
+</div>
