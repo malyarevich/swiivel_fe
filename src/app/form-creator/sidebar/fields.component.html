@@ -13,7 +13,7 @@
 
         <div class="field-tree-node__content_node">
           <div class="checkbox">
-            <input type="checkbox" [checked]="isSelectedNode(node)" (change)="toggleNode(node);">
+            <input type="checkbox" [checked]="node.isSelected" (change)="toggleNode(node)">
           </div>
           <i class="dragdrop fas fa-ellipsis-v" cdkDragHandle></i>
           <span class="node-name">{{node.name}}</span>
@@ -47,31 +47,33 @@
         <ng-container cdkTreeNodeOutlet></ng-container>
       </div>
 
-      <div class="custom-field">
-        <div class="custom-field__inputs">
-          <sw-input-text class="settings-field">
-            <span class="placeholder">Name</span>
-          </sw-input-text>
-          <sw-dropdown-input class="settings-field">
-            <span class="input_label">
-              <p>Type</p>
-            </span>
-          </sw-dropdown-input>
-          <sw-dropdown-input class="settings-field">
-            <span class="input_label">
-              <p>Width</p>
-            </span>
-          </sw-dropdown-input>
-        </div>
-        <div class="custom-field__actions">
-          <sw-button class="outline-btn full_width narrow" style="margin-right: 5px;" (click)="addCustomField(node)">
-            <span class="text">Cancel</span>
-          </sw-button>
-          <sw-button class="full_width narrow" (click)="addCustomField(node)">
-            <span class="text">Create Field</span>
-          </sw-button>
-        </div>
-        <div class="custom-field__show-btn">
+      <div class="custom-field" *ngIf="canCreateField(node)">
+        <ng-container *ngIf="showCreateField(node)">
+          <div class="custom-field__inputs">
+            <sw-input-text class="settings-field">
+              <span class="placeholder">Name</span>
+            </sw-input-text>
+            <sw-dropdown-input class="settings-field">
+              <span class="input_label">
+                <p>Type</p>
+              </span>
+            </sw-dropdown-input>
+            <sw-dropdown-input class="settings-field">
+              <span class="input_label">
+                <p>Width</p>
+              </span>
+            </sw-dropdown-input>
+          </div>
+          <div class="custom-field__actions">
+            <sw-button class="outline-btn full_width narrow" style="margin-right: 5px;" (click)="addCustomField(node)">
+              <span class="text">Cancel</span>
+            </sw-button>
+            <sw-button class="full_width narrow" (click)="addCustomField(node)">
+              <span class="text">Create Field</span>
+            </sw-button>
+          </div>
+        </ng-container>
+        <div class="custom-field__show-btn" *ngIf="!showCreateField(node)">
           <sw-button class="outline-btn full_width narrow" (click)="addCustomField(node)">
             <span class="text">Create New Field</span>
           </sw-button>

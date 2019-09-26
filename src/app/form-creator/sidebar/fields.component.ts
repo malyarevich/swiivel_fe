@@ -7,7 +7,7 @@ import { FieldService } from '@app/core/field.service';
 import { TreeDataSource } from '../tree.datasource';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Popup } from '@app/core/popup.service';
-
+import { tree } from '../tree.datasource';
 
 
 
@@ -18,9 +18,10 @@ import { Popup } from '@app/core/popup.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SidebarFieldsComponent implements OnInit {
-  treeControl = new NestedTreeControl<any>(node => node.fields);
+
   checklistSelection = new SelectionModel<any>(true);
-  treeSource = new TreeDataSource();
+  treeSource = new TreeDataSource([]);
+  treeControl = new NestedTreeControl<any>(this.getChildren);
   delFieldName: string;
   delInput: FormControl = new FormControl(null);
   ref: any;
@@ -33,18 +34,43 @@ export class SidebarFieldsComponent implements OnInit {
     private popup: Popup,
     private cdr: ChangeDetectorRef) {
     this.api.getSidebarFields().subscribe((fields) => {
-      this.treeSource = fields;
+      this.treeSource.nodes = fields;
       this.cdr.markForCheck();
     });
   }
 
-  ngOnInit() { }
+  getChildren(node) {
+    return tree.childrenToArray(node);
+  }
+
+  activate(node, event) {
+    console.log(node)
+    return event;
+  }
+
+  ngOnInit() {
+  }
 
   hasChild = (_: number, node: any) => !!node.fields && node.fields.length > 0;
+
+
 
   getIcon(expanded: boolean): string {
     return expanded ? 'fa-caret-up' : 'fa-caret-down';
   }
+
+  canCreateField(node) {
+    return node.type === 113 && this.treeControl.isExpanded(node);
+  }
+
+  showCreateField(node) {
+    node.formVisible = !(!!node.formVisible);
+    return node.formVisible;
+    // return false;
+  }
+
+
+
 
   openDeletePop(node: any) {
     if (!node && !node.data) return;
@@ -77,27 +103,52 @@ export class SidebarFieldsComponent implements OnInit {
   }
 
   toggleParentNode(node: any): void {
-    this.checklistSelection.toggle(node);
     const descendants = this.treeControl.getDescendants(node);
-    this.checklistSelection.isSelected(node)
-      ? this.checklistSelection.select(...descendants)
-      : this.checklistSelection.deselect(...descendants);
+    node.isSelected = !node.isSelected;
+    for (let descendant of descendants) {
+      descendant.isSelected = node.isSelected;
+    }
+    if (node.isSelected) {
+      if (!node.isExpanded) {
+        this.treeControl.expandDescendants(node);
+      }
+    } else {
+      if (node.isExpanded) {
+        this.treeControl.collapseDescendants(node);
+      }
+    }
+  }
+
+  toggleNode(node: any): void {
+    const ancestors = this.treeSource.getAncestors(node);
+    node.isSelected = !node.isSelected;
+    for (let ancestor of ancestors) {
+      ancestor.isSelected = node.isSelected;
+    }
+    if (node.isSelected) {
+      if (!node.isExpanded) {
+        this.treeControl.expand(node);
+      }
+    } else {
+      if (node.isExpanded) {
+        this.treeControl.collapse(node);
+      }
+    }
   }
 
   descendantsAllSelected(node: any): boolean {
     const descendants = this.treeControl.getDescendants(node);
-    return descendants.every(child => this.checklistSelection.isSelected(child));
+    return descendants.every(child => child.isSelected);
   }
 
   descendantsPartiallySelected(node: any): boolean {
     const descendants = this.treeControl.getDescendants(node);
-    const result = descendants.some(child => this.checklistSelection.isSelected(child));
+    const result = descendants.some(child => child.isSelected);
     return result && !this.descendantsAllSelected(node);
   }
 
-  toggleNode(node: any) {
-    this.checklistSelection.toggle(node);
-  }
+
+
 
   isSelectedNode(node: any) {
     return this.checklistSelection.isSelected(node);

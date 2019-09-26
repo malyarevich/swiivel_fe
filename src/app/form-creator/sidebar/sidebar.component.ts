@@ -100,7 +100,7 @@ export class SidebarComponent implements OnInit {
   }
 
   onStatusChange(node, active?: boolean) {
-    this.sidebarFields.setActive(node, !!active);
+    // this.sidebarFields.setActive(node, !!active);
     console.log(node);
   }
 
