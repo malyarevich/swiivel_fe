@@ -12,46 +12,36 @@
     <span>Form Fields</span>
   </div>
   <div class="sidebar_section__content">
-    <span class="title">System Fields</span>
-    <div class="search-wrap">
-      <input class="search" id="filter" #filter placeholder="Search"/>
-      <i class="icon fas fa-search"></i>
-    </div>
+    <ng-container *ngComponentOutlet="components.fields"></ng-container>
+  </div>
+</div>
 
-    <cdk-tree [dataSource]="sidebarFields" [treeControl]="treeControl" cdkDropList >
-        <!-- (cdkDropListDropped)="drop($event)" -->
+<div class="sidebar_section" [class.expanded]="isExpanded('addDocs')">
+  <div class="sidebar_section__header" (click)="onClick('addDocs', $event)">
+    <sw-input-toggle [formControl]="sections?.get('addDocs')"></sw-input-toggle>
+    <span>Additional Documents</span>
+  </div>
+  <div class="sidebar_section__content">
+    <ng-container *ngComponentOutlet="components.addDocsComponent"></ng-container>
+  </div>
+</div>
 
-      <!-- This is the tree node template for leaf nodes -->
-      <cdk-nested-tree-node *cdkTreeNodeDef="let node"
-        class="field-tree-node" cdkDrag [cdkDragData]="node">
-        <div class="field-tree-node__content">
-          <sw-input-checkbox (inputClick)="onCheckBoxClick(node, $event)">
-            <i class="dragdrop fas fa-ellipsis-v" cdkDragHandle></i>
-            <span class="input_label">{{node.name}}</span>
-          </sw-input-checkbox>
-        </div>
-        <!-- use a disabled button to provide padding for tree leaf -->
-      </cdk-nested-tree-node>
+<div class="sidebar_section" [class.expanded]="isExpanded('consent')">
+  <div class="sidebar_section__header" (click)="onClick('consent', $event)">
+    <sw-input-toggle [formControl]="sections?.get('consent')"></sw-input-toggle>
+    <span>CONSENT</span>
+  </div>
+  <div class="sidebar_section__content">
+    <ng-container *ngComponentOutlet="components.consent"></ng-container>
+  </div>
+</div>
 
-      <!-- This is the tree node template for expandable nodes -->
-      <cdk-nested-tree-node *cdkTreeNodeDef="let node; when: hasChild"
-         class="field-tree-node" cdkDrag [cdkDragData]="node">
-        <div class="field-tree-node__content">
-          <sw-input-checkbox (inputClick)="onCheckBoxClick(node, $event)">
-            <i class="dragdrop fas fa-ellipsis-v" cdkDragHandle></i>
-            <span class="input_label">{{node.name}}</span>
-          </sw-input-checkbox>
-          <sw-icon-button [icon]="getIcon(treeControl.isExpanded(node))" cdkTreeNodeToggle [attr.aria-label]="'toggle ' + node.name">
-          </sw-icon-button>
-        </div>
-
-
-        <div [class.field-tree-invisible]="!treeControl.isExpanded(node)">
-            <ng-container cdkTreeNodeOutlet></ng-container>
-          </div>
-      </cdk-nested-tree-node>
-    </cdk-tree>
-
-
+<div class="sidebar_section" [class.expanded]="isExpanded('tac')">
+  <div class="sidebar_section__header" (click)="onClick('tac', $event)">
+    <sw-input-toggle [formControl]="sections?.get('tac')"></sw-input-toggle>
+    <span>TERMS AND CONDITIONS</span>
+  </div>
+  <div class="sidebar_section__content">
+    <ng-container *ngComponentOutlet="components.tac"></ng-container>
   </div>
 </div>

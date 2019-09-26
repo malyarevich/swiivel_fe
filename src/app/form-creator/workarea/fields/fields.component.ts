@@ -18,15 +18,26 @@ import { Subject } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WorkareaFieldsComponent implements AfterViewInit, OnInit, OnDestroy {
-  treeControl = new NestedTreeControl<any>(node => node.children);
-  treeSource: TreeDataSource;
+  options = {
+    idField: 'mongo_id',
+    childrenField: 'fields',
+    displayField: 'name',
+    useCheckbox: true,
+    allowDrop: true,
+    allowDrag: true
+  };
+  fields: any[] = [];
+  destroyed$ = new Subject();
+  fieldsTree: any[];
+  treeSource = new TreeDataSource();
+  treeControl = new NestedTreeControl<any>(node => node.fields);
 
   constructor(private service: FormCreatorService, private api: ApiService, private cdr: ChangeDetectorRef) {
     this.api.getSidebarFields().subscribe((sidebar) => {
-      this.treeSource = sidebar;
+      // this.sidebar = sidebar;
       // this.fieldsTree = this.fs.toFlatTree(this.sidebar.slice());
-      // this.fieldsTree.reverse();
-      // this.treeSource.data = this.fieldsTree;
+      this.treeSource = sidebar;
+      this.cdr.markForCheck();
     })
   }
 
@@ -40,7 +51,7 @@ export class WorkareaFieldsComponent implements AfterViewInit, OnInit, OnDestroy
   }
   ngOnDestroy() {
     // this.service.fields = this.tree.treeModel.getState()
-    // this.destroyed$.complete();
+    this.destroyed$.complete();
   }
 
   ngAfterViewInit() {
@@ -57,13 +68,16 @@ export class WorkareaFieldsComponent implements AfterViewInit, OnInit, OnDestroy
     // })
 
   }
+
+  hasChild = (_: number, node: any) => !!node.fields && node.fields.length > 0;
+
   getIcon(expanded: boolean): string {
     return expanded ? 'fa-caret-up' : 'fa-caret-down';
   }
 
 
   getParentNode(node: any) {
-    // const nodeIndex = this.fieldsTree.indexOf(node);
+    const nodeIndex = this.fieldsTree.indexOf(node);
   }
 
   getHint(node: any) {

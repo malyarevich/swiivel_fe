@@ -13,4 +13,35 @@
       display: flex;
     }
   }
+  div.sidebar_section {
+    padding: 15px;
+    display: flex;
+    flex-flow: column nowrap;
+    background-color: #fff;
+    margin-bottom: 15px;
+    border-radius: 5px; 
+    &__header {
+      display: flex;
+      flex-flow: row nowrap;
+      opacity: 0.6;
+      text-transform: uppercase;
+      font: 800 13px/15px $nunito-sans;
+    }
+    &__content {
+      display: none;
+      flex-flow: column nowrap;
+      width: 100%;
+      margin-top: 20px;
+    }
+    &.expanded {
+      .sidebar_section__header {
+        opacity: 1;
+      }
+      .sidebar_section__content {
+        display: flex;
+      }
+    }
+  }
+  
+  
 }

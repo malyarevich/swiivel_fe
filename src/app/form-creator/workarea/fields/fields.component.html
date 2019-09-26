@@ -1,0 +1,117 @@
+<cdk-tree [dataSource]="treeSource" [treeControl]="treeControl">
+  <cdk-nested-tree-node *cdkTreeNodeDef="let node" cdkTreeNodePadding cdkTreeNodePaddingIndent="15px"
+    [style.display]="shouldRender(node) ? 'flex' : 'none'" class="field-workarea-node">
+    <!-- use a disabled button to provide padding for tree leaf -->
+    <div class="field" [class.active]="node.showSettings">
+      <div class="main-container">
+        <div class="drag-icon">
+          <i class="dragdrop fas fa-ellipsis-v" cdkDragHandle></i>
+        </div>
+        <div class="name-container">
+          <div class="main-text">{{ node.name }}</div>
+          <div class="hint">Field Type -</div>
+        </div>
+        <sw-dropdown-input style="margin-right: 10px;">
+          <span class="input_label">Field Width</span>
+        </sw-dropdown-input>
+            <div class="input">
+              <sw-input-checkbox>
+                <span class="input_label">Required</span>
+              </sw-input-checkbox>
+            </div>
+            <div class="input">
+              <sw-input-checkbox>
+                <span class="input_label">Hide Label</span>
+              </sw-input-checkbox>
+            </div>
+            <div class="input">
+              <sw-input-checkbox>
+                <span class="input_label">Read–Only</span>
+              </sw-input-checkbox>
+            </div>
+            <div class="input">
+              <sw-input-checkbox>
+                <span class="input_label">Unique</span>
+              </sw-input-checkbox>
+            </div>
+      </div>
+
+      <div class="actions">
+        <div class="icon">
+          <sw-icon-button icon="fa-cog" class="field-creator blue" [class.active]="node.showSettings"
+            (click)="settingsTogle(node)">
+          </sw-icon-button>
+        </div>
+        <div class="icon">
+          <sw-icon-button icon="fa-times" class="field-creator blue" (click)="node.isActive = !node.isActive">
+          </sw-icon-button>
+        </div>
+      </div>
+    </div>
+
+    <div class="settings" *ngIf="node.showSettings">
+      <sw-settings [field]="node"></sw-settings>
+    </div>
+  </cdk-nested-tree-node>
+  <!-- This is the tree node template for expandable nodes -->
+  <cdk-nested-tree-node *cdkTreeNodeDef="let node; when: hasChild" cdkTreeNodePadding cdkTreeNodePaddingIndent="10px"
+    [style.display]="shouldRender(node) ? 'flex' : 'none'"
+    [ngClass]="{'group-tree-node': node.type === 113, 'section-tree-node': node.type === 114}">
+    <div class="field" [class.active]="node.showSettings">
+      <div [ngSwitch]="node.type">
+        <div *ngSwitchCase="113">
+          <div class="main-container">
+            <div class="drag-icon">
+              <i class="dragdrop fas fa-ellipsis-v" cdkDragHandle></i>
+            </div>
+            <div class="name-container">
+              <div class="main-text">{{ node.name }}</div>
+              <div class="hint">Group Type -</div>
+            </div>
+            <sw-dropdown-input style="margin-right: 10px;">
+              <span class="input_label">Section Width</span>
+            </sw-dropdown-input>
+          </div>
+        </div>
+        <div *ngSwitchCase="114">
+          <div class="main-container">
+            <div class="drag-icon">
+              <i class="dragdrop fas fa-ellipsis-v" cdkDragHandle></i>
+            </div>
+            <sw-input-text [(ngModel)]="node.name" style="margin-right: 10px; width: 450px;">
+              <span class="placeholder">Section Name</span>
+            </sw-input-text>
+            <sw-dropdown-input style="margin-right: 10px;">
+              <span class="input_label">Section Width</span>
+            </sw-dropdown-input>
+          </div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <div class="icon">
+          <sw-icon-button icon="fa-cog" class="field-creator" [class.blue]="node.type === 113"
+            [class.active]="node.showSettings" (click)="settingsTogle(node)">
+          </sw-icon-button>
+        </div>
+        <div class="icon">
+          <sw-icon-button icon="fa-times" class="field-creator" [class.blue]="node.type === 113"
+            (click)="node.isActive = !node.isActive">
+
+          </sw-icon-button>
+        </div>
+        <div class="icon dragdrop">
+          <sw-icon-button [icon]="getIcon(node.expanded)" cdkTreeNodeToggle [class.blue]="node.type === 113"
+            [attr.aria-label]="'toggle ' + node.filename" (click)="node.expanded = !node.expanded"
+            [style.visibility]="node.expandable ? 'visible' : 'hidden'">
+          </sw-icon-button>
+        </div>
+      </div>
+
+    </div>
+    <div class="settings" *ngIf="node.showSettings">
+      <sw-settings [field]="node"></sw-settings>
+    </div>
+
+  </cdk-nested-tree-node>
+</cdk-tree>

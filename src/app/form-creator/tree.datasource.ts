@@ -8,9 +8,10 @@ const tree = new SymbolTree();
 import { catchError, debounceTime, distinctUntilChanged, finalize, retry, tap, timeout } from 'rxjs/operators';
 
 export class TreeDataSource implements DataSource<any> {
-  private root = {};// tree// new SymbolTree("Tree source");
-  private childKey = 'fields';
-  private dataSubject = new BehaviorSubject<any>([]);
+  private dataSubject = new BehaviorSubject<any[]>([]);
+  // private loadingSections = new BehaviorSubject<boolean>(false);
+  public count = 0;
+  public sections;
   public data$ = this.dataSubject.asObservable();
   // public loadingSections$ = this.loadingSections.asObservable();
   public filters;
@@ -47,6 +48,7 @@ export class TreeDataSource implements DataSource<any> {
   get data() {
     return this.dataSubject.getValue();
   }
+
 
   set nodes(nodes: any[]) {
     console.log('set nodes', nodes);

@@ -1,10 +1,17 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormCreatorService } from '../form-creator.service';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { ApiService } from '@app/core/api.service';
 import { TREE_ACTIONS, TreeNode } from 'angular-tree-component';
+import { Popup } from '@app/core/popup.service';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { TreeDataSource } from '../tree.datasource';
+import { SelectionModel } from '@angular/cdk/collections';
+
+import { SidebarDocumentsFormsComponent } from './documents-forms.component';
+import { SidebarConsentComponent } from './consent.component';
+import { SidebarTermsConditionsComponent } from './terms-conditions.component';
+import { SidebarFieldsComponent } from './fields.component';
 
 @Component({
   selector: 'sw-form-creator-sidebar',
@@ -13,23 +20,60 @@ import { TreeDataSource } from '../tree.datasource';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SidebarComponent implements OnInit {
-  treeControl = new NestedTreeControl<any>(node => node.fields);
+  components = {
+    fields: SidebarFieldsComponent,
+    addDocsComponent: SidebarDocumentsFormsComponent,
+    consent: SidebarConsentComponent,
+    tac: SidebarTermsConditionsComponent
+  }
+  // treeControl = new NestedTreeControl<any>(node => node.fields);
+  // checklistSelection = new SelectionModel<any>(true);
+  // treeSource = new TreeDataSource();
   expandedSection: string;
   sections: FormGroup;
-  sidebarFields = new TreeDataSource();
+  // delFieldName: string;
+  // delInput: FormControl = new FormControl(null);
+  // ref: any;
+  // @ViewChild('deletePop', { static: false }) deletePop;
 
-  constructor(private service: FormCreatorService, private fb: FormBuilder, private api: ApiService) {
-    this.api.getSidebarFields().subscribe((fields) => {
-      // let a = new TreeDataSource(fields);
-      // this.sidebarFields = [];
-      this.sidebarFields.nodes = fields;
-    })
+  // sidebarFields = [];
+  // sidebarOptions = {
+  //   idField: 'mongo_id',
+  //   childrenField: 'fields',
+  //   displayField: 'name',
+  //   useCheckbox: true,
+  //   allowDrop: false,
+  //   allowDrag: true,
+  //   actionMapping: {
+  //     mouse: {
+  //       checkboxClick: (tree, node: TreeNode, $event) => {
+  //         TREE_ACTIONS.TOGGLE_SELECTED(tree, node, $event);
+  //         if (node.isSelected) {
+  //           if (node.isRoot) {
+  //             node.expandAll();
+  //           }
+  //           this.service.addField(node);
+  //         } else {
+  //           if (node.isRoot) {
+  //             node.collapseAll();
+  //           }
+  //           this.service.removeField(node);
+  //         }
+  //       }
+  //     }
+  //   }
+  // };
+
+  constructor(private service: FormCreatorService, private fb: FormBuilder, private api: ApiService, private popup: Popup) {
     this.service.section$.subscribe(section => {
       this.expandedSection = section;
     });
     this.sections = this.fb.group({
       intro: [null],
-      fields: [null]
+      fields: [null],
+      addDocs: [null],
+      consent: [null],
+      tac: [null]
     });
     this.sections.valueChanges.subscribe(value => {
       this.service.sections = value;
@@ -61,6 +105,5 @@ export class SidebarComponent implements OnInit {
   }
 
   ngOnInit() { }
-
 
 }
