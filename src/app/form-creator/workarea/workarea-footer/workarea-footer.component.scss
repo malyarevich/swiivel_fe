@@ -1,0 +1,12 @@
+@import 'index';
+
+:host {
+  display: flex;
+  justify-content: flex-end;
+
+  .button:first-of-type {
+    margin: 0 10px 0 0;
+  }
+}
+
+

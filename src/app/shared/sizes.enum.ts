@@ -1,3 +1,4 @@
 export enum SizesEnum {
-  SMALL = 'small'
+  SMALL = 'small',
+  BIG = 'big',
 }

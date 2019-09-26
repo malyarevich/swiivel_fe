@@ -1,3 +1,4 @@
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
@@ -5,6 +6,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { SharedModule } from '@shared/shared.module';
 
+import { WorkareaConsentComponent } from '@app/form-creator/workarea/consent/consent.component';
+import { WorkareaTermsConditionComponent } from '@app/form-creator/workarea/terms-and-conditions/terms-and-conditions.component';
+import { WorkareaFooterComponent } from '@app/form-creator/workarea/workarea-footer/workarea-footer.component';
+import { WorkareaHeaderComponent } from '@app/form-creator/workarea/workarea-header/workarea-header.component';
 import { FormCreatorRoutingModule } from './form-creator-routing.module';
 import { FormCreatorComponent } from './form-creator.component';
 import { SidebarConsentComponent } from './sidebar/consent.component';
@@ -22,15 +27,17 @@ import { WorkareaComponent } from './workarea/workarea.component';
 import { CdkTreeModule } from '@angular/cdk/tree';
 import { FormCreatorService } from './form-creator.service';
 
-
 @NgModule({
   declarations: [
-
     FormCreatorComponent,
     SidebarComponent,
     WorkareaComponent,
+    WorkareaConsentComponent,
     WorkareaIntroComponent,
     WorkareaFieldsComponent,
+    WorkareaFooterComponent,
+    WorkareaHeaderComponent,
+    WorkareaTermsConditionComponent,
     SectionComponent,
     SidebarIntroComponent,
     SidebarFieldsComponent,
@@ -46,10 +53,15 @@ import { FormCreatorService } from './form-creator.service';
     ReactiveFormsModule,
     ScrollingModule,
     SharedModule,
-    SettingsModule
+    SettingsModule,
+    DragDropModule,
   ],
   entryComponents: [
     SidebarIntroComponent,
+    WorkareaConsentComponent,
+    WorkareaFooterComponent,
+    WorkareaHeaderComponent,
+    WorkareaTermsConditionComponent,
     SidebarFieldsComponent,
     SidebarDocumentsFormsComponent,
     SidebarConsentComponent,

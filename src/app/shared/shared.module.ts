@@ -26,6 +26,8 @@ import { InputEmailComponent } from './inputs/input-email/input-email.component'
 import { InputPhoneNumberComponent } from './inputs/input-phone-number/input-phone-number.component';
 import { DialogComponent } from './popup/dialog.component';
 
+// Utils
+import { MainSpinnerComponent } from './utils/main-spinner/main-spinner.component';
 // Bars
 import { DocumentApprovalBarComponent } from '@shared/bars/document-approval-bar.component';
 
@@ -38,12 +40,17 @@ import { MainComponent } from './main.component';
 import { ComponentIdDirective } from './inputs/e2e.directive';
 import { PaginatorComponent } from './paginator/paginator.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { CdkStepperModule } from '@angular/cdk/stepper';
+import { StepperComponent } from './stepper/stepper.component';
+import { StepperService } from './stepper.service';
+import { FormComponent } from './form.component';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
     ReactiveFormsModule,
+    CdkStepperModule,
   ],
   declarations: [
     // Buttons
@@ -67,6 +74,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     // Headers
     PageHeaderComponent,
     BlockHeaderComponent,
+    // Utils
+    MainSpinnerComponent,
     // Others
     LabelComponent,
     UserItemComponent,
@@ -78,9 +87,12 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     PaginatorComponent,
     // Bars
     DocumentApprovalBarComponent,
+    StepperComponent,
+    FormComponent,
   ],
   exports: [
     CommonModule,
+    CdkStepperModule,
     // Buttons
     ButtonComponent,
     IconButtonComponent,
@@ -103,6 +115,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     // Headers
     PageHeaderComponent,
     BlockHeaderComponent,
+    // Utils
+    MainSpinnerComponent,
     // Others
     LabelComponent,
     UserItemComponent,
@@ -115,6 +129,10 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     PaginatorComponent,
     // Bars
     DocumentApprovalBarComponent,
+    StepperComponent,
+  ],
+  providers: [
+    StepperService
   ]
 })
 export class SharedModule { }

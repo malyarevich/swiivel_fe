@@ -1,0 +1,66 @@
+<sw-form-creator-workarea-header
+  (changeContentDisplay)="changeIsShown($event)"
+  [sectionName]="'Documents'">
+</sw-form-creator-workarea-header>
+<div *ngIf="isShown" cdkDropList (cdkDropListDropped)="drop($event)">
+  <div class="consent-item" *ngFor="let consentForm of consentForms" cdkDrag>
+    <div class="consent-item__bubbles">
+      <i class="fas fa-grip-vertical consent-item__bubbles-ico"></i>
+    </div>
+    <div class="consent-item__fields">
+      <div class="consent-item__fields-name">
+        <sw-input-text>
+          <span class="placeholder">Document Name</span>
+        </sw-input-text>
+      </div>
+      <div class="consent-item__fields-text">
+        <sw-input-textarea
+          [rows]="textarea.rows"
+          [cols]="textarea.cols"
+          [readonly]="!textarea.editable">
+          <span class="input_label">Text</span>
+        </sw-input-textarea>
+      </div>
+      <div *ngIf="consentForm.checkBox.isShown" class="consent-item__fields-checkbox-container">
+        <div class="consent-item__fields-checkbox">
+          <sw-input-checkbox></sw-input-checkbox>
+        </div>
+        <sw-input-text>
+          <span class="placeholder">Checkbox Text</span>
+        </sw-input-text>
+      </div>
+      <div *ngIf="!consentForm.isBothParentsSignature" class="consent-item__fields-signatures">
+        <div class="consent-item__fields-signature">
+          <sw-input-textarea
+            [rows]="textarea.rows"
+            [cols]="textarea.cols"
+            [readonly]="!textarea.editable">
+            <span class="input_label">Father's signature</span>
+          </sw-input-textarea>
+        </div>
+        <div class="consent-item__fields-signature">
+          <sw-input-textarea
+            [rows]="textarea.rows"
+            [cols]="textarea.cols"
+            [readonly]="!textarea.editable">
+            <span class="input_label">Mother's signature</span>
+          </sw-input-textarea>
+        </div>
+      </div>
+      <div *ngIf="consentForm.isBothParentsSignature" class="consent-item__fields-signatures">
+        <div class="consent-item__fields-signature">
+          <sw-input-textarea
+            [rows]="textarea.rows"
+            [cols]="textarea.cols"
+            [readonly]="!textarea.editable">
+            <span class="input_label">Parents's signature</span>
+          </sw-input-textarea>
+        </div>
+      </div>
+      <div *ngIf="consentForm.button.isShown" class="consent-item__fields-button">
+        <sw-input-text [style]="'button_type'"></sw-input-text>
+      </div>
+    </div>
+  </div>
+</div>
+<sw-form-creator-workarea-footer></sw-form-creator-workarea-footer>

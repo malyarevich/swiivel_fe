@@ -6,18 +6,18 @@ import { FormTableComponent } from './form-table.component';
 
 export const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: MainComponent,
     canActivate: [AuthGuard],
     canActivateChild: [AuthGuard],
     children: [
       { path: '',  component: FormTableComponent},
     ]
-  },
+  }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class FormTableRoutingModule { }
+export class FormTableRoutingModule {}

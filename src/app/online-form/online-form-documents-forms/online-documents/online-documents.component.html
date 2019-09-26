@@ -1,0 +1,506 @@
+<h2 class="content_section__section_title">Documents</h2>
+<div class="content_section__main_container">
+  <div
+    class="content_section__document"
+    *ngFor="let document of form.documents"
+  >
+    <div
+      class="content_section__article_title content_section__article_title--left"
+    >
+      {{ document.name }}
+    </div>
+    <div
+      class="content_section__article_text"
+      [innerHTML]="document.accompanyingText.data"
+    ></div>
+    <div class="containers_line">
+      <div class="document_container">
+        <svg
+          class="document_container__file_icon"
+          version="1.1"
+          viewBox="0 0 19 22"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g fill="none" fill-rule="evenodd">
+            <g transform="translate(-1038 -471)">
+              <g transform="translate(380 217)">
+                <g transform="translate(0 153)">
+                  <g transform="translate(475 46)">
+                    <g transform="translate(168 40)">
+                      <g transform="translate(15 15)">
+                        <g transform="translate(2.8045)">
+                          <path
+                            d="m15.686 5.6028l-5.1184-5.1028h-8.5672c-0.82843 0-1.5 0.67157-1.5 1.5v17.209c0 0.82843 0.67157 1.5 1.5 1.5h12.186c0.82843 0 1.5-0.67157 1.5-1.5v-13.606z"
+                            fill="#F1F9FF"
+                            stroke="#97CDF4"
+                          />
+                          <path
+                            d="m10.604 0l5.5813 5.5813h-3.5813c-1.1046 0-2-0.89543-2-2v-3.5813z"
+                            fill="#97CDF4"
+                          />
+                        </g>
+                        <g transform="translate(0 9.1346)" fill="#97CDF4">
+                          <rect width="13.221" height="4.8077" rx="1" />
+                        </g>
+                      </g>
+                    </g>
+                  </g>
+                </g>
+              </g>
+            </g>
+          </g>
+        </svg>
+        <div
+          class="document_container__file_information"
+          (click)="openForPreview(document)"
+        >
+          <div class="document_container__file_title">
+            {{ getDocumentName(document) }}
+          </div>
+          <div class="document_container__file_size">
+            {{ getDocumentPages(document) }}
+          </div>
+        </div>
+        <button
+          class="document_container__download"
+          (click)="openForPreview(document)"
+        >
+          <svg
+            class="document_container__download_icon"
+            version="1.1"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+          >
+            <defs>
+              <path
+                id="a"
+                d="m15.627 19.796c0-0.4156 0.33691-0.75251 0.75251-0.75251h3.1265c0.55228 0 1-0.44772 1-1v-3.25c0-0.41421 0.33579-0.75 0.75-0.75 0.41421 0 0.75 0.33579 0.75 0.75v3.75c0 1.1046-0.89543 2-2 2l-3.6265 0.0038162c-0.41494 6.62e-4 -0.75185-0.32729-0.75251-0.74222-6e-7 -3.996e-4 0-0.0086848 0-0.0090843zm-11.121 0.74749c-1.1046 0-2-0.89543-2-2v-3.75c0-0.41421 0.33579-0.75 0.75-0.75 0.41421 0 0.75 0.33579 0.75 0.75v3.25c0 0.55228 0.44772 1 1 1h2.3443c0.41558 0 0.75247 0.33689 0.75247 0.75247 0 0.41497-0.3364 0.75136-0.75136 0.75136-2.4628e-4 0-0.94871-0.0012771-2.8454-0.0038311zm8.5922-1.4864c0.41433 6.748e-4 0.7498 0.33687 0.74957 0.7512-2e-7 2.711e-4 -4e-7 5.422e-4 -9e-7 8.134e-4 -6.738e-4 0.41375-0.33663 0.74862-0.75039 0.74795l-2.5-0.0040716c-0.41433-6.748e-4 -0.7498-0.33687-0.74957-0.7512 1.4e-7 -2.711e-4 4.4e-7 -5.422e-4 8.8e-7 -8.133e-4 6.7384e-4 -0.41375 0.33663-0.74862 0.75039-0.74795l2.5 0.0040715zm-1.1012-15.512c0.41421-2.2487e-4 0.75017 0.33538 0.7504 0.74958l0.0048655 9.1396 1.3559-1.3083c0.27799-0.26823 0.72078-0.26032 0.989 0.017669 0.0042619 0.004417 0.0084655 0.0088898 0.01261 0.013418 0.2712 0.29629 0.26117 0.75354-0.022752 1.0377l-2.3802 2.3824c-0.39039 0.39066-1.0236 0.39088-1.4142 4.872e-4l-2.436e-4 -2.436e-4 -2.3585-2.359c-0.29289-0.29289-0.29289-0.76777 0-1.0607s0.76777-0.29289 1.0607 0l1.2578 1.2578-0.0048538-9.1201c-2.205e-4 -0.41421 0.33539-0.75018 0.7496-0.75041z"
+              />
+            </defs>
+            <g fill-rule="evenodd">
+              <mask id="b" fill="#FFFFFF">
+                <use xlink:href="#a" />
+              </mask>
+              <use fill="#FFFFFF" fill-rule="nonzero" xlink:href="#a" />
+              <g fill="#fff" mask="url(#b)">
+                <rect width="24" height="24" rx="3" />
+              </g>
+            </g>
+          </svg>
+        </button>
+      </div>
+      <div
+        class="document_container document_container__upload"
+        *ngIf="
+          document.isUpload && !document.fileUploading && !document.fileUploaded
+        "
+      >
+        <label
+          [for]="document.name"
+          class="document_container__upload_label"
+          appDragDrop
+          (onFileDropped)="onFileSelected(document, $event)"
+        >
+          <svg
+            class="document_container__upload_icon"
+            version="1.1"
+            viewBox="0 0 46 43"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+          >
+            <defs>
+              <path
+                id="a"
+                d="m8.6129 5.4253c0-1.3364 1.1355-2.4178 2.5387-2.4178h4.8466c1.0201 0 1.8463 0.78689 1.8463 1.7584 0 0.97153-0.82624 1.7584-1.8463 1.7584h-3.9235c-0.63699 0-1.154-0.49236-1.154-1.099s0.51698-1.099 1.154-1.099h3.4619v0.87921h-3.5034c-0.25387 0-0.25387 0.43961 0 0.43961h3.965c0.50774 0 0.92317-0.39564 0.92317-0.87921s-0.41543-0.87921-0.92317-0.87921h-4.8466c-0.89086 0-1.6155 0.69018-1.6155 1.5386v0.49827c0.03564 1.0289-0.10098 1.3491-0.40986 0.96058-0.32224-0.40535-0.51331-0.91064-0.51331-1.4588z"
+              />
+            </defs>
+            <g fill="none" fill-rule="evenodd">
+              <g transform="translate(-891 -423)">
+                <g transform="translate(380 217)">
+                  <g transform="translate(0 153)">
+                    <g transform="translate(475 46)">
+                      <g transform="translate(36 7)">
+                        <g transform="translate(16.341 .32875)">
+                          <path
+                            d="m3 0.5c-1.3807 0-2.5 1.1193-2.5 2.5v16.647c0 1.3807 1.1193 2.5 2.5 2.5h11.283c1.3807 0 2.5-1.1193 2.5-2.5v-16.647c0-1.3807-1.1193-2.5-2.5-2.5h-11.283z"
+                            fill="#EEF8FF"
+                            stroke="#97CDF4"
+                          />
+                          <circle
+                            cx="7.6352"
+                            cy="4.8466"
+                            r="2.1541"
+                            fill="#97CDF4"
+                          />
+                          <path
+                            d="m5.3291e-14 12.026l2.7807-2.7807c0.78105-0.78105 2.0474-0.78105 2.8284 0l0.70822 0.70822c0.78105 0.78105 2.0474 0.78105 2.8284 0l4.0461-4.0461c0.73144-0.73144 1.8999-0.78444 2.6946-0.12223l1.1788 0.98233-0.026239 12.856c-0.0033766 1.6545-1.3455 2.9939-3 2.9939h-11.039c-1.6569 0-3-1.3431-3-3l-1.4855e-10 -7.5918z"
+                            fill="#97CDF4"
+                          />
+                        </g>
+                        <g
+                          transform="translate(13.876 18.045) rotate(-25) translate(-9 -12)"
+                        >
+                          <path
+                            d="m3 1.4232c-1.3807 0-2.5 1.1193-2.5 2.5v16.647c0 1.3807 1.1193 2.5 2.5 2.5h11.283c1.3807 0 2.5-1.1193 2.5-2.5v-16.647c0-1.3807-1.1193-2.5-2.5-2.5h-11.283z"
+                            fill="#EEF8FF"
+                            stroke="#97CDF4"
+                          />
+                          <mask fill="white">
+                            <use xlink:href="#a" />
+                          </mask>
+                          <use
+                            transform="translate(13.229 5.0257) scale(1 -1) rotate(-90) translate(-13.229 -5.0257)"
+                            fill="#97CDF4"
+                            fill-rule="nonzero"
+                            xlink:href="#a"
+                          />
+                        </g>
+                        <g
+                          transform="translate(35.854 20.094) rotate(25) translate(-9 -11.5)"
+                        >
+                          <path
+                            d="m16.783 5.9686l-5.4854-5.4686h-8.2979c-1.3807 0-2.5 1.1193-2.5 2.5v16.647c0 1.3807 1.1193 2.5 2.5 2.5h11.283c1.3807 0 2.5-1.1193 2.5-2.5v-13.678z"
+                            fill="#EEF8FF"
+                            stroke="#97CDF4"
+                          />
+                          <path
+                            d="m11.324 0l5.9598 5.9598h-2.9598c-1.6569 0-3-1.3431-3-3v-2.9598z"
+                            fill="#97CDF4"
+                          />
+                        </g>
+                        <path
+                          d="m9.9538 39.429c-5.3848-0.25558-9.6721-4.7023-9.6721-10.15 0-5.6123 4.5497-10.162 10.162-10.162 0.57784 0 1.1444 0.04823 1.6959 0.14088 0.59712-4.0146 4.0474-7.0938 8.2143-7.0938 3.7752 0 6.9622 2.5275 7.9721 5.9882 0.76743-0.43569 1.6542-0.68438 2.5989-0.68438 2.9191 0 5.2855 2.3746 5.2855 5.3038 0 0.5936-0.097178 1.1644-0.27644 1.6973 0.54506-0.11911 1.1118-0.18195 1.6935-0.18195 4.2744 0 7.7394 3.3923 7.7394 7.5769 0 4.0006-3.167 7.277-7.1805 7.5574l0.0060178 0.019456h-14.728-13.508l-0.0023979-0.0116z"
+                          fill="#fff"
+                        />
+                        <path
+                          d="m0.28178 29.278c0-5.6123 4.5497-10.162 10.162-10.162 0.57784 0 1.1444 0.04823 1.6959 0.14088 0.59712-4.0146 4.0474-7.0938 8.2143-7.0938 3.7752 0 6.9622 2.5275 7.9721 5.9882 0.76743-0.43569 1.6542-0.68438 2.5989-0.68438 2.9191 0 5.2855 2.3746 5.2855 5.3038 0 0.5936-0.097178 1.1644-0.27644 1.6973 0.54506-0.11911 1.1118-0.18195 1.6935-0.18195 4.2744 0 7.7394 3.3923 7.7394 7.5769 0 4.0006-3.167 7.277-7.1805 7.5574l0.0060178 0.019456h-14.728-13.508l-0.0023979-0.0116c-5.3848-0.25558-9.6721-4.7023-9.6721-10.15zm37.591 9.1619l0.24367-0.017024c3.5148-0.24557 6.2502-3.1095 6.2502-6.5599 0-3.6275-3.0127-6.5769-6.7394-6.5769-0.50312 0-0.99841 0.053639-1.48 0.15889l-1.7239 0.37674 0.56262-1.6725c0.14789-0.43965 0.22425-0.9032 0.22425-1.3785 0-2.3777-1.9194-4.3038-4.2855-4.3038-0.74929 0-1.4684 0.1925-2.1052 0.554l-1.0995 0.62422-0.35418-1.2137c-0.90426-3.0988-3.7473-5.2683-7.0121-5.2683-3.6289 0-6.6946 2.6737-7.2252 6.2409l-0.14991 1.0079-1.0049-0.16882c-0.50198-0.084334-1.0132-0.12706-1.5302-0.12706-5.06 0-9.1619 4.1019-9.1619 9.1619 0 4.8954 3.8491 8.9203 8.7195 9.1515l0.22071 0.010476h27.651z"
+                          fill="#97CDF4"
+                          fill-rule="nonzero"
+                        />
+                        <polygon
+                          points="16.062 36.96 29.587 36.96 29.587 39.44 16.062 39.44"
+                          fill="#fff"
+                        />
+                        <path
+                          d="m19.543 37.711h1.984v4.2726c0 0.27614 0.22386 0.5 0.5 0.5h1.5944c0.27614 0 0.5-0.22386 0.5-0.5v-4.2726h1.984c0.27614 0 0.5-0.22386 0.5-0.5 0-0.10254-0.031524-0.20259-0.090299-0.28661l-3.2812-4.6904c-0.15829-0.22627-0.47004-0.28138-0.69631-0.12309-0.047912 0.033518-0.089574 0.075179-0.12309 0.12309l-3.2812 4.6904c-0.15829 0.22627-0.10318 0.53802 0.12309 0.69631 0.084018 0.058775 0.18407 0.090299 0.28661 0.090299z"
+                          fill="#97CDF4"
+                        />
+                      </g>
+                    </g>
+                  </g>
+                </g>
+              </g>
+            </g>
+          </svg>
+          <span class="document_container__upload_text">
+            Drop File(s) Here or
+          </span>
+          <span class="document_container__upload_text blue">
+            Upload Document
+          </span>
+          <span class="document_container__upload_text underline">
+            Up to 10MB,
+            <span class="document_container__upload_formats">
+              Formats
+            </span>
+            <ul
+              *ngIf="
+                document.dataTypeAllowed.isDocuments ||
+                document.dataTypeAllowed.isImages ||
+                document.dataTypeAllowed.isVideoAudio
+              "
+              class="document_container__upload_formats_list"
+            >
+              <li
+                class="documents"
+                *ngIf="document.dataTypeAllowed.isDocuments"
+              >
+                <svg
+                  version="1.1"
+                  viewBox="0 0 19 22"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g fill="none" fill-rule="evenodd">
+                    <g transform="translate(-1038 -471)">
+                      <g transform="translate(380 217)">
+                        <g transform="translate(0 153)">
+                          <g transform="translate(475 46)">
+                            <g transform="translate(168 40)">
+                              <g transform="translate(15 15)">
+                                <g transform="translate(2.8045)">
+                                  <path
+                                    d="m15.686 5.6028l-5.1184-5.1028h-8.5672c-0.82843 0-1.5 0.67157-1.5 1.5v17.209c0 0.82843 0.67157 1.5 1.5 1.5h12.186c0.82843 0 1.5-0.67157 1.5-1.5v-13.606z"
+                                    fill="#F1F9FF"
+                                    stroke="#97CDF4"
+                                  />
+                                  <path
+                                    d="m10.604 0l5.5813 5.5813h-3.5813c-1.1046 0-2-0.89543-2-2v-3.5813z"
+                                    fill="#97CDF4"
+                                  />
+                                </g>
+                                <g
+                                  transform="translate(0 9.1346)"
+                                  fill="#97CDF4"
+                                >
+                                  <rect width="13.221" height="4.8077" rx="1" />
+                                </g>
+                              </g>
+                            </g>
+                          </g>
+                        </g>
+                      </g>
+                    </g>
+                  </g>
+                </svg>
+                {{ getAcceptedFormats(document, "documents") }}
+              </li>
+              <li class="images" *ngIf="document.dataTypeAllowed.isImages">
+                <svg
+                  version="1.1"
+                  viewBox="0 0 17 21"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g fill="none" fill-rule="evenodd">
+                    <g transform="translate(-1040 -503)">
+                      <g transform="translate(380 217)">
+                        <g transform="translate(0 153)">
+                          <g transform="translate(475 46)">
+                            <g transform="translate(168 40)">
+                              <g transform="translate(17 47)">
+                                <path
+                                  d="m2 0.5c-0.82843 0-1.5 0.67157-1.5 1.5v16.864c0 0.82843 0.67157 1.5 1.5 1.5h13c0.82843 0 1.5-0.67157 1.5-1.5v-16.864c0-0.82843-0.67157-1.5-1.5-1.5h-13z"
+                                  fill="#F1F9FF"
+                                  stroke="#97CDF4"
+                                />
+                                <circle
+                                  cx="7.3409"
+                                  cy="6.5682"
+                                  r="1.9318"
+                                  fill="#97CDF4"
+                                />
+                                <path
+                                  d="m0 15.313l2.9223-2.9557c0.58245-0.5891 1.5322-0.59449 2.1213-0.01204 0.0040362 0.0039906 0.0080497 0.0080041 0.01204 0.01204l1.2296 1.2437c0.58245 0.5891 1.5322 0.59449 2.1213 0.01204 0.0040362-0.0039906 0.0080497-0.0080041 0.01204-0.01204l4.3582-4.408c0.55879-0.56517 1.4614-0.59639 2.0579-0.071186l2.1653 1.9065-0.021407 6.8443c-0.0051706 1.6532-1.3468 2.9906-3 2.9906h-10.979c-1.6569 0-3-1.3431-3-3l-2.4071e-10 -2.5503z"
+                                  fill="#97CDF4"
+                                />
+                              </g>
+                            </g>
+                          </g>
+                        </g>
+                      </g>
+                    </g>
+                  </g>
+                </svg>
+                {{ getAcceptedFormats(document, "images") }}
+              </li>
+              <li class="media" *ngIf="document.dataTypeAllowed.isVideoAudio">
+                <svg
+                  version="1.1"
+                  viewBox="0 0 28 22"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <defs>
+                    <path
+                      id="b"
+                      d="m2-1.1239e-13l7.6709 1.0717e-13 4.8577 4.8428v12.195c0 1.1046-0.89543 2-2 2h-10.529c-1.1046 0-2-0.89543-2-2l-2.7756e-14 -15.037c-1.3527e-16 -1.1046 0.89543-2 2-2z"
+                    />
+                  </defs>
+                  <g fill="none" fill-rule="evenodd">
+                    <g transform="translate(-1036 -535)">
+                      <g transform="translate(380 217)">
+                        <g transform="translate(0 153)">
+                          <g transform="translate(475 46)">
+                            <g transform="translate(168 40)">
+                              <g transform="translate(12 78)">
+                                <g
+                                  transform="translate(19.456 12.077) rotate(15) translate(-7.5 -9.5)"
+                                >
+                                  <path
+                                    d="m2-1.7875e-13h10.5c1.1046-2.0291e-16 2 0.89543 2 2v14.988c0 1.1046-0.89543 2-2 2h-10.5c-1.1046 0-2-0.89543-2-2v-14.988c-1.3527e-16 -1.1046 0.89543-2 2-2z"
+                                    fill="#F1F9FF"
+                                  />
+                                  <path
+                                    d="m2 0h10.5c1.1046-2.0291e-16 2 0.89543 2 2v14.988c0 1.1046-0.89543 2-2 2h-10.5c-1.1046 0-2-0.89543-2-2v-14.988c-1.3527e-16 -1.1046 0.89543-2 2-2zm0 1c-0.55228 0-1 0.44772-1 1v14.988c0 0.55228 0.44772 1 1 1h10.5c0.55228 0 1-0.44772 1-1v-14.988c0-0.55228-0.44772-1-1-1h-10.5z"
+                                    fill="#97CDF4"
+                                    fill-rule="nonzero"
+                                  />
+                                  <path
+                                    d="m5.1383 4.5771l5.4526-0.85891c0.27278-0.042969 0.52874 0.14333 0.57171 0.41611 0.004054 0.025736 0.0060902 0.051749 0.0060902 0.077802v7.912c0 0.70327-0.5395 1.265-1.3816 1.4719-0.92531 0.22237-1.8174-0.15389-1.9956-0.84254-0.17746-0.69019 0.42859-1.4296 1.3531-1.6543 0.4175-0.10003 0.82946-0.079253 1.1733 0.038472v-4.5232c0-0.27614-0.22386-0.5-0.5-0.5-0.029327 0-0.058598 0.0025802-0.087472 0.0077109l-3.7302 0.66281c-0.23801 0.042291-0.41168 0.24881-0.41252 0.49055l-0.020728 5.9504c-0.0039611 0.60247-0.56485 1.1957-1.3698 1.3888-0.91343 0.22237-1.872-0.20006-1.9742-0.83177-0.17508-0.68173 0.42305-1.4135 1.3396-1.6366 0.41196-0.10003 0.8152-0.080022 1.1535 0.035394v-7.1108c0-0.24611 0.17909-0.45561 0.4222-0.49391z"
+                                    fill="#97CDF4"
+                                  />
+                                </g>
+                                <g
+                                  transform="translate(10.438 12.297) rotate(-15) translate(-7.5 -10)"
+                                >
+                                  <g transform="translate(0)">
+                                    <mask id="a" fill="white">
+                                      <use xlink:href="#b" />
+                                    </mask>
+                                    <use fill="#F1F9FF" xlink:href="#b" />
+                                    <path
+                                      d="m9.6709 1.3511e-13l4.8577 4.8428v12.195c0 1.1046-0.89543 2-2 2h-10.529c-1.1046 0-2-0.89543-2-2l-2.7756e-14 -15.037c-1.3527e-16 -1.1046 0.89543-2 2-2l7.6709 1.3511e-13zm-0.41332 1h-7.2575c-0.55228 0-1 0.44772-1 1v15.037c0 0.55228 0.44772 1 1 1h10.529c0.55228 0 1-0.44772 1-1v-11.779l-4.271-4.258z"
+                                      fill="#97CDF4"
+                                      fill-rule="nonzero"
+                                      mask="url(#a)"
+                                    />
+                                    <path
+                                      d="m2.8848 18.107l0.0026424-2-1-0.0013212-0.0026424 2 1 0.0013194zm0.0052848-4l0.0026424-2-1-0.0013212-0.0026424 2 1 0.0013194zm0.0052848-4l0.0026424-2-1-0.0013212-0.0026424 2 1 0.0013194zm0.0052848-4l0.0026424-2-1-0.0013212-0.0026424 2 1 0.0013194zm0.0052848-4l0.0025918-1.9617-1-0.0013212-0.0025918 1.9617 1 0.0013212z"
+                                      fill="#97CDF4"
+                                      fill-rule="nonzero"
+                                      mask="url(#a)"
+                                    />
+                                    <path
+                                      d="m12.508 18.142l0.0026424-2-1-0.0013212-0.0026424 2 1 0.0013194zm0.0052848-4l0.0026424-2-1-0.0013212-0.0026424 2 1 0.0013194zm0.0052848-4l0.0026424-2-1-0.0013212-0.0026424 2 1 0.0013194zm0.0052847-4l0.0026424-2-1-0.0013212-0.0026424 2 1 0.0013194zm0.0052848-4l0.0025918-1.9617-1-0.0013212-0.0025918 1.9617 1 0.0013212z"
+                                      fill="#97CDF4"
+                                      fill-rule="nonzero"
+                                      mask="url(#a)"
+                                    />
+                                  </g>
+                                  <path
+                                    d="m9.5187 0l5.0098 5.0098h-3.0098c-1.1046 0-2-0.89543-2-2v-3.0098z"
+                                    fill="#97CDF4"
+                                  />
+                                  <path
+                                    d="m5.4853 11.848v-4.6581c0-0.27614 0.22386-0.5 0.5-0.5 0.10819 0 0.21345 0.035089 0.3 0.1l3.1054 2.3291c0.22091 0.16569 0.26569 0.47909 0.1 0.7-0.028427 0.037903-0.062097 0.071573-0.1 0.1l-3.1054 2.3291c-0.22091 0.16569-0.53431 0.12091-0.7-0.1-0.064911-0.086548-0.1-0.19181-0.1-0.3z"
+                                    fill="#97CDF4"
+                                  />
+                                </g>
+                              </g>
+                            </g>
+                          </g>
+                        </g>
+                      </g>
+                    </g>
+                  </g>
+                </svg>
+                {{ getAcceptedFormats(document, "videoAudio") }}
+              </li>
+            </ul>
+          </span>
+          <input
+            type="file"
+            class="d-none"
+            [id]="document.name"
+            [name]="document.name"
+            [accept]="getAcceptedFormats(document)"
+            (change)="onFileSelected(document, $event.target.files[0])"
+          />
+        </label>
+      </div>
+      <div
+        class="document_container document_container__uploading"
+        *ngIf="document.fileUploading"
+      >
+        <div class="document_container__uploading_header">
+          <label class="document_container__uploading_title">
+            {{ document.selectedFile.name }}
+          </label>
+          <button
+            (click)="onCancelUpload(document)"
+            class="document_container__uploading_cancel"
+          >
+            Cancel
+          </button>
+        </div>
+        <div class="document_container__uploading_progress">
+          <div class="document_container__uploading_total">
+            <div
+              class="document_container__uploading_uploaded"
+              [ngStyle]="{
+                width:
+                  (document.uploaded * 100) / document.selectedFile.size + '%'
+              }"
+            ></div>
+          </div>
+          <label class="document_container__uploading_uploaded_value">
+            {{ document.uploaded | fileSize }} of
+            {{ document.selectedFile.size | fileSize }} uploaded
+          </label>
+        </div>
+      </div>
+      <div
+        class="document_container document_container__uploaded"
+        *ngIf="document.fileUploaded"
+      >
+        <svg
+          class="document_container__uploaded_icon"
+          version="1.1"
+          viewBox="0 0 19 22"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g fill="none" fill-rule="evenodd">
+            <g transform="translate(-1038 -471)">
+              <g transform="translate(380 217)">
+                <g transform="translate(0 153)">
+                  <g transform="translate(475 46)">
+                    <g transform="translate(168 40)">
+                      <g transform="translate(15 15)">
+                        <g transform="translate(2.8045)">
+                          <path
+                            d="m15.686 5.6028l-5.1184-5.1028h-8.5672c-0.82843 0-1.5 0.67157-1.5 1.5v17.209c0 0.82843 0.67157 1.5 1.5 1.5h12.186c0.82843 0 1.5-0.67157 1.5-1.5v-13.606z"
+                            fill="#F1F9FF"
+                            stroke="#14BB3E"
+                          />
+                          <path
+                            d="m10.604 0l5.5813 5.5813h-3.5813c-1.1046 0-2-0.89543-2-2v-3.5813z"
+                            fill="#14BB3E"
+                          />
+                        </g>
+                        <g transform="translate(0 9.1346)" fill="#14BB3E">
+                          <rect width="13.221" height="4.8077" rx="1" />
+                        </g>
+                      </g>
+                    </g>
+                  </g>
+                </g>
+              </g>
+            </g>
+          </g>
+        </svg>
+        <div class="document_container__uploaded_file_information">
+          <div class="document_container__uploaded_title">
+            {{ document.selectedFile.name }}
+          </div>
+          <label class="document_container__uploaded_size">
+            {{ document.selectedFile.size | fileSize }}
+            <ng-container *ngIf="document.countPages">
+              ({{ document.countPages }} pages)
+            </ng-container>
+          </label>
+        </div>
+        <button
+          class="document_container__uploaded_delete"
+          (click)="deleteUploadedFile(document)"
+        >
+          <svg
+            class="document_container__uploaded_delete_icon"
+            version="1.1"
+            viewBox="0 0 16 16"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+          >
+            <defs>
+              <path
+                d="M12.4416486,12.2151984 C12.3663559,13.3445888 11.4283078,14.2221825 10.2964105,14.2221825 L6.73802433,14.2221825 C5.606127,14.2221825 4.66807893,13.3445888 4.59278624,12.2151984 L4.06985632,4.37124958 L3.55,4.37124958 C3.16340068,4.37124958 2.85,4.0578489 2.85,3.67124958 C2.85,3.28465025 3.16340068,2.97124958 3.55,2.97124958 L13.45,2.97124958 C13.8365993,2.97124958 14.15,3.28465025 14.15,3.67124958 C14.15,4.0578489 13.8365993,4.37124958 13.45,4.37124958 L12.9645785,4.37124958 L12.4416486,12.2151984 Z M6.49395434,1.54754489 C6.49395434,1.16230148 6.80625583,0.85 7.19149923,0.85 L9.74670872,0.85 C10.1319521,0.85 10.4442536,1.16230148 10.4442536,1.54754489 C10.4442536,1.9327883 10.1319521,2.24508978 9.74670872,2.24508978 L7.19149923,2.24508978 C6.80625583,2.24508978 6.49395434,1.9327883 6.49395434,1.54754489 Z M5.46804286,4.37124958 L5.97886848,12.0336339 C6.00863536,12.4801371 6.37949157,12.8270927 6.82698586,12.8270927 L10.207449,12.8270927 C10.6549432,12.8270927 11.0257995,12.4801371 11.0555663,12.0336339 L11.566392,4.37124958 L5.46804286,4.37124958 Z M9.20245511,11.0747341 C9.20245511,11.4613334 8.88905443,11.7747341 8.50245511,11.7747341 C8.11585579,11.7747341 7.80245511,11.4613334 7.80245511,11.0747341 L7.80245511,6.1907134 C7.80245511,5.80411408 8.11585579,5.4907134 8.50245511,5.4907134 C8.88905443,5.4907134 9.20245511,5.80411408 9.20245511,6.1907134 L9.20245511,11.0747341 Z"
+                id="path-1"
+              ></path>
+            </defs>
+            <g fill="none" fill-rule="evenodd" stroke="none" stroke-width="1">
+              <mask fill="white" id="mask-2">
+                <use xlink:href="#path-1"></use>
+              </mask>
+              <use
+                fill="#979797"
+                fill-rule="nonzero"
+                xlink:href="#path-1"
+              ></use>
+              <g fill="#BDBFC9" mask="url(#mask-2)">
+                <rect height="16" rx="3" width="16" x="0" y="0"></rect>
+              </g>
+            </g>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

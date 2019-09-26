@@ -73,6 +73,7 @@ sw-input-text {
     }
     & + span {
       &.placeholder {
+        pointer-events: none;
         position: absolute;
         top: 2px;
         left: 10px;
@@ -168,6 +169,11 @@ sw-input-number {
           font-size: 12px;
         }
       }
+    }
+    .input_ico {
+      position: absolute;
+      top: 8px;
+      right: 8px;
     }
   }
 }

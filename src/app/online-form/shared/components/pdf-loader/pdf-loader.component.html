@@ -1,0 +1,91 @@
+<div class="zooming" (click)="$event.stopPropagation()" xmlns="http://www.w3.org/1999/html">
+    <div class="pdf_wrapper">
+        <ng-container *ngIf="isStartLoading && !isFinishLoading">
+          <sw-main-spinner class="spinner_box"></sw-main-spinner>
+        </ng-container>
+        <div class="slice-wrap m-3">
+
+          <ng-container *ngIf="isFinishLoading">
+            <div class="fields_group">
+              <div *ngFor="let div of pdf.form.fieldsPdf[page - 1]">
+                <div [ngStyle]="styleObject(div)" class="div-inside">
+                  <ng-container *ngIf="isShowLinkedFieldForSystem(div)">
+                    <div
+                      class="form-group app-input-container"
+                      [ngClass]="{
+                        'app-input-fill':
+                          div.linkedField.value && !div.linkedField.options.hideLabel
+                      }"
+                    >
+                      <label
+                        *ngIf="!div.linkedField.options.hideLabel"
+                        class="app-input-label"
+                        >{{ div.linkedField.name | titlecase }}</label
+                      >
+                      <!-- [(ngModel)]="div.linkedField.value" -->
+                      <textarea
+                        aria-describedby="basic-addon2"
+                        class="app-input"
+                        [readOnly]="div.linkedField.options.readonly"
+                        [required]="div.linkedField.options.required"
+                        [placeholder]="div.linkedField.name | titlecase"
+                      ></textarea>
+                    </div>
+                  </ng-container>
+
+                  <ng-container *ngIf="isShowLinkedFieldForTemporary(div)">
+                    <div
+                      *ngIf="isShowLinkedFieldForTemporary(div)"
+                      class="form-group app-input-container"
+                      [ngClass]="{ 'app-input-fill': div.linkedField.value }"
+                    >
+                      <label class="app-input-label">
+                        {{div.linkedField.name | titlecase}}
+                      </label>
+                      <!-- [(ngModel)]="div.linkedField.value" -->
+                      <textarea
+                        aria-describedby="basic-addon2"
+                        class="app-input"
+                        [placeholder]="div.linkedField.name | titlecase"
+                      ></textarea>
+                    </div>
+                  </ng-container>
+                  <ng-container *ngIf="isShowLinkedFieldForSignature(div)">
+                    <div
+                      *ngIf="isShowLinkedFieldForSignature(div)"
+                      class="form-group"
+                    >
+                      <span>&nbsp; Sign Here</span>
+                    </div>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+
+          <div class="pdf-wrapper">
+            <div class="pdf-overlay"></div>
+            <pdf-viewer
+              [original-size]="false"
+              [src]="{ url: pdf.form.link + token }"
+              [render-text-mode]="0"
+              [autoresize]="true"
+              [show-all]="false"
+              [page]="page"
+              style="display: block;"
+              (on-progress)="onProgress($event)"
+            >
+            </pdf-viewer>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="pdf.form.numberOfPages > 1" class="pdf_container">
+        <!-- <ngb-pagination
+          [collectionSize]="pdf.form.numberOfPages * 10"
+          [(page)]="page"
+          aria-label="Default pagination"
+        ></ngb-pagination> -->
+      </div>
+
+</div>

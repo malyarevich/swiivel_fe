@@ -10,7 +10,6 @@ import { Subject } from 'rxjs';
 
 // import { fields } from '@shared/fields';
 
-
 @Component({
   selector: 'sw-form-creator-workarea-fields',
   templateUrl: './fields.component.html',
@@ -82,7 +81,7 @@ export class WorkareaFieldsComponent implements AfterViewInit, OnInit, OnDestroy
 
   getHint(node: any) {
     console.log('Node Hint', node);
-    return 'Group type'
+    return 'Group type';
   }
   shouldRender(node: any) {
     // const parent = this.getParentNode(node);

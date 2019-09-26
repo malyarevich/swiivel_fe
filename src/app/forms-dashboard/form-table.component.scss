@@ -188,5 +188,20 @@
         justify-content: center;
       }
     }
+    &.cdk-column-spinner {
+      .app_loading {
+        position: relative;
+        min-width: unset;
+        min-height: unset;
+        margin: 30px 0;
+        &__logo {
+          font-size: 65px;
+        }
+        &__spinner {
+          width: 150px;
+          height: 150px;
+        }
+      }
+    }
   }
 }

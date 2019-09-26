@@ -1,0 +1,28 @@
+<table class="table">
+  <thead>
+    <tr class="app-tuition-table-header">
+      <th scope="col">FEES</th>
+      <th scope="col">FEE AMOUNT</th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngFor="let item of tuitionContract.fees; let i = index">
+      <tr *ngIf="item.isActive">
+        <td class="font-weight-bold">{{ item.name }}</td>
+        <td>${{ tempFees[i] || tempFees[0] }}</td>
+      </tr>
+    </ng-container>
+    <tr class="app-tuition-table-total font-weight-bold">
+      <td>BUILDING FEE</td>
+      <td>$1000</td>
+    </tr>
+    <tr class="app-tuition-table-total font-weight-bold">
+      <td>SECURITY FEE</td>
+      <td>$520</td>
+    </tr>
+    <tr class="app-tuition-table-total font-weight-bold">
+      <td>Tuition and Family Fees Total</td>
+      <td>$21160</td>
+    </tr>
+  </tbody>
+</table>
