@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { Observable, range } from 'rxjs';
 import { map, toArray, filter } from 'rxjs/operators';
 
@@ -15,6 +15,11 @@ export class PaginatorComponent implements OnInit, OnChanges {
   public pages: Observable<number[]>;
   public limit: number = 10;
 
+  @Input() set index(i: number) {
+    if (i) {
+      this.currentPage = i;
+    } 
+  }
   @Input() size: number = 200;
   @Input() sizeOptions = [10, 20, 50, 100];
   @Output() pageChange: EventEmitter<any> = new EventEmitter<any>();
@@ -26,6 +31,7 @@ export class PaginatorComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
+    this.currentPage = 1;
     this.getPages(this.limit, this.size);
   }
 

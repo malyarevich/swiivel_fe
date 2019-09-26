@@ -73,6 +73,7 @@ sw-input-text {
     }
     & + span {
       &.placeholder {
+        pointer-events: none;
         position: absolute;
         top: 2px;
         left: 10px;

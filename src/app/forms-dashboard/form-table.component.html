@@ -210,7 +210,7 @@
             <ng-container cdkColumnDef="paginator">
               <td cdk-footer-cell *cdkFooterCellDef [attr.colspan]="displayedColumns.length">
                 <div class="wrapper" data-e2e="paginatorname">
-                  <sw-paginator [size]="totalItems" (pageChange)="changePage($event)"></sw-paginator>
+                  <sw-paginator [index]="currentPage" [size]="totalItems" (pageChange)="changePage($event)"></sw-paginator>
                 </div>
               </td>
             </ng-container>
