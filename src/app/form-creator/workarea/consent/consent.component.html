@@ -9,11 +9,13 @@
       </sw-input-text>
     </div>
     <div class="consent-header__section-width">
-      <!--change for drop down-->
-      <sw-input-text formControlName="sectionWidth">
-        <span class="placeholder">Section Width</span>
-      </sw-input-text>
-      <sw-dropdown-select></sw-dropdown-select>
+      <sw-dropdown-input
+        formControlName="sectionWidth"
+        [options]="widthOption"
+        [multiple]="false"
+      >
+        <span class="input_label">Section Width</span>
+      </sw-dropdown-input>
     </div>
   </form>
   <div class="consent-header__controls">
@@ -45,8 +47,8 @@
     </div>
   </div>
 </div>
-<div *ngIf="isShown">
-  <div class="consent-item">
+<div *ngIf="isShown" cdkDropList (cdkDropListDropped)="drop($event)">
+  <div class="consent-item" *ngFor="let consentForm of consentForms" cdkDrag>
     <div class="consent-item__bubbles">
       <i class="fas fa-grip-vertical consent-item__bubbles-ico"></i>
     </div>
@@ -64,7 +66,15 @@
           <span class="input_label">Text</span>
         </sw-input-textarea>
       </div>
-      <div class="consent-item__fields-signatures">
+      <div *ngIf="consentForm.checkBox.isShown" class="consent-item__fields-checkbox-container">
+        <div class="consent-item__fields-checkbox">
+          <sw-input-checkbox></sw-input-checkbox>
+        </div>
+        <sw-input-text>
+          <span class="placeholder">Checkbox Text</span>
+        </sw-input-text>
+      </div>
+      <div *ngIf="!consentForm.isBothParentsSignature" class="consent-item__fields-signatures">
         <div class="consent-item__fields-signature">
           <sw-input-textarea
             [rows]="textarea.rows"
@@ -82,38 +92,7 @@
           </sw-input-textarea>
         </div>
       </div>
-      <div class="consent-item__fields-button">
-        <sw-input-text [style]="'button_type'"></sw-input-text>
-      </div>
-    </div>
-  </div>
-  <div class="consent-item">
-    <div class="consent-item__bubbles">
-      <i class="fas fa-grip-vertical consent-item__bubbles-ico"></i>
-    </div>
-    <div class="consent-item__fields">
-      <div class="consent-item__fields-name">
-        <sw-input-text>
-          <span class="placeholder">Document Name</span>
-        </sw-input-text>
-      </div>
-      <div class="consent-item__fields-text">
-        <sw-input-textarea
-          [rows]="textarea.rows"
-          [cols]="textarea.cols"
-          [readonly]="!textarea.editable">
-          <span class="input_label">Text</span>
-        </sw-input-textarea>
-      </div>
-      <div class="consent-item__fields-checkbox-container">
-        <div class="consent-item__fields-checkbox">
-          <sw-input-checkbox></sw-input-checkbox>
-        </div>
-        <sw-input-text>
-          <span class="placeholder">Checkbox Text</span>
-        </sw-input-text>
-      </div>
-      <div class="consent-item__fields-signatures">
+      <div *ngIf="consentForm.isBothParentsSignature" class="consent-item__fields-signatures">
         <div class="consent-item__fields-signature">
           <sw-input-textarea
             [rows]="textarea.rows"
@@ -123,7 +102,7 @@
           </sw-input-textarea>
         </div>
       </div>
-      <div class="consent-item__fields-button">
+      <div *ngIf="consentForm.button.isShown" class="consent-item__fields-button">
         <sw-input-text [style]="'button_type'"></sw-input-text>
       </div>
     </div>
