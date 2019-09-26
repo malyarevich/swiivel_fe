@@ -1,7 +1,6 @@
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ColorsEnum } from '@shared/colors.enum';
-import { IconsEnum } from '@shared/icons.enum';
 
 @Component({
   selector: 'sw-form-creator-workarea-consent',
@@ -10,8 +9,6 @@ import { IconsEnum } from '@shared/icons.enum';
 })
 
 export class WorkareaConsentComponent {
-  public form: FormGroup;
-  public icons = IconsEnum;
   public colors = ColorsEnum;
   public isShown = true;
   public textarea = {
@@ -19,16 +16,43 @@ export class WorkareaConsentComponent {
     cols: undefined,
     editable: true
   };
+  consentForms = [
+    {
+      documentName: 'text',
+      text: '',
+      isBothParentsSignature: true,
+      checkBox: {
+        isShown: false,
+        text: null
+      },
+      button: {
+        isShown: false,
+        text: 'Button'
+      }
+    },
+    {
+      documentName: '',
+      text: '',
+      isBothParentsSignature: false,
+      checkBox: {
+        isShown: true,
+        text: 'checkbox text'
+      },
+      button: {
+        isShown: true,
+        text: 'Button'
+      }
+    }
+  ];
 
-  constructor(private fb: FormBuilder ) {
-    this.form = this.fb.group({
-      sectionName: new FormControl('Paren Consent', Validators.required),
-      sectionWidth: new FormControl('4 columns'),
-    });
+  constructor() {}
+
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.consentForms, event.previousIndex, event.currentIndex);
   }
 
-  changeIsShown(): void {
-    this.isShown = !this.isShown;
+  changeIsShown(evt: boolean): void {
+    this.isShown = evt;
   }
 
 }

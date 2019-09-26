@@ -1,0 +1,43 @@
+<sw-form-creator-workarea-header
+  [sectionName]="'Document for parents'"
+  (changeContentDisplay)="changeIsShown($event)">
+</sw-form-creator-workarea-header>
+<div *ngIf="isShown" cdkDropList (cdkDropListDropped)="drop($event)">
+  <div class="item" *ngFor="let form of forms" cdkDrag>
+    <div class="bubbles">
+      <i class="fas fa-grip-vertical bubbles-ico"></i>
+    </div>
+    <div class="fields">
+      <div class="fields-name">
+        <sw-input-text>
+          <span class="placeholder">Document Name</span>
+        </sw-input-text>
+      </div>
+      <div class="fields-text">
+        <sw-input-textarea
+          [rows]="textarea.rows"
+          [cols]="textarea.cols"
+          [readonly]="!textarea.editable">
+          <span class="input_label">Text</span>
+        </sw-input-textarea>
+      </div>
+      <div *ngIf="form.checkBox.isShown" class="fields-checkbox-container">
+        <div class="fields-checkbox">
+          <sw-input-checkbox></sw-input-checkbox>
+        </div>
+        <sw-input-text>
+          <span class="placeholder">Checkbox Text</span>
+        </sw-input-text>
+      </div>
+      <div *ngIf="form.isBothParentsSignature" class="fields-signatures">
+        <sw-input-textarea
+          [rows]="textarea.rows"
+          [cols]="textarea.cols"
+          [readonly]="!textarea.editable">
+          <span class="input_label">Parents's signature</span>
+        </sw-input-textarea>
+      </div>
+    </div>
+  </div>
+</div>
+<sw-form-creator-workarea-footer></sw-form-creator-workarea-footer>
