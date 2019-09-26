@@ -1,7 +1,7 @@
 <header class="forms-header">
   <div class="title">
     <div class="back-btn">
-      <i class="fas fa-chevron-left"></i>
+      <i class="fas fa-chevron-left" [routerLink]="[ '/dashboard' ]"></i>
     </div>
     <div class="text">
       NEW DATA COLLECTION FORM
@@ -20,7 +20,7 @@
       Receive
     </div>
   </div>
-  <div class="log-out-btn">
+  <div class="log-out-btn" (click)="logout()">
     <i class="fas fa-sign-out-alt"></i>
   </div>
 </header>
