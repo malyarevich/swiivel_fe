@@ -25,6 +25,7 @@ export class SidebarFieldsComponent implements OnInit {
   delFieldName: string;
   delInput: FormControl = new FormControl(null);
   ref: any;
+
   @ViewChild('deletePop', { static: false }) deletePop;
 
   constructor(
@@ -60,11 +61,15 @@ export class SidebarFieldsComponent implements OnInit {
   }
 
   canCreateField(node) {
-    return node.type === 113 && this.treeControl.isExpanded(node);
+    return (node.type === 113 || node.type === 114) && this.treeControl.isExpanded(node);
+  }
+
+  createFieldToggle(node) {
+    node.formVisible = !(!!node.formVisible);
   }
 
   showCreateField(node) {
-    node.formVisible = !(!!node.formVisible);
+    // node.formVisible = !(!!node.formVisible);
     return node.formVisible;
     // return false;
   }
@@ -146,9 +151,6 @@ export class SidebarFieldsComponent implements OnInit {
     const result = descendants.some(child => child.isSelected);
     return result && !this.descendantsAllSelected(node);
   }
-
-
-
 
   isSelectedNode(node: any) {
     return this.checklistSelection.isSelected(node);

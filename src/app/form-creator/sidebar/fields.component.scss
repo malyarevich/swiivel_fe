@@ -137,37 +137,50 @@
   }
   div.custom-field {
     margin-top: 10px;
-    padding: 10px;
-    border: 1px solid #4350A2;
-    box-sizing: border-box;
-    border-radius: 3px;
-    &__inputs {
-      display: flex;
-      flex-flow: row nowrap;
-      margin-bottom: 10px;
-      sw-input-text {
-        width: 48%;
-        margin-right: 5px;
-      }
-      sw-dropdown-input {
-        width: 25%;
-        &:not(:last-of-type) {
+    padding-left: 10px;
+    &__form {
+      display: none;
+      flex-flow: column nowrap;
+      margin-top: 10px;
+      padding: 10px;
+      border: 1px solid #4350A2;
+      box-sizing: border-box;
+      border-radius: 3px;
+      &_inputs {
+        display: flex;
+        flex-flow: row nowrap;
+        margin-bottom: 10px;
+        sw-input-text {
+          width: 48%;
           margin-right: 5px;
         }
+        sw-dropdown-input {
+          width: 25%;
+          &:not(:last-of-type) {
+            margin-right: 5px;
+          }
+        }
+      }
+      &_actions {
+        display: flex;
+        flex-flow: row nowrap;
       }
     }
-    &__actions {
-      display: flex;
-      flex-flow: row nowrap;
-    }
-    &__show-btn { display: none; }
-    &.show-btn {
-      &__inputs { display: none; }
-      &__show-btn { display: flex; }
-      padding: 0 0 0 10px;
-    }
-  }
 
+    &__button {
+      display: flex;
+    }
+
+    &.show {
+      .custom-field__form {
+        display: flex
+      }
+      .custom-field__button {
+        display: none;
+      }
+    }
+
+  }
 }
 
 
