@@ -1,5 +1,15 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, forwardRef, Input, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef, EventEmitter,
+  forwardRef,
+  Input,
+  OnInit,
+  Output,
+  ViewChild
+} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Popup } from '@core/popup.service';
 
@@ -39,6 +49,8 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
       this.dropdownList = opts;
     }
   }
+
+  @Output() isPopupShown = new EventEmitter();
 
   @ViewChild('droplist', { static: false }) droplist;
   @ViewChild('holder', { static: false, read: ElementRef }) holder: ElementRef;
@@ -107,6 +119,7 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
   }
 
   showPopup(): void {
+    this.isPopupShown.emit(true);
     if (!!this.disable) { return ; }
 
     this._ref = this.popup.open({
@@ -115,6 +128,7 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
       panelClass: this.panelClass
     });
     this._ref.afterClosed$.subscribe((result) => {
+      this.isPopupShown.emit(false);
       this._ref = null;
       this.onTouched();
       this.cdr.markForCheck();
