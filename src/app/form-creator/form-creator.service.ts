@@ -9,6 +9,7 @@ export class FormCreatorService {
   private sectionSubject$: BehaviorSubject<any> = new BehaviorSubject('intro');
   private sectionsSubject$: BehaviorSubject<any> = new BehaviorSubject(null);
   private eventSubject$: Subject<any> = new Subject();
+  private stepperSubject$: BehaviorSubject<string> = new BehaviorSubject(null);
 
   addField(field: any) {
     const change = {field, added: true};
@@ -74,6 +75,13 @@ export class FormCreatorService {
     this.eventSubject$.next(eventObj);
   }
 
+  set stepper(step: string) {
+    if (step === 'next' || step === 'prev') this.stepperSubject$.next(step);
+  }
+
+  get stepper$() {
+    return this.stepperSubject$.asObservable();
+  }
 
 
 }

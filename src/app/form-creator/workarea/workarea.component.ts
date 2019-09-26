@@ -20,4 +20,12 @@ export class WorkareaComponent implements OnInit {
     });
   }
 
+  prevStep() {
+    this.service.stepper = 'prev';
+  }
+
+  nextStep() {
+    this.service.stepper = 'next';
+  }
+
 }
