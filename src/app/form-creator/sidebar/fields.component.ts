@@ -64,7 +64,8 @@ export class SidebarFieldsComponent implements OnInit {
     return (node.type === 113 || node.type === 114) && this.treeControl.isExpanded(node);
   }
 
-  createFieldToggle(node) {
+  customFieldToggle(node) {
+    console.log(this.treeSource);
     node.formVisible = !(!!node.formVisible);
   }
 

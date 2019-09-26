@@ -67,7 +67,7 @@
             </div>
             <div class="custom-field__form_actions">
               <sw-button class="outline-btn full_width narrow" style="margin-right: 5px;"
-                (click)="addCustomField(node)">
+                (click)="customFieldToggle(node)">
                 <span class="text">Cancel</span>
               </sw-button>
               <sw-button class="full_width narrow" (click)="addCustomField(node)">
@@ -76,7 +76,7 @@
             </div>
           </div>
           <div class="custom-field__button">
-            <sw-button class="outline-btn full_width narrow" (click)="createFieldToggle(node)">
+            <sw-button class="outline-btn full_width narrow" (click)="customFieldToggle(node)">
               <span class="text">Create New Field</span>
             </sw-button>
           </div>

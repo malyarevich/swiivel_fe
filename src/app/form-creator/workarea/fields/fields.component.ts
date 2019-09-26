@@ -43,6 +43,7 @@ export class WorkareaFieldsComponent implements AfterViewInit, OnInit, OnDestroy
   ngOnInit() {
 
     if (this.service.fields) {
+      this.treeSource = this.service.fields;
       // this.tree.treeModel.setState(this.service.fields);
       // this.tree.treeModel.update();
       this.cdr.detectChanges();
@@ -87,6 +88,7 @@ export class WorkareaFieldsComponent implements AfterViewInit, OnInit, OnDestroy
     // const parent = this.getParentNode(node);
     // const should = !parent || parent.expanded;
     // return should;
+    return !node.isSelected;
   }
 
   settingsTogle(node: any)  {

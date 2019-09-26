@@ -125,6 +125,13 @@
         }
       }
     }
+    .field-tree-node,
+    .field-workarea-node {
+      padding-left: 15px;
+    }
+    .field-tree-invisible {
+      display: none;
+    }
     .settings {
       margin-top: -5px;
     }
