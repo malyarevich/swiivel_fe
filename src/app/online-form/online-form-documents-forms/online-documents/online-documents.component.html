@@ -1,8 +1,13 @@
 <h2 class="content_section__section_title">Documents</h2>
-<div class="content_section__main">
-  <div class="content_section__document" *ngFor="let document of form.documents">
-    <div class="content_section__article_title content_section__article_title--left">
-      {{document.name}}
+<div class="content_section__main_container">
+  <div
+    class="content_section__document"
+    *ngFor="let document of form.documents"
+  >
+    <div
+      class="content_section__article_title content_section__article_title--left"
+    >
+      {{ document.name }}
     </div>
     <div
       class="content_section__article_text"
@@ -50,10 +55,10 @@
           (click)="openForPreview(document)"
         >
           <div class="document_container__file_title">
-            {{getDocumentName(document)}}
+            {{ getDocumentName(document) }}
           </div>
           <div class="document_container__file_size">
-            {{getDocumentPages(document)}}
+            {{ getDocumentPages(document) }}
           </div>
         </div>
         <button
@@ -87,7 +92,9 @@
       </div>
       <div
         class="document_container document_container__upload"
-        *ngIf="document.isUpload && !document.fileUploading && !document.fileUploaded"
+        *ngIf="
+          document.isUpload && !document.fileUploading && !document.fileUploaded
+        "
       >
         <label
           [for]="document.name"
@@ -120,13 +127,20 @@
                             fill="#EEF8FF"
                             stroke="#97CDF4"
                           />
-                          <circle cx="7.6352" cy="4.8466" r="2.1541" fill="#97CDF4" />
+                          <circle
+                            cx="7.6352"
+                            cy="4.8466"
+                            r="2.1541"
+                            fill="#97CDF4"
+                          />
                           <path
                             d="m5.3291e-14 12.026l2.7807-2.7807c0.78105-0.78105 2.0474-0.78105 2.8284 0l0.70822 0.70822c0.78105 0.78105 2.0474 0.78105 2.8284 0l4.0461-4.0461c0.73144-0.73144 1.8999-0.78444 2.6946-0.12223l1.1788 0.98233-0.026239 12.856c-0.0033766 1.6545-1.3455 2.9939-3 2.9939h-11.039c-1.6569 0-3-1.3431-3-3l-1.4855e-10 -7.5918z"
                             fill="#97CDF4"
                           />
                         </g>
-                        <g transform="translate(13.876 18.045) rotate(-25) translate(-9 -12)">
+                        <g
+                          transform="translate(13.876 18.045) rotate(-25) translate(-9 -12)"
+                        >
                           <path
                             d="m3 1.4232c-1.3807 0-2.5 1.1193-2.5 2.5v16.647c0 1.3807 1.1193 2.5 2.5 2.5h11.283c1.3807 0 2.5-1.1193 2.5-2.5v-16.647c0-1.3807-1.1193-2.5-2.5-2.5h-11.283z"
                             fill="#EEF8FF"
@@ -142,7 +156,9 @@
                             xlink:href="#a"
                           />
                         </g>
-                        <g transform="translate(35.854 20.094) rotate(25) translate(-9 -11.5)">
+                        <g
+                          transform="translate(35.854 20.094) rotate(25) translate(-9 -11.5)"
+                        >
                           <path
                             d="m16.783 5.9686l-5.4854-5.4686h-8.2979c-1.3807 0-2.5 1.1193-2.5 2.5v16.647c0 1.3807 1.1193 2.5 2.5 2.5h11.283c1.3807 0 2.5-1.1193 2.5-2.5v-13.678z"
                             fill="#EEF8FF"
@@ -196,8 +212,15 @@
               "
               class="document_container__upload_formats_list"
             >
-              <li class="documents" *ngIf="document.dataTypeAllowed.isDocuments">
-                <svg version="1.1" viewBox="0 0 19 22" xmlns="http://www.w3.org/2000/svg">
+              <li
+                class="documents"
+                *ngIf="document.dataTypeAllowed.isDocuments"
+              >
+                <svg
+                  version="1.1"
+                  viewBox="0 0 19 22"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
                   <g fill="none" fill-rule="evenodd">
                     <g transform="translate(-1038 -471)">
                       <g transform="translate(380 217)">
@@ -216,7 +239,10 @@
                                     fill="#97CDF4"
                                   />
                                 </g>
-                                <g transform="translate(0 9.1346)" fill="#97CDF4">
+                                <g
+                                  transform="translate(0 9.1346)"
+                                  fill="#97CDF4"
+                                >
                                   <rect width="13.221" height="4.8077" rx="1" />
                                 </g>
                               </g>
@@ -227,10 +253,14 @@
                     </g>
                   </g>
                 </svg>
-                {{getAcceptedFormats(document, 'documents')}}
+                {{ getAcceptedFormats(document, "documents") }}
               </li>
               <li class="images" *ngIf="document.dataTypeAllowed.isImages">
-                <svg version="1.1" viewBox="0 0 17 21" xmlns="http://www.w3.org/2000/svg">
+                <svg
+                  version="1.1"
+                  viewBox="0 0 17 21"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
                   <g fill="none" fill-rule="evenodd">
                     <g transform="translate(-1040 -503)">
                       <g transform="translate(380 217)">
@@ -243,7 +273,12 @@
                                   fill="#F1F9FF"
                                   stroke="#97CDF4"
                                 />
-                                <circle cx="7.3409" cy="6.5682" r="1.9318" fill="#97CDF4" />
+                                <circle
+                                  cx="7.3409"
+                                  cy="6.5682"
+                                  r="1.9318"
+                                  fill="#97CDF4"
+                                />
                                 <path
                                   d="m0 15.313l2.9223-2.9557c0.58245-0.5891 1.5322-0.59449 2.1213-0.01204 0.0040362 0.0039906 0.0080497 0.0080041 0.01204 0.01204l1.2296 1.2437c0.58245 0.5891 1.5322 0.59449 2.1213 0.01204 0.0040362-0.0039906 0.0080497-0.0080041 0.01204-0.01204l4.3582-4.408c0.55879-0.56517 1.4614-0.59639 2.0579-0.071186l2.1653 1.9065-0.021407 6.8443c-0.0051706 1.6532-1.3468 2.9906-3 2.9906h-10.979c-1.6569 0-3-1.3431-3-3l-2.4071e-10 -2.5503z"
                                   fill="#97CDF4"
@@ -256,10 +291,14 @@
                     </g>
                   </g>
                 </svg>
-                {{getAcceptedFormats(document, 'images')}}
+                {{ getAcceptedFormats(document, "images") }}
               </li>
               <li class="media" *ngIf="document.dataTypeAllowed.isVideoAudio">
-                <svg version="1.1" viewBox="0 0 28 22" xmlns="http://www.w3.org/2000/svg">
+                <svg
+                  version="1.1"
+                  viewBox="0 0 28 22"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
                   <defs>
                     <path
                       id="b"
@@ -273,7 +312,9 @@
                           <g transform="translate(475 46)">
                             <g transform="translate(168 40)">
                               <g transform="translate(12 78)">
-                                <g transform="translate(19.456 12.077) rotate(15) translate(-7.5 -9.5)">
+                                <g
+                                  transform="translate(19.456 12.077) rotate(15) translate(-7.5 -9.5)"
+                                >
                                   <path
                                     d="m2-1.7875e-13h10.5c1.1046-2.0291e-16 2 0.89543 2 2v14.988c0 1.1046-0.89543 2-2 2h-10.5c-1.1046 0-2-0.89543-2-2v-14.988c-1.3527e-16 -1.1046 0.89543-2 2-2z"
                                     fill="#F1F9FF"
@@ -288,7 +329,9 @@
                                     fill="#97CDF4"
                                   />
                                 </g>
-                                <g transform="translate(10.438 12.297) rotate(-15) translate(-7.5 -10)">
+                                <g
+                                  transform="translate(10.438 12.297) rotate(-15) translate(-7.5 -10)"
+                                >
                                   <g transform="translate(0)">
                                     <mask id="a" fill="white">
                                       <use xlink:href="#b" />
@@ -330,7 +373,7 @@
                     </g>
                   </g>
                 </svg>
-                {{getAcceptedFormats(document, 'videoAudio')}}
+                {{ getAcceptedFormats(document, "videoAudio") }}
               </li>
             </ul>
           </span>
@@ -341,7 +384,7 @@
             [name]="document.name"
             [accept]="getAcceptedFormats(document)"
             (change)="onFileSelected(document, $event.target.files[0])"
-          >
+          />
         </label>
       </div>
       <div
@@ -350,7 +393,7 @@
       >
         <div class="document_container__uploading_header">
           <label class="document_container__uploading_title">
-            {{document.selectedFile.name}}
+            {{ document.selectedFile.name }}
           </label>
           <button
             (click)="onCancelUpload(document)"
@@ -363,11 +406,15 @@
           <div class="document_container__uploading_total">
             <div
               class="document_container__uploading_uploaded"
-              [ngStyle]="{width: (document.uploaded * 100 / document.selectedFile.size) + '%' }"
+              [ngStyle]="{
+                width:
+                  (document.uploaded * 100) / document.selectedFile.size + '%'
+              }"
             ></div>
           </div>
           <label class="document_container__uploading_uploaded_value">
-            {{document.uploaded | fileSize}} of {{document.selectedFile.size | fileSize}} uploaded
+            {{ document.uploaded | fileSize }} of
+            {{ document.selectedFile.size | fileSize }} uploaded
           </label>
         </div>
       </div>
@@ -412,12 +459,12 @@
         </svg>
         <div class="document_container__uploaded_file_information">
           <div class="document_container__uploaded_title">
-            {{document.selectedFile.name}}
+            {{ document.selectedFile.name }}
           </div>
           <label class="document_container__uploaded_size">
-            {{document.selectedFile.size | fileSize}}
+            {{ document.selectedFile.size | fileSize }}
             <ng-container *ngIf="document.countPages">
-              ({{document.countPages}} pages)
+              ({{ document.countPages }} pages)
             </ng-container>
           </label>
         </div>
@@ -442,7 +489,11 @@
               <mask fill="white" id="mask-2">
                 <use xlink:href="#path-1"></use>
               </mask>
-              <use fill="#979797" fill-rule="nonzero" xlink:href="#path-1"></use>
+              <use
+                fill="#979797"
+                fill-rule="nonzero"
+                xlink:href="#path-1"
+              ></use>
               <g fill="#BDBFC9" mask="url(#mask-2)">
                 <rect height="16" rx="3" width="16" x="0" y="0"></rect>
               </g>

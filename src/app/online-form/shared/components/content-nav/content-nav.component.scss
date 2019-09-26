@@ -4,7 +4,7 @@
 // }
 
 .content_nav {
-  font-family: Nunito Sans;
+  font-family: "Nunito Sans", "Helvetica";
 font-weight: 400;
 
   &__list {
@@ -51,7 +51,7 @@ font-weight: 400;
 
   &__link {
     color: $icon-grey-color;
-    font-family: Nunito Sans;
+    font-family: "Nunito Sans", "Helvetica";
 font-weight: 400;
     font-weight: normal;
     transition: all 0.1s ease-in-out;
