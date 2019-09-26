@@ -33,6 +33,9 @@ const routes: Routes = [
     path: 'form-creator',
     loadChildren: () => import('./form-creator/form-creator.module').then(m => m.FormCreatorModule)
   },
+  { path: 'form-creator-send', 
+    loadChildren: () => import('./form-creator-send/form-creator-send.module').then(m => m.FormCreatorSendModule) 
+  },
   {
     path: 'forms-dashboard',
     loadChildren: () => import('./forms-dashboard/form-table.module').then(m => m.FormTableModule)
@@ -40,7 +43,7 @@ const routes: Routes = [
   {
     path: '**',
     redirectTo: '/dashboard',
-  }
+  },
 ];
 
 @NgModule({
