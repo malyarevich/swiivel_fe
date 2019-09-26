@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormCreatorService } from '../form-creator.service';
+import { StepperService } from '@app/shared/stepper.service';
 
 @Component({
   selector: 'sw-form-creator-workarea',
@@ -10,7 +11,7 @@ import { FormCreatorService } from '../form-creator.service';
 export class WorkareaComponent implements OnInit {
   _workarea = 'default';
 
-  constructor(private service: FormCreatorService, private cdr: ChangeDetectorRef) {
+  constructor(private service: FormCreatorService, private cdr: ChangeDetectorRef, private stepperService: StepperService) {
   }
 
   ngOnInit() {
@@ -18,6 +19,14 @@ export class WorkareaComponent implements OnInit {
       this._workarea = section;
       this.cdr.markForCheck();
     });
+  }
+
+  prevStep() {
+    this.stepperService.stepper = 'prev';
+  }
+
+  nextStep() {
+    this.stepperService.stepper = 'next';
   }
 
 }

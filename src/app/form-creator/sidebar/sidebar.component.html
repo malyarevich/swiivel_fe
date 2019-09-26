@@ -63,3 +63,10 @@
     <span>Consent</span>
   </div>
 </div>
+
+<div class="sidebar_section" [class.expanded]="isExpanded('tac')">
+  <div class="sidebar_section__header" (click)="onClick('tac', $event)">
+    <sw-input-toggle [formControl]="sections?.get('tac')"></sw-input-toggle>
+    <span>Terms & Conditions</span>
+  </div>
+</div>

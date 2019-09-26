@@ -39,12 +39,17 @@ import { SelectOptionDirective } from './inputs/dropdown-select/option.directive
 import { MainComponent } from './main.component';
 import { ComponentIdDirective } from './inputs/e2e.directive';
 import { PaginatorComponent } from './paginator/paginator.component';
+import { CdkStepperModule } from '@angular/cdk/stepper';
+import { StepperComponent } from './stepper/stepper.component';
+import { StepperService } from './stepper.service';
+import { FormComponent } from './form.component';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
     ReactiveFormsModule,
+    CdkStepperModule,
   ],
   declarations: [
     // Buttons
@@ -81,9 +86,12 @@ import { PaginatorComponent } from './paginator/paginator.component';
     PaginatorComponent,
     // Bars
     DocumentApprovalBarComponent,
+    StepperComponent,
+    FormComponent,
   ],
   exports: [
     CommonModule,
+    CdkStepperModule,
     // Buttons
     ButtonComponent,
     IconButtonComponent,
@@ -119,6 +127,10 @@ import { PaginatorComponent } from './paginator/paginator.component';
     PaginatorComponent,
     // Bars
     DocumentApprovalBarComponent,
+    StepperComponent,
+  ],
+  providers: [
+    StepperService
   ]
 })
 export class SharedModule { }

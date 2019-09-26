@@ -7,6 +7,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '@shared/shared.module';
 
 import { WorkareaConsentComponent } from '@app/form-creator/workarea/consent/consent.component';
+import { WorkareaTermsConditionComponent } from '@app/form-creator/workarea/terms-and-conditions/terms-and-conditions.component';
+import { WorkareaFooterComponent } from '@app/form-creator/workarea/workarea-footer/workarea-footer.component';
+import { WorkareaHeaderComponent } from '@app/form-creator/workarea/workarea-header/workarea-header.component';
 import { FormCreatorRoutingModule } from './form-creator-routing.module';
 import { FormCreatorComponent } from './form-creator.component';
 import { SidebarConsentComponent } from './sidebar/consent.component';
@@ -23,18 +26,18 @@ import { WorkareaComponent } from './workarea/workarea.component';
 
 import { TreeModule } from 'angular-tree-component';
 import { FormCreatorService } from './form-creator.service';
-import { RouterModule } from '@angular/router';
-
 
 @NgModule({
   declarations: [
-
     FormCreatorComponent,
     SidebarComponent,
     WorkareaComponent,
     WorkareaConsentComponent,
     WorkareaIntroComponent,
     WorkareaFieldsComponent,
+    WorkareaFooterComponent,
+    WorkareaHeaderComponent,
+    WorkareaTermsConditionComponent,
     SectionComponent,
     SidebarIntroComponent,
     SidebarFieldsComponent,
@@ -57,6 +60,9 @@ import { RouterModule } from '@angular/router';
   entryComponents: [
     SidebarIntroComponent,
     WorkareaConsentComponent,
+    WorkareaFooterComponent,
+    WorkareaHeaderComponent,
+    WorkareaTermsConditionComponent,
     SidebarFieldsComponent,
     SidebarDocumentsFormsComponent,
     SidebarConsentComponent,

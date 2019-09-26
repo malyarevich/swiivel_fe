@@ -1,0 +1,50 @@
+<div class="bubbles">
+  <i class="fas fa-grip-vertical bubbles-ico"></i>
+</div>
+<form class="sections" [formGroup]="form">
+  <div class="section-name">
+    <sw-input-text formControlName="sectionName">
+      <span class="placeholder">Section Name</span>
+    </sw-input-text>
+  </div>
+  <div class="section-width">
+    <sw-dropdown-input
+      formControlName="sectionWidth"
+      [options]="widthOption"
+      [multiple]="false"
+      (isPopupShown)="changePopupDisplay($event)"
+    >
+      <span class="input_label">Section Width</span>
+      <span class="input_ico"><i class="fas fa-caret-down" [ngClass]="{' fa-caret-up': popupDisplay}"></i></span>
+    </sw-dropdown-input>
+  </div>
+</form>
+<div class="controls">
+  <div class="ico-container">
+    <div class="controls-ico">
+      <sw-icon-button [icon]="icons.SETTINGS"></sw-icon-button>
+    </div>
+  </div>
+  <div class="controls-ico">
+    <sw-icon-button [icon]="icons.CROSS"></sw-icon-button>
+  </div>
+  <div class="controls-arrow-container">
+    <div class="controls-arrow">
+      <sw-icon-button
+        *ngIf="isContentShown"
+        [icon]="icons.CARET_DOWN"
+        [color]="colors.WHITE"
+        (click)="changeIsContentShown()"
+      >
+      </sw-icon-button>
+      <sw-icon-button
+        *ngIf="!isContentShown"
+        [icon]="icons.CARET_UP"
+        [color]="colors.WHITE"
+        (click)="changeIsContentShown()"
+      >
+      </sw-icon-button>
+    </div>
+  </div>
+</div>
+
