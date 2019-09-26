@@ -42,6 +42,7 @@ import { PaginatorComponent } from './paginator/paginator.component';
 import { CdkStepperModule } from '@angular/cdk/stepper';
 import { StepperComponent } from './stepper/stepper.component';
 import { StepperService } from './stepper.service';
+import { FormComponent } from './form.component';
 
 @NgModule({
   imports: [
@@ -86,6 +87,7 @@ import { StepperService } from './stepper.service';
     // Bars
     DocumentApprovalBarComponent,
     StepperComponent,
+    FormComponent,
   ],
   exports: [
     CommonModule,

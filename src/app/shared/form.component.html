@@ -1,0 +1,27 @@
+<header class="forms-header">
+  <div class="title">
+    <div class="back-btn">
+      <i class="fas fa-chevron-left"></i>
+    </div>
+    <div class="text">
+      NEW DATA COLLECTION FORM
+    </div>
+  </div>
+  <div class="items-wrap">
+    <div class="item" [routerLink]="[ '/form-creator' ]" routerLinkActive="active">
+      Create
+    </div>
+    <i class="fas fa-chevron-right"></i>
+    <div class="item"  [routerLink]="[ '/form-creator' ]" routerLinkActive="aactive">
+      Send
+    </div>
+    <i class="fas fa-chevron-right"></i>
+    <div class="item" [routerLink]="[ '/form-creator' ]" routerLinkActive="aactive">
+      Receive
+    </div>
+  </div>
+  <div class="log-out-btn">
+    <i class="fas fa-sign-out-alt"></i>
+  </div>
+</header>
+<router-outlet></router-outlet>
