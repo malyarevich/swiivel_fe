@@ -39,7 +39,6 @@ import { SelectOptionDirective } from './inputs/dropdown-select/option.directive
 import { MainComponent } from './main.component';
 import { ComponentIdDirective } from './inputs/e2e.directive';
 import { PaginatorComponent } from './paginator/paginator.component';
-import { InputFileComponent } from './inputs/input-file/input-file.component';
 
 @NgModule({
   imports: [
@@ -59,7 +58,6 @@ import { InputFileComponent } from './inputs/input-file/input-file.component';
     InputDynamicComponent,
     InputNumberComponent,
     InputTextComponent,
-    InputFileComponent,
     InputSuggestComponent,
     InputToggleComponent,
     DropdownInputComponent,
@@ -96,7 +94,6 @@ import { InputFileComponent } from './inputs/input-file/input-file.component';
     InputDynamicComponent,
     InputNumberComponent,
     InputTextComponent,
-    InputFileComponent,
     InputSuggestComponent,
     InputToggleComponent,
     DropdownInputComponent,

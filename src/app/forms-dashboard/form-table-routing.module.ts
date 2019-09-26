@@ -6,7 +6,7 @@ import { FormTableComponent } from './form-table.component';
 
 export const routes: Routes = [
   {
-    path: "",
+    path: '',
     component: MainComponent,
     canActivate: [AuthGuard],
     canActivateChild: [AuthGuard],
@@ -15,8 +15,6 @@ export const routes: Routes = [
       // { path: 'form-constructor', component: FormConstructorComponent, pathMatch: 'full'},
       // { path: 'form-constructor/:mongo_id', component: FormConstructorComponent, pathMatch: 'full'},
       { path: 'online-form/:mongo_id', loadChildren: () => import('@app/online-form/online-form.module').then(m => m.OnlineFormModule), pathMatch: 'full'},
-      
-    
     ]
   }
 ];

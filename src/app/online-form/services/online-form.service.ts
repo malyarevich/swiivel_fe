@@ -15,6 +15,7 @@ import { LabelFieldComponent } from "../online-form-fields/label-field/label-fie
 import { EmptyLineFieldComponent } from "../online-form-fields/empty-line-field/empty-line-field.component";
 import { FormControl, FormBuilder, FormGroup, AbstractControl } from "@angular/forms";
 import { HttpService } from '@app/core/http.service';
+import { FileFieldComponent } from '@app/online-form/online-form-fields/file-field/file-field.component';
 
 export const hasRequiredField = (abstractControl: AbstractControl): boolean => {
   if (abstractControl.validator) {
@@ -48,7 +49,8 @@ export type IFormField =
   | typeof PhoneNumberFieldComponent
   | typeof HebrewDateFieldComponent
   | typeof LabelFieldComponent
-  | typeof EmptyLineFieldComponent;
+  | typeof EmptyLineFieldComponent
+  | typeof FileFieldComponent;
 
 @Injectable()
 export class OnlineFormService {
@@ -83,7 +85,8 @@ export class OnlineFormService {
     [109, PhoneNumberFieldComponent],
     [110, HebrewDateFieldComponent],
     [111, LabelFieldComponent],
-    [112, EmptyLineFieldComponent]
+    [112, EmptyLineFieldComponent],
+    [115, FileFieldComponent]
   ]);
 
   getComponentByTypeNumber = (typeNumber: number) => {

@@ -59,10 +59,6 @@ export class DashboardComponent implements OnInit {
     }
   ];
 
-  fileOptions = {
-    acceptedFormats: ['.jpg', '.svg', '.pdf']
-  };
-
   constructor(
     private fb: FormBuilder,
     private fs: FieldService

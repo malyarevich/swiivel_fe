@@ -29,6 +29,7 @@ import { EmptyLineFieldComponent } from "./online-form-fields/empty-line-field/e
 import { EmailFieldComponent } from "./online-form-fields/email-field/email-field.component";
 import { DropDownListFieldComponent } from "./online-form-fields/drop-down-list-field/drop-down-list-field.component";
 import { DateTimeFieldComponent } from "./online-form-fields/date-time-field/date-time-field.component";
+import { FileFieldComponent } from '@app/online-form/online-form-fields/file-field/file-field.component';
 //OnlineFormViewComponentsUtils
 import { OnlineFormViewWrapperComponent } from "./online-form-view/online-form-view-wrapper/online-form-view-wrapper.component";
 //OnlineFormViewComponents
@@ -76,6 +77,7 @@ import { TuitionContractByStudentComponent } from './online-form-tuition-contrac
     DropDownListFieldComponent,
     DateTimeFieldComponent,
     TimeFieldComponent,
+    FileFieldComponent,
     //OnlineFormViewComponentsUtils
     OnlineFormViewWrapperComponent,
     //OnlineFormViewComponents
@@ -114,7 +116,8 @@ import { TuitionContractByStudentComponent } from './online-form-tuition-contrac
       EmailFieldComponent,
       DropDownListFieldComponent,
       DateTimeFieldComponent,
-      TimeFieldComponent
+      TimeFieldComponent,
+      FileFieldComponent
     ]),
     GeneralPipesModule
   ],
