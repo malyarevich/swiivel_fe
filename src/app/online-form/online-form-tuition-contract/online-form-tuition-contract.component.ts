@@ -1,17 +1,17 @@
-import { Component, Input, OnInit } from "@angular/core";
-import { FormGroup } from "@angular/forms";
-import { Form } from "@app/models/data-collection/form";
+import { Component, Input, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { Form } from '@app/models/data-collection/form';
 import {
-  menuItems,
-  mainMenuNames,
   IMainMenuNames,
-  IMenuItems
-} from "../models/menu.model";
+  IMenuItems,
+  mainMenuNames,
+  menuItems
+} from '../models/menu.model';
 
 @Component({
-  selector: "sw-online-form-tuition-contract",
-  templateUrl: "./online-form-tuition-contract.component.html",
-  styleUrls: ["./online-form-tuition-contract.component.scss"]
+  selector: 'sw-online-form-tuition-contract',
+  templateUrl: './online-form-tuition-contract.component.html',
+  styleUrls: ['./online-form-tuition-contract.component.scss']
 })
 export class OnlineFormTuitionContractComponent implements OnInit {
   @Input() form: Form;

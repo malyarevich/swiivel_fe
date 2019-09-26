@@ -1,6 +1,6 @@
 export class FormSearchParams {
-    page?: number = 0;
-    limit?: number = 15;
+    page = 0;
+    limit = 15;
     search?: string;
     sort?: {
       order: string,

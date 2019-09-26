@@ -8,7 +8,7 @@ import { numericValidator } from '@core/validators';
 const TEST_FIELD_SERVICE = false;
 
 @Component({
-  selector: 'app-dashboard',
+  selector: 'sw-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })

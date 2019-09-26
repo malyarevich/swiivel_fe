@@ -3,14 +3,14 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { fadeInOutVoid } from '@core/animations';
 
 @Component({
-  selector: 'app-restore-password',
+  selector: 'sw-restore-password',
   templateUrl: './restore-password.component.html',
   styleUrls: ['./restore-password.component.scss'],
   animations: [fadeInOutVoid()]
 })
 export class RestorePasswordComponent implements OnInit {
   public form: FormGroup;
-  private _stage = 0;
+  private stageProp = 0;
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
         email: ['', [Validators.required]],
@@ -18,11 +18,11 @@ export class RestorePasswordComponent implements OnInit {
   }
 
   set stage(stageNum: number) {
-    this._stage = stageNum;
+    this.stageProp = stageNum;
   }
 
   get stage() {
-    return this._stage;
+    return this.stageProp;
   }
 
   ngOnInit() {

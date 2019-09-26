@@ -20,8 +20,8 @@ export class ApiService {
     return this.http.post('/forgot-password', { email });
   }
 
-  resetPassword(token: string, new_password: object) {
-    return this.http.post('/reset-password', { token, new_password });
+  resetPassword(token: string, newPassword: object) {
+    return this.http.post('/reset-password', { token, newPassword });
   }
 
   signin(email: string, password: string, uuid: string) {
@@ -33,6 +33,6 @@ export class ApiService {
   }
 
   public download(url: string) {
-    return this.http.getFile(url)
+    return this.http.getFile(url);
   }
 }

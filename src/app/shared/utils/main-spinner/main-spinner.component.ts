@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'sw-main-spinner',
@@ -6,7 +6,7 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./main-spinner.component.scss']
 })
 export class MainSpinnerComponent implements OnInit {
-  @Input() spinnerText: string = "";
+  @Input() spinnerText = '';
 
   constructor() { }
 

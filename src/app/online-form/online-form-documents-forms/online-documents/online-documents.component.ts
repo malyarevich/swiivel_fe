@@ -1,3 +1,4 @@
+import { HttpEventType } from '@angular/common/http';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -5,16 +6,15 @@ import {
   Input,
   OnDestroy,
   OnInit
-} from "@angular/core";
-import { HttpEventType } from "@angular/common/http";
-import { Subscription } from "rxjs";
-import { Form } from "@app/models/data-collection/form";
-import { FilesService } from "../../services/files.service";
+} from '@angular/core';
+import { Form } from '@app/models/data-collection/form';
+import { Subscription } from 'rxjs';
+import { FilesService } from '../../services/files.service';
 
 @Component({
-  selector: "app-online-documents",
-  templateUrl: "./online-documents.component.html",
-  styleUrls: ["./online-documents.component.scss"],
+  selector: 'app-online-documents',
+  templateUrl: './online-documents.component.html',
+  styleUrls: ['./online-documents.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class OnlineDocumentsComponent implements OnInit, OnDestroy {
@@ -33,7 +33,7 @@ export class OnlineDocumentsComponent implements OnInit, OnDestroy {
     if (!document.data) {
       return;
     }
-    window.open(this.form.attachments[document.data].link, "_self");
+    window.open(this.form.attachments[document.data].link, '_self');
   }
 
   downloadFile(document: any) {
@@ -47,38 +47,38 @@ export class OnlineDocumentsComponent implements OnInit, OnDestroy {
 
   getAcceptedFormats(document: any, type?: string) {
     const formats = [];
-    //TODO: fix it <any>
-    const data = <any>document.dataTypeAllowed;
+    // TODO: fix it <any>
+    const data = document.dataTypeAllowed as any;
     if (type) {
       switch (type) {
-        case "documents":
+        case 'documents':
           if (data.isDocuments) {
             data.documents.forEach(item => {
               if (item.isAllow) {
                 formats.push(item.name);
               }
             });
-            return formats.join(", ");
+            return formats.join(', ');
           }
           break;
-        case "images":
+        case 'images':
           if (data.isImages) {
             data.images.forEach(item => {
               if (item.isAllow) {
                 formats.push(item.name);
               }
             });
-            return formats.join(", ");
+            return formats.join(', ');
           }
           break;
-        case "videoAudio":
+        case 'videoAudio':
           if (data.isVideoAudio) {
             data.videoAudio.forEach(item => {
               if (item.isAllow) {
                 formats.push(item.name);
               }
             });
-            return formats.join(", ");
+            return formats.join(', ');
           }
       }
     } else {
@@ -115,10 +115,10 @@ export class OnlineDocumentsComponent implements OnInit, OnDestroy {
       document.selectedFile = file;
       document.fileUploading = true;
       const formData = new FormData();
-      formData.append("id", document.id);
-      formData.append("type", "document");
-      formData.append("original_name", file.name);
-      formData.append("file", file, file.name);
+      formData.append('id', document.id);
+      formData.append('type', 'document');
+      formData.append('original_name', file.name);
+      formData.append('file', file, file.name);
       this.uploadSubscription = this.fileService
         .uploadFileToServer(this.form._id, formData)
         .subscribe(event => {
@@ -134,7 +134,7 @@ export class OnlineDocumentsComponent implements OnInit, OnDestroy {
         });
     } else {
       console.log(file);
-      alert("File type does not supported");
+      alert('File type does not supported');
     }
   }
 
@@ -150,11 +150,11 @@ export class OnlineDocumentsComponent implements OnInit, OnDestroy {
   }
 
   getCountPages(document: any) {
-    if (document.selectedFile.type === "application/pdf") {
+    if (document.selectedFile.type === 'application/pdf') {
       const reader = new FileReader();
       reader.readAsBinaryString(document.selectedFile);
       reader.onloadend = () => {
-        if (typeof reader.result === "string") {
+        if (typeof reader.result === 'string') {
           document.countPages = reader.result.match(
             new RegExp(/\/Type[\s]*\/Page[^s]/g)
           ).length;
@@ -168,13 +168,13 @@ export class OnlineDocumentsComponent implements OnInit, OnDestroy {
     if (document.data) {
       return this.form.attachments[document.data].name;
     }
-    return "File is not exist...";
+    return 'File is not exist...';
   }
 
   getDocumentPages(document: any): string {
     if (document.data) {
       const pages = this.form.attachments[document.data].numberOfPages;
-      return String("(" + pages + " pages)");
+      return String('(' + pages + ' pages)');
     }
   }
 

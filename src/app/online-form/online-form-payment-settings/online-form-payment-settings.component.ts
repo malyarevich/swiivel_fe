@@ -1,17 +1,17 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { Form } from "@app/models/data-collection/form";
+import { Form } from '@app/models/data-collection/form';
 import {
-  menuItems,
-  mainMenuNames,
   IMainMenuNames,
-  IMenuItems
-} from "../models/menu.model";
+  IMenuItems,
+  mainMenuNames,
+  menuItems
+} from '../models/menu.model';
 
 @Component({
-  selector: "sw-online-form-payment-settings",
-  templateUrl: "./online-form-payment-settings.component.html",
-  styleUrls: ["./online-form-payment-settings.component.scss"]
+  selector: 'sw-online-form-payment-settings',
+  templateUrl: './online-form-payment-settings.component.html',
+  styleUrls: ['./online-form-payment-settings.component.scss']
 })
 export class OnlineFormPaymentSettingsComponent implements OnInit {
   @Input() form: Form;

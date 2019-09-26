@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormCreatorService } from '../form-creator.service';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ApiService } from '@app/core/api.service';
 import { TREE_ACTIONS, TreeNode } from 'angular-tree-component';
+import { FormCreatorService } from '../form-creator.service';
 
 @Component({
   selector: 'sw-form-creator-sidebar',

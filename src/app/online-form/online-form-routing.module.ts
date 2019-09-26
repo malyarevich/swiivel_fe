@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { OnlineFormComponent } from './online-form.component';
-import { MainComponent } from '@app/shared/main.component';
 import { AuthGuard } from '@app/core/auth.guard';
+import { MainComponent } from '@app/shared/main.component';
+import { OnlineFormComponent } from './online-form.component';
 
 const routes: Routes = [
   {

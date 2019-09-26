@@ -1,17 +1,17 @@
-import { Component, Input, OnInit } from "@angular/core";
-import { FormGroup } from "@angular/forms";
-import { Form } from "@app/models/data-collection/form";
+import { Component, Input, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { Form } from '@app/models/data-collection/form';
 import {
-  menuItems,
-  mainMenuNames,
   IMainMenuNames,
-  IMenuItems
-} from "../models/menu.model";
+  IMenuItems,
+  mainMenuNames,
+  menuItems
+} from '../models/menu.model';
 
 @Component({
-  selector: "sw-online-form-terms-conditions",
-  templateUrl: "./online-form-terms-conditions.component.html",
-  styleUrls: ["./online-form-terms-conditions.component.scss"]
+  selector: 'sw-online-form-terms-conditions',
+  templateUrl: './online-form-terms-conditions.component.html',
+  styleUrls: ['./online-form-terms-conditions.component.scss']
 })
 export class OnlineFormTermsConditionsComponent implements OnInit {
   @Input() form: Form;

@@ -1,20 +1,20 @@
 import {
   Component,
+  EventEmitter,
   Input,
   OnInit,
-  Output,
-  EventEmitter
-} from "@angular/core";
-import { Subscription } from "rxjs";
+  Output
+} from '@angular/core';
+import { Subscription } from 'rxjs';
 
 @Component({
-  selector: "sw-content-nav",
-  templateUrl: "./content-nav.component.html",
-  styleUrls: ["./content-nav.component.scss"]
+  selector: 'sw-content-nav',
+  templateUrl: './content-nav.component.html',
+  styleUrls: ['./content-nav.component.scss']
 })
 export class ContentNavComponent implements OnInit {
   @Input() formNavigationState: any;
-  @Input() currentPosition: object;
+  @Input() currentPosition: any;
 
   @Output() onGoToTab: EventEmitter<number> = new EventEmitter;
 
@@ -27,12 +27,12 @@ export class ContentNavComponent implements OnInit {
 
   getTabs(): any[] {
     return this.formNavigationState.find(state => {
-      return state['page'] === this.currentPosition['page']
-    })['tabs'];
+      return state.page === this.currentPosition.page;
+    }).tabs;
   }
 
   isActive(id): boolean {
-    return this.currentPosition['tab'] === id;
+    return this.currentPosition.tab === id;
   }
 
   setActiveId(id) {

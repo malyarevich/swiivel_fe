@@ -1,28 +1,28 @@
-import { Component, Input, OnInit, AfterViewInit } from "@angular/core";
-import { FormGroup } from "@angular/forms";
-import { Subscription } from "rxjs";
+import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { Field } from '@app/models/data-collection/field.model';
 import { Form } from '@app/models/data-collection/form';
-import { Field } from "@app/models/data-collection/field.model";
+import { Subscription } from 'rxjs';
 import {
-  menuItems,
-  mainMenuNames,
   IMainMenuNames,
-  IMenuItems
-} from "../models/menu.model";
+  IMenuItems,
+  mainMenuNames,
+  menuItems
+} from '../models/menu.model';
 import {
-  OnlineFormService,
-  hasRequiredField
-} from "./../services/online-form.service";
+  hasRequiredField,
+  OnlineFormService
+} from './../services/online-form.service';
 
 @Component({
-  selector: "sw-online-form-general-info",
-  templateUrl: "./online-form-general-info.component.html",
-  styleUrls: ["./online-form-general-info.component.scss"]
+  selector: 'sw-online-form-general-info',
+  templateUrl: './online-form-general-info.component.html',
+  styleUrls: ['./online-form-general-info.component.scss']
 })
 export class OnlineFormGeneralInfoComponent implements OnInit, AfterViewInit {
   @Input() form: Form;
   @Input() formNavigationState: any;
-  @Input() currentPosition: object;
+  @Input() currentPosition: any;
   @Input() formErrors: any;
   @Input() fg: FormGroup;
 
@@ -55,7 +55,7 @@ export class OnlineFormGeneralInfoComponent implements OnInit, AfterViewInit {
       });
     } else {
       this.sections = [
-        { _id: "generalInfo", name: "General Information", type: 114 }
+        { _id: 'generalInfo', name: 'General Information', type: 114 }
       ];
     }
     // this.onlineFormNavigationService.setSectionItemOfMenuItems(
@@ -88,7 +88,7 @@ export class OnlineFormGeneralInfoComponent implements OnInit, AfterViewInit {
   // }
 
   isShowSectionByIndex(index: number): boolean {
-    return index === this.currentPosition['tab'];
+    return index === this.currentPosition.tab;
   }
 
   getTime() {

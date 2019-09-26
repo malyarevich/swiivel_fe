@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Form } from '@app/models/data-collection/form';
 
@@ -10,7 +10,7 @@ import { Form } from '@app/models/data-collection/form';
 export class OnlineFormPacketIntroductionComponent implements OnInit {
   @Input() form: Form;
   @Input() formNavigationState: any;
-  @Input() currentPosition: object;
+  @Input() currentPosition: any;
   @Input() formErrors: any;
   @Input() fg: FormGroup;
 

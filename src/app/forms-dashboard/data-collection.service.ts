@@ -1,12 +1,12 @@
+import { HttpParams } from '@angular/common/http';
 import { ApiService } from '@app/core/api.service';
 import { FormSearchParams } from '@app/models/form-search-params';
 import { Observable, throwError } from 'rxjs';
-import { map, first } from 'rxjs/operators';
-import { HttpParams } from '@angular/common/http';
+import { first, map } from 'rxjs/operators';
 
 export class DataCollectionService extends ApiService {
   getFormsList(requestParams?: FormSearchParams): Observable<any> {
-    if (!requestParams) requestParams = {page: 1, limit: 150};
+    if (!requestParams) { requestParams = {page: 1, limit: 150}; }
     let params = new HttpParams();
     if ('filter' in requestParams) {
       for (const filter of Object.keys(requestParams.filter)) {
@@ -36,14 +36,14 @@ export class DataCollectionService extends ApiService {
   }
 
   exportPDFForm(mongoId: string) {
-    return this.download(`/proxy/form-builder/pdf-export/${mongoId}`).pipe(map((response: any)=> {
-      return window.URL.createObjectURL(new Blob([response], {type: 'application/pdf'}))
+    return this.download(`/proxy/form-builder/pdf-export/${mongoId}`).pipe(map((response: any) => {
+      return window.URL.createObjectURL(new Blob([response], {type: 'application/pdf'}));
     }), first());
   }
 
   exportPDFFormZIP(mongoIds: string) {
     return this.download(`/proxy/form-builder/bulk-pdf-export?ids=${mongoIds}`).pipe(map((response: any) => {
-      return window.URL.createObjectURL(new Blob([response], {type: 'application/zip'}))
+      return window.URL.createObjectURL(new Blob([response], {type: 'application/zip'}));
     }));
   }
 

@@ -31,6 +31,7 @@ export interface Form {
   paymentSettings?: any;
   termsConditions?: any;
   tuitionContract?: any;
+  activeSections?: any;
 }
 
 interface FormPermissions {

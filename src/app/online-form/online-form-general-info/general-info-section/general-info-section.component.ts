@@ -1,6 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Field } from 'src/app/models/data-collection/field.model';
-import { FormGroup, FormControl } from '@angular/forms';
 import { OnlineFormService } from '../../services/online-form.service';
 
 @Component({
@@ -26,13 +26,13 @@ export class GeneralInfoSectionComponent implements OnInit {
   initGroups() {
     this.groups = this.section.fields.filter((item) => {
       return item.type === 113;
-    })
+    });
   }
 
   initFields() {
     this.fields = this.section.fields.filter((item) => {
       return item.type && item.type !== 113;
-    })
+    });
   }
 
 }

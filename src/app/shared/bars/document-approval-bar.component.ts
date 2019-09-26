@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { ColorsEnum } from '@shared/colors.enum';
 import { DocumentApproval } from '@models/data-collection/document-approval.model';
+import { ColorsEnum } from '@shared/colors.enum';
 
 @Component({
   selector: 'sw-document-approval-bar',

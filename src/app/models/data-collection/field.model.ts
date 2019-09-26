@@ -11,50 +11,50 @@ export interface Field {
   isValid?: boolean;
   isValidName?: boolean;
   exist?: boolean;
-  fields?: Field[],
-  isActive?: boolean,
-  prefix?: string,
+  fields?: Field[];
+  isActive?: boolean;
+  prefix?: string;
   settings?: FieldSettings;
   conditional?: FieldSettingConditional;
   typeSettings?: ITypeFieldSettings;
-  //TODO: fix type of width
+  // TODO: fix type of width
   width?: any;
 }
 
 
 export interface FieldOption {
-  placeholder?: string,
-  language?: string,
+  placeholder?: string;
+  language?: string;
   isSupportText?: boolean;
-  supportText?: string,
-  supportTextDisplayed?: boolean,
-  required?: false,
-  readonly?: false,
-  hideLabel?: false,
-  unique?: false,
-  value?: string,
-  autoComplete?: false,
-  size?: number,
-  default?: string,
-  space?: number,
-  shapeStrokeValue: number,
-  shapeStrokeColor: string,
-  dividerStyle?: string
+  supportText?: string;
+  supportTextDisplayed?: boolean;
+  required?: false;
+  readonly?: false;
+  hideLabel?: false;
+  unique?: false;
+  value?: string;
+  autoComplete?: false;
+  size?: number;
+  default?: string;
+  space?: number;
+  shapeStrokeValue: number;
+  shapeStrokeColor: string;
+  dividerStyle?: string;
 
 }
 
 export interface FieldSettings {
-  multiplier?: FieldSettingMultiplier,
-  options?: GroupSectionOptions,
+  multiplier?: FieldSettingMultiplier;
+  options?: GroupSectionOptions;
 }
 
 export interface FieldSettingMultiplier {
-  enabled: boolean,
-  mapped_type: string,
-  mapping_field: string,
-  prefill: boolean,
-  limit: boolean,
-  limit_amount: number
+  enabled: boolean;
+  mapped_type: string;
+  mapping_field: string;
+  prefill: boolean;
+  limit: boolean;
+  limit_amount: number;
 }
 
 export interface FieldSettingConditional {
@@ -66,9 +66,9 @@ export interface FieldSettingConditional {
 
 export interface GroupSectionOptions {
   groupPreset: string;
-  required?: boolean,
-  readonly?: boolean,
-  hideLabel?: boolean,
+  required?: boolean;
+  readonly?: boolean;
+  hideLabel?: boolean;
   unique?: boolean;
   isSupportText: boolean;
   supportText: string;
@@ -78,15 +78,15 @@ export interface GroupSectionOptions {
 }
 
 export interface ITypeFieldSettings {
-  //ShortTextSettings
+  // ShortTextSettings
   minSizeChar?: number;
   maxSizeChar?: number;
   inputMask?: string;
   isDefaultValue?: boolean;
   defaultValue?: string;
-  //LongTextSettings
-  editorMode?: 'plain' | 'rich' | 'full'
-  //DropDownListSettings
+  // LongTextSettings
+  editorMode?: 'plain' | 'rich' | 'full';
+  // DropDownListSettings
   isFullWidth?: boolean;
   fieldWidth?: number;
   fieldHeight?: number;
@@ -94,19 +94,19 @@ export interface ITypeFieldSettings {
   options?: { name: string }[];
   isSelectedDefault?: boolean;
   selectedDefault?: { name: string };
-  //EmailSettings
+  // EmailSettings
   validateEmail?: boolean;
   confirmationTextBox?: boolean;
   emailBlocks?: boolean;
   disallowFreeAddress?: boolean;
   blockDomains?: string;
-  //PhoneNumberSettings
+  // PhoneNumberSettings
   numberFormat?: ILabelValueSelect;
   country?: ILabelValueSelect;
   isCellphone?: boolean;
   isVerify?: boolean;
   isInputMask?: boolean;
-  //NumberTextSettings
+  // NumberTextSettings
   minValue?: number;
   maxValue?: number;
   numberType?: ILabelValueSelect;
@@ -115,7 +115,7 @@ export interface ITypeFieldSettings {
   currency?: ILabelValueSelect;
   isDisplay?: boolean;
   displayType?: 'slider' | 'spinner' | 'star' | 'scale';
-  //DateSettings
+  // DateSettings
   separator?: ILabelValueSelect;
   dateFormat?: ILabelValueSelect;
   monthDisplay?: ILabelValueSelect;

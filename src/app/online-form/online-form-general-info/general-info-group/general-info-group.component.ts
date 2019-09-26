@@ -1,6 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Field } from 'src/app/models/data-collection/field.model';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { Field } from 'src/app/models/data-collection/field.model';
 
 @Component({
   selector: 'sw-general-info-group',
@@ -11,7 +11,7 @@ export class GeneralInfoGroupComponent implements OnInit {
   @Input() group: Field;
   @Input() formErrors: any;
   @Input() fg: FormGroup;
-  @Input() groupCaption: string; 
+  @Input() groupCaption: string;
 
   groups: Field[];
   fields: Field[];
@@ -27,13 +27,13 @@ export class GeneralInfoGroupComponent implements OnInit {
   initNestedGroups() {
     this.groups = this.group.fields.filter((item) => {
       return item.type === 113;
-    })
+    });
   }
 
   initFields() {
     this.fields = this.group.fields.filter((item) => {
       return item.type && item.type !== 113;
-    })
+    });
   }
 
 }

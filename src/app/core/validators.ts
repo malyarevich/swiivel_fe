@@ -1,6 +1,6 @@
 import { FormControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import * as glibphone from 'google-libphonenumber';
-import { isDecimal, isEmail, isURL, isEmpty, contains, equals } from 'validator';
+import { contains, equals, isDecimal, isEmail, isEmpty, isURL } from 'validator';
 
 function checkValue(value) {
     return (value && typeof value === 'string') ? value.trim() : value;
@@ -152,30 +152,30 @@ export function phoneNumberValidator(): ValidatorFn {
 
 export function isEmptyValidator(): ValidatorFn {
   return (c: FormControl): ValidationErrors => {
-    return isEmpty(c.value) ? null : { empty: true }
-  }
+    return isEmpty(c.value) ? null : { empty: true };
+  };
 }
 
 export function isNotEmptyValidator(): ValidatorFn {
   return (c: FormControl): ValidationErrors => {
     return isEmpty(c.value) ? { notEmpty: true } : null;
-  }
+  };
 }
 
 export function containValidator(seed: string): ValidatorFn {
   return (c: FormControl): ValidationErrors => {
-    return contains(c.value, seed) ? null : { contain: seed }
-  }
+    return contains(c.value, seed) ? null : { contain: seed };
+  };
 }
 
 export function notContainValidator(seed: string): ValidatorFn {
   return (c: FormControl): ValidationErrors => {
-    return contains(c.value, seed) ? { notContain: seed } : null
-  }
+    return contains(c.value, seed) ? { notContain: seed } : null;
+  };
 }
 
 export function stringEqualValidator(seed: string): ValidatorFn {
   return (c: FormControl): ValidationErrors => {
-    return equals(c.value, seed) ? null : { strEqual: seed }
-  }
+    return equals(c.value, seed) ? null : { strEqual: seed };
+  };
 }

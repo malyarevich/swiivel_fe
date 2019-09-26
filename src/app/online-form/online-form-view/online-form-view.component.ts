@@ -1,24 +1,24 @@
-import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
-import { FormGroup } from "@angular/forms";
-import { Form } from "@app/models/data-collection/form";
-import { Observable, Subscription } from "rxjs";
-import { Location } from "@angular/common";
+import { Location } from '@angular/common';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { Form } from '@app/models/data-collection/form';
+import { Observable, Subscription } from 'rxjs';
 import {
-  IMenuItems,
   IMainMenuNames,
-  menuItems,
-  mainMenuNames
-} from "../models/menu.model";
+  IMenuItems,
+  mainMenuNames,
+  menuItems
+} from '../models/menu.model';
 
 @Component({
-  selector: "sw-online-form-view",
-  templateUrl: "./online-form-view.component.html",
-  styleUrls: ["./online-form-view.component.scss"]
+  selector: 'sw-online-form-view',
+  templateUrl: './online-form-view.component.html',
+  styleUrls: ['./online-form-view.component.scss']
 })
 export class OnlineFormViewComponent implements OnInit {
   @Input() form: Form;
   @Input() formNavigationState: any;
-  @Input() currentPosition: object;
+  @Input() currentPosition: any;
   @Input() formErrors: any;
   @Input() fg: FormGroup;
 
@@ -30,28 +30,28 @@ export class OnlineFormViewComponent implements OnInit {
 
   getPageTitle(): string {
     return menuItems.find(item => {
-      return item.name === this.currentPosition["page"];
-    })["title"];
+      return item.name === this.currentPosition.page;
+    }).title;
   }
 
   getCurrentPage(): string {
-    return this.currentPosition["page"];
+    return this.currentPosition.page;
   }
 
   getCurrentTab(): string {
-    return this.currentPosition["tab"];
+    return this.currentPosition.tab;
   }
 
   getPageTime(): number {
     return menuItems.find(item => {
-      return item.name === this.currentPosition["page"];
-    })["time"];
+      return item.name === this.currentPosition.page;
+    }).time;
   }
 
   isShow(page, tabId): boolean {
     return (
-      this.currentPosition["page"] === page &&
-      this.currentPosition["tab"] === tabId
+      this.currentPosition.page === page &&
+      this.currentPosition.tab === tabId
     );
   }
 

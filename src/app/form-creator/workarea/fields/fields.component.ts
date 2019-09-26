@@ -1,9 +1,9 @@
-import { Component, OnInit, ChangeDetectionStrategy, ViewChild, AfterViewInit, Input, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { FormCreatorService } from '@app/form-creator/form-creator.service';
 import { ApiService } from '@core/api.service';
 import { TreeComponent } from 'angular-tree-component';
-import { FormCreatorService } from '@app/form-creator/form-creator.service';
-import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 // import { fields } from '@shared/fields';
 
@@ -49,7 +49,7 @@ export class WorkareaFieldsComponent implements AfterViewInit, OnInit, OnDestroy
         if (change.added) {
           this.tree.treeModel.nodes.push(change.field.data);
         } else {
-          this.tree.treeModel.nodes.filter(node => node.data === change.field.data)
+          this.tree.treeModel.nodes.filter(node => node.data === change.field.data);
         }
         this.tree.treeModel.update();
         this.cdr.markForCheck();

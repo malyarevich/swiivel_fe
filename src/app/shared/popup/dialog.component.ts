@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, ViewChild, EventEmitter, Output } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { Popup } from '@core/popup.service';
 import { isObjectLike, isString } from 'lodash';
 
@@ -30,8 +30,7 @@ export class DialogComponent {
   }
 
   toggle() {
-    if (this._ref) { this._ref.close(); }
-    else { this.showPopup(); }
+    if (this._ref) { this._ref.close(); } else { this.showPopup(); }
   }
 
   close(action?: boolean) {

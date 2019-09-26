@@ -1,16 +1,16 @@
-import { Component, OnInit, Input, OnDestroy } from "@angular/core";
-import { Field } from "src/app/models/data-collection/field.model";
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { Field } from 'src/app/models/data-collection/field.model';
 import {
-  OnlineFormService,
-  IFormField
-} from "../../services/online-form.service";
-import { FormControl, Validators, FormGroup } from "@angular/forms";
-import { Subscription } from "rxjs";
+  IFormField,
+  OnlineFormService
+} from '../../services/online-form.service';
 
 @Component({
-  selector: "sw-general-info-field",
-  templateUrl: "./general-info-field.component.html",
-  styleUrls: ["./general-info-field.component.scss"]
+  selector: 'sw-general-info-field',
+  templateUrl: './general-info-field.component.html',
+  styleUrls: ['./general-info-field.component.scss']
 })
 
 export class GeneralInfoFieldComponent implements OnInit, OnDestroy {
@@ -57,7 +57,7 @@ export class GeneralInfoFieldComponent implements OnInit, OnDestroy {
   initFormFieldValue() {
     this.value = this.field._id
       ? this.onlineFormService.getFormValueById(this.field._id)
-      : "ID is undefined";
+      : 'ID is undefined';
   }
 
   initReactiveFormControl() {
@@ -77,7 +77,7 @@ export class GeneralInfoFieldComponent implements OnInit, OnDestroy {
   }
 
   getComposed() {
-    let arrayValidators = [];
+    const arrayValidators = [];
 
     if (this.field.options.required) {
       arrayValidators.push(Validators.required);

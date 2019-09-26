@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, EventEmitter, Output, ViewChild, AfterViewInit, ChangeDetectionStrategy, AfterContentInit } from '@angular/core';
+import { AfterContentInit, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ApiService } from '@app/core/api.service';
 import { IActionMapping, TreeComponent } from 'angular-tree-component';
@@ -24,7 +24,7 @@ export class SidebarFieldsComponent implements AfterViewInit {
     actionMapping: {
       mouse: {
        checkboxClick: (tree, node, $event) => {
-         console.log($event, tree)
+         console.log($event, tree);
          if (node.data.isActive) {
            this.service.addField(node);
          }
@@ -43,7 +43,7 @@ export class SidebarFieldsComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     // this.tree.treeModel.expandAll();
-    console.log(this.tree.treeModel)
+    console.log(this.tree.treeModel);
     // this.tree.treeModel.subscribe('nodeActivate', (e) => {
     //   console.log(e)
     // });

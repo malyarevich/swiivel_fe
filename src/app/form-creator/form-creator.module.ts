@@ -21,9 +21,9 @@ import { SettingsModule } from './workarea/fields/settings/settings.module';
 import { WorkareaIntroComponent } from './workarea/intro/intro.component';
 import { WorkareaComponent } from './workarea/workarea.component';
 
+import { RouterModule } from '@angular/router';
 import { TreeModule } from 'angular-tree-component';
 import { FormCreatorService } from './form-creator.service';
-import { RouterModule } from '@angular/router';
 
 
 @NgModule({

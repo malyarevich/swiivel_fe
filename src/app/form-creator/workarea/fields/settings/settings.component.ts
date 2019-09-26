@@ -60,12 +60,10 @@ export class SettingsComponent implements OnInit, AfterViewInit, OnDestroy {
     let res: string;
     switch (t) {
       case 'settings':
-        if (this.type === 113) { res = 'col-8'; }
-        else { res = 'col-4'; }
+        if (this.type === 113) { res = 'col-8'; } else { res = 'col-4'; }
         break;
       case 'logic':
-        if (this.type === 113) { res = 'col-4'; }
-        else { res = 'col-8'; }
+        if (this.type === 113) { res = 'col-4'; } else { res = 'col-8'; }
         break;
     }
     return res;

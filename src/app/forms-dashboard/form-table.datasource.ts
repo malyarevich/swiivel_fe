@@ -1,9 +1,9 @@
-import { DataCollectionService } from './data-collection.service';
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { DataSource } from '@angular/cdk/table';
 import { CollectionViewer } from '@angular/cdk/collections';
-import { catchError, finalize } from 'rxjs/operators';
+import { DataSource } from '@angular/cdk/table';
 import { FormSearchParams } from '@app/models/form-search-params';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { catchError, finalize } from 'rxjs/operators';
+import { DataCollectionService } from './data-collection.service';
 
 export class FormsDataSource implements DataSource<any> {
   private formsSubject = new BehaviorSubject<any[]>([]);
@@ -21,7 +21,7 @@ export class FormsDataSource implements DataSource<any> {
             form.updated_at = new Date(form.updated_at);
           }
           return form;
-        })
+        });
         this.formsSubject.next(data);
       }
     });
@@ -72,16 +72,16 @@ export class FormsDataSource implements DataSource<any> {
   }
 
   sort(sort) {
-    let unsorted = this.formsSubject.getValue().slice();
+    const unsorted = this.formsSubject.getValue().slice();
     if (sort[1] !== null) {
       unsorted.sort((a, b) => {
         if (a[sort[0]] > b[sort[0]]) {
           return -1;
       }
-      if (b[sort[0]] > a[sort[0]]) {
+        if (b[sort[0]] > a[sort[0]]) {
           return 1;
       }
-      return 0;
+        return 0;
     });
       if (sort[1] === false) {
         unsorted.reverse();

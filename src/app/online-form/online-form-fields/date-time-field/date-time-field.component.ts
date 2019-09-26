@@ -1,13 +1,13 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from '@angular/core';
 // import { NgbDateParserFormatter } from "@ng-bootstrap/ng-bootstrap";
-import { FormGroup } from "@angular/forms";
-import { Subscription } from "rxjs";
-import { Field } from "src/app/models/data-collection/field.model";
+import { FormGroup } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { Field } from 'src/app/models/data-collection/field.model';
 
 @Component({
-  selector: "app-date-time-field",
-  templateUrl: "./date-time-field.component.html",
-  styleUrls: ["./date-time-field.component.scss"]
+  selector: 'app-date-time-field',
+  templateUrl: './date-time-field.component.html',
+  styleUrls: ['./date-time-field.component.scss']
 })
 export class DateTimeFieldComponent implements OnInit {
   @Input() field: Field;
@@ -15,7 +15,7 @@ export class DateTimeFieldComponent implements OnInit {
   @Input() validationText: string;
 
   value: string;
-  isLoaded: boolean = false;
+  isLoaded = false;
   onValueChangeSubscription: Subscription;
 
   formatDate;
@@ -56,8 +56,8 @@ export class DateTimeFieldComponent implements OnInit {
 
   getPlaceholder() {
     return this.field.options.placeholder &&
-      this.field.options.placeholder !== "string"
+      this.field.options.placeholder !== 'string'
       ? this.field.options.placeholder
-      : "12/12/2020";
+      : '12/12/2020';
   }
 }

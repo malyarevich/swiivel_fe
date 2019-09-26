@@ -9,13 +9,13 @@ import { AuthService } from '@core/auth.service';
 export class AuthGuard implements  CanActivate, CanActivateChild, CanLoad {
   constructor(private auth: AuthService, private router: Router) { }
 
-  canLoad(_route: Route, _segments: UrlSegment[]) {
+  canLoad(route: Route, segments: UrlSegment[]) {
     return this.isAllowed();
   }
-  canActivateChild(_route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+  canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     return this.isAllowed() ? true : this.toLogin(state.url);
   }
-  canActivate(_route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     return this.isAllowed() ? true : this.toLogin(state.url);
   }
 
@@ -24,7 +24,7 @@ export class AuthGuard implements  CanActivate, CanActivateChild, CanLoad {
   }
 
   toLogin(from?: string) {
-    if (from) this.auth.redirect = from;
+    if (from) { this.auth.redirect = from; }
     return this.router.parseUrl('/login');
   }
 }

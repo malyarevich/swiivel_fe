@@ -1,22 +1,22 @@
+import { ActiveDescendantKeyManager } from '@angular/cdk/a11y';
+import { DOWN_ARROW, ENTER, ESCAPE, UP_ARROW } from '@angular/cdk/keycodes';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
+  HostListener,
   Input,
   Output,
+  QueryList,
   ViewChild,
   ViewChildren,
-  QueryList,
-  HostListener,
 } from '@angular/core';
 import { Popup } from '@core/popup.service';
 import { isObjectLike, isString } from 'lodash';
-import { SelectOptionDirective } from './option.directive';
-import { ActiveDescendantKeyManager } from '@angular/cdk/a11y';
-import { DOWN_ARROW, UP_ARROW, ENTER, ESCAPE } from '@angular/cdk/keycodes';
 import { isNumber } from 'util';
+import { SelectOptionDirective } from './option.directive';
 
 @Component({
   selector: 'sw-dropdown-select',
@@ -26,55 +26,6 @@ import { isNumber } from 'util';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DropdownSelectComponent {
-  private _ref = null;
-  items = [];
-  selectedIndex = null;
-
-  @ViewChildren(SelectOptionDirective) selectOptions: QueryList<SelectOptionDirective>;
-  keyManager: ActiveDescendantKeyManager<SelectOptionDirective>;
-
-  @Output() selected = new EventEmitter<number>();
-  @Output() selectedValue = new EventEmitter<any>();
-  @Input() panelClass = 'dropdown-overlay';
-  @Input() disabled = false;
-  @HostListener('keydown', ['$event'])
-  onKeyDown(event: KeyboardEvent) {
-    event.stopImmediatePropagation();
-    if (event) {
-      if (event.keyCode === ENTER) {
-        event.preventDefault();
-        if (this.keyManager && this.keyManager.activeItem) {
-          this.selectedValue.emit(this.keyManager.activeItem.option);
-        }
-        this.close();
-        this.cdr.markForCheck();
-      } else if (this.keyManager && event.keyCode === UP_ARROW){
-        this.keyManager.setPreviousItemActive();
-        this.cdr.markForCheck();
-      } else if (event.keyCode === DOWN_ARROW) {
-        if (this.keyManager) {
-          if (this._ref) {
-            if (this.keyManager.activeItem === null) {
-              this.keyManager.setActiveItem(0);
-              this.cdr.markForCheck()
-            } else {
-              this.keyManager.setNextItemActive();
-              this.cdr.markForCheck();
-            }
-          } else {
-            this.showPopup()
-          }
-        }
-      } else if (event.keyCode === ESCAPE) {
-        this.selectedValue.emit(null);
-        this.close();
-      }
-    }
-
-    // if (event.keyCode === DOWN_ARROW || event.keyCode === UP_ARROW) {
-    //
-    // }
- }
   @Input() set value(val: any) {
     let selectedValue;
     if (isString(val)) {
@@ -119,13 +70,66 @@ export class DropdownSelectComponent {
     }
   }
 
-  @ViewChild('list', { static: false }) list;
-  @ViewChild('holder', { static: false, read: ElementRef }) holder: ElementRef;
-
   constructor(
     private popup: Popup,
     private cdr: ChangeDetectorRef
   ) {}
+
+  get isOpened() {
+    return this._ref !== null;
+  }
+  private _ref = null;
+  items = [];
+  selectedIndex = null;
+
+  @ViewChildren(SelectOptionDirective) selectOptions: QueryList<SelectOptionDirective>;
+  keyManager: ActiveDescendantKeyManager<SelectOptionDirective>;
+
+  @Output() selected = new EventEmitter<number>();
+  @Output() selectedValue = new EventEmitter<any>();
+  @Input() panelClass = 'dropdown-overlay';
+  @Input() disabled = false;
+
+  @ViewChild('list', { static: false }) list;
+  @ViewChild('holder', { static: false, read: ElementRef }) holder: ElementRef;
+  @HostListener('keydown', ['$event'])
+  onKeyDown(event: KeyboardEvent) {
+    event.stopImmediatePropagation();
+    if (event) {
+      if (event.keyCode === ENTER) {
+        event.preventDefault();
+        if (this.keyManager && this.keyManager.activeItem) {
+          this.selectedValue.emit(this.keyManager.activeItem.option);
+        }
+        this.close();
+        this.cdr.markForCheck();
+      } else if (this.keyManager && event.keyCode === UP_ARROW) {
+        this.keyManager.setPreviousItemActive();
+        this.cdr.markForCheck();
+      } else if (event.keyCode === DOWN_ARROW) {
+        if (this.keyManager) {
+          if (this._ref) {
+            if (this.keyManager.activeItem === null) {
+              this.keyManager.setActiveItem(0);
+              this.cdr.markForCheck();
+            } else {
+              this.keyManager.setNextItemActive();
+              this.cdr.markForCheck();
+            }
+          } else {
+            this.showPopup();
+          }
+        }
+      } else if (event.keyCode === ESCAPE) {
+        this.selectedValue.emit(null);
+        this.close();
+      }
+    }
+
+    // if (event.keyCode === DOWN_ARROW || event.keyCode === UP_ARROW) {
+    //
+    // }
+ }
 
   isSelected(i) {
     return this.selectedIndex === i;
@@ -134,12 +138,8 @@ export class DropdownSelectComponent {
   select(i): void {
     this.selectedIndex = i;
     this.selected.emit(this.selectedIndex);
-    if (this._ref) this._ref.close();
+    if (this._ref) { this._ref.close(); }
     this.cdr.markForCheck();
-  }
-
-  get isOpened() {
-    return this._ref !== null;
   }
 
   toggle() {
@@ -151,7 +151,7 @@ export class DropdownSelectComponent {
   }
 
   close(): void {
-    if (this._ref) this._ref.close();
+    if (this._ref) { this._ref.close(); }
   }
 
   showPopup(): void {

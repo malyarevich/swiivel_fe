@@ -1,9 +1,9 @@
-import { Component, OnInit, Output, EventEmitter } from "@angular/core";
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
-  selector: "sw-online-form-controls",
-  templateUrl: "./online-form-controls.component.html",
-  styleUrls: ["./online-form-controls.component.scss"]
+  selector: 'sw-online-form-controls',
+  templateUrl: './online-form-controls.component.html',
+  styleUrls: ['./online-form-controls.component.scss']
 })
 export class OnlineFormControlsComponent implements OnInit {
   @Output() previousStepEmitter = new EventEmitter<any>();

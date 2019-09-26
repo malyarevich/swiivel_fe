@@ -12,12 +12,12 @@ import { InputButtonGroupComponent } from './inputs/input-button-group/input-but
 import { InputCheckboxComponent } from './inputs/input-checkbox/input-checkbox.component';
 import { InputDynamicComponent } from './inputs/input-dynamic/input-dynamic.component';
 import { InputNumberComponent } from './inputs/input-number/input-number.component';
-import { InputTextComponent } from './inputs/input-text/input-text.component';
 import { InputSuggestComponent } from './inputs/input-suggest/input-suggest.component';
+import { InputTextComponent } from './inputs/input-text/input-text.component';
 
+import { DropdownSelectComponent } from './inputs/dropdown-select/dropdown-select.component';
 import { InputTextareaComponent } from './inputs/input-textarea/input-textarea.component';
 import { InputToggleComponent } from './inputs/input-toggle/input-toggle.component';
-import { DropdownSelectComponent } from './inputs/dropdown-select/dropdown-select.component';
 
 // Headers
 import { BlockHeaderComponent} from './headers/block-header/block-header.component';
@@ -27,18 +27,18 @@ import { InputPhoneNumberComponent } from './inputs/input-phone-number/input-pho
 import { DialogComponent } from './popup/dialog.component';
 
 // Utils
-import { MainSpinnerComponent } from './utils/main-spinner/main-spinner.component';
 // Bars
 import { DocumentApprovalBarComponent } from '@shared/bars/document-approval-bar.component';
+import { MainSpinnerComponent } from './utils/main-spinner/main-spinner.component';
 
 // Others
+import { SelectOptionDirective } from './inputs/dropdown-select/option.directive';
+import { ComponentIdDirective } from './inputs/e2e.directive';
 import { RadioGroupComponent } from './inputs/radio-group/radio-group.component';
 import { LabelComponent } from './label/label.component';
-import { UserItemComponent } from './user-item/user-item.component';
-import { SelectOptionDirective } from './inputs/dropdown-select/option.directive';
 import { MainComponent } from './main.component';
-import { ComponentIdDirective } from './inputs/e2e.directive';
 import { PaginatorComponent } from './paginator/paginator.component';
+import { UserItemComponent } from './user-item/user-item.component';
 
 @NgModule({
   imports: [

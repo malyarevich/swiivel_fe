@@ -1,10 +1,10 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { SidebarConsentComponent } from './sidebar/consent.component';
 import { SidebarDocumentsFormsComponent } from './sidebar/documents-forms.component';
 import { SidebarFieldsComponent } from './sidebar/fields.component';
 import { SidebarIntroComponent } from './sidebar/intro.component';
 import { SidebarTermsConditionsComponent } from './sidebar/terms-conditions.component';
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'sw-form-creator',
@@ -35,7 +35,7 @@ export class FormCreatorComponent implements OnInit {
       if (params.has('mongo_id')) {
         console.info(`Edit form with ID ${params.get('mongo_id')}`);
       } else {
-        console.info(`Create New Form`)
+        console.info(`Create New Form`);
       }
     });
     // console.log(route)
