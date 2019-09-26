@@ -12,7 +12,7 @@
         [form]="form"
         [pagesPercents]="pagesPercents"
         [formNavigationState]="formNavigationState"
-        [currentPosition]="currentPosition"
+        [currentPosition]="(currentPosition$ | async)"
         (onGoToPage)="goToPage($event)"
       ></sw-online-form-menu>
     </div>
@@ -23,7 +23,7 @@
           [form]="form"
           [fg]="fg"
           [formNavigationState]="formNavigationState"
-          [currentPosition]="currentPosition"
+          [currentPosition]="(currentPosition$ | async)"
           [formErrors]="formErrors"
           (onGoToTab)="goToTab($event)"
         ></sw-online-form-view>

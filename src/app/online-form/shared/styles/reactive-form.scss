@@ -61,11 +61,10 @@ input.ng-dirty.ng-invalid + .error_icon,
   opacity: 1;
 }
 
-
 .error_msg {
   color: $error-color;
-  font-family: Nunito Sans;
-font-weight: 400;
+  font-family: "Nunito Sans", "Helvetica";
+  font-weight: 400;
   font-size: 1rem;
   line-height: 1.1rem;
   padding-top: 0.5rem;
@@ -75,7 +74,7 @@ font-weight: 400;
   margin-bottom: 0;
 }
 
-.form-control:disabled, 
+.form-control:disabled,
 .form-control[readonly] {
   cursor: text;
   background-color: $white;

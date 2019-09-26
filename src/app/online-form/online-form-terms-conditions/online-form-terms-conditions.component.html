@@ -1,32 +1,33 @@
-<div class="content_section__main content_section__main--center">
-  <!--Title-->
-  <div *ngIf="form.termsConditions?.termsConditionsItems?.length">
-    <ng-container
-      *ngFor="
-        let item of form.termsConditions.termsConditionsItems;
-        let indexItem = index
-      "
-    >
-      <!--Title-->
-      <h2 class="content_section__article_title">
-        {{ item.title }}
-      </h2>
-
-      <!--Text-->
-      <article class="content_section__article">
-        <div
-          class="content_section__article_text"
-          [innerHTML]="item.text"
-        ></div>
-      </article>
-
-      <!--Checkbox-->
-      <div
-        *ngIf="item.checkbox.isActive"
-        class="content_section__additional_fields"
+<div class="content_section__main_container p-4">
+  <div class="content_section__main content_section__main--center">
+    <!--Title-->
+    <div *ngIf="form.termsConditions?.termsConditionsItems?.length">
+      <ng-container
+        *ngFor="
+          let item of form.termsConditions.termsConditionsItems;
+          let indexItem = index
+        "
       >
-        <div class="content_section__inputs_container">
-          <!-- <div class="content_section__checkbox_container py-0">
+        <!--Title-->
+        <h2 class="content_section__article_title">
+          {{ item.title }}
+        </h2>
+
+        <!--Text-->
+        <article class="content_section__article">
+          <div
+            class="content_section__article_text"
+            [innerHTML]="item.text"
+          ></div>
+        </article>
+
+        <!--Checkbox-->
+        <div
+          *ngIf="item.checkbox.isActive"
+          class="content_section__additional_fields"
+        >
+          <div class="content_section__inputs_container">
+            <!-- <div class="content_section__checkbox_container py-0">
               <input
                 class="content_section__checkbox"
                 type="checkbox"
@@ -47,12 +48,13 @@
                 {{ item.checkbox.text }}
               </label>
             </div> -->
+          </div>
         </div>
-      </div>
-    </ng-container>
+      </ng-container>
 
-    <sw-online-form-signatures
-      [signature]="signature"
-    ></sw-online-form-signatures>
+      <sw-online-form-signatures
+        [signature]="signature"
+      ></sw-online-form-signatures>
+    </div>
   </div>
 </div>

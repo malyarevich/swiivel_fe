@@ -27,9 +27,9 @@ export class OnlineFormComponent implements OnInit {
   form: Form;
   fg: FormGroup;
 
-  formNavigationState: object[] = [];
+  formNavigationState: object[];
   pagesPercents: object[] = [];
-  currentPosition: object = {};
+  currentPosition$: BehaviorSubject<object> = new BehaviorSubject({});
 
   saveFormSubscription: Subscription;
   _isReady$: BehaviorSubject<boolean> = new BehaviorSubject(false);
@@ -78,8 +78,10 @@ export class OnlineFormComponent implements OnInit {
   }
 
   initNavigation(): void {
-    this.initNavigationState();
-    this.initTabsForEachPage();
+    if(!this.formNavigationState) {
+      this.initNavigationState();
+      this.initTabsForEachPage();
+    }
   }
 
   initNavigationState(): void {
@@ -274,10 +276,10 @@ export class OnlineFormComponent implements OnInit {
 
   initPosition() {
     if (this.formNavigationState.length > 0) {
-      this.currentPosition = {
+      this.currentPosition$.next({
         page: this.formNavigationState[0]["page"],
         tab: 0
-      };
+      });
     }
   }
 
@@ -318,31 +320,31 @@ export class OnlineFormComponent implements OnInit {
   }
 
   goToPage(pageName) {
-    this.currentPosition = { page: pageName, tab: 0 };
+    this.currentPosition$.next({ page: pageName, tab: 0});
   }
 
   goToTab(tabIndex) {
-    this.currentPosition = {
-      page: this.currentPosition["page"],
+    this.currentPosition$.next({
+      page: this.currentPosition$.value["page"],
       tab: tabIndex
-    };
+    });
   }
 
   goToPreviousStep() {
     const currentPageIndex = this.formNavigationState.findIndex(page => {
-      return page["page"] === this.currentPosition["page"];
+      return page["page"] === this.currentPosition$.value["page"];
     });
-    if (this.currentPosition["tab"] !== 0) {
-      this.currentPosition = {
-        ...this.currentPosition,
-        tab: this.currentPosition["tab"] - 1
-      };
+    if (this.currentPosition$.value["tab"] !== 0) {
+      this.currentPosition$.next({
+        ...this.currentPosition$.value,
+        tab: this.currentPosition$.value["tab"] - 1
+      });
     } else if (currentPageIndex !== 0) {
-      this.currentPosition = {
-        ...this.currentPosition,
+      this.currentPosition$.next({
+        ...this.currentPosition$.value,
         page: this.formNavigationState[currentPageIndex - 1]["page"],
         tab: this.formNavigationState[currentPageIndex - 1]["tabs"].length - 1
-      };
+      });
     }
   }
 
@@ -353,22 +355,22 @@ export class OnlineFormComponent implements OnInit {
 
   goToNextStep() {
     const currentPage = this.formNavigationState.find(page => {
-      return page["page"] === this.currentPosition["page"];
+      return page["page"] === this.currentPosition$.value["page"];
     });
     const currentPageIndex = this.formNavigationState.findIndex(page => {
-      return page["page"] === this.currentPosition["page"];
+      return page["page"] === this.currentPosition$.value["page"];
     });
-    if (currentPage["tabs"].length > this.currentPosition["tab"] + 1) {
-      this.currentPosition = {
-        ...this.currentPosition,
-        tab: this.currentPosition["tab"] + 1
-      };
+    if (currentPage["tabs"].length > this.currentPosition$.value["tab"] + 1) {
+      this.currentPosition$.next({
+        ...this.currentPosition$.value,
+        tab: this.currentPosition$.value["tab"] + 1
+      });
     } else if (currentPageIndex + 1 < this.formNavigationState.length) {
-      this.currentPosition = {
-        ...this.currentPosition,
+      this.currentPosition$.next({
+        ...this.currentPosition$.value,
         page: this.formNavigationState[currentPageIndex + 1]["page"],
         tab: 0
-      };
+      });
     } else {
       //TODO: goToFinishPage
       console.log("TODO: goToFinishPage");
