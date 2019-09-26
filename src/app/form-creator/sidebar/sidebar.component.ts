@@ -50,7 +50,8 @@ export class SidebarComponent implements OnInit {
     this.sections = this.fb.group({
       intro: [null],
       fields: [null],
-      consent: [null]
+      consent: [null],
+      tac: [null]
     });
     this.sections.valueChanges.subscribe(value => {
       this.service.sections = value;

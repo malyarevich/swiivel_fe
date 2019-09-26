@@ -1,5 +1,5 @@
-import {NgModule} from '@angular/core';
-import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
+import { NgModule } from '@angular/core';
+import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '@core/auth.guard';
 import { DashboardComponent } from '@core/components/dashboard.component';
 import { LoginComponent } from '@core/components/login.component';
@@ -26,6 +26,10 @@ const routes: Routes = [
     ]
   },
   {
+    path: 'online-form',
+    loadChildren: () => import('./online-form/online-form.module').then(m => m.OnlineFormModule)
+  },
+  {
     path: 'form-creator',
     loadChildren: () => import('./form-creator/form-creator.module').then(m => m.FormCreatorModule)
   },
@@ -43,7 +47,7 @@ const routes: Routes = [
   imports: [
     RouterModule.forRoot(routes, {
       preloadingStrategy: PreloadAllModules,
-      enableTracing: !!environment.production
+      enableTracing: !environment.production
     })
   ],
   exports: [RouterModule]

@@ -30,3 +30,12 @@
     border: 1px solid $error-color;
   }
 }
+
+:host(.h-100) {
+  .input_textarea {
+    height: 100%;
+    &__input {
+      height: 100%;
+    }
+  }
+}

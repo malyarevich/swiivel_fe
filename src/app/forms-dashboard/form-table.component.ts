@@ -21,7 +21,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormTableComponent implements OnInit {
-  @ViewChild('link', {static: false}) link: ElementRef;
+  @ViewChild('link', { static: false }) link: ElementRef;
   @ViewChild('dialog', { static: true }) dialog: DialogComponent;
 
   // TABS
@@ -50,7 +50,7 @@ export class FormTableComponent implements OnInit {
   // POPUP
   public popupTitle = '';
   public popupActionBtnText = '';
-  public popupContentArray: {title: string, id?: any}[] = [];
+  public popupContentArray: { title: string, id?: any }[] = [];
   public canLabelsRemove = false;
 
   public icons = IconsEnum;
@@ -64,11 +64,12 @@ export class FormTableComponent implements OnInit {
     url: SafeResourceUrl;
     filename: string;
   } = {
-    url: null,
-    filename: null
-  }
+      url: null,
+      filename: null
+    }
   filterForm: FormGroup;
   sort = ['name', true];
+  currentPage = 1;
 
   statusesOptions: string[] = ['Active', 'Drafts', 'In Review', 'Closed', 'Archived'];
   _sm: SelectionModel<any>;
@@ -93,8 +94,9 @@ export class FormTableComponent implements OnInit {
 
   ngOnInit() {
     this._sm = new SelectionModel(true);
-    this.dataSource.count$.subscribe( count => {
+    this.dataSource.count$.subscribe(count => {
       this.totalItems = count;
+      this.currentPage = 1;
     });
     this.dataSource.loadFormsList(this.params);
     this.filterForm.valueChanges.pipe(
@@ -105,7 +107,8 @@ export class FormTableComponent implements OnInit {
         return value;
       })
     ).subscribe(value => {
-      this.params.filter = {...value};
+      this.params.filter = { ...value };
+      this.params.page = 1;
       this.dataSource.loadFormsList(this.params);
     });
     this.dataSource.$loading.subscribe((loading: boolean) => {
@@ -115,7 +118,7 @@ export class FormTableComponent implements OnInit {
 
   getUserInfo(obj: any) {
     const user = pick(obj, ['full_name', 'role.role_name']);
-    return { name: user['full_name'], role: user['role']['role_name']};
+    return { name: user['full_name'], role: user['role']['role_name'] };
   }
 
   getStatusColor(status: string): string {
@@ -169,6 +172,7 @@ export class FormTableComponent implements OnInit {
     }
     this.params.sort.field = field;
     this.params.sort.order = !!this.sort[1] ? 'asc' : 'desc';
+    this.params.page = 1;
     this.dataSource.loadFormsList(this.params);
   }
 
@@ -206,7 +210,7 @@ export class FormTableComponent implements OnInit {
 
   clickTab(filter) {
     this.activeTab = filter;
-    this.filterForm.get('status').setValue(filter.title, {emitEvent: false});
+    this.filterForm.get('status').setValue(filter.title, { emitEvent: false });
   }
 
   bulkAction(selectedIndex) {
@@ -274,7 +278,7 @@ export class FormTableComponent implements OnInit {
   openSharePopup(form?: Form) {
     this.popupTitle = 'Share';
 
-    if (form ) {
+    if (form) {
       this.popupContentArray = [];
       this.popupContentArray.push({ title: FormTableComponent.createSharedUrl(form.mongo_id) });
     } else {
@@ -335,7 +339,7 @@ export class FormTableComponent implements OnInit {
     this.dataCollectionService
       .duplicateForm(mongoId)
       .subscribe((res) => {
-        this.router.navigate([`forms-dashboard/form-constructor/${res._id}`]).then();
+        this.router.navigate(['form-creator', res._id]).then();
       });
   }
 
@@ -378,7 +382,7 @@ export class FormTableComponent implements OnInit {
 
   onCopyLink(label: string): void {
     this.utilsService.copyTextToClipboard(label)
-      .then(() =>  {})
+      .then(() => { })
       .catch(() => {
         console.log('Could not copy text');
       });

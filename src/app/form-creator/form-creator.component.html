@@ -1,2 +1,24 @@
-<sw-form-creator-sidebar style="margin-right: 15px;"></sw-form-creator-sidebar>
-<sw-form-creator-workarea></sw-form-creator-workarea>
+<sw-stepper [headerOptions]="['general', 'builder', 'review']" #stepper>
+  <cdk-step>
+    <p>General page</p>
+    <sw-button class="outline-btn" (click)="prevStep()">
+        Back to Previous Step
+    </sw-button>
+    <sw-button (click)="nextStep()">
+        Save & Go Next Step
+    </sw-button>
+  </cdk-step>
+  <cdk-step>
+    <sw-form-creator-sidebar style="margin-right: 15px;"></sw-form-creator-sidebar>
+    <sw-form-creator-workarea></sw-form-creator-workarea>
+  </cdk-step>
+  <cdk-step>
+    <p>Reviev form</p>
+    <sw-button class="outline-btn" (click)="prevStep()">
+        Back to Previous Step
+    </sw-button>
+    <sw-button (click)="nextStep()">
+        Save & Go Next Step
+    </sw-button>
+  </cdk-step>
+</sw-stepper>

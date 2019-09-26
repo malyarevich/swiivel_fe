@@ -23,6 +23,7 @@ export interface Form {
   isSelected?: boolean;
   sharedUrl?: string;
   fields?: any;
+  fieldsData: object;
   attachments?: any;
   consentInfo?: any;
   documents?: any;
