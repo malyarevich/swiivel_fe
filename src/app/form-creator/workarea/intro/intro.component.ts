@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'sw-form-creator-workarea-intro',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./intro.component.scss']
 })
 export class WorkareaIntroComponent implements OnInit {
+
+  textareaControl: FormControl = new FormControl(null);
 
   constructor() { }
 

@@ -1,0 +1,19 @@
+@import "index";
+
+:host {
+  .intro-container {
+    min-height: 526px;
+    height: calc(100vh - 174px);
+    padding: 15px;
+    background: #fff;
+    border-radius: 3px;
+    .title {
+      font: 800 14px/20px $nunito-sans;
+      margin-bottom: 20px;
+    }
+    .text-area {
+      width: 100%;
+      height: calc(100% - 40px);
+    }
+  }
+}
