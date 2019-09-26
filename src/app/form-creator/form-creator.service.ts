@@ -74,6 +74,4 @@ export class FormCreatorService {
     this.eventSubject$.next(eventObj);
   }
 
-
-
 }
