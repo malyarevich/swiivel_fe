@@ -1,10 +1,12 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ViewChild } from '@angular/core';
 import { SidebarConsentComponent } from './sidebar/consent.component';
 import { SidebarDocumentsFormsComponent } from './sidebar/documents-forms.component';
 import { SidebarFieldsComponent } from './sidebar/fields.component';
 import { SidebarIntroComponent } from './sidebar/intro.component';
 import { SidebarTermsConditionsComponent } from './sidebar/terms-conditions.component';
 import { ActivatedRoute } from '@angular/router';
+import { CdkStepper } from '@angular/cdk/stepper';
+import { StepperService } from '@shared/stepper.service';
 
 @Component({
   selector: 'sw-form-creator',
@@ -26,7 +28,9 @@ export class FormCreatorComponent implements OnInit {
     {name: 'FORM PAYMENT', workarea: '', component: SidebarIntroComponent, active: false, expanded: false},
   ];
 
-  constructor(private route: ActivatedRoute) {
+  @ViewChild('stepper', { static: false }) steppert: CdkStepper;
+
+  constructor(private route: ActivatedRoute, private stepperService: StepperService) {
 
    }
 
@@ -38,11 +42,26 @@ export class FormCreatorComponent implements OnInit {
         console.info(`Create New Form`)
       }
     });
+    this.stepperService.stepper$.subscribe((step: string) => {
+      if (step === 'next') {
+        this.steppert.next();
+      } else if (step === 'prev') {
+        this.steppert.previous();
+      }
+    })
     // console.log(route)
   }
 
   switchWorkarea(workarea: string) {
     this.workarea = workarea;
+  }
+
+  prevStep() {
+    this.steppert.previous()
+  }
+
+  nextStep() {
+    this.steppert.next();
   }
 
 }

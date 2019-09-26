@@ -3,12 +3,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '@app/core/auth.guard';
 import { MainComponent } from '@shared/main.component';
 import { FormCreatorComponent } from './form-creator.component';
+import { FormComponent } from '@app/shared/form.component';
 
 
 const routes: Routes = [
   {
     path: '',
-    component: MainComponent,
+    component: FormComponent,
     canActivate: [AuthGuard],
     canActivateChild: [AuthGuard],
     children: [
