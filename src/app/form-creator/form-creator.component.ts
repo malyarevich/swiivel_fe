@@ -6,7 +6,7 @@ import { SidebarIntroComponent } from './sidebar/intro.component';
 import { SidebarTermsConditionsComponent } from './sidebar/terms-conditions.component';
 import { ActivatedRoute } from '@angular/router';
 import { CdkStepper } from '@angular/cdk/stepper';
-import { FormCreatorService } from './form-creator.service';
+import { StepperService } from '@shared/stepper.service';
 
 @Component({
   selector: 'sw-form-creator',
@@ -30,7 +30,7 @@ export class FormCreatorComponent implements OnInit {
 
   @ViewChild('stepper', { static: false }) steppert: CdkStepper;
 
-  constructor(private route: ActivatedRoute, private service: FormCreatorService) {
+  constructor(private route: ActivatedRoute, private stepperService: StepperService) {
 
    }
 
@@ -42,7 +42,7 @@ export class FormCreatorComponent implements OnInit {
         console.info(`Create New Form`)
       }
     });
-    this.service.stepper$.subscribe((step: string) => {
+    this.stepperService.stepper$.subscribe((step: string) => {
       if (step === 'next') {
         this.steppert.next();
       } else if (step === 'prev') {

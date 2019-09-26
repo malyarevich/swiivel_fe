@@ -41,6 +41,7 @@ import { ComponentIdDirective } from './inputs/e2e.directive';
 import { PaginatorComponent } from './paginator/paginator.component';
 import { CdkStepperModule } from '@angular/cdk/stepper';
 import { StepperComponent } from './stepper/stepper.component';
+import { StepperService } from './stepper.service';
 
 @NgModule({
   imports: [
@@ -125,6 +126,9 @@ import { StepperComponent } from './stepper/stepper.component';
     // Bars
     DocumentApprovalBarComponent,
     StepperComponent,
+  ],
+  providers: [
+    StepperService
   ]
 })
 export class SharedModule { }
