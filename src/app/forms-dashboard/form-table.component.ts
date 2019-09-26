@@ -335,7 +335,7 @@ export class FormTableComponent implements OnInit {
     this.dataCollectionService
       .duplicateForm(mongoId)
       .subscribe((res) => {
-        this.router.navigate([`forms-dashboard/form-constructor/${res._id}`]).then();
+        this.router.navigate(['form-creator', res._id]).then();
       });
   }
 
