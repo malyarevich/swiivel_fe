@@ -76,13 +76,6 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (TEST_FIELD_SERVICE) {
-      this.fields = this.fs.fromArray(fields);
-      const dform = this.fb.array(this.fields.map(field => field.control));
-      dform.valueChanges.subscribe((value) => {
-        console.log(`Dynamic form fields value changed`, value);
-      });
-    }
     this.longTextDisabled.valueChanges.subscribe((isDisabled) => {
       if (!!isDisabled) {
         this.form.get('longText').disable();

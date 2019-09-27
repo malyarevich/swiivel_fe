@@ -6,67 +6,61 @@
 </div>
 
 
-<div class="sidebar_section" [class.expanded]="isExpanded('fields')">
+<div class="sidebar_section" [class.expanded]="isExpanded('fields')" [class.open]="isOpen()">
   <div class="sidebar_section__header" (click)="onClick('fields', $event)">
     <sw-input-toggle [formControl]="sections?.get('fields')"></sw-input-toggle>
     <span>Form Fields</span>
+    <div class="actions">
+      <sw-icon-button [class.blue]="isOpen()" [icon]="getIcon()" (click)="toggleSection()">
+      </sw-icon-button>
+    </div>
   </div>
   <div class="sidebar_section__content">
-    <span class="title">System Fields</span>
-    <div class="search-wrap">
-      <input class="search" id="filter" #filter (keyup)="tree.treeModel.filterNodes(filter.value)" placeholder="Search"/>
-      <i class="icon fas fa-search"></i>
-    </div>
-    <tree-root [nodes]="sidebarFields" [options]="sidebarOptions" #tree>
-      <ng-template #treeNodeFullTemplate let-node let-index="index" let-templates="templates">
-        <div [class]="node.getClass()" [class.tree-node]="true"
-          [class.tree-node-expanded]="node.isExpanded && node.hasChildren"
-          [class.tree-node-collapsed]="node.isCollapsed && node.hasChildren" [class.tree-node-leaf]="node.isLeaf"
-          [class.tree-node-active]="node.isActive" [class.tree-node-focused]="node.isFocused" [treeDrag]="node"
-          [treeDragEnabled]="true">
-
-          <!-- <tree-node-drop-slot *ngIf="index === 0" [dropIndex]="node.index" [node]="node.parent">
-          </tree-node-drop-slot> -->
-          <div class="node-wrap">
-            <!-- <tree-node-wrapper [node]="node" [index]="index" [templates]="templates">
-            </tree-node-wrapper> -->
-
-            <tree-node-checkbox [node]="node">
-            </tree-node-checkbox>
-
-
-            <div class="draghandler">
-              <i class="dragdrop fas fa-ellipsis-v" cdkDragHandle></i>
-            </div>
-
-            <tree-node-content [node]="node"></tree-node-content>
-
-            <tree-node-expander [node]="node"></tree-node-expander>
-          </div>
-
-
-          <tree-node-children [node]="node" [templates]="templates">
-          </tree-node-children>
-
-          <!-- <tree-node-drop-slot [dropIndex]="node.index + 1" [node]="node.parent">
-          </tree-node-drop-slot> -->
-        </div>
-      </ng-template>
-    </tree-root>
-
+    <ng-container *ngComponentOutlet="components.fields"></ng-container>
   </div>
 </div>
 
-<div class="sidebar_section" [class.expanded]="isExpanded('consent')">
+<div class="sidebar_section" [class.expanded]="isExpanded('addDocs')" [class.open]="isOpen()">
+  <div class="sidebar_section__header" (click)="onClick('addDocs', $event)">
+    <sw-input-toggle [formControl]="sections?.get('addDocs')"></sw-input-toggle>
+    <span>Additional Documents</span>
+    <div class="actions">
+      <sw-icon-button [class.blue]="isOpen()" [icon]="getIcon()" (click)="toggleSection()">
+      </sw-icon-button>
+    </div>
+  </div>
+  <div class="sidebar_section__content">
+    <ng-container *ngComponentOutlet="components.addDocsComponent"></ng-container>
+  </div>
+</div>
+
+<div class="sidebar_section" [class.expanded]="isExpanded('consent')" [class.open]="isOpen()">
   <div class="sidebar_section__header" (click)="onClick('consent', $event)">
     <sw-input-toggle [formControl]="sections?.get('consent')"></sw-input-toggle>
-    <span>Consent</span>
+    <span>CONSENT</span>
+    <div class="actions">
+      <sw-icon-button [class.blue]="isOpen()" [icon]="getIcon()" (click)="toggleSection()">
+      </sw-icon-button>
+    </div>
+  </div>
+  <div class="sidebar_section__content">
+    <ng-container *ngComponentOutlet="components.consent"></ng-container>
   </div>
 </div>
 
-<div class="sidebar_section" [class.expanded]="isExpanded('tac')">
+<div class="sidebar_section" [class.expanded]="isExpanded('tac')" [class.open]="isOpen()">
   <div class="sidebar_section__header" (click)="onClick('tac', $event)">
     <sw-input-toggle [formControl]="sections?.get('tac')"></sw-input-toggle>
-    <span>Terms & Conditions</span>
+    <span>TERMS AND CONDITIONS</span>
+    <div class="actions">
+      <sw-icon-button class="blue" style="margin-right: 5px;" icon="fa-plus-square" (click)="toggleSection()">
+      </sw-icon-button>
+      <sw-icon-button [class.blue]="isOpen()" [icon]="getIcon()" (click)="toggleSection()">
+      </sw-icon-button>
+    </div>
+  </div>
+
+  <div class="sidebar_section__content">
+    <ng-container *ngComponentOutlet="components.tac"></ng-container>
   </div>
 </div>

@@ -7,6 +7,8 @@ import { SidebarTermsConditionsComponent } from './sidebar/terms-conditions.comp
 import { ActivatedRoute } from '@angular/router';
 import { CdkStepper } from '@angular/cdk/stepper';
 import { StepperService } from '@shared/stepper.service';
+import { FormCreatorService } from './form-creator.service';
+import { ApiService } from '@app/core/api.service';
 
 @Component({
   selector: 'sw-form-creator',
@@ -22,15 +24,19 @@ export class FormCreatorComponent implements OnInit {
     {name: 'Form Fields', workarea: 'fields', component: SidebarFieldsComponent, active: false, expanded: false},
     {name: 'Additional Documents', workarea: 'addDocs', component: SidebarDocumentsFormsComponent, active: false, expanded: false},
     {name: 'CONSENT', workarea: 'consent', component: SidebarConsentComponent, active: false, expanded: false},
-    {name: 'TUITION CONTRACT', workarea: '', component: SidebarIntroComponent, active: false, expanded: false},
-    {name: 'PAYMENT SETTINGS', workarea: '', component: SidebarIntroComponent, active: false, expanded: false},
+    {name: 'TUITION CONTRACT', workarea: '', component: null, active: false, expanded: false},
+    {name: 'PAYMENT SETTINGS', workarea: '', component: null, active: false, expanded: false},
     {name: 'TERMS AND CONDITIONS', workarea: 'tac', component: SidebarTermsConditionsComponent, active: false, expanded: false},
-    {name: 'FORM PAYMENT', workarea: '', component: SidebarIntroComponent, active: false, expanded: false},
+    {name: 'FORM PAYMENT', workarea: '', component: null, active: false, expanded: false},
   ];
 
   @ViewChild('stepper', { static: false }) steppert: CdkStepper;
 
-  constructor(private route: ActivatedRoute, private stepperService: StepperService) {
+  constructor(
+    private route: ActivatedRoute,
+    private service: FormCreatorService,
+    private stepperService: StepperService,
+    private api: ApiService) {
 
    }
 
@@ -39,7 +45,7 @@ export class FormCreatorComponent implements OnInit {
       if (params.has('mongo_id')) {
         console.info(`Edit form with ID ${params.get('mongo_id')}`);
       } else {
-        console.info(`Create New Form`)
+        console.info(`Create New Form`);
       }
     });
     this.stepperService.stepper$.subscribe((step: string) => {

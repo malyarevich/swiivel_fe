@@ -39,7 +39,10 @@ export class SettingsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Input()
   set field(f: any) {
-    this._field = f;
+    if (f) {
+      this._field = f;
+      this.initSettings(this._field);
+    }
   }
   @ViewChild('container', { read: ViewContainerRef, static: false }) container;
 
@@ -89,9 +92,7 @@ export class SettingsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   updateField(v) {
-    // console.log('fieldSettings', v);
     Object.assign(this._field, v);
-    // console.log('Updated Field', this._field);
   }
 
   ngOnDestroy(): void {

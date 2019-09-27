@@ -1,5 +1,5 @@
 <label class="input_checkbox">
-  <input type="checkbox" (change)="onInputChange()" #input />
+  <input type="checkbox" #input (click)="onClick($event)"/>
   <i class="input_checkbox__icon"></i>
   <ng-content select="i.dragdrop"></ng-content>
   <ng-content select="span"></ng-content>

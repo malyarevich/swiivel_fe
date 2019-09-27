@@ -8,6 +8,7 @@
   box-sizing: border-box;
   border-bottom-left-radius: 3px;
   border-bottom-right-radius: 3px;
+  max-width: 1500px;
   &__row {
     flex-wrap: nowrap;
     .section_title {
