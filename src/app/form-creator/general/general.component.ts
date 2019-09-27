@@ -20,6 +20,8 @@ export class GeneralComponent implements OnInit {
       value: 'duplicate'
     }
   ];
+
+  buttonGroup: FormControl = new FormControl(null);
   filter: FormControl = new FormControl(null);
 
   constructor(
@@ -28,9 +30,9 @@ export class GeneralComponent implements OnInit {
     // this.api.getForms().subscribe(formsList => {
     //   console.log('Forms List',formsList);
     // })
-    this.filter.valueChanges.subscribe(v => {
-      console.log('Filter value', v);
-    });
+    // this.filter.valueChanges.subscribe(v => {
+    //   console.log('Filter value', v);
+    // });
   }
 
   ngOnInit() {
