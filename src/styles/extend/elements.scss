@@ -85,6 +85,25 @@ sw-input-text {
   }
 }
 
+sw-input-text.settings-field{
+  .input_text__input {
+    padding: 6px 10px 4px 10px;
+    &.empty {
+      & + span {
+        &.placeholder {
+          display: flex;
+          top: 4px;
+        }
+      }
+    }
+    & + span {
+      &.placeholder {
+        display: none;
+      }
+    }
+  }
+}
+
 sw-input-toggle {
   span {
     &.input_label {
@@ -143,7 +162,7 @@ sw-input-number {
     @extend %placeholder;
     &.empty {
       &:not(:focus-within) {
-        padding: 10px;
+        padding: 5px 10px;
         .input_label {
           position: absolute;
           top: 8px;
@@ -155,6 +174,28 @@ sw-input-number {
       position: absolute;
       top: 8px;
       right: 8px;
+    }
+  }
+}
+
+sw-dropdown-input.settings-field {
+  .dropdown_input_container {
+    .input_label {
+      display: none;
+      width: calc(100% - 28px);
+      p {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+    &.empty {
+      &:not(:focus-within) {
+        .input_label {
+          display: flex;
+          top: 2px;
+        }
+      }
     }
   }
 }

@@ -39,10 +39,12 @@ import { SelectOptionDirective } from './inputs/dropdown-select/option.directive
 import { MainComponent } from './main.component';
 import { ComponentIdDirective } from './inputs/e2e.directive';
 import { PaginatorComponent } from './paginator/paginator.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CdkStepperModule } from '@angular/cdk/stepper';
 import { StepperComponent } from './stepper/stepper.component';
 import { StepperService } from './stepper.service';
 import { FormComponent } from './form.component';
+
 
 @NgModule({
   imports: [
@@ -120,6 +122,7 @@ import { FormComponent } from './form.component';
     LabelComponent,
     UserItemComponent,
     ReactiveFormsModule,
+    DragDropModule,
     // Directives
     SelectOptionDirective,
     ComponentIdDirective,

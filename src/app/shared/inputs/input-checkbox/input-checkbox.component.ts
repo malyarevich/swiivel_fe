@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ElementRef, forwardRef, Renderer2, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, forwardRef, Renderer2, ViewChild, EventEmitter, Output } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
@@ -18,6 +18,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 export class InputCheckboxComponent implements ControlValueAccessor {
 
   @ViewChild('input', {static: true}) input: ElementRef;
+  @Output() inputClick = new EventEmitter();
 
   private onChange: (value: boolean) => void;
   private onTouched: () => void;
@@ -42,8 +43,22 @@ export class InputCheckboxComponent implements ControlValueAccessor {
     this.renderer.setProperty(this.input.nativeElement, 'checked', value);
   }
 
+  private toggle(): void {
+    const checked = !!this.input.nativeElement.checked;
+    this.renderer.setProperty(this.input.nativeElement, 'checked', !checked);
+  }
+
+  public onClick(event) {
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    this.inputClick.emit(event);
+    this.onInputChange();
+  }
   public onInputChange() {
-    this.onChange(this.input.nativeElement.checked);
+    const checked = !!this.input.nativeElement.checked;
+    this.onChange(checked);
   }
 
 }

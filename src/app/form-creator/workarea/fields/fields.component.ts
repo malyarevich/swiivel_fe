@@ -1,8 +1,10 @@
-import { Component, OnInit, ChangeDetectionStrategy, ViewChild, AfterViewInit, Input, ChangeDetectorRef, OnDestroy } from '@angular/core';
-import { ApiService } from '@core/api.service';
-import { TreeComponent } from 'angular-tree-component';
+import { ArrayDataSource } from '@angular/cdk/collections';
+import {FlatTreeControl, NestedTreeControl} from '@angular/cdk/tree';
+import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy, AfterViewInit, OnDestroy, ViewChild } from '@angular/core';
+import { FieldService } from '@app/core/field.service';
+import { ApiService } from '@app/core/api.service';
+import { TreeDataSource } from '@app/form-creator/tree.datasource';
 import { FormCreatorService } from '@app/form-creator/form-creator.service';
-import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 // import { fields } from '@shared/fields';
@@ -24,60 +26,68 @@ export class WorkareaFieldsComponent implements AfterViewInit, OnInit, OnDestroy
   };
   fields: any[] = [];
   destroyed$ = new Subject();
-  @ViewChild(TreeComponent, {static: true})
-  private tree: TreeComponent;
-  constructor(private service: FormCreatorService, private cdr: ChangeDetectorRef) {
+  fieldsTree: any[];
+  treeSource = new TreeDataSource('Form');
+  treeControl = new NestedTreeControl<any>(node => node.fields);
 
+  constructor(private service: FormCreatorService, private api: ApiService, private cdr: ChangeDetectorRef) {
+    let s = this.service.sidebar;
+    s.subscribe(fields => {
+      console.log(fields);
+      this.cdr.markForCheck();
+    });
   }
 
   ngOnInit() {
 
-    if (this.service.fields) {
-      this.tree.treeModel.setState(this.service.fields);
-      this.tree.treeModel.update();
-      this.cdr.detectChanges();
-    }
   }
   ngOnDestroy() {
-    this.service.fields = this.tree.treeModel.getState();
+    // this.service.fields = this.tree.treeModel.getState()
     this.destroyed$.complete();
   }
 
   ngAfterViewInit() {
-    this.service.fieldChanges.pipe(takeUntil(this.destroyed$)).subscribe((change) => {
-      if (change) {
-        if (change.added) {
-          this.tree.treeModel.nodes.push(change.field.data);
-        } else {
-          this.tree.treeModel.nodes.filter(node => node.data === change.field.data)
-        }
-        this.tree.treeModel.update();
-        this.cdr.markForCheck();
-      }
-    });
+    // this.service.fieldChanges.pipe(takeUntil(this.destroyed$)).subscribe((change) => {
+    //   if (change) {
+    //     if (change.added) {
+    //       this.tree.treeModel.nodes.push(change.field.data);
+    //     } else {
+    //       this.tree.treeModel.nodes.filter(node => node.data === change.field.data)
+    //     }
+    //     this.tree.treeModel.update();
+    //     this.cdr.markForCheck();
+    //   }
+    // })
 
   }
 
-  getClass(type: number) {
-    let styleClass = 'workarea-node-wrap ';
-    switch (type) {
-      case 114:
-        styleClass += 'section-tree-node';
-        break;
-      case 113:
-        styleClass += 'group-tree-node';
-        break;
-      default:
-        styleClass += 'field-workarea-node';
-        break;
-    }
-    return styleClass;
+  hasChild = (_: number, node: any) => !!node.fields && node.fields.length > 0;
+
+  getIcon(expanded: boolean): string {
+    return expanded ? 'fa-caret-up' : 'fa-caret-down';
+  }
+
+
+  getParentNode(node: any) {
+    const nodeIndex = this.fieldsTree.indexOf(node);
   }
 
   getHint(node: any) {
     console.log('Node Hint', node);
     return 'Group type';
   }
+  shouldRender(node: any) {
+    // const parent = this.getParentNode(node);
+    // const should = !parent || parent.expanded;
+    // return should;
+    return !!node.isSelected;
+    // return true;
+  }
 
-
+  settingsTogle(node: any)  {
+    if (node) {
+      node.showSettings = !node.showSettings;
+      this.cdr.markForCheck();
+    }
+  }
 }

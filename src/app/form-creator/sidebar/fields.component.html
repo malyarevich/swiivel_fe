@@ -1,30 +1,121 @@
-<tree-root [nodes]="fields" [options]="options" #tree>
-  <ng-template #treeNodeFullTemplate
-    let-node
-    let-index="index"
-    let-templates="templates">
-    <div
-      [class]="node.getClass()"
-      [class.tree-node]="true"
-      [class.tree-node-expanded]="node.isExpanded && node.hasChildren"
-      [class.tree-node-collapsed]="node.isCollapsed && node.hasChildren"
-      [class.tree-node-leaf]="node.isLeaf"
-      [class.tree-node-active]="node.isActive"
-      [class.tree-node-focused]="node.isFocused">
+<div class="fields-container">
 
-      <tree-node-drop-slot
-        *ngIf="index === 0"
-        [dropIndex]="node.index"
-        [node]="node.parent">
-      </tree-node-drop-slot>
+  <span class="title">System Fields</span>
+  <div class="search-wrap">
+    <input class="search" (input)="filterTree(filter.value)" #filter placeholder="Search" />
+    <i class="icon fas fa-search"></i>
+  </div>
 
-      <tree-node-wrapper [node]="node" [index]="index" [templates]="templates">
-      </tree-node-wrapper>
+  <cdk-tree [dataSource]="treeSource" [treeControl]="treeControl" cdkDropList  cdkDropListSortingDisabled
+    (cdkDropListDropped)="drop($event)">
 
-      <tree-node-children [node]="node" [templates]="templates">
-      </tree-node-children>
-      <tree-node-drop-slot [dropIndex]="node.index + 1" [node]="node.parent">
-      </tree-node-drop-slot>
+    <cdk-nested-tree-node *cdkTreeNodeDef="let node" class="field-tree-node" cdkDrag [cdkDragData]="node">
+      <div class="field-tree-node__content">
+
+        <div class="field-tree-node__content_node">
+          <div class="checkbox">
+            <input type="checkbox" [checked]="node.isSelected" (change)="toggleNode(node)">
+          </div>
+          <i class="dragdrop fas fa-ellipsis-v" cdkDragHandle></i>
+          <span class="node-name">{{node.name}}</span>
+        </div>
+
+      </div>
+
+    </cdk-nested-tree-node>
+
+
+
+
+    <cdk-nested-tree-node *cdkTreeNodeDef="let node; when: hasChild" class="field-tree-node" >
+      <div class="field-tree-node__content">
+
+        <div class="field-tree-node__content_node" [class.expanded]="treeControl.isExpanded(node)" cdkDrag [cdkDragData]="node">
+          <div class="checkbox">
+            <input type="checkbox" [checked]="descendantsAllSelected(node)"
+              [indeterminate]="descendantsPartiallySelected(node)" (change)="toggleParentNode(node)">
+          </div>
+          <i class="dragdrop fas fa-ellipsis-v" cdkDragHandle></i>
+          <span class="node-name">{{node.name}}</span>
+        </div>
+
+        <sw-icon-button [icon]="getIcon(treeControl.isExpanded(node))" cdkTreeNodeToggle
+          [attr.aria-label]="'toggle ' + node.name">
+        </sw-icon-button>
+      </div>
+
+
+      <div [class.field-tree-invisible]="!treeControl.isExpanded(node)">
+        <ng-container cdkTreeNodeOutlet></ng-container>
+      </div>
+
+      <ng-container *ngIf="canCreateField(node)">
+        <div class="custom-field" [class.show]="showCreateField(node)">
+          <div class="custom-field__form">
+            <div class="custom-field__form_inputs">
+              <sw-input-text class="settings-field">
+                <span class="placeholder">Name</span>
+              </sw-input-text>
+              <sw-dropdown-input class="settings-field">
+                <span class="input_label">
+                  <p>Type</p>
+                </span>
+              </sw-dropdown-input>
+              <sw-dropdown-input class="settings-field">
+                <span class="input_label">
+                  <p>Width</p>
+                </span>
+              </sw-dropdown-input>
+            </div>
+            <div class="custom-field__form_actions">
+              <sw-button class="outline-btn full_width narrow" style="margin-right: 5px;"
+                (click)="customFieldToggle(node)">
+                <span class="text">Cancel</span>
+              </sw-button>
+              <sw-button class="full_width narrow" (click)="addCustomField(node)">
+                <span class="text">Create Field</span>
+              </sw-button>
+            </div>
+          </div>
+          <div class="custom-field__button">
+            <sw-button class="outline-btn full_width narrow" (click)="customFieldToggle(node)">
+              <span class="text">Create New Field</span>
+            </sw-button>
+          </div>
+        </div>
+      </ng-container>
+
+    </cdk-nested-tree-node>
+  </cdk-tree>
+
+
+</div>
+
+
+<ng-template #deletePop>
+  <div class="dialog_container">
+    <div class="dialog_container__header">
+      <span class="text">Delete Confirmation Required</span>
+      <div class="icon" (click)="closePop()">
+        <i class="fas fa-times"></i>
+      </div>
     </div>
-  </ng-template>
-</tree-root>
+    <div class="dialog_container__body">
+      <div class="text">You are trying to delete <span class="field-name">{{ delFieldName }}</span> custom field. Once
+        deleted, all
+        data from this field will be lost. Are you sure you want do it?
+      </div>
+      <div class="chips">School Information > Main > Parents > General > Personal Information > Father’s Information
+      </div>
+      <div class="confirm-text">Type <span class="field-name">{{ delFieldName }}</span> to confirm</div>
+      <div class="input">
+        <sw-input-text [formControl]='delInput'></sw-input-text>
+      </div>
+    </div>
+    <div class="dialog_container__footer">
+      <sw-button class="outline-btn" style="margin-right: 10px;" (click)="closePop()">Cancel</sw-button>
+      <sw-button (click)="deleteNode()">Delete Field</sw-button>
+    </div>
+  </div>
+
+</ng-template>
