@@ -23,7 +23,9 @@ export class TreeDataSource implements DataSource<any> {
   get selectedFields() {
     return this.dataSubject.pipe(filter(node => node.isSelected));;
   }
-
+  get changes() {
+    return this.dataSubject.asObservable();
+  }
   get nodes() {
     return this.tree.treeToArray(this.tree)
   }
@@ -53,8 +55,8 @@ export class TreeDataSource implements DataSource<any> {
     }
   }
 
-  connect(): Observable<any[]> {
-    return this.dataSubject.asObservable();
+  connect(_collectionViewer: CollectionViewer): Observable<any[]> {
+    return this.dataSubject;
   }
 
   disconnect(): void {
@@ -86,8 +88,39 @@ export class TreeDataSource implements DataSource<any> {
     return this.tree.ancestorsToArray(node);
   }
 
+  refresh() {
+    this.data =  this.dataSubject.getValue();
+  }
+
   setActive(node, active: boolean) {
     node.isActive = active;
+    node.isSelected = active;
+    if (this.tree.hasChildren(node)) {
+      let descendants = this.tree.childrenIterator(node);
+      for (let descendant of descendants) {
+        descendant.isActive = node.isActive;
+        descendant.isSelected = node.isSelected;
+      }
+    }
+
+    // for (let ancestor of this.tree.ancestorsIterator(node)) {
+      // let children = this.getChildren(ancestor).filter(child => !child.hasChildren && child.isActive);
+      // if (children.length === 0) {
+      //   ancestor.isActive = false;
+      //   ancestor.isSelected = false;
+      // }
+      // if (this.getChildren(ancestor).filter(child => child.isActive) === 1) {
+      //   ancestor.isActive = false;
+      //   ancestor.isSelected = false;
+      //   this.getChildren(ancestor)[0].isActive = false;
+      //   this.getChildren(ancestor)[0].isSelected = false;
+      // }
+    // }
+
+
+    this.refresh();
+    // this.tree.getD node.
+    // this.CollectionViewer.
   }
 
  }

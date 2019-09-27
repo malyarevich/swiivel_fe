@@ -100,10 +100,6 @@ export class SidebarComponent implements OnInit {
     console.log('cbclick', node, event)
   }
 
-  onStatusChange(node, active?: boolean) {
-    // this.sidebarFields.setActive(node, !!active);
-    console.log(node);
-  }
 
   toggleSection() {
     this.expanded = !this.expanded;

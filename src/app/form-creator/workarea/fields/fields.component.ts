@@ -27,16 +27,25 @@ export class WorkareaFieldsComponent implements AfterViewInit, OnInit, OnDestroy
   fields: any[] = [];
   destroyed$ = new Subject();
   fieldsTree: any[];
-  treeSource = new TreeDataSource('Form');
+  treeSource;
+  // treeSource = new TreeDataSource('Form');
   treeControl = new NestedTreeControl<any>(node => node.fields);
 
   constructor(private service: FormCreatorService, private api: ApiService, private cdr: ChangeDetectorRef) {
     this.service.sidebar.subscribe(sidebar => {
-      sidebar.selectedFields.subscribe((fields) => {
-        console.log(fields);
-        this.treeSource.update(fields);
-      });
+      this.treeSource = sidebar;
+      this.cdr.markForCheck();
+      console.log(this.treeSource);
+      // console.log(sidebar.nodes)
+      // this.treeSource = new TreeDataSource('Form', sidebar.nodes);
+      // sidebar.selectedFields.subscribe((fields) => {
+      //
+      //   this.treeSource.update(fields);
+      // });
     })
+    // this.treeSource.changes.subscribe(change => {
+    //   console.log('cha', change)
+    // });
   }
 
   ngOnInit() {
@@ -78,6 +87,7 @@ export class WorkareaFieldsComponent implements AfterViewInit, OnInit, OnDestroy
     return 'Group type';
   }
   shouldRender(node: any) {
+    // console.log(node)
     // this.treeControl.
     // const parent = this.getParentNode(node);
     // const should = !parent || parent.expanded;

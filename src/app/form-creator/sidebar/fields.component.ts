@@ -45,7 +45,10 @@ export class SidebarFieldsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.service.sidebar = this.treeSource;
+    // this.service.sidebar = this.treeSource;
+    this.treeSource.changes.subscribe(value => {
+      this.service.sidebar = this.treeSource;
+    })
     this.filterControl.valueChanges.subscribe(value => {
 
     });
@@ -114,28 +117,28 @@ export class SidebarFieldsComponent implements OnInit {
   }
 
   toggleParentNode(node: any): void {
-    const descendants = this.treeControl.getDescendants(node);
-    node.isSelected = !node.isSelected;
-    for (let descendant of descendants) {
-      descendant.isSelected = node.isSelected;
-    }
-    if (node.isSelected) {
-      if (!node.isExpanded) {
-        this.treeControl.expandDescendants(node);
-      }
-    } else {
-      if (node.isExpanded) {
-        this.treeControl.collapseDescendants(node);
-      }
-    }
-    this.treeSource.setActive(node, node.isSelected)
+    this.treeSource.setActive(node, !node.isActive);
+    if (node.isActive && !node.expanded) this.treeControl.expandDescendants(node);
+    else if (node.isExpanded) this.treeControl.collapseDescendants(node);
+    // if (node.isSelected) {
+    //   if (!node.isExpanded) {
+    //     this.treeControl.expandDescendants(node);
+    //   }
+    // } else {
+    //   if (node.isExpanded) {
+    //     this.treeControl.collapseDescendants(node);
+    //   }
+    // }
+    // this.treeSource.setActive(node, node.isSelected)
   }
 
   toggleNode(node: any): void {
     const ancestors = this.treeSource.getAncestors(node);
     node.isSelected = !node.isSelected;
     for (let ancestor of ancestors) {
-      ancestor.isSelected = node.isSelected;
+      if (node.isSelected) {
+        ancestor.isSelected = node.isSelected;
+      }
     }
     if (node.isSelected) {
       if (!node.isExpanded) {
