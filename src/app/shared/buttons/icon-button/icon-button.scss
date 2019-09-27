@@ -62,3 +62,9 @@
     opacity: 1;
   }
 }
+
+:host(.blue) {
+  .icon-button {
+    color: $button-color;
+  }
+}

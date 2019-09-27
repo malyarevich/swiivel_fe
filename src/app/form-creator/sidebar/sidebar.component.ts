@@ -31,6 +31,7 @@ export class SidebarComponent implements OnInit {
   // treeSource = new TreeDataSource();
   expandedSection: string;
   sections: FormGroup;
+  expanded: boolean = false;
   // delFieldName: string;
   // delInput: FormControl = new FormControl(null);
   // ref: any;
@@ -91,6 +92,7 @@ export class SidebarComponent implements OnInit {
 
   onClick(section: string, event?: MouseEvent) {
     if (section !== this.expandedSection) {
+      this.expanded = true;
       this.service.section = section;
     }
   }
@@ -102,6 +104,18 @@ export class SidebarComponent implements OnInit {
   onStatusChange(node, active?: boolean) {
     // this.sidebarFields.setActive(node, !!active);
     console.log(node);
+  }
+
+  toggleSection() {
+    this.expanded = !this.expanded;
+  }
+
+  getIcon(): string {
+    return this.expanded ? 'fa-caret-up' : 'fa-caret-down';
+  }
+
+  isOpen() {
+    return this.expanded;
   }
 
   ngOnInit() { }

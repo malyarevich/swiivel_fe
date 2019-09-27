@@ -26,6 +26,10 @@
       opacity: 0.6;
       text-transform: uppercase;
       font: 800 13px/15px $nunito-sans;
+      .actions {
+        display: none;
+        margin-left: auto;
+      }
     }
     &__content {
       display: none;
@@ -36,7 +40,12 @@
     &.expanded {
       .sidebar_section__header {
         opacity: 1;
+        .actions {
+          display: flex;
+        }
       }
+    }
+    &.expanded.open {
       .sidebar_section__content {
         display: flex;
       }
