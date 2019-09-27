@@ -146,7 +146,7 @@ export class SidebarFieldsComponent implements OnInit {
       }
     } else {
       if (node.isExpanded) {
-        this.treeControl.collapse(nwode);
+        this.treeControl.collapse(node);
       }
     }
     this.treeSource.setActive(node, node.isSelected)
