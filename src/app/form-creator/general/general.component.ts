@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { StepperService } from '@app/shared/stepper.service';
 import { FormControl } from '@angular/forms';
 import { ApiService } from '@app/core/api.service';
+import { DateTime } from 'luxon';
 
 @Component({
   selector: 'sw-general',
@@ -44,6 +45,22 @@ export class GeneralComponent implements OnInit {
 
   nextStep() {
     this.stepperService.stepper = 'next';
+  }
+
+  getDate() {
+    const currentTime = DateTime.local().hour;
+    let res: string;
+
+    if (currentTime <= 4 && currentTime >= 21) {
+      res = 'night';
+    } else if (currentTime <= 11 && currentTime >= 5) {
+      res = 'morning';
+    } else if (currentTime <= 17 && currentTime >= 12) {
+      res = 'afternoon';
+    } else if (currentTime <= 20 && currentTime >= 18) {
+      res = 'evening';
+    }
+    return res;
   }
 
 }
