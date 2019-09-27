@@ -51,7 +51,7 @@ export class GeneralComponent implements OnInit {
     const currentTime = DateTime.local().hour;
     let res: string;
 
-    if (currentTime <= 4 && currentTime >= 21) {
+    if (currentTime <= 4 || currentTime >= 21) {
       res = 'night';
     } else if (currentTime <= 11 && currentTime >= 5) {
       res = 'morning';
