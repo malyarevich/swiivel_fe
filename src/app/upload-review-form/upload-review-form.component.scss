@@ -1,0 +1,12 @@
+@import 'index';
+
+:host {
+  .content {
+    display: flex;
+  }
+
+  .sidebar {
+    width: 22%;
+    min-width: 295px;
+  }
+}

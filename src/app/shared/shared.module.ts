@@ -28,8 +28,10 @@ import { DialogComponent } from './popup/dialog.component';
 
 // Utils
 import { MainSpinnerComponent } from './utils/main-spinner/main-spinner.component';
+
 // Bars
-import { DocumentApprovalBarComponent } from '@shared/bars/document-approval-bar.component';
+import { BackBarComponent } from '@shared/bars/back-bar/back-bar.component';
+import { DocumentApprovalBarComponent } from '@shared/bars/document-approval-bar/document-approval-bar.component';
 
 // Others
 import { RadioGroupComponent } from './inputs/radio-group/radio-group.component';
@@ -86,6 +88,7 @@ import { FormComponent } from './form.component';
     PaginatorComponent,
     // Bars
     DocumentApprovalBarComponent,
+    BackBarComponent,
     StepperComponent,
     FormComponent,
   ],
@@ -127,6 +130,7 @@ import { FormComponent } from './form.component';
     PaginatorComponent,
     // Bars
     DocumentApprovalBarComponent,
+    BackBarComponent,
     StepperComponent,
   ],
   providers: [
