@@ -118,3 +118,8 @@
     margin: 0 !important;
   }
 }
+@media (min-width: 768px) {
+  .container {
+    max-width: 960px;
+  }
+}
