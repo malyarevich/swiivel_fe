@@ -3,12 +3,11 @@ import { Component, OnInit, ChangeDetectionStrategy, ViewChild, ChangeDetectorRe
 import { FormControl, FormBuilder } from '@angular/forms';
 import { ApiService } from '@app/core/api.service';
 import { FormCreatorService } from '../form-creator.service';
-import { FieldService } from '@app/core/field.service';
+// import { FieldService } from '@app/core/field.service';
 import { TreeDataSource } from '../tree.datasource';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Popup } from '@app/core/popup.service';
-import { tree } from '../tree.datasource';
-import fields from '@app/shared/fields';
+// import fields from '@app/shared/fields';
 
 
 
@@ -21,8 +20,8 @@ import fields from '@app/shared/fields';
 export class SidebarFieldsComponent implements OnInit {
 
   checklistSelection = new SelectionModel<any>(true);
-  treeSource = new TreeDataSource([]);
-  treeControl = new NestedTreeControl<any>(this.getChildren);
+  treeSource = new TreeDataSource('Fields');
+  treeControl = new NestedTreeControl<any>(node => node.fields);
   delFieldName: string;
   delInput: FormControl = new FormControl(null);
   ref: any;
@@ -36,16 +35,27 @@ export class SidebarFieldsComponent implements OnInit {
     private popup: Popup,
     private cdr: ChangeDetectorRef
     ) {
-    this.service.fieldChanges.subscribe(fields => {
-      console.log('service value changes', fields)
-      if (fields) { this.treeSource.nodes = fields; }
-      this.cdr.markForCheck()
-    });
+      this.api.getSidebarFields().subscribe((fields) => {
+        this.treeSource.build(fields);
+      });
+    // this.service.fieldChanges.subscribe(fields => {
+    //
+    //   // console.log('service value changes', fields)
+    //   // if (fields) { this.treeSource.nodes = fields; }
+    //   this.cdr.markForCheck()
+    // });
   }
 
-  getChildren(node) {
-    return tree.childrenToArray(node);
-  }
+  // getChildren(node) {
+  //   console.log(this);
+  //   console.log(this.treeSource)
+  //   console.log(node)
+  //   // console.log(this);
+  //   // let c = node[].childrenToArray(node);
+  //   // console.log(c);
+  //   return node.getChildren();
+  //   // return node
+  // }
 
   activate(node, event) {
     console.log(node)
@@ -53,6 +63,7 @@ export class SidebarFieldsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.service.selectedFields.next(this.treeSource);
   }
 
   hasChild = (_: number, node: any) => !!node.fields && node.fields.length > 0;
@@ -68,7 +79,6 @@ export class SidebarFieldsComponent implements OnInit {
   }
 
   customFieldToggle(node) {
-    console.log(this.treeSource);
     node.formVisible = !(!!node.formVisible);
   }
 
@@ -126,6 +136,7 @@ export class SidebarFieldsComponent implements OnInit {
         this.treeControl.collapseDescendants(node);
       }
     }
+      this.service.selectedFields.next(this.treeControl.expansionModel.selected.filter(field => field.isSelected));
   }
 
   toggleNode(node: any): void {
@@ -143,6 +154,8 @@ export class SidebarFieldsComponent implements OnInit {
         this.treeControl.collapse(node);
       }
     }
+    this.service.selectedFields.next(this.treeControl.expansionModel.selected.filter(field => field.isSelected));
+
   }
 
   descendantsAllSelected(node: any): boolean {

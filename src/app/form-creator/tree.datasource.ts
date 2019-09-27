@@ -3,57 +3,49 @@ import { ApiService } from '@core/api.service';
 import { BehaviorSubject, Observable, of, Subject, throwError } from 'rxjs';
 import * as SymbolTree from 'symbol-tree';
 
-export const tree = new SymbolTree('Tree');
-export class TreeNodeItem {
-
-  // constructor(node) {
-  //   this = node;
-  // }
-  //   // {...node};
-  //   console.log(`constr`, node)
-  //   return this;
-  // }
-  get test() {
-    return this['symbol'];
-  }
-  get children() {
-    return this;
-  }
-}
-
-// import { HttpErrorResponse } from '@angular/common/http';
 import { catchError, debounceTime, distinctUntilChanged, finalize, retry, tap, timeout } from 'rxjs/operators';
 
 export class TreeDataSource implements DataSource<any> {
   private dataSubject = new BehaviorSubject<any[]>([]);
-  private tree = tree;
   private childKey = 'fields';
-  private root = {};
-  // private loadingSections = new BehaviorSubject<boolean>(false);
   public count = 0;
   public sections;
   public data$ = this.dataSubject.asObservable();
-  // public loadingSections$ = this.loadingSections.asObservable();
   public filters;
+  public tree: SymbolTree;
 
 
-  constructor(nodes?: any[]) {
-    if (nodes) this.build(nodes);
+  constructor(symbol = 'Tree', nodes?: any[]) {
+    this.tree = new SymbolTree(symbol);
+    if (nodes) this.build(nodes, this.tree);
+    return this;
   }
 
   get nodes() {
     return this.tree['symbol'];
   }
 
-  build(nodes: TreeNodeItem[] = [], root = this.root, childKey = this.childKey) {
+  clear() {
+    this.tree.remove(this.tree);
+  }
+
+  update(nodes?: any[]) {
+    this.clear();
+    if (nodes) {
+      this.build(nodes);
+      this.tree['symbol'];
+    }
+  }
+
+  build(nodes: any[] = [], root = this.tree, childKey = this.childKey) {
     for (let node of nodes) {
-      node['isSelected'] = node['isActive'];
+      // node['isSelected'] = node['isActive'];
       this.tree.appendChild(root, node);
       if (Array.isArray(node[childKey])) {
         this.build(node[childKey], node, childKey);
       }
     }
-    if (this.root === root) {
+    if (this.tree === root) {
       this.data = this.tree.childrenToArray(root);
     }
   }
@@ -74,12 +66,13 @@ export class TreeDataSource implements DataSource<any> {
   }
 
 
+
   set nodes(nodes: any[]) {
     this.build(nodes);
   }
 
   get children() {
-    return this.tree.childrenToArray(this.root)
+    return this.tree.childrenToArray(this.tree)
   }
 
   getChildren(node) {

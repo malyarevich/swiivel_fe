@@ -9,39 +9,18 @@ export class FormCreatorService {
   private sectionSubject$: BehaviorSubject<any> = new BehaviorSubject('intro');
   private sectionsSubject$: BehaviorSubject<any> = new BehaviorSubject(null);
   private eventSubject$: Subject<any> = new Subject();
-
-  addField(field: any) {
-    const change = {field, added: true};
-    console.log(change, field);
-    this.fieldSubject$.next(change);
-    console.log(this.fieldSubject$.getValue());
+  selectedFields = new BehaviorSubject(null);
+  get sidebar() {
+    return this.selectedFields.asObservable();
   }
 
-  removeField(field: any) {
-    const change = {field, added: false};
-    console.log(change, field);
-    this.fieldSubject$.next(change);
-  }
-
-  get fieldChanges(): Observable<any> {
+  get fields$() {
     return this.fieldSubject$.asObservable();
   }
-
-  // set fields(fields) {
-  //   this._savedFields = fields;
-  // }
-
-  // get fields() {
-  //   return this._savedFields;
-  // }
-
-  set fields(fields) {
-    this.fieldSubject$.next(fields);
-  }
-
   get fields() {
     return this.fieldSubject$.getValue();
   }
+
 
   set section(current: any) {
     this.sectionSubject$.next(current);
