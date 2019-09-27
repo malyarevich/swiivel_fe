@@ -18,14 +18,14 @@ import { Popup } from '@app/core/popup.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SidebarFieldsComponent implements OnInit {
-
+  filterControl = new FormControl();
   checklistSelection = new SelectionModel<any>(true);
   treeSource = new TreeDataSource('Fields');
   treeControl = new NestedTreeControl<any>(node => node.fields);
   delFieldName: string;
   delInput: FormControl = new FormControl(null);
   ref: any;
-
+  @ViewChild('filter', { static: false}) filterNames;
   @ViewChild('deletePop', { static: false }) deletePop;
 
   constructor(
@@ -45,7 +45,13 @@ export class SidebarFieldsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.service.selectedFields.next(this.treeSource);
+    // this.service.sidebar = this.treeSource;
+    this.treeSource.changes.subscribe(value => {
+      this.service.sidebar = this.treeSource;
+    })
+    this.filterControl.valueChanges.subscribe(value => {
+
+    });
   }
 
   hasChild = (_: number, node: any) => !!node.fields && node.fields.length > 0;
@@ -71,7 +77,6 @@ export class SidebarFieldsComponent implements OnInit {
 
   drop(event: CdkDragDrop<any>) {
     if (!event.item.data.isSelected) {
-
       this.toggleNode(event.item.data);
     }
   }
@@ -105,33 +110,35 @@ export class SidebarFieldsComponent implements OnInit {
     this.closePop();
   }
 
-  filterTree(filter: string) {
-    console.log('filterTree', filter, this.treeControl);
+
+  shouldRender(node) {
+    if (!this.filterControl.value) return true;
+    return  this.filterControl.value && node.name.toString().toLowerCase().startsWith(this.filterControl.value);
   }
 
   toggleParentNode(node: any): void {
-    const descendants = this.treeControl.getDescendants(node);
-    node.isSelected = !node.isSelected;
-    for (let descendant of descendants) {
-      descendant.isSelected = node.isSelected;
-    }
-    if (node.isSelected) {
-      if (!node.isExpanded) {
-        this.treeControl.expandDescendants(node);
-      }
-    } else {
-      if (node.isExpanded) {
-        this.treeControl.collapseDescendants(node);
-      }
-    }
-      this.service.selectedFields.next(this.treeControl.expansionModel.selected.filter(field => field.isSelected));
+    this.treeSource.setActive(node, !node.isActive);
+    if (node.isActive && !node.expanded) this.treeControl.expandDescendants(node);
+    else if (node.isExpanded) this.treeControl.collapseDescendants(node);
+    // if (node.isSelected) {
+    //   if (!node.isExpanded) {
+    //     this.treeControl.expandDescendants(node);
+    //   }
+    // } else {
+    //   if (node.isExpanded) {
+    //     this.treeControl.collapseDescendants(node);
+    //   }
+    // }
+    // this.treeSource.setActive(node, node.isSelected)
   }
 
   toggleNode(node: any): void {
     const ancestors = this.treeSource.getAncestors(node);
     node.isSelected = !node.isSelected;
     for (let ancestor of ancestors) {
-      ancestor.isSelected = node.isSelected;
+      if (node.isSelected) {
+        ancestor.isSelected = node.isSelected;
+      }
     }
     if (node.isSelected) {
       if (!node.isExpanded) {
@@ -139,10 +146,10 @@ export class SidebarFieldsComponent implements OnInit {
       }
     } else {
       if (node.isExpanded) {
-        this.treeControl.collapse(node);
+        this.treeControl.collapse(nwode);
       }
     }
-    this.service.selectedFields.next(this.treeControl.expansionModel.selected.filter(field => field.isSelected));
+    this.treeSource.setActive(node, node.isSelected)
 
   }
 

@@ -3,14 +3,13 @@ import { ApiService } from '@core/api.service';
 import { BehaviorSubject, Observable, of, Subject, throwError } from 'rxjs';
 import * as SymbolTree from 'symbol-tree';
 
-import { catchError, debounceTime, distinctUntilChanged, finalize, retry, tap, timeout } from 'rxjs/operators';
+import { catchError, debounceTime, distinctUntilChanged, finalize, retry, tap, timeout, filter } from 'rxjs/operators';
 
 export class TreeDataSource implements DataSource<any> {
-  private dataSubject = new BehaviorSubject<any[]>([]);
+  private dataSubject = new BehaviorSubject<any>([]);
   private childKey = 'fields';
   public count = 0;
   public sections;
-  public data$ = this.dataSubject.asObservable();
   public filters;
   public tree: SymbolTree;
 
@@ -21,8 +20,14 @@ export class TreeDataSource implements DataSource<any> {
     return this;
   }
 
+  get selectedFields() {
+    return this.dataSubject.pipe(filter(node => node.isSelected));;
+  }
+  get changes() {
+    return this.dataSubject.asObservable();
+  }
   get nodes() {
-    return this.tree['symbol'];
+    return this.tree.treeToArray(this.tree)
   }
 
   clear() {
@@ -50,13 +55,13 @@ export class TreeDataSource implements DataSource<any> {
     }
   }
 
-  connect(): Observable<any[]> {
-    return this.data$;
+  connect(_collectionViewer: CollectionViewer): Observable<any[]> {
+    return this.dataSubject;
   }
 
   disconnect(): void {
     this.dataSubject.complete();
-    // this.loadingSections.complete();
+
   }
   set data(data: any) {
     this.dataSubject.next(data);
@@ -72,7 +77,7 @@ export class TreeDataSource implements DataSource<any> {
   }
 
   get children() {
-    return this.tree.childrenToArray(this.tree)
+    return this.tree.childrenToArray()
   }
 
   getChildren(node) {
@@ -83,9 +88,39 @@ export class TreeDataSource implements DataSource<any> {
     return this.tree.ancestorsToArray(node);
   }
 
+  refresh() {
+    this.data =  this.dataSubject.getValue();
+  }
+
   setActive(node, active: boolean) {
-    console.log('setactive', active, node );
     node.isActive = active;
+    node.isSelected = active;
+    if (this.tree.hasChildren(node)) {
+      let descendants = this.tree.childrenIterator(node);
+      for (let descendant of descendants) {
+        descendant.isActive = node.isActive;
+        descendant.isSelected = node.isSelected;
+      }
+    }
+
+    // for (let ancestor of this.tree.ancestorsIterator(node)) {
+      // let children = this.getChildren(ancestor).filter(child => !child.hasChildren && child.isActive);
+      // if (children.length === 0) {
+      //   ancestor.isActive = false;
+      //   ancestor.isSelected = false;
+      // }
+      // if (this.getChildren(ancestor).filter(child => child.isActive) === 1) {
+      //   ancestor.isActive = false;
+      //   ancestor.isSelected = false;
+      //   this.getChildren(ancestor)[0].isActive = false;
+      //   this.getChildren(ancestor)[0].isSelected = false;
+      // }
+    // }
+
+
+    this.refresh();
+    // this.tree.getD node.
+    // this.CollectionViewer.
   }
 
  }

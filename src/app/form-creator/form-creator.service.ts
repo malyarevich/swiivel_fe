@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { BehaviorSubject, Subject, Observable } from 'rxjs';
+import { TreeDataSource } from './tree.datasource';
 
 @Injectable()
 export class FormCreatorService {
@@ -9,9 +10,14 @@ export class FormCreatorService {
   private sectionSubject$: BehaviorSubject<any> = new BehaviorSubject('intro');
   private sectionsSubject$: BehaviorSubject<any> = new BehaviorSubject(null);
   private eventSubject$: Subject<any> = new Subject();
-  selectedFields = new BehaviorSubject(null);
+  private sidebarSubject$: BehaviorSubject<any> = new BehaviorSubject(null);
+
   get sidebar() {
-    return this.selectedFields.asObservable();
+    return this.sidebarSubject$.asObservable();
+  }
+
+  set sidebar(data: any) {
+    this.sidebarSubject$.next(data);
   }
 
   get fields$() {
