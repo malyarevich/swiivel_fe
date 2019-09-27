@@ -46,9 +46,6 @@ export class FormCreatorComponent implements OnInit {
         console.info(`Edit form with ID ${params.get('mongo_id')}`);
       } else {
         console.info(`Create New Form`);
-        this.api.getSidebarFields().subscribe((fields) => {
-          this.service.fields = fields;
-        });
       }
     });
     this.stepperService.stepper$.subscribe((step: string) => {

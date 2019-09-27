@@ -1,0 +1,11 @@
+<sw-back-bar [title]="'Review Forms'"></sw-back-bar>
+<sw-document-approval-bar [document]="getSelectForm()"></sw-document-approval-bar>
+<div class="content">
+ <div class="sidebar">
+   <app-upload-review-form-item></app-upload-review-form-item>
+ </div>
+  <div class="workarea">
+    <app-upload-review-form-document></app-upload-review-form-document>
+  </div>
+</div>
+<app-upload-review-form-footer></app-upload-review-form-footer>

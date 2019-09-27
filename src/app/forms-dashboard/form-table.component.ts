@@ -94,9 +94,14 @@ export class FormTableComponent implements OnInit {
 
   ngOnInit() {
     this._sm = new SelectionModel(true);
-    this.dataSource.count$.subscribe(count => {
-      this.totalItems = count;
-      this.currentPage = 1;
+    this.dataSource.formsListMetadata$.subscribe(metadata => {
+      if (metadata.page > metadata.last_page) {
+        this.params.page = 1;
+        this.dataSource.loadFormsList(this.params);
+      } else {
+        this.totalItems = metadata.total;
+        this.currentPage = metadata.page;
+      }
     });
     this.dataSource.loadFormsList(this.params);
     this.filterForm.valueChanges.pipe(
@@ -108,7 +113,7 @@ export class FormTableComponent implements OnInit {
       })
     ).subscribe(value => {
       this.params.filter = { ...value };
-      this.params.page = 1;
+      
       this.dataSource.loadFormsList(this.params);
     });
     this.dataSource.$loading.subscribe((loading: boolean) => {
@@ -178,8 +183,8 @@ export class FormTableComponent implements OnInit {
 
   changePage(event) {
     if (event) {
-      this.params.limit = event.limit;
       this.params.page = event.page;
+      this.params.limit = event.limit;
       this.dataSource.loadFormsList(this.params);
     }
   }

@@ -9,8 +9,10 @@ export class FormsDataSource implements DataSource<any> {
   private formsSubject = new BehaviorSubject<any[]>([]);
   private dataSubject = new BehaviorSubject<any[]>([]);
   private loadingSubject = new BehaviorSubject<boolean>(false);
-  private countData: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   public $loading = this.loadingSubject.asObservable();
+
+  private defaultMetadata = {page: 1, last_page: 1, count: 0, limit: 10, total: 0};
+  private metadata: BehaviorSubject<any> = new BehaviorSubject<any>(this.defaultMetadata);
 
   constructor(private dataService: DataCollectionService) {
     this.dataSubject.subscribe((data) => {
@@ -27,8 +29,8 @@ export class FormsDataSource implements DataSource<any> {
     });
   }
 
-  get count$() {
-    return this.countData.asObservable();
+  get formsListMetadata$() {
+    return this.metadata.asObservable();
   }
 
   connect(_collectionViewer: CollectionViewer): Observable<any[]> {
@@ -38,7 +40,7 @@ export class FormsDataSource implements DataSource<any> {
   disconnect(_collectionViewer: CollectionViewer): void {
     this.formsSubject.complete();
     this.loadingSubject.complete();
-    this.countData.complete();
+    this.metadata.complete();
   }
 
   loadFormsList(params: FormSearchParams = { page: 0, limit: 10 }) {
@@ -47,8 +49,10 @@ export class FormsDataSource implements DataSource<any> {
       catchError(() => of([])),
       finalize(() => this.loadingSubject.next(false))
     ).subscribe(forms => {
+      // All fields except data are metadata.
+      const { data, ...metadata } = forms;
+      this.metadata.next(metadata);
       this.loadingSubject.next(false);
-      this.countData.next(parseInt(forms.total));
       this.dataSubject.next(forms.data);
     });
   }

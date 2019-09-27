@@ -8,6 +8,7 @@ import { TreeModule } from 'angular-tree-component';
 
 import { AppComponent } from './app.component';
 
+import { UploadReviewFormModule } from '@app/upload-review-form/upload-review-form.module';
 import { AuthGuard } from '@core/auth.guard';
 import { AuthInterceptor } from '@core/auth.interceptor';
 import { AuthService } from '@core/auth.service';
@@ -23,7 +24,6 @@ export function onInit(authService: AuthService) {
 }
 
 import { OverlayModule } from '@angular/cdk/overlay';
-// todo: delete after routing
 import { PopupComponent } from '@core/components/popup/popup.component';
 
 @NgModule({
@@ -43,7 +43,8 @@ import { PopupComponent } from '@core/components/popup/popup.component';
     FormsModule,
     SharedModule,
     AppRoutingModule,
-    OverlayModule
+    OverlayModule,
+    UploadReviewFormModule,
   ],
   entryComponents: [
     PopupComponent,

@@ -1,4 +1,4 @@
-<cdk-tree [dataSource]="treeSource" [treeControl]="treeControl">
+<cdk-tree [dataSource]="treeSource" [treeControl]="treeControl" cdkDropList id="fields-list" >
   <cdk-nested-tree-node *cdkTreeNodeDef="let node" cdkTreeNodePadding cdkTreeNodePaddingIndent="15px"
     [style.display]="shouldRender(node) ? 'flex' : 'none'" class="field-workarea-node">
     <!-- use a disabled button to provide padding for tree leaf -->

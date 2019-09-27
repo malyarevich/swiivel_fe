@@ -3,12 +3,11 @@ import { Component, OnInit, ChangeDetectionStrategy, ViewChild, ChangeDetectorRe
 import { FormControl, FormBuilder } from '@angular/forms';
 import { ApiService } from '@app/core/api.service';
 import { FormCreatorService } from '../form-creator.service';
-import { FieldService } from '@app/core/field.service';
+import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import { TreeDataSource } from '../tree.datasource';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Popup } from '@app/core/popup.service';
-import { tree } from '../tree.datasource';
-import fields from '@app/shared/fields';
+// import fields from '@app/shared/fields';
 
 
 
@@ -19,14 +18,14 @@ import fields from '@app/shared/fields';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SidebarFieldsComponent implements OnInit {
-
+  filterControl = new FormControl();
   checklistSelection = new SelectionModel<any>(true);
-  treeSource = new TreeDataSource([]);
-  treeControl = new NestedTreeControl<any>(this.getChildren);
+  treeSource = new TreeDataSource('Fields');
+  treeControl = new NestedTreeControl<any>(node => node.fields);
   delFieldName: string;
   delInput: FormControl = new FormControl(null);
   ref: any;
-
+  @ViewChild('filter', { static: false}) filterNames;
   @ViewChild('deletePop', { static: false }) deletePop;
 
   constructor(
@@ -36,23 +35,23 @@ export class SidebarFieldsComponent implements OnInit {
     private popup: Popup,
     private cdr: ChangeDetectorRef
     ) {
-    this.service.fieldChanges.subscribe(fields => {
-      console.log('service value changes', fields)
-      if (fields) { this.treeSource.nodes = fields; }
-      this.cdr.markForCheck()
-    });
-  }
-
-  getChildren(node) {
-    return tree.childrenToArray(node);
+      this.api.getSidebarFields().subscribe((fields) => {
+        this.treeSource.build(fields);
+      });
   }
 
   activate(node, event) {
-    console.log(node)
     return event;
   }
 
   ngOnInit() {
+    // this.service.sidebar = this.treeSource;
+    this.treeSource.changes.subscribe(value => {
+      this.service.sidebar = this.treeSource;
+    })
+    this.filterControl.valueChanges.subscribe(value => {
+
+    });
   }
 
   hasChild = (_: number, node: any) => !!node.fields && node.fields.length > 0;
@@ -68,14 +67,18 @@ export class SidebarFieldsComponent implements OnInit {
   }
 
   customFieldToggle(node) {
-    console.log(this.treeSource);
     node.formVisible = !(!!node.formVisible);
   }
 
   showCreateField(node) {
-    // node.formVisible = !(!!node.formVisible);
     return node.formVisible;
-    // return false;
+  }
+
+
+  drop(event: CdkDragDrop<any>) {
+    if (!event.item.data.isSelected) {
+      this.toggleNode(event.item.data);
+    }
   }
 
 
@@ -107,32 +110,35 @@ export class SidebarFieldsComponent implements OnInit {
     this.closePop();
   }
 
-  filterTree(filter: string) {
-    console.log('filterTree', filter, this.treeControl);
+
+  shouldRender(node) {
+    if (!this.filterControl.value) return true;
+    return  this.filterControl.value && node.name.toString().toLowerCase().startsWith(this.filterControl.value);
   }
 
   toggleParentNode(node: any): void {
-    const descendants = this.treeControl.getDescendants(node);
-    node.isSelected = !node.isSelected;
-    for (let descendant of descendants) {
-      descendant.isSelected = node.isSelected;
-    }
-    if (node.isSelected) {
-      if (!node.isExpanded) {
-        this.treeControl.expandDescendants(node);
-      }
-    } else {
-      if (node.isExpanded) {
-        this.treeControl.collapseDescendants(node);
-      }
-    }
+    this.treeSource.setActive(node, !node.isActive);
+    if (node.isActive && !node.expanded) this.treeControl.expandDescendants(node);
+    else if (node.isExpanded) this.treeControl.collapseDescendants(node);
+    // if (node.isSelected) {
+    //   if (!node.isExpanded) {
+    //     this.treeControl.expandDescendants(node);
+    //   }
+    // } else {
+    //   if (node.isExpanded) {
+    //     this.treeControl.collapseDescendants(node);
+    //   }
+    // }
+    // this.treeSource.setActive(node, node.isSelected)
   }
 
   toggleNode(node: any): void {
     const ancestors = this.treeSource.getAncestors(node);
     node.isSelected = !node.isSelected;
     for (let ancestor of ancestors) {
-      ancestor.isSelected = node.isSelected;
+      if (node.isSelected) {
+        ancestor.isSelected = node.isSelected;
+      }
     }
     if (node.isSelected) {
       if (!node.isExpanded) {
@@ -143,6 +149,8 @@ export class SidebarFieldsComponent implements OnInit {
         this.treeControl.collapse(node);
       }
     }
+    this.treeSource.setActive(node, node.isSelected)
+
   }
 
   descendantsAllSelected(node: any): boolean {

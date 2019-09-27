@@ -7,6 +7,7 @@ import { Popup } from '@app/core/popup.service';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { TreeDataSource } from '../tree.datasource';
 import { SelectionModel } from '@angular/cdk/collections';
+import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 
 import { SidebarDocumentsFormsComponent } from './documents-forms.component';
 import { SidebarConsentComponent } from './consent.component';
