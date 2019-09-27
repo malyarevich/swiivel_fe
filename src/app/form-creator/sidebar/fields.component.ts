@@ -3,7 +3,7 @@ import { Component, OnInit, ChangeDetectionStrategy, ViewChild, ChangeDetectorRe
 import { FormControl, FormBuilder } from '@angular/forms';
 import { ApiService } from '@app/core/api.service';
 import { FormCreatorService } from '../form-creator.service';
-// import { FieldService } from '@app/core/field.service';
+import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import { TreeDataSource } from '../tree.datasource';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Popup } from '@app/core/popup.service';
@@ -38,27 +38,9 @@ export class SidebarFieldsComponent implements OnInit {
       this.api.getSidebarFields().subscribe((fields) => {
         this.treeSource.build(fields);
       });
-    // this.service.fieldChanges.subscribe(fields => {
-    //
-    //   // console.log('service value changes', fields)
-    //   // if (fields) { this.treeSource.nodes = fields; }
-    //   this.cdr.markForCheck()
-    // });
   }
 
-  // getChildren(node) {
-  //   console.log(this);
-  //   console.log(this.treeSource)
-  //   console.log(node)
-  //   // console.log(this);
-  //   // let c = node[].childrenToArray(node);
-  //   // console.log(c);
-  //   return node.getChildren();
-  //   // return node
-  // }
-
   activate(node, event) {
-    console.log(node)
     return event;
   }
 
@@ -83,9 +65,15 @@ export class SidebarFieldsComponent implements OnInit {
   }
 
   showCreateField(node) {
-    // node.formVisible = !(!!node.formVisible);
     return node.formVisible;
-    // return false;
+  }
+
+
+  drop(event: CdkDragDrop<any>) {
+    if (!event.item.data.isSelected) {
+
+      this.toggleNode(event.item.data);
+    }
   }
 
 

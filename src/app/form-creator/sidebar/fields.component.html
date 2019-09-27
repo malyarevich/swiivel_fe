@@ -6,7 +6,8 @@
     <i class="icon fas fa-search"></i>
   </div>
 
-  <cdk-tree [dataSource]="treeSource" [treeControl]="treeControl" cdkDropList>
+  <cdk-tree [dataSource]="treeSource" [treeControl]="treeControl" cdkDropList  cdkDropListSortingDisabled
+    (cdkDropListDropped)="drop($event)">
 
     <cdk-nested-tree-node *cdkTreeNodeDef="let node" class="field-tree-node" cdkDrag [cdkDragData]="node">
       <div class="field-tree-node__content">
@@ -24,11 +25,12 @@
     </cdk-nested-tree-node>
 
 
-    <cdk-nested-tree-node *cdkTreeNodeDef="let node; when: hasChild" class="field-tree-node" cdkDrag
-      [cdkDragData]="node">
+
+
+    <cdk-nested-tree-node *cdkTreeNodeDef="let node; when: hasChild" class="field-tree-node" >
       <div class="field-tree-node__content">
 
-        <div class="field-tree-node__content_node" [class.expanded]="treeControl.isExpanded(node)">
+        <div class="field-tree-node__content_node" [class.expanded]="treeControl.isExpanded(node)" cdkDrag [cdkDragData]="node">
           <div class="checkbox">
             <input type="checkbox" [checked]="descendantsAllSelected(node)"
               [indeterminate]="descendantsPartiallySelected(node)" (change)="toggleParentNode(node)">
