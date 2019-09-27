@@ -27,12 +27,20 @@ export class FormCreatorService {
     return this.fieldSubject$.asObservable();
   }
 
+  // set fields(fields) {
+  //   this._savedFields = fields;
+  // }
+
+  // get fields() {
+  //   return this._savedFields;
+  // }
+
   set fields(fields) {
-    this._savedFields = fields;
+    this.fieldSubject$.next(fields);
   }
 
   get fields() {
-    return this._savedFields;
+    return this.fieldSubject$.getValue();
   }
 
   set section(current: any) {

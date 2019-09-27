@@ -8,6 +8,7 @@ import { TreeDataSource } from '../tree.datasource';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Popup } from '@app/core/popup.service';
 import { tree } from '../tree.datasource';
+import fields from '@app/shared/fields';
 
 
 
@@ -33,10 +34,12 @@ export class SidebarFieldsComponent implements OnInit {
     private fb: FormBuilder,
     private api: ApiService,
     private popup: Popup,
-    private cdr: ChangeDetectorRef) {
-    this.api.getSidebarFields().subscribe((fields) => {
-      this.treeSource.nodes = fields;
-      this.cdr.markForCheck();
+    private cdr: ChangeDetectorRef
+    ) {
+    this.service.fieldChanges.subscribe(fields => {
+      console.log('service value changes', fields)
+      if (fields) { this.treeSource.nodes = fields; }
+      this.cdr.markForCheck()
     });
   }
 

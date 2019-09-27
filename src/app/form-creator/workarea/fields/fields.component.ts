@@ -32,22 +32,28 @@ export class WorkareaFieldsComponent implements AfterViewInit, OnInit, OnDestroy
   treeControl = new NestedTreeControl<any>(node => node.fields);
 
   constructor(private service: FormCreatorService, private api: ApiService, private cdr: ChangeDetectorRef) {
-    this.api.getSidebarFields().subscribe((sidebar) => {
-      // this.sidebar = sidebar;
-      // this.fieldsTree = this.fs.toFlatTree(this.sidebar.slice());
-      this.treeSource = sidebar;
+    // this.api.getSidebarFields().subscribe((sidebar) => {
+    //   // this.sidebar = sidebar;
+    //   // this.fieldsTree = this.fs.toFlatTree(this.sidebar.slice());
+    //   this.treeSource = sidebar;
+    //   this.cdr.markForCheck();
+    // })
+    this.service.fieldChanges.subscribe(fields => {
+      if (fields) {
+        this.treeSource = fields;
+      }
       this.cdr.markForCheck();
-    })
+    });
   }
 
   ngOnInit() {
 
-    if (this.service.fields) {
-      this.treeSource = this.service.fields;
-      // this.tree.treeModel.setState(this.service.fields);
-      // this.tree.treeModel.update();
-      this.cdr.detectChanges();
-    }
+    // if (this.service.fields) {
+    //   this.treeSource = this.service.fields;
+    //   // this.tree.treeModel.setState(this.service.fields);
+    //   // this.tree.treeModel.update();
+    //   this.cdr.detectChanges();
+    // }
   }
   ngOnDestroy() {
     // this.service.fields = this.tree.treeModel.getState()
@@ -88,7 +94,8 @@ export class WorkareaFieldsComponent implements AfterViewInit, OnInit, OnDestroy
     // const parent = this.getParentNode(node);
     // const should = !parent || parent.expanded;
     // return should;
-    return !node.isSelected;
+    return !!node.isSelected;
+    // return true;
   }
 
   settingsTogle(node: any)  {

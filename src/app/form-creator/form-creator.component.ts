@@ -8,6 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CdkStepper } from '@angular/cdk/stepper';
 import { StepperService } from '@shared/stepper.service';
 import { FormCreatorService } from './form-creator.service';
+import { ApiService } from '@app/core/api.service';
 
 @Component({
   selector: 'sw-form-creator',
@@ -31,7 +32,11 @@ export class FormCreatorComponent implements OnInit {
 
   @ViewChild('stepper', { static: false }) steppert: CdkStepper;
 
-  constructor(private route: ActivatedRoute, private service: FormCreatorService, private stepperService: StepperService) {
+  constructor(
+    private route: ActivatedRoute,
+    private service: FormCreatorService,
+    private stepperService: StepperService,
+    private api: ApiService) {
 
    }
 
@@ -41,6 +46,9 @@ export class FormCreatorComponent implements OnInit {
         console.info(`Edit form with ID ${params.get('mongo_id')}`);
       } else {
         console.info(`Create New Form`);
+        this.api.getSidebarFields().subscribe((fields) => {
+          this.service.fields = fields;
+        });
       }
     });
     this.stepperService.stepper$.subscribe((step: string) => {
