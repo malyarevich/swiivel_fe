@@ -27,9 +27,7 @@ export class SidebarComponent implements OnInit {
     consent: SidebarConsentComponent,
     tac: SidebarTermsConditionsComponent
   }
-  // treeControl = new NestedTreeControl<any>(node => node.fields);
-  // checklistSelection = new SelectionModel<any>(true);
-  // treeSource = new TreeDataSource();
+  // trataSource();
   expandedSection: string;
   sections: FormGroup;
   expanded: boolean = false;

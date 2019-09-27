@@ -31,11 +31,12 @@ export class WorkareaFieldsComponent implements AfterViewInit, OnInit, OnDestroy
   treeControl = new NestedTreeControl<any>(node => node.fields);
 
   constructor(private service: FormCreatorService, private api: ApiService, private cdr: ChangeDetectorRef) {
-    let s = this.service.sidebar;
-    s.subscribe(fields => {
-      console.log(fields);
-      this.cdr.markForCheck();
-    });
+    this.service.sidebar.subscribe(sidebar => {
+      sidebar.selectedFields.subscribe((fields) => {
+        console.log(fields);
+        this.treeSource.update(fields);
+      });
+    })
   }
 
   ngOnInit() {
@@ -77,6 +78,7 @@ export class WorkareaFieldsComponent implements AfterViewInit, OnInit, OnDestroy
     return 'Group type';
   }
   shouldRender(node: any) {
+    // this.treeControl.
     // const parent = this.getParentNode(node);
     // const should = !parent || parent.expanded;
     // return should;

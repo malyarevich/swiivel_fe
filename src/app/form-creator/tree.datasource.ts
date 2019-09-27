@@ -3,14 +3,13 @@ import { ApiService } from '@core/api.service';
 import { BehaviorSubject, Observable, of, Subject, throwError } from 'rxjs';
 import * as SymbolTree from 'symbol-tree';
 
-import { catchError, debounceTime, distinctUntilChanged, finalize, retry, tap, timeout } from 'rxjs/operators';
+import { catchError, debounceTime, distinctUntilChanged, finalize, retry, tap, timeout, filter } from 'rxjs/operators';
 
 export class TreeDataSource implements DataSource<any> {
-  private dataSubject = new BehaviorSubject<any[]>([]);
+  private dataSubject = new BehaviorSubject<any>([]);
   private childKey = 'fields';
   public count = 0;
   public sections;
-  public data$ = this.dataSubject.asObservable();
   public filters;
   public tree: SymbolTree;
 
@@ -21,8 +20,12 @@ export class TreeDataSource implements DataSource<any> {
     return this;
   }
 
+  get selectedFields() {
+    return this.dataSubject.pipe(filter(node => node.isSelected));;
+  }
+
   get nodes() {
-    return this.tree['symbol'];
+    return this.tree.treeToArray(this.tree)
   }
 
   clear() {
@@ -51,12 +54,12 @@ export class TreeDataSource implements DataSource<any> {
   }
 
   connect(): Observable<any[]> {
-    return this.data$;
+    return this.dataSubject.asObservable();
   }
 
   disconnect(): void {
     this.dataSubject.complete();
-    // this.loadingSections.complete();
+
   }
   set data(data: any) {
     this.dataSubject.next(data);
@@ -72,7 +75,7 @@ export class TreeDataSource implements DataSource<any> {
   }
 
   get children() {
-    return this.tree.childrenToArray(this.tree)
+    return this.tree.childrenToArray()
   }
 
   getChildren(node) {
@@ -84,7 +87,6 @@ export class TreeDataSource implements DataSource<any> {
   }
 
   setActive(node, active: boolean) {
-    console.log('setactive', active, node );
     node.isActive = active;
   }
 
