@@ -3,6 +3,12 @@
 <div class="content">
  <div class="sidebar">
    <app-upload-review-form-item></app-upload-review-form-item>
+   <div class="buttons">
+     <input type="file"
+            id="file"
+            (change)="handleFileInput($event.target.files)">
+   </div>
+   <sw-button (click)="uploadFile()">Upload Document</sw-button>
  </div>
   <div class="workarea">
     <app-upload-review-form-document></app-upload-review-form-document>
