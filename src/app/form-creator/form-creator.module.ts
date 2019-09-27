@@ -26,6 +26,7 @@ import { WorkareaComponent } from './workarea/workarea.component';
 
 import { CdkTreeModule } from '@angular/cdk/tree';
 import { FormCreatorService } from './form-creator.service';
+import { GeneralComponent } from './general/general.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { FormCreatorService } from './form-creator.service';
     SidebarDocumentsFormsComponent,
     SidebarConsentComponent,
     SidebarTermsConditionsComponent,
+    GeneralComponent,
   ],
   imports: [
     CommonModule,
