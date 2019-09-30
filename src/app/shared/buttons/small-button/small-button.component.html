@@ -1,7 +1,7 @@
-<button class="small-button" (click)="onButtonClick()">
+<button class="small-button" data-e2e="small-button" (click)="onButtonClick()">
   <i
     *ngIf="icon"
     [ngClass]="{ 'small-button__icon--text': text }"
     class="{{ iconClass }}"></i>
-  <span *ngIf="text" class="small-button__text">{{ text }}</span>
+  <span *ngIf="text" class="small-button__text" data-e2e="small-button__text">{{ text }}</span>
 </button>
