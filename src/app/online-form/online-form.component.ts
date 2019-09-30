@@ -28,9 +28,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
   form: Form;
   fg: FormGroup;
 
-  // formNavigationState: object[];
   formNavigationState$: BehaviorSubject<object[]> = new BehaviorSubject(null);
-  // pagesPercents: object[] = [];
   pagesPercents$: BehaviorSubject<object[]> = new BehaviorSubject([]);
   currentPosition$: BehaviorSubject<object> = new BehaviorSubject({});
 
@@ -69,8 +67,6 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
       this.initPercents();
       this.initPosition();
       this.initFormControls();
-      console.log(this.onlineFormService.getFormGroup());
-      // throw new Error(JSON.stringify(this.formNavigationState$.getValue()));
       if (this.onlineFormService.getFormGroup()) {
         this._isReady$.next(true);
       }
@@ -98,7 +94,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
       const tabs = <ISectionTab[]>this.tabsByPage(page["page"]);
       return {page: page['page'], tabs};
     });
-    console.log(newState);
+  
     newState = newState.filter(page => {
       const isEmpty = Object.values(mainMenuNames).find(item => {
         return page['tabs'][0]['_id'] === item;
@@ -287,7 +283,6 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
   initPercents() {
     this.formNavigationState$.getValue().forEach(item => {
       this.pagesPercents$.next([...this.pagesPercents$.getValue(), { page: item["page"], percent: -1 }]);
-      console.log(this.pagesPercents$.getValue());
     });
   }
 
