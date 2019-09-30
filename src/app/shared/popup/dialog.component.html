@@ -2,10 +2,10 @@
 </div>
 
 <ng-template #list>
-  <div class="dialog_container">
-    <div class="dialog_header">
+  <div class="dialog_container" data-e2e="popupbody">
+    <div class="dialog_header" data-e2e="dialogheader">
       <div class="dialog_title">
-        <div class="dialog_title__text">{{ title }}</div>
+        <div class="dialog_title__text" data-e2e="popuptitle">{{ title }}</div>
           <!--<sw-input-toggle>-->
             <!--<span>Select All</span>-->
           <!--</sw-input-toggle>-->
@@ -14,14 +14,14 @@
         <i class="fas fa-times" (click)="close(false)"></i>
       </div>
     </div>
-    <div class="dialog_body">
+    <div class="dialog_body" data-e2e="dialogbody">
       <ng-content></ng-content>
     </div>
-    <div class="dialog_footer">
-      <div class="dialog_footer__button">
+    <div class="dialog_footer" data-e2e="dialog_footer">
+      <div class="dialog_footer__button" data-e2e="dialog_footer__button_cancel">
         <sw-button (click)="close(false)" [style]="'white'">Cancel</sw-button>
       </div>
-      <div class="dialog_footer__button">
+      <div class="dialog_footer__button" data-e2e="dialog_footer__button_action">
         <sw-button (click)="close(true)">{{ action }}</sw-button>
       </div>
     </div>
