@@ -9,7 +9,7 @@
   </sw-input-toggle>
 
   <sw-input-checkbox formControlName="checkbox">
-    <span class="input_label">default value</span>
+    <span class="label">default value</span>
   </sw-input-checkbox>
 
   <sw-input-button-group formControlName="buttonGroup" [options]="buttons"></sw-input-button-group>
@@ -39,3 +39,5 @@
 <button type="button" (click)="changeTextarea()">Change textarea value</button>
 <button type="button" (click)="changeTextarea(true)">Change textarea size</button>
 <button [routerLink]="['/upload-review-form', '5d8ddc0e8ffb08460b4c2e02']">Go to Form Upload</button>
+
+<pre>{{form.value | json}}</pre>
