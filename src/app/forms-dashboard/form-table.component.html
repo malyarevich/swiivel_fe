@@ -14,10 +14,10 @@
         </sw-block-header>
       </div>
       <div class="app-form-table__controls">
-        <div class="app-form-table__controls-button">
+        <div class="app-form-table__controls-button" data-e2e ="createnewformbutton">
           <sw-button routerLink="/form-creator">Create New Form</sw-button>
         </div>
-        <div class="app-form-table__controls-bulk">
+        <div class="app-form-table__controls-bulk" data-e2e ="bulkactions">
           <sw-dropdown-select [options]="bulkOptions" #bulk="dropdown" (selected)="bulkAction($event)"
             [panelClass]="'app-form-table-dropdown-overlay'" [disabled]="disabledBulkBtn">
             <sw-button [disabled]="disabledBulkBtn">

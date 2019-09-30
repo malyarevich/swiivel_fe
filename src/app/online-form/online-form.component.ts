@@ -6,7 +6,7 @@ import {
 } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { FormGroup, FormControl } from "@angular/forms";
-import { BehaviorSubject, Observable, Subscription } from "rxjs";
+import { BehaviorSubject, Observable, Subscription, Subject, pipe } from "rxjs";
 import { Form } from "@app/models/data-collection/form";
 import { OnlineFormService } from "./services/online-form.service";
 import {
@@ -15,6 +15,7 @@ import {
   menuItems,
   mainMenuNames
 } from "./models/menu.model";
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: "sw-online-form",
@@ -22,7 +23,7 @@ import {
   styleUrls: ["./online-form.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class OnlineFormComponent implements OnInit {
+export class OnlineFormComponent implements OnInit, OnDestroy {
   formId: string;
   form: Form;
   fg: FormGroup;
@@ -31,7 +32,7 @@ export class OnlineFormComponent implements OnInit {
   pagesPercents: object[] = [];
   currentPosition$: BehaviorSubject<object> = new BehaviorSubject({});
 
-  saveFormSubscription: Subscription;
+  destroyedSaveForm$ = new Subject();
   _isReady$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(
@@ -78,7 +79,7 @@ export class OnlineFormComponent implements OnInit {
   }
 
   initNavigation(): void {
-    if(!this.formNavigationState) {
+    if (!this.formNavigationState) {
       this.initNavigationState();
       this.initTabsForEachPage();
     }
@@ -97,11 +98,9 @@ export class OnlineFormComponent implements OnInit {
   initConsentInfo(): any[] {
     let tabs = [];
     if (this.form.consentInfo && this.form.consentInfo.consents.length > 0) {
-      tabs = Object.values(this.form.consentInfo.consents).map(
-        item => {
-          return { _id: item["id"], name: item["title"] };
-        }
-      );
+      tabs = Object.values(this.form.consentInfo.consents).map(item => {
+        return { _id: item["id"], name: item["title"] };
+      });
     } else {
       tabs.push({ _id: mainMenuNames.consentInfo, name: "Consent section" });
     }
@@ -286,41 +285,96 @@ export class OnlineFormComponent implements OnInit {
   initConsentFormControls() {
     if (this.form.consentInfo && this.form.consentInfo.consents.length > 0) {
       const consentKeys = [
-        '_agree',
-        '_external_parent',
-        '_external_father',
-        '_external_mother',
-        '_system_parent',
-        '_system_father',
-        '_system_mother',
-        '_wet_parent',
-        '_wet_father',
-        '_wet_mother'
+        "__agree",
+        "__external_parent",
+        "__external_father",
+        "__external_mother",
+        "__system_parent",
+        "__system_father",
+        "__system_mother",
+        "__wet_parent",
+        "__wet_father",
+        "__wet_mother"
       ];
 
       consentKeys.forEach(key => {
         Object.values(this.form.consentInfo.consents).forEach(item => {
           if (item["id"]) {
             // const aValidators = !this.field.options.readonly ? Validators.compose(this.getComposed()) : {};
-            this.fg.addControl(item["id"] + key, new FormControl(
-              {
-                value: this.form.fieldsData[item["id"] + key],
-                disabled: false
-              },
-              // aValidators
-            ));
+            this.fg.addControl(
+              item["id"] + key,
+              new FormControl(
+                {
+                  value: this.form.fieldsData[item["id"] + key],
+                  disabled: false
+                }
+                // aValidators
+              )
+            );
           }
-        })
-      })
+        });
+      });
+    }
+  }
+
+  initTermsConditionsFormControls() {
+    if (
+      this.form.termsConditions &&
+      this.form.termsConditions.termsConditionsItems.length > 0
+    ) {
+      const termsConditionsKeys = [
+        "termsConditions__external_parent",
+        "termsConditions__external_father",
+        "termsConditions__external_mother",
+        "termsConditions__system_parent",
+        "termsConditions__system_father",
+        "termsConditions__system_mother",
+        "termsConditions__wet_parent",
+        "termsConditions__wet_father",
+        "termsConditions__wet_mother"
+      ];
+
+      termsConditionsKeys.forEach(key => {
+        // const aValidators = !this.field.options.readonly ? Validators.compose(this.getComposed()) : {};
+        this.fg.addControl(
+          key,
+          new FormControl(
+            {
+              value: this.form.fieldsData[key],
+              disabled: false
+            }
+            // aValidators
+          )
+        );
+      });
+
+      Object.values(this.form.termsConditions.termsConditionsItems).forEach(
+        item => {
+          if (item["id"]) {
+            // const aValidators = !this.field.options.readonly ? Validators.compose(this.getComposed()) : {};
+            this.fg.addControl(
+              item["id"] + "__agree",
+              new FormControl(
+                {
+                  value: this.form.fieldsData[item["id"] + "__agree"],
+                  disabled: false
+                }
+                // aValidators
+              )
+            );
+          }
+        }
+      );
     }
   }
 
   initFormControls() {
     this.initConsentFormControls();
+    this.initTermsConditionsFormControls();
   }
 
   goToPage(pageName) {
-    this.currentPosition$.next({ page: pageName, tab: 0});
+    this.currentPosition$.next({ page: pageName, tab: 0 });
   }
 
   goToTab(tabIndex) {
@@ -350,7 +404,6 @@ export class OnlineFormComponent implements OnInit {
 
   goPreviousStep() {
     this.goToPreviousStep();
-    // console.log("goPreviousStep");
   }
 
   goToNextStep() {
@@ -378,21 +431,19 @@ export class OnlineFormComponent implements OnInit {
   }
 
   saveAndNextStep() {
-    this.onlineFormService
-      .sendForm({
-        fieldsData: this.fg.value,
-        pagesPercents: this.pagesPercents
-      })
-      .subscribe(() => {
-        this.goToNextStep();
-      });
-    // console.log("saveAndNextStep");
+    const savingObj = {
+      pagesPercents: this.pagesPercents
+    };
+    //TODO: change to commented code when back-end will be ready
+    // savingObj[this.currentPosition$.value["page"]] = this.fg.value;
+    savingObj["fieldsData"] = this.fg.value;
+    this.onlineFormService.sendForm(savingObj).pipe(takeUntil(this.destroyedSaveForm$)).subscribe(() => {
+      this.goToNextStep();
+    });
   }
 
   ngOnDestroy(): void {
     this._isReady$.unsubscribe();
-    if (this.saveFormSubscription) {
-      this.saveFormSubscription.unsubscribe();
-    }
+    this.destroyedSaveForm$.next();
   }
 }
