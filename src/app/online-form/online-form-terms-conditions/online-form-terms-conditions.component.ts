@@ -1,12 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { FormGroup } from "@angular/forms";
+import { cloneDeep } from 'lodash';
 import { Form } from "@app/models/data-collection/form";
-import {
-  menuItems,
-  mainMenuNames,
-  IMainMenuNames,
-  IMenuItems
-} from "../models/menu.model";
 
 @Component({
   selector: "sw-online-form-terms-conditions",
@@ -20,12 +15,24 @@ export class OnlineFormTermsConditionsComponent implements OnInit {
   @Input() formErrors: any;
   @Input() fg: FormGroup;
 
-  menuItems: IMenuItems[] = menuItems;
-  mainMenuNames: IMainMenuNames = mainMenuNames;
+  termsConditions: any[];
 
-  signature: any;
+  sections: object[];
+  activeSectionId: string;
 
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.initTermsConditions();
+  }
+
+  initTermsConditions() {
+    this.termsConditions = cloneDeep(this.form.termsConditions.termsConditionsItems).map(item => {
+      return { ...item, _id: item.id, name: item.title };
+    });
+  }
+
+  isShowTermsConditions (termsConditionsIndex: number): boolean {
+    return this.currentPosition['tab'] === termsConditionsIndex;
+  }
 }

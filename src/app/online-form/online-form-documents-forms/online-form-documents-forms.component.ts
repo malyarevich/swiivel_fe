@@ -1,11 +1,5 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { FormGroup } from "@angular/forms";
-import {
-  menuItems,
-  mainMenuNames,
-  IMainMenuNames,
-  IMenuItems
-} from "../models/menu.model";
 import { Form } from "@app/models/data-collection/form";
 
 @Component({
@@ -20,14 +14,7 @@ export class OnlineFormDocumentsFormsComponent implements OnInit {
   @Input() formErrors: any;
   @Input() fg: FormGroup;
 
-  percent: number;
-
-  menuItems: IMenuItems[] = menuItems;
-  mainMenuNames: IMainMenuNames = mainMenuNames;
-
   sections: object[];
-
-  activeSectionId: string;
 
   constructor() {}
 

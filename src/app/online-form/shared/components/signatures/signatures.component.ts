@@ -33,9 +33,7 @@ export class SignaturesComponent implements OnInit {
 
   isDisabled: boolean = false;
 
-  constructor(
-    // private readonly systemSignatureService: SystemSignatureService
-  ) {}
+  constructor() {}
 
   ngOnInit() {}
 }

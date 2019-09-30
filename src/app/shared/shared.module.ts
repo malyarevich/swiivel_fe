@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 // Buttons
 import { ButtonComponent } from './buttons/button/button.component';
@@ -52,6 +52,7 @@ import { FormComponent } from './form.component';
   imports: [
     CommonModule,
     RouterModule,
+    FormsModule,
     ReactiveFormsModule,
     CdkStepperModule,
   ],
