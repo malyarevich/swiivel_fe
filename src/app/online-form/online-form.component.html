@@ -1,4 +1,4 @@
-<ng-container *ngIf="isReady$ | async">
+<ng-container *ngIf="(isReady$ | async)">
 
   <sw-online-form-nav
     [formName]="form?.name"
@@ -10,8 +10,8 @@
     <div class="online_form_container__nav">
       <sw-online-form-menu
         [form]="form"
-        [pagesPercents]="pagesPercents"
-        [formNavigationState]="formNavigationState"
+        [pagesPercents]="(pagesPercents$ | async)"
+        [formNavigationState]="(formNavigationState$ | async)"
         [currentPosition]="(currentPosition$ | async)"
         (onGoToPage)="goToPage($event)"
       ></sw-online-form-menu>
@@ -22,7 +22,7 @@
         <sw-online-form-view
           [form]="form"
           [fg]="fg"
-          [formNavigationState]="formNavigationState"
+          [formNavigationState]="(formNavigationState$ | async)"
           [currentPosition]="(currentPosition$ | async)"
           [formErrors]="formErrors"
           (onGoToTab)="goToTab($event)"
@@ -39,6 +39,6 @@
 
   </div>
 </ng-container>
-<ng-container *ngIf="!isReady$ | async">
+<ng-container *ngIf="!(isReady$ | async)">
   <sw-main-spinner class="spinner_box"></sw-main-spinner>
 </ng-container>

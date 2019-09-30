@@ -7,7 +7,7 @@ import {
 import { ActivatedRoute } from "@angular/router";
 import { FormGroup, FormControl } from "@angular/forms";
 import { BehaviorSubject, Observable, Subscription, Subject, pipe } from "rxjs";
-import { Form } from "@app/models/data-collection/form";
+import { Form, ISectionTab } from "@app/models/data-collection/form";
 import { OnlineFormService } from "./services/online-form.service";
 import {
   IMenuItems,
@@ -28,8 +28,10 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
   form: Form;
   fg: FormGroup;
 
-  formNavigationState: object[];
-  pagesPercents: object[] = [];
+  // formNavigationState: object[];
+  formNavigationState$: BehaviorSubject<object[]> = new BehaviorSubject(null);
+  // pagesPercents: object[] = [];
+  pagesPercents$: BehaviorSubject<object[]> = new BehaviorSubject([]);
   currentPosition$: BehaviorSubject<object> = new BehaviorSubject({});
 
   destroyedSaveForm$ = new Subject();
@@ -67,6 +69,8 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
       this.initPercents();
       this.initPosition();
       this.initFormControls();
+      console.log(this.onlineFormService.getFormGroup());
+      // throw new Error(JSON.stringify(this.formNavigationState$.getValue()));
       if (this.onlineFormService.getFormGroup()) {
         this._isReady$.next(true);
       }
@@ -79,23 +83,33 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
   }
 
   initNavigation(): void {
-    if (!this.formNavigationState) {
+    if (!this.formNavigationState$.getValue()) {
       this.initNavigationState();
       this.initTabsForEachPage();
     }
   }
 
   initNavigationState(): void {
-    this.formNavigationState = this.getFilteredSections();
+    this.formNavigationState$.next(this.getFilteredSections());
   }
 
   initTabsForEachPage(): void {
-    this.formNavigationState = this.formNavigationState.map(page => {
-      return { ...page, tabs: this.tabsByPage(page["page"]) };
+    let newState: object[] = this.formNavigationState$.getValue().map(page => {
+      const tabs = <ISectionTab[]>this.tabsByPage(page["page"]);
+      return {page: page['page'], tabs};
     });
+    console.log(newState);
+    newState = newState.filter(page => {
+      const isEmpty = Object.values(mainMenuNames).find(item => {
+        return page['tabs'][0]['_id'] === item;
+      });
+      return !isEmpty;
+    });
+
+    this.formNavigationState$.next(newState);
   }
 
-  initConsentInfo(): any[] {
+  initConsentInfo(): ISectionTab[] {
     let tabs = [];
     if (this.form.consentInfo && this.form.consentInfo.consents.length > 0) {
       tabs = Object.values(this.form.consentInfo.consents).map(item => {
@@ -107,14 +121,14 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
     return tabs;
   }
 
-  initDocumentsForms(): any[] {
+  initDocumentsForms(): ISectionTab[] {
     const tabs = [];
     tabs.push({ _id: "documents", name: "Documents for Parents" });
     tabs.push({ _id: "pdf-forms", name: "External Forms" });
     return tabs;
   }
 
-  initGeneralInfo(): any[] {
+  initGeneralInfo(): ISectionTab[] {
     let tabs = [];
     if (this.form.fields && this.form.fields.length > 0) {
       tabs = this.form.fields.filter(item => {
@@ -126,23 +140,25 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
     return tabs;
   }
 
-  initPacketIntroduction(): any[] {
-    const tabs = [];
-    tabs.push({ _id: mainMenuNames.packetIntroduction, name: "Introduction" });
-    tabs.push({
-      _id: mainMenuNames.packetIntroduction + "2",
-      name: "Introduction 2"
-    });
+  initPacketIntroduction(): ISectionTab[] {
+    let tabs = [];
+    if (this.form.packetIntroduction && this.form.packetIntroduction.packets.length > 0) {
+      tabs = Object.values(this.form.packetIntroduction.packets).map(item => {
+        return { _id: item["id"], name: item["title"] };
+      });
+    } else {
+      tabs.push({ _id: mainMenuNames.packetIntroduction, name: "Introduction" });
+    }
     return tabs;
   }
 
-  initPayment(): any[] {
+  initPayment(): ISectionTab[] {
     const tabs = [];
     tabs.push({ _id: mainMenuNames.payment, name: "Payment section" });
     return tabs;
   }
 
-  initPaymentSettings(): any[] {
+  initPaymentSettings(): ISectionTab[] {
     const tabs = [];
     // if (
     //   this.form.paymentSettings &&
@@ -165,30 +181,32 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
     return tabs;
   }
 
-  initTermsConditions(): any[] {
+  initTermsConditions(): ISectionTab[] {
     const tabs = [];
-    // if (
-    //   this.form.termsConditions &&
-    //   this.form.termsConditions.termsConditionsItems.length > 0
-    // ) {
-    //   this.sections = Object.values(
-    //     this.form.termsConditions.termsConditionsItems
-    //   ).map(item => {
-    //     return { _id: item["id"], name: item["title"] };
-    //   });
-    // } else {
-    //   this.sections = [
-    //     { _id: "termsConditions", name: "Terms & Conditions section" }
-    //   ];
-    // }
-    tabs.push({
-      _id: mainMenuNames.termsConditions,
-      name: "Terms & Conditions section"
-    });
+    if (
+      this.form.termsConditions &&
+      this.form.termsConditions.termsConditionsItems.length > 0
+    ) {
+      // Object.values(
+      //   this.form.termsConditions.termsConditionsItems
+      // ).map(item => {
+      //   return { _id: item["id"], name: item["title"] };
+      // });
+      tabs.push({
+        _id: mainMenuNames.termsConditions + '__active',
+        name: "Terms & Conditions section"
+      });
+    } else {
+      tabs.push({
+        _id: mainMenuNames.termsConditions,
+        name: "Terms & Conditions section"
+      });
+    }
+    
     return tabs;
   }
 
-  initTuitionContract(): any[] {
+  initTuitionContract(): ISectionTab[] {
     const tabs = [];
     // if (
     //   this.form.paymentSettings &&
@@ -211,8 +229,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
     return tabs;
   }
 
-  tabsByPage(page): any[] {
-    const tabs = [];
+  tabsByPage(page): ISectionTab[] {
     switch (page) {
       case mainMenuNames.consentInfo:
         return this.initConsentInfo();
@@ -268,15 +285,16 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
   }
 
   initPercents() {
-    this.formNavigationState.map(item => {
-      this.pagesPercents.push({ page: item["page"], percent: 33 });
+    this.formNavigationState$.getValue().forEach(item => {
+      this.pagesPercents$.next([...this.pagesPercents$.getValue(), { page: item["page"], percent: -1 }]);
+      console.log(this.pagesPercents$.getValue());
     });
   }
 
   initPosition() {
-    if (this.formNavigationState.length > 0) {
+    if (this.formNavigationState$.getValue().length > 0) {
       this.currentPosition$.next({
-        page: this.formNavigationState[0]["page"],
+        page: this.formNavigationState$.getValue()[0]["page"],
         tab: 0
       });
     }
@@ -385,7 +403,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
   }
 
   goToPreviousStep() {
-    const currentPageIndex = this.formNavigationState.findIndex(page => {
+    const currentPageIndex = this.formNavigationState$.getValue().findIndex(page => {
       return page["page"] === this.currentPosition$.value["page"];
     });
     if (this.currentPosition$.value["tab"] !== 0) {
@@ -396,8 +414,8 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
     } else if (currentPageIndex !== 0) {
       this.currentPosition$.next({
         ...this.currentPosition$.value,
-        page: this.formNavigationState[currentPageIndex - 1]["page"],
-        tab: this.formNavigationState[currentPageIndex - 1]["tabs"].length - 1
+        page: this.formNavigationState$.getValue()[currentPageIndex - 1]["page"],
+        tab: this.formNavigationState$.getValue()[currentPageIndex - 1]["tabs"].length - 1
       });
     }
   }
@@ -407,10 +425,10 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
   }
 
   goToNextStep() {
-    const currentPage = this.formNavigationState.find(page => {
+    const currentPage = this.formNavigationState$.getValue().find(page => {
       return page["page"] === this.currentPosition$.value["page"];
     });
-    const currentPageIndex = this.formNavigationState.findIndex(page => {
+    const currentPageIndex = this.formNavigationState$.getValue().findIndex(page => {
       return page["page"] === this.currentPosition$.value["page"];
     });
     if (currentPage["tabs"].length > this.currentPosition$.value["tab"] + 1) {
@@ -418,10 +436,10 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
         ...this.currentPosition$.value,
         tab: this.currentPosition$.value["tab"] + 1
       });
-    } else if (currentPageIndex + 1 < this.formNavigationState.length) {
+    } else if (currentPageIndex + 1 < this.formNavigationState$.getValue().length) {
       this.currentPosition$.next({
         ...this.currentPosition$.value,
-        page: this.formNavigationState[currentPageIndex + 1]["page"],
+        page: this.formNavigationState$.getValue()[currentPageIndex + 1]["page"],
         tab: 0
       });
     } else {
@@ -432,7 +450,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
 
   saveAndNextStep() {
     const savingObj = {
-      pagesPercents: this.pagesPercents
+      pagesPercents: this.pagesPercents$.getValue()
     };
     //TODO: change to commented code when back-end will be ready
     // savingObj[this.currentPosition$.value["page"]] = this.fg.value;

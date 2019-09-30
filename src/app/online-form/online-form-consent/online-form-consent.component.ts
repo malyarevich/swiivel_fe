@@ -17,9 +17,6 @@ export class OnlineFormConsentComponent implements OnInit {
 
   consents: any[];
 
-  sections: object[];
-  activeSectionId: string;
-
   constructor() {}
 
   ngOnInit() {

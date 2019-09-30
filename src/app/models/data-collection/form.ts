@@ -28,6 +28,8 @@ export interface Form {
   consentInfo?: any;
   documents?: any;
   forms?: any;
+  packetIntroduction?: IPacketIntroduction;
+  payment?: any;
   paymentSettings?: any;
   termsConditions?: any;
   tuitionContract?: any;
@@ -43,4 +45,45 @@ export interface ISubMenus {
     online: boolean;
     pdf: boolean;
   };
+}
+
+export interface IPacketIntroduction {
+  packets: [
+    {
+      id: string;
+      text: {
+        value: string;
+      },
+      title: string;
+    }
+  ],
+  sectionName: string;
+};
+
+export interface ISectionTab {
+  _id?: string;
+  id?: string;
+  name?: string;
+  text?: {
+    value: string;
+  };
+  title?: string;
+  checkbox?: {
+    checked?: boolean;
+    isActive?: boolean;
+    text?: string;
+  }
+  signature?: ISignature;
+}
+
+export interface ISignature {
+  eType?: string;
+  isBothParents?: boolean;
+  isRequire?: boolean;
+  signed?: {
+    fathers?: boolean;
+    mothers?: boolean;
+    parents?: boolean;
+  }
+  type?: string;
 }
