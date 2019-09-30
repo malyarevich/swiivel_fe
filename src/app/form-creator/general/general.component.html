@@ -15,10 +15,10 @@
       </div>
       <div class="content">
         <div class="inputs">
-          <sw-input-text class="input">
+          <sw-input-text class="input" [formControl]="form.get('name')">
             <span class="placeholder">Form Name</span>
           </sw-input-text>
-          <sw-dropdown-input class="input">
+          <sw-dropdown-input class="input" [options]="typeOptions" [formControl]="form.get('type')">
             <span class="input_label">Form Type</span>
           </sw-dropdown-input>
         </div>
@@ -32,20 +32,35 @@
         </div>
       </div>
       <div class="content h-100">
-        <sw-input-button-group [formControl]="buttonGroup" [options]="buttonOptions"></sw-input-button-group>
-        <div class="row w-100 h-100 no-m">
+        <sw-input-button-group [(ngModel)]="dublicate" [options]="buttonOptions"></sw-input-button-group>
+        <div class="row w-100 h-100 no-m" *ngIf="dublicate">
           <div class="col-3" style="padding-left: 8px; padding-right: 8px;">
             <div class="search-wrap">
               <input class="search" [formControl]="filter" placeholder="Search" />
               <i class="icon fas fa-search"></i>
             </div>
-            <cdk-virtual-scroll-viewport itemSize="50" class="forms-viewport">
-              <div *cdkVirtualFor="let item of items" class="form-item">{{item}}</div>
+            <cdk-virtual-scroll-viewport itemSize="35" class="forms-viewport">
+              <div *cdkVirtualFor="let item of dataSource" class="form-item" [class.selected]="isSelected(item)"
+                (click)="selectForm(item)">{{item.name}}</div>
             </cdk-virtual-scroll-viewport>
           </div>
-          <div class="col-9" style="padding-left: 8px; padding-right: 8px;">
+          <div class="col-9" style="padding-left: 8px; padding-right: 8px; height: 100%;">
             <div class="form-preview">
-              l
+              <ng-container *ngIf="selectedItem; else noPdf">
+                <div class="title">
+                  <div class="name"> {{ selectedItem.name }}</div>
+                </div>
+                <div class="pdf-container">
+                    <pdf-viewer [src]="selectedItem.src"
+                    style="display: block; margin-top: 60px;" zoom="0.7"></pdf-viewer>
+                </div>
+              </ng-container>
+
+              <ng-template #noPdf>
+                <div class="no-pdf-text">
+                  Please select the form you want to use as a duplicate
+                </div>
+              </ng-template>
             </div>
           </div>
         </div>
