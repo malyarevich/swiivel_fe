@@ -6,7 +6,7 @@
     <ng-container *ngIf="signature.eType === E_SIGNATURE_TYPES['EXTERNAL']">
       <div class="signature__inputs_container" *ngIf="!signature.isBothParents">
         <sw-input-textarea
-          [formControlName]="sourcePage + '_external_parent'"
+          [formControlName]="sourcePage + '__external_parent'"
           [rows]="2"
           [readonly]="isDisabled"
         >
@@ -16,14 +16,14 @@
 
       <div class="signature__inputs_container" *ngIf="signature.isBothParents">
         <sw-input-textarea
-          [formControlName]="sourcePage + '_external_father'"
+          [formControlName]="sourcePage + '__external_father'"
           [rows]="2"
           [readonly]="isDisabled"
         >
           <span class="input_label">{{placeholderText['father']}}</span>
         </sw-input-textarea>
         <sw-input-textarea
-          [formControlName]="sourcePage + '_external_mother'"
+          [formControlName]="sourcePage + '__external_mother'"
           [rows]="2"
           [readonly]="isDisabled"
         >
@@ -47,7 +47,7 @@
         <ng-container *ngIf="!signature.isBothParents">
           <div class="signature__checkbox_container">
             <sw-input-checkbox
-              [formControlName]="sourcePage + '_system_parent'"
+              [formControlName]="sourcePage + '__system_parent'"
             >
               <span class="input_label"> {{ placeholderText["parent"] }}</span>
             </sw-input-checkbox>
@@ -58,7 +58,7 @@
         <ng-container *ngIf="signature.isBothParents">
           <div class="signature__checkbox_container">
             <sw-input-checkbox
-              [formControlName]="sourcePage + '_system_father'"
+              [formControlName]="sourcePage + '__system_father'"
             >
               <span class="input_label"> {{ placeholderText["father"] }}</span>
             </sw-input-checkbox>
@@ -67,7 +67,7 @@
 
           <div class="signature__checkbox_container">
             <sw-input-checkbox
-              [formControlName]="sourcePage + '_system_mother'"
+              [formControlName]="sourcePage + '__system_mother'"
             >
               <span class="input_label"> {{ placeholderText["mother"] }}</span>
             </sw-input-checkbox>
@@ -95,7 +95,7 @@
       *ngIf="!signature.isBothParents"
     >
       <sw-input-textarea
-        [formControlName]="sourcePage + '_wet_parent'"
+        [formControlName]="sourcePage + '__wet_parent'"
         [rows]="2"
         [readonly]="isDisabled"
       >
@@ -108,14 +108,14 @@
       *ngIf="signature.isBothParents"
     >
       <sw-input-textarea
-        [formControlName]="sourcePage + '_wet_father'"
+        [formControlName]="sourcePage + '__wet_father'"
         [rows]="2"
         [readonly]="isDisabled"
       >
         <span class="input_label">WET {{placeholderText['father']}}</span>
       </sw-input-textarea>
       <sw-input-textarea
-        [formControlName]="sourcePage + '_wet_mother'"
+        [formControlName]="sourcePage + '__wet_mother'"
         [rows]="2"
         [readonly]="isDisabled"
       >
