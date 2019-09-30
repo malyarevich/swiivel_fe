@@ -53,6 +53,14 @@ export class ApiService {
     return this.http.get(`/proxy/form-builder/form-templates`, {params});
   }
 
+  getFormsShortList(type: string = 'registration'): Observable<any> {
+    return this.http.get(`/proxy/form-builder/form-templates/short/${type}`);
+  }
+  
+  saveNewForm(form: any) {
+    return this.http.post('/proxy/form-builder/form-template', form);
+  }
+
   public download(url: string) {
     return this.http.getFile(url)
   }
