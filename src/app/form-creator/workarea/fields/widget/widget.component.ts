@@ -42,7 +42,7 @@ export class WidgetComponent implements OnInit {
     });
     this.ref.afterClosed$.subscribe(result => {
       this.ref = null;
-    })
+    });
   }
 
 }
