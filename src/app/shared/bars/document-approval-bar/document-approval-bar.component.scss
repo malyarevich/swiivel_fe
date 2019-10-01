@@ -3,6 +3,8 @@
 .document-approval-bar {
   display: flex;
   padding: 12px 10px 12px 0;
+  border-top: 1px solid $dark-grey;
+  border-bottom: 1px solid $dark-grey;
   background: #fff;
 
   &__icon-container {
@@ -13,7 +15,7 @@
 
   &__icon {
     margin: auto;
-    color: $gray-color;
+    color: $icon-dark-gray-color;
     font-size: 30px;
   }
 
@@ -33,12 +35,7 @@
   }
 
   &__status {
-    height: 15px;
-    padding: 1px 8px;
     margin: 8px 0 0;
-    border-radius: 100px;
-    font: 500 10px/13px $nunito-sans;
-    color: #fff;
   }
 
   &__buttons {

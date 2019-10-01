@@ -1,11 +1,33 @@
 <sw-back-bar [title]="'Review Forms'"></sw-back-bar>
-<sw-document-approval-bar [document]="getSelectForm()"></sw-document-approval-bar>
-<div class="content">
- <div class="sidebar">
-   <app-upload-review-form-item></app-upload-review-form-item>
- </div>
-  <div class="workarea">
-    <app-upload-review-form-document></app-upload-review-form-document>
+<div *ngIf="!documents || !documents.length">
+  <div class="app_loading">
+    <div class="app_loading__logo">i!</div>
+    <svg class="app_loading__spinner" viewBox="25 25 50 50">
+      <circle
+        class="app_loading__path"
+        cx="50"
+        cy="50"
+        r="20"
+        fill="none"
+        stroke-width="2"
+        stroke-miterlimit="10"
+      >
+      </circle>
+    </svg>
   </div>
 </div>
-<app-upload-review-form-footer></app-upload-review-form-footer>
+<div *ngIf="documents && documents.length">
+  <sw-document-approval-bar
+    [document]="getSelectForm()"></sw-document-approval-bar>
+  <div class="content">
+    <div class="sidebar">
+      <div *ngFor="let document of documents">
+        <app-upload-review-form-item [document]="document" (selected)="selectItem($event)"></app-upload-review-form-item>
+      </div>
+    </div>
+    <div class="workarea">
+      <app-upload-review-form-document></app-upload-review-form-document>
+    </div>
+  </div>
+  <app-upload-review-form-footer></app-upload-review-form-footer>
+</div>
