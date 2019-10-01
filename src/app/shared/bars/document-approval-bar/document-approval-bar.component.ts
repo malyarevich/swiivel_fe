@@ -15,5 +15,5 @@ export class DocumentApprovalBarComponent {
   public colors = ColorsEnum;
   public uploadReviewFormStatusesEnum = UploadReviewFormStatusesEnum;
 
-  constructor(private uploadReviewFormService: UploadReviewFormService) { }
+  constructor(public uploadReviewFormService: UploadReviewFormService) { }
 }
