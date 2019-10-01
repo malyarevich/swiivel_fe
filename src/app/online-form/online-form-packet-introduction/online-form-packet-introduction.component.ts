@@ -20,7 +20,7 @@ export class OnlineFormPacketIntroductionComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    console.log(this.formNavigationState);
+    // console.log(this.formNavigationState);
     if(this.formNavigationState) {
       this.initPackets();
     }

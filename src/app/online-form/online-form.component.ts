@@ -5,8 +5,14 @@ import {
   OnDestroy
 } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import { FormGroup, FormControl } from "@angular/forms";
-import { BehaviorSubject, Observable, Subscription, Subject, pipe } from "rxjs";
+import {
+  FormGroup,
+  FormControl,
+  Validators,
+  AbstractControl
+} from "@angular/forms";
+import { BehaviorSubject, Observable, Subject, pipe, Subscription } from "rxjs";
+import { takeUntil } from "rxjs/operators";
 import { Form, ISectionTab } from "@app/models/data-collection/form";
 import { OnlineFormService } from "./services/online-form.service";
 import {
@@ -15,7 +21,7 @@ import {
   menuItems,
   mainMenuNames
 } from "./models/menu.model";
-import { takeUntil } from 'rxjs/operators';
+import { SIGNATURE_TYPES, E_SIGNATURE_TYPES } from "./models/signature.model";
 
 @Component({
   selector: "sw-online-form",
@@ -31,6 +37,12 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
   formNavigationState$: BehaviorSubject<object[]> = new BehaviorSubject(null);
   pagesPercents$: BehaviorSubject<object[]> = new BehaviorSubject([]);
   currentPosition$: BehaviorSubject<object> = new BehaviorSubject({});
+
+  fgValueChangesSubscription: Subscription;
+  requiredListByPage: object = {};
+  requiredValidator = Validators.compose([Validators.required]);
+  SIGNATURE_TYPES: object = SIGNATURE_TYPES;
+  E_SIGNATURE_TYPES: object = E_SIGNATURE_TYPES;
 
   destroyedSaveForm$ = new Subject();
   _isReady$: BehaviorSubject<boolean> = new BehaviorSubject(false);
@@ -66,10 +78,40 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
       this.initNavigation();
       this.initPercents();
       this.initPosition();
+      this.initRequiredList();
       this.initFormControls();
       if (this.onlineFormService.getFormGroup()) {
         this._isReady$.next(true);
       }
+      this.fgValueChangesSubscription = this.fg.statusChanges.subscribe(() => {
+        this.pagesPercents$.next(
+          this.getRecountedPagesPercentsByPage(
+            this.currentPosition$.getValue()["page"]
+          )
+        );
+      });
+    });
+  }
+
+  calcPercentByPage(page): number {
+    const filteredList = this.requiredListByPage[page].filter(key => {
+      return (
+        this.fg.controls[key].valid && this.fg.controls[key].value !== false
+      );
+    });
+    return this.requiredListByPage[page].length > 0
+      ? Math.round(
+          (filteredList.length / this.requiredListByPage[page].length) * 100
+        )
+      : 100;
+  }
+
+  getRecountedPagesPercentsByPage(page): object[] {
+    return this.pagesPercents$.getValue().map(elem => {
+      if (page !== elem["page"]) {
+        return elem;
+      }
+      return { ...elem, percent: this.calcPercentByPage(page) };
     });
   }
 
@@ -92,12 +134,12 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
   initTabsForEachPage(): void {
     let newState: object[] = this.formNavigationState$.getValue().map(page => {
       const tabs = <ISectionTab[]>this.tabsByPage(page["page"]);
-      return {page: page['page'], tabs};
+      return { page: page["page"], tabs };
     });
-  
+
     newState = newState.filter(page => {
       const isEmpty = Object.values(mainMenuNames).find(item => {
-        return page['tabs'][0]['_id'] === item;
+        return page["tabs"][0]["_id"] === item;
       });
       return !isEmpty;
     });
@@ -138,12 +180,18 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
 
   initPacketIntroduction(): ISectionTab[] {
     let tabs = [];
-    if (this.form.packetIntroduction && this.form.packetIntroduction.packets.length > 0) {
+    if (
+      this.form.packetIntroduction &&
+      this.form.packetIntroduction.packets.length > 0
+    ) {
       tabs = Object.values(this.form.packetIntroduction.packets).map(item => {
         return { _id: item["id"], name: item["title"] };
       });
     } else {
-      tabs.push({ _id: mainMenuNames.packetIntroduction, name: "Introduction" });
+      tabs.push({
+        _id: mainMenuNames.packetIntroduction,
+        name: "Introduction"
+      });
     }
     return tabs;
   }
@@ -189,7 +237,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
       //   return { _id: item["id"], name: item["title"] };
       // });
       tabs.push({
-        _id: mainMenuNames.termsConditions + '__active',
+        _id: mainMenuNames.termsConditions + "__active",
         name: "Terms & Conditions section"
       });
     } else {
@@ -198,7 +246,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
         name: "Terms & Conditions section"
       });
     }
-    
+
     return tabs;
   }
 
@@ -282,7 +330,10 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
 
   initPercents() {
     this.formNavigationState$.getValue().forEach(item => {
-      this.pagesPercents$.next([...this.pagesPercents$.getValue(), { page: item["page"], percent: -1 }]);
+      this.pagesPercents$.next([
+        ...this.pagesPercents$.getValue(),
+        { page: item["page"], percent: -1 }
+      ]);
     });
   }
 
@@ -295,10 +346,61 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
     }
   }
 
+  initRequiredList() {
+    Object.values(mainMenuNames).forEach(name => {
+      this.requiredListByPage[name] = [];
+    });
+  }
+
+  filterSignatureBySignatureAndKey(signature, key) {
+    if (signature.isBothParents) {
+      if (key.includes("_parent")) {
+        return false;
+      }
+    } else {
+      if (key.includes("_father") || key.includes("_mother")) {
+        return false;
+      }
+    }
+
+    if (signature.type === SIGNATURE_TYPES["WET"]) {
+      if (key.includes("__external_") || key.includes("__system_")) {
+        return false;
+      }
+    } else if (signature.eType === E_SIGNATURE_TYPES["EXTERNAL"]) {
+      if (key.includes("__system_") || key.includes("__wet_")) {
+        return false;
+      }
+    } else {
+      //system
+      if (key.includes("__external_") || key.includes("__wet_")) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  addControl(
+    key: string,
+    isValidate: boolean,
+    validators = this.requiredValidator
+  ): void {
+    this.fg.addControl(
+      key,
+      new FormControl(
+        {
+          value: this.form.fieldsData[key] ? this.form.fieldsData[key] : "",
+          disabled: false
+        },
+        isValidate ? validators : null
+      )
+    );
+  }
+
   initConsentFormControls() {
     if (this.form.consentInfo && this.form.consentInfo.consents.length > 0) {
       const consentKeys = [
-        "__agree",
+        "__checkbox",
         "__external_parent",
         "__external_father",
         "__external_mother",
@@ -312,22 +414,75 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
 
       consentKeys.forEach(key => {
         Object.values(this.form.consentInfo.consents).forEach(item => {
-          if (item["id"]) {
-            // const aValidators = !this.field.options.readonly ? Validators.compose(this.getComposed()) : {};
-            this.fg.addControl(
-              item["id"] + key,
-              new FormControl(
-                {
-                  value: this.form.fieldsData[item["id"] + key],
-                  disabled: false
-                }
-                // aValidators
-              )
-            );
+          if (
+            item["id"] &&
+            this.filterSignatureBySignatureAndKey(item["signature"], key)
+          ) {
+            const isRequired =
+              key === "__checkbox"
+                ? item["checkbox"]["isActive"]
+                : item["signature"]["isRequire"];
+            if (isRequired) {
+              this.requiredListByPage[mainMenuNames.consentInfo].push(
+                item["id"] + key
+              );
+            }
+            this.addControl(item["id"] + key, isRequired);
           }
         });
       });
     }
+  }
+
+  getFieldsByFormFields(fields) {
+    let aFields = [];
+    Object.values(fields).forEach(field => {
+      if (field["type"]) {
+        if (field["type"] === 113 || field["type"] === 114) {
+          aFields = aFields.concat(this.getFieldsByFormFields(field['fields']));
+        } else {
+          aFields.push(field);
+        }
+      }
+    });
+    return aFields;
+  }
+
+  getComposedValidatorsByField(field) {
+    let arrayValidators = [];
+
+    if (field.options.required) {
+      arrayValidators.push(Validators.required);
+    }
+
+    if (field.options.minFieldSize) {
+      arrayValidators.push(Validators.minLength(field.options.minFieldSize));
+    }
+
+    if (field.options.maxFieldSize) {
+      arrayValidators.push(Validators.maxLength(field.options.maxFieldSize));
+    }
+
+    return arrayValidators;
+  }
+
+  initGeneralInfoFormControls() {
+    const aFields = this.getFieldsByFormFields(this.form.fields);
+    aFields.forEach(field => {
+      if (field["_id"]) {
+        const aValidators = this.getComposedValidatorsByField(field);
+        const validatorFn = !field.options.readonly
+          ? Validators.compose(aValidators)
+          : null;
+        this.addControl(field["_id"], !(validatorFn === null), validatorFn);
+        const isRequired = aValidators.find(validator => {
+          return validator === Validators.required;
+        });
+        if (isRequired) {
+          this.requiredListByPage[mainMenuNames.generalInfo].push(field["_id"]);
+        }
+      }
+    });
   }
 
   initTermsConditionsFormControls() {
@@ -347,33 +502,33 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
         "termsConditions__wet_mother"
       ];
 
-      termsConditionsKeys.forEach(key => {
-        // const aValidators = !this.field.options.readonly ? Validators.compose(this.getComposed()) : {};
-        this.fg.addControl(
-          key,
-          new FormControl(
-            {
-              value: this.form.fieldsData[key],
-              disabled: false
-            }
-            // aValidators
-          )
-        );
-      });
+      const isRequired = this.form.termsConditions["signature"]["isRequire"];
+
+      termsConditionsKeys
+        .filter(key => {
+          return this.filterSignatureBySignatureAndKey(
+            this.form.termsConditions.signature,
+            key
+          );
+        })
+        .forEach(key => {
+          if (isRequired) {
+            this.requiredListByPage[mainMenuNames.termsConditions].push(key);
+          }
+          this.addControl(key, isRequired);
+        });
 
       Object.values(this.form.termsConditions.termsConditionsItems).forEach(
         item => {
           if (item["id"]) {
-            // const aValidators = !this.field.options.readonly ? Validators.compose(this.getComposed()) : {};
-            this.fg.addControl(
-              item["id"] + "__agree",
-              new FormControl(
-                {
-                  value: this.form.fieldsData[item["id"] + "__agree"],
-                  disabled: false
-                }
-                // aValidators
-              )
+            if (item["checkbox"]["isActive"]) {
+              this.requiredListByPage[mainMenuNames.termsConditions].push(
+                item["id"] + "__checkbox"
+              );
+            }
+            this.addControl(
+              item["id"] + "__checkbox",
+              item["checkbox"]["isActive"]
             );
           }
         }
@@ -383,6 +538,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
 
   initFormControls() {
     this.initConsentFormControls();
+    this.initGeneralInfoFormControls();
     this.initTermsConditionsFormControls();
   }
 
@@ -398,9 +554,11 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
   }
 
   goToPreviousStep() {
-    const currentPageIndex = this.formNavigationState$.getValue().findIndex(page => {
-      return page["page"] === this.currentPosition$.value["page"];
-    });
+    const currentPageIndex = this.formNavigationState$
+      .getValue()
+      .findIndex(page => {
+        return page["page"] === this.currentPosition$.value["page"];
+      });
     if (this.currentPosition$.value["tab"] !== 0) {
       this.currentPosition$.next({
         ...this.currentPosition$.value,
@@ -409,8 +567,12 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
     } else if (currentPageIndex !== 0) {
       this.currentPosition$.next({
         ...this.currentPosition$.value,
-        page: this.formNavigationState$.getValue()[currentPageIndex - 1]["page"],
-        tab: this.formNavigationState$.getValue()[currentPageIndex - 1]["tabs"].length - 1
+        page: this.formNavigationState$.getValue()[currentPageIndex - 1][
+          "page"
+        ],
+        tab:
+          this.formNavigationState$.getValue()[currentPageIndex - 1]["tabs"]
+            .length - 1
       });
     }
   }
@@ -423,18 +585,25 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
     const currentPage = this.formNavigationState$.getValue().find(page => {
       return page["page"] === this.currentPosition$.value["page"];
     });
-    const currentPageIndex = this.formNavigationState$.getValue().findIndex(page => {
-      return page["page"] === this.currentPosition$.value["page"];
-    });
+    const currentPageIndex = this.formNavigationState$
+      .getValue()
+      .findIndex(page => {
+        return page["page"] === this.currentPosition$.value["page"];
+      });
     if (currentPage["tabs"].length > this.currentPosition$.value["tab"] + 1) {
       this.currentPosition$.next({
         ...this.currentPosition$.value,
         tab: this.currentPosition$.value["tab"] + 1
       });
-    } else if (currentPageIndex + 1 < this.formNavigationState$.getValue().length) {
+    } else if (
+      currentPageIndex + 1 <
+      this.formNavigationState$.getValue().length
+    ) {
       this.currentPosition$.next({
         ...this.currentPosition$.value,
-        page: this.formNavigationState$.getValue()[currentPageIndex + 1]["page"],
+        page: this.formNavigationState$.getValue()[currentPageIndex + 1][
+          "page"
+        ],
         tab: 0
       });
     } else {
@@ -450,13 +619,17 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
     //TODO: change to commented code when back-end will be ready
     // savingObj[this.currentPosition$.value["page"]] = this.fg.value;
     savingObj["fieldsData"] = this.fg.value;
-    this.onlineFormService.sendForm(savingObj).pipe(takeUntil(this.destroyedSaveForm$)).subscribe(() => {
-      this.goToNextStep();
-    });
+    this.onlineFormService
+      .sendForm(savingObj)
+      .pipe(takeUntil(this.destroyedSaveForm$))
+      .subscribe(() => {
+        this.goToNextStep();
+      });
   }
 
   ngOnDestroy(): void {
     this._isReady$.unsubscribe();
     this.destroyedSaveForm$.next();
+    this.fgValueChangesSubscription.unsubscribe();
   }
 }
