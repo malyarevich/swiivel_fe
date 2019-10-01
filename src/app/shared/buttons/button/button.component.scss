@@ -92,6 +92,22 @@
   }
 }
 
+:host(.widget-icon) {
+  .button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+}
+
+:host(.widget-icon.active) {
+  .button {
+    background-color: #fff;
+    border: 1px solid #4350A2;
+    color: #4350A2;
+  }
+}
+
 :host {
   button:disabled {
     background: $gray;

@@ -1,0 +1,35 @@
+<div #holder class="widget" cdkDragLockAxis="y" cdkDrag cdkDragBoundary=".stepper-content" [cdkDragDisabled]="isActive()">
+  <sw-button class="widget-icon" [class.active]="isActive()" (click)="widgetTogle()">
+    <i class="fas fa-plus"></i>
+  </sw-button>
+</div>
+
+<ng-template #widgetContent>
+  <div class="widget-pop">
+    <div class="widget-header">
+      <div class="text">Additional Options</div>
+    </div>
+    <div class="widget-body">
+      <div class="list">
+        <div class="title">Formatting Options</div>
+        <div class="item" cdkDrag>
+          <i class="dragdrop fas fa-ellipsis-v" cdkDragHandle></i>
+          <div class="text">New Section</div>
+        </div>
+        <div class="item" cdkDrag>
+          <i class="dragdrop fas fa-ellipsis-v" cdkDragHandle></i>
+          <div class="text">New Group</div>
+        </div>
+      </div>
+      <div class="list">
+        <div class="title">
+          Widgets
+        </div>
+        <div class="item" cdkDrag>
+          <i class="dragdrop fas fa-ellipsis-v" cdkDragHandle></i>
+          <div class="text">Custom Table</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
