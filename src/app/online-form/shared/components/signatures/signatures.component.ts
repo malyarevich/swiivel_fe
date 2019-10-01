@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, ViewEncapsulation } from "@angular/core";
 import { FormGroup } from '@angular/forms';
+import { SIGNATURE_TYPES, E_SIGNATURE_TYPES } from '@app/online-form/models/signature.model';
 // import { SystemSignatureService } from "../../../services/signatures/system-signature.service";
 
 
@@ -15,15 +16,8 @@ export class SignaturesComponent implements OnInit {
   @Input() signature: any;
   @Input() sourcePage: string; //id for FormControl
 
-  SIGNATURE_TYPES: object = {
-    ESIGN: 'esign',
-    WET: 'wet',
-  }
-
-  E_SIGNATURE_TYPES: object = {
-    SYSTEM: 'system',
-    EXTERNAL: 'external',
-  }
+  SIGNATURE_TYPES: object = SIGNATURE_TYPES;
+  E_SIGNATURE_TYPES: object = E_SIGNATURE_TYPES;
 
   placeholderText: object = {
     "father": "Father's Signature",
