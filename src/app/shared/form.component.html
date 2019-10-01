@@ -1,26 +1,26 @@
-<header class="forms-header">
-  <div class="title">
-    <div class="back-btn">
+<header class="forms-header" data-e2e="forms-header">
+  <div class="title" data-e2e="titleform">
+    <div class="back-btn" data-e2e="back-btn">
       <i class="fas fa-chevron-left" [routerLink]="[ '/dashboard' ]"></i>
     </div>
-    <div class="text">
+    <div class="text" data-e2e="newdatacollectionform">
       NEW DATA COLLECTION FORM
     </div>
   </div>
-  <div class="items-wrap">
-    <div class="item" [routerLink]="[ '/form-creator' ]" routerLinkActive="active">
+  <div class="items-wrap" data-e2e="items-wrap">
+    <div class="item" data-e2e="createitem" [routerLink]="[ '/form-creator' ]" routerLinkActive="active">
       Create
     </div>
     <i class="fas fa-chevron-right"></i>
-    <div class="item"  [routerLink]="[ '/form-creator' ]" routerLinkActive="aactive">
+    <div class="item" data-e2e="senditem" [routerLink]="[ '/form-creator' ]" routerLinkActive="aactive">
       Send
     </div>
     <i class="fas fa-chevron-right"></i>
-    <div class="item" [routerLink]="[ '/form-creator' ]" routerLinkActive="aactive">
+    <div class="item" data-e2e="recieveitem" [routerLink]="[ '/form-creator' ]" routerLinkActive="aactive">
       Receive
     </div>
   </div>
-  <div class="log-out-btn" (click)="logout()">
+  <div class="log-out-btn" data-e2e="log-out-btn" (click)="logout()">
     <i class="fas fa-sign-out-alt"></i>
   </div>
 </header>
