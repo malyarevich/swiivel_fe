@@ -1,41 +1,41 @@
-<div class="general-page">
-  <div class="container h-100">
-    <div class="row column">
-      <div class="header">
-        <div class="text gray">
+<div class="general-page" data-e2e="general-page">
+  <div class="container h-100" data-e2e="container-h-100">
+    <div class="row column" data-e2e="row-column">
+      <div class="header" data-e2e="header">
+        <div class="text gray" data-e2e="text-gray">
           1. Basic Form Information
         </div>
-        <div class="text">
+        <div class="text" data-e2e="textfirst">
           Good {{ getDate() }}, I am the Form Set­up Wizard [name]. I will create your form
           with you in minutes
         </div>
-        <div class="text">
+        <div class="text" data-e2e="testsecond">
           What would you like to call this form and what type of form do you need?
         </div>
       </div>
-      <div class="content">
-        <div class="inputs">
+      <div class="content" data-e2e="content">
+        <div class="inputs" data-e2e="inputs">
           <sw-input-text class="input" [formControl]="form.get('name')">
-            <span class="placeholder">Form Name</span>
+            <span class="placeholder" data-e2e="titleformname">Form Name</span>
           </sw-input-text>
           <sw-dropdown-input class="input" [options]="typeOptions" [formControl]="form.get('type')">
-            <span class="input_label">Form Type</span>
+            <span class="input_label" data-e2e="formtypelabel">Form Type</span>
           </sw-dropdown-input>
         </div>
       </div>
 
     </div>
-    <div class="row second no-m column">
-      <div class="header">
-        <div class="text">
+    <div class="row second no-m column" data-e2e="row-second">
+      <div class="header" data-e2e="headersecond">
+        <div class="text" data-e2e="textchooseform">
           Choose the way you want to create your form
         </div>
       </div>
-      <div class="content h-100">
+      <div class="content h-100" data-e2e="content-h-100">
         <sw-input-button-group [(ngModel)]="dublicate" [options]="buttonOptions"></sw-input-button-group>
         <div class="row w-100 h-100 no-m" *ngIf="dublicate">
           <div class="col-3" style="padding-left: 8px; padding-right: 8px;">
-            <div class="search-wrap">
+            <div class="search-wrap" data-e2e="search-wrap">
               <input class="search" [formControl]="filter" placeholder="Search" />
               <i class="icon fas fa-search"></i>
             </div>
@@ -45,19 +45,19 @@
             </cdk-virtual-scroll-viewport>
           </div>
           <div class="col-9" style="padding-left: 8px; padding-right: 8px; height: 100%;">
-            <div class="form-preview">
+            <div class="form-preview" data-e2e="form-preview">
               <ng-container *ngIf="selectedItem; else noPdf">
-                <div class="title">
+                <div class="title" data-e2e="title">
                   <div class="name"> {{ selectedItem.name }}</div>
                 </div>
-                <div class="pdf-container">
+                <div class="pdf-container"data-e2e="pdf-container">
                     <pdf-viewer [src]="selectedItem.src"
                     style="display: block; margin-top: 60px;" zoom="0.7"></pdf-viewer>
                 </div>
               </ng-container>
 
               <ng-template #noPdf>
-                <div class="no-pdf-text">
+                <div class="no-pdf-text" data-e2e="no-pdf-text">
                   Please select the form you want to use as a duplicate
                 </div>
               </ng-template>
