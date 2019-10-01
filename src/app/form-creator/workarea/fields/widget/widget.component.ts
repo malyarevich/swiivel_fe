@@ -21,6 +21,10 @@ export class WidgetComponent implements OnInit {
   ngOnInit() {
   }
 
+  isActive(): boolean {
+    return !!this.ref;
+  }
+
   widgetTogle(): void {
     if (this.ref) {
       this.ref.close();
