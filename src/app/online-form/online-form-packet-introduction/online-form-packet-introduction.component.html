@@ -1,4 +1,4 @@
-<ng-container *ngIf="formNavigationState; else elseTemplate">
+<ng-container *ngIf="isExist(); else elseTemplate">
     <div *ngFor="let item of packets; let packetIndex = index"
       class="content_section__main_container app-div-animation"
       [ngClass]="{

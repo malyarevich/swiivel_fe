@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from "@angular/core";
-import { FormGroup } from '@angular/forms';
+import { FormGroup } from "@angular/forms";
 import { cloneDeep } from "lodash";
 import { Form } from "@app/models/data-collection/form";
 import {
@@ -38,5 +38,9 @@ export class OnlineFormPaymentComponent implements OnInit {
 
   isDisabledSign(personsType) {
     return this.form.paymentSettings.signature.signed[personsType];
+  }
+
+  isExist(): boolean {
+    return typeof this.form.payment !== "undefined"; // && this.form.payment.payments.length > 0;
   }
 }

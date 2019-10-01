@@ -29,6 +29,10 @@ export class OnlineFormConsentComponent implements OnInit {
     });
   }
 
+  isExist(): boolean {
+    return typeof this.form.consentInfo !== 'undefined' && this.form.consentInfo.consents.length > 0;
+  }
+
   isShowConsent(consentIndex: number): boolean {
     return this.currentPosition['tab'] === consentIndex;
   }

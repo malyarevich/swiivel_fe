@@ -43,6 +43,10 @@ export class OnlineFormGeneralInfoComponent implements OnInit {
     }
   }
 
+  isExist(): boolean {
+    return typeof this.form.fields !== 'undefined' && this.form.fields.length > 0;
+  }
+
   isShowSectionByIndex(index: number): boolean {
     return index === this.currentPosition['tab'];
   }

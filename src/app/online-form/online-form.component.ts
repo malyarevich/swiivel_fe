@@ -37,8 +37,12 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
   formNavigationState$: BehaviorSubject<object[]> = new BehaviorSubject(null);
   pagesPercents$: BehaviorSubject<object[]> = new BehaviorSubject([]);
   currentPosition$: BehaviorSubject<object> = new BehaviorSubject({});
+  formErrors$: BehaviorSubject<object> = new BehaviorSubject({});
 
   fgValueChangesSubscription: Subscription;
+  fgStatusChangesSubscription: Subscription;
+  isFormStatusChanged: boolean = false;
+  fieldListByPage: object = {};
   requiredListByPage: object = {};
   requiredValidator = Validators.compose([Validators.required]);
   SIGNATURE_TYPES: object = SIGNATURE_TYPES;
@@ -83,12 +87,15 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
       if (this.onlineFormService.getFormGroup()) {
         this._isReady$.next(true);
       }
-      this.fgValueChangesSubscription = this.fg.statusChanges.subscribe(() => {
+      this.fgStatusChangesSubscription = this.fg.statusChanges.subscribe(() => {
         this.pagesPercents$.next(
           this.getRecountedPagesPercentsByPage(
             this.currentPosition$.getValue()["page"]
           )
         );
+      });
+      this.fgValueChangesSubscription = this.fg.valueChanges.subscribe(() => {
+        this.isFormStatusChanged = true;
       });
     });
   }
@@ -349,6 +356,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
   initRequiredList() {
     Object.values(mainMenuNames).forEach(name => {
       this.requiredListByPage[name] = [];
+      this.fieldListByPage[name] = [];
     });
   }
 
@@ -378,6 +386,14 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
       }
     }
     return true;
+  }
+
+  // Make lists with required fields and with control fields by page
+  addToFieldLists(menuName: string, key: string, isRequired: boolean) {
+    if (isRequired) {
+      this.requiredListByPage[menuName].push(key);
+    }
+    this.fieldListByPage[menuName].push(key);
   }
 
   addControl(
@@ -422,11 +438,12 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
               key === "__checkbox"
                 ? item["checkbox"]["isActive"]
                 : item["signature"]["isRequire"];
-            if (isRequired) {
-              this.requiredListByPage[mainMenuNames.consentInfo].push(
-                item["id"] + key
-              );
-            }
+
+            this.addToFieldLists(
+              mainMenuNames.consentInfo,
+              item["id"] + key,
+              isRequired
+            );
             this.addControl(item["id"] + key, isRequired);
           }
         });
@@ -439,7 +456,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
     Object.values(fields).forEach(field => {
       if (field["type"]) {
         if (field["type"] === 113 || field["type"] === 114) {
-          aFields = aFields.concat(this.getFieldsByFormFields(field['fields']));
+          aFields = aFields.concat(this.getFieldsByFormFields(field["fields"]));
         } else {
           aFields.push(field);
         }
@@ -478,9 +495,12 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
         const isRequired = aValidators.find(validator => {
           return validator === Validators.required;
         });
-        if (isRequired) {
-          this.requiredListByPage[mainMenuNames.generalInfo].push(field["_id"]);
-        }
+
+        this.addToFieldLists(
+          mainMenuNames.generalInfo,
+          field["_id"],
+          isRequired
+        );
       }
     });
   }
@@ -512,24 +532,21 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
           );
         })
         .forEach(key => {
-          if (isRequired) {
-            this.requiredListByPage[mainMenuNames.termsConditions].push(key);
-          }
+          this.addToFieldLists(mainMenuNames.termsConditions, key, isRequired);
           this.addControl(key, isRequired);
         });
 
       Object.values(this.form.termsConditions.termsConditionsItems).forEach(
         item => {
           if (item["id"]) {
-            if (item["checkbox"]["isActive"]) {
-              this.requiredListByPage[mainMenuNames.termsConditions].push(
-                item["id"] + "__checkbox"
-              );
-            }
-            this.addControl(
-              item["id"] + "__checkbox",
-              item["checkbox"]["isActive"]
+            const key = item["id"] + "__checkbox";
+            const isRequired = item["checkbox"]["isActive"];
+            this.addToFieldLists(
+              mainMenuNames.termsConditions,
+              key,
+              isRequired
             );
+            this.addControl(key, isRequired);
           }
         }
       );
@@ -613,23 +630,38 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
   }
 
   saveAndNextStep() {
-    const savingObj = {
-      pagesPercents: this.pagesPercents$.getValue()
-    };
-    //TODO: change to commented code when back-end will be ready
-    // savingObj[this.currentPosition$.value["page"]] = this.fg.value;
-    savingObj["fieldsData"] = this.fg.value;
-    this.onlineFormService
-      .sendForm(savingObj)
-      .pipe(takeUntil(this.destroyedSaveForm$))
-      .subscribe(() => {
-        this.goToNextStep();
-      });
+    if (this.isFormStatusChanged) {
+      const savingObj = {
+        pagesPercents: this.pagesPercents$.getValue()
+      };
+      //TODO: change to commented code when back-end will be ready
+      // savingObj["fieldListByPage"] = this.fieldListByPage;
+      // savingObj["currentPosition"] = this.currentPosition$.getValue();
+      savingObj["fieldsData"] = this.fg.value;
+      this.onlineFormService
+        .sendForm(savingObj)
+        .pipe(takeUntil(this.destroyedSaveForm$))
+        .subscribe(
+          () => {
+            this.formErrors$.next({});
+            this.goToNextStep();
+            this.isFormStatusChanged = false;
+          },
+          error => {
+            if (error.error.status === 0) {
+              this.formErrors$.next(error.error.errors);
+            }
+          }
+        );
+    } else {
+      this.goToNextStep();
+    }
   }
 
   ngOnDestroy(): void {
     this._isReady$.unsubscribe();
     this.destroyedSaveForm$.next();
+    this.fgStatusChangesSubscription.unsubscribe();
     this.fgValueChangesSubscription.unsubscribe();
   }
 }

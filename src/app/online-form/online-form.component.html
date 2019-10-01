@@ -24,7 +24,7 @@
           [fg]="fg"
           [formNavigationState]="(formNavigationState$ | async)"
           [currentPosition]="(currentPosition$ | async)"
-          [formErrors]="formErrors"
+          [formErrors]="(formErrors$ | async)"
           (onGoToTab)="goToTab($event)"
         ></sw-online-form-view>
       </div>

@@ -38,6 +38,10 @@ export class OnlineFormPacketIntroductionComponent implements OnInit {
     }
   }
 
+  isExist(): boolean {
+    return typeof this.form.packetIntroduction !== 'undefined' && this.form.packetIntroduction.packets.length > 0;
+  }
+
   isShowPacket(packetIndex: number): boolean {
     return this.currentPosition['tab'] === packetIndex;
   }

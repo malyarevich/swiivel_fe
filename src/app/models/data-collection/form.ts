@@ -27,6 +27,7 @@ export interface Form {
   attachments?: any;
   consentInfo?: any;
   documents?: any;
+  documentsForms?: any;
   forms?: any;
   packetIntroduction?: IPacketIntroduction;
   payment?: any;
