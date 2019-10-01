@@ -58,7 +58,7 @@ export class FormTableComponent implements OnInit {
   showSpinner: boolean;
 
   static createSharedUrl(id: string) {
-    return `${window.location.href}/f/${id}`;
+    return `${window.location.href}/online-form/${id}`;
   }
   download: {
     url: SafeResourceUrl;
@@ -113,7 +113,7 @@ export class FormTableComponent implements OnInit {
       })
     ).subscribe(value => {
       this.params.filter = { ...value };
-      
+
       this.dataSource.loadFormsList(this.params);
     });
     this.dataSource.$loading.subscribe((loading: boolean) => {
