@@ -1,14 +1,11 @@
 <ng-container *ngIf="formNavigationState; else elseTemplate">
-  <ng-container *ngFor="let item of packets; let packetIndex = index">
-    <div
+    <div *ngFor="let item of packets; let packetIndex = index"
       class="content_section__main_container app-div-animation"
       [ngClass]="{
         'app-div-show': isShowPacket(packetIndex),
         'app-div-hide': !isShowPacket(packetIndex)
       }"
     >
-      <ng-container>
-        <div class="content_section__header">
           <!--Title-->
           <h2 class="content_section__article_title">
             {{ item.title }}
