@@ -1,9 +1,9 @@
-<div class="paginator-container">
-  <div class="paginator-container__dropdown">
+<div class="paginator-container" data-e2e="paginator-container">
+  <div class="paginator-container__dropdown" data-e2e="paginator-container__dropdown">
     Show:
     <sw-dropdown-select [options]="sizeOptions" (selected)="changeSize($event)">
-      <div class="fake-input">
-        <div class="text">
+      <div class="fake-input" data-e2e="fake-input">
+        <div class="text" data-e2e="textlimit">
           {{ limit }}
         </div>
         <div class="icon">
@@ -13,19 +13,19 @@
     </sw-dropdown-select>
 
   </div>
-  <div class="paginator-container__spacer"></div>
-  <div class="paginator-container__paginator">
+  <div class="paginator-container__spacer" data-e2e="paginator-container__spacer"></div>
+  <div class="paginator-container__paginator" data-e2e="paginator-container__paginator">
     <div class="item icon" (click)="selectPage(currentPage - 1)" [class.disabled]="currentPage === 1">
       <i class="fas fa-chevron-left"></i>
     </div>
-    <div class="item page first-page" *ngIf="(currentPage - range) >= 2" (click)="selectPage(1)">
+    <div class="item page first-page" data-e2e="item-page-first-page" *ngIf="(currentPage - range) >= 2" (click)="selectPage(1)">
       1
     </div>
-    <div class="item dots" *ngIf="(currentPage - range) > 2">
+    <div class="item dots" data-e2e="item-dots" *ngIf="(currentPage - range) > 2">
       ...
     </div>
 
-    <div class="item page" [class.selected]="currentPage === page" *ngFor="let page of pages | async"
+    <div class="item page" data-e2e="item-page" [class.selected]="currentPage === page" *ngFor="let page of pages | async"
       (click)="selectPage(page)">
       {{ page }}
     </div>
@@ -33,7 +33,7 @@
     <div class="item dots" *ngIf="(totalPages - 1) > (currentPage + range)">
       ...
     </div>
-    <div class="item page last-page" *ngIf="(totalPages - 1) >= (currentPage + range)" (click)="selectPage(totalPages)">
+    <div class="item page last-page" data-e2e="item-page-last-page" *ngIf="(totalPages - 1) >= (currentPage + range)" (click)="selectPage(totalPages)">
       {{ totalPages }}
     </div>
     <div class="item icon" (click)="selectPage(currentPage + 1)" [class.disabled]="currentPage === totalPages">
