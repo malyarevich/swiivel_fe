@@ -7,5 +7,6 @@ export enum IconsEnum {
   CARET_DOWN = 'fa-caret-down',
   CARET_UP = 'fa-caret-up',
   SETTINGS = 'fa-cog',
-  CROSS = 'fa-times'
+  CROSS = 'fa-times',
+  TRASH = 'fa-trash',
 }
