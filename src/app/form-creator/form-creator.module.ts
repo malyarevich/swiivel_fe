@@ -28,6 +28,7 @@ import { CdkTreeModule } from '@angular/cdk/tree';
 import { FormCreatorService } from './form-creator.service';
 import { GeneralComponent } from './general/general.component';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { WidgetComponent } from './workarea/fields/widget/widget.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     SidebarConsentComponent,
     SidebarTermsConditionsComponent,
     GeneralComponent,
+    WidgetComponent,
   ],
   imports: [
     CommonModule,

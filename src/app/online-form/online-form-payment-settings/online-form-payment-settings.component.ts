@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from "@angular/core";
-import { FormGroup } from '@angular/forms';
+import { FormGroup } from "@angular/forms";
 import { Form } from "@app/models/data-collection/form";
 import {
   menuItems,
@@ -32,4 +32,8 @@ export class OnlineFormPaymentSettingsComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {}
+
+  isExist(): boolean {
+    return typeof this.form.paymentSettings !== "undefined"; // && this.form.paymentSettings.payments.length > 0;
+  }
 }

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { FormGroup } from "@angular/forms";
-import { cloneDeep } from 'lodash';
+import { cloneDeep } from "lodash";
 import { Form } from "@app/models/data-collection/form";
 
 @Component({
@@ -27,12 +27,21 @@ export class OnlineFormTermsConditionsComponent implements OnInit {
   }
 
   initTermsConditions() {
-    this.termsConditions = cloneDeep(this.form.termsConditions.termsConditionsItems).map(item => {
+    this.termsConditions = cloneDeep(
+      this.form.termsConditions.termsConditionsItems
+    ).map(item => {
       return { ...item, _id: item.id, name: item.title };
     });
   }
 
-  isShowTermsConditions (termsConditionsIndex: number): boolean {
-    return this.currentPosition['tab'] === termsConditionsIndex;
+  isExist(): boolean {
+    return (
+      typeof this.form.termsConditions !== "undefined" &&
+      this.form.termsConditions.termsConditionsItems.length > 0
+    );
+  }
+
+  isShowTermsConditions(termsConditionsIndex: number): boolean {
+    return this.currentPosition["tab"] === termsConditionsIndex;
   }
 }

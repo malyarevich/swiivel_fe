@@ -23,7 +23,7 @@ export class Popup {
   constructor(
     private overlay: Overlay,
     private injector: Injector
-  ) {}
+  ) { }
 
   open<T>({ origin, content, data, width, height, panelClass, location }: PopupParams<T>): PopupRef<T> {
     const overlayRef = this.overlay.create(this.getOverlayConfig({ origin, width, height, panelClass, location }));
@@ -41,6 +41,9 @@ export class Popup {
     } else if (panelClass === 'centered-panel') {
       ss = this.overlay.scrollStrategies.block();
       bc = ['fullpage-backdrop', 'transparent-backdrop'];
+    } else if (panelClass === 'widget-dropdown') {
+      ss = this.overlay.scrollStrategies.reposition();
+      bc = 'hide-backdrop';
     } else {
       ss = this.overlay.scrollStrategies.reposition();
       bc = 'popup-backdrop';
@@ -63,11 +66,11 @@ export class Popup {
       return positionStrategy;
     } else {
       const positionStrategy = this.overlay.position()
-      .flexibleConnectedTo(origin)
-      .withPositions(this.getPositions(location))
-      .withFlexibleDimensions()
-      .withViewportMargin(5)
-      .withPush(false);
+        .flexibleConnectedTo(origin)
+        .withPositions(this.getPositions(location))
+        .withFlexibleDimensions()
+        .withViewportMargin(5)
+        .withPush(false);
       return positionStrategy;
     }
   }
@@ -98,6 +101,14 @@ export class Popup {
           originX: 'start',
           originY: 'bottom',
           overlayX: 'center',
+          overlayY: 'top',
+        }];
+        break;
+      case 'center-down-left':
+        result = [{
+          originX: 'center',
+          originY: 'center',
+          overlayX: 'end',
           overlayY: 'top',
         }];
         break;

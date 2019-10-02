@@ -17,9 +17,6 @@ export class OnlineFormConsentComponent implements OnInit {
 
   consents: any[];
 
-  sections: object[];
-  activeSectionId: string;
-
   constructor() {}
 
   ngOnInit() {
@@ -30,6 +27,10 @@ export class OnlineFormConsentComponent implements OnInit {
     this.consents = cloneDeep(this.form.consentInfo.consents).map(item => {
       return { ...item, _id: item.id, name: item.title };
     });
+  }
+
+  isExist(): boolean {
+    return typeof this.form.consentInfo !== 'undefined' && this.form.consentInfo.consents.length > 0;
   }
 
   isShowConsent(consentIndex: number): boolean {

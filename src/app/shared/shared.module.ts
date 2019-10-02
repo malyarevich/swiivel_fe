@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, registerLocaleData } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -19,6 +19,8 @@ import { InputTextareaComponent } from './inputs/input-textarea/input-textarea.c
 import { InputToggleComponent } from './inputs/input-toggle/input-toggle.component';
 import { DropdownSelectComponent } from './inputs/dropdown-select/dropdown-select.component';
 
+import { InputFileComponent } from './inputs/input-file/input-file.component';
+
 // Headers
 import { BlockHeaderComponent} from './headers/block-header/block-header.component';
 import { PageHeaderComponent} from './headers/page-header/page-header.component';
@@ -35,7 +37,7 @@ import { DocumentApprovalBarComponent } from '@shared/bars/document-approval-bar
 
 // Others
 import { RadioGroupComponent } from './inputs/radio-group/radio-group.component';
-import { LabelComponent } from './label/label.component';
+import { LabelComponent } from './labels/label/label.component';
 import { UserItemComponent } from './user-item/user-item.component';
 import { SelectOptionDirective } from './inputs/dropdown-select/option.directive';
 import { MainComponent } from './main.component';
@@ -46,7 +48,14 @@ import { CdkStepperModule } from '@angular/cdk/stepper';
 import { StepperComponent } from './stepper/stepper.component';
 import { StepperService } from './stepper.service';
 import { FormComponent } from './form.component';
+import { StatusLabelComponent } from '@shared/labels/status-label/status-label.component';
+import { InputEnglishDatepickerComponent } from './inputs/input-english-datepicker/input-english-datepicker.component';
+import { InputHebrewDatepickerComponent } from './inputs/input-hebrew-datepicker/input-hebrew-datepicker.component';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import localHe from '@angular/common/locales/he';
 
+registerLocaleData(localHe)
 
 @NgModule({
   imports: [
@@ -55,6 +64,10 @@ import { FormComponent } from './form.component';
     FormsModule,
     ReactiveFormsModule,
     CdkStepperModule,
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory
+    }),
   ],
   declarations: [
     // Buttons
@@ -75,6 +88,7 @@ import { FormComponent } from './form.component';
     InputEmailComponent,
     InputTextareaComponent,
     DialogComponent,
+    InputFileComponent,
     // Headers
     PageHeaderComponent,
     BlockHeaderComponent,
@@ -84,6 +98,7 @@ import { FormComponent } from './form.component';
     LabelComponent,
     UserItemComponent,
     RadioGroupComponent,
+    StatusLabelComponent,
     // Directives
     SelectOptionDirective,
     ComponentIdDirective,
@@ -94,6 +109,8 @@ import { FormComponent } from './form.component';
     BackBarComponent,
     StepperComponent,
     FormComponent,
+    InputEnglishDatepickerComponent,
+    InputHebrewDatepickerComponent,
   ],
   exports: [
     CommonModule,
@@ -117,6 +134,9 @@ import { FormComponent } from './form.component';
     DropdownSelectComponent,
     DialogComponent,
     RadioGroupComponent,
+    InputEnglishDatepickerComponent,
+    InputHebrewDatepickerComponent,
+    InputFileComponent,
     // Headers
     PageHeaderComponent,
     BlockHeaderComponent,
@@ -127,6 +147,7 @@ import { FormComponent } from './form.component';
     UserItemComponent,
     ReactiveFormsModule,
     DragDropModule,
+    StatusLabelComponent,
     // Directives
     SelectOptionDirective,
     ComponentIdDirective,

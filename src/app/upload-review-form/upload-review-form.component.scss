@@ -8,5 +8,54 @@
   .sidebar {
     width: 22%;
     min-width: 295px;
+    padding: 20px 15px;
+    border-radius: 3px;
+    background: #fff;
+
+
+    .loading {
+      position: relative;
+      opacity: 0.7;
+    }
+
+    .spinner {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 30px;
+    }
+
+    &-controls {
+      display: flex;
+      margin: 0 0 15px;
+    }
+
+    &-controls-title {
+      color: $gray-color;
+      font-size: 12px;
+      line-height: 15px;
+    }
+
+    &-filter {
+      position: relative;
+      width: 53%;
+      min-width: 159px;
+      margin: 0 10px 0 0;
+    }
+
+    &-filter:after {
+      position: absolute;
+      right: -10px;
+      top: 0;
+      content: '';
+      width: 1px;
+      height: 34px;
+      background: $dark-grey;
+    }
+
+    &-sort {
+      margin: 0 0 0 10px;
+    }
   }
 }

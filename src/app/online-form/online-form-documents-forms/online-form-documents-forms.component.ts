@@ -27,4 +27,9 @@ export class OnlineFormDocumentsFormsComponent implements OnInit {
   isExternalTab(): boolean {
     return this.currentPosition["tab"] === 1;
   }
+
+  isExist(): boolean {
+    return typeof this.form.documentsForms !== 'undefined' && this.form.consentInfo.consents.length > 0;
+  }
+
 }
