@@ -7,6 +7,7 @@ import {
   IMainMenuNames,
   IMenuItems
 } from "../models/menu.model";
+import { GenerateErrorsService } from '@app/online-form/utils/generate-errors.service';
 
 @Component({
   selector: "sw-online-form-general-info",
@@ -16,7 +17,7 @@ import {
 export class OnlineFormGeneralInfoComponent implements OnInit {
   @Input() form: Form;
   @Input() formNavigationState: any;
-  @Input() currentPosition: object;
+  @Input() currentPosition: { page: string, tab: number };
   @Input() formErrors: any;
   @Input() fg: FormGroup;
 
@@ -25,10 +26,14 @@ export class OnlineFormGeneralInfoComponent implements OnInit {
   mainMenuNames: IMainMenuNames = mainMenuNames;
 
   constructor(
+    private generateErrorService: GenerateErrorsService
   ) {}
 
   ngOnInit() {
     this.initSections();
+    this.fg.valueChanges.subscribe(() => {
+      this.generateErrorService.getFormGroupAndSection(this.sections[this.currentPosition.tab], this.fg);
+    })
   }
 
   initSections() {
@@ -48,7 +53,7 @@ export class OnlineFormGeneralInfoComponent implements OnInit {
   }
 
   isShowSectionByIndex(index: number): boolean {
-    return index === this.currentPosition['tab'];
+    return index === this.currentPosition.tab;
   }
 
   getTime() {

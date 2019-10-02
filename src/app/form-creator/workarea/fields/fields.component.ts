@@ -73,7 +73,6 @@ export class WorkareaFieldsComponent implements AfterViewInit, OnInit, OnDestroy
     }
   }
 
-
   settingsToggle(node: any)  {
     if (node) {
       node.showSettings = !node.showSettings;

@@ -16,9 +16,15 @@
             class="content_nav__item"
             [ngClass]="{
               'content_nav__item--active': isActive(i)
-            }"
-          >
+            }">
             {{ item.name }}
+
+            <ng-container *ngIf="errors">
+              <span
+                error-hint
+                [errorsList]="sectionErrors"
+                class="content_nav__errors-bullet"></span>
+            </ng-container>
           </li>
         </a>
         <ng-container *ngIf="!lastIndex">

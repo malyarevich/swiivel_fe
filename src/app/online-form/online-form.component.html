@@ -24,9 +24,10 @@
           [fg]="fg"
           [formNavigationState]="(formNavigationState$ | async)"
           [currentPosition]="(currentPosition$ | async)"
-          [formErrors]="(formErrors$ | async)"
+          [formErrors]="(sectionGroupFieldsErrors$ | async)"
           (onGoToTab)="goToTab($event)"
-        ></sw-online-form-view>
+          ></sw-online-form-view>
+          <!-- [formErrors]="(formErrors$ | async)" -->
       </div>
 
       <div class="online_form_container__control_block">
