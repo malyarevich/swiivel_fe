@@ -72,6 +72,8 @@ export class DashboardComponent implements OnInit {
       phone: new FormControl('', vs.phoneNumberValidator()),
       email: new FormControl('', vs.emailValidator()),
       longText: new FormControl('Long text\n wrew', Validators.required),
+      engdate: new FormControl(null),
+      hebrewddate: new FormControl(null)
     });
   }
 
