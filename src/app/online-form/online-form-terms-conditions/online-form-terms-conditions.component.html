@@ -1,44 +1,43 @@
-<div class="content_section__main_container">
-  <div class="content_section__main">
-    <ng-container
-      *ngFor="let item of termsConditions; let termsConditionsIndex = index"
-    >
-      <!-- <div class="content_section__main_container app-div-animation"
+<div class="content_section__main_container" *ngIf="isExist()">
+  <div
+    class="content_section__main"
+    *ngFor="let item of termsConditions; let termsConditionsIndex = index"
+  >
+    <!-- <div class="content_section__main_container app-div-animation"
       [ngClass]="{
         'app-div-show': isShowTermsConditions(termsConditionsIndex),
         'app-div-hide': !isShowTermsConditions(termsConditionsIndex)
       }"
     > -->
-      <div class="content_section__header content_section__header--alt">
-        <!--Title-->
-        <h2 class="content_section__article_title">
-          {{ item.title }}
-        </h2>
-      </div>
-      <div class="content_section__article_wrapper" [formGroup]="fg">
-        <!--Text-->
-        <article class="content_section__article content_section__article--alt">
-          <div
-            class="content_section__article_text"
-            [innerHTML]="item.text"
-          ></div>
-        </article>
-
-        <!--Checkbox-->
+    <div class="content_section__header content_section__header--alt">
+      <!--Title-->
+      <h2 class="content_section__article_title">
+        {{ item.title }} {{ item._id }}
+      </h2>
+    </div>
+    <div class="content_section__article_wrapper" [formGroup]="fg">
+      <!--Text-->
+      <article class="content_section__article content_section__article--alt">
         <div
-          *ngIf="item.checkbox.isActive"
-          class="content_section__additional_fields"
-        >
-          <div class="content_section__inputs_container">
-            <div class="content_section__checkbox_container p-0">
-              <sw-input-checkbox [formControlName]="item._id + '__agree'">
-                <span class="input_label"> {{ item.checkbox.text }}</span>
-              </sw-input-checkbox>
-            </div>
+          class="content_section__article_text"
+          [innerHTML]="item.text"
+        ></div>
+      </article>
+
+      <!--Checkbox-->
+      <div
+        *ngIf="item.checkbox.isActive"
+        class="content_section__additional_fields"
+      >
+        <div class="content_section__inputs_container">
+          <div class="content_section__checkbox_container p-0">
+            <sw-input-checkbox [formControlName]="item._id + '__checkbox'">
+              <span class="label"> {{ item.checkbox.text }}</span>
+            </sw-input-checkbox>
           </div>
         </div>
       </div>
-    </ng-container>
+    </div>
 
     <!--SIGNATURE-->
     <sw-online-form-signatures
