@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormCreatorService } from '../form-creator.service';
 import { StepperService } from '@app/shared/stepper.service';
+import { ApiService } from '@app/core/api.service';
 
 @Component({
   selector: 'sw-form-creator-workarea',
@@ -11,7 +12,12 @@ import { StepperService } from '@app/shared/stepper.service';
 export class WorkareaComponent implements OnInit {
   _workarea = 'default';
 
-  constructor(private service: FormCreatorService, private cdr: ChangeDetectorRef, private stepperService: StepperService) {
+  constructor(
+    private service: FormCreatorService,
+    private cdr: ChangeDetectorRef,
+    private stepperService: StepperService,
+    private api: ApiService
+  ) {
   }
 
   ngOnInit() {
@@ -26,6 +32,9 @@ export class WorkareaComponent implements OnInit {
   }
 
   nextStep() {
+    this.api.updateFormTemplate(this.service.formId, this.service.formTemplate).subscribe(data => {
+      // console.log('save ddata', data)
+    });
     this.stepperService.stepper = 'next';
   }
 
