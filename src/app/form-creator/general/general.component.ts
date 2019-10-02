@@ -79,7 +79,11 @@ export class GeneralComponent implements OnInit, OnDestroy {
     }
     newForm.name = this.form.get('name').value;
     newForm.type = this.form.get('type').value[0].value;
-    this.api.saveNewForm(newForm);
+    this.api.saveNewForm(newForm).pipe(
+      takeUntil(this.destoyer$)
+    ).subscribe(data => {
+      if (data) { sessionStorage.setItem('newForm', JSON.stringify(data)); }
+    });
   }
 
   getDate(): string {
