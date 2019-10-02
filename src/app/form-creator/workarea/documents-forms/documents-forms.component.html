@@ -1,0 +1,90 @@
+<sw-form-creator-workarea-header (changeContentDisplay)="expandToggle($event, 'documents')" [sectionName]="'Documents'">
+</sw-form-creator-workarea-header>
+<section class="documents" *ngIf="isOpenSection('documents')">
+  <div class="documents-item" *ngFor="let item of documents">
+    <div class="row item-row justify-content-between">
+      <div class="document-info align-items-center">
+        <div class="document-name">
+          <sw-input-text>
+            <span class="placeholder">Document Name</span>
+          </sw-input-text>
+        </div>
+        <div class="lable green">
+          Family
+        </div>
+      </div>
+      <sw-button class="outline-btn">Add Specific Criteria</sw-button>
+    </div>
+    <div class="row item-row">
+      <sw-input-textarea>
+        <span class="input_label">Text</span>
+      </sw-input-textarea>
+    </div>
+    <div class="row item-row">
+      <div class="file">
+        fileinput
+      </div>
+      <div class="actions">
+        <sw-button *ngIf="!item?.isUpload; else uploadDocument">
+          Download Document
+        </sw-button>
+        <ng-template #uploadDocument>
+          <sw-button>
+            Upload Document
+          </sw-button>
+          <sw-icon-button icon="fa-file-alt"></sw-icon-button>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</section>
+
+<sw-form-creator-workarea-header (changeContentDisplay)="expandToggle($event, 'forms')" [sectionName]="'Forms'">
+</sw-form-creator-workarea-header>
+<section class="forms" *ngIf="isOpenSection('forms')">
+  <section class="documents" *ngIf="isOpenSection('documents')">
+    <div class="documents-item" *ngFor="let item of documents">
+      <div class="row item-row justify-content-between">
+        <div class="document-info align-items-center">
+          <div class="document-name">
+            <sw-input-text>
+              <span class="placeholder">Document Name</span>
+            </sw-input-text>
+          </div>
+
+          <div class="lable green">
+            Family
+          </div>
+        </div>
+
+        <sw-button class="outline-btn">Add Specific Criteria</sw-button>
+
+      </div>
+      <div class="row item-row">
+        <sw-input-textarea>
+          <span class="input_label">Text</span>
+        </sw-input-textarea>
+      </div>
+      <div class="row item-row form-actions">
+          <sw-dropdown-input style="width: 25%; margin-right: 10px;">
+            <span class="input_label">Fillable Form Type</span>
+          </sw-dropdown-input>
+          <sw-input-text style="width: 25%; margin-right: 10px;">
+            <span class="placeholder">Fillable Form Type</span>
+          </sw-input-text>
+          <sw-dropdown-input style="width: 36%; margin-right: 10px;" *ngIf="!item.isNew; else new">
+            <span class="input_label">Fillable Form Type</span>
+          </sw-dropdown-input>
+          <ng-template #new>
+            <div class="file" style="width: 40%;">
+              fileinput
+            </div>
+          </ng-template>
+          <sw-input-checkbox>
+            <span class="label">Share Publicly</span>
+          </sw-input-checkbox>
+
+      </div>
+    </div>
+  </section>
+</section>

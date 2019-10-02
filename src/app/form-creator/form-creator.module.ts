@@ -29,6 +29,7 @@ import { FormCreatorService } from './form-creator.service';
 import { GeneralComponent } from './general/general.component';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { WidgetComponent } from './workarea/fields/widget/widget.component';
+import { WorkareaDocumentsFormsComponent } from './workarea/documents-forms/documents-forms.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { WidgetComponent } from './workarea/fields/widget/widget.component';
     SidebarTermsConditionsComponent,
     GeneralComponent,
     WidgetComponent,
+    WorkareaDocumentsFormsComponent,
   ],
   imports: [
     CommonModule,
