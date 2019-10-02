@@ -58,6 +58,7 @@ export class DashboardComponent implements OnInit {
       value: 'delete-value'
     }
   ];
+  uploadStatus = 'No file selected';
 
   constructor(
     private fb: FormBuilder,
@@ -73,7 +74,8 @@ export class DashboardComponent implements OnInit {
       email: new FormControl('', vs.emailValidator()),
       longText: new FormControl('Long text\n wrew', Validators.required),
       engdate: new FormControl(null),
-      hebrewddate: new FormControl(null)
+      hebrewddate: new FormControl(null),
+      upload: new FormControl(null)
     });
   }
 
@@ -89,6 +91,18 @@ export class DashboardComponent implements OnInit {
 
   onChecked(isChecked: boolean) {
     this.form.get('checkbox').setValue(!!isChecked);
+  }
+
+  onUploadSelected(file) {
+    this.uploadStatus = `File selected: ${file.name} (${file.size})`
+  }
+
+  onUploadProgress(progress) {
+    this.uploadStatus = `Upload progress: ${progress.loaded} of ${progress.total}`;
+  }
+
+  onUploadResponse(response) {
+    this.uploadStatus = `Upload complete. File path: ${response.file_path} (${response.file_origin_name})`;
   }
 
   changeTextarea(size = false) {
