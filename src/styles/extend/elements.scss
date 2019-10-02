@@ -59,8 +59,18 @@
 }
 
 sw-input-text {
+  span.icon {
+    position: absolute;
+    right: 10px;
+    top: 9px;
+    bottom: 5px;
+    i {
+      color: $gray-color;
+    }
+  }
   .input_text__input {
     padding: 15px 10px 5px 10px;
+    position: relative;
     &.empty {
       padding: 10px;
       & + span {

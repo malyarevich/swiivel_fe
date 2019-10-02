@@ -7,7 +7,8 @@ import {
   Input,
   Output,
   Renderer2,
-  ViewChild } from '@angular/core';
+  ViewChild, 
+  ChangeDetectorRef} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { SizesEnum } from '@shared/sizes.enum';
 
@@ -50,6 +51,7 @@ export class InputTextComponent implements ControlValueAccessor {
 
   constructor(
     private renderer: Renderer2,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -80,6 +82,7 @@ export class InputTextComponent implements ControlValueAccessor {
 
   public writeValue(obj: any): void {
     this.renderer.setProperty(this.input.nativeElement, 'value', obj);
+    this.cdr.markForCheck();
   }
 
 }
