@@ -1,4 +1,4 @@
-<div>
+<div *ngIf="isExist()">
   <app-online-documents
     *ngIf="isDocumentsTab()"
     [form]="form"

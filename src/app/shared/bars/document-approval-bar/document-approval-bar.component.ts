@@ -1,6 +1,8 @@
 import { Component, Input } from '@angular/core';
+import { UploadReviewFormStatusesEnum } from '@app/upload-review-form/upload-review-form-statuses.enum';
+import { UploadReviewFormService } from '@app/upload-review-form/upload-review-form.service';
+import { Document } from '@models/upload-review-form/document.model';
 import { ColorsEnum } from '@shared/colors.enum';
-import { DocumentApproval } from '@models/data-collection/document-approval.model';
 
 @Component({
   selector: 'sw-document-approval-bar',
@@ -9,19 +11,9 @@ import { DocumentApproval } from '@models/data-collection/document-approval.mode
 })
 
 export class DocumentApprovalBarComponent {
-  @Input() document: DocumentApproval;
+  @Input() document: Document;
   public colors = ColorsEnum;
+  public uploadReviewFormStatusesEnum = UploadReviewFormStatusesEnum;
 
-  constructor() { }
-
-  getStatusColor(status: string): string {
-    switch (status) {
-      case 'Accepted':
-        return '#3CA476';
-      case 'Need Review':
-        return '#F8BC45';
-      default:
-        return 'gray';
-    }
-  }
+  constructor(public uploadReviewFormService: UploadReviewFormService) { }
 }

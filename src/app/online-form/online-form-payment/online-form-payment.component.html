@@ -1,4 +1,4 @@
-<div class="content_section__main_container">
+<div class="content_section__main_container" *ngIf="isExist()">
   <div class="content_section__main content_section__main--center">
     <!--Title-->
     <ng-container *ngIf="form.paymentSettings?.paymentSettingsItems?.length">

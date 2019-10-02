@@ -34,4 +34,11 @@ export class OnlineFormTuitionContractComponent implements OnInit {
   saveSystemSign() {}
 
   isDisabledSign() {}
+
+  isExist(): boolean {
+    return (
+      typeof this.form.tuitionContract !== "undefined"
+      // && this.form.tuitionContract.tuitionContractItems.length > 0
+    );
+  }
 }
