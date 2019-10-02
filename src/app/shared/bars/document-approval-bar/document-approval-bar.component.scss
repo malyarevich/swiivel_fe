@@ -2,10 +2,15 @@
 
 .document-approval-bar {
   display: flex;
+  min-height: 74px;
   padding: 12px 10px 12px 0;
   border-top: 1px solid $dark-grey;
   border-bottom: 1px solid $dark-grey;
   background: #fff;
+
+  &--empty {
+    margin: auto 0 auto 10px;
+  }
 
   &__icon-container {
     display: flex;
