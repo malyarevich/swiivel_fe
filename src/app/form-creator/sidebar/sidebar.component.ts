@@ -27,7 +27,9 @@ export class SidebarComponent implements OnInit {
     consent: SidebarConsentComponent,
     tac: SidebarTermsConditionsComponent
   }
-  // trataSource();
+  // treeControl = new NestedTreeControl<any>(node => node.fields);
+  // checklistSelection = new SelectionModel<any>(true);
+  // treeSource = new TreeDataSource();
   expandedSection: string;
   sections: FormGroup;
   expanded: boolean = false;
@@ -100,6 +102,10 @@ export class SidebarComponent implements OnInit {
     console.log('cbclick', node, event)
   }
 
+  onStatusChange(node, active?: boolean) {
+    // this.sidebarFields.setActive(node, !!active);
+    console.log(node);
+  }
 
   toggleSection() {
     this.expanded = !this.expanded;

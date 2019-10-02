@@ -83,10 +83,10 @@ export class DashboardComponent implements OnInit {
         this.form.get('longText').enable();
       }
     });
-    this.form.valueChanges.subscribe((value) => {
-      console.log('Phone input', this.form.get('phone').valid);
-      console.log(`Value changed`, value);
-    });
+  }
+
+  onChecked(isChecked: boolean) {
+    this.form.get('checkbox').setValue(!!isChecked);
   }
 
   changeTextarea(size = false) {

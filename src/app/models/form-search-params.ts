@@ -9,4 +9,5 @@ export class FormSearchParams {
     filter?: {
       [key: string]: string
     };
+    type?: string;
 }

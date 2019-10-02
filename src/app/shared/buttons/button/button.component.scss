@@ -66,7 +66,9 @@
 
 :host(.input_button) {
   .button {
+    white-space: nowrap;
     font-size: 12px;
+    line-height: 15px;
     color: $black;
     background: $dark-grey;
     border: 1px solid $soft-gray;
@@ -87,6 +89,22 @@
   width: 100%;
   .button {
     width: 100%;
+  }
+}
+
+:host(.widget-icon) {
+  .button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+}
+
+:host(.widget-icon.active) {
+  .button {
+    background-color: #fff;
+    border: 1px solid #4350A2;
+    color: #4350A2;
   }
 }
 
