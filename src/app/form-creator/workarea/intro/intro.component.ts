@@ -32,7 +32,7 @@ export class WorkareaIntroComponent implements OnInit, OnDestroy {
     this.formCreatorService.formTemplate$.pipe(
       takeUntil(this.destroed$)
     ).subscribe(formTemplate => {
-      if (formTemplate && formTemplate.packetIntroduction) {
+      if (formTemplate && formTemplate.packetIntroduction && this.packetIntroduction !== formTemplate.packetIntroduction) {
         this.packetIntroduction = formTemplate.packetIntroduction;
         this.textareaControl.setValue(formTemplate.packetIntroduction.content);
         this.cdr.markForCheck();
