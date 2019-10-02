@@ -56,9 +56,21 @@ export class ApiService {
   getFormsShortList(type: string = 'registration'): Observable<any> {
     return this.http.get(`/proxy/form-builder/form-templates/short/${type}`);
   }
+
+  getFormTemplate(mongoId: string) {
+    return this.http.get(`/proxy/form-builder/form-template/${mongoId}`);
+  }
+
+  updateFormTemplate(mongoId: string, form) {
+    return this.http.put(`/proxy/form-builder/form-template/${mongoId}`, form);
+  }
   
   saveNewForm(form: any) {
     return this.http.post('/proxy/form-builder/form-template', form);
+  }
+
+  updateGeneralForm(form: any, id: string) {
+    return this.http.put(`/proxy/form-builder/form-template/${ id }`, form);
   }
 
   public download(url: string) {
