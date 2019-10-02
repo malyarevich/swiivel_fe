@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpProgressEvent, HttpSentEvent, HttpResponse, HttpEvent, HttpUploadProgressEvent, HttpDownloadProgressEvent, HttpHeaderResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
@@ -44,6 +44,41 @@ export class HttpService {
         catchError(this.handleError),
         finalize(() => this.endRequest())
       );
+  }
+  'upload'(url: string, file: File, method='POST', showLoader = false): Observable<any> {
+    if (showLoader) {
+      this.requestSubject.next('Saving data');
+    }
+    const formData = new FormData();
+    formData.append('type', 'document');
+    formData.append('original_name', file.name);
+    formData.append('file', file, file.name);
+    return this.http.request(method, this.apiUrl + url, {
+      body: formData,
+      reportProgress: true,
+      observe: 'events',
+      responseType: 'json',
+    }).pipe(
+      map((response: any) => {
+        if (response.type === 1) {
+          return response as HttpUploadProgressEvent;
+        } else if (response.type === 2) {
+          return response as HttpHeaderResponse;
+        } else if (response.type === 3) {
+          return response as HttpDownloadProgressEvent;
+        } else if (response.type === 4 && response instanceof HttpResponse) {
+          if (response.status === 200 && response.body.status === 1) {
+            return response.body.data;
+          } else {
+            throw new HttpErrorResponse({error: response.body.errors, status: response.body.status});
+          }
+        } else {
+          return response;
+        }
+      }),
+      catchError(this.handleError),
+      finalize(() => this.endRequest())
+    );
   }
   'postForm'(url: string, data: object, showLoader = false): Observable<any> {
     if (showLoader) {

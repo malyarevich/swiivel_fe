@@ -1,33 +1,39 @@
 <sw-back-bar [title]="'Review Forms'"></sw-back-bar>
-<div *ngIf="!documents || !documents.length">
-  <div class="app_loading">
-    <div class="app_loading__logo">i!</div>
-    <svg class="app_loading__spinner" viewBox="25 25 50 50">
-      <circle
-        class="app_loading__path"
-        cx="50"
-        cy="50"
-        r="20"
-        fill="none"
-        stroke-width="2"
-        stroke-miterlimit="10"
-      >
-      </circle>
-    </svg>
-  </div>
-</div>
-<div *ngIf="documents && documents.length">
-  <sw-document-approval-bar
-    [document]="getSelectForm()"></sw-document-approval-bar>
-  <div class="content">
-    <div class="sidebar">
-      <div *ngFor="let document of documents">
-        <app-upload-review-form-item [document]="document" (selected)="selectItem($event)"></app-upload-review-form-item>
+<sw-document-approval-bar [document]="getSelectForm()"></sw-document-approval-bar>
+<div class="content">
+  <div class="sidebar">
+    <form [formGroup]="form">
+      <div class="sidebar-controls">
+        <div class="sidebar-filter">
+          <sw-dropdown-input
+            formControlName="filter"
+            [multiple]="true"
+            [dropdownSubHeader]="true"
+            [options]="filterValue">
+            <span class="sidebar-controls-title">Filtered By</span>
+          </sw-dropdown-input>
+        </div>
+        <div class="sidebar-sort">
+          sort
+        </div>
       </div>
+    </form>
+    <div *ngIf="documents && documents.length" [ngClass]="{ 'loading': showSpinner }">
+      <div *ngFor="let document of documents">
+        <app-upload-review-form-item
+          [document]="document"
+          (selected)="selectItem($event)"
+        >
+        </app-upload-review-form-item>
+      </div>
+      <i *ngIf="showSpinner" class="fas fa-spinner spinner"></i>
     </div>
-    <div class="workarea">
-      <app-upload-review-form-document></app-upload-review-form-document>
+    <div *ngIf="!showSpinner && (!documents || !documents.length)" class="sidebar--empty">
+      No documents
     </div>
   </div>
-  <app-upload-review-form-footer></app-upload-review-form-footer>
+  <div class="workarea">
+    <app-upload-review-form-document></app-upload-review-form-document>
+  </div>
 </div>
+<app-upload-review-form-footer></app-upload-review-form-footer>
