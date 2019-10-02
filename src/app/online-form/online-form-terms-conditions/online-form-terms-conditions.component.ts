@@ -17,9 +17,6 @@ export class OnlineFormTermsConditionsComponent implements OnInit {
 
   termsConditions: any[];
 
-  sections: object[];
-  activeSectionId: string;
-
   constructor() {}
 
   ngOnInit() {
