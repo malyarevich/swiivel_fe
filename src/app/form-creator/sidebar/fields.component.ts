@@ -4,11 +4,10 @@ import { FormControl, FormBuilder } from '@angular/forms';
 import { ApiService } from '@app/core/api.service';
 import { FormCreatorService } from '../form-creator.service';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
-import { TreeDataSource } from '../tree.datasource';
+import { TreeDataSource, CHILDREN_SYMBOL } from '../tree.datasource';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Popup } from '@app/core/popup.service';
 // import fields from '@app/shared/fields';
-
 
 
 @Component({
@@ -19,9 +18,8 @@ import { Popup } from '@app/core/popup.service';
 })
 export class SidebarFieldsComponent implements OnInit {
   filterControl = new FormControl();
-  checklistSelection = new SelectionModel<any>(true);
   treeSource = new TreeDataSource('Fields');
-  treeControl = new NestedTreeControl<any>(node => node.fields);
+  treeControl = new NestedTreeControl(node => node[CHILDREN_SYMBOL]);
   delFieldName: string;
   delInput: FormControl = new FormControl(null);
   ref: any;
@@ -35,9 +33,7 @@ export class SidebarFieldsComponent implements OnInit {
     private popup: Popup,
     private cdr: ChangeDetectorRef
     ) {
-      this.api.getSidebarFields().subscribe((fields) => {
-        this.treeSource.build(fields);
-      });
+
   }
 
   activate(node, event) {
@@ -45,16 +41,24 @@ export class SidebarFieldsComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.service.sidebar = this.treeSource;
-    this.treeSource.changes.subscribe(value => {
+    this.api.getSidebarFields().subscribe((fields) => {
+      this.treeSource.build(fields);
       this.service.sidebar = this.treeSource;
+      this.treeControl = new NestedTreeControl<any>(node => {
+        let children = node[CHILDREN_SYMBOL];
+        debugger
+        return children;
+      });
+    });
+    this.treeSource.changes.subscribe(value => {
+      this.cdr.detectChanges();
     })
     this.filterControl.valueChanges.subscribe(value => {
 
     });
   }
 
-  hasChild = (_: number, node: any) => !!node.fields && node.fields.length > 0;
+  hasChild = (_: number, node: any) => !!node[CHILDREN_SYMBOL] && node[CHILDREN_SYMBOL].length > 0;
 
 
 
@@ -117,30 +121,34 @@ export class SidebarFieldsComponent implements OnInit {
   }
 
   toggleParentNode(node: any): void {
-    this.treeSource.setActive(node, !node.isActive);
-    if (node.isActive && !node.expanded) this.treeControl.expandDescendants(node);
-    else if (node.isExpanded) this.treeControl.collapseDescendants(node);
-    // if (node.isSelected) {
-    //   if (!node.isExpanded) {
-    //     this.treeControl.expandDescendants(node);
-    //   }
-    // } else {
-    //   if (node.isExpanded) {
-    //     this.treeControl.collapseDescendants(node);
-    //   }
-    // }
-    // this.treeSource.setActive(node, node.isSelected)
+    const children = this.treeSource.getChildren(node);
+    node.isActive = !node.isActive;
+    for (let child of children) {
+      if (node.isActive) {
+        child.isActive = node.isActive;
+      }
+    }
+    if (node.isActive) {
+      if (!node.isExpanded) {
+        this.treeControl.expandDescendants(node);
+      }
+    } else {
+      if (node.isExpanded) {
+        this.treeControl.collapseDescendants(node);
+      }
+    }
+    this.treeSource.refresh();
   }
 
   toggleNode(node: any): void {
     const ancestors = this.treeSource.getAncestors(node);
-    node.isSelected = !node.isSelected;
+    node.isActive = !node.isActive;
     for (let ancestor of ancestors) {
-      if (node.isSelected) {
-        ancestor.isSelected = node.isSelected;
+      if (node.isActive) {
+        ancestor.isActive = node.isActive;
       }
     }
-    if (node.isSelected) {
+    if (node.isActive) {
       if (!node.isExpanded) {
         this.treeControl.expand(node);
       }
@@ -149,23 +157,24 @@ export class SidebarFieldsComponent implements OnInit {
         this.treeControl.collapse(node);
       }
     }
-    this.treeSource.setActive(node, node.isSelected)
+    this.treeSource.refresh();
 
   }
 
   descendantsAllSelected(node: any): boolean {
+    // return this.treeSource.descendantsAllSelected(node);
     const descendants = this.treeControl.getDescendants(node);
-    return descendants.every(child => child.isSelected);
+    const allSelected =  descendants.every(node => node['isActive']);
+    return allSelected;
   }
+
+
 
   descendantsPartiallySelected(node: any): boolean {
     const descendants = this.treeControl.getDescendants(node);
-    const result = descendants.some(child => child.isSelected);
+    const result = descendants.some(node => node['isActive']);
     return result && !this.descendantsAllSelected(node);
   }
 
-  isSelectedNode(node: any) {
-    return this.checklistSelection.isSelected(node);
-  }
 
 }
