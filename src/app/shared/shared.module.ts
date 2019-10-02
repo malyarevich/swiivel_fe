@@ -35,7 +35,7 @@ import { DocumentApprovalBarComponent } from '@shared/bars/document-approval-bar
 
 // Others
 import { RadioGroupComponent } from './inputs/radio-group/radio-group.component';
-import { LabelComponent } from './label/label.component';
+import { LabelComponent } from './labels/label/label.component';
 import { UserItemComponent } from './user-item/user-item.component';
 import { SelectOptionDirective } from './inputs/dropdown-select/option.directive';
 import { MainComponent } from './main.component';
@@ -46,6 +46,7 @@ import { CdkStepperModule } from '@angular/cdk/stepper';
 import { StepperComponent } from './stepper/stepper.component';
 import { StepperService } from './stepper.service';
 import { FormComponent } from './form.component';
+import { StatusLabelComponent } from '@shared/labels/status-label/status-label.component';
 
 
 @NgModule({
@@ -84,6 +85,7 @@ import { FormComponent } from './form.component';
     LabelComponent,
     UserItemComponent,
     RadioGroupComponent,
+    StatusLabelComponent,
     // Directives
     SelectOptionDirective,
     ComponentIdDirective,
@@ -127,6 +129,7 @@ import { FormComponent } from './form.component';
     UserItemComponent,
     ReactiveFormsModule,
     DragDropModule,
+    StatusLabelComponent,
     // Directives
     SelectOptionDirective,
     ComponentIdDirective,

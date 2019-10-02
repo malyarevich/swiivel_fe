@@ -335,12 +335,17 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
   }
 
   initPercents() {
-    this.formNavigationState$.getValue().forEach(item => {
-      this.pagesPercents$.next([
-        ...this.pagesPercents$.getValue(),
-        { page: item["page"], percent: -1 }
-      ]);
-    });
+    if (typeof this.form.pagesPercents !== "undefined" &&
+      this.form.pagesPercents.length > 0) {
+      this.pagesPercents$.next(this.form.pagesPercents);
+    } else {
+      this.formNavigationState$.getValue().forEach(item => {
+        this.pagesPercents$.next([
+          ...this.pagesPercents$.getValue(),
+          { page: item["page"], percent: -1 }
+        ]);
+      });
+    }
   }
 
   initPosition() {
