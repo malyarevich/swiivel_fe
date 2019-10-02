@@ -53,6 +53,8 @@ import { OnlineFormTuitionContractComponent } from "./online-form-tuition-contra
 import { GeneralPipesModule } from "./utils/pipes/general-pipes.module";
 import { TuitionContractByFeeComponent } from './online-form-tuition-contract/tuition-contract-by-fee/tuition-contract-by-fee.component';
 import { TuitionContractByStudentComponent } from './online-form-tuition-contract/tuition-contract-by-student/tuition-contract-by-student.component';
+import { ErrorHintTooltipDirective } from '@app/online-form/shared/directives/error-hint-tooltip.directive';
+import { ErrorsListTooltipComponent } from '@app/online-form/errors-list/errors-list-tooltip.component';
 
 @NgModule({
   declarations: [
@@ -85,6 +87,7 @@ import { TuitionContractByStudentComponent } from './online-form-tuition-contrac
     OnlineFormViewWrapperComponent,
     //OnlineFormViewComponents
     OnlineFormConsentComponent,
+    ErrorHintTooltipDirective,
     OnlineFormDocumentsFormsComponent,
     OnlineDocumentsComponent,
     OnlinePdfFormsComponent,
@@ -98,7 +101,7 @@ import { TuitionContractByStudentComponent } from './online-form-tuition-contrac
     OnlineFormTermsConditionsComponent,
     OnlineFormTuitionContractComponent,
     TuitionContractByFeeComponent,
-    TuitionContractByStudentComponent
+    TuitionContractByStudentComponent,
   ],
   imports: [
     CommonModule,
@@ -124,6 +127,6 @@ import { TuitionContractByStudentComponent } from './online-form-tuition-contrac
     GeneralPipesModule
   ],
   exports: [OnlineFormComponent, OnlineFormNavComponent],
-  providers: [OnlineFormService, FilesService]
+  providers: [OnlineFormService, FilesService],
 })
 export class OnlineFormModule {}
