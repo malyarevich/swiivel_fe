@@ -92,11 +92,23 @@ export class GeneralComponent implements OnInit, OnDestroy {
     }
     newForm.name = this.form.get('name').value;
     newForm.type = this.form.get('type').value[0].value;
-    this.api.saveNewForm(newForm).pipe(
-      takeUntil(this.destoyer$)
-    ).subscribe(data => {
-      if (data) { sessionStorage.setItem('newForm', JSON.stringify(data)); }
-    });
+    if (this.formCreatorService.formId) {
+      this.api.updateGeneralForm(newForm, this.formCreatorService.formId).pipe(
+        takeUntil(this.destoyer$)
+      ).subscribe(data => {
+
+      });
+    } else {
+      this.api.saveNewForm(newForm).pipe(
+        takeUntil(this.destoyer$)
+      ).subscribe(data => {
+        if (data) {
+          this.formCreatorService.formId = data._id;
+          sessionStorage.setItem('newForm', JSON.stringify(data));
+        }
+      });
+    }
+    
   }
 
   getDate(): string {

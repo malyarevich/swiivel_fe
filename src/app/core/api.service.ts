@@ -69,6 +69,10 @@ export class ApiService {
     return this.http.post('/proxy/form-builder/form-template', form);
   }
 
+  updateGeneralForm(form: any, id: string) {
+    return this.http.put(`/proxy/form-builder/form-template/${ id }`, form);
+  }
+
   public download(url: string) {
     return this.http.getFile(url)
   }
