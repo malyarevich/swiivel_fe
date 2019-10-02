@@ -7,6 +7,17 @@
   font-family: "Nunito Sans", "Helvetica";
 font-weight: 400;
 
+  &__errors-bullet {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: block;
+    width: 4px;
+    height: 4px;
+    border-radius: 9999px;
+    background-color: #FD6969;
+  }
+
   &__list {
     align-items: stretch;
     display: flex;

@@ -25,6 +25,7 @@ export function onInit(authService: AuthService) {
 
 import { OverlayModule } from '@angular/cdk/overlay';
 import { PopupComponent } from '@core/components/popup/popup.component';
+import { ErrorsListTooltipComponent } from '@app/online-form/errors-list/errors-list-tooltip.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { PopupComponent } from '@core/components/popup/popup.component';
     RestorePasswordComponent,
     DashboardComponent,
     PopupComponent,
+    ErrorsListTooltipComponent
   ],
   imports: [
     TreeModule.forRoot(),
@@ -48,6 +50,7 @@ import { PopupComponent } from '@core/components/popup/popup.component';
   ],
   entryComponents: [
     PopupComponent,
+    ErrorsListTooltipComponent
   ],
   providers: [
     AuthGuard,
@@ -56,7 +59,7 @@ import { PopupComponent } from '@core/components/popup/popup.component';
     { provide: APP_INITIALIZER, useFactory: onInit, multi: true, deps: [AuthService, HttpService]},
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {
 }

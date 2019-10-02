@@ -25,7 +25,7 @@ export const menuItems: IMenuItems[] = [
   },
   {
     name: mainMenuNames.documentsForms,
-    title: "Documents & Forms",
+    title: "Additional documents",
     time: 15,
     icon: "documents-forms"
   },
