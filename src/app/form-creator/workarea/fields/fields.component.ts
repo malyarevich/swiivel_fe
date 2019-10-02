@@ -6,6 +6,7 @@ import { ApiService } from '@app/core/api.service';
 import { CHILDREN_SYMBOL, TreeDataSource } from '@app/form-creator/tree.datasource';
 import { FormCreatorService } from '@app/form-creator/form-creator.service';
 import { Subject } from 'rxjs';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'sw-form-creator-workarea-fields',
@@ -64,6 +65,14 @@ export class WorkareaFieldsComponent implements AfterViewInit, OnInit, OnDestroy
     return 'Group type';
   }
 
+  drop(event: CdkDragDrop<any>) {
+    if (event.item.data.type == 113 || event.item.data.type == 114) {
+      this.closeParentNode(event.item.data);
+    } else {
+      this.closeNode(event.item.data);
+    }
+  }
+
 
   settingsToggle(node: any)  {
     if (node) {
@@ -72,7 +81,7 @@ export class WorkareaFieldsComponent implements AfterViewInit, OnInit, OnDestroy
     }
   }
   closeParentNode(node: any): void {
-    const children = this.treeSource.getChildren(node);
+    const children = this.treeSource.getParentChildren(node);
     node.isActive = false;
     node.showSettings = false;
     for (let child of children) {

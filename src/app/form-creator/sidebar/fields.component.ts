@@ -80,6 +80,7 @@ export class SidebarFieldsComponent implements OnInit {
 
 
   drop(event: CdkDragDrop<any>) {
+    console.log(event)
     if (!event.item.data.isActive) {
       console.log(event.item.data);
       this.toggleNode(event.item.data);
@@ -122,7 +123,7 @@ export class SidebarFieldsComponent implements OnInit {
   }
 
   toggleParentNode(node: any): void {
-    const children = this.treeSource.getChildren(node);
+    let children = this.treeSource.getParentChildren(node);
     if (this.descendantsAllSelected(node)) {
       node.isActive = false;
       // for (let child of children) {
@@ -132,10 +133,11 @@ export class SidebarFieldsComponent implements OnInit {
       node.isActive = false;
     } else {
       node.isActive = true;
+      children = this.treeSource.getChildren(node);
     }
     for (let child of children) {
       child.isActive = node.isActive;
-      console.log(child.isActive, node.isActive)
+
     }
 
     if (node.isActive) {
