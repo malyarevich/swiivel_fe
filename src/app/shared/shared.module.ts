@@ -19,6 +19,8 @@ import { InputTextareaComponent } from './inputs/input-textarea/input-textarea.c
 import { InputToggleComponent } from './inputs/input-toggle/input-toggle.component';
 import { DropdownSelectComponent } from './inputs/dropdown-select/dropdown-select.component';
 
+import { InputFileComponent } from './inputs/input-file/input-file.component';
+
 // Headers
 import { BlockHeaderComponent} from './headers/block-header/block-header.component';
 import { PageHeaderComponent} from './headers/page-header/page-header.component';
@@ -86,6 +88,7 @@ registerLocaleData(localHe)
     InputEmailComponent,
     InputTextareaComponent,
     DialogComponent,
+    InputFileComponent,
     // Headers
     PageHeaderComponent,
     BlockHeaderComponent,
@@ -133,6 +136,7 @@ registerLocaleData(localHe)
     RadioGroupComponent,
     InputEnglishDatepickerComponent,
     InputHebrewDatepickerComponent,
+    InputFileComponent,
     // Headers
     PageHeaderComponent,
     BlockHeaderComponent,
