@@ -26,7 +26,7 @@ export class WorkareaFieldsComponent implements AfterViewInit, OnInit, OnDestroy
   destroyed$ = new Subject();
   fieldsTree: any[];
   treeSource;
-  treeControl = new NestedTreeControl<any>(node => node.isActive ? node[CHILDREN_SYMBOL]: null);
+  treeControl = new NestedTreeControl<any>(node => node[CHILDREN_SYMBOL]);
 
   constructor(private service: FormCreatorService, private api: ApiService, private cdr: ChangeDetectorRef) {
   }
@@ -65,10 +65,28 @@ export class WorkareaFieldsComponent implements AfterViewInit, OnInit, OnDestroy
   }
 
 
-  settingsTogle(node: any)  {
+  settingsToggle(node: any)  {
     if (node) {
       node.showSettings = !node.showSettings;
       this.cdr.markForCheck();
     }
+  }
+  closeParentNode(node: any): void {
+    const children = this.treeSource.getChildren(node);
+    node.isActive = false;
+    node.showSettings = false;
+    for (let child of children) {
+      child.isActive = false;
+      child.showSettings = false;
+    }
+    this.treeSource.refresh();
+    this.cdr.markForCheck();
+  }
+
+  closeNode(node: any): void {
+    node.isActive = false;
+    node.showSettings = false;
+    this.treeSource.refresh();
+    this.cdr.markForCheck();
   }
 }
