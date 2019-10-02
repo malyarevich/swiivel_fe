@@ -80,7 +80,8 @@ export class SidebarFieldsComponent implements OnInit {
 
 
   drop(event: CdkDragDrop<any>) {
-    if (!event.item.data.isSelected) {
+    if (!event.item.data.isActive) {
+      console.log(event.item.data);
       this.toggleNode(event.item.data);
     }
   }
@@ -134,6 +135,7 @@ export class SidebarFieldsComponent implements OnInit {
     }
     for (let child of children) {
       child.isActive = node.isActive;
+      console.log(child.isActive, node.isActive)
     }
 
     if (node.isActive) {

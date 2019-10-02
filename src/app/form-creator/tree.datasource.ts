@@ -106,9 +106,6 @@ export class TreeDataSource implements DataSource<any> {
     return this.tree.ancestorsToArray(node);
   }
 
-  getAncestors2(node) {
-    return this.tree.ancestorsIterator(node);
-  }
 
   refresh() {
     this.data =  this.dataSubject.getValue();
