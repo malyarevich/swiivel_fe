@@ -102,6 +102,10 @@ export class TreeDataSource implements DataSource<any> {
     return this.tree.childrenToArray(node);
   }
 
+  getParentChildren(node) {
+    return this.tree.treeToArray(node);
+  }
+
   getAncestors(node) {
     return this.tree.ancestorsToArray(node);
   }

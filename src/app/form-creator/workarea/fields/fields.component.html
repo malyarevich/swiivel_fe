@@ -1,5 +1,6 @@
-<cdk-tree [dataSource]="treeSource" [treeControl]="treeControl" cdkDropList id="fields-list" >
-  <cdk-nested-tree-node *cdkTreeNodeDef="let node" cdkTreeNodePadding cdkTreeNodePaddingIndent="15px" class="field-workarea-node">
+<cdk-tree [dataSource]="treeSource" [treeControl]="treeControl" cdkDropList id="fields-list"
+[cdkDropListConnectedTo]="['sidebar-list']"   cdkDropListSortingDisabled (cdkDropListDropped)="drop($event)">
+  <cdk-nested-tree-node *cdkTreeNodeDef="let node" cdkTreeNodePadding cdkDrag [cdkDragData]="node" cdkDragLockAxis="x" cdkTreeNodePaddingIndent="15px" class="field-workarea-node">
     <!-- use a disabled button to provide padding for tree leaf -->
     <div class="field" [class.active]="node.showSettings"  *ngIf="node.isActive">
       <div class="main-container">
@@ -55,7 +56,7 @@
   <!-- This is the tree node template for expandable nodes -->
   <cdk-nested-tree-node *cdkTreeNodeDef="let node; when: hasChild" class="field-tree-node"
     [ngClass]="{'group-tree-node': node.type === 113, 'section-tree-node': node.type === 114}">
-    <div class="field" [class.active]="node.showSettings"  *ngIf="node.isActive">
+    <div class="field" [class.active]="node.showSettings"  *ngIf="node.isActive" cdkDrag [cdkDragData]="node" cdkDragLockAxis="x">
       <div [ngSwitch]="node.type">
         <div *ngSwitchCase="113">
           <div class="main-container">
