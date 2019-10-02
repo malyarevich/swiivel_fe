@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { UploadReviewFormStatusesEnum } from '@app/upload-review-form/upload-review-form-statuses.enum';
 import { UploadReviewFormService } from '@app/upload-review-form/upload-review-form.service';
-import { Document } from '@models/data-collection/document.model';
+import { Document } from '@models/upload-review-form/document.model';
 import { ColorsEnum } from '@shared/colors.enum';
 
 @Component({

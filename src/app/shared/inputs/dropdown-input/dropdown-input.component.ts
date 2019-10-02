@@ -37,6 +37,7 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
   disable = false;
   _multiple = false;
 
+  @Input() dropdownSubHeader = false;
   @Input() panelClass = 'dropdown-overlay';
   @Input()
   set multiple(opt: boolean) {
@@ -100,7 +101,7 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
     return !this.active && this._sm.isEmpty();
   }
 
-  select(item): void {
+  select(item: any): void {
     this._sm.toggle(item);
     if (!this._multiple) { this._ref.close(); }
     this.onChange(this._sm.selected);

@@ -1,4 +1,4 @@
-<div class="document-approval-bar">
+<div class="document-approval-bar" *ngIf="document">
   <div class="document-approval-bar__icon-container">
     <i class="fas fa-file document-approval-bar__icon"></i>
   </div>
@@ -28,4 +28,7 @@
       <sw-button [disabled]="true">Save</sw-button>
     </div>
   </div>
+</div>
+<div class="document-approval-bar" *ngIf="!document">
+  <h3 class="document-approval-bar--empty">No selected document</h3>
 </div>
