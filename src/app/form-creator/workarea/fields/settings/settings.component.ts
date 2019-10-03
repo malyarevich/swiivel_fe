@@ -81,6 +81,9 @@ export class SettingsComponent implements OnInit, AfterViewInit, OnDestroy {
       // console.log('CCCC,', c)
       this.type = c.type;
       this.title = c.title;
+      if (c.type === 107) {
+        console.log('Field group', f)
+      }
       const factory: ComponentFactory<any> = this.resolver.resolveComponentFactory(c.component);
       if (this.container) {
         this.component = this.container.createComponent(factory);
@@ -95,6 +98,7 @@ export class SettingsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   updateField(v) {
     Object.assign(this._field, v);
+    console.log('object assign', Object.assign(this._field, v))
   }
 
   ngOnDestroy(): void {

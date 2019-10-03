@@ -14,7 +14,16 @@ export class NumberSettingComponent implements OnInit {
   @Input()
   set settings(obj: any) {
     if (obj) {
-      this.form.patchValue(obj);
+      console.log(obj)
+      this.form.patchValue({
+        showDefaultValue: !!obj.defaultValue,
+        showValidators: obj.validators && obj.validators.length > 0,
+        allowList: obj.allowList,
+        defaultValue: obj.defaultValue || null,
+        places: obj.places || null,
+        format:  obj.format ? [this.validatorsOptions.find(o => o.title === obj.format)] : [],
+        validators: obj.validators
+      });
     }
   }
   @Output() fieldSettings = new EventEmitter();
@@ -39,6 +48,7 @@ export class NumberSettingComponent implements OnInit {
     this.form.valueChanges.subscribe(v => {
       delete v.showDefaultValue;
       delete v.showValidators;
+      if (v.format && v.format[0]) { v.format = v.format[0].title }
       this.fieldSettings.emit(v);
     });
   }

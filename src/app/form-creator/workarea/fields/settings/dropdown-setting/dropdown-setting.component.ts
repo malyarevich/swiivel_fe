@@ -11,7 +11,14 @@ export class DropdownSettingComponent implements OnInit {
   @Input()
   set settings(obj: any) {
     if (obj) {
-      this.setFormValue(obj);
+      this.form.patchValue({
+        showDefaultValue: !!obj.defaultValue,
+        showDefaultOptions: obj.defaultOption && obj.defaultOption.length > 0,
+        defaultOption: obj.defaultOption || null,
+        multiple: obj.multiple || false,
+        fieldType:  obj.fieldsType ? [this.fieldsType.find(o => o.value === obj.fieldType)] : [],
+        fieldOptions: obj.fieldOptions || []
+      });
     }
   }
   @Output() fieldSettings = new EventEmitter();
@@ -28,10 +35,10 @@ export class DropdownSettingComponent implements OnInit {
   ];
 
   fieldsType = [
-    { title: 'Text' },
-    { title: 'Number' },
-    { title: 'Date/Time' },
-    { title: 'Phone Number' }
+    { title: 'Text', value: 'text' },
+    { title: 'Number', value: 'number' },
+    { title: 'Date/Time', value: 'date' },
+    { title: 'Phone Number', value: 'phone' }
   ];
 
   form: FormGroup;
@@ -42,9 +49,9 @@ export class DropdownSettingComponent implements OnInit {
     this.form = this.fb.group({
       showDefaultOptions: new FormControl(false, {updateOn: 'change'}),
       defaultOption: new FormControl([], {updateOn: 'change'}),
-      type: new FormControl([], {updateOn: 'change'}),
+      fieldType: new FormControl([], {updateOn: 'change'}),
       multiple: new FormControl(false, {updateOn: 'change'}),
-      options: new FormArray([
+      fieldOptions: new FormArray([
         new FormGroup({
           title: new FormControl('', {updateOn: 'blur'})
         })
@@ -59,11 +66,11 @@ export class DropdownSettingComponent implements OnInit {
   }
 
   get options() {
-    return this.form.get('options') as FormArray;
+    return this.form.get('fieldOptions') as FormArray;
   }
 
   get optionsValue() {
-    return this.form.get('options').value;
+    return this.form.get('fieldOptions').value;
   }
 
   setFormValue(obj: any) {
@@ -98,8 +105,8 @@ export class DropdownSettingComponent implements OnInit {
   }
 
   prepareForm(value) {
-    const { multiple, options, type, defaultOption } = value;
-    this.fieldSettings.emit({multiple, options, type, defaultOption});
+    const { multiple, fieldOptions, fieldType, defaultOption } = value;
+    this.fieldSettings.emit({multiple, fieldOptions, fieldType, defaultOption});
   }
 
 }

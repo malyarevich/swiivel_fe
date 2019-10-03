@@ -1,5 +1,5 @@
 import { NestedTreeControl } from '@angular/cdk/tree';
-import { Component, OnInit, ChangeDetectionStrategy, ViewChild, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ViewChild, ChangeDetectorRef, AfterViewChecked, OnDestroy } from '@angular/core';
 import { FormControl, FormBuilder } from '@angular/forms';
 import { ApiService } from '@app/core/api.service';
 import { FormCreatorService } from '../form-creator.service';
@@ -7,6 +7,9 @@ import {CdkDragDrop, moveItemInArray, transferArrayItem, CdkDragExit} from '@ang
 import { TreeDataSource, CHILDREN_SYMBOL } from '../tree.datasource';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Popup } from '@app/core/popup.service';
+import { ActivatedRoute } from '@angular/router';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 // import fields from '@app/shared/fields';
 
 
@@ -16,7 +19,7 @@ import { Popup } from '@app/core/popup.service';
   styleUrls: ['./fields.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SidebarFieldsComponent implements OnInit, AfterViewChecked {
+export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestroy {
   filterValue: string = null;
   filterControl = new FormControl();
   treeSource = new TreeDataSource('Fields');
@@ -24,6 +27,7 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked {
   delFieldName: string;
   delInput: FormControl = new FormControl(null);
   ref: any;
+  destroyed$ = new Subject();
   @ViewChild('filter', { static: false}) filterNames;
   @ViewChild('deletePop', { static: false }) deletePop;
 
@@ -32,7 +36,8 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked {
     private fb: FormBuilder,
     private api: ApiService,
     private popup: Popup,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private route: ActivatedRoute,
     ) {
 
   }
@@ -40,21 +45,42 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked {
   activate(node, event) {
     return event;
   }
-
+  ngOnDestroy() {
+    this.destroyed$.next(true);
+    this.destroyed$.complete();
+  }
 
   ngOnInit() {
-    this.api.getSidebarFields().subscribe((fields) => {
-      this.treeSource.build(fields);
-      this.service.sidebar = this.treeSource;
-      this.treeControl = new NestedTreeControl<any>(node => {
-        let children = node[CHILDREN_SYMBOL];
-        return children;
-      });
+    this.route.paramMap.subscribe(params => {
+      this.treeSource.changes.pipe(takeUntil(this.destroyed$)).subscribe(value => {
+        this.cdr.markForCheck();
+      })
+      if (params.has('mongo_id')) {
+        this.treeControl = new NestedTreeControl<any>(node => {
+          let children = node[CHILDREN_SYMBOL];
+          return children;
+        });
+        this.service.formTemplate$.pipe(takeUntil(this.destroyed$)).subscribe(value => {
+          if (value) {
+            this.treeSource.build(value.fields);
+            this.service.sidebar = this.treeSource;
+            this.cdr.markForCheck();
+          }
+        })
+      } else {
+        this.api.getSidebarFields().pipe(takeUntil(this.destroyed$)).subscribe((fields) => {
+          this.treeControl = new NestedTreeControl<any>(node => {
+            let children = node[CHILDREN_SYMBOL];
+            return children;
+          });
+          this.treeSource.build(fields);
+          this.service.sidebar = this.treeSource;
+        });
+      }
     });
-    this.treeSource.changes.subscribe(value => {
-      this.cdr.markForCheck();
-    })
-    this.filterControl.valueChanges.subscribe(value => {
+
+
+    this.filterControl.valueChanges.pipe(takeUntil(this.destroyed$)).subscribe(value => {
       if (value && value.length > 0) {
         this.filterValue = value.toLowerCase();
       } else {
