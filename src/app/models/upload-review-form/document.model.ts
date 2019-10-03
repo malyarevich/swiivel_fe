@@ -1,3 +1,5 @@
+import { ExtremeUploadForm } from '@models/upload-review-form/forms.model';
+
 export interface Document {
   bucketId: string;
   content_type: string;
@@ -20,4 +22,9 @@ export interface Document {
   _id: string;
   status?: string;
   isSelected?: boolean;
+  next_form: ExtremeUploadForm;
+  previous_form: ExtremeUploadForm;
 }
+
+
+

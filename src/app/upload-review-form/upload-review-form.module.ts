@@ -8,7 +8,7 @@ import { UploadFormReviewItemComponent } from '@app/upload-review-form/upload-re
 import { SharedModule } from '@shared/shared.module';
 import { UploadReviewFormRoutingModule } from './upload-review-form-routing.module';
 import { UploadReviewFormComponent } from './upload-review-form.component';
-import {UploadReviewFormService} from '@app/upload-review-form/upload-review-form.service';
+import { UploadReviewFormService } from '@app/upload-review-form/upload-review-form.service';
 
 @NgModule({
   declarations: [

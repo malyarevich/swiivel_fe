@@ -5,6 +5,7 @@ import { FilterDropDownData } from '@models/upload-review-form/filter.model';
 import { SortDropDownData } from '@models/upload-review-form/sort.model';
 import { Observable } from 'rxjs';
 import { UploadReviewFormSortEnum } from '@app/upload-review-form/upload-review-form-sort.enum';
+import {first, map} from 'rxjs/operators';
 
 export class UploadReviewFormService extends ApiService {
   getStatusColor(status: string): string {
@@ -48,6 +49,12 @@ export class UploadReviewFormService extends ApiService {
   getFilterList(formId: string): Observable<any> {
     const endpoint = `/proxy/upload-reviews-form/list-variables-filter/${formId}`;
     return this.http.get(endpoint);
+  }
+
+  downloadForm(id: string) {
+    return this.download(`/proxy/upload-reviews-form/bulk-download/${id}`).pipe(map((response: any) => {
+      return window.URL.createObjectURL(new Blob([response], {type: 'application/pdf'}));
+    }), first());
   }
 
   getFilterDropDownData(documents: any): FilterDropDownData | {} {
