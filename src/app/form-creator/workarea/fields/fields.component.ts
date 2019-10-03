@@ -37,6 +37,14 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
       this.treeSource.changes.subscribe(value => {
         this.cdr.detectChanges();
       });
+    });
+    this.service.events$.subscribe(event => {
+      if (event.action === 'expand') {
+        this.treeControl.expand(event.target);
+      } else if (event.action === 'collapse') {
+        this.treeControl.collapse(event.target);
+      }
+      console.log(`events`, event)
     })
   }
   ngOnDestroy() {

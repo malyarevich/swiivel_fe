@@ -184,11 +184,13 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked {
       if (node.isActive) {
         if (ancestor.type && (ancestor.type === 113 || ancestor.type === 114)) {
           ancestor.isActive = true;
+          this.service.event = {action: 'expand', target: ancestor};
         }
       } else {
         if (!this.descendantsPartiallySelected(ancestor)) {
           ancestor.isActive = false;
           this.treeControl.collapse(ancestor);
+          this.service.event = {action: 'collapse', target: ancestor};
         }
       }
     }
