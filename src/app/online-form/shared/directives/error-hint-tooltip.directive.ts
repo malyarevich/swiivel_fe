@@ -20,7 +20,7 @@ import { ISectionError } from '@app/online-form/utils/generate-errors.service';
 })
 
 export class ErrorHintTooltipDirective implements OnInit {
-  @Input() errorsList: ISectionError[];
+  @Input() errorsList: object;
   @Input() connectedPosition: ConnectedPosition[] = [{
     originX : 'center',
     originY : 'bottom',

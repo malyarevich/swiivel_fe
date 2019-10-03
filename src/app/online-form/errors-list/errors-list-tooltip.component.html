@@ -1,2 +1,8 @@
-<!--ERRORS LIST - {{ errors | json }}-->
-WORKS
+<div class="missing_fields">
+  <h5 class="missing_fields__title">Missing Fields({{ getErrorsCount() }})</h5>
+  <div class="missing_fields__fields_list">
+    <div *ngFor="let error of getErrors()" class="missing_fields__field">
+      {{ error }}
+    </div>
+  </div>
+</div>

@@ -194,6 +194,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
     let tabs = [];
     if (
       this.form.packetIntroduction &&
+      this.form.packetIntroduction.packets &&
       this.form.packetIntroduction.packets.length > 0
     ) {
       tabs = Object.values(this.form.packetIntroduction.packets).map(item => {
@@ -241,6 +242,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
     const tabs = [];
     if (
       this.form.termsConditions &&
+      this.form.termsConditions.termsConditionsItems &&
       this.form.termsConditions.termsConditionsItems.length > 0
     ) {
       // Object.values(
