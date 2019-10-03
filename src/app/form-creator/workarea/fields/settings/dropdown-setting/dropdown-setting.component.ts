@@ -11,7 +11,15 @@ export class DropdownSettingComponent implements OnInit {
   @Input()
   set settings(obj: any) {
     if (obj) {
-      this.setFormValue(obj);
+      console.log(obj)
+      this.form.patchValue({
+        showDefaultValue: !!obj.defaultValue,
+        showDefaultOptions: obj.defaultOption && obj.defaultOption.length > 0,
+        defaultOption: obj.defaultOption || null,
+        multiple: obj.multiple || false,
+        type:  obj.type ? [this.fieldsType.find(o => o.value === obj.type)] : [],
+        options: obj.options
+      });
     }
   }
   @Output() fieldSettings = new EventEmitter();
@@ -28,10 +36,10 @@ export class DropdownSettingComponent implements OnInit {
   ];
 
   fieldsType = [
-    { title: 'Text' },
-    { title: 'Number' },
-    { title: 'Date/Time' },
-    { title: 'Phone Number' }
+    { title: 'Text', value: 'text' },
+    { title: 'Number', value: 'number' },
+    { title: 'Date/Time', value: 'date' },
+    { title: 'Phone Number', value: 'phone' }
   ];
 
   form: FormGroup;
