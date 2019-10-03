@@ -7,6 +7,7 @@ import {CdkDragDrop, moveItemInArray, transferArrayItem, CdkDragExit} from '@ang
 import { TreeDataSource, CHILDREN_SYMBOL } from '../tree.datasource';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Popup } from '@app/core/popup.service';
+import { ActivatedRoute } from '@angular/router';
 // import fields from '@app/shared/fields';
 
 
@@ -32,7 +33,8 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked {
     private fb: FormBuilder,
     private api: ApiService,
     private popup: Popup,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private route: ActivatedRoute,
     ) {
 
   }
@@ -43,17 +45,40 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked {
 
 
   ngOnInit() {
-    this.api.getSidebarFields().subscribe((fields) => {
-      this.treeSource.build(fields);
-      this.service.sidebar = this.treeSource;
-      this.treeControl = new NestedTreeControl<any>(node => {
-        let children = node[CHILDREN_SYMBOL];
-        return children;
-      });
+    this.route.paramMap.subscribe(params => {
+      this.treeSource.changes.subscribe(value => {
+        this.cdr.markForCheck();
+      })
+      if (params.has('mongo_id')) {
+
+          this.treeControl = new NestedTreeControl<any>(node => {
+            let children = node[CHILDREN_SYMBOL];
+            return children;
+          });
+
+            this.service.formTemplate$.subscribe(value => {
+              if (value) {
+                this.treeSource.build(value.fields, undefined, undefined, undefined, true);
+                this.service.sidebar = this.treeSource;
+                this.cdr.markForCheck();
+              }
+            })
+      } else {
+        this.api.getSidebarFields().subscribe((fields) => {
+          this.treeControl = new NestedTreeControl<any>(node => {
+            let children = node[CHILDREN_SYMBOL];
+            return children;
+          });
+
+            this.treeSource.build(fields);
+          this.service.sidebar = this.treeSource;
+
+
+        });
+      }
     });
-    this.treeSource.changes.subscribe(value => {
-      this.cdr.markForCheck();
-    })
+
+
     this.filterControl.valueChanges.subscribe(value => {
       if (value && value.length > 0) {
         this.filterValue = value.toLowerCase();

@@ -44,8 +44,9 @@ export class TreeDataSource implements DataSource<any> {
     }
   }
 
-  build(nodes: any[] = [], root = this.tree, childKey = this.childKey, onlyActive?) {
+  build(nodes: any[] = [], root = this.tree, childKey = this.childKey, onlyActive?, allActive?) {
     for (let node of nodes) {
+      if (allActive) node.isActive = true;
       if (this.tree.index(node) === -1) {
         if (onlyActive === true) {
           if (node.isActive) {
