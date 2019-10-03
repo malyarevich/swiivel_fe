@@ -25,25 +25,25 @@
       font-size: 30px;
     }
 
-    &-controls {
+    .sidebar-controls {
       display: flex;
       margin: 0 0 15px;
     }
 
-    &-controls-title {
+    .sidebar-title {
       color: $gray-color;
       font-size: 12px;
       line-height: 15px;
     }
 
-    &-filter {
+    .sidebar-filter {
       position: relative;
       width: 53%;
       min-width: 159px;
       margin: 0 10px 0 0;
     }
 
-    &-filter:after {
+    .sidebar-filter:after {
       position: absolute;
       right: -10px;
       top: 0;
@@ -53,7 +53,7 @@
       background: $dark-grey;
     }
 
-    &-sort {
+    .sidebar-sort {
       margin: 0 0 0 10px;
     }
   }

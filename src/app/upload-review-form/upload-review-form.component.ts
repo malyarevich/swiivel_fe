@@ -1,9 +1,10 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { UploadReviewFormDataSource } from '@app/upload-review-form/upload-review-form.datasource';
 import { UploadReviewFormService } from '@app/upload-review-form/upload-review-form.service';
 import { Document } from '@models/upload-review-form/document.model';
+import { SortDropDownData } from '@models/upload-review-form/sort.model';
 
 @Component({
   selector: 'app-upload-review-form',
@@ -17,6 +18,7 @@ export class UploadReviewFormComponent  implements OnInit {
   public activeIdDocument: string;
   public activeIdForm = '';
   public filterValue = {};
+  public sortValue: SortDropDownData[];
   public form: FormGroup;
   public showSpinner: boolean;
 
@@ -26,7 +28,8 @@ export class UploadReviewFormComponent  implements OnInit {
     private cdr: ChangeDetectorRef,
     private fb: FormBuilder) {
     this.form = this.fb.group({
-      filter: new FormControl([], Validators.required)
+      filter: new FormControl([], Validators.required),
+      sort: new FormControl([], Validators.required)
     });
 
   }
@@ -43,11 +46,14 @@ export class UploadReviewFormComponent  implements OnInit {
       .subscribe((data) => {
         if (data) {
           this.filterValue = this.uploadReviewFormService.convertFilterDocumentsData(data);
+          if ( data.sort) {
+            this.sortValue = this.uploadReviewFormService.convertSortDocumentsData(data);
+          }
           this.cdr.detectChanges();
         }
       });
-    this.form.valueChanges.subscribe(filters => {
-      this.dataSource.uploadDocuments(this.activeIdForm, filters.filter);
+    this.form.valueChanges.subscribe(params => {
+      this.dataSource.uploadDocuments(this.activeIdForm, params.filter, params.sort);
       this.getDocuments();
     });
   }
