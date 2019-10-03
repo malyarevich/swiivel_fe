@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { BehaviorSubject, Subject, Observable } from 'rxjs';
 import { TreeDataSource } from './tree.datasource';
+import { filter } from 'rxjs/operators';
 
 @Injectable()
 export class FormCreatorService {
@@ -26,12 +27,13 @@ export class FormCreatorService {
     this.formTemplateSubject$.next(data);
   }
 
+
   get formTemplate() {
-    return this.formTemplateSubject$.getValue();
+    return this.formTemplateSubject$.getValue()
   }
 
   get formTemplate$() {
-    return this.formTemplateSubject$.asObservable();
+    return this.formTemplateSubject$.pipe(filter(node => node && node.isActive));
   }
 
   get sidebar() {
@@ -80,6 +82,7 @@ export class FormCreatorService {
 
 
   constructor() {
+
 
   }
   get events$() {
