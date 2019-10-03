@@ -1,1 +1,42 @@
-footer
+<div class="upload-review-form-footer" *ngIf="documents">
+  <div class="prev">
+    <div class="container" *ngIf="documents.previous_form">
+      <div class="button-container">
+        <sw-button class="button">
+          <i class="fas fa fa-play button-ico"></i>
+        </sw-button>
+      </div>
+      <div class="text-row">
+        <p class="name">{{ documents.previous_form.family_name }}</p>
+        <div class="text-row-container">
+          <p class="document-name">{{ documents.previous_form.form_name }}</p>
+          <div class="control-item">
+            <sw-status-label [class]="uploadReviewFormService.getStatusColor(documents.previous_form.status)">
+              {{ uploadReviewFormStatusesEnum[documents.previous_form.status] }}
+            </sw-status-label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="next" *ngIf="documents.next_form">
+    <div class="container" *ngIf="documents.next_form">
+      <div class="text-row">
+        <p class="name">{{ documents.next_form.family_name }}</p>
+        <div class="text-row-container">
+          <p class="document-name">{{ documents.next_form.form_name }}</p>
+          <div class="control-item">
+            <sw-status-label [class]="uploadReviewFormService.getStatusColor(documents.next_form.status)">
+              {{ uploadReviewFormStatusesEnum[documents.next_form.status] }}
+            </sw-status-label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="button-container">
+      <sw-button class="button">
+        <i class="fas fa fa-play button-ico"></i>
+      </sw-button>
+    </div>
+  </div>
+</div>

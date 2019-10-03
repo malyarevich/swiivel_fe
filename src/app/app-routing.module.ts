@@ -18,10 +18,6 @@ const routes: Routes = [
     component: RestorePasswordComponent
   },
   {
-    path: 'upload-review-form/:id',
-    component: UploadReviewFormComponent
-  },
-  {
     path: '',
     canActivate: [AuthGuard],
     component: MainComponent,
@@ -41,6 +37,10 @@ const routes: Routes = [
   {
     path: 'forms-dashboard',
     loadChildren: () => import('./forms-dashboard/form-table.module').then(m => m.FormTableModule)
+  },
+  {
+    path: 'upload-review-form',
+    loadChildren: () => import('./upload-review-form/upload-review-form.module').then(m => m.UploadReviewFormModule)
   },
   {
     path: '**',
