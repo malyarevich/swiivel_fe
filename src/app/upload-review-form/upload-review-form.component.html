@@ -52,5 +52,8 @@
   </div>
 </div>
 <div class="footer">
-  <app-upload-review-form-footer [documents]="extremeDocuments"></app-upload-review-form-footer>
+  <app-upload-review-form-footer
+    [documents]="extremeDocuments"
+    (changeForm)="updateForm($event)"
+  ></app-upload-review-form-footer>
 </div>

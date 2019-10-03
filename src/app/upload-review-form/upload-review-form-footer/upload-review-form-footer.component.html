@@ -2,7 +2,10 @@
   <div class="prev">
     <div class="container" *ngIf="documents.previous_form">
       <div class="button-container">
-        <sw-button class="button button-icon">
+        <sw-button
+          class="button button-icon"
+          (click)="prev()"
+        >
           <i class="fas fa-caret-left button-icon-size"></i>
         </sw-button>
       </div>
@@ -38,7 +41,10 @@
       </div>
     </div>
     <div class="button-container">
-      <sw-button class="button button-icon">
+      <sw-button
+        class="button button-icon"
+        (click)="next()"
+      >
         <i class="fas fa-caret-right button-icon-size"></i>
       </sw-button>
     </div>
