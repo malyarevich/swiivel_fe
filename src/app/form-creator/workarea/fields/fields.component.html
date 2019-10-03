@@ -55,9 +55,9 @@
     </div>
   </cdk-nested-tree-node>
   <!-- This is the tree node template for expandable nodes -->
-  <cdk-nested-tree-node *cdkTreeNodeDef="let node; when: hasChild" class="field-tree-node"
+  <cdk-nested-tree-node *cdkTreeNodeDef="let node; when: hasChild" class="field-tree-node"  cdkDrag [cdkDragData]="node"  (cdkDragDropped)="drop($event)" 
     [ngClass]="{'group-tree-node': node.type === 113, 'section-tree-node': node.type === 114 || node.type === undefined}">
-    <div class="field" [class.active]="node.showSettings" *ngIf="node.isActive" cdkDrag [cdkDragData]="node">
+    <div class="field" [class.active]="node.showSettings" *ngIf="node.isActive">
       <div [ngSwitch]="node.type">
         <div *ngSwitchCase="113">
           <div class="main-container">
