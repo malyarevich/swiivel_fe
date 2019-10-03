@@ -1,20 +1,19 @@
 import { ArrayDataSource } from '@angular/cdk/collections';
 import {FlatTreeControl, NestedTreeControl} from '@angular/cdk/tree';
-import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy, AfterViewInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy, AfterViewInit, OnDestroy, ViewChild, AfterViewChecked } from '@angular/core';
 import { FieldService } from '@app/core/field.service';
 import { ApiService } from '@app/core/api.service';
 import { CHILDREN_SYMBOL, TreeDataSource } from '@app/form-creator/tree.datasource';
 import { FormCreatorService } from '@app/form-creator/form-creator.service';
 import { Subject } from 'rxjs';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
-
 @Component({
   selector: 'sw-form-creator-workarea-fields',
   templateUrl: './fields.component.html',
   styleUrls: ['./fields.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class WorkareaFieldsComponent implements AfterViewInit, OnInit, OnDestroy {
+export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked, OnInit, OnDestroy {
   options = {
     idField: 'mongo_id',
     childrenField: 'fields',
@@ -38,13 +37,26 @@ export class WorkareaFieldsComponent implements AfterViewInit, OnInit, OnDestroy
       this.treeSource.changes.subscribe(value => {
         this.cdr.detectChanges();
       });
+    });
+    this.service.events$.subscribe(event => {
+      if (event.action === 'expand') {
+        this.treeControl.expand(event.target);
+      } else if (event.action === 'collapse') {
+        this.treeControl.collapse(event.target);
+      }
+      console.log(`events`, event)
     })
   }
   ngOnDestroy() {
     this.destroyed$.complete();
   }
 
+  ngAfterViewChecked(): void {
+      this.cdr.detectChanges()
+  }
+
   ngAfterViewInit() {
+
   }
 
   hasChild = (_: number, node: any) => {
@@ -67,10 +79,13 @@ export class WorkareaFieldsComponent implements AfterViewInit, OnInit, OnDestroy
 
   drop(event: CdkDragDrop<any>) {
     let node = event.item.data;
-    if (node.type === 113 || node.type === 114) {
-      this.closeParentNode(node);
-    } else {
-      this.closeNode(node);
+    let dc = event.container;
+    if (dc.id !== 'fields-list') {
+      if (node.type === 113 || node.type === 114) {
+        this.closeParentNode(node);
+      } else {
+        this.closeNode(node);
+      }
     }
   }
 
