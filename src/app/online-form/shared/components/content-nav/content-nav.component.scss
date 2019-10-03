@@ -8,12 +8,14 @@
   font-weight: 400;
 
   &__errors-bullet {
+    cursor: pointer;
     position: absolute;
+    display: block;
+    width: 0.5rem;
+    height: 0.5rem;
     top: 0;
     right: 0;
     display: block;
-    width: 4px;
-    height: 4px;
     border-radius: 9999px;
     background-color: #fd6969;
   }

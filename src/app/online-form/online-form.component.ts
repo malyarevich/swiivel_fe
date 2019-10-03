@@ -730,7 +730,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
             oFields[field["_id"]] = nestedNode;
           }
         } else {
-          if (this.formErrors$.getValue()["fields"][field["_id"]]) {
+          if (this.formErrors$.getValue()["fields"] && this.formErrors$.getValue()["fields"][field["_id"]]) {
             oFields[field["_id"]] = this.formErrors$.getValue()["fields"][
               field["_id"]
             ];
@@ -747,7 +747,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
       documents.forEach(document => {
         const key = document["id"];
 
-        if (this.formErrors$.getValue()["fields"][key]) {
+        if (this.formErrors$.getValue()["fields"] && this.formErrors$.getValue()["fields"][key]) {
           oFields["documents"][key] = this.formErrors$.getValue()["fields"][
             key
           ];
@@ -779,6 +779,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
       this.consentKeys.forEach(key => {
         if (
           key.includes(section["id"]) &&
+          this.formErrors$.getValue()["fields"] &&
           this.formErrors$.getValue()["fields"][key]
         ) {
           sectionErrors[key] = this.formErrors$.getValue()["fields"][key];
@@ -803,7 +804,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
       const sectionErrors = {};
 
       this.termsConditionsKeys.forEach(key => {
-        if (this.formErrors$.getValue()["fields"][key]) {
+        if (this.formErrors$.getValue()["fields"] && this.formErrors$.getValue()["fields"][key]) {
           sectionErrors[key] = this.formErrors$.getValue()["fields"][key];
         }
       });
