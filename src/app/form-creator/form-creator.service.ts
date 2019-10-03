@@ -38,7 +38,7 @@ export class FormCreatorService {
   }
 
   get formTemplate$() {
-    return this.formTemplateSubject$.pipe(filter(node => node && node.isActive));
+    return this.formTemplateSubject$.asObservable();
   }
 
   get sidebar() {

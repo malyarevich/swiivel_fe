@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, ViewChild } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { SidebarConsentComponent } from './sidebar/consent.component';
 import { SidebarDocumentsFormsComponent } from './sidebar/documents-forms.component';
 import { SidebarFieldsComponent } from './sidebar/fields.component';
@@ -65,7 +65,8 @@ export class FormCreatorComponent implements OnInit {
     private route: ActivatedRoute,
     private service: FormCreatorService,
     private stepperService: StepperService,
-    private api: ApiService) {
+    private api: ApiService,
+    private cdr: ChangeDetectorRef) {
 
    }
 
@@ -80,10 +81,12 @@ export class FormCreatorComponent implements OnInit {
       if (params.has('mongo_id')) {
         console.info(`Edit form with ID ${params.get('mongo_id')}`);
         this.api.getFormTemplate(params.get('mongo_id')).subscribe(v => {
+          console.log('form creator', v)
           this.form_id = params.get('mongo_id');
           if (v) {
               this.service.formId = params.get('mongo_id');
               this.service.formTemplate = v;
+              this.cdr.detectChanges()
             }
           this.sections.forEach((section) => {
             if (section.active === true && section.expanded === true) {
