@@ -1,5 +1,10 @@
 @import "index";
 
+#fields-list {
+  display: block;
+  height: calc(100vh - 200px);
+}
+
 .group-tree-node {
   .field {
     background: #EBEEFF;
