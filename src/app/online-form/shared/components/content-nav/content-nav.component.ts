@@ -22,6 +22,7 @@ export class ContentNavComponent implements OnInit, OnDestroy {
   @Input() formNavigationState: any;
   @Input() currentPosition: { page: string; tab: number };
   @Input() formErrors: object;
+  @Input() fieldNameList: object;
 
   @Output() onGoToTab: EventEmitter<number> = new EventEmitter();
 
