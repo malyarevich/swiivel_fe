@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Document } from '@models/upload-review-form/document.model';
 
 @Component({
   selector: 'app-upload-review-form-document',
@@ -7,5 +8,5 @@ import { Component } from '@angular/core';
 })
 
 export class UploadReviewFormDocumentComponent {
-
+  @Input() document: Document;
 }

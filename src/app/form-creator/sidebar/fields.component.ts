@@ -80,8 +80,13 @@ export class SidebarFieldsComponent implements OnInit {
 
 
   drop(event: CdkDragDrop<any>) {
-    if (!event.item.data.isSelected) {
-      this.toggleNode(event.item.data);
+    let node = event.item.data;
+    if (!node.isActive) {
+      if (node.type === 113 || node.type === 114) {
+        this.toggleParentNode(node);
+      } else {
+        this.toggleNode(node);
+      }
     }
   }
 
@@ -121,13 +126,23 @@ export class SidebarFieldsComponent implements OnInit {
   }
 
   toggleParentNode(node: any): void {
-    const children = this.treeSource.getChildren(node);
-    node.isActive = !node.isActive;
-    for (let child of children) {
-      if (node.isActive) {
-        child.isActive = node.isActive;
-      }
+    let children = this.treeSource.getParentChildren(node);
+    if (this.descendantsAllSelected(node)) {
+      node.isActive = false;
+      // for (let child of children) {
+      //   child.isActive = false;
+      // }
+    } else if (this.descendantsPartiallySelected(node)) {
+      node.isActive = false;
+    } else {
+      node.isActive = true;
+      children = this.treeSource.getChildren(node);
     }
+    for (let child of children) {
+      child.isActive = node.isActive;
+
+    }
+
     if (node.isActive) {
       if (!node.isExpanded) {
         this.treeControl.expandDescendants(node);
@@ -145,30 +160,24 @@ export class SidebarFieldsComponent implements OnInit {
     node.isActive = !node.isActive;
     for (let ancestor of ancestors) {
       if (node.isActive) {
-        ancestor.isActive = node.isActive;
-      }
-    }
-    if (node.isActive) {
-      if (!node.isExpanded) {
-        this.treeControl.expand(node);
-      }
-    } else {
-      if (node.isExpanded) {
-        this.treeControl.collapse(node);
+        if (ancestor.type && (ancestor.type === 113 || ancestor.type === 114)) {
+          ancestor.isActive = true;
+        }
+      } else {
+        if (!this.descendantsPartiallySelected(ancestor)) {
+          ancestor.isActive = false;
+          this.treeControl.collapse(ancestor);
+        }
       }
     }
     this.treeSource.refresh();
-
   }
 
   descendantsAllSelected(node: any): boolean {
-    // return this.treeSource.descendantsAllSelected(node);
     const descendants = this.treeControl.getDescendants(node);
     const allSelected =  descendants.every(node => node['isActive']);
     return allSelected;
   }
-
-
 
   descendantsPartiallySelected(node: any): boolean {
     const descendants = this.treeControl.getDescendants(node);

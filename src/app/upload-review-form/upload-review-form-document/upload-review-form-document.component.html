@@ -1,1 +1,18 @@
-content
+<div
+  *ngIf="document && document.content_type.includes('image')"
+>
+  <img
+    class="image"
+    [src]="document.link"
+    alt="document.entity_name"
+  />
+</div>
+<div
+  *ngIf="document && document.content_type.includes('pdf')"
+>
+  <pdf-viewer
+    [src]="document.link"
+    [render-text]="true"
+    style="display: block;"
+  ></pdf-viewer>
+</div>

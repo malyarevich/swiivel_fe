@@ -6,10 +6,9 @@
     <i class="icon fas fa-search"></i>
   </div>
 
-  <cdk-tree [dataSource]="treeSource" [treeControl]="treeControl" cdkDropList  cdkDropListSortingDisabled
-    (cdkDropListDropped)="drop($event)">
+  <cdk-tree [dataSource]="treeSource" [treeControl]="treeControl" cdkDropList [cdkDropListData]="treeSource" [cdkDropListConnectedTo]="['fields-list']"  cdkDropListSortingDisabled  id="sidebar-list">
 
-    <cdk-nested-tree-node *cdkTreeNodeDef="let node" class="field-tree-node" cdkDrag [cdkDragDisabled]="node.isActive" [cdkDragData]="node" cdkDragLockAxis="x">
+    <cdk-nested-tree-node *cdkTreeNodeDef="let node" class="field-tree-node" cdkDrag [cdkDragDisabled]="node.isActive" (cdkDragDropped)="drop($event)" [cdkDragData]="node">
       <div class="field-tree-node__content">
 
         <div class="field-tree-node__content_node">
@@ -28,11 +27,11 @@
 
 
     <cdk-nested-tree-node *cdkTreeNodeDef="let node; when: hasChild" class="field-tree-node">
-      <div class="field-tree-node__content">
+      <div class="field-tree-node__content" [cdkDragDisabled]="node.isActive" cdkDrag (cdkDragDropped)="drop($event)" [cdkDragData]="node">
 
-        <div class="field-tree-node__content_node" [class.expanded]="treeControl.isExpanded(node)" cdkDrag [cdkDragData]="node" [cdkDragDisabled]="node.isActive" cdkDragLockAxis="x">
+        <div class="field-tree-node__content_node" [class.expanded]="treeControl.isExpanded(node)">
           <div class="checkbox">
-            <input type="checkbox" [checked]="descendantsAllSelected(node)"
+            <input type="checkbox" [checked]="node.isActive && descendantsAllSelected(node)"
               [indeterminate]="descendantsPartiallySelected(node)" (click)="toggleParentNode(node)">
           </div>
           <i class="dragdrop fas fa-ellipsis-v" cdkDragHandle ></i>

@@ -6,6 +6,7 @@ import { ApiService } from '@app/core/api.service';
 import { CHILDREN_SYMBOL, TreeDataSource } from '@app/form-creator/tree.datasource';
 import { FormCreatorService } from '@app/form-creator/form-creator.service';
 import { Subject } from 'rxjs';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'sw-form-creator-workarea-fields',
@@ -26,7 +27,7 @@ export class WorkareaFieldsComponent implements AfterViewInit, OnInit, OnDestroy
   destroyed$ = new Subject();
   fieldsTree: any[];
   treeSource;
-  treeControl = new NestedTreeControl<any>(node => node.isActive ? node[CHILDREN_SYMBOL]: null);
+  treeControl = new NestedTreeControl<any>(node => node[CHILDREN_SYMBOL]);
 
   constructor(private service: FormCreatorService, private api: ApiService, private cdr: ChangeDetectorRef) {
   }
@@ -64,11 +65,37 @@ export class WorkareaFieldsComponent implements AfterViewInit, OnInit, OnDestroy
     return 'Group type';
   }
 
+  drop(event: CdkDragDrop<any>) {
+    let node = event.item.data;
+    if (node.type === 113 || node.type === 114) {
+      this.closeParentNode(node);
+    } else {
+      this.closeNode(node);
+    }
+  }
 
-  settingsTogle(node: any)  {
+  settingsToggle(node: any)  {
     if (node) {
       node.showSettings = !node.showSettings;
       this.cdr.markForCheck();
     }
+  }
+  closeParentNode(node: any): void {
+    const children = this.treeSource.getParentChildren(node);
+    node.isActive = false;
+    node.showSettings = false;
+    for (let child of children) {
+      child.isActive = false;
+      child.showSettings = false;
+    }
+    this.treeSource.refresh();
+    this.cdr.markForCheck();
+  }
+
+  closeNode(node: any): void {
+    node.isActive = false;
+    node.showSettings = false;
+    this.treeSource.refresh();
+    this.cdr.markForCheck();
   }
 }

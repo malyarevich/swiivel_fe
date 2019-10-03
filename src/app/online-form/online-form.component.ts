@@ -81,7 +81,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
 
     this.onlineFormService.getOneForm().subscribe((form: Form) => {
       this.form = form;
-      console.log(this.form);
+      // console.log(this.form);
 
       this.initForm();
       this.initNavigation();
