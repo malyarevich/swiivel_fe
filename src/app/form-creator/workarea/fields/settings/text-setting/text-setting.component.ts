@@ -14,9 +14,10 @@ export class TextSettingComponent implements OnInit {
   @Input()
   set settings(obj: any) {
     if (obj) {
+      console.log(obj)
       this.form.patchValue({
         showDefaultValue: !!obj.defaultValue,
-        showValidators: !!obj.validators,
+        showValidators: obj.validators && obj.validators.length > 0,
         allowList: obj.allowList,
         defaultValue: obj.defaultValue || null,
         validators: obj.validators
@@ -45,6 +46,7 @@ export class TextSettingComponent implements OnInit {
     this.form.valueChanges.subscribe(v => {
       delete v.showDefaultValue;
       delete v.showValidators;
+      if (v.validators.criteria && v.validators.criteria[0]) { v.validators.criteria = v.validators.criteria[0].title }
       this.fieldSettings.emit(v);
     });
   }
