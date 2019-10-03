@@ -108,7 +108,8 @@ export class FormTableComponent implements OnInit {
       debounceTime(300),
       distinctUntilChanged(),
       map(value => {
-        Object.keys(value).forEach(key => (value[key] === null || value[key] === '') && delete value[key])
+        if (value['status']) value['status'] = this.statusArray.find(status => status.title === value['status']).value
+        Object.keys(value).forEach(key => (value[key] === null || value[key] === '') && delete value[key]);
         return value;
       })
     ).subscribe(value => {
@@ -215,7 +216,11 @@ export class FormTableComponent implements OnInit {
 
   clickTab(filter) {
     this.activeTab = filter;
-    this.filterForm.get('status').setValue(filter.title, { emitEvent: false });
+    if (filter.title === 'All') {
+      this.filterForm.get('status').reset();
+    } else {
+      this.filterForm.get('status').setValue(filter.title, { emitEvent: false});
+    }
   }
 
   bulkAction(selectedIndex) {

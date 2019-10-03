@@ -5,13 +5,16 @@ import { ApiService } from '@core/api.service';
 
 export class GeneralDataSource extends DataSource<any> {
   private dataSubject = new BehaviorSubject<(any | undefined)[]>(null);
-
+  private data = new BehaviorSubject<any>([]);
   constructor(private api: ApiService) {
     super();
+    this.dataSubject.subscribe((data) => {
+      this.data.next(data);
+    })
   }
 
   connect(collectionViewer: CollectionViewer): Observable<(any | undefined)> {
-    return this.dataSubject;
+    return this.data.asObservable();
 
   }
 
@@ -23,6 +26,10 @@ export class GeneralDataSource extends DataSource<any> {
     this.api.getFormsShortList(type).subscribe((data) => {
       this.dataSubject.next(data);
     });
+  }
+
+  filter(value) {
+    this.data.next(this.dataSubject.getValue().filter(form => form.name.toLowerCase().startsWith(value.toLowerCase())));
   }
 
 }
