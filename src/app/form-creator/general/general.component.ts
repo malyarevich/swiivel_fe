@@ -111,6 +111,9 @@ export class GeneralComponent implements OnInit, OnDestroy {
       ).subscribe(data => {
         if (data) {
           this.formCreatorService.formId = data._id;
+          this.api.getFormTemplate(data._id).subscribe((data) => {
+            this.formCreatorService.formTemplate = data;
+          })
           sessionStorage.setItem('newForm', JSON.stringify(data));
         }
       });
