@@ -29,10 +29,19 @@
         <app-upload-review-form-item
           [document]="document"
           (selected)="selectItem($event)"
+          (downLoadForm)="downLoadForm($event)"
         >
         </app-upload-review-form-item>
       </div>
       <i *ngIf="showSpinner" class="fas fa-spinner spinner"></i>
+      <!--<div class="items-controls">-->
+        <!--<div class="items-control">-->
+          <!--<sw-button (click)="downLoadForm(this.activeIdDocument)">Upload Document</sw-button>-->
+        <!--</div>-->
+        <!--<div class="items-control">-->
+          <!--<sw-button [style]="colors.WHITE">Bulk Download</sw-button>-->
+        <!--</div>-->
+      <!--</div>-->
     </div>
     <div *ngIf="!showSpinner && (!documents || !documents.length)" class="sidebar--empty">
       No documents
@@ -42,4 +51,6 @@
     <app-upload-review-form-document [document]="getSelectForm()"></app-upload-review-form-document>
   </div>
 </div>
-<app-upload-review-form-footer></app-upload-review-form-footer>
+<div class="footer">
+  <app-upload-review-form-footer [documents]="extremeDocuments"></app-upload-review-form-footer>
+</div>

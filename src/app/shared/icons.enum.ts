@@ -9,4 +9,6 @@ export enum IconsEnum {
   SETTINGS = 'fa-cog',
   CROSS = 'fa-times',
   TRASH = 'fa-trash',
+  ZOOM_IN = 'fa-search-plus',
+  ZOOM_OUT = 'fa-search-minus'
 }

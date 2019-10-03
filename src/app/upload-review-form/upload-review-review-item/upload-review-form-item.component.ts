@@ -17,6 +17,7 @@ export class UploadFormReviewItemComponent {
   public icons = IconsEnum;
   public colors = ColorsEnum;
   public uploadReviewFormStatusesEnum = UploadReviewFormStatusesEnum;
+  @Output() downLoadForm = new EventEmitter<string>();
 
   constructor(public uploadReviewFormService: UploadReviewFormService) {}
 
@@ -27,5 +28,9 @@ export class UploadFormReviewItemComponent {
     } else {
       this.selected.emit(this.document._id);
     }
+  }
+
+  downloadForm(): void {
+    this.downLoadForm.emit(this.document._id);
   }
 }

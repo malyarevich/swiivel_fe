@@ -4,7 +4,9 @@ import { ActivatedRoute } from '@angular/router';
 import { UploadReviewFormDataSource } from '@app/upload-review-form/upload-review-form.datasource';
 import { UploadReviewFormService } from '@app/upload-review-form/upload-review-form.service';
 import { Document } from '@models/upload-review-form/document.model';
+import { ExtremeUploadForms } from '@models/upload-review-form/forms.model';
 import { SortDropDownData } from '@models/upload-review-form/sort.model';
+import { ColorsEnum } from '@shared/colors.enum';
 
 @Component({
   selector: 'app-upload-review-form',
@@ -12,7 +14,7 @@ import { SortDropDownData } from '@models/upload-review-form/sort.model';
   styleUrls: ['./upload-review-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UploadReviewFormComponent  implements OnInit {
+export class UploadReviewFormComponent implements OnInit {
   public dataSource: UploadReviewFormDataSource = new UploadReviewFormDataSource(this.uploadReviewFormService);
   public documents: Document[];
   public activeIdDocument: string;
@@ -21,6 +23,8 @@ export class UploadReviewFormComponent  implements OnInit {
   public sortValue: SortDropDownData[];
   public form: FormGroup;
   public showSpinner: boolean;
+  public extremeDocuments: ExtremeUploadForms = {};
+  public colors = ColorsEnum;
 
   constructor(
     public uploadReviewFormService: UploadReviewFormService,
@@ -46,7 +50,7 @@ export class UploadReviewFormComponent  implements OnInit {
       .subscribe((data) => {
         if (data) {
           this.filterValue = this.uploadReviewFormService.convertFilterDocumentsData(data);
-          if ( data.sort) {
+          if (data.sort) {
             this.sortValue = this.uploadReviewFormService.convertSortDocumentsData(data);
           }
           this.cdr.detectChanges();
@@ -71,6 +75,11 @@ export class UploadReviewFormComponent  implements OnInit {
           this.cdr.detectChanges();
         }
       });
+    this.dataSource.getExtremeDocuments()
+      .subscribe((docs) => {
+        this.extremeDocuments = docs;
+        this.cdr.detectChanges();
+      });
   }
 
   getSelectForm(): Document {
@@ -84,4 +93,7 @@ export class UploadReviewFormComponent  implements OnInit {
     this.activeIdDocument = id;
   }
 
+  downLoadForm(id: string): void {
+    this.dataSource.downloadForm(id);
+  }
 }
