@@ -22,7 +22,7 @@
             <ng-container *ngIf="hasErrors(tab._id)">
               <span
                 error-hint
-                [errorsList]="getErrorBySectionId(tab._id)"
+                [errorsList]="getErrorByNodeId(tab._id)"
                 [fieldNameList]="fieldNameList"
                 class="content_nav__errors-bullet"
                 ></span>

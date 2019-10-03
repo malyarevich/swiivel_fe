@@ -11,7 +11,8 @@ import { GenerateErrorsService } from '@app/online-form/utils/generate-errors.se
 })
 export class GeneralInfoSectionComponent implements OnInit {
   @Input() section: Field;
-  @Input() formErrors: any;
+  @Input() formErrors: object;
+  @Input() fieldNameList: object;
   @Input() fg: FormGroup;
 
   groups: Field[];
@@ -35,5 +36,9 @@ export class GeneralInfoSectionComponent implements OnInit {
     this.fields = this.section.fields.filter((item) => {
       return item.type && item.type !== 113;
     });
+  }
+
+  getFormErrorsById(id) {
+    return this.formErrors[id] ? this.formErrors[id] : {};
   }
 }
