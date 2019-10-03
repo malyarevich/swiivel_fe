@@ -464,6 +464,22 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
     }
   }
 
+  initDocumentsFormControls() {
+    if (this.form.documents && this.form.documents.length > 0) {
+      this.form.documents.forEach(document => {
+        const key = document["id"];
+        const isRequired = true; //document["isRequired"];
+
+        if (document["isUpload"]) {
+          this.addToFieldLists(mainMenuNames.documentsForms, key, isRequired);
+          this.addControl(key, isRequired);
+        }
+      });
+    }
+  }
+
+  initFormsFormControls() {}
+
   getFieldsByFormFields(fields) {
     let aFields = [];
     Object.values(fields).forEach(field => {
@@ -570,6 +586,8 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
 
   initFormControls() {
     this.initConsentFormControls();
+    this.initDocumentsFormControls();
+    this.initFormsFormControls();
     this.initGeneralInfoFormControls();
     this.initTermsConditionsFormControls();
   }
@@ -672,6 +690,36 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
     return oFields;
   }
 
+  getFieldsForSectionByDocuments(documents: object[]): object {
+    let oFields = {};
+    if (documents && documents.length > 0) {
+      documents.forEach(document => {
+        const key = document["id"];
+
+        if (this.formErrors$.getValue()["fields"][key]) {
+          oFields["documents"][key] = this.formErrors$.getValue()["fields"][
+            key
+          ];
+        }
+      });
+    }
+    return oFields;
+  }
+
+  getFieldsForSectionByForms(forms: object[]): object {
+    let oFields = {};
+    if (forms && forms.length > 0) {
+      forms.forEach(forms => {
+        const key = forms["id"];
+
+        // if(this.formErrors$.getValue()["fields"][key]) {
+        //   oFields['forms'][key] = this.formErrors$.getValue()["fields"][key];
+        // }
+      });
+    }
+    return oFields;
+  }
+
   getFieldsForSectionByConcent(consents: object[]): object {
     let oFields = {};
     consents.forEach(section => {
@@ -725,8 +773,8 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
     const generalInfo = this.getFieldsForSectionGroupByFormFields(
       this.form.fields
     ); // OK
-    const documents = {}; //this.getFieldsForSectionGroupByFormFields(this.form.documents);
-    const forms = {}; //this.getFieldsForSectionGroupByFormFields(this.form.forms);
+    const documents = this.getFieldsForSectionByDocuments(this.form.documents);
+    const forms = this.getFieldsForSectionByForms(this.form.forms);
     const consentInfo = this.getFieldsForSectionByConcent(
       this.form.consentInfo["consents"]
     );

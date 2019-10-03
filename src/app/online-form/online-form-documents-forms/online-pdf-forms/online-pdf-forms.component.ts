@@ -10,6 +10,7 @@ import {
 import { Subscription } from "rxjs";
 import { Form } from "@app/models/data-collection/form";
 import { FilesService } from "../../services/files.service";
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: "app-online-pdf-forms",
@@ -37,6 +38,8 @@ import { FilesService } from "../../services/files.service";
 })
 export class OnlinePdfFormsComponent implements OnInit, OnDestroy {
   @Input() form: Form;
+  @Input() formErrors: object;
+  @Input() fg: FormGroup;
 
   constructor(private fileService: FilesService) {}
 
