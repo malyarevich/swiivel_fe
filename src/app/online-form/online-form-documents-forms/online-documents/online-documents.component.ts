@@ -28,9 +28,9 @@ export class OnlineDocumentsComponent implements OnInit, OnDestroy {
   uploadStatus: object = {};
   UploadStatus = UploadStatus;
 
-  file: object;
-  progress: object;
-  response: object;
+  file: object = {};
+  progress: object = {};
+  response: object = {};
 
   constructor(
     private fileService: FilesService,
