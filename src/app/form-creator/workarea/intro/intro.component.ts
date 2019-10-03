@@ -18,19 +18,19 @@ export class WorkareaIntroComponent implements OnInit, OnDestroy {
   }
   textareaControl: FormControl = new FormControl(null, { updateOn: 'blur' });
 
-  private destroed$ = new Subject();
+  private destroyed$ = new Subject();
 
   constructor(
     private formCreatorService: FormCreatorService,
     private cdr: ChangeDetectorRef
   ) {
     this.textareaControl.valueChanges.pipe(
-      takeUntil(this.destroed$)
+      takeUntil(this.destroyed$)
     ).subscribe(value => {
       this.setIntroContent(value);
     });
     this.formCreatorService.formTemplate$.pipe(
-      takeUntil(this.destroed$)
+      takeUntil(this.destroyed$)
     ).subscribe(formTemplate => {
       if (formTemplate && formTemplate.packetIntroduction && this.packetIntroduction !== formTemplate.packetIntroduction) {
         this.packetIntroduction = formTemplate.packetIntroduction;
@@ -49,7 +49,7 @@ export class WorkareaIntroComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.destroed$.next();
+    this.destroyed$.next();
   }
 
 }

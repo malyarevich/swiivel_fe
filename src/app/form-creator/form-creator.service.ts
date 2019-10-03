@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject, Observable } from 'rxjs';
 import { TreeDataSource } from './tree.datasource';
 import { filter } from 'rxjs/operators';
+import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 
 @Injectable()
 export class FormCreatorService {
@@ -14,7 +15,10 @@ export class FormCreatorService {
   private eventSubject$: Subject<any> = new Subject();
   private sidebarSubject$: BehaviorSubject<any> = new BehaviorSubject(null);
   private formTemplateSubject$: BehaviorSubject<any> = new BehaviorSubject(null);
+  constructor(private fb: FormBuilder) {
 
+
+  }
   set formId(id: string) {
     this.mongoId = id;
   }
@@ -26,6 +30,9 @@ export class FormCreatorService {
   set formTemplate(data: any) {
     this.formTemplateSubject$.next(data);
   }
+
+
+
 
 
   get formTemplate() {
@@ -81,10 +88,7 @@ export class FormCreatorService {
 
 
 
-  constructor() {
 
-
-  }
   get events$() {
     return this.eventSubject$;
   }
