@@ -71,7 +71,7 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
 
   drop(event: CdkDragDrop<any>) {
     let node = event.item.data;
-    let dc = event.item.dropContainer;
+    let dc = event.container;
     if (dc.id !== 'fields-list') {
       if (node.type === 113 || node.type === 114) {
         this.closeParentNode(node);
