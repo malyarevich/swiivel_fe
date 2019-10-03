@@ -5,25 +5,23 @@ import {
   OnDestroy,
   OnInit,
   Output
-} from '@angular/core';
+} from "@angular/core";
 import {
   GenerateErrorsService,
   ISectionError
-} from '@app/online-form/utils/generate-errors.service';
-import {
-  Subject,
-  Subscription
-} from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+} from "@app/online-form/utils/generate-errors.service";
+import { Subject, Subscription } from "rxjs";
+import { takeUntil } from "rxjs/operators";
 
 @Component({
-  selector: 'sw-content-nav',
-  templateUrl: './content-nav.component.html',
-  styleUrls: ['./content-nav.component.scss']
+  selector: "sw-content-nav",
+  templateUrl: "./content-nav.component.html",
+  styleUrls: ["./content-nav.component.scss"]
 })
 export class ContentNavComponent implements OnInit, OnDestroy {
   @Input() formNavigationState: any;
   @Input() currentPosition: { page: string; tab: number };
+  @Input() formErrors: object;
 
   @Output() onGoToTab: EventEmitter<number> = new EventEmitter();
 
@@ -32,22 +30,44 @@ export class ContentNavComponent implements OnInit, OnDestroy {
   sectionErrors: ISectionError[];
   private destroyed$ = new Subject();
 
-  constructor(
-    private generateErrorService: GenerateErrorsService
-  ) {}
+  constructor(private generateErrorService: GenerateErrorsService) {}
 
   ngOnInit() {
-    this.generateErrorService.errorAsObservable$.pipe(
-      takeUntil(this.destroyed$)
-    ).subscribe((errors) => {
-      this.sectionErrors = errors;
-    });
+    // this.generateErrorService.errorAsObservable$.pipe(
+    //   takeUntil(this.destroyed$)
+    // ).subscribe((errors) => {
+    //   this.sectionErrors = errors;
+    // });
   }
 
   getTabs(): any[] {
     return this.formNavigationState.find(state => {
       return state.page === this.currentPosition.page;
     }).tabs;
+  }
+
+  getErrorBySectionId(id, targetNode = this.formErrors) {
+    let errors = {};
+    if (
+      !(
+        Object.keys(targetNode).length === 0 &&
+        targetNode.constructor === Object
+      )
+    ) {
+      if (
+        !(
+          Object.keys(targetNode[id]).length === 0 &&
+          targetNode[id].constructor === Object
+        )
+      ) {
+        errors = targetNode[id];
+      } else {
+        Object.keys(targetNode[id]).forEach(key => {
+          this.getErrorBySectionId(key, targetNode[id]);
+        });
+      }
+    }
+    return errors;
   }
 
   isActive(id): boolean {
@@ -58,8 +78,8 @@ export class ContentNavComponent implements OnInit, OnDestroy {
     this.onGoToTab.emit(id);
   }
 
-  get errors() {
-    return this.sectionErrors.length > 0;
+  hasErrors(id) {
+    return typeof(this.formErrors[id]) !== 'undefined';
   }
 
   ngOnDestroy(): void {

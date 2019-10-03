@@ -2,14 +2,14 @@
   <nav class="content_nav">
     <ul class="content_nav__list">
       <ng-container
-        *ngFor="let item of getTabs(); let i = index; let lastIndex = last"
+        *ngFor="let tab of getTabs(); let i = index; let lastIndex = last"
       >
         <a
           class="content_nav__link"
           [ngClass]="{
             'content_nav__link--active': isActive(i)
           }"
-          [tabindex]="item._id"
+          [tabindex]="tab._id"
           (click)="setActiveId(i)"
         >
           <li
@@ -17,13 +17,14 @@
             [ngClass]="{
               'content_nav__item--active': isActive(i)
             }">
-            {{ item.name }}
+            {{ tab.name }}
 
-            <ng-container *ngIf="errors">
+            <ng-container *ngIf="hasErrors(tab._id)">
               <span
                 error-hint
-                [errorsList]="sectionErrors"
-                class="content_nav__errors-bullet"></span>
+                [errorsList]="getErrorBySectionId(tab._id)"
+                class="content_nav__errors-bullet"
+                ></span>
             </ng-container>
           </li>
         </a>

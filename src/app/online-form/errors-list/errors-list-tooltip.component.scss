@@ -1,7 +1,54 @@
+@import "../shared/styles/index.scss";
+
 :host {
   display: flex;
   background: #fff;
-  width: 305px;
-  height: 134px;
-  padding: 15px;
+  border-radius: 0.25rem;
+  padding: 1.25rem;
+  border: 1px solid #F6F6F6;
+  box-shadow: 0.1rem 0.1rem 1rem #30365844;
+  box-sizing: border-box;
+  max-width: 25rem;
+}
+
+.missing_fields {
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+
+  &__title {
+    font-family: "Nunito Sans", "Helvetica";
+    font-style: normal;
+    font-weight: 900;
+    font-size: 0.85rem;
+    line-height: 1.1rem;
+
+    text-transform: uppercase;
+
+    color: $dark-gray-blue-color;
+  }
+
+  &__fields_list {
+    align-items: stretch;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+
+    padding-top: 1rem;
+  }
+
+  &__field {
+    color: $error-color;
+    background: $light-red;
+    border-radius: 1rem;
+    font-family: "Nunito Sans", "Helvetica";
+    font-style: normal;
+    font-weight: normal;
+    font-size: 1rem;
+    line-height: 0.9rem;
+    margin: 0.25rem;
+    padding: 0.5rem 1rem;
+  }
 }
