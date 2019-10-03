@@ -45,7 +45,7 @@
       </div>
 
 
-      <div>
+      <div *ngIf="treeControl.isExpanded(node)">
         <ng-container cdkTreeNodeOutlet></ng-container>
       </div>
 

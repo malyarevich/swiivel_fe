@@ -1,5 +1,5 @@
 import { NestedTreeControl } from '@angular/cdk/tree';
-import { Component, OnInit, ChangeDetectionStrategy, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ViewChild, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
 import { FormControl, FormBuilder } from '@angular/forms';
 import { ApiService } from '@app/core/api.service';
 import { FormCreatorService } from '../form-creator.service';
@@ -16,7 +16,8 @@ import { Popup } from '@app/core/popup.service';
   styleUrls: ['./fields.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SidebarFieldsComponent implements OnInit {
+export class SidebarFieldsComponent implements OnInit, AfterViewChecked {
+
   filterControl = new FormControl();
   treeSource = new TreeDataSource('Fields');
   treeControl = new NestedTreeControl(node => node[CHILDREN_SYMBOL]);
@@ -46,16 +47,18 @@ export class SidebarFieldsComponent implements OnInit {
       this.service.sidebar = this.treeSource;
       this.treeControl = new NestedTreeControl<any>(node => {
         let children = node[CHILDREN_SYMBOL];
-        debugger
         return children;
       });
     });
     this.treeSource.changes.subscribe(value => {
-      this.cdr.detectChanges();
+      this.cdr.markForCheck();
     })
     this.filterControl.valueChanges.subscribe(value => {
 
     });
+  }
+  ngAfterViewChecked(): void {
+      this.cdr.detectChanges()
   }
 
   hasChild = (_: number, node: any) => !!node[CHILDREN_SYMBOL] && node[CHILDREN_SYMBOL].length > 0;
@@ -129,9 +132,6 @@ export class SidebarFieldsComponent implements OnInit {
     let children = this.treeSource.getParentChildren(node);
     if (this.descendantsAllSelected(node)) {
       node.isActive = false;
-      // for (let child of children) {
-      //   child.isActive = false;
-      // }
     } else if (this.descendantsPartiallySelected(node)) {
       node.isActive = false;
     } else {
