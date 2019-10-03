@@ -3,7 +3,7 @@ import { Component, OnInit, ChangeDetectionStrategy, ViewChild, ChangeDetectorRe
 import { FormControl, FormBuilder } from '@angular/forms';
 import { ApiService } from '@app/core/api.service';
 import { FormCreatorService } from '../form-creator.service';
-import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
+import {CdkDragDrop, moveItemInArray, transferArrayItem, CdkDragExit} from '@angular/cdk/drag-drop';
 import { TreeDataSource, CHILDREN_SYMBOL } from '../tree.datasource';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Popup } from '@app/core/popup.service';
@@ -17,7 +17,7 @@ import { Popup } from '@app/core/popup.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SidebarFieldsComponent implements OnInit, AfterViewChecked {
-
+  filterValue: string = null;
   filterControl = new FormControl();
   treeSource = new TreeDataSource('Fields');
   treeControl = new NestedTreeControl(node => node[CHILDREN_SYMBOL]);
@@ -41,6 +41,7 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked {
     return event;
   }
 
+
   ngOnInit() {
     this.api.getSidebarFields().subscribe((fields) => {
       this.treeSource.build(fields);
@@ -54,7 +55,12 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked {
       this.cdr.markForCheck();
     })
     this.filterControl.valueChanges.subscribe(value => {
-
+      if (value && value.length > 0) {
+        this.filterValue = value.toLowerCase();
+      } else {
+        this.filterValue = null;
+      }
+      console.log(this.filterValue);
     });
   }
   ngAfterViewChecked(): void {
@@ -83,14 +89,22 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked {
 
 
   drop(event: CdkDragDrop<any>) {
+
     let node = event.item.data;
-    if (!node.isActive) {
-      if (node.type === 113 || node.type === 114) {
-        this.toggleParentNode(node);
-      } else {
-        this.toggleNode(node);
+    if (event.container.id !== 'sidebar-list') {
+      if (!node.isActive) {
+        if (node.type === 113 || node.type === 114) {
+          this.toggleParentNode(node);
+        } else {
+          this.toggleNode(node);
+        }
       }
     }
+
+  }
+
+  onExit(event: CdkDragExit<any>) {
+    console.log(event)
   }
 
 
@@ -120,6 +134,14 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked {
       console.log('Delete field', this.delFieldName);
     }
     this.closePop();
+  }
+
+  isFiltered(node) {
+    if (this.filterValue) {
+      return !node.name.toLowerCase().startsWith(this.filterValue)
+    } else {
+      return !!this.filterValue;
+    }
   }
 
 

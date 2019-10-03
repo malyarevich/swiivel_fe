@@ -7,7 +7,6 @@ import { CHILDREN_SYMBOL, TreeDataSource } from '@app/form-creator/tree.datasour
 import { FormCreatorService } from '@app/form-creator/form-creator.service';
 import { Subject } from 'rxjs';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
-
 @Component({
   selector: 'sw-form-creator-workarea-fields',
   templateUrl: './fields.component.html',
@@ -72,10 +71,13 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
 
   drop(event: CdkDragDrop<any>) {
     let node = event.item.data;
-    if (node.type === 113 || node.type === 114) {
-      this.closeParentNode(node);
-    } else {
-      this.closeNode(node);
+    let dc = event.item.dropContainer;
+    if (dc.id !== 'fields-list') {
+      if (node.type === 113 || node.type === 114) {
+        this.closeParentNode(node);
+      } else {
+        this.closeNode(node);
+      }
     }
   }
 
