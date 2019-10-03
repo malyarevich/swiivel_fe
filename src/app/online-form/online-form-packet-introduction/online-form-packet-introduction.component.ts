@@ -27,27 +27,33 @@ export class OnlineFormPacketIntroductionComponent implements OnInit {
   }
 
   initPackets() {
-    if (this.form.packetIntroduction) {
-      this.packets = <ISectionTab[]>cloneDeep(
-        this.form.packetIntroduction.packets
-      ).map(item => {
-        return { ...item, _id: item.id, name: item.title };
-      });
-    } else {
-      this.packets = <ISectionTab[]>cloneDeep(
-        this.form.packetIntroduction.packets
-      ).map(item => {
-        return { ...item, _id: item.id, name: item.title };
-      });
-    }
+    // if (this.form.packetIntroduction) {
+    //   this.packets = <ISectionTab[]>cloneDeep(
+    //     this.form.packetIntroduction.packets
+    //   ).map(item => {
+    //     return { ...item, _id: item.id, name: item.title };
+    //   });
+    // } else {
+    //   this.packets = <ISectionTab[]>cloneDeep(
+    //     this.form.packetIntroduction.packets
+    //   ).map(item => {
+    //     return { ...item, _id: item.id, name: item.title };
+    //   });
+    // }
+    this.form.packetIntroduction
   }
 
   isExist(): boolean {
     return (
       typeof this.form.packetIntroduction !== "undefined" &&
-      this.form.packetIntroduction.packets &&
-      this.form.packetIntroduction.packets.length > 0
+      this.form.packetIntroduction &&
+      this.form.packetIntroduction.content !== ""
     );
+    // return (
+    //   typeof this.form.packetIntroduction !== "undefined" &&
+    //   this.form.packetIntroduction.packets &&
+    //   this.form.packetIntroduction.packets.length > 0
+    // );
   }
 
   isShowPacket(packetIndex: number): boolean {

@@ -193,13 +193,27 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
 
   initPacketIntroduction(): ISectionTab[] {
     let tabs = [];
+    // if (
+    //   this.form.packetIntroduction &&
+    //   this.form.packetIntroduction.packets &&
+    //   this.form.packetIntroduction.packets.length > 0
+    // ) {
+    //   tabs = Object.values(this.form.packetIntroduction.packets).map(item => {
+    //     return { _id: item["id"], name: item["title"] };
+    //   });
+    // } else {
+    //   tabs.push({
+    //     _id: mainMenuNames.packetIntroduction,
+    //     name: "Introduction"
+    //   });
+    // }
     if (
       this.form.packetIntroduction &&
-      this.form.packetIntroduction.packets &&
-      this.form.packetIntroduction.packets.length > 0
+      this.form.packetIntroduction.content !== ""
     ) {
-      tabs = Object.values(this.form.packetIntroduction.packets).map(item => {
-        return { _id: item["id"], name: item["title"] };
+      tabs.push({
+        _id: mainMenuNames.packetIntroduction + "__active",
+        name: "Introduction"
       });
     } else {
       tabs.push({
@@ -207,6 +221,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
         name: "Introduction"
       });
     }
+
     return tabs;
   }
 
@@ -527,17 +542,19 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
     }
   }
 
-  getFieldsByFormFields(fields) {
+  getFieldsByFormFields(fields): any[] {
     let aFields = [];
-    Object.values(fields).forEach(field => {
-      if (field["type"]) {
-        if (field["type"] === 113 || field["type"] === 114) {
-          aFields = aFields.concat(this.getFieldsByFormFields(field["fields"]));
-        } else {
-          aFields.push(field);
+    if(fields && fields.length > 0) {
+      Object.values(fields).forEach(field => {
+        if (field["type"]) {
+          if (field["type"] === 113 || field["type"] === 114) {
+            aFields = aFields.concat(this.getFieldsByFormFields(field["fields"]));
+          } else {
+            aFields.push(field);
+          }
         }
-      }
-    });
+      });
+    }
     return aFields;
   }
 
@@ -559,27 +576,29 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
     return arrayValidators;
   }
 
-  initGeneralInfoFormControls() {
-    const aFields = this.getFieldsByFormFields(this.form.fields);
-    aFields.forEach(field => {
-      if (field["_id"]) {
-        const aValidators = this.getComposedValidatorsByField(field);
-        const validatorFn = !field.options.readonly
-          ? Validators.compose(aValidators)
-          : null;
-        this.addControl(field["_id"], !(validatorFn === null), validatorFn);
-        const isRequired = aValidators.find(validator => {
-          return validator === Validators.required;
-        });
+  initGeneralInfoFormControls(fields) {
+    const aFields = this.getFieldsByFormFields(fields);
+    if (aFields.length > 0) {
+      aFields.forEach(field => {
+        if (field["_id"]) {
+          const aValidators = this.getComposedValidatorsByField(field);
+          const validatorFn = !field.options.readonly
+            ? Validators.compose(aValidators)
+            : null;
+          this.addControl(field["_id"], !(validatorFn === null), validatorFn);
+          const isRequired = aValidators.find(validator => {
+            return validator === Validators.required;
+          });
 
-        this.addToFieldLists(
-          mainMenuNames.generalInfo,
-          field["_id"],
-          isRequired,
-          field["name"]
-        );
-      }
-    });
+          this.addToFieldLists(
+            mainMenuNames.generalInfo,
+            field["_id"],
+            isRequired,
+            field["name"]
+          );
+        }
+      });
+    }
   }
 
   initTermsConditionsFormControls() {
@@ -611,7 +630,12 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
         .forEach(key => {
           const label = "Checkbox";
           this.termsConditionsKeys.push(key);
-          this.addToFieldLists(mainMenuNames.termsConditions, key, isRequired, label);
+          this.addToFieldLists(
+            mainMenuNames.termsConditions,
+            key,
+            isRequired,
+            label
+          );
           this.addControl(key, isRequired);
         });
 
@@ -639,7 +663,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
     this.initConsentFormControls();
     this.initDocumentsFormControls(this.form.documents);
     this.initFormsFormControls(this.form.forms);
-    this.initGeneralInfoFormControls();
+    this.initGeneralInfoFormControls(this.form.fields);
     this.initTermsConditionsFormControls();
   }
 
@@ -730,7 +754,10 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
             oFields[field["_id"]] = nestedNode;
           }
         } else {
-          if (this.formErrors$.getValue()["fields"] && this.formErrors$.getValue()["fields"][field["_id"]]) {
+          if (
+            this.formErrors$.getValue()["fields"] &&
+            this.formErrors$.getValue()["fields"][field["_id"]]
+          ) {
             oFields[field["_id"]] = this.formErrors$.getValue()["fields"][
               field["_id"]
             ];
@@ -747,7 +774,10 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
       documents.forEach(document => {
         const key = document["id"];
 
-        if (this.formErrors$.getValue()["fields"] && this.formErrors$.getValue()["fields"][key]) {
+        if (
+          this.formErrors$.getValue()["fields"] &&
+          this.formErrors$.getValue()["fields"][key]
+        ) {
           oFields["documents"][key] = this.formErrors$.getValue()["fields"][
             key
           ];
@@ -804,7 +834,10 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
       const sectionErrors = {};
 
       this.termsConditionsKeys.forEach(key => {
-        if (this.formErrors$.getValue()["fields"] && this.formErrors$.getValue()["fields"][key]) {
+        if (
+          this.formErrors$.getValue()["fields"] &&
+          this.formErrors$.getValue()["fields"][key]
+        ) {
           sectionErrors[key] = this.formErrors$.getValue()["fields"][key];
         }
       });
