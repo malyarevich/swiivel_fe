@@ -38,6 +38,11 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
   pagesPercents$: BehaviorSubject<object[]> = new BehaviorSubject([]);
   currentPosition$: BehaviorSubject<object> = new BehaviorSubject({});
   formErrors$: BehaviorSubject<object> = new BehaviorSubject({});
+  sectionGroupFieldsErrors$: BehaviorSubject<object> = new BehaviorSubject({});
+
+  //keys
+  consentKeys: string[] = [];
+  termsConditionsKeys: string[] = [];
 
   fgValueChangesSubscription: Subscription;
   fgStatusChangesSubscription: Subscription;
@@ -76,7 +81,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
 
     this.onlineFormService.getOneForm().subscribe((form: Form) => {
       this.form = form;
-      console.log(this.form);
+      // console.log(this.form);
 
       this.initForm();
       this.initNavigation();
@@ -336,12 +341,19 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
   }
 
   initPercents() {
-    this.formNavigationState$.getValue().forEach(item => {
-      this.pagesPercents$.next([
-        ...this.pagesPercents$.getValue(),
-        { page: item["page"], percent: -1 }
-      ]);
-    });
+    if (
+      typeof this.form.pagesPercents !== "undefined" &&
+      this.form.pagesPercents.length > 0
+    ) {
+      this.pagesPercents$.next(this.form.pagesPercents);
+    } else {
+      this.formNavigationState$.getValue().forEach(item => {
+        this.pagesPercents$.next([
+          ...this.pagesPercents$.getValue(),
+          { page: item["page"], percent: -1 }
+        ]);
+      });
+    }
   }
 
   initPosition() {
@@ -434,6 +446,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
             item["id"] &&
             this.filterSignatureBySignatureAndKey(item["signature"], key)
           ) {
+            this.consentKeys.push(item["id"] + key);
             const isRequired =
               key === "__checkbox"
                 ? item["checkbox"]["isActive"]
@@ -532,6 +545,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
           );
         })
         .forEach(key => {
+          this.termsConditionsKeys.push(key);
           this.addToFieldLists(mainMenuNames.termsConditions, key, isRequired);
           this.addControl(key, isRequired);
         });
@@ -540,6 +554,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
         item => {
           if (item["id"]) {
             const key = item["id"] + "__checkbox";
+            this.termsConditionsKeys.push(key);
             const isRequired = item["checkbox"]["isActive"];
             this.addToFieldLists(
               mainMenuNames.termsConditions,
@@ -629,6 +644,105 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
     }
   }
 
+  getFieldsForSectionGroupByFormFields(fields): object {
+    let oFields = {};
+    Object.values(fields).forEach(field => {
+      if (field["type"]) {
+        if (field["type"] === 113 || field["type"] === 114) {
+          const nestedNode = this.getFieldsForSectionGroupByFormFields(
+            field["fields"]
+          );
+          if (
+            !(
+              Object.keys(nestedNode).length === 0 &&
+              nestedNode.constructor === Object
+            )
+          ) {
+            oFields[field["_id"]] = nestedNode;
+          }
+        } else {
+          if (this.formErrors$.getValue()["fields"][field["_id"]]) {
+            oFields[field["_id"]] = this.formErrors$.getValue()["fields"][
+              field["_id"]
+            ];
+          }
+        }
+      }
+    });
+    return oFields;
+  }
+
+  getFieldsForSectionByConcent(consents: object[]): object {
+    let oFields = {};
+    consents.forEach(section => {
+      const sectionErrors = {};
+
+      this.consentKeys.forEach(key => {
+        if (
+          key.includes(section["id"]) &&
+          this.formErrors$.getValue()["fields"][key]
+        ) {
+          sectionErrors[key] = this.formErrors$.getValue()["fields"][key];
+        }
+      });
+
+      if (
+        !(
+          Object.keys(sectionErrors).length === 0 &&
+          sectionErrors.constructor === Object
+        )
+      ) {
+        oFields[section["id"]] = sectionErrors;
+      }
+    });
+    return oFields;
+  }
+
+  getFieldsForSectionByTermsConditions(termsConditionsItems: object[]): object {
+    let oFields = {};
+    termsConditionsItems.forEach(section => {
+      const sectionErrors = {};
+
+      this.termsConditionsKeys.forEach(key => {
+        if (this.formErrors$.getValue()["fields"][key]) {
+          sectionErrors[key] = this.formErrors$.getValue()["fields"][key];
+        }
+      });
+
+      if (
+        !(
+          Object.keys(sectionErrors).length === 0 &&
+          sectionErrors.constructor === Object
+        )
+      ) {
+        oFields[mainMenuNames.termsConditions + "__active"] = sectionErrors;
+      }
+    });
+    return oFields;
+  }
+
+  composeSectionGroupFieldsErrors(): object {
+    const generalInfo = this.getFieldsForSectionGroupByFormFields(
+      this.form.fields
+    ); // OK
+    const documents = {}; //this.getFieldsForSectionGroupByFormFields(this.form.documents);
+    const forms = {}; //this.getFieldsForSectionGroupByFormFields(this.form.forms);
+    const consentInfo = this.getFieldsForSectionByConcent(
+      this.form.consentInfo["consents"]
+    );
+    const termsConditions = this.getFieldsForSectionByTermsConditions(
+      this.form.termsConditions["termsConditionsItems"]
+    );
+    return Object.assign(
+      {},
+      generalInfo,
+      documents,
+      forms,
+      consentInfo,
+      termsConditions
+    );
+  }
+
   saveAndNextStep() {
     if (this.isFormStatusChanged) {
       const savingObj = {
@@ -651,6 +765,11 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
             if (error.error.status === 0) {
               this.formErrors$.next(error.error.errors);
             }
+            this.sectionGroupFieldsErrors$.next(
+              this.composeSectionGroupFieldsErrors()
+            );
+            // console.log(this.formErrors$.getValue());
+            // console.log(this.sectionGroupFieldsErrors$.getValue());
           }
         );
     } else {

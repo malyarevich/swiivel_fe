@@ -44,6 +44,12 @@ export class FormCreatorComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       if (params.has('mongo_id')) {
         console.info(`Edit form with ID ${params.get('mongo_id')}`);
+        this.api.getFormTemplate(params.get('mongo_id')).subscribe(v => {
+          if (v) {
+            this.service.formId = params.get('mongo_id');
+            this.service.formTemplate = v;
+          }
+        });
       } else {
         console.info(`Create New Form`);
       }

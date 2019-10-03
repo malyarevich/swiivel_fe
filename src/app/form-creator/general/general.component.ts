@@ -7,6 +7,7 @@ import { GeneralDataSource } from './general.datasource';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { SelectionModel } from '@angular/cdk/collections';
+import { FormCreatorService } from '../form-creator.service';
 
 @Component({
   selector: 'sw-general',
@@ -37,7 +38,8 @@ export class GeneralComponent implements OnInit, OnDestroy {
     private stepperService: StepperService,
     private api: ApiService,
     private fb: FormBuilder,
-    private cdr: ChangeDetectorRef) {
+    private cdr: ChangeDetectorRef,
+    private formCreatorService: FormCreatorService) {
     this.dataSource.loadFormsList();
     this.form = this.fb.group({
       name: [null, Validators.required],
@@ -48,6 +50,17 @@ export class GeneralComponent implements OnInit, OnDestroy {
     ).subscribe(type => {
       if (type) { this.dataSource.loadFormsList(type[0].value); }
     });
+    this.formCreatorService.formTemplate$.pipe(
+      takeUntil(this.destoyer$)
+    ).subscribe(formTemplate => {
+      console.log('Form Template', formTemplate)
+      if (formTemplate) {
+        this.form.patchValue({
+          name: formTemplate.name,
+          type: [this.typeOptions.find(item => item.value === formTemplate.type)]
+        });
+      }
+    })
   }
 
   ngOnInit() {
@@ -79,7 +92,23 @@ export class GeneralComponent implements OnInit, OnDestroy {
     }
     newForm.name = this.form.get('name').value;
     newForm.type = this.form.get('type').value[0].value;
-    this.api.saveNewForm(newForm);
+    if (this.formCreatorService.formId) {
+      this.api.updateGeneralForm(newForm, this.formCreatorService.formId).pipe(
+        takeUntil(this.destoyer$)
+      ).subscribe(data => {
+
+      });
+    } else {
+      this.api.saveNewForm(newForm).pipe(
+        takeUntil(this.destoyer$)
+      ).subscribe(data => {
+        if (data) {
+          this.formCreatorService.formId = data._id;
+          sessionStorage.setItem('newForm', JSON.stringify(data));
+        }
+      });
+    }
+    
   }
 
   getDate(): string {

@@ -6,11 +6,33 @@ import { TreeDataSource } from './tree.datasource';
 @Injectable()
 export class FormCreatorService {
   private _savedFields;
+  private mongoId: string;
   private fieldSubject$: BehaviorSubject<any> = new BehaviorSubject(null);
   private sectionSubject$: BehaviorSubject<any> = new BehaviorSubject('intro');
   private sectionsSubject$: BehaviorSubject<any> = new BehaviorSubject(null);
   private eventSubject$: Subject<any> = new Subject();
   private sidebarSubject$: BehaviorSubject<any> = new BehaviorSubject(null);
+  private formTemplateSubject$: BehaviorSubject<any> = new BehaviorSubject(null);
+
+  set formId(id: string) {
+    this.mongoId = id;
+  }
+
+  get formId() {
+    return this.mongoId;
+  }
+
+  set formTemplate(data: any) {
+    this.formTemplateSubject$.next(data);
+  }
+
+  get formTemplate() {
+    return this.formTemplateSubject$.getValue();
+  }
+
+  get formTemplate$() {
+    return this.formTemplateSubject$.asObservable();
+  }
 
   get sidebar() {
     return this.sidebarSubject$.asObservable();
