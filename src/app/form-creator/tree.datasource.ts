@@ -53,7 +53,7 @@ export class TreeDataSource implements DataSource<any> {
             this.tree.appendChild(root, node);
             if (Array.isArray(node[childKey])) {
               node[CHILDREN_SYMBOL] = node[childKey].filter(child => child.isActive)
-              this.build(node[childKey], node, childKey, onlyActive);
+              this.build(node[childKey], node, childKey, onlyActive, allActive);
             } else {
               node[CHILDREN_SYMBOL] = null;
             }
@@ -62,7 +62,7 @@ export class TreeDataSource implements DataSource<any> {
           this.tree.appendChild(root, node);
           if (Array.isArray(node[childKey])) {
             node[CHILDREN_SYMBOL] = node[childKey]//.filter(child => child.isActive)
-            this.build(node[childKey], node, childKey, onlyActive);
+            this.build(node[childKey], node, childKey, onlyActive, allActive);
           } else {
             node[CHILDREN_SYMBOL] = null;
           }

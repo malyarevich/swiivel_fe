@@ -50,30 +50,25 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked {
         this.cdr.markForCheck();
       })
       if (params.has('mongo_id')) {
-
-          this.treeControl = new NestedTreeControl<any>(node => {
-            let children = node[CHILDREN_SYMBOL];
-            return children;
-          });
-
-            this.service.formTemplate$.subscribe(value => {
-              if (value) {
-                this.treeSource.build(value.fields, undefined, undefined, undefined, true);
-                this.service.sidebar = this.treeSource;
-                this.cdr.markForCheck();
-              }
-            })
+        this.treeControl = new NestedTreeControl<any>(node => {
+          let children = node[CHILDREN_SYMBOL];
+          return children;
+        });
+        this.service.formTemplate$.subscribe(value => {
+          if (value) {
+            this.treeSource.build(value.fields, undefined, undefined, undefined, true);
+            this.service.sidebar = this.treeSource;
+            this.cdr.markForCheck();
+          }
+        })
       } else {
         this.api.getSidebarFields().subscribe((fields) => {
           this.treeControl = new NestedTreeControl<any>(node => {
             let children = node[CHILDREN_SYMBOL];
             return children;
           });
-
-            this.treeSource.build(fields);
+          this.treeSource.build(fields);
           this.service.sidebar = this.treeSource;
-
-
         });
       }
     });
