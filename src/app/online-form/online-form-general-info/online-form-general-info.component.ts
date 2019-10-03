@@ -61,4 +61,8 @@ export class OnlineFormGeneralInfoComponent implements OnInit {
     return this.menuItems.find(o => o.name === this.mainMenuNames.generalInfo)
       .time;
   }
+
+  getFormErrorsById(id) {
+    return this.formErrors[id] ? this.formErrors[id] : {};
+  }
 }

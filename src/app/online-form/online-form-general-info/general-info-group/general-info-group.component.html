@@ -2,7 +2,17 @@
 <h2
   class="content_section__article_title content_section__article_title--left pt-3 pb-2"
 >
-  {{ groupCaption }}
+  <span class="compact-caption"
+    >{{ groupCaption }}
+    <ng-container *ngIf="hasErrors()">
+      <span
+        error-hint
+        [errorsList]="getErrorByNodeId(group.id, formErrors)"
+        [fieldNameList]="fieldNameList"
+        class="errors-bullet"
+      ></span>
+    </ng-container>
+  </span>
 </h2>
 <!-- <div class="pl-3"> -->
 <div>
@@ -15,10 +25,13 @@
   </div>
 
   <div class="section__groups">
-    <ng-container *ngFor="let group of groups">
+    <ng-container *ngFor="let groupItem of groups">
       <sw-general-info-group
-        [group]="group"
+        [group]="groupItem"
         [groupCaption]="groupCaption"
+        [formErrors]="getFormErrorsById(groupItem['_id'])"
+        [fieldNameList]="fieldNameList"
+        [fg]="fg"
       ></sw-general-info-group>
     </ng-container>
   </div>

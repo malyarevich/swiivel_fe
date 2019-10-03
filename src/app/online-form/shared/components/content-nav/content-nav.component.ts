@@ -12,6 +12,7 @@ import {
 } from "@app/online-form/utils/generate-errors.service";
 import { Subject, Subscription } from "rxjs";
 import { takeUntil } from "rxjs/operators";
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: "sw-content-nav",
@@ -23,6 +24,7 @@ export class ContentNavComponent implements OnInit, OnDestroy {
   @Input() currentPosition: { page: string; tab: number };
   @Input() formErrors: object;
   @Input() fieldNameList: object;
+  @Input() fg: FormGroup;
 
   @Output() onGoToTab: EventEmitter<number> = new EventEmitter();
 
@@ -47,24 +49,19 @@ export class ContentNavComponent implements OnInit, OnDestroy {
     }).tabs;
   }
 
-  getErrorBySectionId(id, targetNode = this.formErrors) {
+  getErrorByNodeId(id, targetNode = this.formErrors) {
     let errors = {};
     if (
       !(
-        Object.keys(targetNode).length === 0 &&
+        Object.values(targetNode).length === 0 &&
         targetNode.constructor === Object
       )
     ) {
-      if (
-        !(
-          Object.keys(targetNode[id]).length === 0 &&
-          targetNode[id].constructor === Object
-        )
-      ) {
-        errors = targetNode[id];
+      if (this.fg.contains(id)) {
+        errors[id] = targetNode[id];
       } else {
         Object.keys(targetNode[id]).forEach(key => {
-          this.getErrorBySectionId(key, targetNode[id]);
+          errors = {...errors, ...this.getErrorByNodeId(key, targetNode[id])};
         });
       }
     }
@@ -80,7 +77,7 @@ export class ContentNavComponent implements OnInit, OnDestroy {
   }
 
   hasErrors(id) {
-    return typeof(this.formErrors[id]) !== 'undefined';
+    return typeof this.formErrors[id] !== "undefined";
   }
 
   ngOnDestroy(): void {

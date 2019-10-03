@@ -19,7 +19,8 @@
     <ng-container *ngFor="let group of groups">
       <sw-general-info-group
         [group]="group"
-        [formErrors]="formErrors"
+        [formErrors]="getFormErrorsById(group['_id'])"
+        [fieldNameList]="fieldNameList"
         [fg]="fg"
       ></sw-general-info-group>
     </ng-container>
