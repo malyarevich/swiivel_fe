@@ -8,10 +8,10 @@
           </div>
           <div class="row_container" style="justify-content: flex-start">
             <sw-input-checkbox formControlName="required" style="margin-right: 20px;">
-              <span class="input_label">Required</span>
+              <span class="label">Required</span>
             </sw-input-checkbox>
             <sw-input-checkbox class="settings-field" formControlName="hideLabel">
-              <span class="input_label">Hide Label</span>
+              <span class="label">Hide Label</span>
             </sw-input-checkbox>
           </div>
         </section>
@@ -43,7 +43,7 @@
         <section *ngIf="form.get('repeatGroup').value" [ngSwitch]="form.get('repeatStrategy').value">
           <div *ngSwitchCase="'For Each Student in Family'">
             <sw-input-checkbox class="settings-field" formControlName="prefill">
-              <span class="input_label">Prefill with System Information</span>
+              <span class="label">Prefill with System Information</span>
             </sw-input-checkbox>
           </div>
           <div *ngSwitchCase="'Other'">

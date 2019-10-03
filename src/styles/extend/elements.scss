@@ -126,17 +126,23 @@ sw-input-toggle {
 }
 
 sw-input-checkbox {
+  label {
+    margin-bottom: 0 !important;
+    display: flex;
+    align-items: center;
+  }
   i.dragdrop {
     margin-right: 10px;
     color: #A4A4A4;
     font-size: 15px;
   }
   span {
-    &.input_label {
+    &.label {
       font-family: "Nunito Sans";
       font-weight: bold;
       font-size: 12px;
       color: $black;
+      margin-left: 5px;
     }
   }
 }

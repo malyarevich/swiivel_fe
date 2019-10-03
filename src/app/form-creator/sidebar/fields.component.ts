@@ -46,7 +46,6 @@ export class SidebarFieldsComponent implements OnInit {
       this.service.sidebar = this.treeSource;
       this.treeControl = new NestedTreeControl<any>(node => {
         let children = node[CHILDREN_SYMBOL];
-        debugger
         return children;
       });
     });

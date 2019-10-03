@@ -47,7 +47,8 @@ export class SettingsComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('container', { read: ViewContainerRef, static: false }) container;
 
   constructor(
-    private resolver: ComponentFactoryResolver
+    private resolver: ComponentFactoryResolver,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
@@ -87,6 +88,7 @@ export class SettingsComponent implements OnInit, AfterViewInit, OnDestroy {
         this.component.instance.fieldSettings.subscribe(v => {
           this.updateField(v);
         });
+        this.cdr.detectChanges();
       }
     }
   }
