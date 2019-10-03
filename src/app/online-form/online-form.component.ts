@@ -81,7 +81,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
 
     this.onlineFormService.getOneForm().subscribe((form: Form) => {
       this.form = form;
-      // console.log(this.form);
+      console.log(this.form);
 
       this.initForm();
       this.initNavigation();
@@ -464,9 +464,9 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
     }
   }
 
-  initDocumentsFormControls() {
-    if (this.form.documents && this.form.documents.length > 0) {
-      this.form.documents.forEach(document => {
+  initDocumentsFormControls(documents) {
+    if (documents && documents.length > 0) {
+      documents.forEach(document => {
         const key = document["id"];
         const isRequired = true; //document["isRequired"];
 
@@ -478,7 +478,32 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
     }
   }
 
-  initFormsFormControls() {}
+  initFormsFormControls(forms) {
+    if (forms && forms.length > 0) {
+      forms.forEach(form => {
+        const pdfFile = form["form"]["fieldsPdf"];
+        pdfFile.forEach(pdfPage => {
+          pdfPage.forEach(pdfField => {
+            if (pdfField["id"]) {
+              const key = pdfField["id"];
+              const isRequired =
+                pdfField["linkedField"] &&
+                pdfField["linkedField"]["options"] &&
+                pdfField["linkedField"]["options"]["required"]
+                  ? true
+                  : false;
+              this.addToFieldLists(
+                mainMenuNames.documentsForms,
+                key,
+                isRequired
+              );
+              this.addControl(key, isRequired);
+            }
+          });
+        });
+      });
+    }
+  }
 
   getFieldsByFormFields(fields) {
     let aFields = [];
@@ -586,8 +611,8 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
 
   initFormControls() {
     this.initConsentFormControls();
-    this.initDocumentsFormControls();
-    this.initFormsFormControls();
+    this.initDocumentsFormControls(this.form.documents);
+    this.initFormsFormControls(this.form.forms);
     this.initGeneralInfoFormControls();
     this.initTermsConditionsFormControls();
   }

@@ -4,12 +4,16 @@
     class="content_section__form"
     *ngFor="let pdfForm of form.forms"
     (click)="pdfForm.isOpened = !pdfForm.isOpened"
-    [ngClass]="{'active': pdfForm.isOpened}"
+    [ngClass]="{ active: pdfForm.isOpened }"
   >
     <div class="form__header">
-      <div class="form__header_title">{{pdfForm.name}}</div>
+      <div class="form__header_title">{{ pdfForm.name }}</div>
       <div class="form__header_actions">
-        <label for="upload" class="form__header_upload" (click)="$event.stopPropagation()">
+        <label
+          for="upload"
+          class="form__header_upload"
+          (click)="$event.stopPropagation()"
+        >
           <svg
             class="form__header_upload_icon"
             xmlns="http://www.w3.org/2000/svg"
@@ -25,15 +29,28 @@
               <mask id="b" fill="white">
                 <use xlink:href="#upload_icon" />
               </mask>
-              <use fill="#979797" fill-rule="nonzero" xlink:href="#upload_icon" />
+              <use
+                fill="#979797"
+                fill-rule="nonzero"
+                xlink:href="#upload_icon"
+              />
               <g fill="#97CDF4" mask="url(#b)">
                 <rect width="24" height="24" rx="3" />
               </g>
             </g>
           </svg>
-          <input type="file" name="upload" id="upload" (change)="onFileSelected($event)" />
+          <input
+            type="file"
+            name="upload"
+            id="upload"
+            (change)="onFileSelected($event)"
+          />
         </label>
-        <a href="{{pdfForm.form.link}}" class="form__header_download" (click)="$event.stopPropagation()">
+        <a
+          href="{{ pdfForm.form.link }}"
+          class="form__header_download"
+          (click)="$event.stopPropagation()"
+        >
           <svg
             class="form__header_download_icon"
             xmlns="http://www.w3.org/2000/svg"
@@ -49,7 +66,11 @@
               <mask id="download_icon_2" fill="#fff">
                 <use xlink:href="#download_icon_1" />
               </mask>
-              <use fill="#979797" fill-rule="nonzero" xlink:href="#download_icon_1" />
+              <use
+                fill="#979797"
+                fill-rule="nonzero"
+                xlink:href="#download_icon_1"
+              />
               <g mask="url(#download_icon_2)" fill="#97CDF4">
                 <rect width="24" height="24" rx="3" />
               </g>
@@ -59,6 +80,13 @@
       </div>
     </div>
     <div class="form__text" [innerHTML]="pdfForm.accompanyingText.data"></div>
-    <sw-pdf-loader *ngIf="pdfForm.isOpened" [pdf]="pdfForm" [@slideInOut]></sw-pdf-loader>
+    <sw-pdf-loader
+      *ngIf="pdfForm.isOpened"
+      [form]="form"
+      [pdf]="pdfForm"
+      [@slideInOut]
+      [formErrors]="formErrors"
+      [fg]="fg"
+    ></sw-pdf-loader>
   </div>
 </div>
