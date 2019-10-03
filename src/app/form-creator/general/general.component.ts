@@ -50,6 +50,13 @@ export class GeneralComponent implements OnInit, OnDestroy {
     ).subscribe(type => {
       if (type) { this.dataSource.loadFormsList(type[0].value); }
     });
+    this.filter.valueChanges.subscribe((filterValue) => {
+      if (filterValue && filterValue.length > 0) {
+        this.dataSource.filter(filterValue.toLowerCase())
+      } else {
+        this.dataSource.filter('');
+      }
+    })
     this.formCreatorService.formTemplate$.pipe(
       takeUntil(this.destoyer$)
     ).subscribe(formTemplate => {
@@ -108,7 +115,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
         }
       });
     }
-    
+
   }
 
   getDate(): string {
@@ -141,4 +148,3 @@ export class GeneralComponent implements OnInit, OnDestroy {
   }
 
 }
-
