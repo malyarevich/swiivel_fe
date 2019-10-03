@@ -35,6 +35,9 @@
 .section-tree-node {
   .field {
     background: #50597A;
+    sw-dropdown-input {
+      min-width: 120px;
+    }
     .dragdrop {
       color: #fff;
     }
