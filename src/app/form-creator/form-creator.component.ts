@@ -9,6 +9,8 @@ import { CdkStepper } from '@angular/cdk/stepper';
 import { StepperService } from '@shared/stepper.service';
 import { FormCreatorService } from './form-creator.service';
 import { ApiService } from '@app/core/api.service';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'sw-form-creator',
@@ -55,6 +57,7 @@ export class FormCreatorComponent implements OnInit {
   data;
   form_id;
   action = 'create';
+  destroyed$ = new Subject();
 
   @ViewChild('stepper', { static: false }) steppert: CdkStepper;
 
@@ -66,8 +69,14 @@ export class FormCreatorComponent implements OnInit {
 
    }
 
+   ngOnDestroy() {
+     this.destroyed$.next(true);
+     this.destroyed$.complete();
+   }
+
+
   ngOnInit() {
-    this.route.paramMap.subscribe(params => {
+    this.route.paramMap.pipe(takeUntil(this.destroyed$)).subscribe(params => {
       if (params.has('mongo_id')) {
         console.info(`Edit form with ID ${params.get('mongo_id')}`);
         this.api.getFormTemplate(params.get('mongo_id')).subscribe(v => {

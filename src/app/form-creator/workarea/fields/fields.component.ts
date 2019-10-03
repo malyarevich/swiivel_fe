@@ -7,6 +7,7 @@ import { CHILDREN_SYMBOL, TreeDataSource } from '@app/form-creator/tree.datasour
 import { FormCreatorService } from '@app/form-creator/form-creator.service';
 import { Subject } from 'rxjs';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { takeUntil } from 'rxjs/operators';
 @Component({
   selector: 'sw-form-creator-workarea-fields',
   templateUrl: './fields.component.html',
@@ -32,13 +33,13 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
   }
 
   ngOnInit() {
-    this.service.sidebar.subscribe(nodes => {
+    this.service.sidebar.pipe(takeUntil(this.destroyed$)).subscribe(nodes => {
       this.treeSource = nodes;
-      this.treeSource.changes.subscribe(value => {
+      this.treeSource.changes.pipe(takeUntil(this.destroyed$)).subscribe(value => {
         this.cdr.detectChanges();
       });
     });
-    this.service.events$.subscribe(event => {
+    this.service.events$.pipe(takeUntil(this.destroyed$)).subscribe(event => {
       if (event.action === 'expand') {
         this.treeControl.expand(event.target);
       } else if (event.action === 'collapse') {
@@ -48,6 +49,7 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
     })
   }
   ngOnDestroy() {
+    this.destroyed$.next(true);
     this.destroyed$.complete();
   }
 
