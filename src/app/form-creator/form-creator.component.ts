@@ -17,7 +17,30 @@ import { ApiService } from '@app/core/api.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FormCreatorComponent implements OnInit {
-
+  defaults = {
+    'packetIntroduction': {
+      'sectionName': 'Packet Introduction',
+      'sectionWidth': 'full'
+    },
+    'documentsForms': {
+      'documents': {
+        'sectionName': 'Documents for Parents',
+        'sectionWidth': 'full'
+      },
+      'formsPDF': {
+        'sectionName': 'School Forms',
+        'sectionWidth': 'full'
+      },
+    },
+    'consent': {
+      'sectionName': 'Parent Consent',
+      'sectionWidth': 'full'
+    },
+    'termsConditions': {
+      'sectionName': 'Terms and Conditions',
+      'sectionWidth': 'full'
+    }
+  };
   workarea: string;
   sections = [
     {name: 'Packet Introduction', workarea: 'intro', component: SidebarIntroComponent, active: true, expanded: true},
@@ -29,6 +52,9 @@ export class FormCreatorComponent implements OnInit {
     {name: 'TERMS AND CONDITIONS', workarea: 'tac', component: SidebarTermsConditionsComponent, active: false, expanded: false},
     {name: 'FORM PAYMENT', workarea: '', component: null, active: false, expanded: false},
   ];
+  data;
+  form_id;
+  action = 'create';
 
   @ViewChild('stepper', { static: false }) steppert: CdkStepper;
 
@@ -45,12 +71,21 @@ export class FormCreatorComponent implements OnInit {
       if (params.has('mongo_id')) {
         console.info(`Edit form with ID ${params.get('mongo_id')}`);
         this.api.getFormTemplate(params.get('mongo_id')).subscribe(v => {
+          this.form_id = params.get('mongo_id');
           if (v) {
-            this.service.formId = params.get('mongo_id');
-            this.service.formTemplate = v;
-          }
+              this.service.formId = params.get('mongo_id');
+              this.service.formTemplate = v;
+            }
+          this.sections.forEach((section) => {
+            if (section.active === true && section.expanded === true) {
+              this.switchWorkarea(section.workarea);
+              return
+            }
+          });
+          this.switchWorkarea(this.sections[0].workarea);
         });
       } else {
+        // this.service.createForm(this.defaults);
         console.info(`Create New Form`);
       }
     });
