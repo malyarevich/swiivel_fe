@@ -7,7 +7,7 @@
     (click)="showPopup()"
 >
   <ng-content select="span"></ng-content>
-  <div *ngIf="!dropdownSubHeader">
+  <div *ngIf="isDisplaySelected">
     <div
       class="dropdown_input_container__input"
       data-e2e="dropdown_input_container_input"

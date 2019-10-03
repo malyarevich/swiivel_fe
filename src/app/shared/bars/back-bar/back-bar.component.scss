@@ -17,6 +17,10 @@
     }
   }
 
+  .arrow-back-container:hover {
+    cursor: pointer;
+  }
+
   .title {
     margin: auto 0 auto 10px;
     color: $gray-color;

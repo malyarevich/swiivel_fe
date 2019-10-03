@@ -38,6 +38,7 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
   _multiple = false;
 
   @Input() dropdownSubHeader = false;
+  @Input() isDisplaySelected = true;
   @Input() panelClass = 'dropdown-overlay';
   @Input()
   set multiple(opt: boolean) {

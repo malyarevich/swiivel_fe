@@ -1,4 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { Form } from '@app/models/data-collection/form';
+import { UploadStatus } from '@app/online-form/models/upload.model';
 // import { PDFProgressData } from 'pdfjs-dist';
 // import { FormsDivModel } from '../../../../form-constructor/form-builder/documents-forms/model/formsPDF.model';
 
@@ -8,8 +11,18 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./pdf-loader.component.scss']
 })
 export class PdfLoaderComponent implements OnInit {
+  @Input() form: Form;
   @Input() pdf: any;
+  @Input() formErrors: object;
+  @Input() fg: FormGroup;
   // @Output() changeSomeEmitter = new EventEmitter<any>();
+
+  uploadStatus: object = {};
+  UploadStatus = UploadStatus;
+
+  file: object = {};
+  progress: object = {};
+  response: object = {};
 
   // token = `?api_token=${environment.api_token}`;
   token = '';
@@ -67,6 +80,10 @@ export class PdfLoaderComponent implements OnInit {
     return div.type === 'system' && div.linkedField;
   }
 
+  isShowLinkedFieldForCheckbox(div: any) {
+    return div.type === 'checkbox';
+  }
+
   isShowLinkedFieldForTemporary(div: any) {
     // error with:
     // div.type === 'temporary'
@@ -87,5 +104,23 @@ export class PdfLoaderComponent implements OnInit {
     //   console.log(div.linkedField);
     // }
     return div.type === 'signature';
+  }
+  
+  onUploadSelected(file, document: any) {
+    this.uploadStatus[document['id']] = UploadStatus.selected;
+    this.file[document['id']] = file;
+    //`File selected: ${file.name} (${file.size})`;
+  }
+
+  onUploadProgress(progress, document: any) {
+    this.uploadStatus[document['id']] = UploadStatus.process;
+    this.progress[document['id']] = progress;
+    //` Upload progress: ${progress.loaded} of ${progress.total}`;
+  }
+
+  onUploadResponse(response, document: any) {
+    this.uploadStatus[document['id']] = UploadStatus.selected;
+    this.response[document['id']] = response;
+    //`Upload complete. File path: ${response.file_path} (${response.file_origin_name})`;
   }
 }

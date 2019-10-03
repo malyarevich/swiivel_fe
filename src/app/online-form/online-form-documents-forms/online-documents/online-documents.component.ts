@@ -10,6 +10,8 @@ import { HttpEventType } from "@angular/common/http";
 import { Subscription } from "rxjs";
 import { Form } from "@app/models/data-collection/form";
 import { FilesService } from "../../services/files.service";
+import { FormGroup } from "@angular/forms";
+import { UploadStatus } from "@app/online-form/models/upload.model";
 
 @Component({
   selector: "app-online-documents",
@@ -19,6 +21,16 @@ import { FilesService } from "../../services/files.service";
 })
 export class OnlineDocumentsComponent implements OnInit, OnDestroy {
   @Input() form: Form;
+  @Input() formErrors: object;
+  @Input() fg: FormGroup;
+
+  pathIconsFolder = "assets/images/icons/";
+  uploadStatus: object = {};
+  UploadStatus = UploadStatus;
+
+  file: object = {};
+  progress: object = {};
+  response: object = {};
 
   constructor(
     private fileService: FilesService,
@@ -139,14 +151,14 @@ export class OnlineDocumentsComponent implements OnInit, OnDestroy {
   }
 
   onCancelUpload(document: any) {
-    this.uploadSubscription.unsubscribe();
-    document.fileUploading = false;
+    this.uploadStatus[document['id']] = UploadStatus.uploaded;
+    this.fg.patchValue({ ...this.fg.value, [document["id"]]: undefined });
   }
 
   deleteUploadedFile(document: any) {
-    document.selectedFile = null;
-    document.uploaded = null;
-    document.fileUploaded = false;
+    // console.log({...this.fg.value, [document['id']]: undefined});
+    this.uploadStatus[document['id']] = UploadStatus.uploaded;
+    this.fg.patchValue({ ...this.fg.value, [document["id"]]: undefined });
   }
 
   getCountPages(document: any) {
@@ -176,6 +188,37 @@ export class OnlineDocumentsComponent implements OnInit, OnDestroy {
       const pages = this.form.attachments[document.data].numberOfPages;
       return String("(" + pages + " pages)");
     }
+  }
+
+  getOriginName(document: any): string {
+    if (document["id"] && this.fg.get(document["id"]).value) {
+      return this.fg.get(document["id"]).value["file_origin_name"];
+    }
+  }
+
+  getOriginSize(document: any): string {
+    // console.log(this.fg.get(document["id"]).value);
+    if (document["id"] && this.fg.get(document["id"]).value) {
+      return this.fg.get(document["id"]).value["file_origin_size"];
+    }
+  }
+
+  onUploadSelected(file, document: any) {
+    this.uploadStatus[document['id']] = UploadStatus.selected;
+    this.file[document['id']] = file;
+    //`File selected: ${file.name} (${file.size})`;
+  }
+
+  onUploadProgress(progress, document: any) {
+    this.uploadStatus[document['id']] = UploadStatus.process;
+    this.progress[document['id']] = progress;
+    //` Upload progress: ${progress.loaded} of ${progress.total}`;
+  }
+
+  onUploadResponse(response, document: any) {
+    this.uploadStatus[document['id']] = UploadStatus.selected;
+    this.response[document['id']] = response;
+    //`Upload complete. File path: ${response.file_path} (${response.file_origin_name})`;
   }
 
   ngOnDestroy(): void {

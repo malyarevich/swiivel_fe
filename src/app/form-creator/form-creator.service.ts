@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject, Observable } from 'rxjs';
 import { TreeDataSource } from './tree.datasource';
 import { filter } from 'rxjs/operators';
-import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Injectable()
 export class FormCreatorService {
@@ -32,89 +32,13 @@ export class FormCreatorService {
     this.formTemplateSubject$.next(data);
   }
 
-  createForm(data?) {
-    this.form = this.fb.group({
-      'name': [''],
-      'type': [''],
-      'packetIntroduction': this.fb.group({
-        'content': [''],
-        'sectionName': [''],
-        'sectionWidth': ['']
-      }),
-      'formFields': this.fb.group({
-        'fields': this.fb.array([]),
-      }),
-      'documentsForms': this.fb.group({
-        'documents': this.fb.group({
-          'documentsItems': this.fb.array([]),
-          'sectionName': [''],
-          'sectionWidth': ['']
-        }),
-        'formsPDF': this.fb.group({
-          'formsPDFItems': this.fb.array([]),
-          'sectionName': [''],
-          'sectionWidth': ['']
-        }),
-      }),
-      'consentInfo': this.fb.group({
-        'constents': this.fb.array([]),
-        'sectionName': [''],
-        'sectionWidth': ['']
-      }),
-      'termsConditions': this.fb.group({
-        'signature': this.fb.group({
-          'isRequire': [''],
-          'type': [''],
-          'eType': [''],
-          'isBothParents': [''],
-          'signed': this.fb.group({
-            'parents': [''],
-            'fathers': [''],
-            'mothers': ['']
-          })
-        }),
-        'termsConditionsItems': this.fb.array([]),
-        'sectionName': [''],
-        'sectionWidth': ['']
-      })
-    });
-    if (data) {
-      this.patchForm(data);
-    }
-    return this.form;
-  }
-
-  patchForm(data) {
-    this.form.patchValue(data);
-    console.log(this.form.value);
-    for (let field of data.fields) {
-      this.addFormField(field);
-    }
-  }
-
-  addFormField(data) {
-    let fields = this.form.get('formFields.fields') as FormArray;
-    fields.push(this.createFormField(data));
-  }
-
-  createFormField(data) {
-    let field = this.fb.group({
-
-    });
-    return field;
-  }
-
-
-
-
-
 
   get formTemplate() {
     return this.formTemplateSubject$.getValue()
   }
 
   get formTemplate$() {
-    return this.formTemplateSubject$.asObservable();
+    return this.formTemplateSubject$.pipe(filter(node => node && node.isActive));
   }
 
   get sidebar() {

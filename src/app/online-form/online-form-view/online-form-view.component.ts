@@ -19,7 +19,7 @@ export class OnlineFormViewComponent implements OnInit {
   @Input() form: Form;
   @Input() formNavigationState: any;
   @Input() currentPosition: object;
-  @Input() formErrors: any;
+  @Input() formErrors: object;
   @Input() fg: FormGroup;
 
   @Output() onGoToTab: EventEmitter<any> = new EventEmitter();

@@ -48,7 +48,19 @@
 }
 
 .form-group {
+  align-items: stretch;
   height: 100%;
+  width: 100%;
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+}
+
+.agile-control {
+  align-items: stretch;
+  flex: 1;
+  display: flex;
+  flex-direction: row;
 }
 
 .app-input {

@@ -11,7 +11,7 @@ export class OnlineFormDocumentsFormsComponent implements OnInit {
   @Input() form: Form;
   @Input() formNavigationState: any;
   @Input() currentPosition: object;
-  @Input() formErrors: any;
+  @Input() formErrors: object;
   @Input() fg: FormGroup;
 
   sections: object[];

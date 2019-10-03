@@ -18,7 +18,7 @@ export class OnlineFormGeneralInfoComponent implements OnInit {
   @Input() form: Form;
   @Input() formNavigationState: any;
   @Input() currentPosition: { page: string, tab: number };
-  @Input() formErrors: any;
+  @Input() formErrors: object;
   @Input() fg: FormGroup;
 
   sections: any;
