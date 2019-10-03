@@ -2,7 +2,9 @@ import { UploadReviewFormStatusesEnum } from '@app/upload-review-form/upload-rev
 import { UploadReviewFormSubmissionTypeEnum } from '@app/upload-review-form/upload-review-form-submission-type.enum';
 import { ApiService } from '@core/api.service';
 import { FilterDropDownData } from '@models/upload-review-form/filter.model';
+import { SortDropDownData } from '@models/upload-review-form/sort.model';
 import { Observable } from 'rxjs';
+import { UploadReviewFormSortEnum } from '@app/upload-review-form/upload-review-form-sort.enum';
 
 export class UploadReviewFormService extends ApiService {
   getStatusColor(status: string): string {
@@ -24,14 +26,17 @@ export class UploadReviewFormService extends ApiService {
     }
   }
 
-  getDocumentList(formId: string, params?: any): Observable<any> {
+  getDocumentList(formId: string, filterParams?: any, sortParam?: any): Observable<any> {
     let endpoint = '';
-    if (params) {
+    if (filterParams) {
       let endpointParam = '';
-      if (params && params.length) {
-        params.map((param) =>  {
+      if (filterParams && filterParams.length) {
+        filterParams.map((param) =>  {
           endpointParam += `&filter[${param.param}][]=${param.param === 'documents' ? param.id : param.value}`;
         });
+      }
+      if (sortParam) {
+        endpointParam += `&sort=${sortParam[0].value}`;
       }
       endpoint = `/proxy/upload-reviews-form/list?form_id=${formId}&search_query=${endpointParam}`;
     } else {
@@ -92,6 +97,15 @@ export class UploadReviewFormService extends ApiService {
 
   convertFilterDocumentsData(documents: any): FilterDropDownData | {} {
     return this.getFilterDropDownData(documents);
+  }
+
+  convertSortDocumentsData(documents: any): SortDropDownData[] | [] {
+    const sortData = [];
+    const uploadReviewFormSortEnum = UploadReviewFormSortEnum;
+    if (documents && documents.sort) {
+      documents.sort.map((docSort => sortData.push({title: uploadReviewFormSortEnum[docSort], value: docSort})));
+    }
+    return sortData;
   }
 
 }

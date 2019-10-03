@@ -10,5 +10,4 @@ export class BackBarComponent {
   @Input() title: string;
   @Input() backRoute ? = '/';
   constructor() { }
-
 }
