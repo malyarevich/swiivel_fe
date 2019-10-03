@@ -11,14 +11,13 @@ export class DropdownSettingComponent implements OnInit {
   @Input()
   set settings(obj: any) {
     if (obj) {
-      console.log(obj)
       this.form.patchValue({
         showDefaultValue: !!obj.defaultValue,
         showDefaultOptions: obj.defaultOption && obj.defaultOption.length > 0,
         defaultOption: obj.defaultOption || null,
         multiple: obj.multiple || false,
-        type:  obj.type ? [this.fieldsType.find(o => o.value === obj.type)] : [],
-        options: obj.options
+        fieldType:  obj.fieldsType ? [this.fieldsType.find(o => o.value === obj.fieldType)] : [],
+        fieldOptions: obj.fieldOptions || []
       });
     }
   }
@@ -50,9 +49,9 @@ export class DropdownSettingComponent implements OnInit {
     this.form = this.fb.group({
       showDefaultOptions: new FormControl(false, {updateOn: 'change'}),
       defaultOption: new FormControl([], {updateOn: 'change'}),
-      type: new FormControl([], {updateOn: 'change'}),
+      fieldType: new FormControl([], {updateOn: 'change'}),
       multiple: new FormControl(false, {updateOn: 'change'}),
-      options: new FormArray([
+      fieldOptions: new FormArray([
         new FormGroup({
           title: new FormControl('', {updateOn: 'blur'})
         })
@@ -67,11 +66,11 @@ export class DropdownSettingComponent implements OnInit {
   }
 
   get options() {
-    return this.form.get('options') as FormArray;
+    return this.form.get('fieldOptions') as FormArray;
   }
 
   get optionsValue() {
-    return this.form.get('options').value;
+    return this.form.get('fieldOptions').value;
   }
 
   setFormValue(obj: any) {
@@ -106,8 +105,8 @@ export class DropdownSettingComponent implements OnInit {
   }
 
   prepareForm(value) {
-    const { multiple, options, type, defaultOption } = value;
-    this.fieldSettings.emit({multiple, options, type, defaultOption});
+    const { multiple, fieldOptions, fieldType, defaultOption } = value;
+    this.fieldSettings.emit({multiple, fieldOptions, fieldType, defaultOption});
   }
 
 }
