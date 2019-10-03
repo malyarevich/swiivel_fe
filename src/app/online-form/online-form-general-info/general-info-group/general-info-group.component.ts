@@ -43,8 +43,10 @@ export class GeneralInfoGroupComponent implements OnInit {
     // console.log( this.formErrors );
     // console.log( Object.values(this.formErrors).length !== 0 );
     // console.log( this.formErrors.constructor === Object);
-    return Object.values(this.formErrors).length !== 0 &&
-    this.formErrors.constructor === Object;
+    return (
+      Object.values(this.formErrors).length !== 0 &&
+      this.formErrors.constructor === Object
+    );
   }
 
   getGroupErrors() {
@@ -66,20 +68,23 @@ export class GeneralInfoGroupComponent implements OnInit {
       if (this.fg.contains(id)) {
         errors[id] = targetNode[id];
       } else {
-        if(targetNode[id]) {
+        if (targetNode[id]) {
           Object.keys(targetNode[id]).forEach(key => {
-            // console.log(errors);
-            // console.log(key);
-            // console.log(targetNode[id]);
-            errors = { ...errors, ...this.getErrorByNodeId(key, targetNode[id]) };
+            errors = {
+              ...errors,
+              ...this.getErrorByNodeId(key, targetNode[id])
+            };
           });
         } else {
-          // console.log(targetNode);
+          Object.keys(targetNode).forEach(key => {
+            errors = {
+              ...errors,
+              ...this.getErrorByNodeId(key, targetNode)
+            };
+          });
         }
-        
       }
     }
-    // console.log(errors);
     return errors;
   }
 }
