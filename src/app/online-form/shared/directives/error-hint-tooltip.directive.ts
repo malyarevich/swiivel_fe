@@ -21,6 +21,7 @@ import { ISectionError } from '@app/online-form/utils/generate-errors.service';
 
 export class ErrorHintTooltipDirective implements OnInit {
   @Input() errorsList: object;
+  @Input() fieldNameList: object;
   @Input() connectedPosition: ConnectedPosition[] = [{
     originX : 'center',
     originY : 'bottom',
@@ -43,7 +44,8 @@ export class ErrorHintTooltipDirective implements OnInit {
       const compPortal = new ComponentPortal(ErrorsListTooltipComponent);
       const tooltipRef = this.overlayRef.attach(compPortal);
 
-      tooltipRef.instance.errors = this.errorsList;
+      tooltipRef.instance.errorsList = this.errorsList;
+      tooltipRef.instance.fieldNameList = this.fieldNameList;
       return tooltipRef;
     }
   }

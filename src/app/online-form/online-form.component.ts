@@ -48,6 +48,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
   fgStatusChangesSubscription: Subscription;
   isFormStatusChanged: boolean = false;
   fieldListByPage: object = {};
+  fieldNameList: object = {};
   requiredListByPage: object = {};
   requiredValidator = Validators.compose([Validators.required]);
   SIGNATURE_TYPES: object = SIGNATURE_TYPES;
@@ -403,11 +404,17 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
   }
 
   // Make lists with required fields and with control fields by page
-  addToFieldLists(menuName: string, key: string, isRequired: boolean) {
+  addToFieldLists(
+    menuName: string,
+    key: string,
+    isRequired: boolean,
+    label: string
+  ) {
     if (isRequired) {
       this.requiredListByPage[menuName].push(key);
     }
     this.fieldListByPage[menuName].push(key);
+    this.fieldNameList[key] = label;
   }
 
   addControl(
@@ -453,11 +460,13 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
               key === "__checkbox"
                 ? item["checkbox"]["isActive"]
                 : item["signature"]["isRequire"];
+            const label = key === "__checkbox" ? "Checkbox" : "Signature";
 
             this.addToFieldLists(
               mainMenuNames.consentInfo,
               item["id"] + key,
-              isRequired
+              isRequired,
+              label
             );
             this.addControl(item["id"] + key, isRequired);
           }
@@ -471,9 +480,15 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
       documents.forEach(document => {
         const key = document["id"];
         const isRequired = true; //document["isRequired"];
+        const label = document["name"];
 
         if (document["isUpload"]) {
-          this.addToFieldLists(mainMenuNames.documentsForms, key, isRequired);
+          this.addToFieldLists(
+            mainMenuNames.documentsForms,
+            key,
+            isRequired,
+            label
+          );
           this.addControl(key, isRequired);
         }
       });
@@ -494,10 +509,15 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
                 pdfField["linkedField"]["options"]["required"]
                   ? true
                   : false;
+              const label =
+                pdfField["linkedField"] && pdfField["linkedField"]["name"]
+                  ? pdfField["linkedField"]["name"]
+                  : "Field";
               this.addToFieldLists(
                 mainMenuNames.documentsForms,
                 key,
-                isRequired
+                isRequired,
+                label
               );
               this.addControl(key, isRequired);
             }
@@ -555,7 +575,8 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
         this.addToFieldLists(
           mainMenuNames.generalInfo,
           field["_id"],
-          isRequired
+          isRequired,
+          field["name"]
         );
       }
     });
@@ -588,8 +609,9 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
           );
         })
         .forEach(key => {
+          const label = "Checkbox";
           this.termsConditionsKeys.push(key);
-          this.addToFieldLists(mainMenuNames.termsConditions, key, isRequired);
+          this.addToFieldLists(mainMenuNames.termsConditions, key, isRequired, label);
           this.addControl(key, isRequired);
         });
 
@@ -599,10 +621,12 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
             const key = item["id"] + "__checkbox";
             this.termsConditionsKeys.push(key);
             const isRequired = item["checkbox"]["isActive"];
+            const label = "Signature";
             this.addToFieldLists(
               mainMenuNames.termsConditions,
               key,
-              isRequired
+              isRequired,
+              label
             );
             this.addControl(key, isRequired);
           }

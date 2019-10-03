@@ -29,6 +29,7 @@
           [formNavigationState]="(formNavigationState$ | async)"
           [currentPosition]="(currentPosition$ | async)"
           [formErrors]="(sectionGroupFieldsErrors$ | async)"
+          [fieldNameList]="fieldNameList"
           (onGoToTab)="goToTab($event)"
           ></sw-online-form-view>
           <!-- [formErrors]="(formErrors$ | async)" -->
