@@ -11,17 +11,22 @@ import { ISectionError } from '@app/online-form/utils/generate-errors.service';
   styleUrls: ['./errors-list-tooltip.component.scss']
 })
 export class ErrorsListTooltipComponent implements OnInit {
-  @Input() errors: object;
+  @Input() errorsList: object;
+  @Input() fieldNameList: object;
   constructor() { }
 
   ngOnInit() {
   }
 
   getErrors() {
-    return Object.values(this.errors);
+    return Object.values(this.errorsList);
+  }
+
+  getErrorsKeys() {
+    return Object.keys(this.errorsList);
   }
 
   getErrorsCount() {
-    return Object.values(this.errors).length;
+    return Object.values(this.errorsList).length;
   }
 }
