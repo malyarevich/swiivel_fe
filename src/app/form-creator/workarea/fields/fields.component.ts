@@ -66,10 +66,11 @@ export class WorkareaFieldsComponent implements AfterViewInit, OnInit, OnDestroy
   }
 
   drop(event: CdkDragDrop<any>) {
-    if (event.item.data.type == 113 || event.item.data.type == 114) {
-      this.closeParentNode(event.item.data);
+    let node = event.item.data;
+    if (node.type === 113 || node.type === 114) {
+      this.closeParentNode(node);
     } else {
-      this.closeNode(event.item.data);
+      this.closeNode(node);
     }
   }
 
