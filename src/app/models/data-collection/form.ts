@@ -50,16 +50,18 @@ export interface ISubMenus {
 }
 
 export interface IPacketIntroduction {
-  packets: [
-    {
-      id: string;
-      text: {
-        value: string;
-      },
-      title: string;
-    }
-  ],
-  sectionName: string;
+  // packets: [
+  //   {
+  //     id: string;
+  //     text: {
+  //       value: string;
+  //     },
+  //     title: string;
+  //   }
+  // ],
+  content?: string;
+  sectionName?: string;
+  sectionWidth?: string;
 };
 
 export interface ISectionTab {

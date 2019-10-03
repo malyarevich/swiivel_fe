@@ -1,31 +1,39 @@
 <ng-container *ngIf="isExist(); else elseTemplate">
-    <div *ngFor="let item of packets; let packetIndex = index"
+  <div class="content_section__header">
+    <!--Title-->
+    <h2 class="content_section__article_title">
+      {{
+        form.packetIntroduction.name
+          ? form.packetIntroduction.name
+          : "Packet Introduction title has not assign"
+      }}
+    </h2>
+  </div>
+  <div class="content_section__main content_section__main--center">
+    <!--Text-->
+    <article class="content_section__article">
+      <div
+        class="content_section__article_text"
+        [innerHTML]="form.packetIntroduction.content"
+      ></div>
+    </article>
+  </div>
+  <!-- <div *ngFor="let item of packets; let packetIndex = index"
       class="content_section__main_container app-div-animation"
       [ngClass]="{
         'app-div-show': isShowPacket(packetIndex),
         'app-div-hide': !isShowPacket(packetIndex)
       }"
     >
-        <div class="content_section__header">
-            <!--Title-->
-            <h2 class="content_section__article_title">
-            {{ item.title }}
-            </h2>
-        </div>
-        <div
-          class="content_section__main content_section__main--center"
-        >
-            <!--Text-->
-            <article class="content_section__article">
-                <div
-                  class="content_section__article_text"
-                  [innerHTML]="item.text.value"
-                ></div>
-            </article>
-        </div>
-    </div>
+    </div> -->
 </ng-container>
 <ng-template #elseTemplate>
+  <div class="content_section__header">
+    <!--Title-->
+    <h2 class="content_section__article_title">
+      Not loaded from server valid `form.packetIntroduction`
+    </h2>
+  </div>
   <div class="content_section__main_container">
     <div class="p-4">
       <p>
