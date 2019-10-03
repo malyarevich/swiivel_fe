@@ -3,69 +3,68 @@
 .upload-review-form-footer {
   display: flex;
   justify-content: space-between;
-  min-height: 42px;
+  height: 42px;
   padding: 6px 15px;
   background: $table-row-odd-background-color;
+}
 
-  .prev,
-  .next {
+.prev,
+.next {
+  display: flex;
+  width: 50%;
+
+  .container {
     display: flex;
-    width: 50%;
+    padding: 0;
 
-    .container {
-      display: flex;
-      padding: 0;
+    .text-row {
+      margin: auto 0;
 
-      .text-row {
-        margin: auto 0;
-
-        .text-row-container {
-            display: flex;
-        }
-
-        .name {
-          min-height: 15px;
-          margin: 0 0 1px;
-          font: 800 12px/15px $nunito-sans;
-        }
-
-        .document-name {
-          margin: auto 6px auto 0;
-          font: 800 10px/13px $nunito-sans;
-          color: $gray-color;
-        }
-
+      .text-row-container {
+          display: flex;
       }
-    }
 
-    .button-container {
-      display: flex;
-    }
+      .name {
+        min-height: 15px;
+        margin: 0 0 1px;
+        font: 800 12px/15px $nunito-sans;
+      }
 
-    .button {
-      margin: auto;
-    }
+      .document-name {
+        margin: auto 6px auto 0;
+        font: 800 10px/13px $nunito-sans;
+        color: $gray-color;
+      }
 
-    .button-ico {
-      font-size: 9px;
-    }
-  }
-
-  .next {
-
-    .container {
-      justify-content: flex-end;
-      margin: 0 10px 0 0;
     }
   }
 
-  .prev {
-    .button-container {
-      margin: 0 10px 0 0;
-    }
-
-    .button-ico {
-      transform: scaleX(-1);
-    }
+  .button-container {
+    display: flex;
   }
+
+  .button {
+    margin: auto;
+  }
+}
+
+.next {
+  .container {
+    justify-content: flex-end;
+    margin: 0 10px 0 0;
+  }
+}
+
+.prev {
+  .button-container {
+    margin: 0 10px 0 0;
+  }
+}
+
+.button-icon::ng-deep button.button {
+  padding: 3px 8px;
+}
+
+.button-icon-size {
+  font-size: 16px;
 }
