@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { UploadReviewFormStatusesEnum } from '@app/upload-review-form/upload-review-form-statuses.enum';
 import { UploadReviewFormService } from '@app/upload-review-form/upload-review-form.service';
 import { ExtremeUploadForms } from '@models/upload-review-form/forms.model';
@@ -11,7 +11,17 @@ import { ExtremeUploadForms } from '@models/upload-review-form/forms.model';
 
 export class FormUploadFooterComponent {
   @Input() documents: ExtremeUploadForms;
+  @Output('changeForm') changeFormEmmiter = new EventEmitter<string>();
+
   public uploadReviewFormStatusesEnum = UploadReviewFormStatusesEnum;
 
   constructor(public uploadReviewFormService: UploadReviewFormService) {}
+
+  prev() {
+    this.changeFormEmmiter.emit(this.documents.previous_form.form_id);
+  }
+
+  next() {
+    this.changeFormEmmiter.emit(this.documents.next_form.form_id);
+  }
 }

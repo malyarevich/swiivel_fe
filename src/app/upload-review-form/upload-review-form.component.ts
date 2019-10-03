@@ -96,4 +96,10 @@ export class UploadReviewFormComponent implements OnInit {
   downLoadForm(id: string): void {
     this.dataSource.downloadForm(id);
   }
+
+  updateForm(id: string) {
+    this.dataSource.uploadDocuments(id);
+    this.getDocuments();
+    this.dataSource.uploadFilterList(id);
+  }
 }
