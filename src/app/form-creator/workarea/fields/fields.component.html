@@ -1,38 +1,40 @@
-<cdk-tree [dataSource]="treeSource" [treeControl]="treeControl" cdkDropList id="fields-list" cdkDropListSortingDisabled  [cdkDropListConnectedTo]="['sidebar-list']">
-  <cdk-nested-tree-node *cdkTreeNodeDef="let node" cdkTreeNodePadding cdkDrag [cdkDragData]="node" cdkTreeNodePaddingIndent="15px" class="field-workarea-node" (cdkDragDropped)="drop($event)">
+<cdk-tree [dataSource]="treeSource" [treeControl]="treeControl" cdkDropList id="fields-list" cdkDropListSortingDisabled
+  [cdkDropListConnectedTo]="['sidebar-list']">
+  <cdk-nested-tree-node *cdkTreeNodeDef="let node" cdkTreeNodePadding cdkDrag [cdkDragData]="node"
+    cdkTreeNodePaddingIndent="15px" class="field-workarea-node" (cdkDragDropped)="drop($event)">
     <!-- use a disabled button to provide padding for tree leaf -->
-    <div class="field" [class.active]="node.showSettings"  *ngIf="node.isActive">
+    <div class="field" [class.active]="node.showSettings" *ngIf="node.isActive">
       <div class="main-container">
         <div class="drag-icon">
           <i class="dragdrop fas fa-ellipsis-v" cdkDragHandle></i>
         </div>
         <div class="name-container">
           <div class="main-text">{{ node.name }}</div>
-          <div class="hint">Field Type -</div>
+          <div class="hint">Field Type - {{ node.type }}</div>
         </div>
         <sw-dropdown-input style="margin-right: 10px;">
-          <span class="label">Field Width</span>
+          <span class="input_label">Field Width</span>
         </sw-dropdown-input>
-            <div class="input">
-              <sw-input-checkbox>
-                <span class="label">Required</span>
-              </sw-input-checkbox>
-            </div>
-            <div class="input">
-              <sw-input-checkbox>
-                <span class="label">Hide Label</span>
-              </sw-input-checkbox>
-            </div>
-            <div class="input">
-              <sw-input-checkbox>
-                <span class="label">Read–Only</span>
-              </sw-input-checkbox>
-            </div>
-            <div class="input">
-              <sw-input-checkbox>
-                <span class="label">Unique</span>
-              </sw-input-checkbox>
-            </div>
+        <div class="input">
+          <sw-input-checkbox>
+            <span class="label">Required</span>
+          </sw-input-checkbox>
+        </div>
+        <div class="input">
+          <sw-input-checkbox>
+            <span class="label">Hide Label</span>
+          </sw-input-checkbox>
+        </div>
+        <div class="input">
+          <sw-input-checkbox>
+            <span class="label">Read–Only</span>
+          </sw-input-checkbox>
+        </div>
+        <div class="input">
+          <sw-input-checkbox>
+            <span class="label">Unique</span>
+          </sw-input-checkbox>
+        </div>
       </div>
 
       <div class="actions">
@@ -54,8 +56,8 @@
   </cdk-nested-tree-node>
   <!-- This is the tree node template for expandable nodes -->
   <cdk-nested-tree-node *cdkTreeNodeDef="let node; when: hasChild" class="field-tree-node"
-    [ngClass]="{'group-tree-node': node.type === 113, 'section-tree-node': node.type === 114}">
-    <div class="field" [class.active]="node.showSettings"  *ngIf="node.isActive" cdkDrag [cdkDragData]="node">
+    [ngClass]="{'group-tree-node': node.type === 113, 'section-tree-node': node.type === 114 || node.type === undefined}">
+    <div class="field" [class.active]="node.showSettings" *ngIf="node.isActive" cdkDrag [cdkDragData]="node">
       <div [ngSwitch]="node.type">
         <div *ngSwitchCase="113">
           <div class="main-container">
@@ -67,7 +69,7 @@
               <div class="hint">Group Type -</div>
             </div>
             <sw-dropdown-input style="margin-right: 10px;">
-              <span class="label">Section Width</span>
+              <span class="input_label">Section Width</span>
             </sw-dropdown-input>
           </div>
         </div>
@@ -80,14 +82,27 @@
               <span class="placeholder">Section Name</span>
             </sw-input-text>
             <sw-dropdown-input style="margin-right: 10px;">
-              <span class="label">Section Width</span>
+              <span class="input_label">Section Width</span>
+            </sw-dropdown-input>
+          </div>
+        </div>
+        <div *ngSwitchDefault>
+          <div class="main-container">
+            <div class="drag-icon">
+              <i class="dragdrop fas fa-ellipsis-v" cdkDragHandle></i>
+            </div>
+            <sw-input-text [(ngModel)]="node.name" style="margin-right: 10px; width: 450px;">
+              <span class="placeholder">Section Name</span>
+            </sw-input-text>
+            <sw-dropdown-input style="margin-right: 10px;">
+              <span class="input_label">Section Width</span>
             </sw-dropdown-input>
           </div>
         </div>
       </div>
 
       <div class="actions">
-        <div class="icon">
+        <div class="icon" *ngIf="node.type">
           <sw-icon-button icon="fa-cog" class="field-creator" [class.blue]="node.type === 113"
             [class.active]="node.showSettings" (click)="settingsToggle(node)">
           </sw-icon-button>
@@ -99,8 +114,8 @@
           </sw-icon-button>
         </div>
         <div class="icon dragdrop">
-          <sw-icon-button [icon]="getIcon(treeControl.isExpanded(node))" cdkTreeNodeToggle [class.blue]="node.type === 113"
-            [attr.aria-label]="'toggle ' + node.filename">
+          <sw-icon-button [icon]="getIcon(treeControl.isExpanded(node))" cdkTreeNodeToggle
+            [class.blue]="node.type === 113" [attr.aria-label]="'toggle ' + node.filename">
           </sw-icon-button>
         </div>
       </div>
