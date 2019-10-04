@@ -19,6 +19,10 @@
           <span class="node-name">{{node.name}}</span>
         </div>
 
+        <div class="del" *ngIf="node.customField">
+          <i class="fas fa-trash" style="color: #A4A4A4" (click)="openDeletePop(node)"></i>
+        </div>
+
       </div>
 
     </cdk-nested-tree-node>

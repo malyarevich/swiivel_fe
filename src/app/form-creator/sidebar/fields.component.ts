@@ -26,6 +26,7 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
   treeControl = new NestedTreeControl(node => node[CHILDREN_SYMBOL]);
   delFieldName: string;
   delInput: FormControl = new FormControl(null);
+  nodeForDel: any;
   ref: any;
   destroyed$ = new Subject();
 
@@ -167,10 +168,11 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
 
 
   openDeletePop(node: any) {
-    if (!node && !node.data) return;
+    if (!node) return;
 
     this.delInput.reset();
-    this.delFieldName = node.data.name.toUpperCase();
+    this.nodeForDel = node;
+    this.delFieldName = node.name.toUpperCase();
     this.ref = this.popup.open({
       origin: null,
       content: this.deletePop,
@@ -186,8 +188,9 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
   }
 
   deleteNode() {
+    console.log(this.delFieldName === this.delInput.value);
     if (this.delFieldName === this.delInput.value) {
-      console.log('Delete field', this.delFieldName);
+      this.treeSource.deleteNode(this.nodeForDel);
     }
     this.closePop();
   }
@@ -272,6 +275,7 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
       type: formValue.type ? formValue.type[0].type : null,
       width: formValue.width ? formValue.width[0].value : null,
       mapped: formValue.name.toLowerCase().replace(' ', '_'),
+      customField: true,
       isActive: false
     };
     node.fields.push(newField);

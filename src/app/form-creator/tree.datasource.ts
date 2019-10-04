@@ -111,6 +111,13 @@ export class TreeDataSource implements DataSource<any> {
     return this.tree.ancestorsToArray(node);
   }
 
+  deleteNode(node: any) {
+    if (this.tree.parent(node)) {
+      this.tree.parent(node).fields.splice(this.tree.index(node), 1);
+    } else if (this.getChildren(this.tree)) {
+      this.getChildren(this.tree).splice(this.tree.index(node), 1);
+    }
+  }
 
   refresh() {
     this.data =  this.dataSubject.getValue();
