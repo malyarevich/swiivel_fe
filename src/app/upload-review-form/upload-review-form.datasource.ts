@@ -69,4 +69,18 @@ export class UploadReviewFormDataSource implements DataSource<any> {
       console.log(res);
     });
   }
+
+  deleteDocuments(ids: string[], activeFormId: string, filter?: any, sort?: any) {
+    const idsData = [];
+    ids.map(idData => idsData.push(idData));
+    this.uploadReviewFormService.deleteDocuments(idsData).subscribe(() => {
+      this.uploadDocuments(activeFormId, filter, sort);
+    });
+  }
+
+  changeStatus(id: string, status: string, activeFormId: string, filter?: any, sort?: any): void {
+    this.uploadReviewFormService.changeDocumentStatus(id, status).subscribe( () => {
+      this.uploadDocuments(activeFormId, filter, sort);
+    });
+  }
 }

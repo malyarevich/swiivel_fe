@@ -163,14 +163,23 @@ export class HttpService {
       finalize(() => this.endRequest())
     );
   }
-  'delete'(url: string): Observable<any> {
+  'delete'(url: string, data?: object): Observable<any> {
     this.requestSubject.next('Deleting data');
-    return this.http.delete(this.apiUrl + url)
-      .pipe(
-        timeout(this.apiTimeout),
-        catchError(this.handleError),
-        finalize(() => this.endRequest())
-      );
+    if (data) {
+      return this.http.delete(this.apiUrl + url, data)
+        .pipe(
+          timeout(this.apiTimeout),
+          catchError(this.handleError),
+          finalize(() => this.endRequest())
+        );
+    } else {
+      return this.http.delete(this.apiUrl + url)
+        .pipe(
+          timeout(this.apiTimeout),
+          catchError(this.handleError),
+          finalize(() => this.endRequest())
+        );
+    }
   }
 
 

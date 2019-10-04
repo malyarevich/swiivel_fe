@@ -6,6 +6,10 @@
   background: $gray;
   border-radius: 3px;
 
+  &:hover {
+    cursor: pointer;
+  }
+
   &.selected {
     border: none;
 

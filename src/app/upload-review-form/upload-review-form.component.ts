@@ -1,12 +1,15 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { UploadReviewFormStatusesEnum } from '@app/upload-review-form/upload-review-form-statuses.enum';
 import { UploadReviewFormDataSource } from '@app/upload-review-form/upload-review-form.datasource';
 import { UploadReviewFormService } from '@app/upload-review-form/upload-review-form.service';
 import { Document } from '@models/upload-review-form/document.model';
 import { ExtremeUploadForms } from '@models/upload-review-form/forms.model';
 import { SortDropDownData } from '@models/upload-review-form/sort.model';
 import { ColorsEnum } from '@shared/colors.enum';
+import { IconsEnum } from '@shared/icons.enum';
+import { SizesEnum } from '@shared/sizes.enum';
 
 @Component({
   selector: 'app-upload-review-form',
@@ -25,6 +28,10 @@ export class UploadReviewFormComponent implements OnInit {
   public showSpinner: boolean;
   public extremeDocuments: ExtremeUploadForms = {};
   public colors = ColorsEnum;
+  public isSideBarShown = true;
+  public icons = IconsEnum;
+  public size = SizesEnum;
+  public statuses = UploadReviewFormStatusesEnum;
 
   constructor(
     public uploadReviewFormService: UploadReviewFormService,
@@ -101,5 +108,24 @@ export class UploadReviewFormComponent implements OnInit {
     this.dataSource.uploadDocuments(id);
     this.getDocuments();
     this.dataSource.uploadFilterList(id);
+  }
+
+  skipDocument(): void {
+    const activeDocumentIndex = this.documents.indexOf(this.documents.find(document => document._id === this.activeIdDocument));
+    if (activeDocumentIndex + 1 < this.documents.length) {
+      this.selectItem(this.documents[activeDocumentIndex + 1]._id);
+    }
+  }
+
+  changeStatus(status: string): void {
+    const statusData = Object.keys(this.statuses).find(k => this.statuses[k] === status);
+    this.dataSource.changeStatus(
+      this.documents.find(document => document._id === this.activeIdDocument)._id, statusData,
+      this.activeIdForm, this.form.get('filter').value, this.form.get('sort').value
+      );
+  }
+
+  deleteForm(id: string): void {
+    this.dataSource.deleteDocuments([id], this.activeIdForm, this.form.get('filter').value, this.form.get('sort').value);
   }
 }
