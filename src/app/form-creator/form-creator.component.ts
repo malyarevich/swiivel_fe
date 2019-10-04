@@ -99,6 +99,8 @@ export class FormCreatorComponent implements OnInit {
       } else {
         // this.service.createForm(this.defaults);
         console.info(`Create New Form`);
+        this.service.formId = null;
+        this.service.formTemplate = null;
       }
     });
     this.stepperService.stepper$.subscribe((step: string) => {

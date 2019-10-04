@@ -66,6 +66,11 @@ export class GeneralComponent implements OnInit, OnDestroy {
           name: formTemplate.name,
           type: [this.typeOptions.find(item => item.value === formTemplate.type)]
         });
+      } else {
+        this.form.patchValue({
+          name: null,
+          type: [{ title: 'Registration', value: 'registration' }]
+        });
       }
     })
   }
