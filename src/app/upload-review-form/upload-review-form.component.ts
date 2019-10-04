@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { UploadReviewFormStatusesEnum } from '@app/upload-review-form/upload-review-form-statuses.enum';
@@ -10,6 +10,7 @@ import { SortDropDownData } from '@models/upload-review-form/sort.model';
 import { ColorsEnum } from '@shared/colors.enum';
 import { IconsEnum } from '@shared/icons.enum';
 import { SizesEnum } from '@shared/sizes.enum';
+import {DialogComponent} from '@shared/popup/dialog.component';
 
 @Component({
   selector: 'app-upload-review-form',
@@ -18,6 +19,8 @@ import { SizesEnum } from '@shared/sizes.enum';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UploadReviewFormComponent implements OnInit {
+  @ViewChild('dialog', { static: true }) dialog: DialogComponent;
+
   public dataSource: UploadReviewFormDataSource = new UploadReviewFormDataSource(this.uploadReviewFormService);
   public documents: Document[];
   public activeIdDocument: string;
@@ -25,6 +28,8 @@ export class UploadReviewFormComponent implements OnInit {
   public filterValue = {};
   public sortValue: SortDropDownData[];
   public form: FormGroup;
+  public formUpload: FormGroup;
+  public removeDocumentId: string;
   public showSpinner: boolean;
   public extremeDocuments: ExtremeUploadForms = {};
   public colors = ColorsEnum;
@@ -40,9 +45,11 @@ export class UploadReviewFormComponent implements OnInit {
     private fb: FormBuilder) {
     this.form = this.fb.group({
       filter: new FormControl([], Validators.required),
-      sort: new FormControl([], Validators.required)
+      sort: new FormControl([], Validators.required),
     });
-
+    this.formUpload = this.fb.group({
+      upload: new FormControl(null),
+    });
   }
 
   ngOnInit(): void {
@@ -125,7 +132,15 @@ export class UploadReviewFormComponent implements OnInit {
       );
   }
 
-  deleteForm(id: string): void {
-    this.dataSource.deleteDocuments([id], this.activeIdForm, this.form.get('filter').value, this.form.get('sort').value);
+  deleteForm(action?: boolean): void {
+    if (action) {
+      this.dataSource.deleteDocuments([this.removeDocumentId], this.activeIdForm, this.form.get('filter').value, this.form.get('sort').value);
+      this.removeDocumentId = null;
+    }
+  }
+
+  openConfirmPopup(id: string): void {
+    this.removeDocumentId = id;
+    this.dialog.open();
   }
 }

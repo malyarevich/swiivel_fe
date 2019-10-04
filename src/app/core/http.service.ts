@@ -45,7 +45,7 @@ export class HttpService {
         finalize(() => this.endRequest())
       );
   }
-  'upload'(url: string, file: File, method='POST', showLoader = false): Observable<any> {
+  'upload'(url: string, file: File, method='POST', showLoader = false, data = null): Observable<any> {
     if (showLoader) {
       this.requestSubject.next('Saving data');
     }
@@ -53,6 +53,11 @@ export class HttpService {
     formData.append('type', 'document');
     formData.append('original_name', file.name);
     formData.append('file', file, file.name);
+
+    // if (data) {
+    //   console.log(data);
+    // }
+
     return this.http.request(method, this.apiUrl + url, {
       body: formData,
       reportProgress: true,

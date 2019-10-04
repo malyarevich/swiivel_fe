@@ -36,19 +36,27 @@
             [document]="document"
             (selected)="selectItem($event)"
             (downLoadForm)="downLoadForm($event)"
-            (deleteForm)="deleteForm($event)"
+            (deleteForm)="openConfirmPopup($event)"
           >
           </app-upload-review-form-item>
         </div>
         <i *ngIf="showSpinner" class="fas fa-spinner spinner"></i>
-        <div class="items-controls">
-        <div class="items-control">
-        <sw-button (click)="downLoadForm(this.activeIdDocument)">Upload Document</sw-button>
-        </div>
-        <div class="items-control">
-        <sw-button [style]="colors.WHITE">Bulk Download</sw-button>
-        </div>
-        </div>
+        <!--<form [formGroup]="formUpload">-->
+          <!--<div class="items-controls">-->
+            <!--<div class="items-control">-->
+              <!--<sw-input-file-->
+                <!--formControlName="upload"-->
+                <!--#file="upload"-->
+                <!--preupload="/proxy/upload-reviews-form/upload/{{activeIdForm}}"-->
+              <!--&gt;-->
+                <!--<button (click)="file.openDialog($event)">Upload Document</button>-->
+              <!--</sw-input-file>-->
+            <!--</div>-->
+            <!--&lt;!&ndash;<div class="items-control">&ndash;&gt;-->
+              <!--&lt;!&ndash;<sw-button [style]="colors.WHITE">Bulk Download</sw-button>&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+          <!--</div>-->
+        <!--</form>-->
       </div>
       <div *ngIf="!showSpinner && (!documents || !documents.length)" class="sidebar--empty">
         No documents
@@ -61,6 +69,9 @@
       <sw-icon-button [icon]="icons.CARET_RIGHT" [color]="colors.WHITE" [size]="size.MEDIUM"></sw-icon-button>
       </div>
     </div>
+    <!--<pre>-->
+      <!--{{documents | json}}-->
+    <!--</pre>-->
     <app-upload-review-form-document [document]="getSelectForm()"></app-upload-review-form-document>
   </div>
 </div>
@@ -70,3 +81,11 @@
     (changeForm)="updateForm($event)"
   ></app-upload-review-form-footer>
 </div>
+<sw-dialog
+  #dialog
+  action="Remove"
+  title="Remove Document"
+  (closed)="deleteForm($event)"
+>
+  <p>Are you sure you want to remove [Item(s)]?</p>
+</sw-dialog>

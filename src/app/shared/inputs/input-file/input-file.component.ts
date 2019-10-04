@@ -35,6 +35,7 @@ export class InputFileComponent implements ControlValueAccessor {
   disabled = false;
   @Input() method = 'POST';
   @Input('preupload') endpoint: string;
+  @Input('data') data: any = null;
   @Input('maxSize') MAX_SIZE = 100000;
   @Output('response') response = new EventEmitter();
   @Output('progress') progress = new EventEmitter();
@@ -85,7 +86,7 @@ export class InputFileComponent implements ControlValueAccessor {
     this.selected.emit(file);
     if (this.endpoint) {
       if (this.method) {
-        this.http.upload(this.endpoint, file, this.method).subscribe((response) => {
+        this.http.upload(this.endpoint, file, this.method, false, this.data).subscribe((response) => {
           if (response.type && response.type === 1) {
             this.progress.emit({loaded: response.loaded, total: response.total});
           } else if ('file_path' in response) {
