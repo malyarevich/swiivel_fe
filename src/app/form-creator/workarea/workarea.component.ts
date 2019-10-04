@@ -1,4 +1,7 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, ChangeDetectorRef } from '@angular/core';
+import { FormCreatorService } from '../form-creator.service';
+import { StepperService } from '@app/shared/stepper.service';
+import { ApiService } from '@app/core/api.service';
 
 @Component({
   selector: 'sw-form-creator-workarea',
@@ -7,18 +10,32 @@ import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WorkareaComponent implements OnInit {
-  _workarea = 'intro';
-  @Input() set workarea(area: string ) {
-    if (area) {
-      this._workarea = area;
-    }
+  _workarea = 'default';
+
+  constructor(
+    private service: FormCreatorService,
+    private cdr: ChangeDetectorRef,
+    private stepperService: StepperService,
+    private api: ApiService
+  ) {
   }
-  get workarea(): string {
-    return this._workarea;
-  }
-  constructor() { }
 
   ngOnInit() {
+    this.service.section$.subscribe(section => {
+      this._workarea = section;
+      this.cdr.markForCheck();
+    });
+  }
+
+  prevStep() {
+    this.stepperService.stepper = 'prev';
+  }
+
+  nextStep() {
+    this.api.updateFormTemplate(this.service.formId, this.service.formTemplate).subscribe(data => {
+      // console.log('save ddata', data)
+    });
+    this.stepperService.stepper = 'next';
   }
 
 }

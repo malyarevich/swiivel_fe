@@ -1,0 +1,22 @@
+@import 'index';
+
+:host{
+  position: relative;
+  height: 100%;
+  .controllers {
+    position: absolute;
+    display: flex;
+
+    .zoom,
+    .rotate {
+      display: flex;
+      background: $dark-purple;
+    }
+  }
+
+  .image {
+    display: block;
+    margin: 0 auto;
+  }
+
+}

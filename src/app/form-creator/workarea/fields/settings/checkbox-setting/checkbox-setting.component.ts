@@ -1,15 +1,45 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'sw-checkbox-setting',
-  templateUrl: './checkbox-setting.component.html',
-  styleUrls: ['./checkbox-setting.component.scss']
+  templateUrl: './checkbox-setting.component.html'
 })
 export class CheckboxSettingComponent implements OnInit {
 
-  constructor() { }
+  form: FormGroup;
+
+  @Input()
+  set settings(obj: any) {
+    if (obj) {
+      this.form.patchValue({
+        defaultValue: obj.defaultValue ? [this.options.find(o => o.value === obj.defaultValue)] : [],
+        showDefaultValue: !!obj.defaultValue
+      });
+    }
+  }
+  @Output() fieldSettings = new EventEmitter();
+
+  options = [
+    { title: 'Yes', value: true },
+    { title: 'No', value: false }
+  ];
+
+  constructor(
+    private fb: FormBuilder
+  ) {
+    this.form = this.fb.group({
+      defaultValue: new FormControl([]),
+      showDefaultValue: new FormControl(false)
+    });
+  }
 
   ngOnInit() {
+    this.form.valueChanges.subscribe(v => {
+      if (v.showDefaultValue && v.defaultValue[0]) {
+        this.fieldSettings.emit({ defaultValue: v.defaultValue[0].value });
+      }
+    });
   }
 
 }

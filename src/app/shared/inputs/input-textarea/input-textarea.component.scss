@@ -5,6 +5,7 @@
     width: 100%;
     position: relative;
     &__input {
+      width: 100%;
       background: $white;
       font-family: "Nunito Sans";
       font-size: 12px;
@@ -16,8 +17,18 @@
       padding: 15px 10px 5px 10px;
       outline: none;
       resize: none;
+      transition: all 0.4s ease-in-out;
       &:focus-within {
         border-color: $button-color;
+      }
+      &:focus,
+      &:active,
+      &:target {
+        background-color: $light-orange-color;
+        border: 1px solid $orange-fill-color;
+        border-radius: 0.25rem;
+        box-shadow: inset 0 0 10px 0 rgba(85, 85, 85, 0.1);
+        outline: 0;
       }
     }
   }
@@ -25,6 +36,16 @@
 
 :host(.ng-invalid) {
   .input_textarea__input {
+    width: 100%;
     border: 1px solid $error-color;
+  }
+}
+
+:host(.h-100) {
+  .input_textarea {
+    height: 100%;
+    &__input {
+      height: 100%;
+    }
   }
 }

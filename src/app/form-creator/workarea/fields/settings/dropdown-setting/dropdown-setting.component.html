@@ -13,7 +13,7 @@
       <div class="title">
         Field Type
       </div>
-      <sw-dropdown-input formControlName="type" class="settings-field" [multiple]="false" [options]="fieldsType">
+      <sw-dropdown-input formControlName="fieldType" class="settings-field" [multiple]="false" [options]="fieldsType">
       </sw-dropdown-input>
     </section>
     <section>
@@ -26,7 +26,7 @@
       <div class="title">
         Options
       </div>
-      <div class="options_container" formArrayName="options">
+      <div class="options_container" formArrayName="fieldOptions">
         <div class="option" *ngFor="let option of options.controls; let i = index">
           <ng-container [formGroupName]="i">
             <sw-input-text class="settings-field" formControlName="title">

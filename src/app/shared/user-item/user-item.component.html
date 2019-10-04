@@ -1,7 +1,8 @@
-<div class="user-item">
+<div class="user-item" data-e2e="user-item">
   <div
-    class="user-item__image"
+    class="user-item__image" data-e2e="user-item-image"
     [ngStyle]="{'background-image': userItem.avatar ? 'url(' + userItem.avatar + ')' : '' }">
   </div>
-  <p class="user-item__text">{{ userItem.name }}</p>
+  <p class="user-item__text" data-e2e="user-item-text">{{ userItem.name }}</p>
+  <p class="user-item__role" data-e2e="user-item-role">{{ userItem.role }}</p>
 </div>

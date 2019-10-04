@@ -3,11 +3,14 @@ import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MainComponent } from '@core/components/main.component';
 import { AppRoutingModule } from './app-routing.module';
+import { TreeModule } from 'angular-tree-component';
+
 import { AppComponent } from './app.component';
 
+import { UploadReviewFormModule } from '@app/upload-review-form/upload-review-form.module';
 import { AuthGuard } from '@core/auth.guard';
+import { AuthInterceptor } from '@core/auth.interceptor';
 import { AuthService } from '@core/auth.service';
 import { DashboardComponent } from '@core/components/dashboard.component';
 import { LoginComponent } from '@core/components/login.component';
@@ -15,41 +18,39 @@ import { RestorePasswordComponent } from '@core/components/restore-password.comp
 import { FieldService } from '@core/field.service';
 import { HttpService } from '@core/http.service';
 import { SharedModule } from '@shared/shared.module';
-import { AuthInterceptor } from './core/auth.interceptor';
-import { FormCreatorModule } from './form-creator/form-creator.module';
 
 export function onInit(authService: AuthService) {
   return () => authService.load();
 }
 
 import { OverlayModule } from '@angular/cdk/overlay';
-// todo: delete after routing
-import { DataCollectionComponent } from '@app/modules/data-collection/data-collection.component';
 import { PopupComponent } from '@core/components/popup/popup.component';
+import { ErrorsListTooltipComponent } from '@app/online-form/errors-list/errors-list-tooltip.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RestorePasswordComponent,
-    MainComponent,
     DashboardComponent,
     PopupComponent,
-    DataCollectionComponent
+    ErrorsListTooltipComponent
   ],
   imports: [
+    TreeModule.forRoot(),
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
     SharedModule,
-    FormCreatorModule,
     AppRoutingModule,
-    OverlayModule
+    OverlayModule,
+    UploadReviewFormModule,
   ],
   entryComponents: [
-    PopupComponent
+    PopupComponent,
+    ErrorsListTooltipComponent
   ],
   providers: [
     AuthGuard,
@@ -58,7 +59,7 @@ import { PopupComponent } from '@core/components/popup/popup.component';
     { provide: APP_INITIALIZER, useFactory: onInit, multi: true, deps: [AuthService, HttpService]},
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {
 }

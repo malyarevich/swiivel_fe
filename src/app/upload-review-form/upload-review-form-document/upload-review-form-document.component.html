@@ -1,0 +1,43 @@
+<div
+  *ngIf="document && document.content_type.includes('image')"
+>
+  <img
+    class="image"
+    [src]="document.link"
+    alt="document.entity_name"
+  />
+</div>
+<div
+  *ngIf="document && document.content_type.includes('pdf')"
+>
+  <pdf-viewer
+    [src]="document.link"
+    [render-text]="true"
+    style="display: block;"
+  ></pdf-viewer>
+</div>
+<!--<div class="controllers">-->
+  <!--<div class="zoom">-->
+    <!--<sw-icon-button [icon]="icons.ZOOM_IN"></sw-icon-button>-->
+    <!--<sw-icon-button [icon]="icons.ZOOM_OUT"></sw-icon-button>-->
+  <!--</div>-->
+  <!--<div class="rotate">-->
+    <!--rotate left-->
+    <!--rotate right-->
+  <!--</div>-->
+<!--</div>-->
+
+<!--<form [formGroup]="form">-->
+<!--  <h3>Document settings</h3>-->
+<!--  <sw-input-text formControlName="type">-->
+<!--    <span class="placeholder">Document Type</span>-->
+<!--  </sw-input-text>-->
+<!--  <sw-input-text formControlName="account">-->
+<!--    <span class="placeholder">Account</span>-->
+<!--  </sw-input-text>-->
+<!--  <sw-input-text formControlName="student">-->
+<!--    <span class="placeholder">Student</span>-->
+<!--  </sw-input-text>-->
+<!--</form>-->
+
+

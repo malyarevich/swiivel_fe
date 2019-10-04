@@ -17,11 +17,6 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 export class InputToggleComponent implements ControlValueAccessor {
 
-  @ViewChild('input', {static: true}) input: ElementRef;
-
-  private onChange: (value: any) => void;
-  private onTouched: () => void;
-
   constructor(
     private renderer: Renderer2
   ) {}

@@ -63,7 +63,7 @@ export class InputNumberComponent implements ControlValueAccessor {
   }
 
   setValue(value) {
-    this.onChange(value);
+    this.onChange(value.valueOf());
     this.renderer.setProperty(this.input.nativeElement, 'value', value.valueOf());
     this.oldValue = value;
   }
@@ -80,7 +80,7 @@ export class InputNumberComponent implements ControlValueAccessor {
     }
   }
 
-  onInput(event: Event) {
+  changed(event: Event) {
     let newValue = this.input.nativeElement.value.replace(/[^0-9\.]+/g, '');
     try {
       if (newValue.length > 0) {

@@ -8,9 +8,10 @@
   box-sizing: border-box;
   border-bottom-left-radius: 3px;
   border-bottom-right-radius: 3px;
+  max-width: 1500px;
   &__row {
     flex-wrap: nowrap;
-    &_title {
+    .section_title {
       font: 800 14px/20px $nunito-sans;
       margin-bottom: 10px;
     }

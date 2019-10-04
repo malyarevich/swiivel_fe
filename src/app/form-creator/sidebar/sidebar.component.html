@@ -1,2 +1,66 @@
-<sw-form-creator-sidebar-section *ngFor="let section of sections" [section]="section" (activate)="onSwitch($event)" (collapseAll)="onCollapseAll($event)">
-</sw-form-creator-sidebar-section>
+<div class="sidebar_section" [class.expanded]="isExpanded('intro')">
+  <div class="sidebar_section__header" (click)="onClick('intro', $event)">
+    <sw-input-toggle [formControl]="sections?.get('intro')"></sw-input-toggle>
+    <span>Introduction</span>
+  </div>
+</div>
+
+
+<div class="sidebar_section" [class.expanded]="isExpanded('fields')" [class.open]="isOpen()">
+  <div class="sidebar_section__header" (click)="onClick('fields', $event)">
+    <sw-input-toggle [formControl]="sections?.get('fields')"></sw-input-toggle>
+    <span>Form Fields</span>
+    <div class="actions">
+      <sw-icon-button [class.blue]="isOpen()" [icon]="getIcon()" (click)="toggleSection()">
+      </sw-icon-button>
+    </div>
+  </div>
+  <div class="sidebar_section__content">
+    <ng-container *ngComponentOutlet="components.fields"></ng-container>
+  </div>
+</div>
+
+<div class="sidebar_section" [class.expanded]="isExpanded('addDocs')" [class.open]="isOpen()">
+  <div class="sidebar_section__header" (click)="onClick('addDocs', $event)">
+    <sw-input-toggle [formControl]="sections?.get('addDocs')"></sw-input-toggle>
+    <span>Additional Documents</span>
+    <div class="actions">
+      <sw-icon-button [class.blue]="isOpen()" [icon]="getIcon()" (click)="toggleSection()">
+      </sw-icon-button>
+    </div>
+  </div>
+  <div class="sidebar_section__content">
+    <ng-container *ngComponentOutlet="components.addDocsComponent"></ng-container>
+  </div>
+</div>
+
+<div class="sidebar_section" [class.expanded]="isExpanded('consent')" [class.open]="isOpen()">
+  <div class="sidebar_section__header" (click)="onClick('consent', $event)">
+    <sw-input-toggle [formControl]="sections?.get('consent')"></sw-input-toggle>
+    <span>CONSENT</span>
+    <div class="actions">
+      <sw-icon-button [class.blue]="isOpen()" [icon]="getIcon()" (click)="toggleSection()">
+      </sw-icon-button>
+    </div>
+  </div>
+  <div class="sidebar_section__content">
+    <ng-container *ngComponentOutlet="components.consent"></ng-container>
+  </div>
+</div>
+
+<div class="sidebar_section" [class.expanded]="isExpanded('tac')" [class.open]="isOpen()">
+  <div class="sidebar_section__header" (click)="onClick('tac', $event)">
+    <sw-input-toggle [formControl]="sections?.get('tac')"></sw-input-toggle>
+    <span>TERMS AND CONDITIONS</span>
+    <div class="actions">
+      <sw-icon-button class="blue" style="margin-right: 5px;" icon="fa-plus-square" (click)="toggleSection()">
+      </sw-icon-button>
+      <sw-icon-button [class.blue]="isOpen()" [icon]="getIcon()" (click)="toggleSection()">
+      </sw-icon-button>
+    </div>
+  </div>
+
+  <div class="sidebar_section__content">
+    <ng-container *ngComponentOutlet="components.tac"></ng-container>
+  </div>
+</div>

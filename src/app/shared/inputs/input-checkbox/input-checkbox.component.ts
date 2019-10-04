@@ -1,33 +1,44 @@
-import { ChangeDetectionStrategy, Component, ElementRef, forwardRef, Renderer2, ViewChild } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, EventEmitter, Output, Input, Self, Optional } from '@angular/core';
+import { NgControl, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'sw-input-checkbox',
   templateUrl: './input-checkbox.component.html',
   styleUrls: ['./input-checkbox.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => InputCheckboxComponent),
-      multi: true
-    }
-  ]
 })
 
-export class InputCheckboxComponent implements ControlValueAccessor {
-
-  @ViewChild('input', {static: true}) input: ElementRef;
-
+export class InputCheckboxComponent {
+  @Input() target = 'label';
+  @Output() checked = new EventEmitter();
+  control = new FormControl();
+  isIndeterminate: boolean = false;
   private onChange: (value: boolean) => void;
   private onTouched: () => void;
 
   constructor(
-    private renderer: Renderer2
-  ) {}
+    @Self() @Optional() public ngControl: NgControl,
+  ) {
+    if (ngControl) {
+      ngControl.valueAccessor = this;
+    } else {
+      this.onChange = (value) => {
+        this.checked.emit(value);
+      }
+    }
+    this.control.valueChanges.subscribe((value) => {
+      if (this.onChange) {
+        this.onChange(value);
+      }
+    })
+  }
 
   public setDisabledState(isDisabled: boolean): void {
-    this.renderer.setProperty(this.input.nativeElement, 'disabled', isDisabled);
+    if (!!isDisabled) {
+      this.control.disable();
+    } else {
+      this.control.enable();
+    }
   }
 
   public registerOnTouched(fn: any): void {
@@ -39,11 +50,23 @@ export class InputCheckboxComponent implements ControlValueAccessor {
   }
 
   public writeValue(value: boolean): void {
-    this.renderer.setProperty(this.input.nativeElement, 'checked', value);
+    this.control.setValue(value);
   }
 
-  public onInputChange() {
-    this.onChange(this.input.nativeElement.checked);
+  private toggle(): void {
+    this.control.setValue(!this.control.value);
+  }
+
+  public onBlur(event) {
+    this.onTouched();
+  }
+
+  public onClick(event: Event) {
+    if (event.target['tagName'] !== 'INPUT') {
+      this.toggle();
+      event.preventDefault();
+      event.stopPropagation();
+    }
   }
 
 }

@@ -1,0 +1,82 @@
+<form [formGroup]="form">
+  <section class="documents_section" formArrayName="documents">
+    <div class="documents_section__header">
+      <div class="documents_section__header_text">
+        Documents
+      </div>
+      <div class="documents_section__header_controls">
+        <i class="fas fa-plus-square" (click)="addItem('documents')"></i>
+        <i class="fas fa-caret-down" *ngIf="!isOpenDocuments; else up" (click)="showDocuments()"></i>
+        <ng-template #up>
+          <i class="fas fa-caret-up" (click)="hideDocuments()"></i>
+        </ng-template>
+      </div>
+    </div>
+    <ng-container *ngIf="isOpenDocuments">
+      <div class="documents_section__item" *ngFor="let document of documents.controls; let i = index"
+        [formGroupName]="i">
+        <div class="documents_section__item_header">
+          <div class="documents_section__item_header_name">
+            <sw-input-text class="no_styles" formControlName="name"></sw-input-text>
+          </div>
+          <div class="documents_section__item_header_controls">
+            <i class="fas fa-trash" (click)="removeItem('documents', i)"></i>
+          </div>
+        </div>
+        <div class="documents_section__item_content">
+          <div class="documents_section__item_content_input">
+            <sw-input-button-group [options]="documentBut" formControlName="chooseDocumentAction">
+            </sw-input-button-group>
+          </div>
+          <div class="documents_section__item_content_input">
+            <sw-radio-group [options]="radioGroup" formControlName="requirements"></sw-radio-group>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </section>
+  <section class="forms_section" formArrayName="forms">
+    <div class="forms_section__header">
+      <div class="forms_section__header_text">
+        Forms
+      </div>
+      <div class="forms_section__header_controls">
+        <i class="fas fa-plus-square" (click)="addItem('forms')"></i>
+        <i class="fas fa-caret-down" *ngIf="!isOpenForms; else upF" (click)="showForms()"></i>
+        <ng-template #upF>
+          <i class="fas fa-caret-up" (click)="hideForms()"></i>
+        </ng-template>
+      </div>
+    </div>
+    <ng-container *ngIf="isOpenForms">
+      <div class="forms_section__item" *ngFor="let form of forms.controls; let i = index" [formGroupName]="i">
+        <div class="forms_section__item_header">
+          <div class="forms_section__item_header_name">
+            <sw-input-text class="no_styles" formControlName="name"></sw-input-text>
+          </div>
+          <div class="forms_section__item_header_controls">
+            <i class="fas fa-trash" (click)="removeItem('forms', i)"></i>
+          </div>
+        </div>
+        <div class="forms_section__item_content">
+          <div class="forms_section__item_content_input">
+            <sw-input-button-group [options]="formBut" formControlName="chooseForm"></sw-input-button-group>
+          </div>
+          <div class="forms_section__item_content_input">
+            <sw-radio-group [options]="radioGroup" formControlName="requirements"></sw-radio-group>
+          </div>
+          <div class="forms_section__item_content_input">
+            <sw-input-toggle formControlName="filledOnline">
+              <span class="input_label">Fillable Online</span>
+            </sw-input-toggle>
+          </div>
+          <div class="forms_section__item_content_input">
+            <sw-input-toggle formControlName="allowUpload">
+              <span class="input_label">Allow Download/Upload</span>
+            </sw-input-toggle>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </section>
+</form>

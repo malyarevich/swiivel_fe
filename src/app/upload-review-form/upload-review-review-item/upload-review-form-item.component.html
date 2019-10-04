@@ -1,0 +1,38 @@
+<div class="upload-review-form-item" (click)="selectItem($event)" [ngClass]="{'selected': document.isSelected}">
+  <div class="icon-container">
+    <img
+      class="document-icon"
+      [src]="document.submission_type === 'online_form' ? './assets/images/icons/online-form.svg' : './assets/images/icons/upload-form.svg'"
+    />
+  </div>
+  <div class="text">
+    <div class="text-row">
+      <p class="name">{{ document.person_name }}</p>
+      <div class="controls-container">
+        <div class="control-item">
+          <sw-status-label [class]="uploadReviewFormService.getStatusColor(document.status)">
+            {{ uploadReviewFormStatusesEnum[document.status] }}
+          </sw-status-label>
+        </div>
+        <div class="control-item">
+          <sw-icon-button
+            [icon]="icons.DOWNLOAD"
+            [color]="document.isSelected? colors.WHITE : colors.GRAY"
+            (click)="downloadForm()"
+          >
+          </sw-icon-button>
+        </div>
+        <div class="control-item">
+          <sw-icon-button
+            [icon]="icons.TRASH"
+            [color]="document.isSelected? colors.WHITE : colors.GRAY"
+          >
+          </sw-icon-button>
+        </div>
+      </div>
+    </div>
+    <p class="document-name">{{ document.entity_name }}</p>
+  </div>
+</div>
+
+

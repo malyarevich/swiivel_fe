@@ -1,4 +1,6 @@
 @import "~bootstrap/scss/bootstrap";
+@import '~angular-tree-component/dist/angular-tree-component.css';
+@import '~@angular/cdk/overlay-prebuilt.css';
 @import "styles/index";
 
 //Lato fonts
@@ -117,28 +119,33 @@ select {
 }
 
 .cdk-overlay-backdrop {
+  background: transparent;
   position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 1000;
+  z-index: 500;
   pointer-events: auto;
   -webkit-tap-highlight-color: transparent;
-  transition: opacity .4s cubic-bezier(.25,.8,.25,1);
   opacity: 0;
-}
-.cdk-overlay-backdrop.cdk-overlay-backdrop-showing {
-  opacity: 1;
+
+  &.hide-backdrop {
+    display: none;
+  }
+  &.cdk-overlay-backdrop-showing {
+    opacity: 0.48;
+  }
 }
 
 .cdk-overlay-container {
   position: fixed;
-  z-index: 1000;
+  z-index: 500;
 }
 
 .cdk-global-overlay-wrapper, .cdk-overlay-container {
   pointer-events: none;
+  display: flex;
   top: 0;
   left: 0;
   height: 100%;
@@ -147,11 +154,23 @@ select {
 
 .cdk-overlay-connected-position-bounding-box {
   position: absolute;
-  z-index: 1000;
+  z-index: 500;
   display: flex;
   flex-direction: column;
   min-width: 1px;
   min-height: 1px;
+}
+
+div.centered-panel {
+  overflow: auto;
+  min-width: 100px;
+  max-height: 500px;
+  background-color: #fff;
+  border: 1px solid #4350A2;
+  padding-right: 0;
+  border-radius: 3px;
+  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2);
+  z-index: 500;
 }
 
 div.dropdown-overlay {
@@ -161,7 +180,27 @@ div.dropdown-overlay {
   margin-top: 5px;
   background-color: #fff;
   border: 1px solid #4350A2;
-  padding-right: 0px;
+  padding-right: 0;
+  border-radius: 3px;
+  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2);
+}
+
+div.widget-dropdown {
+  background: #50597A;
+  box-shadow: 0px 2px 13px rgba(0, 0, 0, 0.18);
+  border-radius: 5px;
+  min-width: 100px;
+  max-height: 500px;
+}
+
+div.app-form-table-dropdown-overlay {
+  overflow: auto;
+  min-width: 120px;
+  max-height: 500px;
+  margin-top: 5px;
+  background-color: #fff;
+  border: 1px solid #4350A2;
+  padding-right: 0;
   border-radius: 3px;
   box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2);
 }
@@ -225,5 +264,67 @@ div.checkbox_container {
 i.dragdrop {
   &.fa-ellipsis-v:before {
     content: "\f142 \202F \f142";
+  }
+}
+
+div.dropdown_items_container {
+  width: 100%;
+  min-height: 35px;
+  // padding: 15px 10px 5px 10px;
+  border: 1px solid $soft-gray;
+  box-sizing: border-box;
+  border-radius: 3px;
+  position: relative;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  &.active {
+    border-color: #4350A2;
+  }
+  .input {
+    height: 13px;
+    display: flex;
+    align-items: center;
+    .text {
+      font-style: normal;
+      font-size: 12px;
+      line-height: 13px;
+      margin-right: 4px;
+    }
+    i { display: none; }
+    &.many {
+      height: auto;
+      padding: 3px 10px;
+      border-radius: 12px;
+      margin-top: 10px;
+      background-color: #E6EFFF;
+      .text {
+        font-weight: bold;
+        color: #004ED9;
+      }
+      i {
+        font-size: 11px;
+        display: inline-block;
+        color: #979797;
+      }
+      &:not(:last-of-type) {
+        margin-right: 10px;
+      }
+    }
+  }
+}
+
+.field-tree-node {
+  border-radius: 5px;
+  &__content {
+    width: 100%;
+    padding: 10px 0;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    box-shadow: inset 0px -1px 0px #E7E7E7;
+  }
+  .field-tree-invisible {
+    display: none;
   }
 }

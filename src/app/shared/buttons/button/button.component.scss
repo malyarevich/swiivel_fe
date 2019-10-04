@@ -3,16 +3,31 @@
 :host {
   .button {
     border-radius: 3px;
-    background-color: $button-color;
+    background: $button-color;
     outline: none;
     border: none;
-    color: #ffffff;
-    padding: 7px 20px;
+    color: #fff;
+    padding: 7px 16px;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
     flex-wrap: nowrap;
+
+    &--gray {
+      padding: 6px 16px;
+      background: $background-color;
+      color: $button-color;
+      border: 1px solid $button-color;
+    }
+
+    &--white {
+      padding: 6px 16px;
+      background: #fff;
+      color: $button-color;
+      border: 1px solid $button-color;
+    }
+
     span {
       font-style: normal;
       font-weight: bold;
@@ -34,6 +49,7 @@
 
 :host(.outline-btn) {
   .button {
+    padding: 6px 16px;
     background-color: inherit;
     border: 1px solid $button-color;
     box-sizing: border-box;
@@ -50,9 +66,11 @@
 
 :host(.input_button) {
   .button {
+    white-space: nowrap;
     font-size: 12px;
+    line-height: 15px;
     color: $black;
-    background-color: $dark-grey;
+    background: $dark-grey;
     border: 1px solid $soft-gray;
     border-radius: 0;
     margin-left: -1px;
@@ -64,5 +82,37 @@
       border: 1px solid $header-logo-color;
       z-index: 2;
     }
+  }
+}
+
+:host(.full_width)  {
+  width: 100%;
+  .button {
+    width: 100%;
+  }
+}
+
+:host(.widget-icon) {
+  .button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+}
+
+:host(.widget-icon.active) {
+  .button {
+    background-color: #fff;
+    border: 1px solid #4350A2;
+    color: #4350A2;
+  }
+}
+
+:host {
+  button:disabled {
+    background: $gray;
+    padding: 6px 16px;
+    border: 1px solid $icon-gray;
+    color: $icon-gray;
   }
 }

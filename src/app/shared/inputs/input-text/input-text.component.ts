@@ -1,5 +1,16 @@
-import { ChangeDetectionStrategy, Component, ElementRef, forwardRef, Input, Renderer2, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  EventEmitter,
+  forwardRef,
+  Input,
+  Output,
+  Renderer2,
+  ViewChild, 
+  ChangeDetectorRef} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { SizesEnum } from '@shared/sizes.enum';
 
 @Component({
   selector: 'sw-input-text',
@@ -16,16 +27,37 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 })
 
 export class InputTextComponent implements ControlValueAccessor {
-
+  @Input() set autofocus(_value: boolean) {
+    this.focus();
+  }
+  @Input() set autocomplete(value: string) {
+    this._autocomplete = value;
+  }
+  public _autocomplete: string = null;
+  public _type = 'text';
+  public _style = 'button';
   @ViewChild('input', {static: true}) input: ElementRef;
+  @Input() set type(inputType: string) {
+    this._type = inputType;
+  }
+  @Input() set style(styleType: string) {
+    this._style = styleType;
+  }
   @Input() readonly: boolean;
+  @Output() blur = new EventEmitter<any>();
 
   onChange: (value: any) => void;
   onTouched: () => void;
 
   constructor(
-    private renderer: Renderer2
-  ) {}
+    private renderer: Renderer2,
+    private cdr: ChangeDetectorRef
+  ) {
+  }
+
+  public focus() {
+    this.renderer.selectRootElement(this.input.nativeElement).focus();
+  }
 
   public isEmpty(value: string): boolean {
     return !(value && value.trim().length > 0);
@@ -33,6 +65,11 @@ export class InputTextComponent implements ControlValueAccessor {
 
   public setDisabledState(isDisabled: boolean): void {
     this.renderer.setProperty(this.input.nativeElement, 'disabled', isDisabled);
+  }
+
+  public onBlur(event: Event) {
+    this.onTouched();
+    this.blur.emit(event);
   }
 
   public registerOnTouched(fn: any): void {
@@ -45,6 +82,7 @@ export class InputTextComponent implements ControlValueAccessor {
 
   public writeValue(obj: any): void {
     this.renderer.setProperty(this.input.nativeElement, 'value', obj);
+    this.cdr.markForCheck();
   }
 
 }

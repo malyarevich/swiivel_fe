@@ -1,49 +1,118 @@
 import { ArrayDataSource } from '@angular/cdk/collections';
-import {FlatTreeControl} from '@angular/cdk/tree';
-import { Component, OnInit } from '@angular/core';
+import {FlatTreeControl, NestedTreeControl} from '@angular/cdk/tree';
+import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy, AfterViewInit, OnDestroy, ViewChild, AfterViewChecked } from '@angular/core';
 import { FieldService } from '@app/core/field.service';
-import { fields, sidebar } from '@shared/fields';
-
-
+import { ApiService } from '@app/core/api.service';
+import { CHILDREN_SYMBOL, TreeDataSource } from '@app/form-creator/tree.datasource';
+import { FormCreatorService } from '@app/form-creator/form-creator.service';
+import { Subject } from 'rxjs';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { takeUntil } from 'rxjs/operators';
 @Component({
   selector: 'sw-form-creator-workarea-fields',
   templateUrl: './fields.component.html',
-  styleUrls: ['./fields.component.scss']
+  styleUrls: ['./fields.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class WorkareaFieldsComponent implements OnInit {
-  treeControl = new FlatTreeControl<any>(node => node.level, field => field.type === 113 || field.type === 114);
-  fieldsTree = this.fs.toFlatTree(sidebar.slice()).reverse();
-  treeSource = new ArrayDataSource(this.fieldsTree);
-  constructor(private fs: FieldService) {
+export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked, OnInit, OnDestroy {
+  options = {
+    idField: 'mongo_id',
+    childrenField: 'fields',
+    displayField: 'name',
+    useCheckbox: true,
+    allowDrop: true,
+    allowDrag: true
+  };
+  fields: any[] = [];
+  destroyed$ = new Subject();
+  fieldsTree: any[];
+  treeSource;
+  treeControl = new NestedTreeControl<any>(node => node[CHILDREN_SYMBOL]);
 
+  constructor(private service: FormCreatorService, private api: ApiService, private cdr: ChangeDetectorRef) {
   }
 
   ngOnInit() {
+    this.service.sidebar.pipe(takeUntil(this.destroyed$)).subscribe(nodes => {
+      this.treeSource = nodes;
+      this.treeSource.changes.pipe(takeUntil(this.destroyed$)).subscribe(value => {
+        this.cdr.detectChanges();
+      });
+    });
+    this.service.events$.pipe(takeUntil(this.destroyed$)).subscribe(event => {
+      if (event.action === 'expand') {
+        this.treeControl.expand(event.target);
+      } else if (event.action === 'collapse') {
+        this.treeControl.collapse(event.target);
+      }
+      console.log(`events`, event)
+    })
+  }
+  ngOnDestroy() {
+    this.destroyed$.next(true);
+    this.destroyed$.complete();
   }
 
-  toggleNode(node) {
-    node.expanded = !node.expanded;
-    return node.expanded;
+  ngAfterViewChecked(): void {
+      this.cdr.detectChanges()
   }
 
-  hasChild = (_: number, node: any) => node.expandable;
+  ngAfterViewInit() {
+
+  }
+
+  hasChild = (_: number, node: any) => {
+    return !!node[CHILDREN_SYMBOL] && node[CHILDREN_SYMBOL].length > 0;
+  }
+
+  getIcon(expanded: boolean): string {
+    return expanded ? 'fa-caret-up' : 'fa-caret-down';
+  }
+
 
   getParentNode(node: any) {
-    const parentNode = this.fieldsTree.filter(field => field.type === 113 || field.type === 114).find((field) => {
-      return field.prefix === node.prefix;
-    })
-    // for (let i = nodeIndex - 1; i >= 0; i--) {
-    //   if (this.fieldsTree.level === node.level - 1) {
-    //     return this.fieldsTree;
-    //   }
-    // }
-
-    return parentNode;
+    const nodeIndex = this.fieldsTree.indexOf(node);
   }
 
-  shouldRender(node: any) {
-    const parent = this.getParentNode(node);
-    return !parent || !parent.expanded;
+  getHint(node: any) {
+    console.log('Node Hint', node);
+    return 'Group type';
   }
 
+  drop(event: CdkDragDrop<any>) {
+    let node = event.item.data;
+    let dc = event.container;
+    if (dc.id !== 'fields-list') {
+      if (node.type === 113 || node.type === 114) {
+        this.closeParentNode(node);
+      } else {
+        this.closeNode(node);
+      }
+    }
+  }
+
+  settingsToggle(node: any)  {
+    if (node) {
+      node.showSettings = !node.showSettings;
+      this.cdr.markForCheck();
+    }
+  }
+  closeParentNode(node: any): void {
+    const children = this.treeSource.getParentChildren(node);
+    node.isActive = false;
+    node.showSettings = false;
+    for (let child of children) {
+      child.isActive = false;
+      child.showSettings = false;
+    }
+    this.treeSource.refresh();
+    this.cdr.markForCheck();
+  }
+
+  closeNode(node: any): void {
+    node.isActive = false;
+    node.showSettings = false;
+    this.treeSource.refresh();
+    this.cdr.markForCheck();
+  }
 }

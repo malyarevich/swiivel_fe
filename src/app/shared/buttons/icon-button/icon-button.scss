@@ -1,15 +1,10 @@
 @import 'index';
 
 .icon-button {
-  color: $icon-gray;
   background: transparent;
   border: none;
   text-align: center;
-
-  &:hover,
-  &:focus {
-    color: $icon-gray-hover
-  }
+  outline: none;
 
   &:active {
     opacity: 0.7;
@@ -23,5 +18,53 @@
     .icon-button__icon {
       font-size: 14px;
     }
+  }
+
+  &.icon-button--white-color {
+    color: #fff;
+
+    &:hover,
+    &:focus {
+      opacity: 0.8;
+    }
+  }
+
+  &.icon-button--gray-color {
+    color: $icon-gray;
+
+    &:hover,
+    &:focus {
+      color: $icon-gray-hover
+    }
+
+  }
+
+}
+
+:host(.field-creator) {
+  .icon-button {
+    color: #fff;
+    opacity: 0.6;
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+
+:host(.field-creator.blue) {
+  .icon-button {
+    color: $button-color;
+  }
+}
+
+:host(.field-creator.active) {
+  .icon-button {
+    opacity: 1;
+  }
+}
+
+:host(.blue) {
+  .icon-button {
+    color: $button-color;
   }
 }

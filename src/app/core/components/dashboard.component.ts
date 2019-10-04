@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import fields from '@app/shared/fields';
 import { FieldService } from '@core/field.service';
 import * as vs from '@core/validators';
@@ -58,6 +58,7 @@ export class DashboardComponent implements OnInit {
       value: 'delete-value'
     }
   ];
+  uploadStatus = 'No file selected';
 
   constructor(
     private fb: FormBuilder,
@@ -72,17 +73,13 @@ export class DashboardComponent implements OnInit {
       phone: new FormControl('', vs.phoneNumberValidator()),
       email: new FormControl('', vs.emailValidator()),
       longText: new FormControl('Long text\n wrew', Validators.required),
+      engdate: new FormControl(null),
+      hebrewddate: new FormControl(null),
+      upload: new FormControl(null)
     });
   }
 
   ngOnInit() {
-    if (TEST_FIELD_SERVICE) {
-      this.fields = this.fs.fromArray(fields);
-      const dform = this.fb.array(this.fields.map(field => field.control));
-      dform.valueChanges.subscribe((value) => {
-        console.log(`Dynamic form fields value changed`, value);
-      });
-    }
     this.longTextDisabled.valueChanges.subscribe((isDisabled) => {
       if (!!isDisabled) {
         this.form.get('longText').disable();
@@ -90,10 +87,22 @@ export class DashboardComponent implements OnInit {
         this.form.get('longText').enable();
       }
     });
-    this.form.valueChanges.subscribe((value) => {
-      console.log('Phone input', this.form.get('phone').valid);
-      console.log(`Value changed`, value);
-    });
+  }
+
+  onChecked(isChecked: boolean) {
+    this.form.get('checkbox').setValue(!!isChecked);
+  }
+
+  onUploadSelected(file) {
+    this.uploadStatus = `File selected: ${file.name} (${file.size})`
+  }
+
+  onUploadProgress(progress) {
+    this.uploadStatus = `Upload progress: ${progress.loaded} of ${progress.total}`;
+  }
+
+  onUploadResponse(response) {
+    this.uploadStatus = `Upload complete. File path: ${response.file_path} (${response.file_origin_name})`;
   }
 
   changeTextarea(size = false) {

@@ -1,0 +1,50 @@
+@import "index";
+
+.label {
+  height: 15px;
+  padding: 1px 8px;
+  border-radius: 100px;
+  font: 500 10px/13px "Nunito Sans";
+  white-space: nowrap;
+  color: #fff;
+
+  &:hover {
+    cursor: default;
+  }
+}
+
+:host(.yellow) {
+  .label {
+    background: $status-yellow;
+  }
+}
+
+:host(.green) {
+  .label {
+    background: $status-green;
+  }
+}
+
+:host(.gray) {
+  .label {
+    background: $status-gray;
+  }
+}
+
+:host(.gray) {
+  .label {
+    background: $soft-purple;
+  }
+}
+
+:host(.blue) {
+  .label {
+    background: $status-blue;
+  }
+}
+
+:host(.red) {
+  .label {
+    background: $status-red;
+  }
+}

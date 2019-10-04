@@ -1,5 +1,7 @@
-<label class="input_checkbox">
-  <input type="checkbox" (change)="onInputChange()" #input />
-  <i class="input_checkbox__icon"></i>
-  <ng-content select="span"></ng-content>
+<label (click)="onClick($event)">
+  <div class="checkbox">
+    <input type="checkbox" [formControl]="control" [indeterminate]="isIndeterminate" (blur)="onBlur($event)">
+  </div>
+  <ng-content select="i"></ng-content>
+  <ng-content select=".label"></ng-content>
 </label>

@@ -1,0 +1,90 @@
+@import 'index';
+
+:host {
+  position: relative;
+
+  .content {
+    display: flex;
+  }
+
+  .sidebar {
+    position: relative;
+    width: 295px;
+    height: calc(100vh - 154px);
+    padding: 20px 15px 162px;
+    border-radius: 3px;
+    background: #fff;
+
+
+    .loading {
+      position: relative;
+      opacity: 0.7;
+    }
+
+    .spinner {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 30px;
+    }
+
+    .sidebar-controls {
+      display: flex;
+      margin: 0 0 15px;
+    }
+
+    .sidebar-title {
+      color: $gray-color;
+      font-size: 12px;
+      line-height: 15px;
+    }
+
+    .sidebar-filter {
+      position: relative;
+      width: 53%;
+      min-width: 159px;
+      margin: 0 10px 0 0;
+    }
+
+    .sidebar-filter:after {
+      position: absolute;
+      right: -10px;
+      top: 0;
+      content: '';
+      width: 1px;
+      height: 34px;
+      background: $dark-grey;
+    }
+
+    .sidebar-sort {
+      margin: 0 0 0 10px;
+    }
+
+    .items-controls {
+      position: absolute;
+      width: 100%;
+      bottom: 55px;
+      left: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .items-control {
+      margin: 0 0 5px 0;
+    }
+  }
+}
+
+.workarea {
+  flex-grow: 2;
+  overflow: hidden;
+}
+
+.footer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+}

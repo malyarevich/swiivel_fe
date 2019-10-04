@@ -1,26 +1,22 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '@app/core/auth.guard';
-import { MainComponent } from '@app/core/components/main.component';
+import { MainComponent } from '@shared/main.component';
 import { FormCreatorComponent } from './form-creator.component';
+import { FormComponent } from '@app/shared/form.component';
 
 
 const routes: Routes = [
   {
     path: '',
-    component: MainComponent,
+    component: FormComponent,
     canActivate: [AuthGuard],
     canActivateChild: [AuthGuard],
     children: [
-      { path: 'form-creator',  component: FormCreatorComponent, pathMatch: 'full' },
+      { path: ':mongo_id',  component: FormCreatorComponent },
+      { path: '',  component: FormCreatorComponent },
     ]
   },
-  // {
-  //   path: 'form-creator',
-  //   component: FormCreatorComponent,
-  //   canActivate: [AuthGuard],
-  //   canActivateChild: [AuthGuard],
-  // },
 ];
 
 @NgModule({

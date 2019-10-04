@@ -7,7 +7,16 @@
     height: 100vh;
     position: relative;
 }
-
+i {
+  width: 13px;
+  height: 13px;
+  display: block;
+  position: absolute;
+  top: 13px;
+  right: 10px;
+  color: $gray-color;
+  cursor: pointer;
+}
 h1{
     color: $title-color;
     font-size: 28px;

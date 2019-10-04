@@ -1,13 +1,12 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import { DataCollectionComponent } from '@app/modules/data-collection/data-collection.component';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { UploadReviewFormComponent } from '@app/upload-review-form/upload-review-form.component';
 import { AuthGuard } from '@core/auth.guard';
 import { DashboardComponent } from '@core/components/dashboard.component';
 import { LoginComponent } from '@core/components/login.component';
-import { MainComponent } from '@core/components/main.component';
 import { RestorePasswordComponent } from '@core/components/restore-password.component';
 import { environment } from '@env/environment';
-import { routes as dataCollectionRoutes } from './modules/data-collection/data-collection-routing.module';
+import { MainComponent } from './shared/main.component';
 
 const routes: Routes = [
   {
@@ -18,34 +17,34 @@ const routes: Routes = [
     path: 'restore-password',
     component: RestorePasswordComponent
   },
-  // todo: delete after work routing
-  {
-    path: 'data-collection',
-    component: DataCollectionComponent,
-    children: dataCollectionRoutes
-  },
   {
     path: '',
-    component: MainComponent,
     canActivate: [AuthGuard],
-    canActivateChild: [AuthGuard],
+    component: MainComponent,
     children: [
-      {
-        path: '',  component: DashboardComponent, pathMatch: 'full'
-      },
-      {
-        path: 'form-creator',
-        loadChildren: () => {
-          return import('./form-creator/form-creator.module').then(mod => {
-            return mod.FormCreatorModule;
-          });
-        }
-      }
-    ],
+      { path: 'dashboard', component: DashboardComponent, pathMatch: 'prefix'},
+      { path: '', redirectTo: '/dashboard', pathMatch: 'full'}
+    ]
+  },
+  {
+    path: 'online-form',
+    loadChildren: () => import('./online-form/online-form.module').then(m => m.OnlineFormModule)
+  },
+  {
+    path: 'form-creator',
+    loadChildren: () => import('./form-creator/form-creator.module').then(m => m.FormCreatorModule)
+  },
+  {
+    path: 'forms-dashboard',
+    loadChildren: () => import('./forms-dashboard/form-table.module').then(m => m.FormTableModule)
+  },
+  {
+    path: 'upload-review-form',
+    loadChildren: () => import('./upload-review-form/upload-review-form.module').then(m => m.UploadReviewFormModule)
   },
   {
     path: '**',
-    redirectTo: '/',
+    redirectTo: '/dashboard',
   }
 ];
 

@@ -39,3 +39,12 @@
     }
   }
 }
+
+:host(.settings-field) {
+  .phone_number {
+    height: 25px;
+    &__input {
+      padding: 5px 10px;
+    }
+  }
+}

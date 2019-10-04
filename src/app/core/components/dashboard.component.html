@@ -9,7 +9,7 @@
   </sw-input-toggle>
 
   <sw-input-checkbox formControlName="checkbox">
-    <span class="input_label">default value</span>
+    <span class="label">default value</span>
   </sw-input-checkbox>
 
   <sw-input-button-group formControlName="buttonGroup" [options]="buttons"></sw-input-button-group>
@@ -32,9 +32,18 @@
   <sw-input-toggle [formControl]="longTextDisabled">
     <span class="input_label">Disabled</span>
   </sw-input-toggle>
+  <sw-input-english-datepicker formControlName="engdate"></sw-input-english-datepicker>
+  <sw-input-hebrew-datepicker formControlName="hebrewddate"></sw-input-hebrew-datepicker>
+  <sw-input-file formControlName="upload" #file="upload" preupload="/proxy/forms/online/upload/5d8ddc0e8ffb08460b4c2e02" (selected)="onUploadSelected($event)" (progress)="onUploadProgress($event)" (response)="onUploadResponse($event)">
+    <button (click)="file.openDialog($event)">Select file to upload</button>
+    {{uploadStatus}}
+  </sw-input-file>
 </form>
 <sw-input-toggle [(ngModel)]="textarea.editable">
   <span class="input_label">Editable</span>
 </sw-input-toggle>
 <button type="button" (click)="changeTextarea()">Change textarea value</button>
 <button type="button" (click)="changeTextarea(true)">Change textarea size</button>
+<button [routerLink]="['/upload-review-form', '5d8ddc0e8ffb08460b4c2e02']">Go to Form Upload</button>
+
+<pre>{{form.value | json}}</pre>
