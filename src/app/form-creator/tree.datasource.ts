@@ -117,6 +117,8 @@ export class TreeDataSource implements DataSource<any> {
     } else if (this.getChildren(this.tree)) {
       this.getChildren(this.tree).splice(this.tree.index(node), 1);
     }
+    this.data = null;
+    this.data = this.getChildren(this.tree);
   }
 
   refresh() {
