@@ -26,7 +26,7 @@
 
 
 
-    <cdk-nested-tree-node *cdkTreeNodeDef="let node; when: hasChild" class="field-tree-node">
+    <cdk-nested-tree-node *cdkTreeNodeDef="let node; when: hasChild" class="field-tree-node" #tree>
       <div class="field-tree-node__content" [cdkDragDisabled]="node.isActive" cdkDrag (cdkDragDropped)="drop($event)" [cdkDragData]="node">
 
         <div class="field-tree-node__content_node" [class.expanded]="treeControl.isExpanded(node)">
@@ -51,17 +51,17 @@
 
       <ng-container *ngIf="canCreateField(node)">
         <div class="custom-field" [class.show]="showCreateField(node)">
-          <div class="custom-field__form">
+          <div class="custom-field__form" *ngIf="showCreateField(node)" [formGroup]="node.customFieldForm">
             <div class="custom-field__form_inputs">
-              <sw-input-text class="settings-field">
+              <sw-input-text formControlName="name" class="settings-field">
                 <span class="placeholder">Name</span>
               </sw-input-text>
-              <sw-dropdown-input class="settings-field">
+              <sw-dropdown-input formControlName="type" class="settings-field" [options]="typeOptions">
                 <span class="input_label">
                   <p>Type</p>
                 </span>
               </sw-dropdown-input>
-              <sw-dropdown-input class="settings-field">
+              <sw-dropdown-input formControlName="width" class="settings-field" [options]="widthOptions">
                 <span class="input_label">
                   <p>Width</p>
                 </span>

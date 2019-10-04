@@ -28,6 +28,27 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
   delInput: FormControl = new FormControl(null);
   ref: any;
   destroyed$ = new Subject();
+
+  typeOptions = [ 
+    { title: 'Short text field', type: 101 },
+    { title: 'Textarea field', type: 102 },
+    { title: 'Number field', type: 103 },
+    { title: 'Dropdown field', type: 104 },
+    { title: 'English date field', type: 106 },
+    { title: 'Hebrew date field', type: 110 },
+    { title: 'Checkbox field', type: 107 },
+    { title: 'Email field', type: 108 },
+    { title: 'Phone number filed', type: 109 },
+    { title: 'Fields group', type: 113 },
+  ];
+
+  widthOptions = [
+    { title: '4 columns', value: 'full' },
+    { title: '3 columns', value: 'three-quarter' },
+    { title: '2 columns', value: 'half' },
+    { title: '1 column', value: 'quarter' }
+  ];
+
   @ViewChild('filter', { static: false}) filterNames;
   @ViewChild('deletePop', { static: false }) deletePop;
 
@@ -107,6 +128,15 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
 
   customFieldToggle(node) {
     node.formVisible = !(!!node.formVisible);
+    if (node.formVisible) {
+      node.customFieldForm = this.fb.group({
+        name: ['Custom text'],
+        type: [[{ title: 'Short text field', type: 101 }]],
+        width: [[{ title: '4 columns', value: 'full' }]]
+      });
+    } else {
+      delete node.customFieldForm;
+    }
   }
 
   showCreateField(node) {
@@ -233,6 +263,20 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
     const descendants = this.treeControl.getDescendants(node);
     const result = descendants.some(node => node['isActive']);
     return result && !this.descendantsAllSelected(node);
+  }
+
+  addCustomField(node: any) {
+    const formValue = node.customFieldForm.value;
+    let newField = {
+      name: formValue.name,
+      type: formValue.type ? formValue.type[0].type : null,
+      width: formValue.width ? formValue.width[0].value : null,
+      mapped: formValue.name.toLowerCase().replace(' ', '_'),
+      isActive: false
+    };
+    node.fields.push(newField);
+    this.customFieldToggle(node);
+    // console.log('Node', node);
   }
 
 

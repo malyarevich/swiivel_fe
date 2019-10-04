@@ -103,9 +103,9 @@ export class FormCreatorComponent implements OnInit {
     });
     this.stepperService.stepper$.subscribe((step: string) => {
       if (step === 'next') {
-        this.steppert.next();
+        this.nextStep();
       } else if (step === 'prev') {
-        this.steppert.previous();
+        this.prevStep();
       }
     })
     // console.log(route)
@@ -116,11 +116,15 @@ export class FormCreatorComponent implements OnInit {
   }
 
   prevStep() {
-    this.steppert.previous()
+    if (this.steppert) {
+      this.steppert.previous()
+    }
   }
 
   nextStep() {
-    this.steppert.next();
+    if (this.steppert) {
+      this.steppert.next();
+    }
   }
 
 }
