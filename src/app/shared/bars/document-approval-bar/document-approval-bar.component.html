@@ -13,16 +13,22 @@
   </div>
   <div class="document-approval-bar__buttons">
     <div class="document-approval-bar__button">
-      <sw-button [style]="colors.WHITE"> <i class="fas fa-step-forward button_ico"></i>Skip</sw-button>
+      <sw-button [style]="colors.WHITE" (click)="skipDocument.emit()">
+        <i class="fas fa-step-forward button_ico"></i>Skip
+      </sw-button>
     </div>
     <div class="document-approval-bar__button">
-      <sw-button [style]="colors.WHITE">Need Further Review</sw-button>
+      <sw-button
+        [style]="colors.WHITE"
+        (click)="changeStatus.emit(statuses.need_further_review)">
+        Need Further Review
+      </sw-button>
     </div>
     <div class="document-approval-bar__button">
-      <sw-button>Reject</sw-button>
+      <sw-button (click)="changeStatus.emit(statuses.rejected)">Reject</sw-button>
     </div>
     <div class="document-approval-bar__button">
-      <sw-button>Approve</sw-button>
+      <sw-button (click)="changeStatus.emit(statuses.approved)">Approve</sw-button>
     </div>
     <div class="document-approval-bar__button">
       <sw-button [disabled]="true">Save</sw-button>

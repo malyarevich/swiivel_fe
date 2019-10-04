@@ -1,11 +1,11 @@
+import { UploadReviewFormSortEnum } from '@app/upload-review-form/upload-review-form-sort.enum';
 import { UploadReviewFormStatusesEnum } from '@app/upload-review-form/upload-review-form-statuses.enum';
 import { UploadReviewFormSubmissionTypeEnum } from '@app/upload-review-form/upload-review-form-submission-type.enum';
 import { ApiService } from '@core/api.service';
 import { FilterDropDownData } from '@models/upload-review-form/filter.model';
 import { SortDropDownData } from '@models/upload-review-form/sort.model';
 import { Observable } from 'rxjs';
-import { UploadReviewFormSortEnum } from '@app/upload-review-form/upload-review-form-sort.enum';
-import {first, map} from 'rxjs/operators';
+import { first, map } from 'rxjs/operators';
 
 export class UploadReviewFormService extends ApiService {
   getStatusColor(status: string): string {
@@ -36,7 +36,7 @@ export class UploadReviewFormService extends ApiService {
           endpointParam += `&filter[${param.param}][]=${param.param === 'documents' ? param.id : param.value}`;
         });
       }
-      if (sortParam) {
+      if (sortParam && sortParam.length) {
         endpointParam += `&sort=${sortParam[0].value}`;
       }
       endpoint = `/proxy/upload-reviews-form/list?form_id=${formId}&search_query=${endpointParam}`;
@@ -56,6 +56,18 @@ export class UploadReviewFormService extends ApiService {
       return window.URL.createObjectURL(new Blob([response], {type: 'application/pdf'}));
     }), first());
   }
+
+  deleteDocuments(idsData: string[]): Observable<any> {
+    const endpoint = `/proxy/upload-reviews-form/delete-documents`;
+    const bodyData = { ids: idsData };
+    return this.http.delete(endpoint, { body: bodyData });
+  }
+
+  changeDocumentStatus(formId: string, statusData: string): Observable<any> {
+    const body = { status: statusData };
+    return this.http.put(`/proxy/upload-reviews-form/change-status/${formId}`, body);
+  }
+
 
   getFilterDropDownData(documents: any): FilterDropDownData | {} {
     const uploadReviewFormStatusesEnum = UploadReviewFormStatusesEnum;
@@ -114,5 +126,4 @@ export class UploadReviewFormService extends ApiService {
     }
     return sortData;
   }
-
 }

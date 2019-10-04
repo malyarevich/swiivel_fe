@@ -18,7 +18,7 @@
           <sw-icon-button
             [icon]="icons.DOWNLOAD"
             [color]="document.isSelected? colors.WHITE : colors.GRAY"
-            (click)="downloadForm()"
+            (click)="clickDownloadForm()"
           >
           </sw-icon-button>
         </div>
@@ -26,6 +26,7 @@
           <sw-icon-button
             [icon]="icons.TRASH"
             [color]="document.isSelected? colors.WHITE : colors.GRAY"
+            (click)="clickDeleteForm()"
           >
           </sw-icon-button>
         </div>

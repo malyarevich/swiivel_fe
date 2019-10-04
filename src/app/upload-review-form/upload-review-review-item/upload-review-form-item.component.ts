@@ -18,6 +18,7 @@ export class UploadFormReviewItemComponent {
   public colors = ColorsEnum;
   public uploadReviewFormStatusesEnum = UploadReviewFormStatusesEnum;
   @Output() downLoadForm = new EventEmitter<string>();
+  @Output() deleteForm = new EventEmitter<string>();
 
   constructor(public uploadReviewFormService: UploadReviewFormService) {}
 
@@ -30,7 +31,11 @@ export class UploadFormReviewItemComponent {
     }
   }
 
-  downloadForm(): void {
+  clickDownloadForm(): void {
     this.downLoadForm.emit(this.document._id);
+  }
+
+  clickDeleteForm(): void {
+    this.deleteForm.emit(this.document._id);
   }
 }
