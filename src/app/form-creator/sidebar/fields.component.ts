@@ -130,9 +130,9 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
     node.formVisible = !(!!node.formVisible);
     if (node.formVisible) {
       node.customFieldForm = this.fb.group({
-        name: ['Custom text'],
-        type: [[{ title: 'Short text field', type: 101 }]],
-        width: [[{ title: '4 columns', value: 'full' }]]
+        name: [null],
+        type: [null],
+        width: [null]
       });
     } else {
       delete node.customFieldForm;

@@ -36,7 +36,9 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
     this.service.sidebar.pipe(takeUntil(this.destroyed$)).subscribe(nodes => {
       this.treeSource = nodes;
       this.treeSource.changes.pipe(takeUntil(this.destroyed$)).subscribe(value => {
-        this.service.formTemplate.fields = value;
+        if (this.service.formTemplate) {
+          this.service.formTemplate.fields = value;
+        }
         this.cdr.detectChanges();
       });
     });
