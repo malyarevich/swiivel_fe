@@ -10,13 +10,13 @@
       <div class="text">Additional Options</div>
     </div>
     <div class="widget-body">
-      <div class="list">
+      <div class="list" cdkDropList [cdkDropListConnectedTo]="['root-list']">
         <div class="title">Formatting Options</div>
-        <div class="item" cdkDrag>
+        <div class="item" cdkDrag [cdkDragData]="'section'" (cdkDragDropped)="drop($event)">
           <i class="dragdrop fas fa-ellipsis-v" cdkDragHandle></i>
           <div class="text">New Section</div>
         </div>
-        <div class="item" cdkDrag>
+        <div class="item"cdkDrag [cdkDragData]="'group'" (cdkDragDropped)="drop($event)">
           <i class="dragdrop fas fa-ellipsis-v" cdkDragHandle></i>
           <div class="text">New Group</div>
         </div>

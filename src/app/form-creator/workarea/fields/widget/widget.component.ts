@@ -33,6 +33,14 @@ export class WidgetComponent implements OnInit {
     }
   }
 
+  drop(event) {
+    console.log(event);
+  }
+
+  getLists() {
+    return ['0-group', '1-group', '2-group'];
+  }
+
   openWidget() {
     this.ref = this.popup.open({
       origin: this.holder,

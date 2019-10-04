@@ -6,8 +6,8 @@ import { ApiService } from '@app/core/api.service';
 import { CHILDREN_SYMBOL, TreeDataSource } from '@app/form-creator/tree.datasource';
 import { FormCreatorService } from '@app/form-creator/form-creator.service';
 import { Subject } from 'rxjs';
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import { takeUntil } from 'rxjs/operators';
+import { CdkDragDrop, CdkDrag, moveItemInArray } from '@angular/cdk/drag-drop';
+import { takeUntil, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 @Component({
   selector: 'sw-form-creator-workarea-fields',
   templateUrl: './fields.component.html',
@@ -28,6 +28,8 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
   fieldsTree: any[];
   treeSource;
   treeControl = new NestedTreeControl<any>(node => node[CHILDREN_SYMBOL]);
+  i = 0;
+  listIDs = {};
 
   constructor(private service: FormCreatorService, private api: ApiService, private cdr: ChangeDetectorRef) {
   }
@@ -35,7 +37,10 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
   ngOnInit() {
     this.service.sidebar.pipe(takeUntil(this.destroyed$)).subscribe(nodes => {
       this.treeSource = nodes;
-      this.treeSource.changes.pipe(takeUntil(this.destroyed$)).subscribe(value => {
+      this.treeSource.changes.pipe(
+        takeUntil(this.destroyed$),
+        debounceTime(100)
+      ).subscribe(value => {
         this.cdr.detectChanges();
       });
     });
@@ -64,6 +69,20 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
   hasChild = (_: number, node: any) => {
     return !!node[CHILDREN_SYMBOL] && node[CHILDREN_SYMBOL].length > 0;
   }
+  getId(str) {
+    let id = str + '-' + this.i++;
+    if (!Array.isArray(this.listIDs[str])) this.listIDs[str] = [id];
+    this.listIDs[str].push(id);
+    return id;
+  }
+
+  connectTo(str) {
+    if (this.listIDs[str]) {
+      return this.listIDs[str];
+    } else {
+      return [];
+    }
+  }
 
   getIcon(expanded: boolean): string {
     return expanded ? 'fa-caret-up' : 'fa-caret-down';
@@ -79,6 +98,19 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
     return 'Group type';
   }
 
+  dropped(event: CdkDragDrop<any>) {
+    let node = event.item.data;
+    let dc = event.container;
+    console.log(`dropped`, event);
+    // if (dc.id !== 'fields-list') {
+    //   if (node.type === 113 || node.type === 114) {
+    //     this.closeParentNode(node);
+    //   } else {
+    //     this.closeNode(node);
+    //   }
+    // }
+  }
+
   drop(event: CdkDragDrop<any>) {
     let node = event.item.data;
     let dc = event.container;
@@ -89,6 +121,41 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
         this.closeNode(node);
       }
     }
+  }
+
+
+
+  sectionPredicate(item: CdkDrag<number>) {
+    return item.data['type'] === 114;
+  }
+  groupPredicate(item: CdkDrag<number>) {
+    return item.data['type'] === 113;
+  }
+
+  fieldPredicate(item: CdkDrag<number>) {
+    console.log(item);
+    return item.data['type'] !== 113 && item.data['type'] !== 114;
+  }
+
+  dropSection(event) {
+    if (event.previousContainer === event.container) {
+      if (event.item.data.type === 114) {
+        this.treeSource.swapSections(event.previousIndex, event.currentIndex)
+      } else if (event.item.data.type === 113) {
+        console.log(`Move group`)
+        // this.treeSource.MoveGroup(event.previousIndex, event.currentIndex)
+      } else {
+        console.log(`Move field`);
+      }
+      console.log();
+    } else {
+      let prevSection = this.treeSource.getSectionByIdx(event.currentIndex);
+      this.treeSource.addSection(prevSection, event.container.data);
+    }
+  }
+
+  dropGroup(event) {
+    console.log(`group `, event);
   }
 
   settingsToggle(node: any)  {

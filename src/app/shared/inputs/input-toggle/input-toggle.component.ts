@@ -21,6 +21,12 @@ export class InputToggleComponent implements ControlValueAccessor {
     private renderer: Renderer2
   ) {}
 
+  @ViewChild('input', {static: true}) input: ElementRef;
+  private onTouched: () => void;
+
+  private onChange: (value: boolean) => void;
+
+
   public setDisabledState(isDisabled: boolean): void {
     this.renderer.setProperty(this.input.nativeElement, 'disabled', isDisabled);
   }

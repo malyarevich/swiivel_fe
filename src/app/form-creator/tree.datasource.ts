@@ -43,7 +43,23 @@ export class TreeDataSource implements DataSource<any> {
       this.tree['symbol'];
     }
   }
+  addSection(old, title = 'New Section') {
+    this.tree.insertAfter(old, {
+      type: 114,
+      name: title,
+      isActive: true,
+      fields: []
+    });
+    this.data = this.tree.childrenToArray(this.tree);
+  }
 
+  swapSections(prevIdx, curIdx) {
+    console.log(`Move sec from ${prevIdx} to ${curIdx}`)
+  }
+  getSectionByIdx(idx) {
+    return this.nodes[idx];
+
+  }
   build(nodes: any[] = [], root = this.tree, childKey = this.childKey, onlyActive?, allActive?) {
     for (let node of nodes) {
       if (allActive) node.isActive = true;
@@ -102,7 +118,9 @@ export class TreeDataSource implements DataSource<any> {
   getChildren(node) {
     return this.tree.childrenToArray(node);
   }
-
+  getAllChildren(node) {
+    return this.tree.treeToArray(node);
+  }
   getParentChildren(node) {
     return this.tree.treeToArray(node);
   }
@@ -114,6 +132,7 @@ export class TreeDataSource implements DataSource<any> {
 
   refresh() {
     this.data =  this.dataSubject.getValue();
+    console.log(this.data);
   }
 
   isSelected(node) {

@@ -188,7 +188,6 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
     }
     for (let child of children) {
       child.isActive = node.isActive;
-
     }
 
     if (node.isActive) {
@@ -201,6 +200,7 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
       }
     }
     this.treeSource.refresh();
+    if (node.isActive) this.service.event = {action: 'expand', target: node}
   }
 
   toggleNode(node: any): void {

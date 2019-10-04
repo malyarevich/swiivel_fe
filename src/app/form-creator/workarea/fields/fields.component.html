@@ -1,7 +1,6 @@
-<cdk-tree [dataSource]="treeSource" [treeControl]="treeControl" cdkDropList id="fields-list" cdkDropListSortingDisabled
-  [cdkDropListConnectedTo]="['sidebar-list']">
-  <cdk-nested-tree-node *cdkTreeNodeDef="let node" cdkTreeNodePadding cdkDrag [cdkDragData]="node"
-    cdkTreeNodePaddingIndent="15px" class="field-workarea-node" (cdkDragDropped)="drop($event)">
+<cdk-tree [dataSource]="treeSource" [treeControl]="treeControl" cdkDropList id="root-list" (cdkDropListDropped)="dropSection($event)" [cdkDropListEnterPredicate]="sectionPredicate">
+  <cdk-nested-tree-node *cdkTreeNodeDef="let node" cdkTreeNodePadding
+    cdkTreeNodePaddingIndent="15px" class="field-workarea-node" cdkDrag [cdkDragData]="node">
     <!-- use a disabled button to provide padding for tree leaf -->
     <div class="field" [class.active]="node.showSettings" *ngIf="node.isActive">
       <div class="main-container">
@@ -54,9 +53,10 @@
       <sw-settings [field]="node"></sw-settings>
     </div>
   </cdk-nested-tree-node>
+
   <!-- This is the tree node template for expandable nodes -->
-  <cdk-nested-tree-node *cdkTreeNodeDef="let node; when: hasChild" class="field-tree-node"  cdkDrag [cdkDragData]="node"  (cdkDragDropped)="drop($event)" 
-    [ngClass]="{'group-tree-node': node.type === 113, 'section-tree-node': node.type === 114 || node.type === undefined}">
+  <cdk-nested-tree-node *cdkTreeNodeDef="let node; when: hasChild" class="field-tree-node"
+    [ngClass]="{'group-tree-node': node.type === 113, 'section-tree-node': node.type === 114 || node.type === undefined}" cdkDrag [cdkDragData]="node">
     <div class="field" [class.active]="node.showSettings" *ngIf="node.isActive">
       <div [ngSwitch]="node.type">
         <div *ngSwitchCase="113">
@@ -125,7 +125,7 @@
       <sw-settings [field]="node"></sw-settings>
     </div>
 
-    <div *ngIf="treeControl.isExpanded(node)">
+    <div *ngIf="treeControl.isExpanded(node)" cdkDropList cdkDropListDropped="dropField($event)" [id]="getId('fields-list')" [cdkDropListConnectedTo]="connectTo('fields-list')"  [cdkDropListEnterPredicate]="fieldsPredicate">
       <ng-container cdkTreeNodeOutlet></ng-container>
     </div>
 
