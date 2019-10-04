@@ -184,7 +184,7 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
       node.isActive = false;
     } else {
       node.isActive = true;
-      children = this.treeSource.getChildren(node);
+      children = this.treeSource.getParentChildren(node);
     }
     for (let child of children) {
       child.isActive = node.isActive;
