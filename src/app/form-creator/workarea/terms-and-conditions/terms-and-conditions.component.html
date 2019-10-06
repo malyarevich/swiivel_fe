@@ -3,38 +3,38 @@
   (changeContentDisplay)="changeIsShown($event)">
 </sw-form-creator-workarea-header>
 <div *ngIf="isShown" cdkDropList (cdkDropListDropped)="drop($event)">
-  <div class="item" *ngFor="let form of forms" cdkDrag>
-    <div class="bubbles">
+  <div class="item" data-e2e="item" *ngFor="let form of forms" cdkDrag>
+    <div class="bubbles" data-e2e="bubbles">
       <i class="fas fa-grip-vertical bubbles-ico"></i>
     </div>
-    <div class="fields">
-      <div class="fields-name">
+    <div class="fields" data-e2e="fields">
+      <div class="fields-name" data-e2e="fields-name">
         <sw-input-text>
-          <span class="placeholder">Document Name</span>
+          <span class="placeholder" data-e2e="placeholder">Document Name</span>
         </sw-input-text>
       </div>
-      <div class="fields-text">
+      <div class="fields-text" data-e2e="fields-text">
         <sw-input-textarea
           [rows]="textarea.rows"
           [cols]="textarea.cols"
           [readonly]="!textarea.editable">
-          <span class="input_label">Text</span>
+          <span class="input_label" data-e2e="input_label">Text</span>
         </sw-input-textarea>
       </div>
-      <div *ngIf="form.checkBox.isShown" class="fields-checkbox-container">
-        <div class="fields-checkbox">
+      <div *ngIf="form.checkBox.isShown" class="fields-checkbox-container" data-e2e="fields-checkbox-container">
+        <div class="fields-checkbox" data-e2e="fields-checkbox">
           <sw-input-checkbox></sw-input-checkbox>
         </div>
         <sw-input-text>
-          <span class="placeholder">Checkbox Text</span>
+          <span class="placeholder" data-e2e="checkbox_text">Checkbox Text</span>
         </sw-input-text>
       </div>
-      <div *ngIf="form.isBothParentsSignature" class="fields-signatures">
+      <div *ngIf="form.isBothParentsSignature" class="fields-signatures" data-e2e="fields-signatures">
         <sw-input-textarea
           [rows]="textarea.rows"
           [cols]="textarea.cols"
           [readonly]="!textarea.editable">
-          <span class="input_label">Parents's signature</span>
+          <span class="input_label" data-e2e="Parents_signature">Parents's signature</span>
         </sw-input-textarea>
       </div>
     </div>
