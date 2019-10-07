@@ -56,6 +56,16 @@ export const routes: Routes = [
       }
     ],
   },
+  {
+    path: 'upload-review-form',
+    component: LayoutComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('../upload-review-form/upload-review-form.module').then(m => m.UploadReviewFormModule)
+      }
+    ],
+  },
 ];
 
 @NgModule({

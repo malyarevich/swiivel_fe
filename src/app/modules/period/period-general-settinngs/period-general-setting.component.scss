@@ -29,7 +29,7 @@
       height: 30px;
       font-size: 12px;
       line-height: 15px;
-      background-color: $purple;
+      background-color: $element-base-color;
       color: white;
       border-radius: 3px;
       align-items: center;
@@ -63,9 +63,9 @@
       margin: 0 15px 0 0;
       font: 800 12px/15px 'NunitoSans-Bold';
       background-color: $bkg-gray;
-      color: $purple;
+      color: $element-base-color;
       border-radius: 3px;
-      border: 1px solid $purple;
+      border: 1px solid $element-base-color;
       align-items: center;
       vertical-align: middle;
     }
@@ -79,7 +79,7 @@
       height: 30px;
       margin: 0 15px 0 0;
       font: 800 12px/15px 'NunitoSans-Bold';
-      background-color: $purple;
+      background-color: $element-base-color;
       color: white;
       border-radius: 3px;
       align-items: center;

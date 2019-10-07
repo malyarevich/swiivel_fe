@@ -295,7 +295,7 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
 
   loadSideBarNew() {
     this.fieldsService.getExistingSideBarList2().subscribe(
-      data => {
+      ({ data } : { data: Object }) => {
         this.newSideBar = data;
       },
       error => console.log(error, "error"),

@@ -38,7 +38,7 @@
   }
 
   .app-period-split-information--cog {
-    color: $purple;
+    color: $element-base-color;
   }
 
   .app-period-split-information__modification {
@@ -107,7 +107,7 @@
       margin: auto 0;
       font-size: 12px;
       line-height: 20px;
-      background-color: $purple;
+      background-color: $element-base-color;
       color: white;
       border-radius: 3px;
       align-items: center;
@@ -132,7 +132,7 @@
     .app-period-split-information__information--button {
       margin: 0 0 0 15px;
       font: 800 13px/15px 'NunitoSans-Bold';
-      color: $purple;
+      color: $element-base-color;
       background-color: transparent;
       border-color: transparent;
     }

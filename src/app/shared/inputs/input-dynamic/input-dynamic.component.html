@@ -1,0 +1,19 @@
+<!-- <div *ngFor="let field of fields">
+  <ng-container *ngIf="field.type === 113 || field.type === 114; else inputs" [formGroup]="field.control">
+    {{field.name}}
+    <sw-input-dynamic [fields]="field.fields"></sw-input-dynamic>
+  </ng-container>
+  <ng-template #inputs>
+    <ng-container [ngSwitch]="field.type">
+      <sw-input-text *ngSwitchCase="101" [formControl]="field.control" [readonly]="field.options.readonly">
+        <span class="placeholder">{{field.name}}</span>
+      </sw-input-text>
+      <sw-input-number *ngSwitchCase="103" [formControl]="field.control">
+        <span class="labels">{{field.name}}</span>
+      </sw-input-number>
+      <select *ngSwitchCase="105" [formControl]="field.control">
+        <option [value]="option" *ngFor="let option of field.options.items">{{option}}</option>
+      </select>
+    </ng-container>
+  </ng-template>
+</div> -->

@@ -38,9 +38,9 @@
       width: 19px;
       margin: 5px 0 0 0;
       cursor: pointer;
-      color: $purple;
+      color: $element-base-color;
       background-color: $light-purple;
-      border: 1px dashed $purple;
+      border: 1px dashed $element-base-color;
       text-align: center;
       vertical-align: middle;
 
@@ -141,9 +141,9 @@
     margin: 0 0 20px;
     cursor: pointer;
     font: 12px/23px 'NunitoSans-Bold';
-    color: $purple;
+    color: $element-base-color;
     background-color: $light-purple;
-    border: 1px dashed $purple;
+    border: 1px dashed $element-base-color;
     text-align: center;
   }
 

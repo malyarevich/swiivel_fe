@@ -1,0 +1,101 @@
+<sw-back-bar [title]="'Review Forms'" [backRoute]="'/online-form/'+activeIdForm"></sw-back-bar>
+<sw-document-approval-bar
+  [document]="getSelectForm()"
+  (skipDocument)="skipDocument()"
+  (changeStatus)="changeStatus($event)"
+>
+</sw-document-approval-bar>
+<div class="content">
+  <div class="sidebar-container" [class.opened]="isSideBarShown">
+    <div class="sidebar">
+      <form [formGroup]="form">
+        <div class="sidebar-controls">
+          <div class="sidebar-filter">
+            <sw-dropdown-input
+              formControlName="filter"
+              [multiple]="true"
+              [dropdownSubHeader]="true"
+              [options]="filterValue"
+              [isDisplaySelected]="false">
+              <span class="sidebar-controls-title">Filtered By</span>
+            </sw-dropdown-input>
+          </div>
+          <div class="sidebar-sort">
+            <sw-dropdown-input
+              formControlName="sort"
+              [options]="sortValue"
+              [isDisplaySelected]="false">
+              <span class="sidebar-controls-title">Sorted By</span>
+            </sw-dropdown-input>
+          </div>
+        </div>
+      </form>
+      <div *ngIf="documents && documents.length" [ngClass]="{ 'loading': showSpinner }">
+        <div *ngFor="let document of documents">
+          <app-upload-review-form-item
+            [document]="document"
+            (selected)="selectItem($event)"
+            (downLoadForm)="downLoadForm($event)"
+            (deleteForm)="openConfirmPopup($event)"
+          >
+          </app-upload-review-form-item>
+        </div>
+        <i *ngIf="showSpinner" class="fas fa-spinner spinner"></i>
+        <div class="upload-document-controls">
+          <form class="upload-document-form" [formGroup]="formUpload">
+            <div class="upload-document-form-button">
+              <sw-input-file
+                formControlName="upload"
+                #file="upload"
+                [data]="uploadDocumentData"
+                preupload="/proxy/upload-reviews-form/upload/{{activeIdForm}}"
+              >
+                <sw-button (click)="file.openDialog()" [size]="sizeButton.FULL">Upload Document</sw-button>
+              </sw-input-file>
+            </div>
+            <sw-dropdown-select [options]="documentTypes">
+              <span>{{ this.uploadDocumentData.type }}</span>
+            </sw-dropdown-select>
+            <sw-dropdown-select [options]="documentStudent">
+              <span>{{ this.uploadDocumentData.student }}</span>
+            </sw-dropdown-select>
+            <sw-dropdown-select [options]="documentAccount">
+              <span>{{ this.uploadDocumentData.account }}</span>
+            </sw-dropdown-select>
+            <!--<div class="items-control">-->
+            <!--<sw-button [style]="colors.WHITE">Bulk Download</sw-button>-->
+            <!--</div>-->
+          </form>
+        </div>
+      </div>
+      <div *ngIf="!showSpinner && (!documents || !documents.length)" class="sidebar--empty">
+        No documents
+      </div>
+    </div>
+  </div>
+  <div class="workarea">
+    <div class="sidebar-opener" (click)="isSideBarShown = !isSideBarShown">
+      <div class="button">
+        <sw-icon-button [icon]="icons.CARET_RIGHT" [color]="colors.WHITE" [size]="size.MEDIUM"></sw-icon-button>
+      </div>
+    </div>
+    <!--<pre>-->
+    <!--{{documents | json}}-->
+    <!--</pre>-->
+    <app-upload-review-form-document [document]="getSelectForm()"></app-upload-review-form-document>
+  </div>
+</div>
+<div class="footer">
+  <app-upload-review-form-footer
+    [documents]="extremeDocuments"
+    (changeForm)="updateForm($event)"
+  ></app-upload-review-form-footer>
+</div>
+<sw-dialog
+    #dialog
+    action="Remove"
+    title="Remove Document"
+    (closed)="deleteForm($event)"
+>
+  <p>Are you sure you want to remove [Item(s)]?</p>
+</sw-dialog>

@@ -57,3 +57,245 @@
   font-weight: bold;
   text-transform: uppercase;
 }
+
+sw-input-text {
+  span.icon {
+    position: absolute;
+    right: 10px;
+    top: 9px;
+    bottom: 5px;
+    i {
+      color: $gray-color;
+    }
+  }
+  .input_text__input {
+    padding: 15px 10px 5px 10px;
+    position: relative;
+    &.empty {
+      padding: 10px;
+      & + span {
+        &.placeholder {
+          position: absolute;
+          top: 9px;
+          font-size: 12px;
+        }
+      }
+    }
+    & + span {
+      &.placeholder {
+        pointer-events: none;
+        position: absolute;
+        top: 2px;
+        left: 10px;
+        font-size: 10px;
+        color: $gray-color;
+        transition: all 0.2s ease-in-out;
+      }
+    }
+  }
+}
+
+sw-input-text.settings-field{
+  .input_text__input {
+    padding: 6px 10px 4px 10px;
+    &.empty {
+      & + span {
+        &.placeholder {
+          display: flex;
+          top: 4px;
+        }
+      }
+    }
+    & + span {
+      &.placeholder {
+        display: none;
+      }
+    }
+  }
+}
+
+sw-input-toggle {
+  span {
+    &.input_label {
+      font-family: "Nunito Sans";
+      font-weight: bold;
+      font-size: 12px;
+      color: $black;
+    }
+  }
+}
+
+sw-input-checkbox {
+  label {
+    margin-bottom: 0 !important;
+    display: flex;
+    align-items: center;
+  }
+  i.dragdrop {
+    margin-right: 10px;
+    color: #A4A4A4;
+    font-size: 15px;
+  }
+  span {
+    &.label {
+      font-family: "Nunito Sans";
+      font-weight: bold;
+      font-size: 12px;
+      color: $black;
+      margin-left: 5px;
+    }
+  }
+}
+
+sw-input-button-group {
+  .input_button_group {
+    display: flex;
+    align-items: center;
+    .input_button {
+      &:first-of-type {
+        button {
+          border-radius: 4px 0 0 4px!important;
+        }
+      }
+      &:last-of-type {
+        button {
+          border-radius: 0 4px 4px 0!important;
+        }
+      }
+    }
+  }
+}
+
+
+sw-dropdown-input,
+sw-input-phone-number,
+sw-input-email,
+sw-input-number {
+  .phone_number,
+  .email,
+  .dropdown_input_container,
+  .input_number {
+    @extend %placeholder;
+    &.empty {
+      &:not(:focus-within) {
+        padding: 5px 10px;
+        .input_label {
+          position: absolute;
+          top: 8px;
+          font-size: 12px;
+        }
+      }
+    }
+    .input_ico {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+    }
+  }
+}
+
+sw-dropdown-input.settings-field {
+  .dropdown_input_container {
+    .input_label {
+      display: none;
+      width: calc(100% - 28px);
+      p {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+    &.empty {
+      &:not(:focus-within) {
+        .input_label {
+          display: flex;
+          top: 2px;
+        }
+      }
+    }
+  }
+}
+
+sw-input-textarea {
+  .input_textarea {
+    @extend %placeholder;
+    .input_label {
+      position: absolute;
+      top: 0;
+      font-size: 12px;
+    }
+  }
+}
+
+.field_settings_container {
+  padding: 10px;
+  min-height: 150px;
+  section {
+    margin-bottom: 15px;
+    .title {
+      font-weight: 800;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .hint {
+      font: 400 10px/13px $nunito-sans;
+      color: #A4A4A4;
+    }
+    .row_container {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      align-items: center;
+      justify-content: space-between;
+      &:not(:last-of-type) {
+        margin-bottom: 5px;
+      }
+      &__input {
+        width: 100%;
+        &:not(:last-of-type) {
+          margin-right: 5px;
+        }
+        &.small {
+          width: 50%;
+        }
+      }
+    }
+    .options_container {
+      .option {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: center;
+        width: 100%;
+        .controls {
+          visibility: hidden;
+          color: #A4A4A4;
+          margin-left: 5px;
+          display: flex;
+          flex-direction: row;
+          flex-wrap: nowrap;
+          i {
+            text-align: center;
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+            &:not(:last-of-type) {
+              margin-right: 5px;
+            }
+          }
+        }
+        &:not(:last-of-type) {
+          margin-bottom: 5px;
+        }
+        &:hover {
+          .controls {
+            visibility: unset;
+          }
+        }
+      }
+    }
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+  }
+}

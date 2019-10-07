@@ -1,0 +1,46 @@
+@import "index";
+
+.dialog_container {
+  position: relative;
+  width: 430px;
+  min-height: 144px;
+  padding: 12px 12px 52px;
+  background: #fff;
+  border-radius: 3px;
+
+  .dialog_header {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 0 5px;
+  }
+
+  .dialog_title {
+    display: flex;
+    &__text {
+      margin: 0 10px 0 0;
+      font: 800 14px/20px $nunito-sans;
+    }
+  }
+
+  .dialog_close {
+    color: $icon-blue;
+
+    &:hover {
+      cursor: pointer;
+      color: $button-color;
+    }
+  }
+
+  .dialog_footer {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    display: flex;
+
+    &__button:nth-child(1) {
+      margin: 0 10px 0 0;
+    }
+  }
+
+
+}

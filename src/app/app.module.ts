@@ -14,10 +14,13 @@ import {AppComponent} from './app.component';
 import {LoginModule} from '@modules/login';
 import {InterceptorsModule} from '@app/utils';
 import {environment} from '../environments/environment';
+import { OverlayModule } from '@angular/cdk/overlay';
+import { PopupComponent } from '@app/core/components/popup/popup.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    PopupComponent,
   ],
   imports: [
     BrowserModule,
@@ -26,6 +29,7 @@ import {environment} from '../environments/environment';
     AppRoutingModule,
     NgbModule,
     LoginModule,
+    OverlayModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
