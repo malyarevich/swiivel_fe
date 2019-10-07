@@ -11,5 +11,5 @@ export enum IconsEnum {
   TRASH = 'fa-trash',
   ZOOM_IN = 'fa-search-plus',
   ZOOM_OUT = 'fa-search-minus',
-  CARET_RIGHT = 'fa-caret-right',
+  CARET_RIGHT = 'fa-caret-right'
 }

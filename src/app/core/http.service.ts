@@ -53,10 +53,18 @@ export class HttpService {
     formData.append('type', 'document');
     formData.append('original_name', file.name);
     formData.append('file', file, file.name);
-
-    // if (data) {
-    //   console.log(data);
-    // }
+    if (data && data.documentId) {
+      formData.append('document_id', data.documentId);
+    }
+    if (data && data.account) {
+      formData.append('family_id', data.account);
+    }
+    if (data && data.student) {
+      formData.append('person_id', data.student);
+    }
+    if (data && data.type) {
+      formData.append('document_type', data.type);
+    }
 
     return this.http.request(method, this.apiUrl + url, {
       body: formData,

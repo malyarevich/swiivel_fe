@@ -10,7 +10,9 @@ import { SortDropDownData } from '@models/upload-review-form/sort.model';
 import { ColorsEnum } from '@shared/colors.enum';
 import { IconsEnum } from '@shared/icons.enum';
 import { SizesEnum } from '@shared/sizes.enum';
-import {DialogComponent} from '@shared/popup/dialog.component';
+import { DialogComponent } from '@shared/popup/dialog.component';
+import { UploadDataModel } from '@models/data-collection/upload-data.model';
+import { SizeButtonsEnum } from '@shared/size-buttons.enum';
 
 @Component({
   selector: 'app-upload-review-form',
@@ -36,7 +38,13 @@ export class UploadReviewFormComponent implements OnInit {
   public isSideBarShown = true;
   public icons = IconsEnum;
   public size = SizesEnum;
+  public sizeButton = SizeButtonsEnum;
   public statuses = UploadReviewFormStatusesEnum;
+
+  public documentTypes  = ['document'];
+  public documentStudent  = ['7'];
+  public documentAccount  = ['6b639da1ef3956c73e1ec79fbc67a2f5'];
+  public uploadDocumentData: UploadDataModel = { documentId: '', type: '', student: '', account: '' };
 
   constructor(
     public uploadReviewFormService: UploadReviewFormService,
@@ -48,7 +56,10 @@ export class UploadReviewFormComponent implements OnInit {
       sort: new FormControl([], Validators.required),
     });
     this.formUpload = this.fb.group({
-      upload: new FormControl(null),
+      upload: new FormControl(''),
+      documentType: new FormControl(''),
+      student: new FormControl(''),
+      account: new FormControl(''),
     });
   }
 
@@ -74,6 +85,23 @@ export class UploadReviewFormComponent implements OnInit {
       this.dataSource.uploadDocuments(this.activeIdForm, params.filter, params.sort);
       this.getDocuments();
     });
+    this.uploadDocumentData = {
+      documentId: this.activeIdForm,
+      account: this.documentAccount[0],
+      student: this.documentStudent[0],
+      type: this.documentTypes[0]
+    };
+    this.formUpload.valueChanges.subscribe(changes => {
+      this.updateUploadData();
+      console.log(changes , this.uploadDocumentData);
+    });
+  }
+
+  updateUploadData(): void {
+    this.uploadDocumentData.type = this.formUpload.get('documentType').value;
+    this.uploadDocumentData.documentId = this.activeIdForm;
+    this.uploadDocumentData.type = this.formUpload.get('student').value;
+    this.uploadDocumentData.type = this.formUpload.get('account').value;
   }
 
   getDocuments(): void {
