@@ -1,5 +1,5 @@
 import { CollectionViewer, DataSource } from '@angular/cdk/collections';
-import { ApiService } from '@core/api.service';
+import { ApiService } from '@app/core/api.service';
 import { BehaviorSubject, Observable, of, Subject, throwError } from 'rxjs';
 import * as SymbolTree from 'symbol-tree';
 

@@ -14,10 +14,12 @@ import {AppComponent} from './app.component';
 import {LoginModule} from '@modules/login';
 import {InterceptorsModule} from '@app/utils';
 import {environment} from '../environments/environment';
+import { PopupComponent } from './core/components/popup/popup.component'
 
 @NgModule({
   declarations: [
     AppComponent,
+    PopupComponent,
   ],
   imports: [
     BrowserModule,
