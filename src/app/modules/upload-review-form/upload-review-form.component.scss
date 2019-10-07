@@ -1,0 +1,133 @@
+@import 'index';
+
+:host {
+  position: relative;
+
+  .content {
+    display: flex;
+  }
+
+  .sidebar-opener {
+    position: absolute;
+    top: 0;
+    z-index: 2;
+    width: 30px;
+    height: 44px;
+    background: $element-base-color;
+    border-radius: 0 3px 3px 0;
+    display: flex;
+
+    .button {
+      margin: auto;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .sidebar {
+    position: relative;
+    width: 295px;
+    padding: 20px 15px 265px;
+    border-radius: 3px;
+    background: #fff;
+
+    .loading {
+      position: relative;
+      opacity: 0.7;
+    }
+
+    .spinner {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 30px;
+    }
+
+    .sidebar-controls {
+      display: flex;
+      margin: 0 0 15px;
+    }
+
+    .sidebar-title {
+      color: $gray-color;
+      font-size: 12px;
+      line-height: 15px;
+    }
+
+    .sidebar-filter {
+      position: relative;
+      width: 53%;
+      min-width: 159px;
+      margin: 0 10px 0 0;
+    }
+
+    .sidebar-filter:after {
+      position: absolute;
+      right: -10px;
+      top: 0;
+      content: '';
+      width: 1px;
+      height: 34px;
+      background: $dark-grey;
+    }
+
+    .sidebar-sort {
+      margin: 0 0 0 10px;
+    }
+
+    .upload-document-controls {
+      position: absolute;
+      width: 100%;
+      bottom: 55px;
+      left: 0;
+      display: flex;
+      padding: 0 15px;
+
+      .upload-document-form {
+
+      }
+
+      .upload-document-form-button {
+        margin: 0 0 10px;
+      }
+    }
+
+    .upload-document-controls:before {
+      position: absolute;
+      right: 15px;
+      top: -30px;
+      content: '';
+      width: 268px;
+      height: 1px;
+      background: $dark-grey;
+    }
+  }
+}
+
+.workarea {
+  position: relative;
+  flex-grow: 2;
+  overflow: hidden;
+}
+
+.footer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+.sidebar-container {
+  background-color: #fc5;
+  max-width: 0px;
+  overflow-x: hidden;
+  transition: ease-in-out 400ms max-width;
+}
+
+.sidebar-container.opened {
+  max-width: 294px;
+  transition: ease-in-out 600ms max-width;
+}

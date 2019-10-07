@@ -28,6 +28,10 @@
       border: 1px solid $button-color;
     }
 
+    &--full {
+      width: 100%;
+    }
+
     span {
       font-style: normal;
       font-weight: bold;
