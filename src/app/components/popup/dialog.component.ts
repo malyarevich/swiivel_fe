@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, ViewChild, EventEmitter, Output } from '@angular/core';
-import { Popup } from '@core/popup.service';
+import { Popup } from '@app/core/popup.service';
 
 @Component({
   selector: 'sw-dialog',
