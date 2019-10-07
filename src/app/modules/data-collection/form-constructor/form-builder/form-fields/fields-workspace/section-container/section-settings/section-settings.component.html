@@ -5,27 +5,44 @@
       <span class="app-text-extra-bold app-text-large">Section Setting</span>
     </div>
     <div class="col-sm-4">
-      <span class="app-text-extra-bold app-text-large">Section Conditional Logic</span>
+      <span class="app-text-extra-bold app-text-large">Logic Builder</span>
     </div>
-    <div class="col-sm-4 text-right">
+    <!-- <div class="col-sm-4 text-right">
       <button class="btn app-btn-outline-primary">
         Save Section Settings as a Preset
       </button>
-    </div>
+    </div> -->
   </div>
 
 
   <div class="row">
-    <div class="col-4">
-      <div class="settings-div p-3 pt-4 h-100">
-        <app-section-setting-options [section]="section"></app-section-setting-options>
+    <div class="col-4" style="padding-right: 0;">
+      <div class="settings-div h-100">
+        <div class="field_settings_container">
+          <form [formGroup]="sectionForm">
+            <section>
+              <div class="title">
+                <sw-input-toggle formControlName="showHint">
+                  <span class="input_label">Hint</span>
+                </sw-input-toggle>
+              </div>
+              <sw-input-phone-number  class="settings-field" *ngIf="sectionForm.get('showHint').value" formControlName="hint">
+              </sw-input-phone-number>
+            </section>
+            <section>
+              <sw-radio-group class="flex-row" [options]="displayOptions" formControlName="isDirectlyDisplayed">
+              </sw-radio-group>
+            </section>
+          </form>
+        </div>
+        
       </div>
     </div>
 
 
     <div class="col-8">
       <div class="settings-div row no-gutters h-100">
-        <div class="col border-right p-3">
+        <!-- <div class="col border-right p-3">
           <div class="row  mb-2 align-items-center">
             <div class="col">
               <span class="span-text  app-text-extra-bold ">CONDITIONAL LOGIC</span>
@@ -73,9 +90,9 @@
 
             </div>
           </div>
-        </div>
+        </div> -->
         <div class="col p-3">
-          <button class=" btn app-btn-primary form-control mt-2">Add Logic Builder</button>
+          <sw-button>Add Logic Builder</sw-button>
         </div>
       </div>
     </div>

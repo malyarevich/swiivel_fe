@@ -35,7 +35,6 @@ import { SectionSettingsComponent } from "./form-fields/fields-workspace/section
 import { GroupSettingMultiplierComponent } from "./form-fields/fields-workspace/group-container/group-settings/group-setting-multiplier/group-setting-multiplier.component";
 import { FieldsConditionalLogicComponent } from "./form-fields/fields-workspace/fields-shared-components/fields-conditional-logic/fields-conditional-logic.component";
 import { GroupSettingOptionsComponent } from "./form-fields/fields-workspace/group-container/group-settings/group-setting-options/group-setting-options.component";
-import { SectionSettingOptionsComponent } from "./form-fields/fields-workspace/section-container/section-settings/section-setting-options/section-setting-options.component";
 import { FieldsSettingVisibilityComponent } from "./form-fields/fields-workspace/fields-shared-components/fields-setting-visibility/fields-setting-visibility.component";
 import { FieldsSettingSupportTextComponent } from "./form-fields/fields-workspace/fields-shared-components/fields-setting-support-text/fields-setting-support-text.component";
 import { FieldsSettingPresetComponent } from "./form-fields/fields-workspace/fields-shared-components/fields-setting-preset/fields-setting-preset.component";
@@ -61,6 +60,7 @@ import { FinanceService } from "../../../../services/finance/finance.service";
 import { TuitionContractModule } from "./tuition-contract/tuition-contract.module";
 import { SectionHeaderModule } from "src/app/shared/components";
 import { SignatureSidebarModule } from "src/app/shared/components";
+import { SharedModule } from '@app/components/shared.module';
 
 @NgModule({
   declarations: [
@@ -97,7 +97,6 @@ import { SignatureSidebarModule } from "src/app/shared/components";
     GroupSettingMultiplierComponent,
     FieldsConditionalLogicComponent,
     GroupSettingOptionsComponent,
-    SectionSettingOptionsComponent,
     FieldsSettingVisibilityComponent,
     FieldsSettingSupportTextComponent,
     FieldsSettingPresetComponent,
@@ -127,7 +126,8 @@ import { SignatureSidebarModule } from "src/app/shared/components";
     SharedRedComponentsModule,
     SectionHeaderModule,
     TuitionContractModule,
-    SignatureSidebarModule
+    SignatureSidebarModule,
+    SharedModule
   ],
   providers: [FieldsService, FinanceService]
 })
