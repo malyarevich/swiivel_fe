@@ -19,6 +19,7 @@
       "@models/*": ["src/app/models/*"],
       "@modules/*": ["src/app/modules/*"],
       "@services/*": ["src/app/services/*"],
+      "@shared/*": ["src/app/components/*"]
     },
     "typeRoots": [
       "node_modules/@types"
