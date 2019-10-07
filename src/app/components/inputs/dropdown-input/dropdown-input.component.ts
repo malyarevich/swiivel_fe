@@ -11,7 +11,7 @@ import {
   ViewChild
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { Popup } from '@core/popup.service';
+import { Popup } from '@app/core/popup.service';
 
 const DROPDOWN_CONTROL_ACCESSOR = {
   provide: NG_VALUE_ACCESSOR,

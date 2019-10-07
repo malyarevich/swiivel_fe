@@ -11,7 +11,7 @@ import {
   QueryList,
   HostListener,
 } from '@angular/core';
-import { Popup } from '@core/popup.service';
+import { Popup } from '@app/core/popup.service';
 import { isObjectLike, isString } from 'lodash';
 import { SelectOptionDirective } from './option.directive';
 import { ActiveDescendantKeyManager } from '@angular/cdk/a11y';

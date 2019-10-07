@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, ViewChild, EventEmitter, Output } from '@angular/core';
 import { Popup } from '@core/popup.service';
-import { isObjectLike, isString } from 'lodash';
 
 @Component({
   selector: 'sw-dialog',

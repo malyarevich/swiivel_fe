@@ -31,10 +31,6 @@ import { DialogComponent } from './popup/dialog.component';
 // Utils
 import { MainSpinnerComponent } from './utils/main-spinner/main-spinner.component';
 
-// Bars
-import { BackBarComponent } from '@shared/bars/back-bar/back-bar.component';
-import { DocumentApprovalBarComponent } from '@shared/bars/document-approval-bar/document-approval-bar.component';
-
 // Others
 import { RadioGroupComponent } from './inputs/radio-group/radio-group.component';
 import { LabelComponent } from './labels/label/label.component';
@@ -104,9 +100,6 @@ registerLocaleData(localHe)
     ComponentIdDirective,
     MainComponent,
     PaginatorComponent,
-    // Bars
-    DocumentApprovalBarComponent,
-    BackBarComponent,
     StepperComponent,
     FormComponent,
     InputEnglishDatepickerComponent,
@@ -153,9 +146,6 @@ registerLocaleData(localHe)
     ComponentIdDirective,
     MainComponent,
     PaginatorComponent,
-    // Bars
-    DocumentApprovalBarComponent,
-    BackBarComponent,
     StepperComponent,
   ],
   providers: [
