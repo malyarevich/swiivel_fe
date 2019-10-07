@@ -1,0 +1,5 @@
+<div class="phone_number" [class.empty]="isEmpty()" (click)="focusInput()">
+  <ng-content></ng-content>
+  <input #input class="phone_number__input" type="tel" (focus)="onFocus()" (blur)="_onTouched()" (input)="onChange(input.value)" />
+  <i class="phone_number__error_icon"></i>
+</div>

@@ -14,10 +14,13 @@ import {AppComponent} from './app.component';
 import {LoginModule} from '@modules/login';
 import {InterceptorsModule} from '@app/utils';
 import {environment} from '../environments/environment';
+import { PopupComponent } from './core/components/popup/popup.component'
+import { OverlayModule } from '@angular/cdk/overlay';
 
 @NgModule({
   declarations: [
     AppComponent,
+    PopupComponent,
   ],
   imports: [
     BrowserModule,
@@ -31,6 +34,7 @@ import {environment} from '../environments/environment';
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     SharedStoreModule,
     InterceptorsModule.forRoot(),
+    OverlayModule
   ],
   providers: [
     PermissionService,

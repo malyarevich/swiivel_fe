@@ -1,0 +1,13 @@
+<button
+  type="button"
+  [ngClass]="{
+  'button--gray': style === 'gray',
+  'button--white': style === 'white'
+  }"
+  class="button" data-e2e="button"
+  [name]="name"
+  [value]="value"
+  [disabled]="disabled"
+>
+  <ng-content></ng-content>
+</button>

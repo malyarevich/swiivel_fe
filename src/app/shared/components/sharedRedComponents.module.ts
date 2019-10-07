@@ -5,7 +5,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { NgbDatepickerModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { AutoSizeInputModule } from 'ngx-autosize-input';
 
 // buttons
 import { SearchFilterBtnComponent } from './buttons/search-filter-btn/search-filter-btn.component';
@@ -99,7 +98,6 @@ import { ToolTipQuestionComponent } from './tool-tip-question/tool-tip-question.
     NgbDatepickerModule,
     NgSelectModule,
     ReactiveFormsModule,
-    AutoSizeInputModule
   ],
   exports: [
     CommonModule,
