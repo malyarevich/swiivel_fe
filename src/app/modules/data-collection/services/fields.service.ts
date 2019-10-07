@@ -28,29 +28,9 @@ export class FieldsService {
   }
 
   getExistingSideBarList() {
-    // TODO: temporarily
-    return this.http.get(`${environment.apiFB}/sidebar?api_token=${environment.api_token}`)
-      .pipe(
-        map(response => response)
-      );
+    return this.api.getSidebarFields();
   }
 
-  getExistingSideBarList2() {
-    // TODO: temporarily
-    return this.http.get(`${environment.apiCore}/proxy/sidebar-fields`)
-      .pipe(
-        map(response => response)
-      );
-  }
-
-
-  // getExistingSideBarList2() {
-  //   //TODO: temporarily
-  //   return this.http.get(`${environment.apiFB}/sidebar2?api_token=${environment.api_token}`)
-  //     .pipe(
-  //       map(response => response)
-  //     )
-  // }  }
 
   getRoleList() {
     return this.http.get(`/family/roles`)
