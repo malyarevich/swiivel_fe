@@ -1,0 +1,38 @@
+@import 'index';
+
+:host{
+  position: relative;
+  min-height: 70px;
+  height: 100%;
+
+  .controllers {
+    position: absolute;
+    display: flex;
+
+    .zoom,
+    .rotate {
+      display: flex;
+      background: $dark-purple;
+    }
+  }
+
+  .image {
+    display: block;
+    margin: 0 auto;
+  }
+
+  .loading {
+    position: relative;
+    min-height: 70px;
+    opacity: 0.7;
+  }
+
+  .loading-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 40px;;
+  }
+
+}

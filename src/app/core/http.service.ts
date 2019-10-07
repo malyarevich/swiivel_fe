@@ -54,9 +54,11 @@ export class HttpService {
     formData.append('original_name', file.name);
     formData.append('file', file, file.name);
 
-    // if (data) {
-    //   console.log(data);
-    // }
+    if (data && Object.entries(data).length && data.constructor === Object) {
+      for (const value in data) {
+        formData.append(value, data[value]);
+      }
+    }
 
     return this.http.request(method, this.apiUrl + url, {
       body: formData,
