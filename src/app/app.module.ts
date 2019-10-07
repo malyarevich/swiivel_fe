@@ -34,7 +34,10 @@ import { OverlayModule } from '@angular/cdk/overlay';
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     SharedStoreModule,
     InterceptorsModule.forRoot(),
-    OverlayModule
+    OverlayModule,
+  ],
+  entryComponents: [
+    PopupComponent,
   ],
   providers: [
     PermissionService,
