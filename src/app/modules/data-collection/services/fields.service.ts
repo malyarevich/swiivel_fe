@@ -3,11 +3,14 @@ import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import {environment} from '../../../../environments/environment';
 import {Field} from '../../../models/data-collection/field.model';
+import { ApiService } from '@app/core/api.service';
+
+
 
 
 @Injectable()
 export class FieldsService {
-  constructor(private http: HttpClient) {
+  constructor(private api: ApiService, private http: HttpClient) {
   }
 
   getCustomList() {
