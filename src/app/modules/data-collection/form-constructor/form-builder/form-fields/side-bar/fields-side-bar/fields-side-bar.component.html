@@ -1,12 +1,12 @@
 <span class="app-text-extra-bold">System Fields</span>
 <input class="form-control my-3 search-input" [(ngModel)]="searchText" placeholder="Search...">
-<!-- <div *ngIf="isTree" class="mr-3">
+<div *ngIf="isTree" class="mr-3">
   <app-fields-side-bar-node [sideBar]="sideBar"></app-fields-side-bar-node>
-</div> -->
-<div >
+</div>
+<div *ngIf="!isTree">
   <app-fields-side-bar-detailed
     [idSectionForDragDrop]="idSectionForDragDrop"
-    [section]="sideBar[0]"
+    [section]="sectionDetailed"
     [searchText]="searchText"
     [form]="form"
   >

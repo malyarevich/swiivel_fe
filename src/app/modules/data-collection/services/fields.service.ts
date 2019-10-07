@@ -34,7 +34,7 @@ export class FieldsService {
 
   getExistingSideBarList2() {
     // TODO: temporarily
-    return this.http.get(`${environment.apiCore}/proxy/sidebar-fields`)
+    return this.http.get(`${environment.apiFB}/sidebar_red_267?api_token=${environment.api_token}`)
       .pipe(
         map(response => response)
       );
