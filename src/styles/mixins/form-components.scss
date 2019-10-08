@@ -116,15 +116,19 @@
 }
 
 %placeholder {
-  .input_label {
+  .label {
     pointer-events: none;
     z-index: 3;
     position: absolute;
     top: 2px;
     left: 10px;
+    right: 10px;
     font-size: 10px;
     color: $gray-color;
     transition: all 0.2s ease-in-out;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 

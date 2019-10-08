@@ -7,6 +7,7 @@ import {SaveFormService} from '../services/save-form.service';
 import {ConstructorDraftService} from '../services/constructor-draft.service';
 
 import {FormNavigationBarComponent} from './form-navigation-bar/form-navigation-bar.component';
+import { SharedModule } from '@app/components/shared.module';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import {FormNavigationBarComponent} from './form-navigation-bar/form-navigation-
   imports: [
     CommonModule,
     FormConstructorRoutingModule,
+    SharedModule
   ],
   providers: [
     SaveFormService,
