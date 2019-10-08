@@ -7,9 +7,9 @@ export class UploadReviewFormDataSource implements DataSource<any> {
   private documentSubject = new BehaviorSubject<any[]>([]);
   private dataSubject = new BehaviorSubject<any[]>([]);
   private filterSubject = new BehaviorSubject<any>({});
-  private extremeDocumentsSubject = new BehaviorSubject<any>({});
   private loadingSubject = new BehaviorSubject<boolean>(false);
   public $loading = this.loadingSubject.asObservable();
+  private selectedFormId = new BehaviorSubject<any>(null);
 
   constructor(private uploadReviewFormService: UploadReviewFormService) {
     this.dataSubject.subscribe((data) => {
@@ -33,8 +33,12 @@ export class UploadReviewFormDataSource implements DataSource<any> {
     return this.filterSubject.asObservable();
   }
 
-  getExtremeDocuments(): any {
-    return this.extremeDocumentsSubject.asObservable();
+  getSelectedFormId(): any {
+    return this.selectedFormId.asObservable();
+  }
+
+  selectFormId(id: any): any {
+    this.selectedFormId.next(id);
   }
 
 
@@ -45,8 +49,8 @@ export class UploadReviewFormDataSource implements DataSource<any> {
   disconnect(_collectionViewer: CollectionViewer): void {
     this.documentSubject.complete();
     this.filterSubject.complete();
-    this.extremeDocumentsSubject.complete();
     this.loadingSubject.complete();
+    this.selectedFormId.complete();
   }
 
   uploadDocuments(formId: string, filterParams?: any, sortParam?: any): void {
@@ -54,7 +58,6 @@ export class UploadReviewFormDataSource implements DataSource<any> {
     this.uploadReviewFormService.getDocumentList(formId, filterParams, sortParam).subscribe((documents) => {
       this.loadingSubject.next(false);
       this.dataSubject.next(documents.data);
-      this.extremeDocumentsSubject.next({previous_form: documents.previous_form, next_form: documents.next_form});
     });
   }
 

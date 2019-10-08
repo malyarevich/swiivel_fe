@@ -5,7 +5,6 @@ import { RouterModule } from '@angular/router';
 
 // Bars
 import { BackBarComponent } from './bars/back-bar/back-bar.component';
-import { DocumentApprovalBarComponent } from './bars/document-approval-bar/document-approval-bar.component';
 
 // Buttons
 import { ButtonComponent } from './buttons/button/button.component';
@@ -73,7 +72,6 @@ registerLocaleData(localHe)
   declarations: [
     // Bars
     BackBarComponent,
-    DocumentApprovalBarComponent,
     // Buttons
     ButtonComponent,
     DropdownSelectComponent,
@@ -118,7 +116,6 @@ registerLocaleData(localHe)
     CdkStepperModule,
     // Bars
     BackBarComponent,
-    DocumentApprovalBarComponent,
     // Buttons
     ButtonComponent,
     IconButtonComponent,

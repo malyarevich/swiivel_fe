@@ -28,8 +28,9 @@ export class UploadReviewFormService extends ApiService {
   }
 
   getDocumentList(formId: string, filterParams?: any, sortParam?: any): Observable<any> {
+    console.log(filterParams, sortParam);
     let endpoint = '';
-    if (filterParams) {
+    if ((filterParams && filterParams.lengt) || (sortParam && sortParam.length)) {
       let endpointParam = '';
       if (filterParams && filterParams.length) {
         filterParams.map((param) =>  {
