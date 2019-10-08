@@ -11,8 +11,6 @@ import { ColorsEnum } from '@shared/colors.enum';
 import { IconsEnum } from '@shared/icons.enum';
 import { SizesEnum } from '@shared/sizes.enum';
 import { DialogComponent } from '@shared/popup/dialog.component';
-import { UploadDataModel } from '@models/data-collection/upload-data.model';
-import { SizeButtonsEnum } from '@shared/size-buttons.enum';
 
 @Component({
   selector: 'app-upload-review-form',
@@ -30,7 +28,6 @@ export class UploadReviewFormComponent implements OnInit {
   public filterValue = {};
   public sortValue: SortDropDownData[];
   public form: FormGroup;
-  public formUpload: FormGroup;
   public removeDocumentId: string;
   public showSpinner: boolean;
   public extremeDocuments: ExtremeUploadForms = {};
@@ -38,7 +35,6 @@ export class UploadReviewFormComponent implements OnInit {
   public isSideBarShown = true;
   public icons = IconsEnum;
   public size = SizesEnum;
-  public sizeButton = SizeButtonsEnum;
   public statuses = UploadReviewFormStatusesEnum;
 
   public documentTypes  = ['document'];
@@ -54,12 +50,6 @@ export class UploadReviewFormComponent implements OnInit {
     this.form = this.fb.group({
       filter: new FormControl([], Validators.required),
       sort: new FormControl([], Validators.required),
-    });
-    this.formUpload = this.fb.group({
-      upload: new FormControl(''),
-      documentType: new FormControl(''),
-      student: new FormControl(''),
-      account: new FormControl(''),
     });
   }
 
@@ -97,25 +87,13 @@ export class UploadReviewFormComponent implements OnInit {
       person_id: this.documentStudent[0],
       document_type: this.documentTypes[0]
     };
-    this.formUpload.valueChanges.subscribe(changes => {
-      this.updateUploadData();
-      console.log(changes , this.uploadDocumentData);
-    });
 
-  }
-
-  updateUploadData(): void {
-    this.uploadDocumentData['document_type'] = this.formUpload.get('documentType').value;
-    this.uploadDocumentData['document_id'] = this.activeIdForm;
-    this.uploadDocumentData['person_id'] = this.formUpload.get('student').value;
-    this.uploadDocumentData['document_type'] = this.formUpload.get('account').value;
   }
 
   getDocuments(): void {
     this.dataSource.getDocuments()
       .subscribe((docs) => {
         if (docs.length) {
-          console.log(this.activeIdDocument);
           this.documents = docs;
           if (!this.activeIdDocument) {
             this.dataSource.selectFormId(docs[0]._id);
@@ -128,11 +106,6 @@ export class UploadReviewFormComponent implements OnInit {
           this.cdr.detectChanges();
         }
       });
-    this.dataSource.getExtremeDocuments()
-      .subscribe((docs) => {
-        this.extremeDocuments = docs;
-        this.cdr.detectChanges();
-      });
   }
 
   getSelectForm(): Document {
@@ -144,6 +117,7 @@ export class UploadReviewFormComponent implements OnInit {
   selectItem(id: string): void {
     this.documents.map(document => document._id === id ? document.isSelected = true : document.isSelected = false);
     this.dataSource.selectFormId(id);
+    this.getExtremeDocuments();
   }
 
   downLoadForm(id: string): void {
@@ -151,15 +125,15 @@ export class UploadReviewFormComponent implements OnInit {
   }
 
   updateForm(id: string) {
-    this.dataSource.uploadDocuments(id);
-    this.getDocuments();
-    this.dataSource.uploadFilterList(id);
+    console.log('change');
+    // this.dataSource.uploadDocuments(id);
+    // this.getDocuments();
+    // this.dataSource.uploadFilterList(id);
   }
 
   skipDocument(): void {
     const activeDocumentIndex = this.documents.indexOf(this.documents.find(document => document._id === this.activeIdDocument));
     if (activeDocumentIndex + 1 < this.documents.length) {
-      console.log(activeDocumentIndex + 1);
       this.selectItem(this.documents[activeDocumentIndex + 1]._id);
     }
   }
@@ -182,5 +156,17 @@ export class UploadReviewFormComponent implements OnInit {
   openConfirmPopup(id: string): void {
     this.removeDocumentId = id;
     this.dialog.open();
+  }
+
+  getExtremeDocuments(): void {
+    this.extremeDocuments = {};
+    const activeDocumentIndex = this.documents.indexOf(this.documents.find(document => document._id === this.activeIdDocument));
+    if (activeDocumentIndex - 1 > -1) {
+      this.extremeDocuments.previous_form = this.documents[activeDocumentIndex - 1];
+    }
+    if (activeDocumentIndex + 1 < this.documents.length) {
+      this.extremeDocuments.next_form = this.documents[activeDocumentIndex + 1];
+    }
+    console.log(this.extremeDocuments);
   }
 }
