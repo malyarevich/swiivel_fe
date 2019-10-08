@@ -1,3 +1,5 @@
+@import "../mixins/form-components";
+
 %standart-btn {
   text-transform: capitalize;
   border-radius: 4px;
@@ -179,7 +181,7 @@ sw-input-number {
     &.empty {
       &:not(:focus-within) {
         padding: 5px 10px;
-        .input_label {
+        .label {
           position: absolute;
           top: 8px;
           font-size: 12px;
@@ -219,7 +221,7 @@ sw-dropdown-input.settings-field {
 sw-input-textarea {
   .input_textarea {
     @extend %placeholder;
-    .input_label {
+    .label {
       position: absolute;
       top: 0;
       font-size: 12px;

@@ -80,7 +80,6 @@ export class FieldsWorkspaceComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.list = Section.sectionWidth;
-    debugger;
   }
 
   ngAfterViewInit(): void {

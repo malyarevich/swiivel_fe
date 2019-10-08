@@ -32,10 +32,7 @@ import { PaymentSettingsTuitionComponent } from "./payment-settings/tuition/tuit
 import { PaymentSettingsTableSchoolCustomDefaultComponent } from "./payment-settings/table/school-custom-default/school-custom-default.component";
 import { SharedRedComponentsModule } from "../../../../shared/components/sharedRedComponents.module";
 import { SectionSettingsComponent } from "./form-fields/fields-workspace/section-container/section-settings/section-settings.component";
-import { GroupSettingMultiplierComponent } from "./form-fields/fields-workspace/group-container/group-settings/group-setting-multiplier/group-setting-multiplier.component";
 import { FieldsConditionalLogicComponent } from "./form-fields/fields-workspace/fields-shared-components/fields-conditional-logic/fields-conditional-logic.component";
-import { GroupSettingOptionsComponent } from "./form-fields/fields-workspace/group-container/group-settings/group-setting-options/group-setting-options.component";
-import { SectionSettingOptionsComponent } from "./form-fields/fields-workspace/section-container/section-settings/section-setting-options/section-setting-options.component";
 import { FieldsSettingVisibilityComponent } from "./form-fields/fields-workspace/fields-shared-components/fields-setting-visibility/fields-setting-visibility.component";
 import { FieldsSettingSupportTextComponent } from "./form-fields/fields-workspace/fields-shared-components/fields-setting-support-text/fields-setting-support-text.component";
 import { FieldsSettingPresetComponent } from "./form-fields/fields-workspace/fields-shared-components/fields-setting-preset/fields-setting-preset.component";
@@ -99,10 +96,7 @@ import { SharedModule } from '@app/components/shared.module';
     PaymentSettingsTuitionComponent,
     PaymentSettingsTableSchoolCustomDefaultComponent,
     SectionSettingsComponent,
-    GroupSettingMultiplierComponent,
     FieldsConditionalLogicComponent,
-    GroupSettingOptionsComponent,
-    SectionSettingOptionsComponent,
     FieldsSettingVisibilityComponent,
     FieldsSettingSupportTextComponent,
     FieldsSettingPresetComponent,
