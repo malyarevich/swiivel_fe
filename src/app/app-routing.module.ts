@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {routes as loginRoutes} from './modules/login';
 import {AuthGuard} from '@services/auth';
+import { environment } from 'src/environments/environment.prod';
 
 const routes: Routes = [
   ...loginRoutes,
@@ -18,7 +19,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {enableTracing: false})],
+  imports: [RouterModule.forRoot(routes, {enableTracing: true})],
   exports: [RouterModule]
 })
 
