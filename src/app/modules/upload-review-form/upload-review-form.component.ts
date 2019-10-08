@@ -64,6 +64,12 @@ export class UploadReviewFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.dataSource.getSelectedFormId()
+      .subscribe(id => {
+        console.log(id);
+        this.activeIdDocument = id;
+
+      });
     this.dataSource.$loading.subscribe((loading: boolean) => {
       this.showSpinner = loading;
     });
@@ -95,6 +101,7 @@ export class UploadReviewFormComponent implements OnInit {
       this.updateUploadData();
       console.log(changes , this.uploadDocumentData);
     });
+
   }
 
   updateUploadData(): void {
@@ -108,9 +115,13 @@ export class UploadReviewFormComponent implements OnInit {
     this.dataSource.getDocuments()
       .subscribe((docs) => {
         if (docs.length) {
+          console.log(this.activeIdDocument);
           this.documents = docs;
-          this.activeIdDocument = docs[0]._id;
-          this.selectItem(this.activeIdDocument);
+          if (!this.activeIdDocument) {
+            this.dataSource.selectFormId(docs[0]._id);
+          } else {
+            this.selectItem(this.activeIdDocument);
+          }
           this.cdr.detectChanges();
         } else {
           this.documents = [];
@@ -132,7 +143,7 @@ export class UploadReviewFormComponent implements OnInit {
 
   selectItem(id: string): void {
     this.documents.map(document => document._id === id ? document.isSelected = true : document.isSelected = false);
-    this.activeIdDocument = id;
+    this.dataSource.selectFormId(id);
   }
 
   downLoadForm(id: string): void {
@@ -148,6 +159,7 @@ export class UploadReviewFormComponent implements OnInit {
   skipDocument(): void {
     const activeDocumentIndex = this.documents.indexOf(this.documents.find(document => document._id === this.activeIdDocument));
     if (activeDocumentIndex + 1 < this.documents.length) {
+      console.log(activeDocumentIndex + 1);
       this.selectItem(this.documents[activeDocumentIndex + 1]._id);
     }
   }

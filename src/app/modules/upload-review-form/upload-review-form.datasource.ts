@@ -10,6 +10,7 @@ export class UploadReviewFormDataSource implements DataSource<any> {
   private extremeDocumentsSubject = new BehaviorSubject<any>({});
   private loadingSubject = new BehaviorSubject<boolean>(false);
   public $loading = this.loadingSubject.asObservable();
+  private selectedFormId = new BehaviorSubject<any>(null);
 
   constructor(private uploadReviewFormService: UploadReviewFormService) {
     this.dataSubject.subscribe((data) => {
@@ -38,6 +39,15 @@ export class UploadReviewFormDataSource implements DataSource<any> {
   }
 
 
+  getSelectedFormId(): any {
+    return this.selectedFormId.asObservable();
+  }
+
+  selectFormId(id: any): any {
+    this.selectedFormId.next(id);
+  }
+
+
   connect(_collectionViewer: CollectionViewer): Observable<any[]> {
     return this.documentSubject.asObservable();
   }
@@ -47,6 +57,7 @@ export class UploadReviewFormDataSource implements DataSource<any> {
     this.filterSubject.complete();
     this.extremeDocumentsSubject.complete();
     this.loadingSubject.complete();
+    this.selectedFormId.complete();
   }
 
   uploadDocuments(formId: string, filterParams?: any, sortParam?: any): void {
