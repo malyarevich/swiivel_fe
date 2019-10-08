@@ -4,6 +4,7 @@ import {
   OnInit,
   OnDestroy
 } from "@angular/core";
+import { Location } from "@angular/common";
 import { ActivatedRoute } from "@angular/router";
 import {
   FormGroup,
@@ -30,7 +31,7 @@ import { SIGNATURE_TYPES, E_SIGNATURE_TYPES } from "./models/signature.model";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class OnlineFormComponent implements OnInit, OnDestroy {
-  formId: string;
+  // formId: string;
   form: Form;
   fg: FormGroup;
 
@@ -46,6 +47,8 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
 
   fgValueChangesSubscription: Subscription;
   fgStatusChangesSubscription: Subscription;
+  getOneFormSubscription: Subscription;
+
   isFormStatusChanged: boolean = false;
   fieldListByPage: object = {};
   fieldNameList: object = {};
@@ -59,7 +62,8 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private onlineFormService: OnlineFormService
+    private onlineFormService: OnlineFormService,
+    private location: Location
   ) {}
 
   ngOnInit() {
@@ -71,38 +75,61 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
     return this._isReady$.asObservable();
   }
 
+  isHaveSense(): boolean {
+    console.log(this.form['activeSections']);
+    return (
+      this.form['activeSections']
+      && Object.keys(this.form['activeSections']).length > 0
+      && this.form['activeSections'].constructor === Object
+    );
+  }
+
+  loadingProcess() {
+    this.initForm();
+    this.initNavigation();
+    this.initPercents();
+    this.initPosition();
+    this.initRequiredList();
+    this.initFormControls();
+    // if (this.onlineFormService.getFormGroup()) {
+    //   this._isReady$.next(true);
+    // }
+    this._isReady$.next(true);
+    this.fgStatusChangesSubscription = this.fg.statusChanges.subscribe(() => {
+      this.pagesPercents$.next(
+        this.getRecountedPagesPercentsByPage(
+          this.currentPosition$.getValue()["page"]
+        )
+      );
+    });
+    this.fgValueChangesSubscription = this.fg.valueChanges.subscribe(() => {
+      this.isFormStatusChanged = true;
+    });
+  }
+
+  failedLoading() {
+    this._isReady$.next(true);
+  }
+
   getForm(): void {
     this.onlineFormService.setFromId(
       this.route.snapshot.paramMap.get("mongo_id")
     );
     //TODO: check if we need formId here
-    this.route.params.subscribe(params => {
-      this.formId = params.mongo_id;
-    });
+    // this.route.params.subscribe(params => {
+    //   this.formId = params.mongo_id;
+    // });
 
-    this.onlineFormService.getOneForm().subscribe((form: Form) => {
+    this.getOneFormSubscription = this.onlineFormService.getOneForm().subscribe((form: Form) => {
       this.form = form;
       console.log(this.form);
 
-      this.initForm();
-      this.initNavigation();
-      this.initPercents();
-      this.initPosition();
-      this.initRequiredList();
-      this.initFormControls();
-      if (this.onlineFormService.getFormGroup()) {
-        this._isReady$.next(true);
+      if (this.isHaveSense()) {
+        this.loadingProcess();
+      } else {
+        this.failedLoading();
       }
-      this.fgStatusChangesSubscription = this.fg.statusChanges.subscribe(() => {
-        this.pagesPercents$.next(
-          this.getRecountedPagesPercentsByPage(
-            this.currentPosition$.getValue()["page"]
-          )
-        );
-      });
-      this.fgValueChangesSubscription = this.fg.valueChanges.subscribe(() => {
-        this.isFormStatusChanged = true;
-      });
+
     });
   }
 
@@ -359,18 +386,25 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
   }
 
   initPercents() {
+    //by default when page loads
+    this.formNavigationState$.getValue().forEach(item => {
+      this.pagesPercents$.next([
+        ...this.pagesPercents$.getValue(),
+        { page: item["page"], percent: -1 }
+      ]);
+    });
+    //also load by server
     if (
       typeof this.form.pagesPercents !== "undefined" &&
       this.form.pagesPercents.length > 0
     ) {
-      this.pagesPercents$.next(this.form.pagesPercents);
-    } else {
-      this.formNavigationState$.getValue().forEach(item => {
-        this.pagesPercents$.next([
-          ...this.pagesPercents$.getValue(),
-          { page: item["page"], percent: -1 }
-        ]);
+      const pagePercentByServer: object = {};
+      this.form.pagesPercents.forEach(elem => {
+        pagePercentByServer[elem['page']] = elem['percent'];
       });
+      this.pagesPercents$.next(this.pagesPercents$.getValue().map(elem => {
+        return {...elem, percent: pagePercentByServer[elem['page']]}
+      }));
     }
   }
 
@@ -422,8 +456,8 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
   addToFieldLists(
     menuName: string,
     key: string,
-    isRequired: boolean,
-    label: string
+    isRequired: boolean = false,
+    label: string = 'hiddenField'
   ) {
     if (isRequired) {
       this.requiredListByPage[menuName].push(key);
@@ -434,7 +468,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
 
   addControl(
     key: string,
-    isValidate: boolean,
+    isValidate: boolean = false,
     validators = this.requiredValidator
   ): void {
     this.fg.addControl(
@@ -601,6 +635,21 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
     }
   }
 
+  initPacketIntroductionFormControls() {
+    if (
+      this.form.packetIntroduction &&
+      this.form.packetIntroduction.content
+    ) {
+
+      const key = mainMenuNames.packetIntroduction;
+      this.addToFieldLists(
+        mainMenuNames.packetIntroduction,
+        key
+      );
+      this.addControl(key);
+    }
+  }
+
   initTermsConditionsFormControls() {
     if (
       this.form.termsConditions &&
@@ -664,6 +713,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
     this.initDocumentsFormControls(this.form.documents);
     this.initFormsFormControls(this.form.forms);
     this.initGeneralInfoFormControls(this.form.fields);
+    this.initPacketIntroductionFormControls();
     this.initTermsConditionsFormControls();
   }
 
@@ -699,6 +749,9 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
           this.formNavigationState$.getValue()[currentPageIndex - 1]["tabs"]
             .length - 1
       });
+    } else {
+      //TODO: need business clarification for this branch of code
+      this.goBackLocation();
     }
   }
 
@@ -882,8 +935,8 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
         pagesPercents: this.pagesPercents$.getValue()
       };
       //TODO: change to commented code when back-end will be ready
-      // savingObj["fieldListByPage"] = this.fieldListByPage;
-      // savingObj["currentPosition"] = this.currentPosition$.getValue();
+      savingObj["fieldListByPage"] = this.fieldListByPage;
+      savingObj["currentPosition"] = this.currentPosition$.getValue();
       savingObj["fieldsData"] = this.fg.value;
       this.onlineFormService
         .sendForm(savingObj)
@@ -891,6 +944,9 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
         .subscribe(
           () => {
             this.formErrors$.next({});
+            this.sectionGroupFieldsErrors$.next(
+              this.composeSectionGroupFieldsErrors()
+            );
             this.goToNextStep();
             this.isFormStatusChanged = false;
           },
@@ -910,10 +966,34 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
     }
   }
 
+  goBackLocation() {
+    this.location.back();
+  }
+
+  onMainNavAction(event) {
+    switch (event) {
+      case "save":
+        this.saveAndNextStep();
+      break;
+      case "cancel":
+        this.goBackLocation();
+        break;
+      default:
+        break;
+    }
+  }
+
   ngOnDestroy(): void {
     this._isReady$.unsubscribe();
     this.destroyedSaveForm$.next();
-    this.fgStatusChangesSubscription.unsubscribe();
-    this.fgValueChangesSubscription.unsubscribe();
+    if (this.fgStatusChangesSubscription) {
+      this.fgStatusChangesSubscription.unsubscribe();
+    }
+    if (this.fgValueChangesSubscription) {
+      this.fgValueChangesSubscription.unsubscribe();
+    }
+    if (this.getOneFormSubscription) {
+      this.getOneFormSubscription.unsubscribe();
+    }
   }
 }

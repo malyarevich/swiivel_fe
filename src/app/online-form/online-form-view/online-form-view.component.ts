@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
+import {Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy} from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { Form } from "@app/models/data-collection/form";
 import { Observable, Subscription } from "rxjs";
@@ -13,7 +13,8 @@ import {
 @Component({
   selector: "sw-online-form-view",
   templateUrl: "./online-form-view.component.html",
-  styleUrls: ["./online-form-view.component.scss"]
+  styleUrls: ["./online-form-view.component.scss"],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class OnlineFormViewComponent implements OnInit {
   @Input() form: Form;
