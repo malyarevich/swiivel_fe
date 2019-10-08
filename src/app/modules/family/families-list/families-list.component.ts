@@ -24,7 +24,10 @@ export class FamiliesListComponent implements OnInit {
     limit: 200,
     page: 1,
     search: {},
-    sort: {}
+    sort: {
+      order: '',
+      field: '',
+    }
   };
 
   cols: DataTableColumn[] = [

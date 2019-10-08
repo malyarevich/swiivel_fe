@@ -12,7 +12,7 @@ export const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren: () => import('./form-table/form-table.module')
+            loadChildren: () => import('./forms-dashboard/form-table.module')
               .then(m => m.FormTableModule)
           }
         ]
