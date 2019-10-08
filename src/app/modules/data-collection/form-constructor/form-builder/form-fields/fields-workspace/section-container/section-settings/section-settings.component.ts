@@ -19,9 +19,9 @@ export class SectionSettingsComponent {
     if (s) {
       this._section = s;
       this.sectionForm.patchValue({
-        showHint: s.options.isSupportText,
-        isDirectlyDisplayed: s.options.isDirectlyDisplayed ? 'Directly Displayed' : 'Pop Up',
-        hint: s.options.isSupportTextData || null
+        isSupportText: s.options ? s.options.isSupportText : null,
+        isDirectlyDisplayed: s.options ? s.options.isDirectlyDisplayed ? 'Directly Displayed' : 'Pop Up' : null,
+        isSupportTextData: s.options ? s.options.isSupportTextData || null : null
       });
     }
   }
@@ -36,8 +36,8 @@ export class SectionSettingsComponent {
     private fb: FormBuilder
   ) {
     this.sectionForm = this.fb.group({
-      showHint: [false],
-      hint: [null, /* { updateOn: 'blur' } */],
+      isSupportText: [false],
+      isSupportTextData: [null, /* { updateOn: 'blur' } */],
       isDirectlyDisplayed: [null]
     });
     this.sectionForm.valueChanges.subscribe(v => {
@@ -47,9 +47,8 @@ export class SectionSettingsComponent {
 
   updateSection(formValue: any):void {
     if (formValue) {
-      this._section.options.isDirectlyDisplayed = formValue.isDirectlyDisplayed === 'Directly Displayed';
-      this._section.options.isSupportText = formValue.showHint;
-      this._section.options.isSupportTextData = formValue.hint;
+      if (!this.section.options) { this.section.options = {}; }
+      Object.assign(this.section.options, formValue)
     }
   }
 

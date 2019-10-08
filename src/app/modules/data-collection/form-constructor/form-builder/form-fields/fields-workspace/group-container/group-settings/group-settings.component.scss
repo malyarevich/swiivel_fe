@@ -1,8 +1,27 @@
-@import '../../../../../../../../../styles/variables/colors';
+@import 'index';
+
+:host {
+    .group_row {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+    }
+    .group_col {
+        width: 50%;
+    }
+    .group_col:not(:last-of-type) {
+        padding-right: 10px;
+        margin-right: 10px;
+        border-right: 1px solid #A4A4A4;
+    }
+    
+}
 
 .app-group-settings-section {
     background-color: white;
-    border-top: 1px solid $element-base-color;
+    border: 1px solid $element-base-color;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
 }
 .app-element-background {
     background-color: $element-base-color;
@@ -34,4 +53,10 @@
 .app-gs-sub-title {
     font-size: 0.8em;
     font-family: 'NunitoSans-ExtraBold';
+}
+
+.settings-div {
+    border-radius: 3px;
+    background-color: #f3f3f3;
+    border: 1px solid #E3E3E3;
 }

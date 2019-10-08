@@ -1,4 +1,4 @@
-@import '../../../../../../../../styles/variables/colors';
+@import "index";
 
 .group-bc{
   background-color: #EBEEFF;
@@ -37,6 +37,9 @@
 .app-setting-show {
   border: 1px solid $element-base-color;
   border-radius: 5px;
+  border-bottom: none;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
 
