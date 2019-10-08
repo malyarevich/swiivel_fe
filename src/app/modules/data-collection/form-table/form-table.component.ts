@@ -20,7 +20,7 @@ export class FormTableComponent implements OnInit {
     limit: 200,
     value: '',
     search: {},
-    sort: {},
+    sort: { order: '', field: ''},
     filter: {},
     conditions: {},
   };

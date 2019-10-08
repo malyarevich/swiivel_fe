@@ -10,7 +10,9 @@ import { IActiveSections } from './form-constructor/form-builder/active-section.
 import { DocumentsFormsModel } from './form-constructor/form-builder/documents-forms.model';
 
 export interface Form {
+  id?: number;
   _id: string;
+  mongo_id?: string;
   name: string;
   fields?: Field[];
   updated_at?: string;
