@@ -1,61 +1,61 @@
 <div class="content_section__main_container" *ngIf="isExist()">
   <div class="content_section__main content_section__main--center">
     <!--Title-->
-    <ng-container *ngIf="form.paymentSettings?.paymentSettingsItems?.length">
-      <ng-container
-        *ngFor="
-          let item of form.paymentSettings.paymentSettingsItems;
-          let indexItem = index
-        "
-      >
-        <!--Title-->
-        <h2 class="content_section__article_title">
-          {{ item.title | uppercase }}
-        </h2>
+<!--    <ng-container *ngIf="form.paymentSettings?.paymentSettingsItems?.length">-->
+<!--      <ng-container-->
+<!--        *ngFor="-->
+<!--          let item of form.paymentSettings.paymentSettingsItems;-->
+<!--          let indexItem = index-->
+<!--        "-->
+<!--      >-->
+<!--        &lt;!&ndash;Title&ndash;&gt;-->
+<!--        <h2 class="content_section__article_title">-->
+<!--          {{ item.title | uppercase }}-->
+<!--        </h2>-->
 
-        <!--Text-->
-        <article class="content_section__article">
-          <div
-            class="content_section__article_text"
-            [innerHTML]="item.text"
-          ></div>
-        </article>
+<!--        &lt;!&ndash;Text&ndash;&gt;-->
+<!--        <article class="content_section__article">-->
+<!--          <div-->
+<!--            class="content_section__article_text"-->
+<!--            [innerHTML]="item.text"-->
+<!--          ></div>-->
+<!--        </article>-->
 
-        <!--Checkbox-->
+<!--        &lt;!&ndash;Checkbox&ndash;&gt;-->
 
-        <div
-          *ngIf="item.checkbox.isActive"
-          class="content_section__additional_fields"
-        >
-          <!-- <div class="content_section__inputs_container p-0">
-          <div class="content_section__checkbox_container p-0">
-            <input
-              class="content_section__checkbox"
-              type="checkbox"
-              id="item.checkbox.id"
-              [(ngModel)]="item.checkbox.checked"
-              [disabled]="true"
-            />
+<!--        <div-->
+<!--          *ngIf="item.checkbox.isActive"-->
+<!--          class="content_section__additional_fields"-->
+<!--        >-->
+<!--          &lt;!&ndash; <div class="content_section__inputs_container p-0">-->
+<!--          <div class="content_section__checkbox_container p-0">-->
+<!--            <input-->
+<!--              class="content_section__checkbox"-->
+<!--              type="checkbox"-->
+<!--              id="item.checkbox.id"-->
+<!--              [(ngModel)]="item.checkbox.checked"-->
+<!--              [disabled]="true"-->
+<!--            />-->
 
-            <label
-              tabindex="indexItem"
-              for="item.id"
-              class="content_section__checkbox_label"
-            >
-              <span
-                class="app-checkbox-checkmark
-                  content_section__checkbox_checkmark"
-              ></span>
-              {{ item.checkbox.text }}
-            </label>
-          </div>
-        </div> -->
-        </div>
-      </ng-container>
+<!--            <label-->
+<!--              tabindex="indexItem"-->
+<!--              for="item.id"-->
+<!--              class="content_section__checkbox_label"-->
+<!--            >-->
+<!--              <span-->
+<!--                class="app-checkbox-checkmark-->
+<!--                  content_section__checkbox_checkmark"-->
+<!--              ></span>-->
+<!--              {{ item.checkbox.text }}-->
+<!--            </label>-->
+<!--          </div>-->
+<!--        </div> &ndash;&gt;-->
+<!--        </div>-->
+<!--      </ng-container>-->
 
-      <sw-online-form-signatures
-        [signature]="signature"
-      ></sw-online-form-signatures>
-    </ng-container>
+<!--      <sw-online-form-signatures-->
+<!--        [signature]="signature"-->
+<!--      ></sw-online-form-signatures>-->
+<!--    </ng-container>-->
   </div>
 </div>

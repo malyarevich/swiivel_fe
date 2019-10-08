@@ -2,6 +2,12 @@ import { Component, OnInit, Input } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { cloneDeep } from "lodash";
 import { Form, ISectionTab } from "@app/models/data-collection/form";
+import {
+  IMenuItems,
+  IMainMenuNames,
+  menuItems,
+  mainMenuNames
+} from "../models/menu.model";
 
 @Component({
   selector: "sw-online-form-packet-introduction",
@@ -24,6 +30,7 @@ export class OnlineFormPacketIntroductionComponent implements OnInit {
     if (this.formNavigationState) {
       this.initPackets();
     }
+    this.fg.patchValue({...this.fg.value, [mainMenuNames.packetIntroduction]: ''});
   }
 
   initPackets() {

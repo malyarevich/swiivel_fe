@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy} from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Form } from '@app/models/data-collection/form';
 import {
@@ -11,16 +11,17 @@ import {
 @Component({
   selector: 'sw-online-form-menu',
   templateUrl: './online-form-menu.component.html',
-  styleUrls: ['./online-form-menu.component.scss']
+  styleUrls: ['./online-form-menu.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class OnlineFormMenuComponent implements OnInit {
   @Input() form: Form;
   @Input() pagesPercents: object[];
   @Input() formNavigationState: object[];
   @Input() currentPosition: object;
-  
+
   @Output() onGoToPage: EventEmitter<any> = new EventEmitter;
-  
+
   menuItems;
 
   hoveredItems = [];

@@ -1,9 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {Component, OnInit, Input, ChangeDetectionStrategy} from '@angular/core';
 
 @Component({
   selector: 'sw-online-form-view-wrapper',
   templateUrl: './online-form-view-wrapper.component.html',
-  styleUrls: ['./online-form-view-wrapper.component.scss']
+  styleUrls: ['./online-form-view-wrapper.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class OnlineFormViewWrapperComponent implements OnInit {
   @Input() page: string;
