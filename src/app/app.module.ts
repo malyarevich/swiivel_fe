@@ -15,6 +15,7 @@ import {LoginModule} from '@modules/login';
 import {InterceptorsModule} from '@app/utils';
 import {environment} from '../environments/environment';
 import { PopupComponent } from './core/components/popup/popup.component'
+import { OverlayModule } from '@angular/cdk/overlay';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,10 @@ import { PopupComponent } from './core/components/popup/popup.component'
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     SharedStoreModule,
     InterceptorsModule.forRoot(),
+    OverlayModule,
+  ],
+  entryComponents: [
+    PopupComponent,
   ],
   providers: [
     PermissionService,

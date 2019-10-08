@@ -3,11 +3,14 @@ import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import {environment} from '../../../../environments/environment';
 import {Field} from '../../../models/data-collection/field.model';
+import { ApiService } from '@app/core/api.service';
+
+
 
 
 @Injectable()
 export class FieldsService {
-  constructor(private http: HttpClient) {
+  constructor(private api: ApiService, private http: HttpClient) {
   }
 
   getCustomList() {
@@ -25,29 +28,9 @@ export class FieldsService {
   }
 
   getExistingSideBarList() {
-    // TODO: temporarily
-    return this.http.get(`${environment.apiFB}/sidebar?api_token=${environment.api_token}`)
-      .pipe(
-        map(response => response)
-      );
+    return this.api.getSidebarFields();
   }
 
-  getExistingSideBarList2() {
-    // TODO: temporarily
-    return this.http.get(`${environment.apiCore}/proxy/sidebar-fields`)
-      .pipe(
-        map(response => response)
-      );
-  }
-
-
-  // getExistingSideBarList2() {
-  //   //TODO: temporarily
-  //   return this.http.get(`${environment.apiFB}/sidebar2?api_token=${environment.api_token}`)
-  //     .pipe(
-  //       map(response => response)
-  //     )
-  // }  }
 
   getRoleList() {
     return this.http.get(`/family/roles`)

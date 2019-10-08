@@ -58,7 +58,11 @@ import { FinanceService } from "../../../../services/finance/finance.service";
 import { TuitionContractModule } from "./tuition-contract/tuition-contract.module";
 import { SectionHeaderModule } from "src/app/shared/components";
 import { SignatureSidebarModule } from "src/app/shared/components";
+
+import { CdkTreeModule } from '@angular/cdk/tree';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { SharedModule } from '@app/components/shared.module';
+
 
 @NgModule({
   declarations: [
@@ -108,7 +112,8 @@ import { SharedModule } from '@app/components/shared.module';
     NumberSettingsComponent,
     DateSettingsComponent,
     FormsContainerComponent,
-    FieldTypePipe
+    FieldTypePipe,
+
   ],
   imports: [
     CommonModule,
@@ -123,6 +128,8 @@ import { SharedModule } from '@app/components/shared.module';
     SectionHeaderModule,
     TuitionContractModule,
     SignatureSidebarModule,
+    CdkTreeModule,
+    DragDropModule,
     SharedModule
   ],
   providers: [FieldsService, FinanceService]

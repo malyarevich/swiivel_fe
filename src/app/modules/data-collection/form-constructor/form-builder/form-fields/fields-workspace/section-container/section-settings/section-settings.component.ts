@@ -20,7 +20,7 @@ export class SectionSettingsComponent {
       this._section = s;
       this.sectionForm.patchValue({
         isSupportText: s.options ? s.options.isSupportText : null,
-        isDirectlyDisplayed: s.options ? s.options.isDirectlyDisplayed ? 'Directly Displayed' : 'Pop Up' : null,
+        isDirectlyDisplayed: s.options ? s.options.isDirectlyDisplayed || null : null,
         isSupportTextData: s.options ? s.options.isSupportTextData || null : null
       });
     }
