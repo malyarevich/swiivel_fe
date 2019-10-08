@@ -11,17 +11,17 @@ import { ExtremeUploadForms } from '@models/upload-review-form/forms.model';
 
 export class FormUploadFooterComponent {
   @Input() documents: ExtremeUploadForms;
-  @Output('changeForm') changeFormEmmiter = new EventEmitter<string>();
+  @Output('changeForm') changeFormEmitter = new EventEmitter<string>();
 
   public uploadReviewFormStatusesEnum = UploadReviewFormStatusesEnum;
 
   constructor(public uploadReviewFormService: UploadReviewFormService) {}
 
   prev() {
-    this.changeFormEmmiter.emit(this.documents.previous_form.form_id);
+    this.changeFormEmitter.emit(this.documents.previous_form.form_id);
   }
 
   next() {
-    this.changeFormEmmiter.emit(this.documents.next_form.form_id);
+    this.changeFormEmitter.emit(this.documents.next_form.form_id);
   }
 }

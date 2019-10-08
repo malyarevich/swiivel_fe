@@ -1,10 +1,10 @@
 <sw-back-bar [title]="'Review Forms'" [backRoute]="'/online-form/'+activeIdForm"></sw-back-bar>
-<sw-document-approval-bar
+<app-document-approval-bar
   [document]="getSelectForm()"
   (skipDocument)="skipDocument()"
   (changeStatus)="changeStatus($event)"
 >
-</sw-document-approval-bar>
+</app-document-approval-bar>
 <div class="content">
   <div class="sidebar-container" [class.opened]="isSideBarShown">
     <div class="sidebar">
@@ -42,30 +42,12 @@
         </div>
         <i *ngIf="showSpinner" class="fas fa-spinner spinner"></i>
         <div class="upload-document-controls">
-          <form class="upload-document-form" [formGroup]="formUpload">
-            <div class="upload-document-form-button">
-              <sw-input-file
-                formControlName="upload"
-                #file="upload"
-                [data]="uploadDocumentData"
-                preupload="/proxy/upload-reviews-form/upload/{{activeIdForm}}"
-              >
-                <sw-button (click)="file.openDialog()" [size]="sizeButton.FULL">Upload Document</sw-button>
-              </sw-input-file>
-            </div>
-            <!--<sw-dropdown-select [options]="documentTypes">-->
-              <!--<span>{{ this.uploadDocumentData.type }}</span>-->
-            <!--</sw-dropdown-select>-->
-            <!--<sw-dropdown-select [options]="documentStudent">-->
-              <!--<span>{{ this.uploadDocumentData.student }}</span>-->
-            <!--</sw-dropdown-select>-->
-            <!--<sw-dropdown-select [options]="documentAccount">-->
-              <!--<span>{{ this.uploadDocumentData.account }}</span>-->
-            <!--</sw-dropdown-select>-->
-            <!--<div class="items-control">-->
-            <!--<sw-button [style]="colors.WHITE">Bulk Download</sw-button>-->
-            <!--</div>-->
-          </form>
+          <app-review-form-controls
+            [activeIdForm]="activeIdForm"
+            [documentStudent]="documentStudent"
+            [documentAccount]="documentAccount"
+            [documentTypes]="documentTypes"
+          ></app-review-form-controls>
         </div>
       </div>
       <div *ngIf="!showSpinner && (!documents || !documents.length)" class="sidebar--empty">

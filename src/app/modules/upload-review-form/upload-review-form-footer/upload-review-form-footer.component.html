@@ -10,9 +10,9 @@
         </sw-button>
       </div>
       <div class="text-row">
-        <p class="name">{{ documents.previous_form.family_name }}</p>
+        <p class="name">{{ documents.previous_form.person_name }}</p>
         <div class="text-row-container">
-          <p class="document-name">{{ documents.previous_form.form_name }}</p>
+          <p class="document-name">{{ documents.previous_form.entity_name }}</p>
           <div class="control-item">
             <sw-status-label
               [class]="uploadReviewFormService.getStatusColor(documents.previous_form.status)"
@@ -27,9 +27,9 @@
   <div class="next" *ngIf="documents.next_form">
     <div class="container" *ngIf="documents.next_form">
       <div class="text-row">
-        <p class="name">{{ documents.next_form.family_name }}</p>
+        <p class="name">{{ documents.next_form.person_name }}</p>
         <div class="text-row-container">
-          <p class="document-name">{{ documents.next_form.form_name }}</p>
+          <p class="document-name">{{ documents.next_form.entity_name }}</p>
           <div class="control-item">
             <sw-status-label
               [class]="uploadReviewFormService.getStatusColor(documents.next_form.status)"
