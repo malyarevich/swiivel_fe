@@ -134,6 +134,9 @@ export interface IFieldValidators {
   isErrorMessage: boolean;
   isProhibitDataEntry: boolean;
   errorText: string;
+  criteria?: string;
+  minLength?: number;
+  maxLength?: number;
 }
 
 export interface IFieldValidatorsRule extends ILabelValueSelect {

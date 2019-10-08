@@ -38,7 +38,6 @@ import { FieldsSettingSupportTextComponent } from "./form-fields/fields-workspac
 import { FieldsSettingPresetComponent } from "./form-fields/fields-workspace/fields-shared-components/fields-setting-preset/fields-setting-preset.component";
 import { FieldsSettingOptionCheckboxesComponent } from "./form-fields/fields-workspace/fields-shared-components/fields-setting-option-checkboxes/fields-setting-option-checkboxes.component";
 import { ShortTextSettingsComponent } from "./form-fields/fields-workspace/field-container/form-field-settings/short-text-settings/short-text-settings.component";
-import { FieldTypeSettingsContainerComponent } from "./form-fields/fields-workspace/field-container/form-field-settings/field-type-settings-container/field-type-settings-container.component";
 import { DropDownListSettingsComponent } from "./form-fields/fields-workspace/field-container/form-field-settings/drop-down-list-settings/drop-down-list-settings.component";
 import { EmailSettingsComponent } from "./form-fields/fields-workspace/field-container/form-field-settings/email-settings/email-settings.component";
 import { FieldValidationComponent } from "./form-fields/fields-workspace/field-container/form-field-settings/field-validation/field-validation.component";
@@ -102,7 +101,6 @@ import { SharedModule } from '@app/components/shared.module';
     FieldsSettingPresetComponent,
     FieldsSettingOptionCheckboxesComponent,
     ShortTextSettingsComponent,
-    FieldTypeSettingsContainerComponent,
     DropDownListSettingsComponent,
     EmailSettingsComponent,
     FieldValidationComponent,

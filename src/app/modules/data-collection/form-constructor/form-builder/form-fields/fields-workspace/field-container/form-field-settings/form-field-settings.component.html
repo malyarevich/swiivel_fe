@@ -1,31 +1,51 @@
 <div class="p-3 mt-3 app-field-settings-section">
-  <div class="row mb-2 mt-3">
-    <div class="col-sm-8">
-      <ul class="nav">
-        <li class="nav-item">
-          <a class="app-nav-link" [ngClass]="{'app-active': tab == 'general'}" (click)="tab = 'general'">General</a>
-        </li>
-        <li class="nav-item">
-        <span class="app-nav-link" [ngClass]="{'app-active': tab == 'settings'}"
-              (click)="tab = 'settings'">{{fieldTypeName}} Settings</span>
-        </li>
-        <li class="nav-item">
-          <a class="app-nav-link" [ngClass]="{'app-active': tab == 'conditional'}" (click)="tab = 'conditional'">Conditional
-            Logic</a>
-        </li>
-        <li class="nav-item">
-          <a class="app-nav-link" [ngClass]="{'app-active': tab == 'mapping'}" (click)="tab = 'mapping'">Mapping
-            Logic</a>
-        </li>
-      </ul>
+
+
+  <div class="row mb-2 mt-1">
+    <div class="col-sm-4">
+      <span class="app-text-extra-bold app-text-large">Setting</span>
     </div>
-    <div class="col-sm-4 text-right">
-      <button class="btn app-btn-outline-primary">
-        Save Field Settings as a Preset
-      </button>
+    <div class="col-sm-4">
+      <span class="app-text-extra-bold app-text-large">Logic Builder</span>
     </div>
   </div>
-  <div class="settings-wrapper p-3">
+
+  <div class="row">
+    <div class="col-sm-4" style="padding-right: 0;">
+      <div class="settings-div h-100">
+
+        <ng-container [ngSwitch]="inputField.type">
+          <app-short-text-settings *ngSwitchCase="fieldTypes.shortTextField" [inputField]="inputField">
+          </app-short-text-settings>
+          <app-long-text-settings *ngSwitchCase="fieldTypes.longTextField" [inputField]="inputField">
+          </app-long-text-settings>
+          <app-drop-down-list-settings *ngSwitchCase="fieldTypes.dropDownListField" [inputField]="inputField">
+          </app-drop-down-list-settings>
+          <app-email-settings *ngSwitchCase="fieldTypes.emailField" [inputField]="inputField"></app-email-settings>
+          <app-phone-number-settings *ngSwitchCase="fieldTypes.phoneNumberField" [inputField]="inputField">
+          </app-phone-number-settings>
+          <app-number-settings *ngSwitchCase="fieldTypes.numberTextField" [inputField]="inputField">
+          </app-number-settings>
+          <app-date-settings *ngSwitchCase="fieldTypes.dateTimeField" [inputField]="inputField"></app-date-settings>
+        </ng-container>
+
+      </div>
+    </div>
+
+
+    <div class="col-sm-8">
+      <div class="settings-div row no-gutters h-100">
+        <div class="col p-3">
+          <sw-button>Add Logic Builder</sw-button>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+
+  <!-- <div class="settings-wrapper p-3">
     <div class="row" *ngIf="tab === 'general'">
       <div class="col-sm-4 app-border-right pt-2">
         <app-general-settings [inputField]="inputField"></app-general-settings>
@@ -46,6 +66,7 @@
         <app-fields-conditional-logic [form]="form" [inputField]="inputField"></app-fields-conditional-logic>
       </div>
     </div>
-  </div>
-</div>
+  </div> -->
 
+
+</div>
