@@ -42,8 +42,8 @@ export class FieldValidationComponent implements OnInit {
         return ValidationRulesModel.multipleOptionsValidators;
       case FieldTypesModel.fieldTypes.dateTimeField:
         return ValidationRulesModel.dateTimeValidators;
-      case FieldTypesModel.fieldTypes.timeField:
-        return ValidationRulesModel.timeValidators;
+      // case FieldTypesModel.fieldTypes.timeField:
+      //   return ValidationRulesModel.timeValidators;
       case FieldTypesModel.fieldTypes.emailField:
         return ValidationRulesModel.emailValidators;
       case FieldTypesModel.fieldTypes.phoneNumberField:

@@ -13,7 +13,7 @@
       data-e2e="dropdown_input_container_input"
       *ngFor="let item of value" [class.many]="_multiple"
     >
-      <span class="text"> {{ item.title }} </span>
+      <span class="text"> {{ item?.title }} </span>
       <i class="fas fa-times" (click)="remove(item, $event)"></i>
     </div>
   </div>
@@ -34,7 +34,7 @@
            (click)="select(item)">
         <div class="checkbox_container" data-e2e="checkbox_container" *ngIf="_multiple" [class.selected]="isSelected(item)">
         </div>
-        <span class="text">{{item.title}}</span>
+        <span class="text">{{item?.title}}</span>
       </div>
     </div>
   </div>
@@ -42,9 +42,9 @@
     <div class="dropdown_items_container">
       <div class="dropdown_items_sub-container" *ngFor="let item of dropdownList | keyvalue">
         <div class="dropdown_items_sub-header">
-          {{ item.value.title }}
+          {{ item?.value?.title }}
           <span *ngIf="item.value.param === 'documents' && item.value.count" class="dropdown_items_sub-header--count">
-            ({{ item.value.count }})
+            ({{ item?.value?.count }})
           </span>
         </div>
         <div
