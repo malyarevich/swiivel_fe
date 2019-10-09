@@ -41,8 +41,9 @@ export interface FieldOption {
   space?: number,
   shapeStrokeValue: number,
   shapeStrokeColor: string,
-  dividerStyle?: string
-
+  dividerStyle?: string,
+  columnWide?: number,
+  rowHeigth?: number
 }
 
 export interface FieldSettings {
