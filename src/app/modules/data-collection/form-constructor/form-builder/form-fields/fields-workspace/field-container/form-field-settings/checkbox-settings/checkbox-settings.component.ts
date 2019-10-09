@@ -4,8 +4,7 @@ import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-checkbox-settings',
-  templateUrl: './checkbox-settings.component.html',
-  styleUrls: ['./checkbox-settings.component.scss']
+  templateUrl: './checkbox-settings.component.html'
 })
 export class CheckboxSettingsComponent {
 
