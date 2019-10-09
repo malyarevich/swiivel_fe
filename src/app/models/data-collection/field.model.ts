@@ -141,6 +141,8 @@ export interface IFieldValidators {
   maxLength?: number;
   verifyPhone?: boolean;
   phone?: boolean;
+  min?: number;
+  max?: number;
 }
 
 export interface IFieldValidatorsRule extends ILabelValueSelect {

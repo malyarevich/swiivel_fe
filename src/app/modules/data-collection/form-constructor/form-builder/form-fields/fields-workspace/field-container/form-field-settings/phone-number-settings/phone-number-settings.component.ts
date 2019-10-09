@@ -35,8 +35,7 @@ export class PhoneNumberSettingsComponent {
       })
     });
     this.form.valueChanges.subscribe(v => {
-      delete v.showDefaultValue;
-      delete v.showValidators;
+      this.updateField(v);
     });
   }
 
@@ -50,9 +49,6 @@ export class PhoneNumberSettingsComponent {
         phone: f.validators.phone ? f.validators.phone : false,
         verifyPhone: f.validators.verifyPhone || false,
       }
-    });
-    this.form.valueChanges.subscribe(v => {
-      this.updateField(v);
     });
   }
 

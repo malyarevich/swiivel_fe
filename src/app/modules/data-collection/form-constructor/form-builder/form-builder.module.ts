@@ -43,7 +43,6 @@ import { EmailSettingsComponent } from "./form-fields/fields-workspace/field-con
 import { FieldValidationComponent } from "./form-fields/fields-workspace/field-container/form-field-settings/field-validation/field-validation.component";
 import { LongTextSettingsComponent } from "./form-fields/fields-workspace/field-container/form-field-settings/long-text-settings/long-text-settings.component";
 import { PhoneNumberSettingsComponent } from "./form-fields/fields-workspace/field-container/form-field-settings/phone-number-settings/phone-number-settings.component";
-import { GeneralSettingsComponent } from "./form-fields/fields-workspace/field-container/form-field-settings/general-settings/general-settings.component";
 import { NumberSettingsComponent } from "./form-fields/fields-workspace/field-container/form-field-settings/number-settings/number-settings.component";
 import { DateSettingsComponent } from "./form-fields/fields-workspace/field-container/form-field-settings/date-settings/date-settings.component";
 import { NgxDnDModule } from "@swimlane/ngx-dnd";
@@ -107,7 +106,6 @@ import { CheckboxSettingsComponent } from './form-fields/fields-workspace/field-
     FieldValidationComponent,
     LongTextSettingsComponent,
     PhoneNumberSettingsComponent,
-    GeneralSettingsComponent,
     NumberSettingsComponent,
     DateSettingsComponent,
     FormsContainerComponent,
