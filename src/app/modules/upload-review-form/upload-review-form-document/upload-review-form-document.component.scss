@@ -24,15 +24,15 @@
   .loading {
     position: relative;
     min-height: 70px;
-    opacity: 0.7;
   }
 
   .loading-spinner {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 40px;;
+    margin: 25px auto;
+  }
+
+  .no-documents-header {
+    text-align: center;
+    margin: 25px 0;
   }
 
 }

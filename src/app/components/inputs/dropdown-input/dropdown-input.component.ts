@@ -34,11 +34,11 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
   onChange: Function;
   onTouched: Function;
   dropdownList: any[];
-  disable = false;
   _multiple = false;
 
   @Input() dropdownSubHeader = false;
   @Input() isDisplaySelected = true;
+  @Input() disabled = false;
   @Input() panelClass = 'dropdown-overlay';
   @Input()
   set multiple(opt: boolean) {
@@ -89,10 +89,6 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
     this.onChange = fn;
   }
 
-  setDisabledState(isDisabled: boolean): void {
-    this.disable = isDisabled;
-  }
-
   isSelected(item) {
     const selected = this._sm.selected.find(option => option === item);
     return selected;
@@ -122,7 +118,7 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
 
   showPopup(): void {
     this.isPopupShown.emit(true);
-    if (!!this.disable) { return ; }
+    if (!!this.disabled) { return ; }
 
     this._ref = this.popup.open({
       origin: this.holder,

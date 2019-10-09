@@ -53,9 +53,9 @@ export class UploadReviewFormDataSource implements DataSource<any> {
     this.selectedFormId.complete();
   }
 
-  uploadDocuments(formId: string, filterParams?: any, sortParam?: any): void {
+  uploadDocuments(formId: string, filterParams?: any, sortParam?: any, searchParam?: any): void {
     this.loadingSubject.next(true);
-    this.uploadReviewFormService.getDocumentList(formId, filterParams, sortParam).subscribe((documents) => {
+    this.uploadReviewFormService.getDocumentList(formId, filterParams, sortParam, searchParam).subscribe((documents) => {
       this.loadingSubject.next(false);
       this.dataSubject.next(documents.data);
     });

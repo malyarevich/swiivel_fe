@@ -3,12 +3,17 @@
   [document]="getSelectForm()"
   (skipDocument)="skipDocument()"
   (changeStatus)="changeStatus($event)"
+  [isLast]="isLastDocument()"
 >
 </app-document-approval-bar>
 <div class="content">
   <div class="sidebar-container" [class.opened]="isSideBarShown">
     <div class="sidebar">
       <form [formGroup]="form">
+        <div class="app-input-search-container">
+          <i class="fas fa-search app-input-search-icon"></i>
+          <input type="text" class="form-control app-input-search" placeholder="Search" formControlName="search">
+        </div>
         <div class="sidebar-controls">
           <div class="sidebar-filter">
             <sw-dropdown-input
@@ -16,7 +21,8 @@
               [multiple]="true"
               [dropdownSubHeader]="true"
               [options]="filterValue"
-              [isDisplaySelected]="false">
+              [isDisplaySelected]="false"
+              [disabled]="isEmptyObject(filterValue)">
               <span class="sidebar-controls-title">Filtered By</span>
             </sw-dropdown-input>
           </div>
@@ -24,7 +30,8 @@
             <sw-dropdown-input
               formControlName="sort"
               [options]="sortValue"
-              [isDisplaySelected]="false">
+              [isDisplaySelected]="false"
+              [disabled]="!(sortValue && sortValue.length)">
               <span class="sidebar-controls-title">Sorted By</span>
             </sw-dropdown-input>
           </div>
@@ -40,7 +47,9 @@
           >
           </app-upload-review-form-item>
         </div>
-        <i *ngIf="showSpinner" class="fas fa-spinner spinner"></i>
+        <div *ngIf="showSpinner" class="spinner">
+          <app-spinner></app-spinner>
+        </div>
         <div class="upload-document-controls">
           <app-review-form-controls
             [activeIdForm]="activeIdForm"
@@ -64,10 +73,10 @@
     <app-upload-review-form-document [document]="getSelectForm()"></app-upload-review-form-document>
   </div>
 </div>
-<div class="footer">
+<div *ngIf="documents && documents.length > 1" class="footer">
   <app-upload-review-form-footer
     [documents]="extremeDocuments"
-    (changeForm)="updateForm($event)"
+    (changeForm)="changeForm($event)"
   ></app-upload-review-form-footer>
 </div>
 <sw-dialog

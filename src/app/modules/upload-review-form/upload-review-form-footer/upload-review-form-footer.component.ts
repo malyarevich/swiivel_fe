@@ -18,10 +18,10 @@ export class FormUploadFooterComponent {
   constructor(public uploadReviewFormService: UploadReviewFormService) {}
 
   prev() {
-    this.changeFormEmitter.emit(this.documents.previous_form.form_id);
+    this.changeFormEmitter.emit(this.documents.previous_form._id);
   }
 
   next() {
-    this.changeFormEmitter.emit(this.documents.next_form.form_id);
+    this.changeFormEmitter.emit(this.documents.next_form._id);
   }
 }

@@ -48,17 +48,16 @@ export class UploadReviewFormComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private fb: FormBuilder) {
     this.form = this.fb.group({
-      filter: new FormControl([], Validators.required),
-      sort: new FormControl([], Validators.required),
+      filter: new FormControl( [], Validators.required),
+      sort: new FormControl( [], Validators.required),
+      search: new FormControl(null, Validators.required),
     });
   }
 
   ngOnInit(): void {
     this.dataSource.getSelectedFormId()
       .subscribe(id => {
-        console.log(id);
         this.activeIdDocument = id;
-
       });
     this.dataSource.$loading.subscribe((loading: boolean) => {
       this.showSpinner = loading;
@@ -71,14 +70,25 @@ export class UploadReviewFormComponent implements OnInit {
       .subscribe((data) => {
         if (data) {
           this.filterValue = this.uploadReviewFormService.convertFilterDocumentsData(data);
+          if (!(this.filterValue && this.filterValue)) {
+            this.form.controls['filter'].disable();
+          } else {
+            this.form.controls['filter'].enable();
+          }
           if (data.sort) {
             this.sortValue = this.uploadReviewFormService.convertSortDocumentsData(data);
+            if (!(this.sortValue && this.sortValue)) {
+              this.form.controls['sort'].disable();
+            } else {
+              this.form.controls['sort'].enable();
+            }
           }
           this.cdr.detectChanges();
         }
       });
     this.form.valueChanges.subscribe(params => {
-      this.dataSource.uploadDocuments(this.activeIdForm, params.filter, params.sort);
+      this.dataSource.uploadDocuments(this.activeIdForm, params.filter, params.sort, params.search);
+      this.activeIdDocument = null;
       this.getDocuments();
     });
     this.uploadDocumentData = {
@@ -87,7 +97,6 @@ export class UploadReviewFormComponent implements OnInit {
       person_id: this.documentStudent[0],
       document_type: this.documentTypes[0]
     };
-
   }
 
   getDocuments(): void {
@@ -97,6 +106,7 @@ export class UploadReviewFormComponent implements OnInit {
           this.documents = docs;
           if (!this.activeIdDocument) {
             this.dataSource.selectFormId(docs[0]._id);
+            this.selectItem(docs[0]._id);
           } else {
             this.selectItem(this.activeIdDocument);
           }
@@ -117,18 +127,15 @@ export class UploadReviewFormComponent implements OnInit {
   selectItem(id: string): void {
     this.documents.map(document => document._id === id ? document.isSelected = true : document.isSelected = false);
     this.dataSource.selectFormId(id);
-    this.getExtremeDocuments();
+    this.getExtremeDocuments(id);
   }
 
   downLoadForm(id: string): void {
     this.dataSource.downloadForm(id);
   }
 
-  updateForm(id: string) {
-    console.log('change');
-    // this.dataSource.uploadDocuments(id);
-    // this.getDocuments();
-    // this.dataSource.uploadFilterList(id);
+  changeForm(id: string) {
+    this.selectItem(id);
   }
 
   skipDocument(): void {
@@ -144,12 +151,19 @@ export class UploadReviewFormComponent implements OnInit {
       this.documents.find(document => document._id === this.activeIdDocument)._id, statusData,
       this.activeIdForm, this.form.get('filter').value, this.form.get('sort').value
       );
+    if (!this.isLastDocument()) {
+      const activeDocumentIndex = this.documents.indexOf(this.documents.find(document => document._id === this.activeIdDocument));
+      this.selectItem(this.documents[activeDocumentIndex + 1]._id);
+    }
   }
 
   deleteForm(action?: boolean): void {
     if (action) {
-      this.dataSource.deleteDocuments([this.removeDocumentId], this.activeIdForm, this.form.get('filter').value, this.form.get('sort').value);
+      this.dataSource
+        .deleteDocuments([this.removeDocumentId], this.activeIdForm, this.form.get('filter').value, this.form.get('sort').value);
       this.removeDocumentId = null;
+      this.dataSource.selectFormId(this.documents[0]._id);
+      this.selectItem(this.documents[0]._id);
     }
   }
 
@@ -158,15 +172,25 @@ export class UploadReviewFormComponent implements OnInit {
     this.dialog.open();
   }
 
-  getExtremeDocuments(): void {
+  getExtremeDocuments(id: string): void {
     this.extremeDocuments = {};
-    const activeDocumentIndex = this.documents.indexOf(this.documents.find(document => document._id === this.activeIdDocument));
+    const activeDocumentIndex = this.documents.indexOf(this.documents.find(document => document._id === id));
     if (activeDocumentIndex - 1 > -1) {
       this.extremeDocuments.previous_form = this.documents[activeDocumentIndex - 1];
     }
     if (activeDocumentIndex + 1 < this.documents.length) {
       this.extremeDocuments.next_form = this.documents[activeDocumentIndex + 1];
     }
-    console.log(this.extremeDocuments);
+  }
+
+  isEmptyObject(obj: any): boolean {
+    return !Object.keys(obj).length;
+  }
+
+  isLastDocument(): boolean {
+    if (this.activeIdDocument) {
+      const activeDocumentIndex = this.documents.indexOf(this.documents.find(document => document._id === this.activeIdDocument));
+      return (activeDocumentIndex + 1 >= this.documents.length);
+    }
   }
 }

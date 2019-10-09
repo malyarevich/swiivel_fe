@@ -3,7 +3,7 @@
     <i class="fas fa-file document-approval-bar__icon"></i>
   </div>
   <div class="document-approval-bar__text">
-    <p class="document-approval-bar__name">{{ document.person_name }}</p>
+    <p class="document-approval-bar__name">{{ document.person_name || 'Unassigned' }}</p>
     <p class="document-approval-bar__document-name">{{ document.entity_name }}</p>
   </div>
   <div class="document-approval-bar__status">
@@ -13,14 +13,14 @@
   </div>
   <div class="document-approval-bar__buttons">
     <div class="document-approval-bar__button">
-      <sw-button [style]="colors.WHITE" (click)="skipDocument.emit()">
+      <sw-button [style]="colors.WHITE" (click)="skipDocument.emit()" [disabled]="isLast">
         <i class="fas fa-step-forward button_ico"></i>Skip
       </sw-button>
     </div>
     <div class="document-approval-bar__button">
       <sw-button
         [style]="colors.WHITE"
-        (click)="changeStatus.emit(statuses.need_further_review)">
+        (click)="changeStatus.emit(statuses.need_review)">
         Need Further Review
       </sw-button>
     </div>
