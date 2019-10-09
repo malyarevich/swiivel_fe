@@ -1,71 +1,68 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {
-  Field,
-  ILabelValueSelect,
-  ITypeFieldSettings
-} from "../../../../../../../../../models/data-collection/field.model";
-import {FormBuilder, FormGroup} from "@angular/forms";
+import { Component, Input } from '@angular/core';
+import { Field } from "@app/models/data-collection/field.model";
+import { FormBuilder, FormGroup, FormControl } from "@angular/forms";
 
-const defaultSettings: ITypeFieldSettings = {
-  numberFormat: {label: 'None', value: 'none'},
-  country: {label: 'United States of America', value: 'usa'},
-  isCellphone: false,
-  isVerify: false,
-  isInputMask: false,
-  inputMask: '',
-  isDefaultValue: false,
-  defaultValue: '',
-};
 
 @Component({
   selector: 'app-phone-number-settings',
-  templateUrl: './phone-number-settings.component.html',
-  styleUrls: ['./phone-number-settings.component.css']
+  templateUrl: './phone-number-settings.component.html'
 })
-export class PhoneNumberSettingsComponent implements OnInit {
-  @Input() inputField: Field;
-  settingsForm: FormGroup;
+export class PhoneNumberSettingsComponent {
 
-  numberFormats: ILabelValueSelect[] = [
-    {label: 'National', value: 'national'},
-    {label: 'International', value: 'international'},
-    {label: 'Both', value: 'both'},
-    {label: 'None', value: 'none'},
-  ];
-  countries: ILabelValueSelect[] = [{label: 'United States of America', value: 'usa'},];
+  form: FormGroup;
 
-  constructor(private readonly fb: FormBuilder) {
-  }
+  private field: Field
 
-  ngOnInit() {
-    this.initSettings();
-    this.initSettingsForm();
-    this.onChangesSettingsForm();
-  }
-
-  initSettings() {
-    if (!this.inputField.hasOwnProperty('typeSettings')) {
-      this.inputField.typeSettings = Object.assign(defaultSettings);
+  @Input()
+  set inputField(f: Field) {
+    if (f) {
+      this.field = f;
+      this.setValueToForm(f);
     }
   }
 
-  initSettingsForm() {
-    this.settingsForm = this.fb.group({
-      numberFormat: [this.inputField.typeSettings.numberFormat.value],
-      country: [this.inputField.typeSettings.country.value],
-      isCellphone: [this.inputField.typeSettings.isCellphone],
-      isVerify: [this.inputField.typeSettings.isVerify],
-      isInputMask: [this.inputField.typeSettings.isInputMask],
-      inputMask: [this.inputField.typeSettings.inputMask],
-      isDefaultValue: [this.inputField.typeSettings.isDefaultValue],
-      defaultValue: [this.inputField.typeSettings.defaultValue],
+
+  constructor(
+    private fb: FormBuilder
+  ) {
+    this.form = this.fb.group({
+      showDefaultValue: new FormControl(false),
+      showValidators: new FormControl(false),
+      default: new FormControl(null),
+      validators: new FormGroup({
+        phone: new FormControl(false),
+        verifyPhone: new FormControl(false),
+      })
+    });
+    this.form.valueChanges.subscribe(v => {
+      delete v.showDefaultValue;
+      delete v.showValidators;
     });
   }
 
-  onChangesSettingsForm() {
-    this.settingsForm.valueChanges.subscribe((val) => {
-      this.inputField.typeSettings = Object.assign(val);
+  private setValueToForm(f: Field): void {
+    if (!f.options) { f.options = {}; }
+    this.form.patchValue({
+      default: f.options.default || null,
+      showDefaultValue: f.options.default ? true : false,
+      showValidators: f.options.showValidators ? true : false,
+      validators: {
+        phone: f.validators.phone ? f.validators.phone : false,
+        verifyPhone: f.validators.verifyPhone || false,
+      }
     });
+    this.form.valueChanges.subscribe(v => {
+      this.updateField(v);
+    });
+  }
+
+  private updateField(formValue): void {
+    if (formValue) {
+      this.field.validators = formValue.validators;
+      delete formValue.validators;
+      delete formValue.showDefaultValue;
+      Object.assign(this.field.options, formValue);
+    }
   }
 
 }

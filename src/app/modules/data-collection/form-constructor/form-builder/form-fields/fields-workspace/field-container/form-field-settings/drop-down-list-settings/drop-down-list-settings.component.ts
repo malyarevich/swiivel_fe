@@ -67,7 +67,6 @@ export class DropDownListSettingsComponent {
   }
 
   private setValueToForm(f: Field): void {
-    console.log('Display set value to form', f);
     if (!f.options) { f.options = {}; }
     this.form.patchValue({
       default: f.options.default && isArray(f.options.default) ? f.options.default : [],
