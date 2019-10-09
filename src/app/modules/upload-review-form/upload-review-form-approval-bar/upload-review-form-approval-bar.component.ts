@@ -12,6 +12,7 @@ import { ColorsEnum } from '@shared/colors.enum';
 
 export class UploadReviewFormApprovalBarComponent {
   @Input() document: Document;
+  @Input() isLast: boolean;
   @Output() changeStatus = new EventEmitter<string>();
   @Output() skipDocument = new EventEmitter();
   public colors = ColorsEnum;
