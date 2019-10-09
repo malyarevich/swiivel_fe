@@ -40,7 +40,6 @@ import { FieldsSettingOptionCheckboxesComponent } from "./form-fields/fields-wor
 import { ShortTextSettingsComponent } from "./form-fields/fields-workspace/field-container/form-field-settings/short-text-settings/short-text-settings.component";
 import { DropDownListSettingsComponent } from "./form-fields/fields-workspace/field-container/form-field-settings/drop-down-list-settings/drop-down-list-settings.component";
 import { EmailSettingsComponent } from "./form-fields/fields-workspace/field-container/form-field-settings/email-settings/email-settings.component";
-import { FieldValidationComponent } from "./form-fields/fields-workspace/field-container/form-field-settings/field-validation/field-validation.component";
 import { LongTextSettingsComponent } from "./form-fields/fields-workspace/field-container/form-field-settings/long-text-settings/long-text-settings.component";
 import { PhoneNumberSettingsComponent } from "./form-fields/fields-workspace/field-container/form-field-settings/phone-number-settings/phone-number-settings.component";
 import { NumberSettingsComponent } from "./form-fields/fields-workspace/field-container/form-field-settings/number-settings/number-settings.component";
@@ -103,7 +102,6 @@ import { CheckboxSettingsComponent } from './form-fields/fields-workspace/field-
     ShortTextSettingsComponent,
     DropDownListSettingsComponent,
     EmailSettingsComponent,
-    FieldValidationComponent,
     LongTextSettingsComponent,
     PhoneNumberSettingsComponent,
     NumberSettingsComponent,
