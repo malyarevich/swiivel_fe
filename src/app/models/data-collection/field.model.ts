@@ -43,7 +43,8 @@ export interface FieldOption {
   shapeStrokeColor: string,
   dividerStyle?: string,
   columnWide?: number,
-  rowHeigth?: number
+  rowHeigth?: number,
+  fieldOptions?: any[]
 }
 
 export interface FieldSettings {
