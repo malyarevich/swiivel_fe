@@ -14,7 +14,7 @@
     <div class="col-sm-4" style="padding-right: 0;">
       <div class="settings-div h-100">
 
-        <ng-container [ngSwitch]="108">
+        <ng-container [ngSwitch]="inputField.type">
           <app-short-text-settings *ngSwitchCase="fieldTypes.shortTextField" [inputField]="inputField">
           </app-short-text-settings>
           <app-long-text-settings *ngSwitchCase="fieldTypes.longTextField" [inputField]="inputField">
@@ -27,6 +27,7 @@
           <app-number-settings *ngSwitchCase="fieldTypes.numberTextField" [inputField]="inputField">
           </app-number-settings>
           <app-date-settings *ngSwitchCase="fieldTypes.dateTimeField" [inputField]="inputField"></app-date-settings>
+          <app-date-settings *ngSwitchCase="fieldTypes.hebrewDateField" [inputField]="inputField"></app-date-settings>
           <app-checkbox-settings *ngSwitchCase="fieldTypes.checkbox" [inputField]="inputField"></app-checkbox-settings>
         </ng-container>
 

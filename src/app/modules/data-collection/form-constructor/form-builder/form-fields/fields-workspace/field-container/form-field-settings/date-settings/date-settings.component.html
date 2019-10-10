@@ -1,37 +1,30 @@
-<form [formGroup]="settingsForm">
-  <div class="mb-3">
-    <app-select-field [formControlName]="'separator'"
-                      [items]="separators"
-                      labelTitle="Separator"></app-select-field>
-  </div>
-  <div class="row no-gutters mb-3">
-    <div class="col-6 pr-2">
-      <app-select-field [formControlName]="'dateFormat'"
-                        [items]="dateFormats"
-                        labelTitle="Date Format"></app-select-field>
-    </div>
-    <div class="col-6 pl-2">
-      <app-select-field [formControlName]="'monthDisplay'"
-                        [items]="displayMonthes"
-                        labelTitle="Month Display as"></app-select-field>
-    </div>
-  </div>
-  <div class="row no-gutters mb-2">
-    <div class="col-6 pr-2">
-      <app-select-field [formControlName]="'defaultDate'"
-                        [items]="defaultDates"
-                        labelTitle="Default Date"></app-select-field>
-    </div>
-    <div class="col-6 pl-2" [hidden]="inputField.typeSettings.defaultDate.value !== 'custom'">
-      <app-datepicker-field [formControlName]="'defaultDateValue'"
-                            label="Date"
-                            dateInputFormat="DD MMM, YYYY"></app-datepicker-field>
-    </div>
-  </div>
-  <div>
-    <app-toggle-checkbox-field>
-      <span class="label">Allow Date as 3 separate fields</span>
-      <input type="checkbox" formControlName="isSeparateFields"/>
-    </app-toggle-checkbox-field>
-  </div>
-</form>
+<div class="field_settings_container">
+  <form [formGroup]="form">
+    <section>
+      <div class="title">
+        <sw-input-toggle formControlName="showDefaultValue">
+          <span class="input_label">default value</span>
+        </sw-input-toggle>
+      </div>
+      <sw-input-text *ngIf="form.get('showDefaultValue').value" class="settings-field" formControlName="default">
+      </sw-input-text>
+    </section>
+    <section>
+      <div class="title">
+        General
+      </div>
+      <div class="row_container">
+        <div class="row_container__input">
+          <sw-dropdown-input formControlName="separator" [multiple]="false" [options]="separators">
+            <span class="label">Separator</span>
+          </sw-dropdown-input>
+        </div>
+        <div class="row_container__input">
+          <sw-dropdown-input formControlName="dateFormat" [multiple]="false" [options]="dateFormats">
+            <span class="label">Date Format</span>
+          </sw-dropdown-input>
+        </div>
+      </div>
+    </section>
+  </form>
+</div>
