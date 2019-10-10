@@ -5,7 +5,6 @@ import { ApiService } from '@app/core/api.service';
 import { FilterDropDownData } from '@models/upload-review-form/filter.model';
 import { SortDropDownData } from '@models/upload-review-form/sort.model';
 import { Observable } from 'rxjs';
-import { first, map } from 'rxjs/operators';
 
 export class UploadReviewFormService extends ApiService {
   getStatusColor(status: string): string {
@@ -42,9 +41,9 @@ export class UploadReviewFormService extends ApiService {
       if (sortParam && sortParam.length) {
         endpointParam += `&sort=${sortParam[0].value}`;
       }
-      endpoint = `/proxy/upload-reviews-form/list?form_id=${formId}&search_query=${endpointParam}`;
+      endpoint = `/proxy/upload-reviews-form/list?form_template_id=${formId}&search_query=${endpointParam}`;
     } else {
-      endpoint = `/proxy/upload-reviews-form/list?form_id=${formId}`;
+      endpoint = `/proxy/upload-reviews-form/list?form_template_id=${formId}`;
     }
     return this.http.get(endpoint);
   }
@@ -54,10 +53,8 @@ export class UploadReviewFormService extends ApiService {
     return this.http.get(endpoint);
   }
 
-  downloadForm(id: string) {
-    return this.download(`/proxy/upload-reviews-form/bulk-download/${id}`).pipe(map((response: any) => {
-      return window.URL.createObjectURL(new Blob([response], {type: 'application/pdf'}));
-    }), first());
+  downloadForm(url: string) {
+    window.location.assign(url);
   }
 
   deleteDocuments(idsData: string[]): Observable<any> {
@@ -70,7 +67,6 @@ export class UploadReviewFormService extends ApiService {
     const body = { status: statusData };
     return this.http.put(`/proxy/upload-reviews-form/change-status/${formId}`, body);
   }
-
 
   getFilterDropDownData(documents: any): FilterDropDownData | {} {
     const uploadReviewFormStatusesEnum = UploadReviewFormStatusesEnum;

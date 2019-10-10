@@ -1,4 +1,4 @@
-<div class="upload-document-controls">
+<div class="upload-document-controls" *ngIf="!isBulkDownload">
   <form class="upload-document-form" [formGroup]="formUpload">
     <div class="upload-document-form-button">
       <sw-input-file
@@ -10,17 +10,26 @@
         <sw-button (click)="file.openDialog()" [size]="sizeButton.FULL">Upload Document</sw-button>
       </sw-input-file>
     </div>
-    <sw-dropdown-select [options]="documentTypes">
-      <span>{{ this.uploadDocumentData.document_type }}</span>
-    </sw-dropdown-select>
-    <sw-dropdown-select [options]="documentStudent">
-      <span>{{ this.uploadDocumentData.person_id }}</span>
-    </sw-dropdown-select>
-    <sw-dropdown-select [options]="documentAccount">
-      <span>{{ this.uploadDocumentData.family_id }}</span>
-    </sw-dropdown-select>
+<!--    <sw-dropdown-select [options]="documentTypes">-->
+<!--      <span>{{ this.uploadDocumentData.document_type }}</span>-->
+<!--    </sw-dropdown-select>-->
+<!--    <sw-dropdown-select [options]="documentStudent">-->
+<!--      <span>{{ this.uploadDocumentData.person_id }}</span>-->
+<!--    </sw-dropdown-select>-->
+<!--    <sw-dropdown-select [options]="documentAccount">-->
+<!--      <span>{{ this.uploadDocumentData.family_id }}</span>-->
+<!--    </sw-dropdown-select>-->
 <!--    <div class="items-control">-->
 <!--      <sw-button [style]="colors.WHITE">Bulk Download</sw-button>-->
 <!--    </div>-->
   </form>
+  <sw-button
+    *ngIf="showBulkDownload"
+    [style]="colors.WHITE" [size]="sizeButton.FULL" (click)="clickBulkDownload()"
+  >Bulk Download</sw-button>
+</div>
+
+<div class="upload-document-controls--bulk" *ngIf="isBulkDownload">
+  <sw-button [style]="colors.WHITE" (click)="clickBulkDownload()">Cancel</sw-button>
+  <sw-button>Download Forms</sw-button>
 </div>

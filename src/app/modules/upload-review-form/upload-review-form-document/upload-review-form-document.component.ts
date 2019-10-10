@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Document } from '@models/upload-review-form/document.model';
 import { IconsEnum } from '@shared/icons.enum';
+import { SizesEnum } from '@shared/sizes.enum';
 
 @Component({
   selector: 'app-upload-review-form-document',
@@ -14,6 +15,7 @@ export class UploadReviewFormDocumentComponent {
   public _document: Document;
   public icons = IconsEnum;
   public form: FormGroup;
+  public sizes = SizesEnum;
   public isDocumentLoading = true;
 
   @Input()
