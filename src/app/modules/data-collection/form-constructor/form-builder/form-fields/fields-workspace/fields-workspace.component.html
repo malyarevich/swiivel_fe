@@ -288,13 +288,12 @@
 </div>
 </div>
 
-
-<ng-container *ngIf="form">
-<div direction="vertical" dropZone="workspace" class="workspace ngx-dnd-container" ngxDroppable>
+<ng-container>
+<div direction="vertical" class="workspace ngx-dnd-container" *ngIf="form" cdkDropList id="workspace">
 <!--  <div   cdkDropList-->
 <!--       [cdkDropListData]="form.fields"-->
 <!--       (cdkDropListDropped)="drop($event)">-->
-<div class="ngx-dnd-item" *ngFor="let item of form.fields " ngxDraggable>
+<div class="ngx-dnd-item" *ngFor="let item of form.fields ">
 <!--<div *ngFor="let item of form.fields " cdkDrag cdkDragLockAxis="y">-->
     <app-section-container
 
@@ -320,5 +319,3 @@
 
 </div>
 </ng-container>
-
-

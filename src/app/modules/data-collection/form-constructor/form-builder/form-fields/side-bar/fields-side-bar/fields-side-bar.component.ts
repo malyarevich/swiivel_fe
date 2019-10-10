@@ -7,6 +7,8 @@ import { NestedTreeControl } from '@angular/cdk/tree';
 import {CdkDragDrop, moveItemInArray, transferArrayItem, CdkDragExit} from '@angular/cdk/drag-drop';
 import { FormControl } from '@angular/forms';
 import { Popup } from '@app/core/popup.service';
+import { v4 as uuid } from "uuid";
+
 
 
 @Component({
@@ -21,11 +23,27 @@ export class FieldsSideBarComponent implements OnInit, OnDestroy, AfterViewCheck
   delInput: FormControl = new FormControl(null);
   ref: any;
   _sideBar;
+  _form;
+  // _sideBarFields = [];
+  // _formFields = [];
+
   @Input() set sideBar(fields) {
+    // this._sideBarFields = fields;
+    // this.treeSource.build(this._sideBarFields.concat(this._formFields));
     this.treeSource.build(fields);
     this._sideBar = this.treeSource.nodes;
   }
-  @Input() form: Form;
+  // @Input() form;
+  @Input() set form(form) {
+    this._form = form;
+    this.treeSource.build(this._sideBar.concat(form.fields));
+    // this._formFields = this._form.fields;
+    // this.treeSource.build(this._sideBarFields.concat(this._formFields));
+    this._sideBar = this.treeSource.nodes;
+  }
+  @Input() set section(what) {
+    console.log(what)
+  }
   @Input() idSectionForDragDrop: string[];
   isTree: boolean = true;
   sectionDetailed;
@@ -48,8 +66,14 @@ export class FieldsSideBarComponent implements OnInit, OnDestroy, AfterViewCheck
       let children = node[CHILDREN_SYMBOL];
       return children;
     });
-    // console.log(this.sideBar.slice());
-    console.log(this.form);
+
+
+    this.treeSource.changes.subscribe(nodes => {
+      if (this._form) {
+        this._form.fields = this.treeSource.toForm()
+      }
+      this.treeControl
+    })
     this.service.sectionSubject.subscribe(data => {
       this.sectionDetailed = data;
       this.isTree = isEmpty(this.sectionDetailed);
@@ -141,6 +165,8 @@ export class FieldsSideBarComponent implements OnInit, OnDestroy, AfterViewCheck
     let children = this.treeSource.getParentChildren(node);
     if (this.descendantsAllSelected(node)) {
       node.isActive = false;
+    } else if (this.descendantsNotSelected(node)) {
+      node.isActive = !node.isActive;
     } else if (this.descendantsPartiallySelected(node)) {
       node.isActive = false;
     } else {
@@ -150,7 +176,6 @@ export class FieldsSideBarComponent implements OnInit, OnDestroy, AfterViewCheck
     for (let child of children) {
       child.isActive = node.isActive;
     }
-
     if (node.isActive) {
       if (!node.isExpanded) {
         this.treeControl.expandDescendants(node);
@@ -161,7 +186,18 @@ export class FieldsSideBarComponent implements OnInit, OnDestroy, AfterViewCheck
       }
     }
     this.treeSource.refresh();
+    this.cdr.markForCheck()
     // if (node.isActive) this.service.event = {action: 'expand', target: node}
+  }
+
+  nodeIsChecked(node) {
+    const isChecked = node.isActive === true && this.descendantsAllSelected(node);
+    return isChecked;
+  }
+
+  nodeIsIndeterminate(node) {
+    const isIndeterminate = node.isActive === true && this.descendantsPartiallySelected(node);
+    return isIndeterminate;
   }
 
   toggleNode(node: any): void {
@@ -188,6 +224,12 @@ export class FieldsSideBarComponent implements OnInit, OnDestroy, AfterViewCheck
     const descendants = this.treeControl.getDescendants(node);
     const allSelected =  descendants.every(node => node['isActive']);
     return allSelected;
+  }
+
+  descendantsNotSelected(node: any): boolean {
+    const descendants = this.treeControl.getDescendants(node);
+    const notSelected =  descendants.every(node => !node['isActive']);
+    return notSelected;
   }
 
   descendantsPartiallySelected(node: any): boolean {
