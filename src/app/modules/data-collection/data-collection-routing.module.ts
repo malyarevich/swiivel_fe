@@ -17,26 +17,26 @@ export const routes: Routes = [
           }
         ]
       },
-      {
-        path: 'form-constructor',
-        children: [
-          {
-            path: '',
-            loadChildren: () => import('./form-constructor/form-constructor.module')
-              .then(m => m.FormConstructorModule)
-          }
-        ]
-      },
-      {
-        path: 'form-constructor/:id',
-        children: [
-          {
-            path: '',
-            loadChildren: () => import('./form-constructor/form-constructor.module')
-              .then(m => m.FormConstructorModule)
-          }
-        ]
-      },
+      // {
+      //   path: 'form-constructor',
+      //   children: [
+      //     {
+      //       path: '',
+      //       loadChildren: () => import('./form-constructor/form-constructor.module')
+      //         .then(m => m.FormConstructorModule)
+      //     }
+      //   ]
+      // },
+      // {
+      //   path: 'form-constructor/:id',
+      //   children: [
+      //     {
+      //       path: '',
+      //       loadChildren: () => import('./form-constructor/form-constructor.module')
+      //         .then(m => m.FormConstructorModule)
+      //     }
+      //   ]
+      // },
       {
         path: 'online-form/:id',
         children: [
