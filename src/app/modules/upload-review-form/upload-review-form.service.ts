@@ -27,10 +27,13 @@ export class UploadReviewFormService extends ApiService {
     }
   }
 
-  getDocumentList(formId: string, filterParams?: any, sortParam?: any): Observable<any> {
+  getDocumentList(formId: string, filterParams?: any, sortParam?: any, searchParam?: any): Observable<any> {
     let endpoint = '';
-    if (filterParams) {
+    if ((filterParams && filterParams.length) || (sortParam && sortParam.length) || searchParam) {
       let endpointParam = '';
+      if (searchParam) {
+        endpointParam += searchParam;
+      }
       if (filterParams && filterParams.length) {
         filterParams.map((param) =>  {
           endpointParam += `&filter[${param.param}][]=${param.param === 'documents' ? param.id : param.value}`;

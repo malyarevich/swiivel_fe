@@ -14,11 +14,11 @@ export class UploadReviewFormDocumentComponent {
   public _document: Document;
   public icons = IconsEnum;
   public form: FormGroup;
-  public isImageLoader = true;
+  public isDocumentLoading = true;
 
   @Input()
   set document(document: Document) {
-    this.isImageLoader = true;
+    this.isDocumentLoading = true;
     this._document = document;
   }
 
@@ -32,5 +32,9 @@ export class UploadReviewFormDocumentComponent {
       account: new FormControl([], Validators.required),
       student: new FormControl([], Validators.required)
     });
+  }
+
+  isLoaded(): void {
+    this.isDocumentLoading = false;
   }
 }
