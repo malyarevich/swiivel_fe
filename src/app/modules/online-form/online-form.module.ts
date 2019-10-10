@@ -56,7 +56,7 @@ import { TuitionContractByStudentComponent } from './online-form-tuition-contrac
 import { ErrorHintTooltipDirective } from './shared/directives/error-hint-tooltip.directive';
 import { ErrorsListTooltipComponent } from './errors-list/errors-list-tooltip.component';
 
-import { MainComponent } from '@app/shared/main.component';
+//import { MainComponent } from '@app/shared/main.component';
 
 @NgModule({
   declarations: [
@@ -104,7 +104,6 @@ import { MainComponent } from '@app/shared/main.component';
     OnlineFormTuitionContractComponent,
     TuitionContractByFeeComponent,
     TuitionContractByStudentComponent,
-    MainComponent,
   ],
   imports: [
     CommonModule,
