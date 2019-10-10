@@ -6,10 +6,12 @@ import { DataCollectionRoutingModule } from './data-collection-routing.module';
 import { FormService } from './services/form.service';
 
 import { DataCollectionComponent } from './data-collection.component';
+import { HeaderRowComponent } from './header-row/header-row.component';
 
 @NgModule({
   declarations: [
     DataCollectionComponent,
+    HeaderRowComponent
   ],
   imports: [
     CommonModule,

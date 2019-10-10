@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { LogoutRequestAction } from '@app/store/auth-store';
 
 @Component({
   selector: 'app-creator-header',
@@ -9,12 +10,31 @@ import { switchMap } from 'rxjs/operators';
 })
 export class CreatorHeaderComponent implements OnInit {
 
+  id: string = '';
+
   constructor(
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private readonly store$: Store<any>,
   ) {
   }
 
   ngOnInit() {
+    this.route.paramMap.subscribe(params => {
+      if (params.get('id')) {
+        this.id = params.get('id');
+      }
+    });
+  }
+
+  getLink(path: string) {
+    if (this.id) {
+      path += `/${this.id}`;
+    }
+    return path;
+  }
+
+  logOut(): void {
+    this.store$.dispatch(new LogoutRequestAction());
   }
 
 }
