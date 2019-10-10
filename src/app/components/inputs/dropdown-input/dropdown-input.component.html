@@ -48,7 +48,6 @@
           <span *ngIf="item.value.param === 'documents' && item.value.count" class="dropdown_items_sub-header--count">
             ({{ item?.value?.count }})
           </span>
-          </div>
           <div
             class="dropdown_items_container__item"
             *ngFor="let dropdownItem of item.value.data" [class.selected]="isSelected(dropdownItem)"
