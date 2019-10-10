@@ -1,5 +1,14 @@
 @import '../../../../../styles/variables/colors';
 
+:host {
+  width: 100%;
+  .spinner {
+    position: fixed;
+    top: 25%;
+    left: 50%;
+  }
+}
+
 .col-center-block {
   float: none;
   display: block;
