@@ -3,7 +3,6 @@ import {Routes, RouterModule} from '@angular/router';
 import {routes as loginRoutes} from './modules/login';
 import {AuthGuard} from '@services/auth';
 import { environment } from 'src/environments/environment.prod';
-import { MainComponent } from '@shared/main.component';
 
 const routes: Routes = [
   ...loginRoutes,
@@ -11,11 +10,6 @@ const routes: Routes = [
     path: '',
     canActivate: [AuthGuard],
     loadChildren: () => import('./modules/organization/organization.module').then(m => m.OrganizationModule)
-  },
-
-  {
-    path: 'online-form',
-    loadChildren: () => import('./modules/online-form/online-form.module').then(m => m.OnlineFormModule)
   },
 
   {

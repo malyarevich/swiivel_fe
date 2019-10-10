@@ -1,13 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { OnlineFormComponent } from './online-form.component';
-import { MainComponent } from '@shared/main.component';
 //import { AuthGuard } from '@app/core/auth.guard';
 
 const routes: Routes = [
   {
     path: '',
-    component: MainComponent,
 /*    canActivate: [AuthGuard],
     canActivateChild: [AuthGuard],*/
     children: [
