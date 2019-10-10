@@ -73,6 +73,7 @@ export class FieldContainerComponent
 
   ngOnInit(): void {
     this.list = Section.sectionWidth;
+    if (!this.inputField.options) this.inputField.options = {};
     this.inputField.exist = true;
   }
 

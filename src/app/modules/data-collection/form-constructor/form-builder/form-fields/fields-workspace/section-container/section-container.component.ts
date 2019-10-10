@@ -22,7 +22,9 @@ export class SectionContainerComponent implements OnInit {
   showSettings: boolean = false;
   isExpand: boolean = true;
   ngOnInit() {}
-
+  drop(event) {
+    console.log('droppp', event);
+  }
   dropAdd(event) {
     if (!event.value._id) {
       this.section.fields = this.sideBarService.replaceExistinField(
@@ -52,7 +54,8 @@ export class SectionContainerComponent implements OnInit {
   //   this.fields = this.fields.map(item => item._id==field._id?newField:item);
 
   removeSection(section: Field) {
-    this.sideBarService.onSectionDelete(section, this.form);
+
+    this.sideBarService.onSectionDelete(section);
     this.section.fields.forEach(field => {
       this.sideBarService.onFieldUncheck(field, this.sideBar[0].fields);
       if (field.type === 113) {

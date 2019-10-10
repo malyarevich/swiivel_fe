@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject, Subject } from "rxjs";
 import { v4 as uuid } from "uuid";
 import { cloneDeep, isEmpty } from "lodash";
 import { Form } from "src/app/models/data-collection/form.model";
@@ -10,6 +10,7 @@ import { Field } from "src/app/models/data-collection/field.model";
 })
 export class SideBarService {
   sectionSubject = new BehaviorSubject({});
+  events$ = new Subject();
 
   constructor() {}
 
@@ -198,8 +199,9 @@ export class SideBarService {
     });
   }
 
-  onSectionDelete(field: Field, filedList: Field | Form) {
-    filedList.fields = filedList.fields.filter(sec => sec.name != field.name);
+  onSectionDelete(field: Field, filedList?: Field | Form) {
+    this.events$.next({target: field, action: 'remove'});
+    // filedList.fields = filedList.fields.filter(sec => sec.name != field.name);
   }
 
   onFieldDelete(field: Field, filedList: Field[]) {

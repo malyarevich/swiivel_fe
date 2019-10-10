@@ -3,6 +3,7 @@ import { SideBarService } from "../../side-bar/side-bar.service";
 import { Form } from "src/app/models/data-collection/form.model";
 import { Section } from "src/app/models/data-collection/section.model";
 import { Field } from "src/app/models/data-collection/field.model";
+import { moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: "app-group-container",
@@ -12,7 +13,7 @@ import { Field } from "src/app/models/data-collection/field.model";
 export class GroupContainerComponent implements OnInit {
   @Input() form: Form;
   @Input() customFields: Field[];
-  @Input() inputGroup: Field;
+  @Input() inputGroup: any;
   @Input() sideBar: Field;
   @Input() nestedLevel: number;
 
@@ -35,7 +36,19 @@ export class GroupContainerComponent implements OnInit {
   ngOnInit() {
     this.list = Section.sectionWidth;
   }
-
+  drop(event) {
+    console.log(event.container, event.previousContainer)
+    if (event.container.id === this.inputGroup.path.join('|')) {
+      moveItemInArray(event.container.data.fields, event.previousIndex, event.currentIndex);
+    } else {
+      console.log('trans',event.previousContainer.data.fields, event.container.data.fields, event.previousIndex, event.currentIndex)
+      transferArrayItem(event.previousContainer.data.fields, event.container.data.fields, event.previousIndex, event.currentIndex);
+    //   console.log('drop fgroup', event)
+    }
+  }
+  dragDrop(event) {
+    console.log('ex', event)
+  }
   dropAdd(event) {
     if (!event.value._id) {
       this.inputGroup.fields = this.sideBarService.replaceExistinField(

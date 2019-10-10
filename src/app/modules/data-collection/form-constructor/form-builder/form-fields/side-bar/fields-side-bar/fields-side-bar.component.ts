@@ -36,7 +36,7 @@ export class FieldsSideBarComponent implements OnInit, OnDestroy, AfterViewCheck
   // @Input() form;
   @Input() set form(form) {
     this._form = form;
-    this.treeSource.build(this._sideBar.concat(form.fields));
+    // this.treeSource.build(this._sideBar.concat(form.fields));
     // this._formFields = this._form.fields;
     // this.treeSource.build(this._sideBarFields.concat(this._formFields));
     this._sideBar = this.treeSource.nodes;
@@ -72,11 +72,19 @@ export class FieldsSideBarComponent implements OnInit, OnDestroy, AfterViewCheck
       if (this._form) {
         this._form.fields = this.treeSource.toForm()
       }
-      this.treeControl
     })
     this.service.sectionSubject.subscribe(data => {
+      console.log('sect', data)
       this.sectionDetailed = data;
       this.isTree = isEmpty(this.sectionDetailed);
+    });
+    this.service.events$.subscribe(event => {
+      if (event['action'] === 'remove') {
+        let f = this._form.fields.find(field => field === event['target'])
+        console.log(f);
+        // event['target']['fields']
+        this._form.fields = this._form.fields.filter(field => field.path !== event['target']['path'])
+      }
     });
   }
   hasChild = (_: number, node: any) => !!node[CHILDREN_SYMBOL] && node[CHILDREN_SYMBOL].length > 0;
@@ -100,6 +108,7 @@ export class FieldsSideBarComponent implements OnInit, OnDestroy, AfterViewCheck
 
 
   drop(event: CdkDragDrop<any>) {
+    console.log('drop', event)
 
     let node = event.item.data;
     if (event.container.id !== 'sidebar-list') {

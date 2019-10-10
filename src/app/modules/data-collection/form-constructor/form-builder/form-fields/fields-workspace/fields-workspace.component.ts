@@ -19,6 +19,7 @@ import { dividerStyle } from "./divider";
 import { Form } from "src/app/models/data-collection/form.model";
 import { Section } from "src/app/models/data-collection/section.model";
 import { Field } from "src/app/models/data-collection/field.model";
+import { CdkDrag } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: "app-fields-workspace",
@@ -84,6 +85,17 @@ export class FieldsWorkspaceComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.cd.detectChanges();
+  }
+
+  drop(event) {
+    console.log('root', event)
+  }
+  dropDrag(event) {
+    console.log('ex', event);
+  }
+
+  noFields(item: CdkDrag<any>) {
+    return item.data.type > 111;
   }
 
   openModal(content) {

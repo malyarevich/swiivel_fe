@@ -289,11 +289,11 @@
 </div>
 
 <ng-container>
-<div direction="vertical" class="workspace ngx-dnd-container" *ngIf="form" cdkDropList id="workspace">
+<div direction="vertical" class="workspace ngx-dnd-container" *ngIf="form" cdkDropList [cdkDropListData]="form.fields" [cdkDropListEnterPredicate]="noFields" id="root-list">
 <!--  <div   cdkDropList-->
 <!--       [cdkDropListData]="form.fields"-->
 <!--       (cdkDropListDropped)="drop($event)">-->
-<div class="ngx-dnd-item" *ngFor="let item of form.fields ">
+<div class="ngx-dnd-item" *ngFor="let item of form.fields"  cdkDrag [cdkDragData]="item" (cdkDragDrop)="dropDrag($event)">
 <!--<div *ngFor="let item of form.fields " cdkDrag cdkDragLockAxis="y">-->
     <app-section-container
 

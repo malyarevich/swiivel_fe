@@ -66,6 +66,7 @@ export class TreeDataSource implements DataSource<any> {
           type: 114,
           name: 'New section',
           isActive: true,
+          path: ['New section'],
           fields: nodes
         }]
       } else {
@@ -79,9 +80,16 @@ export class TreeDataSource implements DataSource<any> {
   getActiveChildren (node) {
     let children = Array.from(this.tree.childrenIterator(node)).filter((node: any) => node.isActive === true);
     return children.map((child: any) => {
+      child.path = this.getPath(child);
       child.fields = this.getActiveChildren(child);
       return child;
     });
+  }
+
+  getPath(node) {
+    return Array.from(this.tree.ancestorsIterator(node), (parent: any) => {
+      return parent.name;
+    }).slice(0, -1);
   }
 
   swapSections(prevIdx, curIdx) {
