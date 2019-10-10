@@ -11,6 +11,7 @@ import { ColorsEnum } from '@shared/colors.enum';
 import { IconsEnum } from '@shared/icons.enum';
 import { SizesEnum } from '@shared/sizes.enum';
 import { DialogComponent } from '@shared/popup/dialog.component';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-upload-review-form',
@@ -36,10 +37,12 @@ export class UploadReviewFormComponent implements OnInit {
   public icons = IconsEnum;
   public size = SizesEnum;
   public statuses = UploadReviewFormStatusesEnum;
+  public isBulkDownload = false;
+  public updateingDocumentStatus = false;
 
   public documentTypes  = ['document'];
-  public documentStudent  = ['7'];
-  public documentAccount  = ['6b639da1ef3956c73e1ec79fbc67a2f5'];
+  public documentStudent  = ['121'];
+  public documentAccount  = ['a062c544a27f2c14f3e83f66efb81c59'];
   public uploadDocumentData = {};
 
   constructor(
@@ -131,7 +134,8 @@ export class UploadReviewFormComponent implements OnInit {
   }
 
   downLoadForm(id: string): void {
-    this.dataSource.downloadForm(id);
+    const url = this.documents.find(document => document._id === id).link;
+    this.dataSource.downloadForm(url);
   }
 
   changeForm(id: string) {
@@ -146,15 +150,21 @@ export class UploadReviewFormComponent implements OnInit {
   }
 
   changeStatus(status: string): void {
+    this.updateingDocumentStatus = true;
+
     const statusData = Object.keys(this.statuses).find(k => this.statuses[k] === status);
     this.dataSource.changeStatus(
       this.documents.find(document => document._id === this.activeIdDocument)._id, statusData,
       this.activeIdForm, this.form.get('filter').value, this.form.get('sort').value
-      );
-    if (!this.isLastDocument()) {
-      const activeDocumentIndex = this.documents.indexOf(this.documents.find(document => document._id === this.activeIdDocument));
-      this.selectItem(this.documents[activeDocumentIndex + 1]._id);
-    }
+    )
+      .subscribe( () => {
+        if (!this.isLastDocument()) {
+          const activeDocumentIndex = this.documents.indexOf(this.documents.find(document => document._id === this.activeIdDocument));
+          this.selectItem(this.documents[activeDocumentIndex + 1]._id);
+        }
+
+        this.updateingDocumentStatus = false;
+      });
   }
 
   deleteForm(action?: boolean): void {
@@ -192,5 +202,9 @@ export class UploadReviewFormComponent implements OnInit {
       const activeDocumentIndex = this.documents.indexOf(this.documents.find(document => document._id === this.activeIdDocument));
       return (activeDocumentIndex + 1 >= this.documents.length);
     }
+  }
+
+  clickBulkDownload(): void {
+    this.isBulkDownload = !this.isBulkDownload;
   }
 }

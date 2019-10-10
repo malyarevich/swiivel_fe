@@ -23,6 +23,7 @@ import {InsideMissingFieldsComponent} from './form-info-submissions/form-info-su
 import {InsideFormHistoryComponent} from './form-info-submissions/form-info-submission-inside/inside-form-history/inside-form-history.component';
 
 import {FormsStatsService} from '../services/forms-stats.service';
+import {SharedModule} from '@shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import {FormsStatsService} from '../services/forms-stats.service';
     FormAccessModalModule,
     FormTableHeaderModule,
     ProgressBarModule,
+    SharedModule,
   ],
   exports: [FormInfoComponent],
   providers: [FormsStatsService]
