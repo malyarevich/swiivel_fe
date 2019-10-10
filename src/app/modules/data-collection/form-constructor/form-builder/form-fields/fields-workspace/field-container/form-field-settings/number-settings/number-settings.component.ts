@@ -1,67 +1,69 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {
-  Field,
-  ILabelValueSelect,
-  ITypeFieldSettings
-} from "../../../../../../../../../models/data-collection/field.model";
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {Component, Input} from '@angular/core';
+import {Field} from "@app/models/data-collection/field.model";
+import {FormBuilder, FormGroup, FormControl} from "@angular/forms";
 
-const defaultSettings: ITypeFieldSettings = {
-  minValue: null,
-  maxValue: null,
-  numberType: {label: 'decimal', value: 'decimal'},
-  decimalRange: 3,
-  isCurrency: false,
-  currency: {label: 'United States Dollar', value: 'usd'},
-  isDisplay: true,
-  displayType: 'slider',
-};
 
 @Component({
   selector: 'app-number-settings',
   templateUrl: './number-settings.component.html',
   styleUrls: ['./number-settings.component.css']
 })
-export class NumberSettingsComponent implements OnInit {
-  @Input() inputField: Field;
-  settingsForm: FormGroup;
+export class NumberSettingsComponent {
 
-  numberFormat = [{label: 'Decimal Places', value: 'decimal'}, {label: 'Is Percentage', value: 'percentage'}];
-  currency = [{label: 'United States Dollar', value: 'usd'}];
+  form: FormGroup;
+  validatorsOptions = ['Decimal Place', 'Percentage', 'Currency US', 'Currency Canada'].map(t => ({ title: t }));
+  
+  private field: Field;
 
-  constructor(private readonly fb: FormBuilder) {
-  }
-
-  ngOnInit() {
-    this.initSettings();
-    this.initSettingsForm();
-    this.onChangesSettingsForm();
-  }
-
-  initSettings() {
-    if (!this.inputField.hasOwnProperty('typeSettings')) {
-      this.inputField.typeSettings = Object.assign(defaultSettings);
+  @Input() 
+  set inputField(f: Field) {
+    if (f) {
+      this.field = f;
+      this.setValueToForm(f);
     }
   }
 
-  initSettingsForm() {
-    this.settingsForm = this.fb.group({
-      minValue: [this.inputField.typeSettings.minValue],
-      maxValue: [this.inputField.typeSettings.maxValue],
-      numberType: [this.inputField.typeSettings.numberType.value],
-      decimalRange: [this.inputField.typeSettings.decimalRange],
-      isCurrency: [this.inputField.typeSettings.isCurrency],
-      currency: [this.inputField.typeSettings.currency.value],
-      isDisplay: [this.inputField.typeSettings.isDisplay],
-      displayType: [this.inputField.typeSettings.displayType],
+  constructor(
+    private fb: FormBuilder
+  ) {
+    this.form = this.fb.group({
+      showDefaultValue: new FormControl(false),
+      showValidators: new FormControl(false),
+      default: new FormControl(null),
+      format: new FormControl([]),
+      places: new FormControl(null),
+      validators: new FormGroup({
+        min: new FormControl(null),
+        max: new FormControl(null)
+      })
+    });
+    this.form.valueChanges.subscribe(v => {
+      this.updateField(v);
+    })
+  }
+
+  private setValueToForm(f: Field): void {
+    if (!f.options) { f.options = {}; }
+    this.form.patchValue({
+      default: f.options.default || null,
+      format: f.options.format || [],
+      places: f.options.places || null,
+      showDefaultValue: f.options.default ? true : false,
+      showValidators: f.options.showValidators ? true : false,
+      validators: {
+        min: f.validators.min || null,
+        max: f.validators.max || null,
+      }
     });
   }
 
-  onChangesSettingsForm() {
-    Object.keys(this.settingsForm.controls).forEach(key => {
-      this.settingsForm.get(key).valueChanges.subscribe((val) => {
-        this.inputField.typeSettings[key] = val;
-      });
-    });
+  private updateField(formValue): void {
+    if (formValue) {
+      this.field.validators = formValue.validators;
+      delete formValue.validators;
+      delete formValue.showDefaultValue;
+      Object.assign(this.field.options, formValue);
+    }
   }
+
 }

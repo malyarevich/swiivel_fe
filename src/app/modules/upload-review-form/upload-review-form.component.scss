@@ -2,9 +2,19 @@
 
 :host {
   position: relative;
+  min-height: calc(100vh - 39px);
 
   .content {
     display: flex;
+  }
+
+  .app-input-search-container {
+    margin: 0 0 10px;
+  }
+
+  .app-input-search {
+    border: 1px solid $soft-gray;
+    border-radius: 100px !important;
   }
 
   .sidebar-opener {
@@ -121,7 +131,7 @@
 }
 
 .sidebar-container {
-  background-color: #fc5;
+  background-color: #fff;
   max-width: 0px;
   overflow-x: hidden;
   transition: ease-in-out 400ms max-width;

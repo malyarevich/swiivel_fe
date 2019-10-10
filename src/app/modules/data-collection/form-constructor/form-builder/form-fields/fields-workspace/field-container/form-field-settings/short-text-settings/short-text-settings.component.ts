@@ -1,53 +1,77 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Field, ITypeFieldSettings} from "../../../../../../../../../models/data-collection/field.model";
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup, FormControl} from "@angular/forms";
 
-const defaultSettings: ITypeFieldSettings = {
-  minSizeChar: 1,
-  maxSizeChar: 30,
-  inputMask: '',
-  isDefaultValue: false,
-  defaultValue: '',
-};
+// const defaultSettings: ITypeFieldSettings = {
+//   minSizeChar: 1,
+//   maxSizeChar: 30,
+//   inputMask: '',
+//   isDefaultValue: false,
+//   defaultValue: '',
+// };
 
 @Component({
   selector: 'app-short-text-settings',
-  templateUrl: './short-text-settings.component.html',
-  styleUrls: ['./short-text-settings.component.css']
+  templateUrl: './short-text-settings.component.html'
 })
-export class ShortTextSettingsComponent implements OnInit {
-  @Input() inputField: Field;
-  shortTextSettingsForm: FormGroup;
+export class ShortTextSettingsComponent {
+  
+  form: FormGroup;
+  validatorsOptions = ['Alphabetic', 'Alphanumeric', 'Url'].map(t => ({ title: t }));
 
-  constructor(private readonly fb: FormBuilder) {
-  }
-
-  ngOnInit() {
-    this.initShortTextSettings();
-    this.initShortTextSettingsForm();
-    this.onChangesShortTextSettingsForm();
-  }
-
-  initShortTextSettings() {
-    if (!this.inputField.hasOwnProperty('typeSettings' )) {
-      this.inputField.typeSettings = Object.assign(defaultSettings);
+  private field: Field;
+  
+  @Input()
+  set inputField(inputField: Field) {
+    if (inputField) {
+      this.field = inputField;
+      this.setValueToForm(inputField);
     }
   }
-
-  initShortTextSettingsForm() {
-    this.shortTextSettingsForm = this.fb.group({
-      minSizeChar: [this.inputField.typeSettings.minSizeChar],
-      maxSizeChar: [this.inputField.typeSettings.maxSizeChar],
-      inputMask: [this.inputField.typeSettings.inputMask],
-      isDefaultValue: [this.inputField.typeSettings.isDefaultValue],
-      defaultValue: [this.inputField.typeSettings.defaultValue],
+  constructor(
+    private fb: FormBuilder
+  ) {
+    this.form = this.fb.group({
+      showDefaultValue: new FormControl(false),
+      showValidators: new FormControl(false),
+      allowList: new FormControl(false),
+      default: new FormControl(null),
+      validators: new FormGroup({
+        minLength: new FormControl(null),
+        maxLength: new FormControl(null),
+        criteria: new FormControl([])
+      })
+    });
+    this.form.valueChanges.subscribe(v => {
+      this.updateField(v);
     });
   }
 
-  onChangesShortTextSettingsForm() {
-    this.shortTextSettingsForm.valueChanges.subscribe((val) => {
-      this.inputField.typeSettings = Object.assign(val);
+  private setValueToForm(f: Field): void {
+    if (!f.options) { f.options = {}; }
+    this.form.patchValue({
+      default: f.options.default || null,
+      showDefaultValue: f.options.default ? true : false,
+      showValidators: f.options.showValidators ? true : false,
+      allowList: f.options.allowList ? true : false,
+      validators: {
+        criteria: f.validators.criteria ? f.validators.criteria : null,
+        minLength: f.validators.minLength || null,
+        maxLength: f.validators.maxLength || null,
+      }
     });
+  }
+
+  private updateField(formValue): void {
+    if (formValue) {
+      if (formValue.validators.criteria && formValue.validators.criteria > 0) {
+        formValue.validators.criteria = formValue.validators.criteria[0].title
+      }
+      this.field.validators = formValue.validators;
+      delete formValue.validators;
+      delete formValue.showDefaultValue;
+      Object.assign(this.field.options, formValue);
+    }
   }
 
 }

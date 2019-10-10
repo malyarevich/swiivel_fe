@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { Form } from "src/app/models/data-collection/form.model";
 import { Field } from "src/app/models/data-collection/field.model";
+import { FieldTypesModel } from '@app/models/data-collection/field-types.model';
 
 @Component({
   selector: "app-form-field-settings",
@@ -11,6 +12,8 @@ export class FormFieldSettingsComponent implements OnInit {
   @Input() inputField: Field;
   @Input() form: Form;
   @Input() fieldTypeName: string;
+
+  fieldTypes = FieldTypesModel.fieldTypes;
 
   tab: string = "general";
 

@@ -12,12 +12,14 @@ import {PersonModule} from './modules/person';
 import * as fromPerson from './modules/person/store/person.reducer';
 import {PersonEffects} from './modules/person/store/person.effect';
 import {UserService} from '../../services/user/user.service';
+import { CreatorHeaderComponent } from './components/creator-header/creator-header.component';
 
 @NgModule({
   declarations: [
     LayoutComponent,
     HeaderComponent,
     HeaderTopComponent,
+    CreatorHeaderComponent,
   ],
   imports: [
     CommonModule,

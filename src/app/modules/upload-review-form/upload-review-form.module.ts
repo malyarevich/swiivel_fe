@@ -14,6 +14,7 @@ import {
 import { FormUploadFooterComponent } from '@modules/upload-review-form/upload-review-form-footer/upload-review-form-footer.component';
 import { UploadFormReviewItemComponent } from '@modules/upload-review-form/upload-review-form-item/upload-review-form-item.component';
 import { SharedModule } from '@shared/shared.module';
+import { SharedRedComponentsModule } from '@app/shared/components/sharedRedComponents.module';
 import { UploadReviewFormRoutingModule } from './upload-review-form-routing.module';
 import { UploadReviewFormComponent } from './upload-review-form.component';
 import { UploadReviewFormService } from '@modules/upload-review-form/upload-review-form.service';
@@ -33,6 +34,7 @@ import { UploadReviewFormService } from '@modules/upload-review-form/upload-revi
     PdfViewerModule,
     UploadReviewFormRoutingModule,
     SharedModule,
+    SharedRedComponentsModule,
   ],
   providers: [UploadReviewFormService],
   entryComponents: [UploadReviewFormComponent]
