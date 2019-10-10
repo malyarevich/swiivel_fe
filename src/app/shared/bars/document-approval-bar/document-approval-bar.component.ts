@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { UploadReviewFormStatusesEnum } from '@app/modules/upload-review-form/upload-review-form-statuses.enum';
 import { UploadReviewFormService } from '@app/modules/upload-review-form/upload-review-form.service';
 import { Document } from '@models/upload-review-form/document.model';

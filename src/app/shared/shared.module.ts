@@ -33,7 +33,8 @@ import { MainSpinnerComponent } from './utils/main-spinner/main-spinner.componen
 
 // Bars
 import { BackBarComponent } from '@shared/bars/back-bar/back-bar.component';
-import { DocumentApprovalBarComponent } from '@shared/bars/document-approval-bar/document-approval-bar.component';
+import { DocumentApprovalBarComponent } from './bars/document-approval-bar/document-approval-bar.component';
+//import { DocumentApprovalBarComponent } from '@shared/bars/document-approval-bar/document-approval-bar.component';
 
 // Others
 import { RadioGroupComponent } from './inputs/radio-group/radio-group.component';
