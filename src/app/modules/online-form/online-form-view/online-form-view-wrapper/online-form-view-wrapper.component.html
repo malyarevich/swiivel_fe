@@ -1,0 +1,10 @@
+<div
+  class="content_section app-div-animation"
+  *ngIf="isExist()"
+  [ngClass]="{
+    'app-div-show': isShow(),
+    'app-div-hide': !isShow()
+  }"
+>
+  <ng-content></ng-content>
+</div>

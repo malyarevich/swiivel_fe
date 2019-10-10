@@ -37,7 +37,8 @@ export const routes: Routes = [
           }
         ]
       },
-      {
+      //TODO: remove that after refactoring
+      /*{
         path: 'online-form/:id',
         children: [
           {
@@ -46,7 +47,7 @@ export const routes: Routes = [
               .then(m => m.OnlineFormModule)
           }
         ]
-      },
+      },*/
       {
         path: 'form-info/:id',
         children: [

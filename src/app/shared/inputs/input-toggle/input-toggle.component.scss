@@ -1,0 +1,53 @@
+@import "index";
+
+:host {
+  .input_toggle {
+    display: flex;
+    align-items: center;
+    text-transform: uppercase;
+    letter-spacing: 0.37px;
+    margin: 0;
+    cursor: pointer;
+    input[type="checkbox"] {
+      display: none;
+      &:checked {
+        & + .input_toggle__slider {
+          background-color: $light-purple;
+          &:before {
+            background-color: $element-base-color;
+            border: 1px solid $element-base-color;
+            transform: translateX(16px);
+          }
+        }
+      }
+    }
+    &__slider {
+      width: 30px;
+      height: 12px;
+      display: inline-block;
+      position: relative;
+      border: 1px solid $medium-purple;
+      box-sizing: border-box;
+      cursor: pointer;
+      transition: .4s;
+      margin-right: 10px;
+      &:before {
+        content: "";
+        width: 14px;
+        height: 14px;
+        position: absolute;
+        top: -2px;
+        left: -1px;
+        background-color: $white;
+        border: 1px solid $medium-purple;
+        transition: .4s;
+      }
+      &.round {
+        border-radius: 100px;
+        &:before {
+          border-radius: 50%;
+        }
+      }
+    }
+  }
+}

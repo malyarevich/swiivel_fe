@@ -1,0 +1,49 @@
+@import "index";
+
+:host {
+  .radio_group {
+    display: flex;
+    flex-direction: column;
+    &__item {
+      position: relative;
+      padding-left: 25px;
+      font: 400 12px/15px $nunito-sans;
+      &:not(:last-of-type) {
+        margin-bottom: 10px;
+      }
+      &::after {
+        content: '';
+        top: 0;
+        left: 0;
+        width: 15px;
+        height: 15px;
+        position: absolute;
+        border-radius: 50%;
+        border: 1px solid #4350A2;
+      }
+      &.selected {
+        font-weight: 800;
+        &::before {
+          content: '';
+          top: 3px;
+          left: 3px;
+          width: 9px;
+          height: 9px;
+          position: absolute;
+          border-radius: 50%;
+          background-color: #4350A2;
+        }
+      }
+    }
+  }
+}
+
+:host(.flex-row) {
+  .radio_group {
+    flex-direction: row;
+    &__item {
+      margin-right: 10px;
+      margin-bottom: 0;
+    }
+  }
+}

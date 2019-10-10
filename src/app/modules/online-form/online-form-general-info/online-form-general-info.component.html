@@ -1,0 +1,18 @@
+<ng-container *ngIf="isExist()">
+  <ng-container *ngFor="let section of sections; let sectionIndex = index">
+    <div
+      class="app-div-animation"
+      [ngClass]="{
+        'app-div-show': isShowSectionByIndex(sectionIndex),
+        'app-div-hide': !isShowSectionByIndex(sectionIndex)
+      }"
+    >
+      <sw-general-info-section
+        [section]="section"
+        [formErrors]="getFormErrorsById(section['_id'])"
+        [fieldNameList]="fieldNameList"
+        [fg]="fg"
+      ></sw-general-info-section>
+    </div>
+  </ng-container>
+</ng-container>
