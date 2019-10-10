@@ -1,81 +1,109 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Field, ITypeFieldSettings} from "../../../../../../../../../models/data-collection/field.model";
-import {FormArray, FormBuilder, FormGroup} from "@angular/forms";
-
-const defaultSettings: ITypeFieldSettings = {
-  isFullWidth: false,
-  fieldWidth: 1,
-  fieldHeight: 1,
-  selection: 'multiple',
-  options: [{name: ''}],
-  isSelectedDefault: false,
-  selectedDefault: {name: ''},
-};
+import { Component, Input, ChangeDetectorRef } from '@angular/core';
+import { Field } from "../../../../../../../../../models/data-collection/field.model";
+import { FormArray, FormBuilder, FormGroup, FormControl } from "@angular/forms";
+import { isArray } from 'util';
 
 @Component({
   selector: 'app-drop-down-list-settings',
-  templateUrl: './drop-down-list-settings.component.html',
-  styleUrls: ['./drop-down-list-settings.component.css']
+  templateUrl: './drop-down-list-settings.component.html'
 })
-export class DropDownListSettingsComponent implements OnInit {
-  @Input() inputField: Field;
-  dropDownListSettingsForm: FormGroup;
+export class DropDownListSettingsComponent {
 
-  get options() {
-    return this.dropDownListSettingsForm.get('options') as FormArray;
-  }
+  buttons = [
+    {
+      label: 'One Selection',
+      value: false
+    },
+    {
+      label: 'Multiple Selection',
+      value: true
+    }
+  ];
 
-  constructor(private readonly fb: FormBuilder) {
-  }
+  fieldsType = [
+    { title: 'Text', value: 'text' },
+    { title: 'Number', value: 'number' },
+    { title: 'Date/Time', value: 'date' },
+    { title: 'Phone Number', value: 'phone' }
+  ];
 
-  ngOnInit() {
-    this.initDropDownListSettings();
-    this.initDropDownListSettingsForm();
-    this.onChangesDropDownListSettingsForm();
-  }
+  form: FormGroup;
+  private field: Field;
 
-  initDropDownListSettings() {
-    if (!this.inputField.hasOwnProperty('typeSettings')) {
-      this.inputField.typeSettings = Object.assign(defaultSettings);
+  @Input() 
+  set inputField(f: Field) {
+    if (f) {
+      this.field = f;
+      this.setValueToForm(f);
     }
   }
 
-  initDropDownListSettingsForm() {
-    this.dropDownListSettingsForm = this.fb.group({
-      isFullWidth: [this.inputField.typeSettings.isFullWidth],
-      fieldWidth: [this.inputField.typeSettings.fieldWidth],
-      fieldHeight: [this.inputField.typeSettings.fieldHeight],
-      selection: [this.inputField.typeSettings.selection],
-      options: this.fb.array(this.initOptions()),
-      isSelectedDefault: [this.inputField.typeSettings.isSelectedDefault],
-      selectedDefault: [this.inputField.typeSettings.selectedDefault],
+  constructor(
+    private fb: FormBuilder,
+    private cdr: ChangeDetectorRef
+  ) {
+    this.form = this.fb.group({
+      showDefaultOptions: new FormControl(false),
+      default: new FormControl([]),
+      fieldType: new FormControl([]),
+      multiple: new FormControl(false),
+      fieldOptions: new FormArray([
+        new FormGroup({
+          title: new FormControl('', /* { updateOn: 'blur' } */)
+        })
+      ])
+    });
+    this.form.valueChanges.subscribe(v => {
+      this.updateField(v);
     });
   }
 
-  initOptions() {
-    let options = [];
-    this.inputField.typeSettings.options.map((option) => {
-      options.push(this.fb.group({
-        name: [option.name]
-      }));
+  get options() {
+    return this.form.get('fieldOptions') as FormArray;
+  }
+
+  get optionsValue() {
+    return this.form.get('fieldOptions').value;
+  }
+
+  private setValueToForm(f: Field): void {
+    if (!f.options) { f.options = {}; }
+    this.form.patchValue({
+      default: f.options.default && isArray(f.options.default) ? f.options.default : [],
+      showDefaultOptions: f.options.default && f.options.default.length > 0 ? true : false,
+      showValidators: f.options.showValidators ? true : false,
+      multiple: f.options.multiple ? true : false,
+      fieldType: f.options.fieldType || [],
+      fieldOptions: f.options.fieldOptions && f.options.fieldOptions.length > 0 ? f.options.fieldOptions : []
     });
-    return options;
   }
 
-  addOption() {
-    this.options.push(this.fb.group({
-      name: ''
-    }));
+  private updateField(formValue): void {
+    if (formValue) {
+      delete formValue.showDefaultOptions;
+      Object.assign(this.field.options, formValue);
+    }
   }
 
-  removeOption(index) {
-    this.options.removeAt(index);
+  showOptions() {
+    return this.form.get('showDefaultOptions').value;
   }
 
-  onChangesDropDownListSettingsForm() {
-    this.dropDownListSettingsForm.valueChanges.subscribe((val) => {
-      this.inputField.typeSettings = Object.assign(val);
-    });
+  addOption(): void {
+    (this.options as FormArray).push(
+      new FormGroup({
+        title: new FormControl('', /*  { updateOn: 'blur' } */)
+      })
+    );
+    this.cdr.markForCheck();
+  }
+
+  removeOption(i: number): void {
+    if (i >= 0) {
+      (this.options as FormArray).removeAt(i);
+      if (i === 0 && this.options.value.length === 0) { this.addOption(); }
+      this.cdr.markForCheck();
+    }
   }
 
 }

@@ -1,48 +1,31 @@
-<form [formGroup]="settingsForm">
-  <!--<p class="app-text-small app-text-extra-bold">TEXTAREA SIZE</p>-->
-  <div class="mb-3">
-    <app-select-field [formControlName]="'numberFormat'"
-                      [items]="numberFormats"
-                      labelTitle="Number Format"></app-select-field>
-  </div>
-  <div class="mb-3" [hidden]="settingsForm.get('numberFormat').value['value'] !== 'national'">
-    <app-select-field [formControlName]="'country'"
-                      [items]="countries"
-                      labelTitle="Country"></app-select-field>
-  </div>
-  <div class="row no-gutters mt-4">
-    <div class="col-6">
-      <app-checkbox-field [formControlName]="'isCellphone'" label="Cell Phone"></app-checkbox-field>
-    </div>
-    <div class="col-6" [hidden]="!settingsForm.get('isCellphone').value">
-      <app-checkbox-field [formControlName]="'isVerify'" label="Verify"></app-checkbox-field>
-    </div>
-  </div>
-  <hr>
-  <div>
-    <app-toggle-checkbox-field>
-      <span class="label">INPUT MASK</span>
-      <input type="checkbox" formControlName="isInputMask"/>
-    </app-toggle-checkbox-field>
-  </div>
-  <div class="mb-4 text-right">
-    <app-tool-tip-question [placement]="'right-bottom'">
-      <div class="p-2">
-        <p class="mb-0 text-left">Use <span class="app-text-extra-bold"># - symbols</span> for number mask</p>
-        <p class="mb-0 text-left">Regex is allowed</p>
+<div class="field_settings_container">
+  <form [formGroup]="form">
+    <section>
+      <div class="title">
+        <sw-input-toggle formControlName="showDefaultValue">
+          <span class="input_label">default value</span>
+        </sw-input-toggle>
       </div>
-    </app-tool-tip-question>
-
-    <app-input-field [formControlName]="'inputMask'" label="Input Mask"></app-input-field>
-  </div>
-  <hr>
-  <div>
-    <app-toggle-checkbox-field>
-      <span class="label">DEFAULT VALUE</span>
-      <input type="checkbox" formControlName="isDefaultValue"/>
-    </app-toggle-checkbox-field>
-  </div>
-  <div>
-    <app-input-field [formControlName]="'defaultValue'" label="Default Value"></app-input-field>
-  </div>
-</form>
+      <sw-input-phone-number *ngIf="form.get('showDefaultValue').value" class="settings-field"
+        formControlName="default">
+      </sw-input-phone-number>
+    </section>
+    <section>
+      <div class="title">
+        <sw-input-toggle formControlName="showValidators">
+          <span class="input_label">validate</span>
+        </sw-input-toggle>
+      </div>
+      <ng-container *ngIf="form.get('showValidators').value" formGroupName="validators">
+        <div class="row_container">
+          <sw-input-checkbox class="phone" formControlName="phone">
+            <span class="label">Cell Phone</span>
+          </sw-input-checkbox>
+          <sw-input-checkbox class="settings-field" formControlName="verifyPhone">
+            <span class="label">Verify By Sending SMS</span>
+          </sw-input-checkbox>
+        </div>
+      </ng-container>
+    </section>
+  </form>
+</div>

@@ -1,77 +1,51 @@
-<form [formGroup]="settingsForm">
-  <p class="app-text-small app-text-extra-bold">FIELD VALUES</p>
-  <div class="row no-gutters mb-4">
-    <div class="col-6 pr-2">
-      <app-input-field [formControlName]="'minValue'"
-                       label="Minimum"
-                       type="number"
-                       [min]="1"></app-input-field>
-    </div>
-    <div class="col-6 pl-2">
-      <app-input-field [formControlName]="'maxValue'"
-                       label="Maximum"
-                       type="number"
-                       [min]="1"></app-input-field>
-    </div>
-  </div>
-  <hr>
-  <p class="app-text-small app-text-extra-bold">NUMBER FORMAT</p>
-  <div class="row no-gutters mb-3">
-    <div class="col-8 pr-2">
-      <app-select-field [formControlName]="'numberType'"
-                        [items]="numberFormat"
-                        labelTitle="Format"></app-select-field>
-    </div>
-    <div class="col-4 pl-2" [hidden]="inputField.typeSettings.numberType.value !== 'decimal'">
-      <app-input-field [formControlName]="'decimalRange'"
-                       type="number"
-                       [min]="1"></app-input-field>
-    </div>
-  </div>
-  <div>
-    <app-toggle-checkbox-field>
-      <span class="label">Currency</span>
-      <input type="checkbox" formControlName="isCurrency"/>
-    </app-toggle-checkbox-field>
-  </div>
-  <div class="mb-4">
-    <app-select-field [formControlName]="'currency'"
-                      [items]="currency"></app-select-field>
-  </div>
-  <hr class="mb-1">
-  <div class="mb-2">
-    <app-toggle-checkbox-field>
-      <span class="label">DISPLAY</span>
-      <input type="checkbox" formControlName="isDisplay"/>
-    </app-toggle-checkbox-field>
-  </div>
-
-  <div class="row no-gutters">
-    <div class="col">
-      <label class="app-radio-container">Slider
-        <input type="radio" name="displayType" [formControlName]="'displayType'" value="slider">
-        <span class="app-radio-checkmark"></span>
-      </label>
-    </div>
-    <div class="col">
-      <label class="app-radio-container">Spinner
-        <input type="radio" name="displayType" [formControlName]="'displayType'" value="spinner">
-        <span class="app-radio-checkmark"></span>
-      </label>
-    </div>
-  </div>
-  <div class="row no-gutters">
-    <div class="col">
-      <label class="app-radio-container">Star Rating
-        <input type="radio" name="displayType" [formControlName]="'displayType'" value="star">
-        <span class="app-radio-checkmark"></span>
-      </label>
-    </div>
-    <div class="col">
-      <label class="app-radio-container">Scale Rating
-        <input type="radio" name="displayType" [formControlName]="'displayType'" value="scale">
-        <span class="app-radio-checkmark"></span>
-      </label>
-    </div>
-  </div>
-</form>
+<div class="field_settings_container">
+  <form [formGroup]="form">
+    <section>
+      <div class="title">
+        <sw-input-toggle formControlName="showDefaultValue">
+          <span class="label">default value</span>
+        </sw-input-toggle>
+      </div>
+      <sw-input-number *ngIf="form.get('showDefaultValue').value" class="settings-field" formControlName="default">
+      </sw-input-number>
+    </section>
+    <section>
+      <div class="title">
+        Number Format
+      </div>
+      <div class="row_container">
+        <div class="row_container__input">
+          <sw-dropdown-input formControlName="format" [multiple]="false" [options]="validatorsOptions">
+            <span class="label">Format</span>
+          </sw-dropdown-input>
+        </div>
+        <div class="row_container__input small">
+          <sw-input-number formControlName="places">
+            <span class="label">Places</span>
+          </sw-input-number>
+        </div>
+      </div>
+    </section>
+    <section>
+      <div class="title">
+        <sw-input-toggle formControlName="showValidators">
+          <span class="label">validate</span>
+        </sw-input-toggle>
+      </div>
+      <ng-container *ngIf="form.get('showValidators').value" formGroupName="validators">
+        <div class="row_container">
+          <div class="row_container__input">
+            <sw-input-number formControlName="min">
+              <span class="label">Min Value</span>
+            </sw-input-number>
+          </div>
+          <div class="row_container__input">
+            <sw-input-number formControlName="max">
+              <span class="label">Max Value</span>
+            </sw-input-number>
+          </div>
+        </div>
+      </ng-container>
+    </section>
+  </form>
+</div>

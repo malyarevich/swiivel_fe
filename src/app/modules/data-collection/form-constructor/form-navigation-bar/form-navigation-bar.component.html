@@ -1,4 +1,4 @@
-<nav class="nav_grid">
+<!-- <nav class="nav_grid">
   <div class="nav_grid__title">
     <span class="nav_icon_brand" routerLink="/data-collection">
       <i class="fas fa-chevron-left fa-xs"></i>
@@ -11,49 +11,28 @@
     <div>
       <ul class="main_navbar">
         <li class="main_navbar__item">
-          <a
-            class="main_navbar__item_link"
-            routerLink="general-information"
-            [ngClass]="{
+          <a class="main_navbar__item_link" routerLink="general-information" [ngClass]="{
               'main_navbar__item_link--valid': isGeneralInfoValid,
               'disabled_router': isRoutingDisable()
-            }"
-            routerLinkActive="active main_navbar__item_link--active"
-          >
-            General Settings
-            <i
-              *ngIf="isGeneralInfoValid"
-              class="fas fa-check-circle fa-xs pl-2"
-            ></i>
-            <i
-              *ngIf="!isGeneralInfoValid"
-              class="fas fa-spacer-non-icon fa-xs pl-2"
-            ></i>
+            }" routerLinkActive="active main_navbar__item_link--active">
+            c
+            <i *ngIf="isGeneralInfoValid" class="fas fa-check-circle fa-xs pl-2"></i>
+            <i *ngIf="!isGeneralInfoValid" class="fas fa-spacer-non-icon fa-xs pl-2"></i>
           </a>
           <i class="fa fa-chevron-right main_navbar__item_icon"></i>
         </li>
         <li class="main_navbar__item">
-          <a
-            class="main_navbar__item_link"
-            [ngClass]="{
+          <a class="main_navbar__item_link" [ngClass]="{
               'disabled_router': isRoutingDisable()
-            }"
-            routerLink="form-builder"
-            routerLinkActive="active main_navbar__item_link--active"
-          >
+            }" routerLink="form-builder" routerLinkActive="active main_navbar__item_link--active">
             Form Builder
           </a>
           <i class="fa fa-chevron-right main_navbar__item_icon"></i>
         </li>
         <li class="main_navbar__item">
-          <a
-            class="main_navbar__item_link"
-            [ngClass]="{
+          <a class="main_navbar__item_link" [ngClass]="{
               'disabled_router': isRoutingDisable()
-            }"
-            routerLink="publish-settings"
-            routerLinkActive="active main_navbar__item_link--active"
-          >
+            }" routerLink="publish-settings" routerLinkActive="active main_navbar__item_link--active">
             Publish Settings
           </a>
         </li>
@@ -61,11 +40,7 @@
     </div>
   </div>
   <div class="nav_grid__controls">
-    <button
-      type="button"
-      class="btn app-btn-outline-primary "
-      (click)="saveForm()"
-    >
+    <button type="button" class="btn app-btn-outline-primary " (click)="saveForm()">
       Save & Exit
     </button>
   </div>
@@ -75,4 +50,25 @@
   <div class="gray_container">
     <router-outlet></router-outlet>
   </div>
+</div>  -->
+
+<div class="stepper-header" data-e2e="stepper-header">
+  <div class="item" routerLink="general-information" routerLinkActive="active">
+    General
+  </div>
+  <div class="item" routerLink="form-builder" routerLinkActive="active">
+    Builder
+  </div>
+  <div class="item" routerLink="publish-settings" routerLinkActive="active">
+    Review
+  </div>
+  <div class="item">
+      <button type="button" class="btn app-btn-outline-primary " (click)="saveForm()">
+          Save & Exit
+        </button>
+  </div>
+</div>
+
+<div class="stepper-content">
+  <router-outlet></router-outlet>
 </div>

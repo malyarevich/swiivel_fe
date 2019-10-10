@@ -1,32 +1,47 @@
-<form [formGroup]="shortTextSettingsForm">
-  <p class="app-text-small app-text-extra-bold">FIELD SIZE & MASK</p>
-  <div class="row no-gutters mb-3">
-    <div class="col-6 pr-2">
-      <app-input-field [formControlName]="'minSizeChar'"
-                       label="Min Field Size"
-                       type="number"
-                       [min]="1"></app-input-field>
-    </div>
-    <div class="col-6 pl-2">
-      <app-input-field [formControlName]="'maxSizeChar'"
-                       label="Max Field Size"
-                       type="number"
-                       [min]="1"></app-input-field>
-    </div>
-  </div>
-  <div class="mb-2">
-    <app-input-field [formControlName]="'inputMask'"
-                     label="Input Mask"></app-input-field>
-  </div>
-  <div>
-    <app-toggle-checkbox-field>
-      <span class="label">DEFAULT VALUE</span>
-      <input type="checkbox" formControlName="isDefaultValue"/>
-    </app-toggle-checkbox-field>
-  </div>
-  <div>
-    <app-input-field [formControlName]="'defaultValue'"
-                     label="Default Value"></app-input-field>
-  </div>
-
-</form>
+<div class="field_settings_container">
+  <form [formGroup]="form">
+    <section>
+      <sw-input-checkbox class="settings-field" formControlName="allowList">
+        <span class="label">Allow List of Values</span>
+      </sw-input-checkbox>
+      <span class="hint">This will let the user enter separated items.</span>
+    </section>
+    <section>
+      <div class="title">
+        <sw-input-toggle formControlName="showDefaultValue">
+          <span class="input_label">default value</span>
+        </sw-input-toggle>
+      </div>
+      <sw-input-text *ngIf="form.get('showDefaultValue').value" class="settings-field" formControlName="default">
+      </sw-input-text>
+    </section>
+    <section>
+      <div class="title">
+        <sw-input-toggle formControlName="showValidators">
+          <span class="input_label">validate</span>
+        </sw-input-toggle>
+      </div>
+      <ng-container *ngIf="form.get('showValidators').value" formGroupName="validators">
+        <div class="row_container">
+          <div class="row_container__input">
+            <sw-dropdown-input formControlName="criteria" [multiple]="false" [options]="validatorsOptions">
+              <span class="label">Validate Criteria</span>
+            </sw-dropdown-input>
+          </div>
+        </div>
+        <div class="row_container">
+          <div class="row_container__input">
+            <sw-input-number formControlName="minLength">
+              <span class="label">Min Character</span>
+            </sw-input-number>
+          </div>
+          <div class="row_container__input">
+            <sw-input-number formControlName="maxLength">
+              <span class="label">Max Character</span>
+            </sw-input-number>
+          </div>
+        </div>
+      </ng-container>
+    </section>
+  </form>
+</div>
