@@ -1,0 +1,202 @@
+<div class="table">
+  
+    <form [formGroup]="filterForm">
+
+        <table #table cdk-table [dataSource]="dataSource">
+
+        <ng-container cdkColumnDef="account" >
+            <th cdk-header-cell *cdkHeaderCellDef>
+            <div class="header_container" data-e2e="formaccount">
+                <div class="header_container__title" data-e2e="formaccounttitle" (click)="sortBy('account')">
+                Accounts
+                <div class="header_container__title_icons">
+                    <i class="fas icon"
+                    [ngClass]="{'up': sort[0] === 'account' && sort[1] === false, 'down': sort[0] === 'account' && sort[1] === true}"></i>
+                </div>
+                </div>
+                <div class="header_container__filter">
+                <sw-input-text class="filter-field" formControlName="account"></sw-input-text>
+                </div>
+            </div>
+            </th>
+            <td cdk-cell *cdkCellDef="let form">
+            <span class="text">{{form.account}}</span>
+            </td>
+        </ng-container>
+
+
+        <!-- <ng-container cdkColumnDef="type">
+            <th cdk-header-cell *cdkHeaderCellDef>
+            <div class="header_container" data-e2e="typename">
+                <div class="header_container__title" data-e2e="typenametitle" (click)="sortBy('type')">
+                type
+                <div class="header_container__title_icons">
+                    <i class="fas icon"
+                    [ngClass]="{'up': sort[0] === 'type' && sort[1] === false, 'down': sort[0] === 'type' && sort[1] === true}"></i>
+                </div>
+                </div>
+                <div class="header_container__filter">
+                <sw-input-text class="filter-field" formControlName="type"></sw-input-text>
+                </div>
+            </div>
+            </th>
+            <td cdk-cell *cdkCellDef="let form">
+            <span class="main-text">{{form.type}}</span>
+            <span class="second-text"></span>
+            </td>
+        </ng-container>
+
+
+        <ng-container cdkColumnDef="access">
+            <th cdk-header-cell *cdkHeaderCellDef>
+            <div class="header_container" data-e2e="accessname">
+                <div class="header_container__title" data-e2e="accessnametitle" (click)="sortBy('access')">
+                access
+                <div class="header_container__title_icons">
+                    <i class="fas icon"
+                    [ngClass]="{'up': sort[0] === 'access' && sort[1] === false, 'down': sort[0] === 'access' && sort[1] === true}"></i>
+                </div>
+                </div>
+                <div class="header_container__filter">
+                <sw-input-text class="filter-field" formControlName="access"></sw-input-text>
+                </div>
+            </div>
+            </th>
+            <td cdk-cell *cdkCellDef="let form">
+            asd
+            </td>
+        </ng-container>
+
+
+        <ng-container cdkColumnDef="createdBy">
+            <th cdk-header-cell *cdkHeaderCellDef>
+            <div class="header_container" data-e2e="createdbyname">
+                <div class="header_container__title" data-e2e="createdbynametitle" (click)="sortBy('createdBy')">
+                created by
+                <div class="header_container__title_icons">
+                    <i class="fas icon"
+                    [ngClass]="{'up': sort[0] === 'createdBy' && sort[1] === false, 'down': sort[0] === 'createdBy' && sort[1] === true}"></i>
+                </div>
+                </div>
+                <div class="header_container__filter">
+                <sw-input-text class="filter-field" formControlName="createdBy"></sw-input-text>
+                </div>
+            </div>
+            </th>
+            <td cdk-cell *cdkCellDef="let form">
+            <sw-user-item [userItem]="getUserInfo(form.owner)"></sw-user-item>
+            </td>
+        </ng-container>
+
+
+        <ng-container cdkColumnDef="updatedAt">
+            <th cdk-header-cell *cdkHeaderCellDef>
+            <div class="header_container" data-e2e="updateddatename">
+                <div class="header_container__title" data-e2e="updateddatenametitle" (click)="sortBy('updated_at')">
+                update date
+                <div class="header_container__title_icons">
+                    <i class="fas icon"
+                    [ngClass]="{'up': sort[0] === 'updated_at' && sort[1] === false, 'down': sort[0] === 'updated_at' && sort[1] === true}"></i>
+                </div>
+                </div>
+                <div class="header_container__filter">
+                <sw-input-text class="filter-field" formControlName="updatedAt"></sw-input-text>
+                </div>
+            </div>
+            </th>
+            <td cdk-cell *cdkCellDef="let form">
+            <span class="date">{{getDate(form.updated_at)}}</span>
+            <span class="time">{{getTime(form.updated_at)}}</span>
+            </td>
+        </ng-container>
+
+
+        <ng-container cdkColumnDef="status">
+            <th cdk-header-cell *cdkHeaderCellDef>
+            <div class="header_container" data-e2e="statusname">
+                <div class="header_container__title" data-e2e="statusnametitle" (click)="sortBy('status')">
+                status
+                <div class="header_container__title_icons">
+                    <i class="fas icon"
+                    [ngClass]="{'up': sort[0] === 'status' && sort[1] === false, 'down': sort[0] === 'status' && sort[1] === true}"></i>
+                </div>
+                </div>
+                <div class="header_container__filter">
+                <sw-input-suggest class="filter-field" formControlName="status" [options]="statusArray">
+                </sw-input-suggest>
+                </div>
+            </div>
+            </th>
+            <td cdk-cell *cdkCellDef="let form">
+            <sw-dropdown-select [options]="statusesOptions" #bulk="dropdown"
+                (selected)="changeStatus($event, [form.id])">
+                <sw-small-button [ngClass]="{'icon-end': true}" [class]="getStatusColor(form.status)"
+                [text]="form.status" [icon]="icons.CARET_DOWN"></sw-small-button>
+            </sw-dropdown-select>
+            </td>
+        </ng-container> -->
+
+        <ng-container cdkColumnDef="actions">
+            <th cdk-header-cell *cdkHeaderCellDef>
+            </th>
+            <td cdk-cell *cdkCellDef="let form">
+            <div class="item" data-e2e="Editbutton">
+                <sw-small-button text="Edit" [icon]="icons.PEN"
+                [routerLink]="['/form-constructor/', form.mongo_id]">
+                </sw-small-button>
+            </div>
+            <div class="item" data-e2e="Viewbutton">
+                <sw-small-button text="View" [icon]="icons.EYE"
+                [routerLink]="['/online-form', form.mongo_id]">
+                </sw-small-button>
+            </div>
+            <div class="item" data-e2e="Sharebutton">
+                <sw-icon-button [icon]="icons.SHARE" (click)="onShareLink(form)">
+                </sw-icon-button>
+            </div>
+            <div class="item" data-e2e="Downloadbutton">
+                <sw-icon-button [icon]="icons.DOWNLOAD" (click)="onExportPDF(form.mongo_id)">
+                </sw-icon-button>
+            </div>
+            <div class="item" data-e2e="Copybutton">
+                <sw-icon-button [icon]="icons.COPY" (click)="onDuplicateForm(form.mongo_id)">
+                </sw-icon-button>
+            </div>
+            </td>
+        </ng-container>
+
+        <ng-container cdkColumnDef="paginator">
+            <td cdk-footer-cell *cdkFooterCellDef [attr.colspan]="displayedColumns.length">
+            <div class="wrapper" data-e2e="paginatorname">
+                <sw-paginator [index]="currentPage" [size]="totalItems" (pageChange)="changePage($event)"></sw-paginator>
+            </div>
+            </td>
+        </ng-container>
+
+        <ng-container cdkColumnDef="spinner">
+            <td cdk-footer-cell *cdkFooterCellDef [attr.colspan]="displayedColumns.length">
+            <div class="app_loading">
+                <div class="app_loading__logo">i!</div>
+                <svg class="app_loading__spinner" viewBox="25 25 50 50">
+                <circle class="app_loading__path" cx="50" cy="50" r="20" fill="none" stroke-width="2"
+                    stroke-miterlimit="10" />
+                </svg>
+            </div>
+            </td>
+        </ng-container>
+
+        <tr cdk-header-row class="filters-row" *cdkHeaderRowDef="displayedColumns;"></tr>
+        <tr cdk-row class="table-row" [class.selected]="rowSelected(form)" #data
+            *cdkRowDef="let form; columns: displayedColumns;" [hidden]="showSpinner"
+            (click)="selectRow(form, $event)">
+        </tr>
+        <tr cdk-footer-row *cdkFooterRowDef="['spinner']" [hidden]="!showSpinner">
+        </tr>
+        <tr cdk-footer-row *cdkFooterRowDef="['paginator']"></tr>
+
+
+        </table>
+
+    </form>
+
+</div>
