@@ -9,12 +9,26 @@ import { switchMap } from 'rxjs/operators';
 })
 export class CreatorHeaderComponent implements OnInit {
 
+  id: string = '';
+
   constructor(
     private route: ActivatedRoute
   ) {
   }
 
   ngOnInit() {
+    this.route.paramMap.subscribe(params => {
+      if (params.get('id')) {
+        this.id = params.get('id');
+      }
+    });
+  }
+
+  getLink(path: string) {
+    if (this.id) {
+      path += `/${this.id}`;
+    }
+    return path;
   }
 
 }

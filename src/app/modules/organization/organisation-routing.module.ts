@@ -36,11 +36,17 @@ export const routes: Routes = [
         loadChildren: () => import('../data-collection/form-constructor/form-constructor.module')
           .then(m => m.FormConstructorModule)
       },
+    ]
+  },
+  {
+    path: 'form-constructor/:id',
+    component: CreatorHeaderComponent,
+    children: [
       {
-        path: ':id',
+        path: '',
         loadChildren: () => import('../data-collection/form-constructor/form-constructor.module')
           .then(m => m.FormConstructorModule)
-      }
+      },
     ]
   },
   {
