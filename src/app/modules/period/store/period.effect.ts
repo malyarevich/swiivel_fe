@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
 import { Observable, of, throwError } from 'rxjs';
-import {catchError, map, switchMap} from 'rxjs/operators';
+import { catchError, map, switchMap } from 'rxjs/operators';
 
 import { PeriodState } from './period.reducer';
 import {

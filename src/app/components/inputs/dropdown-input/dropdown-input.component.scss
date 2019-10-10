@@ -83,6 +83,10 @@
 .dropdown_items_container {
   padding: 10px 0 25px;
 
+  .dropdown_items_sub-container-item {
+    width: 100%;
+  }
+
   .dropdown_items_sub-container {
     position: relative;
     width: 100%;
