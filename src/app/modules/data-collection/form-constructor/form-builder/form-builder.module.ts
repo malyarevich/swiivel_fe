@@ -38,13 +38,10 @@ import { FieldsSettingSupportTextComponent } from "./form-fields/fields-workspac
 import { FieldsSettingPresetComponent } from "./form-fields/fields-workspace/fields-shared-components/fields-setting-preset/fields-setting-preset.component";
 import { FieldsSettingOptionCheckboxesComponent } from "./form-fields/fields-workspace/fields-shared-components/fields-setting-option-checkboxes/fields-setting-option-checkboxes.component";
 import { ShortTextSettingsComponent } from "./form-fields/fields-workspace/field-container/form-field-settings/short-text-settings/short-text-settings.component";
-import { FieldTypeSettingsContainerComponent } from "./form-fields/fields-workspace/field-container/form-field-settings/field-type-settings-container/field-type-settings-container.component";
 import { DropDownListSettingsComponent } from "./form-fields/fields-workspace/field-container/form-field-settings/drop-down-list-settings/drop-down-list-settings.component";
 import { EmailSettingsComponent } from "./form-fields/fields-workspace/field-container/form-field-settings/email-settings/email-settings.component";
-import { FieldValidationComponent } from "./form-fields/fields-workspace/field-container/form-field-settings/field-validation/field-validation.component";
 import { LongTextSettingsComponent } from "./form-fields/fields-workspace/field-container/form-field-settings/long-text-settings/long-text-settings.component";
 import { PhoneNumberSettingsComponent } from "./form-fields/fields-workspace/field-container/form-field-settings/phone-number-settings/phone-number-settings.component";
-import { GeneralSettingsComponent } from "./form-fields/fields-workspace/field-container/form-field-settings/general-settings/general-settings.component";
 import { NumberSettingsComponent } from "./form-fields/fields-workspace/field-container/form-field-settings/number-settings/number-settings.component";
 import { DateSettingsComponent } from "./form-fields/fields-workspace/field-container/form-field-settings/date-settings/date-settings.component";
 import { NgxDnDModule } from "@swimlane/ngx-dnd";
@@ -62,6 +59,7 @@ import { SignatureSidebarModule } from "src/app/shared/components";
 import { CdkTreeModule } from '@angular/cdk/tree';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { SharedModule } from '@app/components/shared.module';
+import { CheckboxSettingsComponent } from './form-fields/fields-workspace/field-container/form-field-settings/checkbox-settings/checkbox-settings.component';
 
 
 @NgModule({
@@ -102,17 +100,15 @@ import { SharedModule } from '@app/components/shared.module';
     FieldsSettingPresetComponent,
     FieldsSettingOptionCheckboxesComponent,
     ShortTextSettingsComponent,
-    FieldTypeSettingsContainerComponent,
     DropDownListSettingsComponent,
     EmailSettingsComponent,
-    FieldValidationComponent,
     LongTextSettingsComponent,
     PhoneNumberSettingsComponent,
-    GeneralSettingsComponent,
     NumberSettingsComponent,
     DateSettingsComponent,
     FormsContainerComponent,
     FieldTypePipe,
+    CheckboxSettingsComponent,
 
   ],
   imports: [

@@ -1,0 +1,27 @@
+<header class="forms-header" data-e2e="forms-header">
+  <div class="title" data-e2e="titleform">
+    <div class="back-btn" data-e2e="back-btn">
+      <i class="fas fa-chevron-left" [routerLink]="[ '/data-collection' ]"></i>
+    </div>
+    <div class="text" data-e2e="newdatacollectionform">
+      NEW DATA COLLECTION FORM
+    </div>
+  </div>
+  <div class="items-wrap" data-e2e="items-wrap">
+    <div class="item" data-e2e="createitem" [routerLink]="[ getLink('/form-constructor') ]" routerLinkActive="active">
+      Create
+    </div>
+    <i class="fas fa-chevron-right"></i>
+    <div class="item" data-e2e="senditem" [routerLink]="[ '/form-creator' ]" routerLinkActive="active">
+      Send
+    </div>
+    <i class="fas fa-chevron-right"></i>
+    <div class="item" data-e2e="recieveitem" [routerLink]="[ '/form-creator' ]" routerLinkActive="active">
+      Receive
+    </div>
+  </div>
+  <div class="log-out-btn" data-e2e="log-out-btn" (click)="logOut()">
+    <i class="fas fa-sign-out-alt"></i>
+  </div>
+</header>
+<router-outlet></router-outlet>

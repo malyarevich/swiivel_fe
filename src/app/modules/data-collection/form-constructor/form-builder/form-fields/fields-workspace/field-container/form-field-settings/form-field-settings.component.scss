@@ -1,4 +1,13 @@
-@import '../../../../../../../../../styles/variables/colors';
+@import "index";
+
+:host {
+  .settings-div{
+    //height: 296px;
+    border-radius: 3px;
+    background-color: #f3f3f3;
+    border: 1px solid #E3E3E3;
+  }
+}
 
 .app-field-settings-section {
   border-top: 1px solid $element-base-color;

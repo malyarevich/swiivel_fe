@@ -8,6 +8,8 @@ import {ConstructorDraftService} from '../services/constructor-draft.service';
 
 import {FormNavigationBarComponent} from './form-navigation-bar/form-navigation-bar.component';
 import { SharedModule } from '@app/components/shared.module';
+import { DataCollectionComponent } from '../data-collection.component';
+import { FormService } from '../services/form.service';
 
 @NgModule({
   declarations: [
@@ -21,6 +23,8 @@ import { SharedModule } from '@app/components/shared.module';
   providers: [
     SaveFormService,
     ConstructorDraftService,
+    DataCollectionComponent,
+    FormService,
   ]
 })
 export class FormConstructorModule {

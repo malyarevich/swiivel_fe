@@ -17,37 +17,36 @@ export const routes: Routes = [
           }
         ]
       },
-      {
-        path: 'form-constructor',
-        children: [
-          {
-            path: '',
-            loadChildren: () => import('./form-constructor/form-constructor.module')
-              .then(m => m.FormConstructorModule)
-          }
-        ]
-      },
-      {
-        path: 'form-constructor/:id',
-        children: [
-          {
-            path: '',
-            loadChildren: () => import('./form-constructor/form-constructor.module')
-              .then(m => m.FormConstructorModule)
-          }
-        ]
-      },
-      //TODO: remove that after refactoring
-      /*{
-        path: 'online-form/:id',
-        children: [
-          {
-            path: '',
-            loadChildren: () => import('./online-form/online-form.module')
-              .then(m => m.OnlineFormModule)
-          }
-        ]
-      },*/
+      // {
+      //   path: 'form-constructor',
+      //   children: [
+      //     {
+      //       path: '',
+      //       loadChildren: () => import('./form-constructor/form-constructor.module')
+      //         .then(m => m.FormConstructorModule)
+      //     }
+      //   ]
+      // },
+      // {
+      //   path: 'form-constructor/:id',
+      //   children: [
+      //     {
+      //       path: '',
+      //       loadChildren: () => import('./form-constructor/form-constructor.module')
+      //         .then(m => m.FormConstructorModule)
+      //     }
+      //   ]
+      // },
+      // {
+      //  path: 'online-form/:id',
+      //  children: [
+      //    {
+      //      path: '',
+      //      loadChildren: () => import('./online-form/online-form.module')
+      //        .then(m => m.OnlineFormModule)
+      //    }
+      //  ]
+      //},
       {
         path: 'form-info/:id',
         children: [
