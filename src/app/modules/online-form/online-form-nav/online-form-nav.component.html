@@ -1,0 +1,16 @@
+<div class="online_form_nav">
+  <div class="online_form_nav__line">
+    <div class="cursor_pointer" (click)="onAction('cancel')">
+      <i class="fas fa-arrow-left"></i> <i class="fas fa-minus pl-2"></i>
+    </div>
+    <div>
+      <h1 class="online_form_nav__title">
+        {{ formName }}
+      </h1>
+    </div>
+
+    <div class="cursor_pointer" (click)="onAction('save')">
+      <i class="fas fa-sign-out-alt thick_icon"></i>
+    </div>
+  </div>
+</div>

@@ -16,11 +16,13 @@ import {InterceptorsModule} from '@app/utils';
 import {environment} from '../environments/environment';
 import { PopupComponent } from './core/components/popup/popup.component'
 import { OverlayModule } from '@angular/cdk/overlay';
+import { ErrorsListTooltipComponent } from '@app/modules/online-form/errors-list/errors-list-tooltip.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PopupComponent,
+    ErrorsListTooltipComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,6 +40,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
   ],
   entryComponents: [
     PopupComponent,
+    ErrorsListTooltipComponent,
   ],
   providers: [
     PermissionService,

@@ -1,0 +1,10 @@
+@import "../../shared/styles/index.scss";
+
+.multi-div{
+  align-items: stretch;
+  border: 1px solid bisque;
+  border-radius: 11px;
+  flex: 1 1 10rem;
+  display: flex;
+  justify-content: space-between;
+}

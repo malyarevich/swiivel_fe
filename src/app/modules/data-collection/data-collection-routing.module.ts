@@ -37,16 +37,16 @@ export const routes: Routes = [
       //     }
       //   ]
       // },
-      {
-        path: 'online-form/:id',
-        children: [
-          {
-            path: '',
-            loadChildren: () => import('./online-form/online-form.module')
-              .then(m => m.OnlineFormModule)
-          }
-        ]
-      },
+      // {
+      //  path: 'online-form/:id',
+      //  children: [
+      //    {
+      //      path: '',
+      //      loadChildren: () => import('./online-form/online-form.module')
+      //        .then(m => m.OnlineFormModule)
+      //    }
+      //  ]
+      //},
       {
         path: 'form-info/:id',
         children: [
