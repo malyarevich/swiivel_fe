@@ -1,89 +1,46 @@
-<form [formGroup]="dropDownListSettingsForm">
-  <p class="app-text-small app-text-extra-bold">FIELD SIZE</p>
-  <div class="mb-3">
-    <app-checkbox-field label="Full Width" [formControlName]="'isFullWidth'"></app-checkbox-field>
-  </div>
-  <div class="row no-gutters mb-4">
-    <div class="col-6 pr-2">
-      <app-input-field [formControlName]="'fieldWidth'"
-                       label="Field Width"
-                       type="number"
-                       [min]="1"></app-input-field>
-    </div>
-    <div class="col-6 pl-2">
-      <app-input-field [formControlName]="'fieldHeight'"
-                       label="Field Height (in rows)"
-                       type="number"
-                       [min]="1"></app-input-field>
-    </div>
-  </div>
-
-  <p class="app-text-small app-text-extra-bold">NUMBER OF SELECTION</p>
-  <div class="row no-gutters mb-4">
-    <div class="col">
-      <label class="app-radio-container">One Selection
-        <input type="radio" name="selection" [formControlName]="'selection'" value="one">
-        <span class="app-radio-checkmark"></span>
-      </label>
-    </div>
-    <div class="col">
-      <label class="app-radio-container">Multiple Selection
-        <input type="radio" name="selection" [formControlName]="'selection'" value="multiple">
-        <span class="app-radio-checkmark"></span>
-      </label>
-    </div>
-  </div>
-
-  <p class="app-text-small app-text-extra-bold">OPTIONS</p>
-
-  <p>List of Predef. Options</p>
-  <div class="row no-gutters mb-3">
-    <div class="col-8">
-      <app-select-field [items]="['None']"
-                        [value]="'None'"></app-select-field>
-    </div>
-    <div class="col-4 d-flex align-middle justify-content-end">
-      <button class="btn app-btn-primary" placement="right"
-              popoverTitle="Notice"
-              ngbPopover="This feature is under development">
-        <span class="app-text-small bold-text">EDIT LIST</span>
-      </button>
-    </div>
-  </div>
-
-  <div class="row align-items-center no-gutters mb-1"
-       formArrayName="options"
-       *ngFor="let item of options.controls; let i=index">
-    <ng-container [formGroupName]="i">
-      <div class="col-11 mb-2">
-        <app-input-field class="" [formControlName]="'name'"></app-input-field>
+<div class="field_settings_container">
+  <form [formGroup]="form">
+    <section>
+      <div class="title">
+        <sw-input-toggle formControlName="showDefaultOptions">
+          <span class="input_label">Select by default</span>
+        </sw-input-toggle>
       </div>
-    </ng-container>
-    <div class="col-1 text-center">
-      <span>
-        <i class="fas fa-trash app-text-second fa-xs pl-2 app-cursor-pointer"
-           (click)="removeOption(i)">
-        </i>
-      </span>
-    </div>
-  </div>
-  <div class="mb-2">
-    <i class="fas fa-plus app-text-second fa-sm app-cursor-pointer"
-       (click)="addOption()"> ADD OPTION
-    </i>
-  </div>
-  <div>
-    <app-toggle-checkbox-field>
-      <span class="label">SELECTED BY DEFAULT</span>
-      <input type="checkbox" formControlName="isSelectedDefault"/>
-    </app-toggle-checkbox-field>
-  </div>
-  <div>
-    <app-select-field [formControlName]="'selectedDefault'"
-                      [items]="inputField.typeSettings.options"
-                      labelTitle="Default Option"
-                      [value]="inputField.typeSettings.selectedDefault.name"
-                      bindLabel="name"
-                      bindValue="name"></app-select-field>
-  </div>
-</form>
+      <sw-dropdown-input *ngIf="showOptions()" class="settings-field" formControlName="default" [options]="optionsValue">
+      </sw-dropdown-input>
+    </section>
+    <section>
+      <div class="title">
+        Field Type
+      </div>
+      <sw-dropdown-input formControlName="fieldType" class="settings-field" [multiple]="false" [options]="fieldsType">
+      </sw-dropdown-input>
+    </section>
+    <section>
+      <div class="title">
+        Number of selections
+      </div>
+      <sw-input-button-group formControlName="multiple" [options]="buttons"></sw-input-button-group>
+    </section>
+    <section>
+      <div class="title">
+        Options
+      </div>
+      <div class="options_container" formArrayName="fieldOptions">
+        <div class="option" *ngFor="let option of options.controls; let i = index">
+          <ng-container [formGroupName]="i">
+            <sw-input-text class="settings-field" formControlName="title">
+            </sw-input-text>
+            <div class="controls">
+              <i class="fas fa-plus" (click)="addOption()"></i>
+              <i class="fas fa-trash" (click)="removeOption(i)"></i>
+              <i class="dragdrop fas fa-ellipsis-v"></i>
+            </div>
+          </ng-container>
+
+        </div>
+      </div>
+    </section>
+  </form>
+
+</div>

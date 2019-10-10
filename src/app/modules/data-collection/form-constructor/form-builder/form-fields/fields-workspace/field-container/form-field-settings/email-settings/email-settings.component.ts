@@ -1,56 +1,63 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Field, ITypeFieldSettings} from "../../../../../../../../../models/data-collection/field.model";
-import {FormArray, FormBuilder, FormGroup} from "@angular/forms";
-
-const defaultSettings: ITypeFieldSettings = {
-  maxSizeChar: null,
-  validateEmail: true,
-  confirmationTextBox: true,
-  emailBlocks: true,
-  disallowFreeAddress: true,
-  blockDomains: '',
-};
+import { Component, Input } from '@angular/core';
+import { Field } from "../../../../../../../../../models/data-collection/field.model";
+import { FormBuilder, FormGroup, FormControl } from "@angular/forms";
 
 @Component({
   selector: 'app-email-settings',
-  templateUrl: './email-settings.component.html',
-  styleUrls: ['./email-settings.component.css']
+  templateUrl: './email-settings.component.html'
 })
-export class EmailSettingsComponent implements OnInit {
-  @Input() inputField: Field;
+export class EmailSettingsComponent {
 
-  settingsForm: FormGroup;
 
-  constructor(private readonly fb: FormBuilder) {
-  }
+  form: FormGroup;
+  private field: Field;
 
-  ngOnInit() {
-    this.initSettings();
-    this.initSettingsForm();
-    this.onChangesSettingsForm();
-  }
-
-  initSettings() {
-    if (!this.inputField.hasOwnProperty('typeSettings')) {
-      this.inputField.typeSettings = Object.assign(defaultSettings);
+  @Input()
+  set inputField(f: Field) {
+    if (f) {
+      this.field = f;
+      this.setValueToForm(f);
     }
   }
 
-  initSettingsForm() {
-    this.settingsForm = this.fb.group({
-      maxSizeChar: [this.inputField.typeSettings.maxSizeChar],
-      validateEmail: [this.inputField.typeSettings.validateEmail],
-      confirmationTextBox: [this.inputField.typeSettings.confirmationTextBox],
-      emailBlocks: [this.inputField.typeSettings.emailBlocks],
-      disallowFreeAddress: [this.inputField.typeSettings.disallowFreeAddress],
-      blockDomains: [this.inputField.typeSettings.blockDomains],
+  @Input()
+  set settings(obj: any) {
+    if (obj) {
+      this.form.patchValue({
+        showDefaultValue: !!obj.defaultValue,
+        defaultValue: obj.defaultValue || '',
+        askForConfirm: !!obj.askForConfirm
+      });
+    }
+  }
+
+  constructor(
+    private fb: FormBuilder
+  ) {
+    this.form = this.fb.group({
+      showDefaultValue: new FormControl(false),
+      default: new FormControl(null),
+      askForConfirm: new FormControl(false),
+    });
+    this.form.valueChanges.subscribe(v => {
+      this.updateField(v);
     });
   }
 
-  onChangesSettingsForm() {
-    this.settingsForm.valueChanges.subscribe((val) => {
-      this.inputField.typeSettings = Object.assign(val);
+  private setValueToForm(f: Field): void {
+    if (!f.options) { f.options = {}; }
+    this.form.patchValue({
+      default: f.options.default || null,
+      showDefaultValue: f.options.default ? true : false,
+      askForConfirm: f.options.askForConfirm ? true : false,
     });
+  }
+
+  private updateField(formValue): void {
+    if (formValue) {
+      delete formValue.showDefaultValue;
+      Object.assign(this.field.options, formValue);
+    }
   }
 
 }

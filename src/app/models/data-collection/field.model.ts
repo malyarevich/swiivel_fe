@@ -41,8 +41,10 @@ export interface FieldOption {
   space?: number,
   shapeStrokeValue: number,
   shapeStrokeColor: string,
-  dividerStyle?: string
-
+  dividerStyle?: string,
+  columnWide?: number,
+  rowHeigth?: number,
+  fieldOptions?: any[]
 }
 
 export interface FieldSettings {
@@ -134,6 +136,13 @@ export interface IFieldValidators {
   isErrorMessage: boolean;
   isProhibitDataEntry: boolean;
   errorText: string;
+  criteria?: string;
+  minLength?: number;
+  maxLength?: number;
+  verifyPhone?: boolean;
+  phone?: boolean;
+  min?: number;
+  max?: number;
 }
 
 export interface IFieldValidatorsRule extends ILabelValueSelect {

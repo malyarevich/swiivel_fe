@@ -6,7 +6,7 @@ export class FieldTypesModel {
     multipleOptionsField: 104,
     dropDownListField: 105,
     dateTimeField: 106,
-    timeField: 107,
+    checkbox: 107,
     emailField: 108,
     phoneNumberField: 109,
     hebrewDateField: 110,

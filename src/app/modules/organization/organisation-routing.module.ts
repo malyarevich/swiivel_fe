@@ -3,6 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {LayoutComponent} from './components/layout';
 import {routes as personRoutes} from './modules/person';
 import {routes as dashboardRoutes} from './modules/dashboard';
+import { CreatorHeaderComponent } from './components/creator-header/creator-header.component';
 
 export const routes: Routes = [
   {
@@ -25,6 +26,22 @@ export const routes: Routes = [
 
       }
     ],
+  },
+  {
+    path: 'form-constructor',
+    component: CreatorHeaderComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('../data-collection/form-constructor/form-constructor.module')
+          .then(m => m.FormConstructorModule)
+      },
+      {
+        path: ':id',
+        loadChildren: () => import('../data-collection/form-constructor/form-constructor.module')
+          .then(m => m.FormConstructorModule)
+      }
+    ]
   },
   {
     path: 'payer-accounts',

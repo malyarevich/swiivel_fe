@@ -1,47 +1,78 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Field, ITypeFieldSettings} from "../../../../../../../../../models/data-collection/field.model";
-import {FormBuilder, FormGroup} from "@angular/forms";
-
-const defaultSettings: ITypeFieldSettings = {
-  isFullWidth: true,
-  editorMode: 'plain',
-};
+import {Field, ITypeFieldSettings} from "@app/models/data-collection/field.model";
+import {FormBuilder, FormGroup, FormControl} from "@angular/forms";
 
 @Component({
   selector: 'app-long-text-settings',
   templateUrl: './long-text-settings.component.html',
-  styleUrls: ['./long-text-settings.component.scss']
 })
-export class LongTextSettingsComponent implements OnInit {
-  @Input() inputField: Field;
-  settingsForm: FormGroup;
+export class LongTextSettingsComponent  {
 
-  constructor(private readonly fb: FormBuilder) {
-  }
+  form: FormGroup;
+  validatorsOptions = ['Alphabetic', 'Alphanumeric'].map(t => ({ title: t }));
 
-  ngOnInit() {
-    this.initSettings();
-    this.initSettingsForm();
-    this.onChangesSettingsForm();
-  }
+  private field: Field
 
-  initSettings() {
-    if (!this.inputField.hasOwnProperty('typeSettings')) {
-      this.inputField.typeSettings = Object.assign(defaultSettings);
+  @Input()
+  set inputField(f: Field) {
+    if (f) {
+      this.field = f;
+      this.setValueToForm(f);
     }
   }
 
-  initSettingsForm() {
-    this.settingsForm = this.fb.group({
-      isFullWidth: [this.inputField.typeSettings.isFullWidth],
-      editorMode: [this.inputField.typeSettings.editorMode],
+  @Input()
+  set settings(obj: any) {
+    if (obj) {
+      this.form.patchValue(obj);
+    }
+  }
+
+  constructor(
+    private fb: FormBuilder
+  ) {
+    this.form = this.fb.group({
+      showDefaultValue: new FormControl(false),
+      showValidators: new FormControl(false),
+      default: new FormControl([]),
+      columnWide: new FormControl([]),
+      rowHeigth: new FormControl([]),
+      validators: new FormGroup({
+        minLength: new FormControl(null),
+        maxLength: new FormControl(null),
+        criteria: new FormControl([])
+      })
+    });
+    this.form.valueChanges.subscribe(v => {
+      this.updateField(v);
     });
   }
 
-  onChangesSettingsForm() {
-    this.settingsForm.valueChanges.subscribe((val) => {
-      this.inputField.typeSettings = Object.assign(val);
+  private setValueToForm(f: Field): void {
+    if (!f.options) { f.options = {}; }
+    this.form.patchValue({
+      default: f.options.default || null,
+      showDefaultValue: f.options.default ? true : false,
+      showValidators: f.options.showValidators ? true : false,
+      allowList: f.options.allowList ? true : false,
+      columnWide: f.options.columnWide || null,
+      rowHeigth: f.options.rowHeigth || null,
+      validators: {
+        criteria: f.validators.criteria ? f.validators.criteria : null,
+        minLength: f.validators.minLength || null,
+        maxLength: f.validators.maxLength || null,
+      }
     });
   }
+
+  private updateField(formValue): void {
+    if (formValue) {
+      this.field.validators = formValue.validators;
+      delete formValue.validators;
+      delete formValue.showDefaultValue;
+      Object.assign(this.field.options, formValue);
+    }
+  }
+
 
 }
