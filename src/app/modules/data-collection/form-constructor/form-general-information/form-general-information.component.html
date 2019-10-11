@@ -52,7 +52,7 @@
                 </div>
                 <div class="pdf-container" data-e2e="pdf-container">
                     <pdf-viewer [src]="selectedItem.src" (on-progress)="onProgress($event)" (error)="onError($event)"
-                    style="display: block; margin-top: 60px;" zoom="0.7" [hidden]="pdfLoading || pdfError"></pdf-viewer>
+                    style="display: block; margin-top: 60px;" zoom="0.7" [class.dont-display]="pdfLoading || pdfError"></pdf-viewer>
                 </div>
                 <div class="loader" *ngIf="pdfLoading">
                   <sw-main-spinner class="medium"></sw-main-spinner>
