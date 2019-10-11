@@ -6,7 +6,7 @@
     <i class="icon fas fa-search"></i>
   </div>
 
-  <cdk-tree [dataSource]="treeSource" [treeControl]="treeControl" cdkDropList [cdkDropListData]="treeSource" [cdkDropListConnectedTo]="['root-list']" cdkDropListSortingDisabled  id="sidebar-list">
+  <cdk-tree [dataSource]="treeSource" [treeControl]="treeControl" cdkDropList [cdkDropListData]="treeSource.children" [cdkDropListConnectedTo]="getConnectedIds()" cdkDropListSortingDisabled  id="sidebar-list">
 
     <cdk-nested-tree-node *cdkTreeNodeDef="let node" class="field-tree-node" cdkDrag [cdkDragDisabled]="node.isActive" (cdkDragDropped)="drop($event)" [cdkDragData]="node" [hidden]="isFiltered(node)">
       <div class="field-tree-node__content">
@@ -27,8 +27,8 @@
       <div class="field-tree-node__content">
         <div class="field-tree-node__content_node" [class.expanded]="treeControl.isExpanded(node)">
           <div class="checkbox">
-            <input type="checkbox" [checked]="node.isActive && descendantsAllSelected(node)"
-              [indeterminate]="descendantsPartiallySelected(node)" (click)="toggleParentNode(node)">
+            <input type="checkbox" [checked]="nodeIsChecked(node)"
+              [indeterminate]="nodeIsIndeterminate(node)" (click)="toggleParentNode(node)">
           </div>
           <i class="dragdrop fas fa-ellipsis-v" cdkDragHandle ></i>
           <span class="node-name">{{node.name}}</span>

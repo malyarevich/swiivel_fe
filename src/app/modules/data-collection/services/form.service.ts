@@ -27,7 +27,7 @@ export class FormService {
 
   getOneForm(id): Observable<any> {
     return this.http
-      .get(`/proxy/forms/${id}`)
+      .get(`/proxy/form-builder/form-template/${id}`)
       .pipe(map((response: Response) => response.data));
   }
 
