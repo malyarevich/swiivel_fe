@@ -13,7 +13,6 @@ import { ProgressBarComponent } from '@shared/bars/progress-bar/progress-bar.com
 import { PopupComponent } from '@app/core/components/popup/popup.component';
 import { HttpClientModule } from '@angular/common/http';
 import { OnlineFormModule } from '@app/modules/data-collection/online-form/online-form.module';
-import { OnlineFormService } from "@app/modules/data-collection/online-form/services/online-form.service";
 import { FormManagementDataSource } from './mock-datasource';
 import { FormManagementSubmissionsComponent } from './form-management-submissions.component';
 

@@ -1,7 +1,7 @@
 import { Injectable, EventEmitter, Output } from "@angular/core";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
-import { HttpClient } from "@angular/common/http";
+import { HttpService } from "@app/core/http.service";
 import { ShortTextFieldComponent } from "../online-form-fields/short-text-field/short-text-field.component";
 import { LongTextFieldComponent } from "../online-form-fields/long-text-field/long-text-field.component";
 import { NumberTextFieldComponent } from "../online-form-fields/number-text-field/number-text-field.component";
@@ -126,7 +126,7 @@ export class OnlineFormService {
     // console.log(this.fg.value);
   }
 
-  constructor(private http: HttpClient, private fb: FormBuilder) {}
+  constructor(private http: HttpService, private fb: FormBuilder) {}
 
   setFromId(id: string) {
     this.formId = id;
