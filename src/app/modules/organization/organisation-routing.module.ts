@@ -89,6 +89,17 @@ export const routes: Routes = [
       }
     ],
   },
+  {
+    path: 'online-form',
+    component: LayoutComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('../online-form/online-form.module').then(m => m.OnlineFormModule),
+
+      }
+    ],
+  },
 ];
 
 @NgModule({
