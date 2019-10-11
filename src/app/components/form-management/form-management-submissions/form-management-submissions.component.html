@@ -174,28 +174,19 @@
             <th cdk-header-cell *cdkHeaderCellDef>
             </th>
             <td cdk-cell *cdkCellDef="let form">
-            <div class="item" data-e2e="Editbutton">
-                <sw-small-button text="Edit" [icon]="icons.PEN"
-                [routerLink]="['/form-constructor/', form.mongo_id]">
-                </sw-small-button>
-            </div>
-            <div class="item" data-e2e="Viewbutton">
-                <sw-small-button text="View" [icon]="icons.EYE"
-                [routerLink]="['/online-form', form.mongo_id]">
-                </sw-small-button>
-            </div>
-            <div class="item" data-e2e="Sharebutton">
-                <sw-icon-button [icon]="icons.SHARE" (click)="onShareLink(form)">
-                </sw-icon-button>
-            </div>
-            <div class="item" data-e2e="Downloadbutton">
-                <sw-icon-button [icon]="icons.DOWNLOAD" (click)="onExportPDF(form.mongo_id)">
-                </sw-icon-button>
-            </div>
-            <div class="item" data-e2e="Copybutton">
-                <sw-icon-button [icon]="icons.COPY" (click)="onDuplicateForm(form.mongo_id)">
-                </sw-icon-button>
-            </div>
+                <div class="item" data-e2e="Downloadbutton">
+                    <sw-icon-button [icon]="icons.DOWNLOAD" (click)="onExportPDF(form.mongo_id)">
+                    </sw-icon-button>
+                </div>
+                <div class="item" data-e2e="Expandbutton">
+                    <svg width="1" height="44" viewBox="0 0 1 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect opacity="0.3" width="1" height="44" fill="#4350A2"/>
+                    </svg>
+                            
+                    <sw-icon-button [icon]="icons.CARET_DOWN" (click)="onToggleExpand(form.id)"></sw-icon-button>
+
+                    <app-online-form-view *ngIf="shouldExpand === form.id" [formID]="form.id"></app-online-form-view>
+                </div>
             </td>
         </ng-container>
 

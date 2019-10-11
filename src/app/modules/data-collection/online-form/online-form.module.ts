@@ -111,6 +111,7 @@ import { GeneralPipesModule } from '../../../utils/pipes/general-pipes.module';
     GeneralDirectivesModule,
     GeneralPipesModule
   ],
-  providers: [OnlineFormService, OnlineFormNavigationService, SystemSignatureService]
+  providers: [OnlineFormService, OnlineFormNavigationService, SystemSignatureService],
+  exports: [OnlineFormViewComponent],
 })
 export class OnlineFormModule {}

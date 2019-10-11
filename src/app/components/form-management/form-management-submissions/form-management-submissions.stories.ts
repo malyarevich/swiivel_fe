@@ -10,19 +10,26 @@ import { StatusColors } from './form-management-submissions.models';
 import { StorybookImports, StorybookProviders } from '@components/utils/storybook';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { ProgressBarComponent } from '@shared/bars/progress-bar/progress-bar.component';
+import { PopupComponent } from '@app/core/components/popup/popup.component';
+import { HttpClientModule } from '@angular/common/http';
+import { OnlineFormModule } from '@app/modules/data-collection/online-form/online-form.module';
+import { OnlineFormService } from "@app/modules/data-collection/online-form/services/online-form.service";
 import { FormManagementDataSource } from './mock-datasource';
 import { FormManagementSubmissionsComponent } from './form-management-submissions.component';
-import { PopupComponent } from '@app/core/components/popup/popup.component'
 
 const stories = storiesOf('Form Management Submissions', module);
 
 stories.addDecorator(withKnobs);
 stories.addDecorator(
   moduleMetadata({ 
-    declarations: [FormManagementSubmissionsComponent, ProgressBarComponent, PopupComponent],
+    declarations: [
+        FormManagementSubmissionsComponent, ProgressBarComponent, 
+        PopupComponent,
+    ],
     imports: [
         CommonModule, FormsModule, SharedModule, CdkTableModule,
-        OverlayModule, MatProgressBarModule, ...StorybookImports, 
+        OverlayModule, MatProgressBarModule, OnlineFormModule,
+        HttpClientModule, ...StorybookImports, 
     ],
     providers: [...StorybookProviders],
     entryComponents: [PopupComponent],
@@ -34,7 +41,7 @@ dataSource.loadFormsList();
 
 const displayedColumns = [
     'account', 'students', 'last_updated', 'completion_percentage', 
-    'online_submission', 'pdf_submission', 'status',
+    'online_submission', 'pdf_submission', 'status', 'actions'
 ];
 const filterFormGroup = {
     account: [null],
@@ -69,6 +76,10 @@ const statusColors: StatusColors = {
 const totalItems = 100;
 const showSpinner = false;
 
+function onToggleExpand(formID: string) {
+    debugger
+}
+
 
 stories.add('Default', () => ({
     template: `
@@ -83,6 +94,7 @@ stories.add('Default', () => ({
             [statusColors]="statusColors"
             [totalItems]="totalItems"
             [showSpinner]="showSpinner"
+            (toggleExpand)="onToggleExpand($event)"
         >
         </sw-form-management-submissions>`,
     props: {
@@ -95,6 +107,7 @@ stories.add('Default', () => ({
         formSubmissionsListParams,
         statusColors,
         showSpinner,
+        onToggleExpand,
     },
   })
 );

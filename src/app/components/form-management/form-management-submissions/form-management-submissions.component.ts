@@ -39,6 +39,7 @@ export class FormManagementSubmissionsComponent implements OnInit {
   @Input() showSpinner: boolean;
 
   @Output() changeStatus = new EventEmitter<any>();
+  @Output() toggleExpand = new EventEmitter<string>();
   @Output() exportZIP = new EventEmitter<boolean>();
   @Output() exportPDF = new EventEmitter<boolean>();
 
@@ -47,6 +48,7 @@ export class FormManagementSubmissionsComponent implements OnInit {
   filterForm: FormGroup;
   icons = IconsEnum;
   statusesFriendlyNames: string[];
+  shouldExpand: string;
   download: {
     url: SafeResourceUrl;
     filename: string;
@@ -172,5 +174,11 @@ export class FormManagementSubmissionsComponent implements OnInit {
 
   onChangeStatus(statusId: number, ids: number[]): void {
     this.changeStatus.emit({ statusId, ids })
+  }
+  
+  onToggleExpand(formID: string): void {
+    this.shouldExpand === formID ? 
+      this.shouldExpand = null : 
+      this.shouldExpand = formID;
   }
 }
