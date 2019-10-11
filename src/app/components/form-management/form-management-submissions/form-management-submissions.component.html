@@ -25,88 +25,122 @@
         </ng-container>
 
 
-        <!-- <ng-container cdkColumnDef="type">
+        <ng-container cdkColumnDef="students">
             <th cdk-header-cell *cdkHeaderCellDef>
-            <div class="header_container" data-e2e="typename">
-                <div class="header_container__title" data-e2e="typenametitle" (click)="sortBy('type')">
-                type
+            <div class="header_container" data-e2e="studentsname">
+                <div class="header_container__title" data-e2e="studentsnametitle" (click)="sortBy('students')">
+                Students
                 <div class="header_container__title_icons">
                     <i class="fas icon"
-                    [ngClass]="{'up': sort[0] === 'type' && sort[1] === false, 'down': sort[0] === 'type' && sort[1] === true}"></i>
+                    [ngClass]="{'up': sort[0] === 'students' && sort[1] === false, 'down': sort[0] === 'students' && sort[1] === true}"></i>
                 </div>
                 </div>
                 <div class="header_container__filter">
-                <sw-input-text class="filter-field" formControlName="type"></sw-input-text>
+                <sw-input-text class="filter-field" formControlName="students"></sw-input-text>
                 </div>
             </div>
             </th>
             <td cdk-cell *cdkCellDef="let form">
-            <span class="main-text">{{form.type}}</span>
-            <span class="second-text"></span>
+                <sw-user-item *ngIf="form.students.length" [userItem]="getStudentInfo(form.students)"></sw-user-item>
             </td>
         </ng-container>
 
 
-        <ng-container cdkColumnDef="access">
+        <ng-container cdkColumnDef="last_updated">
             <th cdk-header-cell *cdkHeaderCellDef>
-            <div class="header_container" data-e2e="accessname">
-                <div class="header_container__title" data-e2e="accessnametitle" (click)="sortBy('access')">
-                access
+            <div class="header_container" data-e2e="last_updatedname">
+                <div class="header_container__title" data-e2e="last_updatedtitle" (click)="sortBy('last_updated')">
+                Last Updated Date
                 <div class="header_container__title_icons">
                     <i class="fas icon"
-                    [ngClass]="{'up': sort[0] === 'access' && sort[1] === false, 'down': sort[0] === 'access' && sort[1] === true}"></i>
+                    [ngClass]="{'up': sort[0] === 'last_updated' && sort[1] === false, 'down': sort[0] === 'last_updated' && sort[1] === true}"></i>
                 </div>
                 </div>
                 <div class="header_container__filter">
-                <sw-input-text class="filter-field" formControlName="access"></sw-input-text>
+                <sw-input-text class="filter-field" formControlName="last_updated"></sw-input-text>
                 </div>
             </div>
             </th>
-            <td cdk-cell *cdkCellDef="let form">
-            asd
+            <td class="datetime" cdk-cell *cdkCellDef="let form">
+                <span class="date">{{getDate(form.last_updated)}}</span>&nbsp;
+                <span class="time">{{getTime(form.last_updated)}}</span>
             </td>
         </ng-container>
 
 
-        <ng-container cdkColumnDef="createdBy">
+        <ng-container cdkColumnDef="completion_percentage">
             <th cdk-header-cell *cdkHeaderCellDef>
-            <div class="header_container" data-e2e="createdbyname">
-                <div class="header_container__title" data-e2e="createdbynametitle" (click)="sortBy('createdBy')">
-                created by
+            <div class="header_container" data-e2e="completion_percentagename">
+                <div class="header_container__title" data-e2e="completion_percentagetitle" (click)="sortBy('completion_percentage')">
+                Completion
                 <div class="header_container__title_icons">
                     <i class="fas icon"
-                    [ngClass]="{'up': sort[0] === 'createdBy' && sort[1] === false, 'down': sort[0] === 'createdBy' && sort[1] === true}"></i>
+                    [ngClass]="{'up': sort[0] === 'completion_percentage' && sort[1] === false, 'down': sort[0] === 'completion_percentage' && sort[1] === true}"></i>
                 </div>
                 </div>
                 <div class="header_container__filter">
-                <sw-input-text class="filter-field" formControlName="createdBy"></sw-input-text>
+                <sw-input-text class="filter-field" formControlName="completion_percentage"></sw-input-text>
                 </div>
             </div>
             </th>
             <td cdk-cell *cdkCellDef="let form">
-            <sw-user-item [userItem]="getUserInfo(form.owner)"></sw-user-item>
+                <sw-progress-bar [value]="form.completion_percentage"></sw-progress-bar>
             </td>
         </ng-container>
 
 
-        <ng-container cdkColumnDef="updatedAt">
+        <ng-container cdkColumnDef="online_submission">
             <th cdk-header-cell *cdkHeaderCellDef>
-            <div class="header_container" data-e2e="updateddatename">
-                <div class="header_container__title" data-e2e="updateddatenametitle" (click)="sortBy('updated_at')">
-                update date
+            <div class="header_container" data-e2e="online_submissionname">
+                <div class="header_container__title" data-e2e="online_submissiontitle" (click)="sortBy('online_submission')">
+                Online Submission
                 <div class="header_container__title_icons">
                     <i class="fas icon"
-                    [ngClass]="{'up': sort[0] === 'updated_at' && sort[1] === false, 'down': sort[0] === 'updated_at' && sort[1] === true}"></i>
+                    [ngClass]="{'up': sort[0] === 'online_submission' && sort[1] === false, 'down': sort[0] === 'online_submission' && sort[1] === true}"></i>
                 </div>
                 </div>
                 <div class="header_container__filter">
-                <sw-input-text class="filter-field" formControlName="updatedAt"></sw-input-text>
+                <sw-input-text class="filter-field" formControlName="online_submission"></sw-input-text>
                 </div>
             </div>
             </th>
-            <td cdk-cell *cdkCellDef="let form">
-            <span class="date">{{getDate(form.updated_at)}}</span>
-            <span class="time">{{getTime(form.updated_at)}}</span>
+            <td cdk-cell *cdkCellDef="let form" class="centered">
+                <svg *ngIf="form.online_submission; else elseNotOnlineSubmission" class="checkmark" width="13" height="11" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M11.656 0.705067L4.13132 8.20507L1.33658 5.48508L0 6.83104L4.13132 10.9996L13 2.05103L11.656 0.705067Z" fill="#3CA476"/>
+                </svg>
+                <ng-template #elseNotOnlineSubmission>
+                    <svg class="exmark" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 1.20857L10.7914 0L6 4.79143L1.20857 0L0 1.20857L4.79143 6L0 10.7914L1.20857 12L6 7.20857L10.7914 12L12 10.7914L7.20857 6L12 1.20857Z" fill="#A4A4A4"/>
+                    </svg>                            
+                </ng-template>
+            </td>
+        </ng-container>
+
+
+        <ng-container cdkColumnDef="pdf_submission">
+            <th cdk-header-cell *cdkHeaderCellDef>
+            <div class="header_container" data-e2e="pdf_submissionname">
+                <div class="header_container__title" data-e2e="pdf_submissiontitle" (click)="sortBy('pdf_submission')">
+                PDF Submission
+                <div class="header_container__title_icons">
+                    <i class="fas icon"
+                    [ngClass]="{'up': sort[0] === 'pdf_submission' && sort[1] === false, 'down': sort[0] === 'pdf_submission' && sort[1] === true}"></i>
+                </div>
+                </div>
+                <div class="header_container__filter">
+                <sw-input-text class="filter-field" formControlName="pdf_submission"></sw-input-text>
+                </div>
+            </div>
+            </th>
+            <td cdk-cell *cdkCellDef="let form" class="centered">
+                    <svg *ngIf="form.pdf_submission; else elseNotPDFSubmission" class="checkmark" width="13" height="11" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M11.656 0.705067L4.13132 8.20507L1.33658 5.48508L0 6.83104L4.13132 10.9996L13 2.05103L11.656 0.705067Z" fill="#3CA476"/>
+                    </svg>
+                    <ng-template #elseNotPDFSubmission>
+                        <svg class="exmark" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 1.20857L10.7914 0L6 4.79143L1.20857 0L0 1.20857L4.79143 6L0 10.7914L1.20857 12L6 7.20857L10.7914 12L12 10.7914L7.20857 6L12 1.20857Z" fill="#A4A4A4"/>
+                        </svg>                            
+                    </ng-template>
             </td>
         </ng-container>
 
@@ -115,26 +149,26 @@
             <th cdk-header-cell *cdkHeaderCellDef>
             <div class="header_container" data-e2e="statusname">
                 <div class="header_container__title" data-e2e="statusnametitle" (click)="sortBy('status')">
-                status
+                Form Status
                 <div class="header_container__title_icons">
                     <i class="fas icon"
                     [ngClass]="{'up': sort[0] === 'status' && sort[1] === false, 'down': sort[0] === 'status' && sort[1] === true}"></i>
                 </div>
                 </div>
                 <div class="header_container__filter">
-                <sw-input-suggest class="filter-field" formControlName="status" [options]="statusArray">
+                <sw-input-suggest class="filter-field" formControlName="status" [options]="statusesOptions">
                 </sw-input-suggest>
                 </div>
             </div>
             </th>
             <td cdk-cell *cdkCellDef="let form">
-            <sw-dropdown-select [options]="statusesOptions" #bulk="dropdown"
-                (selected)="changeStatus($event, [form.id])">
+            <sw-dropdown-select [options]="statusesFriendlyNames" #bulk="dropdown"
+                (selected)="onChangeStatus($event, [form.id])">
                 <sw-small-button [ngClass]="{'icon-end': true}" [class]="getStatusColor(form.status)"
                 [text]="form.status" [icon]="icons.CARET_DOWN"></sw-small-button>
             </sw-dropdown-select>
             </td>
-        </ng-container> -->
+        </ng-container>
 
         <ng-container cdkColumnDef="actions">
             <th cdk-header-cell *cdkHeaderCellDef>

@@ -1,5 +1,31 @@
 @import 'index';
 
+* {
+    font-family: Nunito Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 15px;
+}
+
+.header_container__title {
+    font-size: 9px;
+    line-height: 13px;
+
+    /* identical to box height, or 144% */
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+}
+
+.time {
+    color: #909090;
+}
+
+.centered {
+    text-align: center;
+    justify-content:center;
+}
+
 .block-wrapper {
     background-color: white;
     border-radius: 5px;

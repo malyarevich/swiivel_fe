@@ -2,43 +2,59 @@ import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { select, text, withKnobs } from '@storybook/addon-knobs';
 import { APP_BASE_HREF, CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { OverlayModule } from "@angular/cdk/overlay";
 import { CdkTableModule } from '@angular/cdk/table';
 import { SharedModule } from '@shared/shared.module';
 import { FormSubmissionsListParams } from '@app/models/form-submissions-list.model';
 import { StatusColors } from './form-management-submissions.models';
 import { StorybookImports, StorybookProviders } from '@components/utils/storybook';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { ProgressBarComponent } from '@shared/bars/progress-bar/progress-bar.component';
 import { FormManagementDataSource } from './mock-datasource';
 import { FormManagementSubmissionsComponent } from './form-management-submissions.component';
+import { PopupComponent } from '@app/core/components/popup/popup.component'
 
 const stories = storiesOf('Form Management Submissions', module);
 
 stories.addDecorator(withKnobs);
 stories.addDecorator(
   moduleMetadata({ 
-    declarations: [FormManagementSubmissionsComponent],
+    declarations: [FormManagementSubmissionsComponent, ProgressBarComponent, PopupComponent],
     imports: [
         CommonModule, FormsModule, SharedModule, CdkTableModule,
-        ...StorybookImports, 
+        OverlayModule, MatProgressBarModule, ...StorybookImports, 
     ],
-    providers: [...StorybookProviders]
+    providers: [...StorybookProviders],
+    entryComponents: [PopupComponent],
   })
 )
 
 const dataSource: FormManagementDataSource = new FormManagementDataSource();
-const displayedColumns = ['account'];
+dataSource.loadFormsList();
+
+const displayedColumns = [
+    'account', 'students', 'last_updated', 'completion_percentage', 
+    'online_submission', 'pdf_submission', 'status',
+];
 const filterFormGroup = {
     account: [null],
     students: [null],
     last_updated: [null],
-    completion: [null],
+    completion_percentage: [null],
     online_submission: [null],
     pdf_submission: [null],
     status: [null],
 };
 const sort = ['account', true];
 const currentPage = 1;
-const statusesOptions = ['Active', 'Drafts', 'In Review', 'Closed', 'Archived'];
+const statusesOptions = [
+    { title: 'All', value: null },
+    { title: 'Active', value: 'active' },
+    { title: 'Drafts', value: 'draft' },
+    { title: 'In Review', value: 'review' },
+    { title: 'Closed', value: 'closed' },
+    { title: 'Archived', value: 'archived' },
+];
 const formSubmissionsListParams: FormSubmissionsListParams = { page: 1, limit: 10 };
 const statusColors: StatusColors = {
     statusColors: new Map([
@@ -53,7 +69,8 @@ const statusColors: StatusColors = {
 const totalItems = 100;
 const showSpinner = false;
 
-stories.add('Standard', () => ({
+
+stories.add('Default', () => ({
     template: `
         <sw-form-management-submissions 
             [dataSource]="dataSource"

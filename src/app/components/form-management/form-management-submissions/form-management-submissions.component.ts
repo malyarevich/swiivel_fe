@@ -11,7 +11,7 @@ import { UtilsService } from '@app/core/utils.service';
 import { Form } from '@models/data-collection/form.model';
 import { IconsEnum } from '@shared/icons.enum';
 import { DialogComponent } from '@shared/popup/dialog.component';
-import { pick } from 'lodash';
+import { flatMap } from 'lodash';
 import { DateTime } from 'luxon';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { StatusColors } from './form-management-submissions.models';
@@ -38,15 +38,15 @@ export class FormManagementSubmissionsComponent implements OnInit {
   @Input() totalItems: number;
   @Input() showSpinner: boolean;
 
+  @Output() changeStatus = new EventEmitter<any>();
   @Output() exportZIP = new EventEmitter<boolean>();
   @Output() exportPDF = new EventEmitter<boolean>();
 
 //   @ViewChild('dialog', { static: true }) dialog: DialogComponent;
 
-  public filterForm: FormGroup;
-
-  public icons = IconsEnum;
-
+  filterForm: FormGroup;
+  icons = IconsEnum;
+  statusesFriendlyNames: string[];
   download: {
     url: SafeResourceUrl;
     filename: string;
@@ -68,34 +68,30 @@ export class FormManagementSubmissionsComponent implements OnInit {
 
   ngOnInit() {
     this.filterForm = this.fb.group(this.filterFormGroup);
+    this.statusesFriendlyNames = flatMap(this.statusesOptions, ({ title }) => [title]);
     this._sm = new SelectionModel(true);
   }
 
   getStatusColor(status: string): string {
-    switch (status) {
-      case 'archived':
-        return 'gray';
-      case 'active':
-        return 'green';
-      case 'draft':
-        return 'lite-gray';
-      case 'review':
-        return 'yellow';
-      case 'closed':
-        return 'gray';
-      default:
-        return 'gray';
-    }
+    return this.statusColors.statusColors.get(status) || this.statusColors.defaultColor;
   }
 
-  getDate(date: Date) {
-    let dt = DateTime.fromJSDate(date);
-    return dt.setLocale('en-US').toFormat("LL-dd-yyyy");
+  getDate(date: string) {
+    // Hack because DateTime.fromFormat won't cooperate to parse the string
+    const splitDate = date.split(' ').slice(0, -2).join(' ');
+    return splitDate;
   }
 
-  getTime(date: Date) {
-    let dt = DateTime.fromJSDate(date);
-    return dt.setLocale('en-US').toFormat("t").toLowerCase();
+  getTime(date: string) {
+     // Hack because DateTime.fromFormat won't cooperate to parse the string
+    const splitTime = date.split(' ').slice(-2).join(' ');
+    return splitTime;
+  }
+
+  getStudentInfo(student: any) {
+    const name = [student.first_name, student.last_name].join(' ');
+    const avatar = student.avatar;
+    return { name, avatar };
   }
 
   sortBy(field: string) {
@@ -174,15 +170,7 @@ export class FormManagementSubmissionsComponent implements OnInit {
       });
   }
 
-  changeStatus(statusId: number, ids: number[]): void {
-    // this.statusArray.forEach((item) => {
-    //   if (item.title === this.statusesOptions[statusId]) {
-    //     this.dataCollectionService
-    //       .changeStatus(ids, item.value)
-    //       .subscribe(() => {
-    //         // this.dataSource.loadFormsList(this.params);
-    //       });
-    //   }
-    // }); 
+  onChangeStatus(statusId: number, ids: number[]): void {
+    this.changeStatus.emit({ statusId, ids })
   }
 }
