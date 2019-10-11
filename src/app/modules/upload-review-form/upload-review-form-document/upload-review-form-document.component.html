@@ -1,5 +1,5 @@
 <div *ngIf="document">
-  <div [ngClass]="{'loading': isDocumentLoading}">
+  <div [ngClass]="{'loading': isDocumentLoading}" class="container">
     <div *ngIf="isDocumentLoading" class="loading-spinner">
       <app-spinner></app-spinner>
     </div>
@@ -21,23 +21,35 @@
       <pdf-viewer
         [src]="document.link"
         [render-text]="true"
-        (after-load-complete)="isLoaded($event)"
+        (after-load-complete)="isLoaded()"
         style="display: block;"
       ></pdf-viewer>
+    </div>
+    <div class="controllers" *ngIf="!isDocumentLoading">
+      <div class="controllers-zoom">
+        <sw-icon-button [icon]="icons.ZOOM_OUT" [size]="sizes.LARGE"></sw-icon-button>
+        <sw-icon-button [icon]="icons.ZOOM_IN" [size]="sizes.LARGE"></sw-icon-button>
+      </div>
+      <div class="controllers-rotate">
+        <button class="controllers-rotate-button">
+          <img
+            class="controllers-rotate-icon"
+            [src]="'./assets/images/icons/rotate-right.svg'"
+          />
+        </button>
+        <button class="controllers-rotate-button">
+          <img
+            class="controllers-rotate-icon"
+            [src]="'./assets/images/icons/rotate-left.svg'"
+          />
+        </button>
+      </div>
     </div>
   </div>
 </div>
 <div *ngIf="!document && !isDocumentLoading">
   <h3 class="no-documents-header">No Selected document</h3>
 </div>
-<!--<div class="controllers">-->
-<!--  <div class="zoom">-->
-<!--    <sw-icon-button [icon]="icons.ZOOM_IN"></sw-icon-button>-->
-<!--    <sw-icon-button [icon]="icons.ZOOM_OUT"></sw-icon-button>-->
-<!--  </div>-->
-<!--  <div class="rotate">-->
-<!--  </div>-->
-<!--</div>-->
 
 <!--<form [formGroup]="form">-->
 <!--  <h3>Document settings</h3>-->

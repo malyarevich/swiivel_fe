@@ -1,6 +1,9 @@
 <div
   class="app-search-field"
-  [ngClass]="{'app-search-field-has-error': isInvalid, 'app-search-field-gray': type === 'gray'}"
+  [ngClass]="{
+  'app-search-field-has-error': isInvalid,
+  'app-search-field-gray': type === 'gray',
+  'app-search-field-controls': type === 'controls'}"
 >
   <input
     class="form-control"

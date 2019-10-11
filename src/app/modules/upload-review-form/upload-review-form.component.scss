@@ -8,15 +8,6 @@
     display: flex;
   }
 
-  .app-input-search-container {
-    margin: 0 0 10px;
-  }
-
-  .app-input-search {
-    border: 1px solid $soft-gray;
-    border-radius: 100px !important;
-  }
-
   .sidebar-opener {
     position: absolute;
     top: 0;
@@ -37,11 +28,14 @@
   }
 
   .sidebar {
-    position: relative;
     width: 295px;
-    padding: 20px 15px 265px;
+    min-height: calc(100vh - 150px);
+    padding: 20px 15px 55px;
     border-radius: 3px;
     background: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 
     .loading {
       position: relative;
@@ -59,6 +53,10 @@
     .sidebar-controls {
       display: flex;
       margin: 0 0 15px;
+    }
+
+    .sidebar-search {
+      margin: 0 0 10px;
     }
 
     .sidebar-title {
@@ -88,31 +86,15 @@
       margin: 0 0 0 10px;
     }
 
-    .upload-document-controls {
-      position: absolute;
-      width: 100%;
-      bottom: 55px;
-      left: 0;
-      display: flex;
-      padding: 0 15px;
-
-      .upload-document-form {
-
-      }
-
-      .upload-document-form-button {
-        margin: 0 0 10px;
-      }
+    .sidebar-controls-title {
+      font-size: 12px;
+      line-height: 15px;
+      color: $gray-color;
     }
 
-    .upload-document-controls:before {
-      position: absolute;
-      right: 15px;
-      top: -30px;
-      content: '';
-      width: 268px;
-      height: 1px;
-      background: $dark-grey;
+    .upload-document-controls-hr {
+      border-top: 1px solid $dark-grey;
+      margin: 0 0 30px;
     }
   }
 }

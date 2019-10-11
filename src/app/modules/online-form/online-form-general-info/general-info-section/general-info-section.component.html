@@ -1,0 +1,28 @@
+<!--Title-->
+<h2 class="content_section__section_title">
+  {{ section.name }}
+</h2>
+
+<div class="app-of-wrap content_section__main_container section">
+  <div class="section__fields">
+    <ng-container *ngFor="let field of fields">
+      <div class="field_width--{{ field.width }}">
+        <sw-general-info-field
+          [field]="field"
+          [formErrors]="formErrors"
+          [fg]="fg"
+        ></sw-general-info-field>
+      </div>
+    </ng-container>
+  </div>
+  <div class="section__groups">
+    <ng-container *ngFor="let group of groups">
+      <sw-general-info-group
+        [group]="group"
+        [formErrors]="getFormErrorsById(group['_id'])"
+        [fieldNameList]="fieldNameList"
+        [fg]="fg"
+      ></sw-general-info-group>
+    </ng-container>
+  </div>
+</div>

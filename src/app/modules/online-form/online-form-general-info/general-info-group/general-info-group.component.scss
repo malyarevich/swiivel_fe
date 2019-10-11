@@ -1,0 +1,23 @@
+@import "../../shared/styles/index.scss";
+
+.group {
+  align-items: stretch;
+  display: flex;
+  flex-direction: row;
+}
+
+.errors-bullet {
+  cursor: pointer;
+  position: absolute;
+  top: -0.5rem;
+  right: -0.75rem;
+  display: block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 9999px;
+  background-color: #fd6969;
+}
+
+.compact-caption {
+  position: relative;
+}

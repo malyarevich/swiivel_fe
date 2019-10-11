@@ -10,7 +10,7 @@
         </sw-button>
       </div>
       <div class="text-row">
-        <p class="name">{{ documents.previous_form.person_name }}</p>
+        <p class="name">{{ documents.previous_form.person_name || 'Unassigned' }}</p>
         <div class="text-row-container">
           <p class="document-name">{{ documents.previous_form.entity_name }}</p>
           <div class="control-item">
@@ -27,7 +27,7 @@
   <div class="next" *ngIf="documents.next_form">
     <div class="container" *ngIf="documents.next_form">
       <div class="text-row">
-        <p class="name">{{ documents.next_form.person_name }}</p>
+        <p class="name">{{ documents.next_form.person_name || 'Unassigned' }}</p>
         <div class="text-row-container">
           <p class="document-name">{{ documents.next_form.entity_name }}</p>
           <div class="control-item">

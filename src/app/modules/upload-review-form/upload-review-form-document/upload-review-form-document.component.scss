@@ -5,15 +5,37 @@
   min-height: 70px;
   height: 100%;
 
+  .container {
+    position: relative;
+  }
+
   .controllers {
     position: absolute;
     display: flex;
+    bottom: 5px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 
-    .zoom,
-    .rotate {
-      display: flex;
-      background: $dark-purple;
-    }
+  .controllers-zoom,
+  .controllers-rotate {
+    display: flex;
+    background: $dark-purple;
+  }
+
+  .controllers-rotate-button {
+    background: transparent;
+    border: none;
+  }
+
+  .controllers-rotate-button:hover {
+    opacity: 0.8;
+  }
+
+
+  .controllers-rotate-button:focus,
+  .controllers-rotate-button:active {
+    outline: none;
   }
 
   .image {

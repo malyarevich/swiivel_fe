@@ -55,6 +55,7 @@
             <div class="checkbox_container" *ngIf="_multiple" [class.selected]="isSelected(dropdownItem)">
             </div>
             <span class="text">{{ dropdownItem.name }}</span>
+            &nbsp;
             <span *ngIf="dropdownItem.param === 'documents' && dropdownItem.count" class="text text--count">
             ({{ dropdownItem.count }})
             </span>

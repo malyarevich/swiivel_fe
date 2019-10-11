@@ -1,0 +1,206 @@
+<h2 class="content_section__section_title">Documents</h2>
+<div class="content_section__main_container" [formGroup]="fg">
+  <div
+    class="content_section__document"
+    *ngFor="let document of form.documents"
+  >
+    <div
+      class="content_section__article_title content_section__article_title--left"
+    >
+      {{ document.name }}
+    </div>
+    <div
+      class="content_section__article_text"
+      [innerHTML]="document.accompanyingText.data"
+    ></div>
+    <div class="containers_line">
+      <div class="document_container">
+        <img
+          class="document_container__file_icon"
+          [src]="pathIconsFolder + 'file.svg'"
+        />
+        <div
+          class="document_container__file_information"
+          (click)="openForPreview(document)"
+        >
+          <div class="document_container__file_title">
+            {{ getDocumentName(document) }}
+          </div>
+          <div class="document_container__file_size">
+            {{ getDocumentPages(document) }}
+          </div>
+        </div>
+        <button
+          class="document_container__download"
+          (click)="openForPreview(document)"
+        >
+          <img
+            class="document_container__download_icon"
+            [src]="pathIconsFolder + 'download.svg'"
+          />
+        </button>
+      </div>
+      <div
+        class="document_container document_container__upload"
+        *ngIf="
+          document.isUpload && !document.fileUploading && !document.fileUploaded
+        "
+      >
+        <sw-input-file
+          class="document_container__input_upload"
+          [formControlName]="document['id']"
+          #file="upload"
+          [preupload]="'/proxy/forms/online/upload/' + form['_id']"
+          (selected)="onUploadSelected($event, document)"
+          (progress)="onUploadProgress($event, document)"
+          (response)="onUploadResponse($event, document)"
+          (onFileDropped)="onFileSelected(document, $event)"
+        >
+          <ng-container [ngSwitch]="uploadStatus[document['id']]">
+            <!-- Selected -->
+            <ng-container *ngSwitchCase="UploadStatus.selected">
+              <!-- {{file | json}} -->
+              <div class="document_container document_container__uploaded">
+                <!-- *ngIf="document.fileUploaded" -->
+                <img
+                  class="document_container__uploaded_icon"
+                  [src]="pathIconsFolder + 'uploaded.svg'"
+                />
+
+                <div class="document_container__uploaded_file_information">
+                  <div class="document_container__uploaded_title">
+                    <!-- {{ document.selectedFile.name }} -->
+                    {{ getOriginName(document) }}
+                  </div>
+                  <label class="document_container__uploaded_size">
+                    {{ getOriginSize(document) }}
+                    <!-- {{ document.selectedFile.size | fileSize }} -->
+                    <ng-container *ngIf="document.countPages">
+                      <!-- ({{ document.countPages }} pages) -->
+                    </ng-container>
+                  </label>
+                </div>
+                <button
+                  class="document_container__uploaded_delete"
+                  (click)="deleteUploadedFile(document)"
+                >
+                  <img
+                    class="document_container__uploaded_delete_icon"
+                    [src]="pathIconsFolder + 'uploaded-delete.svg'"
+                  />
+                </button>
+              </div>
+            </ng-container>
+            <!-- Process -->
+            <ng-container *ngSwitchCase="UploadStatus.process">
+              <div class="document_container document_container__uploading">
+                <!-- *ngIf="document.fileUploading" -->
+                <div class="document_container__uploading_header">
+                  <label class="document_container__uploading_title">
+                    Filled for {{ getDocumentName(document) }}
+                  </label>
+                  <button
+                    (click)="onCancelUpload(document)"
+                    class="document_container__uploading_cancel"
+                  >
+                    Cancel
+                  </button>
+                </div>
+                <div class="document_container__uploading_progress">
+                  <div class="document_container__uploading_total">
+                    <div
+                      class="document_container__uploading_uploaded"
+                      [ngStyle]="{
+                        width: (progress.loaded * 100) / progress.total + '%'
+                      }"
+                    ></div>
+                  </div>
+                  <label class="document_container__uploading_uploaded_value">
+                    {{ progress.loaded | fileSize }} of
+                    {{ progress.total | fileSize }} uploaded
+                  </label>
+                </div>
+              </div>
+            </ng-container>
+            <!-- Default -->
+            <ng-container *ngSwitchDefault>
+              <label
+                [for]="document.name"
+                class="document_container__upload_label"
+                appDragDrop
+              >
+                <img
+                  class="document_container__upload_icon"
+                  [src]="pathIconsFolder + 'upload.svg'"
+                />
+                <span class="document_container__upload_text">
+                  Drop File(s) Here or
+                </span>
+                <span
+                  class="document_container__upload_text blue"
+                  (click)="file.openDialog($event)"
+                >
+                  Upload Document
+                </span>
+                <span class="document_container__upload_text underline">
+                  Up to 10MB,
+                  <span class="document_container__upload_formats">
+                    Formats
+                  </span>
+                  <ul
+                    *ngIf="
+                      document.dataTypeAllowed.isDocuments ||
+                      document.dataTypeAllowed.isImages ||
+                      document.dataTypeAllowed.isVideoAudio
+                    "
+                    class="document_container__upload_formats_list"
+                  >
+                    <li
+                      class="documents"
+                      *ngIf="document.dataTypeAllowed.isDocuments"
+                    >
+                      <img
+                        class="document_container__file_icon"
+                        [src]="pathIconsFolder + 'file-documents.svg'"
+                      />
+                      {{ getAcceptedFormats(document, "documents") }}
+                    </li>
+                    <li
+                      class="images"
+                      *ngIf="document.dataTypeAllowed.isImages"
+                    >
+                      <img
+                        class="document_container__file_icon"
+                        [src]="pathIconsFolder + 'file-images.svg'"
+                      />
+                      {{ getAcceptedFormats(document, "images") }}
+                    </li>
+                    <li
+                      class="media"
+                      *ngIf="document.dataTypeAllowed.isVideoAudio"
+                    >
+                      <img
+                        class="document_container__file_icon"
+                        [src]="pathIconsFolder + 'file-video-audio.svg'"
+                      />
+                      {{ getAcceptedFormats(document, "videoAudio") }}
+                    </li>
+                  </ul>
+                </span>
+
+                <!-- <input
+                  type="file"
+                  class="d-none"
+                  [id]="document.name"
+                  [name]="document.name"
+                  [accept]="getAcceptedFormats(document)"
+                  (change)="onFileSelected(document, $event.target.files[0])"
+                /> -->
+              </label>
+            </ng-container>
+          </ng-container>
+        </sw-input-file>
+      </div>
+    </div>
+  </div>
+</div>

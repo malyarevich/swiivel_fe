@@ -36,11 +36,17 @@ export const routes: Routes = [
         loadChildren: () => import('../data-collection/form-constructor/form-constructor.module')
           .then(m => m.FormConstructorModule)
       },
+    ]
+  },
+  {
+    path: 'form-constructor/:id',
+    component: CreatorHeaderComponent,
+    children: [
       {
-        path: ':id',
+        path: '',
         loadChildren: () => import('../data-collection/form-constructor/form-constructor.module')
           .then(m => m.FormConstructorModule)
-      }
+      },
     ]
   },
   {
@@ -80,6 +86,17 @@ export const routes: Routes = [
       {
         path: '',
         loadChildren: () => import('../upload-review-form/upload-review-form.module').then(m => m.UploadReviewFormModule),
+      }
+    ],
+  },
+  {
+    path: 'online-form',
+    component: LayoutComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('../online-form/online-form.module').then(m => m.OnlineFormModule),
+
       }
     ],
   },

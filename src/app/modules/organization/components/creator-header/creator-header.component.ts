@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { LogoutRequestAction } from '@app/store/auth-store';
 
 @Component({
   selector: 'app-creator-header',
@@ -8,18 +10,31 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class CreatorHeaderComponent implements OnInit {
 
+  id: string = '';
+
   constructor(
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private readonly store$: Store<any>,
   ) {
-    this.route.params.subscribe(params => {
-      console.log(params) //log the entire params object
-      console.log('ID Parametr', params['id']) //log the value of id
-    });
   }
 
   ngOnInit() {
-    console.log('ROUTE', this.route);
-    console.log('snapppp', this.route.snapshot.paramMap.get("id"));
+    this.route.paramMap.subscribe(params => {
+      if (params.get('id')) {
+        this.id = params.get('id');
+      }
+    });
+  }
+
+  getLink(path: string) {
+    if (this.id) {
+      path += `/${this.id}`;
+    }
+    return path;
+  }
+
+  logOut(): void {
+    this.store$.dispatch(new LogoutRequestAction());
   }
 
 }
