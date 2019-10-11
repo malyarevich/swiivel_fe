@@ -4,7 +4,7 @@ import {FormGroup} from '@angular/forms';
 @Component({
   selector: 'app-form-general-basic-info',
   templateUrl: './form-general-basic-info.component.html',
-  styleUrls: ['./form-general-basic-info.component.scss', '../form-general-information.component.css']
+  // styleUrls: ['./form-general-basic-info.component.scss', '../form-general-information.component.css']
 })
 export class FormGeneralBasicInfoComponent implements OnInit {
   @Input() generalInfoForm: FormGroup;
