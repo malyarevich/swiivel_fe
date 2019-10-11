@@ -15,10 +15,10 @@
       </div>
       <div class="content" data-e2e="content">
         <div class="inputs" data-e2e="inputs">
-          <sw-input-text class="input" [formControl]="form.get('name')">
+          <sw-input-text class="input input-form-name" [formControl]="form.get('name')">
             <span class="placeholder" data-e2e="titleformname">Form Name</span>
           </sw-input-text>
-          <sw-dropdown-input class="input" [options]="typeOptions" [formControl]="form.get('type')">
+          <sw-dropdown-input class="input input-form-type" [options]="typeOptions" [formControl]="form.get('type')">
             <span class="label" data-e2e="formtypelabel">Form Type</span>
           </sw-dropdown-input>
         </div>
