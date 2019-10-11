@@ -8,7 +8,7 @@ import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { SelectionModel } from '@angular/cdk/collections';
 import { PDFProgressData } from 'ng2-pdf-viewer';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 // import { FormCreatorService } from '../form-creator.service';
 
 
@@ -38,13 +38,15 @@ export class FormGeneralInformationComponent implements OnInit, OnDestroy {
   filter: FormControl = new FormControl(null);
   destoyer$ = new Subject();
   sm: SelectionModel<any> = new SelectionModel(false);
+  formId: string = '';
 
   constructor(
     // private stepperService: StepperService,
     private api: ApiService,
     private fb: FormBuilder,
     private cdr: ChangeDetectorRef,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
     // private formCreatorService: FormCreatorService
   ) {
     this.dataSource.loadFormsList();
@@ -63,21 +65,30 @@ export class FormGeneralInformationComponent implements OnInit, OnDestroy {
       } else {
         this.dataSource.filter('');
       }
-    })
-    // this.formCreatorService.formTemplate$.pipe(
-    //   takeUntil(this.destoyer$)
-    // ).subscribe(formTemplate => {
-    //   console.log('Form Template', formTemplate)
-    //   if (formTemplate) {
-    //     this.form.patchValue({
-    //       name: formTemplate.name,
-    //       type: [this.typeOptions.find(item => item.value === formTemplate.type)]
-    //     });
-    //   }
-    // })
+    });
+    this.route.parent.parent.parent.parent.params.pipe(
+      takeUntil(this.destoyer$)
+    ).subscribe((params: Params) => {
+      this.formId = params.hasOwnProperty('id') ? params.id : '';
+      if (this.formId) {
+        this.getOldForm(this.formId);
+      }
+    });
   }
 
   ngOnInit() {
+  }
+
+  getOldForm(id: string) {
+    this.api.getFormTemplate(id).subscribe(res => {
+      if (res) {
+        this.form.patchValue({
+          name: res.name,
+          type: [this.typeOptions.find(item => item.value === res.type)]
+        });
+      }
+    });
+
   }
 
   get selectedItem() {
@@ -92,11 +103,12 @@ export class FormGeneralInformationComponent implements OnInit, OnDestroy {
   }
 
   nextStep(): void {
-    if (!this.form.valid) return ;
+    if (!this.form.valid) return;
 
     this.saveForm();
-    // this.stepperService.stepper = 'next';
   }
+
+
 
   saveForm() {
     let newForm: any = {};
@@ -104,25 +116,26 @@ export class FormGeneralInformationComponent implements OnInit, OnDestroy {
     if (this.dublicate && this.sm.selected && this.sm.selected.length > 0) {
       newForm.example_form_id = this.sm.selected[0]._id;
     }
+    newForm._id = this.formId;
     newForm.name = this.form.get('name').value;
     newForm.type = this.form.get('type').value[0].value;
-    // if (this.formCreatorService.formId) {
-    //   this.api.updateGeneralForm(newForm, this.formCreatorService.formId).pipe(
-    //     takeUntil(this.destoyer$)
-    //   ).subscribe(data => {
-
-    //   });
-    // } else {
-    //   this.api.saveNewForm(newForm).pipe(
-    //     takeUntil(this.destoyer$)
-    //   ).subscribe(data => {
-    //     if (data) {
-    //       this.formCreatorService.formId = data._id;
-    //       sessionStorage.setItem('newForm', JSON.stringify(data));
-    //     }
-    //   });
-    // }
-
+    if (this.formId) {
+      this.api.updateGeneralForm(newForm, this.formId).pipe(
+        takeUntil(this.destoyer$)
+      ).subscribe(data => {
+        if (data) {
+          this.router.navigate([`/form-constructor/${data._id}/form-builder`]);
+        }
+      });
+    } else {
+      this.api.saveNewForm(newForm).pipe(
+        takeUntil(this.destoyer$)
+      ).subscribe(data => {
+        if (data) {
+          this.router.navigate([`/form-constructor/${data._id}/form-builder`]);
+        }
+      });
+    }
   }
 
   onProgress(progressData: PDFProgressData) {
