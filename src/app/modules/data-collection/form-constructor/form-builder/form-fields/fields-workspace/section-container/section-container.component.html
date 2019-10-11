@@ -16,7 +16,7 @@
   <!--      [model]="section.fields">-->
   <!--    </ngx-dnd-container>-->
   <ul class="list-group ">
-    <div class="ngx-dnd-container" cdkDropList [id]="section.path.join('|')" [cdkDropListData]="section.fields" (cdkDropListDropped)="drop($event)"
+    <div class="ngx-dnd-container" cdkDropList [id]="section['path'].join('|')" [cdkDropListData]="section.fields" (cdkDropListDropped)="drop($event)"
       direction="vertical">
       <li *ngIf="section.fields.length==0" class="list-group-item empty-section mb-3 py-0 ">
         <div class="text-center"> <span class="empty-section-text">Drag and Drop Fields Onto the Section</span>
