@@ -1,23 +1,23 @@
 <form clrForm class="customForm" [formGroup]="form" (submit)="logIn()" novalidate autocomplete="new-password">
-  <h2 class="text-center">Login</h2>
-  <h5 class="text-center app-text-primary mt-5">Welcome to the ABC School</h5>
-  <h6 class="text-center mb-5">Please login for starting</h6>
+  <h2 class="text-center" data-e2e="logintext">Login</h2>
+  <h5 class="text-center app-text-primary mt-5" data-e2e="wellcometext">Welcome to the ABC School</h5>
+  <h6 class="text-center mb-5" data-e2e="loginstarting">Please login for starting</h6>
   <app-input-container label="Username">
-    <input type="text" placeholder="Username" formControlName="username" class="formInput" autocomplete="new-password">
+    <input type="text" placeholder="Username" formControlName="username" class="formInput" data-e2e="username" autocomplete="new-password">
   </app-input-container>
-  <section class="passwordWrapper">
+  <section class="passwordWrapper" data-e2e="passwordWrapper">
     <app-input-container label="Password">
       <input [type]="shape === 'eye' ? 'password' : 'text'" placeholder="Password" formControlName="password"
-             class="formInput" autocomplete="new-password">
+             class="formInput" data-e2e="password" autocomplete="new-password">
     </app-input-container>
     <img title="password_icon"
          [src]="shape === 'eye' ? '/assets/images/password/eye.svg' : '/assets/images/password/eye_off.svg'"
          (click)="changeField()">
   </section>
-  <span class="smallText" (click)="changeView()">
+  <span class="smallText" data-e2e="forgetpassword" (click)="changeView()">
     Forgot password?
   </span>
-  <button [disabled]="!form.valid" type="submit" class="btn app-btn-warning mt-4">
+  <button [disabled]="!form.valid" type="submit" class="btn app-btn-warning mt-4" data-e2e="login-button">
     Log In
   </button>
 </form>
