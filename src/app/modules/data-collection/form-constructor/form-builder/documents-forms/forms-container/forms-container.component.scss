@@ -23,7 +23,7 @@ canvas {
 
 }
 .div-inside-wrap{
-  z-index: 9999;
+  z-index: 499;
   margin-top: -30px!important;
 
   position: absolute;
@@ -35,7 +35,7 @@ canvas {
 .div-inside{
   background-color: white;
   position: absolute;
-  z-index: 9999;
+  z-index: 499;
   font-size: 0.5rem!important;
 }
 .div-inside-active{
@@ -43,7 +43,7 @@ canvas {
   opacity: 0.8;
   background-color: #EBEEFF;
   position: absolute;
-  z-index: 9999;
+  z-index: 499;
 }
 
 .dropdown-toggle::after {

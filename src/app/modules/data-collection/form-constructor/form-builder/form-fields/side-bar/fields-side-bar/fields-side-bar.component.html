@@ -47,18 +47,18 @@
 
       <ng-container *ngIf="canCreateField(node)">
         <div class="custom-field" [class.show]="showCreateField(node)">
-          <div class="custom-field__form">
+          <div class="custom-field__form" *ngIf="showCreateField(node)" [formGroup]="node.customFieldForm">
             <div class="custom-field__form_inputs">
-              <sw-input-text class="settings-field">
+              <sw-input-text class="settings-field" formControlName="name">
                 <span class="placeholder">Name</span>
               </sw-input-text>
-              <sw-dropdown-input class="settings-field">
-                <span class="input_label">
+              <sw-dropdown-input class="settings-field" formControlName="type" [options]="typeOptions">
+                <span class="label">
                   <p>Type</p>
                 </span>
               </sw-dropdown-input>
-              <sw-dropdown-input class="settings-field">
-                <span class="input_label">
+              <sw-dropdown-input class="settings-field" formControlName="width" [options]="widthOptions">
+                <span class="label">
                   <p>Width</p>
                 </span>
               </sw-dropdown-input>

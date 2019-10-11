@@ -5,7 +5,7 @@ import { SideBarService } from '../side-bar.service';
 import { TreeDataSource, CHILDREN_SYMBOL } from '../tree.datasource';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import {CdkDragDrop, moveItemInArray, transferArrayItem, CdkDragExit} from '@angular/cdk/drag-drop';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormBuilder } from '@angular/forms';
 import { Popup } from '@app/core/popup.service';
 import { v4 as uuid } from 'uuid';
 
@@ -72,10 +72,33 @@ export class FieldsSideBarComponent implements OnInit, OnDestroy, AfterViewCheck
   @ViewChild('filter', { static: false}) filterNames;
   @ViewChild('deletePop', { static: false }) deletePop;
 
+  typeOptions = [ 
+    { title: 'Short text field', type: 101 },
+    { title: 'Textarea field', type: 102 },
+    { title: 'Number field', type: 103 },
+    { title: 'Dropdown field', type: 104 },
+    { title: 'English date field', type: 106 },
+    { title: 'Hebrew date field', type: 110 },
+    { title: 'Checkbox field', type: 107 },
+    { title: 'Email field', type: 108 },
+    { title: 'Phone number filed', type: 109 },
+    { title: 'Fields group', type: 113 },
+  ];
+
+  widthOptions = [
+    { title: '4 columns', value: 'full' },
+    { title: '3 columns', value: 'three-quarter' },
+    { title: '2 columns', value: 'half' },
+    { title: '1 column', value: 'quarter' }
+  ];
+
+
   constructor(
     private service: SideBarService,
     private popup: Popup,
-    private cdr: ChangeDetectorRef, ) {}
+    private cdr: ChangeDetectorRef,
+    private fb: FormBuilder
+  ) {}
 
   ngAfterViewChecked(): void {
       this.cdr.detectChanges();
@@ -148,6 +171,15 @@ export class FieldsSideBarComponent implements OnInit, OnDestroy, AfterViewCheck
   }
 
   customFieldToggle(node) {
+    if (!node.formVisible) {
+      node.customFieldForm = this.fb.group({
+        name: [null],
+        type: [null],
+        width: [null]
+      });
+    } else {
+      delete node.customFieldForm;
+    }
     node.formVisible = !(!!node.formVisible);
   }
 
@@ -294,6 +326,20 @@ export class FieldsSideBarComponent implements OnInit, OnDestroy, AfterViewCheck
     const descendants = this.treeControl.getDescendants(node);
     const result = descendants.some(node => node['isActive']);
     return result && !this.descendantsAllSelected(node);
+  }
+
+  addCustomField(node: any) {
+    const formValue = node.customFieldForm.value;
+    let newField = {
+      name: formValue.name,
+      type: formValue.type ? formValue.type[0].type : null,
+      width: formValue.width ? formValue.width[0].value : null,
+      mapped: formValue.name.toLowerCase().replace(' ', '_'),
+      customField: true,
+      isActive: false
+    };
+    node.fields.push(newField);
+    this.customFieldToggle(node);
   }
 
   ngOnDestroy(): void {

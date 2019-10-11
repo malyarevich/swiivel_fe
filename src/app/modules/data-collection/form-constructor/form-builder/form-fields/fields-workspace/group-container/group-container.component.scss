@@ -76,7 +76,7 @@
 
   &:hover {
     border: 1px solid blue;
-    z-index: 1000;
+    z-index: 499;
   }
 }
 
@@ -91,7 +91,7 @@
 .gu-mirror {
   position: fixed !important;
   margin: 0 !important;
-  z-index: 9999 !important;
+  z-index: 100 !important;
   opacity: 0.8;
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
   filter: alpha(opacity=80);
