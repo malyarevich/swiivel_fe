@@ -1,7 +1,7 @@
 <sw-back-bar [title]="'Review Forms'" [backRoute]="'/online-form/'+activeIdForm"></sw-back-bar>
 <app-document-approval-bar
   [document]="getSelectForm()"
-  [loading]="updateingDocumentStatus"
+  [loading]="updatingDocumentStatus"
   (skipDocument)="skipDocument()"
   (changeStatus)="changeStatus($event)"
   [isLast]="isLastDocument()"
@@ -14,7 +14,12 @@
       <div>
         <form [formGroup]="form">
           <div class="sidebar-search">
-            <app-search-field [placeholder]="'Search'" formControlName="search" [type]="'controls'"></app-search-field>
+            <app-search-field
+              placeholder="Search"
+              formControlName="search"
+              [type]="'controls'"
+              [disabled]="isBulkDownload"
+            ></app-search-field>
           </div>
           <div class="sidebar-controls">
             <div class="sidebar-filter">
@@ -24,7 +29,7 @@
                 [dropdownSubHeader]="true"
                 [options]="filterValue"
                 [isDisplaySelected]="false"
-                [disabled]="isEmptyObject(filterValue)">
+                [disabled]="isEmptyObject(filterValue) || isBulkDownload">
                 <span class="sidebar-controls-title">Filtered By</span>
               </sw-dropdown-input>
             </div>
@@ -33,22 +38,37 @@
                 formControlName="sort"
                 [options]="sortValue"
                 [isDisplaySelected]="false"
-                [disabled]="!(sortValue && sortValue.length)">
+                [disabled]="!(sortValue && sortValue.length) || isBulkDownload">
                 <span class="sidebar-controls-title">Sorted By</span>
               </sw-dropdown-input>
             </div>
           </div>
         </form>
         <div *ngIf="documents && documents.length" [ngClass]="{ 'loading': showSpinner }">
-          <!--<sw-small-button *ngIf="isBulkDownload">Select all</sw-small-button>-->
-          <div *ngFor="let document of documents">
-            <app-upload-review-form-item
-              [document]="document"
-              (selected)="selectItem($event)"
-              (downLoadForm)="downLoadForm($event)"
-              (deleteForm)="openConfirmPopup($event)"
-            >
-            </app-upload-review-form-item>
+          <div *ngIf="!isBulkDownload">
+            <div *ngFor="let document of documents">
+              <app-upload-review-form-item
+                [document]="document"
+                [isBulkDownload]="isBulkDownload"
+                (selected)="selectItem($event)"
+                (downLoadForm)="downLoadForm($event)"
+                (deleteForm)="openConfirmPopup($event)"
+              >
+              </app-upload-review-form-item>
+            </div>
+          </div>
+          <div *ngIf="isBulkDownload">
+            <div class="select-all-button">
+              <sw-small-button [text]="'Select all'" (click)="selectAllDocuments()"></sw-small-button>
+            </div>
+            <div *ngFor="let document of uploadDocuments">
+              <app-upload-review-form-item
+                [document]="document"
+                [isBulkDownload]="isBulkDownload"
+                (selected)="selectItem($event)"
+              >
+              </app-upload-review-form-item>
+            </div>
           </div>
           <div *ngIf="showSpinner" class="spinner">
             <app-spinner></app-spinner>
@@ -66,9 +86,12 @@
           [documentAccount]="documentAccount"
           [documentTypes]="documentTypes"
           [isBulkDownload]="isBulkDownload"
+          [selectedCount]="getSelectedCount()"
           [showBulkDownload]="documents && documents.length"
           (bulkDownload)="clickBulkDownload()"
+          (download)="clickDownload()"
         ></app-review-form-controls>
+        <a [href]="download.url" [download]="download.filename" #link></a>
       </div>
     </div>
   </div>
@@ -78,12 +101,19 @@
         <sw-icon-button [icon]="icons.CARET_RIGHT" [color]="colors.WHITE" [size]="size.MEDIUM"></sw-icon-button>
       </div>
     </div>
-    <app-upload-review-form-document [document]="getSelectForm()"></app-upload-review-form-document>
+    <app-upload-review-form-document
+      [document]="getSelectForm()"
+      [documentStudent]="documentStudent"
+      [documentAccount]="documentAccount"
+      [documentTypes]="documentTypes"
+      (rotateImg)="rotateImg($event)"
+    ></app-upload-review-form-document>
   </div>
 </div>
 <div *ngIf="documents && documents.length > 1" class="footer">
   <app-upload-review-form-footer
     [documents]="extremeDocuments"
+    [disabled]="isBulkDownload"
     (changeForm)="changeForm($event)"
   ></app-upload-review-form-footer>
 </div>

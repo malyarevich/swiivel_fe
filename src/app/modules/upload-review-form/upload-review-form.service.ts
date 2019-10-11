@@ -5,8 +5,10 @@ import { ApiService } from '@app/core/api.service';
 import { FilterDropDownData } from '@models/upload-review-form/filter.model';
 import { SortDropDownData } from '@models/upload-review-form/sort.model';
 import { Observable } from 'rxjs';
+import {map} from 'rxjs/operators';
 
 export class UploadReviewFormService extends ApiService {
+
   getStatusColor(status: string): string {
     switch (status) {
       case 'approved':
@@ -53,7 +55,14 @@ export class UploadReviewFormService extends ApiService {
     return this.http.get(endpoint);
   }
 
-  downloadForm(url: string) {
+  downloadForms(formId: string, ids: string): Observable<any> {
+    const endpoint = `/proxy/upload-reviews-form/bulk-download/${formId}?ids=${ids}`;
+    return this.download(endpoint).pipe(map((response: any) => {
+      return window.URL.createObjectURL(new Blob([response], {type: 'application/zip'}));
+    }));
+  }
+
+  downloadForm(url: string): void {
     window.location.assign(url);
   }
 
@@ -124,5 +133,11 @@ export class UploadReviewFormService extends ApiService {
       documents.sort.map((docSort => sortData.push({title: uploadReviewFormSortEnum[docSort], value: docSort})));
     }
     return sortData;
+  }
+
+  rotateImg(angle: string, id: string): Observable<any> {
+    const endpoint =  `/proxy/upload-reviews-form/change-rotate/${id}`;
+    const body = { rotate: angle };
+    return this.http.put(endpoint, body);
   }
 }

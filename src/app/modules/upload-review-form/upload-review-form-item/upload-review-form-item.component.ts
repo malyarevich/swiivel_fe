@@ -13,6 +13,7 @@ import { IconsEnum } from '@shared/icons.enum';
 
 export class UploadFormReviewItemComponent {
   @Input() document: Document;
+  @Input() isBulkDownload: boolean;
   @Output() selected = new EventEmitter<string>();
   public icons = IconsEnum;
   public colors = ColorsEnum;
