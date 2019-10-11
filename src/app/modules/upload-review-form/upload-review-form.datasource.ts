@@ -3,6 +3,7 @@ import { DataSource } from '@angular/cdk/table';
 import { UploadReviewFormService } from '@modules/upload-review-form/upload-review-form.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
+import {SafeResourceUrl} from '@angular/platform-browser';
 
 export class UploadReviewFormDataSource implements DataSource<any> {
   private documentSubject = new BehaviorSubject<any[]>([]);
@@ -87,4 +88,13 @@ export class UploadReviewFormDataSource implements DataSource<any> {
       }),
     );
   }
+
+  rotateImg(angle: string, id: string, activeFormId: string, filter?: any, sort?: any): Observable<any> {
+    return this.uploadReviewFormService.rotateImg(angle, id).pipe(
+      map(() => {
+        this.uploadDocuments(activeFormId, filter, sort);
+      }),
+    );
+  }
+
 }

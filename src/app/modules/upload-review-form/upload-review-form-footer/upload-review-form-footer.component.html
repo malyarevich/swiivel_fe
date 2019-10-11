@@ -5,6 +5,7 @@
         <sw-button
           class="button button-icon"
           (click)="prev()"
+          [disabled]="disabled"
         >
           <i class="fas fa-caret-left button-icon-size"></i>
         </sw-button>
@@ -44,6 +45,7 @@
       <sw-button
         class="button button-icon"
         (click)="next()"
+        [disabled]="disabled"
       >
         <i class="fas fa-caret-right button-icon-size"></i>
       </sw-button>

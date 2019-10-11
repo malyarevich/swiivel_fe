@@ -16,7 +16,9 @@ export class UploadReviewFormControlsComponent implements OnInit  {
   @Input() documentAccount  ? = [];
   @Input() isBulkDownload ? = false;
   @Input() showBulkDownload = false;
+  @Input() selectedCount = 0;
   @Output() bulkDownload = new EventEmitter();
+  @Output() download = new EventEmitter();
   public formUpload: FormGroup;
   public uploadDocumentData: any;
   public sizeButton = SizeButtonsEnum;
@@ -52,5 +54,9 @@ export class UploadReviewFormControlsComponent implements OnInit  {
 
   clickBulkDownload(): void {
     this.bulkDownload.emit();
+  }
+
+  clickDownload(): void {
+    this.download.emit();
   }
 }

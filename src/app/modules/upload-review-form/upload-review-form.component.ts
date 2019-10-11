@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { UploadReviewFormStatusesEnum } from '@modules/upload-review-form/upload-review-form-statuses.enum';
@@ -11,7 +11,7 @@ import { ColorsEnum } from '@shared/colors.enum';
 import { IconsEnum } from '@shared/icons.enum';
 import { SizesEnum } from '@shared/sizes.enum';
 import { DialogComponent } from '@shared/popup/dialog.component';
-import { map } from 'rxjs/operators';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-upload-review-form',
@@ -20,10 +20,12 @@ import { map } from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UploadReviewFormComponent implements OnInit {
-  @ViewChild('dialog', { static: true }) dialog: DialogComponent;
+  @ViewChild('link', { static: false }) link: ElementRef;
+  @ViewChild('dialog', {static: true}) dialog: DialogComponent;
 
   public dataSource: UploadReviewFormDataSource = new UploadReviewFormDataSource(this.uploadReviewFormService);
   public documents: Document[];
+  public uploadDocuments: Document[];
   public activeIdDocument: string;
   public activeIdForm = '';
   public filterValue = {};
@@ -38,21 +40,24 @@ export class UploadReviewFormComponent implements OnInit {
   public size = SizesEnum;
   public statuses = UploadReviewFormStatusesEnum;
   public isBulkDownload = false;
-  public updateingDocumentStatus = false;
+  public updatingDocumentStatus = false;
+  public download: { url: SafeResourceUrl; filename: string; } = {url: null, filename: null};
 
-  public documentTypes  = ['document'];
-  public documentStudent  = ['121'];
-  public documentAccount  = ['a062c544a27f2c14f3e83f66efb81c59'];
+  public documentTypes = ['document'];
+  public documentStudent = ['Adam Doe'];
+  public documentAccount = ['a062c544a27f2c14f3e83f66efb81c59'];
   public uploadDocumentData = {};
 
   constructor(
     public uploadReviewFormService: UploadReviewFormService,
     private route: ActivatedRoute,
     private cdr: ChangeDetectorRef,
-    private fb: FormBuilder) {
+    private fb: FormBuilder,
+    private sanitizer: DomSanitizer,
+    private renderer: Renderer2) {
     this.form = this.fb.group({
-      filter: new FormControl( [], Validators.required),
-      sort: new FormControl( [], Validators.required),
+      filter: new FormControl([], Validators.required),
+      sort: new FormControl([], Validators.required),
       search: new FormControl(null, Validators.required),
     });
   }
@@ -90,9 +95,11 @@ export class UploadReviewFormComponent implements OnInit {
         }
       });
     this.form.valueChanges.subscribe(params => {
-      this.dataSource.uploadDocuments(this.activeIdForm, params.filter, params.sort, params.search);
-      this.activeIdDocument = null;
-      this.getDocuments();
+      if (!this.isBulkDownload) {
+        this.dataSource.uploadDocuments(this.activeIdForm, params.filter, params.sort, params.search);
+        this.activeIdDocument = null;
+        this.getDocuments();
+      }
     });
     this.uploadDocumentData = {
       document_id: this.activeIdForm,
@@ -128,9 +135,14 @@ export class UploadReviewFormComponent implements OnInit {
   }
 
   selectItem(id: string): void {
-    this.documents.map(document => document._id === id ? document.isSelected = true : document.isSelected = false);
-    this.dataSource.selectFormId(id);
-    this.getExtremeDocuments(id);
+    if (this.isBulkDownload) {
+      const index = this.uploadDocuments.indexOf(this.uploadDocuments.find(document => document._id === id));
+      this.uploadDocuments[index].isSelected = !this.uploadDocuments[index].isSelected;
+    } else {
+      this.documents.map(document => document._id === id ? document.isSelected = true : document.isSelected = false);
+      this.dataSource.selectFormId(id);
+      this.getExtremeDocuments(id);
+    }
   }
 
   downLoadForm(id: string): void {
@@ -150,20 +162,18 @@ export class UploadReviewFormComponent implements OnInit {
   }
 
   changeStatus(status: string): void {
-    this.updateingDocumentStatus = true;
-
+    this.updatingDocumentStatus = true;
     const statusData = Object.keys(this.statuses).find(k => this.statuses[k] === status);
     this.dataSource.changeStatus(
       this.documents.find(document => document._id === this.activeIdDocument)._id, statusData,
       this.activeIdForm, this.form.get('filter').value, this.form.get('sort').value
     )
-      .subscribe( () => {
+      .subscribe((data) => {
         if (!this.isLastDocument()) {
           const activeDocumentIndex = this.documents.indexOf(this.documents.find(document => document._id === this.activeIdDocument));
           this.selectItem(this.documents[activeDocumentIndex + 1]._id);
         }
-
-        this.updateingDocumentStatus = false;
+        this.updatingDocumentStatus = false;
       });
   }
 
@@ -206,5 +216,65 @@ export class UploadReviewFormComponent implements OnInit {
 
   clickBulkDownload(): void {
     this.isBulkDownload = !this.isBulkDownload;
+    this.uploadDocuments = this.documents;
+    this.isBulkDownload ? this.uploadDocuments.map(document => document.isSelected = false) : this.selectItem(this.documents[0]._id);
+  }
+
+  getSelectedCount(): number {
+    let selectedDocuments = 0;
+    if (this.uploadDocuments) {
+      this.uploadDocuments.map((doc) => {
+        if (doc.isSelected) {
+          selectedDocuments++;
+        }
+      });
+    }
+    return selectedDocuments;
+  }
+
+  clickDownload(): void {
+    const ids = [];
+    if (this.uploadDocuments) {
+      this.uploadDocuments.map((document) => {
+        if (document.isSelected) {
+          ids.push(document._id);
+        }
+      });
+    }
+    this.uploadReviewFormService.downloadForms(this.activeIdForm, ids.join(',')).subscribe(
+      (url) => {
+        this.download = {
+          url: this.sanitizer.bypassSecurityTrustResourceUrl(url),
+          filename: `documents.zip`
+        };
+        this.cdr.detectChanges();
+        this.renderer.selectRootElement(this.link.nativeElement).click();
+        this.clearLink(url);
+        this.isBulkDownload = false;
+      });
+  }
+
+  clearLink(url: string): void {
+    this.download = { url: null, filename: null};
+    window.URL.revokeObjectURL(url);
+    this.cdr.markForCheck();
+  }
+
+  selectAllDocuments(): void {
+    this.uploadDocuments.map((item) => item.isSelected = true);
+  }
+
+  rotateImg(evt: string): void {
+    let angle = '0';
+    evt === 'right' ? angle = '90' : angle = '270';
+    this.dataSource.rotateImg(
+      angle,
+      this.documents.find(document => document._id === this.activeIdDocument)._id,
+      this.activeIdForm, this.form.get('filter').value, this.form.get('sort').value
+    )
+      .subscribe(() => {
+        const activeDocumentIndex = this.documents.indexOf(this.documents.find(document => document._id === this.activeIdDocument));
+        this.selectItem(this.documents[activeDocumentIndex]._id);
+      });
   }
 }

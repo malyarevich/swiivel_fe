@@ -1,4 +1,7 @@
-<div class="upload-review-form-item" (click)="selectItem($event)" [ngClass]="{'selected': document.isSelected}">
+<div
+  class="upload-review-form-item"
+  (click)="selectItem($event)"
+  [ngClass]="{'selected': document.isSelected, 'bulk-download': isBulkDownload }">
   <div class="icon-container">
     <img
       class="document-icon"
@@ -10,7 +13,7 @@
       <p class="name">
         {{ document.person_name || 'Unassigned' }}
       </p>
-      <div class="controls-container">
+      <div *ngIf="!isBulkDownload" class="controls-container">
         <div class="control-item">
           <sw-status-label [class]="uploadReviewFormService.getStatusColor(document.status)">
             {{ uploadReviewFormStatusesEnum[document.status] }}
