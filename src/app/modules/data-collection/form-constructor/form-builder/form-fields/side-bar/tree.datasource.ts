@@ -62,13 +62,14 @@ export class TreeDataSource implements DataSource<any> {
     if (nodes.length > 0) {
       let section = nodes.find(node => node.type === 114);
       if (!section) {
-        return [{
+        section = {
           type: 114,
           name: 'New section',
           isActive: true,
           path: ['New section'],
           fields: nodes
-        }]
+        };
+        return [section];
       } else {
         return nodes;
       }
@@ -77,13 +78,23 @@ export class TreeDataSource implements DataSource<any> {
     }
   }
 
-  getActiveChildren (node) {
-    let children = Array.from(this.tree.childrenIterator(node)).filter((node: any) => node.isActive === true);
+  getActiveChildren(parent = this.tree) {
+    let children = Array.from(this.tree.childrenIterator(parent)).filter((node: any) => node.isActive === true);
     return children.map((child: any) => {
       child.path = this.getPath(child);
       child.fields = this.getActiveChildren(child);
       return child;
     });
+  }
+
+  getActiveSections(parent = this.tree) {
+    let sections = Array.from(parent.childrenIterator(parent)).filter((node:any) => node.type === 114 && node.isActive === true);
+    return sections;
+  }
+
+  getActiveGroups(parent = this.tree) {
+    let groups = Array.from(parent.childrenIterator(parent)).filter((node: any) => node.type === 113 && node.isActive === true);
+    return groups;
   }
 
   getPath(node) {

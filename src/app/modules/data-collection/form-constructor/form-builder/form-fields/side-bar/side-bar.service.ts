@@ -200,7 +200,7 @@ export class SideBarService {
   }
 
   onSectionDelete(field: Field, filedList?: Field | Form) {
-    this.events$.next({target: field, action: 'remove'});
+    this.events$.next({ action: 'remove', target: field });
     // filedList.fields = filedList.fields.filter(sec => sec.name != field.name);
   }
 
@@ -244,7 +244,6 @@ export class SideBarService {
 
   onFieldUncheck(field: Field, filedList: Field[]) {
     filedList.forEach(f => {
-      // console.log(f);
       if (f.type == 113 || f.type == 114) this.onFieldUncheck(field, f.fields);
       if (f.name == field.name && f.prefix == field.prefix) f.exist = false;
     });

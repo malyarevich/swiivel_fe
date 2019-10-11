@@ -37,13 +37,10 @@ export class GroupContainerComponent implements OnInit {
     this.list = Section.sectionWidth;
   }
   drop(event) {
-    console.log(event.container, event.previousContainer)
-    if (event.container.id === this.inputGroup.path.join('|')) {
-      moveItemInArray(event.container.data.fields, event.previousIndex, event.currentIndex);
+    if (event.container === event.previousContainer) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
-      console.log('trans',event.previousContainer.data.fields, event.container.data.fields, event.previousIndex, event.currentIndex)
-      transferArrayItem(event.previousContainer.data.fields, event.container.data.fields, event.previousIndex, event.currentIndex);
-    //   console.log('drop fgroup', event)
+      transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
     }
   }
   dragDrop(event) {
@@ -75,6 +72,7 @@ export class GroupContainerComponent implements OnInit {
   }
 
   removeGroup(group: Field) {
+    this.sideBarService.events$.next({action: 'remove', target: group});
     this.sideBarService.onFieldDelete(group, this.form.fields);
     group.fields.forEach(field => {
       this.sideBarService.onSectionUnckeck(field, this.sideBar[0].fields);

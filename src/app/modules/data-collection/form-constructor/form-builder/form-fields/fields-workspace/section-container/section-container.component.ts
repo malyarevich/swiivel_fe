@@ -54,7 +54,7 @@ export class SectionContainerComponent implements OnInit {
   //   this.fields = this.fields.map(item => item._id==field._id?newField:item);
 
   removeSection(section: Field) {
-
+    this.sideBarService.events$.next({action: 'remove', target: section});
     this.sideBarService.onSectionDelete(section);
     this.section.fields.forEach(field => {
       this.sideBarService.onFieldUncheck(field, this.sideBar[0].fields);

@@ -1,20 +1,39 @@
-import { Component, Input, OnDestroy, OnInit, ChangeDetectorRef, ViewChild, AfterViewChecked } from "@angular/core";
-import { isEmpty } from "lodash";
-import { Form } from "src/app/models/data-collection/form.model";
-import { SideBarService } from "../side-bar.service";
+import { Component, Input, OnDestroy, OnInit, ChangeDetectorRef, ViewChild, AfterViewChecked } from '@angular/core';
+import { isEmpty, flattenDeep } from 'lodash';
+import { Form } from 'src/app/models/data-collection/form.model';
+import { SideBarService } from '../side-bar.service';
 import { TreeDataSource, CHILDREN_SYMBOL } from '../tree.datasource';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import {CdkDragDrop, moveItemInArray, transferArrayItem, CdkDragExit} from '@angular/cdk/drag-drop';
 import { FormControl } from '@angular/forms';
 import { Popup } from '@app/core/popup.service';
-import { v4 as uuid } from "uuid";
+import { v4 as uuid } from 'uuid';
 
 
+const flatten = (acc, field) => {
+  if (field.fields && field.fields.length > 0) {
+    return field.fields.reduce(flatten, acc);
+  }
+  console.log(field)
+  acc.push(field.path);
+  return acc;
 
+  // else {
+  //   if (field.type === 113 || field.type === 114) {
+  //     return acc.concat(field.path);
+  //   } else {
+  //     return acc;
+  //   }
+  // }
+  // else if (field.type === 114 || field.type === 113) {
+  //   return acc.concat(field.path);
+  // }
+  //  return flat;
+};
 @Component({
-  selector: "app-fields-side-bar",
-  templateUrl: "./fields-side-bar.component.html",
-  styleUrls: ["./fields-side-bar.component.scss"]
+  selector: 'app-fields-side-bar',
+  templateUrl: './fields-side-bar.component.html',
+  styleUrls: ['./fields-side-bar.component.scss']
 })
 export class FieldsSideBarComponent implements OnInit, OnDestroy, AfterViewChecked {
   filterValue: string = null;
@@ -42,10 +61,10 @@ export class FieldsSideBarComponent implements OnInit, OnDestroy, AfterViewCheck
     this._sideBar = this.treeSource.nodes;
   }
   @Input() set section(what) {
-    console.log(what)
+    console.log(what);
   }
   @Input() idSectionForDragDrop: string[];
-  isTree: boolean = true;
+  isTree = true;
   sectionDetailed;
   searchText: string;
   treeSource = new TreeDataSource('Fields');
@@ -56,34 +75,64 @@ export class FieldsSideBarComponent implements OnInit, OnDestroy, AfterViewCheck
   constructor(
     private service: SideBarService,
     private popup: Popup,
-    private cdr: ChangeDetectorRef,) {}
+    private cdr: ChangeDetectorRef, ) {}
 
   ngAfterViewChecked(): void {
-      this.cdr.detectChanges()
+      this.cdr.detectChanges();
   }
+
+  getConnectedIds () {
+    const sections = this.treeSource.getActiveSections().map(section => section['path'].join('|'));
+    const groups = this.treeSource.getActiveGroups().map(group => group['path'].join('|'));
+    return ['root-list', ...sections, ...groups]
+  }
+
   ngOnInit() {
     this.treeControl = new NestedTreeControl<any>(node => {
-      let children = node[CHILDREN_SYMBOL];
+      const children = node[CHILDREN_SYMBOL];
       return children;
     });
 
 
     this.treeSource.changes.subscribe(nodes => {
       if (this._form) {
-        this._form.fields = this.treeSource.toForm()
+        this._form.fields = this.treeSource.toForm();
       }
-    })
+    });
     this.service.sectionSubject.subscribe(data => {
-      console.log('sect', data)
+      console.log('sect', data);
       this.sectionDetailed = data;
       this.isTree = isEmpty(this.sectionDetailed);
     });
     this.service.events$.subscribe(event => {
       if (event['action'] === 'remove') {
-        let f = this._form.fields.find(field => field === event['target'])
-        console.log(f);
-        // event['target']['fields']
-        this._form.fields = this._form.fields.filter(field => field.path !== event['target']['path'])
+        console.log(`event`, event['target']);
+        event['target'].isActive = false;
+        if (event['target'].type === 113 || event['target'].type === 114) {
+
+          let children = this.treeSource.getParentChildren(event['target']);
+          if (children.length === 1 && children[0] === event['target']) {
+            console.log('114?')
+            event['target']['fields'].forEach(field => {
+              for (let child of this.treeSource.getParentChildren(field)) {
+                child.isActive = false;
+              }
+              this.treeControl.collapseDescendants(field);
+            })
+          } else {
+            for (const child of children) {
+              child.isActive = false;
+              this.treeControl.collapseDescendants(event['target']);
+            }
+
+          }
+          this.treeSource.refresh();
+          this.cdr.markForCheck();
+        }
+        // const f = this._form.fields.find(field => field === event.target);
+        // console.log(f);
+        // // event['target']['fields']
+        // this._form.fields = this._form.fields.filter(field => field.path !== event['target']['path']);
       }
     });
   }
@@ -108,9 +157,9 @@ export class FieldsSideBarComponent implements OnInit, OnDestroy, AfterViewCheck
 
 
   drop(event: CdkDragDrop<any>) {
-    console.log('drop', event)
+    console.log('drop', event);
 
-    let node = event.item.data;
+    const node = event.item.data;
     if (event.container.id !== 'sidebar-list') {
       if (!node.isActive) {
         if (node.type === 113 || node.type === 114) {
@@ -124,14 +173,14 @@ export class FieldsSideBarComponent implements OnInit, OnDestroy, AfterViewCheck
   }
 
   onExit(event: CdkDragExit<any>) {
-    console.log(event)
+    console.log(event);
   }
 
 
 
 
   openDeletePop(node: any) {
-    if (!node && !node.data) return;
+    if (!node && !node.data) { return; }
 
     this.delInput.reset();
     this.delFieldName = node.data.name.toUpperCase();
@@ -158,7 +207,7 @@ export class FieldsSideBarComponent implements OnInit, OnDestroy, AfterViewCheck
 
   isFiltered(node) {
     if (this.filterValue) {
-      return !node.name.toLowerCase().startsWith(this.filterValue)
+      return !node.name.toLowerCase().startsWith(this.filterValue);
     } else {
       return !!this.filterValue;
     }
@@ -166,7 +215,7 @@ export class FieldsSideBarComponent implements OnInit, OnDestroy, AfterViewCheck
 
 
   shouldRender(node) {
-    if (!this.filterControl.value) return true;
+    if (!this.filterControl.value) { return true; }
     return  this.filterControl.value && node.name.toString().toLowerCase().startsWith(this.filterControl.value);
   }
 
@@ -182,7 +231,7 @@ export class FieldsSideBarComponent implements OnInit, OnDestroy, AfterViewCheck
       node.isActive = true;
       children = this.treeSource.getParentChildren(node);
     }
-    for (let child of children) {
+    for (const child of children) {
       child.isActive = node.isActive;
     }
     if (node.isActive) {
@@ -195,7 +244,7 @@ export class FieldsSideBarComponent implements OnInit, OnDestroy, AfterViewCheck
       }
     }
     this.treeSource.refresh();
-    this.cdr.markForCheck()
+    this.cdr.markForCheck();
     // if (node.isActive) this.service.event = {action: 'expand', target: node}
   }
 
@@ -212,7 +261,7 @@ export class FieldsSideBarComponent implements OnInit, OnDestroy, AfterViewCheck
   toggleNode(node: any): void {
     const ancestors = this.treeSource.getAncestors(node);
     node.isActive = !node.isActive;
-    for (let ancestor of ancestors) {
+    for (const ancestor of ancestors) {
       if (node.isActive) {
         if (ancestor.type && (ancestor.type === 113 || ancestor.type === 114)) {
           ancestor.isActive = true;

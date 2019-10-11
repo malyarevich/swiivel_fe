@@ -95,7 +95,7 @@ export class FieldsWorkspaceComponent implements OnInit, AfterViewInit {
   }
 
   noFields(item: CdkDrag<any>) {
-    return item.data.type > 111;
+    return item.data.type >= 112;
   }
 
   openModal(content) {

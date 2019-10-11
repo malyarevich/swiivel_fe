@@ -69,7 +69,7 @@
       </div>
     </li>
     <li class="list-group-item p-0 ngx-dnd-item" [ngClass]="nestedLevel==1?'margin-for-nested':''" [cdkDragData]="field" cdkDrag (cdkDragExited)="dragDrop($event)" (cdkDragEntered)="dragDrop($event)"
-      *ngFor="let field of inputGroup.fields">
+      *ngFor="let field of inputGroup.fields" cdkDragBoundary=".list-group">
       <app-field-container *ngIf="field.type!=113" [inputField]="field" [form]="form" [customFields]="customFields"
         [sideBar]="sideBar">
       </app-field-container>
