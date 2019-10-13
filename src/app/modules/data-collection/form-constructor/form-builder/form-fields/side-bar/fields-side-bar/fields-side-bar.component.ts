@@ -237,8 +237,8 @@ export class FieldsSideBarComponent implements OnInit, OnDestroy, AfterViewCheck
     if (this.delFieldName === this.delInput.value) {
       console.log('Delete field', this.delFieldName);
       this.treeSource.deleteNode(this.nodeForDel);
+      this.closePop();
     }
-    this.closePop();
   }
 
   isFiltered(node) {
