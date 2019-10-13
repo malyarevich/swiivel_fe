@@ -331,15 +331,17 @@ export class FieldsSideBarComponent implements OnInit, OnDestroy, AfterViewCheck
   addCustomField(node: any) {
     const formValue = node.customFieldForm.value;
     let newField = {
-      name: formValue.name,
       type: formValue.type ? formValue.type[0].type : null,
+      name: formValue.name,
       width: formValue.width ? formValue.width[0].value : null,
       mapped: formValue.name.toLowerCase().replace(' ', '_'),
       customField: true,
-      isActive: false
+      isActive: false,
+      exist: false
     };
-    node.fields.push(newField);
+    this.treeSource.addCustomField(node, newField);
     this.customFieldToggle(node);
+    this.cdr.markForCheck();
   }
 
   ngOnDestroy(): void {
