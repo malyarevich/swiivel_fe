@@ -9,14 +9,17 @@
   <cdk-tree [dataSource]="treeSource" [treeControl]="treeControl" cdkDropList [cdkDropListData]="treeSource.children" [cdkDropListConnectedTo]="getConnectedIds()" cdkDropListSortingDisabled  id="sidebar-list">
 
     <cdk-nested-tree-node *cdkTreeNodeDef="let node" class="field-tree-node" cdkDrag [cdkDragDisabled]="node.isActive" (cdkDragDropped)="drop($event)" [cdkDragData]="node" [hidden]="isFiltered(node)">
-      <div class="field-tree-node__content">
+      <div class="field-tree-node__content w-100">
 
-        <div class="field-tree-node__content_node">
+        <div class="field-tree-node__content_node w-100">
           <div class="checkbox">
             <input type="checkbox" [checked]="treeSource.isSelected(node)" (click)="toggleNode(node)">
           </div>
           <i class="dragdrop fas fa-ellipsis-v" cdkDragHandle></i>
           <span class="node-name">{{node.name}}</span>
+          <div class="del" style="margin-left: auto;" *ngIf="node.customField">
+            <i class="fas fa-trash" style="color: #A4A4A4" (click)="openDeletePop(node)"></i>
+          </div>  
         </div>
 
       </div>

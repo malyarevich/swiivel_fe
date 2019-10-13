@@ -43,6 +43,7 @@ export class FieldsSideBarComponent implements OnInit, OnDestroy, AfterViewCheck
   ref: any;
   _sideBar;
   _form;
+  nodeForDel: any;
   // _sideBarFields = [];
   // _formFields = [];
 
@@ -212,10 +213,12 @@ export class FieldsSideBarComponent implements OnInit, OnDestroy, AfterViewCheck
 
 
   openDeletePop(node: any) {
-    if (!node && !node.data) { return; }
+    console.log('Node for del',node);
+    if (!node) { return; }
 
     this.delInput.reset();
-    this.delFieldName = node.data.name.toUpperCase();
+    this.nodeForDel = node;
+    this.delFieldName = node.name.toUpperCase();
     this.ref = this.popup.open({
       origin: null,
       content: this.deletePop,
@@ -233,6 +236,7 @@ export class FieldsSideBarComponent implements OnInit, OnDestroy, AfterViewCheck
   deleteNode() {
     if (this.delFieldName === this.delInput.value) {
       console.log('Delete field', this.delFieldName);
+      this.treeSource.deleteNode(this.nodeForDel);
     }
     this.closePop();
   }
