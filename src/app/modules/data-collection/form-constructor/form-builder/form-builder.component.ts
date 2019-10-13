@@ -8,7 +8,7 @@ import {
   Host
 } from "@angular/core";
 import { FormService } from "../../services/form.service";
-import {ActivatedRoute, Params, Router} from "@angular/router";
+import { ActivatedRoute, Params, Router } from "@angular/router";
 import { v4 as uuid } from "uuid";
 import { cloneDeep, isEmpty } from "lodash";
 import { Location } from "@angular/common";
@@ -295,7 +295,7 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
 
   loadSideBarNew() {
     this.fieldsService.getExistingSideBarList().subscribe(
-      (data: Object ) => {
+      (data: Object) => {
         this.newSideBar = data;
       },
       error => console.log(error, "error"),
@@ -393,6 +393,7 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
       this.constructorIsSavingService.setIsSaving(this.isDataSaving);
       this.formService.sendForm(form).subscribe(res => {
         this.formBuilderIsSavedService.setIsSaved(res["updated"]);
+        this.router.navigate([`/form-constructor/${this.formId}/publish-settings`]);
 
         this.isDataSaving = !this.saveFormService.getSavingStatus();
         this.constructorIsSavingService.setIsSaving(this.isDataSaving);
@@ -403,29 +404,8 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
         }
       });
     }
-    // }
     this.vDataCollection.deleteDraftForm(this.formId);
   }
-
-  // drop(event: CdkDragDrop<Field[]>) {
-  //
-  //   if (event.previousContainer === event.container) {
-  //     moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-  //   } else if ((event.previousContainer.id == 'workPlaceList' && event.container.id == '6372c882-3d14-486f-9c1f-52ae8ab928ef') ||
-  //     (event.container.id == 'workPlaceList' && event.previousContainer.id == '6372c882-3d14-486f-9c1f-52ae8ab928ef')) {
-  //     transferArrayItem(event.previousContainer.data,
-  //       event.container.data,
-  //       event.previousIndex,
-  //       event.currentIndex);
-  //   }
-  // else {
-  //   copyArrayItem(event.previousContainer.data,
-  //     event.container.data,
-  //     event.previousIndex,
-  //     event.currentIndex);
-  //   this.addField(this.fields[event.currentIndex]);
-  // }
-  // }
 
   onChangeGroupBeing(field, group) {
     group = cloneDeep(group);
@@ -620,32 +600,19 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
     );
   }
 
-  // setActiveSection(event, section) {
-  //   Object.keys(this.sections).map((key, index) => {
-  //     this.sections[key] = false;
-  //   });
-  //   this.sections[section] = event;
-  // }
+  prevStep() {
+    this.router.navigate([`/form-constructor/${this.formId}/general-information`]);
+  }
 
-  // Tuition Contract
-
-  //End Tuition Contract
-
-  // ngOnDestroy(): void {
-  //   this.saveDraftForm();
-  //   for (let fbSectionsKey in this.sections) {
-  //     this.sections[fbSectionsKey] = false;
-  //   }
-  // }
+  nextStep(): void {
+    this.saveForm();
+  }
 
   ngOnDestroy(): void {
     this.saveDraftForm();
     // this.saveFormService.unsubscribe();
 
-    if (
-      FormBuilderComponent.countSaveFormService > 1 &&
-      this.saveFormSubscription
-    ) {
+    if ( FormBuilderComponent.countSaveFormService > 1 && this.saveFormSubscription) {
       this.saveFormSubscription.unsubscribe();
       FormBuilderComponent.countSaveFormService--;
     }
