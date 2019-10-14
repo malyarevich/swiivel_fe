@@ -78,11 +78,11 @@ p {
 }
 .list-group-item{
   cursor: pointer;
-  z-index: 9999;
+  z-index: 499;
   height: 27px;	width: 238px;
 }
 .temporary-div, .signature-div{
-  z-index: 9999;
+  z-index: 499;
 
 }
 .div-inside{
@@ -95,9 +95,9 @@ p {
 .div-inside-active{
   background-color: #EBEEFF;
   position: absolute;
-  z-index: 9900;
+  z-index: 450;
   &:first-of-type {
-    z-index: 9999;
+    z-index: 460;
   }
 }
 

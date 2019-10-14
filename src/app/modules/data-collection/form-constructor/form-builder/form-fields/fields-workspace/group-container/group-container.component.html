@@ -1,5 +1,5 @@
-<div class="py-3 group-bc" [ngClass]="{'app-setting-show': showGroupSettings}" xmlns="http://www.w3.org/1999/html">
-  <div class="row align-items-center no-gutters">
+<!-- <div class="py-3 group-bc" [ngClass]="{'app-setting-show': showGroupSettings}" xmlns="http://www.w3.org/1999/html"> -->
+  <!-- <div class="row align-items-center no-gutters">
 
     <div class="col-3 ">
       <div class="row align-items-center no-gutters ml-2">
@@ -51,9 +51,44 @@
       </div>
     </div>
 
+  </div> -->
+
+  <div class="field" >
+      <!-- [class.active]="node.showSettings" *ngIf="node.isActive" -->
+        <div class="main-container">
+          <div class="drag-icon">
+            <i class="dragdrop fas fa-ellipsis-v"></i>
+          </div>
+          <div class="name-container">
+            <div class="main-text">{{inputGroup.name | titlecase}}</div>
+            <div class="hint">Group Type -</div>
+          </div>
+          <sw-dropdown-input style="margin-right: 10px;" [(ngModel)]="width" (ngModelChange)="widthChanged($event)" [options]="widthOptions">
+            <span class="label">Section Width</span>
+          </sw-dropdown-input>
+        </div>
+
+    <div class="actions">
+      <div class="icon">
+        <sw-icon-button icon="fa-cog" class="field-creator blue"
+          [class.active]="showGroupSettings" (click)="showGroupSettings=!showGroupSettings">
+        </sw-icon-button>
+      </div>
+      <div class="icon">
+        <sw-icon-button icon="fa-times" class="field-creator blue"
+          (click)="removeGroup(inputGroup)">
+
+        </sw-icon-button>
+      </div>
+      <div class="icon dragdrop">
+        <sw-icon-button class="blue" (click)="showNested=!showNested" [icon]="getIcon()">
+        </sw-icon-button>
+      </div>
+    </div>
+
   </div>
 
-</div>
+<!-- </div> -->
 
 <div *ngIf="showGroupSettings">
   <app-group-settings [inputGroup]="inputGroup"></app-group-settings>

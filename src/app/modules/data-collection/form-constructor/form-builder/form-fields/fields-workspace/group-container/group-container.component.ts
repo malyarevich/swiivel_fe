@@ -27,6 +27,13 @@ export class GroupContainerComponent implements OnInit {
 
   objectKeys = Object.keys;
   list: object;
+  widthOptions = [
+    { title: '4 columns', value: 'full' },
+    { title: '3 columns', value: 'three-quarter' },
+    { title: '2 columns', value: 'half' },
+    { title: '1 column', value: 'quarter' }
+  ];
+  width: any;
 
   constructor(
     private sideBarService: SideBarService,
@@ -35,7 +42,23 @@ export class GroupContainerComponent implements OnInit {
   showNested: boolean = true;
   ngOnInit() {
     this.list = Section.sectionWidth;
+    if (this.inputGroup) {
+      this.width = this.widthOptions.filter(i => i.value === this.inputGroup.width);
+    }
   }
+
+  getIcon(): string {
+    return this.showNested ? 'fa-caret-up' : 'fa-caret-down';
+  }
+
+  widthChanged(value) {
+    if (value && value.length > 0) {
+      this.inputGroup.width = value[0].value;
+    } else {
+      this.inputGroup.width = '';
+    }
+  }
+
   drop(event) {
     if (event.container === event.previousContainer) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);

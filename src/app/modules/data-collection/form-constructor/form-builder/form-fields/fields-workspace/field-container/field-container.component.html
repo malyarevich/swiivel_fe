@@ -1,135 +1,53 @@
-<div class="py-3" [ngClass]="{'field-checked': showSettings}">
-  <div class="row align-items-center no-gutters">
-
-    <div class="col-3 ">
-      <div class="row align-items-center no-gutters ml-2">
-        <div class="col-3">
-          <div class="row align-items-center no-gutters">
-            <!--            <div *ngIf="inputField.isValidName" >-->
-            <!--              <span><i class="fas fa-ellipsis-v dragable-i"></i></span>-->
-            <!--              <span><i class="fas fa-ellipsis-v dragable-i"></i></span>-->
-            <!--               </div>-->
-            <!--            <div *ngIf="!inputField.isValidName">-->
-            <!--                   <span  aria-hidden="true" [title]="warningCheckExistingLabelString"><i-->
-            <!--                     class="fas fa-exclamation-triangle"></i></span>-->
-            <!--            </div>-->
-
-            <!--            <div *ngIf="inputField.isValid" class=" rectangle"></div>-->
-            <!--            <div *ngIf="!inputField.isValid" class="ml-2">-->
-            <!--              <span aria-hidden="true" [title]="warningCheckUniqString"><i-->
-            <!--              class="fas fa-exclamation-circle"></i></span>-->
-            <!--            </div>-->
-            <div cdkDragHandle>
-              <span><i class="fas fa-ellipsis-v dragable-i"></i></span>
-              <span><i class="fas fa-ellipsis-v dragable-i"></i></span>
-            </div>
-            <div class="ml-2 rectangle"></div>
-          </div>
-        </div>
-
-        <div class="col-9 justify-content-center">
-          <!--          <label class="has-float-label">-->
-          <!--            <input class="form-control " (ngModelChange)="nameChange($event)" [disabled]="inputField.mapped!=''&& inputField.hasOwnProperty('mapped')"-->
-          <!--                   [ngModel]="inputField.name">-->
-          <!--            <span class="spanForLabel">Field Label</span>-->
-          <!--          </label>-->
-          <div class=""><span class="app-text-extra-bold align-self-center">{{inputField.name}}</span></div>
-          <div class=""><span class="field-type-span mb-2">Basic Field – {{returnFieldTYpeName(inputField)}}</span>
-          </div>
-
-        </div>
-      </div>
+<div class="field" [class.active]="showSettings">
+  <div class="main-container">
+    <div class="drag-icon">
+      <i class="dragdrop fas fa-ellipsis-v" cdkDragHandle></i>
     </div>
-    <div class="col-3 ">
-      <div class="row align-items-center ">
-        <div class="col-6">
-          <div class="   app-input-container"
-               [ngClass]="{'app-input-fill': placeholderID.value}">
-            <label for="placeholderId" class="app-input-label">Placeholder</label>
-            <input type="text"
-                   #placeholderID
-                   class="app-input form-control"
-                   id="placeholderId"
-                   placeholder="Placeholder"
-                   [value]="inputField.prefix+'\'s'| titlecase">
-          </div>
-        </div>
-        <div class="col-6">
-          <div class="  app-input-container"
-               [ngClass]="{'app-input-fill': sizeID.value}">
-            <label for="fieldSize" class="app-input-label">Field Width</label>
-            <select class="app-input form-control"
-                    #sizeID
-                    id="fieldSize"
-                    [(ngModel)]="inputField.width"
-            >
-              <option *ngFor="let key of objectKeys(list)"
-                      [value]="list[key]['type']"
-                      [selected]="list[key]['type'] === inputField.width"
-              >{{ list[key]["label"] }}</option>
-            </select>
-
-          </div>
-        </div>
-      </div>
+    <div class="name-container">
+      <div class="main-text">{{inputField.name}}</div>
+      <div class="hint">Field Type - {{returnFieldTYpeName(inputField)}}</div>
     </div>
-    <div class="col-5 row align-items-center pl-2 no-gutters">
-      <div class="col d-flex justify-content-center">
-        <label class="app-checkbox-container mb-0">
-          <input [disabled]="inputField.options.readonly"
-            type="checkbox" [(ngModel)]="inputField.options.required">
-
-          <span class="app-checkbox-checkmark"></span>
-          Required
-        </label>
-      </div>
-
-      <div class="col d-flex justify-content-center">
-        <label class="app-checkbox-container mb-0">
-          <input
-            type="checkbox" [(ngModel)]="inputField.options.hideLabel">
-
-          <span class="app-checkbox-checkmark"></span>
-          Hide Label
-        </label>
-      </div>
-      <div class="col d-flex justify-content-center">
-        <label class="app-checkbox-container mb-0">
-          <input
-            type="checkbox" [(ngModel)]="inputField.options.readonly"
-            (ngModelChange)="onSetReadonly($event)">
-
-          <span class="app-checkbox-checkmark"></span>
-          Read-Only
-        </label>
-      </div>
-      <div class="col d-flex justify-content-center">
-        <label class="app-checkbox-container mb-0">
-          <input [disabled]="inputField.options.readonly"
-            type="checkbox" [(ngModel)]="inputField.options.unique">
-
-          <span class="app-checkbox-checkmark"></span>
-          Unique
-        </label>
-      </div>
-
+    <sw-dropdown-input style="margin-right: 10px;" [(ngModel)]="width" (ngModelChange)="widthChanged($event)"
+      [options]="widthOptions">
+      <span class="label">Field Width</span>
+    </sw-dropdown-input>
+    <div class="input">
+      <sw-input-checkbox [(ngModel)]="inputField.options.required">
+        <span class="label">Required</span>
+      </sw-input-checkbox>
     </div>
-
-    <div class="col-1 row align-items-center no-gutters">
-      <div class=" col d-flex ">
-        <i class="fas fa-cog dragable-i" (click)="showSettings=!showSettings"></i>
-      </div>
-      <div class=" col d-flex ">
-        <i class="fas fa-times dragable-i" (click)="removeField(inputField)"></i>
-      </div>
+    <div class="input">
+      <sw-input-checkbox [(ngModel)]="inputField.options.hideLabel">
+        <span class="label">Hide Label</span>
+      </sw-input-checkbox>
     </div>
-
+    <div class="input">
+      <sw-input-checkbox [(ngModel)]="inputField.options.readonly">
+        <span class="label">Read–Only</span>
+      </sw-input-checkbox>
+    </div>
+    <div class="input">
+      <sw-input-checkbox [(ngModel)]="inputField.options.unique">
+        <span class="label">Unique</span>
+      </sw-input-checkbox>
+    </div>
   </div>
 
-
-  <div *ngIf="showSettings">
-    <app-form-field-settings [inputField]="inputField"
-                               [fieldTypeName]="returnFieldTYpeName(inputField)"
-                               [form]="form"></app-form-field-settings>
+  <div class="actions">
+    <div class="icon">
+      <sw-icon-button icon="fa-cog" class="field-creator blue" [class.active]="showSettings"
+        (click)="showSettings=!showSettings">
+      </sw-icon-button>
+    </div>
+    <div class="icon">
+      <sw-icon-button icon="fa-times" class="field-creator blue" (click)="removeField(inputField)">
+      </sw-icon-button>
+    </div>
   </div>
+</div>
+
+
+<div *ngIf="showSettings">
+  <app-form-field-settings [inputField]="inputField" [fieldTypeName]="returnFieldTYpeName(inputField)" [form]="form">
+  </app-form-field-settings>
 </div>
