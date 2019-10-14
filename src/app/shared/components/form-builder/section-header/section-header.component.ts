@@ -19,8 +19,14 @@ import { Section } from '../../../../models/data-collection/section.model';
   styleUrls: ["./section-header.component.scss"]
 })
 export class SectionHeaderComponent implements OnInit {
-  @Input() sectionName: string;
-  @Input() sectionWidth: string;
+  @Input() 
+  set sectionName(n: string) {
+    this.name = n;
+  }
+  @Input() 
+  set sectionWidth(w: string) {
+    this.width = this.widthOptions.filter(i => i.value === w);
+  }
   @Input() isExpand: boolean;
   @Output() onChangeSectionName: EventEmitter<string> = new EventEmitter;
   @Output() onChangeSectionWidth: EventEmitter<string> = new EventEmitter;
@@ -30,11 +36,36 @@ export class SectionHeaderComponent implements OnInit {
 
   objectKeys = Object.keys;
   list: object;
+  name: string = '';
+  width: any[] = [];
+
+  widthOptions = [
+    { title: '4 columns', value: 'full' },
+    { title: '3 columns', value: 'three-quarter' },
+    { title: '2 columns', value: 'half' },
+    { title: '1 column', value: 'quarter' }
+  ];
 
   constructor() {}
 
   ngOnInit() {
     this.list = Section.sectionWidth;
+  }
+
+  getIcon(): string {
+    return this.isExpand ? 'fa-caret-up' : 'fa-caret-down';
+  }
+
+  nameChanged(value) {
+    this.onChangeSectionName.emit(value);
+  }
+
+  widthChanged(e) {
+    let res = '';
+    if (e && e.length > 0) {
+      res = e[0].value;
+    }
+    this.onChangeSectionWidth.emit(res);
   }
 
   changeSectionName(value: string) {
