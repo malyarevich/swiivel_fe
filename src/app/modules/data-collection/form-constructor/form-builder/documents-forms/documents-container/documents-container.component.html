@@ -17,7 +17,45 @@
     'app-div-hide': !isExpand
   }"
 >
-  <div class="app-section-wrapper mb-2" *ngFor="let document of documents; let i = index">
+
+    <div class="documents-item" *ngFor="let item of documents">
+      <div class="row item-row justify-content-between">
+        <div class="document-info align-items-center">
+          <div class="document-name">
+            <sw-input-text>
+              <span class="placeholder">Document Name</span>
+            </sw-input-text>
+          </div>
+          <div class="lable green">
+            Family
+          </div>
+        </div>
+        <sw-button class="outline-btn">Add Specific Criteria</sw-button>
+      </div>
+      <div class="row item-row">
+        <sw-input-textarea>
+          <span class="input_label">Text</span>
+        </sw-input-textarea>
+      </div>
+      <div class="row item-row">
+        <div class="file">
+          fileinput
+        </div>
+        <div class="actions">
+          <sw-button *ngIf="!item?.isUpload; else uploadDocument">
+            Download Document
+          </sw-button>
+          <ng-template #uploadDocument>
+            <sw-button>
+              Upload Document
+            </sw-button>
+            <sw-icon-button icon="fa-file-alt"></sw-icon-button>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  
+  <!-- <div class="app-section-wrapper mb-2" *ngFor="let document of documents; let i = index">
     <div class="row no-gutters align-items-center">
       <div class="col-5 row no-gutters align-items-center">
         <div class=" col-1 row align-items-center no-gutters">
@@ -251,5 +289,5 @@
         </div>
       </ng-container>
     </div>
-  </div>
+  </div> -->
 </div>

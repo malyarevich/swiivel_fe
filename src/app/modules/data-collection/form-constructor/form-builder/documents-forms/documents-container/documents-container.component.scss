@@ -1,4 +1,62 @@
-@import '../../../../../../../styles/variables/colors';
+@import 'index';
+
+:host {
+  :host {
+    .documents-item {
+      border-radius: 3px;
+      background: #FFFFFF;
+      padding: 15px 15px 10px 45px;
+      margin-bottom: 10px;
+      &:last-of-type {
+        margin-bottom: 30px;
+      }
+      .item-row {
+        margin: 0 0 10px;
+        .document-info {
+          display: flex;
+          width: 60%;
+          .document-name {
+            width: 80%;
+            margin-right: 15px;
+          }
+          .lable {
+            border-radius: 100px;
+            padding: 1px 10px;
+            font: 800 10px/13px $nunito-sans;
+            text-align: center;
+            &.green {
+              background: #D0F1E3;
+              color: #3CA476;
+            }
+            &.blue {
+              background: #DAEEFE;
+              color: #45ABF8;
+            }
+          }
+        }
+        sw-input-textarea {
+          width: 100%;
+        }
+        .actions {
+          margin-left: auto;
+          display: flex;
+          flex-flow: row nowrap;
+          align-items: center;
+          sw-icon-button {
+            margin-left: 10px;
+          }
+        }
+      }
+      .form-actions {
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+        justify-content: space-between;
+      }
+    }
+  }
+  
+}
 
 a, .fas {
   cursor: pointer;
