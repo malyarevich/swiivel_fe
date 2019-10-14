@@ -25,7 +25,7 @@ export class SectionHeaderComponent implements OnInit {
   }
   @Input() 
   set sectionWidth(w: string) {
-    this.width = [this.widthOptions.find(i => i.value === w)];
+    this.width = this.widthOptions.filter(i => i.value === w);
   }
   @Input() isExpand: boolean;
   @Output() onChangeSectionName: EventEmitter<string> = new EventEmitter;
