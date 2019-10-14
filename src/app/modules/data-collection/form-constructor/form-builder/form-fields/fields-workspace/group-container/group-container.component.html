@@ -61,15 +61,15 @@
 
 
 <div [hidden]="!showNested">
-  <ul class="list-group ngx-dnd-container drop-zone" [ngxDroppable]="inputGroup._id" [model]="inputGroup.fields"
-    (drop)="dropAdd($event)" direction="vertical">
+  <ul class="list-group ngx-dnd-container drop-zone" cdkDropList [id]="inputGroup.path.join('|')" [cdkDropListData]="inputGroup"
+    (cdkDropListDropped)="drop($event)">
     <li *ngIf="inputGroup.fields.length==0" class="list-group-item empty-group p-0 "
       [ngClass]="nestedLevel==1?'margin-for-nested':''">
       <div class="text-center"> <span class="empty-group-text">Drag and Drop Fields Onto the Group</span>
       </div>
     </li>
-    <li class="list-group-item p-0 ngx-dnd-item" [ngClass]="nestedLevel==1?'margin-for-nested':''" [model]="field"
-      *ngFor="let field of inputGroup.fields" [ngxDraggable]="idSectionForDragDrop">
+    <li class="list-group-item p-0 ngx-dnd-item" [ngClass]="nestedLevel==1?'margin-for-nested':''" [cdkDragData]="field" cdkDrag (cdkDragExited)="dragDrop($event)" (cdkDragEntered)="dragDrop($event)"
+      *ngFor="let field of inputGroup.fields" cdkDragBoundary=".list-group">
       <app-field-container *ngIf="field.type!=113" [inputField]="field" [form]="form" [customFields]="customFields"
         [sideBar]="sideBar">
       </app-field-container>

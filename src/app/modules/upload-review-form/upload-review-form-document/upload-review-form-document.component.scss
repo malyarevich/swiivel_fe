@@ -5,15 +5,53 @@
   min-height: 70px;
   height: 100%;
 
+  .container {
+    position: relative;
+    padding: 0 0 42px;
+  }
+
   .controllers {
     position: absolute;
     display: flex;
+    bottom: 47px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 3px;
+    overflow: hidden;
+  }
 
-    .zoom,
-    .rotate {
-      display: flex;
-      background: $dark-purple;
-    }
+  .controllers-zoom,
+  .controllers-rotate {
+    display: flex;
+    background: $dark-purple;
+  }
+
+  .controllers-zoom {
+    position: relative;
+  }
+
+  .controllers-zoom:after {
+    position: absolute;
+    right: 0;
+    content: '';
+    width: 1px;
+    height: 38px;
+    background: $soft-purple;
+  }
+
+  .controllers-rotate-button {
+    background: transparent;
+    border: none;
+  }
+
+  .controllers-rotate-button:hover {
+    opacity: 0.8;
+  }
+
+
+  .controllers-rotate-button:focus,
+  .controllers-rotate-button:active {
+    outline: none;
   }
 
   .image {
@@ -35,4 +73,41 @@
     margin: 25px 0;
   }
 
+  .settings {
+    width: 187px;
+    position: absolute;
+    top: 15px;
+    right: 0;
+    border-radius: 3px;
+    padding: 10px 10px 15px;
+    background: #fff;
+
+    .settings-header {
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      margin: 0 0 25px;
+      padding: 0 10px 0 5px;
+
+      .settings-text {
+        margin: 0;
+        color: $element-base-color;
+        font: 800 11px/15px $nunito-sans;
+        text-transform: uppercase;
+      }
+    }
+
+    .settings-header:after {
+      position: absolute;
+      content: '';
+      bottom: -10px;
+      width: 155px;
+      height: 1px;
+      background: $gray-color;
+    }
+
+    .settings-field {
+      margin: 0 0 5px;
+    }
+  }
 }

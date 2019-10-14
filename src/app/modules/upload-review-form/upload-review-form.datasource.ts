@@ -2,6 +2,8 @@ import { CollectionViewer } from '@angular/cdk/collections';
 import { DataSource } from '@angular/cdk/table';
 import { UploadReviewFormService } from '@modules/upload-review-form/upload-review-form.service';
 import { BehaviorSubject, Observable } from 'rxjs';
+import {catchError, map} from 'rxjs/operators';
+import {SafeResourceUrl} from '@angular/platform-browser';
 
 export class UploadReviewFormDataSource implements DataSource<any> {
   private documentSubject = new BehaviorSubject<any[]>([]);
@@ -68,9 +70,7 @@ export class UploadReviewFormDataSource implements DataSource<any> {
   }
 
   downloadForm(id: string): void {
-    this.uploadReviewFormService.downloadForm(id).subscribe((res) => {
-      console.log(res);
-    });
+    this.uploadReviewFormService.downloadForm(id);
   }
 
   deleteDocuments(ids: string[], activeFormId: string, filter?: any, sort?: any) {
@@ -81,9 +81,20 @@ export class UploadReviewFormDataSource implements DataSource<any> {
     });
   }
 
-  changeStatus(id: string, status: string, activeFormId: string, filter?: any, sort?: any): void {
-    this.uploadReviewFormService.changeDocumentStatus(id, status).subscribe( () => {
-      this.uploadDocuments(activeFormId, filter, sort);
-    });
+  changeStatus(id: string, status: string, activeFormId: string, filter?: any, sort?: any): Observable<any> {
+    return this.uploadReviewFormService.changeDocumentStatus(id, status).pipe(
+      map(() => {
+        this.uploadDocuments(activeFormId, filter, sort);
+      }),
+    );
   }
+
+  rotateImg(angle: string, id: string, activeFormId: string, filter?: any, sort?: any): Observable<any> {
+    return this.uploadReviewFormService.rotateImg(angle, id).pipe(
+      map(() => {
+        this.uploadDocuments(activeFormId, filter, sort);
+      }),
+    );
+  }
+
 }

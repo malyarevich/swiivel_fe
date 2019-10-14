@@ -329,6 +329,7 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
   }
 
   formInit(): void {
+    console.log(this.vDataCollection)
     const form = this.vDataCollection.getDraftForm(this.draftId);
     if (!isEmpty(form)) {
       // console.log("loading draftForm");
@@ -337,6 +338,7 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
       this.formService.getOneForm(this.formId).subscribe(
         (form: Form) => {
           // console.log("loading remoteForm");
+          console.log(form)
           this.setLocalForm(form); //remoteForm
         },
         error => console.log(error, "error"),

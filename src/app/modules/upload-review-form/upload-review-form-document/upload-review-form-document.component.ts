@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Document } from '@models/upload-review-form/document.model';
 import { IconsEnum } from '@shared/icons.enum';
+import { SizesEnum } from '@shared/sizes.enum';
 
 @Component({
   selector: 'app-upload-review-form-document',
@@ -14,11 +15,23 @@ export class UploadReviewFormDocumentComponent {
   public _document: Document;
   public icons = IconsEnum;
   public form: FormGroup;
+  public sizes = SizesEnum;
+  public isSettingsOpen = true;
   public isDocumentLoading = true;
+  @Input() documentTypes = [];
+  @Input() documentStudent = [];
+  @Input() documentAccount = [];
+  @Output() rotateImg = new EventEmitter<string>();
+  @Output() zoomImg = new EventEmitter<string>();
 
   @Input()
   set document(document: Document) {
     this.isDocumentLoading = true;
+    if (document) {
+      this.form.controls['type'].setValue(document.entity_name);
+      this.form.controls['account'].setValue(document.family_id);
+      this.form.controls['student'].setValue(document.person_name);
+    }
     this._document = document;
   }
 
@@ -36,5 +49,17 @@ export class UploadReviewFormDocumentComponent {
 
   isLoaded(): void {
     this.isDocumentLoading = false;
+  }
+
+  changeFormState(): void {
+    this.isSettingsOpen = !this.isSettingsOpen;
+  }
+
+  clickRotateImg(evt: string): void {
+    this.rotateImg.emit(evt);
+  }
+
+  clickZoomImg(evt: string): void {
+    this.zoomImg.emit(evt);
   }
 }

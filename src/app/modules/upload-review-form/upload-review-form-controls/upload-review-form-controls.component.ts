@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { SizeButtonsEnum } from '@shared/size-buttons.enum';
 import { ColorsEnum } from '@shared/colors.enum';
@@ -14,6 +14,11 @@ export class UploadReviewFormControlsComponent implements OnInit  {
   @Input() documentTypes ? = [];
   @Input() documentStudent  ? = [];
   @Input() documentAccount  ? = [];
+  @Input() isBulkDownload ? = false;
+  @Input() showBulkDownload = false;
+  @Input() selectedCount = 0;
+  @Output() bulkDownload = new EventEmitter();
+  @Output() download = new EventEmitter();
   public formUpload: FormGroup;
   public uploadDocumentData: any;
   public sizeButton = SizeButtonsEnum;
@@ -45,5 +50,13 @@ export class UploadReviewFormControlsComponent implements OnInit  {
     this.uploadDocumentData['document_id'] = this.activeIdForm;
     this.uploadDocumentData['person_id'] = this.formUpload.get('student').value;
     this.uploadDocumentData['document_type'] = this.formUpload.get('account').value;
+  }
+
+  clickBulkDownload(): void {
+    this.bulkDownload.emit();
+  }
+
+  clickDownload(): void {
+    this.download.emit();
   }
 }

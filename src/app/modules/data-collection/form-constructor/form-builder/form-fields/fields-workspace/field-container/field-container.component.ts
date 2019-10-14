@@ -45,6 +45,7 @@ export class FieldContainerComponent
 
   removeField(field: Field) {
     // console.log(this.sideBar[0].fields);
+    this.sideBarService.events$.next({action: 'remove', target: field});
     this.sideBarService.onFieldUncheck(field, this.sideBar[0].fields);
     this.sideBarService.onFieldDelete(field, this.form.fields);
   }
@@ -73,6 +74,7 @@ export class FieldContainerComponent
 
   ngOnInit(): void {
     this.list = Section.sectionWidth;
+    if (!this.inputField.options) this.inputField.options = {};
     this.inputField.exist = true;
   }
 

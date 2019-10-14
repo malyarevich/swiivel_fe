@@ -32,6 +32,10 @@ export class TreeDataSource implements DataSource<any> {
     return this.tree.treeToArray(this.tree)
   }
 
+  get activeNodes() {
+    return this.getActiveChildren(this.tree);
+  }
+
   clear() {
     this.tree.remove(this.tree);
   }
@@ -43,14 +47,60 @@ export class TreeDataSource implements DataSource<any> {
       this.tree['symbol'];
     }
   }
-  addSection(old, title = 'New Section') {
+  addSection(old, title = 'New Section', fields = []) {
     this.tree.insertAfter(old, {
       type: 114,
       name: title,
       isActive: true,
-      fields: []
+      fields: fields
     });
     this.data = this.tree.childrenToArray(this.tree);
+  }
+
+  toForm() {
+    let nodes = this.getActiveChildren(this.tree);
+    if (nodes.length > 0) {
+      let section = nodes.find(node => node.type === 114);
+      if (!section) {
+        section = {
+          type: 114,
+          name: 'New section',
+          isActive: true,
+          path: ['New section'],
+          fields: nodes
+        };
+        return [section];
+      } else {
+        return nodes;
+      }
+    } else {
+      return [];
+    }
+  }
+
+  getActiveChildren(parent = this.tree) {
+    let children = Array.from(this.tree.childrenIterator(parent)).filter((node: any) => node.isActive === true);
+    return children.map((child: any) => {
+      child.path = this.getPath(child);
+      child.fields = this.getActiveChildren(child);
+      return child;
+    });
+  }
+
+  getActiveSections(parent = this.tree) {
+    let sections = Array.from(parent.childrenIterator(parent)).filter((node:any) => node.type === 114 && node.isActive === true);
+    return sections;
+  }
+
+  getActiveGroups(parent = this.tree) {
+    let groups = Array.from(parent.childrenIterator(parent)).filter((node: any) => node.type === 113 && node.isActive === true);
+    return groups;
+  }
+
+  getPath(node) {
+    return Array.from(this.tree.ancestorsIterator(node), (parent: any) => {
+      return parent.name;
+    }).slice(0, -1);
   }
 
   swapSections(prevIdx, curIdx) {
@@ -112,7 +162,7 @@ export class TreeDataSource implements DataSource<any> {
   }
 
   get children() {
-    return this.tree.childrenToArray()
+    return this.tree.childrenToArray(this.tree)
   }
 
   getChildren(node) {
@@ -132,11 +182,10 @@ export class TreeDataSource implements DataSource<any> {
 
   refresh() {
     this.data =  this.dataSubject.getValue();
-    console.log(this.data);
   }
 
   isSelected(node) {
-    return (node.isActive || node.isSelected) === true;
+    return node.isActive === true;
   }
 
   toggleNode(node) {

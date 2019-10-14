@@ -52,14 +52,9 @@
 
   <div class="col-sm-7 text-right">
     <div class="row">
-      <div class="col-sm-6">
-        <a class="btn app-btn-outline-primary" 
-          tabindex="0">
-          Review the form
-        </a>
-        &nbsp;
-        <button type="button" class="btn app-btn-outline-primary">
-          Upload Forms
+      <div class="col-sm-6">&nbsp;
+        <button type="button" class="btn app-btn-outline-primary" [routerLink]="['/upload-review-form', activeIdForm]">
+          Upload & Review
         </button>
         <div ngbDropdown class="d-inline-block ml-2">
           <button
