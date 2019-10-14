@@ -80,7 +80,7 @@ export class FormNavigationBarComponent implements OnInit, AfterContentChecked {
   delegateLogic() {
     if (this.getSavingStatus()) {
       this.saveFormService.setSavingStatus(true);
-      this.goBack();
+      // this.goBack();
     } else {
       this.saveFormService.setSavingStatus(false);
     }
