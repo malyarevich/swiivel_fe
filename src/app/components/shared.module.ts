@@ -155,6 +155,8 @@ registerLocaleData(localHe)
     MainComponent,
     PaginatorComponent,
     StepperComponent,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [
     StepperService
