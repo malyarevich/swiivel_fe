@@ -10,18 +10,6 @@
         <sw-button (click)="file.openDialog()" [size]="sizeButton.FULL">Upload Document</sw-button>
       </sw-input-file>
     </div>
-<!--    <sw-dropdown-select [options]="documentTypes">-->
-<!--      <span>{{ this.uploadDocumentData.document_type }}</span>-->
-<!--    </sw-dropdown-select>-->
-<!--    <sw-dropdown-select [options]="documentStudent">-->
-<!--      <span>{{ this.uploadDocumentData.person_id }}</span>-->
-<!--    </sw-dropdown-select>-->
-<!--    <sw-dropdown-select [options]="documentAccount">-->
-<!--      <span>{{ this.uploadDocumentData.family_id }}</span>-->
-<!--    </sw-dropdown-select>-->
-<!--    <div class="items-control">-->
-<!--      <sw-button [style]="colors.WHITE">Bulk Download</sw-button>-->
-<!--    </div>-->
   </form>
   <sw-button
     *ngIf="showBulkDownload"
@@ -31,5 +19,7 @@
 
 <div class="upload-document-controls--bulk" *ngIf="isBulkDownload">
   <sw-button [style]="colors.WHITE" (click)="clickBulkDownload()">Cancel</sw-button>
-  <sw-button>Download Forms</sw-button>
+  <sw-button (click)="clickDownload()" [disabled]="selectedCount == 0">
+    Download Forms ({{ selectedCount }})
+  </sw-button>
 </div>

@@ -11,6 +11,7 @@ import { ExtremeUploadForms } from '@models/upload-review-form/forms.model';
 
 export class FormUploadFooterComponent {
   @Input() documents: ExtremeUploadForms;
+  @Input() disabled: boolean;
   @Output('changeForm') changeFormEmitter = new EventEmitter<string>();
 
   public uploadReviewFormStatusesEnum = UploadReviewFormStatusesEnum;

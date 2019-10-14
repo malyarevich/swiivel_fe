@@ -27,17 +27,17 @@
     </div>
     <div class="controllers" *ngIf="!isDocumentLoading">
       <div class="controllers-zoom">
-        <sw-icon-button [icon]="icons.ZOOM_OUT" [size]="sizes.LARGE"></sw-icon-button>
-        <sw-icon-button [icon]="icons.ZOOM_IN" [size]="sizes.LARGE"></sw-icon-button>
+        <sw-icon-button [icon]="icons.ZOOM_OUT" [size]="sizes.LARGE" (click)="clickZoomImg('out')"></sw-icon-button>
+        <sw-icon-button [icon]="icons.ZOOM_IN" [size]="sizes.LARGE" (click)="clickZoomImg('in')"></sw-icon-button>
       </div>
       <div class="controllers-rotate">
-        <button class="controllers-rotate-button">
+        <button class="controllers-rotate-button" (click)="clickRotateImg('left')">
           <img
             class="controllers-rotate-icon"
             [src]="'./assets/images/icons/rotate-right.svg'"
           />
         </button>
-        <button class="controllers-rotate-button">
+        <button class="controllers-rotate-button" (click)="clickRotateImg('right')">
           <img
             class="controllers-rotate-icon"
             [src]="'./assets/images/icons/rotate-left.svg'"
@@ -45,23 +45,34 @@
         </button>
       </div>
     </div>
+    <form [formGroup]="form" class="settings">
+      <div class="settings-header">
+        <p class="settings-text">Document settings</p>
+        <sw-icon-button
+          [icon]="isSettingsOpen ? icons.CARET_DOWN : icons.CARET_UP"
+          (click)="changeFormState()"
+        ></sw-icon-button>
+      </div>
+      <div *ngIf="isSettingsOpen">
+        <div class="settings-field">
+          <app-select-field formControlName="type" [items]="documentTypes" [labelTitle]="'Document Type'">
+          </app-select-field>
+        </div>
+        <div class="settings-field">
+          <app-select-field formControlName="account" [items]="documentAccount" [labelTitle]="'Account'">
+          </app-select-field>
+        </div>
+        <div class="settings-field">
+          <app-select-field formControlName="student" [items]="documentStudent" [labelTitle]="'Student'">
+          </app-select-field>
+        </div>
+      </div>
+    </form>
   </div>
 </div>
 <div *ngIf="!document && !isDocumentLoading">
   <h3 class="no-documents-header">No Selected document</h3>
 </div>
 
-<!--<form [formGroup]="form">-->
-<!--  <h3>Document settings</h3>-->
-<!--  <sw-input-text formControlName="type">-->
-<!--    <span class="placeholder">Document Type</span>-->
-<!--  </sw-input-text>-->
-<!--  <sw-input-text formControlName="account">-->
-<!--    <span class="placeholder">Account</span>-->
-<!--  </sw-input-text>-->
-<!--  <sw-input-text formControlName="student">-->
-<!--    <span class="placeholder">Student</span>-->
-<!--  </sw-input-text>-->
-<!--</form>-->
 
 
