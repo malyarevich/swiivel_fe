@@ -37,6 +37,13 @@ export class FieldContainerComponent
 
   objectKeys = Object.keys;
   list: object;
+  widthOptions = [
+    { title: '4 columns', value: 'full' },
+    { title: '3 columns', value: 'three-quarter' },
+    { title: '2 columns', value: 'half' },
+    { title: '1 column', value: 'quarter' }
+  ];
+  width: { title: string; value: string; }[] = [];
 
   constructor(
     private sideBarService: SideBarService,
@@ -48,6 +55,14 @@ export class FieldContainerComponent
     this.sideBarService.events$.next({action: 'remove', target: field});
     this.sideBarService.onFieldUncheck(field, this.sideBar[0].fields);
     this.sideBarService.onFieldDelete(field, this.form.fields);
+  }
+
+  widthChanged(value) {
+    if (value && value.length > 0) {
+      this.inputField.width = value[0].value;
+    } else {
+      this.inputField.width = '';
+    }
   }
 
   uniqActivated(event) {
@@ -75,6 +90,9 @@ export class FieldContainerComponent
   ngOnInit(): void {
     this.list = Section.sectionWidth;
     if (!this.inputField.options) this.inputField.options = {};
+    if (this.inputField) {
+      this.width = this.widthOptions.filter(i => i.value === this.inputField.width);
+    }
     this.inputField.exist = true;
   }
 
