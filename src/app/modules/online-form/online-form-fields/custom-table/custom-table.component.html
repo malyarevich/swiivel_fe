@@ -1,0 +1,35 @@
+<h2 class="content_section__section_title">
+  {{ tableTitle }}
+</h2>
+
+<div class="custom_table" [formGroup]="fg">
+  <div class="custom_table__header">
+    <div class="custom_table__text custom_table__caption"></div>
+    <div
+      class="custom_table__text custom_table__caption"
+      *ngFor="let caption of table.header"
+    >
+      {{ caption }}
+    </div>
+  </div>
+  <div class="custom_table__body">
+    <ng-container *ngFor="let row of table.body; let i = index">
+      <div
+        class="custom_table__row"
+        [ngClass]="{ 'custom_table__row--error': isError(i) }"
+      >
+        <div
+          class="custom_table__text custom_table__label"
+          [ngClass]="{ 'custom_table__text--error': i == 1 }"
+        >
+          {{ row.label }}
+        </div>
+        <div class="custom_table__field" *ngFor="let item of row.items">
+          <sw-input-checkbox [formControlName]="item._id">
+            <span class="label"></span>
+          </sw-input-checkbox>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>
