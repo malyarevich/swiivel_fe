@@ -1,255 +1,123 @@
 <!--Section Header-->
-<app-section-header
-  [sectionName]="documentsForms.documents.sectionName"
-  [sectionWidth]="documentsForms.documents.sectionWidth"
-  [isExpand]="isExpand"
-  (onChangeSectionName)="changeSectionName($event)"
-  (onChangeSectionWidth)="changeSectionWidth($event)"
-  (onToggleExpand)="toggleExpand()"
-></app-section-header>
+<app-section-header [sectionName]="documentsForms.documents.sectionName"
+  [sectionWidth]="documentsForms.documents.sectionWidth" [isExpand]="isExpand"
+  (onChangeSectionName)="changeSectionName($event)" (onChangeSectionWidth)="changeSectionWidth($event)"
+  (onToggleExpand)="toggleExpand()"></app-section-header>
 <!--End Section Header-->
 
 <!-- Section body -->
-<div
-  class="app-div-animation app-div-hide"
-  [ngClass]="{
+<div class="app-div-animation app-div-hide" [ngClass]="{
     'app-div-show': isExpand,
     'app-div-hide': !isExpand
-  }"
->
-  <div class="app-section-wrapper mb-2" *ngFor="let document of documents; let i = index">
-    <div class="row no-gutters align-items-center">
-      <div class="col-5 row no-gutters align-items-center">
-        <div class=" col-1 row align-items-center no-gutters">
-          <span class="app-fb-section-icon">
-            <i class="fas fa-ellipsis-v"></i>
-            <i class="fas fa-ellipsis-v"></i>
-          </span>
-        </div>
+  }">
 
-        <div
-          class="col-10 ml-1"
-          [ngClass]="{ 'app-input-fill': document.name }"
-        >
-          <label class="app-input-label" for="document-name"
-            >Document Name</label
-          >
-          <input
-            type="text"
-            class="app-input"
-            id="document-name"
-            [(ngModel)]="document.name"
-            placeholder="Document Name"
-          />
+  <div class="documents-item" *ngFor="let document of documents">
+    <div class="row item-row justify-content-between">
+      <div class="document-info align-items-center">
+        <div class="document-name">
+          <sw-input-text [(ngModel)]="document.name">
+            <span class="placeholder">Document Name</span>
+          </sw-input-text>
+        </div>
+        <div class="lable green" *ngIf="document.isPerFamily">
+          Family
+        </div>
+        <div class="lable blue" *ngIf="!document.isPerFamily">
+          Student
         </div>
       </div>
-      <div class="col-1 ">
-        <span
-          *ngIf="document.isPerFamily"
-          class="badge badge-pill badge-success ml-3"
-          >&nbsp;Family&nbsp;</span
-        >
-        <span
-          *ngIf="!document.isPerFamily"
-          class="badge badge-pill badge-info ml-3"
-          >Student</span
-        >
+      <sw-button class="outline-btn">Add Specific Criteria</sw-button>
+    </div>
+    <div class="row item-row">
+      <sw-input-textarea [(ngModel)]="document.accompanyingText.data">
+        <span class="label">Text</span>
+      </sw-input-textarea>
+    </div>
+    <div class="row item-row">
+      <div class="file" *ngIf="!document?.isUpload">
+        <div class="input">
+          <span class="file-name">{{attachments[document.data]?.name}}</span>
+          <div class="actions" style="margin-left: auto; width: fit-content;">
+            <sw-icon-button (click)="openForPreview(document)" icon="fa-eye"></sw-icon-button>
+            <sw-icon-button (click)="deleteAttachment(document)" icon="fa-trash"></sw-icon-button>
+          </div>
+          <input #fileInput type="file" accept=".pdf,.doc,.docx,.jpg" (change)="fileChange($event, document)" hidden />
+        </div>
+        <sw-button class="icon-btn full rigth" (click)="focusInput(fileInput)">
+          <i class="fas fa-sliders-h"></i>
+        </sw-button>
       </div>
-      <div class="col-2 offset-4">
-        <button type="button" class="btn btn-outline-primary form-control">
-          Add Specific Criteria
-        </button>
+      <div class="actions" style="margin-left: auto;">
+        <sw-button *ngIf="!document?.isUpload; else uploadDocument">
+          Download Document
+        </sw-button>
+        <ng-template #uploadDocument>
+          <sw-button>
+            Upload Document
+          </sw-button>
+          <sw-icon-button icon="fa-file-alt" (click)="openFormatsPop(document)"></sw-icon-button>
+        </ng-template>
       </div>
     </div>
+  </div>
 
-    <div class="row">
-      <div class="col-12 ">
-        <div class="text-right">
-          <a
-            [ngClass]="document.accompanyingText.isBold ? 'active' : ''"
-            (click)="
-              document.accompanyingText.isBold = !document.accompanyingText
-                .isBold
-            "
-          >
-            <small>Bold</small>
-          </a>
-          <span><small> | </small></span>
-          <a
-            [ngClass]="document.accompanyingText.isItalic ? 'active' : ''"
-            (click)="
-              document.accompanyingText.isItalic = !document.accompanyingText
-                .isItalic
-            "
-          >
-            <small>Italic</small>
-          </a>
+  <ng-template #formatsOptions>
+
+    <div class="dialog_container">
+      <div class="dialog_container__header">
+        <span class="text">Delete Confirmation Required</span>
+        <div class="icon" (click)="closePop()">
+          <i class="fas fa-times"></i>
         </div>
       </div>
-      <div class="col ">
-        <textarea
-          class="app-consent-table form-control float-right"
-          [ngClass]="[
-            document.accompanyingText.isBold ? 'bold-for-a' : '',
-            document.accompanyingText.isItalic ? 'italic-for-a' : ''
-          ]"
-          rows="4"
-          placeholder="Text"
-          [(ngModel)]="document.accompanyingText.data"
-        ></textarea>
-      </div>
-    </div>
-
-    <div class="row no-gutters align-items-center justify-content-between mt-3">
-      <div class="col-7 offset-1 download-div rounded row align-items-center no-gutters">
-        <div class="col pl-2">
-          <span>{{attachments[document.data]?.name}}</span>
-        </div>
-        <div class="col-1 row no-gutters align-items-center">
-          <div class="col-4" (click)="openForPreview(document)">
-            <span><i class="fas fa-eye fa-xs"></i></span>
+      <div class="dialog_container__body">
+        <div class="item row">
+          <div class="col-4 lable">
+            <sw-input-toggle [(ngModel)]="docs">
+              <span class="label">Documents</span>
+            </sw-input-toggle>
           </div>
-          <div class="col-4" (click)="deleteAttachment(document)">
-            <span><i class="fas fa-trash fa-xs"></i></span>
-          </div>
-          <div class="col-4 download-paperclip-div rounded">
-            <label class="m-0">
-              <i class="fas fa-paperclip fa-sm pl-1"></i>
-              <input
-                type="file"
-                accept=".pdf,.doc,.docx,.jpg"
-                (change)="fileChange($event, document)"
-                hidden
-              />
-            </label>
-          </div>
-        </div>
-      </div>
-      <ng-container *ngIf="!document.isUpload" >
-        <div class="col-2">
-          <button type="button" class="btn d-u-button form-control">
-            Download Document
-          </button>
-        </div>
-      </ng-container>
-      <ng-container *ngIf="document.isUpload">
-        <div class="col-3">
-          <div class="d-flex justify-content-center align-items-center">
-            <button type="button" class="btn d-u-button form-control">
-              Upload Document
-            </button>
-            <div
-              class="offset-3"
-              ngbDropdown
-              placement="bottom-right"
-              autoClose="outside"
-            >
-          <span id="dropdownBasic1" ngbDropdownToggle>
-            <i class="fas fa-upload fa-lg"></i>
-          </span>
-              <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                <div class="row no-gutters align-items-center border-for-dropdown">
-                  <div class="col-4  dropdown-div border-secondary border-right">
-                    <div class="row no-gutters align-items-center">
-                      <div class=" col-3 pl-1">
-                        <label class="app-switch">
-                          <input
-                            type="checkbox"
-                            [(ngModel)]="document.dataTypeAllowed.isDocuments"
-                          />
-                          <span class="app-slider app-round"></span>
-                        </label>
-                      </div>
-                      <div class="col ">
-                        <span class=" ">Documents</span>
-                      </div>
-                    </div>
-                    <div class="row align-items-center pl-2 pt-4">
-                      <div
-                        class="col-4"
-                        *ngFor="let checkbox of document.dataTypeAllowed.documents"
-                      >
-                        <label class="app-checkbox-container"
-                        >{{ checkbox.name }}
-                          <input
-                            type="checkbox"
-                            [(ngModel)]="checkbox.isAllow"
-                            (ngModelChange)="dataSectionChange('documents', i)"
-                          />
-                          <span class="app-checkbox-checkmark"></span>
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="col-4  dropdown-div border-secondary border-right">
-                    <div class="row no-gutters align-items-center">
-                      <div class=" col-3 pl-1">
-                        <label class="app-switch">
-                          <input
-                            type="checkbox"
-                            [(ngModel)]="document.dataTypeAllowed.isImages"
-                          />
-                          <span class="app-slider app-round"></span>
-                        </label>
-                      </div>
-                      <div class="col ">
-                        <span class=" ">Images</span>
-                      </div>
-                    </div>
-                    <div class="row align-items-center pl-2 pt-4">
-                      <div class="col-4" *ngFor="let checkbox of document.dataTypeAllowed.images">
-                        <label class="app-checkbox-container">
-                          {{ checkbox.name }}
-                          <input
-                            type="checkbox"
-                            [(ngModel)]="checkbox.isAllow"
-                            (ngModelChange)="dataSectionChange('images', i)"
-                          />
-                          <span class="app-checkbox-checkmark"></span>
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="col-4  dropdown-div">
-                    <div class="row no-gutters align-items-center">
-                      <div class=" col-3 pl-1">
-                        <label class="app-switch">
-                          <input
-                            type="checkbox"
-                            [(ngModel)]="document.dataTypeAllowed.isVideoAudio"
-                          />
-                          <span class="app-slider app-round"></span>
-                        </label>
-                      </div>
-                      <div class="col ">
-                        <span class=" ">Audio/Video</span>
-                      </div>
-                    </div>
-                    <div class="row align-items-center pl-2 pt-4">
-                      <div
-                        class="col-4"
-                        *ngFor="let checkbox of document.dataTypeAllowed.videoAudio"
-                      >
-                        <label class="app-checkbox-container">
-                          {{ checkbox.name }}
-                          <input
-                            type="checkbox"
-                            [(ngModel)]="checkbox.isAllow"
-                            (ngModelChange)="dataSectionChange('videoAudio', i)"
-                          />
-                          <span class="app-checkbox-checkmark"></span>
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+          <div class="col-8 inputs" *ngIf="docs">
+            <div class="col-3 input" *ngFor="let item of documentsFormats">
+              <sw-input-checkbox [(ngModel)]="item.value" (ngModelChange)="formatChange(item.title, item.value)">
+                <span class="label">{{item.title}}</span>
+              </sw-input-checkbox>
             </div>
           </div>
         </div>
-      </ng-container>
+        <div class="item row">
+          <div class="col-4 lable">
+            <sw-input-toggle [(ngModel)]="images">
+              <span class="label">Images</span>
+            </sw-input-toggle>
+          </div>
+          <div class="col-8 inputs" *ngIf="images">
+            <div class="col-3 input" *ngFor="let item of imgFormats">
+              <sw-input-checkbox [(ngModel)]="item.value" (ngModelChange)="formatChange(item.title, item.value)">
+                <span class="label">{{item.title}}</span>
+              </sw-input-checkbox>
+            </div>
+          </div>
+        </div>
+        <div class="item row">
+          <div class="col-4 lable">
+            <sw-input-toggle [(ngModel)]="audio">
+              <span class="label">Audio/Video</span>
+            </sw-input-toggle>
+          </div>
+          <div class="col-8 inputs" *ngIf="audio">
+            <div class="col-3 input" *ngFor="let item of audiovideoFormats">
+              <sw-input-checkbox [(ngModel)]="item.value" (ngModelChange)="formatChange(item.title, item.value)">
+                <span class="label">{{item.title}}</span>
+              </sw-input-checkbox>
+            </div>
+
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
+
+  </ng-template>
+
+
 </div>

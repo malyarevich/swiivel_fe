@@ -68,6 +68,20 @@
   }
 }
 
+:host(.full) {
+  .button {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+:host(.rigth) {
+  .button {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+  }
+}
+
 :host(.input_button) {
   .button {
     white-space: nowrap;

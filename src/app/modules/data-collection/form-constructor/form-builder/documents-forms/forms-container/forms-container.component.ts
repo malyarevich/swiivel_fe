@@ -24,6 +24,7 @@ export class FormsContainerComponent implements OnInit, OnChanges {
   // page = 1;
 
   isExpand: boolean = true;
+  uploadedForm: any = [];
 
   constructor(private fileService: FilesService) {}
 
@@ -51,9 +52,21 @@ export class FormsContainerComponent implements OnInit, OnChanges {
   getExistingsFormPDFList() {
     this.fileService.getFormsPDFList().subscribe(res => {
       // res.forEach(res1=>console.log(res1._id));
+      res.forEach(i => i.title = i.name);
       this.existingFormsPDF = res;
     });
   }
+
+  deleteAttachment(form: any) {
+    form = null;
+  }
+
+  upladedFileChange(f: any) {
+    if (f) {
+      f.form = this.uploadedForm && this.uploadedForm.length > 0 ? this.uploadedForm[0] : { formName: ""};
+    }
+    
+  } 
 
   testLog(e) {
     // console.log(this.existingFormsPDF);

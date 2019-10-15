@@ -199,11 +199,35 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
       }
     }
   ];
+  documentBut = [
+    {
+      label: 'Upload',
+      value: true
+    },
+    {
+      label: 'Download',
+      value: false
+    }
+  ];
+  formBut = [
+    {
+      label: 'Use Existing',
+      value: false
+    },
+    {
+      label: 'Create New',
+      value: true
+    }
+  ];
+  radioGroup = ['Needed Per Family', 'Needed Per Student'];
+
   vDataCollection: DataCollectionComponent;
   draftId: string;
 
   isDataSaving: boolean = false;
   spinnerText: string = "Data is loading...";
+  isPerFamilyD: any[] = [];
+  isPerFamilyF: any[] = [];
 
   @ViewChild("addCustomFieldInput", { static: false })
   addCustomFieldInput: ElementRef;
@@ -243,15 +267,47 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
     this.loadSideBarNew();
     this.loadMappedFields();
     this.constructorIsSavingService.setIsSaving(this.isDataSaving);
+    this.loadDocsForms();
+  }
+
+  loadDocsForms() {
+    if (this.documents && this.documents.length > 0) {
+      this.documents.forEach((item, index) => {
+        if (item.isPerFamily === true){
+          this.isPerFamilyD[index] = 'Needed Per Family';
+        } else {
+          this.isPerFamilyD[index] = 'Needed Per Student';
+        }
+      });
+    }
+    if (this.formsPDF && this.formsPDF.length > 0) {
+      this.formsPDF.forEach((item, index) => {
+        if (item.isPerFamily === true){
+          this.isPerFamilyF[index] = 'Needed Per Family';
+        } else {
+          this.isPerFamilyF[index] = 'Needed Per Student';
+        }
+      });
+    }
+  }
+
+  changeDocRadio(e, form) {
+    if (e === 'Needed Per Family'){
+      form.isPerFamily = true;
+    } else {
+      form.isPerFamily = false;
+    }
   }
 
   addDocumentItem() {
     let documentItem: DocumentsModel = cloneDeep(documentItemDefault);
     documentItem.id = uuid();
     this.documents.push(documentItem);
+    this.isPerFamilyD[this.documents.length - 1] = 'Needed Per Family';
   }
 
   removeDocument(id: string): void {
+    this.isPerFamilyD.splice(this.documents.findIndex(doc => doc.id === id), 1);
     this.documents = this.documents.filter(doc => doc.id != id);
   }
 
@@ -259,9 +315,11 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
     let formPDFItem = cloneDeep(formPDFItemDefault);
     formPDFItem.id = uuid();
     this.formsPDF.push(formPDFItem);
+    this.isPerFamilyF[this.formsPDF.length - 1] = 'Needed Per Family';
   }
 
   removeFormsPDF(id: string) {
+    this.isPerFamilyF.splice(this.formsPDF.findIndex(forms => forms.id === id), 1);
     this.formsPDF = this.formsPDF.filter(forms => forms.id != id);
   }
 
