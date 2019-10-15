@@ -18,10 +18,11 @@ export class UploadReviewFormDocumentComponent {
   public sizes = SizesEnum;
   public isSettingsOpen = true;
   public isDocumentLoading = true;
+  public angle = 0;
   @Input() documentTypes = [];
   @Input() documentStudent = [];
   @Input() documentAccount = [];
-  @Output() rotateImg = new EventEmitter<string>();
+  @Output() rotateImg = new EventEmitter<any>();
   @Output() zoomImg = new EventEmitter<string>();
 
   @Input()
@@ -33,6 +34,7 @@ export class UploadReviewFormDocumentComponent {
       this.form.controls['student'].setValue(document.person_name);
     }
     this._document = document;
+    this.angle = (document && document.rotate) ? parseInt(document.rotate, 10) : 0;
   }
 
   get document(): Document {
@@ -56,7 +58,7 @@ export class UploadReviewFormDocumentComponent {
   }
 
   clickRotateImg(evt: string): void {
-    this.rotateImg.emit(evt);
+    this.rotateImg.emit({ direction: evt, angle: this._document.rotate ?  this._document.rotate : '0' });
   }
 
   clickZoomImg(evt: string): void {

@@ -13,7 +13,7 @@
       data-e2e="dropdown_input_container_input"
       *ngFor="let item of value" [class.many]="_multiple"
     >
-      <span class="text"> {{ item?.title }} </span>
+      <span class="text"> {{ dropdownSubHeader ? item?.name : item?.title }} </span>
       <i class="fas fa-times" (click)="remove(item, $event)"></i>
     </div>
   </div>
@@ -41,7 +41,7 @@
     </div>
   </div>
   <div *ngIf="dropdownSubHeader">
-    <div class="dropdown_items_container">
+    <div class="dropdown_items_container dropdown_items_sub-header-container">
       <div class="dropdown_items_sub-container" *ngFor="let item of dropdownList | keyvalue">
         <div class="dropdown_items_sub-header">
           {{ item?.value?.title }}
