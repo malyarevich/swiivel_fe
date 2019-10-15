@@ -1,5 +1,5 @@
 <div *ngIf="document">
-  <div [ngClass]="{'loading': isDocumentLoading}" class="container">
+  <div [ngClass]="{'loading': isDocumentLoading}" class="container" [ngClass]="{'full-size': !isSideBarShown}">
     <div *ngIf="isDocumentLoading" class="loading-spinner">
       <app-spinner></app-spinner>
     </div>
@@ -10,8 +10,8 @@
         class="image"
         [src]="document.link"
         [ngStyle]="{'transform' : 'rotate('+document.rotate+'deg)'}"
-        alt="document.entity_name"
-        (load)="isLoaded()"
+        [alt]="document.entity_name"
+        (load)="isLoaded($event)"
         [hidden]="isDocumentLoading"
       />
     </div>

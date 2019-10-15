@@ -15,14 +15,14 @@
     flex-wrap: nowrap;
 
     &--gray {
-      padding: 6px 16px;
+      padding: 6px 15px;
       background: $background-color;
       color: $button-color;
       border: 1px solid $button-color;
     }
 
     &--white {
-      padding: 6px 16px;
+      padding: 6px 15px;
       background: #fff;
       color: $button-color;
       border: 1px solid $button-color;
@@ -129,7 +129,7 @@
 :host {
   button:disabled {
     background: $gray;
-    padding: 6px 16px;
+    padding: 6px 15px;
     border: 1px solid $icon-gray;
     color: $icon-gray;
   }
