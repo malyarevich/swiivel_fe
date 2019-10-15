@@ -22,6 +22,7 @@ export interface Document {
   _id: string;
   status?: string;
   isSelected?: boolean;
+  rotate?: string;
   next_form: ExtremeUploadForm;
   previous_form: ExtremeUploadForm;
 }

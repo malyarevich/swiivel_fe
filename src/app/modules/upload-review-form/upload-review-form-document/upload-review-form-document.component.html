@@ -9,6 +9,7 @@
       <img
         class="image"
         [src]="document.link"
+        [ngStyle]="{'transform' : 'rotate('+document.rotate+'deg)'}"
         alt="document.entity_name"
         (load)="isLoaded()"
         [hidden]="isDocumentLoading"
@@ -20,6 +21,7 @@
     >
       <pdf-viewer
         [src]="document.link"
+        [rotation]="angle"
         [render-text]="true"
         (after-load-complete)="isLoaded()"
         style="display: block;"

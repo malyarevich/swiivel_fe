@@ -140,4 +140,16 @@ export class UploadReviewFormService extends ApiService {
     const body = { rotate: angle };
     return this.http.put(endpoint, body);
   }
+
+  convertToSettingsType(data: any): string[] {
+    const types = [];
+    if (data && data.documents && data.documents.data) {
+      data.documents.data.map((type) => {
+        if (!types.includes(type.name)) {
+          types.push(type.name);
+        }
+      });
+    }
+    return types;
+  }
 }

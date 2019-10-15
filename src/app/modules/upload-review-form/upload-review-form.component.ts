@@ -42,8 +42,9 @@ export class UploadReviewFormComponent implements OnInit {
   public isBulkDownload = false;
   public updatingDocumentStatus = false;
   public download: { url: SafeResourceUrl; filename: string; } = {url: null, filename: null};
+  public isAllDocumentsSelected = false;
 
-  public documentTypes = ['document'];
+  public documentTypes = [];
   public documentStudent = ['Adam Doe'];
   public documentAccount = ['a062c544a27f2c14f3e83f66efb81c59'];
   public uploadDocumentData = {};
@@ -71,13 +72,14 @@ export class UploadReviewFormComponent implements OnInit {
       this.showSpinner = loading;
     });
     this.activeIdForm = this.route.snapshot.paramMap.get('id');
-    this.dataSource.uploadDocuments(this.activeIdForm);
+    this.dataSource.uploadDocuments(this.activeIdForm).subscribe(() => {});
     this.getDocuments();
     this.dataSource.uploadFilterList(this.activeIdForm);
     this.dataSource.getFilters()
       .subscribe((data) => {
         if (data) {
           this.filterValue = this.uploadReviewFormService.convertFilterDocumentsData(data);
+          this.documentTypes = this.uploadReviewFormService.convertToSettingsType(this.filterValue);
           if (!(this.filterValue && this.filterValue)) {
             this.form.controls['filter'].disable();
           } else {
@@ -96,9 +98,10 @@ export class UploadReviewFormComponent implements OnInit {
       });
     this.form.valueChanges.subscribe(params => {
       if (!this.isBulkDownload) {
-        this.dataSource.uploadDocuments(this.activeIdForm, params.filter, params.sort, params.search);
-        this.activeIdDocument = null;
-        this.getDocuments();
+        this.dataSource.uploadDocuments(this.activeIdForm, params.filter, params.sort, params.search).subscribe(() => {
+          this.activeIdDocument = null;
+          this.getDocuments();
+        });
       }
     });
     this.uploadDocumentData = {
@@ -177,13 +180,16 @@ export class UploadReviewFormComponent implements OnInit {
       });
   }
 
+  // TODO
   deleteForm(action?: boolean): void {
     if (action) {
       this.dataSource
-        .deleteDocuments([this.removeDocumentId], this.activeIdForm, this.form.get('filter').value, this.form.get('sort').value);
-      this.removeDocumentId = null;
-      this.dataSource.selectFormId(this.documents[0]._id);
-      this.selectItem(this.documents[0]._id);
+        .deleteDocuments([this.removeDocumentId], this.activeIdForm, this.form.get('filter').value, this.form.get('sort').value)
+        .subscribe( () => {
+          this.removeDocumentId = null;
+          this.dataSource.selectFormId(this.documents[0]._id);
+          this.selectItem(this.documents[0]._id);
+        });
     }
   }
 
@@ -261,12 +267,30 @@ export class UploadReviewFormComponent implements OnInit {
   }
 
   selectAllDocuments(): void {
-    this.uploadDocuments.map((item) => item.isSelected = true);
+    this.isAllDocumentsSelected = !this.isAllDocumentsSelected;
+    this.uploadDocuments.map((item) => item.isSelected = this.isAllDocumentsSelected);
   }
 
-  rotateImg(evt: string): void {
-    let angle = '0';
-    evt === 'right' ? angle = '90' : angle = '270';
+  // TODO
+  rotateImg(evt: any): void {
+    if (evt.angle) {
+      if (evt.direction === 'left') {
+        if (parseInt(evt.angle, 10) + 90 < 361) {
+          this.updateImg((parseInt(evt.angle, 10)  + 90).toString());
+        } else {
+          this.updateImg('90');
+        }
+      } else {
+        if (parseInt(evt.angle, 10) - 90 >= 0) {
+          this.updateImg((parseInt(evt.angle, 10)  - 90).toString());
+        } else {
+          this.updateImg('270');
+        }
+      }
+    }
+  }
+
+  updateImg(angle: string) {
     this.dataSource.rotateImg(
       angle,
       this.documents.find(document => document._id === this.activeIdDocument)._id,

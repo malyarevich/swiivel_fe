@@ -24,12 +24,16 @@
       <sw-button
         [style]="colors.WHITE"
         (click)="changeStatus.emit(statuses.need_review)"
-        [disabled]="disabled">
+        [disabled]="document.status === 'unassigned' || disabled">
         Need Further Review
       </sw-button>
     </div>
     <div class="document-approval-bar__button">
-      <sw-button (click)="changeStatus.emit(statuses.rejected)" [disabled]="disabled">Reject</sw-button>
+      <sw-button
+        (click)="changeStatus.emit(statuses.rejected)"
+        [disabled]="document.status === 'unassigned' || disabled">
+        Reject
+      </sw-button>
     </div>
     <div class="document-approval-bar__button">
       <sw-button
