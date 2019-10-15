@@ -28,7 +28,7 @@
                 [multiple]="true"
                 [dropdownSubHeader]="true"
                 [options]="filterValue"
-                [isDisplaySelected]="false"
+                [isDisplaySelected]="true"
                 [disabled]="isEmptyObject(filterValue) || isBulkDownload">
                 <span class="sidebar-controls-title">Filtered By</span>
               </sw-dropdown-input>
@@ -37,7 +37,7 @@
               <sw-dropdown-input
                 formControlName="sort"
                 [options]="sortValue"
-                [isDisplaySelected]="false"
+                [isDisplaySelected]="true"
                 [disabled]="!(sortValue && sortValue.length) || isBulkDownload">
                 <span class="sidebar-controls-title">Sorted By</span>
               </sw-dropdown-input>
@@ -59,7 +59,10 @@
           </div>
           <div *ngIf="isBulkDownload">
             <div class="select-all-button">
-              <sw-small-button [text]="'Select all'" (click)="selectAllDocuments()"></sw-small-button>
+              <sw-small-button
+                [text]="isAllDocumentsSelected ? 'Unselect all' : 'Select all'"
+                (click)="selectAllDocuments()"
+              ></sw-small-button>
             </div>
             <div *ngFor="let document of uploadDocuments">
               <app-upload-review-form-item
@@ -98,7 +101,12 @@
   <div class="workarea">
     <div class="sidebar-opener" (click)="isSideBarShown = !isSideBarShown">
       <div class="button">
-        <sw-icon-button [icon]="icons.CARET_RIGHT" [color]="colors.WHITE" [size]="size.MEDIUM"></sw-icon-button>
+        <sw-icon-button
+          [icon]="isSideBarShown ? icons.CARET_LEFT : icons.CARET_RIGHT"
+          [color]="colors.WHITE"
+          [size]="size.MEDIUM"
+        >
+        </sw-icon-button>
       </div>
     </div>
     <app-upload-review-form-document
@@ -109,6 +117,7 @@
       (rotateImg)="rotateImg($event)"
     ></app-upload-review-form-document>
   </div>
+
 </div>
 <div *ngIf="documents && documents.length > 1" class="footer">
   <app-upload-review-form-footer

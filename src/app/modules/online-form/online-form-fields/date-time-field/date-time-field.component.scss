@@ -1,11 +1,14 @@
 @import "../../shared/styles/index.scss";
 
 .date_controls {
+  align-items: stretch;
+  align-self: stretch;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: stretch;
   justify-items: stretch;
+  justify-self: stretch;
 
   &__wide {
     display: flex;

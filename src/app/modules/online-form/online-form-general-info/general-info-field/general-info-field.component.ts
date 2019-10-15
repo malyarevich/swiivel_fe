@@ -1,18 +1,17 @@
-import { Component, OnInit, Input, OnDestroy } from "@angular/core";
-import { Field } from "src/app/models/data-collection/field.model";
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Field } from 'src/app/models/data-collection/field.model';
 import {
   OnlineFormService,
   IFormField
-} from "../../services/online-form.service";
-import { FormControl, Validators, FormGroup } from "@angular/forms";
-import { Subscription } from "rxjs";
+} from '../../services/online-form.service';
+import { FormControl, Validators, FormGroup } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Component({
-  selector: "sw-general-info-field",
-  templateUrl: "./general-info-field.component.html",
-  styleUrls: ["./general-info-field.component.scss"]
+  selector: 'sw-general-info-field',
+  templateUrl: './general-info-field.component.html',
+  styleUrls: ['./general-info-field.component.scss']
 })
-
 export class GeneralInfoFieldComponent implements OnInit, OnDestroy {
   @Input() field: Field;
   @Input() formErrors: object;
@@ -57,12 +56,14 @@ export class GeneralInfoFieldComponent implements OnInit, OnDestroy {
   initFormFieldValue() {
     this.value = this.field._id
       ? this.onlineFormService.getFormValueById(this.field._id)
-      : "ID is undefined";
+      : 'ID is undefined';
   }
 
   initReactiveFormControl() {
     if (this.field._id) {
-      const aValidators = !this.field.options.readonly ? Validators.compose(this.getComposed()) : {};
+      const aValidators = !this.field.options.readonly
+        ? Validators.compose(this.getComposed())
+        : {};
       this.fc = new FormControl(
         {
           value: this.value,
@@ -77,7 +78,7 @@ export class GeneralInfoFieldComponent implements OnInit, OnDestroy {
   }
 
   getComposed() {
-    let arrayValidators = [];
+    const arrayValidators = [];
 
     if (this.field.options.required) {
       arrayValidators.push(Validators.required);

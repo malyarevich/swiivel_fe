@@ -62,7 +62,7 @@
                     [ngStyle]="styleObject(div)"
                   >
                     <span class="input_label">
-                      {{ " Sign Here" | titlecase }}
+                      {{ ' Sign Here' | titlecase }}
                     </span>
                   </sw-input-textarea>
                 </div>
@@ -86,7 +86,7 @@
         </div>
       </ng-container>
 
-      <div class="pdf-wrapper">
+      <div class="pdf-wrapper" *ngIf="pdf.form">
         <div class="pdf-overlay"></div>
         <pdf-viewer
           [original-size]="false"
@@ -103,7 +103,7 @@
     </div>
   </div>
 
-  <div *ngIf="pdf.form.numberOfPages > 1" class="pdf_container">
+  <div *ngIf="pdf.form && pdf.form.numberOfPages > 1" class="pdf_container">
     <!-- <ngb-pagination
           [collectionSize]="pdf.form.numberOfPages * 10"
           [(page)]="page"

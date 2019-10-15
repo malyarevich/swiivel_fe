@@ -107,10 +107,11 @@
   position: relative;
   flex-grow: 2;
   overflow: hidden;
+  //min-height: calc(100vh - 150px);
 }
 
 .footer {
-  position: absolute;
+  position: fixed;
   right: 0;
   bottom: 0;
   width: 100%;
@@ -118,7 +119,7 @@
 
 .sidebar-container {
   background-color: #fff;
-  max-width: 0px;
+  max-width: 0;
   overflow-x: hidden;
   transition: ease-in-out 400ms max-width;
 }

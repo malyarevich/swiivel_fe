@@ -2,8 +2,7 @@ import { CollectionViewer } from '@angular/cdk/collections';
 import { DataSource } from '@angular/cdk/table';
 import { UploadReviewFormService } from '@modules/upload-review-form/upload-review-form.service';
 import { BehaviorSubject, Observable } from 'rxjs';
-import {catchError, map} from 'rxjs/operators';
-import {SafeResourceUrl} from '@angular/platform-browser';
+import { map } from 'rxjs/operators';
 
 export class UploadReviewFormDataSource implements DataSource<any> {
   private documentSubject = new BehaviorSubject<any[]>([]);
@@ -55,12 +54,13 @@ export class UploadReviewFormDataSource implements DataSource<any> {
     this.selectedFormId.complete();
   }
 
-  uploadDocuments(formId: string, filterParams?: any, sortParam?: any, searchParam?: any): void {
+  uploadDocuments(formId: string, filterParams?: any, sortParam?: any, searchParam?: any): Observable<any> {
     this.loadingSubject.next(true);
-    this.uploadReviewFormService.getDocumentList(formId, filterParams, sortParam, searchParam).subscribe((documents) => {
+    return this.uploadReviewFormService.getDocumentList(formId, filterParams, sortParam, searchParam).pipe(
+      map((documents) => {
       this.loadingSubject.next(false);
       this.dataSubject.next(documents.data);
-    });
+    }));
   }
 
   uploadFilterList(formId: string): void {
@@ -73,12 +73,15 @@ export class UploadReviewFormDataSource implements DataSource<any> {
     this.uploadReviewFormService.downloadForm(id);
   }
 
-  deleteDocuments(ids: string[], activeFormId: string, filter?: any, sort?: any) {
+  // TODO
+  deleteDocuments(ids: string[], activeFormId: string, filter?: any, sort?: any): Observable<any> {
     const idsData = [];
     ids.map(idData => idsData.push(idData));
-    this.uploadReviewFormService.deleteDocuments(idsData).subscribe(() => {
+    return this.uploadReviewFormService.deleteDocuments(idsData).pipe(
+      map(() => {
       this.uploadDocuments(activeFormId, filter, sort);
-    });
+      })
+    );
   }
 
   changeStatus(id: string, status: string, activeFormId: string, filter?: any, sort?: any): Observable<any> {

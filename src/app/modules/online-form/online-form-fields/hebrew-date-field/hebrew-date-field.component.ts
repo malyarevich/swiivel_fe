@@ -1,21 +1,13 @@
-import { Component, Input, OnInit, OnDestroy } from "@angular/core";
-// import {
-//   NgbCalendar,
-//   NgbCalendarHebrew,
-//   NgbDate,
-//   NgbDatepickerI18n,
-//   NgbDatepickerI18nHebrew,
-//   NgbDateStruct
-// } from "@ng-bootstrap/ng-bootstrap";
-import { FormGroup } from "@angular/forms";
-import { Subscription } from "rxjs";
-import { Field } from "src/app/models/data-collection/field.model";
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { Field } from 'src/app/models/data-collection/field.model';
 
 //TODO: Refactoring of the class
 @Component({
-  selector: "app-hebrew-date-field",
-  templateUrl: "./hebrew-date-field.component.html",
-  styleUrls: ["./hebrew-date-field.component.scss"],
+  selector: 'app-hebrew-date-field',
+  templateUrl: './hebrew-date-field.component.html',
+  styleUrls: ['./hebrew-date-field.component.scss']
   // providers: [
   //   { provide: NgbCalendar, useClass: NgbCalendarHebrew },
   //   { provide: NgbDatepickerI18n, useClass: NgbDatepickerI18nHebrew }
@@ -31,7 +23,8 @@ export class HebrewDateFieldComponent implements OnInit, OnDestroy {
   value: string;
   isLoaded: boolean = false;
   onValueChangeSubscription: Subscription;
-// private calendar: NgbCalendar, public i18n: NgbDatepickerI18n
+  // private calendar: NgbCalendar, public i18n: NgbDatepickerI18n
+
   constructor() {
     // this.dayTemplateData = this.dayTemplateData.bind(this);
   }
