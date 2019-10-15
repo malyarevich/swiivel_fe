@@ -94,7 +94,118 @@
     <!-- END FORM FIELDS -->
 
     <!--    DOCUMENTS & FORMS-->
+
     <div class="row justify-content-center pb-2">
+        <div class="col-10 bg-white ">
+            <div class="row no-gutters slider-item align-items-center">
+                <div class="col-auto mr-2">
+                  <label class="app-switch">
+                    <input type="checkbox" [ngModel]="activeSections.documentsForms.isActive" (ngModelChange)="
+                        activeSections.documentsForms.isActive = activeSections.documentsForms.showSideInfo = $event
+                      " />
+                    <span class="app-slider app-round"></span>
+                  </label>
+                </div>
+                <div class="col" (click)="
+                    activeSections.documentsForms.showSideInfo = !activeSections
+                      .documentsForms.showSideInfo
+                  ">
+                  <span class="font-weight-bold side-bar-toggle">DOCUMENTS & FORMS</span>
+                  <i class="fas float-right app-plus-i" [ngClass]="{
+                      'fa-sort-down': !activeSections.documentsForms.showSideInfo,
+                      'fa-sort-up': activeSections.documentsForms.showSideInfo
+                    }"></i>
+                </div>
+              </div>
+              <div *ngIf="activeSections.documentsForms.showSideInfo" class="bg-white rounded mb-3 ">
+        <section class="documents_section">
+          <div class="documents_section__header">
+            <div class="documents_section__header_text">
+              Documents
+            </div>
+            <div class="documents_section__header_controls">
+              <i class="fas fa-plus-square" (click)="addDocumentItem()"></i>
+              <i class="fas fa-caret-down" *ngIf="isDocumentsForms.isDocuments; else up" (click)="
+              isDocumentsForms.isDocuments = !isDocumentsForms.isDocuments
+            "></i>
+              <ng-template #up>
+                <i class="fas fa-caret-up" (click)="
+                isDocumentsForms.isDocuments = !isDocumentsForms.isDocuments
+              "></i>
+              </ng-template>
+            </div>
+          </div>
+          <ng-container *ngIf="isDocumentsForms.isDocuments">
+            <div class="documents_section__item" *ngFor="let document of documents; let i = index">
+              <div class="documents_section__item_header">
+                <div class="documents_section__item_header_name">
+                  <sw-input-text class="no_styles" [(ngModel)]="document.name"></sw-input-text>
+                </div>
+                <div class="documents_section__item_header_controls">
+                  <i class="fas fa-trash" (click)="removeDocument(document.id)"></i>
+                </div>
+              </div>
+              <div class="documents_section__item_content">
+                <div class="documents_section__item_content_input">
+                  <sw-input-button-group [options]="documentBut" [(ngModel)]="document.isUpload">
+                  </sw-input-button-group>
+                </div>
+                <div class="documents_section__item_content_input">
+                  <sw-radio-group [options]="radioGroup" [(ngModel)]="isPerFamilyD[i]" (ngModelChange)="changeDocRadio($event, document)"></sw-radio-group>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </section>
+        <section class="forms_section">
+          <div class="forms_section__header">
+            <div class="forms_section__header_text">
+              Forms
+            </div>
+            <div class="forms_section__header_controls">
+              <i class="fas fa-plus-square" (click)="addFormPDF()"></i>
+              <i class="fas fa-caret-down" *ngIf="isDocumentsForms.isForms; else upF"  (click)="isDocumentsForms.isForms = !isDocumentsForms.isForms"></i>
+              <ng-template #upF>
+                <i class="fas fa-caret-up"  (click)="isDocumentsForms.isForms = !isDocumentsForms.isForms"></i>
+              </ng-template>
+            </div>
+          </div>
+          <ng-container *ngIf="isDocumentsForms.isForms">
+            <div class="forms_section__item" *ngFor="let forms of formsPDF; let i = index">
+              <div class="forms_section__item_header">
+                <div class="forms_section__item_header_name">
+                  <sw-input-text class="no_styles" [(ngModel)]="forms.name"></sw-input-text>
+                </div>
+                <div class="forms_section__item_header_controls">
+                  <i class="fas fa-trash" (click)="removeFormsPDF(forms.id)"></i>
+                </div>
+              </div>
+              <div class="forms_section__item_content">
+                <div class="forms_section__item_content_input">
+                  <sw-input-button-group [options]="formBut" [(ngModel)]="forms.isNew"></sw-input-button-group>
+                </div>
+                <div class="forms_section__item_content_input">
+                  <sw-radio-group [options]="radioGroup" [(ngModel)]="isPerFamilyF[i]" (ngModelChange)="changeDocRadio($event, forms)"></sw-radio-group>
+                </div>
+                <div class="forms_section__item_content_input">
+                  <sw-input-toggle [(ngModel)]="forms.isFillableOnline">
+                    <span class="input_label">Fillable Online</span>
+                  </sw-input-toggle>
+                </div>
+                <div class="forms_section__item_content_input">
+                  <sw-input-toggle [(ngModel)]="forms.isAllowDownloadUpload">
+                    <span class="input_label">Allow Download/Upload</span>
+                  </sw-input-toggle>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </section>
+        </div>
+        </div>
+      </div>
+      
+    <!-- <div class="row justify-content-center pb-2">
       <div class="col-10 bg-white ">
         <div class="row no-gutters slider-item align-items-center">
           <div class="col-auto mr-2">
@@ -260,7 +371,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <!--  END  DOCUMENTS & FORMS-->
 
