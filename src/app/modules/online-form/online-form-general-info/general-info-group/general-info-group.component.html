@@ -14,16 +14,21 @@
     </ng-container>
   </span>
 </h2>
-<!-- <div class="pl-3"> -->
+
 <div>
+  <!-- Field -->
   <div class="section__fields">
     <ng-container *ngFor="let field of fields">
       <div class="field_width--{{ field.width }}">
-        <sw-general-info-field [field]="field"></sw-general-info-field>
+        <sw-general-info-field
+          [field]="field"
+          [formErrors]="getFormErrorsById(field['_id'])"
+        ></sw-general-info-field>
       </div>
     </ng-container>
   </div>
 
+  <!-- Group -->
   <div class="section__groups">
     <ng-container *ngFor="let groupItem of groups">
       <sw-general-info-group
