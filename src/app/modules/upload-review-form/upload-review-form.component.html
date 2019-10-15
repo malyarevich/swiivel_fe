@@ -29,8 +29,9 @@
                 [dropdownSubHeader]="true"
                 [options]="filterValue"
                 [isDisplaySelected]="true"
+                [isLabelHide]="true"
                 [disabled]="isEmptyObject(filterValue) || isBulkDownload">
-                <span class="sidebar-controls-title">Filtered By</span>
+                <span *ngIf="isFilterEmpty()" class="sidebar-controls-title">Filtered By</span>
               </sw-dropdown-input>
             </div>
             <div class="sidebar-sort">
@@ -38,8 +39,9 @@
                 formControlName="sort"
                 [options]="sortValue"
                 [isDisplaySelected]="true"
+                [isLabelHide]="true"
                 [disabled]="!(sortValue && sortValue.length) || isBulkDownload">
-                <span class="sidebar-controls-title">Sorted By</span>
+                <span *ngIf="isSortByEmpty()" class="sidebar-controls-title">Sorted By</span>
               </sw-dropdown-input>
             </div>
           </div>
@@ -85,14 +87,12 @@
         <hr class="upload-document-controls-hr">
         <app-review-form-controls
           [activeIdForm]="activeIdForm"
-          [documentStudent]="documentStudent"
-          [documentAccount]="documentAccount"
-          [documentTypes]="documentTypes"
           [isBulkDownload]="isBulkDownload"
           [selectedCount]="getSelectedCount()"
           [showBulkDownload]="documents && documents.length"
           (bulkDownload)="clickBulkDownload()"
           (download)="clickDownload()"
+          (upload)="clickUpload()"
         ></app-review-form-controls>
         <a [href]="download.url" [download]="download.filename" #link></a>
       </div>
@@ -110,6 +110,7 @@
       </div>
     </div>
     <app-upload-review-form-document
+      [isSideBarShown]="isSideBarShown"
       [document]="getSelectForm()"
       [documentStudent]="documentStudent"
       [documentAccount]="documentAccount"
@@ -134,3 +135,7 @@
 >
   <p>Are you sure you want to remove [Item(s)]?</p>
 </sw-dialog>
+
+<div>
+  Error
+</div>
