@@ -45,15 +45,15 @@ export interface FormsPDFModel {
 
 
 export interface FormPDFDownloadModel {
-  created_at: string,
-  filename: string,
-  formName: string,
-  hash: string,
-  link: string,
-  name: string,
-  type: string,
-  updated_at: string,
-  _id: string,
+  created_at?: string,
+  filename?: string,
+  formName?: string,
+  hash?: string,
+  link?: string,
+  name?: string,
+  type?: string,
+  updated_at?: string,
+  _id?: string,
   fieldsPdf?: FormsDivModel[][] | null
   numberOfPages?:number
 }
@@ -70,5 +70,8 @@ export const formPDFItemDefault: FormsPDFModel = {
     isBold: false,
     isItalic: false
   },
-  form: null
+  form: {
+    name: null,
+    type: null
+  }
 };
