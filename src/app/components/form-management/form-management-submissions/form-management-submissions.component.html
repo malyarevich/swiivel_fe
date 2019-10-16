@@ -326,21 +326,11 @@
 
             <sw-icon-button
               [icon]="icons.CARET_DOWN"
-              (click)="onToggleExpand(form.id, $event)"
+              (click)="toggleExpand(form.id)"
             ></sw-icon-button>
           </div>
         </td>
       </ng-container>
-
-      <!-- <ng-container cdkColumnDef="online-form">
-            <th cdk-header-cell *cdkHeaderCellDef></th>
-            <td cdk-cell *cdkCellDef="let form">
-                <app-online-form-view
-                    *ngIf="shouldExpand === form.id"
-                    [formID]="form.id"
-                ></app-online-form-view>
-            </td>
-      </ng-container> -->
 
       <ng-container cdkColumnDef="paginator">
         <td
@@ -395,6 +385,7 @@
         [hidden]="showSpinner"
         (click)="selectRow(form, $event)"
         [cdkDetailRow]="form" [cdkDetailRowTpl]="tpl"
+        [cdkDetailExpand]="shouldExpand(form.id)"
       ></tr>
       <tr
         cdk-footer-row

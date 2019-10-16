@@ -17,7 +17,6 @@ export class CdkDetailRowDirective {
   set cdkDetailRow(value: any) {
     if (value !== this.row) {
       this.row = value;
-      // this.render();
     }
   }
 
@@ -28,24 +27,23 @@ export class CdkDetailRowDirective {
     }
   }
 
-  @Output() toggleChange = new EventEmitter<CdkDetailRowDirective>();
+  @Input('cdkDetailExpand')
+  set expand(shouldExpand: boolean) {
+    if (shouldExpand && !this.opened) {
+        this.render();
+    } else if (!shouldExpand && this.opened) {
+        this.vcRef.clear();
+    }
+
+    // if (this.opened) {
+    //   this.vcRef.clear();
+    // } else {
+    //   this.render();
+    // }
+    this.opened = this.vcRef.length > 0;
+  }
 
   constructor(public vcRef: ViewContainerRef) { }
-
-  @HostListener('click')
-  onClick(): void {
-    this.toggle();
-  }
-
-  toggle(): void {
-    if (this.opened) {
-      this.vcRef.clear();
-    } else {
-      this.render();
-    }
-    this.opened = this.vcRef.length > 0;
-    this.toggleChange.emit(this);
-  }
 
   private render(): void {
     this.vcRef.clear();

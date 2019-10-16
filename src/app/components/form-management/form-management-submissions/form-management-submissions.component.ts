@@ -13,7 +13,7 @@ import { IconsEnum } from '@shared/icons.enum';
 import { DialogComponent } from '@shared/popup/dialog.component';
 import { flatMap } from 'lodash';
 import { DateTime } from 'luxon';
-import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators'
 import { StatusColors } from './form-management-submissions.models';
 import { FormSubmissionsListParams } from '@app/models/form-submissions-list.model';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
@@ -40,7 +40,6 @@ export class FormManagementSubmissionsComponent implements OnInit {
   @Input() showSpinner: boolean;
 
   @Output() changeStatus = new EventEmitter<any>();
-  @Output() toggleExpand = new EventEmitter<string>();
   @Output() exportZIP = new EventEmitter<boolean>();
   @Output() exportPDF = new EventEmitter<boolean>();
 
@@ -49,7 +48,7 @@ export class FormManagementSubmissionsComponent implements OnInit {
   filterForm: FormGroup;
   icons = IconsEnum;
   statusesFriendlyNames: string[];
-  shouldExpand: string;
+  rowExpand: string;
   download: {
     url: SafeResourceUrl;
     filename: string;
@@ -59,8 +58,6 @@ export class FormManagementSubmissionsComponent implements OnInit {
     }
 
   _sm: SelectionModel<any>;
-  
-  private openedRow: CdkDetailRowDirective
 
   constructor(
     public router: Router,
@@ -178,15 +175,16 @@ export class FormManagementSubmissionsComponent implements OnInit {
   onChangeStatus(statusId: number, ids: number[]): void {
     this.changeStatus.emit({ statusId, ids })
   }
-  
-  onToggleExpand(formID: string, row: CdkDetailRowDirective): void {  
-    if (this.openedRow && this.openedRow.expanded) {
-      this.openedRow.toggle();      
+
+  toggleExpand(formID: string) {
+    if (this.rowExpand === formID) {
+      this.rowExpand = null;
+    } else {
+      this.rowExpand = formID;
     }
-    
-    // No matter if we're expanding or minimizing, the row should be selected
-    this._sm.select(row);
-    this.shouldExpand === formID ? this.shouldExpand = null : this.shouldExpand = formID;
-    this.openedRow = row.expanded ? row : undefined;
+  }
+  
+  shouldExpand(formID: string) {
+    return this.rowExpand === formID;
   }
 }
