@@ -1,36 +1,41 @@
-import { Injectable, EventEmitter, Output } from "@angular/core";
-import { Observable } from "rxjs";
-import { map } from "rxjs/operators";
-import { ShortTextFieldComponent } from "../online-form-fields/short-text-field/short-text-field.component";
-import { LongTextFieldComponent } from "../online-form-fields/long-text-field/long-text-field.component";
-import { NumberTextFieldComponent } from "../online-form-fields/number-text-field/number-text-field.component";
-import { MultipleOptionsFieldComponent } from "../online-form-fields/multiple-options-field/multiple-options-field.component";
-import { DropDownListFieldComponent } from "../online-form-fields/drop-down-list-field/drop-down-list-field.component";
-import { DateTimeFieldComponent } from "../online-form-fields/date-time-field/date-time-field.component";
-import { TimeFieldComponent } from "../online-form-fields/time-field/time-field.component";
-import { EmailFieldComponent } from "../online-form-fields/email-field/email-field.component";
-import { PhoneNumberFieldComponent } from "../online-form-fields/phone-number-field/phone-number-field.component";
-import { HebrewDateFieldComponent } from "../online-form-fields/hebrew-date-field/hebrew-date-field.component";
-import { LabelFieldComponent } from "../online-form-fields/label-field/label-field.component";
-import { EmptyLineFieldComponent } from "../online-form-fields/empty-line-field/empty-line-field.component";
-import { FormControl, FormBuilder, FormGroup, AbstractControl } from "@angular/forms";
+import { Injectable, EventEmitter, Output } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { ShortTextFieldComponent } from '../online-form-fields/short-text-field/short-text-field.component';
+import { LongTextFieldComponent } from '../online-form-fields/long-text-field/long-text-field.component';
+import { NumberTextFieldComponent } from '../online-form-fields/number-text-field/number-text-field.component';
+import { MultipleOptionsFieldComponent } from '../online-form-fields/multiple-options-field/multiple-options-field.component';
+import { DropDownListFieldComponent } from '../online-form-fields/drop-down-list-field/drop-down-list-field.component';
+import { DateTimeFieldComponent } from '../online-form-fields/date-time-field/date-time-field.component';
+import { TimeFieldComponent } from '../online-form-fields/time-field/time-field.component';
+import { EmailFieldComponent } from '../online-form-fields/email-field/email-field.component';
+import { PhoneNumberFieldComponent } from '../online-form-fields/phone-number-field/phone-number-field.component';
+import { HebrewDateFieldComponent } from '../online-form-fields/hebrew-date-field/hebrew-date-field.component';
+import { LabelFieldComponent } from '../online-form-fields/label-field/label-field.component';
+import { EmptyLineFieldComponent } from '../online-form-fields/empty-line-field/empty-line-field.component';
+import {
+  FormControl,
+  FormBuilder,
+  FormGroup,
+  AbstractControl
+} from '@angular/forms';
 import { HttpService } from '@app/core/http.service';
 
 export const hasRequiredField = (abstractControl: AbstractControl): boolean => {
   if (abstractControl.validator) {
-      const validator = abstractControl.validator({}as AbstractControl);
-      if (validator && validator.required) {
-          return true;
-      }
+    const validator = abstractControl.validator({} as AbstractControl);
+    if (validator && validator.required) {
+      return true;
+    }
   }
   if (abstractControl['controls']) {
-      for (const controlName in abstractControl['controls']) {
-          if (abstractControl['controls'][controlName]) {
-              if (hasRequiredField(abstractControl['controls'][controlName])) {
-                  return true;
-              }
-          }
+    for (const controlName in abstractControl['controls']) {
+      if (abstractControl['controls'][controlName]) {
+        if (hasRequiredField(abstractControl['controls'][controlName])) {
+          return true;
+        }
       }
+    }
   }
   return false;
 };
@@ -103,7 +108,9 @@ export class OnlineFormService {
   }
 
   setFormValues(formValues: Map<string, any>) {
-    this.formValues = formValues ? new Map(Object.entries(formValues)) : this.formValues;
+    this.formValues = formValues
+      ? new Map(Object.entries(formValues))
+      : this.formValues;
   }
 
   getFormValues(): any {
@@ -135,23 +142,39 @@ export class OnlineFormService {
 
   getOneForm(id = this.formId): Observable<any> {
     if (id) {
-      return this.http.get(`/proxy/forms/online/${id}`).pipe(map((response) => {
-        // this.setFormValues(response['data']['fieldsData']);
-        this.setFormValues(response['fieldsData']);
-        return response
-      }));
+      return this.http.get(`/proxy/forms/online/link/${id}`).pipe(
+        map(response => {
+          // this.setFormValues(response['data']['fieldsData']);
+          this.setFormValues(response.fieldsData);
+          return response;
+        })
+      );
     }
-    console.error("Id of form is undefined");
+    console.error('Id of form is undefined');
     return undefined;
   }
 
-  sendForm(form: object = {}): Observable<any>  {
+  getTemplateForm(id = this.formId): Observable<any> {
+    if (id) {
+      return this.http.get(`/proxy/forms/online/${id}`).pipe(
+        map(response => {
+          // this.setFormValues(response['data']['fieldsData']);
+          this.setFormValues(response.fieldsData);
+          return response;
+        })
+      );
+    }
+    console.error('Id of form is undefined');
+    return undefined;
+  }
+
+  sendForm(form: object = {}): Observable<any> {
     if (this.formId) {
       return this.http
-        .put(`/proxy/forms/online/${this.formId}`, form)
+        .put(`/proxy/forms/online/link/${this.formId}`, form)
         .pipe(map(response => response));
     }
-    console.error("Id of form is undefined");
+    console.error('Id of form is undefined');
     return undefined;
   }
 

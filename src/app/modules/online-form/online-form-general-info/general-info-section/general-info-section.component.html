@@ -11,6 +11,7 @@
           [field]="field"
           [formErrors]="formErrors"
           [fg]="fg"
+          [isViewOnly]="isViewOnly"
         ></sw-general-info-field>
       </div>
     </ng-container>
@@ -22,6 +23,7 @@
         [formErrors]="getFormErrorsById(group['_id'])"
         [fieldNameList]="fieldNameList"
         [fg]="fg"
+        [isViewOnly]="isViewOnly"
       ></sw-general-info-group>
     </ng-container>
   </div>

@@ -16,8 +16,8 @@ export class GeneralInfoFieldComponent implements OnInit, OnDestroy {
   @Input() field: Field;
   @Input() formErrors: object;
   @Input() fg: FormGroup;
+  @Input() isViewOnly: boolean;
   value: string | any;
-  isDisabled: any;
   fc: FormControl;
 
   validSubscription: Subscription;
@@ -30,7 +30,6 @@ export class GeneralInfoFieldComponent implements OnInit, OnDestroy {
   constructor(private onlineFormService: OnlineFormService) {}
 
   ngOnInit() {
-    this.initIsDisabled();
     this.initFormField();
     this.initFormFieldValue();
     this.initReactiveFormControl();
@@ -41,10 +40,6 @@ export class GeneralInfoFieldComponent implements OnInit, OnDestroy {
       validationText: this.validationText
     };
     this.fieldOutputs = {};
-  }
-
-  initIsDisabled() {
-    this.isDisabled = this.onlineFormService.getIsFormView();
   }
 
   initFormField() {
@@ -67,7 +62,7 @@ export class GeneralInfoFieldComponent implements OnInit, OnDestroy {
       this.fc = new FormControl(
         {
           value: this.value,
-          disabled: this.field.options.readonly || this.isDisabled
+          disabled: this.field.options.readonly || this.isViewOnly
         },
         aValidators
       );
