@@ -487,7 +487,8 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
   addControl(
     key: string,
     isValidate: boolean = false,
-    validators = this.requiredValidator
+    validators = this.requiredValidator,
+    defatultValue: any = ''
   ): void {
     this.fg.addControl(
       key,
@@ -496,7 +497,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
           value:
             this.form.fieldsData && this.form.fieldsData[key]
               ? this.form.fieldsData[key]
-              : '',
+              : defatultValue,
           disabled: false
         },
         isValidate ? validators : null
@@ -639,12 +640,18 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
     const aFields = this.getFieldsByFormFields(fields);
     if (aFields.length > 0) {
       aFields.forEach(field => {
+        const emptyArray = field.type === 105 ? [] : '';
         if (field['_id']) {
           const aValidators = this.getComposedValidatorsByField(field);
           const validatorFn = !field.options.readonly
             ? Validators.compose(aValidators)
             : null;
-          this.addControl(field['_id'], !(validatorFn === null), validatorFn);
+          this.addControl(
+            field['_id'],
+            !(validatorFn === null),
+            validatorFn,
+            emptyArray
+          );
           const isRequired = aValidators.find(validator => {
             return validator === Validators.required;
           });

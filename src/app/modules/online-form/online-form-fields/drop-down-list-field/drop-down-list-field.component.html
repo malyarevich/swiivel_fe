@@ -1,5 +1,4 @@
 <ng-container *ngIf="!!field">
-  {{ field.options.multiple }}
   <div
     class="form-group app-input-container position-relative"
     [formGroup]="fg"
@@ -7,14 +6,11 @@
   >
     <sw-dropdown-input
       [formControlName]="field._id"
-      [multiple]="
-        (field.options && field.options.multiple) ||
-        field.mapped == 'parent_marital_status'
-          ? true
-          : false
-      "
+      [multiple]="field.options && field.options.multiple ? true : false"
       [options]="
-        field.options && field.options.items ? field.options.items : list
+        field.options && field.options.fieldOptions
+          ? field.options.fieldOptions
+          : list
       "
       [ngClass]="{
         validation_required: this.field.options.required,
