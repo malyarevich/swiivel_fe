@@ -6,6 +6,7 @@
     background: #FFFFFF;
     padding: 15px 15px 10px 45px;
     margin-bottom: 10px;
+    width: 100%;
     &:last-of-type {
       margin-bottom: 30px;
     }
@@ -74,6 +75,16 @@
       flex-flow: row nowrap;
       align-items: center;
       justify-content: space-between;
+    }
+    .form-pdf-section {
+      background: #D7D7D7;
+      margin: 0 -15px -10px -45px;
+      border-radius: 0px 0px 3px 3px;
+      padding: 20px 50px;
+      .pdf-wrap {
+        padding: 20px;
+        background: #fff;
+      }
     }
   }
 }

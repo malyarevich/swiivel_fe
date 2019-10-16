@@ -19,7 +19,7 @@ export class FormService {
   sendForm(form: Form) {
     if (form._id !== "") {
       return this.http
-        .put(`/proxy/forms/${form._id}`, form)
+        .put(`/proxy/form-builder/form-template/${form._id}`, form)
         .pipe(map(response => response));
     }
     return this.http.post("/proxy/forms", form).pipe(map(response => response));
