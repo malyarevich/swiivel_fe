@@ -5,10 +5,6 @@
     [formGroup]="fg"
     [ngClass]="{ 'app-input-fill': !field.options.hideLabel }"
   >
-    <!-- <label *ngIf="!field.options.hideLabel" class="app-input-label">
-      {{ field.name | titlecase }}
-    </label> -->
-
     <sw-dropdown-input
       [formControlName]="field._id"
       [multiple]="
@@ -25,23 +21,10 @@
         validation_error: !!validationText
       }"
     >
-      <span *ngIf="!field.options.hideLabel" class="placeholder">
+      <span *ngIf="!field.options.hideLabel" class="label">
         {{ field.name | titlecase }}
       </span>
     </sw-dropdown-input>
-    <!-- <select
-      [formControlName]="field._id"
-      class="app-input form-control"
-      [ngClass]="{ 
-        validation_required: this.field.options.required,
-        validation_error: !!validationText
-      }"
-    >
-      <option [ngValue]="undefined" selected>{{ field.name }}</option>
-      <option *ngFor="let item of field.options.items || list" [ngValue]="item">
-        {{ item }}
-      </option>
-    </select> -->
     <span
       class="error_icon"
       [ngClass]="{ validation_error: !!validationText }"

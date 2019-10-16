@@ -69,27 +69,36 @@
       position: relative;
       width: 53%;
       min-width: 159px;
-      margin: 0 10px 0 0;
-    }
-
-    .sidebar-filter:after {
-      position: absolute;
-      right: -10px;
-      top: 0;
-      content: '';
-      width: 1px;
-      height: 34px;
-      background: $dark-grey;
+      padding: 0 10px 0 0;
+      border-right: 1px solid $dark-grey;
     }
 
     .sidebar-sort {
       margin: 0 0 0 10px;
+      width: 95px;
+      overflow: hidden;
+
+      sw-dropdown-input::ng-deep .dropdown_input_container__input .text {
+        font-size: 10px;
+        position: absolute;
+        margin-top: 7px;
+        line-height: 9px;
+      }
     }
 
     .sidebar-controls-title {
+      position: absolute;
+      top: 9px;
+      transition: all 0.5s ease 0s;
       font-size: 12px;
       line-height: 15px;
       color: $gray-color;
+    }
+
+    .sidebar-controls-title-with-value {
+      position: absolute;
+      font-size: 10px;
+      top: 2px;
     }
 
     .upload-document-controls-hr {
@@ -107,7 +116,6 @@
   position: relative;
   flex-grow: 2;
   overflow: hidden;
-  //min-height: calc(100vh - 150px);
 }
 
 .footer {
