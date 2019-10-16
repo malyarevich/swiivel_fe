@@ -10,15 +10,14 @@ import { ColorsEnum } from '@shared/colors.enum';
 })
 
 export class UploadReviewFormControlsComponent implements OnInit  {
-  @Input() activeIdForm ? = '';
-  @Input() documentTypes ? = [];
-  @Input() documentStudent  ? = [];
-  @Input() documentAccount  ? = [];
-  @Input() isBulkDownload ? = false;
+  @Input() activeIdForm: string;
+  @Input() isBulkDownload = false;
   @Input() showBulkDownload = false;
   @Input() selectedCount = 0;
   @Output() bulkDownload = new EventEmitter();
   @Output() download = new EventEmitter();
+  @Output() upload = new EventEmitter();
+
   public formUpload: FormGroup;
   public uploadDocumentData: any;
   public sizeButton = SizeButtonsEnum;
@@ -28,19 +27,16 @@ export class UploadReviewFormControlsComponent implements OnInit  {
     this.formUpload = this.fb.group({
       upload: new FormControl('')
     });
-    this.formUpload.valueChanges.subscribe(() => {
-      this.updateUploadData();
-    });
   }
 
   ngOnInit(): void {
     this.uploadDocumentData = {
-      document_id: this.activeIdForm
+      document_id: this.activeIdForm,
     };
   }
 
-  updateUploadData(): void {
-    this.uploadDocumentData['document_type'] = this.formUpload.get('documentType').value;
+  uploadedData(): void {
+    this.upload.emit();
   }
 
   clickBulkDownload(): void {

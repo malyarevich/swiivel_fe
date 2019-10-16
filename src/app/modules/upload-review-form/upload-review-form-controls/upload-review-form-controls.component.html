@@ -6,8 +6,14 @@
         #file="upload"
         [data]="uploadDocumentData"
         preupload="/proxy/upload-reviews-form/upload/{{activeIdForm}}"
+        (response)="uploadedData($event)"
       >
-        <sw-button (click)="file.openDialog()" [size]="sizeButton.FULL">Upload Document</sw-button>
+        <sw-button
+          (click)="file.openDialog()"
+          [size]="sizeButton.FULL"
+        >
+          Upload Document
+        </sw-button>
       </sw-input-file>
     </div>
   </form>

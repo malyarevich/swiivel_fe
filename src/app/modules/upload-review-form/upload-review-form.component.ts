@@ -72,8 +72,7 @@ export class UploadReviewFormComponent implements OnInit {
       this.showSpinner = loading;
     });
     this.activeIdForm = this.route.snapshot.paramMap.get('id');
-    this.dataSource.uploadDocuments(this.activeIdForm).subscribe(() => {});
-    this.getDocuments();
+    this.dataSource.uploadDocuments(this.activeIdForm).subscribe(() => { this.getDocuments() });
     this.dataSource.uploadFilterList(this.activeIdForm);
     this.dataSource.getFilters()
       .subscribe((data) => {
@@ -180,15 +179,18 @@ export class UploadReviewFormComponent implements OnInit {
       });
   }
 
-  // TODO
   deleteForm(action?: boolean): void {
     if (action) {
       this.dataSource
-        .deleteDocuments([this.removeDocumentId], this.activeIdForm, this.form.get('filter').value, this.form.get('sort').value)
+        .deleteDocuments([this.removeDocumentId])
         .subscribe( () => {
           this.removeDocumentId = null;
-          this.dataSource.selectFormId(this.documents[0]._id);
-          this.selectItem(this.documents[0]._id);
+          this.activeIdDocument = null;
+          this.dataSource.uploadDocuments(this.activeIdForm,
+            this.form.get('filter').value,
+            this.form.get('sort').value,
+            this.form.get('search').value,)
+            .subscribe(() => { this.getDocuments() });
         });
     }
   }
@@ -260,6 +262,16 @@ export class UploadReviewFormComponent implements OnInit {
       });
   }
 
+  clickUpload(): void {
+    this.dataSource.uploadDocuments(this.activeIdForm,
+      this.form.get('filter').value,
+      this.form.get('sort').value,
+      this.form.get('search').value,)
+      .subscribe(() => {
+        this.getDocuments();
+        });
+  }
+
   clearLink(url: string): void {
     this.download = { url: null, filename: null};
     window.URL.revokeObjectURL(url);
@@ -291,14 +303,24 @@ export class UploadReviewFormComponent implements OnInit {
   }
 
   updateImg(angle: string) {
-    this.dataSource.rotateImg(
-      angle,
-      this.documents.find(document => document._id === this.activeIdDocument)._id,
-      this.activeIdForm, this.form.get('filter').value, this.form.get('sort').value
-    )
+    this.dataSource.rotateImg(angle, this.documents.find(document => document._id === this.activeIdDocument)._id)
       .subscribe(() => {
         const activeDocumentIndex = this.documents.indexOf(this.documents.find(document => document._id === this.activeIdDocument));
         this.selectItem(this.documents[activeDocumentIndex]._id);
+        this.dataSource.uploadDocuments(this.activeIdForm,
+          this.form.get('filter').value,
+          this.form.get('sort').value,
+          this.form.get('search').value,)
+          .subscribe(() => { this.getDocuments() });
       });
   }
+
+  isFilterEmpty(): boolean {
+    return this.form.get('filter').value.length;
+  }
+
+  isSortByEmpty(): boolean {
+    return this.form.get('sort').value.length;
+  }
+
 }

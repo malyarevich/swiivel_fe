@@ -9,7 +9,7 @@
     box-sizing: border-box;
     border-radius: 3px;
     position: relative;
-    background-color: #fff;
+    background: #fff;
     display: flex;
     align-items: center;
 
@@ -28,6 +28,19 @@
       height: 13px;
       display: flex;
       align-items: center;
+
+      &.hide-label {
+
+        &.many {
+          margin: 2px 0;
+        }
+
+        .text {
+          margin-top: 0;
+        }
+
+      }
+
       .text {
         font-style: normal;
         font-size: 12px;
@@ -67,6 +80,10 @@
         color: #909090;
       }
     }
+  }
+
+  .disabled {
+    background: $gray;
   }
 }
 

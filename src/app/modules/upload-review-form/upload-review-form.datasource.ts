@@ -9,6 +9,8 @@ export class UploadReviewFormDataSource implements DataSource<any> {
   private dataSubject = new BehaviorSubject<any[]>([]);
   private filterSubject = new BehaviorSubject<any>({});
   private loadingSubject = new BehaviorSubject<boolean>(false);
+  private errorSubject = new BehaviorSubject<string>(null);
+  public $error = this.errorSubject.asObservable();
   public $loading = this.loadingSubject.asObservable();
   private selectedFormId = new BehaviorSubject<any>(null);
 
@@ -52,14 +54,16 @@ export class UploadReviewFormDataSource implements DataSource<any> {
     this.filterSubject.complete();
     this.loadingSubject.complete();
     this.selectedFormId.complete();
+    this.errorSubject.complete();
   }
 
   uploadDocuments(formId: string, filterParams?: any, sortParam?: any, searchParam?: any): Observable<any> {
     this.loadingSubject.next(true);
+    this.errorSubject.next(null);
     return this.uploadReviewFormService.getDocumentList(formId, filterParams, sortParam, searchParam).pipe(
       map((documents) => {
-      this.loadingSubject.next(false);
-      this.dataSubject.next(documents.data);
+        this.loadingSubject.next(false);
+        this.dataSubject.next(documents.data);
     }));
   }
 
@@ -73,15 +77,11 @@ export class UploadReviewFormDataSource implements DataSource<any> {
     this.uploadReviewFormService.downloadForm(id);
   }
 
-  // TODO
-  deleteDocuments(ids: string[], activeFormId: string, filter?: any, sort?: any): Observable<any> {
+  deleteDocuments(ids: string[]): Observable<any> {
     const idsData = [];
+    this.loadingSubject.next(true);
     ids.map(idData => idsData.push(idData));
-    return this.uploadReviewFormService.deleteDocuments(idsData).pipe(
-      map(() => {
-      this.uploadDocuments(activeFormId, filter, sort);
-      })
-    );
+    return this.uploadReviewFormService.deleteDocuments(idsData);
   }
 
   changeStatus(id: string, status: string, activeFormId: string, filter?: any, sort?: any): Observable<any> {
@@ -92,12 +92,8 @@ export class UploadReviewFormDataSource implements DataSource<any> {
     );
   }
 
-  rotateImg(angle: string, id: string, activeFormId: string, filter?: any, sort?: any): Observable<any> {
-    return this.uploadReviewFormService.rotateImg(angle, id).pipe(
-      map(() => {
-        this.uploadDocuments(activeFormId, filter, sort);
-      }),
-    );
+  rotateImg(angle: string, id: string): Observable<any> {
+    return this.uploadReviewFormService.rotateImg(angle, id);
   }
 
 }

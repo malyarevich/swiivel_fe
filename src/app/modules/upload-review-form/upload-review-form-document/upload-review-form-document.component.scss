@@ -7,17 +7,23 @@
 
   .container {
     position: relative;
-    padding: 0 0 42px;
+    padding: 0;
+    overflow: scroll;
+    max-width: 100vh;
+    max-height: calc(100vh - 185px);
   }
 
   .controllers {
-    position: absolute;
+    position: fixed;
     display: flex;
     bottom: 47px;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    left: 60%;
     border-radius: 3px;
     overflow: hidden;
+
+    &.full-size {
+      left: 45%;
+    }
   }
 
   .controllers-zoom,
@@ -31,7 +37,7 @@
   }
 
   .controllers-zoom:after {
-    position: absolute;
+    position: fixed;
     right: 0;
     content: '';
     width: 1px;
@@ -57,7 +63,6 @@
   .image {
     display: block;
     margin: 0 auto;
-    //min-height: 100vh;
   }
 
   .loading {
@@ -76,9 +81,9 @@
 
   .settings {
     width: 187px;
-    position: absolute;
-    top: 15px;
-    right: 0;
+    position: fixed;
+    top: 170px;
+    right: 13px;
     border-radius: 3px;
     padding: 10px 10px 15px;
     background: #fff;

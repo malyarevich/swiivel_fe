@@ -4,12 +4,14 @@
     data-e2e="dropdown_input_container"
     [class.active]="active"
     [class.empty]="isEmpty()"
+    [class.disabled]="disabled"
     (click)="showPopup()"
 >
   <ng-content select="span"></ng-content>
   <div *ngIf="isDisplaySelected">
     <div
       class="dropdown_input_container__input"
+      [ngClass]="{'hide-label' : isLabelHide}"
       data-e2e="dropdown_input_container_input"
       *ngFor="let item of value" [class.many]="_multiple"
     >

@@ -46,17 +46,17 @@ export class InputFileComponent implements ControlValueAccessor {
     event.stopPropagation();
     this.onFileAdded(event.dataTransfer.files[0])
   }
+
   @HostListener('window:dragover', ['$event']) public onDragOver(evt) {
     evt.preventDefault();
     evt.stopPropagation();
-
   }
 
   @HostListener('window:dragleave', ['$event']) public onDragLeave(evt) {
     evt.preventDefault();
     evt.stopPropagation();
-
   }
+
   openDialog() {
     this.input.nativeElement.click();
   }
@@ -78,6 +78,7 @@ export class InputFileComponent implements ControlValueAccessor {
         this.resetField();
       } else {
         this.onFileSelected(selected_file);
+        this.resetField();
       }
     }
   }
@@ -92,11 +93,13 @@ export class InputFileComponent implements ControlValueAccessor {
           } else if ('file_path' in response) {
             this.response.emit({...response});
             this.onChange(response);
+          } else if (Array.isArray(response) && response.length && response[0].toLowerCase() === 'success') {
+            this.response.emit({...response});
+            this.onChange(response);
           }
         });
       }
     } else {
-      console.log(file);
       this.onChange(file);
     }
   }
