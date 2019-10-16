@@ -1,4 +1,4 @@
-<div class="section_header">
+<!-- <div class="section_header">
   <div class="section_header__group_box">
     <div class="section_header__grip_box">
       <span><i class="fas fa-grip-vertical section_header__grip"></i></span>
@@ -62,4 +62,36 @@
         </span>
     </div>
   </div>
+</div> -->
+
+<div class="field">
+      <div class="main-container">
+        <div class="drag-icon">
+          <i class="dragdrop fas fa-ellipsis-v" cdkDragHandle></i>
+        </div>
+        <sw-input-text [(ngModel)]="name" (ngModelChange)="nameChanged($event)" style="margin-right: 10px; width: 450px;">
+          <span class="placeholder">Section Name</span>
+        </sw-input-text>
+        <sw-dropdown-input [(ngModel)]="width" (ngModelChange)="widthChanged($event)" style="margin-right: 10px;" [options]="widthOptions">
+          <span class="label">Section Width</span>
+        </sw-dropdown-input>
+      </div>
+
+  <div class="actions">
+    <div class="icon">
+      <sw-icon-button icon="fa-cog" class="field-creator" (click)="toggleSettings()">
+      </sw-icon-button>
+    </div>
+    <div class="icon">
+      <sw-icon-button icon="fa-times" class="field-creator"
+        (click)="removeSection()">
+
+      </sw-icon-button>
+    </div>
+    <div class="icon dragdrop" (click)="toggleExpand()">
+      <sw-icon-button [icon]="getIcon()">
+      </sw-icon-button>
+    </div>
+  </div>
+
 </div>

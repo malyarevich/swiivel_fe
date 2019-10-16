@@ -1,4 +1,5 @@
 import {Component, EventEmitter, OnInit, Output, Input} from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-form-info-table-nav',
@@ -11,13 +12,15 @@ export class FormInfoTableNavComponent implements OnInit {
   @Output() searchValueEmitter = new EventEmitter<string>();
   @Output() bulkActionEmitter = new EventEmitter<string>();
 
+  public activeIdForm = '';
+
   searchValue: string = '';
   activeFilterTab = 'submission';
 
-  constructor() { }
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
-    // console.log(this.formId)
+    this.activeIdForm = this.route.snapshot.paramMap.get('id');
     this.activeTabEmitter.emit(this.activeFilterTab);
   }
 

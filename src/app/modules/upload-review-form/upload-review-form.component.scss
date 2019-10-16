@@ -8,15 +8,6 @@
     display: flex;
   }
 
-  .app-input-search-container {
-    margin: 0 0 10px;
-  }
-
-  .app-input-search {
-    border: 1px solid $soft-gray;
-    border-radius: 100px !important;
-  }
-
   .sidebar-opener {
     position: absolute;
     top: 0;
@@ -37,11 +28,14 @@
   }
 
   .sidebar {
-    position: relative;
     width: 295px;
-    padding: 20px 15px 265px;
+    min-height: calc(100vh - 150px);
+    padding: 20px 15px 55px;
     border-radius: 3px;
     background: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 
     .loading {
       position: relative;
@@ -61,6 +55,10 @@
       margin: 0 0 15px;
     }
 
+    .sidebar-search {
+      margin: 0 0 10px;
+    }
+
     .sidebar-title {
       color: $gray-color;
       font-size: 12px;
@@ -71,49 +69,46 @@
       position: relative;
       width: 53%;
       min-width: 159px;
-      margin: 0 10px 0 0;
-    }
-
-    .sidebar-filter:after {
-      position: absolute;
-      right: -10px;
-      top: 0;
-      content: '';
-      width: 1px;
-      height: 34px;
-      background: $dark-grey;
+      padding: 0 10px 0 0;
+      border-right: 1px solid $dark-grey;
     }
 
     .sidebar-sort {
       margin: 0 0 0 10px;
-    }
+      width: 95px;
+      overflow: hidden;
 
-    .upload-document-controls {
-      position: absolute;
-      width: 100%;
-      bottom: 55px;
-      left: 0;
-      display: flex;
-      padding: 0 15px;
-
-      .upload-document-form {
-
-      }
-
-      .upload-document-form-button {
-        margin: 0 0 10px;
+      sw-dropdown-input::ng-deep .dropdown_input_container__input .text {
+        font-size: 10px;
+        position: absolute;
+        margin-top: 7px;
+        line-height: 9px;
       }
     }
 
-    .upload-document-controls:before {
+    .sidebar-controls-title {
       position: absolute;
-      right: 15px;
-      top: -30px;
-      content: '';
-      width: 268px;
-      height: 1px;
-      background: $dark-grey;
+      top: 9px;
+      transition: all 0.5s ease 0s;
+      font-size: 12px;
+      line-height: 15px;
+      color: $gray-color;
     }
+
+    .sidebar-controls-title-with-value {
+      position: absolute;
+      font-size: 10px;
+      top: 2px;
+    }
+
+    .upload-document-controls-hr {
+      border-top: 1px solid $dark-grey;
+      margin: 0 0 30px;
+    }
+  }
+
+  .select-all-button {
+    margin: 0 0 15px;
   }
 }
 
@@ -124,7 +119,7 @@
 }
 
 .footer {
-  position: absolute;
+  position: fixed;
   right: 0;
   bottom: 0;
   width: 100%;
@@ -132,7 +127,7 @@
 
 .sidebar-container {
   background-color: #fff;
-  max-width: 0px;
+  max-width: 0;
   overflow-x: hidden;
   transition: ease-in-out 400ms max-width;
 }

@@ -1,0 +1,137 @@
+<!--SIGNATURE-->
+<div *ngIf="signature?.isRequire" class="signature" [formGroup]="fg">
+  <!--E-SIGN SIGNATURE-->
+  <ng-container *ngIf="signature.type === SIGNATURE_TYPES['ESIGN']">
+    <!--EXTERNAL SIGNATURE-->
+    <ng-container *ngIf="signature.eType === E_SIGNATURE_TYPES['EXTERNAL']">
+      <div class="signature__inputs_container" *ngIf="!signature.isBothParents">
+        <sw-input-textarea
+          [formControlName]="sourcePage + '__external_parent'"
+          [rows]="2"
+          [readonly]="isDisabled"
+        >
+          <span class="input_label">{{placeholderText['parent']}}</span>
+        </sw-input-textarea>
+      </div>
+
+      <div class="signature__inputs_container" *ngIf="signature.isBothParents">
+        <sw-input-textarea
+          [formControlName]="sourcePage + '__external_father'"
+          [rows]="2"
+          [readonly]="isDisabled"
+        >
+          <span class="input_label">{{placeholderText['father']}}</span>
+        </sw-input-textarea>
+        <sw-input-textarea
+          [formControlName]="sourcePage + '__external_mother'"
+          [rows]="2"
+          [readonly]="isDisabled"
+        >
+          <span class="input_label">{{placeholderText['mother']}}</span>
+        </sw-input-textarea>
+      </div>
+
+      <div class="signature__controls_container">
+        <button
+          class="btn app-btn-primary signature__button"
+          [disabled]="isDisabled"
+        >
+          Accept
+        </button>
+      </div>
+    </ng-container>
+
+    <!--SYSTEM SIGNATURE-->
+    <ng-container *ngIf="signature.eType === E_SIGNATURE_TYPES['SYSTEM']">
+      <div class="signature__inputs_container">
+        <ng-container *ngIf="!signature.isBothParents">
+          <div class="signature__checkbox_container">
+            <sw-input-checkbox
+              [formControlName]="sourcePage + '__system_parent'"
+            >
+              <span class="label"> {{ placeholderText["parent"] }}</span>
+            </sw-input-checkbox>
+          </div>
+          <!-- /.signature__checkbox_container -->
+        </ng-container>
+
+        <ng-container *ngIf="signature.isBothParents">
+          <div class="signature__checkbox_container">
+            <sw-input-checkbox
+              [formControlName]="sourcePage + '__system_father'"
+            >
+              <span class="label"> {{ placeholderText["father"] }}</span>
+            </sw-input-checkbox>
+          </div>
+          <!-- /.signature__checkbox_container -->
+
+          <div class="signature__checkbox_container">
+            <sw-input-checkbox
+              [formControlName]="sourcePage + '__system_mother'"
+            >
+              <span class="label"> {{ placeholderText["mother"] }}</span>
+            </sw-input-checkbox>
+          </div>
+          <!-- /.signature__checkbox_container -->
+        </ng-container>
+      </div>
+      <!-- /.signature__inputs_container -->
+
+      <div class="signature__controls_container">
+        <button
+          class="btn app-btn-primary signature__button"
+          [disabled]="isDisabled"
+        >
+          Accept
+        </button>
+      </div>
+    </ng-container>
+  </ng-container>
+
+  <!--WET SIGNATURE-->
+  <ng-container *ngIf="signature.type === SIGNATURE_TYPES['WET']">
+    <div
+      class="signature__inputs_container p-0"
+      *ngIf="!signature.isBothParents"
+    >
+      <sw-input-textarea
+        [formControlName]="sourcePage + '__wet_parent'"
+        [rows]="2"
+        [readonly]="isDisabled"
+      >
+        <span class="input_label">WET {{placeholderText['parent']}}</span>
+      </sw-input-textarea>
+    </div>
+
+    <div
+      class="signature__inputs_container p-0"
+      *ngIf="signature.isBothParents"
+    >
+      <sw-input-textarea
+        [formControlName]="sourcePage + '__wet_father'"
+        [rows]="2"
+        [readonly]="isDisabled"
+      >
+        <span class="input_label">WET {{placeholderText['father']}}</span>
+      </sw-input-textarea>
+      <sw-input-textarea
+        [formControlName]="sourcePage + '__wet_mother'"
+        [rows]="2"
+        [readonly]="isDisabled"
+      >
+        <span class="input_label">WET {{placeholderText['mother']}}</span>
+      </sw-input-textarea>
+      
+    </div>
+
+    <div class="signature__controls_container">
+      <button
+        class="btn app-btn-primary signature__button"
+        [disabled]="isDisabled"
+      >
+        Accept
+      </button>
+    </div>
+  </ng-container>
+</div>
+<!--END SIGNATURE-->

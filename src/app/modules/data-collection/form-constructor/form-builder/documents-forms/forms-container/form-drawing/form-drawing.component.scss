@@ -2,13 +2,15 @@
 canvas {
   cursor: crosshair;
   border: 1px solid #000000;
-  width: 816px;
-  height: 1056px;
+  width: 100%;
+  height: 100%;
+  // width: 816px;
+  // height: 1056px;
 }
 .canvas-wrap{
   position: relative;
-  width: 816px;
-  height: 1056px;
+  // width: 816px;
+  // height: 1056px;
   .canvas-overlay {
     position: absolute;
     top: 0;
@@ -27,8 +29,10 @@ canvas { position:absolute;
   position:absolute;
   top:0;
   left:0;
-  width: 816px;
-  height: 1056px;
+  width: 100%;
+  height: 100%;
+  // width: 816px;
+  // height: 1056px;
 
 }
 .app-signature {
@@ -57,7 +61,7 @@ label.btn.app-btn-signature.active {
 //}
 .div-inside-wrap{
   z-index: 9900;
-  margin-top: -20px!important;
+  // margin-top: -20px!important;
 
   //position: absolute;
 }
@@ -78,11 +82,11 @@ p {
 }
 .list-group-item{
   cursor: pointer;
-  z-index: 9999;
+  z-index: 499;
   height: 27px;	width: 238px;
 }
 .temporary-div, .signature-div{
-  z-index: 9999;
+  z-index: 499;
 
 }
 .div-inside{
@@ -95,9 +99,9 @@ p {
 .div-inside-active{
   background-color: #EBEEFF;
   position: absolute;
-  z-index: 9900;
+  z-index: 450;
   &:first-of-type {
-    z-index: 9999;
+    z-index: 460;
   }
 }
 

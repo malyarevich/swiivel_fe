@@ -1,0 +1,53 @@
+<ng-container *ngIf="isExist()">
+  <div
+    *ngFor="let item of consents; let consentIndex = index"
+    class="content_section__main_container app-div-animation"
+    [ngClass]="{
+      'app-div-show': isShowConsent(consentIndex),
+      'app-div-hide': !isShowConsent(consentIndex)
+    }"
+  >
+    <ng-container>
+      <div class="content_section__header">
+        <!--Title-->
+        <h2 class="content_section__article_title">
+          {{ item.title }}
+        </h2>
+      </div>
+      <div
+        class="content_section__main content_section__main--center"
+        [formGroup]="fg"
+      >
+        <!--Text-->
+        <article class="content_section__article">
+          <div
+            class="content_section__article_text"
+            [innerHTML]="item.text.value"
+          ></div>
+        </article>
+
+        <!--Checkbox-->
+        <div
+          *ngIf="item.checkbox.isActive"
+          class="content_section__additional_fields"
+        >
+          <div class="content_section__inputs_container">
+            <div class="content_section__checkbox_container p-0">
+              <sw-input-checkbox [formControlName]="item._id + '__checkbox'">
+                <span class="label"> {{ item.checkbox.text }}</span>
+              </sw-input-checkbox>
+            </div>
+          </div>
+        </div>
+
+        <!--SIGNATURE-->
+        <sw-online-form-signatures
+          [fg]="fg"
+          [sourcePage]="item._id"
+          [signature]="item.signature"
+        ></sw-online-form-signatures>
+        <!--END SIGNATURE-->
+      </div>
+    </ng-container>
+  </div>
+</ng-container>

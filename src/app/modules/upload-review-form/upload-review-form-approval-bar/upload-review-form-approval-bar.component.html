@@ -12,23 +12,35 @@
     </sw-status-label>
   </div>
   <div class="document-approval-bar__buttons">
+    <div *ngIf="showSpinner" class="spinner">
+      <app-spinner></app-spinner>
+    </div>
     <div class="document-approval-bar__button">
-      <sw-button [style]="colors.WHITE" (click)="skipDocument.emit()" [disabled]="isLast">
+      <sw-button [style]="colors.WHITE" (click)="skipDocument.emit()" [disabled]="isLast || disabled">
         <i class="fas fa-step-forward button_ico"></i>Skip
       </sw-button>
     </div>
     <div class="document-approval-bar__button">
       <sw-button
         [style]="colors.WHITE"
-        (click)="changeStatus.emit(statuses.need_review)">
+        (click)="changeStatus.emit(statuses.need_review)"
+        [disabled]="document.status === 'unassigned' || disabled">
         Need Further Review
       </sw-button>
     </div>
     <div class="document-approval-bar__button">
-      <sw-button (click)="changeStatus.emit(statuses.rejected)">Reject</sw-button>
+      <sw-button
+        (click)="changeStatus.emit(statuses.rejected)"
+        [disabled]="document.status === 'unassigned' || disabled">
+        Reject
+      </sw-button>
     </div>
     <div class="document-approval-bar__button">
-      <sw-button (click)="changeStatus.emit(statuses.approved)">Approve</sw-button>
+      <sw-button
+        (click)="changeStatus.emit(statuses.approved)"
+        [disabled]="document.status === 'unassigned' || disabled">
+        Approve
+      </sw-button>
     </div>
     <div class="document-approval-bar__button">
       <sw-button [disabled]="true">Save</sw-button>

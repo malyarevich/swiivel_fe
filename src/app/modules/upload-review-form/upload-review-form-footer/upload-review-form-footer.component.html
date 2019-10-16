@@ -5,12 +5,13 @@
         <sw-button
           class="button button-icon"
           (click)="prev()"
+          [disabled]="disabled"
         >
           <i class="fas fa-caret-left button-icon-size"></i>
         </sw-button>
       </div>
       <div class="text-row">
-        <p class="name">{{ documents.previous_form.person_name }}</p>
+        <p class="name">{{ documents.previous_form.person_name || 'Unassigned' }}</p>
         <div class="text-row-container">
           <p class="document-name">{{ documents.previous_form.entity_name }}</p>
           <div class="control-item">
@@ -27,7 +28,7 @@
   <div class="next" *ngIf="documents.next_form">
     <div class="container" *ngIf="documents.next_form">
       <div class="text-row">
-        <p class="name">{{ documents.next_form.person_name }}</p>
+        <p class="name">{{ documents.next_form.person_name || 'Unassigned' }}</p>
         <div class="text-row-container">
           <p class="document-name">{{ documents.next_form.entity_name }}</p>
           <div class="control-item">
@@ -44,6 +45,7 @@
       <sw-button
         class="button button-icon"
         (click)="next()"
+        [disabled]="disabled"
       >
         <i class="fas fa-caret-right button-icon-size"></i>
       </sw-button>

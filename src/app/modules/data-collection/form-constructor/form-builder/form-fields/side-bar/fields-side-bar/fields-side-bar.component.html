@@ -6,17 +6,20 @@
     <i class="icon fas fa-search"></i>
   </div>
 
-  <cdk-tree [dataSource]="treeSource" [treeControl]="treeControl" cdkDropList [cdkDropListData]="treeSource" [cdkDropListConnectedTo]="['root-list']" cdkDropListSortingDisabled  id="sidebar-list">
+  <cdk-tree [dataSource]="treeSource" [treeControl]="treeControl" cdkDropList [cdkDropListData]="treeSource.children" [cdkDropListConnectedTo]="getConnectedIds()" cdkDropListSortingDisabled  id="sidebar-list">
 
     <cdk-nested-tree-node *cdkTreeNodeDef="let node" class="field-tree-node" cdkDrag [cdkDragDisabled]="node.isActive" (cdkDragDropped)="drop($event)" [cdkDragData]="node" [hidden]="isFiltered(node)">
-      <div class="field-tree-node__content">
+      <div class="field-tree-node__content w-100">
 
-        <div class="field-tree-node__content_node">
-          <div class="checkbox">
+        <div class="field-tree-node__content_node w-100">
+          <div class="checkbox" style="padding: 0;">
             <input type="checkbox" [checked]="treeSource.isSelected(node)" (click)="toggleNode(node)">
           </div>
           <i class="dragdrop fas fa-ellipsis-v" cdkDragHandle></i>
           <span class="node-name">{{node.name}}</span>
+          <div class="del" style="margin-left: auto;" *ngIf="node.customField">
+            <i class="fas fa-trash" style="color: #A4A4A4" (click)="openDeletePop(node)"></i>
+          </div>  
         </div>
 
       </div>
@@ -26,9 +29,9 @@
     <cdk-nested-tree-node *cdkTreeNodeDef="let node; when: hasChild" class="field-tree-node"  cdkDrag [cdkDragDisabled]="node.isActive" (cdkDragDropped)="drop($event)" [cdkDragData]="node">
       <div class="field-tree-node__content">
         <div class="field-tree-node__content_node" [class.expanded]="treeControl.isExpanded(node)">
-          <div class="checkbox">
-            <input type="checkbox" [checked]="node.isActive && descendantsAllSelected(node)"
-              [indeterminate]="descendantsPartiallySelected(node)" (click)="toggleParentNode(node)">
+          <div class="checkbox" style="padding: 0;">
+            <input type="checkbox" [checked]="nodeIsChecked(node)"
+              [indeterminate]="nodeIsIndeterminate(node)" (click)="toggleParentNode(node)">
           </div>
           <i class="dragdrop fas fa-ellipsis-v" cdkDragHandle ></i>
           <span class="node-name">{{node.name}}</span>
@@ -47,18 +50,18 @@
 
       <ng-container *ngIf="canCreateField(node)">
         <div class="custom-field" [class.show]="showCreateField(node)">
-          <div class="custom-field__form">
+          <div class="custom-field__form" *ngIf="showCreateField(node)" [formGroup]="node.customFieldForm">
             <div class="custom-field__form_inputs">
-              <sw-input-text class="settings-field">
+              <sw-input-text class="settings-field" formControlName="name">
                 <span class="placeholder">Name</span>
               </sw-input-text>
-              <sw-dropdown-input class="settings-field">
-                <span class="input_label">
+              <sw-dropdown-input class="settings-field" formControlName="type" [options]="typeOptions">
+                <span class="label">
                   <p>Type</p>
                 </span>
               </sw-dropdown-input>
-              <sw-dropdown-input class="settings-field">
-                <span class="input_label">
+              <sw-dropdown-input class="settings-field" formControlName="width" [options]="widthOptions">
+                <span class="label">
                   <p>Width</p>
                 </span>
               </sw-dropdown-input>

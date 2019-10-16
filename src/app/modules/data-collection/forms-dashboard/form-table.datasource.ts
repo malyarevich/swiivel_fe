@@ -49,6 +49,8 @@ export class FormsDataSource implements DataSource<any> {
       catchError(() => of([])),
       finalize(() => this.loadingSubject.next(false))
     ).subscribe(forms => {
+      // All fields except data are metadata.
+      // debugger;
       const { data, ...metadata } = forms;
       this.metadata.next(metadata);
       this.loadingSubject.next(false);

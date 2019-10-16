@@ -5,9 +5,10 @@ import { ApiService } from '@app/core/api.service';
 import { FilterDropDownData } from '@models/upload-review-form/filter.model';
 import { SortDropDownData } from '@models/upload-review-form/sort.model';
 import { Observable } from 'rxjs';
-import { first, map } from 'rxjs/operators';
+import {map} from 'rxjs/operators';
 
 export class UploadReviewFormService extends ApiService {
+
   getStatusColor(status: string): string {
     switch (status) {
       case 'approved':
@@ -42,9 +43,9 @@ export class UploadReviewFormService extends ApiService {
       if (sortParam && sortParam.length) {
         endpointParam += `&sort=${sortParam[0].value}`;
       }
-      endpoint = `/proxy/upload-reviews-form/list?form_id=${formId}&search_query=${endpointParam}`;
+      endpoint = `/proxy/upload-reviews-form/list?form_template_id=${formId}&search_query=${endpointParam}`;
     } else {
-      endpoint = `/proxy/upload-reviews-form/list?form_id=${formId}`;
+      endpoint = `/proxy/upload-reviews-form/list?form_template_id=${formId}`;
     }
     return this.http.get(endpoint);
   }
@@ -54,10 +55,15 @@ export class UploadReviewFormService extends ApiService {
     return this.http.get(endpoint);
   }
 
-  downloadForm(id: string) {
-    return this.download(`/proxy/upload-reviews-form/bulk-download/${id}`).pipe(map((response: any) => {
-      return window.URL.createObjectURL(new Blob([response], {type: 'application/pdf'}));
-    }), first());
+  downloadForms(formId: string, ids: string): Observable<any> {
+    const endpoint = `/proxy/upload-reviews-form/bulk-download/${formId}?ids=${ids}`;
+    return this.download(endpoint).pipe(map((response: any) => {
+      return window.URL.createObjectURL(new Blob([response], {type: 'application/zip'}));
+    }));
+  }
+
+  downloadForm(url: string): void {
+    window.location.assign(url);
   }
 
   deleteDocuments(idsData: string[]): Observable<any> {
@@ -70,7 +76,6 @@ export class UploadReviewFormService extends ApiService {
     const body = { status: statusData };
     return this.http.put(`/proxy/upload-reviews-form/change-status/${formId}`, body);
   }
-
 
   getFilterDropDownData(documents: any): FilterDropDownData | {} {
     const uploadReviewFormStatusesEnum = UploadReviewFormStatusesEnum;
@@ -128,5 +133,23 @@ export class UploadReviewFormService extends ApiService {
       documents.sort.map((docSort => sortData.push({title: uploadReviewFormSortEnum[docSort], value: docSort})));
     }
     return sortData;
+  }
+
+  rotateImg(angle: string, id: string): Observable<any> {
+    const endpoint =  `/proxy/upload-reviews-form/change-rotate/${id}`;
+    const body = { rotate: angle };
+    return this.http.put(endpoint, body);
+  }
+
+  convertToSettingsType(data: any): string[] {
+    const types = [];
+    if (data && data.documents && data.documents.data) {
+      data.documents.data.map((type) => {
+        if (!types.includes(type.name)) {
+          types.push(type.name);
+        }
+      });
+    }
+    return types;
   }
 }

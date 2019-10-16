@@ -2,6 +2,7 @@
 @import "styles/float-label.min.css";
 @import "styles/app/index";
 @import "~@fortawesome/fontawesome-free/css/all.css";
+@import '~@angular/cdk/overlay-prebuilt.css';
 @import "styles/variables/colors";
 @import "index";
 //Lato fonts
@@ -174,6 +175,10 @@ select {
 .cdk-overlay-container {
   position: fixed;
   z-index: 500;
+}
+
+.cdk-overlay-pane ng-component {
+  width: 100%;
 }
 
 .cdk-global-overlay-wrapper, .cdk-overlay-container {

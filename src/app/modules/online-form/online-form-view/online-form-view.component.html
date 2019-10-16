@@ -1,0 +1,145 @@
+<form [formGroup]="fg" *ngIf="formNavigationState">
+  <div class="content_section__container_page_title">
+    <h1 class="content_section__page_title">
+      {{ getPageTitle() }}
+    </h1>
+
+    <!--SubTitle-->
+    <h3 class="sub_title">~{{ getPageTime() }} minutes</h3>
+  </div>
+
+  <!-- Content Nav -->
+  <div class="content_section__nav">
+    <sw-content-nav
+      [formNavigationState]="formNavigationState"
+      [currentPosition]="currentPosition"
+      [formErrors]="formErrors"
+      [fieldNameList]="fieldNameList"
+      [fg]="fg"
+      (onGoToTab)="goToTab($event)"
+    ></sw-content-nav>
+  </div>
+
+  <!-- Content -->
+  <!-- mainMenuNames.packetIntroduction -->
+  <sw-online-form-view-wrapper
+    [page]="mainMenuNames.packetIntroduction"
+    [currentPosition]="currentPosition"
+    [formNavigationState]="formNavigationState"
+  >
+    <sw-online-form-packet-introduction
+      *ngIf="currentPosition.page === mainMenuNames.packetIntroduction"
+      [form]="form"
+      [fg]="fg"
+      [formErrors]="formErrors"
+      [currentPosition]="currentPosition"
+    ></sw-online-form-packet-introduction>
+  </sw-online-form-view-wrapper>
+
+  <!-- mainMenuNames.generalInfo -->
+  <sw-online-form-view-wrapper
+    [page]="mainMenuNames.generalInfo"
+    [currentPosition]="currentPosition"
+    [formNavigationState]="formNavigationState"
+  >
+    <sw-online-form-general-info
+      *ngIf="currentPosition.page === mainMenuNames.generalInfo"
+      [form]="form"
+      [fg]="fg"
+      [formErrors]="formErrors"
+      [fieldNameList]="fieldNameList"
+      [currentPosition]="currentPosition"
+      [isViewOnly]="isViewOnly"
+    ></sw-online-form-general-info>
+  </sw-online-form-view-wrapper>
+
+  <!-- mainMenuNames.documentsForms -->
+  <sw-online-form-view-wrapper
+    [page]="mainMenuNames.documentsForms"
+    [currentPosition]="currentPosition"
+    [formNavigationState]="formNavigationState"
+  >
+    <sw-online-form-documents-forms
+      *ngIf="currentPosition.page === mainMenuNames.documentsForms"
+      [form]="form"
+      [fg]="fg"
+      [formErrors]="formErrors"
+      [currentPosition]="currentPosition"
+    ></sw-online-form-documents-forms>
+  </sw-online-form-view-wrapper>
+
+  <!-- mainMenuNames.consentInfo -->
+  <sw-online-form-view-wrapper
+    [page]="mainMenuNames.consentInfo"
+    [currentPosition]="currentPosition"
+    [formNavigationState]="formNavigationState"
+  >
+    <sw-online-form-consent
+      *ngIf="currentPosition.page === mainMenuNames.consentInfo"
+      [form]="form"
+      [fg]="fg"
+      [formErrors]="formErrors"
+      [currentPosition]="currentPosition"
+    ></sw-online-form-consent>
+  </sw-online-form-view-wrapper>
+
+  <!-- mainMenuNames.paymentSettings -->
+  <sw-online-form-view-wrapper
+    [page]="mainMenuNames.paymentSettings"
+    [currentPosition]="currentPosition"
+    [formNavigationState]="formNavigationState"
+  >
+    <sw-online-form-payment-settings
+      *ngIf="currentPosition.page === mainMenuNames.paymentSettings"
+      [form]="form"
+      [fg]="fg"
+      [formErrors]="formErrors"
+      [currentPosition]="currentPosition"
+    ></sw-online-form-payment-settings>
+  </sw-online-form-view-wrapper>
+
+  <!-- mainMenuNames.payment -->
+  <sw-online-form-view-wrapper
+    [page]="mainMenuNames.payment"
+    [currentPosition]="currentPosition"
+    [formNavigationState]="formNavigationState"
+  >
+    <sw-online-form-payment
+      *ngIf="currentPosition.page === mainMenuNames.payment"
+      [form]="form"
+      [fg]="fg"
+      [formErrors]="formErrors"
+      [currentPosition]="currentPosition"
+    ></sw-online-form-payment>
+  </sw-online-form-view-wrapper>
+
+  <!-- mainMenuNames.termsConditions -->
+  <sw-online-form-view-wrapper
+    [page]="mainMenuNames.termsConditions"
+    [currentPosition]="currentPosition"
+    [formNavigationState]="formNavigationState"
+  >
+    <sw-online-form-terms-conditions
+      *ngIf="currentPosition.page === mainMenuNames.termsConditions"
+      [form]="form"
+      [fg]="fg"
+      [formErrors]="formErrors"
+      [currentPosition]="currentPosition"
+    ></sw-online-form-terms-conditions>
+  </sw-online-form-view-wrapper>
+
+  <!-- mainMenuNames.tuitionContract -->
+  <sw-online-form-view-wrapper
+    [page]="mainMenuNames.tuitionContract"
+    [currentPosition]="currentPosition"
+    [formNavigationState]="formNavigationState"
+  >
+    <sw-online-form-tuition-contract
+      *ngIf="currentPosition.page === mainMenuNames.tuitionContract"
+      [form]="form"
+      [fg]="fg"
+      [formErrors]="formErrors"
+      [currentPosition]="currentPosition"
+    ></sw-online-form-tuition-contract>
+  </sw-online-form-view-wrapper>
+</form>

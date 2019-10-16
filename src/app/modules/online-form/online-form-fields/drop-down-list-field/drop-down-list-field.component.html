@@ -1,0 +1,45 @@
+<ng-container *ngIf="!!field">
+  <div
+    class="form-group app-input-container position-relative"
+    [formGroup]="fg"
+    [ngClass]="{ 'app-input-fill': !field.options.hideLabel }"
+  >
+    <sw-dropdown-input
+      [formControlName]="field._id"
+      [multiple]="field.options && field.options.multiple ? true : false"
+      [options]="
+        field.options && field.options.fieldOptions
+          ? field.options.fieldOptions
+          : list
+      "
+      [ngClass]="{
+        validation_required: this.field.options.required,
+        validation_error: !!validationText
+      }"
+    >
+      <span *ngIf="!field.options.hideLabel" class="label">
+        {{ field.name | titlecase }}
+      </span>
+    </sw-dropdown-input>
+    <span
+      class="error_icon"
+      [ngClass]="{ validation_error: !!validationText }"
+      (click)="validationText = ''"
+    >
+      <i class="fas fa-times fa-xs"> </i>
+    </span>
+
+    <span
+      class="validation_icon"
+      [ngClass]="{ validation_required: this.field.options.required }"
+    >
+      <i class="fas fa-asterisk fa-xs"></i>
+    </span>
+
+    <sw-error-list
+      [fg]="fg"
+      [field]="field"
+      [validationText]="validationText"
+    ></sw-error-list>
+  </div>
+</ng-container>

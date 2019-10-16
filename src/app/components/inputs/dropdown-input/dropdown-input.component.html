@@ -4,16 +4,18 @@
     data-e2e="dropdown_input_container"
     [class.active]="active"
     [class.empty]="isEmpty()"
+    [class.disabled]="disabled"
     (click)="showPopup()"
 >
   <ng-content select="span"></ng-content>
   <div *ngIf="isDisplaySelected">
     <div
       class="dropdown_input_container__input"
+      [ngClass]="{'hide-label' : isLabelHide}"
       data-e2e="dropdown_input_container_input"
       *ngFor="let item of value" [class.many]="_multiple"
     >
-      <span class="text"> {{ item?.title }} </span>
+      <span class="text"> {{ dropdownSubHeader ? item?.name : item?.title }} </span>
       <i class="fas fa-times" (click)="remove(item, $event)"></i>
     </div>
   </div>
@@ -41,7 +43,7 @@
     </div>
   </div>
   <div *ngIf="dropdownSubHeader">
-    <div class="dropdown_items_container">
+    <div class="dropdown_items_container dropdown_items_sub-header-container">
       <div class="dropdown_items_sub-container" *ngFor="let item of dropdownList | keyvalue">
         <div class="dropdown_items_sub-header">
           {{ item?.value?.title }}
@@ -55,6 +57,7 @@
             <div class="checkbox_container" *ngIf="_multiple" [class.selected]="isSelected(dropdownItem)">
             </div>
             <span class="text">{{ dropdownItem.name }}</span>
+            &nbsp;
             <span *ngIf="dropdownItem.param === 'documents' && dropdownItem.count" class="text text--count">
             ({{ dropdownItem.count }})
             </span>

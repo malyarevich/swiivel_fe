@@ -1,0 +1,32 @@
+@import "../../shared/styles/index.scss";
+
+.date_controls {
+  align-items: stretch;
+  align-self: stretch;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: stretch;
+  justify-items: stretch;
+  justify-self: stretch;
+
+  &__wide {
+    display: flex;
+    flex: 1;
+  }
+
+  &__append {
+    display: flex;
+    flex: 0 1 2.5rem;
+  }
+}
+
+.error_icon {
+  right: 3.5rem;
+}
+
+.form-control[readonly],
+.form-control:read-only,
+.form-control:disabled {
+  background-color: $white;
+}

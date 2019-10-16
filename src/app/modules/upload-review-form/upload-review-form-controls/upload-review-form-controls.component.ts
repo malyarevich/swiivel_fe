@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { SizeButtonsEnum } from '@shared/size-buttons.enum';
 import { ColorsEnum } from '@shared/colors.enum';
@@ -10,10 +10,14 @@ import { ColorsEnum } from '@shared/colors.enum';
 })
 
 export class UploadReviewFormControlsComponent implements OnInit  {
-  @Input() activeIdForm ? = '';
-  @Input() documentTypes ? = [];
-  @Input() documentStudent  ? = [];
-  @Input() documentAccount  ? = [];
+  @Input() activeIdForm: string;
+  @Input() isBulkDownload = false;
+  @Input() showBulkDownload = false;
+  @Input() selectedCount = 0;
+  @Output() bulkDownload = new EventEmitter();
+  @Output() download = new EventEmitter();
+  @Output() upload = new EventEmitter();
+
   public formUpload: FormGroup;
   public uploadDocumentData: any;
   public sizeButton = SizeButtonsEnum;
@@ -21,29 +25,25 @@ export class UploadReviewFormControlsComponent implements OnInit  {
 
   constructor(private fb: FormBuilder) {
     this.formUpload = this.fb.group({
-      upload: new FormControl(''),
-      documentType: new FormControl(''),
-      student: new FormControl(''),
-      account: new FormControl(''),
-    });
-    this.formUpload.valueChanges.subscribe(changes => {
-      this.updateUploadData();
+      upload: new FormControl('')
     });
   }
 
   ngOnInit(): void {
     this.uploadDocumentData = {
       document_id: this.activeIdForm,
-      family_id: this.documentAccount[0],
-      person_id: this.documentStudent[0],
-      document_type: this.documentTypes[0]
     };
   }
 
-  updateUploadData(): void {
-    this.uploadDocumentData['document_type'] = this.formUpload.get('documentType').value;
-    this.uploadDocumentData['document_id'] = this.activeIdForm;
-    this.uploadDocumentData['person_id'] = this.formUpload.get('student').value;
-    this.uploadDocumentData['document_type'] = this.formUpload.get('account').value;
+  uploadedData(): void {
+    this.upload.emit();
+  }
+
+  clickBulkDownload(): void {
+    this.bulkDownload.emit();
+  }
+
+  clickDownload(): void {
+    this.download.emit();
   }
 }

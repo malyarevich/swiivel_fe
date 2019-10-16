@@ -5,7 +5,7 @@ import * as SymbolTree from 'symbol-tree';
 
 import { catchError, debounceTime, distinctUntilChanged, finalize, retry, tap, timeout, filter } from 'rxjs/operators';
 
-export const CHILDREN_SYMBOL = Symbol.for('children');
+export const CHILDREN_SYMBOL = Symbol.for('fields');
 
 export class TreeDataSource implements DataSource<any> {
   private dataSubject = new BehaviorSubject<any>([]);
@@ -32,6 +32,10 @@ export class TreeDataSource implements DataSource<any> {
     return this.tree.treeToArray(this.tree)
   }
 
+  get activeNodes() {
+    return this.getActiveChildren(this.tree);
+  }
+
   clear() {
     this.tree.remove(this.tree);
   }
@@ -43,14 +47,60 @@ export class TreeDataSource implements DataSource<any> {
       this.tree['symbol'];
     }
   }
-  addSection(old, title = 'New Section') {
+  addSection(old, title = 'New Section', fields = []) {
     this.tree.insertAfter(old, {
       type: 114,
       name: title,
       isActive: true,
-      fields: []
+      fields: fields
     });
     this.data = this.tree.childrenToArray(this.tree);
+  }
+
+  toForm() {
+    let nodes = this.getActiveChildren(this.tree);
+    if (nodes.length > 0) {
+      let section = nodes.find(node => node.type === 114);
+      if (!section) {
+        section = {
+          type: 114,
+          name: 'New section',
+          isActive: true,
+          path: ['New section'],
+          fields: nodes
+        };
+        return [section];
+      } else {
+        return nodes;
+      }
+    } else {
+      return [];
+    }
+  }
+
+  getActiveChildren(parent = this.tree) {
+    let children = Array.from(this.tree.childrenIterator(parent)).filter((node: any) => node.isActive === true);
+    return children.map((child: any) => {
+      child.path = this.getPath(child);
+      child.fields = this.getActiveChildren(child);
+      return child;
+    });
+  }
+
+  getActiveSections(parent = this.tree) {
+    let sections = Array.from(parent.childrenIterator(parent)).filter((node: any) => node.type === 114 && node.isActive === true);
+    return sections;
+  }
+
+  getActiveGroups(parent = this.tree) {
+    let groups = Array.from(parent.childrenIterator(parent)).filter((node: any) => node.type === 113 && node.isActive === true);
+    return groups;
+  }
+
+  getPath(node) {
+    return Array.from(this.tree.ancestorsIterator(node), (parent: any) => {
+      return parent.name;
+    }).slice(0, -1);
   }
 
   swapSections(prevIdx, curIdx) {
@@ -112,7 +162,7 @@ export class TreeDataSource implements DataSource<any> {
   }
 
   get children() {
-    return this.tree.childrenToArray()
+    return this.tree.childrenToArray(this.tree)
   }
 
   getChildren(node) {
@@ -131,12 +181,11 @@ export class TreeDataSource implements DataSource<any> {
 
 
   refresh() {
-    this.data =  this.dataSubject.getValue();
-    console.log(this.data);
+    this.data = this.dataSubject.getValue();
   }
 
   isSelected(node) {
-    return (node.isActive || node.isSelected) === true;
+    return node.isActive === true;
   }
 
   toggleNode(node) {
@@ -152,35 +201,48 @@ export class TreeDataSource implements DataSource<any> {
   }
 
   toggle(node) {
-   const hasParent = this.tree.parent(node);
-   const hasChildren = this.tree.hasChildren(node);
-   const status = node.isActive;
-   const newStatus = !status;
-   node.isActive = !node.isActive;
-   if (hasParent) {
-     const leafs = this.tree.childrenIterator(node);
-     for (let leaf of leafs) {
-       leaf.isActive = node.isActive;
-     }
-     // leafs.
-   } else if (hasParent) {
-     console.log(parent);
-   } else {
-     console.log(this.tree.following(node));
-   }
+    const hasParent = this.tree.parent(node);
+    const hasChildren = this.tree.hasChildren(node);
+    const status = node.isActive;
+    const newStatus = !status;
+    node.isActive = !node.isActive;
+    if (hasParent) {
+      const leafs = this.tree.childrenIterator(node);
+      for (let leaf of leafs) {
+        leaf.isActive = node.isActive;
+      }
+      // leafs.
+    } else if (hasParent) {
+      console.log(parent);
+    } else {
+      console.log(this.tree.following(node));
+    }
 
 
-   node.isActive = !node.isActive;
- }
- hasChildren(node) {
-   if (this.tree) {
-     return this.tree.hasChildren(node);
-   }
- }
- setActive(node, active: boolean) {
-   console.log('setactive', active, node );
-   node.isActive = active;
- }
+    node.isActive = !node.isActive;
+  }
+  hasChildren(node) {
+    if (this.tree) {
+      return this.tree.hasChildren(node);
+    }
+  }
+  setActive(node, active: boolean) {
+    console.log('setactive', active, node);
+    node.isActive = active;
+  }
 
+  addCustomField(parent: any, node: any) {
+    parent[CHILDREN_SYMBOL].push(node);
+    this.tree.appendChild(parent, node);
+    this.data = null;
+    this.data = this.getChildren(this.tree);
+  }
 
- }
+  deleteNode(node: any) {
+    this.tree.parent(node)[CHILDREN_SYMBOL].splice(this.tree.index(node), 1);
+    this.tree.remove(node);
+    this.data = null;
+    this.data = this.getChildren(this.tree);
+  }
+
+}

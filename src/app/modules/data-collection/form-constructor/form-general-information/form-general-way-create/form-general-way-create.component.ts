@@ -6,7 +6,7 @@ import {Subscribable, Subscription} from 'rxjs';
 @Component({
   selector: 'app-form-general-way-create',
   templateUrl: './form-general-way-create.component.html',
-  styleUrls: ['./form-general-way-create.component.scss', '../form-general-information.component.css']
+  // styleUrls: ['./form-general-way-create.component.scss', '../form-general-information.component.css']
 })
 export class FormGeneralWayCreateComponent implements OnInit, OnDestroy {
   @Output() duplicatedFormIdEmitter: EventEmitter<any> = new EventEmitter<any>();

@@ -1,0 +1,8 @@
+<div class="missing_fields">
+  <h5 class="missing_fields__title">Missing Fields({{ getErrorsCount() }})</h5>
+  <div class="missing_fields__fields_list">
+    <div *ngFor="let errorKey of getErrorsKeys()" class="missing_fields__field">
+      {{ fieldNameList[errorKey] }}
+    </div>
+  </div>
+</div>

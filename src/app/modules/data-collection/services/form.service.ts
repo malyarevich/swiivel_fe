@@ -19,7 +19,7 @@ export class FormService {
   sendForm(form: Form) {
     if (form._id !== "") {
       return this.http
-        .put(`/proxy/forms/${form._id}`, form)
+        .put(`/proxy/form-builder/form-template/${form._id}`, form)
         .pipe(map(response => response));
     }
     return this.http.post("/proxy/forms", form).pipe(map(response => response));
@@ -27,7 +27,7 @@ export class FormService {
 
   getOneForm(id): Observable<any> {
     return this.http
-      .get(`/proxy/forms/${id}`)
+      .get(`/proxy/form-builder/form-template/${id}`)
       .pipe(map((response: Response) => response.data));
   }
 

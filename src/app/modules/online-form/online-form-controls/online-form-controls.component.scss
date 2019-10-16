@@ -1,0 +1,25 @@
+@import "../shared/styles/index.scss";
+
+.btn {
+  font-family: "Nunito Sans", "Helvetica";
+  font-weight: 400;
+  font-size: 0.85rem;
+  font-weight: bold;
+  line-height: 1.1rem;
+  padding: 1rem 2rem;
+  text-transform: uppercase;
+
+  &.btn-link {
+    color: #0d64ff;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  &.btn-primary {
+    background-color: #004ed9;
+    color: #fff;
+  }
+}

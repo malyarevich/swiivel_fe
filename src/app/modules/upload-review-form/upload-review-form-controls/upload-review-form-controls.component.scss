@@ -2,4 +2,13 @@
 
 :host {
   width: 100%;
+
+  .upload-document-controls--bulk {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .upload-document-form-button {
+    margin: 0 0 5px;
+  }
 }

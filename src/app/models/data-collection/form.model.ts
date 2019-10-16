@@ -34,10 +34,13 @@ export interface Form {
   tuitionContract?: TuitionContract;
   consentInfo?: ConsentInfo;
   termsConditions?: TermsConditions;
+  payment?: any;
   paymentSettings?: any; //Need FIXME: (create PaymentSettings)
   chosen_way_to_create_new_form?: number;
   eligible: string;
-  example_form_id?: string;
+  //TODO: check for what that
+  example_form_id?: string;  
+  packetIntroduction?: IPacketIntroduction;
   documentsForms?: DocumentsFormsModel;
   documents?: DocumentsModel[];
   forms?: FormsPDFModel[];
@@ -47,6 +50,7 @@ export interface Form {
   formPeriods?: object;
   //FIXME: when back-end will complete
   isOpened?: boolean;
+  pagesPercents?: IPagesPercent[];
 }
 
 export interface FormSql {
@@ -77,4 +81,65 @@ export interface FormSql {
 interface FormSqlPermissions {
   id: number;
   user: { id: number; full_name: number };
+}
+
+//TODO: check if we need that
+interface FormPermissions {
+  id: number;
+  user: { id: number; full_name: number };
+}
+
+export interface ISubMenus {
+  settings?: {
+    online: boolean;
+    pdf: boolean;
+  };
+}
+
+export interface IPacketIntroduction {
+  // packets: [
+  //   {
+  //     id: string;
+  //     text: {
+  //       value: string;
+  //     },
+  //     title: string;
+  //   }
+  // ],
+  content?: string;
+  sectionName?: string;
+  sectionWidth?: string;
+};
+
+export interface ISectionTab {
+  _id?: string;
+  id?: string;
+  name?: string;
+  text?: {
+    value: string;
+  };
+  title?: string;
+  checkbox?: {
+    checked?: boolean;
+    isActive?: boolean;
+    text?: string;
+  }
+  signature?: ISignature;
+}
+
+export interface ISignature {
+  eType?: string;
+  isBothParents?: boolean;
+  isRequire?: boolean;
+  signed?: {
+    fathers?: boolean;
+    mothers?: boolean;
+    parents?: boolean;
+  }
+  type?: string;
+}
+
+export interface IPagesPercent {
+  page: string;
+  percent: number;
 }

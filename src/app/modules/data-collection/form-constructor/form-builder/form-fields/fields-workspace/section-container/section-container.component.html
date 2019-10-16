@@ -6,7 +6,7 @@
 <!--End Section Header-->
 
 
-<div *ngIf="showSettings">
+<div style="margin: -11px 0 10px;" *ngIf="showSettings">
   <app-section-settings [section]="section"></app-section-settings>
 </div>
 
@@ -16,15 +16,15 @@
   <!--      [model]="section.fields">-->
   <!--    </ngx-dnd-container>-->
   <ul class="list-group ">
-    <div class="ngx-dnd-container" [ngxDroppable]="section._id" [model]="section.fields" (drop)="dropAdd($event)"
+    <div class="ngx-dnd-container" cdkDropList [id]="section['path'].join('|')" [cdkDropListData]="section.fields" (cdkDropListDropped)="drop($event)"
       direction="vertical">
       <li *ngIf="section.fields.length==0" class="list-group-item empty-section mb-3 py-0 ">
         <div class="text-center"> <span class="empty-section-text">Drag and Drop Fields Onto the Section</span>
         </div>
       </li>
 
-      <li class="list-group-item mb-3 p-0 ngx-dnd-item" [model]="field" *ngFor="let field of section.fields; "
-        [ngxDraggable]="idSectionForDragDrop">
+      <li class="list-group-item mb-3 p-0 ngx-dnd-item" *ngFor="let field of section.fields; "
+        [cdkDragData]="field" cdkDrag>
 
         <app-divider-container *ngIf="field.type==112" [inputDivider]="field" [form]="form"></app-divider-container>
         <app-group-container *ngIf="field.type==113" [inputGroup]="field" [nestedLevel]="nestedLevel+1"

@@ -33,6 +33,7 @@ export class DropDownListSettingsComponent {
   @Input() 
   set inputField(f: Field) {
     if (f) {
+      console.log('input field', Object.assign({}, f));
       this.field = f;
       this.setValueToForm(f);
     }
@@ -68,14 +69,26 @@ export class DropDownListSettingsComponent {
 
   private setValueToForm(f: Field): void {
     if (!f.options) { f.options = {}; }
+    
     this.form.patchValue({
       default: f.options.default && isArray(f.options.default) ? f.options.default : [],
       showDefaultOptions: f.options.default && f.options.default.length > 0 ? true : false,
       showValidators: f.options.showValidators ? true : false,
       multiple: f.options.multiple ? true : false,
       fieldType: f.options.fieldType || [],
-      fieldOptions: f.options.fieldOptions && f.options.fieldOptions.length > 0 ? f.options.fieldOptions : []
-    });
+      // fieldOptions: f.options.fieldOptions && f.options.fieldOptions.length > 0 ? f.options.fieldOptions : []
+    }, { emitEvent: false });
+    if (f.options.fieldOptions && f.options.fieldOptions.length > 0) {
+      const fieldOptions = this.options;
+      f.options.fieldOptions.forEach(i => {
+        fieldOptions.push(
+          new FormGroup({
+            title: new FormControl(i.title || '', /*  { updateOn: 'blur' } */)
+          })
+          );
+        });
+        fieldOptions.removeAt(0);
+    }
   }
 
   private updateField(formValue): void {

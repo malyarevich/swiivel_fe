@@ -1,5 +1,5 @@
-<div class="py-3 group-bc" [ngClass]="{'app-setting-show': showGroupSettings}" xmlns="http://www.w3.org/1999/html">
-  <div class="row align-items-center no-gutters">
+<!-- <div class="py-3 group-bc" [ngClass]="{'app-setting-show': showGroupSettings}" xmlns="http://www.w3.org/1999/html"> -->
+  <!-- <div class="row align-items-center no-gutters">
 
     <div class="col-3 ">
       <div class="row align-items-center no-gutters ml-2">
@@ -51,9 +51,44 @@
       </div>
     </div>
 
+  </div> -->
+
+  <div class="field" >
+      <!-- [class.active]="node.showSettings" *ngIf="node.isActive" -->
+        <div class="main-container">
+          <div class="drag-icon">
+            <i class="dragdrop fas fa-ellipsis-v"></i>
+          </div>
+          <div class="name-container">
+            <div class="main-text">{{inputGroup.name | titlecase}}</div>
+            <div class="hint">Group Type -</div>
+          </div>
+          <sw-dropdown-input style="margin-right: 10px;" [(ngModel)]="width" (ngModelChange)="widthChanged($event)" [options]="widthOptions">
+            <span class="label">Section Width</span>
+          </sw-dropdown-input>
+        </div>
+
+    <div class="actions">
+      <div class="icon">
+        <sw-icon-button icon="fa-cog" class="field-creator blue"
+          [class.active]="showGroupSettings" (click)="showGroupSettings=!showGroupSettings">
+        </sw-icon-button>
+      </div>
+      <div class="icon">
+        <sw-icon-button icon="fa-times" class="field-creator blue"
+          (click)="removeGroup(inputGroup)">
+
+        </sw-icon-button>
+      </div>
+      <div class="icon dragdrop">
+        <sw-icon-button class="blue" (click)="showNested=!showNested" [icon]="getIcon()">
+        </sw-icon-button>
+      </div>
+    </div>
+
   </div>
 
-</div>
+<!-- </div> -->
 
 <div *ngIf="showGroupSettings">
   <app-group-settings [inputGroup]="inputGroup"></app-group-settings>
@@ -61,15 +96,15 @@
 
 
 <div [hidden]="!showNested">
-  <ul class="list-group ngx-dnd-container drop-zone" [ngxDroppable]="inputGroup._id" [model]="inputGroup.fields"
-    (drop)="dropAdd($event)" direction="vertical">
+  <ul class="list-group ngx-dnd-container drop-zone" cdkDropList [id]="inputGroup.path.join('|')" [cdkDropListData]="inputGroup"
+    (cdkDropListDropped)="drop($event)">
     <li *ngIf="inputGroup.fields.length==0" class="list-group-item empty-group p-0 "
       [ngClass]="nestedLevel==1?'margin-for-nested':''">
       <div class="text-center"> <span class="empty-group-text">Drag and Drop Fields Onto the Group</span>
       </div>
     </li>
-    <li class="list-group-item p-0 ngx-dnd-item" [ngClass]="nestedLevel==1?'margin-for-nested':''" [model]="field"
-      *ngFor="let field of inputGroup.fields" [ngxDraggable]="idSectionForDragDrop">
+    <li class="list-group-item p-0 ngx-dnd-item" [class.margin-for-nested]="nestedLevel>0" [cdkDragData]="field" cdkDrag (cdkDragExited)="dragDrop($event)" (cdkDragEntered)="dragDrop($event)"
+      *ngFor="let field of inputGroup.fields" cdkDragBoundary=".list-group">
       <app-field-container *ngIf="field.type!=113" [inputField]="field" [form]="form" [customFields]="customFields"
         [sideBar]="sideBar">
       </app-field-container>
