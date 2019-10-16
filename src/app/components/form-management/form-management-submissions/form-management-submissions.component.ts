@@ -179,21 +179,12 @@ export class FormManagementSubmissionsComponent implements OnInit {
     this.changeStatus.emit({ statusId, ids })
   }
   
-  onToggleExpand(formID: string, row: CdkDetailRowDirective): void {    
-    if (this.shouldExpand === formID) {
-      this.shouldExpand = null;
-      this.openedRow.toggle(); 
-    } else {
-      this.shouldExpand = formID;
-    }
-
-    this.openedRow = row.expanded ? row : undefined;
-  }
-
-  onToggleChange(cdkDetailRow: CdkDetailRowDirective) : void {
+  onToggleExpand(formID: string, row: CdkDetailRowDirective): void {  
     if (this.openedRow && this.openedRow.expanded) {
       this.openedRow.toggle();      
     }
-    this.openedRow = cdkDetailRow.expanded ? cdkDetailRow : undefined;
+
+    this.shouldExpand === formID ? this.shouldExpand = null : this.shouldExpand = formID;
+    this.openedRow = row.expanded ? row : undefined;
   }
 }

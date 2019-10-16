@@ -395,7 +395,6 @@
         [hidden]="showSpinner"
         (click)="selectRow(form, $event)"
         [cdkDetailRow]="form" [cdkDetailRowTpl]="tpl"
-        (toggleChange)="onToggleChange($event)"
       ></tr>
       <tr
         cdk-footer-row
@@ -408,9 +407,11 @@
 </div>
 
 <ng-template #tpl let-form>
-    <div class="expanded-row">
-        <app-online-form-view
-            [formID]="form.id"
-        ></app-online-form-view>
-    </div>
+    <tr class="expanded-row">
+        <td colspan="8">
+            <app-online-form-view
+                [formID]="form.id"
+            ></app-online-form-view>
+        </td>
+    </tr>
 </ng-template>
