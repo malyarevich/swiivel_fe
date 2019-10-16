@@ -408,7 +408,7 @@
 
 <ng-template #tpl let-form>
     <tr class="expanded-row">
-        <td colspan="8">
+        <td [attr.colspan]="displayedColumns.length">
             <app-online-form-view
                 [formID]="form.id"
             ></app-online-form-view>

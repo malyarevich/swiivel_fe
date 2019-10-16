@@ -183,7 +183,9 @@ export class FormManagementSubmissionsComponent implements OnInit {
     if (this.openedRow && this.openedRow.expanded) {
       this.openedRow.toggle();      
     }
-
+    
+    // No matter if we're expanding or minimizing, the row should be selected
+    this._sm.select(row);
     this.shouldExpand === formID ? this.shouldExpand = null : this.shouldExpand = formID;
     this.openedRow = row.expanded ? row : undefined;
   }
