@@ -4,6 +4,7 @@
     data-e2e="dropdown_input_container"
     [class.active]="active"
     [class.empty]="isEmpty()"
+    [class.disabled]="disabled"
     (click)="showPopup()"
 >
   <ng-content select="span"></ng-content>

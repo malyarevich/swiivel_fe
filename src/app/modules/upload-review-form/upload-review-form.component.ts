@@ -316,11 +316,11 @@ export class UploadReviewFormComponent implements OnInit {
   }
 
   isFilterEmpty(): boolean {
-    return !this.form.get('filter').value.length;
+    return this.form.get('filter').value.length;
   }
 
   isSortByEmpty(): boolean {
-    return !this.form.get('sort').value.length;
+    return this.form.get('sort').value.length;
   }
 
 }

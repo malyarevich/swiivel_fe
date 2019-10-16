@@ -9,7 +9,7 @@
     box-sizing: border-box;
     border-radius: 3px;
     position: relative;
-    background-color: #fff;
+    background: #fff;
     display: flex;
     align-items: center;
 
@@ -80,6 +80,10 @@
         color: #909090;
       }
     }
+  }
+
+  .disabled {
+    background: $gray;
   }
 }
 
