@@ -176,12 +176,13 @@ export class FormManagementSubmissionsComponent implements OnInit {
     this.changeStatus.emit({ statusId, ids })
   }
 
-  toggleExpand(formID: string) {
-    if (this.rowExpand === formID) {
+  toggleExpand(form: any) {
+    if (this.rowExpand === form.id) {
       this.rowExpand = null;
     } else {
-      this.rowExpand = formID;
+      this.rowExpand = form.id;
     }
+    this._sm.toggle(form);
   }
   
   shouldExpand(formID: string) {
