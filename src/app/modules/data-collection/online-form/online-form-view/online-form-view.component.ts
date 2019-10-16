@@ -4,6 +4,7 @@ import {
   OnDestroy,
   AfterViewInit,
   Input,
+  ChangeDetectorRef,
 } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
@@ -52,7 +53,8 @@ export class OnlineFormViewComponent
     private route: ActivatedRoute,
     private onlineFormService: OnlineFormService,
     private onlineFormNavigationService: OnlineFormNavigationService,
-    private location: Location
+    private location: Location,
+    private cd: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -88,7 +90,7 @@ export class OnlineFormViewComponent
   getForm(formID: string): void {
     this.onlineFormService.setFromId(formID);
     this.onlineFormService.getOneForm().subscribe((form: Form) => {
-      this.form = form["data"];
+      this.form = form;
 
       console.log(this.form);
 
@@ -98,6 +100,7 @@ export class OnlineFormViewComponent
       );
 
       this.initForm();
+      this.cd.detectChanges();
     });
   }
 

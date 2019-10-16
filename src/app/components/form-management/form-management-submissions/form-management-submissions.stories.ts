@@ -12,6 +12,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { ProgressBarComponent } from '@shared/bars/progress-bar/progress-bar.component';
 import { PopupComponent } from '@app/core/components/popup/popup.component';
 import { HttpClientModule } from '@angular/common/http';
+import { CdkDetailRowDirective } from '@app/utils/directives/cdk-detail-row.directive';
 import { OnlineFormModule } from '@app/modules/data-collection/online-form/online-form.module';
 import { FormManagementDataSource } from './mock-datasource';
 import { FormManagementSubmissionsComponent } from './form-management-submissions.component';
@@ -23,7 +24,7 @@ stories.addDecorator(
   moduleMetadata({ 
     declarations: [
         FormManagementSubmissionsComponent, ProgressBarComponent, 
-        PopupComponent,
+        PopupComponent, CdkDetailRowDirective
     ],
     imports: [
         CommonModule, FormsModule, SharedModule, CdkTableModule,
@@ -76,7 +77,7 @@ const totalItems = 100;
 const showSpinner = false;
 
 function onToggleExpand(formID: string) {
-    debugger
+    
 }
 
 

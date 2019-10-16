@@ -17,6 +17,7 @@ import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { StatusColors } from './form-management-submissions.models';
 import { FormSubmissionsListParams } from '@app/models/form-submissions-list.model';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { CdkDetailRowDirective } from '@app/utils/directives/cdk-detail-row.directive';
 
 @Component({
   selector: 'sw-form-management-submissions',
@@ -58,6 +59,8 @@ export class FormManagementSubmissionsComponent implements OnInit {
     }
 
   _sm: SelectionModel<any>;
+  
+  private openedRow: CdkDetailRowDirective
 
   constructor(
     public router: Router,
@@ -176,9 +179,21 @@ export class FormManagementSubmissionsComponent implements OnInit {
     this.changeStatus.emit({ statusId, ids })
   }
   
-  onToggleExpand(formID: string): void {
-    this.shouldExpand === formID ? 
-      this.shouldExpand = null : 
+  onToggleExpand(formID: string, row: CdkDetailRowDirective): void {    
+    if (this.shouldExpand === formID) {
+      this.shouldExpand = null;
+      this.openedRow.toggle(); 
+    } else {
       this.shouldExpand = formID;
+    }
+
+    this.openedRow = row.expanded ? row : undefined;
+  }
+
+  onToggleChange(cdkDetailRow: CdkDetailRowDirective) : void {
+    if (this.openedRow && this.openedRow.expanded) {
+      this.openedRow.toggle();      
+    }
+    this.openedRow = cdkDetailRow.expanded ? cdkDetailRow : undefined;
   }
 }

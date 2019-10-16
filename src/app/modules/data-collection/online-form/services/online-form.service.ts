@@ -135,7 +135,7 @@ export class OnlineFormService {
   getOneForm(id = this.formId): Observable<any> {
     if (id) {
       return this.http.get(`/proxy/forms/online/${id}`).pipe(map((response) => {
-        this.setFormValues(response['data']['fieldsData']);
+        this.setFormValues(response['fieldsData']);
         return response
       }));
     }
