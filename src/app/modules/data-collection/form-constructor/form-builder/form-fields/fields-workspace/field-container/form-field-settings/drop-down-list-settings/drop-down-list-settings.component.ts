@@ -69,6 +69,15 @@ export class DropDownListSettingsComponent {
 
   private setValueToForm(f: Field): void {
     if (!f.options) { f.options = {}; }
+    
+    this.form.patchValue({
+      default: f.options.default && isArray(f.options.default) ? f.options.default : [],
+      showDefaultOptions: f.options.default && f.options.default.length > 0 ? true : false,
+      showValidators: f.options.showValidators ? true : false,
+      multiple: f.options.multiple ? true : false,
+      fieldType: f.options.fieldType || [],
+      // fieldOptions: f.options.fieldOptions && f.options.fieldOptions.length > 0 ? f.options.fieldOptions : []
+    }, { emitEvent: false });
     if (f.options.fieldOptions && f.options.fieldOptions.length > 0) {
       const fieldOptions = this.options;
       f.options.fieldOptions.forEach(i => {
@@ -80,14 +89,6 @@ export class DropDownListSettingsComponent {
         });
         fieldOptions.removeAt(0);
     }
-    this.form.patchValue({
-      default: f.options.default && isArray(f.options.default) ? f.options.default : [],
-      showDefaultOptions: f.options.default && f.options.default.length > 0 ? true : false,
-      showValidators: f.options.showValidators ? true : false,
-      multiple: f.options.multiple ? true : false,
-      fieldType: f.options.fieldType || [],
-      // fieldOptions: f.options.fieldOptions && f.options.fieldOptions.length > 0 ? f.options.fieldOptions : []
-    });
   }
 
   private updateField(formValue): void {
