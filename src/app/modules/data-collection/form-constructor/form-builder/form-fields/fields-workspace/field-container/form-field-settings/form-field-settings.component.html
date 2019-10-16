@@ -19,6 +19,8 @@
           </app-short-text-settings>
           <app-long-text-settings *ngSwitchCase="fieldTypes.longTextField" [inputField]="inputField">
           </app-long-text-settings>
+          <app-drop-down-list-settings *ngSwitchCase="fieldTypes.multipleOptionsField" [inputField]="inputField">
+          </app-drop-down-list-settings>
           <app-drop-down-list-settings *ngSwitchCase="fieldTypes.dropDownListField" [inputField]="inputField">
           </app-drop-down-list-settings>
           <app-email-settings *ngSwitchCase="fieldTypes.emailField" [inputField]="inputField"></app-email-settings>

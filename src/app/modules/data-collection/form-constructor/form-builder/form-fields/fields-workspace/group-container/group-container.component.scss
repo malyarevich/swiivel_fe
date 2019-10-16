@@ -138,7 +138,7 @@
 .ngx-dnd-box,
 .ngx-dnd-item {
   transition: opacity 0.4s ease-in-out;
-  border: 1px solid lightblue;
+  border: none !important;
   display: block;
 
   &:not(.has-handle):not(.move-disabled),
