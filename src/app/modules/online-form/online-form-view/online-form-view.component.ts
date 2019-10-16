@@ -1,18 +1,28 @@
-import {Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy} from "@angular/core";
-import { FormGroup } from "@angular/forms";
-import { Form } from "@app/models/data-collection/form.model";
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  ChangeDetectionStrategy
+} from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { Form } from '@app/models/data-collection/form.model';
 import {
   IMenuItems,
   IMainMenuNames,
   menuItems,
   mainMenuNames
-} from "../models/menu.model";
-import { ICurrentPosition, IFormNavigationState } from '../models/online-form.model';
+} from '../models/menu.model';
+import {
+  ICurrentPosition,
+  IFormNavigationState
+} from '../models/online-form.model';
 
 @Component({
-  selector: "sw-online-form-view",
-  templateUrl: "./online-form-view.component.html",
-  styleUrls: ["./online-form-view.component.scss"],
+  selector: 'sw-online-form-view',
+  templateUrl: './online-form-view.component.html',
+  styleUrls: ['./online-form-view.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class OnlineFormViewComponent implements OnInit {
@@ -22,6 +32,7 @@ export class OnlineFormViewComponent implements OnInit {
   @Input() formErrors: object;
   @Input() fieldNameList: object;
   @Input() fg: FormGroup;
+  @Input() isViewOnly: boolean;
 
   @Output() onGoToTab: EventEmitter<any> = new EventEmitter();
 
@@ -32,7 +43,7 @@ export class OnlineFormViewComponent implements OnInit {
   getPageTitle(): string {
     return menuItems.find(item => {
       return item.name === this.currentPosition.page;
-    })["title"];
+    }).title;
   }
 
   getCurrentPage(): string {
@@ -46,13 +57,12 @@ export class OnlineFormViewComponent implements OnInit {
   getPageTime(): number {
     return menuItems.find(item => {
       return item.name === this.currentPosition.page;
-    })["time"];
+    }).time;
   }
 
   isShow(page, tabId): boolean {
     return (
-      this.currentPosition.page === page &&
-      this.currentPosition.tab === tabId
+      this.currentPosition.page === page && this.currentPosition.tab === tabId
     );
   }
 

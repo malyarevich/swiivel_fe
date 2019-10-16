@@ -17,6 +17,7 @@ export class GeneralInfoSectionComponent implements OnInit {
   @Input() formErrors: object;
   @Input() fieldNameList: object;
   @Input() fg: FormGroup;
+  @Input() isViewOnly: boolean;
 
   groups: Field[];
   fields: Field[];

@@ -90,7 +90,7 @@ export const routes: Routes = [
     ],
   },
   {
-    path: 'online-form',
+    path: 'view-form',
     component: LayoutComponent,
     children: [
       {

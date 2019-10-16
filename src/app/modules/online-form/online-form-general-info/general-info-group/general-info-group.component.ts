@@ -1,11 +1,11 @@
-import { Component, OnInit, Input } from "@angular/core";
-import { Field } from "src/app/models/data-collection/field.model";
-import { FormGroup } from "@angular/forms";
+import { Component, OnInit, Input } from '@angular/core';
+import { Field } from 'src/app/models/data-collection/field.model';
+import { FormGroup } from '@angular/forms';
 
 @Component({
-  selector: "sw-general-info-group",
-  templateUrl: "./general-info-group.component.html",
-  styleUrls: ["./general-info-group.component.scss"]
+  selector: 'sw-general-info-group',
+  templateUrl: './general-info-group.component.html',
+  styleUrls: ['./general-info-group.component.scss']
 })
 export class GeneralInfoGroupComponent implements OnInit {
   @Input() group: Field;
@@ -13,6 +13,7 @@ export class GeneralInfoGroupComponent implements OnInit {
   @Input() fieldNameList: object;
   @Input() fg: FormGroup;
   @Input() groupCaption: string;
+  @Input() isViewOnly: boolean;
 
   groups: Field[];
   fields: Field[];

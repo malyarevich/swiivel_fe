@@ -32,6 +32,7 @@ import {
   defaultCurrentPosition,
   IFormNavigationState
 } from './models/online-form.model';
+import { ninvoke } from 'q';
 
 @Component({
   selector: 'sw-online-form',
@@ -53,8 +54,9 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
   );
   formErrors$: BehaviorSubject<object> = new BehaviorSubject({});
   sectionGroupFieldsErrors$: BehaviorSubject<object> = new BehaviorSubject({});
+  isViewOnly$: BehaviorSubject<boolean> = new BehaviorSubject(true);
 
-  //keys
+  // keys
   consentKeys: string[] = [];
   termsConditionsKeys: string[] = [];
 
@@ -89,7 +91,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
   }
 
   isHaveSense(): boolean {
-    console.log(this.form['activeSections']);
+    // console.log(this.form['activeSections']);
     return (
       this.form['activeSections'] &&
       Object.keys(this.form['activeSections']).length > 0 &&
@@ -108,16 +110,18 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
     //   this._isReady$.next(true);
     // }
     this._isReady$.next(true);
-    this.fgStatusChangesSubscription = this.fg.statusChanges.subscribe(() => {
-      this.pagesPercents$.next(
-        this.getRecountedPagesPercentsByPage(
-          this.currentPosition$.getValue().page
-        )
-      );
-    });
-    this.fgValueChangesSubscription = this.fg.valueChanges.subscribe(() => {
-      this.isFormStatusChanged = true;
-    });
+    if (!this.isViewOnly$.getValue()) {
+      this.fgStatusChangesSubscription = this.fg.statusChanges.subscribe(() => {
+        this.pagesPercents$.next(
+          this.getRecountedPagesPercentsByPage(
+            this.currentPosition$.getValue().page
+          )
+        );
+      });
+      this.fgValueChangesSubscription = this.fg.valueChanges.subscribe(() => {
+        this.isFormStatusChanged = true;
+      });
+    }
   }
 
   failedLoading() {
@@ -125,26 +129,53 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
   }
 
   getForm(): void {
-    this.onlineFormService.setFromId(
-      this.route.snapshot.paramMap.get('mongo_id')
-    );
-    //TODO: check if we need formId here
-    // this.route.params.subscribe(params => {
-    //   this.formId = params.mongo_id;
-    // });
+    // this.isViewOnly$.next(false);
+    if (this.route.pathFromRoot.length > 0) {
+      this.route.pathFromRoot[1].url.subscribe(urlPath => {
+        if (urlPath.length > 0) {
+          const url = urlPath[0].path;
+          this.isViewOnly$.next(url === 'online-form' ? false : true);
+        }
 
-    this.getOneFormSubscription = this.onlineFormService
-      .getOneForm()
-      .subscribe((form: Form) => {
-        this.form = form;
-        console.log(this.form);
+        this.onlineFormService.setFromId(
+          this.route.snapshot.paramMap.get('mongo_id')
+        );
 
-        if (this.isHaveSense()) {
-          this.loadingProcess();
+        // TODO: check if we need formId here
+        // this.route.params.subscribe(params => {
+        //   this.formId = params.mongo_id;
+        // });
+        if (this.isViewOnly$.getValue()) {
+          // template by id
+          this.getOneFormSubscription = this.onlineFormService
+            .getTemplateForm()
+            .subscribe((form: Form) => {
+              this.form = form;
+              console.log(this.form);
+
+              if (this.isHaveSense()) {
+                this.loadingProcess();
+              } else {
+                this.failedLoading();
+              }
+            });
         } else {
-          this.failedLoading();
+          // form by link
+          this.getOneFormSubscription = this.onlineFormService
+            .getOneForm()
+            .subscribe((form: Form) => {
+              this.form = form;
+              console.log(this.form);
+
+              if (this.isHaveSense()) {
+                this.loadingProcess();
+              } else {
+                this.failedLoading();
+              }
+            });
         }
       });
+    }
   }
 
   calcPercentByPage(page): number {
@@ -189,13 +220,13 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
     let newState: IFormNavigationState[] = this.formNavigationState$
       .getValue()
       .map(page => {
-        const tabs = <ISectionTab[]>this.tabsByPage(page['page']);
-        return { page: page['page'], tabs };
+        const tabs = this.tabsByPage(page.page) as ISectionTab[];
+        return { page: page.page, tabs };
       });
 
     newState = newState.filter(page => {
       const isEmpty = Object.values(mainMenuNames).find(item => {
-        return page['tabs'][0]['_id'] === item;
+        return page.tabs[0]._id === item;
       });
       return !isEmpty;
     });
@@ -235,7 +266,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
   }
 
   initPacketIntroduction(): ISectionTab[] {
-    let tabs = [];
+    const tabs = [];
     // if (
     //   this.form.packetIntroduction &&
     //   this.form.packetIntroduction.packets &&
@@ -388,7 +419,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
 
   getFilteredSections(): IFormNavigationState[] {
     const activeMenuList: IFormNavigationState[] = [];
-    //TODO: remove after create packetIntroduction
+    // TODO: remove after create packetIntroduction
     activeMenuList.push({ page: 'packetIntroduction' });
     for (const page in this.form['activeSections']) {
       if (
@@ -402,14 +433,14 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
   }
 
   initPercents() {
-    //by default when page loads
+    // by default when page loads
     this.formNavigationState$.getValue().forEach(item => {
       this.pagesPercents$.next([
         ...this.pagesPercents$.getValue(),
         <IPagesPercent>{ page: item.page, percent: -1 }
       ]);
     });
-    //also load by server
+    // also load by server
     if (
       typeof this.form.pagesPercents !== 'undefined' &&
       this.form.pagesPercents.length > 0
@@ -462,7 +493,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
         return false;
       }
     } else {
-      //system
+      // system
       if (key.includes('__external_') || key.includes('__wet_')) {
         return false;
       }
@@ -488,7 +519,8 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
     key: string,
     isValidate: boolean = false,
     validators = this.requiredValidator,
-    defatultValue: any = ''
+    defatultValue: any = '',
+    disabled: boolean = false
   ): void {
     this.fg.addControl(
       key,
@@ -498,7 +530,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
             this.form.fieldsData && this.form.fieldsData[key]
               ? this.form.fieldsData[key]
               : defatultValue,
-          disabled: false
+          disabled: disabled || this.isViewOnly$.getValue()
         },
         isValidate ? validators : null
       )
@@ -523,23 +555,23 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
       consentKeys.forEach(key => {
         Object.values(this.form.consentInfo.consents).forEach(item => {
           if (
-            item['id'] &&
-            this.filterSignatureBySignatureAndKey(item['signature'], key)
+            item.id &&
+            this.filterSignatureBySignatureAndKey(item.signature, key)
           ) {
-            this.consentKeys.push(item['id'] + key);
+            this.consentKeys.push(item.id + key);
             const isRequired =
               key === '__checkbox'
-                ? item['checkbox']['isActive']
-                : item['signature']['isRequire'];
+                ? item.checkbox.isActive
+                : item.signature.isRequire;
             const label = key === '__checkbox' ? 'Checkbox' : 'Signature';
 
             this.addToFieldLists(
               mainMenuNames.consentInfo,
-              item['id'] + key,
+              item.id + key,
               isRequired,
               label
             );
-            this.addControl(item['id'] + key, isRequired);
+            this.addControl(item.id + key, isRequired);
           }
         });
       });
@@ -550,7 +582,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
     if (documents && documents.length > 0) {
       documents.forEach(document => {
         const key = document['id'];
-        const isRequired = true; //document["isRequired"];
+        const isRequired = true; // document["isRequired"];
         const label = document['name'];
 
         if (document['isUpload']) {
@@ -619,7 +651,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
   }
 
   getComposedValidatorsByField(field) {
-    let arrayValidators = [];
+    const arrayValidators = [];
 
     if (field.options.required) {
       arrayValidators.push(Validators.required);
@@ -640,17 +672,23 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
     const aFields = this.getFieldsByFormFields(fields);
     if (aFields.length > 0) {
       aFields.forEach(field => {
-        const emptyArray = field.type === 105 ? [] : '';
-        if (field['_id']) {
+        const defaultValue =
+          field.type === 105
+            ? []
+            : field.options && field.options.default
+            ? field.options.default
+            : '';
+        if (field._id) {
           const aValidators = this.getComposedValidatorsByField(field);
           const validatorFn = !field.options.readonly
             ? Validators.compose(aValidators)
             : null;
           this.addControl(
-            field['_id'],
+            field._id,
             !(validatorFn === null),
             validatorFn,
-            emptyArray
+            defaultValue,
+            field.options.readonly
           );
           const isRequired = aValidators.find(validator => {
             return validator === Validators.required;
@@ -658,9 +696,9 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
 
           this.addToFieldLists(
             mainMenuNames.generalInfo,
-            field['_id'],
+            field._id,
             isRequired,
-            field['name']
+            field.name
           );
         }
       });
@@ -715,10 +753,10 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
 
       Object.values(this.form.termsConditions.termsConditionsItems).forEach(
         item => {
-          if (item['id']) {
-            const key = item['id'] + '__checkbox';
+          if (item.id) {
+            const key = item.id + '__checkbox';
             this.termsConditionsKeys.push(key);
-            const isRequired = item['checkbox']['isActive'];
+            const isRequired = item.checkbox.isActive;
             const label = 'Signature';
             this.addToFieldLists(
               mainMenuNames.termsConditions,
@@ -775,7 +813,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
             .length - 1
       });
     } else {
-      //TODO: need business clarification for this branch of code
+      // TODO: need business clarification for this branch of code
       this.goBackLocation();
     }
   }
@@ -810,7 +848,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
         tab: 0
       });
     } else {
-      //TODO: goToFinishPage
+      // TODO: goToFinishPage
       console.log('TODO: goToFinishPage');
     }
   }
@@ -955,14 +993,18 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
   }
 
   saveAndNextStep() {
-    if (this.isFormStatusChanged) {
+    if (!this.isViewOnly$.getValue() && this.isFormStatusChanged) {
       const savingObj = {
-        pagesPercents: this.pagesPercents$.getValue()
+        pagesPercents: this.pagesPercents$.getValue(),
+        fieldListByPage: undefined,
+        currentPosition: undefined,
+        fieldsData: undefined
       };
-      //TODO: change to commented code when back-end will be ready
-      savingObj['fieldListByPage'] = this.fieldListByPage;
-      savingObj['currentPosition'] = this.currentPosition$.getValue();
-      savingObj['fieldsData'] = this.fg.value;
+      // TODO: change to commented code when back-end will be ready
+      savingObj.fieldListByPage = this.fieldListByPage;
+      savingObj.currentPosition = this.currentPosition$.getValue();
+      savingObj.fieldsData = this.fg.value;
+
       this.onlineFormService
         .sendForm(savingObj)
         .pipe(takeUntil(this.destroyedSaveForm$))

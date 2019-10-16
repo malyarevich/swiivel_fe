@@ -12,6 +12,15 @@ const routes: Routes = [
     loadChildren: () => import('./modules/organization/organization.module').then(m => m.OrganizationModule)
   },
 
+  
+  {
+    path: 'online-form',
+    loadChildren: () =>
+      import('./modules/online-form/online-form.module').then(
+        m => m.OnlineFormModule
+      )
+  },
+
   {
     path: '**',
     redirectTo: '',
