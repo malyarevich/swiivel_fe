@@ -2,10 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {FormsModule} from '@angular/forms';
-import {FormTableComponent} from './form-table.component';
-import {FormNavComponent} from './form-nav/form-nav.component';
-import {FormTableTbodyComponent} from './form-table-tbody/form-table-tbody.component';
-import {FormTableRoutingModule} from './form-table-routing.module';
+import {FormManagementComponent} from './form-management.component';
+import {FormManagementRoutingModule} from './form-management-routing.module';
 import {FormStatisticModule} from '../form-statistic/form-statistic.module';
 import {SharedRedComponentsModule} from '../../../shared/components/sharedRedComponents.module';
 import {FormTableHeaderModule} from '../../../shared/components';
@@ -14,21 +12,19 @@ import {FormAccessModalModule} from '../form-access-modal/form-access-modal.modu
 
 @NgModule({
   declarations: [
-    FormTableComponent,
-    FormNavComponent,
-    FormTableTbodyComponent,
+    FormManagementComponent,
   ],
   imports: [
     CommonModule,
     FormsModule,
     NgbModule,
-    FormTableRoutingModule,
+    FormManagementRoutingModule,
     FormStatisticModule,
     SharedRedComponentsModule,
     FormTableHeaderModule,
     FormAccessModalModule,
   ],
-  exports: [FormTableComponent],
+  exports: [FormManagementComponent],
   providers: []
 })
-export class FormTableModule {}
+export class FormManagementModule {}

@@ -3,7 +3,8 @@ import {
   OnInit,
   OnDestroy,
   AfterViewInit,
-  NgZone
+  Input,
+  ChangeDetectorRef,
 } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
@@ -27,6 +28,9 @@ import { IActiveSections } from "src/app/models/data-collection/form-constructor
 })
 export class OnlineFormViewComponent
   implements OnInit, AfterViewInit, OnDestroy {
+
+  @Input() formID: string;
+
   form: Form;
   fg: FormGroup;
 
@@ -49,11 +53,13 @@ export class OnlineFormViewComponent
     private route: ActivatedRoute,
     private onlineFormService: OnlineFormService,
     private onlineFormNavigationService: OnlineFormNavigationService,
-    private location: Location
+    private location: Location,
+    private cd: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
-    this.getForm();
+    this.formID = this.formID || this.route.snapshot.paramMap.get("id");
+    this.getForm(this.formID);
     this.onActiveMenuItemSubscription = this.onlineFormNavigationService.onActiveMenuItem.subscribe(
       menuItemName => {
         this.activeMenuItem = menuItemName;
@@ -81,10 +87,10 @@ export class OnlineFormViewComponent
     //Add 'implements AfterViewInit' to the class.
   }
 
-  getForm(): void {
-    this.onlineFormService.setFromId(this.route.snapshot.paramMap.get("id"));
+  getForm(formID: string): void {
+    this.onlineFormService.setFromId(formID);
     this.onlineFormService.getOneForm().subscribe((form: Form) => {
-      this.form = form["data"];
+      this.form = form;
 
       console.log(this.form);
 
@@ -94,6 +100,7 @@ export class OnlineFormViewComponent
       );
 
       this.initForm();
+      this.cd.detectChanges();
     });
   }
 

@@ -12,6 +12,7 @@ export const menuItems: IMenuItems[] = [
   {route: '/family', label: 'Family', icon: 'fa-cog'},
   {route: '/period', label: 'Period', icon: 'fa-calendar'},
   {route: '/data-collection', label: 'Data Collection', icon: 'fa-file'},
+  {route: '/data-collection/form-management', label: 'Form Management', icon: 'fa-file-upload'},
 ];
 
 @Component({

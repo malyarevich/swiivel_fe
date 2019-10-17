@@ -1,0 +1,13 @@
+@import 'index';
+
+.progress {
+  background: #FAD793;
+  border-radius: 100px;
+  height: 4px;
+}
+
+.progress-bar {
+  background: #F8BC45;
+  border-radius: 100px;
+  transform: matrix(1, 0, 0, -1, 0, 0);
+}

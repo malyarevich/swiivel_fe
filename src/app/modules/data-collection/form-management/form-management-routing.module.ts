@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {FormTableComponent} from './form-table.component';
+import {FormManagementComponent} from './form-management.component';
 
 
 export const routes: Routes = [
   {
     path: '',
-    component: FormTableComponent,
+    component: FormManagementComponent,
   }
 ];
 
@@ -15,4 +15,4 @@ export const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class FormTableRoutingModule { }
+export class FormManagementRoutingModule { }
