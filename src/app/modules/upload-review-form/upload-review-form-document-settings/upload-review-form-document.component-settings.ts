@@ -46,6 +46,7 @@ export class UploadReviewFormDocumentSettingsComponent implements OnChanges {
 
           this.updateDocumentSettings.emit({
             entity_id: values.type[0].value,
+            entity_type: values.type[0].type,
             family_id: values.account[0].value,
             person_id: values.student[0].value,
           });

@@ -84,7 +84,7 @@ export class UploadReviewFormComponent implements OnInit {
 
           if (this.filterValue.documents && this.filterValue.documents.data && this.filterValue.documents.data.length) {
             this.documentTypes = this.filterValue.documents.data.map(filter => {
-              return { title: filter.name, value: filter.id };
+              return { title: filter.name, value: filter.id, type: filter.type };
             });
           }
 
