@@ -66,12 +66,8 @@
       </sw-input-checkbox>
 
     </div>
-    <section class="form-pdf-section" *ngIf="forms?.form && forms?.form?.name">
-      <div class="pdf-wrap">
-        <app-form-drawing [existingFields]="existingFields" [pages]="forms.form.numberOfPages" [formsPDF]="forms">
-        </app-form-drawing>
-      </div>
-    </section>
+    <app-form-drawing [existingFields]="existingFields" *ngIf="forms?.form && forms?.form?.name"
+    [pages]="forms.form.numberOfPages" [formsPDF]="forms"></app-form-drawing>
     <!-- <div class="row justify-content-center">
       <
     </div> -->

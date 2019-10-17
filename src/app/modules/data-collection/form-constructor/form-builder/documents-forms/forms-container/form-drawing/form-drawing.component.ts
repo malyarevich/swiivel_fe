@@ -47,6 +47,17 @@ export class FormDrawingComponent implements AfterViewInit, OnDestroy, OnInit, O
   temporaryField: FormPDFTemporaryField[] = [];
   loadingPoc: number;
 
+  signatureOptions = [
+    {
+      label: 'E-signature',
+      value: true
+    },
+    {
+      label: 'Wet Signature',
+      value: false
+    }
+  ]
+
   constructor() {
   }
 
@@ -69,16 +80,16 @@ export class FormDrawingComponent implements AfterViewInit, OnDestroy, OnInit, O
   }
 
 
-  addTempField(name: string){
-  if(name.length<3) return;
+  addTempField(name: string, div: any) {
+    if(name.length<1) return;
+    if (!div.fields) { div.fields = []; }
+    div.fields.push({id: uuid(),name: name});
     this.temporaryField.push({id: uuid(),name: name});
-    this.showAddButtonTemporary=false
+    this.showAddButtonTemporary=false;
   }
 
   linkFieldToDiv(field: Field, div: FormsDivModel):void{
-    if( div.linkedField == undefined ||
-       div.linkedField.mapped==null ||
-       field.mapped!=div.linkedField.mapped) {
+    if(div.linkedField == undefined || div.linkedField.mapped == null || field.mapped != div.linkedField.mapped) {
       div.linkedField = field;
       return;
     }
@@ -122,7 +133,17 @@ export class FormDrawingComponent implements AfterViewInit, OnDestroy, OnInit, O
     this.captureEvents(this.canvasEl);
   }
 
+  editToggle() {
+    console.log('this.formsPDF.isEdit', this.formsPDF.isEdit)
+    this.formsPDF.isEdit = !this.formsPDF.isEdit;
+  }
 
+  setDrawingType(t: string) {
+    if (t) {
+      this.drawingType = t;
+      // this.changeTypeDraw(t);
+    }
+  }
 
 
   mouseDown(e){
@@ -174,6 +195,7 @@ export class FormDrawingComponent implements AfterViewInit, OnDestroy, OnInit, O
     this.temporaryField = [];
     this.formsPDF.form.fieldsPdf.forEach(page=>{
       page.forEach(field=>{
+        console.log('Pdf field', field);
         if(field.type=='temporary'&&field.linkedField) this.temporaryField.push( field.linkedField);
       })
     });
