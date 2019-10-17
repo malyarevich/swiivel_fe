@@ -11,10 +11,10 @@
 <div class="content">
   <div class="sidebar-container" [class.opened]="isSideBarShown">
     <div class="sidebar">
-      <sw-block-header>
-        List of forms
-      </sw-block-header>
       <div>
+        <sw-block-header>
+          List of forms
+        </sw-block-header>
         <form [formGroup]="form">
           <div class="sidebar-search">
             <app-search-field
@@ -51,7 +51,10 @@
             </div>
           </div>
         </form>
-        <div class="sidebar-list">
+        <div
+          class="sidebar-list"
+          [ngClass]="{'sidebar-list-bulk-download': isBulkDownload}"
+        >
           <div *ngIf="documents && documents.length" [ngClass]="{ 'loading': showSpinner }">
             <div *ngIf="!isBulkDownload">
               <div *ngFor="let document of documents">
