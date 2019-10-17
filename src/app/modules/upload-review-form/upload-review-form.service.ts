@@ -41,7 +41,7 @@ export class UploadReviewFormService extends ApiService {
         });
       }
       if (sortParam && sortParam.length) {
-        endpointParam += `&sort=${sortParam[0].value}`;
+        endpointParam += `&sort=${sortParam[0].value.trim()}`;
       }
       endpoint = `/proxy/upload-reviews-form/list?form_template_id=${formId}&search_query=${endpointParam}`;
     } else {
@@ -75,6 +75,14 @@ export class UploadReviewFormService extends ApiService {
   changeDocumentStatus(formId: string, statusData: string): Observable<any> {
     const body = { status: statusData };
     return this.http.put(`/proxy/upload-reviews-form/change-status/${formId}`, body);
+  }
+
+  getFamilyList(): Observable<any> {
+    return this.http.get('/families');
+  }
+
+  updateDocumentSettings(documentId: string, data: any): Observable<any> {
+    return this.http.put(`/proxy/upload-reviews-form/uploaded-document-settings/${documentId}`, { ...data, entity_type: 'document' });
   }
 
   getFilterDropDownData(documents: any): FilterDropDownData | {} {

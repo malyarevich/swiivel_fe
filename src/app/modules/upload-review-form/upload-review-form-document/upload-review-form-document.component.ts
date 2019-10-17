@@ -1,5 +1,4 @@
-import {ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, Output} from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { Document } from '@models/upload-review-form/document.model';
 import { IconsEnum } from '@shared/icons.enum';
 import { SizesEnum } from '@shared/sizes.enum';
@@ -14,29 +13,22 @@ import { SizesEnum } from '@shared/sizes.enum';
 export class UploadReviewFormDocumentComponent {
   public _document: Document;
   public angle = 0;
-  public form: FormGroup;
   public icons = IconsEnum;
   public isDocumentLoading = true;
-  public isSettingsOpen = true;
   public loadedId: string;
   public sizes = SizesEnum;
+  public zoom = 1;
+  public imgDimension: { height: number, width: number } = {height: 0, width: 0};
+  @ViewChild('img', { static: false }) img: ElementRef;
 
-  @Input() documentTypes = [];
-  @Input() documentStudent = [];
-  @Input() documentAccount = [];
   @Input() isSideBarShown: boolean;
+  @Input() rotatingPicture = true;
   @Output() rotateImg = new EventEmitter<any>();
-  @Output() zoomImg = new EventEmitter<string>();
 
   @Input()
   set document(document: Document) {
     this.isDocumentLoading = true;
-
-    if (document) {
-      this.form.controls['type'].setValue(document.entity_name);
-      this.form.controls['account'].setValue(document.family_id);
-      this.form.controls['student'].setValue(document.person_name);
-    }
+    this.zoom = 1;
     this._document = document;
     this.angle = (document && document.rotate) ? parseInt(document.rotate, 10) : 0;
   }
@@ -48,21 +40,17 @@ export class UploadReviewFormDocumentComponent {
     return this._document;
   }
 
-  constructor(private fb: FormBuilder) {
-    this.form = this.fb.group({
-      type: new FormControl([], Validators.required),
-      account: new FormControl([], Validators.required),
-      student: new FormControl([], Validators.required)
-    });
-  }
+  constructor() {}
 
   isLoaded(): void {
     this.isDocumentLoading = false;
     this.loadedId = this._document._id;
-  }
-
-  changeFormState(): void {
-    this.isSettingsOpen = !this.isSettingsOpen;
+    if(this.img) {
+      this.imgDimension = {
+        width: this.img.nativeElement.naturalWidth * this.zoom,
+        height: this.img.nativeElement.naturalHeight * this.zoom
+      };
+    }
   }
 
   clickRotateImg(evt: string): void {
@@ -70,6 +58,18 @@ export class UploadReviewFormDocumentComponent {
   }
 
   clickZoomImg(evt: string): void {
-    this.zoomImg.emit(evt);
+    if ((this.zoom > 0.5) && (this.zoom < 2)) {
+      if (evt === 'in' && this.zoom + 0.1 < 2) {
+        this.zoom += 0.1;
+      } else if (evt === 'out' && this.zoom - 0.1 > 0.5) {
+        this.zoom -= 0.1;
+      }
+      if(this.img) {
+        this.imgDimension = {
+          width: this.img.nativeElement.naturalWidth * this.zoom,
+          height: this.img.nativeElement.naturalHeight * this.zoom
+        };
+      }
+    }
   }
 }

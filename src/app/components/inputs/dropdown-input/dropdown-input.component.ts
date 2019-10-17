@@ -38,7 +38,6 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
 
   @Input() dropdownSubHeader = false;
   @Input() isDisplaySelected = true;
-  @Input() isLabelHide = false;
   @Input() disabled = false;
   @Input() panelClass = 'dropdown-overlay';
   @Input()
