@@ -38,9 +38,9 @@
 
   </div>
 
-  <div [hidden]="loading" class="test-c d-flex justify-content-center overlay">
-    <div class="spinner-border text-light" role="status">
-      <span class="sr-only">Loading...</span>
+  <div class="test-c d-flex align-items-center justify-content-center overlay loading-wrap" [class.displaynone]="loading">
+    <span class="loading-font pb-2">Uploading Page</span>
+    <div class="spinner-border loading-font" role="status">
     </div>
   </div>
   <div [hidden]="!loading" class="test-c">

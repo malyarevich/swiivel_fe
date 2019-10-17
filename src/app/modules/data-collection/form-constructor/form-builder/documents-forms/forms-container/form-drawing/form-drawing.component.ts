@@ -45,6 +45,7 @@ export class FormDrawingComponent implements AfterViewInit, OnDestroy, OnInit, O
   page =1;
   drawingType: string = "system";
   temporaryField: FormPDFTemporaryField[] = [];
+  loadingPoc: number;
 
   constructor() {
   }
@@ -94,7 +95,8 @@ export class FormDrawingComponent implements AfterViewInit, OnDestroy, OnInit, O
 
 
   onProgress(progressData: PDFProgressData) {
-    // do anything with progress data. For example progress indicator
+    // do anything with progress data. For example progress indicator)
+    this.loadingPoc = progressData.loaded / progressData.total * 100;
     this.loading=progressData.loaded<=progressData.total;
   }
   logType(){
