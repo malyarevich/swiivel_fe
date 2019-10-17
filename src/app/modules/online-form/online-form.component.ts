@@ -2,7 +2,8 @@ import {
   ChangeDetectionStrategy,
   Component,
   OnInit,
-  OnDestroy
+  OnDestroy,
+  Input
 } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
@@ -41,7 +42,7 @@ import { ninvoke } from 'q';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class OnlineFormComponent implements OnInit, OnDestroy {
-  // formId: string;
+  @Input() formId: string = '';
   form: Form;
   fg: FormGroup;
 
@@ -138,7 +139,9 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
         }
 
         this.onlineFormService.setFromId(
-          this.route.snapshot.paramMap.get('mongo_id')
+          this.formId === ''
+            ? this.route.snapshot.paramMap.get('mongo_id')
+            : this.formId
         );
 
         // TODO: check if we need formId here
@@ -532,7 +535,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
               : defatultValue,
           disabled: disabled || this.isViewOnly$.getValue()
         },
-        isValidate ? validators : null
+        isValidate && !disabled ? validators : null
       )
     );
   }
@@ -690,9 +693,10 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
             defaultValue,
             field.options.readonly
           );
-          const isRequired = aValidators.find(validator => {
-            return validator === Validators.required;
-          });
+          const isRequired =
+            aValidators.find(validator => {
+              return validator === Validators.required;
+            }) && !field.options.readonly;
 
           this.addToFieldLists(
             mainMenuNames.generalInfo,

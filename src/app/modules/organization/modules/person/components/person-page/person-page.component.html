@@ -2,11 +2,14 @@
   <ngb-tabset>
     <ngb-tab title="GENERAL">
       <ng-template ngbTabContent>
-        <div *ngIf="(person$ | async) as data">
-          <p><b>{{data.first_name}} {{ data.last_name}}</b> {{data.contact_phone}}</p>
-          <p>{{data.address}}</p>
-          <p>{{data.city}} {{data.state}} {{data.country}}</p>
-          <p>{{data.contact_email}}</p>
+        <div *ngIf="person$ | async as data">
+          <p>
+            <b>{{ data.first_name }} {{ data.last_name }}</b>
+            {{ data.contact_phone }}
+          </p>
+          <p>{{ data.address }}</p>
+          <p>{{ data.city }} {{ data.state }} {{ data.country }}</p>
+          <p>{{ data.contact_email }}</p>
         </div>
       </ng-template>
     </ngb-tab>
@@ -15,26 +18,30 @@
         <section class="innerTab">
           <table class="table table-striped">
             <thead>
-            <tr>
-              <th>Form name</th>
-              <th>Created</th>
-              <th>Updated</th>
-              <th>Type</th>
-              <th>Link</th>
-            </tr>
+              <tr>
+                <th>Form name</th>
+                <th>Created</th>
+                <th>Updated</th>
+                <th>Type</th>
+                <th>Link</th>
+              </tr>
             </thead>
             <tbody *ngFor="let item of formList$ | async">
-            <tr>
-              <td>{{item.name}}</td>
-              <td>{{item.created_at}}</td>
-              <td>{{item.updated_at}}</td>
-              <td>Registrations</td>
-              <td>
-                <button type="button" routerLink="/data-collection/online-form/{{item._id}}" class="btn btn-default">
-                  Link
-                </button>
-              </td>
-            </tr>
+              <tr>
+                <td>{{ item.name }}</td>
+                <td>{{ item.created_at }}</td>
+                <td>{{ item.updated_at }}</td>
+                <td>Registrations</td>
+                <td>
+                  <button
+                    type="button"
+                    routerLink="/online-form/{{ item._id }}"
+                    class="btn btn-default"
+                  >
+                    Link
+                  </button>
+                </td>
+              </tr>
             </tbody>
           </table>
         </section>
@@ -42,4 +49,3 @@
     </ngb-tab>
   </ngb-tabset>
 </div>
-

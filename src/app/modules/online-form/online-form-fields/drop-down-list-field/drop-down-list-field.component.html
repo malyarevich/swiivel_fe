@@ -13,7 +13,7 @@
           : list
       "
       [ngClass]="{
-        validation_required: this.field.options.required,
+        validation_required: this.field.options.required && !this.field.options.readonly,
         validation_error: !!validationText
       }"
     >

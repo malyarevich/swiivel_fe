@@ -7,7 +7,7 @@
     <ng-container *ngIf="hasErrors()">
       <span
         error-hint
-        [errorsList]="getErrorByNodeId(group.id, formErrors)"
+        [errorsList]="getErrorByNodeId(group._id, formErrors)"
         [fieldNameList]="fieldNameList"
         class="errors-bullet"
       ></span>
