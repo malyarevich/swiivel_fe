@@ -24,6 +24,13 @@
         }
       }
     }
+
+    &__row {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+
     &__input {
       height: 13px;
       display: flex;

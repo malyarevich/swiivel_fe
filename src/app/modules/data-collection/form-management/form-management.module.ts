@@ -13,14 +13,16 @@ import { CdkDetailRowDirective } from '@app/utils/directives/cdk-detail-row.dire
 import { ProgressLineBarComponent } from '@app/components/bars/progress-line-bar/progress-line-bar.component';
 import { SharedModule } from '@shared/shared.module';
 import { CdkTableModule } from '@angular/cdk/table';
-import { OverlayModule } from "@angular/cdk/overlay";
+import { OverlayModule } from '@angular/cdk/overlay';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { OnlineFormModule } from '@app/modules/data-collection/online-form/online-form.module';
+import { OnlineFormModule } from '@app/modules/online-form/online-form.module';
 import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
-    FormManagementComponent, FormManagementSubmissionsComponent, CdkDetailRowDirective,
+    FormManagementComponent,
+    FormManagementSubmissionsComponent,
+    CdkDetailRowDirective,
     ProgressLineBarComponent
   ],
   imports: [
@@ -37,7 +39,7 @@ import { HttpClientModule } from '@angular/common/http';
     FormStatisticModule,
     SharedRedComponentsModule,
     FormTableHeaderModule,
-    FormAccessModalModule,
+    FormAccessModalModule
   ],
   exports: [FormManagementComponent],
   providers: []

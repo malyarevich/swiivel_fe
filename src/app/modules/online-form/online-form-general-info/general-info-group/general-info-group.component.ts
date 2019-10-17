@@ -66,7 +66,10 @@ export class GeneralInfoGroupComponent implements OnInit {
         targetNode.constructor === Object
       )
     ) {
-      if (this.fg.contains(id)) {
+      if (
+        this.fg.contains(id) ||
+        (this.fg.controls[id] && this.fg.controls[id].disabled)
+      ) {
         errors[id] = targetNode[id];
       } else {
         if (targetNode[id]) {

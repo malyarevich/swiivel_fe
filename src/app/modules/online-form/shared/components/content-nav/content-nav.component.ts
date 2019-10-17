@@ -5,19 +5,22 @@ import {
   OnDestroy,
   OnInit,
   Output
-} from "@angular/core";
+} from '@angular/core';
 import {
   GenerateErrorsService,
   ISectionError
-} from "../../../utils/generate-errors.service";
-import { Subject, Subscription } from "rxjs";
+} from '../../../utils/generate-errors.service';
+import { Subject, Subscription } from 'rxjs';
 import { FormGroup } from '@angular/forms';
-import { ICurrentPosition, IFormNavigationState } from '@app/modules/online-form/models/online-form.model';
+import {
+  ICurrentPosition,
+  IFormNavigationState
+} from '@app/modules/online-form/models/online-form.model';
 
 @Component({
-  selector: "sw-content-nav",
-  templateUrl: "./content-nav.component.html",
-  styleUrls: ["./content-nav.component.scss"]
+  selector: 'sw-content-nav',
+  templateUrl: './content-nav.component.html',
+  styleUrls: ['./content-nav.component.scss']
 })
 export class ContentNavComponent implements OnInit, OnDestroy {
   @Input() formNavigationState: IFormNavigationState[];
@@ -46,7 +49,7 @@ export class ContentNavComponent implements OnInit, OnDestroy {
   getTabs(): any[] {
     return this.formNavigationState.find(state => {
       return state.page === this.currentPosition.page;
-    })['tabs'];
+    }).tabs;
   }
 
   getErrorByNodeId(id, targetNode = this.formErrors) {
@@ -57,11 +60,14 @@ export class ContentNavComponent implements OnInit, OnDestroy {
         targetNode.constructor === Object
       )
     ) {
-      if (this.fg.contains(id)) {
+      if (
+        this.fg.contains(id) ||
+        (this.fg.controls[id] && this.fg.controls[id].disabled)
+      ) {
         errors[id] = targetNode[id];
       } else {
         Object.keys(targetNode[id]).forEach(key => {
-          errors = {...errors, ...this.getErrorByNodeId(key, targetNode[id])};
+          errors = { ...errors, ...this.getErrorByNodeId(key, targetNode[id]) };
         });
       }
     }
@@ -77,7 +83,7 @@ export class ContentNavComponent implements OnInit, OnDestroy {
   }
 
   hasErrors(id) {
-    return typeof this.formErrors[id] !== "undefined";
+    return typeof this.formErrors[id] !== 'undefined';
   }
 
   ngOnDestroy(): void {
