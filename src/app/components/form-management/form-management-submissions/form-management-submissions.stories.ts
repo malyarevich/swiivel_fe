@@ -9,7 +9,7 @@ import { FormSubmissionsListParams } from '@app/models/form-submissions-list.mod
 import { StatusColors } from './form-management-submissions.models';
 import { StorybookImports, StorybookProviders } from '@components/utils/storybook';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { ProgressBarComponent } from '@shared/bars/progress-bar/progress-bar.component';
+import { ProgressLineBarComponent } from '@app/components/bars/progress-line-bar/progress-line-bar.component';
 import { PopupComponent } from '@app/core/components/popup/popup.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CdkDetailRowDirective } from '@app/utils/directives/cdk-detail-row.directive';
@@ -23,7 +23,7 @@ stories.addDecorator(withKnobs);
 stories.addDecorator(
   moduleMetadata({ 
     declarations: [
-        FormManagementSubmissionsComponent, ProgressBarComponent, 
+        FormManagementSubmissionsComponent, ProgressLineBarComponent, 
         PopupComponent, CdkDetailRowDirective
     ],
     imports: [
