@@ -23,31 +23,29 @@ export class UploadReviewFormComponent implements OnInit {
   @ViewChild('link', { static: false }) link: ElementRef;
   @ViewChild('dialog', {static: true}) dialog: DialogComponent;
 
-  public dataSource: UploadReviewFormDataSource = new UploadReviewFormDataSource(this.uploadReviewFormService);
-  public documents: Document[];
-  public uploadDocuments: Document[];
   public activeIdDocument: string;
   public activeIdForm = '';
-  public filterValue = {};
-  public sortValue: SortDropDownData[];
-  public form: FormGroup;
-  public removeDocumentId: string;
-  public showSpinner: boolean;
-  public extremeDocuments: ExtremeUploadForms = {};
   public colors = ColorsEnum;
-  public isSideBarShown = true;
-  public icons = IconsEnum;
-  public size = SizesEnum;
-  public statuses = UploadReviewFormStatusesEnum;
-  public isBulkDownload = false;
-  public updatingDocumentStatus = false;
+  public dataSource: UploadReviewFormDataSource = new UploadReviewFormDataSource(this.uploadReviewFormService);
+  public documents: Document[];
   public download: { url: SafeResourceUrl; filename: string; } = {url: null, filename: null};
+  public extremeDocuments: ExtremeUploadForms = {};
+  public filterValue: any = {};
+  public form: FormGroup;
+  public icons = IconsEnum;
   public isAllDocumentsSelected = false;
+  public isBulkDownload = false;
+  public isSideBarShown = true;
+  public removeDocumentId: string;
+  public size = SizesEnum;
+  public showSpinner: boolean;
+  public sortValue: SortDropDownData[];
+  public statuses = UploadReviewFormStatusesEnum;
+  public updatingDocumentStatus = false;
+  public uploadDocuments: Document[];
 
   public documentTypes = [];
-  public documentStudent = ['Adam Doe'];
-  public documentAccount = ['a062c544a27f2c14f3e83f66efb81c59'];
-  public uploadDocumentData = {};
+  public documentFamilies = [];
 
   constructor(
     public uploadReviewFormService: UploadReviewFormService,
@@ -74,11 +72,22 @@ export class UploadReviewFormComponent implements OnInit {
     this.activeIdForm = this.route.snapshot.paramMap.get('id');
     this.dataSource.uploadDocuments(this.activeIdForm).subscribe(() => { this.getDocuments() });
     this.dataSource.uploadFilterList(this.activeIdForm);
+    this.dataSource.uploadFamilyList()
+      .subscribe(() => {
+        this.dataSource.getFamilies().subscribe((data) => this.documentFamilies = data);
+      });
+
     this.dataSource.getFilters()
       .subscribe((data) => {
         if (data) {
           this.filterValue = this.uploadReviewFormService.convertFilterDocumentsData(data);
-          this.documentTypes = this.uploadReviewFormService.convertToSettingsType(this.filterValue);
+
+          if (this.filterValue.documents && this.filterValue.documents.data && this.filterValue.documents.data.length) {
+            this.documentTypes = this.filterValue.documents.data.map(filter => {
+              return { title: filter.name, value: filter.id };
+            });
+          }
+
           if (!(this.filterValue && this.filterValue)) {
             this.form.controls['filter'].disable();
           } else {
@@ -103,12 +112,6 @@ export class UploadReviewFormComponent implements OnInit {
         });
       }
     });
-    this.uploadDocumentData = {
-      document_id: this.activeIdForm,
-      family_id: this.documentAccount[0],
-      person_id: this.documentStudent[0],
-      document_type: this.documentTypes[0]
-    };
   }
 
   getDocuments(): void {
@@ -283,7 +286,6 @@ export class UploadReviewFormComponent implements OnInit {
     this.uploadDocuments.map((item) => item.isSelected = this.isAllDocumentsSelected);
   }
 
-  // TODO
   rotateImg(evt: any): void {
     if (evt.angle) {
       if (evt.direction === 'left') {
@@ -300,6 +302,17 @@ export class UploadReviewFormComponent implements OnInit {
         }
       }
     }
+  }
+
+  updateDocumentSettings(data: any) {
+    this.dataSource.updateDocumentSettings(this.activeIdDocument, data)
+      .subscribe( () => {
+        this.dataSource.uploadDocuments(this.activeIdForm,
+          this.form.get('filter').value,
+          this.form.get('sort').value,
+          this.form.get('search').value,)
+          .subscribe(() => { this.getDocuments() });
+      });
   }
 
   updateImg(angle: string) {

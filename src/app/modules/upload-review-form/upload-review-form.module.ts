@@ -11,6 +11,9 @@ import {
 import {
   UploadReviewFormControlsComponent
 } from '@modules/upload-review-form/upload-review-form-controls/upload-review-form-controls.component';
+import {
+  UploadReviewFormDocumentSettingsComponent
+} from '@modules/upload-review-form/upload-review-form-document-settings/upload-review-form-document.component-settings';
 import { FormUploadFooterComponent } from '@modules/upload-review-form/upload-review-form-footer/upload-review-form-footer.component';
 import { UploadFormReviewItemComponent } from '@modules/upload-review-form/upload-review-form-item/upload-review-form-item.component';
 import { SharedModule } from '@shared/shared.module';
@@ -21,12 +24,13 @@ import { UploadReviewFormService } from '@modules/upload-review-form/upload-revi
 
 @NgModule({
   declarations: [
-    UploadReviewFormComponent,
-    UploadFormReviewItemComponent,
-    UploadReviewFormDocumentComponent,
     FormUploadFooterComponent,
+    UploadFormReviewItemComponent,
     UploadReviewFormApprovalBarComponent,
+    UploadReviewFormComponent,
     UploadReviewFormControlsComponent,
+    UploadReviewFormDocumentComponent,
+    UploadReviewFormDocumentSettingsComponent,
   ],
   imports: [
     CommonModule,

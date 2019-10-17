@@ -1,5 +1,8 @@
 <div *ngIf="document">
-  <div [ngClass]="{'loading': isDocumentLoading}" class="container" [ngClass]="{'full-size': !isSideBarShown}">
+  <div
+    class="container"
+    [ngClass]="{'loading': isDocumentLoading, 'full-size': !isSideBarShown}"
+  >
     <div *ngIf="isDocumentLoading" class="loading-spinner">
       <app-spinner></app-spinner>
     </div>
@@ -47,34 +50,8 @@
         </button>
       </div>
     </div>
-    <form [formGroup]="form" class="settings">
-      <div class="settings-header">
-        <p class="settings-text">Document settings</p>
-        <sw-icon-button
-          [icon]="isSettingsOpen ? icons.CARET_DOWN : icons.CARET_UP"
-          (click)="changeFormState()"
-        ></sw-icon-button>
-      </div>
-      <div *ngIf="isSettingsOpen">
-        <div class="settings-field">
-          <app-select-field formControlName="type" [items]="documentTypes" [labelTitle]="'Document Type'">
-          </app-select-field>
-        </div>
-        <div class="settings-field">
-          <app-select-field formControlName="account" [items]="documentAccount" [labelTitle]="'Account'">
-          </app-select-field>
-        </div>
-        <div class="settings-field">
-          <app-select-field formControlName="student" [items]="documentStudent" [labelTitle]="'Student'">
-          </app-select-field>
-        </div>
-      </div>
-    </form>
   </div>
 </div>
 <div *ngIf="!document && !isDocumentLoading">
   <h3 class="no-documents-header">No Selected document</h3>
 </div>
-
-
-

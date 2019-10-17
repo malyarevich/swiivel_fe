@@ -1,5 +1,4 @@
-import {ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, Output} from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
 import { Document } from '@models/upload-review-form/document.model';
 import { IconsEnum } from '@shared/icons.enum';
 import { SizesEnum } from '@shared/sizes.enum';
@@ -14,16 +13,11 @@ import { SizesEnum } from '@shared/sizes.enum';
 export class UploadReviewFormDocumentComponent {
   public _document: Document;
   public angle = 0;
-  public form: FormGroup;
   public icons = IconsEnum;
   public isDocumentLoading = true;
-  public isSettingsOpen = true;
   public loadedId: string;
   public sizes = SizesEnum;
 
-  @Input() documentTypes = [];
-  @Input() documentStudent = [];
-  @Input() documentAccount = [];
   @Input() isSideBarShown: boolean;
   @Output() rotateImg = new EventEmitter<any>();
   @Output() zoomImg = new EventEmitter<string>();
@@ -32,11 +26,6 @@ export class UploadReviewFormDocumentComponent {
   set document(document: Document) {
     this.isDocumentLoading = true;
 
-    if (document) {
-      this.form.controls['type'].setValue(document.entity_name);
-      this.form.controls['account'].setValue(document.family_id);
-      this.form.controls['student'].setValue(document.person_name);
-    }
     this._document = document;
     this.angle = (document && document.rotate) ? parseInt(document.rotate, 10) : 0;
   }
@@ -48,21 +37,11 @@ export class UploadReviewFormDocumentComponent {
     return this._document;
   }
 
-  constructor(private fb: FormBuilder) {
-    this.form = this.fb.group({
-      type: new FormControl([], Validators.required),
-      account: new FormControl([], Validators.required),
-      student: new FormControl([], Validators.required)
-    });
-  }
+  constructor() {}
 
   isLoaded(): void {
     this.isDocumentLoading = false;
     this.loadedId = this._document._id;
-  }
-
-  changeFormState(): void {
-    this.isSettingsOpen = !this.isSettingsOpen;
   }
 
   clickRotateImg(evt: string): void {

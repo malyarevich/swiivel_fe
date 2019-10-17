@@ -35,19 +35,6 @@
       height: 13px;
       display: flex;
       align-items: center;
-
-      &.hide-label {
-
-        &.many {
-          margin: 2px 0;
-        }
-
-        .text {
-          margin-top: 0;
-        }
-
-      }
-
       .text {
         font-style: normal;
         font-size: 12px;

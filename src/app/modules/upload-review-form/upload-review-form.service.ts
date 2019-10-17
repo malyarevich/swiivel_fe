@@ -77,6 +77,14 @@ export class UploadReviewFormService extends ApiService {
     return this.http.put(`/proxy/upload-reviews-form/change-status/${formId}`, body);
   }
 
+  getFamilyList(): Observable<any> {
+    return this.http.get('/families');
+  }
+
+  updateDocumentSettings(documentId: string, data: any): Observable<any> {
+    return this.http.put(`/proxy/upload-reviews-form/uploaded-document-settings/${documentId}`, { ...data, entity_type: 'document' });
+  }
+
   getFilterDropDownData(documents: any): FilterDropDownData | {} {
     const uploadReviewFormStatusesEnum = UploadReviewFormStatusesEnum;
     const uploadReviewFormSubmissionTypeEnum = UploadReviewFormSubmissionTypeEnum;
