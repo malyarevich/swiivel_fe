@@ -178,12 +178,18 @@ export class UploadReviewFormComponent implements OnInit {
       this.documents.find(document => document._id === this.activeIdDocument)._id, statusData,
       this.activeIdForm, this.form.get('filter').value, this.form.get('sort').value
     )
-      .subscribe((data) => {
+      .subscribe(() => {
+        this.updatingDocumentStatus = false;
+
         if (!this.isLastDocument()) {
           const activeDocumentIndex = this.documents.indexOf(this.documents.find(document => document._id === this.activeIdDocument));
           this.selectItem(this.documents[activeDocumentIndex + 1]._id);
         }
-        this.updatingDocumentStatus = false;
+        this.dataSource.uploadDocuments(this.activeIdForm,
+          this.form.get('filter').value,
+          this.form.get('sort').value,
+          this.form.get('search').value,)
+          .subscribe(() => { this.getDocuments() });
       });
   }
 
