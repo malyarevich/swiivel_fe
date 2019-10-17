@@ -1,7 +1,8 @@
-<ng-container *ngIf="(isReady$ | async)">
-
+<ng-container *ngIf="isReady$ | async">
   <div class="online_form_container__controls">
-    <sw-button [routerLink]="['/upload-review-form', formId]">Upload & Review</sw-button>
+    <sw-button [routerLink]="['/upload-review-form', formId]"
+      >Upload & Review</sw-button
+    >
   </div>
 
   <sw-online-form-nav
@@ -10,13 +11,12 @@
   ></sw-online-form-nav>
 
   <div class="container-fluid app-of-background online_form_container">
-
     <div class="online_form_container__nav">
       <sw-online-form-menu
         [form]="form"
-        [pagesPercents]="(pagesPercents$ | async)"
-        [formNavigationState]="(formNavigationState$ | async)"
-        [currentPosition]="(currentPosition$ | async)"
+        [pagesPercents]="pagesPercents$ | async"
+        [formNavigationState]="formNavigationState$ | async"
+        [currentPosition]="currentPosition$ | async"
         (onGoToPage)="goToPage($event)"
       ></sw-online-form-menu>
     </div>
@@ -26,25 +26,29 @@
         <sw-online-form-view
           [form]="form"
           [fg]="fg"
-          [formNavigationState]="(formNavigationState$ | async)"
-          [currentPosition]="(currentPosition$ | async)"
-          [formErrors]="(sectionGroupFieldsErrors$ | async)"
+          [formNavigationState]="formNavigationState$ | async"
+          [currentPosition]="currentPosition$ | async"
+          [formErrors]="sectionGroupFieldsErrors$ | async"
           [fieldNameList]="fieldNameList"
+          [isViewOnly]="isViewOnly$ | async"
           (onGoToTab)="goToTab($event)"
-          ></sw-online-form-view>
-          <!-- [formErrors]="(formErrors$ | async)" -->
+        ></sw-online-form-view>
+        <!-- [formErrors]="(formErrors$ | async)" -->
       </div>
 
       <div class="online_form_container__control_block">
         <sw-online-form-controls
-        (previousStepEmitter)="goPreviousStep()"
-        (saveAndNextStepEmitter)="saveAndNextStep()"
+          (previousStepEmitter)="goPreviousStep()"
+          (saveAndNextStepEmitter)="saveAndNextStep()"
         ></sw-online-form-controls>
       </div>
     </div>
-
   </div>
 </ng-container>
 <ng-container *ngIf="!(isReady$ | async)">
-  <sw-main-spinner class="spinner_box"></sw-main-spinner>
+  <ng-container *ngIf="hasErrors$ | async">Error!</ng-container>
+
+  <ng-container *ngIf="!(hasErrors$ | async)">
+    <sw-main-spinner class="spinner_box"></sw-main-spinner>
+  </ng-container>
 </ng-container>

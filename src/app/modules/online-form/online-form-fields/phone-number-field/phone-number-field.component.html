@@ -10,7 +10,7 @@
     <!-- <sw-input-phone-number
       [formControlName]="field._id"
       [ngClass]="{
-        validation_required: this.field.options.required,
+        validation_required: this.field.options.required && !this.field.options.readonly,
         validation_error: !!validationText
       }"
     >
@@ -23,7 +23,7 @@
       aria-describedby="basic-addon2"
       class="app-input form-control"
       [ngClass]="{
-        validation_required: this.field.options.required,
+        validation_required: this.field.options.required && !this.field.options.readonly,
         validation_error: !!validationText
       }"
       [placeholder]="field.name | titlecase"
@@ -38,7 +38,7 @@
 
     <span
       class="validation_icon"
-      [ngClass]="{ validation_required: this.field.options.required }"
+      [ngClass]="{ validation_required: this.field.options.required && !this.field.options.readonly }"
     >
       <i class="fas fa-asterisk fa-xs"></i>
     </span>

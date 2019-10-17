@@ -7,7 +7,7 @@
     <ng-container *ngIf="hasErrors()">
       <span
         error-hint
-        [errorsList]="getErrorByNodeId(group.id, formErrors)"
+        [errorsList]="getErrorByNodeId(group._id, formErrors)"
         [fieldNameList]="fieldNameList"
         class="errors-bullet"
       ></span>
@@ -23,6 +23,7 @@
         <sw-general-info-field
           [field]="field"
           [formErrors]="getFormErrorsById(field['_id'])"
+          [isViewOnly]="isViewOnly"
         ></sw-general-info-field>
       </div>
     </ng-container>
@@ -37,6 +38,7 @@
         [formErrors]="getFormErrorsById(groupItem['_id'])"
         [fieldNameList]="fieldNameList"
         [fg]="fg"
+        [isViewOnly]="isViewOnly"
       ></sw-general-info-group>
     </ng-container>
   </div>

@@ -22,7 +22,7 @@
 
     <span
       class="validation_icon"
-      [ngClass]="{ validation_required: this.field.options.required }"
+      [ngClass]="{ validation_required: this.field.options.required && !this.field.options.readonly }"
     >
       <i class="fas fa-asterisk fa-xs"></i>
     </span>

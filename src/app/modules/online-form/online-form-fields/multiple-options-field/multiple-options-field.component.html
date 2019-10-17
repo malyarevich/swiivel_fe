@@ -15,7 +15,7 @@
           type="checkbox"
           mdInput
           [ngClass]="{ 
-            validation_required: this.field.options.required,
+            validation_required: this.field.options.required && !this.field.options.readonly,
             validation_error: !!validationText
           }"
         />{{ item }}
@@ -34,7 +34,7 @@
 
     <!-- <span class="error_icon" [ngClass]="{'validation_error': !!validationText}" (click)="validationText = ''"><i class="fas fa-times fa-xs"></i></span> -->
 
-    <!-- <span class="validation_icon" [ngClass]="{ validation_required: this.field.options.required }">
+    <!-- <span class="validation_icon" [ngClass]="{ validation_required: this.field.options.required && !this.field.options.readonly }">
         <i class="fas fa-asterisk fa-xs"></i>
     </span> -->
 

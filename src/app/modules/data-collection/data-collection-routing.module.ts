@@ -57,6 +57,16 @@ export const routes: Routes = [
           }
         ]
       },
+      {
+        path: 'form-management',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('./form-management/form-management.module')
+              .then(m => m.FormManagementModule)
+          }
+        ]
+      },
     ]
   }
 ];
