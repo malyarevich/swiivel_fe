@@ -31,13 +31,9 @@
                 [multiple]="true"
                 [dropdownSubHeader]="true"
                 [options]="filterValue"
-                [isDisplaySelected]="true"
                 [disabled]="isEmptyObject(filterValue) || isBulkDownload"
               >
-                <span
-                  class="sidebar-controls-title"
-                  [ngClass]="{'sidebar-controls-title-with-value': isFilterEmpty()}"
-                >
+                <span class="label">
                   Filtered By
                 </span>
               </sw-dropdown-input>
@@ -46,13 +42,9 @@
               <sw-dropdown-input
                 formControlName="sort"
                 [options]="sortValue"
-                [isDisplaySelected]="true"
                 [disabled]="!(sortValue && sortValue.length) || isBulkDownload"
               >
-                <span
-                  class="sidebar-controls-title"
-                  [ngClass]="{'sidebar-controls-title-with-value': isSortByEmpty()}"
-                >
+                <span class="label">
                   Sorted By
                 </span>
               </sw-dropdown-input>

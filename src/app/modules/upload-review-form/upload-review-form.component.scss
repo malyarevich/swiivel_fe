@@ -87,8 +87,6 @@
 
       sw-dropdown-input::ng-deep .dropdown_input_container__input .text {
         font-size: 10px;
-        position: absolute;
-        margin-top: 7px;
         line-height: 9px;
       }
     }
@@ -116,6 +114,9 @@
 
   .select-all-button {
     margin: 0 0 15px;
+    &::ng-deep button.small-button .small-button__text {
+      font-size: 10px;
+    }
   }
 }
 
