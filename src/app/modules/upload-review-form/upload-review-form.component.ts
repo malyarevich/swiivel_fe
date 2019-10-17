@@ -43,6 +43,7 @@ export class UploadReviewFormComponent implements OnInit {
   public statuses = UploadReviewFormStatusesEnum;
   public updatingDocumentStatus = false;
   public uploadDocuments: Document[];
+  public rotatingPicture: boolean;
 
   public documentTypes = [];
   public documentFamilies = [];
@@ -69,6 +70,9 @@ export class UploadReviewFormComponent implements OnInit {
     this.dataSource.$loading.subscribe((loading: boolean) => {
       this.showSpinner = loading;
     });
+    this.dataSource.$changingRotationSubject.subscribe((rotating: boolean) => {
+      this.rotatingPicture = rotating;
+    });
     this.activeIdForm = this.route.snapshot.paramMap.get('id');
     this.dataSource.uploadDocuments(this.activeIdForm).subscribe(() => { this.getDocuments() });
     this.dataSource.uploadFilterList(this.activeIdForm);
@@ -89,21 +93,22 @@ export class UploadReviewFormComponent implements OnInit {
           }
 
           if (!(this.filterValue && this.filterValue)) {
-            this.form.controls['filter'].disable();
+            this.form.controls['filter'].disable({ emitEvent: false });
           } else {
-            this.form.controls['filter'].enable();
+            this.form.controls['filter'].enable({ emitEvent: false });
           }
           if (data.sort) {
             this.sortValue = this.uploadReviewFormService.convertSortDocumentsData(data);
             if (!(this.sortValue && this.sortValue)) {
-              this.form.controls['sort'].disable();
+              this.form.controls['sort'].disable({ emitEvent: false });
             } else {
-              this.form.controls['sort'].enable();
+              this.form.controls['sort'].enable({ emitEvent: false });
             }
           }
           this.cdr.detectChanges();
         }
       });
+
     this.form.valueChanges.subscribe(params => {
       if (!this.isBulkDownload) {
         this.dataSource.uploadDocuments(this.activeIdForm, params.filter, params.sort, params.search).subscribe(() => {

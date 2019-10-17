@@ -3,32 +3,40 @@
     class="container"
     [ngClass]="{'loading': isDocumentLoading, 'full-size': !isSideBarShown}"
   >
-    <div *ngIf="isDocumentLoading" class="loading-spinner">
+    <div
+      *ngIf="isDocumentLoading || rotatingPicture"
+      [ngClass]="{'loading-spinner': isDocumentLoading, 'rotating-spinner': rotatingPicture}">
       <app-spinner></app-spinner>
     </div>
-    <div
-      *ngIf="document && document.content_type.includes('image')"
-    >
-      <img
-        class="image"
-        [src]="document.link"
-        [ngStyle]="{'transform' : 'rotate('+document.rotate+'deg)'}"
-        [alt]="document.entity_name"
-        (load)="isLoaded($event)"
-        [hidden]="isDocumentLoading"
-      />
-    </div>
-    <div
-      *ngIf="document && document.content_type.includes('pdf')"
-      [ngStyle]="{opacity: isDocumentLoading ? 0 : 1}"
-    >
-      <pdf-viewer
-        [src]="document.link"
-        [rotation]="angle"
-        [render-text]="true"
-        (after-load-complete)="isLoaded()"
-        style="display: block;"
-      ></pdf-viewer>
+    <div [ngClass]="{'rotating': rotatingPicture }">
+      <div
+        *ngIf="document && document.content_type.includes('image')"
+      >
+        <img
+          class="image"
+          [width]="imgDimension.width"
+          [height]="imgDimension.height"
+          [src]="document.link"
+          [ngStyle]="{'transform' : 'rotate('+document.rotate+'deg)'}"
+          [alt]="document.entity_name"
+          (load)="isLoaded($event)"
+          [hidden]="isDocumentLoading"
+          #img
+        />
+      </div>
+      <div
+        *ngIf="document && document.content_type.includes('pdf')"
+        [ngStyle]="{opacity: isDocumentLoading ? 0 : 1}"
+      >
+        <pdf-viewer
+          [src]="document.link"
+          [rotation]="angle"
+          [render-text]="true"
+          (after-load-complete)="isLoaded()"
+          style="display: block;"
+          [zoom]="zoom"
+        ></pdf-viewer>
+      </div>
     </div>
     <div class="controllers" *ngIf="!isDocumentLoading">
       <div class="controllers-zoom">

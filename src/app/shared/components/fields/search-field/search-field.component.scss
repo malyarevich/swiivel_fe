@@ -10,6 +10,11 @@
   width: auto;
   position: relative;
 
+  .form-control:disabled {
+    background: $gray;
+    border-color: $soft-gray;
+  }
+
   &.app-search-field-controls {
     input {
       border-radius: 100px;

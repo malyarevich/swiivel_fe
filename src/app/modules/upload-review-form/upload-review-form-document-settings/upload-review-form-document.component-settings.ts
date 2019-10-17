@@ -1,4 +1,4 @@
-import {Component, Input, Output, OnChanges, SimpleChanges, EventEmitter} from '@angular/core';
+import { Component, Input, Output, OnChanges, SimpleChanges, EventEmitter } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { IconsEnum } from '@shared/icons.enum';
 import { Document } from '@models/upload-review-form/document.model';

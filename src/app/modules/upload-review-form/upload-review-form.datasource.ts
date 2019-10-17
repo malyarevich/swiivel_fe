@@ -10,9 +10,11 @@ export class UploadReviewFormDataSource implements DataSource<any> {
   private familySubject = new BehaviorSubject<any>([]);
   private filterSubject = new BehaviorSubject<any>({});
   private loadingSubject = new BehaviorSubject<boolean>(false);
+  private changingRotationSubject = new BehaviorSubject<boolean>(false);
   private errorSubject = new BehaviorSubject<string>(null);
   public $error = this.errorSubject.asObservable();
   public $loading = this.loadingSubject.asObservable();
+  public $changingRotationSubject  = this.changingRotationSubject.asObservable();
   private selectedFormId = new BehaviorSubject<any>(null);
 
   constructor(private uploadReviewFormService: UploadReviewFormService) {
@@ -49,7 +51,6 @@ export class UploadReviewFormDataSource implements DataSource<any> {
     this.selectedFormId.next(id);
   }
 
-
   connect(_collectionViewer: CollectionViewer): Observable<any[]> {
     return this.documentSubject.asObservable();
   }
@@ -61,6 +62,7 @@ export class UploadReviewFormDataSource implements DataSource<any> {
     this.loadingSubject.complete();
     this.selectedFormId.complete();
     this.errorSubject.complete();
+    this.changingRotationSubject.complete();
   }
 
   uploadDocuments(formId: string, filterParams?: any, sortParam?: any, searchParam?: any): Observable<any> {
@@ -69,6 +71,7 @@ export class UploadReviewFormDataSource implements DataSource<any> {
     return this.uploadReviewFormService.getDocumentList(formId, filterParams, sortParam, searchParam).pipe(
       map((documents) => {
         this.loadingSubject.next(false);
+        this.changingRotationSubject.next(false);
         this.dataSubject.next(documents.data);
     }));
   }
@@ -119,6 +122,7 @@ export class UploadReviewFormDataSource implements DataSource<any> {
   }
 
   rotateImg(angle: string, id: string): Observable<any> {
+    this.changingRotationSubject.next(true);
     return this.uploadReviewFormService.rotateImg(angle, id);
   }
 
