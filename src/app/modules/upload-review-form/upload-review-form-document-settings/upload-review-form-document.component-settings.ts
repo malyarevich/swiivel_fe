@@ -62,16 +62,18 @@ export class UploadReviewFormDocumentSettingsComponent implements OnChanges {
       let account = [null];
       let student = [];
 
-      if (document.entity_id) {
-        type = this.documentTypes.filter(value => value.value === document.entity_id);
-      }
+      if (document) {
+        if (document.entity_id) {
+          type = this.documentTypes.filter(value => value.value === document.entity_id);
+        }
 
-      if (document.family_id) {
-        account = this.documentFamilies.filter(value => value.value === document.family_id);
-      }
+        if (document.family_id) {
+          account = this.documentFamilies.filter(value => value.value === document.family_id);
+        }
 
-      if (document.person_id) {
-        student = account[0]['students'].filter(value => value.value === parseInt(document.person_id, 10));
+        if (document.person_id) {
+          student = account[0]['students'].filter(value => value.value === parseInt(document.person_id, 10));
+        }
       }
 
       this.form.patchValue({ type, account, student });
