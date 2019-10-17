@@ -17,7 +17,6 @@ import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators'
 import { StatusColors } from './form-management-submissions.models';
 import { FormSubmissionsListParams } from '@app/models/form-submissions-list.model';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { CdkDetailRowDirective } from '@app/utils/directives/cdk-detail-row.directive';
 
 @Component({
   selector: 'sw-form-management-submissions',
