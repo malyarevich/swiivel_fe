@@ -10,7 +10,6 @@
     'app-div-show': isExpand,
     'app-div-hide': !isExpand
   }">
-<<<<<<< HEAD
 
   <div class="documents-item" *ngFor="let forms of formsPDF">
     <div class="row item-row justify-content-between">
@@ -31,28 +30,6 @@
 
       <sw-button class="outline-btn">Add Specific Criteria</sw-button>
 
-=======
-
-  <div class="documents-item" *ngFor="let forms of formsPDF">
-    <div class="row item-row justify-content-between">
-      <div class="document-info align-items-center">
-        <div class="document-name">
-          <sw-input-text [(ngModel)]="forms.name">
-            <span class="placeholder">Form Name</span>
-          </sw-input-text>
-        </div>
-
-        <div class="lable green" *ngIf="forms.isPerFamily">
-          Family
-        </div>
-        <div class="lable blue" *ngIf="!forms.isPerFamily">
-          Student
-        </div>
-      </div>
-
-      <sw-button class="outline-btn">Add Specific Criteria</sw-button>
-
->>>>>>> master
     </div>
     <div class="row item-row">
       <sw-input-textarea [(ngModel)]="forms.accompanyingText.data">
