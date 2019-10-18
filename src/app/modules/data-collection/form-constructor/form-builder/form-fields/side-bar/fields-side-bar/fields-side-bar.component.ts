@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit, ChangeDetectorRef, ViewChild, AfterViewChecked } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ChangeDetectorRef, ViewChild, AfterViewChecked, Output, EventEmitter } from '@angular/core';
 import { isEmpty, flattenDeep } from 'lodash';
 import { Form } from 'src/app/models/data-collection/form.model';
 import { SideBarService } from '../side-bar.service';
@@ -64,7 +64,9 @@ export class FieldsSideBarComponent implements OnInit, OnDestroy, AfterViewCheck
   @Input() set section(what) {
     console.log(what);
   }
+  @Input() displayOnly = false;
   @Input() idSectionForDragDrop: string[];
+  @Output() selectedField: EventEmitter<any> = new EventEmitter<any>();
   isTree = true;
   sectionDetailed;
   searchText: string;
@@ -168,7 +170,11 @@ export class FieldsSideBarComponent implements OnInit, OnDestroy, AfterViewCheck
   }
 
   canCreateField(node) {
-    return (node.type === 113 || node.type === 114) && this.treeControl.isExpanded(node);
+    return ((node.type === 113 || node.type === 114) && !this.displayOnly) && this.treeControl.isExpanded(node);
+  }
+
+  selectField(node: any) {
+    this.selectedField.emit(node);
   }
 
   customFieldToggle(node) {
