@@ -29,7 +29,7 @@
 
   .sidebar {
     width: 295px;
-    height: calc(100vh - 40px - 38px - 71px);
+    height: calc(100vh - 159px);
     padding: 20px 15px 55px;
     border-radius: 3px;
     background: #fff;
@@ -44,13 +44,13 @@
     }
 
     .sidebar-list {
-      height: calc(100vh - 40px - 38px - 76px - 15px - 71px - 100px - 75px - 30px);
+      height: calc(100vh - 460px);
       min-height: 50px;
       overflow-y: scroll;
     }
 
     .sidebar-list-bulk-download {
-      height: calc(100vh - 40px - 38px - 76px - 15px - 71px - 100px - 75px);
+      height: calc(100vh - 415px);
     }
 
     .spinner {
