@@ -4,9 +4,11 @@
   &__main {
     padding: 1.75rem 0 0 0;
   }
+
   &__article_text {
-    margin: 0.85rem 0;
+    margin: 1rem 0 0 0;
   }
+
   &__document {
     padding: 1.75rem 1.75rem;
     &:not(:last-of-type) {
@@ -20,7 +22,7 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  margin-bottom: 1.25rem;
+  margin-bottom: 0;
   @include media-breakpoint-up(xl) {
     flex-direction: row;
     justify-content: space-between;
@@ -29,20 +31,35 @@
 
 .document_container {
   max-width: 50%;
-  max-height: 5rem;
   display: flex;
   flex: 1;
-  align-items: center;
-  background-color: #F4F4F5;
-  border-radius: 3px;
-  padding: 0.833rem;
-  &:not(:last-of-type) {
-    margin-right: 1.25rem;
-  }
+  align-items: flex-start;
+  background-color: transparent;
+  border-radius: 0.25rem;
+  margin-right: 1.25rem;
+
   @media screen and (max-width: 1200px) {
     max-width: 100%;
-    margin: 0 0 0.85rem 0!important;
+    margin: 0 0 1rem 0;
   }
+
+  &__control {
+    height: 5rem;
+    max-width: 50%;
+    display: flex;
+    flex: 1;
+    align-items: center;
+    background-color: #F4F4F5;
+    border-radius: 0.25rem;
+    padding: 1rem;
+    margin-top: 1rem;
+
+    @media screen and (max-width: 1200px) {
+      max-width: 100%;
+      margin: 0 0 1rem 0;
+    }
+  }
+
   &__file {
     &_information {
       align-items: center;
@@ -57,16 +74,19 @@
         align-items: flex-start;
       }
     }
+
     &_icon {
       width: 2.666rem;
       margin-right: 0.916rem;
     }
+
     &_title {
       color: $element-additional-color;
       font-size: 1rem;
       font-weight: bold;
       margin-bottom: 0.25rem;
     }
+
     &_size {
       font-size: 0.75rem;
       font-weight: bold;
@@ -81,6 +101,7 @@
     background-color: $orange-fill-color;
     padding: 0;
     outline: none;
+
     &:hover,
     &:focus,
     &:active {
@@ -89,6 +110,7 @@
       background-color: darken($color: $orange-fill-color, $amount: 5);
       box-shadow: 0 0 0 0.1rem lighten($color: $orange-fill-color, $amount: 10);
     }
+
     &_icon {
       width: 2rem;
       height: 2rem;
@@ -100,7 +122,6 @@
     display: flex;
     flex-direction: column;
     justify-content: stretch;
-
     padding: 0;
 
     &_label {
@@ -118,16 +139,19 @@
         border: 1px dashed $element-additional-color;
       }
     }
+
     &_icon {
       width: 3.75rem;
       margin-right: 1.25rem;
     }
+
     &_text {
       font-size: 0.75rem;
       font-weight: bold;
       color: #9294A2;
       position: relative;
       text-transform: uppercase;
+
       &:last-of-type {
         display: flex;
         align-items: center;
@@ -140,6 +164,7 @@
           margin-right: 0.333rem;
         }
       }
+
       &.blue {
         display: block;
         color: #004ED9;
@@ -151,9 +176,11 @@
       font-size: 0.75rem;
       text-decoration: underline;
       margin-left: 0.333rem;
+
       &:hover + ul {
         display: block;
       }
+
       &_list {
         width: 17.5rem;
         display: none;
@@ -165,24 +192,29 @@
         border: 1px solid #F6F6F6;
         border-radius: 3px;
         box-shadow: 1px 1px 5px 0 $softgray-color;
+
         li {
           display: flex;
           align-items: center;
           font-size: 0.75rem;
           color: $black;
+
           &:not(:last-of-type) {
             margin-bottom: 0.916rem;
           }
+
           svg {
             height: 1.666rem;
             display: block;
             margin-right: 0.75rem;
           }
+
           &.documents {
             svg {
               margin-left: -0.166rem;
             }
           }
+
           &.media {
             svg {
               margin-left: -0.333rem;
@@ -204,12 +236,14 @@
     align-items: start!important;
     padding: 0.666rem 0.833rem;
     max-width: 100%;
+
     &_header {
       width: 100%;
       display: flex;
       justify-content: space-between;
       margin-bottom: 0.416rem;
     }
+
     &_title {
       font-size: 1rem;
       font-weight: bold;
@@ -217,6 +251,7 @@
       color: $black;
       margin-bottom: 0;
     }
+
     &_cancel {
       font-size: 1rem;
       font-weight: bold;
@@ -227,10 +262,12 @@
       outline: none;
       padding: 0;
     }
+
     &_progress {
       display: block;
       width: 100%;
     }
+
     &_total {
       width: 100%;
       height: 0.333rem;
@@ -240,12 +277,14 @@
       border-radius: 2px;
       margin-bottom: 0.416rem;
     }
+
     &_uploaded {
       width: 1%;
       height: 0.333rem;
       border-radius: 3px;
       background-color: $element-additional-color;
     }
+
     &_uploaded_value {
       display: block;
       font-size: 0.75rem;
@@ -262,12 +301,14 @@
       width: 2.666rem;
       margin-right: 1rem;
     }
+
     &_title {
       color: #14BB3E;
       font-size: 1rem;
       font-weight: bold;
       margin-bottom: 0.333rem;
     }
+
     &_size {
       display: block;
       color: #A8AABA;
@@ -275,6 +316,7 @@
       font-weight: bold;
       margin-bottom: 0;
     }
+
     &_delete {
       width: 2rem;
       height: 2rem;

@@ -677,9 +677,9 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
       aFields.forEach(field => {
         const defaultValue =
           field.type === 105
-            ? []
-            : field.options && field.options.default
-            ? field.options.default
+            ? field.options && field.options.default
+              ? field.options.default
+              : []
             : '';
         if (field._id) {
           const aValidators = this.getComposedValidatorsByField(field);

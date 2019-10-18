@@ -12,9 +12,12 @@
           ? field.options.fieldOptions
           : list
       "
+      [disabled]="field.options && field.options.readonly ? true : false"
       [ngClass]="{
-        validation_required: this.field.options.required && !this.field.options.readonly,
-        validation_error: !!validationText
+        validation_required:
+          this.field.options.required && !this.field.options.readonly,
+        validation_error: !!validationText,
+        online_form: true
       }"
     >
       <span *ngIf="!field.options.hideLabel" class="label">

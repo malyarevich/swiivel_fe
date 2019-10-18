@@ -88,6 +88,28 @@
   }
 }
 
+:host(.online_form) {
+  .dropdown_input_container {
+    min-height: 3rem;
+
+    &__row {
+      padding-top: 0.5rem;
+    }
+
+    &__input {
+      & .text {
+        margin-top: 0;
+      }
+
+      &.many {
+        border-radius: 0.25rem;
+        margin-right: 0.25rem;
+        margin-top: 0.25rem;
+      }
+    }
+  }
+}
+
 .dropdown_items_container__item:hover {
   cursor: pointer;
 }

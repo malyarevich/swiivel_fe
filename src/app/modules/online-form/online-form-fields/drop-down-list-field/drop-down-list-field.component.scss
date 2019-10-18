@@ -1,1 +1,9 @@
 @import "../../shared/styles/index.scss";
+
+:host {
+  flex: 1 0 100%;
+}
+
+.dropdown_input_container {
+  height: 3rem;
+}

@@ -1,0 +1,34 @@
+<ng-container *ngIf="true">
+  <div
+    class="form-group multi-div position-relative"
+    [formGroup]="fg"
+    [ngClass]="{ 'app-input-fill': !field.options.hideLabel }"
+  >
+    <sw-input-checkbox [formControlName]="field._id">
+      <span class="label"> {{ field.name }}</span>
+    </sw-input-checkbox>
+
+    <span
+      class="error_icon"
+      [ngClass]="{ validation_error: !!validationText }"
+      (click)="validationText = ''"
+      ><i class="fas fa-times fa-xs"></i
+    ></span>
+
+    <span
+      class="validation_icon"
+      [ngClass]="{
+        validation_required:
+          this.field.options.required && !this.field.options.readonly
+      }"
+    >
+      <i class="fas fa-asterisk fa-xs"></i>
+    </span>
+
+    <sw-error-list
+      [fg]="fg"
+      [field]="field"
+      [validationText]="validationText"
+    ></sw-error-list>
+  </div>
+</ng-container>
