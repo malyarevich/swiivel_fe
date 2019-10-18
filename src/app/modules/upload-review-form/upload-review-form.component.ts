@@ -272,6 +272,9 @@ export class UploadReviewFormComponent implements OnInit {
         this.cdr.detectChanges();
         this.renderer.selectRootElement(this.link.nativeElement).click();
         this.clearLink(url);
+        this.documents.forEach((doc) => doc.isSelected = false);
+        this.activeIdDocument = this.documents[0]._id;
+        this.selectItem(this.activeIdDocument);
         this.isBulkDownload = false;
       });
   }
