@@ -1,6 +1,6 @@
 @import 'index';
 
-* {
+*:not(.fas) {
     font-family: Nunito Sans;
     font-style: normal;
     font-weight: normal;

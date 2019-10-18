@@ -1,9 +1,11 @@
 import { requestsSubmissionsList } from './submissions-list';
+import { requestsFormDetails } from './form-details';
 import { requestsOnlineForm } from './online-form';
 import { HttpRequest, HttpResponse } from '@angular/common/http';
 
 const requestsMocks = [
     ...requestsSubmissionsList,
+    ...requestsFormDetails,
     ...requestsOnlineForm,
 ];
 

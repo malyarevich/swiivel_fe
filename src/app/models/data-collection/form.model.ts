@@ -37,7 +37,7 @@ export interface Form {
   payment?: any;
   paymentSettings?: any; //Need FIXME: (create PaymentSettings)
   chosen_way_to_create_new_form?: number;
-  eligible: string;
+  eligible?: string;
   //TODO: check for what that
   example_form_id?: string;  
   packetIntroduction?: IPacketIntroduction;

@@ -14,8 +14,8 @@
                 <i
                   class="fas icon"
                   [ngClass]="{
-                    up: sort[0] === 'account' && sort[1] === false,
-                    down: sort[0] === 'account' && sort[1] === true
+                    'up': sort[0] === 'account' && sort[1] === false,
+                    'down': sort[0] === 'account' && sort[1] === true
                   }"
                 ></i>
               </div>
@@ -46,8 +46,8 @@
                 <i
                   class="fas icon"
                   [ngClass]="{
-                    up: sort[0] === 'students' && sort[1] === false,
-                    down: sort[0] === 'students' && sort[1] === true
+                    'up': sort[0] === 'students' && sort[1] === false,
+                    'down': sort[0] === 'students' && sort[1] === true
                   }"
                 ></i>
               </div>
@@ -81,8 +81,8 @@
                 <i
                   class="fas icon"
                   [ngClass]="{
-                    up: sort[0] === 'last_updated' && sort[1] === false,
-                    down: sort[0] === 'last_updated' && sort[1] === true
+                    'up': sort[0] === 'last_updated' && sort[1] === false,
+                    'down': sort[0] === 'last_updated' && sort[1] === true
                   }"
                 ></i>
               </div>
@@ -115,9 +115,9 @@
                 <i
                   class="fas icon"
                   [ngClass]="{
-                    up:
+                    'up':
                       sort[0] === 'completion_percentage' && sort[1] === false,
-                    down:
+                    'down':
                       sort[0] === 'completion_percentage' && sort[1] === true
                   }"
                 ></i>
@@ -151,8 +151,8 @@
                 <i
                   class="fas icon"
                   [ngClass]="{
-                    up: sort[0] === 'online_submission' && sort[1] === false,
-                    down: sort[0] === 'online_submission' && sort[1] === true
+                    'up': sort[0] === 'online_submission' && sort[1] === false,
+                    'down': sort[0] === 'online_submission' && sort[1] === true
                   }"
                 ></i>
               </div>
@@ -211,8 +211,8 @@
                 <i
                   class="fas icon"
                   [ngClass]="{
-                    up: sort[0] === 'pdf_submission' && sort[1] === false,
-                    down: sort[0] === 'pdf_submission' && sort[1] === true
+                    'up': sort[0] === 'pdf_submission' && sort[1] === false,
+                    'down': sort[0] === 'pdf_submission' && sort[1] === true
                   }"
                 ></i>
               </div>
@@ -271,8 +271,8 @@
                 <i
                   class="fas icon"
                   [ngClass]="{
-                    up: sort[0] === 'status' && sort[1] === false,
-                    down: sort[0] === 'status' && sort[1] === true
+                    'up': sort[0] === 'status' && sort[1] === false,
+                    'down': sort[0] === 'status' && sort[1] === true
                   }"
                 ></i>
               </div>
@@ -392,6 +392,8 @@
     </table>
   </form>
 </div>
+
+<a [href]="download.url" [download]="download.filename" #link></a>
 
 <ng-template #tpl let-form>
     <tr class="expanded-row">

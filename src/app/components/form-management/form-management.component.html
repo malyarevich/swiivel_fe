@@ -1,0 +1,67 @@
+<ng-content select="[analytics]"></ng-content>
+
+<div class="app-form-table">
+  <div class="app-form-table__header">
+    <div class="app-form-table__text">
+      <sw-page-header>
+        {{ form.name }}
+      </sw-page-header>
+    </div>
+  </div>
+  <div class="app-form-table__table">
+    <div class="app-form-table__header">
+      <div class="app-form-table__tabs" data-e2e="alltabs">
+        <button
+          class="app-form-table__tab"
+          [ngClass]="{ 'app-form-table__tab--activated': activeTab === 'submissions' }"
+          (click)="activeTab = 'submissions'"
+        >
+          Submissions
+        </button>
+        <button
+          class="app-form-table__tab"
+          [ngClass]="{ 'app-form-table__tab--activated': activeTab === 'log' }"
+          (click)="activeTab = 'log'"
+        >
+          Log
+        </button>
+      </div>
+
+      <div class="app-form-table__controls">
+        <div
+          class="app-form-table__controls-button"
+          data-e2e="createnewformbutton"
+        >
+          <sw-button routerLink="/form-constructor">Create New Form</sw-button>
+        </div>
+        <div class="app-form-table__controls-bulk" data-e2e="bulkactions">
+          <sw-dropdown-select
+            [options]="bulkOptions"
+            #bulk="dropdown"
+            (selected)="bulkAction($event)"
+            [panelClass]="'app-form-table-dropdown-overlay'"
+            [disabled]="disabledBulkBtn"
+          >
+            <sw-button [disabled]="disabledBulkBtn">
+              <span class="app-form-table__controls-bulk-btn-text"
+                >Bulk Actions</span
+              >
+              <i
+                class="fas fa-chevron-down"
+                [ngClass]="{ 'fa-chevron-up': bulk.isOpened }"
+              ></i>
+            </sw-button>
+          </sw-dropdown-select>
+        </div>
+      </div>
+    </div>
+
+    <div>
+        <ng-content
+        select="[submissions]"
+        *ngIf="activeTab === 'submissions'"
+        ></ng-content>
+        <ng-content select="[log]" *ngIf="activeTab === 'log'"></ng-content>
+    </div>
+  </div>
+</div>
