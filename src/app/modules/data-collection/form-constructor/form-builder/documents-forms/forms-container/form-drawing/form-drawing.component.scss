@@ -3,6 +3,28 @@
 :host {
   min-width: 503px;
   min-height: 830px;
+  .div {
+    background: #EBEEFF;
+    mix-blend-mode: normal;
+    border: 2px solid #4350A2;
+    box-sizing: border-box;
+    position: relative;
+    .settings-wrap {
+      position: absolute;
+      top: -20px;
+      width: 100%;
+      .set-icons {
+        color: #fff;
+      }
+    }
+    .field-name {
+      position: absolute;
+      left: 0;
+      bottom: -15px;
+      color: #fff;
+      font: 800 12px/13px $nunito-sans;
+    }
+  }
   .form-pdf-section {
     background: #D7D7D7;
     margin: 0 -15px -10px -45px;
@@ -12,6 +34,9 @@
     .pdf-wrap {
       padding: 20px;
       background: #fff;
+      .fake {
+        overflow: scroll;
+      }
     }
     .signature-div{
       height: auto;
@@ -77,7 +102,8 @@
   }
   .system-div {
     height: auto;
-    max-height: 500;
+    max-height: 500px;
+    opacity: 1 !important;
     overflow: auto;
     width: 279px;
     padding: 15px;
@@ -263,19 +289,21 @@ canvas {
   // border: 1px solid #000000;
   background: #000000;
   mix-blend-mode: normal;
-  opacity: 0.3;
+  opacity: 0.4;
   z-index: 7;
   width: 100%;
   height: 100%;
-  min-width: 503px;
-  min-height: 830px;
+  // min-width: 503px;
+  // min-height: 830px;
   // width: 816px;
   // height: 1056px;
 }
 .canvas-wrap{
   position: relative;
-  width: 100%;
-  height: 100%;
+  // width: 100%;
+  // height: 100%;
+  width: 816px;
+  height: 1056px;
   min-width: 503px;
   min-height: 830px;
   .canvas-overlay {
@@ -338,7 +366,7 @@ label.btn.app-btn-signature.active {
 //  border-color: $element-base-color!important;
 //}
 .div-inside-wrap{
-  z-index: 9900;
+  z-index: 55;
   // margin-top: -20px!important;
 
   //position: absolute;
@@ -353,7 +381,7 @@ p {
 }
 
 .div-inside-field-name{
-  z-index: 9900;
+  z-index: 55;
   margin-bottom: -30px!important;
 
   //position: absolute;
@@ -371,7 +399,7 @@ p {
   border: 2px solid #000000;
   background-color: white;
   position: absolute;
-  z-index: 9900;
+  z-index: 55;
   font-size: 0.5rem!important;
 }
 .div-inside-active{
