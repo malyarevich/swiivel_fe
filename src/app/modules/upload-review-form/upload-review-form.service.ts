@@ -41,7 +41,7 @@ export class UploadReviewFormService extends ApiService {
         });
       }
       if (sortParam && sortParam.length) {
-        endpointParam += `&sort=${sortParam[0].value.trim()}`;
+        endpointParam += `&sort=${sortParam[0].value}`;
       }
       endpoint = `/proxy/upload-reviews-form/list?form_template_id=${formId}&search_query=${endpointParam}`;
     } else {

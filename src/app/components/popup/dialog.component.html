@@ -4,7 +4,10 @@
 <ng-template #list>
   <div class="dialog_container" data-e2e="popupbody">
     <div class="dialog_header" data-e2e="dialogheader">
-      <div class="dialog_title">
+      <div
+        class="dialog_title"
+        [class.center]="style == 'center'"
+      >
         <div class="dialog_title__text" data-e2e="popuptitle">{{ title }}</div>
           <!--<sw-input-toggle>-->
             <!--<span>Select All</span>-->
@@ -14,7 +17,11 @@
         <i class="fas fa-times" (click)="close(false)"></i>
       </div>
     </div>
-    <div class="dialog_body" data-e2e="dialogbody">
+    <div
+      class="dialog_body"
+      data-e2e="dialogbody"
+      [class.center]="style == 'center'"
+    >
       <ng-content></ng-content>
     </div>
     <div class="dialog_footer" data-e2e="dialog_footer">

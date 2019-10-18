@@ -13,6 +13,7 @@ export class DialogComponent {
   @Output() closed = new EventEmitter<boolean>();
   @Input() title = 'Dialog title';
   @Input() action = 'Dialog button';
+  @Input() style: string;
 
   @ViewChild('list', { static: false }) list;
   @ViewChild('holder', { static: false, read: ElementRef }) holder: ElementRef;
