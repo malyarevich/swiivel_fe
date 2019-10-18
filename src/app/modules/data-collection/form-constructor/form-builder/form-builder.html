@@ -96,115 +96,118 @@
     <!--    DOCUMENTS & FORMS-->
 
     <div class="row justify-content-center pb-2">
-        <div class="col-10 bg-white ">
-            <div class="row no-gutters slider-item align-items-center">
-                <div class="col-auto mr-2">
-                  <label class="app-switch">
-                    <input type="checkbox" [ngModel]="activeSections.documentsForms.isActive" (ngModelChange)="
+      <div class="col-10 bg-white ">
+        <div class="row no-gutters slider-item align-items-center">
+          <div class="col-auto mr-2">
+            <label class="app-switch">
+              <input type="checkbox" [ngModel]="activeSections.documentsForms.isActive" (ngModelChange)="
                         activeSections.documentsForms.isActive = activeSections.documentsForms.showSideInfo = $event
                       " />
-                    <span class="app-slider app-round"></span>
-                  </label>
-                </div>
-                <div class="col" (click)="
+              <span class="app-slider app-round"></span>
+            </label>
+          </div>
+          <div class="col" (click)="
                     activeSections.documentsForms.showSideInfo = !activeSections
                       .documentsForms.showSideInfo
                   ">
-                  <span class="font-weight-bold side-bar-toggle">DOCUMENTS & FORMS</span>
-                  <i class="fas float-right app-plus-i" [ngClass]="{
+            <span class="font-weight-bold side-bar-toggle">DOCUMENTS & FORMS</span>
+            <i class="fas float-right app-plus-i" [ngClass]="{
                       'fa-sort-down': !activeSections.documentsForms.showSideInfo,
                       'fa-sort-up': activeSections.documentsForms.showSideInfo
                     }"></i>
-                </div>
+          </div>
+        </div>
+        <div *ngIf="activeSections.documentsForms.showSideInfo" class="bg-white rounded mb-3 ">
+          <section class="documents_section">
+            <div class="documents_section__header">
+              <div class="documents_section__header_text">
+                Documents
               </div>
-              <div *ngIf="activeSections.documentsForms.showSideInfo" class="bg-white rounded mb-3 ">
-        <section class="documents_section">
-          <div class="documents_section__header">
-            <div class="documents_section__header_text">
-              Documents
-            </div>
-            <div class="documents_section__header_controls">
-              <i class="fas fa-plus-square" (click)="addDocumentItem()"></i>
-              <i class="fas fa-caret-down" *ngIf="isDocumentsForms.isDocuments; else up" (click)="
+              <div class="documents_section__header_controls">
+                <i class="fas fa-plus-square" (click)="addDocumentItem()"></i>
+                <i class="fas fa-caret-down" *ngIf="isDocumentsForms.isDocuments; else up" (click)="
               isDocumentsForms.isDocuments = !isDocumentsForms.isDocuments
             "></i>
-              <ng-template #up>
-                <i class="fas fa-caret-up" (click)="
+                <ng-template #up>
+                  <i class="fas fa-caret-up" (click)="
                 isDocumentsForms.isDocuments = !isDocumentsForms.isDocuments
               "></i>
-              </ng-template>
-            </div>
-          </div>
-          <ng-container *ngIf="isDocumentsForms.isDocuments">
-            <div class="documents_section__item" *ngFor="let document of documents; let i = index">
-              <div class="documents_section__item_header">
-                <div class="documents_section__item_header_name">
-                  <sw-input-text class="no_styles" [(ngModel)]="document.name"></sw-input-text>
-                </div>
-                <div class="documents_section__item_header_controls">
-                  <i class="fas fa-trash" (click)="removeDocument(document.id)"></i>
-                </div>
-              </div>
-              <div class="documents_section__item_content">
-                <div class="documents_section__item_content_input">
-                  <sw-input-button-group [options]="documentBut" [(ngModel)]="document.isUpload">
-                  </sw-input-button-group>
-                </div>
-                <div class="documents_section__item_content_input">
-                  <sw-radio-group [options]="radioGroup" [(ngModel)]="isPerFamilyD[i]" (ngModelChange)="changeDocRadio($event, document)"></sw-radio-group>
-                </div>
+                </ng-template>
               </div>
             </div>
-          </ng-container>
-        </section>
-        <section class="forms_section">
-          <div class="forms_section__header">
-            <div class="forms_section__header_text">
-              Forms
-            </div>
-            <div class="forms_section__header_controls">
-              <i class="fas fa-plus-square" (click)="addFormPDF()"></i>
-              <i class="fas fa-caret-down" *ngIf="isDocumentsForms.isForms; else upF"  (click)="isDocumentsForms.isForms = !isDocumentsForms.isForms"></i>
-              <ng-template #upF>
-                <i class="fas fa-caret-up"  (click)="isDocumentsForms.isForms = !isDocumentsForms.isForms"></i>
-              </ng-template>
-            </div>
-          </div>
-          <ng-container *ngIf="isDocumentsForms.isForms">
-            <div class="forms_section__item" *ngFor="let forms of formsPDF; let i = index">
-              <div class="forms_section__item_header">
-                <div class="forms_section__item_header_name">
-                  <sw-input-text class="no_styles" [(ngModel)]="forms.name"></sw-input-text>
+            <ng-container *ngIf="isDocumentsForms.isDocuments">
+              <div class="documents_section__item" *ngFor="let document of documents; let i = index">
+                <div class="documents_section__item_header">
+                  <div class="documents_section__item_header_name">
+                    <sw-input-text class="no_styles" [(ngModel)]="document.name"></sw-input-text>
+                  </div>
+                  <div class="documents_section__item_header_controls">
+                    <i class="fas fa-trash" (click)="removeDocument(document.id)"></i>
+                  </div>
                 </div>
-                <div class="forms_section__item_header_controls">
-                  <i class="fas fa-trash" (click)="removeFormsPDF(forms.id)"></i>
+                <div class="documents_section__item_content">
+                  <div class="documents_section__item_content_input">
+                    <sw-input-button-group [options]="documentBut" [(ngModel)]="document.isUpload">
+                    </sw-input-button-group>
+                  </div>
+                  <div class="documents_section__item_content_input">
+                    <sw-radio-group [options]="radioGroup" [(ngModel)]="isPerFamilyD[i]"
+                      (ngModelChange)="changeDocRadio($event, document)"></sw-radio-group>
+                  </div>
                 </div>
               </div>
-              <div class="forms_section__item_content">
-                <div class="forms_section__item_content_input">
-                  <sw-input-button-group [options]="formBut" [(ngModel)]="forms.isNew"></sw-input-button-group>
-                </div>
-                <div class="forms_section__item_content_input">
-                  <sw-radio-group [options]="radioGroup" [(ngModel)]="isPerFamilyF[i]" (ngModelChange)="changeDocRadio($event, forms)"></sw-radio-group>
-                </div>
-                <div class="forms_section__item_content_input">
-                  <sw-input-toggle [(ngModel)]="forms.isFillableOnline">
-                    <span class="input_label">Fillable Online</span>
-                  </sw-input-toggle>
-                </div>
-                <div class="forms_section__item_content_input">
-                  <sw-input-toggle [(ngModel)]="forms.isAllowDownloadUpload">
-                    <span class="input_label">Allow Download/Upload</span>
-                  </sw-input-toggle>
-                </div>
+            </ng-container>
+          </section>
+          <section class="forms_section">
+            <div class="forms_section__header">
+              <div class="forms_section__header_text">
+                Forms
+              </div>
+              <div class="forms_section__header_controls">
+                <i class="fas fa-plus-square" (click)="addFormPDF()"></i>
+                <i class="fas fa-caret-down" *ngIf="isDocumentsForms.isForms; else upF"
+                  (click)="isDocumentsForms.isForms = !isDocumentsForms.isForms"></i>
+                <ng-template #upF>
+                  <i class="fas fa-caret-up" (click)="isDocumentsForms.isForms = !isDocumentsForms.isForms"></i>
+                </ng-template>
               </div>
             </div>
-          </ng-container>
-        </section>
-        </div>
+            <ng-container *ngIf="isDocumentsForms.isForms">
+              <div class="forms_section__item" *ngFor="let forms of formsPDF; let i = index">
+                <div class="forms_section__item_header">
+                  <div class="forms_section__item_header_name">
+                    <sw-input-text class="no_styles" [(ngModel)]="forms.name"></sw-input-text>
+                  </div>
+                  <div class="forms_section__item_header_controls">
+                    <i class="fas fa-trash" (click)="removeFormsPDF(forms.id)"></i>
+                  </div>
+                </div>
+                <div class="forms_section__item_content">
+                  <div class="forms_section__item_content_input">
+                    <sw-input-button-group [options]="formBut" [(ngModel)]="forms.isNew"></sw-input-button-group>
+                  </div>
+                  <div class="forms_section__item_content_input">
+                    <sw-radio-group [options]="radioGroup" [(ngModel)]="isPerFamilyF[i]"
+                      (ngModelChange)="changeDocRadio($event, forms)"></sw-radio-group>
+                  </div>
+                  <div class="forms_section__item_content_input">
+                    <sw-input-toggle [(ngModel)]="forms.isFillableOnline">
+                      <span class="input_label">Fillable Online</span>
+                    </sw-input-toggle>
+                  </div>
+                  <div class="forms_section__item_content_input">
+                    <sw-input-toggle [(ngModel)]="forms.isAllowDownloadUpload">
+                      <span class="input_label">Allow Download/Upload</span>
+                    </sw-input-toggle>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </section>
         </div>
       </div>
-      
+    </div>
+
     <!-- <div class="row justify-content-center pb-2">
       <div class="col-10 bg-white ">
         <div class="row no-gutters slider-item align-items-center">
@@ -376,129 +379,74 @@
     <!--  END  DOCUMENTS & FORMS-->
 
     <!--CONSENT-->
-    <div class="row justify-content-center pb-2">
-      <div class="col-10 bg-white">
-        <div class="row no-gutters slider-item align-items-center">
-          <div class="col-auto mr-2">
-            <label class="app-switch">
-              <input type="checkbox" [ngModel]="activeSections.consent.isActive" (ngModelChange)="
-                  activeSections.consent.isActive = activeSections.consent.showSideInfo = $event
-                " />
-              <span class="app-slider app-round"></span>
-            </label>
-          </div>
-          <div class="col" (click)="
-              activeSections.consent.showSideInfo = !activeSections.consent
-                .showSideInfo
-            ">
-            <span class="font-weight-bold side-bar-toggle">CONSENT</span>
-            <i class="fas float-right app-plus-i" [ngClass]="{
-                'fa-sort-down': !activeSections.consent.showSideInfo,
-                'fa-sort-up': activeSections.consent.showSideInfo
-              }"></i>
-          </div>
+    <div class="sidebar_section" data-e2e="sidebar_section" [class.expanded]="1"
+      [class.open]="activeSections.consent.showSideInfo">
+      <!-- (click)="onClick('consent', $event)" -->
+      <div class="sidebar_section__header" data-e2e="sidebar_section__header">
+        <sw-input-toggle [ngModel]="activeSections.consent.isActive"
+          (ngModelChange)="activeSections.consent.isActive = activeSections.consent.showSideInfo = $event">
+        </sw-input-toggle>
+        <span>CONSENT</span>
+        <div class="actions" data-e2e="actions">
+          <sw-icon-button [class.blue]="activeSections.consent.showSideInfo"
+            [icon]="getIcon(activeSections.consent.showSideInfo)"
+            (click)="activeSections.consent.showSideInfo = !activeSections.consent.showSideInfo">
+          </sw-icon-button>
         </div>
-
-        <div class="row no-gutters">
-          <div class="col" *ngIf="activeSections.consent.showSideInfo">
-            <i (click)="addConsentItem()" class="fas fa-plus-square float-right app-plus-i"></i>
-          </div>
+      </div>
+      <div class="sidebar_section__content" *ngIf="activeSections.consent.showSideInfo"
+        data-e2e="sidebar_section__content">
+        <!-- <ng-container *ngComponentOutlet="components.consent"></ng-container> -->
+        <div class="col" *ngIf="activeSections.consent.showSideInfo">
+          <i (click)="addConsentItem()" class="fas fa-plus-square float-right app-plus-i"></i>
         </div>
-
-        <div *ngIf="activeSections.consent.showSideInfo" class="bg-white rounded mb-3 ">
-          <div class="app-consent-item p-3 mt-3" *ngFor="let item of consentInfo.consents; let i = index">
-            <div class="row no-gutters mb-2">
-              <div class="col-10">
-                <span class="app-consent-item-title" *ngIf="isEditConsentName !== i" (click)="isEditConsentName = i">
-                  {{ item.title }}
-                </span>
-                <input type="text" class="form-control app-consent-name-input" autofocus
-                  *ngIf="isEditConsentName === i || !item.title" (input)="isEditConsentName = i"
-                  (blur)="isEditConsentName = null" (keyup.enter)="isEditConsentName = null" [(ngModel)]="item.title"
-                  placeholder="Title" />
+        <section class="consent_section">
+          <div class="consent_section__item" *ngFor="let item of consentInfo.consents; let i = index">
+            <div class="consent_section__item_header">
+              <div class="consent_section__item_header_name">
+                <sw-input-text class="no_styles" [(ngModel)]="item.title"></sw-input-text>
               </div>
-              <div class="col-2 text-right pt-2">
-                <span (click)="removeConsentItem(i)" class="app-fb-trash mr-3"><i class="fas fa-trash"></i></span>
-                <span class="app-fb-caret-up"><i class="fas fa-caret-up"></i></span>
+              <div class="consent_section__item_header_controls">
+                <i class="fas fa-trash" (click)="removeConsentItem(i)"></i>
+                <i class="fas fa-caret-down blue" *ngIf="!item.isOpen; else up"
+                  (click)="item.isOpen = !item.isOpen"></i>
+                <ng-template #up>
+                  <i class="fas fa-caret-up blue" (click)="item.isOpen = !item.isOpen"></i>
+                </ng-template>
               </div>
             </div>
-
-            <div class="row no-gutters align-items-center pt-3">
-              <div class="col-auto mr-2">
-                <label class="app-switch">
-                  <input type="checkbox" [(ngModel)]="item.checkbox.isActive" />
-                  <span class="app-slider app-round"></span>
-                </label>
+            <div class="consent_section__item_content" *ngIf="item.isOpen">
+              <div class="consent_section__item_content_input">
+                <sw-input-toggle [(ngModel)]="item.checkbox.isActive">
+                  <span class="input_label">Checkbox</span>
+                </sw-input-toggle>
               </div>
-              <div class="col">
-                <span class="font-weight-bold ">CHECKBOX</span>
+              <div class="consent_section__item_content_input">
+                <sw-input-toggle [(ngModel)]="item.button.isActive">
+                  <span class="input_label">Button</span>
+                </sw-input-toggle>
               </div>
-            </div>
-
-            <div class="row no-gutters align-items-center pt-3">
-              <div class="col-auto mr-2">
-                <label class="app-switch">
-                  <input type="checkbox" [(ngModel)]="item.signature.isRequire" />
-                  <span class="app-slider app-round"></span>
-                </label>
+              <div class="consent_section__item_content_input">
+                <sw-input-toggle [(ngModel)]="item.signature.isRequire">
+                  <span class="input_label">Require Signature</span>
+                </sw-input-toggle>
               </div>
-              <div class="col">
-                <span class="font-weight-bold ">REQUIRE SIGNATURE</span>
+              <div class="consent_section__item_content_input" *ngIf="item.signature.isRequire">
+                <sw-input-button-group [(ngModel)]="item.signature.isBothParents" [options]="consentButtonOptions">
+                </sw-input-button-group>
               </div>
             </div>
-
-            <ng-container *ngIf="item.signature.isRequire">
-              <div class="row no-gutters">
-                <div class="btn-group btn-group-toggle w-100 mt-2" ngbRadioGroup [name]="'consentSignature' + i"
-                  [(ngModel)]="item.signature.type" [ngModelOptions]="{ standalone: true }">
-                  <label ngbButtonLabel class="btn app-btn-signature">
-                    <input ngbButton type="radio" [value]="SIGNATURE_TYPES.ESIGN" />
-                    E-signature
-                  </label>
-                  <label ngbButtonLabel class="btn app-btn-signature">
-                    <input ngbButton type="radio" [value]="SIGNATURE_TYPES.WET" />
-                    Wet Signature
-                  </label>
-                </div>
-              </div>
-
-              <div *ngIf="item.signature.type === SIGNATURE_TYPES.ESIGN"
-                class="row no-gutters app-consent-signature px-3 py-3">
-                <div class="col">
-                  <label class="app-radio-container">System
-                    <input type="radio" [name]="'eSignatureType' + i" [value]="E_SIGNATURE_TYPES.SYSTEM"
-                      [(ngModel)]="item.signature.eType" />
-                    <span class="app-radio-checkmark"></span>
-                  </label>
-                </div>
-                <div class="col">
-                  <label class="app-radio-container">External
-                    <span class="pl-2"><i class="fas fa-cog app-fb-gear"></i></span>
-                    <input type="radio" [name]="'eSignatureType' + i" [value]="E_SIGNATURE_TYPES.EXTERNAL"
-                      [(ngModel)]="item.signature.eType" />
-                    <span class="app-radio-checkmark"></span>
-                  </label>
-                </div>
-              </div>
-
-              <div class="row px-4 pt-3">
-                <label class="app-checkbox-container">
-                  Both Parents' Signature (when applicable)
-                  <input type="checkbox" [(ngModel)]="item.signature.isBothParents" />
-                  <span class="app-checkbox-checkmark"></span>
-                </label>
-              </div>
-            </ng-container>
           </div>
-        </div>
+        </section>
+
       </div>
     </div>
     <!--END CONSENT-->
 
-    <app-tuition-contract-sidebar></app-tuition-contract-sidebar>
+    <!-- <app-tuition-contract-sidebar></app-tuition-contract-sidebar> -->
 
     <!--PAYMENT SETTINGS-->
-    <div class="row justify-content-center pb-2">
+    <!-- <div class="row justify-content-center pb-2">
       <div class="col-10 sidebar_item">
         <div class="row no-gutters align-items-center">
           <div class="col-auto mr-2">
@@ -521,7 +469,6 @@
           </div>
         </div>
         <div *ngIf="activeSections.paymentSettings.showSideInfo" class="bg-white rounded mb-3 ">
-          <!-- list -->
           <div class="app-consent-item p-3 mt-3" *ngFor="
               let item of paymentSettings?.paymentSettingsItems;
               let i = index
@@ -614,88 +561,62 @@
           </ng-container>
         </div>
       </div>
-    </div>
+    </div> -->
     <!--END PAYMENT SETTINGS-->
 
     <!--TERMS AND CONDITIONS-->
-    <div class="row justify-content-center pb-2">
-      <div class="col-10 bg-white">
-        <div class="row no-gutters slider-item align-items-center">
-          <div class="col-auto mr-2">
-            <label class="app-switch">
-              <input type="checkbox" [ngModel]="activeSections.termsConditionals.isActive" (ngModelChange)="
-                  activeSections.termsConditionals.isActive = activeSections.termsConditionals.showSideInfo = $event
-                " />
-              <span class="app-slider app-round"></span>
-            </label>
-          </div>
-          <div class="col" (click)="
-              activeSections.termsConditionals.showSideInfo = !activeSections
-                .termsConditionals.showSideInfo
-            ">
-            <span class="font-weight-bold side-bar-toggle">TERMS AND CONDITIONS</span>
-            <i class="fas float-right app-plus-i" [ngClass]="{
-                'fa-sort-down': !activeSections.termsConditionals.showSideInfo,
-                'fa-sort-up': activeSections.termsConditionals.showSideInfo
-              }"></i>
-          </div>
+    <div class="sidebar_section" data-e2e="sidebar_section" [class.expanded]="1"
+      [class.open]="activeSections.termsConditionals.showSideInfo">
+      <div class="sidebar_section__header" data-e2e="sidebar_section__header">
+        <sw-input-toggle [ngModel]="activeSections.termsConditionals.isActive" (ngModelChange)="
+          activeSections.termsConditionals.isActive = activeSections.termsConditionals.showSideInfo = $event">
+        </sw-input-toggle>
+        <span>TERMS AND CONDITIONS</span>
+        <div class="actions" data-e2e="actions">
+          <sw-icon-button class="blue" style="margin-right: 5px;" icon="fa-plus-square"
+            *ngIf="activeSections.termsConditionals.showSideInfo" (click)="addTermsConditionsItem()">
+          </sw-icon-button>
+          <sw-icon-button [class.blue]="activeSections.termsConditionals.showSideInfo"
+            [icon]="getIcon(activeSections.termsConditionals.showSideInfo)"
+            (click)="activeSections.termsConditionals.showSideInfo = !activeSections.termsConditionals.showSideInfo">
+          </sw-icon-button>
         </div>
-        <div class="row no-gutters">
-          <div class="col">
-            <i *ngIf="activeSections.termsConditionals.showSideInfo" (click)="addTermsConditionsItem()"
-              class="fas fa-plus-square float-right app-plus-i"></i>
-          </div>
-        </div>
-        <div *ngIf="activeSections.termsConditionals.showSideInfo" class="bg-white rounded mb-3 ">
-          <div class="app-consent-item p-3 mt-3" *ngFor="
-              let item of termsConditions?.termsConditionsItems;
-              let i = index
-            ">
-            <div class="row no-gutters mb-2">
-              <div class="col-10">
-                <span class="app-consent-item-title" *ngIf="isEditTermsConditionsName !== item.id"
-                  (click)="isEditTermsConditionsName = item.id">
-                  {{ item.title }}
-                </span>
-                <input type="text" class="form-control app-consent-name-input" autofocus
-                  *ngIf="isEditTermsConditionsName === item.id || !item.title"
-                  (input)="isEditTermsConditionsName = item.id" (blur)="isEditTermsConditionsName = null"
-                  (keyup.enter)="isEditTermsConditionsName = null" [(ngModel)]="item.title" placeholder="Title" />
+      </div>
+
+      <div class="sidebar_section__content" data-e2e="sidebar_section__content">
+
+        <section class="terms_conditions_section">
+          <div class="terms_conditions_section__item"
+            *ngFor="let item of termsConditions?.termsConditionsItems; let i = index">
+            <div class="terms_conditions_section__item_header">
+              <div class="terms_conditions_section__item_header_name">
+                <sw-input-text class="no_styles" [(ngModel)]="item.title"></sw-input-text>
               </div>
-              <div class="col-2 text-right pt-2">
-                <span (click)="removeTermsConditionsItem(item.id)" class="app-fb-trash mr-3"><i
-                    class="fas fa-trash"></i></span>
+              <div class="terms_conditions_section__item_header_controls">
+                <i class="fas fa-trash" (click)="removeTermsConditionsItem(item.id)"></i>
               </div>
             </div>
-
-            <div class="row no-gutters align-items-center pt-3">
-              <div class="col-auto mr-2">
-                <label class="app-switch">
-                  <input type="checkbox" [(ngModel)]="item.checkbox.isActive" />
-                  <span class="app-slider app-round"></span>
-                </label>
-              </div>
-              <div class="col">
-                <span class="font-weight-bold ">CHECKBOX</span>
+            <div class="terms_conditions_section__item_content">
+              <div class="terms_conditions_section__item_content_input">
+                <sw-input-toggle [(ngModel)]="item.checkbox.isActive">
+                  <span class="input_label">Checkbox</span>
+                </sw-input-toggle>
               </div>
             </div>
           </div>
-
-          <hr />
-
-          <div class="row no-gutters align-items-center pt-1">
-            <div class="col-auto mr-2">
-              <label class="app-switch">
-                <input type="checkbox" [(ngModel)]="termsConditions.signature.isRequire" />
-                <span class="app-slider app-round"></span>
-              </label>
-            </div>
-            <div class="col">
-              <span class="font-weight-bold ">REQUIRE SIGNATURE</span>
-            </div>
+        </section>
+        <section class="terms_conditions_signature_section">
+          <div class="terms_conditions_signature_section__title">
+            <sw-input-checkbox [(ngModel)]="termsConditions.signature.isRequire">
+              <span class="label">Signature</span>
+            </sw-input-checkbox>
           </div>
-
-          <ng-container *ngIf="termsConditions.signature.isRequire">
+          <div class="terms_conditions_signature_section__content">
+            <sw-input-button-group [options]="consentButtonOptions" [(ngModel)]="termsConditions.signature.isBothParents">
+            </sw-input-button-group>
+          </div>
+        </section>
+<!-- <ng-container *ngIf="termsConditions.signature.isRequire">
             <div class="row no-gutters">
               <div class="btn-group btn-group-toggle w-100 mt-2" ngbRadioGroup name="termsConditionsSignature"
                 [(ngModel)]="termsConditions.signature.type" [ngModelOptions]="{ standalone: true }">
@@ -736,14 +657,15 @@
                 <span class="app-checkbox-checkmark"></span>
               </label>
             </div>
-          </ng-container>
-        </div>
+          </ng-container> -->
+
       </div>
     </div>
+
     <!--END TERMS AND CONDITIONS-->
 
     <!--    FORM PAYMENT-->
-    <div class="row justify-content-center pb-2">
+    <!-- <div class="row justify-content-center pb-2">
       <div class="col-10 bg-white ">
         <div class="row no-gutters slider-item align-items-center">
           <div class="col-auto mr-2">
@@ -779,7 +701,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 
   <!--  END  FORM PAYMENT-->
@@ -810,9 +732,9 @@
       <app-fields-workspace *ngIf="activeSections.formFields.isActive" [form]="form" [sideBar]="newSideBar"
         [idSectionForDragDrop]="idSectionForDragDrop" [customFields]="customFields"></app-fields-workspace>
       <!--  documents-forms-->
-      <app-documents-forms *ngIf="activeSections.documentsForms.isActive" [sideBar]="newSideBar" [form]="form" [isDocumentsForms]="isDocumentsForms"
-        [documentsForms]="documentsForms" [documents]="documents" [formsPDF]="formsPDF" [attachments]="attachments"
-        [formId]="formId" [existingFields]="existingFields">
+      <app-documents-forms *ngIf="activeSections.documentsForms.isActive" [sideBar]="newSideBar" [form]="form"
+        [isDocumentsForms]="isDocumentsForms" [documentsForms]="documentsForms" [documents]="documents"
+        [formsPDF]="formsPDF" [attachments]="attachments" [formId]="formId" [existingFields]="existingFields">
       </app-documents-forms>
       <!--  end  documents-forms-->
 
