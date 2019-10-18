@@ -1,6 +1,8 @@
 export enum IconsEnum {
   COPY = 'fa-copy',
   DOWNLOAD = 'fa-download',
+  UPLOAD = 'fa-upload',
+  FILE = 'fa-file',
   EYE = 'fa-eye',
   PEN = 'fa-pen',
   SHARE = 'fa-share-alt',

@@ -32,7 +32,8 @@ export class FormManagementSubmissionsComponent implements OnInit {
   @Input() filterFormGroup: object;
   @Input() sort: any[];
   @Input() currentPage: number;
-  @Input() statusesOptions: string[];
+  @Input() statusesOptions: any[];
+  @Input() statusesTitles: Object;
   @Input() formSubmissionsListParams: FormSubmissionsListParams;
   @Input() statusColors: StatusColors;
   @Input() totalItems: number;
@@ -75,6 +76,21 @@ export class FormManagementSubmissionsComponent implements OnInit {
 
   getStatusColor(status: string): string {
     return this.statusColors.statusColors.get(status) || this.statusColors.defaultColor;
+  }
+
+  getStatusTitle(status: string): string {
+    return this.statusesTitles[status];
+  }
+
+  getIcons(form: any) {
+    const icons = this.statusesOptions
+      .filter(option => option.value === form.status)
+      .reduce((icons, option) => {
+        icons.push(...option.icons);
+        // TODO: handle substatuses
+        return icons;
+      }, []);
+    return icons;
   }
 
   getDate(date: string) {

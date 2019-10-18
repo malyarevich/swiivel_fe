@@ -296,7 +296,7 @@
             <sw-small-button
               [ngClass]="{ 'icon-end': true }"
               [class]="getStatusColor(form.status)"
-              [text]="form.status"
+              [text]="getStatusTitle(form.status)"
               [icon]="icons.CARET_DOWN"
             ></sw-small-button>
           </sw-dropdown-select>
@@ -306,24 +306,20 @@
       <ng-container cdkColumnDef="actions">
         <th cdk-header-cell *cdkHeaderCellDef></th>
         <td cdk-cell *cdkCellDef="let form">
-          <div class="item" data-e2e="Downloadbutton">
+          <div *ngFor="let icon of getIcons(form)" class="item" data-e2e="Downloadbutton">
             <sw-icon-button
-              [icon]="icons.DOWNLOAD"
-              (click)="onExportPDF(form.mongo_id)"
+              [icon]="icon.icon"
+              (click)="icon.action(form)"
             >
             </sw-icon-button>
           </div>
-          <div class="item" data-e2e="Expandbutton">
-            <svg
-              width="1"
-              height="44"
-              viewBox="0 0 1 44"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <rect opacity="0.3" width="1" height="44" fill="#4350A2" />
-            </svg>
+        </td>
+      </ng-container>
 
+      <ng-container cdkColumnDef="expand">
+        <th cdk-header-cell *cdkHeaderCellDef></th>
+        <td cdk-cell *cdkCellDef="let form">
+          <div class="item" data-e2e="Expandbutton">
             <sw-icon-button
               [icon]="icons.CARET_DOWN"
               (click)="toggleExpand(form)"
