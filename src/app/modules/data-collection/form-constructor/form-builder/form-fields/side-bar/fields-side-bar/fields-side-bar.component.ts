@@ -79,7 +79,7 @@ export class FieldsSideBarComponent implements OnInit, OnDestroy, AfterViewCheck
     { title: 'Short text field', type: 101 },
     { title: 'Textarea field', type: 102 },
     { title: 'Number field', type: 103 },
-    { title: 'Dropdown field', type: 104 },
+    { title: 'Dropdown field', type: 105 },
     { title: 'English date field', type: 106 },
     { title: 'Hebrew date field', type: 110 },
     { title: 'Checkbox field', type: 107 },

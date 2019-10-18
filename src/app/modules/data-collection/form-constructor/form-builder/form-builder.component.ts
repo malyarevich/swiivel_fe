@@ -219,6 +219,17 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
       value: true
     }
   ];
+  consentButtonOptions = [
+    {
+      label: 'Any Parent',
+      value: false
+    },
+    {
+      label: 'Both Parents',
+      value: true
+    }
+  ];
+
   radioGroup = ['Needed Per Family', 'Needed Per Student'];
 
   vDataCollection: DataCollectionComponent;
@@ -664,6 +675,10 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
 
   nextStep(): void {
     this.saveForm();
+  }
+
+  getIcon(check): string {
+    return check ? 'fa-caret-up' : 'fa-caret-down';
   }
 
   ngOnDestroy(): void {
