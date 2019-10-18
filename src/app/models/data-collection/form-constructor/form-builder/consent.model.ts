@@ -12,6 +12,7 @@ export interface ConsentItemInfo {
   id: string;
   text: ConsentItemInfoText;
   checkbox: ConsentItemInfoCheckbox;
+  button: any;
   signature: ConsentItemInfoSignature;
 }
 
@@ -49,6 +50,10 @@ export const consentItemDefault: ConsentItemInfo = {
     isActive: false,
     checked: false,
     text: '',
+  },
+  button: {
+    isActive: false,
+    text: ''
   },
   signature: {
     isRequire: false,
