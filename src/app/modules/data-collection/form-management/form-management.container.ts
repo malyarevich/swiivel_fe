@@ -15,12 +15,11 @@ import { FormSearchParams } from '@app/models/form-search-params';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
-  selector: 'sw-form-management',
-  templateUrl: './form-management.component.html',
-  styleUrls: ['./form-management.component.scss'],
+  selector: 'sw-form-management-container',
+  templateUrl: './form-management.container.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FormManagementComponent implements OnInit {
+export class FormManagementContainer implements OnInit {
   @ViewChild('link', { static: false }) link: ElementRef;
   @ViewChild('dialog', { static: true }) dialog: DialogComponent;
 
@@ -290,11 +289,11 @@ export class FormManagementComponent implements OnInit {
 
     if (form) {
       this.popupContentArray = [];
-      this.popupContentArray.push({ title: FormManagementComponent.createSharedUrl(form.mongo_id) });
+      this.popupContentArray.push({ title: FormManagementContainer.createSharedUrl(form.mongo_id) });
     } else {
       this.popupContentArray = [];
       this._sm.selected.forEach((item: Form) => {
-        this.popupContentArray.push({ title: FormManagementComponent.createSharedUrl(item.mongo_id) });
+        this.popupContentArray.push({ title: FormManagementContainer.createSharedUrl(item.mongo_id) });
       });
     }
 
