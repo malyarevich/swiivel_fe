@@ -1,266 +1,264 @@
-<div *ngIf="formsPDF.isEdit" class="d-flex justify-content-center pt-4">
-  <div class="draw-div bg-white row align-items-center">
-    <div class="col-2 text-center ">
-      <span class="app-text-extra-bold">Draw</span>
+<section class="form-pdf-section">
+  <div class="edit-container" [class.open]="formsPDF.isEdit">
+    <div class="edit-toggle">
+      <sw-button (click)="editToggle()">
+        Edit Form
+      </sw-button>
     </div>
-    <div
-      class="col-10  align-items-center   btn-group btn-group-toggle"
-      ngbRadioGroup
-      name="radioDrawType"
-      (ngModelChange)="changeTypeDraw($event)"
-      [(ngModel)]="drawingType"
-    >
-        <label ngbButtonLabel class="btn rounded  pt-1 btn-sm form-control-plaintext mx-2 app-btn-outline-primary">
-          <input ngbButton type="radio" value="system">System Fields
-        </label>
-        <label ngbButtonLabel class="btn rounded  pt-1 btn-sm form-control-plaintext mx-2 app-btn-outline-primary">
-          <input ngbButton type="radio" value="checkbox"> Checkbox
-        </label>
-        <label ngbButtonLabel class="btn rounded  pt-1 btn-sm form-control-plaintext mx-2 app-btn-outline-primary">
-          <input ngbButton type="radio" value="signature"> Signature
-        </label>
-        <label ngbButtonLabel class="btn rounded  pt-1 btn-sm form-control-plaintext mx-2 app-btn-outline-primary">
-          <input ngbButton type="radio" value="temporary"> Temporary Field
-        </label>
+    <div class="edit-fields">
+      <div class="title">
+        Draw Panel
+      </div>
+      <div class="fields">
+        <div class="item">
+          <sw-button class="small gray" [class.yellow]="drawingType === 'system'" (click)="setDrawingType('system')">
+            <span class="text">System Fields</span>
+          </sw-button>
+        </div>
+        <div class="item">
+          <sw-button class="small gray" [class.yellow]="drawingType === 'checkbox'"
+            (click)="setDrawingType('checkbox')">
+            <span class="text">
+              Checkbox
+            </span>
+          </sw-button>
+        </div>
+        <div class="item">
+          <sw-button class="small gray" [class.yellow]="drawingType === 'signature'"
+            (click)="setDrawingType('signature')">
+            <span class="text">
+              Signature
+            </span>
+          </sw-button>
+        </div>
+        <div class="item">
+          <sw-button class="small gray" [class.yellow]="drawingType === 'temporary'"
+            (click)="setDrawingType('temporary')">
+            <span class="text">
+              Temporary Field
+            </span>
+          </sw-button>
+        </div>
+      </div>
+      <div class="actions">
+        <div class="item">
+          <sw-button class="green full_width" (click)="editToggle()">
+            <span class="text">
+              Save Changes
+            </span>
+          </sw-button>
+        </div>
+        <div class="item">
+          <sw-button class="gray full_width" (click)="editToggle()">
+            <span class="text">
+              Cancel
+            </span>
+          </sw-button>
+        </div>
+      </div>
     </div>
   </div>
-</div>
+  <div class="pdf-wrap">
 
-<div class="canvas-wrap">
-  <div class="canvas-overlay"></div>
-  <div [hidden]="!formsPDF.isEdit" id="layer1">
-
-    <canvas
-      #viewer
-      (mousedown)="mouseDown($event)"
-      (mouseup)="mouseUp($event)">
-    </canvas>
-
-  </div>
-
-  <div class="test-c d-flex align-items-center justify-content-center overlay loading-wrap" [class.displaynone]="loading">
-    <span class="loading-font pb-2">Uploading Page</span>
-    <div class="spinner-border loading-font" role="status">
-    </div>
-  </div>
-  <div [hidden]="!loading" class="test-c">
-    <ng-container *ngFor="let div of formsPDF.form.fieldsPdf[page-1]">
-      <div
-        [ngStyle]="styleObject(div)"
-        [ngClass]="[
-        div.isEdit?'div-inside-active':'div-inside',
-        div.type==drawingType&&formsPDF.isEdit?'div-active-type':''
-        ]"
-        class=""
-        ngbDropdown
-        placement="left"
-        autoClose="outside"
-        #myDrop="ngbDropdown"
-        (click)="editDivChange(div);"
-      >
-        <div *ngIf="div.isEdit" class="row no-gutters align-items-center div-inside-wrap" (click)="$event.stopPropagation()">
-          <div class="justify-content-center">
-              <span
-                *ngIf="div.type!='checkbox'"
-                id="dropdownBasic1"
-                ngbDropdownToggle
-
-              >
-                <i class="fas fa-pen fa-xs "></i>
-              </span>
-              <span (click)="removeDiv(div.id)"><i class="fas fa-trash fa-xs ml-2"></i></span>
-
-
-          </div>
-
+    <!-- formsPDF.isEdit -->
+    <!-- <div *ngIf="1" class="d-flex justify-content-center pt-4">
+      <div class="draw-div bg-white row align-items-center">
+        <div class="col-2 text-center ">
+          <span class="app-text-extra-bold">Draw</span>
         </div>
-        <div [ngStyle]="styleObject(div)"><p>{{div.linkedField?.name}}</p></div>
-
-        <div *ngIf="div.type=='system'" class="" ngbDropdownMenu aria-labelledby="dropdownBasic1" (click)="$event.stopPropagation()">
-          <div class="row mb-3 align-items-center row-button">
-            <div class="col-5 ml-2">
-              <button
-                class="btn btn-outline-primary form-control"
-                (click)="$event.stopPropagation();
-                 myDrop.close();
-                 searchText='';
-                 div.isEdit=!div.isEdit;"
-              >
-                Close
-              </button>
-            </div>
-            <div class="col-5 pr-2">
-              <button
-                class="btn btn-primary form-control"
-                (click)="$event.stopPropagation();
-                 myDrop.close();
-                 searchText='';
-                 div.isEdit=!div.isEdit;"
-              >
-                Save
-              </button>
-
-            </div>
-          </div>
-          <input class="form-control mb-3 search-input" [(ngModel)]="searchText" placeholder="Search...">
-          <div class="justify-content-center div-list-field">
-            <ul class="list-group justify-content-center">
-              <li
-                [ngClass]="div.linkedField?.mapped==field.mapped?'active':'do-not-active'"
-                (click)="linkFieldToDiv(field, div)"
-                class="list-group-item  ml-2 mb-3 pl-2 py-0"
-                *ngFor="let field of existingFields | filter : searchText"
-              >
-                {{field.name}}
-              </li>
-            </ul>
-
-          </div>
+        <div class="col-10  align-items-center   btn-group btn-group-toggle" ngbRadioGroup name="radioDrawType"
+          (ngModelChange)="changeTypeDraw($event)" [(ngModel)]="drawingType">
+          <label ngbButtonLabel class="btn rounded  pt-1 btn-sm form-control-plaintext mx-2 app-btn-outline-primary">
+            <input ngbButton type="radio" value="system">System Fields
+          </label>
+          <label ngbButtonLabel class="btn rounded  pt-1 btn-sm form-control-plaintext mx-2 app-btn-outline-primary">
+            <input ngbButton type="radio" value="checkbox"> Checkbox
+          </label>
+          <label ngbButtonLabel class="btn rounded  pt-1 btn-sm form-control-plaintext mx-2 app-btn-outline-primary">
+            <input ngbButton type="radio" value="signature"> Signature
+          </label>
+          <label ngbButtonLabel class="btn rounded  pt-1 btn-sm form-control-plaintext mx-2 app-btn-outline-primary">
+            <input ngbButton type="radio" value="temporary"> Temporary Field
+          </label>
         </div>
+      </div>
+    </div> -->
 
-        <div *ngIf="div.type=='signature'" (click)="$event.stopPropagation()" class="signature-div px-2 py-2" ngbDropdownMenu aria-labelledby="dropdownBasic1">
-          <div class=" pl-1 font-weight-bold">
-            <span>Signature Settings</span>
-          </div>
-          <div class="row no-gutters">
-            <div class="btn-group btn-group-toggle w-100 mt-2"
-                 ngbRadioGroup
-                 name="radioSignature"
-                [(ngModel)]="div.linkedField.isE"
-                >
-              <label ngbButtonLabel class="btn app-btn-signature">
-                <input ngbButton type="radio" [value]="true"> E-signature
-              </label>
-              <label ngbButtonLabel class="btn app-btn-signature">
-                <input ngbButton type="radio" [value]="false"> Wet Signature
-              </label>
-            </div>
-          </div>
+    <div class="canvas-wrap">
+      <div class="canvas-overlay"></div>
+      <div [hidden]="!formsPDF.isEdit" id="layer1">
 
-          <div *ngIf="div.linkedField.isE" class="row no-gutters app-signature px-2" ngbRadioGroup [(ngModel)]="div.linkedField.isSystem"
-               name="">
-            <div class="col">
-              <label ngbButtonLabel class="app-radio-container text-left">System
-                <input type="radio"
-                       ngbButton
-                       [value]="true"
-                >
-                <span class="app-radio-checkmark mt-2"></span>
-              </label>
-            </div>
-            <div class="col">
-
-              <label ngbButtonLabel class="app-radio-container text-left">External
-                <input type="radio"
-                       ngbButton
-                       [value]="false"
-                >
-                <span class="app-radio-checkmark mt-2"></span>
-              </label>
-            </div>
-          </div>
-          <div class="row px-3 pt-3">
-            <label class="app-checkbox-container">
-              Both Parents' Signature (when applicable)
-              <input type="checkbox" [(ngModel)]="div.linkedField.isBothParents" >
-              <span class="app-checkbox-checkmark"></span>
-            </label>
-          </div>
-        </div>
-
-        <div *ngIf="div.type=='temporary'" (click)="$event.stopPropagation()" class="temporary-div" ngbDropdownMenu aria-labelledby="dropdownBasic1">
-          <div class="row mb-3 align-items-center row-button">
-            <div class="col-5 ml-2">
-              <button
-                class="btn btn-outline-primary form-control"
-                (click)="$event.stopPropagation();
-                 myDrop.close();
-                 searchText='';
-                 div.isEdit=!div.isEdit;"
-              >
-                Close
-              </button>
-            </div>
-            <div class="col-5 pr-2">
-              <button
-                class="btn btn-primary form-control"
-                (click)="$event.stopPropagation();
-                 myDrop.close();
-                 searchText='';
-                 div.isEdit=!div.isEdit;"
-              >
-                Save
-              </button>
-
-            </div>
-          </div>
-          <input class="form-control mb-3 search-input" [(ngModel)]="searchText" placeholder="Search...">
-          <a class="app-text-primary text-center my-1 pl-2"
-            *ngIf="!showAddButtonTemporary"
-            (click)="showAddButtonTemporary=true">
-            &nbsp;&nbsp; Add New Field Name
-          </a>
-          <input
-            *ngIf="showAddButtonTemporary"
-            class="form-control add-input p-0"
-            autofocus
-            #newField
-            (blur)="addTempField(newField.value); newField.value='';"
-            (keyup.enter)="addTempField(newField.value) ;newField.value='';">
-          <div class="justify-content-center div-list-field mt-2">
-            <ul class="list-group justify-content-center">
-              <li
-                [ngClass]="div.linkedField?.name==field.name?'active':'do-not-active'"
-                (click)="linkFieldToDiv(field, div)"
-                class="list-group-item  ml-2 mb-3 pl-2 py-0"
-                *ngFor="let field of temporaryField | filter : searchText"
-              >
-                {{field?.name}}
-              </li>
-            </ul>
-
-          </div>
-        </div>
+        <canvas #viewer (mousedown)="mouseDown($event)" (mouseup)="mouseUp($event)">
+        </canvas>
 
       </div>
-    </ng-container>
 
+      <div class="test-c d-flex align-items-center justify-content-center overlay loading-wrap"
+        [class.displaynone]="loading">
+        <span class="loading-font pb-2">Uploading Page</span>
+        <div class="spinner-border loading-font" role="status">
+        </div>
+      </div>
+      <div [hidden]="!loading" class="test-c">
+        <ng-container *ngFor="let div of formsPDF.form.fieldsPdf[page-1]">
+          <div [ngStyle]="styleObject(div)" [ngClass]="[
+                  div.isEdit?'div-inside-active':'div-inside',
+                  div.type==drawingType&&formsPDF.isEdit?'div-active-type':''
+                  ]" class="" ngbDropdown placement="left" autoClose="outside" #myDrop="ngbDropdown"
+            (click)="editDivChange(div);">
+            <div *ngIf="div.isEdit" class="row no-gutters align-items-center div-inside-wrap"
+              (click)="$event.stopPropagation()">
+              <div class="justify-content-center">
+                <span *ngIf="div.type!='checkbox'" id="dropdownBasic1" ngbDropdownToggle>
+                  <i class="fas fa-pen fa-xs "></i>
+                </span>
+                <span (click)="removeDiv(div.id)"><i class="fas fa-trash fa-xs ml-2"></i></span>
+
+
+              </div>
+
+            </div>
+            <div [ngStyle]="styleObject(div)">
+              <p>{{div.linkedField?.name}}</p>
+            </div>
+
+            <div *ngIf="div.type === 'system'" class="system-div" ngbDropdownMenu aria-labelledby="dropdownBasic1"
+              (click)="$event.stopPropagation()">
+              <app-fields-side-bar [sideBar]="sideBar" [form]="form" [displayOnly]="true" (selectedField)="linkFieldToDiv($event, div)">
+                </app-fields-side-bar>
+              <!-- <div class="row mb-3 align-items-center row-button">
+                <div class="col-5 ml-2">
+                  <button class="btn btn-outline-primary form-control" (click)="$event.stopPropagation();
+                           myDrop.close();
+                           searchText='';
+                           div.isEdit=!div.isEdit;">
+                    Close
+                  </button>
+                </div>
+                <div class="col-5 pr-2">
+                  <button class="btn btn-primary form-control" (click)="$event.stopPropagation();
+                           myDrop.close();
+                           searchText='';
+                           div.isEdit=!div.isEdit;">
+                    Save
+                  </button>
+
+                </div>
+              </div>
+              <input class="form-control mb-3 search-input" [(ngModel)]="searchText" placeholder="Search...">
+              <div class="justify-content-center div-list-field">
+                <ul class="list-group justify-content-center">
+                  <li [ngClass]="div.linkedField?.mapped==field.mapped?'active':'do-not-active'"
+                    (click)="linkFieldToDiv(field, div)" class="list-group-item  ml-2 mb-3 pl-2 py-0"
+                    *ngFor="let field of existingFields | filter : searchText">
+                    {{field.name}}
+                  </li>
+                </ul>
+
+              </div> -->
+            </div>
+
+            <div *ngIf="div.type === 'signature'" (click)="$event.stopPropagation()" class="signature-div"
+              ngbDropdownMenu aria-labelledby="dropdownBasic1">
+              <div class="title font-weight-bold">
+                Signature Settings
+              </div>
+              <div class="row no-gutters">
+                <sw-input-button-group [options]="signatureOptions" style="width: 100%;"
+                  [(ngModel)]="div.linkedField.isE"></sw-input-button-group>
+              </div>
+            </div>
+
+            <div *ngIf="div.type === 'temporary'" (click)="$event.stopPropagation()" class="temporary-div"
+              ngbDropdownMenu aria-labelledby="dropdownBasic1">
+              <div class="wrap" [class.active]="div.toggle">
+                <div class="main-cont">
+                  <div class="lable">
+                    Temporary Field
+                  </div>
+                  <div class="text">
+                    {{ div.linkedField?.name }}
+                  </div>
+                  <div class="icon" (click)="div.toggle = !div.toggle">
+                    <div class="icon_up">
+                      <i class="fas fa-caret-up"></i>
+                    </div>
+                    <div class="icon_down">
+                      <i class="fas fa-caret-down"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="drop-cont">
+                  <div class="search-wrap">
+                    <input class="search mb-3 search-input" [(ngModel)]="searchText" placeholder="Search...">
+                    <div class="icon">
+                      <i class="fas fa-search"></i>
+                    </div>
+                  </div>
+                  <div class="add-wrap">
+                    <a class="add-btn" (click)="showAddButtonTemporary=true">
+                      Add New Field Name
+                    </a>
+                    <div class="input-wrap" *ngIf="showAddButtonTemporary">
+                      <input class="add-input" autofocus #newField placeholder="Start Typing...">
+                      <div class="actions">
+                        <sw-button class="outline-btn icon-btn icon-green"
+                          (click)="addTempField(newField.value, div); newField.value='';">
+                          <i class="fas fa-check green"></i>
+                        </sw-button>
+                        <sw-button class="outline-btn icon-btn icon-gray"
+                          (click)="newField.value=''; showAddButtonTemporary=false;">
+                          <i class="fas fa-times gray"></i>
+                        </sw-button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="list-wrap">
+                    <ul class="list-ul">
+                      <li (click)="linkFieldToDiv(field, div)" class="list-ul-item"
+                        [class.active]="div.linkedField?.name==field.name"
+                        *ngFor="let field of div?.fields | filter : searchText">
+                        {{field?.name}}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </ng-container>
+
+      </div>
+
+      <div id="layer3" style="width: 100%; height: 100%;">
+
+        <pdf-viewer [original-size]="false" [src]="{ url: formsPDF.form.link}" [render-text-mode]="0"
+          [autoresize]="true" [show-all]="false" [page]="page" style="display: block;" (error)="onError($event)"
+          (on-progress)="onProgress($event)" (after-load-complete)="loadComplete($event)">
+        </pdf-viewer>
+
+      </div>
+
+    </div>
+
+    <div *ngIf="pages>1" class="d-flex justify-content-center pt-4">
+      <ngb-pagination [collectionSize]="pages * 10" [(page)]="page" aria-label="Default pagination"></ngb-pagination>
+    </div>
+
+    <!-- <div *ngIf="formsPDF.isEdit" class="d-flex justify-content-center pt-4 row align-items-center">
+      <div class="col-3">
+        <button class="btn app-btn-outline-primary form-control"
+          (click)="formsPDF.isEdit=!formsPDF.isEdit; changeTypeDraw($event)">
+          Cancel
+        </button>
+      </div>
+      <div class="col-3">
+        <button class="btn app-btn-primary form-control"
+          (click)="formsPDF.isEdit=!formsPDF.isEdit; changeTypeDraw($event)">
+          Apply Changes
+        </button>
+      </div>
+    </div> -->
   </div>
-
-  <div id="layer3" style="width: 100%; height: 100%;">
-
-    <pdf-viewer
-      [original-size]="false"
-      [src]="{ url: formsPDF.form.link}"
-      [render-text-mode]="0"
-      [autoresize]="true"
-      [show-all]="false"
-      [page]="page"
-      style="display: block;"
-      (error)="onError($event)"
-      (on-progress)="onProgress($event)"
-      (after-load-complete)="loadComplete($event)"
-    >
-    </pdf-viewer>
-
-  </div>
-
-</div>
-
-<div *ngIf="pages>1" class="d-flex justify-content-center pt-4">
-  <ngb-pagination [collectionSize]="pages * 10" [(page)]="page" aria-label="Default pagination"></ngb-pagination>
-
-</div>
-
-<div *ngIf="formsPDF.isEdit" class="d-flex justify-content-center pt-4 row align-items-center">
-  <div class="col-3">
-    <button class="btn app-btn-outline-primary form-control" (click)="formsPDF.isEdit=!formsPDF.isEdit; changeTypeDraw($event)">
-      Cancel
-    </button>
-  </div>
-  <div class="col-3">
-    <button class="btn app-btn-primary form-control" (click)="formsPDF.isEdit=!formsPDF.isEdit; changeTypeDraw($event)">
-      Apply Changes
-    </button>
-  </div>
-</div>
+</section>

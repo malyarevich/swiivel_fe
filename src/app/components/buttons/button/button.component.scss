@@ -126,6 +126,50 @@
   }
 }
 
+:host(.small) {
+  .button {
+    width: 100%;
+    padding: 1px 15px;
+  }
+}
+
+:host(.gray) {
+  .button {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    box-sizing: border-box;
+    border-radius: 3px;
+  }
+}
+
+:host(.yellow) {
+  .button {
+    background: #F8BC45;
+    border: none;
+  }
+}
+
+:host(.green) {
+  .button {
+    background: #3CA476;
+    border: none;
+  }
+}
+
+:host(.icon-green) {
+  .button {
+    border: 1px solid #3CA476;
+    padding: 1px;
+  }
+}
+
+:host(.icon-gray) {
+  .button {
+    border: 1px solid #909090;
+    padding: 1px;
+  }
+}
+
 :host {
   button:disabled {
     background: $gray;

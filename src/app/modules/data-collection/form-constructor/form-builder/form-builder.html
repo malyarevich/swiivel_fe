@@ -810,7 +810,7 @@
       <app-fields-workspace *ngIf="activeSections.formFields.isActive" [form]="form" [sideBar]="newSideBar"
         [idSectionForDragDrop]="idSectionForDragDrop" [customFields]="customFields"></app-fields-workspace>
       <!--  documents-forms-->
-      <app-documents-forms *ngIf="activeSections.documentsForms.isActive" [isDocumentsForms]="isDocumentsForms"
+      <app-documents-forms *ngIf="activeSections.documentsForms.isActive" [sideBar]="newSideBar" [form]="form" [isDocumentsForms]="isDocumentsForms"
         [documentsForms]="documentsForms" [documents]="documents" [formsPDF]="formsPDF" [attachments]="attachments"
         [formId]="formId" [existingFields]="existingFields">
       </app-documents-forms>

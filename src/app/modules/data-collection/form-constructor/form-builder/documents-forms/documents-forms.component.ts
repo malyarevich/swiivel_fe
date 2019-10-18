@@ -17,6 +17,8 @@ export class DocumentsFormsComponent implements OnInit {
   @Input() documents: DocumentsModel[];
   @Input() existingFields: Field[];
   @Input() documentsForms: DocumentsFormsModel;
+  @Input() sideBar: any;
+  @Input() form: any;
   constructor() { }
 
   ngOnInit() {
