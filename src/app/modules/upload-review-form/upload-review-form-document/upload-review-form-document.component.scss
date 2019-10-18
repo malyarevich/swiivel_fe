@@ -9,7 +9,7 @@
     position: relative;
     padding: 0;
     overflow: scroll;
-    max-width: 100vh;
+    max-width: 100vw;
     max-height: calc(100vh - 185px);
   }
 
@@ -41,7 +41,7 @@
   }
 
   .controllers-zoom:after {
-    position: fixed;
+    position: absolute;
     right: 0;
     content: '';
     width: 1px;
