@@ -66,7 +66,7 @@
       </sw-input-checkbox>
 
     </div>
-    <app-form-drawing [existingFields]="existingFields" *ngIf="forms?.form && forms?.form?.name"
+    <app-form-drawing [sideBar]="sideBar" [form]="form" [existingFields]="existingFields" *ngIf="forms?.form && forms?.form?.name"
     [pages]="forms.form.numberOfPages" [formsPDF]="forms"></app-form-drawing>
     <!-- <div class="row justify-content-center">
       <

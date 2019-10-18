@@ -33,6 +33,8 @@ export class FormDrawingComponent implements AfterViewInit, OnDestroy, OnInit, O
   @Input() height = 1056;
   @Input() existingFields: Field[];
   @Input() formsPDF: FormsPDFModel;
+  @Input() sideBar: any;
+  @Input() form: any;
   @ViewChild('viewer', { static: true }) canvas: ElementRef;
 
   showAddButtonTemporary: boolean = false;

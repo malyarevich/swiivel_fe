@@ -122,9 +122,11 @@
               <p>{{div.linkedField?.name}}</p>
             </div>
 
-            <div *ngIf="div.type=='system'" class="" ngbDropdownMenu aria-labelledby="dropdownBasic1"
+            <div *ngIf="div.type === 'system'" class="system-div" ngbDropdownMenu aria-labelledby="dropdownBasic1"
               (click)="$event.stopPropagation()">
-              <div class="row mb-3 align-items-center row-button">
+              <app-fields-side-bar [sideBar]="sideBar" [form]="form" [displayOnly]="true" (selectedField)="linkFieldToDiv($event, div)">
+                </app-fields-side-bar>
+              <!-- <div class="row mb-3 align-items-center row-button">
                 <div class="col-5 ml-2">
                   <button class="btn btn-outline-primary form-control" (click)="$event.stopPropagation();
                            myDrop.close();
@@ -153,7 +155,7 @@
                   </li>
                 </ul>
 
-              </div>
+              </div> -->
             </div>
 
             <div *ngIf="div.type === 'signature'" (click)="$event.stopPropagation()" class="signature-div"

@@ -19,6 +19,8 @@ export class FormsContainerComponent implements OnInit, OnChanges {
   @Input() existingFields: Field[];
   @Input() formsPDF: FormsPDFModel[];
   @Input() documentsForms: DocumentsFormsModel;
+  @Input() sideBar: any;
+  @Input() form: any;
 
   existingFormsPDF: FormPDFDownloadModel[] = [];
   // page = 1;
