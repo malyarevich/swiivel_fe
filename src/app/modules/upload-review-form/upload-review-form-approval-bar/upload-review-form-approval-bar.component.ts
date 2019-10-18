@@ -14,9 +14,11 @@ export class UploadReviewFormApprovalBarComponent {
   @Input() document: Document;
   @Input() isLast: boolean;
   @Input() disabled: boolean;
+  @Input() isSaveActive: boolean;
   @Input('loading') showSpinner = false;
   @Output() changeStatus = new EventEmitter<string>();
   @Output() skipDocument = new EventEmitter();
+  @Output() saveDocument = new EventEmitter();
   public colors = ColorsEnum;
   public statuses = UploadReviewFormStatusesEnum;
   public uploadReviewFormStatusesEnum = UploadReviewFormStatusesEnum;

@@ -51,9 +51,9 @@ export const termsConditionsDefault: TermsConditions = {
   sectionWidth: Section.full,
   termsConditionsItems: [],
   signature: {
-    isRequire: false,
-    type: SIGNATURE_TYPES.ESIGN,
-    eType: E_SIGNATURE_TYPES.SYSTEM,
+    isRequire: true,
+    type: SIGNATURE_TYPES.WET,
+    eType: E_SIGNATURE_TYPES.EXTERNAL,
     isBothParents: false,
     signed: { parents: false, fathers: false, mothers: false }
   }
