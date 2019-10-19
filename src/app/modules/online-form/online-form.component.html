@@ -6,6 +6,7 @@
   </div>
 
   <sw-online-form-nav
+    [isMenuShow]="isMenuShow"
     [formName]="form?.name"
     (actionEmitter)="onMainNavAction($event)"
   ></sw-online-form-nav>
