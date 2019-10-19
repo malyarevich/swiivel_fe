@@ -9,12 +9,14 @@
     >
       {{ document.name }}
     </div>
-    <div
-      class="content_section__article_text"
-      [innerHTML]="document.accompanyingText.data"
-    ></div>
     <div class="containers_line">
       <div class="document_container">
+        <div
+          class="content_section__article_text"
+          [innerHTML]="document.accompanyingText.data"
+        ></div>
+      </div>
+      <div class="document_container document_container__control" *ngIf="!document.isUpload">
         <img
           class="document_container__file_icon"
           [src]="pathIconsFolder + 'file.svg'"
@@ -41,7 +43,7 @@
         </button>
       </div>
       <div
-        class="document_container document_container__upload"
+        class="document_container document_container__control document_container__upload"
         *ngIf="
           document.isUpload && !document.fileUploading && !document.fileUploaded
         "
@@ -163,7 +165,7 @@
                         class="document_container__file_icon"
                         [src]="pathIconsFolder + 'file-documents.svg'"
                       />
-                      {{ getAcceptedFormats(document, "documents") }}
+                      {{ getAcceptedFormats(document, 'documents') }}
                     </li>
                     <li
                       class="images"
@@ -173,7 +175,7 @@
                         class="document_container__file_icon"
                         [src]="pathIconsFolder + 'file-images.svg'"
                       />
-                      {{ getAcceptedFormats(document, "images") }}
+                      {{ getAcceptedFormats(document, 'images') }}
                     </li>
                     <li
                       class="media"
@@ -183,7 +185,7 @@
                         class="document_container__file_icon"
                         [src]="pathIconsFolder + 'file-video-audio.svg'"
                       />
-                      {{ getAcceptedFormats(document, "videoAudio") }}
+                      {{ getAcceptedFormats(document, 'videoAudio') }}
                     </li>
                   </ul>
                 </span>

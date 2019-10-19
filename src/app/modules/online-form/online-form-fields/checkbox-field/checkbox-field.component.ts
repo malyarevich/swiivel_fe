@@ -3,11 +3,11 @@ import { FormGroup } from '@angular/forms';
 import { Field } from 'src/app/models/data-collection/field.model';
 
 @Component({
-  selector: 'app-time-field',
-  templateUrl: './time-field.component.html',
-  styleUrls: ['./time-field.component.scss']
+  selector: 'app-checkbox-field',
+  templateUrl: './checkbox-field.component.html',
+  styleUrls: ['./checkbox-field.component.scss']
 })
-export class TimeFieldComponent implements OnInit {
+export class CheckboxFieldComponent implements OnInit {
   @Input() field: Field;
   @Input() fg: FormGroup;
   @Input() validationText: string;

@@ -19,7 +19,7 @@
   <!-- Field -->
   <div class="section__fields">
     <ng-container *ngFor="let field of fields">
-      <div class="field_width--{{ field.width }}">
+      <div class="field_width--{{ getWidth(field) }}">
         <sw-general-info-field
           [field]="field"
           [formErrors]="getFormErrorsById(field['_id'])"

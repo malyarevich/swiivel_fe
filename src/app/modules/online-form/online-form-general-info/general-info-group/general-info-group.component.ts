@@ -91,4 +91,8 @@ export class GeneralInfoGroupComponent implements OnInit {
     }
     return errors;
   }
+
+  getWidth(field: Field): string {
+    return field.width ? field.width : 'quarter';
+  }
 }

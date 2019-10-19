@@ -2,14 +2,17 @@
   <div
     class="form-group app-input-container position-relative date_controls"
     [formGroup]="fg"
-    [ngClass]="{ 'app-input-fill': !field.options.hideLabel }"
   >
-    <label *ngIf="!field.options.hideLabel" class="app-input-label">
-      {{ field.name | titlecase }}
-    </label>
-
     <sw-input-hebrew-datepicker
       [formControlName]="field._id"
+      [separator]="getSeparator()"
+      [format]="getFormat()"
+      [placeholder]="getLabel()"
+      [value]="getValue()"
+      [ngClass]="{
+        online_form: true
+      }"
+      [isActive]="isActive()"
     ></sw-input-hebrew-datepicker>
 
     <span
@@ -22,7 +25,9 @@
 
     <span
       class="validation_icon"
-      [ngClass]="{ validation_required: this.field.options.required && !this.field.options.readonly }"
+      [ngClass]="{
+        validation_required: isRequired()
+      }"
     >
       <i class="fas fa-asterisk fa-xs"></i>
     </span>
