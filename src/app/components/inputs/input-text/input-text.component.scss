@@ -1,5 +1,9 @@
 @import "index";
 
+.fa-search {
+  display: none;
+}
+
 :host {
   .input_text {
     width: 100%;
@@ -65,6 +69,32 @@
   }
 }
 
+:host(.filter-field) {
+  .input_text {
+    position: relative;
+
+    &__input {
+      border-color: transparent;
+      height: 25px;
+      padding: 5px 10px;
+    }
+
+    .fa-search {
+      color: #A4A4A4;
+      cursor: pointer;
+      display: block;
+      position: absolute;
+      right: 0.75rem;
+      top: 0.75rem;
+
+      @media (min-width: 1280px){
+        right: 0.5rem;
+        top: 0.5rem;
+      }
+    }
+  }
+}
+
 :host(.no_styles) {
   .input_text__input {
     border: none;
@@ -73,7 +103,6 @@
     padding: 0;
     font: 800 14px/20px $nunito-sans;
   }
-
 }
 
 :host(.no_styles.small) {
