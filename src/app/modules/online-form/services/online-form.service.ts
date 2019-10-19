@@ -182,6 +182,16 @@ export class OnlineFormService {
     return undefined;
   }
 
+  sendFormTemplate(form: object = {}): Observable<any> {
+    if (this.formId) {
+      return this.http
+        .put(`/proxy/forms/online/${this.formId}`, form)
+        .pipe(map(response => response));
+    }
+    console.error('Id of template is undefined');
+    return undefined;
+  }
+
   initOneForm() {
     this.fg = new FormGroup({});
   }

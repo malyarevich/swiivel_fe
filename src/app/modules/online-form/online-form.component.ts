@@ -57,7 +57,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
   );
   formErrors$: BehaviorSubject<object> = new BehaviorSubject({});
   sectionGroupFieldsErrors$: BehaviorSubject<object> = new BehaviorSubject({});
-  isViewOnly$: BehaviorSubject<boolean> = new BehaviorSubject(true);
+  isViewMode$: BehaviorSubject<boolean> = new BehaviorSubject(true);
 
   // keys
   consentKeys: string[] = [];
@@ -110,18 +110,18 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
     this.initFormControls();
 
     this._isReady$.next(true);
-    if (!this.isViewOnly$.getValue()) {
-      this.fgStatusChangesSubscription = this.fg.statusChanges.subscribe(() => {
-        this.pagesPercents$.next(
-          this.getRecountedPagesPercentsByPage(
-            this.currentPosition$.getValue().page
-          )
-        );
-      });
-      this.fgValueChangesSubscription = this.fg.valueChanges.subscribe(() => {
-        this.isFormStatusChanged = true;
-      });
-    }
+    // if (!this.isViewMode$.getValue()) {
+    this.fgStatusChangesSubscription = this.fg.statusChanges.subscribe(() => {
+      this.pagesPercents$.next(
+        this.getRecountedPagesPercentsByPage(
+          this.currentPosition$.getValue().page
+        )
+      );
+    });
+    this.fgValueChangesSubscription = this.fg.valueChanges.subscribe(() => {
+      this.isFormStatusChanged = true;
+    });
+    // }
   }
 
   failedLoading() {
@@ -133,7 +133,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
       this.route.pathFromRoot[1].url.subscribe(urlPath => {
         if (urlPath.length > 0) {
           const url = urlPath[0].path;
-          this.isViewOnly$.next(
+          this.isViewMode$.next(
             url === 'online-form' || this.isFormReviewMode ? false : true
           );
         }
@@ -148,7 +148,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
         // this.route.params.subscribe(params => {
         //   this.formId = params.mongo_id;
         // });
-        if (this.isViewOnly$.getValue()) {
+        if (this.isViewMode$.getValue()) {
           // template by id
           this.getOneFormSubscription = this.onlineFormService
             .getTemplateForm()
@@ -520,10 +520,10 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
 
   addControl(
     key: string,
-    isValidate: boolean = false,
+    isRequired: boolean = false,
     validators = this.requiredValidator,
     defatultValue: string | boolean | number | object | object[] = '',
-    disabled: boolean = false
+    isDisabled: boolean = false
   ): void {
     this.fg.addControl(
       key,
@@ -533,9 +533,10 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
             this.form.fieldsData && this.form.fieldsData[key]
               ? this.form.fieldsData[key]
               : defatultValue,
-          disabled: disabled || this.isViewOnly$.getValue()
+          disabled: isRequired ? false : isDisabled // || this.isViewMode$.getValue()
         },
-        isValidate && !disabled ? validators : null
+        isRequired ? validators : null
+        // isRequired && !isDisabled ? validators : null
       )
     );
   }
@@ -688,15 +689,15 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
             : null;
           this.addControl(
             field._id,
-            !(validatorFn === null),
+            field.options.required,
             validatorFn,
             defaultValue,
             field.options.readonly
           );
-          const isRequired =
-            aValidators.find(validator => {
-              return validator === Validators.required;
-            }) && !field.options.readonly;
+          const isRequired = field.options.required;
+          // aValidators.find(validator => {
+          //   return validator === Validators.required;
+          // }) && !field.options.readonly;
 
           this.addToFieldLists(
             mainMenuNames.generalInfo,
@@ -997,7 +998,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
   }
 
   saveAndNextStep() {
-    if (!this.isViewOnly$.getValue() && this.isFormStatusChanged) {
+    if (this.isFormStatusChanged) {
       const savingObj = {
         pagesPercents: this.pagesPercents$.getValue(),
         fieldListByPage: undefined,
@@ -1009,29 +1010,55 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
       savingObj.currentPosition = this.currentPosition$.getValue();
       savingObj.fieldsData = this.fg.value;
 
-      this.onlineFormService
-        .sendForm(savingObj)
-        .pipe(takeUntil(this.destroyedSaveForm$))
-        .subscribe(
-          () => {
-            this.formErrors$.next({});
-            this.sectionGroupFieldsErrors$.next(
-              this.composeSectionGroupFieldsErrors()
-            );
-            this.goToNextStep();
-            this.isFormStatusChanged = false;
-          },
-          error => {
-            if (error.error.status === 0) {
-              this.formErrors$.next(error.error.errors);
+      if (this.isViewMode$.getValue()) {
+        this.onlineFormService
+          .sendFormTemplate(savingObj)
+          .pipe(takeUntil(this.destroyedSaveForm$))
+          .subscribe(
+            () => {
+              this.formErrors$.next({});
+              this.sectionGroupFieldsErrors$.next(
+                this.composeSectionGroupFieldsErrors()
+              );
+              this.goToNextStep();
+              this.isFormStatusChanged = false;
+            },
+            error => {
+              if (error.error.status === 0) {
+                this.formErrors$.next(error.error.errors);
+              }
+              this.sectionGroupFieldsErrors$.next(
+                this.composeSectionGroupFieldsErrors()
+              );
+              // console.log(this.formErrors$.getValue());
+              // console.log(this.sectionGroupFieldsErrors$.getValue());
             }
-            this.sectionGroupFieldsErrors$.next(
-              this.composeSectionGroupFieldsErrors()
-            );
-            // console.log(this.formErrors$.getValue());
-            // console.log(this.sectionGroupFieldsErrors$.getValue());
-          }
-        );
+          );
+      } else {
+        this.onlineFormService
+          .sendForm(savingObj)
+          .pipe(takeUntil(this.destroyedSaveForm$))
+          .subscribe(
+            () => {
+              this.formErrors$.next({});
+              this.sectionGroupFieldsErrors$.next(
+                this.composeSectionGroupFieldsErrors()
+              );
+              this.goToNextStep();
+              this.isFormStatusChanged = false;
+            },
+            error => {
+              if (error.error.status === 0) {
+                this.formErrors$.next(error.error.errors);
+              }
+              this.sectionGroupFieldsErrors$.next(
+                this.composeSectionGroupFieldsErrors()
+              );
+              // console.log(this.formErrors$.getValue());
+              // console.log(this.sectionGroupFieldsErrors$.getValue());
+            }
+          );
+      }
     } else {
       this.goToNextStep();
     }

@@ -22,12 +22,12 @@ export class EmailFieldComponent implements OnInit {
 
   isActive(): boolean {
     return (
-      !(this.field.options && this.field.options.readonly) &&
+      // !(this.field.options && this.field.options.readonly) &&
       this.fg.controls[this.field._id].enabled
     );
   }
 
   isRequired(): boolean {
-    return this.field.options.required && !this.field.options.readonly;
+    return this.field.options.required; // && !this.field.options.readonly;
   }
 }
