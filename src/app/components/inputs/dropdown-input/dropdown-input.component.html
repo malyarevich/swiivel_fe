@@ -1,13 +1,13 @@
 <div
-    #holder
-    class="dropdown_input_container"
-    data-e2e="dropdown_input_container"
-    [class.active]="active"
-    [class.empty]="isEmpty()"
-    [class.disabled]="disabled"
-    (click)="showPopup()"
+  #holder
+  class="dropdown_input_container"
+  data-e2e="dropdown_input_container"
+  [class.active]="active"
+  [class.empty]="isEmpty()"
+  [class.disabled]="disabled"
+  (click)="showPopup()"
 >
-  <ng-content select="span"></ng-content>
+  <ng-content select="span" class="span"></ng-content>
   <div class="dropdown_input_container__row" *ngIf="isDisplaySelected">
     <div
       class="dropdown_input_container__input"

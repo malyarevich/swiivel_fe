@@ -6,6 +6,8 @@
   (changeStatus)="changeStatus($event)"
   [isLast]="isLastDocument()"
   [disabled]="isBulkDownload"
+  [isSaveActive]="isSaveActive"
+  (saveDocument)="onOpenConfirmSavePopup()"
 >
 </app-document-approval-bar>
 <div class="content">
@@ -21,7 +23,7 @@
               placeholder="Search"
               formControlName="search"
               type="controls"
-              [disabled]="isBulkDownload"
+              [disabled]="isBulkDownload || isSaveActive"
             ></app-search-field>
           </div>
           <div class="sidebar-controls">
@@ -31,7 +33,7 @@
                 [multiple]="true"
                 [dropdownSubHeader]="true"
                 [options]="filterValue"
-                [disabled]="isEmptyObject(filterValue) || isBulkDownload"
+                [disabled]="isEmptyObject(filterValue) || isBulkDownload || isSaveActive"
               >
                 <span class="label">
                   Filtered By
@@ -42,7 +44,7 @@
               <sw-dropdown-input
                 formControlName="sort"
                 [options]="sortValue"
-                [disabled]="!(sortValue && sortValue.length) || isBulkDownload"
+                [disabled]="!(sortValue && sortValue.length) || isBulkDownload || isSaveActive"
               >
                 <span class="label">
                   Sorted By
@@ -63,7 +65,7 @@
                   [isBulkDownload]="isBulkDownload"
                   (selected)="selectItem($event)"
                   (downLoadForm)="downLoadForm($event)"
-                  (deleteForm)="openConfirmPopup($event)"
+                  (deleteForm)="openDeleteConfirmPopup($event)"
                 >
                 </app-upload-review-form-item>
               </div>
@@ -130,7 +132,7 @@
         [documentTypes]="documentTypes"
         [documentFamilies]="documentFamilies"
         [document]="getSelectForm()"
-        (updateDocumentSettings)="updateDocumentSettings($event)"
+        (updateDocumentSettings)="changeDocumentSettings($event)"
       ></app-upload-review-form-document-settings>
     </div>
 
@@ -146,9 +148,14 @@
 </div>
 <sw-dialog
     #dialog
-    action="Remove"
-    title="Remove Document"
-    (closed)="deleteForm($event)"
+    [action]="isSaveActive ? 'Save' : 'Remove'"
+    [title]="isSaveActive ? 'Save Document' : 'Remove Document'"
+    [style]="'center'"
+    (closed)="closeForm($event)"
 >
-  <p>Are you sure you want to remove [Item(s)]?</p>
+  <p *ngIf="!this.isSaveActive">Are you sure you want to remove
+    {{ getDocument(removeDocumentId) && getDocument(removeDocumentId).entity_name ?
+          getDocument(removeDocumentId).entity_name : 'this document' }}?
+  </p>
+  <p *ngIf="this.isSaveActive">Are you sure you want to save settings for this document?</p>
 </sw-dialog>

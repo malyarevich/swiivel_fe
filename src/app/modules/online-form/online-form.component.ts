@@ -43,6 +43,8 @@ import { ninvoke } from 'q';
 })
 export class OnlineFormComponent implements OnInit, OnDestroy {
   @Input() formId: string = '';
+  @Input() isMenuShow: boolean = true;
+  @Input() isFormReviewMode: boolean = false;
   form: Form;
   fg: FormGroup;
 
@@ -55,7 +57,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
   );
   formErrors$: BehaviorSubject<object> = new BehaviorSubject({});
   sectionGroupFieldsErrors$: BehaviorSubject<object> = new BehaviorSubject({});
-  isViewOnly$: BehaviorSubject<boolean> = new BehaviorSubject(true);
+  isViewMode$: BehaviorSubject<boolean> = new BehaviorSubject(true);
 
   // keys
   consentKeys: string[] = [];
@@ -92,11 +94,10 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
   }
 
   isHaveSense(): boolean {
-    // console.log(this.form['activeSections']);
     return (
-      this.form['activeSections'] &&
-      Object.keys(this.form['activeSections']).length > 0 &&
-      this.form['activeSections'].constructor === Object
+      this.form.activeSections &&
+      Object.keys(this.form.activeSections).length > 0 &&
+      this.form.activeSections.constructor === Object
     );
   }
 
@@ -107,22 +108,20 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
     this.initPosition();
     this.initRequiredList();
     this.initFormControls();
-    // if (this.onlineFormService.getFormGroup()) {
-    //   this._isReady$.next(true);
-    // }
+
     this._isReady$.next(true);
-    if (!this.isViewOnly$.getValue()) {
-      this.fgStatusChangesSubscription = this.fg.statusChanges.subscribe(() => {
-        this.pagesPercents$.next(
-          this.getRecountedPagesPercentsByPage(
-            this.currentPosition$.getValue().page
-          )
-        );
-      });
-      this.fgValueChangesSubscription = this.fg.valueChanges.subscribe(() => {
-        this.isFormStatusChanged = true;
-      });
-    }
+    // if (!this.isViewMode$.getValue()) {
+    this.fgStatusChangesSubscription = this.fg.statusChanges.subscribe(() => {
+      this.pagesPercents$.next(
+        this.getRecountedPagesPercentsByPage(
+          this.currentPosition$.getValue().page
+        )
+      );
+    });
+    this.fgValueChangesSubscription = this.fg.valueChanges.subscribe(() => {
+      this.isFormStatusChanged = true;
+    });
+    // }
   }
 
   failedLoading() {
@@ -130,12 +129,13 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
   }
 
   getForm(): void {
-    // this.isViewOnly$.next(false);
     if (this.route.pathFromRoot.length > 0) {
       this.route.pathFromRoot[1].url.subscribe(urlPath => {
         if (urlPath.length > 0) {
           const url = urlPath[0].path;
-          this.isViewOnly$.next(url === 'online-form' ? false : true);
+          this.isViewMode$.next(
+            url === 'online-form' || this.isFormReviewMode ? false : true
+          );
         }
 
         this.onlineFormService.setFromId(
@@ -148,7 +148,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
         // this.route.params.subscribe(params => {
         //   this.formId = params.mongo_id;
         // });
-        if (this.isViewOnly$.getValue()) {
+        if (this.isViewMode$.getValue()) {
           // template by id
           this.getOneFormSubscription = this.onlineFormService
             .getTemplateForm()
@@ -424,10 +424,10 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
     const activeMenuList: IFormNavigationState[] = [];
     // TODO: remove after create packetIntroduction
     activeMenuList.push({ page: 'packetIntroduction' });
-    for (const page in this.form['activeSections']) {
+    for (const page in this.form.activeSections) {
       if (
-        this.form['activeSections'][page] &&
-        this.form['activeSections'][page].isActive
+        this.form.activeSections[page] &&
+        this.form.activeSections[page].isActive
       ) {
         activeMenuList.push({ page: page });
       }
@@ -520,10 +520,10 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
 
   addControl(
     key: string,
-    isValidate: boolean = false,
+    isRequired: boolean = false,
     validators = this.requiredValidator,
-    defatultValue: any = '',
-    disabled: boolean = false
+    defatultValue: string | boolean | number | object | object[] = '',
+    isDisabled: boolean = false
   ): void {
     this.fg.addControl(
       key,
@@ -533,9 +533,10 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
             this.form.fieldsData && this.form.fieldsData[key]
               ? this.form.fieldsData[key]
               : defatultValue,
-          disabled: disabled || this.isViewOnly$.getValue()
+          disabled: isRequired ? false : isDisabled // || this.isViewMode$.getValue()
         },
-        isValidate && !disabled ? validators : null
+        isRequired ? validators : null
+        // isRequired && !isDisabled ? validators : null
       )
     );
   }
@@ -676,10 +677,10 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
     if (aFields.length > 0) {
       aFields.forEach(field => {
         const defaultValue =
-          field.type === 105
-            ? []
-            : field.options && field.options.default
+          field.options && field.options.default
             ? field.options.default
+            : field.type === 105
+            ? []
             : '';
         if (field._id) {
           const aValidators = this.getComposedValidatorsByField(field);
@@ -688,15 +689,15 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
             : null;
           this.addControl(
             field._id,
-            !(validatorFn === null),
+            field.options.required,
             validatorFn,
             defaultValue,
             field.options.readonly
           );
-          const isRequired =
-            aValidators.find(validator => {
-              return validator === Validators.required;
-            }) && !field.options.readonly;
+          const isRequired = field.options.required;
+          // aValidators.find(validator => {
+          //   return validator === Validators.required;
+          // }) && !field.options.readonly;
 
           this.addToFieldLists(
             mainMenuNames.generalInfo,
@@ -997,7 +998,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
   }
 
   saveAndNextStep() {
-    if (!this.isViewOnly$.getValue() && this.isFormStatusChanged) {
+    if (this.isFormStatusChanged) {
       const savingObj = {
         pagesPercents: this.pagesPercents$.getValue(),
         fieldListByPage: undefined,
@@ -1009,29 +1010,55 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
       savingObj.currentPosition = this.currentPosition$.getValue();
       savingObj.fieldsData = this.fg.value;
 
-      this.onlineFormService
-        .sendForm(savingObj)
-        .pipe(takeUntil(this.destroyedSaveForm$))
-        .subscribe(
-          () => {
-            this.formErrors$.next({});
-            this.sectionGroupFieldsErrors$.next(
-              this.composeSectionGroupFieldsErrors()
-            );
-            this.goToNextStep();
-            this.isFormStatusChanged = false;
-          },
-          error => {
-            if (error.error.status === 0) {
-              this.formErrors$.next(error.error.errors);
+      if (this.isViewMode$.getValue()) {
+        this.onlineFormService
+          .sendFormTemplate(savingObj)
+          .pipe(takeUntil(this.destroyedSaveForm$))
+          .subscribe(
+            () => {
+              this.formErrors$.next({});
+              this.sectionGroupFieldsErrors$.next(
+                this.composeSectionGroupFieldsErrors()
+              );
+              this.goToNextStep();
+              this.isFormStatusChanged = false;
+            },
+            error => {
+              if (error.error.status === 0) {
+                this.formErrors$.next(error.error.errors);
+              }
+              this.sectionGroupFieldsErrors$.next(
+                this.composeSectionGroupFieldsErrors()
+              );
+              // console.log(this.formErrors$.getValue());
+              // console.log(this.sectionGroupFieldsErrors$.getValue());
             }
-            this.sectionGroupFieldsErrors$.next(
-              this.composeSectionGroupFieldsErrors()
-            );
-            // console.log(this.formErrors$.getValue());
-            // console.log(this.sectionGroupFieldsErrors$.getValue());
-          }
-        );
+          );
+      } else {
+        this.onlineFormService
+          .sendForm(savingObj)
+          .pipe(takeUntil(this.destroyedSaveForm$))
+          .subscribe(
+            () => {
+              this.formErrors$.next({});
+              this.sectionGroupFieldsErrors$.next(
+                this.composeSectionGroupFieldsErrors()
+              );
+              this.goToNextStep();
+              this.isFormStatusChanged = false;
+            },
+            error => {
+              if (error.error.status === 0) {
+                this.formErrors$.next(error.error.errors);
+              }
+              this.sectionGroupFieldsErrors$.next(
+                this.composeSectionGroupFieldsErrors()
+              );
+              // console.log(this.formErrors$.getValue());
+              // console.log(this.sectionGroupFieldsErrors$.getValue());
+            }
+          );
+      }
     } else {
       this.goToNextStep();
     }

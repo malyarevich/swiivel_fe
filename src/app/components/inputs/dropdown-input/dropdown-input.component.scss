@@ -88,6 +88,42 @@
   }
 }
 
+:host(.online_form) {
+  .dropdown_input_container {
+    min-height: 3rem;
+
+    &.empty:not(:focus-within) {
+      & .label {
+        top: .75rem;
+        font-size: 1.5rem;
+      }
+    }
+
+    &__row {
+      padding-top: 0.5rem;
+    }
+
+    &__input {
+      & .text {
+        margin-top: 0;
+        font-size: 1rem;
+      }
+
+      &.many {
+        border-radius: 0.25rem;
+        margin-right: 0.25rem;
+        margin-top: 0.25rem;
+      }
+    }
+
+    & .span {
+      left: 1.25rem;
+      right: 1.25rem;
+      font-size: 1.5rem;
+    }
+  }
+}
+
 .dropdown_items_container__item:hover {
   cursor: pointer;
 }

@@ -9,12 +9,17 @@
     >
       {{ document.name }}
     </div>
-    <div
-      class="content_section__article_text"
-      [innerHTML]="document.accompanyingText.data"
-    ></div>
     <div class="containers_line">
       <div class="document_container">
+        <div
+          class="content_section__article_text"
+          [innerHTML]="document.accompanyingText.data"
+        ></div>
+      </div>
+      <div
+        class="document_container document_container__control"
+        *ngIf="!document.isUpload"
+      >
         <img
           class="document_container__file_icon"
           [src]="pathIconsFolder + 'file.svg'"
@@ -41,7 +46,7 @@
         </button>
       </div>
       <div
-        class="document_container document_container__upload"
+        class="document_container document_container__control"
         *ngIf="
           document.isUpload && !document.fileUploading && !document.fileUploaded
         "
@@ -51,9 +56,9 @@
           [formControlName]="document['id']"
           #file="upload"
           [preupload]="'/proxy/forms/online/upload/' + form['_id']"
-          (selected)="onUploadSelected($event, document)"
-          (progress)="onUploadProgress($event, document)"
-          (response)="onUploadResponse($event, document)"
+          (selected)="onUploadSelected($event, document['id'])"
+          (progress)="onUploadProgress($event, document['id'])"
+          (response)="onUploadResponse($event, document['id'])"
           (onFileDropped)="onFileSelected(document, $event)"
         >
           <ng-container [ngSwitch]="uploadStatus[document['id']]">
@@ -62,6 +67,7 @@
               <!-- {{file | json}} -->
               <div class="document_container document_container__uploaded">
                 <!-- *ngIf="document.fileUploaded" -->
+                <!-- <div class="row"> -->
                 <img
                   class="document_container__uploaded_icon"
                   [src]="pathIconsFolder + 'uploaded.svg'"
@@ -89,6 +95,7 @@
                     [src]="pathIconsFolder + 'uploaded-delete.svg'"
                   />
                 </button>
+                <!-- </div> -->
               </div>
             </ng-container>
             <!-- Process -->
@@ -138,7 +145,7 @@
                 </span>
                 <span
                   class="document_container__upload_text blue"
-                  (click)="file.openDialog($event)"
+                  (click)="file.openDialog($event, document)"
                 >
                   Upload Document
                 </span>
@@ -163,7 +170,7 @@
                         class="document_container__file_icon"
                         [src]="pathIconsFolder + 'file-documents.svg'"
                       />
-                      {{ getAcceptedFormats(document, "documents") }}
+                      {{ getAcceptedFormats(document, 'documents') }}
                     </li>
                     <li
                       class="images"
@@ -173,7 +180,7 @@
                         class="document_container__file_icon"
                         [src]="pathIconsFolder + 'file-images.svg'"
                       />
-                      {{ getAcceptedFormats(document, "images") }}
+                      {{ getAcceptedFormats(document, 'images') }}
                     </li>
                     <li
                       class="media"
@@ -183,7 +190,7 @@
                         class="document_container__file_icon"
                         [src]="pathIconsFolder + 'file-video-audio.svg'"
                       />
-                      {{ getAcceptedFormats(document, "videoAudio") }}
+                      {{ getAcceptedFormats(document, 'videoAudio') }}
                     </li>
                   </ul>
                 </span>
