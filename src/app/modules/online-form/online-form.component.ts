@@ -522,7 +522,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
     key: string,
     isValidate: boolean = false,
     validators = this.requiredValidator,
-    defatultValue: any = '',
+    defatultValue: string | boolean | number | object | object[] = '',
     disabled: boolean = false
   ): void {
     this.fg.addControl(
@@ -676,11 +676,12 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
     if (aFields.length > 0) {
       aFields.forEach(field => {
         const defaultValue =
-          field.type === 105
-            ? field.options && field.options.default
-              ? field.options.default
-              : []
+          field.options && field.options.default
+            ? field.options.default
+            : field.type === 105
+            ? []
             : '';
+        console.log('default', defaultValue);
         if (field._id) {
           const aValidators = this.getComposedValidatorsByField(field);
           const validatorFn = !field.options.readonly

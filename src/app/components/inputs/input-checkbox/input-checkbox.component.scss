@@ -64,3 +64,9 @@
   }
   }
 }
+
+:host(.online_form) {
+  label {
+    padding-left: 0.5rem;
+  }
+}

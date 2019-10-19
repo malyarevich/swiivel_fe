@@ -12,16 +12,15 @@
           ? field.options.fieldOptions
           : list
       "
-      [disabled]="field.options && field.options.readonly ? true : false"
       [ngClass]="{
-        validation_required:
-          this.field.options.required && !this.field.options.readonly,
+        validation_required: isRequired(),
         validation_error: !!validationText,
         online_form: true
       }"
+      [isActive]="isActive()"
     >
       <span *ngIf="!field.options.hideLabel" class="label">
-        {{ field.name | titlecase }}
+        {{ getLabel() }}
       </span>
     </sw-dropdown-input>
     <span
@@ -34,7 +33,9 @@
 
     <span
       class="validation_icon"
-      [ngClass]="{ validation_required: this.field.options.required }"
+      [ngClass]="{
+        validation_required: this.field.options.required && !isActive()
+      }"
     >
       <i class="fas fa-asterisk fa-xs"></i>
     </span>

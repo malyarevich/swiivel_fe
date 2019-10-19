@@ -2,29 +2,34 @@
   <div
     class="form-group app-input-container position-relative"
     [formGroup]="fg"
-    [ngClass]="{ 'app-input-fill': !field.options.hideLabel }"
   >
-    <label *ngIf="!field.options.hideLabel" class="app-input-label">{{
-      field.name | titlecase
-    }}</label>
     <input
       [formControlName]="field._id"
       mdInput
       type="number"
       aria-describedby="basic-addon2"
       class="app-input form-control"
-      [ngClass]="{ 
-        validation_required: this.field.options.required && !this.field.options.readonly,
+      [ngClass]="{
+        validation_required: isRequired(),
         validation_error: !!validationText
       }"
-      [placeholder]="field.name | titlecase"
+      [placeholder]="getLabel()"
     />
-    <span class="error_icon" [ngClass]="{ validation_error: !!validationText }" (click)="validationText = ''">
+    <span
+      class="error_icon"
+      [ngClass]="{ validation_error: !!validationText }"
+      (click)="validationText = ''"
+    >
       <i class="fas fa-times fa-xs"></i>
     </span>
 
-    <span class="validation_icon" [ngClass]="{ validation_required: this.field.options.required && !this.field.options.readonly }">
-        <i class="fas fa-asterisk fa-xs"></i>
+    <span
+      class="validation_icon"
+      [ngClass]="{
+        validation_required: isRequired()
+      }"
+    >
+      <i class="fas fa-asterisk fa-xs"></i>
     </span>
 
     <sw-error-list

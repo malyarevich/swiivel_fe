@@ -6,7 +6,7 @@
 <div class="app-of-wrap content_section__main_container section">
   <div class="section__fields">
     <ng-container *ngFor="let field of fields">
-      <div class="field_width--{{ field.width ? field.width : 'full' }}">
+      <div class="field_width--{{ getWidth(field) }}">
         <sw-general-info-field
           [field]="field"
           [formErrors]="formErrors"

@@ -1,11 +1,13 @@
 <ng-container *ngIf="true">
-  <div
-    class="form-group multi-div position-relative"
-    [formGroup]="fg"
-    [ngClass]="{ 'app-input-fill': !field.options.hideLabel }"
-  >
-    <sw-input-checkbox [formControlName]="field._id">
-      <span class="label"> {{ field.name }}</span>
+  <div class="form-group multi-div position-relative" [formGroup]="fg">
+    <sw-input-checkbox
+      class="online_form"
+      [formControlName]="field._id"
+      [isActive]="isActive()"
+    >
+      <span class="label" *ngIf="!field.options.hideLabel">
+        {{ getLabel() }}</span
+      >
     </sw-input-checkbox>
 
     <span
@@ -18,8 +20,7 @@
     <span
       class="validation_icon"
       [ngClass]="{
-        validation_required:
-          this.field.options.required && !this.field.options.readonly
+        validation_required: isRequired()
       }"
     >
       <i class="fas fa-asterisk fa-xs"></i>

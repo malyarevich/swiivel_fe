@@ -2,20 +2,7 @@
   <div
     class="form-group app-input-container position-relative"
     [formGroup]="fg"
-    [ngClass]="{ 'app-input-fill': !field.options.hideLabel }"
   >
-    <label *ngIf="!field.options.hideLabel" class="app-input-label">
-      {{ field.name | titlecase }}
-    </label>
-    <!-- <sw-input-phone-number
-      [formControlName]="field._id"
-      [ngClass]="{
-        validation_required: this.field.options.required && !this.field.options.readonly,
-        validation_error: !!validationText
-      }"
-    >
-      <span *ngIf="!field.options.hideLabel" class="placeholder">{{ field.name | titlecase }}</span>
-    </sw-input-phone-number> -->
     <input
       [formControlName]="field._id"
       mdInput
@@ -23,10 +10,10 @@
       aria-describedby="basic-addon2"
       class="app-input form-control"
       [ngClass]="{
-        validation_required: this.field.options.required && !this.field.options.readonly,
+        validation_required: isRequired(),
         validation_error: !!validationText
       }"
-      [placeholder]="field.name | titlecase"
+      [placeholder]="getLabel()"
     />
     <span
       class="error_icon"
@@ -38,7 +25,9 @@
 
     <span
       class="validation_icon"
-      [ngClass]="{ validation_required: this.field.options.required && !this.field.options.readonly }"
+      [ngClass]="{
+        validation_required: isRequired()
+      }"
     >
       <i class="fas fa-asterisk fa-xs"></i>
     </span>

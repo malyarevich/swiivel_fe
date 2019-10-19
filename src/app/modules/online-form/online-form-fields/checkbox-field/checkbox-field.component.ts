@@ -15,4 +15,19 @@ export class CheckboxFieldComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {}
+
+  getLabel(): string {
+    return this.field.options.hideLabel ? '' : this.field.name;
+  }
+
+  isActive(): boolean {
+    return (
+      !(this.field.options && this.field.options.readonly) &&
+      this.fg.controls[this.field._id].enabled
+    );
+  }
+
+  isRequired(): boolean {
+    return this.field.options.required && !this.field.options.readonly;
+  }
 }
