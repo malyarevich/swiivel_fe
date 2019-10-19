@@ -109,37 +109,37 @@ export class InputEnglishDatepickerComponent
   }
 
   dayClicked(day: CalendarMonthViewDay): void {
-    if (this.selectedMonthViewDay) {
-      delete this.selectedMonthViewDay.cssClass;
+    if (this.isActive) {
+      if (this.selectedMonthViewDay) {
+        delete this.selectedMonthViewDay.cssClass;
+      }
+      if (this.selectedMonthViewDay === day) {
+        this.value = '';
+        this.onChange(this.value);
+        this.selectedMonthViewDay = null;
+      } else {
+        this.value = DateTime.fromJSDate(day.date).toFormat(this.dateFormat);
+        day.cssClass = 'cal-day-selected';
+        this.selectedMonthViewDay = day;
+        this.onChange(this.value);
+      }
+      this.cdr.markForCheck();
     }
-    if (this.selectedMonthViewDay === day) {
-      this.value = '';
-      this.onChange(this.value);
-      this.selectedMonthViewDay = null;
-    } else {
-      this.value = DateTime.fromJSDate(day.date).toFormat(this.dateFormat);
-      day.cssClass = 'cal-day-selected';
-      this.selectedMonthViewDay = day;
-      this.onChange(this.value);
-    }
-    this.cdr.markForCheck();
   }
 
   openDatepicker(): void {
-    if (this.isActive) {
-      this.ref = this.popup.open({
-        origin: this.holder,
-        content: this.datepicker,
-        panelClass: 'dropdown-overlay'
-      });
-      this.ref.afterClosed$
-        .pipe(takeUntil(this.destroyed$))
-        .subscribe(result => {
-          // console.log('Datepiker result:', result)
-          this.ref = null;
-          this.onTouched();
-        });
-    }
+    // if (this.isActive) {
+    this.ref = this.popup.open({
+      origin: this.holder,
+      content: this.datepicker,
+      panelClass: 'dropdown-overlay'
+    });
+    this.ref.afterClosed$.pipe(takeUntil(this.destroyed$)).subscribe(result => {
+      // console.log('Datepiker result:', result)
+      this.ref = null;
+      this.onTouched();
+    });
+    // }
   }
 
   close(): void {

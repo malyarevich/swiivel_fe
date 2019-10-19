@@ -6,7 +6,10 @@
   }
 
   &__article_text {
-    margin: 1rem 0 0 0;
+    margin: 1rem 0 1rem 0;
+    @media screen and (max-width: 1200px) {
+      margin: 1rem 0 1rem 0;
+    }
   }
 
   &__document {
@@ -33,14 +36,15 @@
   max-width: 50%;
   display: flex;
   flex: 1;
-  align-items: flex-start;
+  align-items: center;
   background-color: transparent;
   border-radius: 0.25rem;
-  margin-right: 1.25rem;
+  margin-right: 0;
+  box-sizing: border-box;
 
   @media screen and (max-width: 1200px) {
     max-width: 100%;
-    margin: 0 0 1rem 0;
+    min-height: 5rem;
   }
 
   &__control {
@@ -51,8 +55,8 @@
     align-items: center;
     background-color: #F4F4F5;
     border-radius: 0.25rem;
-    padding: 1rem;
     margin-top: 1rem;
+    margin-left: 1.5rem;
 
     @media screen and (max-width: 1200px) {
       max-width: 100%;
@@ -76,8 +80,9 @@
     }
 
     &_icon {
-      width: 2.666rem;
-      margin-right: 0.916rem;
+      width: 2.75rem;
+      margin-right: 1rem;
+      margin-left: 1rem;
     }
 
     &_title {
@@ -101,6 +106,7 @@
     background-color: $orange-fill-color;
     padding: 0;
     outline: none;
+    margin-right: 1rem;
 
     &:hover,
     &:focus,
@@ -118,11 +124,19 @@
   }
 
   &__upload {
-    align-items: stretch;
-    display: flex;
-    flex-direction: column;
-    justify-content: stretch;
-    padding: 0;
+
+    &--process {
+      background-color: #F4F4F5;
+    }
+
+    &--init {
+      background-color: #F5FBFF;
+      border: 1px dashed #97CDF4;
+    }
+
+    &--success {
+      background-color: #E9FBF2;
+    }
 
     &_label {
       width: 100%;
@@ -133,6 +147,7 @@
       background-color: #F5FBFF;
       border: 1px dashed #97CDF4;
       border-radius: 3px;
+      min-height: 5rem;
       cursor: pointer;
       margin-bottom: 0;
       &.dragover {
@@ -296,6 +311,9 @@
   &__uploaded {
     background-color: #E9FBF2;
     max-width: 100%;
+    min-height: 5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
 
     &_icon {
       width: 2.666rem;
@@ -325,6 +343,12 @@
       outline: none;
       padding: 0;
       margin: 0 0.433rem 0 auto;
+    }
+
+    &_file_information,
+    &_delete_icon {
+      display: flex;
+      align-items: center;
     }
   }
 }
