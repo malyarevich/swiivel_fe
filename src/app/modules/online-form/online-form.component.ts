@@ -43,6 +43,7 @@ import { ninvoke } from 'q';
 })
 export class OnlineFormComponent implements OnInit, OnDestroy {
   @Input() formId: string = '';
+  @Input() isMenuShow: boolean = true;
   form: Form;
   fg: FormGroup;
 

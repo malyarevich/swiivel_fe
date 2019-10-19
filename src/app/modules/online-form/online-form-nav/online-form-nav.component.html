@@ -1,4 +1,10 @@
-<div class="online_form_nav">
+<div
+  class="online_form_nav app-div-animation"
+  [ngClass]="{
+    'app-div-show': isMenuShow,
+    'app-div-hide': !isMenuShow
+  }"
+>
   <div class="online_form_nav__line">
     <div class="cursor_pointer" (click)="onAction('cancel')">
       <i class="fas fa-arrow-left"></i> <i class="fas fa-minus pl-2"></i>
