@@ -401,7 +401,11 @@
 <ng-template #tpl let-form>
   <tr class="expanded-row">
     <td [attr.colspan]="displayedColumns.length">
-      <sw-online-form [formId]="form.id" [formReviewMode]="true" [isMenuShow]="true"></sw-online-form>
+      <sw-online-form
+        [formId]="form.id"
+        [isFormReviewMode]="true"
+        [isMenuShow]="true"
+      ></sw-online-form>
     </td>
   </tr>
 </ng-template>

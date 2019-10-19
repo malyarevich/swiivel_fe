@@ -44,6 +44,7 @@ import { ninvoke } from 'q';
 export class OnlineFormComponent implements OnInit, OnDestroy {
   @Input() formId: string = '';
   @Input() isMenuShow: boolean = true;
+  @Input() isFormReviewMode: boolean = false;
   form: Form;
   fg: FormGroup;
 
@@ -93,11 +94,10 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
   }
 
   isHaveSense(): boolean {
-    // console.log(this.form['activeSections']);
     return (
-      this.form['activeSections'] &&
-      Object.keys(this.form['activeSections']).length > 0 &&
-      this.form['activeSections'].constructor === Object
+      this.form.activeSections &&
+      Object.keys(this.form.activeSections).length > 0 &&
+      this.form.activeSections.constructor === Object
     );
   }
 
@@ -108,9 +108,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
     this.initPosition();
     this.initRequiredList();
     this.initFormControls();
-    // if (this.onlineFormService.getFormGroup()) {
-    //   this._isReady$.next(true);
-    // }
+
     this._isReady$.next(true);
     if (!this.isViewOnly$.getValue()) {
       this.fgStatusChangesSubscription = this.fg.statusChanges.subscribe(() => {
@@ -131,12 +129,13 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
   }
 
   getForm(): void {
-    // this.isViewOnly$.next(false);
     if (this.route.pathFromRoot.length > 0) {
       this.route.pathFromRoot[1].url.subscribe(urlPath => {
         if (urlPath.length > 0) {
           const url = urlPath[0].path;
-          this.isViewOnly$.next(url === 'online-form' ? false : true);
+          this.isViewOnly$.next(
+            url === 'online-form' || this.isFormReviewMode ? false : true
+          );
         }
 
         this.onlineFormService.setFromId(
@@ -425,10 +424,10 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
     const activeMenuList: IFormNavigationState[] = [];
     // TODO: remove after create packetIntroduction
     activeMenuList.push({ page: 'packetIntroduction' });
-    for (const page in this.form['activeSections']) {
+    for (const page in this.form.activeSections) {
       if (
-        this.form['activeSections'][page] &&
-        this.form['activeSections'][page].isActive
+        this.form.activeSections[page] &&
+        this.form.activeSections[page].isActive
       ) {
         activeMenuList.push({ page: page });
       }
