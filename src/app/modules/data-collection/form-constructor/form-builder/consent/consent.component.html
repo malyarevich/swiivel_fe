@@ -1,255 +1,59 @@
 <!--Section Header-->
-<app-section-header
-  [sectionName]="consentInfo.sectionName"
-  [sectionWidth]="consentInfo.sectionWidth"
-  [isExpand]="isExpand"
-  (onChangeSectionName)="changeSectionName($event)"
-  (onChangeSectionWidth)="changeSectionWidth($event)"
-  (onToggleExpand)="toggleExpand()"
-></app-section-header>
+<app-section-header [sectionName]="consentInfo.sectionName" [sectionWidth]="consentInfo.sectionWidth"
+  [isExpand]="isExpand" (onChangeSectionName)="changeSectionName($event)"
+  (onChangeSectionWidth)="changeSectionWidth($event)" (onToggleExpand)="toggleExpand()"></app-section-header>
 <!--End Section Header-->
 
-<div  [ngClass]="{
-    'app-div-show': isExpand,
-    'app-div-hide': !isExpand
-  }">
-  <div
-    class="app-section-wrapper pb-4 mb-2"
-    *ngFor="let item of consentInfo.consents; let i = index"
-  >
-    <!--TITLE-->
-    <div class="row">
-      <div class="col-6">
-        <div class="px-3 pt-3 row no-gutters">
-          <div class="col-1 pt-3">
-          <span class="app-fb-section-icon">
-            <i class="fas fa-ellipsis-v"></i>
-            <i class="fas fa-ellipsis-v"></i>
-          </span>
-          </div>
-          <div class="col">
-            <div
-              class="form-group app-input-container w-50"
-              [ngClass]="{ 'app-input-fill': consentText.value }"
-            >
-              <label class="app-input-label" for="consent-text">Title</label>
-              <input
-                #consentText
-                [(ngModel)]="item.title"
-                id="consent-text"
-                type="text"
-                class="app-input"
-                placeholder="Title"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
+<div *ngIf="isExpand" cdkDropList (cdkDropListDropped)="drop($event)">
+
+  <div class="consent-item" *ngFor="let item of consentInfo.consents; let i = index" cdkDrag>
+    <div class="consent-item__bubbles">
+      <i class="fas fa-grip-vertical consent-item__bubbles-ico"></i>
     </div>
-
-    <div class="row app-consent-text">
-      <div class="col-12 app-consent-table px-3 py-2">
-        <div class="row">
-          <div class="col">Text</div>
-          <div class="col text-right">
-            <div class="command_text_line">
-              <div class="command_text_line">
-                <a
-                  class="command_text_line__item"
-                  (click)="setCommand('bold')"
-                  (mousedown)="$event.preventDefault()"
-                >
-                  Bold
-                </a>
-                <a
-                  class="command_text_line__item"
-                  (click)="setCommand('italic')"
-                  (mousedown)="$event.preventDefault()"
-                >
-                  Italic
-                </a>
-                <a
-                  class="command_text_line__item"
-                  (click)="setCommand('removeFormat')"
-                  (mousedown)="$event.preventDefault()"
-                >
-                  Remove Format
-                </a>
-              </div>
-              <div class="command_text_line__item_extended">
-                <app-command-dropdown
-                  (onSetCommandEmitter)="onSetCommand($event)"
-                ></app-command-dropdown>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div
-          [innerHTML]="item.text.value"
-          #consentText
-          class="mt-3 mb-2"
-          (blur)="item.text.value = $event.target.innerHTML"
-          contentEditable="true"
-        ></div>
+    <div class="consent-item__fields">
+      <div class="consent-item__fields-name">
+        <sw-input-text [(ngModel)]="item.title">
+          <span class="placeholder">Title</span>
+        </sw-input-text>
       </div>
-    </div>
-
-    <!--CHECKBOX-->
-    <div class="row" *ngIf="item.checkbox.isActive">
-      <div class="col-6">
-        <div class="px-3 pt-3 row no-gutters">
-          <div class="col-1 pt-3">
-            <label class="app-checkbox-container">
-              <input type="checkbox" [(ngModel)]="item.checkbox.checked"/>
-              <span class="app-checkbox-checkmark"></span>
-            </label>
-          </div>
-          <div class="col">
-            <div
-              class="form-group app-input-container"
-              [ngClass]="{ 'app-input-fill': consentCheckboxText.value }"
-            >
-              <label class="app-input-label" for="consent-checkbox-text"
-              >Text</label
-              >
-              <input
-                #consentCheckboxText
-                [(ngModel)]="item.checkbox.text"
-                id="consent-checkbox-text"
-                type="text"
-                class="app-input"
-                placeholder="Text"
-              />
-            </div>
-          </div>
-        </div>
+      <div class="consent-item__fields-text">
+        <sw-input-textarea [(ngModel)]="item.text.value">
+          <span class="label">Text</span>
+        </sw-input-textarea>
       </div>
-    </div>
-
-    <!--SIGNATURE-->
-    <div *ngIf="item.signature.isRequire" class="mt-3">
-      <!--E-SIGN SIGNATURE-->
-      <ng-container *ngIf="item.signature.type === SIGNATURE_TYPES.ESIGN">
-        <!--EXTERNAL SIGNATURE-->
-        <ng-container *ngIf="item.signature.eType === E_SIGNATURE_TYPES.EXTERNAL">
-          <div class="row pt-3" *ngIf="!item.signature.isBothParents">
-            <div class="col-12 app-consent-text">
-              <div class="row">
-                <div class="col-4">
-                <textarea
-                  class="app-consent-table w-100 pl-3"
-                  rows="2"
-                  placeholder="Parent's Signature"
-                ></textarea>
-                </div>
-              </div>
-            </div>
+      <div *ngIf="item.checkbox.isActive" class="consent-item__fields-checkbox-container">
+        <div class="consent-item__fields-checkbox">
+          <sw-input-checkbox [(ngModel)]="item.checkbox.checked"></sw-input-checkbox>
+        </div>
+        <sw-input-text [(ngModel)]="item.checkbox.text">
+          <span class="placeholder">Checkbox Text</span>
+        </sw-input-text>
+      </div>
+      <ng-container *ngIf="item.signature.isRequire">
+        <div *ngIf="item.signature.isBothParents" class="consent-item__fields-signatures">
+          <div class="consent-item__fields-signature">
+            <sw-input-textarea>
+              <span class="label">Father's signature</span>
+            </sw-input-textarea>
           </div>
-
-          <div class="row pt-3" *ngIf="item.signature.isBothParents">
-            <div class="col-12 app-consent-text">
-              <div class="row">
-                <div class="col-4">
-                <textarea
-                  class="app-consent-table w-100 pl-3"
-                  rows="2"
-                  placeholder="Father's Signature"
-                ></textarea>
-                </div>
-                <div class="col-4">
-                <textarea
-                  class="app-consent-table w-100 pl-3"
-                  rows="2"
-                  placeholder="Mother's Signature"
-                ></textarea>
-                </div>
-              </div>
-            </div>
-          </div>
-        </ng-container>
-
-        <!--SYSTEM SIGNATURE-->
-        <ng-container *ngIf="item.signature.eType === E_SIGNATURE_TYPES.SYSTEM">
-          <div class="row pt-3" *ngIf="!item.signature.isBothParents">
-            <div class="col-12 app-consent-text">
-              <div class="row">
-                <div class="col-4">
-                  <label class="app-checkbox-container"
-                  >Parent's Signature
-                    <input type="checkbox" disabled/>
-                    <span class="app-checkbox-checkmark"></span>
-                  </label>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="row pt-3" *ngIf="item.signature.isBothParents">
-            <div class="col-12 app-consent-text">
-              <div class="row">
-                <div class="col-4">
-                  <label class="app-checkbox-container"
-                  >Father's Signature
-                    <input type="checkbox" disabled/>
-                    <span class="app-checkbox-checkmark"></span>
-                  </label>
-                </div>
-                <div class="col-4">
-                  <label class="app-checkbox-container"
-                  >Mother's Signature
-                    <input type="checkbox" disabled/>
-                    <span class="app-checkbox-checkmark"></span>
-                  </label>
-                </div>
-              </div>
-            </div>
-          </div>
-        </ng-container>
-      </ng-container>
-
-      <!--WET SIGNATURE-->
-      <ng-container *ngIf="item.signature.type === SIGNATURE_TYPES.WET">
-        <div class="row pt-3" *ngIf="!item.signature.isBothParents">
-          <div class="col-12 app-consent-text">
-            <div class="row">
-              <div class="col-4">
-              <textarea
-                class="app-consent-table w-100 pl-3"
-                rows="2"
-                placeholder="Parent's Signature"
-              ></textarea>
-              </div>
-            </div>
+          <div class="consent-item__fields-signature">
+            <sw-input-textarea>
+              <span class="label">Mother's signature</span>
+            </sw-input-textarea>
           </div>
         </div>
-
-        <div class="row pt-3" *ngIf="item.signature.isBothParents">
-          <div class="col-12 app-consent-text">
-            <div class="row">
-              <div class="col-4">
-              <textarea
-                class="app-consent-table w-100 pl-3"
-                rows="2"
-                placeholder="Father's Signature"
-              ></textarea>
-              </div>
-              <div class="col-4">
-              <textarea
-                class="app-consent-table w-100 pl-3"
-                rows="2"
-                placeholder="Mother's Signature"
-              ></textarea>
-              </div>
-            </div>
+        <div *ngIf="!item.signature.isBothParents" class="consent-item__fields-signatures">
+          <div class="consent-item__fields-signature">
+            <sw-input-textarea>
+              <span class="label">Parents's signature</span>
+            </sw-input-textarea>
           </div>
         </div>
       </ng-container>
 
-      <div class="py-2 pr-5 text-right">
-        <button class="btn app-btn-accept px-5 py-2 mr-3">Accept</button>
+      <div *ngIf="item.button.isActive" class="consent-item__fields-button">
+        <sw-input-text [(ngModel)]="item.button.text" [style]="'button_type'"></sw-input-text>
       </div>
     </div>
-    <!--END SIGNATURE-->
   </div>
 </div>
