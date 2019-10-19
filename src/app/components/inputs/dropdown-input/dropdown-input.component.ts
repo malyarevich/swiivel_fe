@@ -119,23 +119,23 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
   }
 
   showPopup(): void {
-    if (this.isActive) {
-      this.isPopupShown.emit(true);
-      if (!!this.disabled) {
-        return;
-      }
-
-      this._ref = this.popup.open({
-        origin: this.holder,
-        content: this.droplist,
-        panelClass: this.panelClass
-      });
-      this._ref.afterClosed$.subscribe(result => {
-        this.isPopupShown.emit(false);
-        this._ref = null;
-        this.onTouched();
-        this.cdr.markForCheck();
-      });
+    // if (this.isActive) {
+    this.isPopupShown.emit(true);
+    if (!!this.disabled) {
+      return;
     }
+
+    this._ref = this.popup.open({
+      origin: this.holder,
+      content: this.droplist,
+      panelClass: this.panelClass
+    });
+    this._ref.afterClosed$.subscribe(result => {
+      this.isPopupShown.emit(false);
+      this._ref = null;
+      this.onTouched();
+      this.cdr.markForCheck();
+    });
+    // }
   }
 }
