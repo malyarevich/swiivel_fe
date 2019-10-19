@@ -681,7 +681,6 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
             : field.type === 105
             ? []
             : '';
-        console.log('default', defaultValue);
         if (field._id) {
           const aValidators = this.getComposedValidatorsByField(field);
           const validatorFn = !field.options.readonly
