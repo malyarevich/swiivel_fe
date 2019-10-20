@@ -18,6 +18,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { OnlineFormModule } from '@app/modules/data-collection/online-form/online-form.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FormManagementContainer } from './form-management.container';
+import { FormManagementAPIService } from './form-management.service';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,6 @@ import { FormManagementContainer } from './form-management.container';
     CdkTableModule,
     OverlayModule,
     MatProgressBarModule,
-    OnlineFormModule,
     HttpClientModule,
     NgbModule,
     FormManagementRoutingModule,
@@ -39,8 +39,9 @@ import { FormManagementContainer } from './form-management.container';
     SharedRedComponentsModule,
     FormTableHeaderModule,
     FormAccessModalModule,
+    OnlineFormModule,
   ],
   exports: [FormManagementContainer],
-  providers: []
+  providers: [FormManagementAPIService]
 })
 export class FormManagementModule {}

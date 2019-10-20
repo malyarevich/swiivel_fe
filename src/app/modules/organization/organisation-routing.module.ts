@@ -50,6 +50,17 @@ export const routes: Routes = [
     ]
   },
   {
+    path: 'form-management/:id',
+    component: LayoutComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('../data-collection/form-management/form-management.module')
+          .then(m => m.FormManagementModule)
+      },
+    ]
+  },
+  {
     path: 'payer-accounts',
     component: LayoutComponent,
     children: [

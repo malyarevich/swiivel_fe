@@ -7,6 +7,12 @@ export const routes: Routes = [
   {
     path: '',
     component: FormManagementContainer,
+    children: [
+      {
+        path: '',
+        component: FormManagementContainer,
+      },
+    ],
   }
 ];
 
