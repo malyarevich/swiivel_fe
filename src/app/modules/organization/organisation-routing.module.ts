@@ -61,6 +61,17 @@ export const routes: Routes = [
     ]
   },
   {
+    path: 'form-info/:id',
+    component: LayoutComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('../data-collection/form-info/form-info.module')
+          .then(m => m.FormInfoModule)
+      },
+    ]
+  },
+  {
     path: 'payer-accounts',
     component: LayoutComponent,
     children: [
