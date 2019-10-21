@@ -124,6 +124,24 @@
   }
 }
 
+:host(.online_form.read_only) {
+  .dropdown_input_container {
+    background-color: #eee;
+
+    &__item {
+      background-color: #eee;
+    }
+  }
+
+  .dropdown_items_container {
+    background-color: #eee;
+
+    &__item {
+      background-color: #eee;
+    }
+  }
+}
+
 .dropdown_items_container__item:hover {
   cursor: pointer;
 }
