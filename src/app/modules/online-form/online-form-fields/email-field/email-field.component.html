@@ -11,7 +11,8 @@
       class="app-input form-control"
       [ngClass]="{
         validation_required: isRequired(),
-        validation_error: !!validationText
+        validation_error: !!validationText,
+        online_form: true,
       }"
       [placeholder]="getLabel()"
     />

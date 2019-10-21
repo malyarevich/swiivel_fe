@@ -76,8 +76,8 @@ input.ng-dirty.ng-invalid + .error_icon,
 
 .form-control:disabled,
 .form-control[readonly] {
-  cursor: text;
-  background-color: $white;
+  // cursor: text;
+  // background-color: $white;
 }
 
 input.app-input.form-control,

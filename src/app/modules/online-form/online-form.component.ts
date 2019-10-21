@@ -522,7 +522,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
     key: string,
     isRequired: boolean = false,
     validators = this.requiredValidator,
-    defatultValue: string | boolean | number | object | object[] = '',
+    defaultValue: string | boolean | number | object | object[] = '',
     isDisabled: boolean = false
   ): void {
     this.fg.addControl(
@@ -532,7 +532,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
           value:
             this.form.fieldsData && this.form.fieldsData[key]
               ? this.form.fieldsData[key]
-              : defatultValue,
+              : defaultValue,
           disabled: isRequired ? false : isDisabled // || this.isViewMode$.getValue()
         },
         isRequired ? validators : null
