@@ -58,7 +58,7 @@ export class FormTableComponent implements OnInit {
   showSpinner: boolean;
 
   static createSharedUrl(id: string) {
-    return `${window.location.href}/review-form/${id}`;
+    return `${window.location.origin}/view-form/${id}`;
   }
   download: {
     url: SafeResourceUrl;
@@ -349,7 +349,7 @@ export class FormTableComponent implements OnInit {
     this.dataCollectionService
       .duplicateForm(mongoId)
       .subscribe((res) => {
-        this.router.navigate(['form-creator', res._id]).then();
+        this.router.navigate(['form-constructor', res._id]).then();
       });
   }
 
