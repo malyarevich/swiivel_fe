@@ -3,6 +3,9 @@
     <sw-input-checkbox
       class="online_form"
       [formControlName]="field._id"
+      [ngClass]="{
+        online_form: true,
+      }"
       [isActive]="isActive()"
     >
       <span class="label" *ngIf="!field.options.hideLabel">
