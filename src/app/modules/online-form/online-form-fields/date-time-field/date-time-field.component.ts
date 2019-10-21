@@ -17,11 +17,28 @@ export class DateTimeFieldComponent implements OnInit {
   ngOnInit() {}
 
   getSeparator(): string {
-    return this.field.options.separator &&
+    const title =
+      this.field.options.separator &&
       this.field.options.separator[0] &&
       this.field.options.separator[0].value
         ? this.field.options.separator[0].value
         : 'dash';
+
+    switch (title) {
+      case 'dash':
+        return '-';
+        break;
+      case 'backslash':
+        return '/';
+        break;
+      case 'dot':
+        return '.';
+        break;
+
+      default:
+        return '/';
+        break;
+    }
   }
 
   getFormat(): string {

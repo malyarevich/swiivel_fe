@@ -5,6 +5,7 @@
       [formControlName]="field._id"
       [ngClass]="{
         online_form: true,
+        read_only: !isActive()
       }"
       [isActive]="isActive()"
     >

@@ -76,7 +76,7 @@ input.ng-dirty.ng-invalid + .error_icon,
 
 .form-control:disabled,
 .form-control[readonly] {
-  // cursor: text;
+  cursor: default;
   // background-color: $white;
 }
 
@@ -89,4 +89,16 @@ select.app-input.form-control {
     border: 1px solid $orange-fill-color;
     border-radius: 0.25rem;
   }
+}
+
+.read_only {
+  background-color: #eee;
+  cursor: default;
+}
+
+.form-control[readonly],
+.form-control:read-only,
+.form-control:disabled {
+  cursor: default;
+  // background-color: $white;
 }

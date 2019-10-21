@@ -58,7 +58,7 @@ export class FormTableComponent implements OnInit {
   showSpinner: boolean;
 
   static createSharedUrl(id: string) {
-    return `${window.location.href}/online-form/${id}`;
+    return `${window.location.href}/review-form/${id}`;
   }
   download: {
     url: SafeResourceUrl;
