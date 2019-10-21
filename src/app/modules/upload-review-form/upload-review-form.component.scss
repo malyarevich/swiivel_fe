@@ -46,7 +46,11 @@
     .sidebar-list {
       height: calc(100vh - 460px);
       min-height: 50px;
-      overflow-y: scroll;
+      overflow-y: auto;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
     }
 
     .sidebar-list-bulk-download {
