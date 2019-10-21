@@ -1,324 +1,52 @@
-<!--Section Header-->
-<!--<div class="app-section-wrapper app-section-header mt-2 mb-2 row align-items-center no-gutters">-->
+<app-section-header [sectionName]="termsConditions.sectionName" [sectionWidth]="termsConditions.sectionWidth"
+  [isExpand]="isExpand" (onChangeSectionName)="changeSectionName($event)"
+  (onChangeSectionWidth)="changeSectionWidth($event)" (onToggleExpand)="toggleExpand()"></app-section-header>
 
-<!--<div class="col-4 row align-items-center no-gutters">-->
-<!--<div class="col-1 row align-items-center no-gutters">-->
-<!--<span class="app-fb-section-icon-white">-->
-<!--<i class="fas fa-ellipsis-v"></i>-->
-<!--<i class="fas fa-ellipsis-v"></i>-->
-<!--</span>-->
-<!--</div>-->
-<!--<div class="col-10 ml-3" [ngClass]="{'app-input-fill': sectionName}">-->
-<!--<label class="app-input-label" for="section-name">Section Name</label>-->
-<!--<input-->
-<!--id="section-name"-->
-<!--type="text"-->
-<!--class="app-input"-->
-<!--[(ngModel)]="sectionName"-->
-<!--placeholder="Section Name">-->
-<!--</div>-->
-<!--</div>-->
-
-
-<!--<div class="col-2 pl-4 app-input-container w-100" [ngClass]="{'app-input-fill': sectionWidth}">-->
-<!--<label class="app-input-label" for="section-width">Section Width</label>-->
-<!--<input-->
-<!--id="section-width"-->
-<!--type="text"-->
-<!--class="app-input"-->
-<!--[(ngModel)]="sectionWidth"-->
-<!--placeholder="Section Name">-->
-<!--</div>-->
-
-
-<!--<div class="col-1 offset-5   row align-items-center no-gutters">-->
-<!--<div class="col">-->
-<!--<span class="app-fb-section-icon-white">-->
-<!--<i class="fas fa-cog dragable-i pr-2"></i>-->
-<!--</span>-->
-<!--</div>-->
-<!--<div class="col">-->
-<!--<span class="app-fb-section-icon-white">-->
-<!--<i class="fas  fa-caret-down dragable-y"></i>-->
-<!--</span>-->
-<!--</div>-->
-<!--</div>-->
-
-<!--</div>-->
-
-<app-section-header
-  [sectionName]="termsConditions.sectionName"
-  [sectionWidth]="termsConditions.sectionWidth"
-  [isExpand]="isExpand"
-  (onChangeSectionName)="changeSectionName($event)"
-  (onChangeSectionWidth)="changeSectionWidth($event)"
-  (onToggleExpand)="toggleExpand()"
-></app-section-header>
-<!--End Section Header-->
-
-<div [ngClass]="{
-    'app-div-show': isExpand,
-    'app-div-hide': !isExpand
-  }">
-  <div class="app-section-wrapper pb-4 mb-2" *ngFor="let item of termsConditions.termsConditionsItems">
-
-    <!--TITLE-->
-    <div class="row">
-      <div class="col-6">
-        <div class="px-3 pt-3 row no-gutters">
-          <div class="col-1 pt-3">
-          <span class="app-fb-section-icon">
-            <i class="fas fa-ellipsis-v"></i>
-            <i class="fas fa-ellipsis-v"></i>
-          </span>
-          </div>
-          <div class="col">
-            <div class="form-group app-input-container w-50" [ngClass]="{'app-input-fill': termsConditionsTitle.value}">
-              <label class="app-input-label" for="consent-text">Title</label>
-              <input #termsConditionsTitle
-                     [(ngModel)]="item.title"
-                     id="consent-text"
-                     type="text"
-                     class="app-input"
-                     placeholder="Title">
-            </div>
-          </div>
-        </div>
-      </div>
+<div *ngIf="isExpand" cdkDropList (cdkDropListDropped)="drop($event)">
+  <div class="item" data-e2e="item" *ngFor="let item of termsConditions.termsConditionsItems" cdkDrag>
+    <div class="bubbles" data-e2e="bubbles">
+      <i class="fas fa-grip-vertical bubbles-ico"></i>
     </div>
-
-    <div class="row app-terms-text">
-      <div class="col-12 app-terms-table px-3 py-2">
-        <div class="row">
-          <div class="col">Text</div>
-          <div class="col text-right">
-            <div class="d-inline-block">
-              <a (click)="setCommand('bold')" (mousedown)="$event.preventDefault()">
-                <small>Bold</small>
-              </a>
-              <span><small> | </small></span>
-              <a (click)="setCommand('italic')" (mousedown)="$event.preventDefault()">
-                <small>Italic</small>
-              </a>
-              <span><small> | </small></span>
-              <a (click)="setCommand('removeFormat')" (mousedown)="$event.preventDefault()">
-                <small>Remove Format</small>
-              </a>
-            </div>
-
-            <!--Var Dropdown-->
-            <div class="d-inline-block ml-3"
-                 #varDrop="ngbDropdown" ngbDropdown
-                 placement="bottom-right"
-                 autoClose="outside"
-                 (mouseleave)="varDrop.close()">
-
-            <span id="dropdownConsentVar"
-                  (mouseover)="varDrop.open()"
-                  ngbDropdownToggle
-                  class="app-terms-dropdown-var">
-              <i class="fas fa-angle-left mr-1"></i><i class="fas fa-angle-right"></i>
-            </span>
-
-              <div class="p-3" ngbDropdownMenu aria-labelledby="dropdownConsentVar" style="min-width: 400px">
-
-                <div class="row no-gutters align-items-center">
-
-                  <div class="col-4 p-1">
-                    <div class="app-terms-dropdown-var-item p-2"
-                         (click)="setCommand('insertText', false, '{%studentsName%}')"
-                         (mousedown)="$event.preventDefault()">
-                    <span class="app-fb-section-icon mr-1">
-                      <i class="fas fa-ellipsis-v"></i>
-                      <i class="fas fa-ellipsis-v"></i>
-                    </span>Student’s Name
-                    </div>
-                  </div>
-
-                  <div class="col-4 p-1">
-                    <div class="app-terms-dropdown-var-item p-2"
-                         (click)="setCommand('insertText', false, '{%parent%}')"
-                         (mousedown)="$event.preventDefault()">
-                    <span class="app-fb-section-icon mr-1">
-                      <i class="fas fa-ellipsis-v"></i>
-                      <i class="fas fa-ellipsis-v"></i>
-                    </span>Parent
-                    </div>
-                  </div>
-
-                  <div class="col-4 p-1">
-                    <div class="app-terms-dropdown-var-item p-2"
-                         (click)="setCommand('insertText', false, '{%date%}')"
-                         (mousedown)="$event.preventDefault()">
-                    <span class="app-fb-section-icon mr-1">
-                      <i class="fas fa-ellipsis-v"></i>
-                      <i class="fas fa-ellipsis-v"></i>
-                    </span>Date
-                    </div>
-                  </div>
-
-                </div>
-
-              </div>
-            </div>
-            <!--End Var Dropdown-->
-
-          </div>
-        </div>
-
-        <div [innerHTML]="item.text"
-             #consentText
-             class="mt-3 mb-2"
-             (blur)="item.text = $event.target.innerHTML"
-             contentEditable=true>
-        </div>
+    <div class="fields" data-e2e="fields">
+      <div class="fields-name" data-e2e="fields-name">
+        <sw-input-text [(ngModel)]="item.title">
+          <span class="placeholder" data-e2e="placeholder">Document Name</span>
+        </sw-input-text>
       </div>
-    </div>
-
-    <!--CHECKBOX-->
-    <div class="row" *ngIf="item.checkbox.isActive">
-      <div class="col-6">
-        <div class="px-3 pt-3 row no-gutters">
-          <div class="col-1 pt-3">
-            <label class="app-checkbox-container">
-              <input type="checkbox" [(ngModel)]="item.checkbox.checked">
-              <span class="app-checkbox-checkmark"></span>
-            </label>
-          </div>
-          <div class="col">
-            <div class="form-group app-input-container"
-                 [ngClass]="{'app-input-fill': termsConditionsCheckboxText.value}">
-              <label class="app-input-label">Text</label>
-              <input #termsConditionsCheckboxText
-                     [(ngModel)]="item.checkbox.text"
-                     type="text"
-                     class="app-input"
-                     placeholder="Text">
-            </div>
-          </div>
+      <div class="fields-text" data-e2e="fields-text">
+        <sw-input-textarea [rows]="textarea.rows" [cols]="textarea.cols" [readonly]="!textarea.editable">
+          <span class="label" data-e2e="input_label">Text</span>
+        </sw-input-textarea>
+      </div>
+      <div *ngIf="item.checkbox.isActive" class="fields-checkbox-container" data-e2e="fields-checkbox-container">
+        <div class="fields-checkbox" data-e2e="fields-checkbox">
+          <sw-input-checkbox [(ngModel)]="item.checkbox.checked"></sw-input-checkbox>
         </div>
+        <sw-input-text [(ngModel)]="item.checkbox.text">
+          <span class="placeholder" data-e2e="checkbox_text">Checkbox Text</span>
+        </sw-input-text>
       </div>
     </div>
   </div>
-
-  <!--SIGNATURE-->
-  <div *ngIf="termsConditions.signature.isRequire" class="app-section-wrapper mb-2">
-
-    <!--E-SIGN SIGNATURE-->
-    <ng-container *ngIf="termsConditions.signature.type === SIGNATURE_TYPES.ESIGN">
-
-      <!--EXTERNAL SIGNATURE-->
-      <ng-container *ngIf="termsConditions.signature.eType === E_SIGNATURE_TYPES.EXTERNAL">
-
-        <div class="row pt-3" *ngIf="!termsConditions.signature.isBothParents">
-          <div class="col-12 app-terms-text">
-            <div class="row">
-              <div class="col-4">
-      <textarea class="app-terms-table w-100 pl-3"
-                rows="2"
-                placeholder="Parent's Signature"></textarea>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="row pt-3" *ngIf="termsConditions.signature.isBothParents">
-          <div class="col-12 app-terms-text">
-            <div class="row">
-              <div class="col-4">
-          <textarea class="app-terms-table w-100 pl-3"
-                    rows="2"
-                    placeholder="Father's Signature"></textarea>
-              </div>
-              <div class="col-4">
-          <textarea class="app-terms-table w-100 pl-3"
-                    rows="2"
-                    placeholder="Mother's Signature"></textarea>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </ng-container>
-
-      <!--SYSTEM SIGNATURE-->
-      <ng-container *ngIf="termsConditions.signature.eType === E_SIGNATURE_TYPES.SYSTEM">
-
-        <div class="row pt-3" *ngIf="!termsConditions.signature.isBothParents">
-          <div class="col-12 app-terms-text">
-            <div class="row">
-              <div class="col-4">
-                <label class="app-checkbox-container">Parent's Signature
-                  <input type="checkbox" disabled>
-                  <span class="app-checkbox-checkmark"></span>
-                </label>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="row pt-3" *ngIf="termsConditions.signature.isBothParents">
-          <div class="col-12 app-terms-text">
-            <div class="row">
-              <div class="col-4">
-                <label class="app-checkbox-container">Father's Signature
-                  <input type="checkbox" disabled>
-                  <span class="app-checkbox-checkmark"></span>
-                </label>
-              </div>
-              <div class="col-4">
-                <label class="app-checkbox-container">Mother's Signature
-                  <input type="checkbox" disabled>
-                  <span class="app-checkbox-checkmark"></span>
-                </label>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </ng-container>
-
-    </ng-container>
-
-    <!--WET SIGNATURE-->
-    <ng-container *ngIf="termsConditions.signature.type === SIGNATURE_TYPES.WET">
-
-      <div class="row pt-3" *ngIf="!termsConditions.signature.isBothParents">
-        <div class="col-12 app-terms-text">
-          <div class="row">
-            <div class="col-4">
-      <textarea class="app-terms-table w-100 pl-3"
-                rows="2"
-                placeholder="Parent's Signature"></textarea>
-            </div>
-          </div>
-        </div>
+  <div class="item" *ngIf="termsConditions.signature.isRequire" style="padding-left: 50px;">
+    <div *ngIf="termsConditions.signature.isBothParents" class="fields-signatures">
+      <div class="fields-signature">
+        <sw-input-textarea>
+          <span class="label">Father's signature</span>
+        </sw-input-textarea>
       </div>
-
-      <div class="row pt-3" *ngIf="termsConditions.signature.isBothParents">
-        <div class="col-12 app-terms-text">
-          <div class="row">
-            <div class="col-4">
-          <textarea class="app-terms-table w-100 pl-3"
-                    rows="2"
-                    placeholder="Father's Signature"></textarea>
-            </div>
-            <div class="col-4">
-          <textarea class="app-terms-table w-100 pl-3"
-                    rows="2"
-                    placeholder="Mother's Signature"></textarea>
-            </div>
-          </div>
-        </div>
+      <div class="fields-signature">
+        <sw-input-textarea>
+          <span class="label">Mother's signature</span>
+        </sw-input-textarea>
       </div>
-
-    </ng-container>
-
-    <div class="py-2 pr-5 text-right">
-      <button class="btn app-btn-primary px-5 py-2 mr-3">Accept</button>
     </div>
-
+    <div *ngIf="!termsConditions.signature.isBothParents" class="fields-signatures">
+      <div class="fields-signature">
+        <sw-input-textarea>
+          <span class="label">Parents's signature</span>
+        </sw-input-textarea>
+      </div>
+    </div>
   </div>
-  <!--END SIGNATURE-->
 </div>
-
