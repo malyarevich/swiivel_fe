@@ -33,6 +33,13 @@ import {
   defaultCurrentPosition,
   IFormNavigationState
 } from "./models/online-form.model";
+import {
+  phoneNumberValidator,
+  alphabeticValidator,
+  alphanumericValidator,
+  emailValidator
+} from "@app/core/validators";
+import { fieldValidators } from "@app/models/data-collection/field.model";
 
 @Component({
   selector: "sw-online-form",
@@ -640,16 +647,77 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
   getComposedValidatorsByField(field) {
     const arrayValidators = [];
 
-    if (field.options.required) {
+    if (
+      field.options &&
+      field.options.validators &&
+      field.options.validators.phone &&
+      field.options.validators.verifyPhone
+    ) {
+      arrayValidators.push(phoneNumberValidator);
+    }
+
+    if (field.options && field.options.required) {
       arrayValidators.push(Validators.required);
     }
 
-    if (field.options.minFieldSize) {
-      arrayValidators.push(Validators.minLength(field.options.minFieldSize));
+    if (
+      field.options &&
+      field.options.validators &&
+      field.options.validators.minLength
+    ) {
+      arrayValidators.push(
+        Validators.minLength(field.options.validators.minLength)
+      );
     }
 
-    if (field.options.maxFieldSize) {
-      arrayValidators.push(Validators.maxLength(field.options.maxFieldSize));
+    if (
+      field.options &&
+      field.options.validators &&
+      field.options.validators.maxLength
+    ) {
+      arrayValidators.push(
+        Validators.maxLength(field.options.validators.maxLength)
+      );
+    }
+
+    if (field.options && field.options.validators) {
+      Object.keys(field.options.validators).forEach(key => {
+        switch (key) {
+          case fieldValidators.Alphabetic:
+            if (field.options.validators[key]) {
+              arrayValidators.push(alphabeticValidator);
+            }
+            break;
+          case fieldValidators.Alphanumeric:
+            if (field.options.validators[key]) {
+              arrayValidators.push(alphanumericValidator);
+            }
+            break;
+          case fieldValidators.CurrencyCanada:
+            if (field.options.validators[key]) {
+              // arrayValidators.push(currencyCanadaValidator);
+            }
+            break;
+          case fieldValidators.CurrencyUS:
+            if (field.options.validators[key]) {
+              // arrayValidators.push(currencyUSValidator);
+            }
+            break;
+          case fieldValidators.DecimalPlace:
+            if (field.options.validators[key]) {
+              // arrayValidators.push(decimalPlaceValidator);
+            }
+            break;
+          case fieldValidators.Email:
+            if (field.options.validators[key]) {
+              arrayValidators.push(emailValidator);
+            }
+            break;
+
+          default:
+            break;
+        }
+      });
     }
 
     return arrayValidators;

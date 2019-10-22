@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Field, ITypeFieldSettings} from "../../../../../../../../../models/data-collection/field.model";
+import {Field, ITypeFieldSettings, fieldValidators} from "../../../../../../../../../models/data-collection/field.model";
 import {FormBuilder, FormGroup, FormControl} from "@angular/forms";
 
 // const defaultSettings: ITypeFieldSettings = {
@@ -10,6 +10,12 @@ import {FormBuilder, FormGroup, FormControl} from "@angular/forms";
 //   defaultValue: '',
 // };
 
+export const aShortTextCriteriaValidators: string[] = [
+  fieldValidators.Alphabetic, 
+  fieldValidators.Alphanumeric, 
+  fieldValidators.Url
+];
+
 @Component({
   selector: 'app-short-text-settings',
   templateUrl: './short-text-settings.component.html'
@@ -17,7 +23,7 @@ import {FormBuilder, FormGroup, FormControl} from "@angular/forms";
 export class ShortTextSettingsComponent {
   
   form: FormGroup;
-  validatorsOptions = ['Alphabetic', 'Alphanumeric', 'Url'].map(t => ({ title: t }));
+  validatorsOptions = aShortTextCriteriaValidators.map(t => ({ title: t }));
 
   private field: Field;
   
@@ -37,8 +43,8 @@ export class ShortTextSettingsComponent {
       allowList: new FormControl(false),
       default: new FormControl(null),
       validators: new FormGroup({
-        minLength: new FormControl(null),
-        maxLength: new FormControl(null),
+        [fieldValidators.minLength]: new FormControl(null),
+        [fieldValidators.maxLength]: new FormControl(null),
         criteria: new FormControl([])
       })
     });
@@ -56,8 +62,8 @@ export class ShortTextSettingsComponent {
       allowList: f.options.allowList ? true : false,
       validators: {
         criteria: f.validators.criteria ? f.validators.criteria : null,
-        minLength: f.validators.minLength || null,
-        maxLength: f.validators.maxLength || null,
+        [fieldValidators.minLength]: f.validators.minLength || null,
+        [fieldValidators.maxLength]: f.validators.maxLength || null,
       }
     });
   }

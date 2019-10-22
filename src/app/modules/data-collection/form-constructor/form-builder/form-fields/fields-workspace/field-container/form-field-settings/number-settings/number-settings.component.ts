@@ -1,7 +1,14 @@
 import {Component, Input} from '@angular/core';
-import {Field} from "@app/models/data-collection/field.model";
+import {Field, fieldValidators} from "@app/models/data-collection/field.model";
 import {FormBuilder, FormGroup, FormControl} from "@angular/forms";
 
+
+export const aNumberCriteriaValidators: string[] = [
+  fieldValidators.DecimalPlace,
+  fieldValidators.Percentage,
+  fieldValidators.CurrencyUS,
+  fieldValidators.CurrencyCanada
+];
 
 @Component({
   selector: 'app-number-settings',
@@ -11,7 +18,7 @@ import {FormBuilder, FormGroup, FormControl} from "@angular/forms";
 export class NumberSettingsComponent {
 
   form: FormGroup;
-  validatorsOptions = ['Decimal Place', 'Percentage', 'Currency US', 'Currency Canada'].map(t => ({ title: t }));
+  validatorsOptions = aNumberCriteriaValidators.map(t => ({ title: t }));
   
   private field: Field;
 
@@ -33,8 +40,8 @@ export class NumberSettingsComponent {
       format: new FormControl([]),
       places: new FormControl(null),
       validators: new FormGroup({
-        min: new FormControl(null),
-        max: new FormControl(null)
+        [fieldValidators.min]: new FormControl(null),
+        [fieldValidators.max]: new FormControl(null)
       })
     });
     this.form.valueChanges.subscribe(v => {
