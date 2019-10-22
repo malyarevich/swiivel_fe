@@ -90,6 +90,11 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
   customFields: Field[];
   existingFields: Field[];
   sideBarFields: Field[];
+  packetIntro: any = {
+    content: '',
+    sectionName: 'Packet Introduction',
+    sectionWidth: 'full'
+  };
   consentInfo: ConsentInfo = consentInfoDefault;
   termsConditions: TermsConditions = termsConditionsDefault;
   paymentSettings: PaymentSettings = paymentSettingsDefault;
@@ -377,6 +382,7 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
       this.form = form;
       this.formName = form.name;
       this.fields = this.form.fields = form.fields || [];
+      this.packetIntro = form.packetIntroduction || { content: '' }
       this.consentInfo = form.consentInfo || consentInfoDefault;
       this.termsConditions = form.termsConditions || termsConditionsDefault;
       this.paymentSettings = form.paymentSettings || paymentSettingsDefault;
@@ -444,6 +450,7 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
       forms: this.formsPDF,
       name: this.formName,
       sidebar: this.newSideBar,
+      packetIntroduction: this.packetIntro,
       consentInfo: this.consentInfo,
       termsConditions: this.termsConditions,
       paymentSettings: this.paymentSettings,
@@ -460,9 +467,10 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
       this.spinnerText = "Data is saving...";
       this.isDataSaving = true;
       this.constructorIsSavingService.setIsSaving(this.isDataSaving);
+      console.log('form pre save', form);
       this.formService.sendForm(form).subscribe(res => {
         this.formBuilderIsSavedService.setIsSaved(res["updated"]);
-        this.router.navigate([`/form-constructor/${this.formId}/publish-settings`]);
+        // this.router.navigate([`/form-constructor/${this.formId}/publish-settings`]);
 
         this.isDataSaving = !this.saveFormService.getSavingStatus();
         this.constructorIsSavingService.setIsSaving(this.isDataSaving);

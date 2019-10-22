@@ -50,6 +50,16 @@ export const routes: Routes = [
     ]
   },
   {
+    path: 'form-send/:id',
+    component: CreatorHeaderComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('../form-send/form-send.module').then(m => m.FormSendModule)
+      }
+    ]
+  },
+  {
     path: 'payer-accounts',
     component: LayoutComponent,
     children: [

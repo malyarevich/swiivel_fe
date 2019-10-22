@@ -60,6 +60,7 @@ import { CdkTreeModule } from '@angular/cdk/tree';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { SharedModule } from '@app/components/shared.module';
 import { CheckboxSettingsComponent } from './form-fields/fields-workspace/field-container/form-field-settings/checkbox-settings/checkbox-settings.component';
+import { PacketIntroComponent } from './packet-intro/packet-intro.component';
 
 
 @NgModule({
@@ -109,6 +110,7 @@ import { CheckboxSettingsComponent } from './form-fields/fields-workspace/field-
     FormsContainerComponent,
     FieldTypePipe,
     CheckboxSettingsComponent,
+    PacketIntroComponent,
 
   ],
   imports: [

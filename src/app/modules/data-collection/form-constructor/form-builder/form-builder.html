@@ -16,7 +16,40 @@
 <div class="row no-gutters" *ngIf="form !== undefined && !isDataSaving">
   <div class="col-3">
     <!-- FORM FIELDS -->
-    <div class="row justify-content-center pb-2">
+    <div class="sidebar_section" data-e2e="sidebar_section" [class.expanded]="1">
+      <div class="sidebar_section__header" data-e2e="sidebar_section__header">
+        <!-- (click)="onClick('intro', $event)" -->
+        <sw-input-toggle [ngModel]="activeSections?.packetIntroduction.isActive"
+          (ngModelChange)="activeSections?.packetIntroduction.isActive = activeSections?.packetIntroduction.showSideInfo = $event">
+        </sw-input-toggle>
+        <span>Packet Introduction</span>
+      </div>
+    </div>
+
+    <div class="sidebar_section" data-e2e="sidebar_section" [class.expanded]="1"
+      [class.open]="activeSections.formFields.showSideInfo">
+      <!-- (click)="onClick('consent', $event)" -->
+      <div class="sidebar_section__header" data-e2e="sidebar_section__header">
+        <sw-input-toggle [ngModel]="activeSections.formFields.isActive" (ngModelChange)="
+        activeSections.formFields.isActive = activeSections.formFields.showSideInfo = $event
+      ">
+        </sw-input-toggle>
+        <span>FORM FIELDS</span>
+        <div class="actions" data-e2e="actions">
+          <sw-icon-button [class.blue]="activeSections.formFields.showSideInfo"
+            [icon]="getIcon(activeSections.formFields.showSideInfo)"
+            (click)="activeSections.formFields.showSideInfo = !activeSections.formFields.showSideInfo">
+          </sw-icon-button>
+        </div>
+      </div>
+      <div class="sidebar_section__content" *ngIf="activeSections.formFields.showSideInfo"
+        data-e2e="sidebar_section__content">
+        <app-fields-side-bar [sideBar]="newSideBar" [idSectionForDragDrop]="idSectionForDragDrop" [form]="form">
+        </app-fields-side-bar>
+      </div>
+    </div>
+
+    <!-- <div class="row justify-content-center pb-2">
       <div class="col-10 bg-white ">
         <div class="row no-gutters slider-item align-items-center">
           <div class="col-auto mr-2">
@@ -41,61 +74,121 @@
         <div *ngIf="activeSections.formFields.showSideInfo" class="bg-white rounded mb-3">
           <app-fields-side-bar [sideBar]="newSideBar" [idSectionForDragDrop]="idSectionForDragDrop" [form]="form">
           </app-fields-side-bar>
-
-          <!--          Old side bar -->
-          <!--          <div class="mb-2  " *ngFor="let sideBar of sideBarFields | filter : searchText">-->
-          <!--            <app-side-bar-group-->
-          <!--              *ngIf="sideBar.type==113"-->
-          <!--              [group]="sideBar"-->
-          <!--              [existingFields]="existingFields"-->
-          <!--              [customFields]="customFields"-->
-          <!--              (onDeleteNested)="onDelete($event)"-->
-          <!--              (onChangeFieldBeing)="onChangeFieldBeing($event)"-->
-          <!--              (onChangeGroupBeing)="onChangeGroupBeing($event, sideBar)"-->
-          <!--            >-->
-
-          <!--            </app-side-bar-group>-->
-          <!--            <app-side-bar-field-->
-          <!--              *ngIf="sideBar.type!=113"-->
-          <!--              [field]="sideBar"-->
-          <!--              [style]="sideBar.mapped==''"-->
-          <!--              (deleteCustom)="onDeleteCustom($event)"-->
-          <!--              (onChangeFieldBeing)="onChangeFieldBeing($event)"-->
-
-          <!--            >-->
-          <!--            </app-side-bar-field>-->
-          <!--          </div>-->
-          <!--          <div>-->
-          <!--            <button-->
-          <!--              *ngIf="showAddButton"-->
-          <!--              type="button"-->
-          <!--              class="btn btn-outline-primary form-control p-0 text-left"-->
-          <!--              (click)="showAddButton=false">-->
-          <!--              &nbsp;&nbsp;+ Add New Field-->
-          <!--            </button>-->
-          <!--            <input-->
-          <!--              *ngIf="!showAddButton"-->
-          <!--              (keyup)="nameChange($event)"-->
-          <!--              [ngClass]="!validNewCustomFieldName?'is-invalid':''"-->
-          <!--              class="form-control add-input p-0"-->
-          <!--              autofocus-->
-          <!--              #newField-->
-          <!--              (blur)="addNewCustomField(newField.value, sideBarFields); newField.value=''"-->
-          <!--              (keyup.enter)="addNewCustomField(newField.value, sideBarFields); newField.value=''">-->
-          <!--            <div class="invalid-feedback">-->
-          <!--              We have existing field with the same name!-->
-          <!--            </div>-->
-          <!--          </div>-->
-          <!--        End of  Old side bar-->
         </div>
       </div>
-    </div>
+    </div> -->
 
     <!-- END FORM FIELDS -->
 
     <!--    DOCUMENTS & FORMS-->
+    <div class="sidebar_section" data-e2e="sidebar_section" [class.expanded]="1"
+      [class.open]="activeSections.documentsForms.showSideInfo">
+      <!-- (click)="onClick('consent', $event)" -->
+      <div class="sidebar_section__header" data-e2e="sidebar_section__header">
+        <sw-input-toggle [ngModel]="activeSections.documentsForms.isActive" (ngModelChange)="
+        activeSections.documentsForms.isActive = activeSections.documentsForms.showSideInfo = $event
+      ">
+        </sw-input-toggle>
+        <span>DOCUMENTS & FORMS</span>
+        <div class="actions" data-e2e="actions">
+          <sw-icon-button [class.blue]="activeSections.documentsForms.showSideInfo"
+            [icon]="getIcon(activeSections.documentsForms.showSideInfo)"
+            (click)="activeSections.documentsForms.showSideInfo = !activeSections.documentsForms.showSideInfo">
+          </sw-icon-button>
+        </div>
+      </div>
+      <div class="sidebar_section__content" *ngIf="activeSections.documentsForms.showSideInfo"
+        data-e2e="sidebar_section__content">
+        <section class="documents_section">
+            <div class="documents_section__header">
+              <div class="documents_section__header_text">
+                Documents
+              </div>
+              <div class="documents_section__header_controls">
+                <i class="fas fa-plus-square" (click)="addDocumentItem()"></i>
+                <i class="fas fa-caret-down" *ngIf="isDocumentsForms.isDocuments; else up" (click)="
+              isDocumentsForms.isDocuments = !isDocumentsForms.isDocuments
+            "></i>
+                <ng-template #up>
+                  <i class="fas fa-caret-up" (click)="
+                isDocumentsForms.isDocuments = !isDocumentsForms.isDocuments
+              "></i>
+                </ng-template>
+              </div>
+            </div>
+            <ng-container *ngIf="isDocumentsForms.isDocuments">
+              <div class="documents_section__item" *ngFor="let document of documents; let i = index">
+                <div class="documents_section__item_header">
+                  <div class="documents_section__item_header_name">
+                    <sw-input-text class="no_styles" [(ngModel)]="document.name"></sw-input-text>
+                  </div>
+                  <div class="documents_section__item_header_controls">
+                    <i class="fas fa-trash" (click)="removeDocument(document.id)"></i>
+                  </div>
+                </div>
+                <div class="documents_section__item_content">
+                  <div class="documents_section__item_content_input">
+                    <sw-input-button-group [options]="documentBut" [(ngModel)]="document.isUpload">
+                    </sw-input-button-group>
+                  </div>
+                  <div class="documents_section__item_content_input">
+                    <sw-radio-group [options]="radioGroup" [(ngModel)]="isPerFamilyD[i]"
+                      (ngModelChange)="changeDocRadio($event, document)"></sw-radio-group>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </section>
+          <section class="forms_section">
+            <div class="forms_section__header">
+              <div class="forms_section__header_text">
+                Forms
+              </div>
+              <div class="forms_section__header_controls">
+                <i class="fas fa-plus-square" (click)="addFormPDF()"></i>
+                <i class="fas fa-caret-down" *ngIf="isDocumentsForms.isForms; else upF"
+                  (click)="isDocumentsForms.isForms = !isDocumentsForms.isForms"></i>
+                <ng-template #upF>
+                  <i class="fas fa-caret-up" (click)="isDocumentsForms.isForms = !isDocumentsForms.isForms"></i>
+                </ng-template>
+              </div>
+            </div>
+            <ng-container *ngIf="isDocumentsForms.isForms">
+              <div class="forms_section__item" *ngFor="let forms of formsPDF; let i = index">
+                <div class="forms_section__item_header">
+                  <div class="forms_section__item_header_name">
+                    <sw-input-text class="no_styles" [(ngModel)]="forms.name"></sw-input-text>
+                  </div>
+                  <div class="forms_section__item_header_controls">
+                    <i class="fas fa-trash" (click)="removeFormsPDF(forms.id)"></i>
+                  </div>
+                </div>
+                <div class="forms_section__item_content">
+                  <div class="forms_section__item_content_input">
+                    <sw-input-button-group [options]="formBut" [(ngModel)]="forms.isNew"></sw-input-button-group>
+                  </div>
+                  <div class="forms_section__item_content_input">
+                    <sw-radio-group [options]="radioGroup" [(ngModel)]="isPerFamilyF[i]"
+                      (ngModelChange)="changeDocRadio($event, forms)"></sw-radio-group>
+                  </div>
+                  <div class="forms_section__item_content_input">
+                    <sw-input-toggle [(ngModel)]="forms.isFillableOnline">
+                      <span class="input_label">Fillable Online</span>
+                    </sw-input-toggle>
+                  </div>
+                  <div class="forms_section__item_content_input">
+                    <sw-input-toggle [(ngModel)]="forms.isAllowDownloadUpload">
+                      <span class="input_label">Allow Download/Upload</span>
+                    </sw-input-toggle>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </section>
+      </div>
+    </div>
 
-    <div class="row justify-content-center pb-2">
+    <!-- <div class="row justify-content-center pb-2">
       <div class="col-10 bg-white ">
         <div class="row no-gutters slider-item align-items-center">
           <div class="col-auto mr-2">
@@ -204,174 +297,6 @@
               </div>
             </ng-container>
           </section>
-        </div>
-      </div>
-    </div>
-
-    <!-- <div class="row justify-content-center pb-2">
-      <div class="col-10 bg-white ">
-        <div class="row no-gutters slider-item align-items-center">
-          <div class="col-auto mr-2">
-            <label class="app-switch">
-              <input type="checkbox" [ngModel]="activeSections.documentsForms.isActive" (ngModelChange)="
-                  activeSections.documentsForms.isActive = activeSections.documentsForms.showSideInfo = $event
-                " />
-              <span class="app-slider app-round"></span>
-            </label>
-          </div>
-          <div class="col" (click)="
-              activeSections.documentsForms.showSideInfo = !activeSections
-                .documentsForms.showSideInfo
-            ">
-            <span class="font-weight-bold side-bar-toggle">DOCUMENTS & FORMS</span>
-            <i class="fas float-right app-plus-i" [ngClass]="{
-                'fa-sort-down': !activeSections.documentsForms.showSideInfo,
-                'fa-sort-up': activeSections.documentsForms.showSideInfo
-              }"></i>
-          </div>
-        </div>
-        <div *ngIf="activeSections.documentsForms.showSideInfo" class="bg-white rounded mb-3 ">
-          <div class="row no-gutters pt-2 align-items-center">
-            <div class="col">
-              <span class="font-weight-bold">Documents</span>
-              <span><i class="fas fa-question-circle pl-1" title="test"></i></span>
-            </div>
-            <div class="col-1 align-self-end" (click)="addDocumentItem()">
-              <span><i class="fas fa-plus-square"></i></span>
-            </div>
-            <div class="col-1 align-self-end" (click)="
-                isDocumentsForms.isDocuments = !isDocumentsForms.isDocuments
-              ">
-              <span [hidden]="!isDocumentsForms.isDocuments"><i class="fas fa-caret-up ml-2"></i></span>
-              <span [hidden]="isDocumentsForms.isDocuments"><i class="fas fa-caret-down ml-2"></i></span>
-            </div>
-          </div>
-
-          <div [hidden]="!isDocumentsForms.isDocuments">
-            <div class="app-consent-item px-3 pt-3 pb-1 mt-3" *ngFor="let document of documents">
-              <div class="row no-gutters">
-                <div class="col-10">
-                  <span class="font-weight-bold" *ngIf="isEditDocumentName !== document.id"
-                    (click)="isEditDocumentName = document.id">
-                    {{ document.name }}
-                  </span>
-
-                  <input type="text" class="form-control app-consent-name-input" autofocus
-                    *ngIf="isEditDocumentName === document.id || !document.name"
-                    (input)="isEditDocumentName = document.id" (blur)="isEditDocumentName = null"
-                    (keyup.enter)="isEditDocumentName = null" [(ngModel)]="document.name" placeholder="Document Name" />
-                </div>
-                <div class="col-2 text-right" (click)="removeDocument(document.id)">
-                  <span class=" mr-3"><i class="fas fa-trash fa-xs"></i></span>
-                </div>
-              </div>
-              <div class="row no-gutters">
-                <div class="btn-group btn-group-toggle w-100 mt-2" ngbRadioGroup [(ngModel)]="document.isUpload"
-                  name="isUpload">
-                  <label ngbButtonLabel class="btn app-btn-signature">
-                    <input ngbButton type="radio" [value]="true" /> Upload
-                  </label>
-                  <label ngbButtonLabel class="btn app-btn-signature">
-                    <input ngbButton type="radio" [value]="false" /> Download
-                  </label>
-                </div>
-              </div>
-              <div class="col mt-4 p-0 no-gutters align-items-center" ngbRadioGroup [(ngModel)]="document.isPerFamily"
-                name="">
-                <div class="col-10">
-                  <label ngbButtonLabel class="app-radio-container text-left">Needed per Family
-                    <input type="radio" ngbButton [value]="true" />
-                    <span class="app-radio-checkmark mt-2"></span>
-                  </label>
-                </div>
-                <div class="col-10">
-                  <label ngbButtonLabel class="app-radio-container text-left">Needed per Student
-                    <input type="radio" ngbButton [value]="false" />
-                    <span class="app-radio-checkmark mt-2"></span>
-                  </label>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <hr />
-
-          <div class="row no-gutters pt-2 align-items-center">
-            <div class="col">
-              <span class="font-weight-bold">External section</span>
-              <span><i class="fas fa-question-circle pl-1" title="test"></i></span>
-            </div>
-            <div class="col-1 align-self-end" (click)="addFormPDF()">
-              <span><i class="fas fa-plus-square"></i></span>
-            </div>
-            <div class="col-1 align-self-end" (click)="isDocumentsForms.isForms = !isDocumentsForms.isForms">
-              <span [hidden]="!isDocumentsForms.isForms"><i class="fas fa-caret-up ml-2"></i></span>
-              <span [hidden]="isDocumentsForms.isForms"><i class="fas fa-caret-down ml-2"></i></span>
-            </div>
-          </div>
-
-          <div [hidden]="!isDocumentsForms.isForms">
-            <div class="app-consent-item px-3 pt-3 pb-2 mt-3" *ngFor="let forms of formsPDF">
-              <div class="row no-gutters">
-                <div class="col-10">
-                  <span class="font-weight-bold" *ngIf="isEditFormPDFName !== forms.id"
-                    (click)="isEditFormPDFName = forms.id">
-                    {{ forms.name }}
-                  </span>
-
-                  <input type="text" class="form-control app-consent-name-input" autofocus
-                    *ngIf="isEditFormPDFName === forms.id || !forms.name" (input)="isEditFormPDFName = forms.id"
-                    (blur)="isEditFormPDFName = null" (keyup.enter)="isEditFormPDFName = null" [(ngModel)]="forms.name"
-                    placeholder="Form Name" />
-                </div>
-                <div class="col-2 text-right" (click)="removeFormsPDF(forms.id)">
-                  <span class=" mr-3"><i class="fas fa-trash fa-xs"></i></span>
-                </div>
-              </div>
-
-              <div class="row no-gutters">
-                <div class="btn-group btn-group-toggle w-100 mt-2" ngbRadioGroup [(ngModel)]="forms.isNew" name="isNew">
-                  <label ngbButtonLabel class="btn app-btn-signature">
-                    <input ngbButton type="radio" [value]="false" /> Use
-                    Existing
-                  </label>
-                  <label ngbButtonLabel class="btn app-btn-signature">
-                    <input ngbButton type="radio" [value]="true" /> Create New
-                  </label>
-                </div>
-              </div>
-              <div class="col mt-4 p-0 no-gutters align-items-center" ngbRadioGroup [(ngModel)]="forms.isPerFamily"
-                name="">
-                <div class="col-10">
-                  <label ngbButtonLabel class="app-radio-container text-left">Needed per Family
-                    <input type="radio" ngbButton [value]="true" />
-                    <span class="app-radio-checkmark mt-2"></span>
-                  </label>
-                </div>
-                <div class="col-10">
-                  <label ngbButtonLabel class="app-radio-container text-left">Needed per Student
-                    <input type="radio" ngbButton [value]="false" />
-                    <span class="app-radio-checkmark mt-2"></span>
-                  </label>
-                </div>
-              </div>
-
-              <div class="col mt-4 p-0">
-                <label class="app-switch">
-                  <input type="checkbox" [(ngModel)]="forms.isFillableOnline" />
-                  <span class="app-slider app-round"></span>
-                </label>
-                <span class="ml-1">Fillable Online</span>
-              </div>
-              <div class="col p-0">
-                <label class="app-switch">
-                  <input type="checkbox" [(ngModel)]="forms.isAllowDownloadUpload" />
-                  <span class="app-slider app-round"></span>
-                </label>
-                <span class="ml-1">Allow Download/Upload</span>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div> -->
@@ -612,11 +537,12 @@
             </sw-input-checkbox>
           </div>
           <div class="terms_conditions_signature_section__content">
-            <sw-input-button-group [options]="consentButtonOptions" [(ngModel)]="termsConditions.signature.isBothParents">
+            <sw-input-button-group [options]="consentButtonOptions"
+              [(ngModel)]="termsConditions.signature.isBothParents">
             </sw-input-button-group>
           </div>
         </section>
-<!-- <ng-container *ngIf="termsConditions.signature.isRequire">
+        <!-- <ng-container *ngIf="termsConditions.signature.isRequire">
             <div class="row no-gutters">
               <div class="btn-group btn-group-toggle w-100 mt-2" ngbRadioGroup name="termsConditionsSignature"
                 [(ngModel)]="termsConditions.signature.type" [ngModelOptions]="{ standalone: true }">
@@ -729,8 +655,8 @@
       <!--        </li>-->
 
       <!--      </ul>-->
-      <app-fields-workspace *ngIf="activeSections.formFields.isActive" [form]="form" [sideBar]="newSideBar"
-        [idSectionForDragDrop]="idSectionForDragDrop" [customFields]="customFields"></app-fields-workspace>
+      <app-packet-intro *ngIf="activeSections.packetIntroduction.isActive" [packetIntro]="packetIntro"></app-packet-intro>
+      <app-fields-workspace *ngIf="activeSections.formFields.isActive" [form]="form"></app-fields-workspace>
       <!--  documents-forms-->
       <app-documents-forms *ngIf="activeSections.documentsForms.isActive" [sideBar]="newSideBar" [form]="form"
         [isDocumentsForms]="isDocumentsForms" [documentsForms]="documentsForms" [documents]="documents"
