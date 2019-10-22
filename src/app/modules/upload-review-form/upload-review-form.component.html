@@ -131,7 +131,8 @@
       ></app-upload-review-form-document>
     </div>
     <div *ngIf="getSelectForm() && (getSelectForm().submission_type === 'onlineForm' || getSelectForm().submission_type === 'pdfForm')">
-      <sw-online-form [formId]="getSelectForm().form_id"></sw-online-form>
+      <sw-online-form [formId]="getSelectForm().form_id" [isViewMode]="true" [isMenuShow]="false"></sw-online-form>
+      <!-- <sw-online-form [formId]="'5d9f0eff8ffb080c090ee232'" [isViewMode]="true" [isMenuShow]="false"></sw-online-form> -->
     </div>
     <div *ngIf="documentTypes.length && documentFamilies.length">
       <app-upload-review-form-document-settings
