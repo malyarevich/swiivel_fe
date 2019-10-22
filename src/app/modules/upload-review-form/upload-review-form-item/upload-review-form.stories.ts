@@ -25,24 +25,3 @@ storiesOf('Upload Review Form', module)
     },
   })
   );
-
-storiesOf('Upload Review Form', module)
-  .addDecorator(
-    moduleMetadata({
-      declarations: [UploadFormReviewItemComponent, StatusLabelComponent, IconButtonComponent],
-      providers: [UploadReviewFormService, HttpClient, HttpHandler]
-    })
-  )
-  .add('Upload item - PDF Form', () => ({
-      template: `<app-upload-review-form-item [document]="document"></app-upload-review-form-item>`,
-      props: {
-        document: {
-          entity_name: 'Name',
-          status: 'approved',
-          submission_type: 'pdf_form',
-          person_name: 'SD name Jacobson',
-          isSelected: true,
-        },
-      },
-    })
-  );

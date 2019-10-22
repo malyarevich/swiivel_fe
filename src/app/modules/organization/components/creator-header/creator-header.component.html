@@ -8,17 +8,17 @@
     </div>
   </div>
   <div class="items-wrap" data-e2e="items-wrap">
-    <div class="item" data-e2e="createitem" [routerLink]="[ getLink('/form-constructor') ]" routerLinkActive="active">
+    <a class="item" data-e2e="createitem" [routerLink]="[ getLink('/form-constructor') ]" routerLinkActive="active">
       Create
-    </div>
+    </a>
     <i class="fas fa-chevron-right"></i>
-    <div class="item" data-e2e="senditem" [routerLink]="[ '/form-creator' ]" routerLinkActive="active">
+    <a class="item" data-e2e="senditem" [class.disabled]="!id" [routerLink]="[ getLink('/form-send') ]" routerLinkActive="active">
       Send
-    </div>
+    </a>
     <i class="fas fa-chevron-right"></i>
-    <div class="item" data-e2e="recieveitem" [routerLink]="[ '/form-creator' ]" routerLinkActive="active">
+    <a class="item" data-e2e="recieveitem" [routerLink]="[ '/form-creator' ]" routerLinkActive="active">
       Receive
-    </div>
+    </a>
   </div>
   <div class="log-out-btn" data-e2e="log-out-btn" (click)="logOut()">
     <i class="fas fa-sign-out-alt"></i>

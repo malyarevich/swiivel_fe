@@ -127,3 +127,9 @@
     }
   }
 }
+
+:host(.read_only) {
+  .input_text__input {
+    background-color: #eee;
+  }
+}
