@@ -26,20 +26,13 @@ export class SectionContainerComponent implements OnInit {
     private sideBarService: SideBarService
   ) { }
   showSettings: boolean = false;
-  isExpand: boolean = true;
   ngOnInit() { }
   drop(event) {
     if (event.container.id === 'sidebar-list') {
       this.sideBarService.events$.next({ action: 'remove', target: event.item.data });
     }
   }
-  start(event: CdkDragStart) {
-    if (event.source.data.type === 113) {
-      this.isExpand = false;
-      this.cd.markForCheck()
-    }
-    // console.log('start', event);
-  }
+
 
 
 
@@ -51,7 +44,7 @@ export class SectionContainerComponent implements OnInit {
   }
 
   getEndOfSection() {
-    return "End of the " + this.section.name;
+    return "End of the " + this._section.name;
   }
 
   getConnectedPathIds() {
@@ -79,9 +72,8 @@ export class SectionContainerComponent implements OnInit {
   }
 
   toggleExpand() {
-    this.isExpand = !this.isExpand;
+    this._section.isExpanded = !this._section.isExpanded;
     this.cd.markForCheck()
-    console.log(this.isExpand)
   }
 
   toggleSettings() {

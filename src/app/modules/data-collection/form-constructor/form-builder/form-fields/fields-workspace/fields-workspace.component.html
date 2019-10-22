@@ -268,7 +268,7 @@
   <div class="" *ngFor="let item of _form.fields" cdkDrag [cdkDragData]="item" (cdkDragDropped)="drop($event)"
     (cdkDragStarted)="start($event)">
     <ng-container *ngIf="item.type === 114">
-      <app-section-header *cdkDragPreview [sectionName]="item.name" [isExpand]="false">
+      <app-section-header *cdkDragPreview [sectionName]="item.name" [isExpanded]="false">
       </app-section-header>
       <app-section-container [section]="item" [sideBar]="sideBar" [idSectionForDragDrop]="idSectionForDragDrop"
         [form]="_form" [customFields]="customFields">

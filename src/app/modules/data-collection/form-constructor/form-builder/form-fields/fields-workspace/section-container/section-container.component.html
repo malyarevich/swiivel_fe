@@ -1,7 +1,8 @@
 <!--Section Header-->
-<app-section-header *ngIf="_section" [sectionName]="_section.name" [sectionWidth]="_section.width" [isExpand]="isExpand"
-  (onChangeSectionName)="changeSectionName($event)" (onChangeSectionWidth)="changeSectionWidth($event)"
-  (onToggleExpand)="toggleExpand()" (onToggleSettings)="toggleSettings()" (onRemoveSection)="removeSection(_section)">
+<app-section-header *ngIf="_section" [sectionName]="_section.name" [sectionWidth]="_section.width"
+  [isExpanded]="_section.isExpanded" (onChangeSectionName)="changeSectionName($event)"
+  (onChangeSectionWidth)="changeSectionWidth($event)" (onToggleExpand)="toggleExpand()"
+  (onToggleSettings)="toggleSettings()" (onRemoveSection)="removeSection(_section)">
 </app-section-header>
 <!--End Section Header-->
 
@@ -10,7 +11,7 @@
   <app-section-settings [section]="_section"></app-section-settings>
 </div>
 
-<div *ngIf="_section && isExpand">
+<div *ngIf="_section">
 
   <!--    <ngx-dnd-container-->
   <!--      [model]="section.fields">-->
@@ -34,7 +35,7 @@
       <ng-container *ngIf="field.type === 113">
         <app-group-container *cdkDragPreview [inputGroup]="field" [nestedLevel]="nestedLevel+1" [hideNested]="true">
         </app-group-container>
-        <app-group-container [inputGroup]="field" [nestedLevel]="nestedLevel+1" [hideNested]="field.hideNested">
+        <app-group-container [inputGroup]="field" [nestedLevel]="nestedLevel+1" [hideNested]="!field.isExpanded">
         </app-group-container>
       </ng-container>
 
@@ -44,7 +45,6 @@
 </div>
 
 
-<div class="" *ngIf="section">
+<div class="" *ngIf="_section">
   <hr class="hr-text" [attr.data-content]="getEndOfSection()">
-
 </div>
