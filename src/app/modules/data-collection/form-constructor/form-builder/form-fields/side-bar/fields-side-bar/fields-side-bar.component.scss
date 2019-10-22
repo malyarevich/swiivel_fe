@@ -1,6 +1,15 @@
 @import "index";
 
 :host {
+  cdk-nested-tree-node.cdk-drag-disabled > div.field-tree-node__content {
+      i.cdk-drag-handle	{
+        cursor: default;
+      }
+
+  }
+  .cdk-drop-list-receiving, .cdk-drop-list-dragging	{
+    opacity: 1;
+  }
   .fields-container {
     display: flex;
     flex-flow: column nowrap;
@@ -79,11 +88,11 @@
                 border-color: #4350A2;
               }
             }
-            input[type=checkbox]:checked,
-            input[type=checkbox]:indeterminate {
+            input[type=checkbox].checked,
+            input[type=checkbox].indeterminate {
               background: #4350A2;
             }
-            input[type=checkbox]:checked:after {
+            input[type=checkbox].checked:after {
               content: '';
               position: absolute;
               top: 1px;
@@ -99,7 +108,7 @@
               transform: rotate(45deg);
             }
 
-            input[type=checkbox]:indeterminate:after {
+            input[type=checkbox].indeterminate:after {
               content: "\2022";
               color: transparent;
               background-color: #fff;

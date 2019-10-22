@@ -5,7 +5,9 @@ import {
   ViewChild,
   ElementRef,
   OnDestroy,
-  Host
+  Host,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef
 } from "@angular/core";
 import { FormService } from "../../services/form.service";
 import { ActivatedRoute, Params, Router } from "@angular/router";
@@ -58,11 +60,13 @@ import {
 import { Field } from 'src/app/models/data-collection/field.model';
 import { DocumentSideBar, DocumentsModel, documentItemDefault } from 'src/app/models/data-collection/form-constructor/form-builder/documents.model';
 import { FormsPDFModel, formPDFItemDefault } from 'src/app/models/data-collection/form-constructor/form-builder/formsPDF.model';
+import { SideBarService } from './form-fields/side-bar/side-bar.service';
 
 @Component({
   selector: "app-form-table",
   templateUrl: "./form-builder.html",
-  styleUrls: ["./form-builder.scss"]
+  styleUrls: ["./form-builder.scss"],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FormBuilderComponent implements OnInit, OnDestroy {
   @Input() saveEvents: Observable<void>;
@@ -253,7 +257,8 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
     private constructorIsSavingService: ConstructorIsSavingService,
     private formBuilderIsSavedService: FormBuilderIsSavedService,
     private fileService: FilesService,
-    private saveFormService: SaveFormService
+    private saveFormService: SaveFormService,
+    private cdr: ChangeDetectorRef
   ) {
     this.vDataCollection = vDataCollection;
   }
@@ -284,7 +289,7 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
   loadDocsForms() {
     if (this.documents && this.documents.length > 0) {
       this.documents.forEach((item, index) => {
-        if (item.isPerFamily === true){
+        if (item.isPerFamily === true) {
           this.isPerFamilyD[index] = 'Needed Per Family';
         } else {
           this.isPerFamilyD[index] = 'Needed Per Student';
@@ -293,7 +298,7 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
     }
     if (this.formsPDF && this.formsPDF.length > 0) {
       this.formsPDF.forEach((item, index) => {
-        if (item.isPerFamily === true){
+        if (item.isPerFamily === true) {
           this.isPerFamilyF[index] = 'Needed Per Family';
         } else {
           this.isPerFamilyF[index] = 'Needed Per Student';
@@ -303,7 +308,7 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
   }
 
   changeDocRadio(e, form) {
-    if (e === 'Needed Per Family'){
+    if (e === 'Needed Per Family') {
       form.isPerFamily = true;
     } else {
       form.isPerFamily = false;
@@ -387,15 +392,53 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
       this.attachments = form.attachments || {};
       this.activeSections = form.activeSections || activeSectionsDefault;
       this.newSideBar = this.initSideBar(form);
+      this.cdr.markForCheck()
     }
   }
 
   initSideBar(form) {
-    if (form.hasOwnProperty('sidebar')) {
-      return form.sidebar.length ? form.sidebar : this.newSideBar;
+    const getPathId = (field) => {
+      if (field.path) {
+        return field.path.join('') + field.type;
+      }
     }
-    return this.newSideBar;
+    const flatten = (fields) => {
+      let result = [];
+      for (const field of fields) {
+        if (field.fields) {
+          result.push(...flatten(field.fields))
+        }
+        result.push(field);
+      }
+      return result;
+    }
+    const joinForm = (field, path = []) => {
+      if (field.fields) {
+        path.push(field.name);
+        field.fields = field.fields.map(cfield => joinForm(cfield, path))
+      }
+      let found = flatten(form.fields).find(ffield => {
+        return field.name === ffield.name && field.type === ffield.type;
+      })
+      if (found) {
+        if (field.type < 112) {
+          return found;
+        } else {
+          let fields = JSON.parse(JSON.stringify(field.fields));
+          field = JSON.parse(JSON.stringify(found));
+          field.isActive = true;
+          field.fields = fields;
+          // field._id = found.id
+          return field;
+        }
+      } else {
+        field.isActive = false;
+        return field;
+      }
+    }
+    return this.newSideBar.map(field => joinForm(field)).slice()
   }
+
 
   formInit(): void {
     console.log(this.vDataCollection)
@@ -414,7 +457,7 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
         () => {
           this.generalInfoIsValidService.setIsValid(true);
           if (!isEmpty(this.fields)) {
-            this.initFormFieldsToSideBar(this.newSideBar, this.fields);
+            // this.initFormFieldsToSideBar(this.newSideBar, this.fields);
           }
 
         }
@@ -685,7 +728,7 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
     this.saveDraftForm();
     // this.saveFormService.unsubscribe();
 
-    if ( FormBuilderComponent.countSaveFormService > 1 && this.saveFormSubscription) {
+    if (FormBuilderComponent.countSaveFormService > 1 && this.saveFormSubscription) {
       this.saveFormSubscription.unsubscribe();
       FormBuilderComponent.countSaveFormService--;
     }

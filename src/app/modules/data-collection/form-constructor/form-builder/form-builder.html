@@ -612,11 +612,12 @@
             </sw-input-checkbox>
           </div>
           <div class="terms_conditions_signature_section__content">
-            <sw-input-button-group [options]="consentButtonOptions" [(ngModel)]="termsConditions.signature.isBothParents">
+            <sw-input-button-group [options]="consentButtonOptions"
+              [(ngModel)]="termsConditions.signature.isBothParents">
             </sw-input-button-group>
           </div>
         </section>
-<!-- <ng-container *ngIf="termsConditions.signature.isRequire">
+        <!-- <ng-container *ngIf="termsConditions.signature.isRequire">
             <div class="row no-gutters">
               <div class="btn-group btn-group-toggle w-100 mt-2" ngbRadioGroup name="termsConditionsSignature"
                 [(ngModel)]="termsConditions.signature.type" [ngModelOptions]="{ standalone: true }">
@@ -707,7 +708,7 @@
   <!--  END  FORM PAYMENT-->
 
   <div class="col-9">
-    <div>
+    <div style="height: calc(100% - 25px);">
       <!--      cdkDropList-->
       <!--      id="workPlaceList"-->
       <!--      [cdkDropListData]="fields"-->
@@ -729,8 +730,9 @@
       <!--        </li>-->
 
       <!--      </ul>-->
-      <app-fields-workspace *ngIf="activeSections.formFields.isActive" [form]="form" [sideBar]="newSideBar"
-        [idSectionForDragDrop]="idSectionForDragDrop" [customFields]="customFields"></app-fields-workspace>
+      <app-fields-workspace *ngIf="activeSections.formFields.isActive" [sideBar]="newSideBar"
+        [idSectionForDragDrop]="idSectionForDragDrop" [customFields]="customFields">
+      </app-fields-workspace>
       <!--  documents-forms-->
       <app-documents-forms *ngIf="activeSections.documentsForms.isActive" [sideBar]="newSideBar" [form]="form"
         [isDocumentsForms]="isDocumentsForms" [documentsForms]="documentsForms" [documents]="documents"
