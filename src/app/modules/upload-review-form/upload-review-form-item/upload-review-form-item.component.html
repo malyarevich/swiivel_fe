@@ -5,7 +5,7 @@
   <div class="icon-container">
     <img
       class="document-icon"
-      [src]="document.submission_type === 'online_form' ? './assets/images/icons/online-form.svg' : './assets/images/icons/upload-form.svg'"
+      [src]="document.submission_type === 'onlineForm' || document.submission_type === 'pdfForm' ? './assets/images/icons/online-form.svg' : './assets/images/icons/upload-form.svg'"
     />
   </div>
   <div class="text">

@@ -1,4 +1,5 @@
 export interface IActiveSections {
+  packetIntroduction: IActiveSection;
   formFields: IActiveSection;
   documentsForms: IActiveSection;
   consent: IActiveSection;
@@ -14,6 +15,7 @@ export interface IActiveSection {
 }
 
 export const activeSectionsDefault: IActiveSections = {
+  packetIntroduction: {isActive: false, showSideInfo: false},
   formFields: {isActive: false, showSideInfo: false},
   documentsForms: {isActive: false, showSideInfo: false},
   consent: {isActive: false, showSideInfo: false},

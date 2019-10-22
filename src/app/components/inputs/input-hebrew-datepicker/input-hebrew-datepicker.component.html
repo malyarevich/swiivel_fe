@@ -2,6 +2,9 @@
   <sw-input-text
     [(ngModel)]="value"
     class="online_form__data_picker"
+    [ngClass]="{
+      'read_only': !isActive
+    }"
     [readonly]="!isActive"
   >
     <span class="placeholder">{{ placeholder }}</span>

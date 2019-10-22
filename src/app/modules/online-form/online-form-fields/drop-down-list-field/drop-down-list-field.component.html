@@ -15,7 +15,8 @@
       [ngClass]="{
         validation_required: isRequired(),
         validation_error: !!validationText,
-        online_form: true
+        online_form: true,
+        read_only: !isActive()
       }"
       [isActive]="isActive()"
     >

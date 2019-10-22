@@ -10,7 +10,8 @@
       [placeholder]="getLabel()"
       [value]="getValue()"
       [ngClass]="{
-        online_form: true
+        online_form: true,
+        read_only: !isActive()
       }"
       [isActive]="isActive()"
     ></sw-input-english-datepicker>

@@ -392,7 +392,7 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
       this.attachments = form.attachments || {};
       this.activeSections = form.activeSections || activeSectionsDefault;
       this.newSideBar = this.initSideBar(form);
-      this.cdr.markForCheck()
+      this.cdr.markForCheck();
     }
   }
 
