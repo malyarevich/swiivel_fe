@@ -73,12 +73,14 @@ export class UploadReviewFormDataSource implements DataSource<any> {
         this.loadingSubject.next(false);
         this.changingRotationSubject.next(false);
         this.dataSubject.next(documents.data);
-    }));
+      }));
   }
 
   uploadFilterList(formId: string): void {
     this.uploadReviewFormService.getFilterList(formId).subscribe((filters) => {
       this.filterSubject.next(filters);
+    }, (error) => {
+      this.filterSubject.error(error);
     });
   }
 

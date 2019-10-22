@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UploadReviewFormStatusesEnum } from '@modules/upload-review-form/upload-review-form-statuses.enum';
 import { UploadReviewFormDataSource } from '@modules/upload-review-form/upload-review-form.datasource';
 import { UploadReviewFormService } from '@modules/upload-review-form/upload-review-form.service';
@@ -53,6 +53,7 @@ export class UploadReviewFormComponent implements OnInit {
   constructor(
     public uploadReviewFormService: UploadReviewFormService,
     private route: ActivatedRoute,
+    private router: Router,
     private cdr: ChangeDetectorRef,
     private fb: FormBuilder,
     private sanitizer: DomSanitizer,
@@ -109,6 +110,8 @@ export class UploadReviewFormComponent implements OnInit {
           }
           this.cdr.detectChanges();
         }
+      }, () => {
+        this.router.navigate(['/']);
       });
 
     this.form.get('search').valueChanges.subscribe(

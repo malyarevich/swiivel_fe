@@ -62,7 +62,12 @@
                 </div>
               </th>
               <td cdk-cell *cdkCellDef="let form">
-                <span class="text">{{form.name}}</span>
+                <button
+                  class="button-text-link"
+                  [routerLink]="['/data-collection/form-info', form.mongo_id]"
+                >
+                  {{form.name}}
+                </button>
               </td>
             </ng-container>
 
