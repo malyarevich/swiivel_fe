@@ -9,8 +9,8 @@ const routes: Routes = [
 /*    canActivate: [AuthGuard],
     canActivateChild: [AuthGuard],*/
     children: [
-      { path: ':mongo_id',  component: OnlineFormComponent },
-      { path: '',  component: OnlineFormComponent },
+      // { path: ':mongo_id',  component: OnlineFormComponent },
+      // { path: '',  component: OnlineFormComponent },
     ]
   },
 ];

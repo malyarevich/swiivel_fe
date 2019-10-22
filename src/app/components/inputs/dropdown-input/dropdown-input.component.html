@@ -2,6 +2,7 @@
   #holder
   class="dropdown_input_container"
   data-e2e="dropdown_input_container"
+  [ngClass]="{'filter': style == 'filter'}"
   [class.active]="active"
   [class.empty]="isEmpty()"
   [class.disabled]="disabled"

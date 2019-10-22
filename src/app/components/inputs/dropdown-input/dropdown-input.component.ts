@@ -40,7 +40,11 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
   @Input() dropdownSubHeader = false;
   @Input() isDisplaySelected = true;
   @Input() disabled = false;
+  @Input() style = '';
   @Input() panelClass = 'dropdown-overlay';
+  @Input() set isReset(opt: any) {
+    console.log(opt)
+  };
   @Input()
   set multiple(opt: boolean) {
     this._multiple = opt === undefined ? false : opt;
