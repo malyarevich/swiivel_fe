@@ -134,7 +134,6 @@ export class FieldsSideBarComponent implements OnInit, OnDestroy, AfterViewCheck
       return dataNode.fields;
     }
     this.treeSource.activeFields$.subscribe((fields) => {
-      fields = JSON.parse(JSON.stringify(fields));
 
       // if (this._form.fields.length > 0) {
       //   let wp = this.treeSource.isWrappedBySection(this._form.fields);
@@ -145,32 +144,30 @@ export class FieldsSideBarComponent implements OnInit, OnDestroy, AfterViewCheck
       //   }
       // }
       if (fields.length > 0) {
+        fields = JSON.parse(JSON.stringify(fields));
+        this.service.fields = getActive(fields);
         // console.log('afs', fields)
         // let wrapped = this.treeSource.wrapIfNeeded(fields);
         // console.log(fields, wrapped, getActive(wrapped), getActive(fields));
-        this.service.fields = getActive(fields);
       } else {
-        // this.service.fields = [];
+        this.service.fields = [];
       }
     });
     this.service.events$.subscribe((event: any) => {
-      let target = this.treeSource.findNodeByPathId(event.target.pathId);
-      if (target) {
-        if (event.action === 'remove') {
+      if (event.action === 'remove') {
+        let target = this.treeSource.findNodeByPathId(event.target.pathId);
+        if (target) {
           if (target.type === 113 || target.type === 114) {
             this.toggleParentNode(target);
           } else {
             this.toggleNode(target);
           }
           this.cdr.markForCheck();
+        } else if (event.target.type === 114) {
+          event.target.fields.forEach((field: any) => {
+            this.toggleParentNode(this.treeSource.findNodeByPathId(field.pathId))
+          })
         }
-        else {
-          console.log(event)
-        }
-      } else if (event.target.type === 114) {
-        event.target.fields.forEach(field => {
-          this.toggleParentNode(this.treeSource.findNodeByPathId(field.pathId))
-        })
       }
     });
   }
@@ -184,7 +181,7 @@ export class FieldsSideBarComponent implements OnInit, OnDestroy, AfterViewCheck
   }
 
   canCreateField(node) {
-    return ((node.type === 113 || node.type === 114) && !this.displayOnly) && this.treeControl.isExpanded(node);
+    return ((node.type === 113 || node.type === 114) && !this.displayOnly) && node.isExpanded;
   }
 
   selectField(node: any) {
@@ -256,7 +253,10 @@ export class FieldsSideBarComponent implements OnInit, OnDestroy, AfterViewCheck
   deleteNode() {
     if (this.delFieldName === this.delInput.value) {
       console.log('Delete field', this.delFieldName);
-      this.treeSource.deleteNode(this.nodeForDel);
+      this.treeSource.remove(this.nodeForDel);
+      this.treeSource.reload();
+      this.cdr.markForCheck();
+      this.service.events$.next({ action: 'update', data: this.treeSource.nodes });
       this.closePop();
     }
   }
@@ -275,6 +275,15 @@ export class FieldsSideBarComponent implements OnInit, OnDestroy, AfterViewCheck
     return this.filterControl.value && node.name.toString().toLowerCase().startsWith(this.filterControl.value);
   }
 
+  toggleExpand(node) {
+    node.isExpanded = !node.isExpanded;
+    if (node.isExpanded) {
+      this.treeControl.collapseDescendants(node);
+    } else {
+      this.treeControl.expandDescendants(node);
+    }
+  }
+
   toggleParentNode(node: any): void {
     this.treeSource.toggle(node);
     if (node.isActive) {
@@ -286,6 +295,7 @@ export class FieldsSideBarComponent implements OnInit, OnDestroy, AfterViewCheck
         this.treeControl.collapseDescendants(node);
       }
     }
+    node.isExpanded = this.treeControl.isExpanded(node);
     this.cdr.markForCheck();
   }
 
@@ -319,6 +329,7 @@ export class FieldsSideBarComponent implements OnInit, OnDestroy, AfterViewCheck
       }
       this.treeControl.collapse(topInactive);
     }
+    node.isExpanded = this.treeControl.isExpanded(node);
     this.cdr.markForCheck();
   }
 
@@ -342,6 +353,7 @@ export class FieldsSideBarComponent implements OnInit, OnDestroy, AfterViewCheck
 
   addCustomField(node: any) {
     const formValue = node.customFieldForm.value;
+    if (!formValue.type || !formValue.width) return false;
     let newField = {
       type: formValue.type ? formValue.type[0].type : null,
       name: formValue.name,
@@ -354,6 +366,7 @@ export class FieldsSideBarComponent implements OnInit, OnDestroy, AfterViewCheck
     this.treeSource.addCustomField(node, newField);
     this.customFieldToggle(node);
     this.cdr.markForCheck();
+    this.service.events$.next({ action: 'update', data: this.treeSource.nodes });
   }
 
   ngOnDestroy(): void {

@@ -441,6 +441,8 @@ export class TreeDataSource implements DataSource<any> {
     this.reload();
   }
 
+
+
   deleteNode(node: any) {
     let parent = this.parentOf(node);
     if (parent) {

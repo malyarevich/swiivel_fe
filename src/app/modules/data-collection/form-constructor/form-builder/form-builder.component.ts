@@ -258,9 +258,15 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
     private formBuilderIsSavedService: FormBuilderIsSavedService,
     private fileService: FilesService,
     private saveFormService: SaveFormService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private sidebarService: SideBarService
   ) {
     this.vDataCollection = vDataCollection;
+    this.sidebarService.events$.subscribe((event: any) => {
+      if (event.action === 'update') {
+        this.newSideBar = JSON.parse(JSON.stringify(event.data));
+      }
+    });
   }
   ngOnInit() {
     window.scrollTo(0, 0);

@@ -41,13 +41,13 @@
           <span class="node-name">{{node.name}}</span>
         </div>
 
-        <sw-icon-button [icon]="getIcon(treeControl.isExpanded(node))" cdkTreeNodeToggle
-          [cdkTreeNodeToggleRecursive]="true" [attr.aria-label]="'toggle ' + node.name">
+        <sw-icon-button [icon]="getIcon(treeControl.isExpanded(node))" (click)="toggleExpand(node)"
+          [attr.aria-label]="'toggle ' + node.name">
         </sw-icon-button>
       </div>
 
 
-      <div *ngIf="treeControl.isExpanded(node)">
+      <div *ngIf="node.isExpanded">
         <ng-container cdkTreeNodeOutlet></ng-container>
       </div>
 
