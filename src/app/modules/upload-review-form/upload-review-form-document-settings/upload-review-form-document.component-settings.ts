@@ -18,6 +18,7 @@ export class UploadReviewFormDocumentSettingsComponent implements OnChanges {
   @Input() documentTypes = [];
   @Input() documentFamilies = [];
   @Input() document: Document;
+  @Input() isSave: boolean;
 
   @Output() updateDocumentSettings = new EventEmitter<any>();
 
@@ -58,26 +59,34 @@ export class UploadReviewFormDocumentSettingsComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     if (changes.document && JSON.stringify(changes.document.currentValue) !== JSON.stringify(changes.document.previousValue)) {
       const document = changes.document.currentValue;
-      let type = [null];
-      let account = [null];
-      let student = [];
+      this.setDocument(document);
+    }
 
-      if (document) {
-        if (document.entity_id) {
-          type = this.documentTypes.filter(value => value.value === document.entity_id);
-        }
+    if (changes.isSave && changes.isSave.previousValue === true) {
+      this.setDocument(this.document);
+    }
+  }
 
-        if (document.family_id) {
-          account = this.documentFamilies.filter(value => value.value === document.family_id);
-        }
+  setDocument(document: Document): void {
+    let type = [null];
+    let account = [null];
+    let student = [];
 
-        if (document.person_id) {
-          student = account[0]['students'].filter(value => value.value === parseInt(document.person_id, 10));
-        }
+    if (document) {
+      if (document.entity_id) {
+        type = this.documentTypes.filter(value => value.value === document.entity_id);
       }
 
-      this.form.patchValue({ type, account, student });
+      if (document.family_id) {
+        account = this.documentFamilies.filter(value => value.value === document.family_id);
+      }
+
+      if (document.person_id) {
+        student = account[0]['students'].filter(value => value.value === parseInt(document.person_id, 10));
+      }
     }
+
+    this.form.patchValue({ type, account, student });
   }
 
   changeFormState(): void {

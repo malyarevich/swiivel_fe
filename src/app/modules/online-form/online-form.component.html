@@ -1,10 +1,4 @@
 <ng-container *ngIf="isReady$ | async">
-  <div class="online_form_container__controls">
-    <sw-button [routerLink]="['/upload-review-form', formId]"
-      >Upload & Review</sw-button
-    >
-  </div>
-
   <sw-online-form-nav
     [isMenuShow]="isMenuShow"
     [formName]="form?.name"

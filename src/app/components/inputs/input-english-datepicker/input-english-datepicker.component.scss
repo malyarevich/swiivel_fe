@@ -9,3 +9,9 @@
     justify-content: space-between;
   }
 }
+
+:host(.online_form.read_only) {
+  .dropdown_input_container {
+    background-color: #eee;
+  }
+}
