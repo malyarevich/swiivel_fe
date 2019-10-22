@@ -22,7 +22,7 @@ import { ErrorsListTooltipComponent } from '@app/modules/online-form/errors-list
   declarations: [
     AppComponent,
     PopupComponent,
-    ErrorsListTooltipComponent,
+    ErrorsListTooltipComponent
   ],
   imports: [
     BrowserModule,

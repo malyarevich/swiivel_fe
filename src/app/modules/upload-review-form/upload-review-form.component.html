@@ -31,6 +31,7 @@
               <sw-dropdown-input
                 formControlName="filter"
                 [multiple]="true"
+                [style]="'filter'"
                 [dropdownSubHeader]="true"
                 [options]="filterValue"
                 [disabled]="isEmptyObject(filterValue) || isBulkDownload || isSaveActive"
@@ -121,17 +122,17 @@
         </sw-icon-button>
       </div>
     </div>
-    <app-upload-review-form-document
-      [isSideBarShown]="isSideBarShown"
-      [document]="getSelectForm()"
-      (rotateImg)="rotateImg($event)"
-      [rotatingPicture]="rotatingPicture"
-    ></app-upload-review-form-document>
-    <div *ngIf="getSelectForm() && (getSelectForm().submission_type === 'onlineForm' || getSelectForm().submission_type === 'externalForm')">
-      <pre>
-        {{ getSelectForm() | json}}
-      </pre>
-      <!--<sw-online-form [formId]="form.id"></sw-online-form>-->
+    <div *ngIf="getSelectForm() && (getSelectForm().submission_type === 'document' || getSelectForm().submission_type === 'externalForm')">
+      <app-upload-review-form-document
+        [isSideBarShown]="isSideBarShown"
+        [document]="getSelectForm()"
+        (rotateImg)="rotateImg($event)"
+        [rotatingPicture]="rotatingPicture"
+      ></app-upload-review-form-document>
+    </div>
+    <div *ngIf="getSelectForm() && (getSelectForm().submission_type === 'onlineForm' || getSelectForm().submission_type === 'pdfForm')">
+      <sw-online-form [formId]="getSelectForm().form_id" [isViewMode]="true" [isMenuShow]="false"></sw-online-form>
+      <!-- <sw-online-form [formId]="'5d9f0eff8ffb080c090ee232'" [isViewMode]="true" [isMenuShow]="false"></sw-online-form> -->
     </div>
     <div *ngIf="documentTypes.length && documentFamilies.length">
       <app-upload-review-form-document-settings
