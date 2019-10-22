@@ -52,6 +52,12 @@
               </sw-dropdown-input>
             </div>
           </div>
+          <div *ngIf="isBulkDownload" class="select-all-button">
+            <sw-small-button
+              [text]="isAllDocumentsSelected ? 'Unselect all' : 'Select all'"
+              (click)="selectAllDocuments()"
+            ></sw-small-button>
+          </div>
         </form>
         <div
           class="sidebar-list"
@@ -71,12 +77,6 @@
               </div>
             </div>
             <div *ngIf="isBulkDownload">
-              <div class="select-all-button">
-                <sw-small-button
-                  [text]="isAllDocumentsSelected ? 'Unselect all' : 'Select all'"
-                  (click)="selectAllDocuments()"
-                ></sw-small-button>
-              </div>
               <div *ngFor="let document of uploadDocuments">
                 <app-upload-review-form-item
                   [document]="document"
@@ -127,6 +127,12 @@
       (rotateImg)="rotateImg($event)"
       [rotatingPicture]="rotatingPicture"
     ></app-upload-review-form-document>
+    <div *ngIf="getSelectForm() && (getSelectForm().submission_type === 'onlineForm' || getSelectForm().submission_type === 'externalForm')">
+      <pre>
+        {{ getSelectForm() | json}}
+      </pre>
+      <!--<sw-online-form [formId]="form.id"></sw-online-form>-->
+    </div>
     <div *ngIf="documentTypes.length && documentFamilies.length">
       <app-upload-review-form-document-settings
         [documentTypes]="documentTypes"
