@@ -114,11 +114,16 @@ export class UploadReviewFormComponent implements OnInit {
     this.form.get('search').valueChanges.subscribe(
       (data) =>  {
         const search = (data.replace(/^\s+/g, ''));
-        this.dataSource.uploadDocuments(this.activeIdForm,
-          this.form.get('filter').value,
-          this.form.get('sort').value,
-          search)
-          .subscribe(() => { this.getDocuments() });
+        // if (search.length) {
+          this.dataSource.uploadDocuments(this.activeIdForm,
+            this.form.get('filter').value,
+            this.form.get('sort').value,
+            search)
+            .subscribe(() => { this.getDocuments() });
+        // } else {
+          // если тут будем менять то, срабатывает подписка
+          // console.log('change input');
+        // }
       }
   );
 
@@ -332,6 +337,7 @@ export class UploadReviewFormComponent implements OnInit {
       this.form.get('sort').value,
       this.form.get('search').value,)
       .subscribe(() => {
+        this.activeIdDocument = null;
         this.getDocuments();
         });
   }
