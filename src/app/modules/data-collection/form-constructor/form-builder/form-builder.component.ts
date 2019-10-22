@@ -5,7 +5,9 @@ import {
   ViewChild,
   ElementRef,
   OnDestroy,
-  Host
+  Host,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef
 } from "@angular/core";
 import { FormService } from "../../services/form.service";
 import { ActivatedRoute, Params, Router } from "@angular/router";
@@ -58,11 +60,13 @@ import {
 import { Field } from 'src/app/models/data-collection/field.model';
 import { DocumentSideBar, DocumentsModel, documentItemDefault } from 'src/app/models/data-collection/form-constructor/form-builder/documents.model';
 import { FormsPDFModel, formPDFItemDefault } from 'src/app/models/data-collection/form-constructor/form-builder/formsPDF.model';
+import { SideBarService } from './form-fields/side-bar/side-bar.service';
 
 @Component({
   selector: "app-form-table",
   templateUrl: "./form-builder.html",
-  styleUrls: ["./form-builder.scss"]
+  styleUrls: ["./form-builder.scss"],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FormBuilderComponent implements OnInit, OnDestroy {
   @Input() saveEvents: Observable<void>;
@@ -90,11 +94,6 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
   customFields: Field[];
   existingFields: Field[];
   sideBarFields: Field[];
-  packetIntro: any = {
-    content: '',
-    sectionName: 'Packet Introduction',
-    sectionWidth: 'full'
-  };
   consentInfo: ConsentInfo = consentInfoDefault;
   termsConditions: TermsConditions = termsConditionsDefault;
   paymentSettings: PaymentSettings = paymentSettingsDefault;
@@ -258,9 +257,16 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
     private constructorIsSavingService: ConstructorIsSavingService,
     private formBuilderIsSavedService: FormBuilderIsSavedService,
     private fileService: FilesService,
-    private saveFormService: SaveFormService
+    private saveFormService: SaveFormService,
+    private cdr: ChangeDetectorRef,
+    private sidebarService: SideBarService
   ) {
     this.vDataCollection = vDataCollection;
+    this.sidebarService.events$.subscribe((event: any) => {
+      if (event.action === 'update') {
+        this.newSideBar = JSON.parse(JSON.stringify(event.data));
+      }
+    });
   }
   ngOnInit() {
     window.scrollTo(0, 0);
@@ -289,7 +295,7 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
   loadDocsForms() {
     if (this.documents && this.documents.length > 0) {
       this.documents.forEach((item, index) => {
-        if (item.isPerFamily === true){
+        if (item.isPerFamily === true) {
           this.isPerFamilyD[index] = 'Needed Per Family';
         } else {
           this.isPerFamilyD[index] = 'Needed Per Student';
@@ -298,7 +304,7 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
     }
     if (this.formsPDF && this.formsPDF.length > 0) {
       this.formsPDF.forEach((item, index) => {
-        if (item.isPerFamily === true){
+        if (item.isPerFamily === true) {
           this.isPerFamilyF[index] = 'Needed Per Family';
         } else {
           this.isPerFamilyF[index] = 'Needed Per Student';
@@ -308,7 +314,7 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
   }
 
   changeDocRadio(e, form) {
-    if (e === 'Needed Per Family'){
+    if (e === 'Needed Per Family') {
       form.isPerFamily = true;
     } else {
       form.isPerFamily = false;
@@ -382,7 +388,6 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
       this.form = form;
       this.formName = form.name;
       this.fields = this.form.fields = form.fields || [];
-      this.packetIntro = form.packetIntroduction || { content: '' }
       this.consentInfo = form.consentInfo || consentInfoDefault;
       this.termsConditions = form.termsConditions || termsConditionsDefault;
       this.paymentSettings = form.paymentSettings || paymentSettingsDefault;
@@ -393,15 +398,53 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
       this.attachments = form.attachments || {};
       this.activeSections = form.activeSections || activeSectionsDefault;
       this.newSideBar = this.initSideBar(form);
+      this.cdr.markForCheck();
     }
   }
 
   initSideBar(form) {
-    if (form.hasOwnProperty('sidebar')) {
-      return form.sidebar.length ? form.sidebar : this.newSideBar;
+    const getPathId = (field) => {
+      if (field.path) {
+        return field.path.join('') + field.type;
+      }
     }
-    return this.newSideBar;
+    const flatten = (fields) => {
+      let result = [];
+      for (const field of fields) {
+        if (field.fields) {
+          result.push(...flatten(field.fields))
+        }
+        result.push(field);
+      }
+      return result;
+    }
+    const joinForm = (field, path = []) => {
+      if (field.fields) {
+        path.push(field.name);
+        field.fields = field.fields.map(cfield => joinForm(cfield, path))
+      }
+      let found = flatten(form.fields).find(ffield => {
+        return field.name === ffield.name && field.type === ffield.type;
+      })
+      if (found) {
+        if (field.type < 112) {
+          return found;
+        } else {
+          let fields = JSON.parse(JSON.stringify(field.fields));
+          field = JSON.parse(JSON.stringify(found));
+          field.isActive = true;
+          field.fields = fields;
+          // field._id = found.id
+          return field;
+        }
+      } else {
+        field.isActive = false;
+        return field;
+      }
+    }
+    return this.newSideBar.map(field => joinForm(field)).slice()
   }
+
 
   formInit(): void {
     console.log(this.vDataCollection)
@@ -420,7 +463,7 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
         () => {
           this.generalInfoIsValidService.setIsValid(true);
           if (!isEmpty(this.fields)) {
-            this.initFormFieldsToSideBar(this.newSideBar, this.fields);
+            // this.initFormFieldsToSideBar(this.newSideBar, this.fields);
           }
 
         }
@@ -450,7 +493,6 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
       forms: this.formsPDF,
       name: this.formName,
       sidebar: this.newSideBar,
-      packetIntroduction: this.packetIntro,
       consentInfo: this.consentInfo,
       termsConditions: this.termsConditions,
       paymentSettings: this.paymentSettings,
@@ -467,10 +509,9 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
       this.spinnerText = "Data is saving...";
       this.isDataSaving = true;
       this.constructorIsSavingService.setIsSaving(this.isDataSaving);
-      console.log('form pre save', form);
       this.formService.sendForm(form).subscribe(res => {
         this.formBuilderIsSavedService.setIsSaved(res["updated"]);
-        // this.router.navigate([`/form-constructor/${this.formId}/publish-settings`]);
+        this.router.navigate([`/form-constructor/${this.formId}/publish-settings`]);
 
         this.isDataSaving = !this.saveFormService.getSavingStatus();
         this.constructorIsSavingService.setIsSaving(this.isDataSaving);
@@ -693,7 +734,7 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
     this.saveDraftForm();
     // this.saveFormService.unsubscribe();
 
-    if ( FormBuilderComponent.countSaveFormService > 1 && this.saveFormSubscription) {
+    if (FormBuilderComponent.countSaveFormService > 1 && this.saveFormSubscription) {
       this.saveFormSubscription.unsubscribe();
       FormBuilderComponent.countSaveFormService--;
     }

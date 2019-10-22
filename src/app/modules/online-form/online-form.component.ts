@@ -45,6 +45,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
   @Input() formId: string = '';
   @Input() isMenuShow: boolean = true;
   @Input() isFormReviewMode: boolean = false;
+  @Input() isViewMode: boolean = false;
   form: Form;
   fg: FormGroup;
 
@@ -57,7 +58,6 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
   );
   formErrors$: BehaviorSubject<object> = new BehaviorSubject({});
   sectionGroupFieldsErrors$: BehaviorSubject<object> = new BehaviorSubject({});
-  isViewMode$: BehaviorSubject<boolean> = new BehaviorSubject(true);
 
   // keys
   consentKeys: string[] = [];
@@ -79,7 +79,6 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
   _isReady$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(
-    private route: ActivatedRoute,
     private onlineFormService: OnlineFormService,
     private location: Location
   ) {}
@@ -129,55 +128,39 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
   }
 
   getForm(): void {
-    if (this.route.pathFromRoot.length > 0) {
-      this.route.pathFromRoot[1].url.subscribe(urlPath => {
-        if (urlPath.length > 0) {
-          const url = urlPath[0].path;
-          this.isViewMode$.next(
-            url === 'online-form' || this.isFormReviewMode ? false : true
-          );
-        }
+    this.onlineFormService.setFromId(this.formId);
+    // TODO: check if we need formId here
+    // this.route.params.subscribe(params => {
+    //   this.formId = params.mongo_id;
+    // });
+    if (this.isViewMode) {
+      // template by id
+      this.getOneFormSubscription = this.onlineFormService
+        .getTemplateForm()
+        .subscribe((form: Form) => {
+          this.form = form;
+          console.log(this.form);
 
-        this.onlineFormService.setFromId(
-          this.formId === ''
-            ? this.route.snapshot.paramMap.get('mongo_id')
-            : this.formId
-        );
+          if (this.isHaveSense()) {
+            this.loadingProcess();
+          } else {
+            this.failedLoading();
+          }
+        });
+    } else {
+      // form by link
+      this.getOneFormSubscription = this.onlineFormService
+        .getOneForm()
+        .subscribe((form: Form) => {
+          this.form = form;
+          console.log(this.form);
 
-        // TODO: check if we need formId here
-        // this.route.params.subscribe(params => {
-        //   this.formId = params.mongo_id;
-        // });
-        if (this.isViewMode$.getValue()) {
-          // template by id
-          this.getOneFormSubscription = this.onlineFormService
-            .getTemplateForm()
-            .subscribe((form: Form) => {
-              this.form = form;
-              console.log(this.form);
-
-              if (this.isHaveSense()) {
-                this.loadingProcess();
-              } else {
-                this.failedLoading();
-              }
-            });
-        } else {
-          // form by link
-          this.getOneFormSubscription = this.onlineFormService
-            .getOneForm()
-            .subscribe((form: Form) => {
-              this.form = form;
-              console.log(this.form);
-
-              if (this.isHaveSense()) {
-                this.loadingProcess();
-              } else {
-                this.failedLoading();
-              }
-            });
-        }
-      });
+          if (this.isHaveSense()) {
+            this.loadingProcess();
+          } else {
+            this.failedLoading();
+          }
+        });
     }
   }
 
@@ -1010,7 +993,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
       savingObj.currentPosition = this.currentPosition$.getValue();
       savingObj.fieldsData = this.fg.value;
 
-      if (this.isViewMode$.getValue()) {
+      if (this.isViewMode) {
         this.onlineFormService
           .sendFormTemplate(savingObj)
           .pipe(takeUntil(this.destroyedSaveForm$))

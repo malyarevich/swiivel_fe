@@ -1,19 +1,30 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, Input, OnInit, ChangeDetectionStrategy } from "@angular/core";
 import { SideBarService } from "../../side-bar/side-bar.service";
 import { Form } from "src/app/models/data-collection/form.model";
 import { Section } from "src/app/models/data-collection/section.model";
 import { Field } from "src/app/models/data-collection/field.model";
-import { moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { moveItemInArray, transferArrayItem, copyArrayItem } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: "app-group-container",
   templateUrl: "./group-container.component.html",
-  styleUrls: ["./group-container.component.scss"]
+  styleUrls: ["./group-container.component.scss"],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GroupContainerComponent implements OnInit {
+  group;
   @Input() form: Form;
   @Input() customFields: Field[];
-  @Input() inputGroup: any;
+  @Input() set hideNested(hide: boolean) {
+    this.showNested = !hide;
+    this.cd.markForCheck()
+  }
+  @Input() set inputGroup(group: any) {
+    this.group = JSON.parse(JSON.stringify(group));
+    this.sideBarService.addPathId(group.pathId);
+    this.cd.markForCheck()
+    // this.cd.detectChanges()
+  }
   @Input() sideBar: Field;
   @Input() nestedLevel: number;
 
@@ -38,8 +49,8 @@ export class GroupContainerComponent implements OnInit {
   constructor(
     private sideBarService: SideBarService,
     private cd: ChangeDetectorRef
-  ) {}
-  showNested: boolean = true;
+  ) { }
+  showNested: boolean = false;
   ngOnInit() {
     this.list = Section.sectionWidth;
     if (this.inputGroup) {
@@ -50,6 +61,13 @@ export class GroupContainerComponent implements OnInit {
   getIcon(): string {
     return this.showNested ? 'fa-caret-up' : 'fa-caret-down';
   }
+  getConnectedIds() {
+    return this.sideBarService.pathIds.slice(0, -1).filter(pathId => pathId.endsWith('113') || pathId === 'sidebar-list').concat(this.group.pathId);
+  }
+
+  removeGroup(group) {
+    this.sideBarService.events$.next({ action: 'remove', target: group });
+  }
 
   widthChanged(value) {
     if (value && value.length > 0) {
@@ -59,52 +77,30 @@ export class GroupContainerComponent implements OnInit {
     }
   }
 
+  // drop(event) {
+  //   if (event.container === event.previousContainer) {
+  //     moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+  //   } else {
+  //     transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
+  //   }
+  // }
   drop(event) {
     if (event.container === event.previousContainer) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      console.log(event.container.data, event.previousIndex, event.currentIndex)
+      // moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
-      transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
-    }
-  }
-  dragDrop(event) {
-    console.log('ex', event)
-  }
-  dropAdd(event) {
-    if (!event.value._id) {
-      this.inputGroup.fields = this.sideBarService.replaceExistinField(
-        this.inputGroup.fields[event.dropIndex],
-        this.inputGroup.fields
-      );
-      if (
-        this.sideBarService.findIfPresent(
-          this.inputGroup.fields[event.dropIndex],
-          this.inputGroup.fields
-        ).length > 1
-      ) {
-        this.sideBarService.onFieldDelete(
-          this.inputGroup.fields[event.dropIndex],
-          this.inputGroup.fields
-        );
-        return;
+      if (event.container.id === 'sidebar-list') {
+        this.sideBarService.events$.next({ action: 'remove', target: event.item.data });
       }
-      this.sideBarService.fieldCheck(
-        this.inputGroup.fields[event.dropIndex],
-        this.sideBar[0]
-      );
+      // console.log(event.previousContainer, event.container, event.previousIndex, event.currentIndex)
+      // copyArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex)
     }
   }
-
-  removeGroup(group: Field) {
-    this.sideBarService.events$.next({action: 'remove', target: group});
-    this.sideBarService.onFieldDelete(group, this.form.fields);
-    group.fields.forEach(field => {
-      this.sideBarService.onSectionUnckeck(field, this.sideBar[0].fields);
-    });
-    this.sideBarService.onSectionUnckeck(group, this.sideBar[0].fields);
+  start(event) {
+    console.log(event);
   }
 
   ngAfterViewInit(): void {
-    this.idSectionForDragDrop.push(this.inputGroup._id);
 
     this.cd.detectChanges();
   }

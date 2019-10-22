@@ -4,15 +4,117 @@ import { v4 as uuid } from "uuid";
 import { cloneDeep, isEmpty } from "lodash";
 import { Form } from "src/app/models/data-collection/form.model";
 import { Field } from "src/app/models/data-collection/field.model";
-
+export const isSaved = (field: any) => {
+  if (!field._id) return false;
+  if (field.fields && field.fields.length > 0) {
+    return !!field._id && field.fields.some(isSaved);
+  } else {
+    return !!field._id;
+  }
+}
+export const getSaved = (fields: any[]) => {
+  return fields.map((field) => {
+    if (!isSaved(field)) return null;
+    if (Array.isArray(field.fields)) {
+      field.fields = getSaved(field.fields);
+    }
+    return field;
+  }).filter(field => field !== null);
+  // return fields;
+}
 @Injectable({
   providedIn: "root"
 })
 export class SideBarService {
   sectionSubject = new BehaviorSubject({});
   events$ = new Subject();
+  _fields = new BehaviorSubject([]);
+  _form = new BehaviorSubject(null);
+  _pathIds = [];
+  constructor() {
+  }
 
-  constructor() {}
+  get form() {
+    return this._form.getValue();
+  }
+
+  get form$() {
+    return this._form.asObservable();
+  }
+  set form(_form) {
+    console.log(`form updated`, _form);
+    this._form.next(_form);
+  }
+
+  get fields() {
+    return this._fields.getValue();
+  }
+
+  findById(fields, ffield) {
+    fields.forEach(field => {
+      if (field._id) {
+        if (field._id === ffield._id) {
+          field = ffield;
+          return;
+        }
+      }
+      if (field.fields) {
+        let found = this.findById(field.fields, ffield);
+        if (found.length === 1) {
+          found[0] = ffield;
+          return;
+        }
+      }
+    })
+    return fields;
+  }
+
+  set fields(fieldsArr) {
+    const fields = JSON.parse(JSON.stringify(fieldsArr));
+    const form = this._form.getValue();
+    let formFields = getSaved(form.fields.slice());
+    fields.forEach((ffield) => {
+      if (ffield._id) {
+        this.findById(formFields, JSON.parse(JSON.stringify(ffield)));
+      } else {
+        let section = formFields.find(field => field.type === 114);
+        if (!section) {
+          section = {
+            type: 114,
+            name: 'New section',
+            isActive: true,
+            fields: [],
+            path: ['New section'],
+            pathId: 'New section114'
+          }
+
+          formFields = [section]
+        }
+        section.fields = section.fields.filter(field => {
+          return !(field.name === ffield.name && field.type === ffield.type);
+        });
+        section.fields.push(ffield);
+      }
+
+    })
+    form.fields = formFields;
+    this.form = form;
+  }
+
+  get pathIds() {
+    return this._pathIds.concat(['sidebar-list', 'root-list']);
+  }
+
+  addPathId(pathId: string) {
+    if (pathId) {
+      this._pathIds.push(pathId);
+    }
+    return this.pathIds;
+  }
+
+  get fields$() {
+    return this._fields.asObservable()
+  }
 
   //FiXME:This is a very bad code that was written very quickly. I hope the followers will fix it
   onChangeGroupBeing(

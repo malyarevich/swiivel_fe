@@ -132,4 +132,4 @@ import { PacketIntroComponent } from './packet-intro/packet-intro.component';
   ],
   providers: [FieldsService, FinanceService]
 })
-export class FormBuilderModule {}
+export class FormBuilderModule { }

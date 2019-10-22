@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { OnlineFormComponent } from './online-form.component';
+import { OnlineFormWrapperComponent } from './online-form-wrapper.component';
 //import { AuthGuard } from '@app/core/auth.guard';
 
 const routes: Routes = [
@@ -9,8 +9,8 @@ const routes: Routes = [
 /*    canActivate: [AuthGuard],
     canActivateChild: [AuthGuard],*/
     children: [
-      { path: ':mongo_id',  component: OnlineFormComponent },
-      { path: '',  component: OnlineFormComponent },
+      { path: ':mongo_id',  component: OnlineFormWrapperComponent },
+      { path: '',  component: OnlineFormWrapperComponent },
     ]
   },
 ];

@@ -105,8 +105,7 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        loadChildren: () => import('../online-form/online-form.module').then(m => m.OnlineFormModule),
-
+        loadChildren: () => import('../online-form-wrapper/online-form-wrapper.module').then(m => m.OnlineFormWrapperModule),
       }
     ],
   },

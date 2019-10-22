@@ -1,4 +1,4 @@
-<div class="field" [class.active]="showSettings">
+<div class="field" *ngIf="inputField" [class.active]="showSettings">
   <div class="main-container">
     <div class="drag-icon">
       <i class="dragdrop fas fa-ellipsis-v" cdkDragHandle></i>
@@ -47,7 +47,7 @@
 </div>
 
 
-<div *ngIf="showSettings">
+<div *ngIf="inputField && showSettings">
   <app-form-field-settings [inputField]="inputField" [fieldTypeName]="returnFieldTYpeName(inputField)" [form]="form">
   </app-form-field-settings>
 </div>

@@ -3,7 +3,8 @@ import {
   ChangeDetectorRef,
   Component,
   Input,
-  OnInit
+  OnInit,
+  ChangeDetectionStrategy
 } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { range } from "lodash";
@@ -24,9 +25,11 @@ import { CdkDrag } from '@angular/cdk/drag-drop';
 @Component({
   selector: "app-fields-workspace",
   templateUrl: "./fields-workspace.component.html",
-  styleUrls: ["./fields-workspace.component.scss"]
+  styleUrls: ["./fields-workspace.component.scss"],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FieldsWorkspaceComponent implements OnInit, AfterViewInit {
+  fields = [];
   sectionAddGroup: FormGroup = new FormGroup({
     sectionName: new FormControl("", {
       validators: Validators.compose([
@@ -60,8 +63,12 @@ export class FieldsWorkspaceComponent implements OnInit, AfterViewInit {
     }),
     sectionRelate: new FormControl(null, Validators.required)
   });
+  _form;
+  @Input() set form(_form: Form) {
+    this._form = _form;
+    this.cd.markForCheck()
+  }
 
-  @Input() form: Form;
   @Input() sideBar: Field;
   @Input() customFields: Field[];
   size = range(1, 13);
@@ -77,10 +84,19 @@ export class FieldsWorkspaceComponent implements OnInit, AfterViewInit {
     private fb: FormBuilder,
     private cd: ChangeDetectorRef,
     private sideBarService: SideBarService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.list = Section.sectionWidth;
+    this.sideBarService.form$.subscribe((form) => {
+      if (!this._form) {
+        this._form = form;
+      }
+      if (this._form) {
+        this._form.fields = form.fields;
+      }
+      this.cd.markForCheck()
+    })
   }
 
   ngAfterViewInit(): void {
@@ -88,7 +104,9 @@ export class FieldsWorkspaceComponent implements OnInit, AfterViewInit {
   }
 
   drop(event) {
-    console.log('root', event)
+    if (event.container.id === 'sidebar-list') {
+      this.sideBarService.events$.next({ action: 'remove', target: event.item.data });
+    }
   }
   dropDrag(event) {
     console.log('ex', event);
@@ -98,11 +116,19 @@ export class FieldsWorkspaceComponent implements OnInit, AfterViewInit {
     return item.data.type >= 112;
   }
 
+  getConnectedPathIds() {
+    return this.sideBarService.pathIds.filter(pathId => pathId.endsWith('114') || pathId.endsWith('113') || pathId.endsWith('list'))
+  }
+
+  start(event) {
+    console.log(event)
+  }
+
   openModal(content) {
     this.modalService
       .open(content, { size: "lg", ariaLabelledBy: "modal-basic-title" })
       .result.then(
-        result => {},
+        result => { },
         reason => {
           console.log(reason);
         }

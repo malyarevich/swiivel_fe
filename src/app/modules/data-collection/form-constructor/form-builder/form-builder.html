@@ -100,91 +100,91 @@
       <div class="sidebar_section__content" *ngIf="activeSections.documentsForms.showSideInfo"
         data-e2e="sidebar_section__content">
         <section class="documents_section">
-            <div class="documents_section__header">
-              <div class="documents_section__header_text">
-                Documents
-              </div>
-              <div class="documents_section__header_controls">
-                <i class="fas fa-plus-square" (click)="addDocumentItem()"></i>
-                <i class="fas fa-caret-down" *ngIf="isDocumentsForms.isDocuments; else up" (click)="
+          <div class="documents_section__header">
+            <div class="documents_section__header_text">
+              Documents
+            </div>
+            <div class="documents_section__header_controls">
+              <i class="fas fa-plus-square" (click)="addDocumentItem()"></i>
+              <i class="fas fa-caret-down" *ngIf="isDocumentsForms.isDocuments; else up" (click)="
               isDocumentsForms.isDocuments = !isDocumentsForms.isDocuments
             "></i>
-                <ng-template #up>
-                  <i class="fas fa-caret-up" (click)="
+              <ng-template #up>
+                <i class="fas fa-caret-up" (click)="
                 isDocumentsForms.isDocuments = !isDocumentsForms.isDocuments
               "></i>
-                </ng-template>
+              </ng-template>
+            </div>
+          </div>
+          <ng-container *ngIf="isDocumentsForms.isDocuments">
+            <div class="documents_section__item" *ngFor="let document of documents; let i = index">
+              <div class="documents_section__item_header">
+                <div class="documents_section__item_header_name">
+                  <sw-input-text class="no_styles" [(ngModel)]="document.name"></sw-input-text>
+                </div>
+                <div class="documents_section__item_header_controls">
+                  <i class="fas fa-trash" (click)="removeDocument(document.id)"></i>
+                </div>
+              </div>
+              <div class="documents_section__item_content">
+                <div class="documents_section__item_content_input">
+                  <sw-input-button-group [options]="documentBut" [(ngModel)]="document.isUpload">
+                  </sw-input-button-group>
+                </div>
+                <div class="documents_section__item_content_input">
+                  <sw-radio-group [options]="radioGroup" [(ngModel)]="isPerFamilyD[i]"
+                    (ngModelChange)="changeDocRadio($event, document)"></sw-radio-group>
+                </div>
               </div>
             </div>
-            <ng-container *ngIf="isDocumentsForms.isDocuments">
-              <div class="documents_section__item" *ngFor="let document of documents; let i = index">
-                <div class="documents_section__item_header">
-                  <div class="documents_section__item_header_name">
-                    <sw-input-text class="no_styles" [(ngModel)]="document.name"></sw-input-text>
-                  </div>
-                  <div class="documents_section__item_header_controls">
-                    <i class="fas fa-trash" (click)="removeDocument(document.id)"></i>
-                  </div>
+          </ng-container>
+        </section>
+        <section class="forms_section">
+          <div class="forms_section__header">
+            <div class="forms_section__header_text">
+              Forms
+            </div>
+            <div class="forms_section__header_controls">
+              <i class="fas fa-plus-square" (click)="addFormPDF()"></i>
+              <i class="fas fa-caret-down" *ngIf="isDocumentsForms.isForms; else upF"
+                (click)="isDocumentsForms.isForms = !isDocumentsForms.isForms"></i>
+              <ng-template #upF>
+                <i class="fas fa-caret-up" (click)="isDocumentsForms.isForms = !isDocumentsForms.isForms"></i>
+              </ng-template>
+            </div>
+          </div>
+          <ng-container *ngIf="isDocumentsForms.isForms">
+            <div class="forms_section__item" *ngFor="let forms of formsPDF; let i = index">
+              <div class="forms_section__item_header">
+                <div class="forms_section__item_header_name">
+                  <sw-input-text class="no_styles" [(ngModel)]="forms.name"></sw-input-text>
                 </div>
-                <div class="documents_section__item_content">
-                  <div class="documents_section__item_content_input">
-                    <sw-input-button-group [options]="documentBut" [(ngModel)]="document.isUpload">
-                    </sw-input-button-group>
-                  </div>
-                  <div class="documents_section__item_content_input">
-                    <sw-radio-group [options]="radioGroup" [(ngModel)]="isPerFamilyD[i]"
-                      (ngModelChange)="changeDocRadio($event, document)"></sw-radio-group>
-                  </div>
+                <div class="forms_section__item_header_controls">
+                  <i class="fas fa-trash" (click)="removeFormsPDF(forms.id)"></i>
                 </div>
               </div>
-            </ng-container>
-          </section>
-          <section class="forms_section">
-            <div class="forms_section__header">
-              <div class="forms_section__header_text">
-                Forms
-              </div>
-              <div class="forms_section__header_controls">
-                <i class="fas fa-plus-square" (click)="addFormPDF()"></i>
-                <i class="fas fa-caret-down" *ngIf="isDocumentsForms.isForms; else upF"
-                  (click)="isDocumentsForms.isForms = !isDocumentsForms.isForms"></i>
-                <ng-template #upF>
-                  <i class="fas fa-caret-up" (click)="isDocumentsForms.isForms = !isDocumentsForms.isForms"></i>
-                </ng-template>
+              <div class="forms_section__item_content">
+                <div class="forms_section__item_content_input">
+                  <sw-input-button-group [options]="formBut" [(ngModel)]="forms.isNew"></sw-input-button-group>
+                </div>
+                <div class="forms_section__item_content_input">
+                  <sw-radio-group [options]="radioGroup" [(ngModel)]="isPerFamilyF[i]"
+                    (ngModelChange)="changeDocRadio($event, forms)"></sw-radio-group>
+                </div>
+                <div class="forms_section__item_content_input">
+                  <sw-input-toggle [(ngModel)]="forms.isFillableOnline">
+                    <span class="input_label">Fillable Online</span>
+                  </sw-input-toggle>
+                </div>
+                <div class="forms_section__item_content_input">
+                  <sw-input-toggle [(ngModel)]="forms.isAllowDownloadUpload">
+                    <span class="input_label">Allow Download/Upload</span>
+                  </sw-input-toggle>
+                </div>
               </div>
             </div>
-            <ng-container *ngIf="isDocumentsForms.isForms">
-              <div class="forms_section__item" *ngFor="let forms of formsPDF; let i = index">
-                <div class="forms_section__item_header">
-                  <div class="forms_section__item_header_name">
-                    <sw-input-text class="no_styles" [(ngModel)]="forms.name"></sw-input-text>
-                  </div>
-                  <div class="forms_section__item_header_controls">
-                    <i class="fas fa-trash" (click)="removeFormsPDF(forms.id)"></i>
-                  </div>
-                </div>
-                <div class="forms_section__item_content">
-                  <div class="forms_section__item_content_input">
-                    <sw-input-button-group [options]="formBut" [(ngModel)]="forms.isNew"></sw-input-button-group>
-                  </div>
-                  <div class="forms_section__item_content_input">
-                    <sw-radio-group [options]="radioGroup" [(ngModel)]="isPerFamilyF[i]"
-                      (ngModelChange)="changeDocRadio($event, forms)"></sw-radio-group>
-                  </div>
-                  <div class="forms_section__item_content_input">
-                    <sw-input-toggle [(ngModel)]="forms.isFillableOnline">
-                      <span class="input_label">Fillable Online</span>
-                    </sw-input-toggle>
-                  </div>
-                  <div class="forms_section__item_content_input">
-                    <sw-input-toggle [(ngModel)]="forms.isAllowDownloadUpload">
-                      <span class="input_label">Allow Download/Upload</span>
-                    </sw-input-toggle>
-                  </div>
-                </div>
-              </div>
-            </ng-container>
-          </section>
+          </ng-container>
+        </section>
       </div>
     </div>
 
@@ -340,7 +340,7 @@
                 </ng-template>
               </div>
             </div>
-            <div class="consent_section__item_content" *ngIf="item.isOpen">
+            <div class="consent_section__item_content" *ngIf="item['isOpen']">
               <div class="consent_section__item_content_input">
                 <sw-input-toggle [(ngModel)]="item.checkbox.isActive">
                   <span class="input_label">Checkbox</span>
@@ -633,7 +633,7 @@
   <!--  END  FORM PAYMENT-->
 
   <div class="col-9">
-    <div>
+    <div style="height: calc(100% - 25px);">
       <!--      cdkDropList-->
       <!--      id="workPlaceList"-->
       <!--      [cdkDropListData]="fields"-->
@@ -655,8 +655,10 @@
       <!--        </li>-->
 
       <!--      </ul>-->
-      <app-packet-intro *ngIf="activeSections.packetIntroduction.isActive" [packetIntro]="packetIntro"></app-packet-intro>
-      <app-fields-workspace *ngIf="activeSections.formFields.isActive" [form]="form"></app-fields-workspace>
+      <app-packet-intro *ngIf="activeSections.packetIntroduction.isActive" [packetIntro]="packetIntro">
+      </app-packet-intro>
+      <app-fields-workspace *ngIf="activeSections.formFields.isActive" [form]="form" [sideBar]="newSideBar"
+        [customFields]="customFields"></app-fields-workspace>
       <!--  documents-forms-->
       <app-documents-forms *ngIf="activeSections.documentsForms.isActive" [sideBar]="newSideBar" [form]="form"
         [isDocumentsForms]="isDocumentsForms" [documentsForms]="documentsForms" [documents]="documents"
