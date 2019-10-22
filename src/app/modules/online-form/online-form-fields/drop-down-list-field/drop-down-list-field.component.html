@@ -6,7 +6,7 @@
   >
     <sw-dropdown-input
       [formControlName]="field._id"
-      [multiple]="field.options && field.options.multiple ? true : false"
+      [multiple]="isMultiple(field)"
       [options]="
         field.options && field.options.fieldOptions
           ? field.options.fieldOptions
