@@ -22,6 +22,14 @@ const routes: Routes = [
   },
 
   {
+    path: 'view-form',
+    loadChildren: () =>
+      import('./modules/online-form/online-form.module').then(
+        m => m.OnlineFormModule
+      )
+  },
+
+  {
     path: '**',
     redirectTo: '',
   }
