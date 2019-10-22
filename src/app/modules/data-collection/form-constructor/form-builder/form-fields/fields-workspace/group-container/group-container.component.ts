@@ -104,7 +104,9 @@ export class GroupContainerComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
-    this.idSectionForDragDrop.push(this.inputGroup._id);
+    if (this.idSectionForDragDrop) {
+      this.idSectionForDragDrop.push(this.inputGroup._id);
+    }
 
     this.cd.detectChanges();
   }

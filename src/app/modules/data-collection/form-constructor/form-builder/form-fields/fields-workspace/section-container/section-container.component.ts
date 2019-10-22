@@ -73,7 +73,9 @@ export class SectionContainerComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
-    this.idSectionForDragDrop.push(this.section._id);
+    if (this.idSectionForDragDrop) {
+      this.idSectionForDragDrop.push(this.section._id);
+    }
 
     this.cd.detectChanges();
   }
