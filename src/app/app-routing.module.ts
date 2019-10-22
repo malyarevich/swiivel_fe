@@ -16,8 +16,8 @@ const routes: Routes = [
   {
     path: 'online-form',
     loadChildren: () =>
-      import('./modules/online-form/online-form.module').then(
-        m => m.OnlineFormModule
+      import('./modules/online-form-wrapper/online-form-wrapper.module').then(
+        m => m.OnlineFormWrapperModule
       )
   },
 

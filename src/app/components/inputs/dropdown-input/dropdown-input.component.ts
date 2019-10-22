@@ -43,7 +43,7 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
   @Input() style = '';
   @Input() panelClass = 'dropdown-overlay';
   @Input() set isReset(opt: any) {
-    console.log(opt)
+    // console.log(opt)
   };
   @Input()
   set multiple(opt: boolean) {
