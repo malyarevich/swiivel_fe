@@ -2,7 +2,7 @@ import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { withKnobs } from '@storybook/addon-knobs';
 import { CommonModule } from '@angular/common';
 import { StorybookImports, StorybookProviders } from '@components/utils/storybook';
-import { FormManagementSubmissionsComponent } from './form-management-analytics.component';
+import { FormManagementAnalyticsComponent } from './form-management-analytics.component';
 import { 
   mockAnalyticsDashboardResponse,
   mockLogListResponse,
@@ -14,13 +14,13 @@ stories.addDecorator(withKnobs);
 stories.addDecorator(
   moduleMetadata({ 
     declarations: [
-        FormManagementSubmissionsComponent
+      FormManagementAnalyticsComponent
     ],
     imports: [
         CommonModule, ...StorybookImports, 
     ],
     providers: [...StorybookProviders],
-    entryComponents: [FormManagementSubmissionsComponent],
+    entryComponents: [FormManagementAnalyticsComponent],
   })
 );
 

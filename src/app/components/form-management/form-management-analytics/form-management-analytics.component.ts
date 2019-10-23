@@ -8,7 +8,7 @@ import {
   templateUrl: './form-management-analytics.component.html',
   styleUrls: ['./form-management-analytics.component.scss'],
 })
-export class FormManagementSubmissionsComponent implements OnInit {
+export class FormManagementAnalyticsComponent implements OnInit {
   @Input() round: Round;
   @Input() created: Log;
   @Input() lastUpdated: Log;

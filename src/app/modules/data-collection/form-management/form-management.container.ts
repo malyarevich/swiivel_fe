@@ -132,4 +132,8 @@ export class FormManagementContainer implements OnInit {
   onExportPDF(form: any) {
     console.log(`Export PDF: ${form.mongo_id}`);
   }
+  
+  onToggleExpand(event: any) {
+    console.log(`Expanded: ${event}`);
+  }
 }
