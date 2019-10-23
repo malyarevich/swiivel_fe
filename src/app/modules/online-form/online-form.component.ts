@@ -38,7 +38,11 @@ import {
   phoneNumberValidator,
   alphabeticValidator,
   alphanumericValidator,
-  emailValidator
+  emailValidator,
+  numericValidator,
+  urlValidator,
+  minValueValidator,
+  maxValueValidator
 } from "@app/core/validators";
 import { fieldValidators } from "@app/models/data-collection/field.model";
 import { customTable } from "./models/custom-table.model";
@@ -147,7 +151,7 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
 
   formSubscriber(form: Form) {
     this.form$.next(form);
-    console.log(this.form$.getValue());
+    console.log('Form by BE: ', this.form$.getValue());
 
     if (this.isHaveSense()) {
       this.loadingProcess();
@@ -691,27 +695,28 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
       arrayValidators.push(Validators.required);
     }
 
-    if (
-      field.options &&
-      field.options.validators &&
-      field.options.validators.minLength
-    ) {
-      arrayValidators.push(
-        Validators.minLength(field.options.validators.minLength)
-      );
-    }
+    // if (
+    //   field.options &&
+    //   field.options.validators &&
+    //   field.options.validators.minLength
+    // ) {
+    //   arrayValidators.push(
+    //     Validators.minLength(field.options.validators.minLength)
+    //   );
+    // }
 
-    if (
-      field.options &&
-      field.options.validators &&
-      field.options.validators.maxLength
-    ) {
-      arrayValidators.push(
-        Validators.maxLength(field.options.validators.maxLength)
-      );
-    }
+    // if (
+    //   field.options &&
+    //   field.options.validators &&
+    //   field.options.validators.maxLength
+    // ) {
+    //   arrayValidators.push(
+    //     Validators.maxLength(field.options.validators.maxLength)
+    //   );
+    // }
 
     if (field.options && field.options.validators) {
+      console.log('field.options.validators:', field.options.validators);
       Object.keys(field.options.validators).forEach(key => {
         switch (key) {
           case fieldValidators.Alphabetic:
@@ -736,7 +741,7 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
             break;
           case fieldValidators.DecimalPlace:
             if (field.options.validators[key]) {
-              // arrayValidators.push(decimalPlaceValidator);
+              arrayValidators.push(numericValidator);
             }
             break;
           case fieldValidators.Email:
@@ -744,8 +749,63 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
               arrayValidators.push(emailValidator);
             }
             break;
+          case fieldValidators.Percentage:
+            if (field.options.validators[key]) {
+              arrayValidators.push();
+            }
+            break;
+          case fieldValidators.Url:
+            if (field.options.validators[key]) {
+              arrayValidators.push(urlValidator);
+            }
+            break;
+          case fieldValidators.max:
+            if (field.options.validators[key]) {
+              arrayValidators.push(
+                maxValueValidator(field.options.validators.max)
+              );
+            }
+            break;
+          case fieldValidators.maxLength:
+            if (field.options.validators[key]) {
+              arrayValidators.push(
+                Validators.maxLength(field.options.validators.maxLength)
+              );
+            }
+            break;
+          case fieldValidators.min:
+            if (field.options.validators[key]) {
+              arrayValidators.push(
+                minValueValidator(field.options.validators.min)
+              );
+            }
+            break;
+          case fieldValidators.minLength:
+            if (field.options.validators[key]) {
+              arrayValidators.push(
+                Validators.minLength(field.options.validators.minLength)
+              );
+            }
+            break;
+          case fieldValidators.phone:
+            if (
+              field.options.validators[key] &&
+              field.options.validators.verifyPhone
+            ) {
+              arrayValidators.push(phoneNumberValidator);
+            }
+            break;
+          case fieldValidators.verifyPhone:
+            break;
+          case fieldValidators.required:
+            // console.log('options: ', field.options)
+            if (field.options.validators[key]) {
+              arrayValidators.push(Validators.required);
+            }
+            break;
 
           default:
+            console.log("New validator case: ", key);
             break;
         }
       });
