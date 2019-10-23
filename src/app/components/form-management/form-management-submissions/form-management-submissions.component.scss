@@ -1,6 +1,6 @@
 @import 'index';
 
-* {
+*:not(.fas) {
     font-family: Nunito Sans;
     font-style: normal;
     font-weight: normal;
@@ -148,6 +148,15 @@
       &.selected {
         background: #E4E7FF;
       }
+      .cdk-cell {
+        vertical-align: middle;
+        min-height: 44px;
+      }
+      .cdk-column-account {
+        .text {
+          font-weight: bold;
+        }
+      }
       .cdk-column-name {
         .text {
           color: #4350A2;
@@ -168,9 +177,21 @@
         flex-flow: row nowrap;
         .item {
           color: #A4A4A4;
-          &:not(:last-of-type) {
-            margin-right: 10px;
+          margin-top: auto;
+          margin-bottom: auto;
+          &:last-of-type {
+            margin-right: 12px;
           }
+        }
+      }
+      .cdk-column-expand {
+        width: 44px;
+        border-left: 1px solid #dee2e6;
+        padding: 6px 0px;
+        .item {
+          justify-content: center;
+          display: flex;
+          color: #A4A4A4;
         }
       }
       .cdk-column-updatedAt {

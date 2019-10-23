@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
-import { FormManagementComponent } from './form-management.component';
+import { FormManagementComponent } from '@app/components/form-management/form-management.component';
 import { FormManagementRoutingModule } from './form-management-routing.module';
 import { FormStatisticModule } from '../form-statistic/form-statistic.module';
 import { SharedRedComponentsModule } from '../../../shared/components/sharedRedComponents.module';
@@ -17,13 +17,13 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { OnlineFormModule } from '@app/modules/online-form/online-form.module';
 import { HttpClientModule } from '@angular/common/http';
+import { FormManagementContainer } from './form-management.container';
+import { FormManagementAPIService } from './form-management.service';
 
 @NgModule({
   declarations: [
-    FormManagementComponent,
-    FormManagementSubmissionsComponent,
-    CdkDetailRowDirective,
-    ProgressLineBarComponent
+    FormManagementContainer, FormManagementComponent, FormManagementSubmissionsComponent,
+    ProgressLineBarComponent, CdkDetailRowDirective
   ],
   imports: [
     CommonModule,
@@ -32,16 +32,16 @@ import { HttpClientModule } from '@angular/common/http';
     CdkTableModule,
     OverlayModule,
     MatProgressBarModule,
-    OnlineFormModule,
     HttpClientModule,
     NgbModule,
     FormManagementRoutingModule,
     FormStatisticModule,
     SharedRedComponentsModule,
     FormTableHeaderModule,
-    FormAccessModalModule
+    FormAccessModalModule,
+    OnlineFormModule,
   ],
-  exports: [FormManagementComponent],
-  providers: []
+  exports: [FormManagementContainer],
+  providers: [FormManagementAPIService]
 })
 export class FormManagementModule {}

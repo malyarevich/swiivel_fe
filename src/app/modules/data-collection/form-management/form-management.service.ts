@@ -1,29 +1,34 @@
 import { ApiService } from '@app/core/api.service';
-import { Observable, throwError } from 'rxjs';
-import { map, first } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { HttpParams } from '@angular/common/http';
+import { FormSearchParams } from '@models/form-search-params';
 
 export class FormManagementAPIService extends ApiService {
 
-  changeStatus(updatedIds: number[], updatedStatus: string): Observable<any> {
-    return this.http.post(`/proxy/form-builder/form-template/status`, {ids: updatedIds, status: updatedStatus});
+  getFormDetails(id: string): Observable<any> {
+    return this.http.get(`/proxy/form-management/form-details/${id}`);
   }
-
-  duplicateForm(id: string): Observable<any> {
-    return this.http.post(`/proxy/form-builder/form-template/duplicate`, {
-      example_form_id: id,
-    });
-  }
-
-  exportPDFForm(mongoId: string) {
-    return this.download(`/proxy/form-builder/pdf-export/${mongoId}`).pipe(map((response: any)=> {
-      return window.URL.createObjectURL(new Blob([response], {type: 'application/pdf'}))
-    }), first());
-  }
-
-  exportPDFFormZIP(mongoIds: string) {
-    return this.download(`/proxy/form-builder/bulk-pdf-export?ids=${mongoIds}`).pipe(map((response: any) => {
-      return window.URL.createObjectURL(new Blob([response], {type: 'application/zip'}))
-    }));
+  
+  getSubmissionsList(
+    id: string, 
+    requestParams: FormSearchParams = {page: 1, limit: 150},
+  ): Observable<any> {
+    let params = new HttpParams();
+    if ('filter' in requestParams) {
+      for (const filter of Object.keys(requestParams.filter)) {
+        params = params.append(`filter[${filter}]`, requestParams.filter[filter]);
+      }
+    }
+    if ('sort' in requestParams) {
+      params = params.append(`sort[${requestParams.sort['field']}]`, requestParams.sort['order']);
+    }
+    if ('page' in requestParams) {
+      params = params.append('page', requestParams.page.toString());
+    }
+    if ('limit' in requestParams) {
+      params = params.append('limit', requestParams.limit.toString());
+    }
+    return this.http.get(`/proxy/form-management/submissions-list/${id}`, { params });
   }
 
 }
