@@ -418,4 +418,10 @@ export class UploadReviewFormComponent implements OnInit {
     return id ? this.documents.find(document => document._id === id) : null;
   }
 
+  isOnlineForm(): boolean {
+    return (
+      this.getSelectForm() && (this.getSelectForm().submission_type === 'onlineForm' || this.getSelectForm().submission_type === 'pdfForm')
+    )
+  }
+
 }
