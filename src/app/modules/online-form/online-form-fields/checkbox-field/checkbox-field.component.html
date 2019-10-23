@@ -1,27 +1,21 @@
 <ng-container *ngIf="true">
-  <div
-    class="form-group app-input-container position-relative"
-    [formGroup]="fg"
-  >
-    <input
+  <div class="form-group multi-div position-relative" [formGroup]="fg">
+    <sw-input-checkbox
+      class="online_form"
       [formControlName]="field._id"
-      mdInput
-      type="number"
-      aria-describedby="basic-addon2"
-      class="app-input form-control"
-      [ngClass]="{
-        validation_required: isRequired(),
-        validation_error: !!validationText
-      }"
-      [placeholder]="getLabel()"
-    />
+      [isActive]="isActive()"
+    >
+      <span class="label" *ngIf="!field.options.hideLabel">
+        {{ getLabel() }}</span
+      >
+    </sw-input-checkbox>
+
     <span
       class="error_icon"
       [ngClass]="{ validation_error: !!validationText }"
       (click)="validationText = ''"
-    >
-      <i class="fas fa-times fa-xs"></i>
-    </span>
+      ><i class="fas fa-times fa-xs"></i
+    ></span>
 
     <span
       class="validation_icon"

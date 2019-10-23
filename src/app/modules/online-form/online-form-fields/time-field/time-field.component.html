@@ -12,18 +12,27 @@
       mdInput
       type="time"
       class="app-input form-control"
-      [ngClass]="{ 
-        validation_required: this.field.options.required,
+      [ngClass]="{
+        validation_required: isRequired(),
         validation_error: !!validationText
       }"
-      [placeholder]="field.name | titlecase"
+      [placeholder]="getLabel()"
     />
-    <span class="error_icon" [ngClass]="{ validation_error: !!validationText }" (click)="validationText = ''">
+    <span
+      class="error_icon"
+      [ngClass]="{ validation_error: !!validationText }"
+      (click)="validationText = ''"
+    >
       <i class="fas fa-times fa-xs"></i>
     </span>
 
-    <span class="validation_icon" [ngClass]="{ validation_required: this.field.options.required }">
-        <i class="fas fa-asterisk fa-xs"></i>
+    <span
+      class="validation_icon"
+      [ngClass]="{
+        validation_required: isRequired()
+      }"
+    >
+      <i class="fas fa-asterisk fa-xs"></i>
     </span>
 
     <sw-error-list

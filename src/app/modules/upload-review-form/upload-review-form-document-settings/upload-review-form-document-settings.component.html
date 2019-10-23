@@ -1,0 +1,43 @@
+<div class="settings-header">
+  <p class="settings-header-text">Document settings</p>
+  <sw-icon-button
+    [icon]="isSettingsOpen ? icons.CHEVRON_DOWN : icons.CHEVRON_UP"
+    (click)="changeFormState()"
+  ></sw-icon-button>
+</div>
+<div *ngIf="isSettingsOpen">
+  <hr class="settings-hr">
+  <form [formGroup]="form">
+    <div class="settings-field">
+      <sw-dropdown-input
+        formControlName="type"
+        [options]="documentTypes"
+      >
+        <span class="label">
+          Document Type
+        </span>
+      </sw-dropdown-input>
+    </div>
+    <div class="settings-field">
+      <sw-dropdown-input
+        formControlName="account"
+        [options]="documentFamilies"
+      >
+        <span class="label">
+          Account
+        </span>
+      </sw-dropdown-input>
+    </div>
+    <div class="settings-field">
+      <sw-dropdown-input
+        formControlName="student"
+        [options]="students"
+        [disabled]="!form.get('account').value || !form.get('account').value[0] || !form.get('account').value[0].value"
+      >
+        <span class="label">
+          Student
+        </span>
+      </sw-dropdown-input>
+    </div>
+  </form>
+</div>

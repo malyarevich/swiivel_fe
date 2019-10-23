@@ -66,7 +66,10 @@ export class GeneralInfoGroupComponent implements OnInit {
         targetNode.constructor === Object
       )
     ) {
-      if (this.fg.contains(id)) {
+      if (
+        this.fg.contains(id) ||
+        (this.fg.controls[id] && this.fg.controls[id].disabled)
+      ) {
         errors[id] = targetNode[id];
       } else {
         if (targetNode[id]) {
@@ -87,5 +90,9 @@ export class GeneralInfoGroupComponent implements OnInit {
       }
     }
     return errors;
+  }
+
+  getWidth(field: Field): string {
+    return field.width ? field.width : 'quarter';
   }
 }

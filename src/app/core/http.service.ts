@@ -115,7 +115,7 @@ export class HttpService {
       .pipe(
         timeout(requestTimeout || this.apiTimeout),
         map((response: any) => {
-          if (response.status === 1) {
+          if (response.status === 1 || response.success === true) {
             return response.data;
           } else {
             throw new HttpErrorResponse({error: response.errors, status: response.status});

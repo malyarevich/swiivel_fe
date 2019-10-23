@@ -10,7 +10,6 @@
     'app-div-show': isExpand,
     'app-div-hide': !isExpand
   }">
-<<<<<<< HEAD
 
   <div class="documents-item" *ngFor="let forms of formsPDF">
     <div class="row item-row justify-content-between">
@@ -31,28 +30,6 @@
 
       <sw-button class="outline-btn">Add Specific Criteria</sw-button>
 
-=======
-
-  <div class="documents-item" *ngFor="let forms of formsPDF">
-    <div class="row item-row justify-content-between">
-      <div class="document-info align-items-center">
-        <div class="document-name">
-          <sw-input-text [(ngModel)]="forms.name">
-            <span class="placeholder">Form Name</span>
-          </sw-input-text>
-        </div>
-
-        <div class="lable green" *ngIf="forms.isPerFamily">
-          Family
-        </div>
-        <div class="lable blue" *ngIf="!forms.isPerFamily">
-          Student
-        </div>
-      </div>
-
-      <sw-button class="outline-btn">Add Specific Criteria</sw-button>
-
->>>>>>> master
     </div>
     <div class="row item-row">
       <sw-input-textarea [(ngModel)]="forms.accompanyingText.data">
@@ -89,12 +66,8 @@
       </sw-input-checkbox>
 
     </div>
-    <section class="form-pdf-section" *ngIf="forms?.form && forms?.form?.name">
-      <div class="pdf-wrap">
-        <app-form-drawing [existingFields]="existingFields" [pages]="forms.form.numberOfPages" [formsPDF]="forms">
-        </app-form-drawing>
-      </div>
-    </section>
+    <app-form-drawing [sideBar]="sideBar" [form]="form" [existingFields]="existingFields" *ngIf="forms?.form && forms?.form?.name"
+    [pages]="forms.form.numberOfPages" [formsPDF]="forms"></app-form-drawing>
     <!-- <div class="row justify-content-center">
       <
     </div> -->

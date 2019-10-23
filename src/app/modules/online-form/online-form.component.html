@@ -6,6 +6,7 @@
   </div>
 
   <sw-online-form-nav
+    [isMenuShow]="isMenuShow"
     [formName]="form?.name"
     (actionEmitter)="onMainNavAction($event)"
   ></sw-online-form-nav>
@@ -46,5 +47,9 @@
   </div>
 </ng-container>
 <ng-container *ngIf="!(isReady$ | async)">
-  <sw-main-spinner class="spinner_box"></sw-main-spinner>
+  <ng-container *ngIf="hasErrors$ | async">Error!</ng-container>
+
+  <ng-container *ngIf="!(hasErrors$ | async)">
+    <sw-main-spinner class="spinner_box"></sw-main-spinner>
+  </ng-container>
 </ng-container>

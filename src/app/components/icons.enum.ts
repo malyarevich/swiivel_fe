@@ -15,4 +15,6 @@ export enum IconsEnum {
   ZOOM_OUT = 'fa-search-minus',
   CARET_RIGHT = 'fa-caret-right',
   CARET_LEFT = 'fa-caret-left',
+  CHEVRON_DOWN = 'fa-chevron-down',
+  CHEVRON_UP = 'fa-chevron-up'
 }

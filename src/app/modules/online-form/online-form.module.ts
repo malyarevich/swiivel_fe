@@ -26,7 +26,7 @@ import { TimeFieldComponent } from './online-form-fields/time-field/time-field.c
 import { ShortTextFieldComponent } from './online-form-fields/short-text-field/short-text-field.component';
 import { PhoneNumberFieldComponent } from './online-form-fields/phone-number-field/phone-number-field.component';
 import { NumberTextFieldComponent } from './online-form-fields/number-text-field/number-text-field.component';
-import { MultipleOptionsFieldComponent } from './online-form-fields/multiple-options-field/multiple-options-field.component';
+import { CheckboxFieldComponent } from './online-form-fields/checkbox-field/checkbox-field.component';
 import { LongTextFieldComponent } from './online-form-fields/long-text-field/long-text-field.component';
 import { LabelFieldComponent } from './online-form-fields/label-field/label-field.component';
 import { HebrewDateFieldComponent } from './online-form-fields/hebrew-date-field/hebrew-date-field.component';
@@ -77,7 +77,7 @@ import { ErrorsListTooltipComponent } from './errors-list/errors-list-tooltip.co
     ShortTextFieldComponent,
     PhoneNumberFieldComponent,
     NumberTextFieldComponent,
-    MultipleOptionsFieldComponent,
+    CheckboxFieldComponent,
     LongTextFieldComponent,
     LabelFieldComponent,
     HebrewDateFieldComponent,
@@ -118,7 +118,7 @@ import { ErrorsListTooltipComponent } from './errors-list/errors-list-tooltip.co
       ShortTextFieldComponent,
       PhoneNumberFieldComponent,
       NumberTextFieldComponent,
-      MultipleOptionsFieldComponent,
+      CheckboxFieldComponent,
       LongTextFieldComponent,
       LabelFieldComponent,
       HebrewDateFieldComponent,

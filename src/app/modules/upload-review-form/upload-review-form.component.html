@@ -6,19 +6,24 @@
   (changeStatus)="changeStatus($event)"
   [isLast]="isLastDocument()"
   [disabled]="isBulkDownload"
+  [isSaveActive]="isSaveActive"
+  (saveDocument)="onOpenConfirmSavePopup()"
 >
 </app-document-approval-bar>
 <div class="content">
   <div class="sidebar-container" [class.opened]="isSideBarShown">
     <div class="sidebar">
       <div>
+        <sw-block-header>
+          List of forms
+        </sw-block-header>
         <form [formGroup]="form">
           <div class="sidebar-search">
             <app-search-field
               placeholder="Search"
               formControlName="search"
-              [type]="'controls'"
-              [disabled]="isBulkDownload"
+              type="controls"
+              [disabled]="isBulkDownload || isSaveActive"
             ></app-search-field>
           </div>
           <div class="sidebar-controls">
@@ -28,13 +33,9 @@
                 [multiple]="true"
                 [dropdownSubHeader]="true"
                 [options]="filterValue"
-                [isDisplaySelected]="true"
-                [disabled]="isEmptyObject(filterValue) || isBulkDownload"
+                [disabled]="isEmptyObject(filterValue) || isBulkDownload || isSaveActive"
               >
-                <span
-                  class="sidebar-controls-title"
-                  [ngClass]="{'sidebar-controls-title-with-value': isFilterEmpty()}"
-                >
+                <span class="label">
                   Filtered By
                 </span>
               </sw-dropdown-input>
@@ -43,54 +44,55 @@
               <sw-dropdown-input
                 formControlName="sort"
                 [options]="sortValue"
-                [isDisplaySelected]="true"
-                [disabled]="!(sortValue && sortValue.length) || isBulkDownload"
+                [disabled]="!(sortValue && sortValue.length) || isBulkDownload || isSaveActive"
               >
-                <span
-                  class="sidebar-controls-title"
-                  [ngClass]="{'sidebar-controls-title-with-value': isSortByEmpty()}"
-                >
+                <span class="label">
                   Sorted By
                 </span>
               </sw-dropdown-input>
             </div>
           </div>
         </form>
-        <div *ngIf="documents && documents.length" [ngClass]="{ 'loading': showSpinner }">
-          <div *ngIf="!isBulkDownload">
-            <div *ngFor="let document of documents">
-              <app-upload-review-form-item
-                [document]="document"
-                [isBulkDownload]="isBulkDownload"
-                (selected)="selectItem($event)"
-                (downLoadForm)="downLoadForm($event)"
-                (deleteForm)="openConfirmPopup($event)"
-              >
-              </app-upload-review-form-item>
+        <div
+          class="sidebar-list"
+          [ngClass]="{'sidebar-list-bulk-download': isBulkDownload}"
+        >
+          <div *ngIf="documents && documents.length" [ngClass]="{ 'loading': showSpinner }">
+            <div *ngIf="!isBulkDownload">
+              <div *ngFor="let document of documents">
+                <app-upload-review-form-item
+                  [document]="document"
+                  [isBulkDownload]="isBulkDownload"
+                  (selected)="selectItem($event)"
+                  (downLoadForm)="downLoadForm($event)"
+                  (deleteForm)="openDeleteConfirmPopup($event)"
+                >
+                </app-upload-review-form-item>
+              </div>
+            </div>
+            <div *ngIf="isBulkDownload">
+              <div class="select-all-button">
+                <sw-small-button
+                  [text]="isAllDocumentsSelected ? 'Unselect all' : 'Select all'"
+                  (click)="selectAllDocuments()"
+                ></sw-small-button>
+              </div>
+              <div *ngFor="let document of uploadDocuments">
+                <app-upload-review-form-item
+                  [document]="document"
+                  [isBulkDownload]="isBulkDownload"
+                  (selected)="selectItem($event)"
+                >
+                </app-upload-review-form-item>
+              </div>
+            </div>
+            <div *ngIf="showSpinner" class="spinner">
+              <app-spinner></app-spinner>
             </div>
           </div>
-          <div *ngIf="isBulkDownload">
-            <div class="select-all-button">
-              <sw-small-button
-                [text]="isAllDocumentsSelected ? 'Unselect all' : 'Select all'"
-                (click)="selectAllDocuments()"
-              ></sw-small-button>
-            </div>
-            <div *ngFor="let document of uploadDocuments">
-              <app-upload-review-form-item
-                [document]="document"
-                [isBulkDownload]="isBulkDownload"
-                (selected)="selectItem($event)"
-              >
-              </app-upload-review-form-item>
-            </div>
+          <div *ngIf="!showSpinner && (!documents || !documents.length)" class="sidebar--empty">
+            No documents
           </div>
-          <div *ngIf="showSpinner" class="spinner">
-            <app-spinner></app-spinner>
-          </div>
-        </div>
-        <div *ngIf="!showSpinner && (!documents || !documents.length)" class="sidebar--empty">
-          No documents
         </div>
       </div>
       <div class="upload-document-controls">
@@ -122,11 +124,18 @@
     <app-upload-review-form-document
       [isSideBarShown]="isSideBarShown"
       [document]="getSelectForm()"
-      [documentStudent]="documentStudent"
-      [documentAccount]="documentAccount"
-      [documentTypes]="documentTypes"
       (rotateImg)="rotateImg($event)"
+      [rotatingPicture]="rotatingPicture"
     ></app-upload-review-form-document>
+    <div *ngIf="documentTypes.length && documentFamilies.length">
+      <app-upload-review-form-document-settings
+        [documentTypes]="documentTypes"
+        [documentFamilies]="documentFamilies"
+        [document]="getSelectForm()"
+        (updateDocumentSettings)="changeDocumentSettings($event)"
+      ></app-upload-review-form-document-settings>
+    </div>
+
   </div>
 
 </div>
@@ -139,13 +148,14 @@
 </div>
 <sw-dialog
     #dialog
-    action="Remove"
-    title="Remove Document"
-    (closed)="deleteForm($event)"
+    [action]="isSaveActive ? 'Save' : 'Remove'"
+    [title]="isSaveActive ? 'Save Document' : 'Remove Document'"
+    [style]="'center'"
+    (closed)="closeForm($event)"
 >
-  <p>Are you sure you want to remove [Item(s)]?</p>
+  <p *ngIf="!this.isSaveActive">Are you sure you want to remove
+    {{ getDocument(removeDocumentId) && getDocument(removeDocumentId).entity_name ?
+          getDocument(removeDocumentId).entity_name : 'this document' }}?
+  </p>
+  <p *ngIf="this.isSaveActive">Are you sure you want to save settings for this document?</p>
 </sw-dialog>
-
-<div>
-  Error
-</div>

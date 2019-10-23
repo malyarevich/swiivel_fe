@@ -9,8 +9,12 @@
     position: relative;
     padding: 0;
     overflow: scroll;
-    max-width: 100vh;
+    max-width: 100vw;
     max-height: calc(100vh - 185px);
+  }
+
+  .rotating {
+    opacity: 0.8;
   }
 
   .controllers {
@@ -37,7 +41,7 @@
   }
 
   .controllers-zoom:after {
-    position: fixed;
+    position: absolute;
     right: 0;
     content: '';
     width: 1px;
@@ -74,46 +78,14 @@
     margin: 25px auto;
   }
 
+  .rotating-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+  }
+
   .no-documents-header {
     text-align: center;
     margin: 25px 0;
-  }
-
-  .settings {
-    width: 187px;
-    position: fixed;
-    top: 170px;
-    right: 13px;
-    border-radius: 3px;
-    padding: 10px 10px 15px;
-    background: #fff;
-
-    .settings-header {
-      position: relative;
-      display: flex;
-      justify-content: space-between;
-      margin: 0 0 25px;
-      padding: 0 10px 0 5px;
-
-      .settings-text {
-        margin: 0;
-        color: $element-base-color;
-        font: 800 11px/15px $nunito-sans;
-        text-transform: uppercase;
-      }
-    }
-
-    .settings-header:after {
-      position: absolute;
-      content: '';
-      bottom: -10px;
-      width: 155px;
-      height: 1px;
-      background: $gray-color;
-    }
-
-    .settings-field {
-      margin: 0 0 5px;
-    }
   }
 }

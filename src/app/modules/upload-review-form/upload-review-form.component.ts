@@ -23,31 +23,32 @@ export class UploadReviewFormComponent implements OnInit {
   @ViewChild('link', { static: false }) link: ElementRef;
   @ViewChild('dialog', {static: true}) dialog: DialogComponent;
 
-  public dataSource: UploadReviewFormDataSource = new UploadReviewFormDataSource(this.uploadReviewFormService);
-  public documents: Document[];
-  public uploadDocuments: Document[];
   public activeIdDocument: string;
   public activeIdForm = '';
-  public filterValue = {};
-  public sortValue: SortDropDownData[];
-  public form: FormGroup;
-  public removeDocumentId: string;
-  public showSpinner: boolean;
-  public extremeDocuments: ExtremeUploadForms = {};
   public colors = ColorsEnum;
-  public isSideBarShown = true;
-  public icons = IconsEnum;
-  public size = SizesEnum;
-  public statuses = UploadReviewFormStatusesEnum;
-  public isBulkDownload = false;
-  public updatingDocumentStatus = false;
+  public dataSource: UploadReviewFormDataSource = new UploadReviewFormDataSource(this.uploadReviewFormService);
+  public documents: Document[];
   public download: { url: SafeResourceUrl; filename: string; } = {url: null, filename: null};
+  public extremeDocuments: ExtremeUploadForms = {};
+  public filterValue: any = {};
+  public form: FormGroup;
+  public icons = IconsEnum;
   public isAllDocumentsSelected = false;
+  public isBulkDownload = false;
+  public isSideBarShown = true;
+  public removeDocumentId: string;
+  public size = SizesEnum;
+  public showSpinner: boolean;
+  public sortValue: SortDropDownData[];
+  public statuses = UploadReviewFormStatusesEnum;
+  public updatingDocumentStatus = false;
+  public uploadDocuments: Document[];
+  public rotatingPicture: boolean;
+  public isSaveActive = false;
+  public dataSettings = {};
 
   public documentTypes = [];
-  public documentStudent = ['Adam Doe'];
-  public documentAccount = ['a062c544a27f2c14f3e83f66efb81c59'];
-  public uploadDocumentData = {};
+  public documentFamilies = [];
 
   constructor(
     public uploadReviewFormService: UploadReviewFormService,
@@ -71,44 +72,75 @@ export class UploadReviewFormComponent implements OnInit {
     this.dataSource.$loading.subscribe((loading: boolean) => {
       this.showSpinner = loading;
     });
+    this.dataSource.$changingRotationSubject.subscribe((rotating: boolean) => {
+      this.rotatingPicture = rotating;
+    });
     this.activeIdForm = this.route.snapshot.paramMap.get('id');
     this.dataSource.uploadDocuments(this.activeIdForm).subscribe(() => { this.getDocuments() });
     this.dataSource.uploadFilterList(this.activeIdForm);
+    this.dataSource.uploadFamilyList()
+      .subscribe(() => {
+        this.dataSource.getFamilies().subscribe((data) => this.documentFamilies = data);
+      });
+
     this.dataSource.getFilters()
       .subscribe((data) => {
         if (data) {
           this.filterValue = this.uploadReviewFormService.convertFilterDocumentsData(data);
-          this.documentTypes = this.uploadReviewFormService.convertToSettingsType(this.filterValue);
+
+          if (this.filterValue.documents && this.filterValue.documents.data && this.filterValue.documents.data.length) {
+            this.documentTypes = this.filterValue.documents.data.map(filter => {
+              return { title: filter.name, value: filter.id, type: filter.type };
+            });
+          }
+
           if (!(this.filterValue && this.filterValue)) {
-            this.form.controls['filter'].disable();
+            this.form.controls['filter'].disable({ emitEvent: false });
           } else {
-            this.form.controls['filter'].enable();
+            this.form.controls['filter'].enable({ emitEvent: false });
           }
           if (data.sort) {
             this.sortValue = this.uploadReviewFormService.convertSortDocumentsData(data);
             if (!(this.sortValue && this.sortValue)) {
-              this.form.controls['sort'].disable();
+              this.form.controls['sort'].disable({ emitEvent: false });
             } else {
-              this.form.controls['sort'].enable();
+              this.form.controls['sort'].enable({ emitEvent: false });
             }
           }
           this.cdr.detectChanges();
         }
       });
-    this.form.valueChanges.subscribe(params => {
-      if (!this.isBulkDownload) {
-        this.dataSource.uploadDocuments(this.activeIdForm, params.filter, params.sort, params.search).subscribe(() => {
-          this.activeIdDocument = null;
-          this.getDocuments();
-        });
+
+    this.form.get('search').valueChanges.subscribe(
+      (data) =>  {
+        const search = (data.replace(/^\s+/g, ''));
+        this.dataSource.uploadDocuments(this.activeIdForm,
+          this.form.get('filter').value,
+          this.form.get('sort').value,
+          search)
+          .subscribe(() => { this.getDocuments() });
       }
-    });
-    this.uploadDocumentData = {
-      document_id: this.activeIdForm,
-      family_id: this.documentAccount[0],
-      person_id: this.documentStudent[0],
-      document_type: this.documentTypes[0]
-    };
+  );
+
+    this.form.get('sort').valueChanges.subscribe(
+      () =>  {
+        this.dataSource.uploadDocuments(this.activeIdForm,
+          this.form.get('filter').value,
+          this.form.get('sort').value,
+          this.form.get('search').value)
+          .subscribe(() => { this.getDocuments() });
+      }
+    );
+
+    this.form.get('filter').valueChanges.subscribe(
+      () =>  {
+        this.dataSource.uploadDocuments(this.activeIdForm,
+          this.form.get('filter').value,
+          this.form.get('sort').value,
+          this.form.get('search').value)
+          .subscribe(() => { this.getDocuments() });
+      }
+    );
   }
 
   getDocuments(): void {
@@ -137,13 +169,18 @@ export class UploadReviewFormComponent implements OnInit {
   }
 
   selectItem(id: string): void {
-    if (this.isBulkDownload) {
-      const index = this.uploadDocuments.indexOf(this.uploadDocuments.find(document => document._id === id));
-      this.uploadDocuments[index].isSelected = !this.uploadDocuments[index].isSelected;
+    if (!this.isSaveActive) {
+      if (this.isBulkDownload) {
+        const index = this.uploadDocuments.indexOf(this.uploadDocuments.find(document => document._id === id));
+        this.uploadDocuments[index].isSelected = !this.uploadDocuments[index].isSelected;
+      } else {
+        this.isSaveActive = false;
+        this.documents.map(document => document._id === id ? document.isSelected = true : document.isSelected = false);
+        this.dataSource.selectFormId(id);
+        this.getExtremeDocuments(id);
+      }
     } else {
-      this.documents.map(document => document._id === id ? document.isSelected = true : document.isSelected = false);
-      this.dataSource.selectFormId(id);
-      this.getExtremeDocuments(id);
+      this.onOpenConfirmSavePopup();
     }
   }
 
@@ -157,9 +194,13 @@ export class UploadReviewFormComponent implements OnInit {
   }
 
   skipDocument(): void {
-    const activeDocumentIndex = this.documents.indexOf(this.documents.find(document => document._id === this.activeIdDocument));
-    if (activeDocumentIndex + 1 < this.documents.length) {
-      this.selectItem(this.documents[activeDocumentIndex + 1]._id);
+    if (this.isSaveActive) {
+      this.onOpenConfirmSavePopup();
+    } else {
+      const activeDocumentIndex = this.documents.indexOf(this.documents.find(document => document._id === this.activeIdDocument));
+      if (activeDocumentIndex + 1 < this.documents.length) {
+        this.selectItem(this.documents[activeDocumentIndex + 1]._id);
+      }
     }
   }
 
@@ -170,33 +211,53 @@ export class UploadReviewFormComponent implements OnInit {
       this.documents.find(document => document._id === this.activeIdDocument)._id, statusData,
       this.activeIdForm, this.form.get('filter').value, this.form.get('sort').value
     )
-      .subscribe((data) => {
+      .subscribe(() => {
+        this.updatingDocumentStatus = false;
+
         if (!this.isLastDocument()) {
           const activeDocumentIndex = this.documents.indexOf(this.documents.find(document => document._id === this.activeIdDocument));
           this.selectItem(this.documents[activeDocumentIndex + 1]._id);
         }
-        this.updatingDocumentStatus = false;
+        this.dataSource.uploadDocuments(this.activeIdForm,
+          this.form.get('filter').value,
+          this.form.get('sort').value,
+          this.form.get('search').value,)
+          .subscribe(() => { this.getDocuments() });
       });
   }
 
-  deleteForm(action?: boolean): void {
-    if (action) {
-      this.dataSource
-        .deleteDocuments([this.removeDocumentId])
-        .subscribe( () => {
-          this.removeDocumentId = null;
-          this.activeIdDocument = null;
-          this.dataSource.uploadDocuments(this.activeIdForm,
-            this.form.get('filter').value,
-            this.form.get('sort').value,
-            this.form.get('search').value,)
-            .subscribe(() => { this.getDocuments() });
-        });
+  closeForm(action?: boolean): void {
+    if (this.isSaveActive) {
+       if (action) {
+         this.updateDocumentSettings(action);
+       } else {
+         this.isSaveActive = false;
+       }
+    } else {
+      if (action) {
+        this.dataSource
+          .deleteDocuments([this.removeDocumentId])
+          .subscribe( () => {
+            this.removeDocumentId = null;
+            this.activeIdDocument = null;
+            this.dataSource.uploadDocuments(this.activeIdForm,
+              this.form.get('filter').value,
+              this.form.get('sort').value,
+              this.form.get('search').value)
+              .subscribe(() => { this.getDocuments() });
+          });
+      }
     }
   }
 
-  openConfirmPopup(id: string): void {
-    this.removeDocumentId = id;
+  openDeleteConfirmPopup(id: string): void {
+    if(!this.isSaveActive) {
+      this.removeDocumentId = id;
+      this.dialog.open();
+    }
+  }
+
+  onOpenConfirmSavePopup(): void {
     this.dialog.open();
   }
 
@@ -258,6 +319,9 @@ export class UploadReviewFormComponent implements OnInit {
         this.cdr.detectChanges();
         this.renderer.selectRootElement(this.link.nativeElement).click();
         this.clearLink(url);
+        this.documents.forEach((doc) => doc.isSelected = false);
+        this.activeIdDocument = this.documents[0]._id;
+        this.selectItem(this.activeIdDocument);
         this.isBulkDownload = false;
       });
   }
@@ -283,7 +347,6 @@ export class UploadReviewFormComponent implements OnInit {
     this.uploadDocuments.map((item) => item.isSelected = this.isAllDocumentsSelected);
   }
 
-  // TODO
   rotateImg(evt: any): void {
     if (evt.angle) {
       if (evt.direction === 'left') {
@@ -302,6 +365,31 @@ export class UploadReviewFormComponent implements OnInit {
     }
   }
 
+  updateDocumentSettings(action) {
+    if (action) {
+      this.dataSource.updateDocumentSettings(this.activeIdDocument, this.dataSettings)
+        .subscribe( () => {
+          this.dataSource.uploadDocuments(this.activeIdForm,
+            this.form.get('filter').value,
+            this.form.get('sort').value,
+            this.form.get('search').value,)
+            .subscribe(() => { this.getDocuments() });
+        });
+    } else {
+      this.dataSource.uploadDocuments(this.activeIdForm,
+        this.form.get('filter').value,
+        this.form.get('sort').value,
+        this.form.get('search').value,)
+        .subscribe(() => { this.getDocuments() });
+    }
+    this.isSaveActive = false;
+  }
+
+  changeDocumentSettings(data: any) {
+    this.isSaveActive = true;
+    this.dataSettings = data;
+  }
+
   updateImg(angle: string) {
     this.dataSource.rotateImg(angle, this.documents.find(document => document._id === this.activeIdDocument)._id)
       .subscribe(() => {
@@ -310,17 +398,13 @@ export class UploadReviewFormComponent implements OnInit {
         this.dataSource.uploadDocuments(this.activeIdForm,
           this.form.get('filter').value,
           this.form.get('sort').value,
-          this.form.get('search').value,)
+          this.form.get('search').value)
           .subscribe(() => { this.getDocuments() });
       });
   }
 
-  isFilterEmpty(): boolean {
-    return this.form.get('filter').value.length;
-  }
-
-  isSortByEmpty(): boolean {
-    return this.form.get('sort').value.length;
+  getDocument(id: string): Document {
+    return id ? this.documents.find(document => document._id === id) : null;
   }
 
 }

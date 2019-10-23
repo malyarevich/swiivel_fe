@@ -19,21 +19,28 @@
 
     .text-row {
       margin: auto 0;
+      max-width: 350px;
+      white-space: nowrap;
+      overflow: hidden;
 
       .text-row-container {
-          display: flex;
+        display: flex;
       }
 
       .name {
         min-height: 15px;
         margin: 0 0 1px;
         font: 800 12px/15px $nunito-sans;
+        text-overflow: ellipsis;
+        overflow: hidden;
       }
 
       .document-name {
         margin: auto 6px auto 0;
         font: 800 10px/13px $nunito-sans;
         color: $gray-color;
+        text-overflow: ellipsis;
+        overflow: hidden;
       }
 
     }

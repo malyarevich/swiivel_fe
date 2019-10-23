@@ -44,4 +44,8 @@ export class GeneralInfoSectionComponent implements OnInit {
   getFormErrorsById(id) {
     return this.formErrors[id] ? this.formErrors[id] : {};
   }
+
+  getWidth(field: Field): string {
+    return field.width ? field.width : 'quarter';
+  }
 }

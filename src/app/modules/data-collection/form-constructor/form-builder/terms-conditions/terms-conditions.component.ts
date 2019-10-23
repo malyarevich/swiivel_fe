@@ -10,6 +10,11 @@ import {TermsConditions} from "../../../../../models/data-collection/form-constr
 export class TermsConditionsComponent implements OnInit {
   @Input() termsConditions: TermsConditions;
 
+  public textarea = {
+    rows: 5,
+    cols: undefined,
+    editable: true
+  };
   isExpand: boolean = true;
 
   SIGNATURE_TYPES = SIGNATURE_TYPES;

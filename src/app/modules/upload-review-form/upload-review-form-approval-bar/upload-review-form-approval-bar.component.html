@@ -20,30 +20,30 @@
         <i class="fas fa-step-forward button_ico"></i>Skip
       </sw-button>
     </div>
-    <div class="document-approval-bar__button">
+    <div class="document-approval-bar__button document-approval-bar__second">
       <sw-button
         [style]="colors.WHITE"
         (click)="changeStatus.emit(statuses.need_review)"
-        [disabled]="document.status === 'unassigned' || disabled">
+        [disabled]="document.status == 'unassigned' || disabled || isSaveActive">
         Need Further Review
       </sw-button>
     </div>
     <div class="document-approval-bar__button">
       <sw-button
         (click)="changeStatus.emit(statuses.rejected)"
-        [disabled]="document.status === 'unassigned' || disabled">
+        [disabled]="document.status == 'unassigned' || disabled || isSaveActive">
         Reject
       </sw-button>
     </div>
-    <div class="document-approval-bar__button">
+    <div class="document-approval-bar__button document-approval-bar__button-last">
       <sw-button
         (click)="changeStatus.emit(statuses.approved)"
-        [disabled]="document.status === 'unassigned' || disabled">
+        [disabled]="document.status == 'unassigned' || disabled || isSaveActive">
         Approve
       </sw-button>
     </div>
     <div class="document-approval-bar__button">
-      <sw-button [disabled]="true">Save</sw-button>
+      <sw-button (click)="saveDocument.emit()" [disabled]="!isSaveActive">Save</sw-button>
     </div>
   </div>
 </div>

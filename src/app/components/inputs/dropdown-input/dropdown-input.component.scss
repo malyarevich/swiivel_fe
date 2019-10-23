@@ -24,23 +24,17 @@
         }
       }
     }
+
+    &__row {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+
     &__input {
       height: 13px;
       display: flex;
       align-items: center;
-
-      &.hide-label {
-
-        &.many {
-          margin: 2px 0;
-        }
-
-        .text {
-          margin-top: 0;
-        }
-
-      }
-
       .text {
         font-style: normal;
         font-size: 12px;
@@ -91,6 +85,42 @@
   .dropdown_input_container {
     min-height: 25px;
     padding: 4px 10px;
+  }
+}
+
+:host(.online_form) {
+  .dropdown_input_container {
+    min-height: 3rem;
+
+    &.empty:not(:focus-within) {
+      & .label {
+        top: .75rem;
+        font-size: 1.5rem;
+      }
+    }
+
+    &__row {
+      padding-top: 0.5rem;
+    }
+
+    &__input {
+      & .text {
+        margin-top: 0;
+        font-size: 1rem;
+      }
+
+      &.many {
+        border-radius: 0.25rem;
+        margin-right: 0.25rem;
+        margin-top: 0.25rem;
+      }
+    }
+
+    & .span {
+      left: 1.25rem;
+      right: 1.25rem;
+      font-size: 1.5rem;
+    }
   }
 }
 

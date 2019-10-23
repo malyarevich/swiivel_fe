@@ -4,7 +4,7 @@ import { map } from 'rxjs/operators';
 import { ShortTextFieldComponent } from '../online-form-fields/short-text-field/short-text-field.component';
 import { LongTextFieldComponent } from '../online-form-fields/long-text-field/long-text-field.component';
 import { NumberTextFieldComponent } from '../online-form-fields/number-text-field/number-text-field.component';
-import { MultipleOptionsFieldComponent } from '../online-form-fields/multiple-options-field/multiple-options-field.component';
+import { CheckboxFieldComponent } from '../online-form-fields/checkbox-field/checkbox-field.component';
 import { DropDownListFieldComponent } from '../online-form-fields/drop-down-list-field/drop-down-list-field.component';
 import { DateTimeFieldComponent } from '../online-form-fields/date-time-field/date-time-field.component';
 import { TimeFieldComponent } from '../online-form-fields/time-field/time-field.component';
@@ -45,7 +45,7 @@ export type IFormField =
   | typeof ShortTextFieldComponent
   | typeof LongTextFieldComponent
   | typeof NumberTextFieldComponent
-  | typeof MultipleOptionsFieldComponent
+  | typeof CheckboxFieldComponent
   | typeof DropDownListFieldComponent
   | typeof DateTimeFieldComponent
   | typeof TimeFieldComponent
@@ -80,10 +80,10 @@ export class OnlineFormService {
     [101, ShortTextFieldComponent],
     [102, LongTextFieldComponent],
     [103, NumberTextFieldComponent],
-    [104, MultipleOptionsFieldComponent],
+    [104, TimeFieldComponent],
     [105, DropDownListFieldComponent],
     [106, DateTimeFieldComponent],
-    [107, TimeFieldComponent],
+    [107, CheckboxFieldComponent],
     [108, EmailFieldComponent],
     [109, PhoneNumberFieldComponent],
     [110, HebrewDateFieldComponent],
@@ -143,6 +143,7 @@ export class OnlineFormService {
   getOneForm(id = this.formId): Observable<any> {
     if (id) {
       return this.http.get(`/proxy/forms/online/link/${id}`).pipe(
+        // return this.http.get(`/proxy/forms/online/${id}`).pipe(
         map(response => {
           // this.setFormValues(response['data']['fieldsData']);
           this.setFormValues(response.fieldsData);
@@ -170,11 +171,24 @@ export class OnlineFormService {
 
   sendForm(form: object = {}): Observable<any> {
     if (this.formId) {
-      return this.http
-        .put(`/proxy/forms/online/link/${this.formId}`, form)
-        .pipe(map(response => response));
+      return (
+        this.http
+          .put(`/proxy/forms/online/link/${this.formId}`, form)
+          // .put(`/proxy/forms/online/${this.formId}`, form)
+          .pipe(map(response => response))
+      );
     }
     console.error('Id of form is undefined');
+    return undefined;
+  }
+
+  sendFormTemplate(form: object = {}): Observable<any> {
+    if (this.formId) {
+      return this.http
+        .put(`/proxy/forms/online/${this.formId}`, form)
+        .pipe(map(response => response));
+    }
+    console.error('Id of template is undefined');
     return undefined;
   }
 

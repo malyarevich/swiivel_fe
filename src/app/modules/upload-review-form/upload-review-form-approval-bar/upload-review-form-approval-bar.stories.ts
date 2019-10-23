@@ -8,16 +8,17 @@ import {
   UploadReviewFormApprovalBarComponent
 } from '@modules/upload-review-form/upload-review-form-approval-bar/upload-review-form-approval-bar.component';
 import { ButtonComponent } from '@shared/buttons/button/button.component';
+import { SpinnerComponent } from '@app/shared/components/spinner/spinner.component';
 
 const stories = storiesOf('Upload Review Form', module);
 
 stories.addDecorator(withKnobs);
 stories.addDecorator(
   moduleMetadata({
-    declarations: [UploadReviewFormApprovalBarComponent, StatusLabelComponent, IconButtonComponent, ButtonComponent],
+    declarations: [UploadReviewFormApprovalBarComponent, StatusLabelComponent, IconButtonComponent, ButtonComponent, SpinnerComponent],
     providers: [UploadReviewFormService, HttpClient, HttpHandler]
   })
-)
+);
 
 const optionsStatus = [
   'approved', 'assigned', 'need_review', 'need_further_review', 'not_started', 'rejected', 'unassigned',

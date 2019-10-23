@@ -25,7 +25,10 @@
           {{ row.label }}
         </div>
         <div class="custom_table__field" *ngFor="let item of row.items">
-          <sw-input-checkbox [formControlName]="item._id">
+          <sw-input-checkbox
+            [formControlName]="item._id"
+            [isActive]="isActive(item)"
+          >
             <span class="label"></span>
           </sw-input-checkbox>
         </div>

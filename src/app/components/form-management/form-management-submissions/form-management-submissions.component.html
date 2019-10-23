@@ -380,7 +380,8 @@
         *cdkRowDef="let form; columns: displayedColumns"
         [hidden]="showSpinner"
         (click)="selectRow(form, $event)"
-        [cdkDetailRow]="form" [cdkDetailRowTpl]="tpl"
+        [cdkDetailRow]="form"
+        [cdkDetailRowTpl]="tpl"
         [cdkDetailExpand]="shouldExpand(form.id)"
       ></tr>
       <tr
@@ -396,11 +397,13 @@
 <a [href]="download.url" [download]="download.filename" #link></a>
 
 <ng-template #tpl let-form>
-    <tr class="expanded-row">
-        <td [attr.colspan]="displayedColumns.length">
-            <app-online-form-view
-                [formID]="form.id"
-            ></app-online-form-view>
-        </td>
-    </tr>
+  <tr class="expanded-row">
+    <td [attr.colspan]="displayedColumns.length">
+      <sw-online-form
+        [formId]="form.id"
+        [isFormReviewMode]="true"
+        [isMenuShow]="true"
+      ></sw-online-form>
+    </td>
+  </tr>
 </ng-template>

@@ -105,7 +105,7 @@ export class CustomTableComponent implements OnInit {
             this.form.fieldsData && this.form.fieldsData[key]
               ? this.form.fieldsData[key]
               : '',
-          disabled: false
+          disabled: true
         },
         isValidate ? validators : null
       )
@@ -114,6 +114,14 @@ export class CustomTableComponent implements OnInit {
 
   ngOnInit() {
     this.addControls(this.table.body);
+  }
+
+  // TODO: check if field is editable
+  isActive(field): boolean {
+    return (
+      !(field.options && field.options.readonly) &&
+      this.fg.controls[field._id].enabled
+    );
   }
 
   isError(i: number): boolean {

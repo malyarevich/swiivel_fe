@@ -1,15 +1,15 @@
 @import "./root-styles.scss";
 
+input.validation_required,
+select.validation_required {
+  border: 1px solid $softgray-color;
+}
+
 input.ng-dirty.ng-invalid,
 input.validation_error,
 select.ng-dirty.ng-invalid,
 select.validation_error {
   border: 1px solid $error-color;
-}
-
-input.validation_required,
-select.validation_required {
-  border: 1px solid $softgray-color;
 }
 
 .error_icon {

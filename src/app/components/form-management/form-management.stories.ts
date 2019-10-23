@@ -13,7 +13,7 @@ import { ProgressLineBarComponent } from '@app/components/bars/progress-line-bar
 import { PopupComponent } from '@app/core/components/popup/popup.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CdkDetailRowDirective } from '@app/utils/directives/cdk-detail-row.directive';
-import { OnlineFormModule } from '@app/modules/data-collection/online-form/online-form.module';
+import { OnlineFormModule } from '@app/modules/online-form/online-form.module';
 import { FormManagementDataSource } from './form-management-submissions/mock-datasource';
 import { FormManagementSubmissionsComponent } from './form-management-submissions/form-management-submissions.component';
 import { IconsEnum } from '@app/components/icons.enum';

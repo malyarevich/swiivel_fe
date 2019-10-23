@@ -1,0 +1,35 @@
+@import 'index';
+
+:host {
+  width: 187px;
+  right: 0;
+  position: absolute;
+  top: 13px;
+  border-radius: 3px 0 0 3px;
+  padding: 10px;
+  background: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+
+  .settings-header {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px 0 5px;
+  }
+
+  .settings-header-text {
+    margin: 0;
+    color: $element-base-color;
+    font: 800 11px/17px $nunito-sans;
+    text-transform: uppercase;
+  }
+
+  .settings-hr {
+    margin: 10px 0 15px;
+    border-top: 1px solid $gray-color;
+  }
+
+  .settings-field {
+    margin: 0 0 5px;
+  }
+}
