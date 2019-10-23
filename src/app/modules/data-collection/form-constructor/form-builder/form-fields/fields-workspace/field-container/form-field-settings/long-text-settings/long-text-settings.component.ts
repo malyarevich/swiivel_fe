@@ -1,6 +1,11 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Field, ITypeFieldSettings} from "@app/models/data-collection/field.model";
+import {Field, ITypeFieldSettings, fieldValidators} from "@app/models/data-collection/field.model";
 import {FormBuilder, FormGroup, FormControl} from "@angular/forms";
+
+export const aLongTextCriteriaValidators: string[] = [
+  fieldValidators.Alphabetic,
+  fieldValidators.Alphanumeric
+];
 
 @Component({
   selector: 'app-long-text-settings',
@@ -38,8 +43,8 @@ export class LongTextSettingsComponent  {
       columnWide: new FormControl([]),
       rowHeigth: new FormControl([]),
       validators: new FormGroup({
-        minLength: new FormControl(null),
-        maxLength: new FormControl(null),
+        [fieldValidators.minLength]: new FormControl(null),
+        [fieldValidators.maxLength]: new FormControl(null),
         criteria: new FormControl([])
       })
     });
@@ -59,8 +64,8 @@ export class LongTextSettingsComponent  {
       rowHeigth: f.options.rowHeigth || null,
       validators: {
         criteria: f.validators.criteria ? f.validators.criteria : null,
-        minLength: f.validators.minLength || null,
-        maxLength: f.validators.maxLength || null,
+        [fieldValidators.minLength]: f.validators.minLength || null,
+        [fieldValidators.maxLength]: f.validators.maxLength || null,
       }
     });
   }

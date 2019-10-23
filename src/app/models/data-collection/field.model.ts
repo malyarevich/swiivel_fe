@@ -81,6 +81,24 @@ export interface GroupSectionOptions {
   isMakeExpandButtonVisible?: boolean;
 }
 
+export const fieldValidators = {
+  Alphabetic: 'Alphabetic',
+  Alphanumeric: 'Alphanumeric',
+  Url: 'Url',
+  DecimalPlace: 'Decimal Place',
+  Percentage: 'Percentage',
+  CurrencyUS: 'Currency US',
+  CurrencyCanada: 'Currency Canada',
+  phone: 'phone',
+  verifyPhone: 'verifyPhone',
+  minLength: 'minLength',
+  maxLength: 'maxLength',
+  min: 'min',
+  max: 'max',
+  Email: 'Email',
+  required: 'required'
+} 
+
 export interface ITypeFieldSettings {
   //ShortTextSettings
   minSizeChar?: number;

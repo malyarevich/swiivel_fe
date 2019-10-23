@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Field } from "../../../../../../../../../models/data-collection/field.model";
+import { Field, fieldValidators } from "../../../../../../../../../models/data-collection/field.model";
 import { FormBuilder, FormGroup, FormControl } from "@angular/forms";
 
 @Component({
@@ -40,6 +40,7 @@ export class EmailSettingsComponent {
       askForConfirm: new FormControl(false),
     });
     this.form.valueChanges.subscribe(v => {
+      v.validators[fieldValidators.Email] = true;
       this.updateField(v);
     });
   }

@@ -3,7 +3,8 @@ import {
   Component,
   OnInit,
   OnDestroy,
-  Input
+  Input,
+  OnChanges
 } from "@angular/core";
 import { Location } from "@angular/common";
 import { ActivatedRoute } from "@angular/router";
@@ -33,6 +34,18 @@ import {
   defaultCurrentPosition,
   IFormNavigationState
 } from "./models/online-form.model";
+import {
+  phoneNumberValidator,
+  alphabeticValidator,
+  alphanumericValidator,
+  emailValidator,
+  numericValidator,
+  urlValidator,
+  minValueValidator,
+  maxValueValidator
+} from "@app/core/validators";
+import { fieldValidators } from "@app/models/data-collection/field.model";
+import { customTable } from "./models/custom-table.model";
 
 @Component({
   selector: "sw-online-form",
@@ -40,13 +53,17 @@ import {
   styleUrls: ["./online-form.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class OnlineFormComponent implements OnInit, OnDestroy {
+export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
   @Input() formId: string = "";
   @Input() isMenuShow: boolean = true;
   @Input() isFormReviewMode: boolean = false;
   @Input() isViewMode: boolean = false;
-  form: Form;
-  fg: FormGroup;
+  @Input() isReviewMode: boolean = false;
+  // form: Form;
+  // fg: FormGroup;
+  form$: BehaviorSubject<Form> = new BehaviorSubject(null);
+  fg$: BehaviorSubject<FormGroup> = new BehaviorSubject(null);
+  isReady$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   formNavigationState$: BehaviorSubject<
     IFormNavigationState[]
@@ -75,28 +92,28 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
   E_SIGNATURE_TYPES: object = E_SIGNATURE_TYPES;
 
   destroyedSaveForm$ = new Subject();
-  _isReady$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(
-    private route: ActivatedRoute,
     private onlineFormService: OnlineFormService,
     private location: Location
   ) {}
 
   ngOnInit() {
-    this._isReady$.subscribe();
     this.getForm();
   }
 
-  get isReady$(): Observable<boolean> {
-    return this._isReady$.asObservable();
+  ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
+    if (changes.formId && changes.formId.previousValue !== undefined) {
+      this.isReady$.next(false);
+      this.getForm();
+    }
   }
 
   isHaveSense(): boolean {
     return (
-      this.form.activeSections &&
-      Object.keys(this.form.activeSections).length > 0 &&
-      this.form.activeSections.constructor === Object
+      this.form$.getValue().activeSections &&
+      Object.keys(this.form$.getValue().activeSections).length > 0 &&
+      this.form$.getValue().activeSections.constructor === Object
     );
   }
 
@@ -108,23 +125,39 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
     this.initRequiredList();
     this.initFormControls();
 
-    this._isReady$.next(true);
+    this.onlineFormService.setFormGroup(this.fg$.getValue());
+    this.isReady$.next(true);
     // if (!this.isViewMode$.getValue()) {
-    this.fgStatusChangesSubscription = this.fg.statusChanges.subscribe(() => {
-      this.pagesPercents$.next(
-        this.getRecountedPagesPercentsByPage(
-          this.currentPosition$.getValue().page
-        )
-      );
-    });
-    this.fgValueChangesSubscription = this.fg.valueChanges.subscribe(() => {
-      this.isFormStatusChanged = true;
-    });
+    this.fgStatusChangesSubscription = this.fg$
+      .getValue()
+      .statusChanges.subscribe(() => {
+        this.pagesPercents$.next(
+          this.getRecountedPagesPercentsByPage(
+            this.currentPosition$.getValue().page
+          )
+        );
+      });
+    this.fgValueChangesSubscription = this.fg$
+      .getValue()
+      .valueChanges.subscribe(() => {
+        this.isFormStatusChanged = true;
+      });
     // }
   }
 
   failedLoading() {
-    this._isReady$.next(true);
+    this.isReady$.next(true);
+  }
+
+  formSubscriber(form: Form) {
+    this.form$.next(form);
+    console.log('Form by BE: ', this.form$.getValue());
+
+    if (this.isHaveSense()) {
+      this.loadingProcess();
+    } else {
+      this.failedLoading();
+    }
   }
 
   getForm(): void {
@@ -135,31 +168,23 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
     // });
     if (this.isViewMode) {
       // template by id
+      if (this.getOneFormSubscription) {
+        this.getOneFormSubscription.unsubscribe();
+      }
       this.getOneFormSubscription = this.onlineFormService
         .getTemplateForm()
         .subscribe((form: Form) => {
-          this.form = form;
-          console.log(this.form);
-
-          if (this.isHaveSense()) {
-            this.loadingProcess();
-          } else {
-            this.failedLoading();
-          }
+          this.formSubscriber(form);
         });
     } else {
       // form by link
+      if (this.getOneFormSubscription) {
+        this.getOneFormSubscription.unsubscribe();
+      }
       this.getOneFormSubscription = this.onlineFormService
         .getOneForm()
         .subscribe((form: Form) => {
-          this.form = form;
-          console.log(this.form);
-
-          if (this.isHaveSense()) {
-            this.loadingProcess();
-          } else {
-            this.failedLoading();
-          }
+          this.formSubscriber(form);
         });
     }
   }
@@ -167,7 +192,8 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
   calcPercentByPage(page): number {
     const filteredList = this.requiredListByPage[page].filter(key => {
       return (
-        this.fg.controls[key].valid && this.fg.controls[key].value !== false
+        this.fg$.getValue().controls[key].valid &&
+        this.fg$.getValue().controls[key].value !== false
       );
     });
     return this.requiredListByPage[page].length > 0
@@ -188,7 +214,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
 
   initForm(): void {
     this.onlineFormService.initOneForm();
-    this.fg = this.onlineFormService.getFormGroup();
+    this.fg$.next(this.onlineFormService.getFormGroup());
   }
 
   initNavigation(): void {
@@ -222,10 +248,15 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
 
   initConsentInfo(): ISectionTab[] {
     let tabs = [];
-    if (this.form.consentInfo && this.form.consentInfo.consents.length > 0) {
-      tabs = Object.values(this.form.consentInfo.consents).map(item => {
-        return { _id: item["id"], name: item["title"] };
-      });
+    if (
+      this.form$.getValue().consentInfo &&
+      this.form$.getValue().consentInfo.consents.length > 0
+    ) {
+      tabs = Object.values(this.form$.getValue().consentInfo.consents).map(
+        item => {
+          return { _id: item["id"], name: item["title"] };
+        }
+      );
     } else {
       tabs.push({ _id: mainMenuNames.consentInfo, name: "Consent section" });
     }
@@ -241,8 +272,11 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
 
   initGeneralInfo(): ISectionTab[] {
     let tabs = [];
-    if (this.form.fields && this.form.fields.length > 0) {
-      tabs = this.form.fields.filter(item => {
+    if (
+      this.form$.getValue().fields &&
+      this.form$.getValue().fields.length > 0
+    ) {
+      tabs = this.form$.getValue().fields.filter(item => {
         return item.type === 114;
       });
     } else {
@@ -254,11 +288,11 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
   initPacketIntroduction(): ISectionTab[] {
     const tabs = [];
     // if (
-    //   this.form.packetIntroduction &&
-    //   this.form.packetIntroduction.packets &&
-    //   this.form.packetIntroduction.packets.length > 0
+    //   this.form$.getValue().packetIntroduction &&
+    //   this.form$.getValue().packetIntroduction.packets &&
+    //   this.form$.getValue().packetIntroduction.packets.length > 0
     // ) {
-    //   tabs = Object.values(this.form.packetIntroduction.packets).map(item => {
+    //   tabs = Object.values(this.form$.getValue().packetIntroduction.packets).map(item => {
     //     return { _id: item["id"], name: item["title"] };
     //   });
     // } else {
@@ -268,8 +302,8 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
     //   });
     // }
     if (
-      this.form.packetIntroduction &&
-      this.form.packetIntroduction.content !== ""
+      this.form$.getValue().packetIntroduction &&
+      this.form$.getValue().packetIntroduction.content !== ""
     ) {
       tabs.push({
         _id: mainMenuNames.packetIntroduction + "__active",
@@ -294,11 +328,11 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
   initPaymentSettings(): ISectionTab[] {
     const tabs = [];
     // if (
-    //   this.form.paymentSettings &&
-    //   this.form.paymentSettings.paymentSettingsItems.length > 0
+    //   this.form$.getValue().paymentSettings &&
+    //   this.form$.getValue().paymentSettings.paymentSettingsItems.length > 0
     // ) {
     //   this.sections = Object.values(
-    //     this.form.paymentSettings.paymentSettingsItems
+    //     this.form$.getValue().paymentSettings.paymentSettingsItems
     //   ).map(item => {
     //     return { _id: item["id"], name: item["title"] };
     //   });
@@ -317,12 +351,12 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
   initTermsConditions(): ISectionTab[] {
     const tabs = [];
     if (
-      this.form.termsConditions &&
-      this.form.termsConditions.termsConditionsItems &&
-      this.form.termsConditions.termsConditionsItems.length > 0
+      this.form$.getValue().termsConditions &&
+      this.form$.getValue().termsConditions.termsConditionsItems &&
+      this.form$.getValue().termsConditions.termsConditionsItems.length > 0
     ) {
       // Object.values(
-      //   this.form.termsConditions.termsConditionsItems
+      //   this.form$.getValue().termsConditions.termsConditionsItems
       // ).map(item => {
       //   return { _id: item["id"], name: item["title"] };
       // });
@@ -343,11 +377,11 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
   initTuitionContract(): ISectionTab[] {
     const tabs = [];
     // if (
-    //   this.form.paymentSettings &&
-    //   this.form.paymentSettings.paymentSettingsItems.length > 0
+    //   this.form$.getValue().paymentSettings &&
+    //   this.form$.getValue().paymentSettings.paymentSettingsItems.length > 0
     // ) {
     //   this.sections = Object.values(
-    //     this.form.paymentSettings.paymentSettingsItems
+    //     this.form$.getValue().paymentSettings.paymentSettingsItems
     //   ).map(item => {
     //     return { _id: item["id"], name: item["title"] };
     //   });
@@ -407,10 +441,10 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
     const activeMenuList: IFormNavigationState[] = [];
     // TODO: remove after create packetIntroduction
     activeMenuList.push({ page: "packetIntroduction" });
-    for (const page in this.form.activeSections) {
+    for (const page in this.form$.getValue().activeSections) {
       if (
-        this.form.activeSections[page] &&
-        this.form.activeSections[page].isActive
+        this.form$.getValue().activeSections[page] &&
+        this.form$.getValue().activeSections[page].isActive
       ) {
         activeMenuList.push({ page: page });
       }
@@ -428,11 +462,11 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
     });
     // also load by server
     if (
-      typeof this.form.pagesPercents !== "undefined" &&
-      this.form.pagesPercents.length > 0
+      typeof this.form$.getValue().pagesPercents !== "undefined" &&
+      this.form$.getValue().pagesPercents.length > 0
     ) {
       const pagePercentByServer: object = {};
-      this.form.pagesPercents.forEach(elem => {
+      this.form$.getValue().pagesPercents.forEach(elem => {
         pagePercentByServer[elem.page] = elem["percent"];
       });
       this.pagesPercents$.next(
@@ -508,13 +542,14 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
     defaultValue: string | boolean | number | object | object[] = "",
     isDisabled: boolean = false
   ): void {
-    this.fg.addControl(
+    this.fg$.getValue().addControl(
       key,
       new FormControl(
         {
           value:
-            this.form.fieldsData && this.form.fieldsData[key]
-              ? this.form.fieldsData[key]
+            this.form$.getValue().fieldsData &&
+            this.form$.getValue().fieldsData[key]
+              ? this.form$.getValue().fieldsData[key]
               : defaultValue,
           disabled: isRequired ? false : isDisabled // || this.isViewMode$.getValue()
         },
@@ -525,7 +560,10 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
   }
 
   initConsentFormControls() {
-    if (this.form.consentInfo && this.form.consentInfo.consents.length > 0) {
+    if (
+      this.form$.getValue().consentInfo &&
+      this.form$.getValue().consentInfo.consents.length > 0
+    ) {
       const consentKeys = [
         "__checkbox",
         "__external_parent",
@@ -540,27 +578,29 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
       ];
 
       consentKeys.forEach(key => {
-        Object.values(this.form.consentInfo.consents).forEach(item => {
-          if (
-            item.id &&
-            this.filterSignatureBySignatureAndKey(item.signature, key)
-          ) {
-            this.consentKeys.push(item.id + key);
-            const isRequired =
-              key === "__checkbox"
-                ? item.checkbox.isActive
-                : item.signature.isRequire;
-            const label = key === "__checkbox" ? "Checkbox" : "Signature";
+        Object.values(this.form$.getValue().consentInfo.consents).forEach(
+          item => {
+            if (
+              item.id &&
+              this.filterSignatureBySignatureAndKey(item.signature, key)
+            ) {
+              this.consentKeys.push(item.id + key);
+              const isRequired =
+                key === "__checkbox"
+                  ? item.checkbox.isActive
+                  : item.signature.isRequire;
+              const label = key === "__checkbox" ? "Checkbox" : "Signature";
 
-            this.addToFieldLists(
-              mainMenuNames.consentInfo,
-              item.id + key,
-              isRequired,
-              label
-            );
-            this.addControl(item.id + key, isRequired);
+              this.addToFieldLists(
+                mainMenuNames.consentInfo,
+                item.id + key,
+                isRequired,
+                label
+              );
+              this.addControl(item.id + key, isRequired);
+            }
           }
-        });
+        );
       });
     }
   }
@@ -590,30 +630,32 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
       forms.forEach(form => {
         if (form["form"] !== null) {
           const pdfFile = form["form"]["fieldsPdf"];
-          pdfFile.forEach(pdfPage => {
-            pdfPage.forEach(pdfField => {
-              if (pdfField["id"]) {
-                const key = pdfField["id"];
-                const isRequired =
-                  pdfField["linkedField"] &&
-                  pdfField["linkedField"]["options"] &&
-                  pdfField["linkedField"]["options"]["required"]
-                    ? true
-                    : false;
-                const label =
-                  pdfField["linkedField"] && pdfField["linkedField"]["name"]
-                    ? pdfField["linkedField"]["name"]
-                    : "Field";
-                this.addToFieldLists(
-                  mainMenuNames.documentsForms,
-                  key,
-                  isRequired,
-                  label
-                );
-                this.addControl(key, isRequired);
-              }
+          if (pdfFile) {
+            pdfFile.forEach(pdfPage => {
+              pdfPage.forEach(pdfField => {
+                if (pdfField["id"]) {
+                  const key = pdfField["id"];
+                  const isRequired =
+                    pdfField["linkedField"] &&
+                    pdfField["linkedField"]["options"] &&
+                    pdfField["linkedField"]["options"]["required"]
+                      ? true
+                      : false;
+                  const label =
+                    pdfField["linkedField"] && pdfField["linkedField"]["name"]
+                      ? pdfField["linkedField"]["name"]
+                      : "Field";
+                  this.addToFieldLists(
+                    mainMenuNames.documentsForms,
+                    key,
+                    isRequired,
+                    label
+                  );
+                  this.addControl(key, isRequired);
+                }
+              });
             });
-          });
+          }
         }
       });
     }
@@ -640,19 +682,155 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
   getComposedValidatorsByField(field) {
     const arrayValidators = [];
 
-    if (field.options.required) {
+    if (
+      field.options &&
+      field.options.validators &&
+      field.options.validators.phone &&
+      field.options.validators.verifyPhone
+    ) {
+      arrayValidators.push(phoneNumberValidator);
+    }
+
+    if (field.options && field.options.required) {
       arrayValidators.push(Validators.required);
     }
 
-    if (field.options.minFieldSize) {
-      arrayValidators.push(Validators.minLength(field.options.minFieldSize));
-    }
+    // if (
+    //   field.options &&
+    //   field.options.validators &&
+    //   field.options.validators.minLength
+    // ) {
+    //   arrayValidators.push(
+    //     Validators.minLength(field.options.validators.minLength)
+    //   );
+    // }
 
-    if (field.options.maxFieldSize) {
-      arrayValidators.push(Validators.maxLength(field.options.maxFieldSize));
+    // if (
+    //   field.options &&
+    //   field.options.validators &&
+    //   field.options.validators.maxLength
+    // ) {
+    //   arrayValidators.push(
+    //     Validators.maxLength(field.options.validators.maxLength)
+    //   );
+    // }
+
+    if (field.options && field.options.validators) {
+      console.log('field.options.validators:', field.options.validators);
+      Object.keys(field.options.validators).forEach(key => {
+        switch (key) {
+          case fieldValidators.Alphabetic:
+            if (field.options.validators[key]) {
+              arrayValidators.push(alphabeticValidator);
+            }
+            break;
+          case fieldValidators.Alphanumeric:
+            if (field.options.validators[key]) {
+              arrayValidators.push(alphanumericValidator);
+            }
+            break;
+          case fieldValidators.CurrencyCanada:
+            if (field.options.validators[key]) {
+              // arrayValidators.push(currencyCanadaValidator);
+            }
+            break;
+          case fieldValidators.CurrencyUS:
+            if (field.options.validators[key]) {
+              // arrayValidators.push(currencyUSValidator);
+            }
+            break;
+          case fieldValidators.DecimalPlace:
+            if (field.options.validators[key]) {
+              arrayValidators.push(numericValidator);
+            }
+            break;
+          case fieldValidators.Email:
+            if (field.options.validators[key]) {
+              arrayValidators.push(emailValidator);
+            }
+            break;
+          case fieldValidators.Percentage:
+            if (field.options.validators[key]) {
+              arrayValidators.push();
+            }
+            break;
+          case fieldValidators.Url:
+            if (field.options.validators[key]) {
+              arrayValidators.push(urlValidator);
+            }
+            break;
+          case fieldValidators.max:
+            if (field.options.validators[key]) {
+              arrayValidators.push(
+                maxValueValidator(field.options.validators.max)
+              );
+            }
+            break;
+          case fieldValidators.maxLength:
+            if (field.options.validators[key]) {
+              arrayValidators.push(
+                Validators.maxLength(field.options.validators.maxLength)
+              );
+            }
+            break;
+          case fieldValidators.min:
+            if (field.options.validators[key]) {
+              arrayValidators.push(
+                minValueValidator(field.options.validators.min)
+              );
+            }
+            break;
+          case fieldValidators.minLength:
+            if (field.options.validators[key]) {
+              arrayValidators.push(
+                Validators.minLength(field.options.validators.minLength)
+              );
+            }
+            break;
+          case fieldValidators.phone:
+            if (
+              field.options.validators[key] &&
+              field.options.validators.verifyPhone
+            ) {
+              arrayValidators.push(phoneNumberValidator);
+            }
+            break;
+          case fieldValidators.verifyPhone:
+            break;
+          case fieldValidators.required:
+            // console.log('options: ', field.options)
+            if (field.options.validators[key]) {
+              arrayValidators.push(Validators.required);
+            }
+            break;
+
+          default:
+            console.log("New validator case: ", key);
+            break;
+        }
+      });
     }
 
     return arrayValidators;
+  }
+
+  initCustomTable(body) {
+    body.forEach(row => {
+      row.items.forEach(field => {
+        const isRequired = false;
+        const validators = this.requiredValidator;
+        const defaultValue = false;
+        const isDisabled = false;
+        this.addControl(
+          field._id,
+          isRequired,
+          validators,
+          defaultValue,
+          isDisabled
+        );
+        // this.addControl(field._id);
+      });
+    });
   }
 
   initGeneralInfoFormControls(fields) {
@@ -691,10 +869,14 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
         }
       });
     }
+    this.initCustomTable(customTable.body);
   }
 
   initPacketIntroductionFormControls() {
-    if (this.form.packetIntroduction && this.form.packetIntroduction.content) {
+    if (
+      this.form$.getValue().packetIntroduction &&
+      this.form$.getValue().packetIntroduction.content
+    ) {
       const key = mainMenuNames.packetIntroduction;
       this.addToFieldLists(mainMenuNames.packetIntroduction, key);
       this.addControl(key);
@@ -703,8 +885,8 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
 
   initTermsConditionsFormControls() {
     if (
-      this.form.termsConditions &&
-      this.form.termsConditions.termsConditionsItems.length > 0
+      this.form$.getValue().termsConditions &&
+      this.form$.getValue().termsConditions.termsConditionsItems.length > 0
     ) {
       const termsConditionsKeys = [
         "termsConditions__external_parent",
@@ -718,12 +900,14 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
         "termsConditions__wet_mother"
       ];
 
-      const isRequired = this.form.termsConditions["signature"]["isRequire"];
+      const isRequired = this.form$.getValue().termsConditions["signature"][
+        "isRequire"
+      ];
 
       termsConditionsKeys
         .filter(key => {
           return this.filterSignatureBySignatureAndKey(
-            this.form.termsConditions.signature,
+            this.form$.getValue().termsConditions.signature,
             key
           );
         })
@@ -739,31 +923,31 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
           this.addControl(key, isRequired);
         });
 
-      Object.values(this.form.termsConditions.termsConditionsItems).forEach(
-        item => {
-          if (item.id) {
-            const key = item.id + "__checkbox";
-            this.termsConditionsKeys.push(key);
-            const isRequired = item.checkbox.isActive;
-            const label = "Signature";
-            this.addToFieldLists(
-              mainMenuNames.termsConditions,
-              key,
-              isRequired,
-              label
-            );
-            this.addControl(key, isRequired);
-          }
+      Object.values(
+        this.form$.getValue().termsConditions.termsConditionsItems
+      ).forEach(item => {
+        if (item.id) {
+          const key = item.id + "__checkbox";
+          this.termsConditionsKeys.push(key);
+          const isRequired = item.checkbox.isActive;
+          const label = "Signature";
+          this.addToFieldLists(
+            mainMenuNames.termsConditions,
+            key,
+            isRequired,
+            label
+          );
+          this.addControl(key, isRequired);
         }
-      );
+      });
     }
   }
 
   initFormControls() {
     this.initConsentFormControls();
-    this.initDocumentsFormControls(this.form.documents);
-    this.initFormsFormControls(this.form.forms);
-    this.initGeneralInfoFormControls(this.form.fields);
+    this.initDocumentsFormControls(this.form$.getValue().documents);
+    this.initFormsFormControls(this.form$.getValue().forms);
+    this.initGeneralInfoFormControls(this.form$.getValue().fields);
     this.initPacketIntroductionFormControls();
     this.initTermsConditionsFormControls();
   }
@@ -802,7 +986,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
       });
     } else {
       // TODO: need business clarification for this branch of code
-      this.goBackLocation();
+      // this.goBackLocation();
     }
   }
 
@@ -960,15 +1144,17 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
 
   composeSectionGroupFieldsErrors(): object {
     const generalInfo = this.getFieldsForSectionGroupByFormFields(
-      this.form.fields
+      this.form$.getValue().fields
     ); // OK
-    const documents = this.getFieldsForSectionByDocuments(this.form.documents);
-    const forms = this.getFieldsForSectionByForms(this.form.forms);
+    const documents = this.getFieldsForSectionByDocuments(
+      this.form$.getValue().documents
+    );
+    const forms = this.getFieldsForSectionByForms(this.form$.getValue().forms);
     const consentInfo = this.getFieldsForSectionByConcent(
-      this.form.consentInfo["consents"]
+      this.form$.getValue().consentInfo["consents"]
     );
     const termsConditions = this.getFieldsForSectionByTermsConditions(
-      this.form.termsConditions["termsConditionsItems"]
+      this.form$.getValue().termsConditions["termsConditionsItems"]
     );
     return Object.assign(
       {},
@@ -991,7 +1177,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
       // TODO: change to commented code when back-end will be ready
       savingObj.fieldListByPage = this.fieldListByPage;
       savingObj.currentPosition = this.currentPosition$.getValue();
-      savingObj.fieldsData = this.fg.value;
+      savingObj.fieldsData = this.fg$.getValue().value;
 
       if (this.isViewMode) {
         this.onlineFormService
@@ -1065,7 +1251,6 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this._isReady$.unsubscribe();
     this.destroyedSaveForm$.next();
     if (this.fgStatusChangesSubscription) {
       this.fgStatusChangesSubscription.unsubscribe();
