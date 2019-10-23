@@ -1,12 +1,12 @@
 import { storiesOf, moduleMetadata } from '@storybook/angular';
-import { select, text, withKnobs } from '@storybook/addon-knobs';
-import { APP_BASE_HREF, CommonModule } from '@angular/common';
+import { withKnobs } from '@storybook/addon-knobs';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { OverlayModule } from "@angular/cdk/overlay";
 import { CdkTableModule } from '@angular/cdk/table';
 import { SharedModule } from '@shared/shared.module';
 import { FormSubmissionsListParams } from '@app/models/form-submissions-list.model';
-import { StatusColors } from './form-management-submissions.models';
+import { StatusColors } from './form-management-submissions/form-management-submissions.models';
 import { StorybookImports, StorybookProviders } from '@components/utils/storybook';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { ProgressLineBarComponent } from '@app/components/bars/progress-line-bar/progress-line-bar.component';
@@ -14,18 +14,21 @@ import { PopupComponent } from '@app/core/components/popup/popup.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CdkDetailRowDirective } from '@app/utils/directives/cdk-detail-row.directive';
 import { OnlineFormModule } from '@app/modules/online-form/online-form.module';
-import { FormManagementDataSource } from './mock-datasource';
-import { FormManagementSubmissionsComponent } from './form-management-submissions.component';
+import { FormManagementDataSource } from './form-management-submissions/mock-datasource';
+import { FormManagementSubmissionsComponent } from './form-management-submissions/form-management-submissions.component';
 import { IconsEnum } from '@app/components/icons.enum';
+import { Form } from '@models/data-collection/form.model'
+import { mockFormDetails } from './mock-api-responses';
+import { FormManagementComponent } from './form-management.component';
 
-const stories = storiesOf('Form Management Submissions', module);
+const stories = storiesOf('Form Management', module);
 
 stories.addDecorator(withKnobs);
 stories.addDecorator(
   moduleMetadata({ 
     declarations: [
-        FormManagementSubmissionsComponent, ProgressLineBarComponent, 
-        PopupComponent, CdkDetailRowDirective
+        FormManagementComponent, FormManagementSubmissionsComponent, 
+        ProgressLineBarComponent, PopupComponent, CdkDetailRowDirective,
     ],
     imports: [
         CommonModule, FormsModule, SharedModule, CdkTableModule,
@@ -36,6 +39,10 @@ stories.addDecorator(
     entryComponents: [PopupComponent],
   })
 )
+
+const form: Form = mockFormDetails.data.form_data;
+
+// Props for form-management-submissions
 
 const dataSource: FormManagementDataSource = new FormManagementDataSource();
 dataSource.loadFormsList();
@@ -111,22 +118,29 @@ function onExportPDF(form: any) {
 
 stories.add('Default', () => ({
     template: `
-        <sw-form-management-submissions 
-            [dataSource]="dataSource"
-            [displayedColumns]="displayedColumns"
-            [filterFormGroup]="filterFormGroup"
-            [sort]="sort"
-            [currentPage]="currentPage"
-            [statusesOptions]="statusesOptions"
-            [statusesTitles]="statusesTitles"
-            [formSubmissionsListParams]="formSubmissionsListParams"
-            [statusColors]="statusColors"
-            [totalItems]="totalItems"
-            [showSpinner]="showSpinner"
-            (toggleExpand)="onToggleExpand($event)"
+        <sw-form-management
+            [form]="form"
         >
-        </sw-form-management-submissions>`,
+            <sw-form-management-submissions 
+                submissions
+                [dataSource]="dataSource"
+                [displayedColumns]="displayedColumns"
+                [filterFormGroup]="filterFormGroup"
+                [sort]="sort"
+                [currentPage]="currentPage"
+                [statusesOptions]="statusesOptions"
+                [statusesTitles]="statusesTitles"
+                [formSubmissionsListParams]="formSubmissionsListParams"
+                [statusColors]="statusColors"
+                [totalItems]="totalItems"
+                [showSpinner]="showSpinner"
+                (toggleExpand)="onToggleExpand($event)"
+            >
+            </sw-form-management-submissions>
+        <sw-form-management>
+        `,
     props: {
+        form,
         dataSource,
         displayedColumns,
         filterFormGroup,

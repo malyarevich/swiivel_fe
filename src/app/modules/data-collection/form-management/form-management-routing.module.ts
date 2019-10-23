@@ -1,12 +1,18 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {FormManagementComponent} from './form-management.component';
+import { FormManagementContainer } from './form-management.container';
 
 
 export const routes: Routes = [
   {
     path: '',
-    component: FormManagementComponent,
+    component: FormManagementContainer,
+    children: [
+      {
+        path: '',
+        component: FormManagementContainer,
+      },
+    ],
   }
 ];
 

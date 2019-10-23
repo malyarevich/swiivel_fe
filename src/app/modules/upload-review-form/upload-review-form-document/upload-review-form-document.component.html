@@ -6,11 +6,11 @@
     <div
       *ngIf="isDocumentLoading || rotatingPicture"
       [ngClass]="{'loading-spinner': isDocumentLoading, 'rotating-spinner': rotatingPicture}">
-      <app-spinner></app-spinner>
+          <sw-main-spinner [spinnerSize]="sizes.MEDIUM"></sw-main-spinner>
     </div>
     <div [ngClass]="{'rotating': rotatingPicture }">
       <div
-        *ngIf="document && document.content_type.includes('image')"
+        *ngIf="document && document.content_type && document.content_type.includes('image')"
       >
         <img
           class="image"
@@ -25,7 +25,7 @@
         />
       </div>
       <div
-        *ngIf="document && document.content_type.includes('pdf')"
+        *ngIf="document && document.content_type && document.content_type.includes('pdf')"
         [ngStyle]="{opacity: isDocumentLoading ? 0 : 1}"
       >
         <pdf-viewer
