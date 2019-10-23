@@ -6,8 +6,7 @@
     <div
       *ngIf="isDocumentLoading || rotatingPicture"
       [ngClass]="{'loading-spinner': isDocumentLoading, 'rotating-spinner': rotatingPicture}">
-          <app-spinner></app-spinner>
-          <sw-main-spinner></sw-main-spinner>
+          <sw-main-spinner [spinnerSize]="sizes.MEDIUM"></sw-main-spinner>
     </div>
     <div [ngClass]="{'rotating': rotatingPicture }">
       <div

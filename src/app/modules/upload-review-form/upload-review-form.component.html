@@ -10,7 +10,7 @@
   (saveDocument)="onOpenConfirmSavePopup()"
 >
 </app-document-approval-bar>
-<div class="content">
+<div class="content" [ngClass]="{'pdf-form': isOnlineForm()}">
   <div class="sidebar-container" [class.opened]="isSideBarShown">
     <div class="sidebar">
       <div>
@@ -114,7 +114,7 @@
     </div>
   </div>
   <div class="workarea">
-    <div class="sidebar-opener" (click)="isSideBarShown = !isSideBarShown">
+    <div class="sidebar-opener" [class.opened]="isSideBarShown" (click)="isSideBarShown = !isSideBarShown">
       <div class="button">
         <sw-icon-button
           [icon]="isSideBarShown ? icons.CARET_LEFT : icons.CARET_RIGHT"
@@ -134,7 +134,7 @@
       ></app-upload-review-form-document>
     </div>
 
-    <div *ngIf="getSelectForm() && (getSelectForm().submission_type == 'onlineForm' || getSelectForm().submission_type == 'pdfForm')">
+    <div *ngIf="isOnlineForm()">
       <sw-online-form
         [formId]="getSelectForm().form_id"
         [isViewMode]="true"

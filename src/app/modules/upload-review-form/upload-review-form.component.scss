@@ -6,17 +6,44 @@
 
   .content {
     display: flex;
+
+    &.pdf-form {
+      position: relative;
+
+      .workarea {
+        position: absolute;
+        max-height: calc(100vh - 150px);
+        width: calc(100vw - 50px);
+        overflow: scroll;
+      }
+
+      .sidebar-container {
+        z-index: 2;
+      }
+
+      .sidebar-opener {
+        left: 0;
+        transition: ease-in-out 400ms left;
+      }
+
+      .sidebar-opener.opened {
+        left: 295px;
+        transition: ease-in-out 600ms left;
+      }
+    }
   }
 
   .sidebar-opener {
     position: absolute;
     top: 0;
+    left: 0;
     z-index: 2;
     width: 30px;
     height: 44px;
     background: $element-base-color;
     border-radius: 0 3px 3px 0;
     display: flex;
+    transition: ease-in-out 600ms left;
 
     .button {
       margin: auto;
@@ -136,6 +163,7 @@
 
 .footer {
   position: fixed;
+  z-index: 3;
   right: 0;
   bottom: 0;
   width: 100%;

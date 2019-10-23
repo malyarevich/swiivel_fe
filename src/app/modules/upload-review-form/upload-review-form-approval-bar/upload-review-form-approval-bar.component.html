@@ -13,7 +13,7 @@
   </div>
   <div class="document-approval-bar__buttons">
     <div *ngIf="showSpinner" class="spinner">
-      <app-spinner></app-spinner>
+      <sw-main-spinner [spinnerSize]="size.SMALL"></sw-main-spinner>
     </div>
     <div class="document-approval-bar__button">
       <sw-button [style]="colors.WHITE" (click)="skipDocument.emit()" [disabled]="isLast || disabled">
