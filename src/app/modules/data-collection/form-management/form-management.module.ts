@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { FormManagementComponent } from '@app/components/form-management/form-management.component';
+import { FormManagementAnalyticsComponent } from '@app/components/form-management/form-management-analytics/form-management-analytics.component';
 import { FormManagementRoutingModule } from './form-management-routing.module';
 import { FormStatisticModule } from '../form-statistic/form-statistic.module';
 import { SharedRedComponentsModule } from '../../../shared/components/sharedRedComponents.module';
@@ -23,7 +24,7 @@ import { FormManagementAPIService } from './form-management.service';
 @NgModule({
   declarations: [
     FormManagementContainer, FormManagementComponent, FormManagementSubmissionsComponent,
-    ProgressLineBarComponent, CdkDetailRowDirective
+    ProgressLineBarComponent, CdkDetailRowDirective, FormManagementAnalyticsComponent
   ],
   imports: [
     CommonModule,
