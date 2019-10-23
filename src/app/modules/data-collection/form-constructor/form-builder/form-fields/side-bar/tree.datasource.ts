@@ -263,6 +263,10 @@ export class TreeDataSource implements DataSource<any> {
     return this.tree.treeIterator(parent);
   }
 
+  array(parent = this.tree) {
+    return this.tree.treeToArray(parent)
+  }
+
   deActivate(node: Node, recursive = true) {
     node.isActive = false;
     if (this.hasParent(node) && recursive) {
@@ -299,7 +303,6 @@ export class TreeDataSource implements DataSource<any> {
   }
 
   activate(node, recursive = true) {
-    console.log(`Activate ${node.name} ${node.isActive} ${this.hasParent(node)} ${this.hasChildren(node)}`, { ...node })
     node.isActive = true;
     if (this.hasParent(node) && recursive) {
       for (const field of this.parentsOf(node)) {
@@ -311,7 +314,6 @@ export class TreeDataSource implements DataSource<any> {
     if (this.hasChildren(node) && recursive) {
       for (const field of this.tree.treeIterator(node)) {
         field.isActive = true;
-        console.log(`Child ${field.name}`, field.isActive);
       }
     }
     this.reload();

@@ -13,6 +13,8 @@ import { SideBarService } from "../../side-bar/side-bar.service";
 import { Section } from "src/app/models/data-collection/section.model";
 import { Form } from "src/app/models/data-collection/form.model";
 import { Field } from "src/app/models/data-collection/field.model";
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { flatMap } from 'lodash';
 
 @Component({
   selector: "app-field-container",
@@ -22,8 +24,16 @@ import { Field } from "src/app/models/data-collection/field.model";
 export class FieldContainerComponent
   implements OnInit, OnDestroy, AfterViewInit {
   @Input() sideBar: Field;
-  @Input() form: Form;
-  @Input() inputField;
+  @Input('form') _form: Form;
+  field;
+  @Input() set inputField(field) {
+    this.field = field;
+    if (this.form) {
+      // this.form.patchValue({
+      //   ...this.field.options
+      // })
+    }
+  }
   @Input() customFields: Field[];
   @Input() warningTitle: string;
   @Output() onDelete = new EventEmitter<any>();
@@ -45,11 +55,13 @@ export class FieldContainerComponent
     { title: '1 column', value: 'quarter' }
   ];
   width: { title: string; value: string; }[] = [];
-
+  form: FormGroup;
   constructor(
     private sideBarService: SideBarService,
-    private cd: ChangeDetectorRef
-  ) { }
+    private cd: ChangeDetectorRef,
+    private fb: FormBuilder
+  ) {
+  }
 
   removeField(field: Field) {
     this.sideBarService.events$.next({ action: 'remove', target: field });
@@ -87,14 +99,25 @@ export class FieldContainerComponent
 
   ngOnInit(): void {
     this.list = Section.sectionWidth;
-    if (this.inputField) {
-      if (!this.inputField.options) this.inputField.options = {};
-      if (this.inputField) {
-        this.width = this.widthOptions.filter(i => i.value === this.inputField.width);
+    if (this.field) {
+      if (this.field.path.length > 1) {
+        this.form = this.sideBarService.form.form.get(flatMap(this.field.path, (path => { return [path, 'fields'] })).slice(0, -1));
+      } else {
+        this.form = this.sideBarService.form.form.get(this.field.path);
       }
-      this.inputField.exist = true;
+      if (this.form) {
+
+        this.form.valueChanges.subscribe((form) => {
+          console.log(form);
+        })
+      }
+      if (!this.field.options) this.field.options = {};
+      if (this.field) {
+        this.width = this.widthOptions.filter(i => i.value === this.field.width);
+      }
 
     }
+
   }
 
   ngOnDestroy(): void {
