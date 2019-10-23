@@ -9,7 +9,7 @@ export const mockSubmissionsListResponse = {
             "completion_percentage": 25,
             "online_submission": true,
             "pdf_submission": false,
-            "status": "active"
+            "status": "in_progress"
         },
         {
             "id": "5d8b6b5a8ffb0834da2f3504",
@@ -19,7 +19,7 @@ export const mockSubmissionsListResponse = {
             "completion_percentage": 0,
             "online_submission": true,
             "pdf_submission": false,
-            "status": "not_started"
+            "status": "submitted"
         },
         {
             "id": "5d8b6b5a8ffb0834da2f3506",

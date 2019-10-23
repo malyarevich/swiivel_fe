@@ -1,0 +1,22 @@
+<sw-form-management
+    [form]="form"
+>
+    <sw-form-management-submissions 
+        submissions
+        [dataSource]="submissions.dataSource"
+        [displayedColumns]="submissions.displayedColumns"
+        [filterFormGroup]="submissions.filterFormGroup"
+        [sort]="submissions.sort"
+        [currentPage]="submissions.currentPage"
+        [statusesOptions]="submissions.statusesOptions"
+        [statusesTitles]="submissions.statusesTitles"
+        [formSubmissionsListParams]="submissions.formSubmissionsListParams"
+        [statusColors]="submissions.statusColors"
+        [totalItems]="submissions.totalItems"
+        [showSpinner]="submissions.showSpinner"
+        (toggleExpand)="onToggleExpand($event)"
+    >
+    </sw-form-management-submissions>
+<sw-form-management>
+
+<h1>Form Management</h1>

@@ -34,12 +34,6 @@ export class CdkDetailRowDirective {
     } else if (!shouldExpand && this.opened) {
         this.vcRef.clear();
     }
-
-    // if (this.opened) {
-    //   this.vcRef.clear();
-    // } else {
-    //   this.render();
-    // }
     this.opened = this.vcRef.length > 0;
   }
 

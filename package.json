@@ -93,6 +93,7 @@
     "karma-jasmine": "~1.1.2",
     "karma-jasmine-html-reporter": "^0.2.2",
     "live-server": "^1.2.1",
+    "postcss-loader": "^3.0.0",
     "protractor": "~5.4.0",
     "sw-precache": "^5.2.1",
     "ts-node": "~7.0.0",

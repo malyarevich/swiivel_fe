@@ -12,7 +12,7 @@ export interface ConsentItemInfo {
   id: string;
   text: ConsentItemInfoText;
   checkbox: ConsentItemInfoCheckbox;
-  button: any;
+  button?: any;
   signature: ConsentItemInfoSignature;
 }
 

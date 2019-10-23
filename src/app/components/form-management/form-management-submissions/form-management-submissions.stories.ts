@@ -16,6 +16,7 @@ import { CdkDetailRowDirective } from '@app/utils/directives/cdk-detail-row.dire
 import { OnlineFormModule } from '@app/modules/online-form/online-form.module';
 import { FormManagementDataSource } from './mock-datasource';
 import { FormManagementSubmissionsComponent } from './form-management-submissions.component';
+import { IconsEnum } from '@app/components/icons.enum';
 
 const stories = storiesOf('Form Management Submissions', module);
 
@@ -41,7 +42,7 @@ dataSource.loadFormsList();
 
 const displayedColumns = [
     'account', 'students', 'last_updated', 'completion_percentage', 
-    'online_submission', 'pdf_submission', 'status', 'actions'
+    'online_submission', 'pdf_submission', 'status', 'actions', 'expand'
 ];
 const filterFormGroup = {
     account: [null],
@@ -56,20 +57,43 @@ const sort = ['account', true];
 const currentPage = 1;
 const statusesOptions = [
     { title: 'All', value: null },
-    { title: 'Active', value: 'active' },
-    { title: 'Drafts', value: 'draft' },
-    { title: 'In Review', value: 'review' },
-    { title: 'Closed', value: 'closed' },
-    { title: 'Archived', value: 'archived' },
+    { title: 'Not Started', value: 'not_started', icons: [] },
+    { title: 'In Progress', value: 'in_progress', icons: [] },
+    { title: 'Incomplete', value: 'incomplete', icons: [], substatuses: [
+        { title: 'Missing Info', value: 'missing_info', icons: [
+            { icon: IconsEnum.DOWNLOAD, action: onExportPDF },
+        ]},
+        { title: 'Missing Documents', value: 'missing_documents', icons: [
+            { icon: IconsEnum.DOWNLOAD, action: onExportPDF },
+            { icon: IconsEnum.UPLOAD, action: '' },
+        ]},
+        { title: 'Missing Payment', value: 'missing_payment', icons: [
+            { icon: IconsEnum.DOWNLOAD, action: onExportPDF },
+        ]},
+    ]},
+    { title: 'Submitted', value: 'submitted', icons: [
+        { icon: IconsEnum.DOWNLOAD, action: onExportPDF },
+    ]},
+    { title: 'Need Further Review', value: 'need_further_review', icons: [
+        { icon: IconsEnum.DOWNLOAD, action: onExportPDF },
+    ]},
+    { title: 'Completed', value: 'completed', icons: [
+        { icon: IconsEnum.DOWNLOAD, action: onExportPDF },
+    ]},
 ];
+const statusesTitles = statusesOptions.reduce((obj, option) => {
+    obj[option.value] = option.title;
+    return obj;
+}, {});
 const formSubmissionsListParams: FormSubmissionsListParams = { page: 1, limit: 10 };
 const statusColors: StatusColors = {
     statusColors: new Map([
-        ['archived', 'gray'],
-        ['active', 'green'],
-        ['draft', 'lite-gray'],
-        ['review', 'yellow'],
-        ['closed', 'gray'],
+        ['not_started', 'gray'],
+        ['in_progress', 'blue'],
+        ['incomplete', 'red'],
+        ['submitted', 'gray'],
+        ['need_further_review', 'yellow'],
+        ['completed', 'green'],
     ]),
     defaultColor: 'gray',
 };
@@ -78,6 +102,10 @@ const showSpinner = false;
 
 function onToggleExpand(formID: string) {
     
+}
+
+function onExportPDF(form: any) {
+    console.log(`Export PDF: ${form.mongo_id}`);
 }
 
 
@@ -90,6 +118,7 @@ stories.add('Default', () => ({
             [sort]="sort"
             [currentPage]="currentPage"
             [statusesOptions]="statusesOptions"
+            [statusesTitles]="statusesTitles"
             [formSubmissionsListParams]="formSubmissionsListParams"
             [statusColors]="statusColors"
             [totalItems]="totalItems"
@@ -104,6 +133,7 @@ stories.add('Default', () => ({
         sort,
         currentPage,
         statusesOptions,
+        statusesTitles,
         formSubmissionsListParams,
         statusColors,
         showSpinner,

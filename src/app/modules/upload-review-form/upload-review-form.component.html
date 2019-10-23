@@ -10,7 +10,7 @@
   (saveDocument)="onOpenConfirmSavePopup()"
 >
 </app-document-approval-bar>
-<div class="content">
+<div class="content" [ngClass]="{'pdf-form': isOnlineForm()}">
   <div class="sidebar-container" [class.opened]="isSideBarShown">
     <div class="sidebar">
       <div>
@@ -31,7 +31,9 @@
               <sw-dropdown-input
                 formControlName="filter"
                 [multiple]="true"
+                [style]="'filter'"
                 [dropdownSubHeader]="true"
+                [isClearable]="true"
                 [options]="filterValue"
                 [disabled]="isEmptyObject(filterValue) || isBulkDownload || isSaveActive"
               >
@@ -44,6 +46,7 @@
               <sw-dropdown-input
                 formControlName="sort"
                 [options]="sortValue"
+                [isClearable]="true"
                 [disabled]="!(sortValue && sortValue.length) || isBulkDownload || isSaveActive"
               >
                 <span class="label">
@@ -87,7 +90,7 @@
               </div>
             </div>
             <div *ngIf="showSpinner" class="spinner">
-              <app-spinner></app-spinner>
+              <sw-main-spinner [spinnerSize]="size.MEDIUM"></sw-main-spinner>
             </div>
           </div>
           <div *ngIf="!showSpinner && (!documents || !documents.length)" class="sidebar--empty">
@@ -111,7 +114,7 @@
     </div>
   </div>
   <div class="workarea">
-    <div class="sidebar-opener" (click)="isSideBarShown = !isSideBarShown">
+    <div class="sidebar-opener" [class.opened]="isSideBarShown" (click)="isSideBarShown = !isSideBarShown">
       <div class="button">
         <sw-icon-button
           [icon]="isSideBarShown ? icons.CARET_LEFT : icons.CARET_RIGHT"
@@ -121,19 +124,25 @@
         </sw-icon-button>
       </div>
     </div>
-    <app-upload-review-form-document
-      [isSideBarShown]="isSideBarShown"
-      [document]="getSelectForm()"
-      (rotateImg)="rotateImg($event)"
-      [rotatingPicture]="rotatingPicture"
-    ></app-upload-review-form-document>
-    <div *ngIf="getSelectForm() && (getSelectForm().submission_type === 'onlineForm' || getSelectForm().submission_type === 'externalForm')">
-      <pre>
-        {{ getSelectForm() | json}}
-      </pre>
-      <!--<sw-online-form [formId]="form.id"></sw-online-form>-->
+
+    <div *ngIf="getSelectForm() && getSelectForm().submission_type !== 'onlineForm' && getSelectForm().submission_type !== 'pdfForm'">
+      <app-upload-review-form-document
+        [isSideBarShown]="isSideBarShown"
+        [document]="getSelectForm()"
+        (rotateImg)="rotateImg($event)"
+        [rotatingPicture]="rotatingPicture"
+      ></app-upload-review-form-document>
     </div>
-    <div *ngIf="documentTypes.length && documentFamilies.length">
+
+    <div *ngIf="isOnlineForm()">
+      <sw-online-form
+        [formId]="getSelectForm().form_id"
+        [isViewMode]="true"
+        [isMenuShow]="true"
+      ></sw-online-form>
+    </div>
+
+    <div *ngIf="documentTypes.length && documentFamilies.length && getSelectForm() && getSelectForm().submission_type !== 'onlineForm' && getSelectForm().submission_type !== 'pdfForm'">
       <app-upload-review-form-document-settings
         [documentTypes]="documentTypes"
         [documentFamilies]="documentFamilies"

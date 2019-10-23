@@ -15,18 +15,18 @@ import {
   UploadReviewFormDocumentSettingsComponent
 } from '@modules/upload-review-form/upload-review-form-document-settings/upload-review-form-document.component-settings';
 import { FormUploadFooterComponent } from '@modules/upload-review-form/upload-review-form-footer/upload-review-form-footer.component';
-// import { OnlineFormComponent } from '@modules/online-form/online-form.component';
 import { SharedModule } from '@shared/shared.module';
 import { SharedRedComponentsModule } from '@app/shared/components/sharedRedComponents.module';
 import { UploadReviewFormRoutingModule } from './upload-review-form-routing.module';
 import { UploadReviewFormComponent } from './upload-review-form.component';
 import { UploadReviewFormService } from '@modules/upload-review-form/upload-review-form.service';
 import { UploadFormReviewItemComponent } from '@modules/upload-review-form/upload-review-form-item/upload-review-form-item.component';
+import { OnlineFormModule } from '@modules/online-form/online-form.module';
+
 
 @NgModule({
   declarations: [
     FormUploadFooterComponent,
-    // OnlineFormComponent,
     UploadFormReviewItemComponent,
     UploadReviewFormApprovalBarComponent,
     UploadReviewFormComponent,
@@ -38,6 +38,7 @@ import { UploadFormReviewItemComponent } from '@modules/upload-review-form/uploa
     CommonModule,
     FormsModule,
     PdfViewerModule,
+    OnlineFormModule,
     UploadReviewFormRoutingModule,
     SharedModule,
     SharedRedComponentsModule,

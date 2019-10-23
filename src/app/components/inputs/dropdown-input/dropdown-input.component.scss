@@ -13,6 +13,77 @@
     display: flex;
     align-items: center;
 
+    .dropdown_input_container__icon {
+      display: flex;
+    }
+
+    .dropdown_input_container__icon--clear {
+      margin: 0 2px 0 0;
+      color: $button-color;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    &.filter {
+
+      .dropdown_input_container__input {
+        display: flex;
+        align-items: center;
+        position: relative;
+
+        .text {
+          font-style: normal;
+          font-size: 12px;
+          line-height: 13px;
+          margin-right: 4px;
+          margin-top: 12px;
+        }
+
+        i {
+          display: none;
+        }
+
+        .text:after {
+          position: absolute;
+          top: 0;
+          right: 20px;
+          content: '';
+          width: 1px;
+          height: 100%;
+          background: $soft-gray;
+        }
+
+        &.many {
+          background: #e4e7ff;
+          padding: 5px 7px;
+          margin: 10px 0 0 0;
+          border-radius: 3px;
+          border: 1px solid $soft-gray;
+          color: #4350a2;
+          display: flex;
+          align-items: center;
+
+          .text {
+            font: 10px "NunitoSans-Bold";
+            margin: 0 13px 0 0;
+            color: $button-color;
+          }
+
+          i {
+            font-size: 11px;
+            display: inline-block;
+            color: $icon-dark-gray-color;
+
+            &:hover {
+              color: $icon-grey-color;
+            }
+          }
+        }
+      }
+    }
+
     &.active {
       border-color: #4350A2;
       .dropdown_input_container__icon {
@@ -32,7 +103,7 @@
     }
 
     &__input {
-      //height: 13px;
+      height: 13px;
       display: flex;
       align-items: center;
       .text {
@@ -44,22 +115,22 @@
       }
       i { display: none; }
       &.many {
-        background: #e4e7ff;
-        padding: 10px;
-        margin: 10px 0 0 0;
-        border-radius: 3px;
-        color: #4350a2;
-        display: flex;
-        align-items: center;
+        height: auto;
+        padding: 3px 10px;
+        border-radius: 12px;
+        margin-top: 10px;
+        background-color: #E6EFFF;
         .text {
-          font: 10px "NunitoSans-Bold";
-          margin: 0 6px 0 0;
-          color: $button-color;
+          font-weight: bold;
+          color: #004ED9;
         }
         i {
           font-size: 11px;
           display: inline-block;
           color: #979797;
+        }
+        &:not(:last-of-type) {
+          margin-right: 10px;
         }
       }
     }

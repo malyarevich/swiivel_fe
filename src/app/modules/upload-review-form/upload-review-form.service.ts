@@ -37,7 +37,11 @@ export class UploadReviewFormService extends ApiService {
       }
       if (filterParams && filterParams.length) {
         filterParams.map((param) =>  {
-          endpointParam += `&filter[${param.param}][]=${param.param === 'documents' ? param.id : param.value}`;
+          if (param.param === 'documents') {
+            endpointParam += `&filter[${param.type}][]=${param.id}`;
+          } else {
+            endpointParam += `&filter[${param.param}][]=${param.value}`;
+          }
         });
       }
       if (sortParam && sortParam.length) {
@@ -82,7 +86,7 @@ export class UploadReviewFormService extends ApiService {
   }
 
   updateDocumentSettings(documentId: string, data: any): Observable<any> {
-    return this.http.put(`/proxy/upload-reviews-form/uploaded-document-settings/${documentId}`, { ...data, entity_type: 'document' });
+    return this.http.put(`/proxy/upload-reviews-form/uploaded-document-settings/${documentId}`, data);
   }
 
   getFilterDropDownData(documents: any): FilterDropDownData | {} {

@@ -142,8 +142,9 @@ export class OnlineFormService {
 
   getOneForm(id = this.formId): Observable<any> {
     if (id) {
-      return this.http.get(`/proxy/forms/online/link/${id}`).pipe(
-        // return this.http.get(`/proxy/forms/online/${id}`).pipe(
+      // TODO: when /online/link stops returning errors we should use it
+      // return this.http.get(`/proxy/forms/online/link/${id}`).pipe(
+        return this.http.get(`/proxy/forms/online/${id}`).pipe(
         map(response => {
           // this.setFormValues(response['data']['fieldsData']);
           this.setFormValues(response.fieldsData);
