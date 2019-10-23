@@ -20,10 +20,17 @@ export class GroupContainerComponent implements OnInit {
     this.cd.markForCheck()
   }
   @Input() set inputGroup(group: any) {
-    this.group = JSON.parse(JSON.stringify(group));
-    this.sideBarService.addPathId(group.pathId);
-    this.showNested = this.group.isExpanded;
-    this.cd.markForCheck()
+    if (!group.isActive) {
+      this.group = null;
+      this.cd.markForCheck();
+    }
+    else {
+      this.group = JSON.parse(JSON.stringify(group));
+      this.sideBarService.addPathId(group.pathId);
+      this.showNested = this.group.isExpanded;
+      this.cd.markForCheck()
+
+    }
   }
   @Input() sideBar: Field;
   @Input() nestedLevel: number;

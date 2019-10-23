@@ -129,11 +129,52 @@ export class FieldsSideBarComponent implements OnInit, OnDestroy, AfterViewCheck
     return this.service.pathIds.slice(0, -3).concat('root-list');
   }
 
+  expandFiltered() {
+
+    let visible = this.treeSource.filter((field: any) => {
+      return field.name && field.name.toLowerCase().startsWith(this.filterValue);
+    });
+    for (let node of visible) {
+      for (let parent of this.treeSource.parentsOf(node)) {
+        if ('isExpanded' in parent && !parent.isExpanded) {
+          parent.isExpanded = true;
+          this.treeControl.expand(parent);
+        }
+      }
+    }
+    // for (let node of this.treeSource.array()) {
+    //   let mustShow = !this.isFiltered(node);
+    //   let parent = this.treeSource.parentOf(node);
+    //   if (mustShow) {
+    //     if (parent && !parent.isExpanded) {
+    //       parent.isExpanded = true;
+    //       this.treeControl.expand(parent)
+    //     } else {
+    //       if (!parent) debugger;
+    //       else {
+    //         console.log(parent, this.isFiltered(parent))
+    //       }
+    //     }
+    //   } else {
+    //     node.isExpanded = false;
+    //   }
+    // }
+  }
+
   ngOnInit() {
+    this.filterControl.valueChanges.subscribe((val) => {
+      if (val.length > 0) {
+        this.filterValue = val;
+        this.expandFiltered()
+      } else {
+        this.filterValue = null;
+      }
+    });
     this.treeControl.getDescendants = (dataNode) => {
       return dataNode.fields;
     }
     this.treeSource.activeFields$.subscribe((fields) => {
+      this.treeControl.dataNodes = fields;
 
       // if (this._form.fields.length > 0) {
       //   let wp = this.treeSource.isWrappedBySection(this._form.fields);
@@ -145,8 +186,7 @@ export class FieldsSideBarComponent implements OnInit, OnDestroy, AfterViewCheck
       // }
       if (fields.length > 0) {
         fields = JSON.parse(JSON.stringify(fields));
-        this.service.fields = getActive(fields);
-        // console.log('afs', fields)
+        // this.service.fields = getActive(fields);
         // let wrapped = this.treeSource.wrapIfNeeded(fields);
         // console.log(fields, wrapped, getActive(wrapped), getActive(fields));
       } else {
@@ -262,17 +302,26 @@ export class FieldsSideBarComponent implements OnInit, OnDestroy, AfterViewCheck
   }
 
   isFiltered(node) {
-    if (this.filterValue) {
-      return !node.name.toLowerCase().startsWith(this.filterValue);
+    if (!!this.filterValue && this.filterValue.length > 0 && !!node.name) {
+      let byName = node.name.toLowerCase().startsWith(this.filterValue.toLowerCase());
+      if (byName) return !byName;
+      if (node.fields && node.fields.length > 0) {
+        let byChildName = (fields: any[]) => {
+          return fields.filter((node: any) => {
+            let byName = !!node.name && node.name.toLowerCase().startsWith(this.filterValue.toLowerCase());
+            if (byName) return true;
+            if (node.fields && node.fields.length > 0) {
+              return byChildName(node.fields).length > 0;
+            }
+            return false;
+          });
+        }
+        return byChildName(node.fields).length === 0;
+      }
+      return !byName;
     } else {
       return !!this.filterValue;
     }
-  }
-
-
-  shouldRender(node) {
-    if (!this.filterControl.value) { return true; }
-    return this.filterControl.value && node.name.toString().toLowerCase().startsWith(this.filterControl.value);
   }
 
   toggleExpand(node) {
@@ -287,10 +336,12 @@ export class FieldsSideBarComponent implements OnInit, OnDestroy, AfterViewCheck
   toggleParentNode(node: any): void {
     this.treeSource.toggle(node);
     if (node.isActive) {
+      this.service.addField(node);
       if (!this.treeControl.isExpanded(node)) {
         this.treeControl.expandDescendants(node);
       }
     } else {
+      this.service.removeField(node);
       if (this.treeControl.isExpanded(node)) {
         this.treeControl.collapseDescendants(node);
       }
@@ -321,6 +372,7 @@ export class FieldsSideBarComponent implements OnInit, OnDestroy, AfterViewCheck
   toggleNode(node: any): void {
     this.treeSource.toggle(node);
     if (!node.isActive) {
+      this.service.removeField(node);
       let topInactive: any;
       for (const ancestor of this.treeSource.parentsOf(node)) {
         if (!ancestor.isActive) {
@@ -328,6 +380,8 @@ export class FieldsSideBarComponent implements OnInit, OnDestroy, AfterViewCheck
         }
       }
       this.treeControl.collapse(topInactive);
+    } else {
+      this.service.addField(node);
     }
     node.isExpanded = this.treeControl.isExpanded(node);
     this.cdr.markForCheck();

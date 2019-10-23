@@ -61,6 +61,7 @@ import { Field } from 'src/app/models/data-collection/field.model';
 import { DocumentSideBar, DocumentsModel, documentItemDefault } from 'src/app/models/data-collection/form-constructor/form-builder/documents.model';
 import { FormsPDFModel, formPDFItemDefault } from 'src/app/models/data-collection/form-constructor/form-builder/formsPDF.model';
 import { SideBarService } from './form-fields/side-bar/side-bar.service';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: "app-form-table",
@@ -259,16 +260,20 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
     private fileService: FilesService,
     private saveFormService: SaveFormService,
     private cdr: ChangeDetectorRef,
-    private sidebarService: SideBarService
+    private sidebarService: SideBarService,
+    private fb: FormBuilder
   ) {
     this.vDataCollection = vDataCollection;
     this.sidebarService.events$.subscribe((event: any) => {
       if (event.action === 'update') {
-        this.newSideBar = JSON.parse(JSON.stringify(event.data));
+        if (event.data) {
+          this.newSideBar = JSON.parse(JSON.stringify(event.data));
+        }
       }
       if (event.action === 'moveField') {
         console.log(event.field, event.toIndex)
       }
+
     });
   }
   ngOnInit() {
@@ -405,6 +410,8 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
     }
   }
 
+
+
   initSideBar(form) {
     const getPathId = (field) => {
       if (field.path) {
@@ -422,6 +429,7 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
       return result;
     }
     const joinForm = (field, path = []) => {
+      let result;
       if (field.fields) {
         path.push(field.name);
         field.fields = field.fields.map(cfield => joinForm(cfield, path))
@@ -431,19 +439,22 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
       })
       if (found) {
         if (field.type < 112) {
-          return found;
+          result = found;
         } else {
           let fields = JSON.parse(JSON.stringify(field.fields));
           field = JSON.parse(JSON.stringify(found));
           field.isActive = true;
           field.fields = fields;
+
           // field._id = found.id
-          return field;
+          result = field;
         }
       } else {
         field.isActive = false;
-        return field;
+        result = field;
       }
+
+      return result;
     }
     return this.newSideBar.map(field => joinForm(field)).slice()
   }

@@ -1,9 +1,11 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Subject } from "rxjs";
 import { v4 as uuid } from "uuid";
-import { cloneDeep, isEmpty } from "lodash";
+import { cloneDeep, isEmpty, flatMap, set, unset, get, has } from "lodash";
 import { Form } from "src/app/models/data-collection/form.model";
 import { Field } from "src/app/models/data-collection/field.model";
+import { FormBuilder, FormArray } from '@angular/forms';
+import { unescapeIdentifier } from '@angular/compiler';
 export const isSaved = (field: any) => {
   if (!field._id) return false;
   if (field.fields && field.fields.length > 0) {
@@ -22,6 +24,25 @@ export const getSaved = (fields: any[]) => {
   }).filter(field => field !== null);
   // return fields;
 }
+
+const findById = (fields, id) => {
+  fields.forEach(field => {
+    if (field._id) {
+      if (field._id === id) {
+        return field;
+      }
+    }
+    if (field.fields) {
+      let found = findById(field.fields, id);
+      return found;
+      // if (found.length === 1) {
+      //   return found[0];
+      // }
+    }
+  });
+}
+
+
 @Injectable({
   providedIn: "root"
 })
@@ -31,7 +52,27 @@ export class SideBarService {
   _fields = new BehaviorSubject([]);
   _form = new BehaviorSubject(null);
   _pathIds = [];
-  constructor() {
+  constructor(public fb: FormBuilder) {
+    this.events$.subscribe((event: any) => {
+      if (event.action === 'options') {
+        let form = this._form.getValue();
+        let formFields = form.fields.slice();
+        const setOption = (fields, field, options) => {
+          if (fields) {
+            fields.forEach((ffield: any) => {
+              if (ffield.pathId === field.pathId) {
+                ffield.options = options;
+              } else {
+                setOption(ffield.fields, field, options);
+              }
+            });
+          }
+        }
+        setOption(formFields, event.field, event.options);
+        form.fields = formFields;
+        this.form = Object.assign({}, form);
+      }
+    })
   }
 
   get form() {
@@ -42,12 +83,79 @@ export class SideBarService {
     return this._form.asObservable();
   }
   set form(_form) {
+    _form.form = this.initForm(_form.fields);
+    _form.workspace = [];
+    _form.fields.forEach((field) => set(_form.workspace, field.path, field));
     console.log(`form updated`, _form);
     this._form.next(_form);
   }
 
   get fields() {
     return this._fields.getValue();
+  }
+  addField(field) {
+    let form = this.form.form;// this.fb.array([]) as FormArray;
+    if (field.path.length > 1) {
+      let parentPath = flatMap(field.path.slice(0, -1), (path => { return [path, 'fields'] }));
+      let current = get(this.form.workspace, parentPath, []);
+      current.push(field);
+      set(form.workspace, parentPath, current);
+      form.get(parentPath).addControl(field.name, this.createForm(field));
+    } else {
+      this.form.workspace.push(field);
+      form.addControl(field.name, this.createForm(field));
+    }
+    this.events$.next({ action: 'update' });
+    return form;
+  }
+
+  removeField(field) {
+    let form = this.form.form// as FormArray;// this.fb.array([]) as FormArray;
+    if (field.path.length > 1) {
+      let parentPath = flatMap(field.path.slice(0, -1), (path => { return [path, 'fields'] }));
+      form.get(parentPath).removeControl(field.name);
+      console.log()
+      console.log(get(form.workspace, parentPath));
+    } else {
+      form.removeControl(field.name);
+    }
+    // console.log(unset(this.form.workspace, flatMap(field.path, (path => { return [path, 'fields'] })).slice(0, -1)))
+    this.events$.next({ action: 'update' });
+    return form;
+  }
+
+  createForm(field, ctx = this) {
+    let form = this.fb.group({
+      name: [field.name],
+    });
+    form.addControl('size', this.fb.control(''));
+    form.addControl('required', this.fb.control(''));
+    form.addControl('hideLabel', this.fb.control(''));
+    form.addControl('readonly', this.fb.control(''));
+    form.addControl('unique', this.fb.control(''));
+    if (field.options) {
+      let settings = this.fb.group({});
+      form.addControl('settings', settings);
+      if (field.type < 112) {
+
+      }
+    }
+    if (field.fields && field.fields.length > 0) {
+      let fields = this.fb.group({});
+      form.addControl('fields', fields);
+      field.fields.forEach(child => fields.addControl(child.name, this.createForm(child)));
+    }
+
+    return form;
+  }
+
+  initForm(fields) {
+    let form = this.fb.group({})//.array(fields.map(this.createForm));
+    for (let field of fields) {
+      field.form = this.createForm(field)
+      form.addControl(field.name, field.form);
+    }
+    return form;
   }
 
   findById(fields, ffield) {
@@ -70,12 +178,12 @@ export class SideBarService {
   }
 
   set fields(fieldsArr) {
-    const fields = JSON.parse(JSON.stringify(fieldsArr));
+    const fields = cloneDeep(fieldsArr);
     const form = this._form.getValue();
-    let formFields = getSaved(form.fields.slice());
+    let formFields = getSaved(form.fields);
     fields.forEach((ffield) => {
       if (ffield._id) {
-        this.findById(formFields, JSON.parse(JSON.stringify(ffield)));
+        this.findById(formFields, cloneDeep(ffield));
       } else {
         let section = formFields.find(field => field.type === 114);
         if (!section) {
@@ -97,8 +205,9 @@ export class SideBarService {
       }
 
     })
-    form.fields = formFields;
-    this.form = form;
+    this.form.fields = formFields;
+    this.events$.next({ action: 'update' });
+    // this.form = form;
   }
 
   get pathIds() {
@@ -303,7 +412,6 @@ export class SideBarService {
 
   onSectionDelete(field: Field, filedList?: Field | Form) {
     this.events$.next({ action: 'remove', target: field });
-    // filedList.fields = filedList.fields.filter(sec => sec.name != field.name);
   }
 
   onFieldDelete(field: Field, filedList: Field[]) {

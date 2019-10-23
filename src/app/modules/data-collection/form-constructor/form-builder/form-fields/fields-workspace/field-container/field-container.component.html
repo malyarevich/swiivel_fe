@@ -1,33 +1,32 @@
-<div class="field" *ngIf="inputField" [class.active]="showSettings">
+<div class="field" *ngIf="field && form" [class.active]="showSettings" [formGroup]="form">
   <div class="main-container">
     <div class="drag-icon">
       <i class="dragdrop fas fa-ellipsis-v" cdkDragHandle></i>
     </div>
     <div class="name-container">
-      <div class="main-text">{{inputField.name}}</div>
-      <div class="hint">Field Type - {{returnFieldTYpeName(inputField)}}</div>
+      <div class="main-text">{{field.name}}</div>
+      <div class="hint">Field Type - {{returnFieldTYpeName(field)}}</div>
     </div>
-    <sw-dropdown-input style="margin-right: 10px;" [(ngModel)]="width" (ngModelChange)="widthChanged($event)"
-      [options]="widthOptions">
+    <sw-dropdown-input style="margin-right: 10px;" formControlName="size" [options]="widthOptions">
       <span class="label">Field Width</span>
     </sw-dropdown-input>
     <div class="input">
-      <sw-input-checkbox [(ngModel)]="inputField.options.required">
+      <sw-input-checkbox formControlName="required">
         <span class="label">Required</span>
       </sw-input-checkbox>
     </div>
     <div class="input">
-      <sw-input-checkbox [(ngModel)]="inputField.options.hideLabel">
+      <sw-input-checkbox formControlName="hideLabel">
         <span class="label">Hide Label</span>
       </sw-input-checkbox>
     </div>
     <div class="input">
-      <sw-input-checkbox [(ngModel)]="inputField.options.readonly">
+      <sw-input-checkbox formControlName="readonly">
         <span class="label">Read–Only</span>
       </sw-input-checkbox>
     </div>
     <div class="input">
-      <sw-input-checkbox [(ngModel)]="inputField.options.unique">
+      <sw-input-checkbox formControlName="unique">
         <span class="label">Unique</span>
       </sw-input-checkbox>
     </div>
@@ -40,14 +39,14 @@
       </sw-icon-button>
     </div>
     <div class="icon">
-      <sw-icon-button icon="fa-times" class="field-creator blue" (click)="removeField(inputField)">
+      <sw-icon-button icon="fa-times" class="field-creator blue" (click)="removeField(field)">
       </sw-icon-button>
     </div>
   </div>
 </div>
 
 
-<div *ngIf="inputField && showSettings">
-  <app-form-field-settings [inputField]="inputField" [fieldTypeName]="returnFieldTYpeName(inputField)" [form]="form">
+<div *ngIf="field && showSettings">
+  <app-form-field-settings [inputField]="field" [fieldTypeName]="returnFieldTYpeName(field)" [form]="form">
   </app-form-field-settings>
 </div>

@@ -32,7 +32,7 @@
   </div>
 </div>
 
-<div *ngIf="group && showGroupSettings">
+<div [hidden]="!(group && showGroupSettings)">
   <app-group-settings [inputGroup]="group"></app-group-settings>
 </div>
 
