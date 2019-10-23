@@ -12,7 +12,7 @@ import {
 import { FormService } from "../../services/form.service";
 import { ActivatedRoute, Params, Router } from "@angular/router";
 import { v4 as uuid } from "uuid";
-import { cloneDeep, isEmpty } from "lodash";
+import { cloneDeep, isEmpty, isPlainObject, values } from "lodash";
 import { Location } from "@angular/common";
 import { FieldsService } from "../../services/fields.service";
 import { Form } from "src/app/models/data-collection/form.model";
@@ -62,6 +62,7 @@ import { DocumentSideBar, DocumentsModel, documentItemDefault } from 'src/app/mo
 import { FormsPDFModel, formPDFItemDefault } from 'src/app/models/data-collection/form-constructor/form-builder/formsPDF.model';
 import { SideBarService } from './form-fields/side-bar/side-bar.service';
 import { FormBuilder } from '@angular/forms';
+import { array, object } from '@storybook/addon-knobs';
 
 @Component({
   selector: "app-form-table",
@@ -420,6 +421,9 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
     }
     const flatten = (fields) => {
       let result = [];
+      if (isPlainObject(fields)) {
+        fields = values(fields);
+      }
       for (const field of fields) {
         if (field.fields) {
           result.push(...flatten(field.fields))
@@ -496,11 +500,21 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
       });
     });
   }
-
+  formToArray(form) {
+    let arr = [];
+    for (let key of Object.keys(form)) {
+      let field = form[key];
+      if (field.fields) {
+        field.fields = this.formToArray(field.fields);
+      }
+      arr.push(field);
+    }
+    return arr;
+  }
   getForm(): Form {
     return {
       _id: this.formId,
-      fields: this.form.fields,
+      fields: this.formToArray(this.form['form'].value),
       // fields: this.fields,
       documentsForms: this.documentsForms,
       documents: this.documents,
@@ -520,21 +534,22 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
     // if (this.validCheckFields()) {
     if (this.form && !this.isDataSaving) {
       const form: Form = this.getForm();
+      console.log(form);
       this.spinnerText = "Data is saving...";
       this.isDataSaving = true;
       this.constructorIsSavingService.setIsSaving(this.isDataSaving);
-      this.formService.sendForm(form).subscribe(res => {
-        this.formBuilderIsSavedService.setIsSaved(res["updated"]);
-        this.router.navigate([`/form-constructor/${this.formId}/publish-settings`]);
+      // this.formService.sendForm(form).subscribe(res => {
+      //   this.formBuilderIsSavedService.setIsSaved(res["updated"]);
+      //   this.router.navigate([`/form-constructor/${this.formId}/publish-settings`]);
 
-        this.isDataSaving = !this.saveFormService.getSavingStatus();
-        this.constructorIsSavingService.setIsSaving(this.isDataSaving);
-        if (this.isDataSaving) {
-          this.spinnerText = "Other tabs are saving...";
-        } else {
-          this.spinnerText = "Data is loading...";
-        }
-      });
+      //   this.isDataSaving = !this.saveFormService.getSavingStatus();
+      //   this.constructorIsSavingService.setIsSaving(this.isDataSaving);
+      //   if (this.isDataSaving) {
+      //     this.spinnerText = "Other tabs are saving...";
+      //   } else {
+      //     this.spinnerText = "Data is loading...";
+      //   }
+      // });
     }
     this.vDataCollection.deleteDraftForm(this.formId);
   }

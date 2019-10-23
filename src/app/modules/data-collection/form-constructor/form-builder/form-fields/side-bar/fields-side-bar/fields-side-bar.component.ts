@@ -142,23 +142,6 @@ export class FieldsSideBarComponent implements OnInit, OnDestroy, AfterViewCheck
         }
       }
     }
-    // for (let node of this.treeSource.array()) {
-    //   let mustShow = !this.isFiltered(node);
-    //   let parent = this.treeSource.parentOf(node);
-    //   if (mustShow) {
-    //     if (parent && !parent.isExpanded) {
-    //       parent.isExpanded = true;
-    //       this.treeControl.expand(parent)
-    //     } else {
-    //       if (!parent) debugger;
-    //       else {
-    //         console.log(parent, this.isFiltered(parent))
-    //       }
-    //     }
-    //   } else {
-    //     node.isExpanded = false;
-    //   }
-    // }
   }
 
   ngOnInit() {
@@ -381,7 +364,7 @@ export class FieldsSideBarComponent implements OnInit, OnDestroy, AfterViewCheck
       }
       this.treeControl.collapse(topInactive);
     } else {
-      this.service.addField(node);
+      this.service.addField(node, Array.from(this.treeSource.parentsOf(node)).slice(-2, -1)[0]);
     }
     node.isExpanded = this.treeControl.isExpanded(node);
     this.cdr.markForCheck();
