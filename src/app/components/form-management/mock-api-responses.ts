@@ -9,6 +9,10 @@ export const mockFormDetails = {
             "updated_at": "2019-09-25 13:27:52",
             "created_at": "2019-09-25 13:26:54",
             "activeSections": {
+                "packetIntroduction": {
+                    "isActive": true,
+                    "showSideInfo": true
+                },
                 "formFields": {
                     "isActive": true,
                     "showSideInfo": true

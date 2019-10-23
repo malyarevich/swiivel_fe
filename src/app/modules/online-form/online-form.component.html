@@ -1,18 +1,15 @@
 <ng-container *ngIf="isReady$ | async">
-  <div class="online_form_container__controls">
-    <sw-button [routerLink]="['/upload-review-form', formId]"
-      >Upload & Review</sw-button
-    >
-  </div>
-
   <sw-online-form-nav
-    [isMenuShow]="isMenuShow"
     [formName]="form?.name"
     (actionEmitter)="onMainNavAction($event)"
   ></sw-online-form-nav>
 
   <div class="container-fluid app-of-background online_form_container">
-    <div class="online_form_container__nav">
+    <div class="online_form_container__nav app-div-animation"
+    [ngClass]="{
+      'app-div-show': isMenuShow,
+      'app-div-hide': !isMenuShow
+    }">
       <sw-online-form-menu
         [form]="form"
         [pagesPercents]="pagesPercents$ | async"

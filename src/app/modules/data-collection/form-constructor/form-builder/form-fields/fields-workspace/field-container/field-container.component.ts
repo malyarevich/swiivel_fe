@@ -6,7 +6,8 @@ import {
   Input,
   OnDestroy,
   OnInit,
-  Output
+  Output,
+  ChangeDetectionStrategy
 } from "@angular/core";
 import { SideBarService } from "../../side-bar/side-bar.service";
 import { Section } from "src/app/models/data-collection/section.model";
@@ -16,13 +17,13 @@ import { Field } from "src/app/models/data-collection/field.model";
 @Component({
   selector: "app-field-container",
   templateUrl: "./field-container.component.html",
-  styleUrls: ["./field-container.component.scss"]
+  styleUrls: ["./field-container.component.scss"],
 })
 export class FieldContainerComponent
   implements OnInit, OnDestroy, AfterViewInit {
   @Input() sideBar: Field;
   @Input() form: Form;
-  @Input() inputField: Field;
+  @Input() inputField;
   @Input() customFields: Field[];
   @Input() warningTitle: string;
   @Output() onDelete = new EventEmitter<any>();
@@ -48,13 +49,10 @@ export class FieldContainerComponent
   constructor(
     private sideBarService: SideBarService,
     private cd: ChangeDetectorRef
-  ) {}
+  ) { }
 
   removeField(field: Field) {
-    // console.log(this.sideBar[0].fields);
-    this.sideBarService.events$.next({action: 'remove', target: field});
-    this.sideBarService.onFieldUncheck(field, this.sideBar[0].fields);
-    this.sideBarService.onFieldDelete(field, this.form.fields);
+    this.sideBarService.events$.next({ action: 'remove', target: field });
   }
 
   widthChanged(value) {
@@ -89,15 +87,17 @@ export class FieldContainerComponent
 
   ngOnInit(): void {
     this.list = Section.sectionWidth;
-    if (!this.inputField.options) this.inputField.options = {};
     if (this.inputField) {
-      this.width = this.widthOptions.filter(i => i.value === this.inputField.width);
+      if (!this.inputField.options) this.inputField.options = {};
+      if (this.inputField) {
+        this.width = this.widthOptions.filter(i => i.value === this.inputField.width);
+      }
+      this.inputField.exist = true;
+
     }
-    this.inputField.exist = true;
   }
 
   ngOnDestroy(): void {
-    this.inputField.exist = false;
   }
   ngAfterViewInit() {
     this.cd.detectChanges();

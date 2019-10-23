@@ -15,7 +15,6 @@ import {
 })
 export class OnlineFormNavComponent implements OnInit {
   @Input() formName: string;
-  @Input() isMenuShow: boolean = true;
   @Output() actionEmitter = new EventEmitter<string>();
 
   constructor() {}

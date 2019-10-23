@@ -1,44 +1,50 @@
 <!--Section Header-->
-<app-section-header [sectionName]="section.name" [sectionWidth]="section.width" [isExpand]="isExpand"
-  (onChangeSectionName)="changeSectionName($event)" (onChangeSectionWidth)="changeSectionWidth($event)"
-  (onToggleExpand)="toggleExpand()" (onToggleSettings)="toggleSettings()" (onRemoveSection)="removeSection(section)">
+<app-section-header *ngIf="_section" [sectionName]="_section.name" [sectionWidth]="_section.width"
+  [isExpanded]="_section.isExpanded" (onChangeSectionName)="changeSectionName($event)"
+  (onChangeSectionWidth)="changeSectionWidth($event)" (onToggleExpand)="toggleExpand()"
+  (onToggleSettings)="toggleSettings()" (onRemoveSection)="removeSection(_section)">
 </app-section-header>
 <!--End Section Header-->
 
 
-<div style="margin: -11px 0 10px;" *ngIf="showSettings">
-  <app-section-settings [section]="section"></app-section-settings>
+<div style="margin: -11px 0 10px;" *ngIf="_section && showSettings">
+  <app-section-settings [section]="_section"></app-section-settings>
 </div>
 
-<div [hidden]="!isExpand">
+<div *ngIf="_section">
 
   <!--    <ngx-dnd-container-->
   <!--      [model]="section.fields">-->
   <!--    </ngx-dnd-container>-->
-  <ul class="list-group ">
-    <div class="ngx-dnd-container" cdkDropList [id]="section['path'].join('|')" [cdkDropListData]="section.fields" (cdkDropListDropped)="drop($event)"
-      direction="vertical">
-      <li *ngIf="section.fields.length==0" class="list-group-item empty-section mb-3 py-0 ">
-        <div class="text-center"> <span class="empty-section-text">Drag and Drop Fields Onto the Section</span>
-        </div>
-      </li>
+  <ul class="list-group " cdkDropList [cdkDropListData]="_section.fields" cdkDropListSortingDisabled
+    [id]="_section.pathId" [cdkDropListConnectedTo]="getSectionPathIds()">
+    <li *ngIf="_section.type === 114 && _section.fields.length==0" class="list-group-item empty-section mb-3 py-0 ">
+      <div class="text-center"> <span class="empty-section-text">Drag and Drop Fields Onto the Section</span>
+      </div>
+    </li>
 
-      <li class="list-group-item mb-3 p-0 ngx-dnd-item" *ngFor="let field of section.fields; "
-        [cdkDragData]="field" cdkDrag>
-
-        <app-divider-container *ngIf="field.type==112" [inputDivider]="field" [form]="form"></app-divider-container>
-        <app-group-container *ngIf="field.type==113" [inputGroup]="field" [nestedLevel]="nestedLevel+1"
-          [idSectionForDragDrop]="idSectionForDragDrop" [form]="form" [sideBar]="sideBar" [customFields]="customFields">
+    <li class="list-group-item mb-3 p-0" *ngFor="let field of _section.fields; " cdkDrag (cdkDragDropped)="drop($event)"
+      [cdkDragData]="field">
+      <app-divider-container *ngIf="field.type==112" [inputDivider]="field" [form]="form"></app-divider-container>
+      <ng-container *ngIf="field.type < 112">
+        <app-field-container *cdkDragPreview [inputField]="field">
+        </app-field-container>
+        <app-field-container [customFields]="customFields" [sideBar]="sideBar" [inputField]="field" [form]="form">
+        </app-field-container>
+      </ng-container>
+      <ng-container *ngIf="field.type === 113">
+        <app-group-container *cdkDragPreview [inputGroup]="field" [nestedLevel]="nestedLevel+1" [hideNested]="true">
         </app-group-container>
-        <app-field-container *ngIf="field.type!=113&&field.type!=112" [customFields]="customFields" [sideBar]="sideBar"
-          [inputField]="field" [form]="form"></app-field-container>
-      </li>
-    </div>
+        <app-group-container [inputGroup]="field" [nestedLevel]="nestedLevel+1" [hideNested]="!field.isExpanded">
+        </app-group-container>
+      </ng-container>
+
+
+    </li>
   </ul>
 </div>
 
 
-<div class="">
+<div class="" *ngIf="_section">
   <hr class="hr-text" [attr.data-content]="getEndOfSection()">
-
 </div>

@@ -13,6 +13,48 @@
     display: flex;
     align-items: center;
 
+    &.filter{
+
+      .dropdown_input_container__input {
+        display: flex;
+        align-items: center;
+
+        .text {
+          font-style: normal;
+          font-size: 12px;
+          line-height: 13px;
+          margin-right: 4px;
+          margin-top: 12px;
+        }
+
+        i {
+          display: none;
+        }
+
+        &.many {
+          background: #e4e7ff;
+          padding: 10px;
+          margin: 10px 0 0 0;
+          border-radius: 3px;
+          color: #4350a2;
+          display: flex;
+          align-items: center;
+
+          .text {
+            font: 10px "NunitoSans-Bold";
+            margin: 0 6px 0 0;
+            color: $button-color;
+          }
+
+          i {
+            font-size: 11px;
+            display: inline-block;
+            color: #979797;
+          }
+        }
+      }
+    }
+
     &.active {
       border-color: #4350A2;
       .dropdown_input_container__icon {
@@ -124,23 +166,58 @@
   }
 }
 
+:host(.online_form.read_only) {
+  .dropdown_input_container {
+    background-color: #eee;
+
+    &__item {
+      background-color: #eee;
+    }
+  }
+
+  .dropdown_items_container {
+    background-color: #eee;
+
+    &__item {
+      background-color: #eee;
+    }
+  }
+}
+
 .dropdown_items_container__item:hover {
   cursor: pointer;
 }
 
 .dropdown_items_sub-header-container {
-  padding: 10px 0 25px;
+  padding: 10px 0 0;
 
   .dropdown_items_sub-container-item {
     width: 100%;
-    margin: 0 0 35px 0;
-    padding: 0 10px;
     position: relative;
   }
 
   .dropdown_items_sub-container {
     position: relative;
     width: 100%;
+    margin: 0 0 35px;
+
+    &:last-of-type {
+      margin: 0;
+    }
+
+    &:after {
+      position: absolute;
+      content: '';
+      width: 137px;
+      height: 1px;
+      bottom: -25px;
+      left: 10px;
+      background: $gray-color;
+    }
+
+    &:last-of-type:after {
+      display: none;
+    }
 
     .dropdown_items_sub-header {
       padding: 0 10px;
@@ -160,27 +237,13 @@
       font: 500 9px/13px $nunito-sans;
       text-transform: none;
     }
-
-    &:last-of-type {
-      margin: 0;
-    }
-
-    &:after {
-      position: absolute;
-      content: '';
-      width: 137px;
-      height: 1px;
-      bottom: 10px;
-      left: 10px;
-      background: $gray-color;
-    }
-
-    &:last-of-type:after {
-      display: none;
-    }
   }
 
   .text--count {
     color: $gray-color;
   }
+}
+
+.remove-btn {
+  cursor: pointer;
 }

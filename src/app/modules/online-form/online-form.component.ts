@@ -4,47 +4,47 @@ import {
   OnInit,
   OnDestroy,
   Input
-} from '@angular/core';
-import { Location } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+} from "@angular/core";
+import { Location } from "@angular/common";
+import { ActivatedRoute } from "@angular/router";
 import {
   FormGroup,
   FormControl,
   Validators,
   AbstractControl
-} from '@angular/forms';
-import { BehaviorSubject, Observable, Subject, pipe, Subscription } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+} from "@angular/forms";
+import { BehaviorSubject, Observable, Subject, pipe, Subscription } from "rxjs";
+import { takeUntil } from "rxjs/operators";
 import {
   Form,
   ISectionTab,
   IPagesPercent
-} from '@app/models/data-collection/form.model';
-import { OnlineFormService } from './services/online-form.service';
+} from "@app/models/data-collection/form.model";
+import { OnlineFormService } from "./services/online-form.service";
 import {
   IMenuItems,
   IMainMenuNames,
   menuItems,
   mainMenuNames
-} from './models/menu.model';
-import { SIGNATURE_TYPES, E_SIGNATURE_TYPES } from './models/signature.model';
+} from "./models/menu.model";
+import { SIGNATURE_TYPES, E_SIGNATURE_TYPES } from "./models/signature.model";
 import {
   ICurrentPosition,
   defaultCurrentPosition,
   IFormNavigationState
-} from './models/online-form.model';
-import { ninvoke } from 'q';
+} from "./models/online-form.model";
 
 @Component({
-  selector: 'sw-online-form',
-  templateUrl: './online-form.component.html',
-  styleUrls: ['./online-form.component.scss'],
+  selector: "sw-online-form",
+  templateUrl: "./online-form.component.html",
+  styleUrls: ["./online-form.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class OnlineFormComponent implements OnInit, OnDestroy {
-  @Input() formId: string = '';
+  @Input() formId: string = "";
   @Input() isMenuShow: boolean = true;
   @Input() isFormReviewMode: boolean = false;
+  @Input() isViewMode: boolean = false;
   form: Form;
   fg: FormGroup;
 
@@ -57,7 +57,6 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
   );
   formErrors$: BehaviorSubject<object> = new BehaviorSubject({});
   sectionGroupFieldsErrors$: BehaviorSubject<object> = new BehaviorSubject({});
-  isViewMode$: BehaviorSubject<boolean> = new BehaviorSubject(true);
 
   // keys
   consentKeys: string[] = [];
@@ -129,55 +128,39 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
   }
 
   getForm(): void {
-    if (this.route.pathFromRoot.length > 0) {
-      this.route.pathFromRoot[1].url.subscribe(urlPath => {
-        if (urlPath.length > 0) {
-          const url = urlPath[0].path;
-          this.isViewMode$.next(
-            url === 'online-form' || this.isFormReviewMode ? false : true
-          );
-        }
+    this.onlineFormService.setFromId(this.formId);
+    // TODO: check if we need formId here
+    // this.route.params.subscribe(params => {
+    //   this.formId = params.mongo_id;
+    // });
+    if (this.isViewMode) {
+      // template by id
+      this.getOneFormSubscription = this.onlineFormService
+        .getTemplateForm()
+        .subscribe((form: Form) => {
+          this.form = form;
+          console.log(this.form);
 
-        this.onlineFormService.setFromId(
-          this.formId === ''
-            ? this.route.snapshot.paramMap.get('mongo_id')
-            : this.formId
-        );
+          if (this.isHaveSense()) {
+            this.loadingProcess();
+          } else {
+            this.failedLoading();
+          }
+        });
+    } else {
+      // form by link
+      this.getOneFormSubscription = this.onlineFormService
+        .getOneForm()
+        .subscribe((form: Form) => {
+          this.form = form;
+          console.log(this.form);
 
-        // TODO: check if we need formId here
-        // this.route.params.subscribe(params => {
-        //   this.formId = params.mongo_id;
-        // });
-        if (this.isViewMode$.getValue()) {
-          // template by id
-          this.getOneFormSubscription = this.onlineFormService
-            .getTemplateForm()
-            .subscribe((form: Form) => {
-              this.form = form;
-              console.log(this.form);
-
-              if (this.isHaveSense()) {
-                this.loadingProcess();
-              } else {
-                this.failedLoading();
-              }
-            });
-        } else {
-          // form by link
-          this.getOneFormSubscription = this.onlineFormService
-            .getOneForm()
-            .subscribe((form: Form) => {
-              this.form = form;
-              console.log(this.form);
-
-              if (this.isHaveSense()) {
-                this.loadingProcess();
-              } else {
-                this.failedLoading();
-              }
-            });
-        }
-      });
+          if (this.isHaveSense()) {
+            this.loadingProcess();
+          } else {
+            this.failedLoading();
+          }
+        });
     }
   }
 
@@ -241,18 +224,18 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
     let tabs = [];
     if (this.form.consentInfo && this.form.consentInfo.consents.length > 0) {
       tabs = Object.values(this.form.consentInfo.consents).map(item => {
-        return { _id: item['id'], name: item['title'] };
+        return { _id: item["id"], name: item["title"] };
       });
     } else {
-      tabs.push({ _id: mainMenuNames.consentInfo, name: 'Consent section' });
+      tabs.push({ _id: mainMenuNames.consentInfo, name: "Consent section" });
     }
     return tabs;
   }
 
   initDocumentsForms(): ISectionTab[] {
     const tabs = [];
-    tabs.push({ _id: 'documents', name: 'Documents for Parents' });
-    tabs.push({ _id: 'pdf-forms', name: 'External Forms' });
+    tabs.push({ _id: "documents", name: "Documents for Parents" });
+    tabs.push({ _id: "pdf-forms", name: "External Forms" });
     return tabs;
   }
 
@@ -263,7 +246,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
         return item.type === 114;
       });
     } else {
-      tabs = [{ _id: 'generalInfo', name: 'General Information', type: 114 }];
+      tabs = [{ _id: "generalInfo", name: "General Information", type: 114 }];
     }
     return tabs;
   }
@@ -286,16 +269,16 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
     // }
     if (
       this.form.packetIntroduction &&
-      this.form.packetIntroduction.content !== ''
+      this.form.packetIntroduction.content !== ""
     ) {
       tabs.push({
-        _id: mainMenuNames.packetIntroduction + '__active',
-        name: 'Introduction'
+        _id: mainMenuNames.packetIntroduction + "__active",
+        name: "Introduction"
       });
     } else {
       tabs.push({
         _id: mainMenuNames.packetIntroduction,
-        name: 'Introduction'
+        name: "Introduction"
       });
     }
 
@@ -304,7 +287,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
 
   initPayment(): ISectionTab[] {
     const tabs = [];
-    tabs.push({ _id: mainMenuNames.payment, name: 'Payment section' });
+    tabs.push({ _id: mainMenuNames.payment, name: "Payment section" });
     return tabs;
   }
 
@@ -326,7 +309,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
     // }
     tabs.push({
       _id: mainMenuNames.paymentSettings,
-      name: 'Payment Settings section'
+      name: "Payment Settings section"
     });
     return tabs;
   }
@@ -344,13 +327,13 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
       //   return { _id: item["id"], name: item["title"] };
       // });
       tabs.push({
-        _id: mainMenuNames.termsConditions + '__active',
-        name: 'Terms & Conditions section'
+        _id: mainMenuNames.termsConditions + "__active",
+        name: "Terms & Conditions section"
       });
     } else {
       tabs.push({
         _id: mainMenuNames.termsConditions,
-        name: 'Terms & Conditions section'
+        name: "Terms & Conditions section"
       });
     }
 
@@ -375,7 +358,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
     // }
     tabs.push({
       _id: mainMenuNames.tuitionContract,
-      name: 'Payment Settings section'
+      name: "Payment Settings section"
     });
     return tabs;
   }
@@ -415,7 +398,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
         break;
 
       default:
-        return [{ _id: 'id_' + Math.random(), name: 'Not Configured Tab' }];
+        return [{ _id: "id_" + Math.random(), name: "Not Configured Tab" }];
         break;
     }
   }
@@ -423,7 +406,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
   getFilteredSections(): IFormNavigationState[] {
     const activeMenuList: IFormNavigationState[] = [];
     // TODO: remove after create packetIntroduction
-    activeMenuList.push({ page: 'packetIntroduction' });
+    activeMenuList.push({ page: "packetIntroduction" });
     for (const page in this.form.activeSections) {
       if (
         this.form.activeSections[page] &&
@@ -445,12 +428,12 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
     });
     // also load by server
     if (
-      typeof this.form.pagesPercents !== 'undefined' &&
+      typeof this.form.pagesPercents !== "undefined" &&
       this.form.pagesPercents.length > 0
     ) {
       const pagePercentByServer: object = {};
       this.form.pagesPercents.forEach(elem => {
-        pagePercentByServer[elem.page] = elem['percent'];
+        pagePercentByServer[elem.page] = elem["percent"];
       });
       this.pagesPercents$.next(
         this.pagesPercents$.getValue().map(elem => {
@@ -463,7 +446,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
   initPosition() {
     if (this.formNavigationState$.getValue().length > 0) {
       this.currentPosition$.next({
-        page: this.formNavigationState$.getValue()[0]['page'],
+        page: this.formNavigationState$.getValue()[0]["page"],
         tab: 0
       });
     }
@@ -478,26 +461,26 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
 
   filterSignatureBySignatureAndKey(signature, key) {
     if (signature.isBothParents) {
-      if (key.includes('_parent')) {
+      if (key.includes("_parent")) {
         return false;
       }
     } else {
-      if (key.includes('_father') || key.includes('_mother')) {
+      if (key.includes("_father") || key.includes("_mother")) {
         return false;
       }
     }
 
-    if (signature.type === SIGNATURE_TYPES['WET']) {
-      if (key.includes('__external_') || key.includes('__system_')) {
+    if (signature.type === SIGNATURE_TYPES["WET"]) {
+      if (key.includes("__external_") || key.includes("__system_")) {
         return false;
       }
-    } else if (signature.eType === E_SIGNATURE_TYPES['EXTERNAL']) {
-      if (key.includes('__system_') || key.includes('__wet_')) {
+    } else if (signature.eType === E_SIGNATURE_TYPES["EXTERNAL"]) {
+      if (key.includes("__system_") || key.includes("__wet_")) {
         return false;
       }
     } else {
       // system
-      if (key.includes('__external_') || key.includes('__wet_')) {
+      if (key.includes("__external_") || key.includes("__wet_")) {
         return false;
       }
     }
@@ -509,7 +492,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
     menuName: string,
     key: string,
     isRequired: boolean = false,
-    label: string = 'hiddenField'
+    label: string = "hiddenField"
   ) {
     if (isRequired) {
       this.requiredListByPage[menuName].push(key);
@@ -522,7 +505,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
     key: string,
     isRequired: boolean = false,
     validators = this.requiredValidator,
-    defatultValue: string | boolean | number | object | object[] = '',
+    defaultValue: string | boolean | number | object | object[] = "",
     isDisabled: boolean = false
   ): void {
     this.fg.addControl(
@@ -532,7 +515,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
           value:
             this.form.fieldsData && this.form.fieldsData[key]
               ? this.form.fieldsData[key]
-              : defatultValue,
+              : defaultValue,
           disabled: isRequired ? false : isDisabled // || this.isViewMode$.getValue()
         },
         isRequired ? validators : null
@@ -544,16 +527,16 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
   initConsentFormControls() {
     if (this.form.consentInfo && this.form.consentInfo.consents.length > 0) {
       const consentKeys = [
-        '__checkbox',
-        '__external_parent',
-        '__external_father',
-        '__external_mother',
-        '__system_parent',
-        '__system_father',
-        '__system_mother',
-        '__wet_parent',
-        '__wet_father',
-        '__wet_mother'
+        "__checkbox",
+        "__external_parent",
+        "__external_father",
+        "__external_mother",
+        "__system_parent",
+        "__system_father",
+        "__system_mother",
+        "__wet_parent",
+        "__wet_father",
+        "__wet_mother"
       ];
 
       consentKeys.forEach(key => {
@@ -564,10 +547,10 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
           ) {
             this.consentKeys.push(item.id + key);
             const isRequired =
-              key === '__checkbox'
+              key === "__checkbox"
                 ? item.checkbox.isActive
                 : item.signature.isRequire;
-            const label = key === '__checkbox' ? 'Checkbox' : 'Signature';
+            const label = key === "__checkbox" ? "Checkbox" : "Signature";
 
             this.addToFieldLists(
               mainMenuNames.consentInfo,
@@ -585,11 +568,11 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
   initDocumentsFormControls(documents) {
     if (documents && documents.length > 0) {
       documents.forEach(document => {
-        const key = document['id'];
+        const key = document["id"];
         const isRequired = true; // document["isRequired"];
-        const label = document['name'];
+        const label = document["name"];
 
-        if (document['isUpload']) {
+        if (document["isUpload"]) {
           this.addToFieldLists(
             mainMenuNames.documentsForms,
             key,
@@ -605,22 +588,22 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
   initFormsFormControls(forms) {
     if (forms && forms.length > 0) {
       forms.forEach(form => {
-        if (form['form'] !== null) {
-          const pdfFile = form['form']['fieldsPdf'];
+        if (form["form"] !== null) {
+          const pdfFile = form["form"]["fieldsPdf"];
           pdfFile.forEach(pdfPage => {
             pdfPage.forEach(pdfField => {
-              if (pdfField['id']) {
-                const key = pdfField['id'];
+              if (pdfField["id"]) {
+                const key = pdfField["id"];
                 const isRequired =
-                  pdfField['linkedField'] &&
-                  pdfField['linkedField']['options'] &&
-                  pdfField['linkedField']['options']['required']
+                  pdfField["linkedField"] &&
+                  pdfField["linkedField"]["options"] &&
+                  pdfField["linkedField"]["options"]["required"]
                     ? true
                     : false;
                 const label =
-                  pdfField['linkedField'] && pdfField['linkedField']['name']
-                    ? pdfField['linkedField']['name']
-                    : 'Field';
+                  pdfField["linkedField"] && pdfField["linkedField"]["name"]
+                    ? pdfField["linkedField"]["name"]
+                    : "Field";
                 this.addToFieldLists(
                   mainMenuNames.documentsForms,
                   key,
@@ -640,10 +623,10 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
     let aFields = [];
     if (fields && fields.length > 0) {
       Object.values(fields).forEach(field => {
-        if (field['type']) {
-          if (field['type'] === 113 || field['type'] === 114) {
+        if (field["type"]) {
+          if (field["type"] === 113 || field["type"] === 114) {
             aFields = aFields.concat(
-              this.getFieldsByFormFields(field['fields'])
+              this.getFieldsByFormFields(field["fields"])
             );
           } else {
             aFields.push(field);
@@ -681,7 +664,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
             ? field.options.default
             : field.type === 105
             ? []
-            : '';
+            : "";
         if (field._id) {
           const aValidators = this.getComposedValidatorsByField(field);
           const validatorFn = !field.options.readonly
@@ -724,18 +707,18 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
       this.form.termsConditions.termsConditionsItems.length > 0
     ) {
       const termsConditionsKeys = [
-        'termsConditions__external_parent',
-        'termsConditions__external_father',
-        'termsConditions__external_mother',
-        'termsConditions__system_parent',
-        'termsConditions__system_father',
-        'termsConditions__system_mother',
-        'termsConditions__wet_parent',
-        'termsConditions__wet_father',
-        'termsConditions__wet_mother'
+        "termsConditions__external_parent",
+        "termsConditions__external_father",
+        "termsConditions__external_mother",
+        "termsConditions__system_parent",
+        "termsConditions__system_father",
+        "termsConditions__system_mother",
+        "termsConditions__wet_parent",
+        "termsConditions__wet_father",
+        "termsConditions__wet_mother"
       ];
 
-      const isRequired = this.form.termsConditions['signature']['isRequire'];
+      const isRequired = this.form.termsConditions["signature"]["isRequire"];
 
       termsConditionsKeys
         .filter(key => {
@@ -745,7 +728,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
           );
         })
         .forEach(key => {
-          const label = 'Checkbox';
+          const label = "Checkbox";
           this.termsConditionsKeys.push(key);
           this.addToFieldLists(
             mainMenuNames.termsConditions,
@@ -759,10 +742,10 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
       Object.values(this.form.termsConditions.termsConditionsItems).forEach(
         item => {
           if (item.id) {
-            const key = item.id + '__checkbox';
+            const key = item.id + "__checkbox";
             this.termsConditionsKeys.push(key);
             const isRequired = item.checkbox.isActive;
-            const label = 'Signature';
+            const label = "Signature";
             this.addToFieldLists(
               mainMenuNames.termsConditions,
               key,
@@ -800,7 +783,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
     const currentPageIndex = this.formNavigationState$
       .getValue()
       .findIndex(page => {
-        return page['page'] === this.currentPosition$.value.page;
+        return page["page"] === this.currentPosition$.value.page;
       });
     if (this.currentPosition$.value.tab !== 0) {
       this.currentPosition$.next({
@@ -811,10 +794,10 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
       this.currentPosition$.next({
         ...this.currentPosition$.value,
         page: this.formNavigationState$.getValue()[currentPageIndex - 1][
-          'page'
+          "page"
         ],
         tab:
-          this.formNavigationState$.getValue()[currentPageIndex - 1]['tabs']
+          this.formNavigationState$.getValue()[currentPageIndex - 1]["tabs"]
             .length - 1
       });
     } else {
@@ -829,14 +812,14 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
 
   goToNextStep() {
     const currentPage = this.formNavigationState$.getValue().find(page => {
-      return page['page'] === this.currentPosition$.value.page;
+      return page["page"] === this.currentPosition$.value.page;
     });
     const currentPageIndex = this.formNavigationState$
       .getValue()
       .findIndex(page => {
-        return page['page'] === this.currentPosition$.value.page;
+        return page["page"] === this.currentPosition$.value.page;
       });
-    if (currentPage['tabs'].length > this.currentPosition$.value.tab + 1) {
+    if (currentPage["tabs"].length > this.currentPosition$.value.tab + 1) {
       this.currentPosition$.next({
         ...this.currentPosition$.value,
         tab: this.currentPosition$.value.tab + 1
@@ -848,23 +831,23 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
       this.currentPosition$.next({
         ...this.currentPosition$.value,
         page: this.formNavigationState$.getValue()[currentPageIndex + 1][
-          'page'
+          "page"
         ],
         tab: 0
       });
     } else {
       // TODO: goToFinishPage
-      console.log('TODO: goToFinishPage');
+      console.log("TODO: goToFinishPage");
     }
   }
 
   getFieldsForSectionGroupByFormFields(fields): object {
     let oFields = {};
     Object.values(fields).forEach(field => {
-      if (field['type']) {
-        if (field['type'] === 113 || field['type'] === 114) {
+      if (field["type"]) {
+        if (field["type"] === 113 || field["type"] === 114) {
           const nestedNode = this.getFieldsForSectionGroupByFormFields(
-            field['fields']
+            field["fields"]
           );
           if (
             !(
@@ -872,15 +855,15 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
               nestedNode.constructor === Object
             )
           ) {
-            oFields[field['_id']] = nestedNode;
+            oFields[field["_id"]] = nestedNode;
           }
         } else {
           if (
-            this.formErrors$.getValue()['fields'] &&
-            this.formErrors$.getValue()['fields'][field['_id']]
+            this.formErrors$.getValue()["fields"] &&
+            this.formErrors$.getValue()["fields"][field["_id"]]
           ) {
-            oFields[field['_id']] = this.formErrors$.getValue()['fields'][
-              field['_id']
+            oFields[field["_id"]] = this.formErrors$.getValue()["fields"][
+              field["_id"]
             ];
           }
         }
@@ -893,13 +876,13 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
     let oFields = {};
     if (documents && documents.length > 0) {
       documents.forEach(document => {
-        const key = document['id'];
+        const key = document["id"];
 
         if (
-          this.formErrors$.getValue()['fields'] &&
-          this.formErrors$.getValue()['fields'][key]
+          this.formErrors$.getValue()["fields"] &&
+          this.formErrors$.getValue()["fields"][key]
         ) {
-          oFields['documents'][key] = this.formErrors$.getValue()['fields'][
+          oFields["documents"][key] = this.formErrors$.getValue()["fields"][
             key
           ];
         }
@@ -912,7 +895,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
     let oFields = {};
     if (forms && forms.length > 0) {
       forms.forEach(forms => {
-        const key = forms['id'];
+        const key = forms["id"];
 
         // if(this.formErrors$.getValue()["fields"][key]) {
         //   oFields['forms'][key] = this.formErrors$.getValue()["fields"][key];
@@ -929,11 +912,11 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
 
       this.consentKeys.forEach(key => {
         if (
-          key.includes(section['id']) &&
-          this.formErrors$.getValue()['fields'] &&
-          this.formErrors$.getValue()['fields'][key]
+          key.includes(section["id"]) &&
+          this.formErrors$.getValue()["fields"] &&
+          this.formErrors$.getValue()["fields"][key]
         ) {
-          sectionErrors[key] = this.formErrors$.getValue()['fields'][key];
+          sectionErrors[key] = this.formErrors$.getValue()["fields"][key];
         }
       });
 
@@ -943,7 +926,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
           sectionErrors.constructor === Object
         )
       ) {
-        oFields[section['id']] = sectionErrors;
+        oFields[section["id"]] = sectionErrors;
       }
     });
     return oFields;
@@ -956,10 +939,10 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
 
       this.termsConditionsKeys.forEach(key => {
         if (
-          this.formErrors$.getValue()['fields'] &&
-          this.formErrors$.getValue()['fields'][key]
+          this.formErrors$.getValue()["fields"] &&
+          this.formErrors$.getValue()["fields"][key]
         ) {
-          sectionErrors[key] = this.formErrors$.getValue()['fields'][key];
+          sectionErrors[key] = this.formErrors$.getValue()["fields"][key];
         }
       });
 
@@ -969,7 +952,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
           sectionErrors.constructor === Object
         )
       ) {
-        oFields[mainMenuNames.termsConditions + '__active'] = sectionErrors;
+        oFields[mainMenuNames.termsConditions + "__active"] = sectionErrors;
       }
     });
     return oFields;
@@ -982,10 +965,10 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
     const documents = this.getFieldsForSectionByDocuments(this.form.documents);
     const forms = this.getFieldsForSectionByForms(this.form.forms);
     const consentInfo = this.getFieldsForSectionByConcent(
-      this.form.consentInfo['consents']
+      this.form.consentInfo["consents"]
     );
     const termsConditions = this.getFieldsForSectionByTermsConditions(
-      this.form.termsConditions['termsConditionsItems']
+      this.form.termsConditions["termsConditionsItems"]
     );
     return Object.assign(
       {},
@@ -1010,7 +993,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
       savingObj.currentPosition = this.currentPosition$.getValue();
       savingObj.fieldsData = this.fg.value;
 
-      if (this.isViewMode$.getValue()) {
+      if (this.isViewMode) {
         this.onlineFormService
           .sendFormTemplate(savingObj)
           .pipe(takeUntil(this.destroyedSaveForm$))
@@ -1070,10 +1053,10 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
 
   onMainNavAction(event) {
     switch (event) {
-      case 'save':
+      case "save":
         this.saveAndNextStep();
         break;
-      case 'cancel':
+      case "cancel":
         this.goBackLocation();
         break;
       default:

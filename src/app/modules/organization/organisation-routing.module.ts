@@ -72,6 +72,16 @@ export const routes: Routes = [
     ]
   },
   {
+    path: 'form-send/:id',
+    component: CreatorHeaderComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('../form-send/form-send.module').then(m => m.FormSendModule)
+      }
+    ]
+  },
+  {
     path: 'payer-accounts',
     component: LayoutComponent,
     children: [
@@ -117,8 +127,7 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        loadChildren: () => import('../online-form/online-form.module').then(m => m.OnlineFormModule),
-
+        loadChildren: () => import('../online-form-wrapper/online-form-wrapper.module').then(m => m.OnlineFormWrapperModule),
       }
     ],
   },

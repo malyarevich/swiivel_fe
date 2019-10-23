@@ -18,35 +18,27 @@
       </div>
       <form [formGroup]="dividerAddGroup" (ngSubmit)="addDivider(modal)">
         <div class="row mt-2">
-          <div class="col  form-group app-input-container"
-               [ngClass]="{'app-input-fill': dividerNameId.value}">
+          <div class="col  form-group app-input-container" [ngClass]="{'app-input-fill': dividerNameId.value}">
             <label for="groupNameID" class="app-input-label">Group Name</label>
-            <input type="text"
-                   #dividerNameId
-                   formControlName="dividerName"
-                   class="app-input form-control"
-                   id="dividerNameID"
-                   [ngClass]="dividerAddGroup.get('dividerName').touched&&dividerAddGroup.get('dividerName').invalid?'is-invalid':''"
-                   placeholder="Divider Name">
+            <input type="text" #dividerNameId formControlName="dividerName" class="app-input form-control"
+              id="dividerNameID"
+              [ngClass]="dividerAddGroup.get('dividerName').touched&&dividerAddGroup.get('dividerName').invalid?'is-invalid':''"
+              placeholder="Divider Name">
 
             <div class="invalid-feedback">
               Divider name is required and contain min 3 and max 50 symbols
             </div>
           </div>
-          <div class="col form-group app-input-container"
-               [ngClass]="{'app-input-fill': sectionRelateTypeID.value}" >
+          <div class="col form-group app-input-container" [ngClass]="{'app-input-fill': sectionRelateTypeID.value}">
             <label for="sectionRelateD" class="app-input-label">Section Relate</label>
-            <select class="app-input form-control"
-                    name="sectionRelate"
-                    #sectionRelateTypeID
-                    formControlName="sectionRelate"
-                    [ngClass]="dividerAddGroup.get('sectionRelate').touched&&dividerAddGroup.get('sectionRelate').invalid?'is-invalid':''"
-                    id="sectionRelateD">
-              <option  value=""   disabled [selected]="true">Section Relate</option>
-              <option  [ngValue]="{name:'workspace'}">Workspace</option>
+            <select class="app-input form-control" name="sectionRelate" #sectionRelateTypeID
+              formControlName="sectionRelate"
+              [ngClass]="dividerAddGroup.get('sectionRelate').touched&&dividerAddGroup.get('sectionRelate').invalid?'is-invalid':''"
+              id="sectionRelateD">
+              <option value="" disabled [selected]="true">Section Relate</option>
+              <option [ngValue]="{name:'workspace'}">Workspace</option>
               <ng-container *ngIf="form">
-                <option *ngFor="let section of form.fields | fieldType: 114"  [ngValue]="section"
-              >
+                <option *ngFor="let section of form.fields | fieldType: 114" [ngValue]="section">
                   {{section.name}}
                 </option>
               </ng-container>
@@ -57,20 +49,14 @@
           </div>
         </div>
         <div class="row mt-2">
-          <div class="col-6 form-group app-input-container"
-               [ngClass]="{'app-input-fill': dividerStyleID.value}" >
+          <div class="col-6 form-group app-input-container" [ngClass]="{'app-input-fill': dividerStyleID.value}">
             <label for="dividerStyle" class="app-input-label">Style</label>
-            <select class="app-input form-control"
-                    name="dividerStyle"
-                    #dividerStyleID
-                    formControlName="dividerStyle"
-                    [ngClass]="dividerAddGroup.get('dividerStyle').touched&&dividerAddGroup.get('dividerStyle').invalid?'is-invalid':''"
-                    id="dividerStyle">
-              <option  value=""   disabled [selected]="true">Divider Style</option>
+            <select class="app-input form-control" name="dividerStyle" #dividerStyleID formControlName="dividerStyle"
+              [ngClass]="dividerAddGroup.get('dividerStyle').touched&&dividerAddGroup.get('dividerStyle').invalid?'is-invalid':''"
+              id="dividerStyle">
+              <option value="" disabled [selected]="true">Divider Style</option>
 
-              <option *ngFor="let item of dividerStyles" [ngValue]="item.type"
-
-              >{{item.name}}</option>
+              <option *ngFor="let item of dividerStyles" [ngValue]="item.type">{{item.name}}</option>
             </select>
             <div class="invalid-feedback">
               Divider style is required!
@@ -79,7 +65,8 @@
         </div>
         <div class="row mt-4">
           <div class="col-2 offset-8">
-            <button type="button" class="btn app-btn-outline-primary form-control" (click)="modalClose(modal)">Cancel</button>
+            <button type="button" class="btn app-btn-outline-primary form-control"
+              (click)="modalClose(modal)">Cancel</button>
           </div>
           <div class="col-2">
             <button type="submit" class="btn app-btn-primary form-control">OK</button>
@@ -96,79 +83,72 @@
 
 
   <ng-template #contentGroup let-modal>
-  <div class="row no-gutters align-items-center text-center mt-4">
-    <div class="offset-1 col-10 text-center">
-      <h4 class=" app-text-extra-bold " id="modal-basic-title2">Adding New Group</h4>
-    </div>
-    <div class="col justify-content-end pr-3">
-      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
+    <div class="row no-gutters align-items-center text-center mt-4">
+      <div class="offset-1 col-10 text-center">
+        <h4 class=" app-text-extra-bold " id="modal-basic-title2">Adding New Group</h4>
+      </div>
+      <div class="col justify-content-end pr-3">
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
 
-  </div>
-  <div class="modal-body">
+    </div>
+    <div class="modal-body">
       <div class="">
         <div class="text-center font-weight-bold"><span>Please enter group name and select section relate</span></div>
       </div>
-    <form [formGroup]="groupAddGroup" (ngSubmit)="addGroup(modal)">
-      <div class="row mt-2">
-        <div class="col  form-group app-input-container"
-             [ngClass]="{'app-input-fill': groupNameId.value}">
-          <label for="groupNameID" class="app-input-label">Group Name</label>
-          <input type="text"
-                 #groupNameId
-                 formControlName="groupName"
-                 class="app-input form-control"
-                 id="groupNameID"
-                 [ngClass]="groupAddGroup.get('groupName').touched&&groupAddGroup.get('groupName').invalid?'is-invalid':''"
-                 placeholder="Group Name">
+      <form [formGroup]="groupAddGroup" (ngSubmit)="addGroup(modal)">
+        <div class="row mt-2">
+          <div class="col  form-group app-input-container" [ngClass]="{'app-input-fill': groupNameId.value}">
+            <label for="groupNameID" class="app-input-label">Group Name</label>
+            <input type="text" #groupNameId formControlName="groupName" class="app-input form-control" id="groupNameID"
+              [ngClass]="groupAddGroup.get('groupName').touched&&groupAddGroup.get('groupName').invalid?'is-invalid':''"
+              placeholder="Group Name">
 
-          <div class="invalid-feedback">
-            Section name is required and contain min 3 and max 50 symbols
+            <div class="invalid-feedback">
+              Section name is required and contain min 3 and max 50 symbols
+            </div>
+          </div>
+
+
+          <div class="col form-group app-input-container" [ngClass]="{'app-input-fill': sectionRelateTypeID.value}">
+            <label for="sectionRelate" class="app-input-label">Section Relate</label>
+            <select class="app-input form-control" name="sectionRelate" #sectionRelateTypeID
+              formControlName="sectionRelate"
+              [ngClass]="groupAddGroup.get('sectionRelate').touched&&groupAddGroup.get('sectionRelate').invalid?'is-invalid':''"
+              id="sectionRelate">
+              <option *ngIf="form.fields.length>0" value="" disabled [selected]="true">Section Relate</option>
+              <option *ngIf="form.fields.length==0" value="" disabled [selected]="true">Please add at least one section
+              </option>
+              <ng-container *ngIf="form">
+                <option *ngFor="let section of form.fields | fieldType: 114" [ngValue]="section">{{section.name}}
+                </option>
+              </ng-container>
+            </select>
+
+            <div class="invalid-feedback">
+              Group section is required!
+            </div>
           </div>
         </div>
 
 
-        <div class="col form-group app-input-container"
-             [ngClass]="{'app-input-fill': sectionRelateTypeID.value}" >
-          <label for="sectionRelate" class="app-input-label">Section Relate</label>
-          <select class="app-input form-control"
-                  name="sectionRelate"
-                  #sectionRelateTypeID
-                  formControlName="sectionRelate"
-                  [ngClass]="groupAddGroup.get('sectionRelate').touched&&groupAddGroup.get('sectionRelate').invalid?'is-invalid':''"
-                  id="sectionRelate">
-            <option *ngIf="form.fields.length>0" value=""   disabled [selected]="true">Section Relate</option>
-            <option *ngIf="form.fields.length==0" value=""   disabled [selected]="true" >Please add at least one section</option>
-            <ng-container *ngIf="form">
-            <option *ngFor="let section of form.fields | fieldType: 114" [ngValue]="section"
-
-            >{{section.name}}</option>
-            </ng-container>
-          </select>
-
-          <div class="invalid-feedback">
-            Group section is required!
+        <div class="row mt-4">
+          <div class="col-2 offset-8">
+            <button type="button" class="btn app-btn-outline-primary form-control"
+              (click)="modalClose(modal)">Cancel</button>
+          </div>
+          <div class="col-2">
+            <button type="submit" class="btn app-btn-primary form-control">OK</button>
           </div>
         </div>
-      </div>
-
-
-    <div class="row mt-4">
-      <div class="col-2 offset-8">
-        <button type="button" class="btn app-btn-outline-primary form-control" (click)="modalClose(modal)">Cancel</button>
-      </div>
-      <div class="col-2">
-        <button type="submit" class="btn app-btn-primary form-control">OK</button>
-      </div>
+      </form>
     </div>
-    </form>
-  </div>
-<!--  <div class="modal-footer">-->
-<!--    <button type="submit" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>-->
-<!--  </div>-->
-</ng-template>
+    <!--  <div class="modal-footer">-->
+    <!--    <button type="submit" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>-->
+    <!--  </div>-->
+  </ng-template>
 
 
   <ng-template #contentSection let-modal>
@@ -189,34 +169,24 @@
       </div>
       <form [formGroup]="sectionAddGroup" (ngSubmit)="addSection(modal)">
         <div class="row mt-2">
-          <div class="col  form-group app-input-container"
-               [ngClass]="{'app-input-fill': sectionNameId.value}">
+          <div class="col  form-group app-input-container" [ngClass]="{'app-input-fill': sectionNameId.value}">
             <label for="sectionNameID" class="app-input-label">Section Name</label>
-            <input type="text"
-                   #sectionNameId
-                   formControlName="sectionName"
-                   class="app-input form-control"
-                   id="sectionNameID"
-                   [ngClass]="sectionAddGroup.get('sectionName').touched&&sectionAddGroup.get('sectionName').invalid?'is-invalid':''"
-                   placeholder="Section Name">
+            <input type="text" #sectionNameId formControlName="sectionName" class="app-input form-control"
+              id="sectionNameID"
+              [ngClass]="sectionAddGroup.get('sectionName').touched&&sectionAddGroup.get('sectionName').invalid?'is-invalid':''"
+              placeholder="Section Name">
 
             <div class="invalid-feedback">
               Section name is required and contain min 3 and max 50 symbols
             </div>
           </div>
-          <div class="col form-group app-input-container"
-               [ngClass]="{'app-input-fill': sizeID.value}" >
+          <div class="col form-group app-input-container" [ngClass]="{'app-input-fill': sizeID.value}">
             <label for="sectionSize" class="app-input-label">Section Width</label>
-            <select class="app-input form-control"
-                    name="sectionSize"
-                    #sizeID
-                    formControlName="sectionSize"
-                    [ngClass]="sectionAddGroup.get('sectionSize').touched&&sectionAddGroup.get('sectionSize').invalid?'is-invalid':''"
-                    id="sectionSize">
-              <option value=""   disabled [selected]="true">Section Width</option>
-              <option *ngFor="let key of objectKeys(list)"
-                      [value]="list[key]['type']"
-              >{{ list[key]["label"] }}</option>
+            <select class="app-input form-control" name="sectionSize" #sizeID formControlName="sectionSize"
+              [ngClass]="sectionAddGroup.get('sectionSize').touched&&sectionAddGroup.get('sectionSize').invalid?'is-invalid':''"
+              id="sectionSize">
+              <option value="" disabled [selected]="true">Section Width</option>
+              <option *ngFor="let key of objectKeys(list)" [value]="list[key]['type']">{{ list[key]["label"] }}</option>
             </select>
             <div class="invalid-feedback">
               Section size is required
@@ -225,7 +195,8 @@
         </div>
         <div class="row mt-4">
           <div class="col-2 offset-8">
-            <button type="button" class="btn app-btn-outline-primary form-control" (click)="modalClose(modal)">Cancel</button>
+            <button type="button" class="btn app-btn-outline-primary form-control"
+              (click)="modalClose(modal)">Cancel</button>
           </div>
           <div class="col-2">
             <button type="submit" class="btn app-btn-primary form-control">OK</button>
@@ -235,87 +206,81 @@
     </div>
 
   </ng-template>
-<div class=" d-flex  justify-content-end custom-circle-wrapper" ngbDropdown placement="bottom-right" autoClose="outside">
-  <div class="circle" id="dropdownBasic1" ngbDropdownToggle>+</div>
-  <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-add-menu pt-0 mt-0">
-    <div class="row no-gutters align-items-center text-center text-white menu-dropdown-header">
-      <div class="col">
-        <span class="app-text-extra-bold">Additional Options</span>
+  <div class=" d-flex  justify-content-end custom-circle-wrapper" ngbDropdown placement="bottom-right"
+    autoClose="outside">
+    <div class="circle" id="dropdownBasic1" ngbDropdownToggle>+</div>
+    <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-add-menu pt-0 mt-0">
+      <div class="row no-gutters align-items-center text-center text-white menu-dropdown-header">
+        <div class="col">
+          <span class="app-text-extra-bold">Additional Options</span>
+        </div>
+      </div>
+      <div class="pl-0 text-white my-1 col-10 offset-1"><span>Formatting Options</span></div>
+
+      <div class=" pl-1 menu-dropdown-item my-1 col-10 offset-1 align-items-center row no-gutters"
+        (click)="openModal(contentSection)">
+        <span><i class="fas fa-ellipsis-v app-text-second "></i></span>
+        <span><i class="fas fa-ellipsis-v app-text-second "></i></span>
+        <span class=" ml-1 dr-menu-item-span">New Section</span>
+      </div>
+      <div class=" pl-1 menu-dropdown-item my-1 col-10 offset-1 align-items-center row no-gutters"
+        (click)="openModal(contentDivider)">
+        <span><i class="fas fa-ellipsis-v app-text-second "></i></span>
+        <span><i class="fas fa-ellipsis-v app-text-second "></i></span>
+        <span class=" ml-1 dr-menu-item-span">Divider</span>
+      </div>
+      <div class=" pl-1 menu-dropdown-item my-1 col-10 offset-1 align-items-center row no-gutters"
+        (click)="openModal(contentGroup)">
+        <span><i class="fas fa-ellipsis-v app-text-second "></i></span>
+        <span><i class="fas fa-ellipsis-v app-text-second "></i></span>
+        <span class=" ml-1 dr-menu-item-span">New Group</span>
+      </div>
+      <hr class="menu-hr">
+      <div class="pl-0  text-white my-1 col-10 offset-1 span-zero-m-t"><span>Widgets</span></div>
+      <div class=" pl-1 menu-dropdown-item my-1 col-10 offset-1 align-items-center row no-gutters"
+        appClickStopPropagation placement="left" ngbPopover="This feature is under development" popoverTitle="Notice">
+        <span><i class="fas fa-ellipsis-v app-text-second "></i></span>
+        <span><i class="fas fa-ellipsis-v app-text-second "></i></span>
+        <span class=" ml-1 dr-menu-item-span">Input Table</span>
+      </div>
+      <div class=" pl-1 menu-dropdown-item my-1 col-10 offset-1 align-items-center row no-gutters"
+        appClickStopPropagation placement="left" ngbPopover="This feature is under development" popoverTitle="Notice">
+        <span><i class="fas fa-ellipsis-v app-text-second "></i></span>
+        <span><i class="fas fa-ellipsis-v app-text-second "></i></span>
+        <span class=" ml-1 dr-menu-item-span">Configurable Matrix</span>
+      </div>
+      <div class=" pl-1 menu-dropdown-item my-1 col-10 offset-1 align-items-center row no-gutters"
+        appClickStopPropagation placement="left" ngbPopover="This feature is under development" popoverTitle="Notice">
+        <span><i class="fas fa-ellipsis-v app-text-second "></i></span>
+        <span><i class="fas fa-ellipsis-v app-text-second "></i></span>
+        <span class=" ml-1 dr-menu-item-span">Custom Embedded Code</span>
       </div>
     </div>
-    <div class="pl-0 text-white my-1 col-10 offset-1"><span>Formatting Options</span></div>
-
-    <div class=" pl-1 menu-dropdown-item my-1 col-10 offset-1 align-items-center row no-gutters" (click)="openModal(contentSection)">
-      <span><i class="fas fa-ellipsis-v app-text-second "></i></span>
-      <span><i class="fas fa-ellipsis-v app-text-second "></i></span>
-      <span class=" ml-1 dr-menu-item-span" >New Section</span>
-    </div>
-    <div class=" pl-1 menu-dropdown-item my-1 col-10 offset-1 align-items-center row no-gutters" (click)="openModal(contentDivider)"
-    >
-      <span><i class="fas fa-ellipsis-v app-text-second "></i></span>
-      <span><i class="fas fa-ellipsis-v app-text-second "></i></span>
-      <span class=" ml-1 dr-menu-item-span">Divider</span>
-    </div>
-    <div class=" pl-1 menu-dropdown-item my-1 col-10 offset-1 align-items-center row no-gutters" (click)="openModal(contentGroup)">
-      <span><i class="fas fa-ellipsis-v app-text-second "></i></span>
-      <span><i class="fas fa-ellipsis-v app-text-second "></i></span>
-      <span class=" ml-1 dr-menu-item-span">New Group</span>
-    </div>
-    <hr class="menu-hr">
-    <div class="pl-0  text-white my-1 col-10 offset-1 span-zero-m-t"><span>Widgets</span></div>
-    <div class=" pl-1 menu-dropdown-item my-1 col-10 offset-1 align-items-center row no-gutters" appClickStopPropagation placement="left"
-         ngbPopover="This feature is under development"
-         popoverTitle="Notice">
-      <span><i class="fas fa-ellipsis-v app-text-second "></i></span>
-      <span><i class="fas fa-ellipsis-v app-text-second "></i></span>
-      <span class=" ml-1 dr-menu-item-span">Input Table</span>
-    </div>
-    <div class=" pl-1 menu-dropdown-item my-1 col-10 offset-1 align-items-center row no-gutters" appClickStopPropagation placement="left"
-         ngbPopover="This feature is under development"
-         popoverTitle="Notice">
-      <span><i class="fas fa-ellipsis-v app-text-second "></i></span>
-      <span><i class="fas fa-ellipsis-v app-text-second "></i></span>
-      <span class=" ml-1 dr-menu-item-span">Configurable Matrix</span>
-    </div>
-    <div class=" pl-1 menu-dropdown-item my-1 col-10 offset-1 align-items-center row no-gutters" appClickStopPropagation placement="left"
-         ngbPopover="This feature is under development"
-         popoverTitle="Notice">
-      <span><i class="fas fa-ellipsis-v app-text-second "></i></span>
-      <span><i class="fas fa-ellipsis-v app-text-second "></i></span>
-      <span class=" ml-1 dr-menu-item-span">Custom Embedded Code</span>
-    </div>
   </div>
 </div>
-</div>
 
-<ng-container>
-<div direction="vertical" class="workspace ngx-dnd-container" *ngIf="form" cdkDropList [cdkDropListData]="form.fields" [cdkDropListEnterPredicate]="noFields" id="root-list">
-<!--  <div   cdkDropList-->
-<!--       [cdkDropListData]="form.fields"-->
-<!--       (cdkDropListDropped)="drop($event)">-->
-<div class="ngx-dnd-item" *ngFor="let item of form.fields"  cdkDrag [cdkDragData]="item" (cdkDragDrop)="dropDrag($event)">
-<!--<div *ngFor="let item of form.fields " cdkDrag cdkDragLockAxis="y">-->
-    <app-section-container
+<!-- <ng-container> -->
+<div class="workspace" *ngIf="_form" cdkDropList [cdkDropListData]="fields"
+  [cdkDropListConnectedTo]="getConnectedPathIds()" id="root-list" style="height: calc(100% - 25px);">
+  <!--  <div   cdkDropList-->
+  <!--       [cdkDropListData]="form.fields"-->
+  <!--       (cdkDropListDropped)="drop($event)">-->
+  <div class="" *ngFor="let item of _form.fields" cdkDrag [cdkDragData]="item" (cdkDragDropped)="drop($event)"
+    (cdkDragStarted)="start($event)">
+    <ng-container *ngIf="item.type === 114">
+      <app-section-header *cdkDragPreview [sectionName]="item.name" [isExpanded]="false">
+      </app-section-header>
+      <app-section-container [section]="item" [sideBar]="sideBar" [idSectionForDragDrop]="idSectionForDragDrop"
+        [form]="_form" [customFields]="customFields">
+      </app-section-container>
+    </ng-container>
 
-      *ngIf="item.type==114"
-      [section]="item"
-      [sideBar]="sideBar"
-      [idSectionForDragDrop]="idSectionForDragDrop"
-      [form]="form"
-      [customFields]="customFields">
 
-    </app-section-container>
 
-  <li class="list-group-item mb-3 p-0"
-      *ngIf="item.type==112"
-      >
-  <app-divider-container
-    *ngIf="item.type==112"
-    [form]="form"
-    [inputDivider]="item"
-  ></app-divider-container>
-  </li>
+    <li class="list-group-item mb-3 p-0" *ngIf="item.type===112">
+      <app-divider-container *ngIf="item.type===112" [form]="_form" [inputDivider]="item"></app-divider-container>
+    </li>
   </div>
 
 </div>
-</ng-container>
+<!-- </ng-container> -->
