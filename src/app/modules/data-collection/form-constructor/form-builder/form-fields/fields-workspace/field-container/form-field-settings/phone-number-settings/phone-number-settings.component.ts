@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { Field } from "@app/models/data-collection/field.model";
+import { Field, fieldValidators } from "@app/models/data-collection/field.model";
 import { FormBuilder, FormGroup, FormControl } from "@angular/forms";
-
 
 @Component({
   selector: 'app-phone-number-settings',
@@ -30,8 +29,8 @@ export class PhoneNumberSettingsComponent {
       showValidators: new FormControl(false),
       default: new FormControl(null),
       validators: new FormGroup({
-        phone: new FormControl(false),
-        verifyPhone: new FormControl(false),
+        [fieldValidators.phone]: new FormControl(false),
+        [fieldValidators.verifyPhone]: new FormControl(false),
       })
     });
     this.form.valueChanges.subscribe(v => {

@@ -34,13 +34,12 @@ export class OnlineFormWrapperComponent implements OnInit {
           const url = urlPath[0].path;
           // console.log('url', url);
           if (url === "online-form") {
-            console.log('url', url);
+            // console.log('url', url);
             this.isViewMode$.next(false);
           }
         }
+        this.formId$.next(this.route.snapshot.paramMap.get("mongo_id"));
       });
     }
-
-    this.formId$.next(this.route.snapshot.paramMap.get("mongo_id"));
   }
 }

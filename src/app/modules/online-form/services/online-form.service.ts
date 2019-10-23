@@ -17,7 +17,8 @@ import {
   FormControl,
   FormBuilder,
   FormGroup,
-  AbstractControl
+  AbstractControl,
+  FormArray
 } from '@angular/forms';
 import { HttpService } from '@app/core/http.service';
 
@@ -60,6 +61,7 @@ export class OnlineFormService {
   formId: string;
   formValues: Map<string, any> = new Map();
   profileForm;
+  fgList: any = {};
   fg: FormGroup;
   //FIXME: replace 'any' to interface (depend on server data)
   @Output() onChangeServerValidations: EventEmitter<any> = new EventEmitter();
@@ -73,7 +75,7 @@ export class OnlineFormService {
   }
 
   verifyForm() {
-    return this.fg.hasError;
+    return this.fgList[this.formId].hasError;
   }
 
   componentFieldsMap = new Map<number, IFormField>([
@@ -114,7 +116,7 @@ export class OnlineFormService {
   }
 
   getFormValues(): any {
-    return this.fg.value;
+    return this.fgList[this.formId].value;
   }
 
   getIsFormView(): boolean {
@@ -122,16 +124,20 @@ export class OnlineFormService {
   }
 
   getFormGroup(): FormGroup {
-    return this.fg;
+    return this.fgList[this.formId];
+  }
+
+  setFormGroup(fg: FormGroup): void {
+    this.fgList[this.formId] = fg;
   }
 
   addFormControl(id: string, fc: FormControl) {
-    this.fg.addControl(id, fc);
+    this.fgList[this.formId].addControl(id, fc);
   }
 
   setFormControlValue(id: string, value: string) {
-    this.fg.patchValue({ id, value });
-    // console.log(this.fg.value);
+    this.fgList[this.formId].patchValue({ id, value });
+    // console.log(this.fgList[this.formId].value);
   }
 
   constructor(private http: HttpService, private fb: FormBuilder) {}
@@ -143,11 +149,9 @@ export class OnlineFormService {
   getOneForm(id = this.formId): Observable<any> {
     if (id) {
       // TODO: when /online/link stops returning errors we should use it
-      // return this.http.get(`/proxy/forms/online/link/${id}`).pipe(
-        return this.http.get(`/proxy/forms/online/${id}`).pipe(
+      return this.http.get(`/proxy/forms/online/link/${id}`).pipe(
+        // return this.http.get(`/proxy/forms/online/${id}`).pipe(
         map(response => {
-          // this.setFormValues(response['data']['fieldsData']);
-          this.setFormValues(response.fieldsData);
           return response;
         })
       );
@@ -160,8 +164,6 @@ export class OnlineFormService {
     if (id) {
       return this.http.get(`/proxy/forms/online/${id}`).pipe(
         map(response => {
-          // this.setFormValues(response['data']['fieldsData']);
-          this.setFormValues(response.fieldsData);
           return response;
         })
       );
@@ -194,6 +196,6 @@ export class OnlineFormService {
   }
 
   initOneForm() {
-    this.fg = new FormGroup({});
+    this.fgList[this.formId] = new FormGroup({});
   }
 }
