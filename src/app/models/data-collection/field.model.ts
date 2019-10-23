@@ -95,7 +95,8 @@ export const fieldValidators = {
   maxLength: 'maxLength',
   min: 'min',
   max: 'max',
-  Email: 'Email'
+  Email: 'Email',
+  required: 'required'
 } 
 
 export interface ITypeFieldSettings {
