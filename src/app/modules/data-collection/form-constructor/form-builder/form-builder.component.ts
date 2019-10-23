@@ -534,22 +534,21 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
     // if (this.validCheckFields()) {
     if (this.form && !this.isDataSaving) {
       const form: Form = this.getForm();
-      console.log(form);
       this.spinnerText = "Data is saving...";
       this.isDataSaving = true;
       this.constructorIsSavingService.setIsSaving(this.isDataSaving);
-      // this.formService.sendForm(form).subscribe(res => {
-      //   this.formBuilderIsSavedService.setIsSaved(res["updated"]);
-      //   this.router.navigate([`/form-constructor/${this.formId}/publish-settings`]);
+      this.formService.sendForm(form).subscribe(res => {
+        this.formBuilderIsSavedService.setIsSaved(res["updated"]);
+        this.router.navigate([`/form-constructor/${this.formId}/publish-settings`]);
 
-      //   this.isDataSaving = !this.saveFormService.getSavingStatus();
-      //   this.constructorIsSavingService.setIsSaving(this.isDataSaving);
-      //   if (this.isDataSaving) {
-      //     this.spinnerText = "Other tabs are saving...";
-      //   } else {
-      //     this.spinnerText = "Data is loading...";
-      //   }
-      // });
+        this.isDataSaving = !this.saveFormService.getSavingStatus();
+        this.constructorIsSavingService.setIsSaving(this.isDataSaving);
+        if (this.isDataSaving) {
+          this.spinnerText = "Other tabs are saving...";
+        } else {
+          this.spinnerText = "Data is loading...";
+        }
+      });
     }
     this.vDataCollection.deleteDraftForm(this.formId);
   }
