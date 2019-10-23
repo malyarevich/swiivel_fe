@@ -90,9 +90,11 @@ export class UploadReviewFormComponent implements OnInit {
           this.filterValue = this.uploadReviewFormService.convertFilterDocumentsData(data);
 
           if (this.filterValue.documents && this.filterValue.documents.data && this.filterValue.documents.data.length) {
-            this.documentTypes = this.filterValue.documents.data.map(filter => {
-              return { title: filter.name, value: filter.id, type: filter.type };
-            });
+            this.documentTypes = this.filterValue.documents.data
+              .map(filter => {
+                return { title: filter.name, value: filter.id, type: filter.type };
+              })
+              .filter((type) => (type.type === 'document' || type.type === 'externalForm'));
           }
 
           if (!(this.filterValue && this.filterValue)) {

@@ -142,7 +142,7 @@
       ></sw-online-form>
     </div>
 
-    <div *ngIf="documentTypes.length && documentFamilies.length">
+    <div *ngIf="documentTypes.length && documentFamilies.length && getSelectForm() && getSelectForm().submission_type !== 'onlineForm' && getSelectForm().submission_type !== 'pdfForm'">
       <app-upload-review-form-document-settings
         [documentTypes]="documentTypes"
         [documentFamilies]="documentFamilies"
