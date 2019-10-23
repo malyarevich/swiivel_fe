@@ -98,7 +98,7 @@ export class UploadReviewFormService extends ApiService {
             documents.documents.map((doc) => {
               documentsQuantity += doc.count;
               docs.push({
-                id: doc.id, type: doc.type, count: doc.count > 1 ? doc.count : 0, name: doc.name, param: 'documents'
+                id: doc.type, type: doc.type, count: doc.count > 1 ? doc.count : 0, name: doc.name, param: 'documents'
               });
             });
           }
