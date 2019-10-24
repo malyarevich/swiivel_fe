@@ -175,8 +175,8 @@ export class SideBarService {
     this.form.form = this.fb.group({ [section.name]: wrapper });
     section.fields = field ? [field] : this.form.workspace;
     this.form.workspace = [section];
-    console.log(this.form.workspace)
     this.events$.next({ action: 'update' });
+    return this.form.workspace[0];
   }
 
   getParentControl(field) {
@@ -264,15 +264,20 @@ export class SideBarService {
       }
     } else {
       let wrapper = this.form.workspace[0];
-      if (wrapper) wrapper.fields.push(field);
-      else {
-        this.addWrapper(null, field);
-        // this.form.workspace[0].fields.push(field);
+      let added = null;
+      if (!wrapper) {
+        wrapper = this.addWrapper(null, field);
+        added = true;
       }
-      wrapper = form.get([Object.keys(form.controls)[0], 'fields']);
-      if (wrapper) wrapper.addControl(field.name, this.createForm(field));
+      if (!wrapper.fields.find(ffield => field.name === ffield.name)) {
+        wrapper.fields.push(field);
+        wrapper = form.get([Object.keys(form.controls)[0], 'fields']);
+        if (!added) wrapper.addControl(field.name, this.createForm(field));
+      } else {
+        // this.removeField(field);
+      }
     }
-    this.events$.next({ action: 'added', field });
+    // this.events$.next({ action: 'added', field });
     this.events$.next({ action: 'update' });
 
     return form;
@@ -335,10 +340,21 @@ export class SideBarService {
           }
         }
       }
+    } else {
+      let parent = form.get(field.name);
+      if (!parent) {
+        for (let key of Object.keys(form.controls)) {
+          let pp = form.get(key).get('fields').get(field.name);
+          if (pp) {
+            form.get(key).get('fields').removeControl(field.name);
+            set(this.form.workspace, [0, 'fields'], this.form.workspace[0]['fields'].filter(ffield => ffield !== field));
+          }
+        }
+      }
+      // this.events$.next({ action: 'removed', field });
+      this.events$.next({ action: 'update' });
+      return form;
     }
-    this.events$.next({ action: 'removed', field });
-    this.events$.next({ action: 'update' });
-    return form;
   }
 
 
