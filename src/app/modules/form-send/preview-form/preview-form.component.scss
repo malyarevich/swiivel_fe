@@ -20,6 +20,9 @@
       z-index: 3;
       background: #36405F;
     }
+    &--online {
+      padding-left: 30px; 
+    }
   }
   .form-preview {
     max-width: 100%;
