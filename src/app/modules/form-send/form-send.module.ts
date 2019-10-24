@@ -6,6 +6,10 @@ import { FormSendNavBarComponent } from './form-send-nav-bar/form-send-nav-bar.c
 import { PreviewComponent } from './preview/preview.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { SharedModule } from '@app/components/shared.module';
+import { DataCollectionModule } from '../data-collection/data-collection.module';
+import { DataCollectionService } from '../data-collection/forms-dashboard/data-collection.service';
+import { CdkTreeModule } from '@angular/cdk/tree';
 
 
 
@@ -20,7 +24,12 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     FormSendRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    ScrollingModule
+    ScrollingModule,
+    SharedModule,
+    CdkTreeModule
+  ],
+  providers: [
+    DataCollectionService
   ]
 })
 export class FormSendModule { }

@@ -73,6 +73,14 @@ export class ApiService {
     return this.http.put(`/proxy/form-builder/form-template/${ id }`, form);
   }
 
+  getFormSend(id: string) {
+    return this.http.get(`/proxy/form-builder/release/${id}`);
+  }
+
+  getUsersByRole(key: string) {
+    return this.http.get(`/persons/eligible/${key}`);
+  }
+
   public download(url: string) {
     return this.http.getFile(url)
   }
