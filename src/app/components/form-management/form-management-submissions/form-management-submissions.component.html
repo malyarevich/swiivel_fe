@@ -401,8 +401,11 @@
     <td [attr.colspan]="displayedColumns.length">
       <sw-online-form
         [formId]="form.id"
-        [isFormReviewMode]="true"
+        [isViewMode]="true"
         [isMenuShow]="true"
+        [isReviewMode]="true"
+        (onBack)="onBack($event)"
+        (onSaveNext)="onSaveNext($event)"
       ></sw-online-form>
     </td>
   </tr>
