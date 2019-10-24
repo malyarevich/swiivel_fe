@@ -28,6 +28,13 @@
       border: 1px solid $button-color;
     }
 
+    &--transparent {
+      outline: none;
+      border: none;
+      background: transparent;
+      padding: 0;
+    }
+
     &--full {
       width: 100%;
     }
@@ -38,6 +45,10 @@
       font-size: 12px;
       line-height: 15px;
     }
+  }
+
+  &:hover .button {
+    opacity: 0.8;
   }
 }
 

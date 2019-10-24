@@ -133,6 +133,7 @@
         font: 800 12px/13px $nunito-sans;
         text-transform: capitalize;
       }
+
       .second-text {
         font: 400 10px/13px $nunito-sans;
       }
@@ -221,5 +222,21 @@
     &:focus {
       outline: none;
     }
+  }
+
+  .icon-invite-user {
+    color: $icon-gray;
+    font-size: 10px;
+    padding: 0 3px 0 0;
+  }
+
+  .button-invite-user {
+    padding: 5px 2px;
+  }
+
+  .button-invite-user-text {
+    font-size: 10px;
+    line-height: 13px;
+    color: $button-color;
   }
 }

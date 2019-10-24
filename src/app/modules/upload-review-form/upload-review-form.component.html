@@ -174,5 +174,7 @@
     {{ getDocument(removeDocumentId) && getDocument(removeDocumentId).entity_name ?
           getDocument(removeDocumentId).entity_name : 'this document' }}?
   </p>
-  <p *ngIf="this.isSaveActive">Are you sure you want to save settings for this document?</p>
+  <p *ngIf="this.isSaveActive">
+    Do you want to save changes to this document?
+  </p>
 </sw-dialog>
