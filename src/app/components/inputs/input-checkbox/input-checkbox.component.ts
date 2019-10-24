@@ -18,6 +18,10 @@ import { NgControl, FormControl } from '@angular/forms';
 export class InputCheckboxComponent {
   @Input() target = 'label';
   @Input() isActive = true;
+  @Input()
+  set check(v: boolean) {
+    if (v !== undefined) this.control.setValue(v, {emitEvent: false});
+  }
   @Output() checked = new EventEmitter();
   control = new FormControl();
   isIndeterminate: boolean = false;
@@ -64,7 +68,9 @@ export class InputCheckboxComponent {
   }
 
   public onBlur(event) {
-    this.onTouched();
+    if (this.onTouched) {
+      this.onTouched();
+    }
   }
 
   public onClick(event: Event) {

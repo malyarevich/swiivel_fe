@@ -12,6 +12,7 @@ import { IconsEnum } from '@shared/icons.enum';
 import { SizesEnum } from '@shared/sizes.enum';
 import { DialogComponent } from '@shared/popup/dialog.component';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { PreviewFormComponent } from '@modules/form-send/preview-form/preview-form.component';
 
 @Component({
   selector: 'app-upload-review-form',
@@ -195,8 +196,27 @@ export class UploadReviewFormComponent implements OnInit {
   }
 
   downLoadForm(id: string): void {
-    const url = this.documents.find(document => document._id === id).link;
-    this.dataSource.downloadForm(url);
+    const document = this.documents.find(document => document._id === id);
+    if( document.submission_type === 'onlineForm' || document.submission_type === 'pdfForm') {
+      console.log('export');
+      this.onExportPDF(document.form_id);
+    } else {
+      this.dataSource.downloadForm(document.link);
+    }
+  }
+
+  onExportPDF(mongoId: string): void {
+    this.uploadReviewFormService
+      .exportPDFForm(mongoId)
+      .subscribe((url) => {
+        this.download = {
+          url: this.sanitizer.bypassSecurityTrustResourceUrl(url),
+          filename: `form-${mongoId}.pdf`
+        };
+        this.cdr.detectChanges();
+        this.renderer.selectRootElement(this.link.nativeElement).click();
+        this.clearLink(url);
+      });
   }
 
   changeForm(id: string) {

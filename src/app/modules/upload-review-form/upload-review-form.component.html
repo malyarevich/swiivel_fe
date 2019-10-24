@@ -7,7 +7,7 @@
   [isLast]="isLastDocument()"
   [disabled]="isBulkDownload"
   [isSaveActive]="isSaveActive"
-  (saveDocument)="onOpenConfirmSavePopup()"
+  (saveDocument)="updateDocumentSettings(true)"
 >
 </app-document-approval-bar>
 <div class="content" [ngClass]="{'pdf-form': isOnlineForm()}">
@@ -113,18 +113,17 @@
       </div>
     </div>
   </div>
-  <div class="workarea">
-    <div class="sidebar-opener" [class.opened]="isSideBarShown" (click)="isSideBarShown = !isSideBarShown">
-      <div class="button">
-        <sw-icon-button
-          [icon]="isSideBarShown ? icons.CARET_LEFT : icons.CARET_RIGHT"
-          [color]="colors.WHITE"
-          [size]="size.MEDIUM"
-        >
-        </sw-icon-button>
-      </div>
+  <div class="sidebar-opener" [class.opened]="isSideBarShown" (click)="isSideBarShown = !isSideBarShown">
+    <div class="button">
+      <sw-icon-button
+        [icon]="isSideBarShown ? icons.CARET_LEFT : icons.CARET_RIGHT"
+        [color]="colors.WHITE"
+        [size]="size.MEDIUM"
+      >
+      </sw-icon-button>
     </div>
-
+  </div>
+  <div class="workarea">
     <div *ngIf="getSelectForm() && getSelectForm().submission_type !== 'onlineForm' && getSelectForm().submission_type !== 'pdfForm'">
       <app-upload-review-form-document
         [isSideBarShown]="isSideBarShown"
@@ -134,13 +133,16 @@
       ></app-upload-review-form-document>
     </div>
 
-    <div *ngIf="isOnlineForm()">
+    <div *ngIf="getSelectForm() && getSelectForm().submission_type === 'onlineForm'">
       <sw-online-form
         [formId]="getSelectForm().form_id"
         [isViewMode]="true"
         [isMenuShow]="true"
         [isReviewMode]="true"
       ></sw-online-form>
+    </div>
+    <div *ngIf="getSelectForm() && getSelectForm().submission_type === 'pdfForm'">
+      <app-preview-form [formId]='getSelectForm()._id'></app-preview-form>
     </div>
 
     <div *ngIf="documentTypes.length && documentFamilies.length && getSelectForm() && getSelectForm().submission_type !== 'onlineForm' && getSelectForm().submission_type !== 'pdfForm'">

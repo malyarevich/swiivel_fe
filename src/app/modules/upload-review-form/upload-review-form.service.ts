@@ -5,7 +5,7 @@ import { ApiService } from '@app/core/api.service';
 import { FilterDropDownData } from '@models/upload-review-form/filter.model';
 import { SortDropDownData } from '@models/upload-review-form/sort.model';
 import { Observable } from 'rxjs';
-import {map} from 'rxjs/operators';
+import {first, map} from 'rxjs/operators';
 
 export class UploadReviewFormService extends ApiService {
 
@@ -164,4 +164,12 @@ export class UploadReviewFormService extends ApiService {
     }
     return types;
   }
+
+
+  exportPDFForm(mongoId: string) {
+    return this.download(`/proxy/form-builder/pdf-export/${mongoId}`).pipe(map((response: any)=> {
+      return window.URL.createObjectURL(new Blob([response], {type: 'application/pdf'}))
+    }), first());
+  }
+
 }
