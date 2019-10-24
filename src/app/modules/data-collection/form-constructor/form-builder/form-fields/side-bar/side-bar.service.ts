@@ -157,7 +157,7 @@ export class SideBarService {
     }
   }
 
-  addWrapper(section?) {
+  addWrapper(section?, field?) {
     let form = cloneDeep(this.form.form);
     if (!section) {
       section = {
@@ -172,8 +172,9 @@ export class SideBarService {
     let wrapper = this.createForm(section);
     wrapper.addControl('fields', form);
     this.form.form = this.fb.group({ [section.name]: wrapper });
-    section.fields = this.form.workspace;
+    section.fields = field ? [field] : this.form.workspace;
     this.form.workspace = [section];
+    console.log(this.form.workspace)
     this.events$.next({ action: 'update' });
   }
 
@@ -261,16 +262,18 @@ export class SideBarService {
         parent.addControl(field.name, this.createForm(field));
       }
     } else {
-      if (!(!!this.form.workspace && Array.isArray(this.form.workspace))) {
-        this.addWrapper();
+      let wrapper = this.form.workspace[0];
+      if (wrapper) wrapper.fields.push(field);
+      else {
+        this.addWrapper(null, field);
+        // this.form.workspace[0].fields.push(field);
       }
-      let wrapper = this.form.workspace[0].fields;
-      if (wrapper) wrapper.push(field);
       wrapper = form.get([Object.keys(form.controls)[0], 'fields']);
       if (wrapper) wrapper.addControl(field.name, this.createForm(field));
     }
     this.events$.next({ action: 'added', field });
     this.events$.next({ action: 'update' });
+
     return form;
   }
   getParentName(control) {
