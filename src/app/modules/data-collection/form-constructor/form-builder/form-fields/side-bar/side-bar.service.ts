@@ -169,6 +169,7 @@ export class SideBarService {
         pathId: 'New section114'
       }
     }
+    if (field) section.fields = [field];
     let wrapper = this.createForm(section);
     wrapper.addControl('fields', form);
     this.form.form = this.fb.group({ [section.name]: wrapper });
