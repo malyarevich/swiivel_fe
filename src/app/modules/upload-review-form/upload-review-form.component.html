@@ -7,7 +7,7 @@
   [isLast]="isLastDocument()"
   [disabled]="isBulkDownload"
   [isSaveActive]="isSaveActive"
-  (saveDocument)="onOpenConfirmSavePopup()"
+  (saveDocument)="updateDocumentSettings(true)"
 >
 </app-document-approval-bar>
 <div class="content" [ngClass]="{'pdf-form': isOnlineForm()}">
