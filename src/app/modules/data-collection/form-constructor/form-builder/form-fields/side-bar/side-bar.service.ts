@@ -53,6 +53,10 @@ export class SideBarService {
   _form = new BehaviorSubject(null);
   _pathIds = [];
   FormsById = {};
+  public fieldTypes = {
+    'schema': [],
+    'mapped': []
+  }
   constructor(public fb: FormBuilder) {
     this.events$.subscribe((event: any) => {
       if (event.action === 'options') {
@@ -336,30 +340,25 @@ export class SideBarService {
 
 
   createForm(field, ctx = this) {
-    let form = this.fb.group({
-      name: [field.name],
-      type: [field.type],
-    });
-    form.addControl('size', this.fb.control(''));
-    form.addControl('required', this.fb.control(''));
-    form.addControl('hideLabel', this.fb.control(''));
-    form.addControl('readonly', this.fb.control(''));
-    form.addControl('unique', this.fb.control(''));
-    if (field._id) {
-      this.FormsById[field._id] = form;
-      form.addControl('_id', this.fb.control(field._id));
-    }
-    if (field.options) {
-      let settings = this.fb.group({});
-      form.addControl('settings', settings);
-      if (field.type < 112) {
-
+    let schema = this.fieldTypes.mapped.find(ftype => ftype.type === field.type && ftype.mapped === field.mapped && ftype.name === field.name);
+    if (!schema) schema = this.fieldTypes.schema.find(ftype => ftype.type === field.type);
+    let obj = Object.assign({}, schema, field);
+    delete obj.fields;
+    let form = this.fb.group({});
+    for (let field in obj) {
+      if (isPlainObject(obj[field])) {
+        form.addControl(field.toString(), this.fb.group(obj[field]));
+      } else {
+        form.addControl(field, this.fb.control(obj[field]));
       }
     }
     if (field.fields && field.fields.length > 0) {
       let fields = this.fb.group({});
       form.addControl('fields', fields);
       field.fields.forEach(child => fields.addControl(child.name, this.createForm(child)));
+    }
+    if (field._id) {
+      this.FormsById[field._id] = form;
     }
     return form;
   }

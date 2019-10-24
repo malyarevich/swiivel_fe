@@ -9,7 +9,7 @@ import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 export class CheckboxSettingsComponent {
 
 
-  form: FormGroup;
+  @Input() form: FormGroup;
 
   options = [
     { title: 'Yes', value: true },

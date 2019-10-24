@@ -27,7 +27,7 @@ export class GroupContainerComponent implements OnInit {
     // else {
     this.group = JSON.parse(JSON.stringify(group));
     this.sideBarService.addPathId(group.pathId);
-    this.showNested = this.group.isExpanded;
+    this.showNested = true || this.group.isExpanded;
     this.cd.markForCheck()
 
     // }
@@ -57,7 +57,7 @@ export class GroupContainerComponent implements OnInit {
     private sideBarService: SideBarService,
     private cd: ChangeDetectorRef
   ) { }
-  showNested: boolean = false;
+  showNested: boolean = true;
   ngOnInit() {
     this.list = Section.sectionWidth;
     if (this.inputGroup) {
