@@ -142,7 +142,7 @@
       ></sw-online-form>
     </div>
     <div *ngIf="getSelectForm() && getSelectForm().submission_type === 'pdfForm'">
-      <app-preview-form [formId]='getSelectForm()._id'></app-preview-form>
+      <app-preview-form [formId]='getSelectForm().form_id'></app-preview-form>
     </div>
 
     <div *ngIf="documentTypes.length && documentFamilies.length && getSelectForm() && getSelectForm().submission_type !== 'onlineForm' && getSelectForm().submission_type !== 'pdfForm'">
