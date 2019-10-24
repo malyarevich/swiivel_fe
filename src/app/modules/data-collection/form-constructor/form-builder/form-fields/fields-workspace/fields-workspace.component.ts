@@ -33,6 +33,7 @@ export class FieldsWorkspaceComponent implements OnInit, AfterViewInit {
 
   @Input('form') set form(form: any) {
     this._form = form;
+    this.fields = form.workspace;
     this.cd.markForCheck()
   }
 
@@ -66,20 +67,28 @@ export class FieldsWorkspaceComponent implements OnInit, AfterViewInit {
     this.sideBarService.events$.subscribe((event: any) => {
       if (event.action === 'update') {
         let fields = this.sideBarService.form.workspace;
-        let section = fields.find(field => field.type === 114);
-        if (!section) {
-          section = {
-            type: 114,
-            name: 'New section',
-            isActive: true,
-            fields: fields,
-            path: ['New section'],
-            pathId: 'New section114'
+        if (!!fields && fields.length > 0) {
+          let section = fields.find(field => field.type === 114);
+          if (!section) {
+            section = {
+              type: 114,
+              name: 'New section',
+              isActive: true,
+              fields: [],
+              path: ['New section'],
+              pathId: 'New section114'
+            }
+            // console.log(fields)
+            this.sideBarService.addWrapper(section);
+            // this.sideBarService.form.form.addControl(section.name, this.sideBarService.createForm(section));
+            // section.fields = fields;
+            // this.fields = [section]
+          } else {
+            console.log('ip', fields)
+            this.fields = fields;
+            this.cd.detectChanges();
+            this.cd.markForCheck();
           }
-          this.sideBarService.form.form.addControl(section.name, this.sideBarService.createForm(section));
-          this.fields = [section]
-        } else {
-          this.fields = fields;
         }
         this.cd.detectChanges();
         this.cd.markForCheck();

@@ -99,12 +99,10 @@ export class FieldContainerComponent
 
   ngOnInit(): void {
     this.list = Section.sectionWidth;
+    console.log(this.field)
     if (this.field) {
-      if (this.field.path.length > 1) {
-        this.form = this.sideBarService.form.form.get(flatMap(this.field.path, (path => { return [path, 'fields'] })).slice(0, -1));
-      } else {
-        this.form = this.sideBarService.form.form.get(this.field.path);
-      }
+      this.form = this.sideBarService.getFormFor(this.field);
+      console.log(this.form)
       if (this.form) {
 
         this.form.valueChanges.subscribe((form) => {

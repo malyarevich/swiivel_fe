@@ -147,8 +147,12 @@ export class FieldsSideBarComponent implements OnInit, OnDestroy, AfterViewCheck
   ngOnInit() {
     this.filterControl.valueChanges.subscribe((val) => {
       if (val.length > 0) {
-        this.filterValue = val;
-        this.expandFiltered()
+        if (val === 'reset!') {
+          this.service.resetForm();
+        } else {
+          this.filterValue = val;
+          this.expandFiltered()
+        }
       } else {
         this.filterValue = null;
       }
@@ -168,12 +172,12 @@ export class FieldsSideBarComponent implements OnInit, OnDestroy, AfterViewCheck
       //   }
       // }
       if (fields.length > 0) {
-        fields = JSON.parse(JSON.stringify(fields));
+        // fields = JSON.parse(JSON.stringify(fields));
         // this.service.fields = getActive(fields);
         // let wrapped = this.treeSource.wrapIfNeeded(fields);
         // console.log(fields, wrapped, getActive(wrapped), getActive(fields));
       } else {
-        this.service.fields = [];
+        // this.service.fields = [];
       }
     });
     this.service.events$.subscribe((event: any) => {

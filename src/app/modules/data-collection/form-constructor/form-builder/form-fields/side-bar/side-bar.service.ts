@@ -52,6 +52,7 @@ export class SideBarService {
   _fields = new BehaviorSubject([]);
   _form = new BehaviorSubject(null);
   _pathIds = [];
+  FormsById = {};
   constructor(public fb: FormBuilder) {
     this.events$.subscribe((event: any) => {
       if (event.action === 'options') {
@@ -83,15 +84,43 @@ export class SideBarService {
     return this._form.asObservable();
   }
   set form(_form) {
-
     if (isPlainObject(_form.fields)) {
       _form.fields = values(_form.fields);
     }
+    _form.workspace = cloneDeep(_form.fields);
     _form.form = this.initForm(_form.fields);
-    _form.workspace = [];
-    _form.fields.forEach((field) => set(_form.workspace, field.path, field));
+    // _form.fields.forEach((field) => set(_form.workspace, field.path, field));
     console.log(`form updated`, _form);
     this._form.next(_form);
+    this.events$.next({ action: 'update' });
+  }
+  findFieldById(id) {
+    return this.FormsById[id];
+  }
+  getFormFor(field) {
+    // if (field.path) {
+    //   let fieldForm = this.form.form.get(this.fieldControlPath(field.path));
+    //   if (!fieldForm) {
+    //     for (let key of Object.keys(this.form.form.controls)) {
+    //       let pp = this.form.form.get(key).get('fields').get(this.fieldControlPath(field.path));
+    //       if (pp) return pp;
+    //     }
+    //   }
+    //   return fieldForm;
+    // } else {
+    if (!!field._id) {
+      return this.findFieldById(field._id);
+    } else {
+      return null
+    }
+    // }
+  }
+  resetForm() {
+    let form = cloneDeep(this.form);
+    form.fields = [];
+    form.form = null;
+    this.form = form;
+    this.form.form.updateValueAndValidity()
   }
 
   get fields() {
@@ -109,6 +138,16 @@ export class SideBarService {
     if (paths.length > 1) {
       flatMap(paths, (path => { return [path, 'fields'] })).slice(0, -1)
     }
+  }
+
+  addWrapper(section) {
+    let form = cloneDeep(this.form.form);
+    let wrapper = this.createForm(section);
+    wrapper.addControl('fields', form);
+    this.form.form = this.fb.group({ [section.name]: wrapper });
+    section.fields = this.form.workspace;
+    this.form.workspace = [section];
+    this.events$.next({ action: 'update' });
   }
 
   getParentControl(field) {
@@ -166,7 +205,16 @@ export class SideBarService {
   removeField(field) {
     let form = this.form.form// as FormArray;// this.fb.array([]) as FormArray;
     if (field.path.length > 1) {
-      form.get(this.parentControlPath(field.path)).removeControl(field.name);
+      let parent = form.get(this.parentControlPath(field.path));
+      if (!parent) {
+        for (let key of Object.keys(form.controls)) {
+          let pp = form.get(key).get('fields').get(this.parentControlPath(field.path));
+          if (pp) pp.removeControl(field.name);
+
+        }
+      }
+      console.log(field);
+      console.log(this.parentControlPath(field.path));
     } else {
       form.removeControl(field.name);
     }
@@ -185,6 +233,10 @@ export class SideBarService {
     form.addControl('hideLabel', this.fb.control(''));
     form.addControl('readonly', this.fb.control(''));
     form.addControl('unique', this.fb.control(''));
+    if (field._id) {
+      this.FormsById[field._id] = form;
+      form.addControl('_id', this.fb.control(field._id));
+    }
     if (field.options) {
       let settings = this.fb.group({});
       form.addControl('settings', settings);
@@ -231,7 +283,7 @@ export class SideBarService {
     return fields;
   }
 
-  set fields(fieldsArr) {
+  set fie2lds(fieldsArr) {
     const fields = cloneDeep(fieldsArr);
     const form = this._form.getValue();
     let formFields = getSaved(form.fields);

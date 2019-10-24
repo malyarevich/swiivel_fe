@@ -511,10 +511,19 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
     }
     return arr;
   }
+  prepareFields() {
+    if (this.sidebarService.form.form) {
+      let fields = this.formToArray(this.sidebarService.form.form.value);
+      console.log('sending', fields)
+      return fields;
+    } else {
+      return [];
+    }
+  }
   getForm(): Form {
     return {
       _id: this.formId,
-      fields: this.formToArray(this.form['form'].value),
+      fields: this.prepareFields(),
       // fields: this.fields,
       documentsForms: this.documentsForms,
       documents: this.documents,
