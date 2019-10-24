@@ -442,7 +442,9 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
         return field.name === ffield.name && field.type === ffield.type;
       })
       if (found) {
+
         if (field.type < 112) {
+          found.isActive = true;
           result = found;
         } else {
           let fields = JSON.parse(JSON.stringify(field.fields));
