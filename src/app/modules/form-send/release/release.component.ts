@@ -5,8 +5,6 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { ReleaseDataSource } from './release.datasource';
 import { DataCollectionService } from '@app/modules/data-collection/forms-dashboard/data-collection.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { NestedTreeControl } from '@angular/cdk/tree';
-import { ArrayDataSource } from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-release',
@@ -29,7 +27,6 @@ export class ReleaseComponent implements OnInit {
     url: null,
     filename: null
   };
-  treeControl = new NestedTreeControl<any> (node => node.data);
   accountsSource;
 
   form: FormGroup;
@@ -74,7 +71,7 @@ export class ReleaseComponent implements OnInit {
     this.dataSource.accoutSubject.subscribe(v => {
       if (v) {
         console.log('set val ', v)
-        this.accountsSource = new ArrayDataSource(v);
+        this.accountsSource = v;
       }
     })
   }
@@ -98,13 +95,12 @@ export class ReleaseComponent implements OnInit {
     }
   }
 
-  hasChild = (_: number, node: any) => {
-    console.log('hasChild', node);
-    return !!node.data && node.data.length > 0
-  };
+  // hasChild = (_: number, node: any) => {
+  //   console.log('hasChild', node);
+  //   return !!node.data && node.data.length > 0
+  // };
 
   getIcon(expanded: boolean): string {
-    console.log('getIcon', expanded)
     return expanded ? 'fa-caret-up' : 'fa-caret-down';
   }
 
