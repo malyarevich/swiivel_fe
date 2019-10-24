@@ -139,6 +139,8 @@
         [isViewMode]="true"
         [isMenuShow]="true"
         [isReviewMode]="true"
+        (onBack)="onBack($event)"
+        (onSaveNext)="onSaveNext($event)"
       ></sw-online-form>
     </div>
     <div *ngIf="getSelectForm() && getSelectForm().submission_type === 'pdfForm'">

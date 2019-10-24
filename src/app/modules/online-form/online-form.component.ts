@@ -4,7 +4,9 @@ import {
   OnInit,
   OnDestroy,
   Input,
-  OnChanges
+  OnChanges,
+  Output,
+  EventEmitter
 } from "@angular/core";
 import { Location } from "@angular/common";
 import { ActivatedRoute } from "@angular/router";
@@ -59,6 +61,8 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
   @Input() isFormReviewMode: boolean = false;
   @Input() isViewMode: boolean = false;
   @Input() isReviewMode: boolean = false;
+  @Output() onSaveNext: EventEmitter<any> = new EventEmitter();
+  @Output() onBack: EventEmitter<any> = new EventEmitter();
   // form: Form;
   // fg: FormGroup;
   form$: BehaviorSubject<Form> = new BehaviorSubject(null);
@@ -974,6 +978,7 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
         ...this.currentPosition$.value,
         tab: this.currentPosition$.value.tab - 1
       });
+      this.onBack.emit(false);
     } else if (currentPageIndex !== 0) {
       this.currentPosition$.next({
         ...this.currentPosition$.value,
@@ -984,9 +989,11 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
           this.formNavigationState$.getValue()[currentPageIndex - 1]["tabs"]
             .length - 1
       });
+      this.onBack.emit(false);
     } else {
       // TODO: need business clarification for this branch of code
       // this.goBackLocation();
+      this.onBack.emit(true);
     }
   }
 
@@ -1008,6 +1015,7 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
         ...this.currentPosition$.value,
         tab: this.currentPosition$.value.tab + 1
       });
+      this.onSaveNext.emit(false);
     } else if (
       currentPageIndex + 1 <
       this.formNavigationState$.getValue().length
@@ -1019,9 +1027,11 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
         ],
         tab: 0
       });
+      this.onSaveNext.emit(false);
     } else {
       // TODO: goToFinishPage
       console.log("TODO: goToFinishPage");
+      this.onSaveNext.emit(true);
     }
   }
 
