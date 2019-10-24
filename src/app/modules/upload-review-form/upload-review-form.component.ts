@@ -199,7 +199,7 @@ export class UploadReviewFormComponent implements OnInit {
     const document = this.documents.find(document => document._id === id);
     if( document.submission_type === 'onlineForm' || document.submission_type === 'pdfForm') {
       console.log('export');
-      this.onExportPDF(id);
+      this.onExportPDF(document.form_id);
     } else {
       this.dataSource.downloadForm(document.link);
     }
