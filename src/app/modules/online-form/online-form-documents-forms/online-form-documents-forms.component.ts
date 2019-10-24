@@ -30,7 +30,7 @@ export class OnlineFormDocumentsFormsComponent implements OnInit {
   }
 
   isExist(): boolean {
-    return typeof this.form.documentsForms !== 'undefined' && this.form.consentInfo.consents.length > 0;
+    return typeof this.form.documentsForms !== 'undefined';
   }
 
 }
