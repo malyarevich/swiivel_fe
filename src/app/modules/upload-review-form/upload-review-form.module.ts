@@ -27,7 +27,6 @@ import { FormSendModule } from '@modules/form-send/form-send.module';
 @NgModule({
   declarations: [
     FormUploadFooterComponent,
-    // OnlineFormComponent,
     UploadFormReviewItemComponent,
     UploadReviewFormApprovalBarComponent,
     UploadReviewFormComponent,
@@ -38,12 +37,12 @@ import { FormSendModule } from '@modules/form-send/form-send.module';
   imports: [
     CommonModule,
     FormsModule,
-    PdfViewerModule,
+    FormSendModule,
     OnlineFormModule,
-    UploadReviewFormRoutingModule,
+    PdfViewerModule,
     SharedModule,
     SharedRedComponentsModule,
-    FormSendModule
+    UploadReviewFormRoutingModule
   ],
   providers: [UploadReviewFormService],
   entryComponents: [UploadReviewFormComponent]
