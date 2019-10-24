@@ -1,9 +1,17 @@
 <div class="row">
   <div class="col-7" style="padding-right: 0;padding-left: 0;height: 100%;">
-    <div class="title-row">
+    <div class="title-row title-row--online">
         Online Form
     </div>
-    <sw-online-form [formId]="formId" [isFormReviewMode]="false" [isMenuShow]="true"></sw-online-form>
+    <sw-online-form
+      [formId]="formId"
+      [isFormReviewMode]="true"
+      [isMenuShow]="false"
+      [isViewMode]="true"
+      [isReviewMode]="true"
+      (onBack)="onBack($event)"
+      (onSaveNext)="onSaveNext($event)"
+    ></sw-online-form>
   </div>
   <div class="col-5" style="padding-right: 0;padding-left: 0;height: 100%;">
     <div class="title-row pdf-color">
