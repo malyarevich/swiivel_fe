@@ -1,0 +1,28 @@
+<div class="row">
+  <div class="col-7" style="padding-right: 0;padding-left: 0;height: 100%;">
+    <div class="title-row">
+        Online Form
+    </div>
+    <sw-online-form [formId]="formId" [isFormReviewMode]="false" [isMenuShow]="true"></sw-online-form>
+  </div>
+  <div class="col-5" style="padding-right: 0;padding-left: 0;height: 100%;">
+    <div class="title-row pdf-color">
+        PDF Form
+    </div>
+    <div class="form-preview" data-e2e="form-preview">
+      <ng-container *ngIf="formId;">
+        <div class="pdf-container" data-e2e="pdf-container">
+          <pdf-viewer [src]="getLink()" (on-progress)="onProgress($event)" (error)="onError($event)"
+            style="display: block; margin-top: 60px;" zoom="0.7" [class.dont-display]="pdfLoading || pdfError">
+          </pdf-viewer>
+        </div>
+        <div class="loader" *ngIf="pdfLoading">
+          <sw-main-spinner class="medium"></sw-main-spinner>
+        </div>
+        <div class="no-pdf" *ngIf="pdfError && !pdfLoading">
+          PDF does not exist
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

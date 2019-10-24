@@ -10,6 +10,9 @@ import { SharedModule } from '@app/components/shared.module';
 import { DataCollectionModule } from '../data-collection/data-collection.module';
 import { DataCollectionService } from '../data-collection/forms-dashboard/data-collection.service';
 import { CdkTreeModule } from '@angular/cdk/tree';
+import { OnlineFormModule } from '../online-form/online-form.module';
+import { PreviewFormComponent } from './preview-form/preview-form.component';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 
 
@@ -17,7 +20,8 @@ import { CdkTreeModule } from '@angular/cdk/tree';
   declarations: [
     ReleaseComponent,
     FormSendNavBarComponent,
-    PreviewComponent
+    PreviewComponent,
+    PreviewFormComponent,
   ],
   imports: [
     CommonModule,
@@ -26,7 +30,10 @@ import { CdkTreeModule } from '@angular/cdk/tree';
     FormsModule,
     ScrollingModule,
     SharedModule,
-    CdkTreeModule
+    CdkTreeModule,
+    OnlineFormModule,
+    PdfViewerModule
+
   ],
   providers: [
     DataCollectionService
