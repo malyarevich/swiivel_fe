@@ -35,4 +35,13 @@ export class PreviewFormComponent implements OnInit {
     }
   }
 
+  onBack(event): void {
+    console.log('onBack', event);
+  }
+
+  onSaveNext(event): void {
+    console.log('onSaveNext', event);
+  }
+
+
 }
