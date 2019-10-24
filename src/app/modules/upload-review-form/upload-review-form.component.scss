@@ -12,7 +12,7 @@
 
       .workarea {
         position: absolute;
-        max-height: calc(100vh - 150px);
+        max-height: calc(100vh - 200px);
         width: calc(100vw - 50px);
         overflow: scroll;
       }
@@ -27,8 +27,8 @@
       }
 
       .sidebar-opener.opened {
-        left: 295px;
-        transition: ease-in-out 600ms left;
+        left: 294px;
+        transition: ease-in-out 400ms left;
       }
     }
   }
@@ -43,7 +43,6 @@
     background: $element-base-color;
     border-radius: 0 3px 3px 0;
     display: flex;
-    transition: ease-in-out 600ms left;
 
     .button {
       margin: auto;
@@ -79,10 +78,23 @@
       height: calc(100vh - 460px);
       min-height: 50px;
       overflow-y: auto;
+      overflow-x: hidden;
 
       &::-webkit-scrollbar {
-        display: none;
+        -webkit-appearance: none;
+        width: 5px;
       }
+
+      &::-webkit-scrollbar-thumb {
+        border-radius: 5px;
+        background-color: rgba(0,0,0,.5);
+        -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+      }
+
+      //
+      //&::-webkit-scrollbar {
+      //  display: none;
+      //}
     }
 
     .sidebar-list-bulk-download {
@@ -183,5 +195,5 @@
 
 .sidebar-container.opened {
   max-width: 294px;
-  transition: ease-in-out 600ms max-width;
+  transition: ease-in-out 400ms max-width;
 }
