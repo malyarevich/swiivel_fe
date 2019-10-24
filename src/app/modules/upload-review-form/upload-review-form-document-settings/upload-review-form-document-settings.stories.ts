@@ -1,12 +1,11 @@
 import { moduleMetadata, storiesOf } from '@storybook/angular';
 import { select, text, withKnobs } from '@storybook/addon-knobs';
-import { IconButtonComponent } from '@shared/buttons/icon-button/icon-button.component';
 import { UploadReviewFormService } from '@modules/upload-review-form/upload-review-form.service';
 import { HttpClient, HttpHandler } from '@angular/common/http';
 import { UploadReviewFormDocumentSettingsComponent } from './upload-review-form-document.component-settings';
-import { DropdownInputComponent } from '@shared/inputs/dropdown-input/dropdown-input.component';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from '@shared/shared.module';
 
 const stories = storiesOf('Upload Review Form', module);
 
@@ -14,8 +13,9 @@ stories.addDecorator(withKnobs);
 // @ts-ignore
 stories.addDecorator(
   moduleMetadata({
-    declarations: [UploadReviewFormDocumentSettingsComponent, DropdownInputComponent, IconButtonComponent],
-    providers: [UploadReviewFormService, HttpClient, HttpHandler, FormsModule, ReactiveFormsModule]
+    imports: [FormsModule, ReactiveFormsModule, SharedModule],
+    declarations: [UploadReviewFormDocumentSettingsComponent],
+    providers: [UploadReviewFormService, HttpClient, HttpHandler]
   })
 )
 
@@ -24,7 +24,11 @@ const optionsStatus = [
 ];
 
 stories.add('Upload Settings', () => ({
-  template: `<app-upload-review-form-document-settings [document]='documents' [documentTypes]="documentTypes" [documentFamilies]="documentFamilies"></app-upload-review-form-document-settings>`,
+  template: `<app-upload-review-form-document-settings
+    [document]='document'
+    [documentTypes]="documentTypes"
+    [documentFamilies]="documentFamilies"
+   ></app-upload-review-form-document-settings>`,
   props: {
     document: {
         bucketId: 'test_school_bucket',
@@ -47,7 +51,7 @@ stories.add('Upload Settings', () => ({
         status: select('Status', optionsStatus, 'needs_review', 'Next Form'),
         submission_type: 'online_form',
         updated_at: '2019-10-08 11:13:16',
-      },
+    },
     documentTypes: [
       {
         title: 'Birth Certificate',
