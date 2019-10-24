@@ -633,7 +633,7 @@
   <!--  END  FORM PAYMENT-->
 
   <div class="col-9">
-    <div style="height: calc(100% - 25px);">
+    <div>
       <!--      cdkDropList-->
       <!--      id="workPlaceList"-->
       <!--      [cdkDropListData]="fields"-->
@@ -657,8 +657,7 @@
       <!--      </ul>-->
       <app-packet-intro *ngIf="activeSections.packetIntroduction.isActive" [packetIntro]="packetIntro">
       </app-packet-intro>
-      <app-fields-workspace *ngIf="activeSections.formFields.isActive" [form]="form" [sideBar]="newSideBar"
-        [customFields]="customFields"></app-fields-workspace>
+      <app-fields-workspace *ngIf="activeSections.formFields.isActive" [form]="form"></app-fields-workspace>
       <!--  documents-forms-->
       <app-documents-forms *ngIf="activeSections.documentsForms.isActive" [sideBar]="newSideBar" [form]="form"
         [isDocumentsForms]="isDocumentsForms" [documentsForms]="documentsForms" [documents]="documents"

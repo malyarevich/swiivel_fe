@@ -88,6 +88,10 @@ export class ReleaseComponent implements OnInit {
     // });
   }
 
+  sort(col: string) {
+    
+  }
+
   initPage(): void {
     if (this.id) {
       this.dataSource.loadList(this.id);

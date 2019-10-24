@@ -1,22 +1,28 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { Form } from '@app/models/data-collection/form.model';
+import {
+  Component,
+  Input,
+  OnInit,
+  ChangeDetectionStrategy
+} from "@angular/core";
+import { FormGroup } from "@angular/forms";
+import { Form } from "@app/models/data-collection/form.model";
 import {
   menuItems,
   mainMenuNames,
   IMainMenuNames,
   IMenuItems
-} from '../models/menu.model';
-import { GenerateErrorsService } from '@app/modules/online-form/utils/generate-errors.service';
+} from "../models/menu.model";
+import { GenerateErrorsService } from "@app/modules/online-form/utils/generate-errors.service";
 import {
   ICurrentPosition,
   IFormNavigationState
-} from '../models/online-form.model';
+} from "../models/online-form.model";
 
 @Component({
-  selector: 'sw-online-form-general-info',
-  templateUrl: './online-form-general-info.component.html',
-  styleUrls: ['./online-form-general-info.component.scss']
+  selector: "sw-online-form-general-info",
+  templateUrl: "./online-form-general-info.component.html",
+  styleUrls: ["./online-form-general-info.component.scss"],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class OnlineFormGeneralInfoComponent implements OnInit {
   @Input() form: Form;
@@ -50,14 +56,14 @@ export class OnlineFormGeneralInfoComponent implements OnInit {
       });
     } else {
       this.sections = [
-        { _id: 'generalInfo', name: 'General Information', type: 114 }
+        { _id: "generalInfo", name: "General Information", type: 114 }
       ];
     }
   }
 
   isExist(): boolean {
     return (
-      typeof this.form.fields !== 'undefined' && this.form.fields.length > 0
+      typeof this.form.fields !== "undefined" && this.form.fields.length > 0
     );
   }
 

@@ -19,15 +19,18 @@ import { Section } from '../../../../models/data-collection/section.model';
   styleUrls: ["./section-header.component.scss"]
 })
 export class SectionHeaderComponent implements OnInit {
-  @Input() 
+  @Input()
   set sectionName(n: string) {
     this.name = n;
   }
-  @Input() 
+  @Input()
   set sectionWidth(w: string) {
     this.width = this.widthOptions.filter(i => i.value === w);
   }
-  @Input() isExpand: boolean;
+  @Input() set isExpand(expanded: boolean) {
+    this.isExpanded = expanded;
+  }
+  @Input() isExpanded: boolean = true;
   @Output() onChangeSectionName: EventEmitter<string> = new EventEmitter;
   @Output() onChangeSectionWidth: EventEmitter<string> = new EventEmitter;
   @Output() onToggleExpand: EventEmitter<any> = new EventEmitter;
@@ -46,14 +49,14 @@ export class SectionHeaderComponent implements OnInit {
     { title: '1 column', value: 'quarter' }
   ];
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit() {
     this.list = Section.sectionWidth;
   }
 
   getIcon(): string {
-    return this.isExpand ? 'fa-caret-up' : 'fa-caret-down';
+    return this.isExpanded ? 'fa-caret-up' : 'fa-caret-down';
   }
 
   nameChanged(value) {
@@ -77,7 +80,7 @@ export class SectionHeaderComponent implements OnInit {
   }
 
   toggleExpand() {
-    this.onToggleExpand.emit();
+    this.isExpanded = !this.isExpanded
   }
 
   toggleSettings() {

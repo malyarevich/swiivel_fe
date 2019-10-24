@@ -50,6 +50,28 @@ export const routes: Routes = [
     ]
   },
   {
+    path: 'form-management/:id',
+    component: LayoutComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('../data-collection/form-management/form-management.module')
+          .then(m => m.FormManagementModule)
+      },
+    ]
+  },
+  {
+    path: 'form-info/:id',
+    component: LayoutComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('../data-collection/form-info/form-info.module')
+          .then(m => m.FormInfoModule)
+      },
+    ]
+  },
+  {
     path: 'form-send/:id',
     component: CreatorHeaderComponent,
     children: [
@@ -105,8 +127,7 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        loadChildren: () => import('../online-form/online-form.module').then(m => m.OnlineFormModule),
-
+        loadChildren: () => import('../online-form-wrapper/online-form-wrapper.module').then(m => m.OnlineFormWrapperModule),
       }
     ],
   },

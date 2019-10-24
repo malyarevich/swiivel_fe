@@ -1,14 +1,20 @@
 <ng-container *ngIf="isReady$ | async">
   <sw-online-form-nav
-    [isMenuShow]="isMenuShow"
-    [formName]="form?.name"
+    *ngIf="!isReviewMode"
+    [formName]="(form$ | async)?.name"
     (actionEmitter)="onMainNavAction($event)"
   ></sw-online-form-nav>
 
   <div class="container-fluid app-of-background online_form_container">
-    <div class="online_form_container__nav">
+    <div
+      class="online_form_container__nav app-div-animation"
+      [ngClass]="{
+        'app-div-show': isMenuShow,
+        'app-div-hide': !isMenuShow
+      }"
+    >
       <sw-online-form-menu
-        [form]="form"
+        [form]="form$ | async"
         [pagesPercents]="pagesPercents$ | async"
         [formNavigationState]="formNavigationState$ | async"
         [currentPosition]="currentPosition$ | async"
@@ -16,11 +22,14 @@
       ></sw-online-form-menu>
     </div>
 
-    <div class="online_form_container__wrapper">
+    <div
+      class="online_form_container__wrapper"
+      [ngClass]="{ 'online_form_container__wrapper--no_move': isReviewMode }"
+    >
       <div class="online_form_container__content">
         <sw-online-form-view
-          [form]="form"
-          [fg]="fg"
+          [form]="form$ | async"
+          [fg]="fg$ | async"
           [formNavigationState]="formNavigationState$ | async"
           [currentPosition]="currentPosition$ | async"
           [formErrors]="sectionGroupFieldsErrors$ | async"

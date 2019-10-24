@@ -17,36 +17,6 @@ export const routes: Routes = [
           }
         ]
       },
-      // {
-      //   path: 'form-constructor',
-      //   children: [
-      //     {
-      //       path: '',
-      //       loadChildren: () => import('./form-constructor/form-constructor.module')
-      //         .then(m => m.FormConstructorModule)
-      //     }
-      //   ]
-      // },
-      // {
-      //   path: 'form-constructor/:id',
-      //   children: [
-      //     {
-      //       path: '',
-      //       loadChildren: () => import('./form-constructor/form-constructor.module')
-      //         .then(m => m.FormConstructorModule)
-      //     }
-      //   ]
-      // },
-      // {
-      //  path: 'online-form/:id',
-      //  children: [
-      //    {
-      //      path: '',
-      //      loadChildren: () => import('./online-form/online-form.module')
-      //        .then(m => m.OnlineFormModule)
-      //    }
-      //  ]
-      //},
       {
         path: 'form-info/:id',
         children: [
@@ -54,16 +24,6 @@ export const routes: Routes = [
             path: '',
             loadChildren: () => import('./form-info/form-info.module')
               .then(m => m.FormInfoModule)
-          }
-        ]
-      },
-      {
-        path: 'form-management',
-        children: [
-          {
-            path: '',
-            loadChildren: () => import('./form-management/form-management.module')
-              .then(m => m.FormManagementModule)
           }
         ]
       },

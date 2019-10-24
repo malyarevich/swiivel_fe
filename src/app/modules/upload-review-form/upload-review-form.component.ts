@@ -90,9 +90,11 @@ export class UploadReviewFormComponent implements OnInit {
           this.filterValue = this.uploadReviewFormService.convertFilterDocumentsData(data);
 
           if (this.filterValue.documents && this.filterValue.documents.data && this.filterValue.documents.data.length) {
-            this.documentTypes = this.filterValue.documents.data.map(filter => {
-              return { title: filter.name, value: filter.id, type: filter.type };
-            });
+            this.documentTypes = this.filterValue.documents.data
+              .map(filter => {
+                return { title: filter.name, value: filter.id, type: filter.type };
+              })
+              .filter((type) => (type.type === 'document' || type.type === 'externalForm'));
           }
 
           if (!(this.filterValue && this.filterValue)) {
@@ -193,8 +195,27 @@ export class UploadReviewFormComponent implements OnInit {
   }
 
   downLoadForm(id: string): void {
-    const url = this.documents.find(document => document._id === id).link;
-    this.dataSource.downloadForm(url);
+    const document = this.documents.find(document => document._id === id);
+    if( document.submission_type === 'onlineForm' || document.submission_type === 'pdfForm') {
+      console.log('export');
+      this.onExportPDF(id);
+    } else {
+      this.dataSource.downloadForm(document.link);
+    }
+  }
+
+  onExportPDF(mongoId: string): void {
+    this.uploadReviewFormService
+      .exportPDFForm(mongoId)
+      .subscribe((url) => {
+        this.download = {
+          url: this.sanitizer.bypassSecurityTrustResourceUrl(url),
+          filename: `form-${mongoId}.pdf`
+        };
+        this.cdr.detectChanges();
+        this.renderer.selectRootElement(this.link.nativeElement).click();
+        this.clearLink(url);
+      });
   }
 
   changeForm(id: string) {
@@ -414,6 +435,12 @@ export class UploadReviewFormComponent implements OnInit {
 
   getDocument(id: string): Document {
     return id ? this.documents.find(document => document._id === id) : null;
+  }
+
+  isOnlineForm(): boolean {
+    return (
+      this.getSelectForm() && (this.getSelectForm().submission_type === 'onlineForm' || this.getSelectForm().submission_type === 'pdfForm')
+    )
   }
 
 }

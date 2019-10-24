@@ -32,6 +32,7 @@
       <sw-dropdown-input
         formControlName="student"
         [options]="students"
+        [selectValue]="form.get('student').value"
         [disabled]="!form.get('account').value || !form.get('account').value[0] || !form.get('account').value[0].value"
       >
         <span class="label">

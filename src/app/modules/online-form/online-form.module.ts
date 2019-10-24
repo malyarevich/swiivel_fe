@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { DynamicModule } from 'ng-dynamic-component';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 // Modules
-import { OnlineFormRoutingModule } from './online-form-routing.module';
+// import { OnlineFormRoutingModule } from './online-form-routing.module';
 import { SharedModule } from '@shared/shared.module';
 // Services
 import { OnlineFormService } from './services/online-form.service';
@@ -109,7 +109,7 @@ import { ErrorsListTooltipComponent } from './errors-list/errors-list-tooltip.co
   ],
   imports: [
     CommonModule,
-    OnlineFormRoutingModule,
+    // OnlineFormRoutingModule,
     PdfViewerModule,
     SharedModule,
     // DynamicComponents

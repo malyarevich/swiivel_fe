@@ -62,12 +62,9 @@
                 </div>
               </th>
               <td cdk-cell *cdkCellDef="let form">
-                <button
-                  class="button-text-link"
-                  [routerLink]="['/data-collection/form-info', form.mongo_id]"
-                >
-                  {{form.name}}
-                </button>
+                <a [routerLink]="['/form-management', form.mongo_id]">
+                  <span class="text">{{form.name}}</span>
+                </a>
               </td>
             </ng-container>
 
@@ -110,7 +107,19 @@
                 </div>
               </th>
               <td cdk-cell *cdkCellDef="let form">
-                asd
+                <span *ngIf="form.permissions && form.permissions.length">
+                  <div class="main-text" *ngFor="let permission of form.permissions">
+                    <sw-user-item [userItem]="getUserName(permission)" [isRoleShown]="false"></sw-user-item>
+                  </div>
+                </span>
+                <div *ngIf="!form.permissions || !form.permissions.length" class="button-invite-user">
+                  <sw-button [style]="colors.TRSNSPARENT">
+                    <span class="button-invite-user-text">
+                      <i class="fas fa-plus icon-invite-user"></i>
+                      Invite users
+                    </span>
+                  </sw-button>
+                </div>
               </td>
             </ng-container>
 

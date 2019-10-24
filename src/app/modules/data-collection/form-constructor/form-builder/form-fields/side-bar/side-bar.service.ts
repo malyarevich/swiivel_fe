@@ -1,9 +1,11 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Subject } from "rxjs";
 import { v4 as uuid } from "uuid";
-import { cloneDeep, isEmpty } from "lodash";
+import { cloneDeep, isEmpty, flatMap, set, unset, get, has, setWith, isPlainObject, values, transform } from "lodash";
 import { Form } from "src/app/models/data-collection/form.model";
 import { Field } from "src/app/models/data-collection/field.model";
+import { FormBuilder, FormArray } from '@angular/forms';
+import { unescapeIdentifier } from '@angular/compiler';
 export const isSaved = (field: any) => {
   if (!field._id) return false;
   if (field.fields && field.fields.length > 0) {
@@ -22,6 +24,25 @@ export const getSaved = (fields: any[]) => {
   }).filter(field => field !== null);
   // return fields;
 }
+
+const findById = (fields, id) => {
+  fields.forEach(field => {
+    if (field._id) {
+      if (field._id === id) {
+        return field;
+      }
+    }
+    if (field.fields) {
+      let found = findById(field.fields, id);
+      return found;
+      // if (found.length === 1) {
+      //   return found[0];
+      // }
+    }
+  });
+}
+
+
 @Injectable({
   providedIn: "root"
 })
@@ -31,7 +52,28 @@ export class SideBarService {
   _fields = new BehaviorSubject([]);
   _form = new BehaviorSubject(null);
   _pathIds = [];
-  constructor() {
+  FormsById = {};
+  constructor(public fb: FormBuilder) {
+    this.events$.subscribe((event: any) => {
+      if (event.action === 'options') {
+        let form = this._form.getValue();
+        let formFields = form.fields.slice();
+        const setOption = (fields, field, options) => {
+          if (fields) {
+            fields.forEach((ffield: any) => {
+              if (ffield.pathId === field.pathId) {
+                ffield.options = options;
+              } else {
+                setOption(ffield.fields, field, options);
+              }
+            });
+          }
+        }
+        setOption(formFields, event.field, event.options);
+        form.fields = formFields;
+        this.form = Object.assign({}, form);
+      }
+    })
   }
 
   get form() {
@@ -42,12 +84,296 @@ export class SideBarService {
     return this._form.asObservable();
   }
   set form(_form) {
+    if (isPlainObject(_form.fields)) {
+      _form.fields = values(_form.fields);
+    }
+    _form.workspace = cloneDeep(_form.fields);
+    _form.form = this.initForm(_form.fields);
+    // _form.fields.forEach((field) => set(_form.workspace, field.path, field));
     console.log(`form updated`, _form);
     this._form.next(_form);
+    this.events$.next({ action: 'update' });
+  }
+  findFieldById(id) {
+    return this.FormsById[id];
+  }
+  getFormFor(field) {
+    // if (field.path) {
+    //   let fieldForm = this.form.form.get(this.fieldControlPath(field.path));
+    //   if (!fieldForm) {
+    //     for (let key of Object.keys(this.form.form.controls)) {
+    //       let pp = this.form.form.get(key).get('fields').get(this.fieldControlPath(field.path));
+    //       if (pp) return pp;
+    //     }
+    //   }
+    //   return fieldForm;
+    // } else {
+    if (!!field._id) {
+      return this.findFieldById(field._id);
+    } else if (!!field.path) {
+      if (field.path.length > 1) {
+        let found = this.form.form.get(this.fieldControlPath(field.path));
+        if (!found) {
+          for (let key of Object.keys(this.form.form.controls)) {
+            found = this.form.form.get(key).get('fields').get(this.fieldControlPath(field.path));
+            if (found) {
+              break;
+            }
+          }
+        }
+        return found;
+      }
+    } else {
+      return null
+    }
+    // }
+  }
+  resetForm() {
+    let form = cloneDeep(this.form);
+    form.fields = [];
+    form.form = null;
+    this.form = form;
+    this.form.form.updateValueAndValidity()
   }
 
   get fields() {
     return this._fields.getValue();
+  }
+
+
+  parentControlPath(paths) {
+    if (paths.length > 1) {
+      return flatMap(paths.slice(0, -1), (path => { return [path, 'fields'] }))
+    }
+  }
+
+  fieldControlPath(paths) {
+    if (paths.length > 1) {
+      return flatMap(paths, (path => { return [path, 'fields'] })).slice(0, -1)
+    }
+  }
+
+  addWrapper(section?) {
+    let form = cloneDeep(this.form.form);
+    if (!section) {
+      section = {
+        type: 114,
+        name: 'New section',
+        isActive: true,
+        fields: [],
+        path: ['New section'],
+        pathId: 'New section114'
+      }
+    }
+    let wrapper = this.createForm(section);
+    wrapper.addControl('fields', form);
+    this.form.form = this.fb.group({ [section.name]: wrapper });
+    section.fields = this.form.workspace;
+    this.form.workspace = [section];
+    this.events$.next({ action: 'update' });
+  }
+
+  getParentControl(field) {
+    let form = this.form.form;
+    let parent = form.get(this.parentControlPath(field.path));
+    return parent;
+  }
+  createParentsIfNotExist(parents) {
+    let form = this.form.form;
+    parents.reverse();
+    for (let parent of parents) {
+      let control = form.get(this.fieldControlPath(parent.path));
+      if (!control) {
+        console.log(parent)
+        let parentControl = this.createForm(parent);
+        if (parent.path > 1) {
+          let prev = form.get(this.parentControlPath(parent.path));
+          prev.addControl(parent.name, parentControl);
+        } else {
+          form.addControl(parent.name, parentControl);
+        }
+      }
+    }
+    let ancestor = parents[parents.length - 1];
+    console.log(ancestor, form)
+    return form.get(this.fieldControlPath(ancestor.path));
+  }
+  // createWorkspace(field) {
+  //   if (!has(this.form.workspace, this.parentControlPath(field.path))) {
+  //     set(this.form.workspace, this.parentControlPath(field.path), field)
+  //   }
+  //   return get(this.form.workspace, this.parentControlPath(field.path));
+  // }
+  addField(field, root?) {
+    if (!field.name) return null;
+    let form = this.form.form;// this.fb.array([]) as FormArray;
+    if (field._id) {
+      let paths = [];
+      let parent = this.FormsById[field._id].parent;
+      this.FormsById[field._id].parent.addControl(field.name, this.createForm(field));
+      while (parent = parent.parent) {
+        if (parent.get('name')) {
+          paths.push(parent.get('name').value);
+        }
+      }
+      paths.reverse()
+      let parentPath = transform(paths, (result, path, index, fields) => {
+        if (result.length === 0) {
+          fields = this.form.workspace
+        } else {
+          fields = get(this.form.workspace, result);
+        }
+        let position = fields.findIndex((field) => field.name === path);
+        result.push(position, 'fields');
+        return position;
+      }, []);
+      let parentArr = get(this.form.workspace, parentPath);
+      if (parentArr) parentArr.push(field);
+      // this.form.form.get(parentPath.slice(0, -2)).addControl(field.name, this.createForm(field));
+    } else if (field.path && field.path.length > 1) {
+      let parent = form.get(this.parentControlPath(field.path));
+      if (!parent) {
+        for (let key of Object.keys(form.controls)) {
+          parent = form.get(key).get('fields').get(this.parentControlPath(field.path));
+          if (parent) {
+            field.path.unshift(key);
+            break;
+          }
+        }
+      }
+      if (parent) {
+        let parentPath = transform(field.path, (result, path, index, fields) => {
+          if (result.length === 0) {
+            fields = this.form.workspace
+          } else {
+            fields = get(this.form.workspace, result);
+          }
+          let position = fields.findIndex((field) => field.name === path);
+          result.push(position, 'fields');
+          return position;
+        }, []);
+        let parentArr = get(this.form.workspace, parentPath.slice(0, -2));
+        if (parentArr) parentArr.push(field);
+        parent.addControl(field.name, this.createForm(field));
+      }
+    } else {
+      if (!(!!this.form.workspace && Array.isArray(this.form.workspace))) {
+        this.addWrapper();
+      }
+      let wrapper = this.form.workspace[0].fields;
+      if (wrapper) wrapper.push(field);
+      wrapper = form.get([Object.keys(form.controls)[0], 'fields']);
+      if (wrapper) wrapper.addControl(field.name, this.createForm(field));
+    }
+    this.events$.next({ action: 'added', field });
+    this.events$.next({ action: 'update' });
+    return form;
+  }
+  getParentName(control) {
+    let parent = control.parent;
+    // if (control.parent)
+  }
+
+  removeField(field) {
+    if (!field.name) return null;
+    let form = this.form.form;
+    if (field._id) {
+      let paths = [];
+      let parent = this.FormsById[field._id].parent;
+      if (!parent) {
+        paths.push(field.name);
+      } else {
+        while (parent = parent.parent) {
+          if (parent.get('name')) {
+            paths.push(parent.get('name').value);
+          }
+        }
+        paths.reverse()
+      }
+      let parentPath = transform(paths, (result, path, index, fields) => {
+        if (result.length === 0) {
+          fields = this.form.workspace
+        } else {
+          fields = get(this.form.workspace, result);
+        }
+        let position = fields.findIndex((field) => field.name === path);
+        result.push(position, 'fields');
+        return position;
+      }, []);
+      let parentArr = get(this.form.workspace, parentPath);
+      set(this.form.workspace, parentPath, parentArr.filter((child) => child._id !== field._id));
+      this.FormsById[field._id].parent.removeControl(field.name);
+    }
+    else if (field.path && field.path.length > 1) {
+      let parent = form.get(this.parentControlPath(field.path));
+      if (!parent) {
+        for (let key of Object.keys(form.controls)) {
+          let pp = form.get(key).get('fields').get(this.parentControlPath(field.path));
+          if (pp) {
+            let paths = [key, ...field.path];
+            let parentPath = transform(paths, (result, path, index, fields) => {
+              if (result.length === 0) {
+                fields = this.form.workspace
+              } else {
+                fields = get(this.form.workspace, result);
+              }
+              let position = fields.findIndex((field) => field.name === path);
+              result.push(position, 'fields');
+              return position;
+            }, []);
+            let parentArr = get(this.form.workspace, parentPath.slice(0, -2));
+            set(this.form.workspace, parentPath.slice(0, -2), parentArr.filter((child) => child.name !== field.name));
+            pp.removeControl(field.name);
+          }
+        }
+      }
+    }
+    this.events$.next({ action: 'removed', field });
+    this.events$.next({ action: 'update' });
+    return form;
+  }
+
+
+
+  createForm(field, ctx = this) {
+    let form = this.fb.group({
+      name: [field.name],
+      type: [field.type],
+    });
+    form.addControl('size', this.fb.control(''));
+    form.addControl('required', this.fb.control(''));
+    form.addControl('hideLabel', this.fb.control(''));
+    form.addControl('readonly', this.fb.control(''));
+    form.addControl('unique', this.fb.control(''));
+    if (field._id) {
+      this.FormsById[field._id] = form;
+      form.addControl('_id', this.fb.control(field._id));
+    }
+    if (field.options) {
+      let settings = this.fb.group({});
+      form.addControl('settings', settings);
+      if (field.type < 112) {
+
+      }
+    }
+    if (field.fields && field.fields.length > 0) {
+      let fields = this.fb.group({});
+      form.addControl('fields', fields);
+      field.fields.forEach(child => fields.addControl(child.name, this.createForm(child)));
+    }
+    return form;
+  }
+
+  initForm(fields) {
+    let form = this.fb.group({})//.array(fields.map(this.createForm));
+    if (isPlainObject(fields)) {
+      fields = values(fields);
+    }
+    for (let field of fields) {
+      field.form = this.createForm(field)
+      form.addControl(field.name, field.form);
+    }
+    return form;
   }
 
   findById(fields, ffield) {
@@ -69,13 +395,13 @@ export class SideBarService {
     return fields;
   }
 
-  set fields(fieldsArr) {
-    const fields = JSON.parse(JSON.stringify(fieldsArr));
+  set fie2lds(fieldsArr) {
+    const fields = cloneDeep(fieldsArr);
     const form = this._form.getValue();
-    let formFields = getSaved(form.fields.slice());
+    let formFields = getSaved(form.fields);
     fields.forEach((ffield) => {
       if (ffield._id) {
-        this.findById(formFields, JSON.parse(JSON.stringify(ffield)));
+        this.findById(formFields, cloneDeep(ffield));
       } else {
         let section = formFields.find(field => field.type === 114);
         if (!section) {
@@ -97,8 +423,9 @@ export class SideBarService {
       }
 
     })
-    form.fields = formFields;
-    this.form = form;
+    this.form.fields = formFields;
+    this.events$.next({ action: 'update' });
+    // this.form = form;
   }
 
   get pathIds() {
@@ -303,7 +630,6 @@ export class SideBarService {
 
   onSectionDelete(field: Field, filedList?: Field | Form) {
     this.events$.next({ action: 'remove', target: field });
-    // filedList.fields = filedList.fields.filter(sec => sec.name != field.name);
   }
 
   onFieldDelete(field: Field, filedList: Field[]) {

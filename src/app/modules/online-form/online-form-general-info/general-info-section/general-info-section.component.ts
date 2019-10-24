@@ -31,13 +31,13 @@ export class GeneralInfoSectionComponent implements OnInit {
 
   initGroups() {
     this.groups = this.section.fields.filter(item => {
-      return item.type === 113;
+      return item.type === 113 || item.type === 114;
     });
   }
 
   initFields() {
     this.fields = this.section.fields.filter(item => {
-      return item.type && item.type !== 113;
+      return item.type && item.type !== 113 && item.type !== 114;
     });
   }
 

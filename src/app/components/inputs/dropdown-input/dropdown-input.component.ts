@@ -40,7 +40,14 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
   @Input() dropdownSubHeader = false;
   @Input() isDisplaySelected = true;
   @Input() disabled = false;
+  @Input() isClearable = false;
+  @Input() style = '';
   @Input() panelClass = 'dropdown-overlay';
+  @Input() set selectValue(opt: boolean) {
+    if (opt[0] === null) {
+      this._sm.clear();
+    }
+  };
   @Input()
   set multiple(opt: boolean) {
     this._multiple = opt === undefined ? false : opt;
@@ -118,24 +125,29 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
     }
   }
 
-  showPopup(): void {
-    // if (this.isActive) {
-    this.isPopupShown.emit(true);
-    if (!!this.disabled) {
-      return;
-    }
+  showPopup(e: any): void {
+    if (!(e && e.target && e.target.className && e.target.className.includes('dropdown_input_container__icon--clear'))) {
+      this.isPopupShown.emit(true);
+      if (!!this.disabled) {
+        return;
+      }
 
-    this._ref = this.popup.open({
-      origin: this.holder,
-      content: this.droplist,
-      panelClass: this.panelClass
-    });
-    this._ref.afterClosed$.subscribe(result => {
-      this.isPopupShown.emit(false);
-      this._ref = null;
-      this.onTouched();
-      this.cdr.markForCheck();
-    });
-    // }
+      this._ref = this.popup.open({
+        origin: this.holder,
+        content: this.droplist,
+        panelClass: this.panelClass
+      });
+      this._ref.afterClosed$.subscribe(result => {
+        this.isPopupShown.emit(false);
+        this._ref = null;
+        this.onTouched();
+        this.cdr.markForCheck();
+      });
+    }
+  }
+
+  clear(): void {
+    this._sm.clear();
+    this.onChange(this._sm.selected);
   }
 }

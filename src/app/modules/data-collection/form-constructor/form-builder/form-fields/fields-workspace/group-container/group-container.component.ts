@@ -20,10 +20,17 @@ export class GroupContainerComponent implements OnInit {
     this.cd.markForCheck()
   }
   @Input() set inputGroup(group: any) {
+    // if (!group.isActive) {
+    //   this.group = null;
+    //   this.cd.markForCheck();
+    // }
+    // else {
     this.group = JSON.parse(JSON.stringify(group));
     this.sideBarService.addPathId(group.pathId);
+    this.showNested = this.group.isExpanded;
     this.cd.markForCheck()
-    // this.cd.detectChanges()
+
+    // }
   }
   @Input() sideBar: Field;
   @Input() nestedLevel: number;
@@ -86,7 +93,8 @@ export class GroupContainerComponent implements OnInit {
   // }
   drop(event) {
     if (event.container === event.previousContainer) {
-      console.log(event.container.data, event.previousIndex, event.currentIndex)
+      this.sideBarService.events$.next({ action: 'moveField', field: event.item.data, toIndex: event.currentIndex })
+      // console.log(event.container.data, event.previousIndex, event.currentIndex)
       // moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
       if (event.container.id === 'sidebar-list') {

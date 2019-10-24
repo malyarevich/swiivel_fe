@@ -3,6 +3,7 @@ import { UploadReviewFormStatusesEnum } from '@modules/upload-review-form/upload
 import { UploadReviewFormService } from '@modules/upload-review-form/upload-review-form.service';
 import { Document } from '@models/upload-review-form/document.model';
 import { ColorsEnum } from '@shared/colors.enum';
+import { SizesEnum } from '@shared/sizes.enum';
 
 @Component({
   selector: 'app-document-approval-bar',
@@ -19,6 +20,7 @@ export class UploadReviewFormApprovalBarComponent {
   @Output() changeStatus = new EventEmitter<string>();
   @Output() skipDocument = new EventEmitter();
   @Output() saveDocument = new EventEmitter();
+  public size = SizesEnum;
   public colors = ColorsEnum;
   public statuses = UploadReviewFormStatusesEnum;
   public uploadReviewFormStatusesEnum = UploadReviewFormStatusesEnum;

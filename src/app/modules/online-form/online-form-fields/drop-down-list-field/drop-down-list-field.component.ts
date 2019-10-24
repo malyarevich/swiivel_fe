@@ -43,6 +43,11 @@ export class DropDownListFieldComponent implements OnInit {
 
   ngOnInit() {}
 
+  isMultiple(field: Field = this.field): boolean | null {
+    // console.log('field', field);
+    return field.options && field.options.multiple ? true : null
+  }
+
   getLabel(): string {
     return this.field.options.hideLabel ? '' : this.field.name;
   }

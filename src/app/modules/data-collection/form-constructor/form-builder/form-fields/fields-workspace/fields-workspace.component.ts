@@ -7,7 +7,7 @@ import {
   ChangeDetectionStrategy
 } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { range } from "lodash";
+import { range, cloneDeep } from "lodash";
 import {
   FormBuilder,
   FormGroup,
@@ -29,50 +29,17 @@ import { CdkDrag } from '@angular/cdk/drag-drop';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FieldsWorkspaceComponent implements OnInit, AfterViewInit {
-  fields = [];
-  sectionAddGroup: FormGroup = new FormGroup({
-    sectionName: new FormControl("", {
-      validators: Validators.compose([
-        Validators.required,
-        Validators.minLength(3),
-        Validators.maxLength(50)
-      ])
-    }),
-    sectionSize: new FormControl(null, Validators.required)
-  });
-
-  dividerAddGroup: FormGroup = new FormGroup({
-    dividerName: new FormControl("", {
-      validators: Validators.compose([
-        Validators.required,
-        Validators.minLength(3),
-        Validators.maxLength(50)
-      ])
-    }),
-    dividerStyle: new FormControl(null, Validators.required),
-    sectionRelate: new FormControl(null, Validators.required)
-  });
-
-  groupAddGroup: FormGroup = new FormGroup({
-    groupName: new FormControl("", {
-      validators: Validators.compose([
-        Validators.required,
-        Validators.minLength(3),
-        Validators.maxLength(50)
-      ])
-    }),
-    sectionRelate: new FormControl(null, Validators.required)
-  });
   _form;
-  @Input() set form(_form: Form) {
-    this._form = _form;
+
+  @Input('form') set form(form: any) {
+    this._form = form;
+    this.fields = form.workspace;
     this.cd.markForCheck()
   }
 
-  @Input() sideBar: Field;
   @Input() customFields: Field[];
+  fields;
   size = range(1, 13);
-  @Input() idSectionForDragDrop: string[];
 
   objectKeys = Object.keys;
   list: object;
@@ -88,14 +55,22 @@ export class FieldsWorkspaceComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.list = Section.sectionWidth;
-    this.sideBarService.form$.subscribe((form) => {
-      if (!this._form) {
-        this._form = form;
+    this.sideBarService.events$.subscribe((event: any) => {
+      if (event.action === 'update') {
+        let fields = cloneDeep(this.sideBarService.form.workspace);
+        if (!!fields && fields.length > 0) {
+          let section = fields.find(field => field.type === 114);
+          if (!section) {
+            this.sideBarService.addWrapper();
+          } else {
+            this.fields = fields;
+          }
+          this.cd.markForCheck();
+        } else {
+          this.fields = [];
+          this.cd.markForCheck();
+        }
       }
-      if (this._form) {
-        this._form.fields = form.fields;
-      }
-      this.cd.markForCheck()
     })
   }
 
@@ -133,91 +108,6 @@ export class FieldsWorkspaceComponent implements OnInit, AfterViewInit {
           console.log(reason);
         }
       );
-  }
-
-  addSection(modal) {
-    this.validateAllFormFields(this.sectionAddGroup);
-    if (!this.sectionAddGroup.valid) return;
-    this.sectionAddGroup.clearValidators();
-    const newSection: Field = {
-      _id: uuid(),
-      name: this.sectionAddGroup.value.sectionName,
-      width: "full",
-      type: 114,
-      options: { size: this.sectionAddGroup.value.sectionSize },
-      prefix: this.sectionAddGroup.value.sectionName
-        .toLowerCase()
-        .split(" ")
-        .join("_"),
-      fields: []
-    };
-    this.form.fields.push(newSection);
-    // this.idSectionForDragDrop = this.sideBarService.getIdOfSection(this.form.fields);
-    this.sectionAddGroup.reset();
-    modal.close();
-  }
-
-  addGroup(modal) {
-    this.validateAllFormFields(this.groupAddGroup);
-    if (!this.groupAddGroup.valid) return;
-    this.groupAddGroup.clearValidators();
-    const newGroup: Field = {
-      _id: uuid(),
-      name: this.groupAddGroup.value.groupName,
-      width: "full",
-      type: 113,
-      options: { size: 4 },
-      prefix: this.groupAddGroup.value.groupName
-        .toLowerCase()
-        .split(" ")
-        .join("_"),
-      fields: []
-    };
-    this.form.fields.forEach(section => {
-      if (
-        section.name == this.groupAddGroup.value.sectionRelate.name &&
-        section.prefix == this.groupAddGroup.value.sectionRelate.prefix
-      ) {
-        section.fields.push(newGroup);
-      }
-    });
-    // this.idSectionForDragDrop = this.sideBarService.getIdOfSection(this.form.fields);
-    this.groupAddGroup.reset();
-    modal.close();
-  }
-
-  addDivider(modal) {
-    this.validateAllFormFields(this.dividerAddGroup);
-    if (!this.dividerAddGroup.valid) return;
-    this.dividerAddGroup.clearValidators();
-    const newDivider: Field = {
-      _id: uuid(),
-      name: this.dividerAddGroup.value.dividerName,
-      type: 112,
-      options: { dividerStyle: this.dividerAddGroup.value.dividerStyle }
-    };
-    if (this.dividerAddGroup.value.sectionRelate.name == "workspace") {
-      this.form.fields.push(newDivider);
-    } else {
-      this.form.fields.forEach(section => {
-        if (
-          section.name == this.dividerAddGroup.value.sectionRelate.name &&
-          section.prefix == this.dividerAddGroup.value.sectionRelate.prefix
-        ) {
-          console.log(newDivider, "section");
-
-          section.fields.push(newDivider);
-        }
-      });
-    }
-
-    this.dividerAddGroup.reset();
-    modal.close();
-  }
-
-  modalClose(modal) {
-    this.sectionAddGroup.reset();
-    modal.close();
   }
 
   validateAllFormFields(formGroup: FormGroup) {

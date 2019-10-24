@@ -1,6 +1,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
     "baseUrl": "./",
     "downlevelIteration": true,
     "outDir": "./dist/out-tsc",
@@ -13,14 +14,30 @@
     "importHelpers": true,
     "target": "es2015",
     "paths": {
-      "@app/*": ["src/app/*"],
-      "@core/*": ["src/app/core/*"],
-      "@components/*": ["src/app/components/*"],
-      "@enums/*": ["src/app/enums/*"],
-      "@models/*": ["src/app/models/*"],
-      "@modules/*": ["src/app/modules/*"],
-      "@services/*": ["src/app/services/*"],
-      "@shared/*": ["src/app/components/*"]
+      "@app/*": [
+        "src/app/*"
+      ],
+      "@core/*": [
+        "src/app/core/*"
+      ],
+      "@components/*": [
+        "src/app/components/*"
+      ],
+      "@enums/*": [
+        "src/app/enums/*"
+      ],
+      "@models/*": [
+        "src/app/models/*"
+      ],
+      "@modules/*": [
+        "src/app/modules/*"
+      ],
+      "@services/*": [
+        "src/app/services/*"
+      ],
+      "@shared/*": [
+        "src/app/components/*"
+      ]
     },
     "typeRoots": [
       "node_modules/@types"

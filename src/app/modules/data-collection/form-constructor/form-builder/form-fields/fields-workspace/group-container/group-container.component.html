@@ -32,7 +32,7 @@
   </div>
 </div>
 
-<div *ngIf="group && showGroupSettings">
+<div [hidden]="!(group && showGroupSettings)">
   <app-group-settings [inputGroup]="group"></app-group-settings>
 </div>
 
@@ -40,13 +40,12 @@
 <div *ngIf="group && showNested">
   <ul class="list-group" cdkDropList [id]="group.pathId" [cdkDropListData]="group"
     [cdkDropListConnectedTo]="getConnectedIds()" cdkDropListSortingDisabled="false">
-    <li *ngIf="group.type === 113 && group.fields.length==0" class="list-group-item empty-group p-0 "
-      [ngClass]="nestedLevel==1?'margin-for-nested':''">
+    <li *ngIf="group.type === 113 && group.fields.length==0" class="list-group-item empty-group p-0 margin-for-nested">
       <div class="text-center"> <span class="empty-group-text">Drag and Drop Fields Onto the Group</span>
       </div>
     </li>
-    <li class="list-group-item p-0" [class.margin-for-nested]="nestedLevel>0" [cdkDragData]="field" cdkDrag
-      (cdkDragDropped)="drop($event)" *ngFor="let field of group.fields">
+    <li class="list-group-item p-0 margin-for-nested" [cdkDragData]="field" cdkDrag (cdkDragDropped)="drop($event)"
+      *ngFor="let field of group.fields">
       <ng-container *ngIf="field.type !== 113">
         <app-field-container *cdkDragPreview [inputField]="field" [form]="form" [customFields]="customFields"
           [sideBar]="sideBar">

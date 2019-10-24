@@ -129,12 +129,39 @@ export class FieldsSideBarComponent implements OnInit, OnDestroy, AfterViewCheck
     return this.service.pathIds.slice(0, -3).concat('root-list');
   }
 
+  expandFiltered() {
+
+    let visible = this.treeSource.filter((field: any) => {
+      return field.name && field.name.toLowerCase().startsWith(this.filterValue);
+    });
+    for (let node of visible) {
+      for (let parent of this.treeSource.parentsOf(node)) {
+        if ('isExpanded' in parent && !parent.isExpanded) {
+          parent.isExpanded = true;
+          this.treeControl.expand(parent);
+        }
+      }
+    }
+  }
+
   ngOnInit() {
+    this.filterControl.valueChanges.subscribe((val) => {
+      if (val.length > 0) {
+        if (val === 'reset!') {
+          this.service.resetForm();
+        } else {
+          this.filterValue = val;
+          this.expandFiltered()
+        }
+      } else {
+        this.filterValue = null;
+      }
+    });
     this.treeControl.getDescendants = (dataNode) => {
       return dataNode.fields;
     }
     this.treeSource.activeFields$.subscribe((fields) => {
-      fields = JSON.parse(JSON.stringify(fields));
+      this.treeControl.dataNodes = fields;
 
       // if (this._form.fields.length > 0) {
       //   let wp = this.treeSource.isWrappedBySection(this._form.fields);
@@ -145,32 +172,36 @@ export class FieldsSideBarComponent implements OnInit, OnDestroy, AfterViewCheck
       //   }
       // }
       if (fields.length > 0) {
-        // console.log('afs', fields)
+        // fields = JSON.parse(JSON.stringify(fields));
+        // this.service.fields = getActive(fields);
         // let wrapped = this.treeSource.wrapIfNeeded(fields);
         // console.log(fields, wrapped, getActive(wrapped), getActive(fields));
-        this.service.fields = getActive(fields);
       } else {
         // this.service.fields = [];
       }
     });
     this.service.events$.subscribe((event: any) => {
-      let target = this.treeSource.findNodeByPathId(event.target.pathId);
-      if (target) {
-        if (event.action === 'remove') {
+      if (event.action === 'remove') {
+        let target = this.treeSource.findNodeByPathId(event.target.pathId);
+        if (target) {
           if (target.type === 113 || target.type === 114) {
             this.toggleParentNode(target);
           } else {
             this.toggleNode(target);
           }
           this.cdr.markForCheck();
+        } else if (event.target.type === 114) {
+          event.target.fields.forEach((field: any) => {
+            this.toggleParentNode(this.treeSource.findNodeByPathId(field.pathId))
+          })
         }
-        else {
-          console.log(event)
-        }
-      } else if (event.target.type === 114) {
-        event.target.fields.forEach(field => {
-          this.toggleParentNode(this.treeSource.findNodeByPathId(field.pathId))
-        })
+      }
+      else if (event.action === 'added') {
+        event.field.isActive = true;
+        this.cdr.markForCheck();
+      } else if (event.action === 'removed') {
+        event.field.isActive = false;
+        this.cdr.markForCheck();
       }
     });
   }
@@ -184,7 +215,7 @@ export class FieldsSideBarComponent implements OnInit, OnDestroy, AfterViewCheck
   }
 
   canCreateField(node) {
-    return ((node.type === 113 || node.type === 114) && !this.displayOnly) && this.treeControl.isExpanded(node);
+    return ((node.type === 113 || node.type === 114) && !this.displayOnly) && node.isExpanded;
   }
 
   selectField(node: any) {
@@ -256,36 +287,60 @@ export class FieldsSideBarComponent implements OnInit, OnDestroy, AfterViewCheck
   deleteNode() {
     if (this.delFieldName === this.delInput.value) {
       console.log('Delete field', this.delFieldName);
-      this.treeSource.deleteNode(this.nodeForDel);
+      this.treeSource.remove(this.nodeForDel);
+      this.treeSource.reload();
+      this.cdr.markForCheck();
+      this.service.events$.next({ action: 'update', data: this.treeSource.nodes });
       this.closePop();
     }
   }
 
   isFiltered(node) {
-    if (this.filterValue) {
-      return !node.name.toLowerCase().startsWith(this.filterValue);
+    if (!!this.filterValue && this.filterValue.length > 0 && !!node.name) {
+      let byName = node.name.toLowerCase().startsWith(this.filterValue.toLowerCase());
+      if (byName) return !byName;
+      if (node.fields && node.fields.length > 0) {
+        let byChildName = (fields: any[]) => {
+          return fields.filter((node: any) => {
+            let byName = !!node.name && node.name.toLowerCase().startsWith(this.filterValue.toLowerCase());
+            if (byName) return true;
+            if (node.fields && node.fields.length > 0) {
+              return byChildName(node.fields).length > 0;
+            }
+            return false;
+          });
+        }
+        return byChildName(node.fields).length === 0;
+      }
+      return !byName;
     } else {
       return !!this.filterValue;
     }
   }
 
-
-  shouldRender(node) {
-    if (!this.filterControl.value) { return true; }
-    return this.filterControl.value && node.name.toString().toLowerCase().startsWith(this.filterControl.value);
+  toggleExpand(node) {
+    node.isExpanded = !node.isExpanded;
+    if (node.isExpanded) {
+      this.treeControl.collapseDescendants(node);
+    } else {
+      this.treeControl.expandDescendants(node);
+    }
   }
 
   toggleParentNode(node: any): void {
     this.treeSource.toggle(node);
     if (node.isActive) {
+      this.service.addField(node);
       if (!this.treeControl.isExpanded(node)) {
         this.treeControl.expandDescendants(node);
       }
     } else {
+      this.service.removeField(node);
       if (this.treeControl.isExpanded(node)) {
         this.treeControl.collapseDescendants(node);
       }
     }
+    node.isExpanded = this.treeControl.isExpanded(node);
     this.cdr.markForCheck();
   }
 
@@ -311,6 +366,7 @@ export class FieldsSideBarComponent implements OnInit, OnDestroy, AfterViewCheck
   toggleNode(node: any): void {
     this.treeSource.toggle(node);
     if (!node.isActive) {
+      this.service.removeField(node);
       let topInactive: any;
       for (const ancestor of this.treeSource.parentsOf(node)) {
         if (!ancestor.isActive) {
@@ -318,7 +374,10 @@ export class FieldsSideBarComponent implements OnInit, OnDestroy, AfterViewCheck
         }
       }
       this.treeControl.collapse(topInactive);
+    } else {
+      this.service.addField(node, Array.from(this.treeSource.parentsOf(node)).slice(-2, -1)[0]);
     }
+    node.isExpanded = this.treeControl.isExpanded(node);
     this.cdr.markForCheck();
   }
 
@@ -342,6 +401,7 @@ export class FieldsSideBarComponent implements OnInit, OnDestroy, AfterViewCheck
 
   addCustomField(node: any) {
     const formValue = node.customFieldForm.value;
+    if (!formValue.type || !formValue.width) return false;
     let newField = {
       type: formValue.type ? formValue.type[0].type : null,
       name: formValue.name,
@@ -354,6 +414,7 @@ export class FieldsSideBarComponent implements OnInit, OnDestroy, AfterViewCheck
     this.treeSource.addCustomField(node, newField);
     this.customFieldToggle(node);
     this.cdr.markForCheck();
+    this.service.events$.next({ action: 'update', data: this.treeSource.nodes });
   }
 
   ngOnDestroy(): void {

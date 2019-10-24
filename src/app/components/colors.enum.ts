@@ -1,5 +1,6 @@
 export enum ColorsEnum {
   GRAY = 'gray',
   WHITE = 'white',
-  PURPLE = 'purple'
+  PURPLE = 'purple',
+  TRSNSPARENT = 'transparent',
 }

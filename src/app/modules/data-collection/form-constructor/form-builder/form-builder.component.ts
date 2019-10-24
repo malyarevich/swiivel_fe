@@ -12,7 +12,7 @@ import {
 import { FormService } from "../../services/form.service";
 import { ActivatedRoute, Params, Router } from "@angular/router";
 import { v4 as uuid } from "uuid";
-import { cloneDeep, isEmpty } from "lodash";
+import { cloneDeep, isEmpty, isPlainObject, values } from "lodash";
 import { Location } from "@angular/common";
 import { FieldsService } from "../../services/fields.service";
 import { Form } from "src/app/models/data-collection/form.model";
@@ -61,6 +61,8 @@ import { Field } from 'src/app/models/data-collection/field.model';
 import { DocumentSideBar, DocumentsModel, documentItemDefault } from 'src/app/models/data-collection/form-constructor/form-builder/documents.model';
 import { FormsPDFModel, formPDFItemDefault } from 'src/app/models/data-collection/form-constructor/form-builder/formsPDF.model';
 import { SideBarService } from './form-fields/side-bar/side-bar.service';
+import { FormBuilder } from '@angular/forms';
+import { array, object } from '@storybook/addon-knobs';
 
 @Component({
   selector: "app-form-table",
@@ -258,9 +260,22 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
     private formBuilderIsSavedService: FormBuilderIsSavedService,
     private fileService: FilesService,
     private saveFormService: SaveFormService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private sidebarService: SideBarService,
+    private fb: FormBuilder
   ) {
     this.vDataCollection = vDataCollection;
+    this.sidebarService.events$.subscribe((event: any) => {
+      if (event.action === 'update') {
+        if (event.data) {
+          this.newSideBar = JSON.parse(JSON.stringify(event.data));
+        }
+      }
+      if (event.action === 'moveField') {
+        console.log(event.field, event.toIndex)
+      }
+
+    });
   }
   ngOnInit() {
     window.scrollTo(0, 0);
@@ -396,6 +411,8 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
     }
   }
 
+
+
   initSideBar(form) {
     const getPathId = (field) => {
       if (field.path) {
@@ -404,6 +421,9 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
     }
     const flatten = (fields) => {
       let result = [];
+      if (isPlainObject(fields)) {
+        fields = values(fields);
+      }
       for (const field of fields) {
         if (field.fields) {
           result.push(...flatten(field.fields))
@@ -413,6 +433,7 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
       return result;
     }
     const joinForm = (field, path = []) => {
+      let result;
       if (field.fields) {
         path.push(field.name);
         field.fields = field.fields.map(cfield => joinForm(cfield, path))
@@ -421,20 +442,25 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
         return field.name === ffield.name && field.type === ffield.type;
       })
       if (found) {
+
         if (field.type < 112) {
-          return found;
+          found.isActive = true;
+          result = found;
         } else {
           let fields = JSON.parse(JSON.stringify(field.fields));
           field = JSON.parse(JSON.stringify(found));
           field.isActive = true;
           field.fields = fields;
+
           // field._id = found.id
-          return field;
+          result = field;
         }
       } else {
         field.isActive = false;
-        return field;
+        result = field;
       }
+
+      return result;
     }
     return this.newSideBar.map(field => joinForm(field)).slice()
   }
@@ -476,11 +502,30 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
       });
     });
   }
-
+  formToArray(form) {
+    let arr = [];
+    for (let key of Object.keys(form)) {
+      let field = form[key];
+      if (field.fields) {
+        field.fields = this.formToArray(field.fields);
+      }
+      arr.push(field);
+    }
+    return arr;
+  }
+  prepareFields() {
+    if (this.sidebarService.form.form) {
+      let fields = this.formToArray(this.sidebarService.form.form.value);
+      console.log('sending', fields)
+      return fields;
+    } else {
+      return [];
+    }
+  }
   getForm(): Form {
     return {
       _id: this.formId,
-      fields: this.form.fields,
+      fields: this.prepareFields(),
       // fields: this.fields,
       documentsForms: this.documentsForms,
       documents: this.documents,

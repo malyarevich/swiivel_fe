@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { Form } from "src/app/models/data-collection/form.model";
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { SideBarService } from '../../../side-bar/side-bar.service';
 
 @Component({
   selector: "app-group-settings",
@@ -17,12 +18,14 @@ export class GroupSettingsComponent {
   private group: any;
 
   @Input()
-  set inputGroup(inputGroup) {
-    if (inputGroup) { this.setGroup(inputGroup); }
+  set inputGroup(_inputGroup) {
+    if (_inputGroup) { this.setGroup(_inputGroup); }
   }
 
+
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private service: SideBarService
   ) {
     this.groupForm = this.fb.group({
       required: [false],
@@ -60,7 +63,12 @@ export class GroupSettingsComponent {
   }
 
   private updateGroupOptions(formVal: any): void {
-    Object.assign(this.group.options, formVal);
+    if (this.group.options) {
+      Object.assign(this.group.options, formVal);
+    } else {
+      this.group.options = Object.assign({}, formVal);
+    }
+    // this.service.events$.next({ action: 'options', field: this.group, options: formVal })
   }
 
 }

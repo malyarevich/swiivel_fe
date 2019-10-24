@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UtilsService } from '@app/core/utils.service';
 import { Form } from '@models/data-collection/form.model';
+import { ColorsEnum } from '@shared/colors.enum';
 import { IconsEnum } from '@shared/icons.enum';
 import { DialogComponent } from '@shared/popup/dialog.component';
 import { pick } from 'lodash';
@@ -53,6 +54,7 @@ export class FormTableComponent implements OnInit {
   public popupContentArray: { title: string, id?: any }[] = [];
   public canLabelsRemove = false;
 
+  public colors = ColorsEnum;
   public icons = IconsEnum;
   totalItems: number;
   showSpinner: boolean;
@@ -408,5 +410,12 @@ export class FormTableComponent implements OnInit {
           });
       }
     });
+  }
+
+  getUserName(permission: any): any {
+    return {
+      name: permission && permission.user && permission.user.full_name ? permission.user.full_name : 'no name',
+      id: permission && permission.user && permission.user.id ? permission.user.id : ''
+    };
   }
 }

@@ -12,12 +12,11 @@ const routes: Routes = [
     loadChildren: () => import('./modules/organization/organization.module').then(m => m.OrganizationModule)
   },
 
-  
   {
     path: 'online-form',
     loadChildren: () =>
-      import('./modules/online-form/online-form.module').then(
-        m => m.OnlineFormModule
+      import('./modules/online-form-wrapper/online-form-wrapper.module').then(
+        m => m.OnlineFormWrapperModule
       )
   },
 
