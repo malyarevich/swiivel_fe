@@ -6,6 +6,7 @@
 
   .content {
     display: flex;
+    position: relative;
 
     &.pdf-form {
       position: relative;
@@ -19,16 +20,6 @@
 
       .sidebar-container {
         z-index: 2;
-      }
-
-      .sidebar-opener {
-        left: 0;
-        transition: ease-in-out 400ms left;
-      }
-
-      .sidebar-opener.opened {
-        left: 294px;
-        transition: ease-in-out 400ms left;
       }
     }
   }
@@ -91,10 +82,6 @@
         -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
       }
 
-      //
-      //&::-webkit-scrollbar {
-      //  display: none;
-      //}
     }
 
     .sidebar-list-bulk-download {
@@ -196,4 +183,14 @@
 .sidebar-container.opened {
   max-width: 294px;
   transition: ease-in-out 400ms max-width;
+}
+
+.sidebar-opener {
+  left: 0;
+  transition: ease-in-out 400ms left;
+}
+
+.sidebar-opener.opened {
+  left: 294px;
+  transition: ease-in-out 400ms left;
 }
