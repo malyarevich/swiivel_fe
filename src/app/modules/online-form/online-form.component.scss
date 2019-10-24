@@ -24,6 +24,13 @@
       padding-right: 1rem;
       width: 32rem;
     }
+    
+    &--lower {
+      @include media-breakpoint-up(lg) {
+        position: relative;
+        top: 3rem;
+      }
+    }
   }
 
   .online_form_container__controls {
@@ -42,7 +49,10 @@
     }
 
     &--no_move {
-      top: 0;
+      
+      @include media-breakpoint-up(lg) {
+        top: 0;
+      }
     }
   }
 

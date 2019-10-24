@@ -33,7 +33,9 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     CdkTreeModule,
     OnlineFormModule,
     PdfViewerModule
-
+  ],
+  exports: [
+    PreviewFormComponent
   ],
   providers: [
     DataCollectionService
