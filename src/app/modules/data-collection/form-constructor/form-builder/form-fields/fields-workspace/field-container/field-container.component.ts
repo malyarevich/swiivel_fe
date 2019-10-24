@@ -50,12 +50,13 @@ export class FieldContainerComponent
   objectKeys = Object.keys;
   list: object;
   widthOptions = [
-    { title: '4 columns', value: 'full' },
-    { title: '3 columns', value: 'three-quarter' },
-    { title: '2 columns', value: 'half' },
-    { title: '1 column', value: 'quarter' }
+    { title: '4 columns' },
+    { title: '3 columns' },
+    { title: '2 columns' },
+    { title: '1 column' }
   ];
   width: { title: string; value: string; }[] = [];
+  size;
   form: FormGroup;
   constructor(
     private sideBarService: SideBarService,
@@ -82,13 +83,7 @@ export class FieldContainerComponent
   }
 
   returnFieldTYpeName(field: Field) {
-    if (this.customFields) {
-      let fieldTypeName: string;
-      this.customFields.forEach(f => {
-        if (field.type == f.type) fieldTypeName = f.name;
-      });
-      return fieldTypeName;
-    }
+    return this.sideBarService.fieldTypes['schema'].find(ftype => ftype.type === field.type).name;
   }
 
   // nameChange(event){
@@ -99,21 +94,16 @@ export class FieldContainerComponent
   // }
 
   ngOnInit(): void {
-    this.list = Section.sectionWidth;
     if (this.field) {
       this.form = this.sideBarService.getFormFor(this.field);
       if (this.form) {
+        this.size = this.widthOptions[4 - this.form.get('options.size').value];
         this.form.valueChanges.subscribe((form) => {
           console.log(form);
         })
       } else {
         if (this.field.isActive) console.log(`no form for `, this.field);
       }
-      if (!this.field.options) this.field.options = {};
-      if (this.field) {
-        this.width = this.widthOptions.filter(i => i.value === this.field.width);
-      }
-
     }
 
   }

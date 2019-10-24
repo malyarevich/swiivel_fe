@@ -15,22 +15,29 @@
       <div class="settings-div h-100">
 
         <ng-container [ngSwitch]="inputField.type">
-          <app-short-text-settings *ngSwitchCase="fieldTypes.shortTextField" [inputField]="inputField">
+          <app-short-text-settings *ngSwitchCase="fieldTypes.shortTextField" [inputField]="inputField" [form]="form">
           </app-short-text-settings>
-          <app-long-text-settings *ngSwitchCase="fieldTypes.longTextField" [inputField]="inputField">
+          <app-long-text-settings *ngSwitchCase="fieldTypes.longTextField" [inputField]="inputField" [form]="form">
           </app-long-text-settings>
-          <app-drop-down-list-settings *ngSwitchCase="fieldTypes.multipleOptionsField" [inputField]="inputField">
+          <app-drop-down-list-settings *ngSwitchCase="fieldTypes.multipleOptionsField" [inputField]="inputField"
+            [form]="form">
           </app-drop-down-list-settings>
-          <app-drop-down-list-settings *ngSwitchCase="fieldTypes.dropDownListField" [inputField]="inputField">
+          <app-drop-down-list-settings *ngSwitchCase="fieldTypes.dropDownListField" [inputField]="inputField"
+            [form]="form">
           </app-drop-down-list-settings>
-          <app-email-settings *ngSwitchCase="fieldTypes.emailField" [inputField]="inputField"></app-email-settings>
-          <app-phone-number-settings *ngSwitchCase="fieldTypes.phoneNumberField" [inputField]="inputField">
+          <app-email-settings *ngSwitchCase="fieldTypes.emailField" [inputField]="inputField" [form]="form">
+          </app-email-settings>
+          <app-phone-number-settings *ngSwitchCase="fieldTypes.phoneNumberField" [inputField]="inputField"
+            [form]="form">
           </app-phone-number-settings>
-          <app-number-settings *ngSwitchCase="fieldTypes.numberTextField" [inputField]="inputField">
+          <app-number-settings *ngSwitchCase="fieldTypes.numberTextField" [inputField]="inputField" [form]="form">
           </app-number-settings>
-          <app-date-settings *ngSwitchCase="fieldTypes.dateTimeField" [inputField]="inputField"></app-date-settings>
-          <app-date-settings *ngSwitchCase="fieldTypes.hebrewDateField" [inputField]="inputField"></app-date-settings>
-          <app-checkbox-settings *ngSwitchCase="fieldTypes.checkbox" [inputField]="inputField"></app-checkbox-settings>
+          <app-date-settings *ngSwitchCase="fieldTypes.dateTimeField" [inputField]="inputField" [form]="form">
+          </app-date-settings>
+          <app-date-settings *ngSwitchCase="fieldTypes.hebrewDateField" [inputField]="inputField" [form]="form">
+          </app-date-settings>
+          <app-checkbox-settings *ngSwitchCase="fieldTypes.checkbox" [inputField]="inputField" [form]="form">
+          </app-checkbox-settings>
         </ng-container>
 
       </div>

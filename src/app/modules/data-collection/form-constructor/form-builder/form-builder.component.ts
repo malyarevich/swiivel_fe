@@ -262,7 +262,8 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
     private saveFormService: SaveFormService,
     private cdr: ChangeDetectorRef,
     private sidebarService: SideBarService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+
   ) {
     this.vDataCollection = vDataCollection;
     this.sidebarService.events$.subscribe((event: any) => {
@@ -357,12 +358,14 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
   loadBasicFields() {
     this.fieldsService.getCustomList().subscribe((fields: Field[]) => {
       this.customFields = fields;
+      this.sidebarService.fieldTypes['schema'] = fields;
     });
   }
 
   loadMappedFields() {
     this.fieldsService.getExistingList().subscribe((fields: Field[]) => {
       this.existingFields = fields;
+      this.sidebarService.fieldTypes['mapped'] = fields;
     });
   }
 

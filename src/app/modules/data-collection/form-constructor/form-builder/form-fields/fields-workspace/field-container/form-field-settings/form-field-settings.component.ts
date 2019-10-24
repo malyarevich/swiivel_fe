@@ -12,6 +12,7 @@ import { FormGroup } from '@angular/forms';
 export class FormFieldSettingsComponent implements OnInit {
   @Input() inputField: Field;
   @Input() fieldTypeName: string;
+  @Input() form;
 
   fieldTypes = FieldTypesModel.fieldTypes;
 
