@@ -1,21 +1,19 @@
 import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { select, text, withKnobs } from '@storybook/addon-knobs';
-import { StatusLabelComponent } from '@shared/labels/status-label/status-label.component';
-import { IconButtonComponent } from '@shared/buttons/icon-button/icon-button.component';
 import { UploadReviewFormService  } from '@modules/upload-review-form/upload-review-form.service';
 import { HttpClient, HttpHandler } from '@angular/common/http';
 import {
   UploadReviewFormApprovalBarComponent
 } from '@modules/upload-review-form/upload-review-form-approval-bar/upload-review-form-approval-bar.component';
-import { ButtonComponent } from '@shared/buttons/button/button.component';
-import { SpinnerComponent } from '@app/shared/components/spinner/spinner.component';
+import { SharedModule } from '@shared/shared.module';
 
 const stories = storiesOf('Upload Review Form', module);
 
 stories.addDecorator(withKnobs);
 stories.addDecorator(
   moduleMetadata({
-    declarations: [UploadReviewFormApprovalBarComponent, StatusLabelComponent, IconButtonComponent, ButtonComponent, SpinnerComponent],
+    imports: [SharedModule],
+    declarations: [UploadReviewFormApprovalBarComponent],
     providers: [UploadReviewFormService, HttpClient, HttpHandler]
   })
 );
