@@ -27,6 +27,7 @@ import { OnlineFormModule } from '@modules/online-form/online-form.module';
 @NgModule({
   declarations: [
     FormUploadFooterComponent,
+    // OnlineFormComponent,
     UploadFormReviewItemComponent,
     UploadReviewFormApprovalBarComponent,
     UploadReviewFormComponent,
