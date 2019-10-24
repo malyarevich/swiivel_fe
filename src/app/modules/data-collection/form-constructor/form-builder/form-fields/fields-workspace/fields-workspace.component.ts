@@ -7,7 +7,7 @@ import {
   ChangeDetectionStrategy
 } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { range } from "lodash";
+import { range, cloneDeep } from "lodash";
 import {
   FormBuilder,
   FormGroup,
@@ -55,43 +55,21 @@ export class FieldsWorkspaceComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.list = Section.sectionWidth;
-    // this.sideBarService.form$.subscribe((form) => {
-    //   if (!this._form) {
-    //     this._form = form;
-    //   }
-    //   if (this._form) {
-    //     this._form.fields = form.fields;
-    //   }
-    //   this.cd.markForCheck()
-    // })
     this.sideBarService.events$.subscribe((event: any) => {
       if (event.action === 'update') {
-        let fields = this.sideBarService.form.workspace;
+        let fields = cloneDeep(this.sideBarService.form.workspace);
         if (!!fields && fields.length > 0) {
           let section = fields.find(field => field.type === 114);
           if (!section) {
-            section = {
-              type: 114,
-              name: 'New section',
-              isActive: true,
-              fields: [],
-              path: ['New section'],
-              pathId: 'New section114'
-            }
-            // console.log(fields)
-            this.sideBarService.addWrapper(section);
-            // this.sideBarService.form.form.addControl(section.name, this.sideBarService.createForm(section));
-            // section.fields = fields;
-            // this.fields = [section]
+            this.sideBarService.addWrapper();
           } else {
-            console.log('ip', fields)
             this.fields = fields;
-            this.cd.detectChanges();
-            this.cd.markForCheck();
           }
+          this.cd.markForCheck();
+        } else {
+          this.fields = [];
+          this.cd.markForCheck();
         }
-        this.cd.detectChanges();
-        this.cd.markForCheck();
       }
     })
   }

@@ -28,6 +28,7 @@ export class FieldContainerComponent
   field;
   @Input() set inputField(field) {
     this.field = field;
+    this.form = this.sideBarService.getFormFor(this.field);
     if (this.form) {
       // this.form.patchValue({
       //   ...this.field.options
@@ -64,7 +65,7 @@ export class FieldContainerComponent
   }
 
   removeField(field: Field) {
-    this.sideBarService.events$.next({ action: 'remove', target: field });
+    this.sideBarService.removeField(field);
   }
 
   widthChanged(value) {
@@ -99,15 +100,14 @@ export class FieldContainerComponent
 
   ngOnInit(): void {
     this.list = Section.sectionWidth;
-    console.log(this.field)
     if (this.field) {
       this.form = this.sideBarService.getFormFor(this.field);
-      console.log(this.form)
       if (this.form) {
-
         this.form.valueChanges.subscribe((form) => {
           console.log(form);
         })
+      } else {
+        if (this.field.isActive) console.log(`no form for `, this.field);
       }
       if (!this.field.options) this.field.options = {};
       if (this.field) {
