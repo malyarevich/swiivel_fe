@@ -12,6 +12,7 @@ import { IconsEnum } from '@shared/icons.enum';
 import { SizesEnum } from '@shared/sizes.enum';
 import { DialogComponent } from '@shared/popup/dialog.component';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { PreviewFormComponent } from '@modules/form-send/preview-form/preview-form.component';
 
 @Component({
   selector: 'app-upload-review-form',
@@ -198,7 +199,7 @@ export class UploadReviewFormComponent implements OnInit {
     const document = this.documents.find(document => document._id === id);
     if( document.submission_type === 'onlineForm' || document.submission_type === 'pdfForm') {
       console.log('export');
-      this.onExportPDF(id);
+      this.onExportPDF(document.form_id);
     } else {
       this.dataSource.downloadForm(document.link);
     }
