@@ -34,12 +34,14 @@ export class InputFileComponent implements ControlValueAccessor {
   onChange: (val: any) => void;
   disabled = false;
   @Input() method = 'POST';
+  @Input() acceptFileTypes = '*';
   @Input('preupload') endpoint: string;
   @Input('data') data: any = null;
   @Input('maxSize') MAX_SIZE = 100000;
   @Output('response') response = new EventEmitter();
   @Output('progress') progress = new EventEmitter();
   @Output('selected') selected = new EventEmitter();
+  @Output() error = new EventEmitter();
   @ViewChild('input', {static: true}) input: ElementRef<HTMLInputElement>;
   @HostListener('window:drop', ['$event']) public onDrop(event) {
     event.preventDefault();
@@ -97,6 +99,8 @@ export class InputFileComponent implements ControlValueAccessor {
             this.response.emit({...response});
             this.onChange(response);
           }
+        }, (error) => {
+          this.error.emit(error);
         });
       }
     } else {
