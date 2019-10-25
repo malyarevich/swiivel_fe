@@ -96,6 +96,11 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
   customFields: Field[];
   existingFields: Field[];
   sideBarFields: Field[];
+  packetIntro: any = {
+    content: '',
+    sectionName: 'Packet Introduction',
+    sectionWidth: 'full'
+  };
   consentInfo: ConsentInfo = consentInfoDefault;
   termsConditions: TermsConditions = termsConditionsDefault;
   paymentSettings: PaymentSettings = paymentSettingsDefault;
@@ -400,6 +405,7 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
       this.form = form;
       this.formName = form.name;
       this.fields = this.form.fields = form.fields || [];
+      this.packetIntro = form.packetIntroduction || { content: '' };
       this.consentInfo = form.consentInfo || consentInfoDefault;
       this.termsConditions = form.termsConditions || termsConditionsDefault;
       this.paymentSettings = form.paymentSettings || paymentSettingsDefault;
@@ -517,7 +523,7 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
     return arr;
   }
   prepareFields() {
-    if (this.sidebarService.form.form) {
+    if (this.sidebarService.form && this.sidebarService.form.form) {
       let fields = this.formToArray(this.sidebarService.form.form.value);
       console.log('sending', fields)
       return fields;
@@ -535,6 +541,7 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
       forms: this.formsPDF,
       name: this.formName,
       sidebar: this.newSideBar,
+      packetIntroduction: this.packetIntro,
       consentInfo: this.consentInfo,
       termsConditions: this.termsConditions,
       paymentSettings: this.paymentSettings,
