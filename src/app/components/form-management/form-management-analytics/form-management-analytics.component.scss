@@ -61,7 +61,62 @@
       line-height: 13px;
       color: #909090;
     }
+  }
 
-    
+  .stats {
+    margin-right: 10px;
+    margin-left: 10px;
+
+    .title {
+      font-weight: bold;
+      line-height: 15px;
+      letter-spacing: 0.2px;
+      text-transform: uppercase;
+    }
+
+    .chart-total-title {
+      position: absolute;
+      left: 20%;
+      top: 42%;
+      font-weight: 800;
+      font-size: 14px;
+      line-height: 20px;
+    }
+
+    .chart-total-percent {
+      position: absolute;
+      left: 22%;
+      top: 55%;
+      color: #F8BC45;
+      height: 20px;
+      font-weight: 800;
+      font-size: 17px;
+      line-height: 20px;
+    }
+
+    .status-numbers {
+      font-weight: 800;
+      font-size: 17px;
+      line-height: 20px;
+
+      .type {
+        font-weight: normal;
+        font-size: 12px;
+        line-height: 15px;
+        letter-spacing: 0.2px;
+        text-transform: uppercase;
+      }
+    }
+  } 
+  
+  .payments {
+    flex: 0 0 48%;
+
+    .title {
+      font-weight: bold;
+      line-height: 15px;
+      letter-spacing: 0.2px;
+      text-transform: uppercase;
+    }
   }
 }

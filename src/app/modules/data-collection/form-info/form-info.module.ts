@@ -52,7 +52,7 @@ import {SharedModule} from '@shared/shared.module';
     ProgressBarModule,
     SharedModule,
   ],
-  exports: [FormInfoComponent],
+  exports: [FormInfoComponent, InsideMissingFieldsComponent, InsideDocumentsViewComponent],
   providers: [FormsStatsService]
 })
 export class FormInfoModule {
