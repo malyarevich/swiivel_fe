@@ -1,144 +1,147 @@
 @import '../../../../../styles/index';
 
 .top_menu {
+  display: flex;
+  flex-direction: row;
+  min-height: $top-menu-height;
+  align-items: stretch;
+  justify-content: space-between;
+  background-color: $background-color-main-menu;
+  box-shadow: inset 0 1px 0 0 $header-shadow-inset-color, 0 $top-menu-height 0 -21px $header-shadow-color;
+
+  &__nav_line {
+    align-items: stretch;
+    border-bottom: 1px solid $header-splitter-color;
     display: flex;
     flex-direction: row;
-    min-height: $top-menu-height;
-    align-items: stretch;
     justify-content: space-between;
-    background-color: $background-color-main-menu;
-    box-shadow: inset 0 1px 0 0 $header-shadow-inset-color, 0 $top-menu-height 0 -21px $header-shadow-color;
+    justify-content: flex-end;
+    min-height: $top-menu-height;
+    width: inherit;
+  }
 
-    &__nav_line {
-        align-items: stretch;
-        border-bottom: 1px solid $header-splitter-color;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        justify-content: flex-end;
-        min-height: $top-menu-height;
-        width: inherit;
+  &__navbar {
+    align-items: stretch;
+    justify-content: flex-end;
+    padding: 0 1rem;
+    width: 100%;
+    width: -webkit-fill-available;
+  }
+
+  &__navbar_nav {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__navbar_button {
+    align-items: center;
+    color: $element-base-color;
+    border: none;
+    border-radius: 0;
+    border-left: 1px solid $header-splitter-color;
+    display: flex;
+    justify-content: center;
+    min-width: 40px;
+    position: relative;
+
+    &:focus {
+      outline: 0 transparent solid;
     }
 
-    &__navbar {
-        align-items: stretch;
-        justify-content: flex-end;
-        padding: 0 1rem;
-        width: 100%;
-        width: -webkit-fill-available;
+    &:hover {
+      color: $element-second-color;
+      text-decoration: none;
     }
 
-    &__navbar_nav {
-        display: flex;
-        flex-direction: column;
-    }
-
-    &__navbar_button {
-        align-items: center;
-        color: $element-base-color;
-        border: none;
-        border-radius: 0;
-        border-left: 1px solid $header-splitter-color;
-        display: flex;
-        justify-content: center;
-        min-width: 40px;
-        position: relative;
-
-        &:focus {
-            outline: 0 transparent solid;
-        }
-        
-        &:hover {
-            color: $element-second-color;
-            text-decoration: none;
-        }
-
-        &--show_label {
-            &:after {
-                background: $background-color-menu-label;
-                border-radius: 3px;
-                color: $header-splitter-color;
-                content: attr(name);
-                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-                font-size: 13px;
-                font-weight: 500;
-                max-height: 10em;
-                max-width: 10em;
-                opacity: 0;
-                padding: .4em;
-                position: absolute;
-                right: 5px;
-                transition: 600ms ease-in-out;
-                top: $top-menu-height;
-                white-space: nowrap;
-                z-index: -1;
-            }
-              
-            &:hover:after {
-                opacity: 1;
-                top: ($top-menu-height + 5px);
-                right: 0px;
-                z-index: 100;
-            }
-        }
-        
-    }
-
-    &__navbar_icon {
-        font-size: 17px;
-        line-height: 19px;
-        min-height: 17px;
-        min-width: 14px;
-    }
-
-    &__navbar_user_image {
-        align-items: center;
-        color: $white;
-        background-color: $element-base-color;
-        border: 2px solid $white;
-        border-radius: 50%;
-        display: flex;
-        justify-content: center;
-        height: 30px;
-        width: 30px;
-    }
-
-    &__nav_item {
+    &--show_label {
+      &:after {
+        background: $background-color-menu-label;
+        border-radius: 3px;
+        color: $header-splitter-color;
+        content: attr(name);
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-        font-size: 16px;
+        font-size: 13px;
         font-weight: 500;
-        border-bottom: 1px $header-splitter-color solid;
+        max-height: 10em;
+        max-width: 10em;
+        opacity: 0;
+        padding: .4em;
+        position: absolute;
+        right: 5px;
+        transition: 600ms ease-in-out;
+        top: $top-menu-height;
+        white-space: nowrap;
+        z-index: -1;
+      }
+
+      &:hover:after {
+        opacity: 1;
+        top: ($top-menu-height + 5px);
+        right: 0px;
+        z-index: 100;
+      }
     }
 
-    &__nav_link {
-        padding: 13px;
-        box-sizing: content-box;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
+  }
 
-        &:focus {
-            outline: 0 transparent solid;
-        }
-    }
+  &__navbar_icon {
+    font-size: 17px;
+    line-height: 19px;
+    min-height: 17px;
+    min-width: 14px;
+  }
 
-    &__nav_link_text {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-        font-size: 14px;
-        font-weight: 500;
-    }
+  &__navbar_user_image {
+    align-items: center;
+    color: $white;
+    background-color: $element-base-color;
+    border: 2px solid $white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    height: 30px;
+    width: 30px;
+  }
 
-    &__user_bar {
-        display: flex;
+  &__nav_item {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    border-bottom: 1px $header-splitter-color solid;
+  }
+
+  &__nav_link {
+    padding: 13px;
+    box-sizing: content-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+
+    &:focus {
+      outline: 0 transparent solid;
     }
-    
+  }
+
+  &__nav_link_text {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  &__user_bar {
+    display: flex;
+  }
+
+  .top_menu__navbar {
+    padding: 0;
+  }
 }
 
 .top_bar {
-    background-color: $white;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    height: 40px;
+  background-color: $white;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 40px;
 }

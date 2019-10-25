@@ -1,25 +1,25 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Field} from "@app/models/data-collection/field.model";
-import {FormBuilder, FormGroup} from "@angular/forms";
+import { Component, Input, OnInit } from '@angular/core';
+import { Field } from "@app/models/data-collection/field.model";
+import { FormBuilder, FormGroup } from "@angular/forms";
 
 @Component({
   selector: 'app-date-settings',
   templateUrl: './date-settings.component.html'
 })
-export class DateSettingsComponent  {
-  
-  form: FormGroup;
+export class DateSettingsComponent {
+
+  @Input() form: FormGroup;
 
   separators = [
-    {title: '- (Dash)', value: 'dash'},
-    {title: '/ (Backslash)', value: 'backslash'},
-    {title: '. (Dot)', value: 'dot'},
+    { title: '- (Dash)', value: 'dash' },
+    { title: '/ (Backslash)', value: 'backslash' },
+    { title: '. (Dot)', value: 'dot' },
   ];
 
   dateFormats = [
-    {title: 'mm-dd-yyyy', value: 'mm-dd-yyyy'},
-    {title: 'dd-mm-yyyy', value: 'dd-mm-yyyy'},
-    {title: 'yyyy-mm-dd', value: 'yyyy-mm-dd'},
+    { title: 'mm-dd-yyyy', value: 'mm-dd-yyyy' },
+    { title: 'dd-mm-yyyy', value: 'dd-mm-yyyy' },
+    { title: 'yyyy-mm-dd', value: 'yyyy-mm-dd' },
   ];
 
   private field: Field;

@@ -41,7 +41,7 @@
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/bootstrap/dist/js/bootstrap.min.js"
             ],
-            "es5BrowserSupport": true
+            "es5BrowserSupport": false
           },
           "configurations": {
             "production": {
@@ -51,15 +51,15 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-              "optimization": true,
-              "outputHashing": "all",
+              "optimization": false,
+              "outputHashing": "none",
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
               "aot": true,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
+              "extractLicenses": false,
+              "vendorChunk": true,
+              "buildOptimizer": false,
               "budgets": [
                 {
                   "type": "initial",

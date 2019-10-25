@@ -103,7 +103,7 @@
     }
 
     &__input {
-      height: 13px;
+      //height: 13px;
       display: flex;
       align-items: center;
       .text {
@@ -115,22 +115,22 @@
       }
       i { display: none; }
       &.many {
-        height: auto;
-        padding: 3px 10px;
-        border-radius: 12px;
-        margin-top: 10px;
-        background-color: #E6EFFF;
+        background: #e4e7ff;
+        padding: 10px;
+        margin: 10px 0 0 0;
+        border-radius: 3px;
+        color: #4350a2;
+        display: flex;
+        align-items: center;
         .text {
-          font-weight: bold;
-          color: #004ED9;
+          font: 10px "NunitoSans-Bold";
+          margin: 0 6px 0 0;
+          color: $button-color;
         }
         i {
           font-size: 11px;
           display: inline-block;
           color: #979797;
-        }
-        &:not(:last-of-type) {
-          margin-right: 10px;
         }
       }
     }

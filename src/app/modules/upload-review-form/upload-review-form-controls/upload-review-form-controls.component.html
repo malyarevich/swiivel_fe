@@ -4,13 +4,16 @@
       <sw-input-file
         formControlName="upload"
         #file="upload"
+        [acceptFileTypes]="'image/*,.pdf'"
         [data]="uploadDocumentData"
         preupload="/proxy/upload-reviews-form/upload/{{activeIdForm}}"
         (response)="uploadedData($event)"
+        (error)="uploadError($event)"
       >
         <sw-button
-          (click)="file.openDialog()"
+          [disabled]="disabledButtons"
           [size]="sizeButton.FULL"
+          (click)="file.openDialog()"
         >
           Upload Document
         </sw-button>
@@ -20,6 +23,7 @@
   <sw-button
     *ngIf="showBulkDownload"
     [style]="colors.WHITE" [size]="sizeButton.FULL" (click)="clickBulkDownload()"
+    [disabled]="disabledButtons"
   >
     Bulk Download
   </sw-button>

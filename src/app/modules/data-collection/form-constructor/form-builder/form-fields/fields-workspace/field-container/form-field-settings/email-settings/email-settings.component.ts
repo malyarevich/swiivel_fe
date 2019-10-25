@@ -9,7 +9,7 @@ import { FormBuilder, FormGroup, FormControl } from "@angular/forms";
 export class EmailSettingsComponent {
 
 
-  form: FormGroup;
+  @Input() form: FormGroup;
   private field: Field;
 
   @Input()

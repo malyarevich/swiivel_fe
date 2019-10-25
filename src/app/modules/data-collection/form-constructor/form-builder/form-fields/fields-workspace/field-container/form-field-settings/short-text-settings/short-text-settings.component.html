@@ -1,5 +1,5 @@
 <div class="field_settings_container">
-  <form [formGroup]="form">
+  <form [formGroup]="typeform">
     <section>
       <sw-input-checkbox class="settings-field" formControlName="allowList">
         <span class="label">Allow List of Values</span>
@@ -12,7 +12,7 @@
           <span class="input_label">default value</span>
         </sw-input-toggle>
       </div>
-      <sw-input-text *ngIf="form.get('showDefaultValue').value" class="settings-field" formControlName="default">
+      <sw-input-text *ngIf="typeform.get('showDefaultValue').value" class="settings-field" formControlName="default">
       </sw-input-text>
     </section>
     <section>
@@ -21,7 +21,7 @@
           <span class="input_label">validate</span>
         </sw-input-toggle>
       </div>
-      <ng-container *ngIf="form.get('showValidators').value" formGroupName="validators">
+      <ng-container *ngIf="typeform.get('showValidators').value" formGroupName="validators">
         <div class="row_container">
           <div class="row_container__input">
             <sw-dropdown-input formControlName="criteria" [multiple]="false" [options]="validatorsOptions">

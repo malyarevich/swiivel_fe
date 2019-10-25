@@ -8,7 +8,7 @@ import { FormBuilder, FormGroup, FormControl } from "@angular/forms";
 })
 export class PhoneNumberSettingsComponent {
 
-  form: FormGroup;
+  @Input() form: FormGroup;
 
   private field: Field
 

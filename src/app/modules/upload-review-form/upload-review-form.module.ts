@@ -22,7 +22,7 @@ import { UploadReviewFormComponent } from './upload-review-form.component';
 import { UploadReviewFormService } from '@modules/upload-review-form/upload-review-form.service';
 import { UploadFormReviewItemComponent } from '@modules/upload-review-form/upload-review-form-item/upload-review-form-item.component';
 import { OnlineFormModule } from '@modules/online-form/online-form.module';
-
+import { FormSendModule } from '@modules/form-send/form-send.module';
 
 @NgModule({
   declarations: [
@@ -37,13 +37,14 @@ import { OnlineFormModule } from '@modules/online-form/online-form.module';
   imports: [
     CommonModule,
     FormsModule,
-    PdfViewerModule,
+    FormSendModule,
     OnlineFormModule,
-    UploadReviewFormRoutingModule,
+    PdfViewerModule,
     SharedModule,
     SharedRedComponentsModule,
+    UploadReviewFormRoutingModule
   ],
   providers: [UploadReviewFormService],
   entryComponents: [UploadReviewFormComponent]
 })
-export class UploadReviewFormModule {}
+export class UploadReviewFormModule { }

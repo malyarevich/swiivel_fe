@@ -196,6 +196,13 @@ export class FieldsSideBarComponent implements OnInit, OnDestroy, AfterViewCheck
           })
         }
       }
+      else if (event.action === 'added') {
+        event.field.isActive = true;
+        this.cdr.markForCheck();
+      } else if (event.action === 'removed') {
+        event.field.isActive = false;
+        this.cdr.markForCheck();
+      }
     });
   }
   hasChild = (_: number, node: any) => {

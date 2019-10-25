@@ -1,6 +1,6 @@
-import {Component, Input} from '@angular/core';
-import {Field, fieldValidators} from "@app/models/data-collection/field.model";
-import {FormBuilder, FormGroup, FormControl} from "@angular/forms";
+import { Component, Input } from '@angular/core';
+import { Field, fieldValidators } from "@app/models/data-collection/field.model";
+import { FormBuilder, FormGroup, FormControl } from "@angular/forms";
 
 
 export const aNumberCriteriaValidators: string[] = [
@@ -17,12 +17,12 @@ export const aNumberCriteriaValidators: string[] = [
 })
 export class NumberSettingsComponent {
 
-  form: FormGroup;
+  @Input() form: FormGroup;
   validatorsOptions = aNumberCriteriaValidators.map(t => ({ title: t }));
-  
+
   private field: Field;
 
-  @Input() 
+  @Input()
   set inputField(f: Field) {
     if (f) {
       this.field = f;

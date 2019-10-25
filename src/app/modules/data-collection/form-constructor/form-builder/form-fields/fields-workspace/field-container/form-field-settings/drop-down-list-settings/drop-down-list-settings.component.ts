@@ -27,10 +27,33 @@ export class DropDownListSettingsComponent {
     { title: 'Phone Number', value: 'phone' }
   ];
 
-  form: FormGroup;
+  typeform;
+  _form;
+  @Input() set form(_form: any) {
+    if (!_form.get('options.showDefaultOptions')) {
+      _form.get('options').addControl('showDefaultOptions', new FormControl(false));
+    }
+    if (!_form.get('options.default')) {
+      _form.get('options').addControl('default', new FormControl([]));
+    }
+    if (!_form.get('options.fieldType')) {
+      _form.get('options').addControl('fieldType', new FormControl([]));
+    }
+    if (!_form.get('options.multiple')) {
+      _form.get('options').addControl('multiple', new FormControl(false));
+    }
+    if (!_form.get('options.fieldOptions')) {
+      _form.get('options').addControl('fieldOptions', new FormArray([
+        new FormGroup({
+          title: new FormControl('')
+        })
+      ]));
+    }
+    this._form = _form;
+  }
   private field: Field;
 
-  @Input() 
+  @Input()
   set inputField(f: Field) {
     if (f) {
       console.log('input field', Object.assign({}, f));
@@ -43,34 +66,34 @@ export class DropDownListSettingsComponent {
     private fb: FormBuilder,
     private cdr: ChangeDetectorRef
   ) {
-    this.form = this.fb.group({
+    this.typeform = this.fb.group({
       showDefaultOptions: new FormControl(false),
       default: new FormControl([]),
       fieldType: new FormControl([]),
       multiple: new FormControl(false),
       fieldOptions: new FormArray([
         new FormGroup({
-          title: new FormControl('', /* { updateOn: 'blur' } */)
+          title: new FormControl('')
         })
       ])
     });
-    this.form.valueChanges.subscribe(v => {
-      this.updateField(v);
+    this.typeform.valueChanges.subscribe(v => {
+      this._form.get('options').patchValue(v);
     });
   }
 
   get options() {
-    return this.form.get('fieldOptions') as FormArray;
+    return this.typeform.get('fieldOptions') as FormArray;
   }
 
   get optionsValue() {
-    return this.form.get('fieldOptions').value;
+    return this.typeform.get('fieldOptions').value;
   }
 
   private setValueToForm(f: Field): void {
     if (!f.options) { f.options = {}; }
-    
-    this.form.patchValue({
+
+    this.typeform.patchValue({
       default: f.options.default && isArray(f.options.default) ? f.options.default : [],
       showDefaultOptions: f.options.default && f.options.default.length > 0 ? true : false,
       showValidators: f.options.showValidators ? true : false,
@@ -83,11 +106,19 @@ export class DropDownListSettingsComponent {
       f.options.fieldOptions.forEach(i => {
         fieldOptions.push(
           new FormGroup({
-            title: new FormControl(i.title || '', /*  { updateOn: 'blur' } */)
+            title: new FormControl(i.title || '')
           })
-          );
-        });
-        fieldOptions.removeAt(0);
+        );
+      });
+      fieldOptions.removeAt(0);
+      f.options.fieldOptions.forEach(i => {
+        this._form.get('options.fieldOptions').push(
+          new FormGroup({
+            title: new FormControl(i.title || '')
+          })
+        );
+      });
+      this._form.get('options.fieldOptions').removeAt(0);
     }
   }
 
@@ -99,13 +130,13 @@ export class DropDownListSettingsComponent {
   }
 
   showOptions() {
-    return this.form.get('showDefaultOptions').value;
+    return this.typeform.get('showDefaultOptions').value;
   }
 
   addOption(): void {
     (this.options as FormArray).push(
       new FormGroup({
-        title: new FormControl('', /*  { updateOn: 'blur' } */)
+        title: new FormControl('')
       })
     );
     this.cdr.markForCheck();

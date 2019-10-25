@@ -1,6 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Field, ITypeFieldSettings, fieldValidators} from "@app/models/data-collection/field.model";
-import {FormBuilder, FormGroup, FormControl} from "@angular/forms";
+import { Component, Input, OnInit } from '@angular/core';
+import { Field, ITypeFieldSettings, fieldValidators } from "@app/models/data-collection/field.model";
+import { FormBuilder, FormGroup, FormControl } from "@angular/forms";
 
 export const aLongTextCriteriaValidators: string[] = [
   fieldValidators.Alphabetic,
@@ -11,9 +11,34 @@ export const aLongTextCriteriaValidators: string[] = [
   selector: 'app-long-text-settings',
   templateUrl: './long-text-settings.component.html',
 })
-export class LongTextSettingsComponent  {
-
-  form: FormGroup;
+export class LongTextSettingsComponent {
+  typeform;
+  _form;
+  @Input() set form(_form: any) {
+    if (!_form.get('options.showDefaultValue')) {
+      _form.get('options').addControl('showDefaultValue', new FormControl(null));
+    }
+    if (!_form.get('options.showValidators')) {
+      _form.get('options').addControl('showValidators', new FormControl(null));
+    }
+    if (!_form.get('options.columnWide')) {
+      _form.get('options').addControl('columnWide', new FormControl(null));
+    }
+    if (!_form.get('options.rowHeight')) {
+      _form.get('options').addControl('rowHeight', new FormControl(null));
+    }
+    if (!_form.get('options.default')) {
+      _form.get('options').addControl('default', new FormControl(null));
+    }
+    if (!_form.get('options.validators')) {
+      _form.get('options').addControl('validators', new FormGroup({
+        [fieldValidators.minLength]: new FormControl(null),
+        [fieldValidators.maxLength]: new FormControl(null),
+        criteria: new FormControl([])
+      }));
+    }
+    this._form = _form;
+  }
   validatorsOptions = ['Alphabetic', 'Alphanumeric'].map(t => ({ title: t }));
 
   private field: Field
@@ -36,7 +61,7 @@ export class LongTextSettingsComponent  {
   constructor(
     private fb: FormBuilder
   ) {
-    this.form = this.fb.group({
+    this.typeform = this.fb.group({
       showDefaultValue: new FormControl(false),
       showValidators: new FormControl(false),
       default: new FormControl([]),
@@ -48,14 +73,14 @@ export class LongTextSettingsComponent  {
         criteria: new FormControl([])
       })
     });
-    this.form.valueChanges.subscribe(v => {
-      this.updateField(v);
+    this.typeform.valueChanges.subscribe(v => {
+      this._form.get('options').patchValue(v);
     });
   }
 
   private setValueToForm(f: Field): void {
     if (!f.options) { f.options = {}; }
-    this.form.patchValue({
+    this.typeform.patchValue({
       default: f.options.default || null,
       showDefaultValue: f.options.default ? true : false,
       showValidators: f.options.showValidators ? true : false,

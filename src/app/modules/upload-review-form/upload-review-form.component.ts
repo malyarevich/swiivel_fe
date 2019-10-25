@@ -12,6 +12,7 @@ import { IconsEnum } from '@shared/icons.enum';
 import { SizesEnum } from '@shared/sizes.enum';
 import { DialogComponent } from '@shared/popup/dialog.component';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { PreviewFormComponent } from '@modules/form-send/preview-form/preview-form.component';
 
 @Component({
   selector: 'app-upload-review-form',
@@ -30,6 +31,7 @@ export class UploadReviewFormComponent implements OnInit {
   public documents: Document[];
   public download: { url: SafeResourceUrl; filename: string; } = {url: null, filename: null};
   public extremeDocuments: ExtremeUploadForms = {};
+  public textError: string;
   public filterValue: any = {};
   public form: FormGroup;
   public icons = IconsEnum;
@@ -39,12 +41,14 @@ export class UploadReviewFormComponent implements OnInit {
   public removeDocumentId: string;
   public size = SizesEnum;
   public showSpinner: boolean;
+  public showError = false;
   public sortValue: SortDropDownData[];
   public statuses = UploadReviewFormStatusesEnum;
   public updatingDocumentStatus = false;
   public uploadDocuments: Document[];
   public rotatingPicture: boolean;
   public isSaveActive = false;
+  public isPopupOpen = false;
   public dataSettings = {};
 
   public documentTypes = [];
@@ -57,7 +61,7 @@ export class UploadReviewFormComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private fb: FormBuilder,
     private sanitizer: DomSanitizer,
-    private renderer: Renderer2) {
+    private renderer: Renderer2,) {
     this.form = this.fb.group({
       filter: new FormControl([], Validators.required),
       sort: new FormControl([], Validators.required),
@@ -195,8 +199,27 @@ export class UploadReviewFormComponent implements OnInit {
   }
 
   downLoadForm(id: string): void {
-    const url = this.documents.find(document => document._id === id).link;
-    this.dataSource.downloadForm(url);
+    const document = this.documents.find(document => document._id === id);
+    if( document.submission_type === 'onlineForm' || document.submission_type === 'pdfForm') {
+      console.log('export');
+      this.onExportPDF(document.form_id);
+    } else {
+      this.dataSource.downloadForm(document.link);
+    }
+  }
+
+  onExportPDF(mongoId: string): void {
+    this.uploadReviewFormService
+      .exportPDFForm(mongoId)
+      .subscribe((url) => {
+        this.download = {
+          url: this.sanitizer.bypassSecurityTrustResourceUrl(url),
+          filename: `form-${mongoId}.pdf`
+        };
+        this.cdr.detectChanges();
+        this.renderer.selectRootElement(this.link.nativeElement).click();
+        this.clearLink(url);
+      });
   }
 
   changeForm(id: string) {
@@ -212,6 +235,7 @@ export class UploadReviewFormComponent implements OnInit {
         this.selectItem(this.documents[activeDocumentIndex + 1]._id);
       }
     }
+    this.scrollToActiveElement();
   }
 
   changeStatus(status: string): void {
@@ -234,9 +258,16 @@ export class UploadReviewFormComponent implements OnInit {
           this.form.get('search').value,)
           .subscribe(() => { this.getDocuments() });
       });
+    this.scrollToActiveElement();
+  }
+
+  scrollToActiveElement(): void {
+    const el = document.getElementById(this.getSelectForm()._id);
+    el.scrollIntoView({ behavior: 'smooth' });
   }
 
   closeForm(action?: boolean): void {
+    this.isPopupOpen = false;
     if (this.isSaveActive) {
        if (action) {
          this.updateDocumentSettings(action);
@@ -264,10 +295,12 @@ export class UploadReviewFormComponent implements OnInit {
     if(!this.isSaveActive) {
       this.removeDocumentId = id;
       this.dialog.open();
+      this.isPopupOpen = true;
     }
   }
 
   onOpenConfirmSavePopup(): void {
+    this.isPopupOpen = true;
     this.dialog.open();
   }
 
@@ -347,6 +380,18 @@ export class UploadReviewFormComponent implements OnInit {
         });
   }
 
+  uploadFileError(value): void {
+    if (value && value.statusText) {
+      this.textError = value.statusText;
+      this.showError = true;
+
+      setTimeout(() => {
+        this.showError = false;
+        this.cdr.detectChanges();
+      }, 3000)
+    }
+  }
+
   clearLink(url: string): void {
     this.download = { url: null, filename: null};
     window.URL.revokeObjectURL(url);
@@ -416,6 +461,22 @@ export class UploadReviewFormComponent implements OnInit {
 
   getDocument(id: string): Document {
     return id ? this.documents.find(document => document._id === id) : null;
+  }
+
+  onBack(event): void {
+    if (event) {
+      const activeDocumentIndex = this.documents.indexOf(this.documents.find(document => document._id === this.activeIdDocument));
+      if (activeDocumentIndex - 1 > -1) {
+        this.selectItem(this.documents[activeDocumentIndex - 1]._id);
+      }
+    }
+    this.scrollToActiveElement();
+  }
+
+  onSaveNext(event): void {
+     if (event) {
+      this.skipDocument();
+    }
   }
 
   isOnlineForm(): boolean {

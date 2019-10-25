@@ -11,12 +11,14 @@ import { ColorsEnum } from '@shared/colors.enum';
 
 export class UploadReviewFormControlsComponent implements OnInit  {
   @Input() activeIdForm: string;
+  @Input() disabledButtons = false;
   @Input() isBulkDownload = false;
   @Input() showBulkDownload = false;
   @Input() selectedCount = 0;
   @Output() bulkDownload = new EventEmitter();
   @Output() download = new EventEmitter();
   @Output() upload = new EventEmitter();
+  @Output() errorUpload = new EventEmitter();
 
   public formUpload: FormGroup;
   public uploadDocumentData: any;
@@ -37,6 +39,10 @@ export class UploadReviewFormControlsComponent implements OnInit  {
 
   uploadedData(): void {
     this.upload.emit();
+  }
+
+  uploadError(value): void {
+    this.errorUpload.emit(value)
   }
 
   clickBulkDownload(): void {
