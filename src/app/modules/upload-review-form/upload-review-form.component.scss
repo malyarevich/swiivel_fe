@@ -76,6 +76,7 @@
     }
 
     .sidebar-list {
+      position: relative;
       height: calc(100vh - 460px);
       min-height: 50px;
       overflow-y: auto;
@@ -100,7 +101,7 @@
 
     .spinner {
       position: absolute;
-      top: 0;
+      top: calc(50% - 50px);
       left: 50%;
       transform: translate(-50%, -50%);
       font-size: 30px;
