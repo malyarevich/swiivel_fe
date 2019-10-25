@@ -294,6 +294,30 @@ export class TreeDataSource implements DataSource<any> {
     return this.tree.treeToArray(this.tree).find(node => node.pathId === pathId);
   }
 
+  findNodeByFieldId(fieldId) {
+    return this.tree.treeToArray(this.tree).find(node => node._id === fieldId);
+  }
+
+  findNodeByParam(param, value) {
+    return this.tree.treeToArray(this.tree).find(node => node[param] === value);
+  }
+
+  findNodeByFieldNameType(field) {
+    return this.tree.treeToArray(this.tree).find(node => {
+      if (field.name && field.type) {
+        return node.name === field.name && node.type === field.type;
+      }
+    })
+  }
+
+  findNodeByField(field) {
+    if (field._id) return this.findNodeByFieldId;
+    if (field.mapped) {
+      return this.findNodeByParam('mapped', field.mapped);
+    }
+    return this.findNodeByFieldNameType(field);
+  }
+
   toggle(node) {
     if (node.isActive) {
       this.deActivate(node);
