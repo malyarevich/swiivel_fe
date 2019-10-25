@@ -61,7 +61,7 @@ export class FieldsWorkspaceComponent implements OnInit, AfterViewInit {
         if (!!fields && fields.length > 0) {
           let section = fields.find(field => field.type === 114);
           if (!section) {
-            this.sideBarService.addWrapper();
+            console.warn(`No section wrapper, skip fields redraw`);
           } else {
             this.fields = fields;
           }

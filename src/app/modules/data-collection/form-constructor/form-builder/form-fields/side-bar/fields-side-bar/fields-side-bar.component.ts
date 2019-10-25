@@ -375,7 +375,7 @@ export class FieldsSideBarComponent implements OnInit, OnDestroy, AfterViewCheck
       }
       this.treeControl.collapse(topInactive);
     } else {
-      this.service.addField(node, Array.from(this.treeSource.parentsOf(node)).slice(-2, -1)[0]);
+      this.service.addField(node, Array.from(this.treeSource.parentsOf(node)).slice(0, -1));
     }
     node.isExpanded = this.treeControl.isExpanded(node);
     this.cdr.markForCheck();
