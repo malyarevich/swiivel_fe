@@ -268,7 +268,7 @@ export class SideBarService {
     }
   }
   addField(field, ancestors?) {
-    console.groupCollapsed(`Adding field`);
+    console.groupCollapsed(`Adding field ${field.name}`);
     if (!field.name) return null;
     let form = this.form.form;// this.fb.array([]) as FormArray;
     let formParent = this.getFieldFormParent(field);
@@ -278,10 +278,11 @@ export class SideBarService {
       formParent.addControl(field.name, this.createForm(field));
       let spaceParent = this.getFieldSpaceParent(field);
       if (spaceParent) {
-        // console.log(cloneDeep(spaceParent))
+        console.log(cloneDeep(spaceParent))
+
         if (!spaceParent.find(a => a.name === field.name && a.type === field.type)) {
 
-          spaceParent.push(field);
+          spaceParent.push({ ...field, fields: [] });
         }
       } else {
         if (ancestors) {
@@ -299,7 +300,7 @@ export class SideBarService {
             }
           });
           spaceParent = this.getFieldSpaceParent(field);
-          // spaceParent.push(field);
+          spaceParent.push(field);
         } else {
           debugger;
         }
