@@ -19,19 +19,7 @@ import { FormManagementSubmissionsComponent } from './form-management-submission
 import { IconsEnum } from '@app/components/icons.enum';
 import { Form } from '@models/data-collection/form.model'
 import { mockFormDetails } from './mock-api-responses';
-import { 
-    mockAnalyticsDashboardResponse,
-    mockLogListResponse,
-  } from './form-management-analytics/mock-api-responses';
 import { FormManagementComponent } from './form-management.component';
-import { FormManagementAnalyticsComponent } from '@app/components/form-management/form-management-analytics/form-management-analytics.component';
-import { InsideMissingFieldsComponent } from '@app/modules/data-collection/form-info/form-info-submissions/form-info-submission-inside/inside-missing-fields/inside-missing-fields.component';
-import { InsideDocumentsViewComponent } from '@app/modules/data-collection/form-info/form-info-submissions/form-info-submission-inside/inside-form-documents/inside-documents-view/inside-documents-view.component';
-import { FormTableHeaderComponent } from '@app/shared/components/form-table-header/form-table-header.component';
-import { TableHeaderFilterTextComponent } from '@app/shared/components/form-table-header/table-header-filter-text/table-header-filter-text.component';
-import { TableHeaderFilterDateComponent } from '@app/shared/components/form-table-header/table-header-filter-date/table-header-filter-date.component';
-import { TableHeaderTitleComponent } from '@app/shared/components/form-table-header/table-header-title/table-header-title.component';
-import { SharedRedComponentsModule } from '@app/shared/components/sharedRedComponents.module';
 
 const stories = storiesOf('Form Management', module);
 
@@ -41,15 +29,11 @@ stories.addDecorator(
     declarations: [
         FormManagementComponent, FormManagementSubmissionsComponent, 
         ProgressLineBarComponent, PopupComponent, CdkDetailRowDirective,
-        FormManagementAnalyticsComponent, InsideMissingFieldsComponent,
-        InsideDocumentsViewComponent, FormTableHeaderComponent, 
-        TableHeaderFilterTextComponent, TableHeaderFilterDateComponent,
-        TableHeaderTitleComponent,
     ],
     imports: [
         CommonModule, FormsModule, SharedModule, CdkTableModule,
         OverlayModule, MatProgressBarModule, OnlineFormModule,
-        HttpClientModule, SharedRedComponentsModule, ...StorybookImports, 
+        HttpClientModule, ...StorybookImports, 
     ],
     providers: [...StorybookProviders],
     entryComponents: [PopupComponent],
@@ -57,39 +41,6 @@ stories.addDecorator(
 )
 
 const form: Form = mockFormDetails.data.form_data;
-const templateStatus = mockAnalyticsDashboardResponse.data.status;
-const templateStatusesOptions = [
-    { title: 'Archived', value: 'archived' },
-    { title: 'Active', value: 'active' },
-    { title: 'Draft', value: 'draft' },
-    { title: 'Review', value: 'review' },
-    { title: 'Closed', value: 'closed' },
-];
-const templateStatusesTitles = templateStatusesOptions.reduce((obj, option) => {
-    obj[option.value] = option.title;
-    return obj;
-}, {});
-const templateStatusColors: StatusColors = {
-    statusColors: new Map([
-        ['archived', 'gray'],
-        ['active', 'green'],
-        ['draft', 'lite-gray'],
-        ['review', 'yellow'],
-        ['closed', 'gray'],
-    ]),
-    defaultColor: 'gray',
-};
-
-// Props for form-management-analytics
-
-const dashboardBlock = mockAnalyticsDashboardResponse.data.dashboard_block;
-const created = mockLogListResponse.data.data.find(log => log.action === 'created');
-const lastUpdated = mockLogListResponse.data.data
-  .filter(log => log.action === 'updated')
-  .reduce((prev, curr) => prev.created_at > curr.created_at ? prev : curr);
-const circleGraph = mockAnalyticsDashboardResponse.data.analytics.circle_graph;
-const statusNumbers = mockAnalyticsDashboardResponse.data.analytics.status_numbers;
-const unassignedDocuments = 11;
 
 // Props for form-management-submissions
 
@@ -169,20 +120,7 @@ stories.add('Default', () => ({
     template: `
         <sw-form-management
             [form]="form"
-            [status]="templateStatus"
-            [statusColors]="templateStatusColors"
-            [statusesTitles]="templateStatusesTitles"
-            [unassignedDocuments]="unassignedDocuments"
         >
-            <sw-form-management-analytics 
-                analytics
-                [round]="round"
-                [created]="created"
-                [lastUpdated]="lastUpdated"
-                [circleGraph]="circleGraph"
-                [statusNumbers]="statusNumbers"
-            >
-            </sw-form-management-analytics>
             <sw-form-management-submissions 
                 submissions
                 [dataSource]="dataSource"
@@ -203,10 +141,6 @@ stories.add('Default', () => ({
         `,
     props: {
         form,
-        templateStatus,
-        templateStatusColors,
-        templateStatusesTitles,
-        unassignedDocuments,
         dataSource,
         displayedColumns,
         filterFormGroup,
@@ -218,11 +152,6 @@ stories.add('Default', () => ({
         statusColors,
         showSpinner,
         onToggleExpand,
-        round: dashboardBlock.round,
-        created,
-        lastUpdated,
-        circleGraph,
-        statusNumbers,
     },
   })
 );

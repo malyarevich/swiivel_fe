@@ -48,7 +48,6 @@ export class FormManagementSubmissionsDataSource implements DataSource<any> {
       catchError(() => of([])),
       finalize(() => this.loadingSubject.next(false))
     ).subscribe(submissionsList => {
-      console.log(JSON.stringify(submissionsList));
       const { data, ...metadata } = submissionsList;
       this.dataSubject.next(data);
       this.metadata.next(metadata);

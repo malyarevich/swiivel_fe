@@ -3,7 +3,6 @@
   [ngClass]="{
     'button--gray': style === 'gray',
     'button--white': style === 'white',
-    'button--green': style === 'green',
     'button--transparent': style === 'transparent',
     'button--full': size === sizeButton.FULL
   }"
@@ -11,9 +10,6 @@
   [name]="name"
   [value]="value"
   [disabled]="disabled"
-  [style.color]="color"
-  [style.border]="border"
-  [style.padding]="padding"
 >
   <ng-content></ng-content>
 </button>

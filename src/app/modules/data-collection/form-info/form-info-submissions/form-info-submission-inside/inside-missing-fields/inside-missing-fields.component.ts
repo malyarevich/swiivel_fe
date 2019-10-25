@@ -1,5 +1,4 @@
-import {Component, OnInit, Input} from '@angular/core';
-import { MissingFields } from '@models/form-management/missing-field';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-inside-missing-fields',
@@ -8,24 +7,30 @@ import { MissingFields } from '@models/form-management/missing-field';
 })
 export class InsideMissingFieldsComponent implements OnInit {
 
-  @Input() missingFields: MissingFields;
+  missingFields = [
+    {section: 'Family Section', fields: [{name: 'Cell Phone Number'}, {name: 'Emergency Contact Name'}]},
+    {section: 'Grandparents Information', fields: [{name: 'Cell Phone Number'}, {name: 'Emergency Contact Name'}]},
+    {section: 'Financial', fields: [{name: 'Cell Phone Number'}, {name: 'Emergency Contact Name'}]},
+    {section: 'Additional Forms', fields: [{name: 'Cell Phone Number'}, {name: 'Emergency Contact Name'}]},
+    {section: 'Consent', fields: [{name: 'Cell Phone Number'}, {name: 'Emergency Contact Name'}]},
+    {section: 'Medical Information', fields: [{name: 'Cell Phone Number'}, {name: 'Emergency Contact Name'}]},
+  ];
 
   showedFields = [];
+
+  get allMissingFields() {
+    let count: number = 0;
+    if (!this.missingFields.length) return 0;
+    this.missingFields.forEach(item => {
+      count += item.fields.length;
+    });
+    return count;
+  }
 
   constructor() {
   }
 
   ngOnInit() {
-    
-  }
-
-  getSections(item: any) {
-    return Object.keys(item.sections);
-  }
-
-  getMissingFields(item: any, section: string) {
-    console.log(JSON.stringify(item.sections[section].missing_fields));
-    return item.sections[section].missing_fields;
   }
 
   showFields(i) {
