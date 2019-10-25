@@ -59,12 +59,14 @@ export class PdfLoaderComponent implements OnInit {
     return this.widthPdf / this.defaultWidthPdf;
   }
 
-  styleObject(div: any) {
+  styleObject(div: any, isInput = false) {
+    const ky = this.getKY();
+    const kx = this.getKX();
     return {
-      top: (div.top * this.getKY()) / 12 + 'em',
-      left: (div.left * this.getKX()) / 12 + 'em',
-      width: (div.width * this.getKX()) / 12 + 'em',
-      height: (div.height * this.getKY()) / 12 + 'em'
+      top: (div.top * ky) / 12 + 'em',
+      left: (div.left * kx) / 12 + 'em',
+      width:  isInput ? ((div.width * kx) / 12 - 0.06)  + 'em' : (div.width * kx) / 12 + 'em',
+      height: isInput ? ((div.height * ky) / 12 - 0.06)  + 'em' : (div.height * ky) / 12 + 'em'
     };
   }
   // FIXME: need condition for parse linkedField

@@ -62,6 +62,12 @@
   }
 }
 
+:host(.pdf-form) {
+  .input_text .input_text__input {
+    height: calc(100% - 0.25em);
+  }
+}
+
 :host(.settings-field,.filter-field) {
   .input_text__input {
     height: 25px;

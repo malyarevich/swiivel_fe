@@ -21,8 +21,8 @@
                 >
                   <sw-input-text
                     [formControlName]="div['id']"
-                    class="agile-control"
-                    [ngStyle]="styleObject(div)"
+                    class="agile-control pdf-form"
+                    [ngStyle]="styleObject(div, true)"
                   >
                     <span
                       class="placeholder"
@@ -42,8 +42,8 @@
                   <!-- [(ngModel)]="div.linkedField.value" -->
                   <sw-input-textarea
                     [formControlName]="div['id']"
-                    class="agile-control"
-                    [ngStyle]="styleObject(div)"
+                    class="agile-control pdf-form"
+                    [ngStyle]="styleObject(div, true)"
                   >
                     <span class="input_label">
                       {{ div.linkedField.name | titlecase }}
@@ -58,8 +58,8 @@
                 >
                   <sw-input-textarea
                     [formControlName]="div['id']"
-                    class="agile-control"
-                    [ngStyle]="styleObject(div)"
+                    class="agile-control pdf-form"
+                    [ngStyle]="styleObject(div, true)"
                   >
                     <span class="input_label">
                       {{ ' Sign Here' | titlecase }}
@@ -74,8 +74,8 @@
                 >
                   <sw-input-checkbox
                     [formControlName]="div['id']"
-                    class="agile-control"
-                    [ngStyle]="styleObject(div)"
+                    class="agile-control pdf-form"
+                    [ngStyle]="styleObject(div, true)"
                   >
                     <span class="label"></span>
                   </sw-input-checkbox>
