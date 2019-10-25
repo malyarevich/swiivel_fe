@@ -111,14 +111,14 @@ export class DropDownListSettingsComponent {
         );
       });
       fieldOptions.removeAt(0);
-      f.options.fieldOptions.forEach(i => {
-        this._form.get('options.fieldOptions').push(
-          new FormGroup({
-            title: new FormControl(i.title || '')
-          })
-        );
-      });
-      this._form.get('options.fieldOptions').removeAt(0);
+      // f.options.fieldOptions.forEach(i => {
+      //   this._form.get('options.fieldOptions').push(
+      //     new FormGroup({
+      //       title: new FormControl(i.title || '')
+      //     })
+      //   );
+      // });
+      // this._form.get('options.fieldOptions').removeAt(0);
     }
   }
 

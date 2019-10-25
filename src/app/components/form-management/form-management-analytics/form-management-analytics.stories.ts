@@ -29,6 +29,8 @@ const created = mockLogListResponse.data.data.find(log => log.action === 'create
 const lastUpdated = mockLogListResponse.data.data
   .filter(log => log.action === 'updated')
   .reduce((prev, curr) => prev.created_at > curr.created_at ? prev : curr);
+const circleGraph = mockAnalyticsDashboardResponse.data.analytics.circle_graph;
+const statusNumbers = mockAnalyticsDashboardResponse.data.analytics.status_numbers;
 
 stories.add('Default', () => ({
     template: `
@@ -36,12 +38,16 @@ stories.add('Default', () => ({
             [round]="round"
             [created]="created"
             [lastUpdated]="lastUpdated"
+            [circleGraph]="circleGraph"
+            [statusNumbers]="statusNumbers"
         >
         </sw-form-management-analytics>`,
     props: {
         round: dashboardBlock.round,
         created,
         lastUpdated,
+        circleGraph,
+        statusNumbers,
     },
   })
 );

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Field } from "@app/models/data-collection/field.model";
-import { FormBuilder, FormGroup } from "@angular/forms";
+import { FormBuilder, FormGroup, FormControl } from "@angular/forms";
 
 @Component({
   selector: 'app-date-settings',
@@ -8,7 +8,23 @@ import { FormBuilder, FormGroup } from "@angular/forms";
 })
 export class DateSettingsComponent {
 
-  @Input() form: FormGroup;
+  @Input() 
+  set form(_form: any) {
+    if (!_form.get('options.showDefaultValue')) {
+      _form.get('options').addControl('showDefaultValue', new FormControl(null));
+    }
+    if (!_form.get('options.default')) {
+      _form.get('options').addControl('default', new FormControl(null));
+    }
+    if (!_form.get('options.dateFormat')) {
+      _form.get('options').addControl('dateFormat', new FormControl(null));
+    }
+    if (!_form.get('options.separator')) {
+      _form.get('options').addControl('separator', new FormControl(null));
+    }
+    this._form = _form;
+  }
+  _form;
 
   separators = [
     { title: '- (Dash)', value: 'dash' },
@@ -23,6 +39,7 @@ export class DateSettingsComponent {
   ];
 
   private field: Field;
+  loacalForm;
 
   @Input()
   set inputField(f: Field) {
@@ -35,20 +52,20 @@ export class DateSettingsComponent {
   constructor(
     private readonly fb: FormBuilder
   ) {
-    this.form = this.fb.group({
+    this.loacalForm = this.fb.group({
       showDefaultValue: [false],
       default: [null],
       separator: [null],
       dateFormat: [null]
     });
-    this.form.valueChanges.subscribe(v => {
+    this.loacalForm.valueChanges.subscribe(v => {
       this.updateField(v);
     });
   }
 
   private setValueToForm(f: Field): void {
     if (!f.options) { f.options = {}; }
-    this.form.patchValue({
+    this.loacalForm.patchValue({
       default: f.options.default || null,
       showDefaultValue: f.options.default ? true : false,
       separator: f.options.separator || [],
@@ -59,7 +76,8 @@ export class DateSettingsComponent {
   private updateField(formValue): void {
     if (formValue) {
       delete formValue.showDefaultValue;
-      Object.assign(this.field.options, formValue);
+      // Object.assign(this.field.options, formValue);
+      this._form.get('options').patchValue(formValue)
     }
   }
 

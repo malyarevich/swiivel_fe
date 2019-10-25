@@ -277,10 +277,6 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
           this.newSideBar = JSON.parse(JSON.stringify(event.data));
         }
       }
-      if (event.action === 'moveField') {
-        console.log(event.field, event.toIndex)
-      }
-
     });
   }
   ngOnInit() {

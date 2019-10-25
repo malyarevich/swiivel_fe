@@ -310,10 +310,34 @@ export class TreeDataSource implements DataSource<any> {
     })
   }
 
+  findNodeByPath(field) {
+    if (field.path) {
+      let path = field.path.slice();
+      let rootPaths = this.nodes.map((root: any) => root.name);
+      if (!rootPaths.includes(path[0])) {
+        path.shift();
+      }
+
+
+      let node = this.tree.treeToArray(this.tree).find(node => {
+        if (!node.path) return false;
+        return node.path.join('') === path.join('');
+      });
+      return node;
+    }
+
+  }
+
   findNodeByField(field) {
     if (field._id) return this.findNodeByFieldId;
-    if (field.mapped) {
-      return this.findNodeByParam('mapped', field.mapped);
+    // if (field.mapped) {
+    //   return this.findNodeByParam('mapped', field.mapped);
+    // }
+    // if (field.pathId) {
+    //   return this.findNodeByParam('pathId', field.pathId);
+    // }
+    if (field.path) {
+      return this.findNodeByPath(field);
     }
     return this.findNodeByFieldNameType(field);
   }

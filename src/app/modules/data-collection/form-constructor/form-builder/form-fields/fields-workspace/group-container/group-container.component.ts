@@ -93,13 +93,15 @@ export class GroupContainerComponent implements OnInit {
   // }
   drop(event) {
     if (event.container === event.previousContainer) {
+      this.sideBarService.moveField(event);
       this.sideBarService.events$.next({ action: 'moveField', field: event.item.data, toIndex: event.currentIndex })
       // console.log(event.container.data, event.previousIndex, event.currentIndex)
       // moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
-      if (event.container.id === 'sidebar-list') {
-        this.sideBarService.events$.next({ action: 'remove', target: event.item.data });
-      }
+      this.sideBarService.removeField(event.item.data);
+      // if (event.container.id === 'sidebar-list') {
+      //   this.sideBarService.events$.next({ action: 'remove', target: event.item.data });
+      // }
       // console.log(event.previousContainer, event.container, event.previousIndex, event.currentIndex)
       // copyArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex)
     }

@@ -76,6 +76,9 @@ export class SideBarService {
         setOption(formFields, event.field, event.options);
         form.fields = formFields;
         this.form = Object.assign({}, form);
+      } else if (event.action === 'update') {
+        console.dir(this.form.form.value);
+        console.dir(this.form.workspace)
       }
     })
   }
@@ -167,6 +170,7 @@ export class SideBarService {
     }
     if (field) section.fields = [field];
     let formGroup = this.createForm(section);
+    if (!field) formGroup.addControl('fields', this.fb.group({}))
     this.form.form = this.fb.group({ [section.name]: formGroup });
     this.form.workspace = [section];
     return this.form;
@@ -267,21 +271,30 @@ export class SideBarService {
       }
     }
   }
-  addField(field, ancestors?) {
-    console.groupCollapsed(`Adding field`);
-    if (!field.name) return null;
+  moveField(event) {
+    console.log(event);
+  }
+  addField(field, ancestors?, only?) {
+    if (!field || !field.name) return null;
+    if (Array.isArray(ancestors) && ancestors.length === 0) ancestors = null;
+    console.groupCollapsed(`Adding field ${field.name}`);
     let form = this.form.form;// this.fb.array([]) as FormArray;
     let formParent = this.getFieldFormParent(field);
     if (formParent === 0 && field.type !== 114) {
-      this.addWrapper(null, field);
+      this.addWrapper();
+      this.addField(field, ancestors, only);
     } else if (!!formParent) {
       formParent.addControl(field.name, this.createForm(field));
       let spaceParent = this.getFieldSpaceParent(field);
       if (spaceParent) {
-        // console.log(cloneDeep(spaceParent))
-        if (!spaceParent.find(a => a.name === field.name && a.type === field.type)) {
+        console.log(cloneDeep(spaceParent))
 
-          spaceParent.push(field);
+        if (!spaceParent.find(a => a.name === field.name && a.type === field.type)) {
+          if (only) {
+            spaceParent.push({ ...field, fields: [] });
+          } else {
+            spaceParent.push(field)
+          }
         }
       } else {
         if (ancestors) {
@@ -299,7 +312,7 @@ export class SideBarService {
             }
           });
           spaceParent = this.getFieldSpaceParent(field);
-          // spaceParent.push(field);
+          spaceParent.push(field);
         } else {
           debugger;
         }
@@ -308,7 +321,7 @@ export class SideBarService {
       if (ancestors) {
         ancestors = ancestors.slice();
         let parent = ancestors.shift();
-        parent = this.addField(parent, ancestors);
+        parent = this.addField(parent, ancestors, true);
         if (parent) {
           this.addField(field);
         } else debugger;
@@ -327,6 +340,7 @@ export class SideBarService {
 
   }
 
+
   remove(field) {
     this.events$.next({ action: 'removeit', field });
   }
@@ -339,6 +353,7 @@ export class SideBarService {
     let spaceParent = this.removeFieldSpace(field);
     if (formParent) {
       formParent.removeControl(field.name);
+      // field.isActive = false;
       // spaceParent = spaceParent.filter(spaceField => !(spaceField.name === field.name && spaceField.type === field.type)).slice();
       console.dir(cloneDeep(formParent));
       console.dir(cloneDeep(spaceParent));
@@ -352,7 +367,7 @@ export class SideBarService {
       // this.events$.next({ action: 'update' });
     }
     console.groupEnd();
-    this.events$.next({ action: 'remnoved', field });
+    this.events$.next({ action: 'removed', field });
     this.events$.next({ action: 'update' });
     return this.form.form;
   }
