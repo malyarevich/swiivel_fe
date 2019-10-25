@@ -57,8 +57,8 @@ export const consentItemDefault: ConsentItemInfo = {
   },
   signature: {
     isRequire: false,
-    type: SIGNATURE_TYPES.ESIGN,
-    eType: E_SIGNATURE_TYPES.SYSTEM,
+    type: SIGNATURE_TYPES.WET,
+    eType: E_SIGNATURE_TYPES.EXTERNAL,
     isBothParents: false,
     signed: {parents: false, fathers: false, mothers: false}
   }
