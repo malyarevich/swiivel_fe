@@ -10,6 +10,10 @@ import { Form } from '@models/data-collection/form.model';
 import { IconsEnum } from '@app/components/icons.enum';
 import { FormSubmissionsListParams } from '@app/models/form-submissions-list.model';
 import { StatusColors } from '@app/components/form-management/form-management-submissions/form-management-submissions.models';
+import { 
+  mockAnalyticsDashboardResponse,
+  mockLogListResponse,
+} from '@app/components/form-management/form-management-analytics/mock-api-responses';
 
 class FormManagement {
   status: string;
@@ -125,6 +129,16 @@ export class FormManagementContainer implements OnInit {
   };
 
   public submissionsDataSource: FormManagementSubmissionsDataSource = new FormManagementSubmissionsDataSource(this.formManagementAPIService);
+
+  // Props for form-management-analytics
+  public round = mockAnalyticsDashboardResponse.data.dashboard_block.round;
+  public created = mockLogListResponse.data.data.find(log => log.action === 'created');
+  public lastUpdated = mockLogListResponse.data.data
+    .filter(log => log.action === 'updated')
+    .reduce((prev, curr) => prev.created_at > curr.created_at ? prev : curr);
+  public circleGraph = mockAnalyticsDashboardResponse.data.analytics.circle_graph;
+  public statusNumbers = mockAnalyticsDashboardResponse.data.analytics.status_numbers;
+  public unassignedDocuments = 11;
 
   constructor(
     public formManagementAPIService: FormManagementAPIService,

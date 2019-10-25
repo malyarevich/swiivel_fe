@@ -19,15 +19,15 @@ import { OnlineFormModule } from '@app/modules/online-form/online-form.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FormManagementContainer } from './form-management.container';
 import { FormManagementAPIService } from './form-management.service';
-import { InsideMissingFieldsComponent } from '@app/modules/data-collection/form-info/form-info-submissions/form-info-submission-inside/inside-missing-fields/inside-missing-fields.component';
-import { InsideDocumentsViewComponent } from '@app/modules/data-collection/form-info/form-info-submissions/form-info-submission-inside/inside-form-documents/inside-documents-view/inside-documents-view.component';
+import { FormInfoModule } from '@app/modules/data-collection/form-info/form-info.module';
 import { FormTableHeaderModule } from '@app/shared/components/form-table-header/form-table-header.module';
+import { FormHistoryComponent } from '@app/components/form-history/form-history.component';
 
 @NgModule({
   declarations: [
     FormManagementContainer, FormManagementComponent, FormManagementSubmissionsComponent,
     ProgressLineBarComponent, CdkDetailRowDirective, FormManagementAnalyticsComponent,
-    InsideMissingFieldsComponent, InsideDocumentsViewComponent,
+    FormHistoryComponent,
   ],
   imports: [
     CommonModule,
@@ -45,6 +45,7 @@ import { FormTableHeaderModule } from '@app/shared/components/form-table-header/
     FormAccessModalModule,
     OnlineFormModule,
     FormTableHeaderModule,
+    FormInfoModule,
   ],
   exports: [FormManagementContainer],
   providers: [FormManagementAPIService]

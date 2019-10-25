@@ -5,6 +5,15 @@
     [statusesTitles]="formManagement.statusesTitles"
     [unassignedDocuments]="formManagement.unassignedDocuments"
 >
+    <sw-form-management-analytics 
+        analytics
+        [round]="round"
+        [created]="created"
+        [lastUpdated]="lastUpdated"
+        [circleGraph]="circleGraph"
+        [statusNumbers]="statusNumbers"
+    >
+    </sw-form-management-analytics>
     <sw-form-management-submissions 
         submissions
         [dataSource]="submissions.dataSource"
@@ -18,7 +27,6 @@
         [statusColors]="submissions.statusColors"
         [totalItems]="submissions.totalItems"
         [showSpinner]="submissions.showSpinner"
-        (toggleExpand)="onToggleExpand($event)"
     >
     </sw-form-management-submissions>
 <sw-form-management>

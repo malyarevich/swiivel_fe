@@ -8,7 +8,7 @@
         class="status-btn"
         [options]="statusesFriendlyNames"
         #bulk="dropdown"
-        (selected)="copyLink($event, [form?.id])"
+        (selected)="copyLink.emit(form?.id)"
       >
         <sw-small-button
           [ngClass]="{ 'icon-end': true }"
