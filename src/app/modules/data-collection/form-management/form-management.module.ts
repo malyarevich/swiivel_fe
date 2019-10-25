@@ -7,7 +7,6 @@ import { FormManagementAnalyticsComponent } from '@app/components/form-managemen
 import { FormManagementRoutingModule } from './form-management-routing.module';
 import { FormStatisticModule } from '../form-statistic/form-statistic.module';
 import { SharedRedComponentsModule } from '../../../shared/components/sharedRedComponents.module';
-import { FormTableHeaderModule } from '../../../shared/components';
 import { FormAccessModalModule } from '../form-access-modal/form-access-modal.module';
 import { FormManagementSubmissionsComponent } from '@app/components/form-management/form-management-submissions/form-management-submissions.component';
 import { CdkDetailRowDirective } from '@app/utils/directives/cdk-detail-row.directive';
@@ -20,11 +19,15 @@ import { OnlineFormModule } from '@app/modules/online-form/online-form.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FormManagementContainer } from './form-management.container';
 import { FormManagementAPIService } from './form-management.service';
+import { InsideMissingFieldsComponent } from '@app/modules/data-collection/form-info/form-info-submissions/form-info-submission-inside/inside-missing-fields/inside-missing-fields.component';
+import { InsideDocumentsViewComponent } from '@app/modules/data-collection/form-info/form-info-submissions/form-info-submission-inside/inside-form-documents/inside-documents-view/inside-documents-view.component';
+import { FormTableHeaderModule } from '@app/shared/components/form-table-header/form-table-header.module';
 
 @NgModule({
   declarations: [
     FormManagementContainer, FormManagementComponent, FormManagementSubmissionsComponent,
-    ProgressLineBarComponent, CdkDetailRowDirective, FormManagementAnalyticsComponent
+    ProgressLineBarComponent, CdkDetailRowDirective, FormManagementAnalyticsComponent,
+    InsideMissingFieldsComponent, InsideDocumentsViewComponent,
   ],
   imports: [
     CommonModule,
@@ -41,6 +44,7 @@ import { FormManagementAPIService } from './form-management.service';
     FormTableHeaderModule,
     FormAccessModalModule,
     OnlineFormModule,
+    FormTableHeaderModule,
   ],
   exports: [FormManagementContainer],
   providers: [FormManagementAPIService]

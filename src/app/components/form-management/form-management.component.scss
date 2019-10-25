@@ -2,11 +2,38 @@
 
 .app-form-table {
   padding: 15px;
+  font-family: Nunito Sans;
+  font-style: normal;
+  font-style: normal;
+  font-weight: normal;
 
+  &__top {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__top-buttons {
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 13px;
+    text-align: center;
+    margin-left: auto;
+    display: flex;
+  }
+  
+  &__top-button {
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 13px;
+    text-align: center;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  
   &__header {
     display: flex;
     justify-content: space-between;
-    height: 56px;
+    height: 55px;
   }
 
   &__table {
@@ -16,6 +43,44 @@
 
   &__tabs {
     display: flex;
+  }
+
+  &__text {
+    display: flex;
+    width: 100%;
+
+    sw-page-header {
+      margin-top: auto;
+      margin-bottom: auto;
+    }
+
+    sw-dropdown-select {
+      margin-top: auto;
+      margin-bottom: auto;
+    }
+
+    .status-btn {
+      padding-left: 10px;
+      padding-right: 5px;
+      margin-top: auto;
+      margin-bottom: auto;
+    }
+
+    .action {
+      padding-left: 5px;
+      padding-right: 5px;
+      font-size: 9px;
+      line-height: 13px;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+      color: #909090;
+      margin-top: auto;
+      margin-bottom: auto;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
   }
 
   &__tab {
@@ -42,17 +107,42 @@
 
   &__controls {
     display: flex;
+    margin-left: auto;
+    margin-right: auto;
+
+    & > div {
+      margin: auto 5px auto 5px;
+    }
   }
 
-  &__controls-button {
-    margin: auto 10px auto 0;
+  &__controls-assign {
+    display: flex;
+    padding-left: 10px;
+    padding-right: 10px;
+    height: 36px;
+    background: #36405F;
+    box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+
+    span {
+      margin: auto 10px auto 5px;
+      font-size: 11px;
+      line-height: 15px;
+      color: white;
+    }
+
+    sw-button {
+      margin: auto 0 auto 5px;
+    }
+  }
+  
+    &__controls-button {
     button {
-        padding: 9px 16px;
+      padding: 9px 16px;
     }
   }
   
   &__controls-bulk {
-    margin: auto 10px auto 0;
     button {
         padding: 9px 16px;
     }
