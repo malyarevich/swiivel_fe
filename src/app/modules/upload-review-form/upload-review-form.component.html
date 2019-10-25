@@ -125,6 +125,7 @@
     <div *ngIf="getSelectForm() && getSelectForm().submission_type === 'pdfForm'">
       <app-preview-form
         [formId]='getSelectForm().form_id'
+        [isReviewMode]="true"
         (onBack)="onBack($event)"
         (onSaveNext)="onSaveNext($event)"
       ></app-preview-form>
