@@ -48,9 +48,55 @@
         </div>
         <hr>
     </div>
+
+    <div class="row">
+      <div class="col title">Access </div>
+    </div> 
   </div>
 
-  <div class="col-3 card stats"></div>
+  <div class="col-3 card stats">
+    <div class="row">
+      <div class="col title">Form Analytics</div>
+    </div>
+    <div class="row">
+      <span class="chart-total-title">Total</span>
+      <span class="chart-total-percent">{{circleGraph?.reviewed_completed}}</span>
+      <div class="col-6">
+          <canvas #chartTotalView width="100%" height="90%">{{ chartTotal }}</canvas>
+      </div>
+      <div class="col-6 status-numbers">
+        <div class="row">
+          <div class="col">{{statusNumbers?.send_out}}
+            <span class="type">Sent Out</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">{{statusNumbers?.in_progress}}
+            <span class="type">In Progress</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">{{statusNumbers?.incomplete}}
+            <span class="type">Incomplete</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">{{statusNumbers?.submitted}}
+            <span class="type">Submitted</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">{{statusNumbers?.reviewed_completed}}
+            <span class="type">Reviewed / Completed</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-  <div class="col-6 card payments"></div>
+  <div class="col-6 card payments">
+      <div class="row">
+          <div class="col title">Form Payments</div>
+        </div>
+  </div>
 </div>

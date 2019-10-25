@@ -1,0 +1,21 @@
+<div class="container form-history">
+  <div class="row top-bar">
+    <div class="col title">Form History</div>
+    <form [formGroup]="formSearch" class="col-3 search-bar">
+        <app-search-field
+        placeholder="Search"
+        formControlName="search"
+        type="controls"
+      ></app-search-field>
+    </form>
+  </div>
+  <div class="row timeline">
+    <div 
+      *ngFor="let record of logList; let i = index" 
+      [ngClass]="{'bottom': i % 2 !== 0}"
+      class="col"
+    >
+      
+    </div>
+  </div>
+</div>
