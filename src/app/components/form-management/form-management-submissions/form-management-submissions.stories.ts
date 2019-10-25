@@ -17,14 +17,6 @@ import { OnlineFormModule } from '@app/modules/online-form/online-form.module';
 import { FormManagementDataSource } from './mock-datasource';
 import { FormManagementSubmissionsComponent } from './form-management-submissions.component';
 import { IconsEnum } from '@app/components/icons.enum';
-import { InsideMissingFieldsComponent } from '@app/modules/data-collection/form-info/form-info-submissions/form-info-submission-inside/inside-missing-fields/inside-missing-fields.component';
-import { InsideDocumentsViewComponent } from '@app/modules/data-collection/form-info/form-info-submissions/form-info-submission-inside/inside-form-documents/inside-documents-view/inside-documents-view.component';
-import { FormTableHeaderComponent } from '@app/shared/components/form-table-header/form-table-header.component';
-import { TableHeaderFilterTextComponent } from '@app/shared/components/form-table-header/table-header-filter-text/table-header-filter-text.component';
-import { TableHeaderFilterDateComponent } from '@app/shared/components/form-table-header/table-header-filter-date/table-header-filter-date.component';
-import { TableHeaderTitleComponent } from '@app/shared/components/form-table-header/table-header-title/table-header-title.component';
-import { SharedRedComponentsModule } from '@app/shared/components/sharedRedComponents.module';
-import { mockFormDetails } from './mock-api-responses';
 
 const stories = storiesOf('Form Management Submissions', module);
 
@@ -33,14 +25,12 @@ stories.addDecorator(
   moduleMetadata({ 
     declarations: [
         FormManagementSubmissionsComponent, ProgressLineBarComponent, 
-        PopupComponent, CdkDetailRowDirective, InsideMissingFieldsComponent,
-        InsideDocumentsViewComponent, FormTableHeaderComponent, TableHeaderFilterTextComponent,
-        TableHeaderFilterDateComponent, TableHeaderTitleComponent,
+        PopupComponent, CdkDetailRowDirective
     ],
     imports: [
         CommonModule, FormsModule, SharedModule, CdkTableModule,
         OverlayModule, MatProgressBarModule, OnlineFormModule,
-        HttpClientModule, SharedRedComponentsModule, ...StorybookImports, 
+        HttpClientModule, ...StorybookImports, 
     ],
     providers: [...StorybookProviders],
     entryComponents: [PopupComponent],
@@ -109,7 +99,6 @@ const statusColors: StatusColors = {
 };
 const totalItems = 100;
 const showSpinner = false;
-const missingFields = mockFormDetails.data.form_data.missingFields;
 
 function onToggleExpand(formID: string) {
     
@@ -134,7 +123,6 @@ stories.add('Default', () => ({
             [statusColors]="statusColors"
             [totalItems]="totalItems"
             [showSpinner]="showSpinner"
-            [missingFields]="missingFields"
             (toggleExpand)="onToggleExpand($event)"
         >
         </sw-form-management-submissions>`,
@@ -149,7 +137,6 @@ stories.add('Default', () => ({
         formSubmissionsListParams,
         statusColors,
         showSpinner,
-        missingFields,
         onToggleExpand,
     },
   })

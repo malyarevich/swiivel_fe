@@ -13,9 +13,6 @@ export class ButtonComponent {
   @Input() name: string;
   @Input() value: any;
   @Input() style ? = 'purple';
-  @Input() color ? = '#fff';
-  @Input() border ? = 'none';
-  @Input() padding: string;
   @Input() size ? = SizeButtonsEnum.DEFAULT;
 
   public sizeButton = SizeButtonsEnum;

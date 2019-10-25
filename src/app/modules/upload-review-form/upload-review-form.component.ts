@@ -1,14 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  ElementRef,
-  OnDestroy,
-  OnInit,
-  Renderer2,
-  ViewChild,
-  ViewRef
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UploadReviewFormStatusesEnum } from '@modules/upload-review-form/upload-review-form-statuses.enum';
@@ -22,6 +12,7 @@ import { IconsEnum } from '@shared/icons.enum';
 import { SizesEnum } from '@shared/sizes.enum';
 import { DialogComponent } from '@shared/popup/dialog.component';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { PreviewFormComponent } from '@modules/form-send/preview-form/preview-form.component';
 
 @Component({
   selector: 'app-upload-review-form',
@@ -29,7 +20,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
   styleUrls: ['./upload-review-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UploadReviewFormComponent implements OnInit, OnDestroy {
+export class UploadReviewFormComponent implements OnInit {
   @ViewChild('link', { static: false }) link: ElementRef;
   @ViewChild('dialog', {static: true}) dialog: DialogComponent;
 
@@ -59,7 +50,6 @@ export class UploadReviewFormComponent implements OnInit, OnDestroy {
   public isSaveActive = false;
   public isPopupOpen = false;
   public dataSettings = {};
-  public isBackAction = false;
 
   public documentTypes = [];
   public documentFamilies = [];
@@ -84,7 +74,7 @@ export class UploadReviewFormComponent implements OnInit, OnDestroy {
       .subscribe(id => {
         this.activeIdDocument = id;
       });
-   this.dataSource.$loading.subscribe((loading: boolean) => {
+    this.dataSource.$loading.subscribe((loading: boolean) => {
       this.showSpinner = loading;
     });
     this.dataSource.$changingRotationSubject.subscribe((rotating: boolean) => {
@@ -178,10 +168,9 @@ export class UploadReviewFormComponent implements OnInit, OnDestroy {
           } else {
             this.selectItem(this.activeIdDocument);
           }
+          this.cdr.detectChanges();
         } else {
           this.documents = [];
-        }
-        if (!this.cdr['destroyed']) {
           this.cdr.detectChanges();
         }
       });
@@ -212,6 +201,7 @@ export class UploadReviewFormComponent implements OnInit, OnDestroy {
   downLoadForm(id: string): void {
     const document = this.documents.find(document => document._id === id);
     if( document.submission_type === 'onlineForm' || document.submission_type === 'pdfForm') {
+      console.log('export');
       this.onExportPDF(document.form_id);
     } else {
       this.dataSource.downloadForm(document.link);
@@ -284,10 +274,6 @@ export class UploadReviewFormComponent implements OnInit, OnDestroy {
        } else {
          this.isSaveActive = false;
        }
-       if (this.isBackAction) {
-        this.router.navigate(['/data-collection/form-info/' + this.activeIdForm]);
-        this.isBackAction = false;
-      }
     } else {
       if (action) {
         this.dataSource
@@ -487,30 +473,16 @@ export class UploadReviewFormComponent implements OnInit, OnDestroy {
     this.scrollToActiveElement();
   }
 
-  backPageClick(): void {
-    this.isBackAction = true;
-    if (this.isSaveActive) {
-      this.onOpenConfirmSavePopup();
-    } else {
-      this.router.navigate(['/data-collection/form-info/' + this.activeIdForm]);
-    }
-  }
-
   onSaveNext(event): void {
      if (event) {
       this.skipDocument();
     }
-
   }
 
   isOnlineForm(): boolean {
     return (
       this.getSelectForm() && (this.getSelectForm().submission_type === 'onlineForm' || this.getSelectForm().submission_type === 'pdfForm')
     )
-  }
-
-  ngOnDestroy(): void {
-    this.cdr.detach();
   }
 
 }

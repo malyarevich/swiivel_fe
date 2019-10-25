@@ -8,10 +8,8 @@ import { FormSearchParams } from '@app/models/form-search-params';
 export class FormsDataSource implements DataSource<any> {
   private formsSubject = new BehaviorSubject<any[]>([]);
   private dataSubject = new BehaviorSubject<any[]>([]);
-  private totalAmountSubject = new BehaviorSubject<any>({});
   private loadingSubject = new BehaviorSubject<boolean>(false);
   public $loading = this.loadingSubject.asObservable();
-  public $totalAmount = this.totalAmountSubject.asObservable();
 
   private defaultMetadata = {page: 1, last_page: 1, count: 0, limit: 10, total: 0};
   private metadata: BehaviorSubject<any> = new BehaviorSubject<any>(this.defaultMetadata);
@@ -35,10 +33,6 @@ export class FormsDataSource implements DataSource<any> {
     return this.metadata.asObservable();
   }
 
-  get totalAmount() {
-    return this.totalAmountSubject.asObservable();
-  }
-
   connect(_collectionViewer: CollectionViewer): Observable<any[]> {
     return this.formsSubject.asObservable();
   }
@@ -47,7 +41,6 @@ export class FormsDataSource implements DataSource<any> {
     this.formsSubject.complete();
     this.loadingSubject.complete();
     this.metadata.complete();
-    this.totalAmountSubject.complete();
   }
 
   loadFormsList(params: FormSearchParams = { page: 0, limit: 10 }) {
@@ -62,7 +55,6 @@ export class FormsDataSource implements DataSource<any> {
       this.metadata.next(metadata);
       this.loadingSubject.next(false);
       this.dataSubject.next(forms.data);
-      this.totalAmountSubject.next(forms.total);
     });
   }
 

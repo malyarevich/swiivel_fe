@@ -6,6 +6,7 @@
     background: $button-color;
     outline: none;
     border: none;
+    color: #fff;
     padding: 7px 16px;
     display: flex;
     flex-direction: row;
@@ -23,13 +24,6 @@
     &--white {
       padding: 6px 15px;
       background: #fff;
-      color: $button-color;
-      border: 1px solid $button-color;
-    }
-
-    &--green {
-      padding: 6px 15px;
-      background: #3CA476;
       color: $button-color;
       border: 1px solid $button-color;
     }

@@ -224,7 +224,6 @@
             <ng-container cdkColumnDef="paginator">
               <td cdk-footer-cell *cdkFooterCellDef [attr.colspan]="displayedColumns.length">
                 <div class="wrapper" data-e2e="paginatorname">
-                  <p class="paginator-results">{{ this.totalAmount }} Results</p>
                   <sw-paginator [index]="currentPage" [size]="totalItems" (pageChange)="changePage($event)"></sw-paginator>
                 </div>
               </td>

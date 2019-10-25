@@ -187,13 +187,6 @@
         display: flex;
         align-items: center;
         justify-content: center;
-
-        .paginator-results {
-          margin: 0 15px 0 0;
-          font-size: 12px;
-          line-height: 20px;
-          color:$gray-color;
-        }
       }
     }
     &.cdk-column-spinner {

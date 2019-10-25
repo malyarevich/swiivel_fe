@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'sw-back-bar',
@@ -8,11 +8,6 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 export class BackBarComponent {
   @Input() title: string;
-  @Output() onBackClick: EventEmitter<any> = new EventEmitter();
-
+  @Input() backRoute ? = '/';
   constructor() { }
-
-  backClick() {
-    this.onBackClick.emit();
-  }
 }
