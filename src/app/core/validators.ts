@@ -9,7 +9,7 @@ function checkValue(value) {
 export function emailValidator(): ValidatorFn {
     return (c: FormControl): ValidationErrors | null => {
         const value = checkValue(c.value);
-        return isEmail(value) ? null : { emailValidator: true };
+        return isEmail(value) ? null : { emailValidator: `is not valid email field` };
     };
 }
 
@@ -17,7 +17,7 @@ export function alphabeticValidator(): ValidatorFn {
     return (c: FormControl): ValidationErrors | null => {
         const value = checkValue(c.value);
         const regexp = new RegExp(/^[a-zA-Z ]*$/, 'gm');
-        return regexp.test(value) ? null : { alphabeticValidator: true };
+        return regexp.test(value) ? null : { alphabeticValidator: `is not valid alphabetic field` };
     };
 }
 
@@ -25,7 +25,7 @@ export function alphanumericValidator(): ValidatorFn {
     return (c: FormControl): ValidationErrors | null => {
         const value = checkValue(c.value);
         const regexp = new RegExp(/^[a-zA-Z0-9 ]*$/, 'gm');
-        return regexp.test(value) ? null : { alphanumericValidator: true };
+        return regexp.test(value) ? null : { alphanumericValidator: `is not valid alphanumeric field` };
     };
 }
 
@@ -33,14 +33,14 @@ export function numericValidator(): ValidatorFn {
     return (c: FormControl): ValidationErrors | null => {
         const value = checkValue(c.value);
         const regexp = new RegExp(/^[0-9]*$/, 'gm');
-        return regexp.test(value) ? null : { numericValidator: true };
+        return regexp.test(value) ? null : { numericValidator: `is not valid numeric field` };
     };
 }
 
 export function urlValidator(): ValidatorFn {
     return (c: FormControl): ValidationErrors | null => {
         const value = checkValue(c.value);
-        return isURL(value) ? null : { urlValidator: true };
+        return isURL(value) ? null : { urlValidator: `is not valid URL field` };
     };
 }
 
@@ -53,8 +53,9 @@ export function minValueValidator(min: number): ValidatorFn {
                 min
             }
         };
-        if (isNaN(value)) { return { minValueValidator: 'Invalid number' }; }
-        return parseFloat(value) < min ? err : null;
+        if (isNaN(value)) { return { minValueValidator: 'has invalid number' }; }
+        // return parseFloat(value) < min ? err : null;
+        return parseFloat(value) < min ? { minValueValidator: `has current value is ${err.minValueValidator.current}, then min allowed ${err.minValueValidator.min}` } : null;
     };
 }
 
@@ -68,8 +69,8 @@ export function maxValueValidator(max: number): ValidatorFn {
             }
 
         };
-        if (isNaN(value)) { return { maxValueValidator: 'Invalid number' }; }
-        return parseFloat(value) > max ? err : null;
+        if (isNaN(value)) { return { maxValueValidator: 'has invalid number' }; }
+        return parseFloat(value) > max ? { minValueValidator: `has current value is ${err.maxValueValidator.current}, then min allowed ${err.maxValueValidator.max}` } : null;
     };
 }
 
@@ -136,7 +137,7 @@ export function multipleLengthValidator(length: number): ValidatorFn {
 export function phoneNumberValidator(): ValidatorFn {
     return (c: FormControl): ValidationErrors | null => {
         const value = checkValue(c.value);
-        const err = { phoneNumberValidator: true };
+        const err = { phoneNumberValidator: `is not valid phone number for US` };
         const phoneUtil = glibphone.PhoneNumberUtil.getInstance();
 
         try {
