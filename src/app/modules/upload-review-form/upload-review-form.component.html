@@ -1,6 +1,6 @@
 <sw-back-bar
   [title]="'Review Forms'"
-  [backRoute]="'/data-collection/form-info/' + activeIdForm"
+  (onBackClick)="backPageClick()"
 ></sw-back-bar>
 <app-document-approval-bar
   [document]="getSelectForm()"
@@ -65,12 +65,12 @@
                 </app-upload-review-form-item>
               </div>
             </div>
-            <div *ngIf="showSpinner" class="spinner">
-              <sw-main-spinner [spinnerSize]="size.MEDIUM"></sw-main-spinner>
-            </div>
           </div>
           <div *ngIf="!showSpinner && (!documents || !documents.length)" class="sidebar--empty">
             No documents
+          </div>
+          <div *ngIf="showSpinner" class="spinner">
+            <sw-main-spinner [spinnerSize]="size.MEDIUM"></sw-main-spinner>
           </div>
         </div>
       </div>
@@ -125,6 +125,7 @@
     <div *ngIf="getSelectForm() && getSelectForm().submission_type === 'pdfForm'">
       <app-preview-form
         [formId]='getSelectForm().form_id'
+        [isReviewMode]="true"
         (onBack)="onBack($event)"
         (onSaveNext)="onSaveNext($event)"
       ></app-preview-form>
@@ -144,14 +145,18 @@
   <app-upload-review-form-footer [documents]="extremeDocuments" [disabled]="isBulkDownload"
     (changeForm)="changeForm($event)"></app-upload-review-form-footer>
 </div>
-<sw-dialog #dialog [action]="isSaveActive ? 'Save' : 'Remove'"
-  [title]="isSaveActive ? 'Save Document' : 'Remove Document'" [style]="'center'" (closed)="closeForm($event)">
+<sw-dialog #dialog [action]="isSaveActive ? (isBackAction ? 'Save and Exit' : 'Save') : 'Remove'"
+  [title]="isSaveActive ? 'Save Document' : 'Remove Document'" [style]="'center'" (closed)="closeForm($event)"
+  [cancelAction]="isBackAction? 'Discard Changes' : 'Cancel'">
   <p *ngIf="!this.isSaveActive">Are you sure you want to remove
     {{ getDocument(removeDocumentId) && getDocument(removeDocumentId).entity_name ?
           getDocument(removeDocumentId).entity_name : 'this document' }}?
   </p>
-  <p *ngIf="this.isSaveActive">
+  <p *ngIf="this.isSaveActive && !this.isBackAction">
     Do you want to save changes to this document?
+  </p>
+  <p *ngIf="this.isSaveActive && this.isBackAction">
+    Are you sure want to exit review form without saving?
   </p>
 </sw-dialog>
 <div *ngIf="isPopupOpen" class="overlay">

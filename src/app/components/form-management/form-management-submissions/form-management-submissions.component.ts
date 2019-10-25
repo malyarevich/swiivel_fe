@@ -17,6 +17,7 @@ import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators'
 import { StatusColors } from './form-management-submissions.models';
 import { FormSubmissionsListParams } from '@app/models/form-submissions-list.model';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { MissingFields } from '@models/form-management/missing-field';
 
 @Component({
   selector: 'sw-form-management-submissions',
@@ -38,6 +39,7 @@ export class FormManagementSubmissionsComponent implements OnInit {
   @Input() statusColors: StatusColors;
   @Input() totalItems: number;
   @Input() showSpinner: boolean;
+  @Input() missingFields: MissingFields;
 
   @Output() changeStatus = new EventEmitter<any>();
   @Output() exportZIP = new EventEmitter<boolean>();
@@ -45,6 +47,7 @@ export class FormManagementSubmissionsComponent implements OnInit {
 
 //   @ViewChild('dialog', { static: true }) dialog: DialogComponent;
 
+  activeTab: string = 'forms';
   filterForm: FormGroup;
   icons = IconsEnum;
   statusesFriendlyNames: string[];
