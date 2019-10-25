@@ -50,6 +50,10 @@
   &:hover .button {
     opacity: 0.8;
   }
+
+  &:hover .button:disabled {
+    opacity: 1;
+  }
 }
 
 :host(.btn-with-icon) {

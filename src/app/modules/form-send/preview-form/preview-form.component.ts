@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { PDFProgressData } from 'ng2-pdf-viewer';
 
 @Component({
@@ -7,8 +7,10 @@ import { PDFProgressData } from 'ng2-pdf-viewer';
   styleUrls: ['./preview-form.component.scss']
 })
 export class PreviewFormComponent implements OnInit {
-  
+
   @Input() formId;
+  @Output() onBack: EventEmitter<any> = new EventEmitter();
+  @Output() onSaveNext: EventEmitter<any> = new EventEmitter();
   pdfError: boolean;
   pdfLoading: boolean;
   constructor() { }
@@ -35,12 +37,12 @@ export class PreviewFormComponent implements OnInit {
     }
   }
 
-  onBack(event): void {
-    console.log('onBack', event);
+  onBackOnlineForm(event): void {
+    this.onBack.emit(event);
   }
 
-  onSaveNext(event): void {
-    console.log('onSaveNext', event);
+  onSaveNextOnlineForm(event): void {
+    this.onSaveNext.emit(event);
   }
 
 

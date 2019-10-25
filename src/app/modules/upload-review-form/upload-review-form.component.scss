@@ -4,6 +4,16 @@
   position: relative;
   min-height: calc(100vh - 39px);
 
+  .overlay {
+    position: absolute;
+    width: calc(100% + 60px);
+    height: calc(100% + 40px);
+    background: rgba(0,0,0,0.4);
+    z-index: 3;
+    top: -40px;
+    left: -60px;
+  }
+
   .content {
     display: flex;
     position: relative;
@@ -193,4 +203,8 @@
 .sidebar-opener.opened {
   left: 294px;
   transition: ease-in-out 400ms left;
+}
+
+.upload-document-error {
+  color: $status-red;
 }
