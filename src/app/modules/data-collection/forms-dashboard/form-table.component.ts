@@ -112,7 +112,6 @@ export class FormTableComponent implements OnInit {
       debounceTime(300),
       distinctUntilChanged(),
       map(value => {
-        if (value['status']) value['status'] = this.statusArray.find(status => status.title === value['status']).value
         Object.keys(value).forEach(key => (value[key] === null || value[key] === '') && delete value[key]);
         return value;
       })
