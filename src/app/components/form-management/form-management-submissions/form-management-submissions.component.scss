@@ -26,6 +26,10 @@
     justify-content:center;
 }
 
+.card {
+  background-color: white;
+}
+
 .app-form-table {
     padding: 15px;
   
@@ -255,4 +259,52 @@
 
   .expanded-row {
     overflow: hidden;
+
+    .tabs {
+      display: flex;
+      margin: 0 0 15px 0;
+    }
+
+    .tab {
+      margin: 0 25px 0 0;
+      padding: 0;
+      color: $gray-color;
+      font: 700 12px/15px $nunito-sans;
+      border: none;
+      border-bottom: 2px solid transparent;
+      border-radius: 0;
+      background: transparent;
+  
+      &.tab--activated {
+        border-bottom: 2px solid $button-color;
+        color: $button-color;
+      }
+  
+      &:hover, &:focus, &:active {
+        border-bottom: 2px solid $hover-purple;
+        color: $hover-purple;
+      }
+    }
+  
+    .col-8 {
+      padding: 0 5px 0px 0px;
+    }
+    .col-4 {
+      padding: 0 0px 0px 5px;
+    }
+
+    .top-row {
+      padding: 5px 15px 25px 15px;
+    }
+
+    .form-history {
+      padding-right: 5px;
+      height: 100%;
+    }
+    
+    .missing-fields {
+      padding-left: 5px;
+      height: 300px;
+      overflow-y: scroll;
+    }
   }

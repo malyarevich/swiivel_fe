@@ -1,12 +1,75 @@
-<ng-content select="[analytics]"></ng-content>
-
 <div class="app-form-table">
-  <div class="app-form-table__header">
+  <div class="app-form-table__top">
     <div class="app-form-table__text">
       <sw-page-header>
         {{ form?.name }}
       </sw-page-header>
+      <sw-dropdown-select
+        class="status-btn"
+        [options]="statusesFriendlyNames"
+        #bulk="dropdown"
+        (selected)="copyLink($event, [form?.id])"
+      >
+        <sw-small-button
+          [ngClass]="{ 'icon-end': true }"
+          [class]="getStatusColor(status)"
+          [text]="getStatusTitle(status)"
+          [icon]="icons.CARET_DOWN"
+        ></sw-small-button>
+      </sw-dropdown-select>
+      <div class="action">
+          <svg width="12" height="6" viewBox="0 0 12 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M1.14 3C1.14 1.974 1.974 1.14 3 1.14H5.4V0H3C1.344 0 0 1.344 0 3C0 4.656 1.344 6 3 6H5.4V4.86H3C1.974 4.86 1.14 4.026 1.14 3ZM3.6 3.6H8.4V2.4H3.6V3.6ZM6.6 0H9C10.656 0 12 1.344 12 3C12 4.656 10.656 6 9 6H6.6V4.86H9C10.026 4.86 10.86 4.026 10.86 3C10.86 1.974 10.026 1.14 9 1.14H6.6V0Z" fill="#A4A4A4"/>
+          </svg>
+          Copy Link
+      </div>
+      <div class="action"
+        (click)="exportPDF.emit()"  
+      >
+          <svg width="11" height="9" viewBox="0 0 11 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="11" height="9">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M6.14258 5.91758V8.10508L10.1426 4.36758L6.14258 0.642578V2.76758C2.25508 3.30508 0.705078 5.96758 0.142578 8.64258C1.53008 6.76758 3.36758 5.91758 6.14258 5.91758Z" fill="white"/>
+            </mask>
+            <g mask="url(#mask0)">
+            <rect x="-2.85742" y="-2.35742" width="16" height="16" rx="3" fill="#A4A4A4"/>
+            </g>
+          </svg>            
+          Export PDF
+      </div>
+      <div class="action" 
+        (click)="inviteAccounts.emit()" 
+      >
+          <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4.8 0H3.2V3.2H0V4.8H3.2V8H4.8V4.8H8V3.2H4.8V0Z" fill="#909090"/>
+            </svg>            
+          Invite Accounts
+      </div>
+      <div class="app-form-table__top-buttons">
+          <div
+          class="app-form-table__top-button"
+        >
+          <sw-button 
+            [style]="'transparent'"
+            [color]="'#4350A2'"
+            [border]="'1px solid #4350A2'"
+            [padding]="'8px 13px'"
+            [routerLink]="['/view-form', form?.id]"
+          >Preview Form</sw-button>
+        </div>
+        <div
+            class="app-form-table__top-button"
+          >
+            <sw-button
+              [border]="'1px solid #4350A2'"
+              [padding]="'8px 13px'"
+              [routerLink]="['/form-constructor', form?.id]"
+            >Edit Form</sw-button>
+        </div>
+      </div>
     </div>
+  </div>
+  <div class="analytics">
+    <ng-content select="[analytics]"></ng-content>
   </div>
   <div class="app-form-table__table">
     <div class="app-form-table__header">
@@ -29,16 +92,37 @@
 
       <div class="app-form-table__controls">
         <div
+          *ngIf="unassignedDocuments"
+          class="app-form-table__controls-assign"
+        >
+          <span>{{ unassignedDocuments }} Documents are unassigned</span>
+          <sw-button 
+            [style]="'green'"
+            [border]="'1px solid #4350A2'"
+            [padding]="'1px 10px'"
+            [routerLink]="['/form-constructor', form?.id]"
+          >Assign</sw-button>
+        </div>
+        <div
           class="app-form-table__controls-button"
           data-e2e="createnewformbutton"
         >
-          <sw-button routerLink="/form-constructor">Create New Form</sw-button>
+          <sw-button 
+            [border]="'1px solid #4350A2'"
+            [padding]="'8px 13px'"
+            [routerLink]="['/form-constructor', form?.id]"
+          >Upload and Review</sw-button>
         </div>
         <div class="app-form-table__controls-bulk" data-e2e="bulkactions">
           <sw-dropdown-select
             [panelClass]="'app-form-table-dropdown-overlay'"
           >
-            <sw-button>
+            <sw-button
+              [style]="'transparent'"
+              [color]="'#4350A2'"
+              [border]="'1px solid #4350A2'"
+              [padding]="'8px 13px'"
+            >
               <span class="app-form-table__controls-bulk-btn-text"
                 >Bulk Actions</span
               >

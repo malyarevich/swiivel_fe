@@ -399,11 +399,47 @@
 <ng-template #tpl let-form>
   <tr class="expanded-row">
     <td [attr.colspan]="displayedColumns.length">
+      <div class="row top-row">
+        <div class="col-8">
+          <div class="card form-history"></div>
+        </div>
+        <div class="col-4">
+          <app-inside-missing-fields 
+            [missingFields]="missingFields"
+          class="card missing-fields"></app-inside-missing-fields>
+        </div>
+      </div>
+
+      <div class="tabs" data-e2e="alltabs">
+        <button
+          class="tab"
+          [ngClass]="{ 'tab--activated': activeTab === 'forms' }"
+          (click)="activeTab = 'forms'"
+        >
+          Forms
+        </button>
+        <button
+          class="tab"
+          [ngClass]="{ 'tab--activated': activeTab === 'documents' }"
+          (click)="activeTab = 'documents'"
+        >
+          Documents
+        </button>
+      </div>
+
       <sw-online-form
+        *ngIf="activeTab === 'forms'"
         [formId]="form.id"
         [isFormReviewMode]="true"
         [isMenuShow]="true"
       ></sw-online-form>
+
+      <div 
+        *ngIf="activeTab === 'documents'"
+        class="documents"
+      >
+        <app-inside-documents-view></app-inside-documents-view>
+      </div>
     </td>
   </tr>
 </ng-template>
