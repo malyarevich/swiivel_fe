@@ -35,7 +35,7 @@
     <span
       class="validation_icon"
       [ngClass]="{
-        validation_required: this.field.options.required && !isActive()
+        validation_required: this.field.options.required && isActive()
       }"
     >
       <i class="fas fa-asterisk fa-xs"></i>

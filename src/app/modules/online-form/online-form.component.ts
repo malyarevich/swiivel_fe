@@ -543,10 +543,26 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
   addControl(
     key: string,
     isRequired: boolean = false,
-    validators = null,
+    validators: ValidatorFn[] = [],
     defaultValue: string | boolean | number | object | object[] = "",
     isDisabled: boolean = false
   ): void {
+    isRequired = isDisabled ? false : isRequired;
+    let controlValidators: ValidatorFn[];
+    if (validators.length === 0 && !isRequired) {
+      controlValidators = [];
+    } else if (
+      validators.length > 0 &&
+      isRequired &&
+      !validators.includes(this.requiredValidator)
+    ) {
+      controlValidators = [].concat(validators).concat([this.requiredValidator]);
+    } else if (isRequired) {
+      controlValidators.push(this.requiredValidator);
+    } else {
+      controlValidators = validators;
+    }
+
     this.fg$.getValue().addControl(
       key,
       new FormControl(
@@ -559,7 +575,7 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
           disabled: isRequired ? false : isDisabled // || this.isViewMode$.getValue()
         },
         // isRequired ? validators : null
-        validators ? validators : isRequired ? this.requiredValidator : null
+        Validators.compose(controlValidators)
       )
     );
   }
@@ -696,7 +712,7 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
     //   arrayValidators.push(phoneNumberValidator);
     // }
 
-    if (field.options && field.options.required) {
+    if (field.options && field.options.required && !field.options.readonly) {
       arrayValidators.push(Validators.required);
     }
 
@@ -815,7 +831,7 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
             break;
           case fieldValidators.required:
             // console.log('options: ', field.options)
-            if (field.options.validators[key]) {
+            if (field.options.validators[key] && !field.options.readonly) {
               arrayValidators.push(Validators.required);
             }
             break;
@@ -834,7 +850,7 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
     body.forEach(row => {
       row.items.forEach(field => {
         const isRequired = false;
-        const validators = this.requiredValidator;
+        const validators = [this.requiredValidator];
         const defaultValue = false;
         const isDisabled = false;
         this.addControl(
@@ -860,15 +876,12 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
             ? []
             : "";
         if (field._id) {
-          const aValidators = this.getComposedValidatorsByField(field);
-          const validatorFn = !field.options.readonly
-            ? Validators.compose(aValidators)
-            : null;
+          const aValidators = !field.options.readonly ? this.getComposedValidatorsByField(field) : [];
           // console.log('validatorFn', validatorFn);
           this.addControl(
             field._id,
             field.options.required,
-            validatorFn,
+            aValidators,
             defaultValue,
             field.options.readonly
           );
@@ -1263,7 +1276,7 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
           );
       }
     } else {
-      console.log("goNext");
+      // console.log("goNext");
       this.goToNextStep();
     }
   }
