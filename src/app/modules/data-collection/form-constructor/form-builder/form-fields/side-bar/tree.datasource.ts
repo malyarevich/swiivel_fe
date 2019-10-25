@@ -314,14 +314,20 @@ export class TreeDataSource implements DataSource<any> {
     if (field.path) {
       let path = field.path.slice();
       let rootPaths = this.nodes.map((root: any) => root.name);
+      let wrapped = false;
       if (!rootPaths.includes(path[0])) {
-        path.shift();
+        wrapped = true;
       }
 
 
       let node = this.tree.treeToArray(this.tree).find(node => {
         if (!node.path) return false;
-        return node.path.join('') === path.join('');
+        if (node.path.join('') === path.join('')) return true;
+        if (wrapped) {
+          if (node.path.join('') === path.slice(1).join('')) return true;
+          if (node.path.slice(1).join('') === path.join('')) return true;
+        }
+        return false;
       });
       return node;
     }

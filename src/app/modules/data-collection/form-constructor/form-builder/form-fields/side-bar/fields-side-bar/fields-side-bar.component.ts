@@ -203,6 +203,8 @@ export class FieldsSideBarComponent implements OnInit, OnDestroy, AfterViewCheck
         let node = this.treeSource.findNodeByField(event.field);
         if (node) {
           node.isActive = false;
+        } else {
+          console.warn(`No field for deselect`, event);
         }
         this.cdr.markForCheck();
       }

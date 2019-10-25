@@ -6,6 +6,7 @@ import { Form } from "src/app/models/data-collection/form.model";
 import { Field } from "src/app/models/data-collection/field.model";
 import { FormBuilder, FormArray } from '@angular/forms';
 import { unescapeIdentifier } from '@angular/compiler';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 export const isSaved = (field: any) => {
   if (!field._id) return false;
   if (field.fields && field.fields.length > 0) {
@@ -271,7 +272,17 @@ export class SideBarService {
       }
     }
   }
-  moveField(event) {
+  moveField(event: CdkDragDrop<any>) {
+    if (event.container.id === event.previousContainer.id) {
+      let rootNames = this.form.workspace.map((root: any) => root.name);
+      let path = event.item.data.path.slice();
+      if (!rootNames.includes(path[0])) {
+        // path.u
+      }
+      let spaceParent = this.getFieldSpaceParent(event.item.data);
+      debugger;
+
+    }
     console.log(event);
   }
   addField(field, ancestors?, only?) {
