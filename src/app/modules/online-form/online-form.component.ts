@@ -14,7 +14,8 @@ import {
   FormGroup,
   FormControl,
   Validators,
-  AbstractControl
+  AbstractControl,
+  ValidatorFn
 } from "@angular/forms";
 import { BehaviorSubject, Observable, Subject, pipe, Subscription } from "rxjs";
 import { takeUntil } from "rxjs/operators";
@@ -155,7 +156,7 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
 
   formSubscriber(form: Form) {
     this.form$.next(form);
-    console.log('Form by BE: ', this.form$.getValue());
+    console.log("Form by BE: ", this.form$.getValue());
 
     if (this.isHaveSense()) {
       this.loadingProcess();
@@ -444,7 +445,7 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
   getFilteredSections(): IFormNavigationState[] {
     const activeMenuList: IFormNavigationState[] = [];
     // TODO: remove after create packetIntroduction
-    activeMenuList.push({ page: "packetIntroduction" });
+    // activeMenuList.push({ page: "packetIntroduction" });
     for (const page in this.form$.getValue().activeSections) {
       if (
         this.form$.getValue().activeSections[page] &&
@@ -542,7 +543,7 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
   addControl(
     key: string,
     isRequired: boolean = false,
-    validators = this.requiredValidator,
+    validators = null,
     defaultValue: string | boolean | number | object | object[] = "",
     isDisabled: boolean = false
   ): void {
@@ -557,8 +558,8 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
               : defaultValue,
           disabled: isRequired ? false : isDisabled // || this.isViewMode$.getValue()
         },
-        isRequired ? validators : null
-        // isRequired && !isDisabled ? validators : null
+        // isRequired ? validators : null
+        validators ? validators : isRequired ? this.requiredValidator : null
       )
     );
   }
@@ -683,21 +684,25 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
     return aFields;
   }
 
-  getComposedValidatorsByField(field) {
-    const arrayValidators = [];
-
-    if (
-      field.options &&
-      field.options.validators &&
-      field.options.validators.phone &&
-      field.options.validators.verifyPhone
-    ) {
-      arrayValidators.push(phoneNumberValidator);
-    }
+  getComposedValidatorsByField(field): ValidatorFn[] {
+    const arrayValidators: ValidatorFn[] = [];
+    // arrayValidators.push(Validators.required);
+    // if (
+    //   field.options &&
+    //   field.options.validators &&
+    //   field.options.validators.phone &&
+    //   field.options.validators.verifyPhone
+    // ) {
+    //   arrayValidators.push(phoneNumberValidator);
+    // }
 
     if (field.options && field.options.required) {
       arrayValidators.push(Validators.required);
     }
+
+    // arrayValidators.push(
+    //   minValueValidator(100)
+    // );
 
     // if (
     //   field.options &&
@@ -720,19 +725,9 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
     // }
 
     if (field.options && field.options.validators) {
-      console.log('field.options.validators:', field.options.validators);
+      // console.log("field.options.validators:", field.options.validators);
       Object.keys(field.options.validators).forEach(key => {
         switch (key) {
-          case fieldValidators.Alphabetic:
-            if (field.options.validators[key]) {
-              arrayValidators.push(alphabeticValidator);
-            }
-            break;
-          case fieldValidators.Alphanumeric:
-            if (field.options.validators[key]) {
-              arrayValidators.push(alphanumericValidator);
-            }
-            break;
           case fieldValidators.CurrencyCanada:
             if (field.options.validators[key]) {
               // arrayValidators.push(currencyCanadaValidator);
@@ -743,14 +738,35 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
               // arrayValidators.push(currencyUSValidator);
             }
             break;
+          case fieldValidators.Criteria:
+            if (field.options.validators[key]) {
+              field.options.validators[key].forEach(criteria => {
+                switch (criteria.title) {
+                  case fieldValidators.Alphabetic:
+                    arrayValidators.push(alphabeticValidator());
+                    break;
+                  case fieldValidators.Alphanumeric:
+                    arrayValidators.push(alphanumericValidator());
+                    break;
+                  case fieldValidators.Url:
+                    arrayValidators.push(urlValidator());
+                    break;
+
+                  default:
+                    console.log("unhandled criteria", criteria);
+                    break;
+                }
+              });
+            }
+            break;
           case fieldValidators.DecimalPlace:
             if (field.options.validators[key]) {
-              arrayValidators.push(numericValidator);
+              arrayValidators.push(numericValidator());
             }
             break;
           case fieldValidators.Email:
             if (field.options.validators[key]) {
-              arrayValidators.push(emailValidator);
+              arrayValidators.push(emailValidator());
             }
             break;
           case fieldValidators.Percentage:
@@ -758,15 +774,10 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
               arrayValidators.push();
             }
             break;
-          case fieldValidators.Url:
-            if (field.options.validators[key]) {
-              arrayValidators.push(urlValidator);
-            }
-            break;
           case fieldValidators.max:
             if (field.options.validators[key]) {
               arrayValidators.push(
-                maxValueValidator(field.options.validators.max)
+                maxValueValidator(field.options.validators.max as number)
               );
             }
             break;
@@ -780,11 +791,12 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
           case fieldValidators.min:
             if (field.options.validators[key]) {
               arrayValidators.push(
-                minValueValidator(field.options.validators.min)
+                minValueValidator(field.options.validators.min as number)
               );
             }
             break;
           case fieldValidators.minLength:
+            // console.log("minLength", field.options.validators);
             if (field.options.validators[key]) {
               arrayValidators.push(
                 Validators.minLength(field.options.validators.minLength)
@@ -796,7 +808,7 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
               field.options.validators[key] &&
               field.options.validators.verifyPhone
             ) {
-              arrayValidators.push(phoneNumberValidator);
+              arrayValidators.push(phoneNumberValidator());
             }
             break;
           case fieldValidators.verifyPhone:
@@ -814,7 +826,7 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
         }
       });
     }
-
+    // console.log('arrayValidators', arrayValidators);
     return arrayValidators;
   }
 
@@ -852,6 +864,7 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
           const validatorFn = !field.options.readonly
             ? Validators.compose(aValidators)
             : null;
+          // console.log('validatorFn', validatorFn);
           this.addControl(
             field._id,
             field.options.required,
@@ -1177,7 +1190,10 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   saveAndNextStep() {
-    if (this.isFormStatusChanged) {
+    if (
+      this.isFormStatusChanged &&
+      this.currentPosition$.getValue().page !== "packetIntroduction"
+    ) {
       const savingObj = {
         pagesPercents: this.pagesPercents$.getValue(),
         fieldListByPage: undefined,
@@ -1205,6 +1221,10 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
             error => {
               if (error.error.status === 0) {
                 this.formErrors$.next(error.error.errors);
+                Object.keys(this.fg$.getValue().controls).forEach(controlId => {
+                  this.fg$.getValue().controls[controlId].markAsDirty();
+                });
+                this.fg$.getValue().updateValueAndValidity();
               }
               this.sectionGroupFieldsErrors$.next(
                 this.composeSectionGroupFieldsErrors()
@@ -1229,6 +1249,10 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
             error => {
               if (error.error.status === 0) {
                 this.formErrors$.next(error.error.errors);
+                Object.keys(this.fg$.getValue().controls).forEach(controlId => {
+                  this.fg$.getValue().controls[controlId].markAsDirty();
+                });
+                this.fg$.getValue().updateValueAndValidity();
               }
               this.sectionGroupFieldsErrors$.next(
                 this.composeSectionGroupFieldsErrors()
@@ -1239,6 +1263,7 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
           );
       }
     } else {
+      console.log("goNext");
       this.goToNextStep();
     }
   }

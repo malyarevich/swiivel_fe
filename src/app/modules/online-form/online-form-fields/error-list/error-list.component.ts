@@ -1,6 +1,10 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input, OnChanges } from "@angular/core";
 import { FormGroup } from "@angular/forms";
-import { Field } from "src/app/models/data-collection/field.model";
+import {
+  Field,
+  fieldValidators
+} from "src/app/models/data-collection/field.model";
+import { string } from "prop-types";
 
 @Component({
   selector: "sw-error-list",
@@ -12,7 +16,18 @@ export class ErrorListComponent implements OnInit {
   @Input() field: Field;
   @Input() validationText: string;
 
+  fieldValidators = fieldValidators;
+
   constructor() {}
 
   ngOnInit() {}
+
+  getKeys(object): string[] {
+    // console.log(this.fg.controls[this.field._id].errors);
+    return Object.keys(object);
+  }
+
+  isCustomError(error): boolean {
+    return typeof error === "string";
+  }
 }

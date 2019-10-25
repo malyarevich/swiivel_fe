@@ -89,6 +89,7 @@ export const fieldValidators = {
   Percentage: 'Percentage',
   CurrencyUS: 'Currency US',
   CurrencyCanada: 'Currency Canada',
+  Criteria: 'criteria',
   phone: 'phone',
   verifyPhone: 'verifyPhone',
   minLength: 'minLength',
