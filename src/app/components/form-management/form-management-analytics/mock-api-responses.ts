@@ -4,7 +4,6 @@ export const mockAnalyticsDashboardResponse = {
         "status": "closed",
         "dashboard_block": {
             "round": {
-                "form_id": "5d8b6b1e8ffb08187f5745f7",
                 "name": "Round 2",
                 "start_date": "Oct 10, 2019",
                 "end_date": "Oct 15, 2019",
@@ -26,7 +25,7 @@ export const mockAnalyticsDashboardResponse = {
         "analytics": {
             "circle_graph": {
                 "total": 21,
-                "reviewed_completed": 0
+                "reviewed_completed": 10
             },
             "status_numbers": {
                 "not_started": 21,
