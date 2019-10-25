@@ -1,6 +1,16 @@
 @import "index";
 
 :host {
+  .left-loupe {
+    .input_text__input {
+      padding: 5px 10px 5px 22px;
+    }
+
+    .search-icon {
+      left: 0.75rem;
+    }
+  }
+
   .input_text {
     width: 100%;
     position: relative;
@@ -85,5 +95,5 @@
     padding: 0;
     font: 800 14px/20px $nunito-sans;
   }
- 
+
 }

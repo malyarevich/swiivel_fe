@@ -23,6 +23,7 @@ export class InputSuggestComponent implements ControlValueAccessor {
   @ViewChild('dropdown', {static: true}) dropdown: DropdownSelectComponent;
   @Input() readonly: boolean;
   @Input() options: any[] = [];
+  @Input() loupeSide = 'right';
   filteredOptions: any[];
   control = new FormControl();
 

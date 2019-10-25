@@ -1,4 +1,4 @@
-<div class="input_text" data-e2e="input_text">
+<div class="input_text" data-e2e="input_text" [ngClass]="{'left-loupe': loupeSide == 'left'}">
   <input
     [type]="_type"
     class="input_text__input"
@@ -12,5 +12,5 @@
   />
   <ng-content></ng-content>
   <i class="fa fa-times-circle"></i>
-  <i class="fas fa-search fa-xs"></i>
+  <i class="fas fa-search fa-xs search-icon"></i>
 </div>

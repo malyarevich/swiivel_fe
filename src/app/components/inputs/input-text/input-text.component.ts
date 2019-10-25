@@ -7,7 +7,7 @@ import {
   Input,
   Output,
   Renderer2,
-  ViewChild, 
+  ViewChild,
   ChangeDetectorRef} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { SizesEnum } from '@shared/sizes.enum';
@@ -44,6 +44,7 @@ export class InputTextComponent implements ControlValueAccessor {
     this._style = styleType;
   }
   @Input() readonly: boolean = false;
+  @Input() loupeSide = 'right';
   @Output() blur = new EventEmitter<any>();
 
   onChange: (value: any) => void;
