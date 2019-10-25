@@ -56,6 +56,7 @@ export class FormTableComponent implements OnInit {
 
   public colors = ColorsEnum;
   public icons = IconsEnum;
+  public totalAmount = 0;
   totalItems: number;
   showSpinner: boolean;
 
@@ -96,6 +97,7 @@ export class FormTableComponent implements OnInit {
 
   ngOnInit() {
     this._sm = new SelectionModel(true);
+    this.dataSource.$totalAmount.subscribe(amount => this.totalAmount = amount ? amount : 0);
     this.dataSource.formsListMetadata$.subscribe(metadata => {
       if (metadata.page > metadata.last_page) {
         this.params.page = 1;
