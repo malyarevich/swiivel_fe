@@ -39,7 +39,8 @@
   zoom: normal;
 }
 .div-inside {
-  border: 2px solid #000000;
+  border: 0.1rem solid #eee;
+  border-radius: 0.25rem;
   background-color: white;
   position: absolute;
   z-index: 499;
