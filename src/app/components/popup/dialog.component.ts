@@ -14,6 +14,7 @@ export class DialogComponent {
   @Input() title = 'Dialog title';
   @Input() action = 'Dialog button';
   @Input() style: string;
+  @Input() cancelAction = 'Cancel';
 
   @ViewChild('list', { static: false }) list;
   @ViewChild('holder', { static: false, read: ElementRef }) holder: ElementRef;
