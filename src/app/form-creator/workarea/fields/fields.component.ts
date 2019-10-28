@@ -1,5 +1,5 @@
 import { ArrayDataSource } from '@angular/cdk/collections';
-import {FlatTreeControl, NestedTreeControl} from '@angular/cdk/tree';
+import { FlatTreeControl, NestedTreeControl } from '@angular/cdk/tree';
 import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy, AfterViewInit, OnDestroy, ViewChild, AfterViewChecked } from '@angular/core';
 import { FieldService } from '@app/core/field.service';
 import { ApiService } from '@app/core/api.service';
@@ -33,12 +33,6 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
   }
 
   ngOnInit() {
-    this.service.sidebar.pipe(takeUntil(this.destroyed$)).subscribe(nodes => {
-      this.treeSource = nodes;
-      this.treeSource.changes.pipe(takeUntil(this.destroyed$)).subscribe(value => {
-        this.cdr.detectChanges();
-      });
-    });
     this.service.events$.pipe(takeUntil(this.destroyed$)).subscribe(event => {
       if (event.action === 'expand') {
         this.treeControl.expand(event.target);
@@ -54,7 +48,7 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
   }
 
   ngAfterViewChecked(): void {
-      this.cdr.detectChanges()
+    this.cdr.detectChanges()
   }
 
   ngAfterViewInit() {
@@ -91,7 +85,7 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
     }
   }
 
-  settingsToggle(node: any)  {
+  settingsToggle(node: any) {
     if (node) {
       node.showSettings = !node.showSettings;
       this.cdr.markForCheck();
