@@ -19,7 +19,9 @@
       <span class="text">
         {{ dropdownSubHeader ? item?.name : item?.title }}
       </span>
-      <i class="fas fa-times remove-btn" (click)="remove(item, $event)"></i>
+      <button *ngIf="style == 'filter'" class="remove-btn" (click)="remove(item, $event)">
+        <i class="fas fa-times"></i>
+      </button>
     </div>
   </div>
   <div class="dropdown_input_container__icon">
