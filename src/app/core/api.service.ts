@@ -12,10 +12,10 @@ import { HttpParams } from '@angular/common/http';
 
 export class ApiService {
 
-  constructor(protected http: HttpService) {}
+  constructor(protected http: HttpService) { }
 
   public login(data: LoginData): any {
-    return this.http.post('/login', {...data});
+    return this.http.post('/login', { ...data });
   }
   forgotPassword(email: string) {
     return this.http.post('/forgot-password', { email });
@@ -34,7 +34,7 @@ export class ApiService {
   }
 
   getFormsList(requestParams?: FormSearchParams): Observable<any> {
-    if (!requestParams) requestParams = {page: 1, limit: 150};
+    if (!requestParams) requestParams = { page: 1, limit: 150 };
     let params = new HttpParams();
     if ('filter' in requestParams) {
       for (const filter of Object.keys(requestParams.filter)) {
@@ -50,7 +50,7 @@ export class ApiService {
     if ('limit' in requestParams) {
       params = params.append('limit', requestParams.limit.toString());
     }
-    return this.http.get(`/proxy/form-builder/form-templates`, {params});
+    return this.http.get(`/proxy/form-builder/form-templates`, { params });
   }
 
   getFormsShortList(type: string = 'registration'): Observable<any> {
@@ -64,13 +64,13 @@ export class ApiService {
   updateFormTemplate(mongoId: string, form) {
     return this.http.put(`/proxy/form-builder/form-template/${mongoId}`, form);
   }
-  
+
   saveNewForm(form: any) {
     return this.http.post('/proxy/form-builder/form-template', form);
   }
 
   updateGeneralForm(form: any, id: string) {
-    return this.http.put(`/proxy/form-builder/form-template/${ id }`, form);
+    return this.http.put(`/proxy/form-builder/form-template/${id}`, form);
   }
 
   public download(url: string) {

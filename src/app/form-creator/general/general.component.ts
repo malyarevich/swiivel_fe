@@ -57,7 +57,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
         this.dataSource.filter('');
       }
     })
-    this.formCreatorService.formTemplate$.pipe(
+    this.formCreatorService.form$.pipe(
       takeUntil(this.destoyer$)
     ).subscribe(formTemplate => {
       console.log('Form Template', formTemplate)
@@ -85,7 +85,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
   }
 
   nextStep(): void {
-    if (!this.form.valid) return ;
+    if (!this.form.valid) return;
 
     this.saveForm();
     this.stepperService.stepper = 'next';
@@ -99,8 +99,8 @@ export class GeneralComponent implements OnInit, OnDestroy {
     }
     newForm.name = this.form.get('name').value;
     newForm.type = this.form.get('type').value[0].value;
-    if (this.formCreatorService.formId) {
-      this.api.updateGeneralForm(newForm, this.formCreatorService.formId).pipe(
+    if (this.formCreatorService.form.has('_id')) {
+      this.api.updateGeneralForm(newForm, this.formCreatorService.form.get('_id').value).pipe(
         takeUntil(this.destoyer$)
       ).subscribe(data => {
 
@@ -110,7 +110,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
         takeUntil(this.destoyer$)
       ).subscribe(data => {
         if (data) {
-          this.formCreatorService.formId = data._id;
+          this.formCreatorService.form = data;
           sessionStorage.setItem('newForm', JSON.stringify(data));
         }
       });

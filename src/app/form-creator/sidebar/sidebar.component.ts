@@ -26,44 +26,10 @@ export class SidebarComponent implements OnInit {
     consent: SidebarConsentComponent,
     tac: SidebarTermsConditionsComponent
   }
-  // treeControl = new NestedTreeControl<any>(node => node.fields);
-  // checklistSelection = new SelectionModel<any>(true);
-  // treeSource = new TreeDataSource();
+
   expandedSection: string;
   sections: FormGroup;
   expanded: boolean = false;
-  // delFieldName: string;
-  // delInput: FormControl = new FormControl(null);
-  // ref: any;
-  // @ViewChild('deletePop', { static: false }) deletePop;
-
-  // sidebarFields = [];
-  // sidebarOptions = {
-  //   idField: 'mongo_id',
-  //   childrenField: 'fields',
-  //   displayField: 'name',
-  //   useCheckbox: true,
-  //   allowDrop: false,
-  //   allowDrag: true,
-  //   actionMapping: {
-  //     mouse: {
-  //       checkboxClick: (tree, node: TreeNode, $event) => {
-  //         TREE_ACTIONS.TOGGLE_SELECTED(tree, node, $event);
-  //         if (node.isSelected) {
-  //           if (node.isRoot) {
-  //             node.expandAll();
-  //           }
-  //           this.service.addField(node);
-  //         } else {
-  //           if (node.isRoot) {
-  //             node.collapseAll();
-  //           }
-  //           this.service.removeField(node);
-  //         }
-  //       }
-  //     }
-  //   }
-  // };
 
   constructor(private service: FormCreatorService, private fb: FormBuilder, private api: ApiService, private popup: Popup) {
     this.service.section$.subscribe(section => {

@@ -45,14 +45,14 @@ export class FormCreatorComponent implements OnInit {
   };
   workarea: string;
   sections = [
-    {name: 'Packet Introduction', workarea: 'intro', component: SidebarIntroComponent, active: true, expanded: true},
-    {name: 'Form Fields', workarea: 'fields', component: SidebarFieldsComponent, active: false, expanded: false},
-    {name: 'Additional Documents', workarea: 'addDocs', component: SidebarDocumentsFormsComponent, active: false, expanded: false},
-    {name: 'CONSENT', workarea: 'consent', component: SidebarConsentComponent, active: false, expanded: false},
-    {name: 'TUITION CONTRACT', workarea: '', component: null, active: false, expanded: false},
-    {name: 'PAYMENT SETTINGS', workarea: '', component: null, active: false, expanded: false},
-    {name: 'TERMS AND CONDITIONS', workarea: 'tac', component: SidebarTermsConditionsComponent, active: false, expanded: false},
-    {name: 'FORM PAYMENT', workarea: '', component: null, active: false, expanded: false},
+    { name: 'Packet Introduction', workarea: 'intro', component: SidebarIntroComponent, active: true, expanded: true },
+    { name: 'Form Fields', workarea: 'fields', component: SidebarFieldsComponent, active: false, expanded: false },
+    { name: 'Additional Documents', workarea: 'addDocs', component: SidebarDocumentsFormsComponent, active: false, expanded: false },
+    { name: 'CONSENT', workarea: 'consent', component: SidebarConsentComponent, active: false, expanded: false },
+    { name: 'TUITION CONTRACT', workarea: '', component: null, active: false, expanded: false },
+    { name: 'PAYMENT SETTINGS', workarea: '', component: null, active: false, expanded: false },
+    { name: 'TERMS AND CONDITIONS', workarea: 'tac', component: SidebarTermsConditionsComponent, active: false, expanded: false },
+    { name: 'FORM PAYMENT', workarea: '', component: null, active: false, expanded: false },
   ];
   data;
   form_id;
@@ -68,26 +68,23 @@ export class FormCreatorComponent implements OnInit {
     private api: ApiService,
     private cdr: ChangeDetectorRef) {
 
-   }
+  }
 
-   ngOnDestroy() {
-     this.destroyed$.next(true);
-     this.destroyed$.complete();
-   }
+  ngOnDestroy() {
+    this.destroyed$.next(true);
+    this.destroyed$.complete();
+  }
 
 
   ngOnInit() {
     this.route.paramMap.pipe(takeUntil(this.destroyed$)).subscribe(params => {
       if (params.has('mongo_id')) {
         console.info(`Edit form with ID ${params.get('mongo_id')}`);
-        this.api.getFormTemplate(params.get('mongo_id')).subscribe(v => {
-          console.log('form creator', v)
-          this.form_id = params.get('mongo_id');
-          if (v) {
-              this.service.formId = params.get('mongo_id');
-              this.service.formTemplate = v;
-              this.cdr.detectChanges()
-            }
+        this.api.getFormTemplate(params.get('mongo_id')).subscribe(form => {
+          if (form) {
+            this.service.form = form;
+            this.cdr.detectChanges()
+          }
           this.sections.forEach((section) => {
             if (section.active === true && section.expanded === true) {
               this.switchWorkarea(section.workarea);
@@ -95,6 +92,7 @@ export class FormCreatorComponent implements OnInit {
             }
           });
           this.switchWorkarea(this.sections[0].workarea);
+          // });
         });
       } else {
         // this.service.createForm(this.defaults);
