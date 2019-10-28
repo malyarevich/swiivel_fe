@@ -1,67 +1,38 @@
 export const customTable = {
-  header: ["Mathematic", "Art", "Music", "Leadership", "Woodshop"],
-  body: [
+  people: [
     {
-      label: "Charlotte Wheeler",
-      items: [
-        {
-          _id: "custom_table__A1"
-        },
-        {
-          _id: "custom_table__A2"
-        },
-        {
-          _id: "custom_table__A3"
-        },
-        {
-          _id: "custom_table__A4"
-        },
-        {
-          _id: "custom_table__A5"
-        }
-      ]
+      id: 'people0',
+      title: 'Charlotte Wheeler'
     },
-
     {
-      label: "Jerome Wheeler",
-      items: [
-        {
-          _id: "custom_table__B1"
-        },
-        {
-          _id: "custom_table__B2"
-        },
-        {
-          _id: "custom_table__B3"
-        },
-        {
-          _id: "custom_table__B4"
-        },
-        {
-          _id: "custom_table__B5"
-        }
-      ]
+      id: 'people1',
+      title: 'Jerome Wheeler'
     },
-
     {
-      label: "Floyd Wheeler",
-      items: [
-        {
-          _id: "custom_table__C1"
-        },
-        {
-          _id: "custom_table__C2"
-        },
-        {
-          _id: "custom_table__C3"
-        },
-        {
-          _id: "custom_table__C4"
-        },
-        {
-          _id: "custom_table__C5"
-        }
-      ]
+      id: 'people2',
+      title: 'Floyd Wheeler'
+    }
+  ],
+  subjects: [
+    {
+      id: 'subject0',
+      title: 'Mathematic'
+    },
+    {
+      id: 'subject1',
+      title: 'Art'
+    },
+    {
+      id: 'subject2',
+      title: 'Music'
+    },
+    {
+      id: 'subject3',
+      title: 'Leadership'
+    },
+    {
+      id: 'subject4',
+      title: 'Woodshop'
     }
   ]
 };
