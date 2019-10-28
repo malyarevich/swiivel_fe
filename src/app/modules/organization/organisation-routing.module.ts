@@ -8,6 +8,10 @@ import { CreatorHeaderComponent } from './components/creator-header/creator-head
 export const routes: Routes = [
   {
     path: '',
+    redirectTo: 'dashboard'
+  },
+  {
+    path: 'dashboard',
     component: LayoutComponent,
     children: dashboardRoutes,
   },
