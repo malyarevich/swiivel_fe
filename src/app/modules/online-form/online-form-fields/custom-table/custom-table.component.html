@@ -1,38 +1,75 @@
 <h2 class="content_section__section_title">
   {{ tableTitle }}
 </h2>
-
-<div class="custom_table" [formGroup]="fg">
-  <div class="custom_table__header">
-    <div class="custom_table__text custom_table__caption"></div>
-    <div
-      class="custom_table__text custom_table__caption"
-      *ngFor="let caption of table.header"
-    >
-      {{ caption }}
-    </div>
-  </div>
-  <div class="custom_table__body">
-    <ng-container *ngFor="let row of table.body; let i = index">
-      <div
-        class="custom_table__row"
-        [ngClass]="{ 'custom_table__row--error': isError(i) }"
-      >
-        <div
-          class="custom_table__text custom_table__label"
-          [ngClass]="{ 'custom_table__text--error': i == 1 }"
-        >
-          {{ row.label }}
+<!-- Mobile First -->
+<form [formGroup]="fg">
+  <div class="custom_table custom_table--mobile">
+    <ng-container *ngFor="let people of table.people; let i = index">
+      <div class="custom_table__header">
+        <div class="custom_table__text custom_table__caption">
+          {{ people.title }}
         </div>
-        <div class="custom_table__field" *ngFor="let item of row.items">
-          <sw-input-checkbox
-            [formControlName]="item._id"
-            [isActive]="isActive(item)"
+      </div>
+      <div class="custom_table__body">
+        <ng-container *ngFor="let subject of table.subjects">
+          <div
+            class="custom_table__row"
+            [ngClass]="{ 'custom_table__row--error': isError(i) }"
           >
-            <span class="label"></span>
-          </sw-input-checkbox>
-        </div>
+            <div
+              class="custom_table__text custom_table__label"
+              [ngClass]="{ 'custom_table__text--error': isError(i) }"
+            >
+              {{ subject.title }}
+            </div>
+            <div class="custom_table__field">
+              <sw-input-checkbox
+                [formControlName]="people.id + '__' + subject.id"
+              >
+                <!-- [isActive]="isActive(item)" -->
+                <!-- <span class="label"></span> -->
+              </sw-input-checkbox>
+            </div>
+          </div>
+        </ng-container>
       </div>
     </ng-container>
   </div>
-</div>
+  <!-- Large Version -->
+  <div class="custom_table custom_table--lg">
+    <div class="custom_table__header">
+      <div class="custom_table__text custom_table__caption"></div>
+      <div
+        class="custom_table__text custom_table__caption"
+        *ngFor="let subject of table.subjects"
+      >
+        {{ subject.title }}
+      </div>
+    </div>
+    <div class="custom_table__body">
+      <ng-container *ngFor="let people of table.people; let i = index">
+        <div
+          class="custom_table__row"
+          [ngClass]="{ 'custom_table__row--error': isError(i) }"
+        >
+          <div
+            class="custom_table__text custom_table__label"
+            [ngClass]="{ 'custom_table__text--error': isError(i) }"
+          >
+            {{ people.title }}
+          </div>
+          <div
+            class="custom_table__field"
+            *ngFor="let subject of table.subjects"
+          >
+            <sw-input-checkbox
+              [formControlName]="people.id + '__' + subject.id"
+            >
+              <span class="label"></span>
+            </sw-input-checkbox>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</form>

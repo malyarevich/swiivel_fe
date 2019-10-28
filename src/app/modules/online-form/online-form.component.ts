@@ -849,14 +849,14 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   initCustomTable(body) {
-    body.forEach(row => {
-      row.items.forEach(field => {
+    body.people.forEach(people => {
+      body.subjects.forEach(subject => {
         const isRequired = false;
         const validators = [this.requiredValidator];
         const defaultValue = false;
         const isDisabled = false;
         this.addControl(
-          field._id,
+          `${people.id}__${subject.id}`,
           isRequired,
           validators,
           defaultValue,
@@ -903,7 +903,7 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
         }
       });
     }
-    this.initCustomTable(customTable.body);
+    this.initCustomTable(customTable);
   }
 
   initPacketIntroductionFormControls() {

@@ -4,12 +4,26 @@
   border: 0.1rem solid rgba(199, 202, 223, 0.8);
   box-sizing: border-box;
   border-radius: 0.5rem;
+  display: none;
   // display: grid;
   // grid-template-rows: repeat(auto-fill);
   // grid-template-columns: minmax(10rem, 4fr) 8fr;
   padding: 0.85rem;
-  display: grid;
   grid-row-gap: 0.1rem;
+
+  &--mobile {
+    display: grid;
+  }
+
+  @include media-breakpoint-up(xl) {
+    &--mobile {
+      display: none;
+    }
+
+    &--lg {
+      display: grid;
+    }
+  }
 
   &__header {
     background: #FFF6D8;
@@ -19,7 +33,7 @@
     grid-column-gap: 1rem;
     grid-row-gap: 1rem;
     grid-template-rows: 3rem;
-    grid-template-columns: minmax(10rem, 4fr) repeat(auto-fit, minmax(10rem, 1fr));
+    grid-template-columns: minmax(8rem, 3fr) repeat(auto-fit, minmax(6rem, 1fr));
   }
 
   &__body {
@@ -37,7 +51,7 @@
     grid-column-gap: 1rem;
     grid-row-gap: 1rem;
     grid-template-rows: 3rem;
-    grid-template-columns: minmax(10rem, 4fr) repeat(auto-fit, minmax(10rem, 1fr));
+    grid-template-columns: minmax(8rem, 3fr) repeat(auto-fit, minmax(6rem, 1fr));
 
     &--error {
       background: #FFF3F3;
