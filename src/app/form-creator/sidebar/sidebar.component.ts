@@ -2,12 +2,11 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output
 import { FormCreatorService } from '../form-creator.service';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { ApiService } from '@app/core/api.service';
-import { TREE_ACTIONS, TreeNode } from 'angular-tree-component';
 import { Popup } from '@app/core/popup.service';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { TreeDataSource } from '../tree.datasource';
 import { SelectionModel } from '@angular/cdk/collections';
-import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 import { SidebarDocumentsFormsComponent } from './documents-forms.component';
 import { SidebarConsentComponent } from './consent.component';
@@ -83,7 +82,7 @@ export class SidebarComponent implements OnInit {
   }
 
   hasChild(_: number, node) {
-    console.log(`hasChild` ,_ ,  node);
+    console.log(`hasChild`, _, node);
     return false;
   }
 

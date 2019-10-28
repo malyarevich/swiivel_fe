@@ -4,7 +4,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
-import { TreeModule } from 'angular-tree-component';
 
 import { AppComponent } from './app.component';
 
@@ -37,7 +36,6 @@ import { ErrorsListTooltipComponent } from '@app/online-form/errors-list/errors-
     ErrorsListTooltipComponent
   ],
   imports: [
-    TreeModule.forRoot(),
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
@@ -56,7 +54,7 @@ import { ErrorsListTooltipComponent } from '@app/online-form/errors-list/errors-
     AuthGuard,
     AuthService,
     FieldService,
-    { provide: APP_INITIALIZER, useFactory: onInit, multi: true, deps: [AuthService, HttpService]},
+    { provide: APP_INITIALIZER, useFactory: onInit, multi: true, deps: [AuthService, HttpService] },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
