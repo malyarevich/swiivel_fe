@@ -3,7 +3,7 @@ import { Component, OnInit, ChangeDetectionStrategy, ViewChild, ChangeDetectorRe
 import { FormControl, FormBuilder } from '@angular/forms';
 import { ApiService } from '@app/core/api.service';
 import { FormCreatorService } from '../form-creator.service';
-import {CdkDragDrop, moveItemInArray, transferArrayItem, CdkDragExit} from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray, transferArrayItem, CdkDragExit } from '@angular/cdk/drag-drop';
 import { TreeDataSource, CHILDREN_SYMBOL } from '../tree.datasource';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Popup } from '@app/core/popup.service';
@@ -23,12 +23,12 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
   filterValue: string = null;
   filterControl = new FormControl();
   treeSource = new TreeDataSource('Fields');
-  treeControl = new NestedTreeControl(node => node[CHILDREN_SYMBOL]);
+  treeControl = new NestedTreeControl((node: any) => node.fields);
   delFieldName: string;
   delInput: FormControl = new FormControl(null);
   ref: any;
   destroyed$ = new Subject();
-  @ViewChild('filter', { static: false}) filterNames;
+  @ViewChild('filter', { static: false }) filterNames;
   @ViewChild('deletePop', { static: false }) deletePop;
 
   constructor(
@@ -38,7 +38,7 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
     private popup: Popup,
     private cdr: ChangeDetectorRef,
     private route: ActivatedRoute,
-    ) {
+  ) {
 
   }
 
@@ -51,10 +51,18 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
   }
 
   ngOnInit() {
+    this.service.sidebar.subscribe((sidebar) => {
+      this.treeSource.nodes = sidebar;
+      this.cdr.markForCheck();
+    });
+    this.treeControl.getDescendants = (dataNode) => {
+      return dataNode.fields;
+    }
     this.route.paramMap.subscribe(params => {
-      this.treeSource.changes.pipe(takeUntil(this.destroyed$)).subscribe(value => {
-        this.cdr.markForCheck();
-      })
+      this.treeSource.activeFields$.subscribe((fields) => {
+        this.treeControl.dataNodes = fields;
+      });
+
       if (params.has('mongo_id')) {
         this.treeControl = new NestedTreeControl<any>(node => {
           let children = node[CHILDREN_SYMBOL];
@@ -62,20 +70,11 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
         });
         this.service.formTemplate$.pipe(takeUntil(this.destroyed$)).subscribe(value => {
           if (value) {
-            this.treeSource.build(value.fields);
+            this.treeSource.nodes = value.fields;
             this.service.sidebar = this.treeSource;
             this.cdr.markForCheck();
           }
         })
-      } else {
-        this.api.getSidebarFields().pipe(takeUntil(this.destroyed$)).subscribe((fields) => {
-          this.treeControl = new NestedTreeControl<any>(node => {
-            let children = node[CHILDREN_SYMBOL];
-            return children;
-          });
-          this.treeSource.build(fields);
-          this.service.sidebar = this.treeSource;
-        });
       }
     });
 
@@ -90,7 +89,7 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
     });
   }
   ngAfterViewChecked(): void {
-      this.cdr.detectChanges()
+    this.cdr.detectChanges()
   }
 
   hasChild = (_: number, node: any) => !!node[CHILDREN_SYMBOL] && node[CHILDREN_SYMBOL].length > 0;
@@ -113,21 +112,14 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
     return node.formVisible;
   }
 
-
   drop(event: CdkDragDrop<any>) {
-
-    let node = event.item.data;
-    if (event.container.id !== 'sidebar-list') {
-      if (!node.isActive) {
-        if (node.type === 113 || node.type === 114) {
-          this.toggleParentNode(node);
-        } else {
-          this.toggleNode(node);
-        }
-      }
+    if (event.container.id === 'sidebar-list') {
+      this.service.removeField(event.item.data);
+    } else {
+      this.service.moveField(event);
     }
-
   }
+
 
   onExit(event: CdkDragExit<any>) {
     console.log(event)
@@ -173,66 +165,43 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
 
   shouldRender(node) {
     if (!this.filterControl.value) return true;
-    return  this.filterControl.value && node.name.toString().toLowerCase().startsWith(this.filterControl.value);
+    return this.filterControl.value && node.name.toString().toLowerCase().startsWith(this.filterControl.value);
+  }
+
+  toggleExpand(node) {
+    node.isExpanded = !node.isExpanded;
+    if (node.isExpanded) {
+      this.treeControl.collapseDescendants(node);
+    } else {
+      this.treeControl.expandDescendants(node);
+    }
   }
 
   toggleParentNode(node: any): void {
-    let children = this.treeSource.getParentChildren(node);
-    if (this.descendantsAllSelected(node)) {
-      node.isActive = false;
-    } else if (this.descendantsPartiallySelected(node)) {
-      node.isActive = false;
-    } else {
-      node.isActive = true;
-      children = this.treeSource.getChildren(node);
-    }
-    for (let child of children) {
-      child.isActive = node.isActive;
-
-    }
-
+    this.treeSource.toggle(node);
     if (node.isActive) {
-      if (!node.isExpanded) {
+      this.service.addField(node);
+      if (!this.treeControl.isExpanded(node)) {
         this.treeControl.expandDescendants(node);
       }
     } else {
-      if (node.isExpanded) {
+      this.service.removeField(node);
+      if (this.treeControl.isExpanded(node)) {
         this.treeControl.collapseDescendants(node);
       }
     }
-    this.treeSource.refresh();
+    node.isExpanded = this.treeControl.isExpanded(node);
+    this.cdr.markForCheck();
   }
 
-  toggleNode(node: any): void {
-    const ancestors = this.treeSource.getAncestors(node);
-    node.isActive = !node.isActive;
-    for (let ancestor of ancestors) {
-      if (node.isActive) {
-        if (ancestor.type && (ancestor.type === 113 || ancestor.type === 114)) {
-          ancestor.isActive = true;
-          this.service.event = {action: 'expand', target: ancestor};
-        }
-      } else {
-        if (!this.descendantsPartiallySelected(ancestor)) {
-          ancestor.isActive = false;
-          this.treeControl.collapse(ancestor);
-          this.service.event = {action: 'collapse', target: ancestor};
-        }
-      }
+  nodeIsChecked(node) {
+    if (!node.isActive) return false;
+    if (node.type === 113 || node.type === 114) {
+      const isChecked = node.isActive === true && Array.from(this.treeSource.tree.treeIterator(node)).every((field: any) => field.isActive);
+      return isChecked;
+    } else {
+      return node.isActive;
     }
-    this.treeSource.refresh();
-  }
-
-  descendantsAllSelected(node: any): boolean {
-    const descendants = this.treeControl.getDescendants(node);
-    const allSelected =  descendants.every(node => node['isActive']);
-    return allSelected;
-  }
-
-  descendantsPartiallySelected(node: any): boolean {
-    const descendants = this.treeControl.getDescendants(node);
-    const result = descendants.some(node => node['isActive']);
-    return result && !this.descendantsAllSelected(node);
   }
 
 

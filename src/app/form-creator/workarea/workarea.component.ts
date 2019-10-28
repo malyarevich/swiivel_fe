@@ -32,7 +32,7 @@ export class WorkareaComponent implements OnInit {
   }
 
   nextStep() {
-    this.api.updateFormTemplate(this.service.formId, this.service.formTemplate).subscribe(data => {
+    this.api.updateFormTemplate(this.service.form.get('_id').value, this.service.form.value).subscribe(data => {
       // console.log('save ddata', data)
     });
     this.stepperService.stepper = 'next';
