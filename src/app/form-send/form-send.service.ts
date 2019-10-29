@@ -14,8 +14,16 @@ export class FormSendService {
     return this.periodsSubject.asObservable();
   }
 
+  get $selectedPeriods() {
+    return this.currentPeriods.asObservable();
+  }
+
   get selectedPeriods() {
     return this.currentPeriods.getValue();
+  }
+
+  set selectedPeriods(periods) {
+    this.currentPeriods.next(periods);
   }
 
   constructor(
@@ -40,8 +48,17 @@ export class FormSendService {
           }
         }
       }
-      // this.loadingSubject.next(false);
     });
+  }
+
+  togglePeriods(item: any, e: boolean): void {
+    let tmp = this.selectedPeriods;
+    if (e === true) {
+      tmp.push(item);
+    } else if (e === false) {
+      tmp.splice(tmp.findIndex(i => (i.id === item.id)), 1);
+    }
+    this.selectedPeriods = tmp;
   }
 
   isSelectedPeriod(id): boolean {

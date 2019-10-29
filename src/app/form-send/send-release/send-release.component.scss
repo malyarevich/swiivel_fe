@@ -59,6 +59,9 @@
       margin-bottom: 30px;
     }
   }
+  div.list-viewport {
+    overflow: auto;
+  }
   .list-viewport {
     width: 100%;
     min-height: 250px;

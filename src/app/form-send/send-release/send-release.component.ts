@@ -10,6 +10,7 @@ import { FormSendService } from '../form-send.service';
 export class SendReleaseComponent implements OnInit {
 
   public periodsList: any = [];
+  public selectedPeriods: any = [];
   public periodsFilter: FormControl = new FormControl([]);
 
   constructor(
@@ -18,7 +19,10 @@ export class SendReleaseComponent implements OnInit {
   ) {
     this.formSendService.$periodsList.subscribe(val => {
       this.periodsList = val;
-      console.log('PERIODS LIST', this.periodsList);
+      this.cdr.markForCheck();
+    });
+    this.formSendService.$selectedPeriods.subscribe(val => {
+      this.selectedPeriods = val;
       this.cdr.markForCheck();
     });
   }
@@ -40,6 +44,19 @@ export class SendReleaseComponent implements OnInit {
     }
     return res;
   }
+
+  getPeriodsLength() {
+    return `(${this.periodsList.length})`;
+  }
+
+
+  checkboxAction(item, e) {
+    this.formSendService.togglePeriods(item, e);
+
+    
+    this.cdr.markForCheck();
+  }
+
 
 
 }

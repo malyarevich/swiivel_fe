@@ -22,15 +22,15 @@
             <i class="icon fas fa-search"></i>
           </div>
           <div class="period-title">
-            <!-- recent periods {{ getPeriodsLength() }} -->
+            recent periods {{ getPeriodsLength() }}
           </div>
           <cdk-virtual-scroll-viewport itemSize="50" class="list-viewport" data-e2e="forms-viewport">
             <div *cdkVirtualFor="let item of periodsList" class="list-item" data-e2e="form-item"
               [class.selected]="isSelectedPeriod(item?.id)">
               <div class="item-title">
-                <!-- <sw-input-checkbox [check]="isSelectedPeriod(item?.id)" (checked)="checkboxAction(item, $event)">
+                <sw-input-checkbox [check]="isSelectedPeriod(item?.id)" (checked)="checkboxAction(item, $event)">
                   <span class="label">{{ item.name }}</span>
-                </sw-input-checkbox> -->
+                </sw-input-checkbox>
               </div>
               <div class="splits">
                 {{ getSplits(item) }}
@@ -42,25 +42,21 @@
           <div class="list-title">
             Chosen Periods
           </div>
-          <!-- <cdk-virtual-scroll-viewport itemSize="50" class="list-viewport" data-e2e="forms-viewport">
-            <ng-container *cdkVirtualFor="let item of dataSource">
-              <div *ngIf="isChecked(item?.id)" class=" list-item" data-e2e="form-item">
-                <div class="item-title">
-                  {{ item.name }}
-                  <div class="action" (click)="checkboxAction(item, false)">
-                    <i class="fas fa-times"></i>
-                  </div>
-                </div>
-                <div class="splits">
-                  {{ getSplits(item) }}
+          <div class="list-viewport" data-e2e="forms-viewport">
+            <div *ngFor="let item of selectedPeriods" class="list-item" data-e2e="form-item">
+              <div class="item-title">
+                {{ item.name }}
+                <div class="action" (click)="checkboxAction(item, false)">
+                  <i class="fas fa-times"></i>
                 </div>
               </div>
-            </ng-container>
-
-          </cdk-virtual-scroll-viewport> -->
+              <div class="splits">
+                {{ getSplits(item) }}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
-
