@@ -27,13 +27,18 @@ export class FormTableComponent implements OnInit {
 
   // TABS
   public statusArray = [
-    { title: 'All', value: null },
     { title: 'Active', value: 'active' },
-    { title: 'Drafts', value: 'draft' },
+    { title: 'Draft', value: 'draft' },
     { title: 'In Review', value: 'review' },
     { title: 'Closed', value: 'closed' },
     { title: 'Archived', value: 'archived' },
   ];
+
+  public typeArray = [
+    { title: 'Registration', value: 'registration' },
+    { title: 'Application', value: 'application' },
+  ];
+
   public activeTab = this.statusArray[0];
 
   // BULK BUTTON
@@ -53,6 +58,7 @@ export class FormTableComponent implements OnInit {
   public popupActionBtnText = '';
   public popupContentArray: { title: string, id?: any }[] = [];
   public canLabelsRemove = false;
+  public isPopupOpen = false;
 
   public colors = ColorsEnum;
   public icons = IconsEnum;
@@ -74,7 +80,7 @@ export class FormTableComponent implements OnInit {
   sort = ['name', true];
   currentPage = 1;
 
-  statusesOptions: string[] = ['Active', 'Drafts', 'In Review', 'Closed', 'Archived'];
+  statusesOptions: string[] = ['Active', 'Draft', 'In Review', 'Closed', 'Archived'];
   _sm: SelectionModel<any>;
 
   constructor(
@@ -117,6 +123,14 @@ export class FormTableComponent implements OnInit {
       })
     ).subscribe(value => {
       this.params.filter = { ...value };
+
+      if (value.status && value.status[0]) {
+        value.status = value.status[0].value;
+      }
+
+      if (value.type && value.type[0]) {
+        value.type = value.type[0].value;
+      }
 
       this.dataSource.loadFormsList(this.params);
     });
@@ -227,6 +241,7 @@ export class FormTableComponent implements OnInit {
   }
 
   bulkAction(selectedIndex) {
+    this.isPopupOpen = true;
     switch (this.bulkOptions[selectedIndex]) {
       case 'Share':
         this.openSharePopup();
@@ -257,6 +272,7 @@ export class FormTableComponent implements OnInit {
     }
     this._sm.clear();
     this.disabledBulkBtn = true;
+    this.isPopupOpen = false;
   }
 
   popupSetActionBtnTextAndLogicRemoved(type: string) {
@@ -283,6 +299,7 @@ export class FormTableComponent implements OnInit {
   }
 
   onShareLink(form): void {
+    this.isPopupOpen = true;
     this._sm.clear();
     this.disabledBulkBtn = true;
     this.openSharePopup(form);

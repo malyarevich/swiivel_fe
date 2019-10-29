@@ -34,7 +34,9 @@ export class ApiService {
   }
 
   getFormsList(requestParams?: FormSearchParams): Observable<any> {
-    if (!requestParams) requestParams = {page: 1, limit: 150};
+    if (!requestParams) {
+      requestParams = {page: 1, limit: 150};
+    }
     let params = new HttpParams();
     if ('filter' in requestParams) {
       for (const filter of Object.keys(requestParams.filter)) {
@@ -64,7 +66,7 @@ export class ApiService {
   updateFormTemplate(mongoId: string, form) {
     return this.http.put(`/proxy/form-builder/form-template/${mongoId}`, form);
   }
-  
+
   saveNewForm(form: any) {
     return this.http.post('/proxy/form-builder/form-template', form);
   }

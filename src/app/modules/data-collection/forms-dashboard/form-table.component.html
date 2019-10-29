@@ -33,7 +33,7 @@
       <div class="app-form-table__tabs" data-e2e ="alltabs">
         <button *ngFor="let tab of statusArray" class="app-form-table__tab"
           [ngClass]="{'app-form-table__tab--activated': activeTab == tab}" (click)="clickTab(tab)">
-          {{tab.title}}
+          {{ tab.title }}
         </button>
       </div>
     </div>
@@ -80,7 +80,14 @@
                     </div>
                   </div>
                   <div class="header_container__filter">
-                    <sw-input-text class="filter-field" formControlName="type"></sw-input-text>
+                    <sw-dropdown-input
+                      formControlName="type"
+                      [style]="'table-header'"
+                      [multiple]="true"
+                      [isClearable]="true"
+                      [options]="typeArray"
+                    >
+                    </sw-dropdown-input>
                   </div>
                 </div>
               </th>
@@ -92,7 +99,7 @@
 
 
             <ng-container cdkColumnDef="access">
-              <th cdk-header-cell *cdkHeaderCellDef>
+              <th cdk-header-cell *cdkHeaderCellDef class="name-cell">
                 <div class="header_container" data-e2e="accessname">
                   <div class="header_container__title" data-e2e="accessnametitle" (click)="sortBy('access')">
                     access
@@ -125,7 +132,7 @@
 
 
             <ng-container cdkColumnDef="createdBy">
-              <th cdk-header-cell *cdkHeaderCellDef>
+              <th cdk-header-cell *cdkHeaderCellDef class="name-cell">
                 <div class="header_container" data-e2e="createdbyname">
                   <div class="header_container__title" data-e2e="createdbynametitle" (click)="sortBy('createdBy')">
                     created by
@@ -156,7 +163,12 @@
                     </div>
                   </div>
                   <div class="header_container__filter">
-                    <sw-input-text class="filter-field" formControlName="updatedAt"></sw-input-text>
+<!--                    <sw-input-text class="filter-field" formControlName="updatedAt"></sw-input-text>-->
+                    <sw-input-english-datepicker
+                      formControlName="updatedAt"
+                      [placeholder]="''"
+                      [class]="'filter-field'"
+                    ></sw-input-english-datepicker>
                   </div>
                 </div>
               </th>
@@ -178,8 +190,14 @@
                     </div>
                   </div>
                   <div class="header_container__filter">
-                    <sw-input-suggest class="filter-field" formControlName="status" [options]="statusArray">
-                    </sw-input-suggest>
+                    <sw-dropdown-input
+                      formControlName="status"
+                      [style]="'table-header'"
+                      [multiple]="true"
+                      [isClearable]="true"
+                      [options]="statusArray"
+                    >
+                    </sw-dropdown-input>
                   </div>
                 </div>
               </th>
@@ -269,4 +287,6 @@
       </sw-label>
     </span>
   </sw-dialog>
+  <div *ngIf="isPopupOpen" class="overlay">
+  </div>
 </div>

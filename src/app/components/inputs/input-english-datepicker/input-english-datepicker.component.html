@@ -1,7 +1,7 @@
-<div class="date-picker" #holder (click)="openDatepicker()">
+<div class="date-picker" #holder (click)="openDatepicker()" [ngClass]="{ 'filter' : class == 'filter-field' }">
   <sw-input-text
     [(ngModel)]="value"
-    class="online_form__data_picker"
+    class="{{class}}"
     [ngClass]="{
       'read_only': !isActive
     }"

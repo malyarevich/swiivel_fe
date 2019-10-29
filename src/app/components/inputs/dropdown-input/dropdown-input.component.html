@@ -2,12 +2,13 @@
   #holder
   class="dropdown_input_container"
   data-e2e="dropdown_input_container"
-  [ngClass]="{'filter': style == 'filter'}"
+  [ngClass]="{ 'filter': style == 'filter', 'table-header' : style == 'table-header' }"
   [class.active]="active"
   [class.empty]="isEmpty()"
   [class.disabled]="disabled"
   (click)="showPopup($event)"
 >
+  <i *ngIf="style == 'table-header'" class="fas fa-search fa-xs"></i>
   <ng-content select="span" class="span"></ng-content>
   <div class="dropdown_input_container__row" *ngIf="isDisplaySelected">
     <div

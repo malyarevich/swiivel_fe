@@ -63,6 +63,7 @@ export class InputEnglishDatepickerComponent
   @Input() isActive = true;
   @Input() value: string = null;
   @Input() placeholder = 'English date';
+  @Input() class = 'online_form__data_picker';
   @Input() range = false;
   @Input() separator: '-' | '/' | '.' = '/';
   @Input() format: 'mm-dd-yyyy' | 'dd-mm-yyyy' | 'yyyy-mm-dd' = 'mm-dd-yyyy';
