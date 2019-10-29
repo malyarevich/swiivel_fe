@@ -1,6 +1,8 @@
 @import 'index';
 
 :host {
+  width: fit-content;
+  display: flex;
   .button {
     border-radius: 3px;
     background: $button-color;
