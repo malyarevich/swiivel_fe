@@ -33,7 +33,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
   filter: FormControl = new FormControl(null);
   destoyer$ = new Subject();
   sm: SelectionModel<any> = new SelectionModel(false);
-
+  saving = false;
   constructor(
     private stepperService: StepperService,
     private api: ApiService,
@@ -86,35 +86,44 @@ export class GeneralComponent implements OnInit, OnDestroy {
 
   nextStep(): void {
     if (!this.form.valid) return;
-
-    this.saveForm();
-    this.stepperService.stepper = 'next';
+    this.saving = true;
+    this.saveForm().then((response) => {
+      this.saving = false;
+      this.stepperService.stepper = 'next';
+    }).catch(error => {
+      console.error(error);
+      this.saving = false;
+    });
   }
 
   saveForm() {
-    let newForm: any = {};
+    return new Promise((resolve, reject) => {
+      let newForm: any = {};
 
-    if (this.dublicate && this.sm.selected && this.sm.selected.length > 0) {
-      newForm.example_form_id = this.sm.selected[0]._id;
-    }
-    newForm.name = this.form.get('name').value;
-    newForm.type = this.form.get('type').value[0].value;
-    if (this.formCreatorService.form.has('_id')) {
-      this.api.updateGeneralForm(newForm, this.formCreatorService.form.get('_id').value).pipe(
-        takeUntil(this.destoyer$)
-      ).subscribe(data => {
+      if (this.dublicate && this.sm.selected && this.sm.selected.length > 0) {
+        newForm.example_form_id = this.sm.selected[0]._id;
+      }
+      newForm.name = this.form.get('name').value;
+      newForm.type = this.form.get('type').value[0].value;
+      if ('_id' in this.formCreatorService.form) {
+        this.api.updateGeneralForm(newForm, this.formCreatorService.form._id).pipe(
+          takeUntil(this.destoyer$)
+        ).subscribe(data => {
+          resolve(data);
+        });
+      } else {
+        this.api.saveNewForm(newForm).pipe(
+          takeUntil(this.destoyer$)
+        ).subscribe(data => {
+          if (data) {
+            this.formCreatorService.form = data;
+            sessionStorage.setItem('newForm', JSON.stringify(data));
+            resolve(data);
+          }
+        });
+      }
+    })
 
-      });
-    } else {
-      this.api.saveNewForm(newForm).pipe(
-        takeUntil(this.destoyer$)
-      ).subscribe(data => {
-        if (data) {
-          this.formCreatorService.form = data;
-          sessionStorage.setItem('newForm', JSON.stringify(data));
-        }
-      });
-    }
 
   }
 

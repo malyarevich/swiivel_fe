@@ -41,7 +41,10 @@ export class FormCreatorComponent implements OnInit {
     'termsConditions': {
       'sectionName': 'Terms and Conditions',
       'sectionWidth': 'full'
-    }
+    },
+    'fields': [],
+    'name': null,
+    'type': 'registration'
   };
   workarea: string;
   sections = [
@@ -95,7 +98,7 @@ export class FormCreatorComponent implements OnInit {
           // });
         });
       } else {
-        // this.service.createForm(this.defaults);
+        this.service.form = this.defaults;
         console.info(`Create New Form`);
       }
     });

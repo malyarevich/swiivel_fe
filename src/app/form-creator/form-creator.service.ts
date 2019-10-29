@@ -5,11 +5,12 @@ import { TreeDataSource } from './tree.datasource';
 import { filter } from 'rxjs/operators';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ApiService } from '@app/core/api.service';
-import { cloneDeep, isPlainObject, get, set, unset, flatMap } from 'lodash';
+import { cloneDeep, isPlainObject, get, set, unset, flatMap, isArrayLike } from 'lodash';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 
-const flatten = (fields) => {
+const flatten = (fields = []) => {
   let result = [];
+  if (!isArrayLike(fields)) fields = [];
   for (const field of fields) {
     if (field.fields) {
       result.push(...flatten(field.fields))
@@ -72,7 +73,7 @@ export class FormCreatorService {
 
   constructor(private fb: FormBuilder, private api: ApiService) {
     this.api.getSidebarFields().subscribe((fields) => {
-      let formFields = this.form ? flatten(this.form.value.fields) : [];
+      let formFields = this.form ? flatten(this.form.form.value.fields) : [];
       this.sidebarSubject$.next(fields.map(field => joinForm(field, [], formFields)).slice());
     });
     this.sidebarSubject$.subscribe((fields) => {
@@ -433,10 +434,12 @@ export class FormCreatorService {
       fields: [],
       workspace: [],
     })//.array(fields.map(this.createForm));
+    if (!isArrayLike(fields)) { fields = []; }
     for (let field of fields) {
       field.form = this.createForm(field)
       form.addControl(field.name, field.form);
     }
+
     console.groupEnd();
     return form;
   }
