@@ -10,7 +10,6 @@ import {
   ViewChild,
   ChangeDetectorRef} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { SizesEnum } from '@shared/sizes.enum';
 
 @Component({
   selector: 'sw-input-text',
@@ -83,6 +82,11 @@ export class InputTextComponent implements ControlValueAccessor {
   public writeValue(obj: any): void {
     this.renderer.setProperty(this.input.nativeElement, 'value', obj);
     this.cdr.markForCheck();
+  }
+
+  public clear(): void {
+    this.input.nativeElement.value = '';
+    this.onChange('');
   }
 
 }

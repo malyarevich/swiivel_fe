@@ -25,9 +25,6 @@
         border: 1px solid $purple;
       }
     }
-    i {
-      display: none;
-    }
   }
 
   .input_text__button {
@@ -71,7 +68,7 @@
 :host(.settings-field,.filter-field) {
   .input_text__input {
     height: 25px;
-    padding: 5px 10px;
+    padding: 5px 14px;
   }
 }
 
@@ -82,7 +79,7 @@
     &__input {
       border-color: transparent;
       height: 25px;
-      padding: 5px 10px;
+      padding: 5px 10px 5px 19px;
     }
 
     .fa-search {
@@ -90,11 +87,22 @@
       cursor: pointer;
       display: block;
       position: absolute;
-      right: 0.75rem;
       top: 0.75rem;
+      left: 5px;
 
-      @media (min-width: 1280px){
-        right: 0.5rem;
+      @media (min-width: 1280px) {
+        top: 0.6rem;
+      }
+    }
+
+    .fa-times {
+      position: absolute;
+      top: 0.75rem;
+      right: 5px;
+      color: #A4A4A4;
+      cursor: pointer;
+
+      @media (min-width: 1280px) {
         top: 0.5rem;
       }
     }

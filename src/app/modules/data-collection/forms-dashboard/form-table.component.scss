@@ -2,6 +2,17 @@
 
 .app-form-table {
   padding: 15px;
+  position: relative;
+
+  .overlay {
+    position: absolute;
+    width: calc(100% + 60px);
+    height: calc(100% + 40px);
+    background: rgba(0,0,0,0.4);
+    z-index: 3;
+    top: -40px;
+    left: -60px;
+  }
 
   &__header {
     display: flex;
@@ -162,6 +173,11 @@
 
   .cdk-header-cell {
     padding: 10px 3px;
+
+    &.name-cell {
+      min-width: 127px;
+    }
+
     &:first-of-type {
       padding-left: 15px;
     }

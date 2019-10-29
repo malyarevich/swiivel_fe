@@ -26,8 +26,32 @@
       }
     }
 
-    &.filter {
+    &.table-header {
+      min-height: 25px;
+      height: 25px;
+      padding: 5px 10px 5px 19px;
+      border: none;
 
+      .dropdown_input_container__input {
+        padding: 4px;
+        margin: 0 2px;
+      }
+
+      .fa-search {
+        color: #A4A4A4;
+        cursor: pointer;
+        display: block;
+        position: absolute;
+        top: 0.75rem;
+        left: 5px;
+
+        @media (min-width: 1280px) {
+          top: 0.6rem;
+        }
+      }
+    }
+
+    &.filter {
       .dropdown_input_container__input {
         display: flex;
         align-items: center;
