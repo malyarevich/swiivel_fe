@@ -35,6 +35,10 @@ const routes: Routes = [
     loadChildren: () => import('./form-creator/form-creator.module').then(m => m.FormCreatorModule)
   },
   {
+    path: 'form-send',
+    loadChildren: () => import('./form-send/form-send.module').then(m => m.FormSendModule)
+  },
+  {
     path: 'forms-dashboard',
     loadChildren: () => import('./forms-dashboard/form-table.module').then(m => m.FormTableModule)
   },
