@@ -73,6 +73,14 @@ export class ApiService {
     return this.http.put(`/proxy/form-builder/form-template/${id}`, form);
   }
 
+  // FORM SEND
+
+  getFormSend(form_id: string) {
+    return this.http.get(`/proxy/form-builder/release/${form_id}`);
+  }
+
+  // FORM SEND END
+
   public download(url: string) {
     return this.http.getFile(url)
   }

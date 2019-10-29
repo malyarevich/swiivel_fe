@@ -1,0 +1,126 @@
+@import 'index';
+
+:host {
+  width: 100%;
+  .header-line {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    .text {
+      font-style: normal;
+      font: 800 18px/20px $nunito-sans;
+    }
+  }
+  .search-wrap {
+    width: 100%;
+    position: relative;
+    margin-bottom: 15px;
+    .search {
+      width: 100%;
+      border-radius: 100px;
+      height: 30px;
+      padding: 8px 22px 8px 27px;
+      border: 1px solid #CACACA;
+      box-sizing: border-box;
+      &:focus {
+        border-color: #4350A2;
+      }
+    }
+    .icon {
+      width: 24px;
+      height: 24px;
+      position: absolute;
+      left: 4px;
+      top: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #A4A4A4;
+      font-size: 14px;
+    }
+  }
+  .section-wrap {
+    padding: 25px;
+    background-color: #fff;
+    border-radius: 3px;
+    margin-bottom: 10px;
+    .section-title {
+      text-align: center;
+      letter-spacing: 0.22px;
+      text-transform: uppercase;
+      color: #909090;
+      font: 400 13px/15px $nunito-sans;
+      margin-bottom: 15px;
+    }
+    .section-main-text {
+      text-align: center;
+      font: 800 18px/20px $nunito-sans;
+      margin-bottom: 30px;
+    }
+  }
+  .list-viewport {
+    width: 100%;
+    min-height: 250px;
+    max-height: 380px;
+    border-radius: 3px;
+    .list-item {
+      padding: 10px;
+      font: 800 12px/15px $nunito-sans;
+      cursor: pointer;
+      color: #0D0D0D;
+      background: #FFFFFF;
+      box-shadow: inset 0px -1px 0px rgba(67, 80, 162, 0.4);
+      .item-title {
+        display: flex;
+        .action {
+          margin-left: auto;
+          i {
+            color: #A4A4A4;
+          }
+        }
+      }
+      .splits {
+        margin-top: 3px;
+        font: 400 10px/13px $nunito-sans;
+        color: #909090;
+      }
+      &:nth-child(odd) {
+        background: #FAFAFA;
+      }
+      &.selected {
+        background: #EBEEFF !important;
+      }
+    }
+  }
+
+  .lists-wrap {
+    display: flex;
+    padding: 15px 0;
+    border: 1px solid #E3E3E3;
+    box-sizing: border-box;
+    border-radius: 3px;
+    background: #fff;
+    .list-wrap {
+      &:not(:last-of-type) {
+        border-right: 1px solid #CACACA;
+      }
+      .list-title {
+        font: 800 11px/15px $nunito-sans;
+        letter-spacing: 0.37px;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+      }
+      .period-title {
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+        font: 800 9px/13px $nunito-sans;
+        color: #0D0D0D;
+        margin-bottom: 5px;
+      }
+    }
+  }
+
+
+
+}

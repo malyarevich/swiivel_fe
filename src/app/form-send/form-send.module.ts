@@ -5,6 +5,10 @@ import { FormSendRoutingModule } from './form-send-routing.module';
 import { SharedModule } from '@app/shared/shared.module';
 import { SendPreviewComponent } from './send-preview/send-preview.component';
 import { SendReleaseComponent } from './send-release/send-release.component';
+import { FormSendService } from './form-send.service';
+
+import {ScrollingModule} from '@angular/cdk/scrolling';
+
 
 
 
@@ -17,7 +21,11 @@ import { SendReleaseComponent } from './send-release/send-release.component';
   imports: [
     CommonModule,
     FormSendRoutingModule,
-    SharedModule
+    SharedModule,
+    ScrollingModule
+  ],
+  providers: [
+    FormSendService
   ]
 })
 export class FormSendModule { }
