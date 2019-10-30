@@ -26,6 +26,10 @@ export class FormSendService {
     this.currentPeriods.next(periods);
   }
 
+  get formId() {
+    return this.form_id;
+  }
+
   constructor(
     private api: ApiService
   ) {

@@ -8,6 +8,7 @@ import { SendReleaseComponent } from './send-release/send-release.component';
 import { FormSendService } from './form-send.service';
 
 import {ScrollingModule} from '@angular/cdk/scrolling';
+import { DataCollectionService } from '@app/forms-dashboard/data-collection.service';
 
 
 
@@ -25,7 +26,8 @@ import {ScrollingModule} from '@angular/cdk/scrolling';
     ScrollingModule
   ],
   providers: [
-    FormSendService
+    FormSendService,
+    DataCollectionService
   ]
 })
 export class FormSendModule { }

@@ -116,7 +116,7 @@ sw-input-text.settings-field{
 
 sw-input-toggle {
   span {
-    &.input_label {
+    &.label {
       font-family: "Nunito Sans";
       font-weight: bold;
       font-size: 12px;
@@ -179,7 +179,7 @@ sw-input-number {
     &.empty {
       &:not(:focus-within) {
         padding: 5px 10px;
-        .input_label {
+        .label {
           position: absolute;
           top: 8px;
           font-size: 12px;
@@ -196,7 +196,7 @@ sw-input-number {
 
 sw-dropdown-input.settings-field {
   .dropdown_input_container {
-    .input_label {
+    .label {
       display: none;
       width: calc(100% - 28px);
       p {
@@ -207,7 +207,7 @@ sw-dropdown-input.settings-field {
     }
     &.empty {
       &:not(:focus-within) {
-        .input_label {
+        .label {
           display: flex;
           top: 2px;
         }
@@ -219,7 +219,7 @@ sw-dropdown-input.settings-field {
 sw-input-textarea {
   .input_textarea {
     @extend %placeholder;
-    .input_label {
+    .label {
       position: absolute;
       top: 0;
       font-size: 12px;
