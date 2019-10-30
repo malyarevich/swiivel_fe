@@ -8,7 +8,7 @@ import { FormSearchParams } from '@app/models/form-search-params';
 import { FormModel } from '@models/data-collection/form.model';
 import { IconsEnum } from '@shared/icons.enum';
 import { DialogComponent } from '@shared/popup/dialog.component';
-import { pick } from 'lodash';
+import { get, pick } from 'lodash';
 import { DateTime } from 'luxon';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { DataCollectionService } from './data-collection.service';
@@ -97,6 +97,7 @@ export class FormTableComponent implements OnInit {
   currentPage = 1;
 
   statusesOptions: string[] = ['Active', 'Draft', 'In Review', 'Closed', 'Archived'];
+  // tslint:disable-next-line:variable-name
   _sm: SelectionModel<any>;
 
   static createSharedUrl(id: string) {
@@ -134,7 +135,7 @@ export class FormTableComponent implements OnInit {
 
   getUserInfo(obj: any) {
     const user = pick(obj, ['full_name', 'role']);
-    return { name: user.full_name, role: user.role.role_name };
+    return {name: user.full_name, role: get(user, 'role.role_name')};
   }
 
   getStatusColor(status: string): string {
@@ -202,7 +203,14 @@ export class FormTableComponent implements OnInit {
 
   selectRow(row: any, e: Event) {
     // @ts-ignore
-    if (e && e.target && (e.target.tagName === 'BUTTON' || e.target.parentElement.tagName === 'BUTTON')) {
+    if (
+      e &&
+      e.target &&
+      // tslint:disable-next-line:no-string-literal
+      (e.target['tagName'] === 'BUTTON' ||
+        // tslint:disable-next-line:no-string-literal
+        e.target['parentElement']['tagName'] === 'BUTTON')
+    ) {
       e.stopPropagation();
     } else {
       if (row) {
