@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { FormModel } from '@app/models/data-collection/form.model';
+import { FormModel } from '@models/data-collection/form.model';
 import { cloneDeep } from 'lodash';
 import { ICurrentPosition, IFormNavigationState } from '../models/online-form.model';
 

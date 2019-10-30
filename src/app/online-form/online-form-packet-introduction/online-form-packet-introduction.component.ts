@@ -1,19 +1,19 @@
-import { Component, OnInit, Input } from "@angular/core";
-import { FormGroup } from "@angular/forms";
-import { cloneDeep } from "lodash";
-import { FormModel, ISectionTab } from "@app/models/data-collection/form.model";
+import { Component, Input, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { FormModel, ISectionTab } from '@models/data-collection/form.model';
 import {
-  IMenuItems,
   IMainMenuNames,
-  menuItems,
-  mainMenuNames
-} from "../models/menu.model";
+  IMenuItems,
+  mainMenuNames,
+  menuItems
+} from '@models/data-collection/online-form/menu.model';
+import { cloneDeep } from 'lodash';
 import { ICurrentPosition, IFormNavigationState } from '../models/online-form.model';
 
 @Component({
-  selector: "sw-online-form-packet-introduction",
-  templateUrl: "./online-form-packet-introduction.component.html",
-  styleUrls: ["./online-form-packet-introduction.component.scss"]
+  selector: 'sw-online-form-packet-introduction',
+  templateUrl: './online-form-packet-introduction.component.html',
+  styleUrls: ['./online-form-packet-introduction.component.scss']
 })
 export class OnlineFormPacketIntroductionComponent implements OnInit {
   @Input() form: FormModel;
@@ -48,14 +48,14 @@ export class OnlineFormPacketIntroductionComponent implements OnInit {
     //     return { ...item, _id: item.id, name: item.title };
     //   });
     // }
-    this.form.packetIntroduction
+    this.form.packetIntroduction;
   }
 
   isExist(): boolean {
     return (
-      typeof this.form.packetIntroduction !== "undefined" &&
+      typeof this.form.packetIntroduction !== 'undefined' &&
       this.form.packetIntroduction &&
-      this.form.packetIntroduction.content !== ""
+      this.form.packetIntroduction.content !== ''
     );
     // return (
     //   typeof this.form.packetIntroduction !== "undefined" &&

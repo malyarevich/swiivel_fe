@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { Field } from 'src/app/models/data-collection/field.model';
+import { Field } from '@models/data-collection/field.model';
 
 @Component({
-  selector: 'app-number-text-field',
+  selector: 'sw-number-text-field',
   templateUrl: './number-text-field.component.html',
   styleUrls: ['./number-text-field.component.scss']
 })

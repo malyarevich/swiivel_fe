@@ -36,7 +36,7 @@
           [formErrors]="sectionGroupFieldsErrors$ | async"
           [fieldNameList]="fieldNameList"
           [isViewOnly]="isViewOnly$ | async"
-          (onGoToTab)="goToTab($event)"
+          (goToTab)="goToTab($event)"
         ></sw-online-form-view>
         <!-- [formErrors]="(formErrors$ | async)" -->
       </div>

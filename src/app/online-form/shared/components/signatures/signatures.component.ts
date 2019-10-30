@@ -3,7 +3,7 @@ import { FormGroup } from '@angular/forms';
 import {
   E_SIGNATURE_TYPES,
   SIGNATURE_TYPES
-} from '@app/models/data-collection/signature.model';
+} from '@models/data-collection/signature.model';
 // import { SystemSignatureService } from "../../../services/signatures/system-signature.service";
 
 @Component({

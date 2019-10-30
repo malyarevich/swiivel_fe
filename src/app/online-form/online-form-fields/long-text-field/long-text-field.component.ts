@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { Field } from 'src/app/models/data-collection/field.model';
+import { Field } from '@models/data-collection/field.model';
 
 @Component({
-  selector: 'app-long-text-field',
+  selector: 'sw-long-text-field',
   templateUrl: './long-text-field.component.html',
   styleUrls: ['./long-text-field.component.scss']
 })

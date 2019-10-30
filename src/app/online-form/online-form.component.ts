@@ -27,28 +27,30 @@ import {
   phoneNumberValidator,
   urlValidator
 } from '@app/core/validators';
+import { TermsConditionsItem } from '@models/data-collection/form-constructor/form-builder/terms-conditions.model';
+import { E_SIGNATURE_TYPES, SIGNATURE_TYPES } from '@models/data-collection/signature.model';
+import {ConsentItemInfo} from '@models/data-collection/consent.model';
 import { Field, fieldValidators } from '@models/data-collection/field.model';
+import {DocumentsModel} from '@models/data-collection/form-constructor/form-builder/documents.model';
 import {
-  Form,
+  FormModel,
   IPagesPercent,
   ISectionTab
 } from '@models/data-collection/form.model';
-import {DocumentsModel} from '@models/data-collection/form-constructor/form-builder/documents.model';
-import { BehaviorSubject, Observable, pipe, Subject, Subscription } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { customTable } from './models/custom-table.model';
 import {
   IMainMenuNames,
   IMenuItems,
   mainMenuNames,
   menuItems
-} from './models/menu.model';
+} from '@models/data-collection/online-form/menu.model';
+import { BehaviorSubject, Observable, pipe, Subject, Subscription } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { customTable } from './models/custom-table.model';
 import {
   defaultCurrentPosition,
   ICurrentPosition,
   IFormNavigationState
 } from './models/online-form.model';
-import { E_SIGNATURE_TYPES, SIGNATURE_TYPES } from '@app/models/data-collection/signature.model';
 import { OnlineFormService } from './services/online-form.service';
 
 @Component({
@@ -57,7 +59,6 @@ import { OnlineFormService } from './services/online-form.service';
   styleUrls: ['./online-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-<<<<<<< HEAD
 export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
   @Input() formId = '';
   @Input() isMenuShow = true;
@@ -66,9 +67,9 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
   @Input() isReviewMode = false;
   @Output() saveNext: EventEmitter<any> = new EventEmitter();
   @Output() goBack: EventEmitter<any> = new EventEmitter();
-  // form: Form;
+  // form: FormModel;
   // fg: FormGroup;
-  form$: BehaviorSubject<Form> = new BehaviorSubject(null);
+  form$: BehaviorSubject<FormModel> = new BehaviorSubject(null);
   fg$: BehaviorSubject<FormGroup> = new BehaviorSubject(null);
   isReady$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
@@ -80,17 +81,6 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
     defaultCurrentPosition
   );
   formErrors$: BehaviorSubject<any> = new BehaviorSubject({});
-=======
-export class OnlineFormComponent implements OnInit, OnDestroy {
-  // formId: string;
-  form: FormModel;
-  fg: FormGroup;
-
-  formNavigationState$: BehaviorSubject<object[]> = new BehaviorSubject(null);
-  pagesPercents$: BehaviorSubject<object[]> = new BehaviorSubject([]);
-  currentPosition$: BehaviorSubject<object> = new BehaviorSubject({});
-  formErrors$: BehaviorSubject<object> = new BehaviorSubject({});
->>>>>>> 1ac37743160ee40bcd2f5918dcc8899d8e751366
   sectionGroupFieldsErrors$: BehaviorSubject<object> = new BehaviorSubject({});
 
   // keys
@@ -167,9 +157,9 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
     this.isReady$.next(true);
   }
 
-  formSubscriber(form: Form) {
+  formSubscriber(form: FormModel) {
     this.form$.next(form);
-    console.log('Form by BE: ', this.form$.getValue());
+    console.log('FormModel by BE: ', this.form$.getValue());
 
     if (this.isHaveSense()) {
       this.loadingProcess();
@@ -184,26 +174,14 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
     // this.route.params.subscribe(params => {
     //   this.formId = params.mongo_id;
     // });
-<<<<<<< HEAD
     if (this.isViewMode) {
       // template by id
       if (this.getOneFormSubscription) {
         this.getOneFormSubscription.unsubscribe();
-=======
-
-    this.getOneFormSubscription = this.onlineFormService.getOneForm().subscribe((form: FormModel) => {
-      this.form = form;
-      console.log(this.form);
-
-      if (this.isHaveSense()) {
-        this.loadingProcess();
-      } else {
-        this.failedLoading();
->>>>>>> 1ac37743160ee40bcd2f5918dcc8899d8e751366
       }
       this.getOneFormSubscription = this.onlineFormService
         .getTemplateForm()
-        .subscribe((form: Form) => {
+        .subscribe((form: FormModel) => {
           this.formSubscriber(form);
         });
     } else {
@@ -213,7 +191,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
       }
       this.getOneFormSubscription = this.onlineFormService
         .getOneForm()
-        .subscribe((form: Form) => {
+        .subscribe((form: FormModel) => {
           this.formSubscriber(form);
         });
     }
@@ -283,7 +261,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
       this.form$.getValue().consentInfo.consents.length > 0
     ) {
       tabs = Object.values(this.form$.getValue().consentInfo.consents).map(
-        item => {
+        (item: ConsentItemInfo) => {
           return { _id: item.id, name: item.title };
         }
       );
@@ -517,7 +495,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
   }
 
   initRequiredList() {
-    Object.values(mainMenuNames).forEach(name => {
+    Object.values(mainMenuNames).forEach((name: string) => {
       this.requiredListByPage[name] = [];
       this.fieldListByPage[name] = [];
     });
@@ -627,7 +605,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
 
       consentKeys.forEach(key => {
         Object.values(this.form$.getValue().consentInfo.consents).forEach(
-          item => {
+          (item: ConsentItemInfo) => {
             if (
               item.id &&
               this.filterSignatureBySignatureAndKey(item.signature, key)
@@ -982,7 +960,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
 
       Object.values(
         this.form$.getValue().termsConditions.termsConditionsItems
-      ).forEach(item => {
+      ).forEach((item: TermsConditionsItem) => {
         if (item.id) {
           const key = item.id + '__checkbox';
           this.termsConditionsKeys.push(key);
@@ -1117,7 +1095,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
   }
 
   getFieldsForSectionByDocuments(documents: object[]): object {
-    const oFields: Form | any = {};
+    const oFields: FormModel | any = {};
     if (documents && documents.length > 0) {
       documents.forEach((document: DocumentsModel) => {
         const key = document.id;
@@ -1138,7 +1116,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
   getFieldsForSectionByForms(forms: object[]): object {
     const oFields = {};
     if (forms && forms.length > 0) {
-      forms.forEach((form: Form) => {
+      forms.forEach((form: FormModel) => {
         const key = form.id;
 
         // if(this.formErrors$.getValue()["fields"][key]) {
@@ -1151,7 +1129,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
 
   getFieldsForSectionByConsent(consents: object[]): object {
     const oFields = {};
-    consents.forEach((section: Form) => {
+    consents.forEach((section: FormModel) => {
       const sectionErrors = {};
 
       this.consentKeys.forEach(key => {

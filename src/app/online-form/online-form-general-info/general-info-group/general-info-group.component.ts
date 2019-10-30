@@ -1,6 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Field } from 'src/app/models/data-collection/field.model';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { Field } from '@models/data-collection/field.model';
 
 @Component({
   selector: 'sw-general-info-group',

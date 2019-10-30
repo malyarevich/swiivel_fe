@@ -4,7 +4,7 @@ import { FormGroup } from '@angular/forms';
 import {
   Field,
   fieldValidators
-} from 'src/app/models/data-collection/field.model';
+} from '@models/data-collection/field.model';
 
 @Component({
   selector: 'sw-error-list',

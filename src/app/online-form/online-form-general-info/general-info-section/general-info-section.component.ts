@@ -1,9 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Field } from 'src/app/models/data-collection/field.model';
+import { Field } from '@models/data-collection/field.model';
 import { FormGroup, FormControl } from '@angular/forms';
 import { OnlineFormService } from '../../services/online-form.service';
 import { GenerateErrorsService } from '../../utils/generate-errors.service';
-import { Form } from '@app/models/data-collection/form.model';
+import { FormModel } from '@models/data-collection/form.model';
 
 @Component({
   selector: 'sw-general-info-section',
@@ -12,7 +12,7 @@ import { Form } from '@app/models/data-collection/form.model';
 })
 export class GeneralInfoSectionComponent implements OnInit {
   // TODO: Remove after create custom table
-  @Input() form: Form;
+  @Input() form: FormModel;
   @Input() section: Field;
   @Input() formErrors: object;
   @Input() fieldNameList: object;

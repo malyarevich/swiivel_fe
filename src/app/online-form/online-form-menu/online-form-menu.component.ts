@@ -6,7 +6,7 @@ import {
   IMenuItems,
   mainMenuNames,
   menuItems
-} from '../models/menu.model';
+} from '@models/data-collection/online-form/menu.model';
 import { ICurrentPosition, IFormNavigationState } from '../models/online-form.model';
 
 @Component({

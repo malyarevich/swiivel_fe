@@ -5,13 +5,13 @@ import {
   OnInit
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { Form } from '@app/models/data-collection/form.model';
+import { FormModel } from '@models/data-collection/form.model';
 import {
   IMainMenuNames,
   IMenuItems,
   mainMenuNames,
   menuItems
-} from '../models/menu.model';
+} from '@models/data-collection/online-form/menu.model';
 import {
   ICurrentPosition,
   IFormNavigationState

@@ -1,18 +1,18 @@
-import { Component, Input, OnInit } from "@angular/core";
-import { FormGroup } from "@angular/forms";
-import { FormModel } from "@app/models/data-collection/form.model";
+import { Component, Input, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { FormModel } from '@models/data-collection/form.model';
 import {
-  menuItems,
-  mainMenuNames,
   IMainMenuNames,
-  IMenuItems
-} from "../models/menu.model";
+  IMenuItems,
+  mainMenuNames,
+  menuItems
+} from '@models/data-collection/online-form/menu.model';
 import { ICurrentPosition, IFormNavigationState } from '../models/online-form.model';
 
 @Component({
-  selector: "sw-online-form-tuition-contract",
-  templateUrl: "./online-form-tuition-contract.component.html",
-  styleUrls: ["./online-form-tuition-contract.component.scss"]
+  selector: 'sw-online-form-tuition-contract',
+  templateUrl: './online-form-tuition-contract.component.html',
+  styleUrls: ['./online-form-tuition-contract.component.scss']
 })
 export class OnlineFormTuitionContractComponent implements OnInit {
   @Input() form: FormModel;
@@ -38,7 +38,7 @@ export class OnlineFormTuitionContractComponent implements OnInit {
 
   isExist(): boolean {
     return (
-      typeof this.form.tuitionContract !== "undefined"
+      typeof this.form.tuitionContract !== 'undefined'
       // && this.form.tuitionContract.tuitionContractItems.length > 0
     );
   }

@@ -1,38 +1,38 @@
-import { Injectable, EventEmitter, Output } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { ShortTextFieldComponent } from '../online-form-fields/short-text-field/short-text-field.component';
-import { LongTextFieldComponent } from '../online-form-fields/long-text-field/long-text-field.component';
-import { NumberTextFieldComponent } from '../online-form-fields/number-text-field/number-text-field.component';
-import { CheckboxFieldComponent } from '../online-form-fields/checkbox-field/checkbox-field.component';
-import { DropDownListFieldComponent } from '../online-form-fields/drop-down-list-field/drop-down-list-field.component';
-import { DateTimeFieldComponent } from '../online-form-fields/date-time-field/date-time-field.component';
-import { TimeFieldComponent } from '../online-form-fields/time-field/time-field.component';
-import { EmailFieldComponent } from '../online-form-fields/email-field/email-field.component';
-import { PhoneNumberFieldComponent } from '../online-form-fields/phone-number-field/phone-number-field.component';
-import { HebrewDateFieldComponent } from '../online-form-fields/hebrew-date-field/hebrew-date-field.component';
-import { LabelFieldComponent } from '../online-form-fields/label-field/label-field.component';
-import { EmptyLineFieldComponent } from '../online-form-fields/empty-line-field/empty-line-field.component';
+import { EventEmitter, Injectable, Output } from '@angular/core';
 import {
-  FormControl,
-  FormBuilder,
-  FormGroup,
   AbstractControl,
-  FormArray
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup
 } from '@angular/forms';
 import { HttpService } from '@app/core/http.service';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { CheckboxFieldComponent } from '../online-form-fields/checkbox-field/checkbox-field.component';
+import { DateTimeFieldComponent } from '../online-form-fields/date-time-field/date-time-field.component';
+import { DropDownListFieldComponent } from '../online-form-fields/drop-down-list-field/drop-down-list-field.component';
+import { EmailFieldComponent } from '../online-form-fields/email-field/email-field.component';
+import { EmptyLineFieldComponent } from '../online-form-fields/empty-line-field/empty-line-field.component';
+import { HebrewDateFieldComponent } from '../online-form-fields/hebrew-date-field/hebrew-date-field.component';
+import { LabelFieldComponent } from '../online-form-fields/label-field/label-field.component';
+import { LongTextFieldComponent } from '../online-form-fields/long-text-field/long-text-field.component';
+import { NumberTextFieldComponent } from '../online-form-fields/number-text-field/number-text-field.component';
+import { PhoneNumberFieldComponent } from '../online-form-fields/phone-number-field/phone-number-field.component';
+import { ShortTextFieldComponent } from '../online-form-fields/short-text-field/short-text-field.component';
+import { TimeFieldComponent } from '../online-form-fields/time-field/time-field.component';
 
-export const hasRequiredField = (abstractControl: AbstractControl): boolean => {
+export const hasRequiredField = (abstractControl: AbstractControl | any): boolean => {
   if (abstractControl.validator) {
     const validator = abstractControl.validator({} as AbstractControl);
     if (validator && validator.required) {
       return true;
     }
   }
-  if (abstractControl['controls']) {
-    for (const controlName in abstractControl['controls']) {
-      if (abstractControl['controls'][controlName]) {
-        if (hasRequiredField(abstractControl['controls'][controlName])) {
+  if (abstractControl.controls) {
+    for (const controlName in abstractControl.controls) {
+      if (abstractControl.controls[controlName]) {
+        if (hasRequiredField(abstractControl.controls[controlName])) {
           return true;
         }
       }
@@ -56,6 +56,21 @@ export type IFormField =
   | typeof LabelFieldComponent
   | typeof EmptyLineFieldComponent;
 
+export const componentFieldsMap = new Map<number, IFormField>([
+  [101, ShortTextFieldComponent],
+  [102, LongTextFieldComponent],
+  [103, NumberTextFieldComponent],
+  [104, TimeFieldComponent],
+  [105, DropDownListFieldComponent],
+  [106, DateTimeFieldComponent],
+  [107, CheckboxFieldComponent],
+  [108, EmailFieldComponent],
+  [109, PhoneNumberFieldComponent],
+  [110, HebrewDateFieldComponent],
+  [111, LabelFieldComponent],
+  [112, EmptyLineFieldComponent]
+]);
+
 @Injectable()
 export class OnlineFormService {
   formId: string;
@@ -63,7 +78,7 @@ export class OnlineFormService {
   profileForm;
   fgList: any = {};
   fg: FormGroup;
-  //FIXME: replace 'any' to interface (depend on server data)
+  // FIXME: replace 'any' to interface (depend on server data)
   @Output() onChangeServerValidations: EventEmitter<any> = new EventEmitter();
 
   changeServerValidations(list: any) {
@@ -78,25 +93,10 @@ export class OnlineFormService {
     return this.fgList[this.formId].hasError;
   }
 
-  componentFieldsMap = new Map<number, IFormField>([
-    [101, ShortTextFieldComponent],
-    [102, LongTextFieldComponent],
-    [103, NumberTextFieldComponent],
-    [104, TimeFieldComponent],
-    [105, DropDownListFieldComponent],
-    [106, DateTimeFieldComponent],
-    [107, CheckboxFieldComponent],
-    [108, EmailFieldComponent],
-    [109, PhoneNumberFieldComponent],
-    [110, HebrewDateFieldComponent],
-    [111, LabelFieldComponent],
-    [112, EmptyLineFieldComponent]
-  ]);
-
   getComponentByTypeNumber = (typeNumber: number) => {
     // return {};
-    return this.componentFieldsMap.get(typeNumber);
-  };
+    return componentFieldsMap.get(typeNumber);
+  }
 
   setFormValueById(id: string, value: any) {
     this.formValues.set(id, value);

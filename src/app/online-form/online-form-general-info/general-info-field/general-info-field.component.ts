@@ -1,11 +1,11 @@
-import { Component, OnInit, Input, OnDestroy, OnChanges } from '@angular/core';
-import { Field } from 'src/app/models/data-collection/field.model';
+import { Component, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { BehaviorSubject, Subscription } from 'rxjs';
+import { Field } from '@models/data-collection/field.model';
 import {
-  OnlineFormService,
-  IFormField
+  IFormField,
+  OnlineFormService
 } from '../../services/online-form.service';
-import { FormControl, Validators, FormGroup } from '@angular/forms';
-import { Subscription, BehaviorSubject } from 'rxjs';
 
 interface IFieldInput {
   field: Field;

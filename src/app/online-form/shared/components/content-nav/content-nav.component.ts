@@ -29,7 +29,7 @@ export class ContentNavComponent implements OnInit, OnDestroy {
   @Input() fieldNameList: object;
   @Input() fg: FormGroup;
 
-  @Output() onGoToTab: EventEmitter<number> = new EventEmitter();
+  @Output() goToTab: EventEmitter<number> = new EventEmitter();
 
   onSetActiveIdSubscription: Subscription;
   activeId: string;
@@ -79,7 +79,7 @@ export class ContentNavComponent implements OnInit, OnDestroy {
   }
 
   setActiveId(id) {
-    this.onGoToTab.emit(id);
+    this.goToTab.emit(id);
   }
 
   hasErrors(id) {

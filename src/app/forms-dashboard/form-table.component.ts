@@ -1,111 +1,26 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  OnInit,
-  ViewChild,
-  Renderer2,
-  ElementRef
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { UtilsService } from '@core/utils.service';
+import { UtilsService } from '@app/core/utils.service';
+import { FormSearchParams } from '@app/models/form-search-params';
 import { FormModel } from '@models/data-collection/form.model';
 import { IconsEnum } from '@shared/icons.enum';
 import { DialogComponent } from '@shared/popup/dialog.component';
 import { pick } from 'lodash';
 import { DateTime } from 'luxon';
+import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { DataCollectionService } from './data-collection.service';
 import { FormsDataSource } from './form-table.datasource';
-import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
-import { FormSearchParams } from '@app/models/form-search-params';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-form-table',
   templateUrl: './form-table.component.html',
   styleUrls: ['./form-table.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormTableComponent implements OnInit {
-  @ViewChild('link', { static: false }) link: ElementRef;
-  @ViewChild('dialog', { static: true }) dialog: DialogComponent;
-
-  // TABS
-  public statusArray = [
-    { title: 'All', value: null },
-    { title: 'Active', value: 'active' },
-    { title: 'Draft', value: 'draft' },
-    { title: 'In Review', value: 'review' },
-    { title: 'Closed', value: 'closed' },
-    { title: 'Archived', value: 'archived' }
-  ];
-  public statusArrayOptions = [...this.statusArray];
-
-  public typeArray = [
-    { title: 'Registration', value: 'registration' },
-    { title: 'Application', value: 'application' }
-  ];
-
-  public activeTab = this.statusArray[0];
-
-  // BULK BUTTON
-  public bulkOptions = ['Share', 'Export PDF', 'Archive'];
-  public disabledBulkBtn = true;
-
-  // TABLE DATA
-  public dataSource: FormsDataSource = new FormsDataSource(
-    this.dataCollectionService
-  );
-  public displayedColumns: string[] = [
-    'name',
-    'type',
-    'access',
-    'createdBy',
-    'updatedAt',
-    'status',
-    'actions'
-  ];
-  public params: FormSearchParams = {
-    page: 1,
-    limit: 10
-  };
-
-  // POPUP
-  public popupTitle = '';
-  public popupActionBtnText = '';
-  public popupContentArray: { title: string; id?: any }[] = [];
-  public canLabelsRemove = false;
-  public isPopupOpen = false;
-
-  public icons = IconsEnum;
-  public totalAmount = 0;
-  totalItems: number;
-  showSpinner: boolean;
-
-  static createSharedUrl(id: string) {
-    return `${window.location.origin}/view-form/${id}`;
-  }
-  download: {
-    url: SafeResourceUrl;
-    filename: string;
-  } = {
-    url: null,
-    filename: null
-  };
-  filterForm: FormGroup;
-  sort = ['name', true];
-  currentPage = 1;
-
-  statusesOptions: string[] = [
-    'Active',
-    'Draft',
-    'In Review',
-    'Closed',
-    'Archived'
-  ];
-  _sm: SelectionModel<any>;
 
   constructor(
     public dataCollectionService: DataCollectionService,
@@ -114,8 +29,7 @@ export class FormTableComponent implements OnInit {
     private fb: FormBuilder,
     public utilsService: UtilsService,
     private sanitizer: DomSanitizer,
-    private renderer: Renderer2
-  ) {
+    private renderer: Renderer2) {
     this.filterForm = this.fb.group({
       name: [null],
       type: [null],
@@ -127,12 +41,71 @@ export class FormTableComponent implements OnInit {
 
     this.statusArrayOptions.splice(0, 1);
   }
+  @ViewChild('link', { static: false }) link: ElementRef;
+  @ViewChild('dialog', { static: true }) dialog: DialogComponent;
+
+  // TABS
+  public statusArray = [
+    { title: 'All', value: null },
+    { title: 'Active', value: 'active' },
+    { title: 'Draft', value: 'draft' },
+    { title: 'In Review', value: 'review' },
+    { title: 'Closed', value: 'closed' },
+    { title: 'Archived', value: 'archived' },
+  ];
+  public statusArrayOptions = [...this.statusArray];
+
+  public typeArray = [
+    { title: 'Registration', value: 'registration' },
+    { title: 'Application', value: 'application' },
+  ];
+
+  public activeTab = this.statusArray[0];
+
+  // BULK BUTTON
+  public bulkOptions = ['Share', 'Export PDF', 'Archive'];
+  public disabledBulkBtn = true;
+
+  // TABLE DATA
+  public dataSource: FormsDataSource = new FormsDataSource(this.dataCollectionService);
+  public displayedColumns: string[] = ['name', 'type', 'access', 'createdBy', 'updatedAt', 'status', 'actions'];
+  public params: FormSearchParams = {
+    page: 1,
+    limit: 10,
+  };
+
+  // POPUP
+  public popupTitle = '';
+  public popupActionBtnText = '';
+  public popupContentArray: { title: string, id?: any }[] = [];
+  public canLabelsRemove = false;
+  public isPopupOpen = false;
+
+  public icons = IconsEnum;
+  public totalAmount = 0;
+  totalItems: number;
+  showSpinner: boolean;
+  download: {
+    url: SafeResourceUrl;
+    filename: string;
+  } = {
+    url: null,
+    filename: null
+  };
+  filterForm: FormGroup;
+  sort = ['name', true];
+  currentPage = 1;
+
+  statusesOptions: string[] = ['Active', 'Draft', 'In Review', 'Closed', 'Archived'];
+  _sm: SelectionModel<any>;
+
+  static createSharedUrl(id: string) {
+    return `${window.location.origin}/view-form/${id}`;
+  }
 
   ngOnInit() {
     this._sm = new SelectionModel(true);
-    this.dataSource.$totalAmount.subscribe(
-      amount => (this.totalAmount = amount ? amount : 0)
-    );
+    this.dataSource.$totalAmount.subscribe(amount => this.totalAmount = amount ? amount : 0);
     this.dataSource.formsListMetadata$.subscribe(metadata => {
       if (metadata.page > metadata.last_page) {
         this.params.page = 1;
@@ -143,30 +116,25 @@ export class FormTableComponent implements OnInit {
       }
     });
     this.dataSource.loadFormsList(this.params);
-    this.filterForm.valueChanges
-      .pipe(
-        debounceTime(300),
-        distinctUntilChanged(),
-        map(value => {
-          Object.keys(value).forEach(
-            key =>
-              (value[key] === null || value[key] === '') && delete value[key]
-          );
-          return value;
-        })
-      )
-      .subscribe(value => {
-        this.params.filter = { ...value };
-        this.dataSource.loadFormsList(this.params);
-      });
+    this.filterForm.valueChanges.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      map(value => {
+        Object.keys(value).forEach(key => (value[key] === null || value[key] === '') && delete value[key]);
+        return value;
+      })
+    ).subscribe(value => {
+      this.params.filter = { ...value };
+      this.dataSource.loadFormsList(this.params);
+    });
     this.dataSource.$loading.subscribe((loading: boolean) => {
       this.showSpinner = loading;
     });
   }
 
   getUserInfo(obj: any) {
-    const user = pick(obj, ['full_name', 'role.role_name']);
-    return { name: user['full_name'], role: user['role']['role_name'] };
+    const user = pick(obj, ['full_name', 'role']);
+    return { name: user.full_name, role: user.role.role_name };
   }
 
   getStatusColor(status: string): string {
@@ -187,16 +155,13 @@ export class FormTableComponent implements OnInit {
   }
 
   getDate(date: Date) {
-    let dt = DateTime.fromJSDate(date);
+    const dt = DateTime.fromJSDate(date);
     return dt.setLocale('en-US').toFormat('LL-dd-yyyy');
   }
 
   getTime(date: Date) {
-    let dt = DateTime.fromJSDate(date);
-    return dt
-      .setLocale('en-US')
-      .toFormat('t')
-      .toLowerCase();
+    const dt = DateTime.fromJSDate(date);
+    return dt.setLocale('en-US').toFormat('t').toLowerCase();
   }
 
   sortBy(field: string) {
@@ -236,12 +201,8 @@ export class FormTableComponent implements OnInit {
   }
 
   selectRow(row: any, e: Event) {
-    if (
-      e &&
-      e.target &&
-      (e.target['tagName'] === 'BUTTON' ||
-        e.target['parentElement']['tagName'] === 'BUTTON')
-    ) {
+    // @ts-ignore
+    if (e && e.target && (e.target.tagName === 'BUTTON' || e.target.parentElement.tagName === 'BUTTON')) {
       e.stopPropagation();
     } else {
       if (row) {
@@ -260,12 +221,7 @@ export class FormTableComponent implements OnInit {
     if (filter.title === 'All') {
       this.filterForm.get('status').setValue(null);
     } else {
-      this.filterForm
-        .get('status')
-        .setValue(
-          [this.statusArray.find(value => value.title === filter.title)],
-          { emitEvent: false }
-        );
+      this.filterForm.get('status').setValue([this.statusArray.find(value => value.title === filter.title)], { emitEvent: false});
     }
   }
 
@@ -289,14 +245,10 @@ export class FormTableComponent implements OnInit {
     if (action) {
       switch (this.popupTitle) {
         case 'Share':
-          this.onCopyLink(
-            this.popupContentArray.map(({ title }) => title).join(', ')
-          );
+          this.onCopyLink(this.popupContentArray.map(({ title }) => title).join(', '));
           break;
         case 'Export PDF':
-          this.onExportZIP(
-            this.popupContentArray.map(({ id }) => id).join(',')
-          );
+          this.onExportZIP(this.popupContentArray.map(({ id }) => id).join(','));
           break;
         case 'Archive':
           this.archiveForms(this.popupContentArray.map(({ id }) => id));
@@ -343,15 +295,11 @@ export class FormTableComponent implements OnInit {
 
     if (form) {
       this.popupContentArray = [];
-      this.popupContentArray.push({
-        title: FormTableComponent.createSharedUrl(form.mongo_id)
-      });
+      this.popupContentArray.push({ title: FormTableComponent.createSharedUrl(form.mongo_id) });
     } else {
       this.popupContentArray = [];
       this._sm.selected.forEach((item: FormModel) => {
-        this.popupContentArray.push({
-          title: FormTableComponent.createSharedUrl(item.mongo_id)
-        });
+        this.popupContentArray.push({ title: FormTableComponent.createSharedUrl(item.mongo_id) });
       });
     }
 
@@ -403,9 +351,11 @@ export class FormTableComponent implements OnInit {
   }
 
   onDuplicateForm(mongoId: string): void {
-    this.dataCollectionService.duplicateForm(mongoId).subscribe(res => {
-      this.router.navigate(['form-constructor', res._id]).then();
-    });
+    this.dataCollectionService
+      .duplicateForm(mongoId)
+      .subscribe((res) => {
+        this.router.navigate(['form-constructor', res._id]).then();
+      });
   }
 
   clearLink(url) {
@@ -418,40 +368,43 @@ export class FormTableComponent implements OnInit {
   }
 
   onExportPDF(mongoId: string) {
-    this.dataCollectionService.exportPDFForm(mongoId).subscribe(url => {
-      this.download = {
-        url: this.sanitizer.bypassSecurityTrustResourceUrl(url),
-        filename: `form-${mongoId}.pdf`
-      };
-      this.cdr.detectChanges();
-      this.renderer.selectRootElement(this.link.nativeElement).click();
-      this.clearLink(url);
-    });
+    this.dataCollectionService
+      .exportPDFForm(mongoId)
+      .subscribe((url) => {
+        this.download = {
+          url: this.sanitizer.bypassSecurityTrustResourceUrl(url),
+          filename: `form-${mongoId}.pdf`
+        };
+        this.cdr.detectChanges();
+        this.renderer.selectRootElement(this.link.nativeElement).click();
+        this.clearLink(url);
+      });
   }
 
   onExportZIP(mongoIds: string) {
-    this.dataCollectionService.exportPDFFormZIP(mongoIds).subscribe(url => {
-      this.download = {
-        url: this.sanitizer.bypassSecurityTrustResourceUrl(url),
-        filename: `forms.zip`
-      };
-      this.cdr.detectChanges();
-      this.renderer.selectRootElement(this.link.nativeElement).click();
-      this.clearLink(url);
-    });
+    this.dataCollectionService
+      .exportPDFFormZIP(mongoIds)
+      .subscribe((url) => {
+        this.download = {
+          url: this.sanitizer.bypassSecurityTrustResourceUrl(url),
+          filename: `forms.zip`
+        };
+        this.cdr.detectChanges();
+        this.renderer.selectRootElement(this.link.nativeElement).click();
+        this.clearLink(url);
+      });
   }
 
   onCopyLink(label: string): void {
-    this.utilsService
-      .copyTextToClipboard(label)
-      .then(() => {})
+    this.utilsService.copyTextToClipboard(label)
+      .then(() => { })
       .catch(() => {
         console.log('Could not copy text');
       });
   }
 
   changeStatus(statusId: number, ids: number[]): void {
-    this.statusArray.forEach(item => {
+    this.statusArray.forEach((item) => {
       if (item.title === this.statusesOptions[statusId]) {
         this.dataCollectionService
           .changeStatus(ids, item.value)
@@ -464,14 +417,8 @@ export class FormTableComponent implements OnInit {
 
   getUserName(permission: any): any {
     return {
-      name:
-        permission && permission.user && permission.user.full_name
-          ? permission.user.full_name
-          : 'no name',
-      id:
-        permission && permission.user && permission.user.id
-          ? permission.user.id
-          : ''
+      name: permission && permission.user && permission.user.full_name ? permission.user.full_name : 'no name',
+      id: permission && permission.user && permission.user.id ? permission.user.id : ''
     };
   }
 }

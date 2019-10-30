@@ -1,9 +1,9 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { Field } from 'src/app/models/data-collection/field.model';
+import { Field } from '@models/data-collection/field.model';
 
 @Component({
-  selector: 'app-hebrew-date-field',
+  selector: 'sw-hebrew-date-field',
   templateUrl: './hebrew-date-field.component.html',
   styleUrls: ['./hebrew-date-field.component.scss']
 })

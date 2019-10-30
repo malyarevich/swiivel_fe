@@ -1,6 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, Validators, FormControl } from '@angular/forms';
-import { Form } from '@app/models/data-collection/form.model';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormModel } from '@models/data-collection/form.model';
 import { customTable } from '../../models/custom-table.model';
 
 @Component({
@@ -9,7 +9,7 @@ import { customTable } from '../../models/custom-table.model';
   styleUrls: ['./custom-table.component.scss']
 })
 export class CustomTableComponent implements OnInit {
-  @Input() form: Form;
+  @Input() form: FormModel;
   @Input() fg: FormGroup;
   tableTitle = 'Favorite subjects';
   table = customTable;

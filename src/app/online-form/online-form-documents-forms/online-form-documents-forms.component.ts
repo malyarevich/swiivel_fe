@@ -1,12 +1,12 @@
-import { Component, Input, OnInit } from "@angular/core";
-import { FormGroup } from "@angular/forms";
+import { Component, Input, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { FormModel } from '@models/data-collection/form.model';
-import { IFormNavigationState, ICurrentPosition } from '../models/online-form.model';
+import { ICurrentPosition, IFormNavigationState } from '../models/online-form.model';
 
 @Component({
-  selector: "sw-online-form-documents-forms",
-  templateUrl: "./online-form-documents-forms.component.html",
-  styleUrls: ["./online-form-documents-forms.component.scss"]
+  selector: 'sw-online-form-documents-forms',
+  templateUrl: './online-form-documents-forms.component.html',
+  styleUrls: ['./online-form-documents-forms.component.scss']
 })
 export class OnlineFormDocumentsFormsComponent implements OnInit {
   @Input() form: FormModel;

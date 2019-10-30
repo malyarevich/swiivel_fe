@@ -1,19 +1,19 @@
-import { Component, Input, OnInit } from "@angular/core";
-import { FormGroup } from "@angular/forms";
-import { cloneDeep } from "lodash";
-import { FormModel } from "@app/models/data-collection/form.model";
+import { Component, Input, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { FormModel } from '@models/data-collection/form.model';
 import {
-  menuItems,
-  mainMenuNames,
   IMainMenuNames,
-  IMenuItems
-} from "../models/menu.model";
+  IMenuItems,
+  mainMenuNames,
+  menuItems
+} from '@models/data-collection/online-form/menu.model';
+import { cloneDeep } from 'lodash';
 import { ICurrentPosition, IFormNavigationState } from '../models/online-form.model';
 
 @Component({
-  selector: "sw-online-form-payment",
-  templateUrl: "./online-form-payment.component.html",
-  styleUrls: ["./online-form-payment.component.scss"]
+  selector: 'sw-online-form-payment',
+  templateUrl: './online-form-payment.component.html',
+  styleUrls: ['./online-form-payment.component.scss']
 })
 export class OnlineFormPaymentComponent implements OnInit {
   @Input() form: FormModel;
@@ -42,6 +42,6 @@ export class OnlineFormPaymentComponent implements OnInit {
   }
 
   isExist(): boolean {
-    return typeof this.form.payment !== "undefined"; // && this.form.payment.payments.length > 0;
+    return typeof this.form.payment !== 'undefined'; // && this.form.payment.payments.length > 0;
   }
 }

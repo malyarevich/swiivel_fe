@@ -1,28 +1,28 @@
 import {
+  ChangeDetectionStrategy,
   Component,
-  OnInit,
-  Input,
-  Output,
   EventEmitter,
-  ChangeDetectionStrategy
-} from "@angular/core";
-import { FormGroup } from "@angular/forms";
-import { FormModel } from "@models/data-collection/form.model";
+  Input,
+  OnInit,
+  Output
+} from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { FormModel } from '@models/data-collection/form.model';
 import {
-  IMenuItems,
   IMainMenuNames,
-  menuItems,
-  mainMenuNames
-} from "../models/menu.model";
+  IMenuItems,
+  mainMenuNames,
+  menuItems
+} from '@models/data-collection/online-form/menu.model';
 import {
   ICurrentPosition,
   IFormNavigationState
-} from "../models/online-form.model";
+} from '../models/online-form.model';
 
 @Component({
-  selector: "sw-online-form-view",
-  templateUrl: "./online-form-view.component.html",
-  styleUrls: ["./online-form-view.component.scss"],
+  selector: 'sw-online-form-view',
+  templateUrl: './online-form-view.component.html',
+  styleUrls: ['./online-form-view.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class OnlineFormViewComponent implements OnInit {
@@ -34,7 +34,7 @@ export class OnlineFormViewComponent implements OnInit {
   @Input() fg: FormGroup;
   @Input() isViewOnly: boolean;
 
-  @Output() onGoToTab: EventEmitter<any> = new EventEmitter();
+  @Output() goToTab: EventEmitter<any> = new EventEmitter();
 
   menuItems: IMenuItems[] = menuItems;
   mainMenuNames: IMainMenuNames = mainMenuNames;
@@ -66,7 +66,7 @@ export class OnlineFormViewComponent implements OnInit {
     );
   }
 
-  goToTab(tabIndex) {
-    this.onGoToTab.emit(tabIndex);
+  onGoToTab(tabIndex) {
+    this.goToTab.emit(tabIndex);
   }
 }

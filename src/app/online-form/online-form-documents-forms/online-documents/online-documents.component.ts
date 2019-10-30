@@ -8,7 +8,7 @@ import {
   OnInit
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { FormModel } from '@app/models/data-collection/form.model';
+import { FormModel } from '@models/data-collection/form.model';
 import { Subscription } from 'rxjs';
 import { UploadStatus } from '../../models/upload.model';
 import { FilesService } from '../../services/files.service';
