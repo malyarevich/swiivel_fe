@@ -1,40 +1,44 @@
 <div
   #holder
-  class="dropdown_input_container"
-  data-e2e="dropdown_input_container"
-  [ngClass]="{ 'filter': style == 'filter', 'table-header' : style == 'table-header' }"
+  class="container"
+  data-e2e="container"
   [class.active]="active"
-  [class.empty]="isEmpty()"
   [class.disabled]="disabled"
+  [class.empty]="isEmpty()"
+  [class.filter]="type === 'filter'"
+  [class.table-header]="type === 'table-header'"
   (click)="showPopup($event)"
 >
-  <i *ngIf="style == 'table-header'" class="fas fa-search fa-xs"></i>
+  <i *ngIf="type === 'table-header'" class="fas fa-search fa-xs"></i>
+
   <ng-content select="span" class="span"></ng-content>
-  <div class="dropdown_input_container__row" *ngIf="isDisplaySelected">
+
+  <div class="container__row" *ngIf="isDisplaySelected">
     <div
-      class="dropdown_input_container__input"
-      data-e2e="dropdown_input_container_input"
       *ngFor="let item of value"
+      class="container__input"
+      data-e2e="container_input"
+      [class.item-purpure]="typeItem === 'purpure'"
       [class.many]="_multiple"
     >
       <span class="text">
         {{ dropdownSubHeader ? item?.name : item?.title }}
       </span>
-      <button *ngIf="style == 'filter'" class="remove-btn" (click)="remove(item, $event)">
+      <button *ngIf="_multiple" class="remove-btn" (click)="remove(item, $event)">
         <i class="fas fa-times"></i>
       </button>
     </div>
   </div>
-  <div class="dropdown_input_container__icon">
+  <div class="container__icon">
     <i
       *ngIf="isClearable && !isEmpty() && !active"
-      class="fas fa-times dropdown_input_container__icon--clear"
+      class="fas fa-times container__icon--clear"
       (click)="clear()"
     ></i>
-    <div class="dropdown_input_container__icon_up">
+    <div class="container__icon_up">
       <i class="fas fa-caret-up"></i>
     </div>
-    <div class="dropdown_input_container__icon_down">
+    <div class="container__icon_down">
       <i class="fas fa-caret-down"></i>
     </div>
   </div>

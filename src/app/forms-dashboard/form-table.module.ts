@@ -8,7 +8,6 @@ import { FormTableComponent} from './form-table.component';
 import { CdkTableModule } from '@angular/cdk/table';
 import { DataCollectionService } from './data-collection.service';
 
-
 @NgModule({
   declarations: [
     FormTableComponent,

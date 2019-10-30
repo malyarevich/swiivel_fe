@@ -8,7 +8,7 @@ import {
   OnInit
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { Form } from '@app/models/data-collection/form.model';
+import { FormModel } from '@app/models/data-collection/form.model';
 import { Subscription } from 'rxjs';
 import { UploadStatus } from '../../models/upload.model';
 import { FilesService } from '../../services/files.service';
@@ -20,7 +20,7 @@ import { FilesService } from '../../services/files.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class OnlineDocumentsComponent implements OnInit, OnDestroy {
-  @Input() form: Form;
+  @Input() form: FormModel;
   @Input() formErrors: object;
   @Input() fg: FormGroup;
 

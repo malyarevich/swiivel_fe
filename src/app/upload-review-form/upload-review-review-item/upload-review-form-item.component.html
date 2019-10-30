@@ -17,7 +17,7 @@
         <div class="control-item">
           <sw-icon-button
             [icon]="icons.DOWNLOAD"
-            [color]="document.isSelected? colors.WHITE : colors.GRAY"
+            [color]="document.isSelected ? 'white' : 'gray'"
             (click)="clickDownloadForm()"
           >
           </sw-icon-button>
@@ -25,7 +25,7 @@
         <div class="control-item">
           <sw-icon-button
             [icon]="icons.TRASH"
-            [color]="document.isSelected? colors.WHITE : colors.GRAY"
+            [color]="document.isSelected ? 'white' : 'gray'"
             (click)="clickDeleteForm()"
           >
           </sw-icon-button>

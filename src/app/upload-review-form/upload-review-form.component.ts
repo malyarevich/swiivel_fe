@@ -7,7 +7,6 @@ import { UploadReviewFormService } from '@app/upload-review-form/upload-review-f
 import { Document } from '@models/upload-review-form/document.model';
 import { ExtremeUploadForms } from '@models/upload-review-form/forms.model';
 import { SortDropDownData } from '@models/upload-review-form/sort.model';
-import { ColorsEnum } from '@shared/colors.enum';
 import { IconsEnum } from '@shared/icons.enum';
 import { SizesEnum } from '@shared/sizes.enum';
 import {DialogComponent} from '@shared/popup/dialog.component';
@@ -32,7 +31,6 @@ export class UploadReviewFormComponent implements OnInit {
   public removeDocumentId: string;
   public showSpinner: boolean;
   public extremeDocuments: ExtremeUploadForms = {};
-  public colors = ColorsEnum;
   public isSideBarShown = true;
   public icons = IconsEnum;
   public size = SizesEnum;

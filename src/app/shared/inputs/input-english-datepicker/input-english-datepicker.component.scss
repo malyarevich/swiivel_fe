@@ -11,7 +11,17 @@
 }
 
 :host(.online_form.read_only) {
-  .dropdown_input_container {
+  .container {
     background-color: #eee;
+  }
+}
+
+:host {
+  .filter {
+    sw-input-text {
+      .icon {
+        top: 5px;
+      }
+    }
   }
 }

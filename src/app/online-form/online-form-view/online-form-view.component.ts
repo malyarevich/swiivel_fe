@@ -7,7 +7,7 @@ import {
   ChangeDetectionStrategy
 } from "@angular/core";
 import { FormGroup } from "@angular/forms";
-import { Form } from "@app/models/data-collection/form.model";
+import { FormModel } from "@models/data-collection/form.model";
 import {
   IMenuItems,
   IMainMenuNames,
@@ -26,7 +26,7 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class OnlineFormViewComponent implements OnInit {
-  @Input() form: Form;
+  @Input() form: FormModel;
   @Input() formNavigationState: IFormNavigationState[];
   @Input() currentPosition: ICurrentPosition;
   @Input() formErrors: object;

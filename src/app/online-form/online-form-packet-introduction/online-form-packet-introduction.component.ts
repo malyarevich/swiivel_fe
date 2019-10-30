@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { cloneDeep } from "lodash";
-import { Form, ISectionTab } from "@app/models/data-collection/form.model";
+import { FormModel, ISectionTab } from "@app/models/data-collection/form.model";
 import {
   IMenuItems,
   IMainMenuNames,
@@ -16,7 +16,7 @@ import { ICurrentPosition, IFormNavigationState } from '../models/online-form.mo
   styleUrls: ["./online-form-packet-introduction.component.scss"]
 })
 export class OnlineFormPacketIntroductionComponent implements OnInit {
-  @Input() form: Form;
+  @Input() form: FormModel;
   @Input() formNavigationState: IFormNavigationState[];
   @Input() currentPosition: ICurrentPosition;
   @Input() formErrors: object;

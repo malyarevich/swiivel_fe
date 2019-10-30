@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { FormGroup } from "@angular/forms";
-import { Form } from "@app/models/data-collection/form.model";
-import { ICurrentPosition, IFormNavigationState } from '../models/online-form.model';
+import { FormModel } from '@models/data-collection/form.model';
+import { IFormNavigationState, ICurrentPosition } from '../models/online-form.model';
 
 @Component({
   selector: "sw-online-form-documents-forms",
@@ -9,7 +9,7 @@ import { ICurrentPosition, IFormNavigationState } from '../models/online-form.mo
   styleUrls: ["./online-form-documents-forms.component.scss"]
 })
 export class OnlineFormDocumentsFormsComponent implements OnInit {
-  @Input() form: Form;
+  @Input() form: FormModel;
   @Input() formNavigationState: IFormNavigationState[];
   @Input() currentPosition: ICurrentPosition;
   @Input() formErrors: object;

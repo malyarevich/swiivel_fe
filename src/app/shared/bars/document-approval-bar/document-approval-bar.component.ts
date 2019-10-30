@@ -2,7 +2,6 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import { UploadReviewFormStatusesEnum } from '@app/upload-review-form/upload-review-form-statuses.enum';
 import { UploadReviewFormService } from '@app/upload-review-form/upload-review-form.service';
 import { Document } from '@models/upload-review-form/document.model';
-import { ColorsEnum } from '@shared/colors.enum';
 
 @Component({
   selector: 'sw-document-approval-bar',
@@ -14,7 +13,6 @@ export class DocumentApprovalBarComponent {
   @Input() document: Document;
   @Output() changeStatus = new EventEmitter<string>();
   @Output() skipDocument = new EventEmitter();
-  public colors = ColorsEnum;
   public statuses = UploadReviewFormStatusesEnum;
   public uploadReviewFormStatusesEnum = UploadReviewFormStatusesEnum;
 

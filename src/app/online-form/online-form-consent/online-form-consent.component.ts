@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { Form } from '@app/models/data-collection/form.model';
+import { FormModel } from '@app/models/data-collection/form.model';
 import { cloneDeep } from 'lodash';
 import { ICurrentPosition, IFormNavigationState } from '../models/online-form.model';
 
@@ -10,7 +10,7 @@ import { ICurrentPosition, IFormNavigationState } from '../models/online-form.mo
   styleUrls: ['./online-form-consent.component.scss']
 })
 export class OnlineFormConsentComponent implements OnInit {
-  @Input() form: Form;
+  @Input() form: FormModel;
   @Input() formNavigationState: IFormNavigationState[];
   @Input() currentPosition: ICurrentPosition;
   @Input() formErrors: object;

@@ -1,59 +1,4 @@
-import { Permissions } from '../permission/permissions.model';
-import { Field } from './field.model';
-import { IActiveSections } from './form-constructor/form-builder/active-section.model';
-import { ConsentInfo } from './form-constructor/form-builder/consent.model';
-import { DocumentsFormsModel } from './form-constructor/form-builder/documents-forms.model';
-import { DocumentsModel } from './form-constructor/form-builder/documents.model';
-import { FormsPDFModel } from './form-constructor/form-builder/formsPDF.model';
-import { TermsConditions } from './form-constructor/form-builder/terms-conditions.model';
-import { TuitionContract } from './form-constructor/form-builder/tuition-contract.model';
-import { ISubMenus } from './form-constructor/form-publish-settings/publish-settings.model';
-
-export interface Form {
-  id?: string;
-  _id: string;
-  mongo_id?: string;
-  name: string;
-  fields?: Field[];
-  updated_at?: string;
-  created_at?: string;
-  api_token?: string;
-  link?: string;
-  personId?: number;
-  template_sql_link?: object;
-  formDates?: object;
-  sidebar?: Field[];
-  step?: number;
-  publish_settings?: {
-    state: ISubMenus;
-    online_config: object;
-    pdf_config: object;
-  };
-  language?: string; // Need FIXME: (type for languages)
-  periodCheckboxGroup?: object;
-  tuitionContract?: TuitionContract;
-  consentInfo?: ConsentInfo;
-  termsConditions?: TermsConditions;
-  payment?: any;
-  paymentSettings?: any; // Need FIXME: (create PaymentSettings)
-  chosen_way_to_create_new_form?: number;
-  eligible?: string;
-  // TODO: check for what that
-  example_form_id?: string;
-  packetIntroduction?: IPacketIntroduction;
-  documentsForms?: DocumentsFormsModel;
-  documents?: DocumentsModel[];
-  forms?: FormsPDFModel[];
-  attachments?: object;
-  activeSections?: IActiveSections;
-  fieldsData?: Map<string, any>;
-  formPeriods?: object;
-  // FIXME: when back-end will complete
-  isOpened?: boolean;
-  pagesPercents?: IPagesPercent[];
-}
-
-export interface FormSql {
+export interface FormModel {
   id: number;
   _id: any;
   mongo_id: string;
@@ -65,8 +10,7 @@ export interface FormSql {
     full_name: string;
     role: { id: number; role_name: string };
   };
-  // permissions?: FormSqlPermissions[];
-  permissions?: Permissions[];
+  permissions?: FormPermissions[];
   status: string;
   publish_settings?: {
     state: ISubMenus;
@@ -93,13 +37,6 @@ export interface FormSql {
   pagesPercents?: any;
 }
 
-// TODO: remove it unused interface after refactoring
-interface FormSqlPermissions {
-  id: number;
-  user: { id: number; full_name: number };
-}
-
-// TODO: check if we need that
 interface FormPermissions {
   id: number;
   user: { id: number; full_name: number };
@@ -125,7 +62,7 @@ export interface IPacketIntroduction {
   content?: string;
   sectionName?: string;
   sectionWidth?: string;
-}
+};
 
 export interface ISectionTab {
   _id?: string;
@@ -139,7 +76,7 @@ export interface ISectionTab {
     checked?: boolean;
     isActive?: boolean;
     text?: string;
-  };
+  }
   signature?: ISignature;
 }
 
@@ -151,11 +88,6 @@ export interface ISignature {
     fathers?: boolean;
     mothers?: boolean;
     parents?: boolean;
-  };
+  }
   type?: string;
-}
-
-export interface IPagesPercent {
-  page: string;
-  percent: number;
 }

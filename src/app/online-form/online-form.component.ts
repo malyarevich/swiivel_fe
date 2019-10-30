@@ -27,12 +27,12 @@ import {
   phoneNumberValidator,
   urlValidator
 } from '@app/core/validators';
-import { Field, fieldValidators } from '@app/models/data-collection/field.model';
+import { Field, fieldValidators } from '@models/data-collection/field.model';
 import {
   Form,
   IPagesPercent,
   ISectionTab
-} from '@app/models/data-collection/form.model';
+} from '@models/data-collection/form.model';
 import {DocumentsModel} from '@models/data-collection/form-constructor/form-builder/documents.model';
 import { BehaviorSubject, Observable, pipe, Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -57,6 +57,7 @@ import { OnlineFormService } from './services/online-form.service';
   styleUrls: ['./online-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
+<<<<<<< HEAD
 export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
   @Input() formId = '';
   @Input() isMenuShow = true;
@@ -79,6 +80,17 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
     defaultCurrentPosition
   );
   formErrors$: BehaviorSubject<any> = new BehaviorSubject({});
+=======
+export class OnlineFormComponent implements OnInit, OnDestroy {
+  // formId: string;
+  form: FormModel;
+  fg: FormGroup;
+
+  formNavigationState$: BehaviorSubject<object[]> = new BehaviorSubject(null);
+  pagesPercents$: BehaviorSubject<object[]> = new BehaviorSubject([]);
+  currentPosition$: BehaviorSubject<object> = new BehaviorSubject({});
+  formErrors$: BehaviorSubject<object> = new BehaviorSubject({});
+>>>>>>> 1ac37743160ee40bcd2f5918dcc8899d8e751366
   sectionGroupFieldsErrors$: BehaviorSubject<object> = new BehaviorSubject({});
 
   // keys
@@ -172,10 +184,22 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
     // this.route.params.subscribe(params => {
     //   this.formId = params.mongo_id;
     // });
+<<<<<<< HEAD
     if (this.isViewMode) {
       // template by id
       if (this.getOneFormSubscription) {
         this.getOneFormSubscription.unsubscribe();
+=======
+
+    this.getOneFormSubscription = this.onlineFormService.getOneForm().subscribe((form: FormModel) => {
+      this.form = form;
+      console.log(this.form);
+
+      if (this.isHaveSense()) {
+        this.loadingProcess();
+      } else {
+        this.failedLoading();
+>>>>>>> 1ac37743160ee40bcd2f5918dcc8899d8e751366
       }
       this.getOneFormSubscription = this.onlineFormService
         .getTemplateForm()

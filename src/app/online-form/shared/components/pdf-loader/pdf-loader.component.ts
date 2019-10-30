@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { Form } from '@app/models/data-collection/form.model';
+import { FormModel } from '@models/data-collection/form.model';
 import { UploadStatus } from '../../../models/upload.model';
 // import { PDFProgressData } from 'pdfjs-dist';
 // import { FormsDivModel } from '../../../../form-constructor/form-builder/documents-forms/model/formsPDF.model';
@@ -11,7 +11,7 @@ import { UploadStatus } from '../../../models/upload.model';
   styleUrls: ['./pdf-loader.component.scss']
 })
 export class PdfLoaderComponent implements OnInit {
-  @Input() form: Form;
+  @Input() form: FormModel;
   @Input() pdf: any;
   @Input() formErrors: object;
   @Input() fg: FormGroup;
@@ -107,7 +107,7 @@ export class PdfLoaderComponent implements OnInit {
     // }
     return div.type === 'signature';
   }
-  
+
   onUploadSelected(file, document: any) {
     this.uploadStatus[document['id']] = UploadStatus.selected;
     this.file[document['id']] = file;

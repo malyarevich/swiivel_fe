@@ -25,7 +25,7 @@ import { GenerateErrorsService } from '../utils/generate-errors.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class OnlineFormGeneralInfoComponent implements OnInit {
-  @Input() form: Form;
+  @Input() form: FormModel;
   @Input() formNavigationState: IFormNavigationState[];
   @Input() currentPosition: ICurrentPosition;
   @Input() formErrors: object;

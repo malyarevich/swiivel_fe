@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { Form, IPagesPercent } from '@app/models/data-collection/form.model';
+import { FormModel, IPagesPercent } from '@models/data-collection/form.model';
 import {
   IMainMenuNames,
   IMenuItems,
@@ -16,7 +16,7 @@ import { ICurrentPosition, IFormNavigationState } from '../models/online-form.mo
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class OnlineFormMenuComponent implements OnInit {
-  @Input() form: Form;
+  @Input() form: FormModel;
   @Input() pagesPercents: IPagesPercent[];
   @Input() formNavigationState: IFormNavigationState[];
   @Input() currentPosition: ICurrentPosition;

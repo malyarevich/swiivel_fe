@@ -1,10 +1,15 @@
 <button
+  class="button"
+  data-e2e="button"
   type="button"
-  [ngClass]="{
-  'button--gray': style === 'gray',
-  'button--white': style === 'white'
-  }"
-  class="button" data-e2e="button"
+  [class.gray]="color === colors.GRAY"
+  [class.green]="color === colors.GREEN"
+  [class.lite-gray]="color === colors.LITE_GRAY"
+  [class.transparent]="color === colors.TRANSPARENT"
+  [class.yellow]="color === colors.YELLOW"
+  [class.white]="color === colors.WHITE"
+  [class.full]="expand === expands.FULL"
+  [class.small]="size === sizes.SMALL"
   [name]="name"
   [value]="value"
   [disabled]="disabled"

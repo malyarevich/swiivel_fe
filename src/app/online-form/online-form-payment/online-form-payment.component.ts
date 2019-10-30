@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { cloneDeep } from "lodash";
-import { Form } from "@app/models/data-collection/form.model";
+import { FormModel } from "@app/models/data-collection/form.model";
 import {
   menuItems,
   mainMenuNames,
@@ -16,7 +16,7 @@ import { ICurrentPosition, IFormNavigationState } from '../models/online-form.mo
   styleUrls: ["./online-form-payment.component.scss"]
 })
 export class OnlineFormPaymentComponent implements OnInit {
-  @Input() form: Form;
+  @Input() form: FormModel;
   @Input() formNavigationState: IFormNavigationState[];
   @Input() currentPosition: ICurrentPosition;
   @Input() formErrors: object;

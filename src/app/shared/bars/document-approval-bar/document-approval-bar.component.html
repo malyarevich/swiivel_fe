@@ -13,13 +13,13 @@
   </div>
   <div class="document-approval-bar__buttons">
     <div class="document-approval-bar__button">
-      <sw-button [style]="colors.WHITE" (click)="skipDocument.emit()">
+      <sw-button color="white" (click)="skipDocument.emit()">
         <i class="fas fa-step-forward button_ico"></i>Skip
       </sw-button>
     </div>
     <div class="document-approval-bar__button">
       <sw-button
-        [style]="colors.WHITE"
+        color="white"
         (click)="changeStatus.emit(statuses.need_further_review)">
         Need Further Review
       </sw-button>

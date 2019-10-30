@@ -8,7 +8,7 @@ import {
 } from '@angular/animations';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { Form } from '@app/models/data-collection/form.model';
+import { FormModel } from '@app/models/data-collection/form.model';
 import { Subscription } from 'rxjs';
 import { FilesService } from '../../services/files.service';
 
@@ -37,7 +37,7 @@ import { FilesService } from '../../services/files.service';
   ]
 })
 export class OnlinePdfFormsComponent implements OnInit, OnDestroy {
-  @Input() form: Form;
+  @Input() form: FormModel;
   @Input() formErrors: object;
   @Input() fg: FormGroup;
 
