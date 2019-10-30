@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { FormCreatorService } from '@app/form-creator/form-creator.service';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, filter } from 'rxjs/operators';
 
 @Component({
   selector: 'sw-form-creator-workarea-intro',
@@ -10,46 +10,35 @@ import { takeUntil } from 'rxjs/operators';
   styleUrls: ['./intro.component.scss']
 })
 export class WorkareaIntroComponent implements OnInit, OnDestroy {
-
-  packetIntroduction = {
-    content: '',
-    sectionName: 'Packet Introduction',
-    sectionWidth: 'full'
-  }
-  textareaControl: FormControl = new FormControl(null, { updateOn: 'blur' });
-
+  form: FormGroup;
   private destroyed$ = new Subject();
 
   constructor(
     private formCreatorService: FormCreatorService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private fb: FormBuilder
   ) {
-    this.textareaControl.valueChanges.pipe(
-      takeUntil(this.destroyed$)
-    ).subscribe(value => {
-      this.setIntroContent(value);
-    });
-    this.formCreatorService.formTemplate$.pipe(
-      takeUntil(this.destroyed$)
-    ).subscribe(formTemplate => {
-      if (formTemplate && formTemplate.packetIntroduction && this.packetIntroduction !== formTemplate.packetIntroduction) {
-        this.packetIntroduction = formTemplate.packetIntroduction;
-        this.textareaControl.setValue(formTemplate.packetIntroduction.content);
-        this.cdr.markForCheck();
-      }
-    });
+
+
   }
 
   ngOnInit() {
-  }
-
-  setIntroContent(value: string) {
-    this.packetIntroduction.content = value;
-    this.formCreatorService.formTemplate = Object.assign(this.formCreatorService.formTemplate, { packetIntroduction: this.packetIntroduction })
+    this.formCreatorService.form$.pipe(
+      takeUntil(this.destroyed$),
+      filter(form => !!form),
+    ).subscribe(form => {
+      this.form = form.get('packetIntroduction') || this.fb.group({
+        content: ['',],
+        sectionName: ['Packet Introduction'],
+        sectionWidth: ['full']
+      });
+      this.form.get('content').valueChanges.subscribe(console.log);
+    });
   }
 
   ngOnDestroy(): void {
-    this.destroyed$.next();
+    this.destroyed$.next(true);
+    this.destroyed$.complete();
   }
 
 }

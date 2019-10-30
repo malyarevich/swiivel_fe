@@ -32,16 +32,16 @@
         </div>
       </div>
       <div class="content h-100" data-e2e="content-h-100">
-        <sw-input-button-group [(ngModel)]="dublicate" [options]="buttonOptions"></sw-input-button-group>
-        <div class="row w-100 h-100 no-m" data-e2e="duplicate_block" *ngIf="dublicate">
+        <sw-input-button-group [formControl]="dublicate" [options]="buttonOptions"></sw-input-button-group>
+        <div class="row w-100 h-100 no-m" data-e2e="duplicate_block" *ngIf="!!dublicate.value">
           <div class="col-3" data-e2e="col-3" style="padding-left: 8px; padding-right: 8px;">
             <div class="search-wrap" data-e2e="search-wrap">
               <input class="search" data-e2e="search" [formControl]="filter" placeholder="Search" />
               <i class="icon fas fa-search"></i>
             </div>
             <cdk-virtual-scroll-viewport itemSize="35" class="forms-viewport" data-e2e="forms-viewport">
-              <div *cdkVirtualFor="let item of dataSource" class="form-item" data-e2e="form-item" [class.selected]="isSelected(item)"
-                (click)="selectForm(item)">{{item.name}}</div>
+              <div *cdkVirtualFor="let item of formsList" class="form-item" data-e2e="form-item"
+                [class.selected]="isSelected(item)" (click)="selectForm(item)">{{item.name}}</div>
             </cdk-virtual-scroll-viewport>
           </div>
           <div class="col-9" data-e2e="col-9" style="padding-left: 8px; padding-right: 8px; height: 100%;">
@@ -50,9 +50,9 @@
                 <div class="title" data-e2e="title">
                   <div class="name" data-e2e="name"> {{ selectedItem.name }}</div>
                 </div>
-                <div class="pdf-container" data-e2e="pdf-container">
-                    <pdf-viewer [src]="selectedItem.src"
-                    style="display: block; margin-top: 60px;" zoom="0.7"></pdf-viewer>
+                <div class="pdf-containerx" data-e2e="pdf-container">
+                  <pdf-viewer [src]="selectedItem.src" style="display: block; margin-top: 60px;" zoom="0.7">
+                  </pdf-viewer>
                 </div>
               </ng-container>
 
@@ -77,7 +77,7 @@
   <sw-button class="outline-btn" style="margin-right: 10px;" (click)="prevStep()">
     Cancel
   </sw-button>
-  <sw-button (click)="nextStep()">
+  <sw-button (click)="nextStep()" [disabled]="this.form.invalid || saving">
     Save & Go Next Step
   </sw-button>
 </div>
