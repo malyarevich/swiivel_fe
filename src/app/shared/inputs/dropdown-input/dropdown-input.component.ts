@@ -42,7 +42,7 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
   @Input() panelClass = 'dropdown-overlay';
   @Input()
   set multiple(opt: boolean) {
-    this._multiple = opt === undefined ? false : opt;
+    this._multiple = !!opt;
     this._sm = new SelectionModel(this._multiple);
   }
   @Input()
