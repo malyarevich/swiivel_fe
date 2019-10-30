@@ -79,7 +79,9 @@ export class ApiService {
     return this.http.post('/proxy/form-builder/form-template', form);
   }
 
-  updateGeneralForm(form: any, id: string) {
+  updateGeneralForm(form: any, id?: string) {
+    if (!id && !form._id) return throwError(`No id`);
+    else if (!id) id = form._id;
     return this.http.put(`/proxy/form-builder/form-template/${id}`, form);
   }
 

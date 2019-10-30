@@ -70,7 +70,7 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
   @ViewChild('droplist', { static: false }) droplist;
   @ViewChild('holder', { static: false, read: ElementRef }) holder: ElementRef;
 
-  constructor(private popup: Popup, private cdr: ChangeDetectorRef) {}
+  constructor(private popup: Popup, private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this._sm = new SelectionModel(this._multiple);
