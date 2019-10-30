@@ -1,5 +1,9 @@
 @import "index";
 
+.fa-search {
+  display: none;
+}
+
 :host {
   .input_text {
     width: 100%;
@@ -16,13 +20,10 @@
       border-radius: 3px;
       outline: none;
       padding: 10px;
-      padding-top: 15px;
+      padding-top: 20px;
       &:focus {
         border: 1px solid $purple;
       }
-    }
-    i {
-      display: none;
     }
   }
 
@@ -39,13 +40,13 @@
       border: 1px solid $error-color;
     }
     i {
-        width: 13px;
-        height: 13px;
-        display: block;
-        position: absolute;
-        top: 13px;
-        right: 10px;
-        // color: $gray-color;
+      width: 13px;
+      height: 13px;
+      display: block;
+      position: absolute;
+      top: 13px;
+      right: 10px;
+      // color: $gray-color;
       display: block;
       color: $error-color;
     }
@@ -58,10 +59,53 @@
   }
 }
 
+:host(.pdf-form) {
+  .input_text .input_text__input {
+    height: calc(100% - 0.25em);
+  }
+}
+
 :host(.settings-field,.filter-field) {
   .input_text__input {
     height: 25px;
-    padding: 5px 10px;
+    padding: 5px 14px;
+  }
+}
+
+:host(.filter-field) {
+  .input_text {
+    position: relative;
+
+    &__input {
+      border-color: transparent;
+      height: 25px;
+      padding: 5px 10px 5px 19px;
+    }
+
+    .fa-search {
+      color: #A4A4A4;
+      cursor: pointer;
+      display: block;
+      position: absolute;
+      top: 0.75rem;
+      left: 5px;
+
+      @media (min-width: 1280px) {
+        top: 0.6rem;
+      }
+    }
+
+    .fa-times {
+      position: absolute;
+      top: 0.75rem;
+      right: 5px;
+      color: #A4A4A4;
+      cursor: pointer;
+
+      @media (min-width: 1280px) {
+        top: 0.5rem;
+      }
+    }
   }
 }
 
@@ -73,11 +117,33 @@
     padding: 0;
     font: 800 14px/20px $nunito-sans;
   }
-
 }
 
 :host(.no_styles.small) {
   .input_text__input {
     font: 800 12px/15px $nunito-sans;
+  }
+}
+
+:host(.online_form__data_picker) {
+  span.placeholder {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  .input_text__input {
+    font-size: 1rem;
+    min-height: 3rem;
+
+    & + span.placeholder {
+      left: 1.25rem;
+      top: 0.25rem;
+    }
+  }
+}
+
+:host(.read_only) {
+  .input_text__input {
+    background-color: #eee;
   }
 }

@@ -173,7 +173,7 @@ sw-input-email,
 sw-input-number {
   .phone_number,
   .email,
-  .dropdown_input_container,
+  .container,
   .input_number {
     @extend %placeholder;
     &.empty {
@@ -195,7 +195,7 @@ sw-input-number {
 }
 
 sw-dropdown-input.settings-field {
-  .dropdown_input_container {
+  .container {
     .input_label {
       display: none;
       width: calc(100% - 28px);

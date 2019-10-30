@@ -2,8 +2,8 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild, Renderer2, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UtilsService } from '@core/utils.service';
-import { Form } from '@models/data-collection/form';
+import { UtilsService } from '@app/core/utils.service';
+import { FormModel } from '@models/data-collection/form.model';
 import { IconsEnum } from '@shared/icons.enum';
 import { DialogComponent } from '@shared/popup/dialog.component';
 import { pick } from 'lodash';
@@ -28,11 +28,18 @@ export class FormTableComponent implements OnInit {
   public statusArray = [
     { title: 'All', value: null },
     { title: 'Active', value: 'active' },
-    { title: 'Drafts', value: 'draft' },
+    { title: 'Draft', value: 'draft' },
     { title: 'In Review', value: 'review' },
     { title: 'Closed', value: 'closed' },
     { title: 'Archived', value: 'archived' },
   ];
+  public statusArrayOptions = [...this.statusArray];
+
+  public typeArray = [
+    { title: 'Registration', value: 'registration' },
+    { title: 'Application', value: 'application' },
+  ];
+
   public activeTab = this.statusArray[0];
 
   // BULK BUTTON
@@ -52,26 +59,28 @@ export class FormTableComponent implements OnInit {
   public popupActionBtnText = '';
   public popupContentArray: { title: string, id?: any }[] = [];
   public canLabelsRemove = false;
+  public isPopupOpen = false;
 
   public icons = IconsEnum;
+  public totalAmount = 0;
   totalItems: number;
   showSpinner: boolean;
 
   static createSharedUrl(id: string) {
-    return `${window.location.href}/online-form/${id}`;
+    return `${window.location.origin}/view-form/${id}`;
   }
   download: {
     url: SafeResourceUrl;
     filename: string;
   } = {
-      url: null,
-      filename: null
-    }
+    url: null,
+    filename: null
+  };
   filterForm: FormGroup;
   sort = ['name', true];
   currentPage = 1;
 
-  statusesOptions: string[] = ['Active', 'Drafts', 'In Review', 'Closed', 'Archived'];
+  statusesOptions: string[] = ['Active', 'Draft', 'In Review', 'Closed', 'Archived'];
   _sm: SelectionModel<any>;
 
   constructor(
@@ -90,10 +99,13 @@ export class FormTableComponent implements OnInit {
       updatedAt: [null],
       status: [null]
     });
+
+    this.statusArrayOptions.splice(0, 1);
   }
 
   ngOnInit() {
     this._sm = new SelectionModel(true);
+    this.dataSource.$totalAmount.subscribe(amount => this.totalAmount = amount ? amount : 0);
     this.dataSource.formsListMetadata$.subscribe(metadata => {
       if (metadata.page > metadata.last_page) {
         this.params.page = 1;
@@ -108,13 +120,11 @@ export class FormTableComponent implements OnInit {
       debounceTime(300),
       distinctUntilChanged(),
       map(value => {
-        if (value['status']) value['status'] = this.statusArray.find(status => status.title === value['status']).value
         Object.keys(value).forEach(key => (value[key] === null || value[key] === '') && delete value[key]);
         return value;
       })
     ).subscribe(value => {
       this.params.filter = { ...value };
-
       this.dataSource.loadFormsList(this.params);
     });
     this.dataSource.$loading.subscribe((loading: boolean) => {
@@ -199,15 +209,6 @@ export class FormTableComponent implements OnInit {
       }
       this.disabledBulkBtn = this._sm.selected.length === 0;
     }
-    // if (this.selectedForms.has(row)) {
-    //   this.selectedForms.delete(row);
-    // } else {
-    //   this.selectedForms.add(row);
-    // }
-
-    // this.disabledBulkBtn = this.selectedForms.size ? false : true;
-
-
   }
 
   rowSelected(row: any) {
@@ -217,13 +218,14 @@ export class FormTableComponent implements OnInit {
   clickTab(filter) {
     this.activeTab = filter;
     if (filter.title === 'All') {
-      this.filterForm.get('status').reset();
+      this.filterForm.get('status').setValue(null);
     } else {
-      this.filterForm.get('status').setValue(filter.title, { emitEvent: false});
+      this.filterForm.get('status').setValue([this.statusArray.find(value => value.title === filter.title)], { emitEvent: false});
     }
   }
 
   bulkAction(selectedIndex) {
+    this.isPopupOpen = true;
     switch (this.bulkOptions[selectedIndex]) {
       case 'Share':
         this.openSharePopup();
@@ -254,6 +256,7 @@ export class FormTableComponent implements OnInit {
     }
     this._sm.clear();
     this.disabledBulkBtn = true;
+    this.isPopupOpen = false;
   }
 
   popupSetActionBtnTextAndLogicRemoved(type: string) {
@@ -280,12 +283,13 @@ export class FormTableComponent implements OnInit {
   }
 
   onShareLink(form): void {
+    this.isPopupOpen = true;
     this._sm.clear();
     this.disabledBulkBtn = true;
     this.openSharePopup(form);
   }
 
-  openSharePopup(form?: Form) {
+  openSharePopup(form?: FormModel) {
     this.popupTitle = 'Share';
 
     if (form) {
@@ -293,7 +297,7 @@ export class FormTableComponent implements OnInit {
       this.popupContentArray.push({ title: FormTableComponent.createSharedUrl(form.mongo_id) });
     } else {
       this.popupContentArray = [];
-      this._sm.selected.forEach((item: Form) => {
+      this._sm.selected.forEach((item: FormModel) => {
         this.popupContentArray.push({ title: FormTableComponent.createSharedUrl(item.mongo_id) });
       });
     }
@@ -309,7 +313,7 @@ export class FormTableComponent implements OnInit {
     this.popupTitle = 'Archive';
 
     this.popupContentArray = [];
-    this._sm.selected.forEach((item: Form) => {
+    this._sm.selected.forEach((item: FormModel) => {
       this.popupContentArray.push({ title: item.name, id: item.id });
     });
 
@@ -324,7 +328,7 @@ export class FormTableComponent implements OnInit {
     this.popupTitle = 'Export PDF';
 
     this.popupContentArray = [];
-    this._sm.selected.forEach((item: Form) => {
+    this._sm.selected.forEach((item: FormModel) => {
       this.popupContentArray.push({ title: item.name, id: item.mongo_id });
     });
 
@@ -349,7 +353,7 @@ export class FormTableComponent implements OnInit {
     this.dataCollectionService
       .duplicateForm(mongoId)
       .subscribe((res) => {
-        this.router.navigate(['form-creator', res._id]).then();
+        this.router.navigate(['form-constructor', res._id]).then();
       });
   }
 
@@ -357,7 +361,7 @@ export class FormTableComponent implements OnInit {
     this.download = {
       url: null,
       filename: null
-    }
+    };
     window.URL.revokeObjectURL(url);
     this.cdr.markForCheck();
   }
@@ -408,5 +412,12 @@ export class FormTableComponent implements OnInit {
           });
       }
     });
+  }
+
+  getUserName(permission: any): any {
+    return {
+      name: permission && permission.user && permission.user.full_name ? permission.user.full_name : 'no name',
+      id: permission && permission.user && permission.user.id ? permission.user.id : ''
+    };
   }
 }

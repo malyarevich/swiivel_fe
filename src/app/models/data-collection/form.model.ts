@@ -1,4 +1,4 @@
-export interface Form {
+export interface FormModel {
   id: number;
   _id: any;
   mongo_id: string;

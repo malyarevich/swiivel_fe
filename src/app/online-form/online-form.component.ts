@@ -14,7 +14,7 @@ import {
 } from "@angular/forms";
 import { BehaviorSubject, Observable, Subject, pipe, Subscription } from "rxjs";
 import { takeUntil } from "rxjs/operators";
-import { Form, ISectionTab } from "@app/models/data-collection/form";
+import { FormModel, ISectionTab } from "@models/data-collection/form.model";
 import { OnlineFormService } from "./services/online-form.service";
 import {
   IMenuItems,
@@ -32,7 +32,7 @@ import { SIGNATURE_TYPES, E_SIGNATURE_TYPES } from "./models/signature.model";
 })
 export class OnlineFormComponent implements OnInit, OnDestroy {
   // formId: string;
-  form: Form;
+  form: FormModel;
   fg: FormGroup;
 
   formNavigationState$: BehaviorSubject<object[]> = new BehaviorSubject(null);
@@ -120,7 +120,7 @@ export class OnlineFormComponent implements OnInit, OnDestroy {
     //   this.formId = params.mongo_id;
     // });
 
-    this.getOneFormSubscription = this.onlineFormService.getOneForm().subscribe((form: Form) => {
+    this.getOneFormSubscription = this.onlineFormService.getOneForm().subscribe((form: FormModel) => {
       this.form = form;
       console.log(this.form);
 

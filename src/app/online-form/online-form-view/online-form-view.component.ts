@@ -1,6 +1,6 @@
 import {Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy} from "@angular/core";
 import { FormGroup } from "@angular/forms";
-import { Form } from "@app/models/data-collection/form";
+import { FormModel } from "@models/data-collection/form.model";
 import { Observable, Subscription } from "rxjs";
 import { Location } from "@angular/common";
 import {
@@ -17,7 +17,7 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class OnlineFormViewComponent implements OnInit {
-  @Input() form: Form;
+  @Input() form: FormModel;
   @Input() formNavigationState: any;
   @Input() currentPosition: object;
   @Input() formErrors: object;

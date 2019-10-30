@@ -9,3 +9,19 @@
     justify-content: space-between;
   }
 }
+
+:host(.online_form.read_only) {
+  .container {
+    background-color: #eee;
+  }
+}
+
+:host {
+  .filter {
+    sw-input-text {
+      .icon {
+        top: 5px;
+      }
+    }
+  }
+}

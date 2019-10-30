@@ -1,6 +1,5 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component } from '@angular/core';
-import { ColorsEnum } from '@shared/colors.enum';
 
 @Component({
   selector: 'sw-form-creator-workarea-terms-and-conditions',
@@ -9,7 +8,6 @@ import { ColorsEnum } from '@shared/colors.enum';
 })
 
 export class WorkareaTermsConditionComponent {
-  public colors = ColorsEnum;
   public isShown = true;
   public textarea = {
     rows: 5,

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { FormGroup } from "@angular/forms";
-import { Form } from "@app/models/data-collection/form";
+import { FormModel } from '@models/data-collection/form.model';
 
 @Component({
   selector: "sw-online-form-documents-forms",
@@ -8,7 +8,7 @@ import { Form } from "@app/models/data-collection/form";
   styleUrls: ["./online-form-documents-forms.component.scss"]
 })
 export class OnlineFormDocumentsFormsComponent implements OnInit {
-  @Input() form: Form;
+  @Input() form: FormModel;
   @Input() formNavigationState: any;
   @Input() currentPosition: object;
   @Input() formErrors: object;

@@ -8,8 +8,10 @@ import { FormSearchParams } from '@app/models/form-search-params';
 export class FormsDataSource implements DataSource<any> {
   private formsSubject = new BehaviorSubject<any[]>([]);
   private dataSubject = new BehaviorSubject<any[]>([]);
+  private totalAmountSubject = new BehaviorSubject<any>({});
   private loadingSubject = new BehaviorSubject<boolean>(false);
   public $loading = this.loadingSubject.asObservable();
+  public $totalAmount = this.totalAmountSubject.asObservable();
 
   private defaultMetadata = {page: 1, last_page: 1, count: 0, limit: 10, total: 0};
   private metadata: BehaviorSubject<any> = new BehaviorSubject<any>(this.defaultMetadata);
@@ -33,6 +35,10 @@ export class FormsDataSource implements DataSource<any> {
     return this.metadata.asObservable();
   }
 
+  get totalAmount() {
+    return this.totalAmountSubject.asObservable();
+  }
+
   connect(_collectionViewer: CollectionViewer): Observable<any[]> {
     return this.formsSubject.asObservable();
   }
@@ -41,6 +47,7 @@ export class FormsDataSource implements DataSource<any> {
     this.formsSubject.complete();
     this.loadingSubject.complete();
     this.metadata.complete();
+    this.totalAmountSubject.complete();
   }
 
   loadFormsList(params: FormSearchParams = { page: 0, limit: 10 }) {
@@ -54,10 +61,11 @@ export class FormsDataSource implements DataSource<any> {
       this.metadata.next(metadata);
       this.loadingSubject.next(false);
       this.dataSubject.next(forms.data);
+      this.totalAmountSubject.next(forms.total);
     });
   }
 
-  filter(filters) {
+  filter(filters: any): void {
     let unfiltered = this.dataSubject.getValue().slice();
     if ('name' in filters && filters.name !== null && filters.name.length > 0) {
       unfiltered = unfiltered.filter(form => form.name.includes(filters.name));
@@ -75,18 +83,18 @@ export class FormsDataSource implements DataSource<any> {
     this.formsSubject.next(unfiltered);
   }
 
-  sort(sort) {
-    let unsorted = this.formsSubject.getValue().slice();
+  sort(sort: any): void {
+    const unsorted = this.formsSubject.getValue().slice();
     if (sort[1] !== null) {
       unsorted.sort((a, b) => {
         if (a[sort[0]] > b[sort[0]]) {
           return -1;
-      }
-      if (b[sort[0]] > a[sort[0]]) {
+        }
+        if (b[sort[0]] > a[sort[0]]) {
           return 1;
-      }
-      return 0;
-    });
+        }
+        return 0;
+      });
       if (sort[1] === false) {
         unsorted.reverse();
       }
