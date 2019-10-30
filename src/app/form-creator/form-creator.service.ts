@@ -5,11 +5,12 @@ import { TreeDataSource } from './tree.datasource';
 import { filter } from 'rxjs/operators';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ApiService } from '@app/core/api.service';
-import { cloneDeep, isPlainObject, get, set, unset, flatMap } from 'lodash';
+import { cloneDeep, isPlainObject, get, set, unset, flatMap, isArrayLike, values } from 'lodash';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 
-const flatten = (fields) => {
+const flatten = (fields = []) => {
   let result = [];
+  if (!isArrayLike(fields)) fields = [];
   for (const field of fields) {
     if (field.fields) {
       result.push(...flatten(field.fields))
@@ -72,7 +73,7 @@ export class FormCreatorService {
 
   constructor(private fb: FormBuilder, private api: ApiService) {
     this.api.getSidebarFields().subscribe((fields) => {
-      let formFields = this.form ? flatten(this.form.value.fields) : [];
+      let formFields = this.form ? flatten(this.form.fields) : [];
       this.sidebarSubject$.next(fields.map(field => joinForm(field, [], formFields)).slice());
     });
     this.sidebarSubject$.subscribe((fields) => {
@@ -93,7 +94,7 @@ export class FormCreatorService {
       }
     }
     if (field) section.fields = [field];
-    let formGroup = this.createForm(section);
+    let formGroup = this.createField(section);
     if (!field) formGroup.addControl('fields', this.fb.group({}))
     this.form.form = this.fb.group({ [section.name]: formGroup });
     this.form.workspace = [section];
@@ -165,8 +166,8 @@ export class FormCreatorService {
     }
   }
   getFieldFormParent(field) {
-    let form = this.form.form;
-    if (Object.keys(form.controls).length === 0) return 0;
+    let form = this.form.get('form');
+    if (!form || !form.controls || Object.keys(form.controls).length === 0) return 0;
     if (field._id) {
 
     } else {
@@ -265,7 +266,7 @@ export class FormCreatorService {
       console.log(cloneDeep(field))
       this.addField(field, ancestors, only);
     } else if (!!formParent) {
-      formParent.addControl(field.name, this.createForm(field));
+      formParent.addControl(field.name, this.createField(field));
       let spaceParent = this.getFieldSpaceParent(field);
       if (spaceParent) {
         if (!spaceParent.find(a => a.name === field.name && a.type === field.type)) {
@@ -402,7 +403,7 @@ export class FormCreatorService {
 
 
 
-  createForm(field, ctx = this) {
+  createField(field, ctx = this) {
     let schema = this.fieldTypes.mapped.find(ftype => ftype.type === field.type && ftype.mapped === field.mapped && ftype.name === field.name);
     if (!schema) schema = this.fieldTypes.schema.find(ftype => ftype.type === field.type);
     let obj = Object.assign({}, schema, field);
@@ -418,28 +419,43 @@ export class FormCreatorService {
     if (field.fields && field.fields.length > 0) {
       let fields = this.fb.group({});
       form.addControl('fields', fields);
-      field.fields.forEach(child => fields.addControl(child.name, this.createForm(child)));
-    }
-    if (field._id) {
-      this.formsById[field._id] = form;
+      field.fields.forEach(child => fields.addControl(child.name, this.createField(child)));
     }
     return form;
   }
 
   initForm(fields) {
-    console.groupCollapsed(`Creating form`);
+    console.groupCollapsed(`Creating fields`);
     console.log(fields);
-    let form = this.fb.group({
-      fields: [],
-      workspace: [],
-    })//.array(fields.map(this.createForm));
+    let form = this.fb.group({})
+    if (!isArrayLike(fields)) fields = [];
     for (let field of fields) {
-      field.form = this.createForm(field)
+      field.form = this.createField(field)
       form.addControl(field.name, field.form);
     }
     console.groupEnd();
     return form;
   }
+  // initForm(formData) {
+  //   console.groupCollapsed(`Creating form`);
+  //   console.log(formData);
+  //   let form = this.fb.group({
+  //     fields: this.createField(formData.fields),
+  //     workspace: [],
+  //     packetIntroduction: this.fb.group({
+  //       ...formData.packetIntroduction
+  //     })
+  //   })//.array(fields.map(this.createField));
+  //   // if (!isArrayLike(formData.fields)) { formData.fields = []; }
+  //   // console.log(formData.fields)
+  //   // for (let field of formData.fields) {
+  //   //   field.form = this.createField(field)
+  //   //   form.addControl(field.name, field.form);
+  //   // }
+
+  //   console.groupEnd();
+  //   return form;
+  // }
 
   get form() {
     return this._form.getValue();
@@ -449,9 +465,27 @@ export class FormCreatorService {
     return this._form.asObservable();
   }
   set form(_form) {
-    _form.workspace = cloneDeep(_form.fields);
-    _form.form = this.initForm(_form.fields);
-    this._form.next(_form);
+    _form = cloneDeep(_form);
+    let fields = cloneDeep(_form.fields);
+    delete _form.fields;
+    let form = this.fb.group({
+      workspace: [cloneDeep(fields)],
+      form: [this.initForm(fields)]
+    });
+    for (let field in _form) {
+      if (isPlainObject(_form[field])) {
+        form.addControl(field.toString(), this.fb.group(_form[field]));
+      } else {
+        form.addControl(field, this.fb.control(_form[field]));
+      }
+    }
+    if (isPlainObject(fields)) {
+      fields = values(fields);
+    }
+
+    // form.workspace = cloneDeep(fields);
+    // form.form = this.initForm(fields);
+    this._form.next(form);
     this.events$.next({ action: 'update' });
   }
 

@@ -20,28 +20,33 @@ import { Subject } from 'rxjs';
 })
 export class FormCreatorComponent implements OnInit {
   defaults = {
-    'packetIntroduction': {
-      'sectionName': 'Packet Introduction',
-      'sectionWidth': 'full'
-    },
-    'documentsForms': {
-      'documents': {
-        'sectionName': 'Documents for Parents',
-        'sectionWidth': 'full'
-      },
-      'formsPDF': {
-        'sectionName': 'School Forms',
-        'sectionWidth': 'full'
-      },
-    },
-    'consent': {
-      'sectionName': 'Parent Consent',
-      'sectionWidth': 'full'
-    },
-    'termsConditions': {
-      'sectionName': 'Terms and Conditions',
-      'sectionWidth': 'full'
-    }
+    fields: [],
+    type: 'registration',
+    name: null
+    // 'packetIntroduction': {
+    //   'sectionName': 'Packet Introduction',
+    //   'sectionWidth': 'full'
+    // },
+    // 'documentsForms': {
+    //   'documents': {
+    //     'sectionName': 'Documents for Parents',
+    //     'sectionWidth': 'full'
+    //   },
+    //   'formsPDF': {
+    //     'sectionName': 'School Forms',
+    //     'sectionWidth': 'full'
+    //   },
+    // },
+    // 'consent': {
+    //   'sectionName': 'Parent Consent',
+    //   'sectionWidth': 'full'
+    // },
+    // 'termsConditions': {
+    //   'sectionName': 'Terms and Conditions',
+    //   'sectionWidth': 'full'
+    // },
+    // 'fields': [],
+    // 'name': null,
   };
   workarea: string;
   sections = [
@@ -95,7 +100,7 @@ export class FormCreatorComponent implements OnInit {
           // });
         });
       } else {
-        // this.service.createForm(this.defaults);
+        this.service.form = this.defaults;
         console.info(`Create New Form`);
       }
     });

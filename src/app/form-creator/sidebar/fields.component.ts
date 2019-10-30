@@ -49,6 +49,23 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
     this.destroyed$.next(true);
     this.destroyed$.complete();
   }
+  toggleNode(node: any): void {
+    this.treeSource.toggle(node);
+    if (!node.isActive) {
+      this.service.removeField(node);
+      let topInactive: any;
+      for (const ancestor of this.treeSource.parentsOf(node)) {
+        if (!ancestor.isActive) {
+          topInactive = ancestor;
+        }
+      }
+      this.treeControl.collapse(topInactive);
+    } else {
+      this.service.addField(node, Array.from(this.treeSource.parentsOf(node)).slice(0, -1));
+    }
+    node.isExpanded = this.treeControl.isExpanded(node);
+    this.cdr.markForCheck();
+  }
 
   ngOnInit() {
     this.service.sidebar.subscribe((sidebar) => {
