@@ -161,13 +161,14 @@ export class OnlineDocumentsComponent implements OnInit, OnDestroy {
   }
 
   onCancelUpload(document: any) {
-    this.uploadStatus[document.id] = UploadStatus.uploaded;
+    this.uploadStatus[document.id] = UploadStatus.init;
+    // this.uploadStatus[document.id] = UploadStatus.uploaded;
     this.fg.patchValue({ ...this.fg.value, [document.id]: undefined });
   }
 
   deleteUploadedFile(document: any) {
     // console.log({...this.fg.value, [document['id']]: undefined});
-    this.uploadStatus[document.id] = UploadStatus.uploaded;
+    this.uploadStatus[document.id] = UploadStatus.init;
     this.fg.patchValue({ ...this.fg.value, [document.id]: undefined });
   }
 
@@ -214,8 +215,11 @@ export class OnlineDocumentsComponent implements OnInit, OnDestroy {
   }
 
   onUploadSelected(file, documentId: any) {
+    console.log(file);
     this.uploadStatus[documentId] = UploadStatus.selected;
     this.file[documentId] = file;
+
+    console.log(this.uploadStatus);
     // `File selected: ${file.name} (${file.size})`;
   }
 
