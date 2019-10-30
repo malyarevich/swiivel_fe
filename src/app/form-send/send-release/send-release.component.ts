@@ -3,6 +3,7 @@ import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { FormSendService } from '../form-send.service';
 import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
 import { DataCollectionService } from '@app/forms-dashboard/data-collection.service';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 @Component({
   selector: 'sw-send-release',
@@ -14,6 +15,7 @@ export class SendReleaseComponent implements OnInit {
   public periodsList: any = [];
   public selectedPeriods: any = [];
   public accountsList: any[] = [];
+  public selectedAccountsList: any[] = [];
   public periodsFilter: FormControl = new FormControl([]);
   public form: FormGroup;
   public showForm: boolean = false;
@@ -50,6 +52,10 @@ export class SendReleaseComponent implements OnInit {
       this.accountsList = val;
       this.cdr.markForCheck();
     });
+    this.formSendService.$selectedAccounts.subscribe(val => {
+      this.selectedAccountsList = val;
+      this.cdr.markForCheck();
+    })
     this.form = this.fb.group({
       name: [''],
       startDate: [''],
@@ -85,7 +91,6 @@ export class SendReleaseComponent implements OnInit {
     console.log('ROUND', this.form.value);
     this.showForm = false;
   }
-
 
   isSelectedPeriod(id): boolean {
     return this.formSendService.isSelectedPeriod(id);
@@ -128,6 +133,20 @@ export class SendReleaseComponent implements OnInit {
         this.renderer.selectRootElement(this.link.nativeElement).click()
         // this.clearLink(url);
       });
+  }
+
+  toggleAccount(item: any, e: boolean) {
+    if (item.data) {
+      item.data.forEach(i => {
+        this.formSendService.toggleAccounts(i, e);
+      });
+    } else {
+      this.formSendService.toggleAccounts(item, e);
+    }
+  }
+
+  isSelectedAccount(i) {
+    return this.formSendService.isSelectedAccounts(i);
   }
 
 

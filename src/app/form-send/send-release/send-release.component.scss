@@ -238,6 +238,8 @@
     margin-left: 15px;
   }
   .list-wrap {
-    border-right: 1px solid #CACACA;
+    &:not(:last-of-type) {
+      border-right: 1px solid #CACACA;
+    }
   }
 }

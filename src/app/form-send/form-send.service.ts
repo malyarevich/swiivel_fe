@@ -9,6 +9,7 @@ export class FormSendService {
   private periodsSubject: BehaviorSubject<any> = new BehaviorSubject<any>([]);
   private currentPeriods: BehaviorSubject<any> = new BehaviorSubject<any>([]);
   private accoutSubject: BehaviorSubject<any> = new BehaviorSubject<any>([]);
+  private currentAccounts: BehaviorSubject<any> = new BehaviorSubject<any>([]);
   private accountsList = [
     {
       name: 'New Students',
@@ -57,6 +58,18 @@ export class FormSendService {
     return this.accoutSubject.asObservable();
   }
 
+  get $selectedAccounts() {
+    return this.currentAccounts.asObservable();
+  }
+
+  get selectedAccounts() {
+    return this.currentAccounts.getValue();
+  }
+
+  set selectedAccounts(accounts) {
+    this.currentAccounts.next(accounts);
+  }
+
   get formId() {
     return this.form_id;
   }
@@ -75,7 +88,7 @@ export class FormSendService {
 
   loadFormSend(): void {
     this.api.getFormSend(this.form_id).subscribe(res => {
-      console.log('response', res);
+      console.log('RESPONSE', res);
       if (res) {
         if (res.periods) {
           if (res.periods.list) {
@@ -110,6 +123,23 @@ export class FormSendService {
 
   isSelectedPeriod(id): boolean {
     return this.selectedPeriods.findIndex(i => (i.id === id)) >= 0 ? true : false;
+  }
+
+  toggleAccounts(item: any, e: boolean): void {
+    console.log('SELECT ACCOUNT', item);
+    let tmp = this.selectedAccounts;
+    if (e === true) {
+      tmp.push(item);
+    } else if (e === false) {
+      tmp.splice(tmp.findIndex(i => (i === item)), 1);
+    }
+    this.selectedAccounts = tmp;
+    console.log('selectedAccountsselectedAccounts', this.selectedAccounts);
+  }
+
+  isSelectedAccounts(item): boolean {
+    console.log('IS SELCTED ACCOUNT', item, this.selectedAccounts,this.selectedAccounts.findIndex(i => (i === item)))
+    return this.selectedAccounts.findIndex(i => (i === item)) >= 0 ? true : false;
   }
 
 

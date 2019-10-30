@@ -268,7 +268,7 @@
                                     <div class="accounts-list">
                                       <div class="account" *ngFor="let item of accountsList">
                                         <div class="item">
-                                          <sw-input-checkbox>
+                                          <sw-input-checkbox [check]="isSelectedAccount(item)" (checked)="toggleAccount(item, $event)">
                                             <span class="label">
                                               {{ item.name }} <p class="count">({{ item.data.length }})</p>
                                             </span>
@@ -278,10 +278,9 @@
                                           </sw-icon-button>
                                         </div>
                                         <div class="nested" *ngIf="item.isExpanded">
-                                          <div class="item" *ngFor="let i of item.data" >
-                                              <!-- (click)="selectItem()" -->
+                                          <div class="item" *ngFor="let i of item.data">
                                             <div class="label">
-                                              <sw-input-checkbox>
+                                              <sw-input-checkbox [check]="isSelectedAccount(i)" (checked)="toggleAccount(i, $event)">
                                                 <span class="label">
                                                   {{ i.first_name }} {{ i.last_name }}
                                                 </span>
@@ -292,27 +291,27 @@
                                       </div>
                                     </div>
                                   </div>
-                                  <!-- <div class="col-6">
+                                  <div class="col-6 list-wrap">
                                     <div class="list-title">
-                                      Chosen Periods
+                                      Chosen Accounts
                                     </div>
-                                    <cdk-virtual-scroll-viewport itemSize="50" class="list-viewport"
+                                    <div itemSize="50" class="list-viewport"
                                       data-e2e="forms-viewport">
-                                      <ng-container *cdkVirtualFor="let item of dataSource">
-                                        <div *ngIf="isChecked(item?.id)" class=" list-item" data-e2e="form-item">
+                                      <ng-container *ngFor="let item of selectedAccountsList">
+                                        <div class=" list-item" data-e2e="form-item">
                                           <div class="item-title">
+                                            {{ item | json }}
                                             {{ item.name }}
                                             <div class="action" (click)="checkboxAction(item, false)">
                                               <i class="fas fa-times"></i>
                                             </div>
                                           </div>
                                           <div class="splits">
-                                            {{ getSplits(item) }}
                                           </div>
                                         </div>
                                       </ng-container>
-                                    </cdk-virtual-scroll-viewport>
-                                  </div> -->
+                                    </div>
+                                  </div>
                                 </div>
                               </div>
                             </div>
