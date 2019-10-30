@@ -19,7 +19,7 @@
         </div>
         <div class="app-form-table__controls-bulk" data-e2e ="bulkactions">
           <sw-dropdown-select [options]="bulkOptions" #bulk="dropdown" (selected)="bulkAction($event)"
-            [panelClass]="'app-form-table-dropdown-overlay'" [disabled]="disabledBulkBtn">
+                              [panelClass]="'app-form-table-dropdown-overlay'" [disabled]="disabledBulkBtn">
             <sw-button [disabled]="disabledBulkBtn">
               <span class="app-form-table__controls-bulk-btn-text">Bulk Actions</span>
               <i class="fas fa-chevron-down" [ngClass]="{'fa-chevron-up': bulk.isOpened}"></i>
@@ -31,9 +31,13 @@
     </div>
     <div>
       <div class="app-form-table__tabs" data-e2e ="alltabs">
-        <button *ngFor="let tab of statusArray" class="app-form-table__tab"
-          [ngClass]="{'app-form-table__tab--activated': activeTab == tab}" (click)="clickTab(tab)">
-          {{tab.title}}
+        <button
+          *ngFor="let tab of statusArray"
+          class="app-form-table__tab"
+          [class.app-form-table__tab--activated]="activeTab == tab"
+          (click)="clickTab(tab)"
+        >
+          {{ tab.title }}
         </button>
       </div>
     </div>
@@ -53,7 +57,7 @@
                     Form Name
                     <div class="header_container__title_icons">
                       <i class="fas icon"
-                        [ngClass]="{'up': sort[0] === 'name' && sort[1] === false, 'down': sort[0] === 'name' && sort[1] === true}"></i>
+                         [ngClass]="{'up': sort[0] === 'name' && sort[1] === false, 'down': sort[0] === 'name' && sort[1] === true}"></i>
                     </div>
                   </div>
                   <div class="header_container__filter">
@@ -62,7 +66,9 @@
                 </div>
               </th>
               <td cdk-cell *cdkCellDef="let form">
-                <span class="text">{{form.name}}</span>
+                <a [routerLink]="['/form-management', form.mongo_id]">
+                  <span class="text">{{form.name}}</span>
+                </a>
               </td>
             </ng-container>
 
@@ -74,11 +80,19 @@
                     type
                     <div class="header_container__title_icons">
                       <i class="fas icon"
-                        [ngClass]="{'up': sort[0] === 'type' && sort[1] === false, 'down': sort[0] === 'type' && sort[1] === true}"></i>
+                         [ngClass]="{'up': sort[0] === 'type' && sort[1] === false, 'down': sort[0] === 'type' && sort[1] === true}"></i>
                     </div>
                   </div>
                   <div class="header_container__filter">
-                    <sw-input-text class="filter-field" formControlName="type"></sw-input-text>
+                    <sw-dropdown-input
+                      formControlName="type"
+                      type="table-header"
+                      typeItem="purpure"
+                      [multiple]="true"
+                      [isClearable]="true"
+                      [options]="typeArray"
+                    >
+                    </sw-dropdown-input>
                   </div>
                 </div>
               </th>
@@ -96,7 +110,7 @@
                     access
                     <div class="header_container__title_icons">
                       <i class="fas icon"
-                        [ngClass]="{'up': sort[0] === 'access' && sort[1] === false, 'down': sort[0] === 'access' && sort[1] === true}"></i>
+                         [ngClass]="{'up': sort[0] === 'access' && sort[1] === false, 'down': sort[0] === 'access' && sort[1] === true}"></i>
                     </div>
                   </div>
                   <div class="header_container__filter">
@@ -105,7 +119,19 @@
                 </div>
               </th>
               <td cdk-cell *cdkCellDef="let form">
-                asd
+                <span *ngIf="form.permissions && form.permissions.length">
+                  <div class="main-text" *ngFor="let permission of form.permissions">
+                    <sw-user-item [userItem]="getUserName(permission)" [isRoleShown]="false"></sw-user-item>
+                  </div>
+                </span>
+                <div *ngIf="!form.permissions || !form.permissions.length" class="button-invite-user">
+                  <sw-button color="transparent">
+                    <span class="button-invite-user-text">
+                      <i class="fas fa-plus icon-invite-user"></i>
+                      Invite users
+                    </span>
+                  </sw-button>
+                </div>
               </td>
             </ng-container>
 
@@ -117,7 +143,7 @@
                     created by
                     <div class="header_container__title_icons">
                       <i class="fas icon"
-                        [ngClass]="{'up': sort[0] === 'createdBy' && sort[1] === false, 'down': sort[0] === 'createdBy' && sort[1] === true}"></i>
+                         [ngClass]="{'up': sort[0] === 'createdBy' && sort[1] === false, 'down': sort[0] === 'createdBy' && sort[1] === true}"></i>
                     </div>
                   </div>
                   <div class="header_container__filter">
@@ -138,11 +164,15 @@
                     update date
                     <div class="header_container__title_icons">
                       <i class="fas icon"
-                        [ngClass]="{'up': sort[0] === 'updated_at' && sort[1] === false, 'down': sort[0] === 'updated_at' && sort[1] === true}"></i>
+                         [ngClass]="{'up': sort[0] === 'updated_at' && sort[1] === false, 'down': sort[0] === 'updated_at' && sort[1] === true}"></i>
                     </div>
                   </div>
                   <div class="header_container__filter">
-                    <sw-input-text class="filter-field" formControlName="updatedAt"></sw-input-text>
+                    <sw-input-english-datepicker
+                      formControlName="updatedAt"
+                      [placeholder]="''"
+                      [class]="'filter-field'"
+                    ></sw-input-english-datepicker>
                   </div>
                 </div>
               </th>
@@ -160,20 +190,35 @@
                     status
                     <div class="header_container__title_icons">
                       <i class="fas icon"
-                        [ngClass]="{'up': sort[0] === 'status' && sort[1] === false, 'down': sort[0] === 'status' && sort[1] === true}"></i>
+                         [ngClass]="{'up': sort[0] === 'status' && sort[1] === false, 'down': sort[0] === 'status' && sort[1] === true}"></i>
                     </div>
                   </div>
                   <div class="header_container__filter">
-                    <sw-input-suggest class="filter-field" formControlName="status" [options]="statusArray">
-                    </sw-input-suggest>
+                    <sw-dropdown-input
+                      formControlName="status"
+                      type="table-header"
+                      typeItem="purpure"
+                      [multiple]="true"
+                      [isClearable]="true"
+                      [options]="statusArrayOptions"
+                    >
+                    </sw-dropdown-input>
                   </div>
                 </div>
               </th>
               <td cdk-cell *cdkCellDef="let form">
-                <sw-dropdown-select [options]="statusesOptions" #bulk="dropdown"
-                  (selected)="changeStatus($event, [form.id])">
-                  <sw-small-button [ngClass]="{'icon-end': true}" [class]="getStatusColor(form.status)"
-                    [text]="form.status" [icon]="icons.CARET_DOWN"></sw-small-button>
+                <sw-dropdown-select
+                  [options]="statusesOptions"
+                  #bulk="dropdown"
+                  (selected)="changeStatus($event, [form.id])"
+                >
+                  <sw-button
+                    size="small"
+                    [color]="getStatusColor(form.status)"
+                  >
+                    <span>{{form.status}}</span>
+                    <i class="fas fa-caret-down"></i>
+                  </sw-button>
                 </sw-dropdown-select>
               </td>
             </ng-container>
@@ -183,14 +228,16 @@
               </th>
               <td cdk-cell *cdkCellDef="let form">
                 <div class="item" data-e2e="Editbutton">
-                  <sw-small-button text="Edit" [icon]="icons.PEN"
-                    [routerLink]="['/form-creator', form.mongo_id]">
-                  </sw-small-button>
+                  <sw-button size="small" [routerLink]="['/form-creator', form.mongo_id]">
+                    <i class="fas fa-pen"></i>
+                    <span>Edit</span>
+                  </sw-button>
                 </div>
                 <div class="item" data-e2e="Viewbutton">
-                  <sw-small-button text="View" [icon]="icons.EYE"
-                    [routerLink]="['/online-form', form.mongo_id]">
-                  </sw-small-button>
+                  <sw-button size="small" [routerLink]="['/online-form', form.mongo_id]">
+                    <i class="fas fa-eye"></i>
+                    <span>View</span>
+                  </sw-button>
                 </div>
                 <div class="item" data-e2e="Sharebutton">
                   <sw-icon-button [icon]="icons.SHARE" (click)="onShareLink(form)">
@@ -210,6 +257,7 @@
             <ng-container cdkColumnDef="paginator">
               <td cdk-footer-cell *cdkFooterCellDef [attr.colspan]="displayedColumns.length">
                 <div class="wrapper" data-e2e="paginatorname">
+                  <p class="paginator-results">{{ this.totalAmount }} Results</p>
                   <sw-paginator [index]="currentPage" [size]="totalItems" (pageChange)="changePage($event)"></sw-paginator>
                 </div>
               </td>
@@ -221,7 +269,7 @@
                   <div class="app_loading__logo">i!</div>
                   <svg class="app_loading__spinner" viewBox="25 25 50 50">
                     <circle class="app_loading__path" cx="50" cy="50" r="20" fill="none" stroke-width="2"
-                      stroke-miterlimit="10" />
+                            stroke-miterlimit="10" />
                   </svg>
                 </div>
               </td>
@@ -229,8 +277,8 @@
 
             <tr cdk-header-row class="filters-row" *cdkHeaderRowDef="displayedColumns;"></tr>
             <tr cdk-row class="table-row" [class.selected]="rowSelected(form)" #data
-              *cdkRowDef="let form; columns: displayedColumns;" [hidden]="showSpinner"
-              (click)="selectRow(form, $event)">
+                *cdkRowDef="let form; columns: displayedColumns;" [hidden]="showSpinner"
+                (click)="selectRow(form, $event)">
             </tr>
             <tr cdk-footer-row *cdkFooterRowDef="['spinner']" [hidden]="!showSpinner">
             </tr>
@@ -254,4 +302,6 @@
       </sw-label>
     </span>
   </sw-dialog>
+  <div *ngIf="isPopupOpen" class="overlay">
+  </div>
 </div>

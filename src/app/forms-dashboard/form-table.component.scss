@@ -2,6 +2,16 @@
 
 .app-form-table {
   padding: 15px;
+  position: relative;
+
+  .overlay {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.4);
+    top: -40px;
+    left: -60px;
+  }
 
   &__header {
     display: flex;
@@ -58,6 +68,7 @@
   .cdk-table {
     width: 100%;
   }
+
   .filters-row {
     background: #F2F2F2;
     box-shadow: inset 0px -1px 0px #E7E7E7;
@@ -133,6 +144,7 @@
         font: 800 12px/13px $nunito-sans;
         text-transform: capitalize;
       }
+
       .second-text {
         font: 400 10px/13px $nunito-sans;
       }
@@ -160,7 +172,9 @@
   }
 
   .cdk-header-cell {
+    vertical-align: top;
     padding: 10px 3px;
+
     &:first-of-type {
       padding-left: 15px;
     }
@@ -186,6 +200,13 @@
         display: flex;
         align-items: center;
         justify-content: center;
+
+        .paginator-results {
+          margin: 0 15px 0 0;
+          font-size: 12px;
+          line-height: 20px;
+          color: $gray-color;
+        }
       }
     }
     &.cdk-column-spinner {
@@ -203,5 +224,21 @@
         }
       }
     }
+  }
+
+  .icon-invite-user {
+    color: $icon-gray;
+    font-size: 10px;
+    padding: 0 3px 0 0;
+  }
+
+  .button-invite-user {
+    padding: 5px 2px;
+  }
+
+  .button-invite-user-text {
+    font-size: 10px;
+    line-height: 13px;
+    color: $button-color;
   }
 }

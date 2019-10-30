@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { cloneDeep } from "lodash";
-import { Form } from "@app/models/data-collection/form";
+import { FormModel } from "@models/data-collection/form.model";
 
 @Component({
   selector: "sw-online-form-terms-conditions",
@@ -9,7 +9,7 @@ import { Form } from "@app/models/data-collection/form";
   styleUrls: ["./online-form-terms-conditions.component.scss"]
 })
 export class OnlineFormTermsConditionsComponent implements OnInit {
-  @Input() form: Form;
+  @Input() form: FormModel;
   @Input() formNavigationState: any;
   @Input() currentPosition: object;
   @Input() formErrors: any;

@@ -5,11 +5,12 @@
   align-items: center;
   margin: 0 6px 0 0;
 
+
   .user-item__image {
+    flex-shrink: 0;
     width: 13px;
     height: 13px;
     border-radius: 50%;
-    position: relative;
     overflow: hidden;
     background: no-repeat center center $icon-grey-color;
     background-size: cover;

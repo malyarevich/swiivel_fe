@@ -5,7 +5,6 @@ import { RouterModule } from '@angular/router';
 // Buttons
 import { ButtonComponent } from './buttons/button/button.component';
 import { IconButtonComponent } from './buttons/icon-button/icon-button.component';
-import { SmallButtonComponent } from './buttons/small-button/small-button.component';
 import { DropdownInputComponent } from './inputs/dropdown-input/dropdown-input.component';
 // Inputs
 import { InputButtonGroupComponent } from './inputs/input-button-group/input-button-group.component';
@@ -74,7 +73,6 @@ registerLocaleData(localHe)
     ButtonComponent,
     DropdownSelectComponent,
     IconButtonComponent,
-    SmallButtonComponent,
     // Inputs
     InputButtonGroupComponent,
     InputCheckboxComponent,
@@ -118,7 +116,6 @@ registerLocaleData(localHe)
     // Buttons
     ButtonComponent,
     IconButtonComponent,
-    SmallButtonComponent,
     // Inputs
     InputButtonGroupComponent,
     InputCheckboxComponent,

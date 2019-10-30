@@ -1,27 +1,44 @@
 <div
-    #holder
-    class="dropdown_input_container"
-    data-e2e="dropdown_input_container"
-    [class.active]="active"
-    [class.empty]="isEmpty()"
-    (click)="showPopup()"
+  #holder
+  class="container"
+  data-e2e="container"
+  [class.active]="active"
+  [class.disabled]="disabled"
+  [class.empty]="isEmpty()"
+  [class.filter]="type === 'filter'"
+  [class.table-header]="type === 'table-header'"
+  (click)="showPopup($event)"
 >
-  <ng-content select="span"></ng-content>
-  <div *ngIf="isDisplaySelected">
+  <i *ngIf="type === 'table-header'" class="fas fa-search fa-xs"></i>
+
+  <ng-content select="span" class="span"></ng-content>
+
+  <div class="container__row" *ngIf="isDisplaySelected">
     <div
-      class="dropdown_input_container__input"
-      data-e2e="dropdown_input_container_input"
-      *ngFor="let item of value" [class.many]="_multiple"
+      *ngFor="let item of value"
+      class="container__input"
+      data-e2e="container_input"
+      [class.item-purpure]="typeItem === 'purpure'"
+      [class.many]="_multiple"
     >
-      <span class="text"> {{ item.title }} </span>
-      <i class="fas fa-times" (click)="remove(item, $event)"></i>
+      <span class="text">
+        {{ dropdownSubHeader ? item?.name : item?.title }}
+      </span>
+      <button *ngIf="_multiple" class="remove-btn" (click)="remove(item, $event)">
+        <i class="fas fa-times"></i>
+      </button>
     </div>
   </div>
-  <div class="dropdown_input_container__icon">
-    <div class="dropdown_input_container__icon_up">
+  <div class="container__icon">
+    <i
+      *ngIf="isClearable && !isEmpty() && !active"
+      class="fas fa-times container__icon--clear"
+      (click)="clear()"
+    ></i>
+    <div class="container__icon_up">
       <i class="fas fa-caret-up"></i>
     </div>
-    <div class="dropdown_input_container__icon_down">
+    <div class="container__icon_down">
       <i class="fas fa-caret-down"></i>
     </div>
   </div>
@@ -30,33 +47,57 @@
 <ng-template #droplist>
   <div *ngIf="!dropdownSubHeader">
     <div class="dropdown_items_container" data-e2e="dropdown_items_container">
-      <div class="dropdown_items_container__item" data-e2e="dropdown_items_container_item" *ngFor="let item of dropdownList" [class.selected]="isSelected(item)"
-           (click)="select(item)">
-        <div class="checkbox_container" data-e2e="checkbox_container" *ngIf="_multiple" [class.selected]="isSelected(item)">
-        </div>
-        <span class="text">{{item.title}}</span>
+      <div
+        class="dropdown_items_container__item"
+        data-e2e="dropdown_items_container_item"
+        *ngFor="let item of dropdownList"
+        [class.selected]="isSelected(item)"
+        (click)="select(item)"
+      >
+        <div
+          class="checkbox_container"
+          data-e2e="checkbox_container"
+          *ngIf="_multiple"
+          [class.selected]="isSelected(item)"
+        ></div>
+        <span class="text">{{ item?.title }}</span>
       </div>
     </div>
   </div>
   <div *ngIf="dropdownSubHeader">
-    <div class="dropdown_items_container">
-      <div class="dropdown_items_sub-container" *ngFor="let item of dropdownList | keyvalue">
+    <div class="dropdown_items_container dropdown_items_sub-header-container">
+      <div
+        class="dropdown_items_sub-container"
+        *ngFor="let item of dropdownList | keyvalue"
+      >
         <div class="dropdown_items_sub-header">
-          {{ item.value.title }}
-          <span *ngIf="item.value.param === 'documents' && item.value.count" class="dropdown_items_sub-header--count">
-            ({{ item.value.count }})
+          {{ item?.value?.title }}
+          <span
+            *ngIf="item.value.param === 'documents' && item.value.count"
+            class="dropdown_items_sub-header--count"
+          >
+            ({{ item?.value?.count }})
           </span>
         </div>
         <div
           class="dropdown_items_container__item"
-          *ngFor="let dropdownItem of item.value.data" [class.selected]="isSelected(dropdownItem)"
-          (click)="select(dropdownItem)">
-          <div class="checkbox_container" *ngIf="_multiple" [class.selected]="isSelected(dropdownItem)">
-          </div>
+          *ngFor="let dropdownItem of item.value.data"
+          [class.selected]="isSelected(dropdownItem)"
+          (click)="select(dropdownItem)"
+        >
+          <div
+            class="checkbox_container"
+            *ngIf="_multiple"
+            [class.selected]="isSelected(dropdownItem)"
+          ></div>
           <span class="text">{{ dropdownItem.name }}</span>
-          <span *ngIf="dropdownItem.param === 'documents' && dropdownItem.count" class="text text--count">
-            ({{ dropdownItem.count }})
-          </span>
+          &nbsp;
+          <span
+            *ngIf="dropdownItem.param === 'documents' && dropdownItem.count"
+            class="text text--count"
+          >
+              ({{ dropdownItem.count }})
+            </span>
         </div>
       </div>
     </div>

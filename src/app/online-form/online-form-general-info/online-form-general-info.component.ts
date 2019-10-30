@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, AfterViewInit } from "@angular/core";
 import { FormGroup } from "@angular/forms";
-import { Form } from '@app/models/data-collection/form';
+import { FormModel } from '@models/data-collection/form.model';
 import {
   menuItems,
   mainMenuNames,
@@ -15,7 +15,7 @@ import { GenerateErrorsService } from '@app/online-form/utils/generate-errors.se
   styleUrls: ["./online-form-general-info.component.scss"]
 })
 export class OnlineFormGeneralInfoComponent implements OnInit {
-  @Input() form: Form;
+  @Input() form: FormModel;
   @Input() formNavigationState: any;
   @Input() currentPosition: { page: string, tab: number };
   @Input() formErrors: object;
