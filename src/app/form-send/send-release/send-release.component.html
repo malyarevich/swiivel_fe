@@ -251,8 +251,8 @@
                       </div>
                       <div class="section-content">
                         <div class="row">
-                          <div class="col-12">
-                            <div class="lists-wrap">
+                          <div class="col-12 lists-wrap">
+                            <!-- <div class="lists-wrap"> -->
                               <div class="container">
                                 <div class="row">
                                   <div class="col-6 list-wrap">
@@ -260,12 +260,13 @@
                                       List of Accounts
                                     </div>
                                     <div class="search-wrap" data-e2e="search-wrap">
-                                      <input class="search" data-e2e="search" [formControl]="filter"
+                                      <input class="search" data-e2e="search" 
                                         placeholder="Search" />
+                                        <!-- [formControl]="filter" -->
                                       <i class="icon fas fa-search"></i>
                                     </div>
-                                    <!-- <div class="accounts-list">
-                                      <div class="account" *ngFor="let item of accountsSource">
+                                    <div class="accounts-list">
+                                      <div class="account" *ngFor="let item of accountsList">
                                         <div class="item">
                                           <sw-input-checkbox>
                                             <span class="label">
@@ -277,7 +278,8 @@
                                           </sw-icon-button>
                                         </div>
                                         <div class="nested" *ngIf="item.isExpanded">
-                                          <div class="item" *ngFor="let i of item.data" (click)="selectItem()">
+                                          <div class="item" *ngFor="let i of item.data" >
+                                              <!-- (click)="selectItem()" -->
                                             <div class="label">
                                               <sw-input-checkbox>
                                                 <span class="label">
@@ -288,7 +290,7 @@
                                           </div>
                                         </div>
                                       </div>
-                                    </div> -->
+                                    </div>
                                   </div>
                                   <!-- <div class="col-6">
                                     <div class="list-title">
@@ -315,7 +317,7 @@
                               </div>
                             </div>
                           </div>
-                        </div>
+                        <!-- </div> -->
                       </div>
                     </section>
                     <section class="actions-section">

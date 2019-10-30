@@ -13,6 +13,7 @@ export class SendReleaseComponent implements OnInit {
 
   public periodsList: any = [];
   public selectedPeriods: any = [];
+  public accountsList: any[] = [];
   public periodsFilter: FormControl = new FormControl([]);
   public form: FormGroup;
   public showForm: boolean = false;
@@ -43,6 +44,10 @@ export class SendReleaseComponent implements OnInit {
     });
     this.formSendService.$selectedPeriods.subscribe(val => {
       this.selectedPeriods = val;
+      this.cdr.markForCheck();
+    });
+    this.formSendService.$accountsList.subscribe(val => {
+      this.accountsList = val;
       this.cdr.markForCheck();
     });
     this.form = this.fb.group({
@@ -84,6 +89,10 @@ export class SendReleaseComponent implements OnInit {
 
   isSelectedPeriod(id): boolean {
     return this.formSendService.isSelectedPeriod(id);
+  }
+
+  getIcon(expanded: boolean): string {
+    return expanded ? 'fa-caret-up' : 'fa-caret-down';
   }
 
   getSplits(item: any) {

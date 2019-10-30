@@ -8,7 +8,34 @@ export class FormSendService {
   private form_id: string;
   private periodsSubject: BehaviorSubject<any> = new BehaviorSubject<any>([]);
   private currentPeriods: BehaviorSubject<any> = new BehaviorSubject<any>([]);
-
+  private accoutSubject: BehaviorSubject<any> = new BehaviorSubject<any>([]);
+  private accountsList = [
+    {
+      name: 'New Students',
+      key: 'newStudents',
+      data: []
+    },
+    {
+      name: 'Specific Grades',
+      key: 'specificGrades',
+      data: []
+    },
+    {
+      name: 'New Families',
+      key: 'newFamilies',
+      data: []
+    },
+    {
+      name: 'Current Families',
+      key: 'currentFamilies',
+      data: []
+    },
+    {
+      name: 'All Parents',
+      key: 'allParents',
+      data: []
+    }
+  ];
 
   get $periodsList() {
     return this.periodsSubject.asObservable();
@@ -26,6 +53,10 @@ export class FormSendService {
     this.currentPeriods.next(periods);
   }
 
+  get $accountsList() {
+    return this.accoutSubject.asObservable();
+  }
+
   get formId() {
     return this.form_id;
   }
@@ -39,6 +70,7 @@ export class FormSendService {
   initFormSend(id: string) {
     this.form_id = id;
     this.loadFormSend();
+    this.loadUsers();
   }
 
   loadFormSend(): void {
@@ -53,6 +85,17 @@ export class FormSendService {
         }
       }
     });
+  }
+
+  loadUsers() {
+    this.accountsList.forEach(async a => {
+      await this.api.getUsersByRole(a.key).subscribe(res => {
+        if (res) {
+          a.data = res;
+        }
+      });
+    });
+    this.accoutSubject.next(this.accountsList);
   }
 
   togglePeriods(item: any, e: boolean): void {

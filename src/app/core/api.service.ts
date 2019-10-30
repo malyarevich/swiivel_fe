@@ -79,6 +79,10 @@ export class ApiService {
     return this.http.get(`/proxy/form-builder/release/${form_id}`);
   }
 
+  getUsersByRole(key: string) {
+    return this.http.get(`/persons/eligible/${key}`);
+  }
+
   // FORM SEND END
 
   public download(url: string) {

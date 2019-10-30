@@ -217,9 +217,27 @@
     justify-content: center;
     align-items: center;
   }
-
-
-
-
-
+  .item {
+    padding: 10px;
+    display: flex;
+    flex-flow: row nowrap;
+    box-shadow: inset 0px -1px 0px #E7E7E7;
+    sw-icon-button {
+      margin-left: auto;
+    }
+    span.label {
+      display: flex;
+      align-items: center;
+      .count {
+        color: #CACACA;
+        margin: 0 0 0 5px;
+      }
+    }
+  }
+  .nested {
+    margin-left: 15px;
+  }
+  .list-wrap {
+    border-right: 1px solid #CACACA;
+  }
 }
