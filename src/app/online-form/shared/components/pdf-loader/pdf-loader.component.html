@@ -21,8 +21,8 @@
                 >
                   <sw-input-text
                     [formControlName]="div['id']"
-                    class="agile-control"
-                    [ngStyle]="styleObject(div)"
+                    class="agile-control pdf-form"
+                    [ngStyle]="styleObject(div, true)"
                   >
                     <span
                       class="placeholder"
@@ -42,8 +42,8 @@
                   <!-- [(ngModel)]="div.linkedField.value" -->
                   <sw-input-textarea
                     [formControlName]="div['id']"
-                    class="agile-control"
-                    [ngStyle]="styleObject(div)"
+                    class="agile-control pdf-form"
+                    [ngStyle]="styleObject(div, true)"
                   >
                     <span class="input_label">
                       {{ div.linkedField.name | titlecase }}
@@ -58,11 +58,11 @@
                 >
                   <sw-input-textarea
                     [formControlName]="div['id']"
-                    class="agile-control"
-                    [ngStyle]="styleObject(div)"
+                    class="agile-control pdf-form"
+                    [ngStyle]="styleObject(div, true)"
                   >
                     <span class="input_label">
-                      {{ " Sign Here" | titlecase }}
+                      {{ ' Sign Here' | titlecase }}
                     </span>
                   </sw-input-textarea>
                 </div>
@@ -74,8 +74,8 @@
                 >
                   <sw-input-checkbox
                     [formControlName]="div['id']"
-                    class="agile-control"
-                    [ngStyle]="styleObject(div)"
+                    class="agile-control pdf-form"
+                    [ngStyle]="styleObject(div, true)"
                   >
                     <span class="label"></span>
                   </sw-input-checkbox>
@@ -86,7 +86,7 @@
         </div>
       </ng-container>
 
-      <div class="pdf-wrapper">
+      <div class="pdf-wrapper" *ngIf="pdf.form">
         <div class="pdf-overlay"></div>
         <pdf-viewer
           [original-size]="false"
@@ -103,7 +103,7 @@
     </div>
   </div>
 
-  <div *ngIf="pdf.form.numberOfPages > 1" class="pdf_container">
+  <div *ngIf="pdf.form && pdf.form.numberOfPages > 1" class="pdf_container">
     <!-- <ngb-pagination
           [collectionSize]="pdf.form.numberOfPages * 10"
           [(page)]="page"

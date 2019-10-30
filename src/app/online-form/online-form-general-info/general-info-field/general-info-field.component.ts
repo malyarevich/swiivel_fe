@@ -1,51 +1,60 @@
-import { Component, OnInit, Input, OnDestroy } from "@angular/core";
-import { Field } from "src/app/models/data-collection/field.model";
+import { Component, OnInit, Input, OnDestroy, OnChanges } from '@angular/core';
+import { Field } from 'src/app/models/data-collection/field.model';
 import {
   OnlineFormService,
   IFormField
-} from "../../services/online-form.service";
-import { FormControl, Validators, FormGroup } from "@angular/forms";
-import { Subscription } from "rxjs";
+} from '../../services/online-form.service';
+import { FormControl, Validators, FormGroup } from '@angular/forms';
+import { Subscription, BehaviorSubject } from 'rxjs';
+
+interface IFieldInput {
+  field: Field;
+  fg: FormGroup;
+  validationText: string;
+}
 
 @Component({
-  selector: "sw-general-info-field",
-  templateUrl: "./general-info-field.component.html",
-  styleUrls: ["./general-info-field.component.scss"]
+  selector: 'sw-general-info-field',
+  templateUrl: './general-info-field.component.html',
+  styleUrls: ['./general-info-field.component.scss']
 })
-
-export class GeneralInfoFieldComponent implements OnInit, OnDestroy {
+export class GeneralInfoFieldComponent implements OnInit, OnChanges, OnDestroy {
   @Input() field: Field;
-  @Input() formErrors: any;
+  @Input() formErrors: string;
   @Input() fg: FormGroup;
+  @Input() isViewOnly: boolean;
   value: string | any;
-  isDisabled: any;
   fc: FormControl;
 
   validSubscription: Subscription;
-  validationText: string;
 
   fieldComponent: any;
-  fieldInputs: object;
+  fieldInputs$: BehaviorSubject<IFieldInput> = new BehaviorSubject(null);
   fieldOutputs: object;
 
   constructor(private onlineFormService: OnlineFormService) {}
 
   ngOnInit() {
-    this.initIsDisabled();
     this.initFormField();
     this.initFormFieldValue();
     this.initReactiveFormControl();
-    this.initListener();
-    this.fieldInputs = {
+    // this.initListener();
+    this.fieldInputs$.next({
       field: this.field,
       fg: this.fg,
-      validationText: this.validationText
-    };
+      validationText:
+        this.formErrors.constructor !== Object ? this.formErrors : ''
+    });
     this.fieldOutputs = {};
   }
 
-  initIsDisabled() {
-    this.isDisabled = this.onlineFormService.getIsFormView();
+  ngOnChanges() {
+    this.fieldInputs$.next({
+      field: this.field,
+      fg: this.fg,
+      validationText:
+        this.formErrors.constructor !== Object ? this.formErrors : ''
+    });
   }
 
   initFormField() {
@@ -57,16 +66,18 @@ export class GeneralInfoFieldComponent implements OnInit, OnDestroy {
   initFormFieldValue() {
     this.value = this.field._id
       ? this.onlineFormService.getFormValueById(this.field._id)
-      : "ID is undefined";
+      : 'ID is undefined';
   }
 
   initReactiveFormControl() {
     if (this.field._id) {
-      const aValidators = !this.field.options.readonly ? Validators.compose(this.getComposed()) : {};
+      const aValidators = !this.field.options.readonly
+        ? Validators.compose(this.getComposed())
+        : {};
       this.fc = new FormControl(
         {
           value: this.value,
-          disabled: this.field.options.readonly || this.isDisabled
+          disabled: this.field.options.readonly || this.isViewOnly
         },
         aValidators
       );
@@ -77,7 +88,7 @@ export class GeneralInfoFieldComponent implements OnInit, OnDestroy {
   }
 
   getComposed() {
-    let arrayValidators = [];
+    const arrayValidators = [];
 
     if (this.field.options.required) {
       arrayValidators.push(Validators.required);
@@ -98,19 +109,20 @@ export class GeneralInfoFieldComponent implements OnInit, OnDestroy {
     return arrayValidators;
   }
 
-  initListener() {
-    this.validSubscription = this.onlineFormService.onChangeServerValidations.subscribe(
-      list => {
-        this.validationText = list[this.field._id];
+  // initListener() {
 
-        this.fieldInputs = {
-          field: this.field,
-          fg: this.fg,
-          validationText: this.validationText
-        };
-      }
-    );
-  }
+  //   this.validSubscription = this.onlineFormService.onChangeServerValidations.subscribe(
+  //     list => {
+  //       this.validationText = list[this.field._id];
+
+  //       this.fieldInputs = {
+  //         field: this.field,
+  //         fg: this.fg,
+  //         validationText: this.validationText
+  //       };
+  //     }
+  //   );
+  // }
 
   ngOnDestroy(): void {
     if (this.validSubscription) {

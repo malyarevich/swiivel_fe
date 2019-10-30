@@ -1,13 +1,14 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { cloneDeep } from "lodash";
-import { Form } from "@app/models/data-collection/form";
+import { Form } from "@app/models/data-collection/form.model";
 import {
   menuItems,
   mainMenuNames,
   IMainMenuNames,
   IMenuItems
 } from "../models/menu.model";
+import { ICurrentPosition, IFormNavigationState } from '../models/online-form.model';
 
 @Component({
   selector: "sw-online-form-payment",
@@ -16,9 +17,9 @@ import {
 })
 export class OnlineFormPaymentComponent implements OnInit {
   @Input() form: Form;
-  @Input() formNavigationState: any;
-  @Input() currentPosition: object;
-  @Input() formErrors: any;
+  @Input() formNavigationState: IFormNavigationState[];
+  @Input() currentPosition: ICurrentPosition;
+  @Input() formErrors: object;
   @Input() fg: FormGroup;
 
   percent: number;

@@ -1,72 +1,53 @@
-import { Component, Input, OnInit, OnDestroy } from "@angular/core";
-// import {
-//   NgbCalendar,
-//   NgbCalendarHebrew,
-//   NgbDate,
-//   NgbDatepickerI18n,
-//   NgbDatepickerI18nHebrew,
-//   NgbDateStruct
-// } from "@ng-bootstrap/ng-bootstrap";
-import { FormGroup } from "@angular/forms";
-import { Subscription } from "rxjs";
-import { Field } from "src/app/models/data-collection/field.model";
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { Field } from 'src/app/models/data-collection/field.model';
 
-//TODO: Refactoring of the class
 @Component({
-  selector: "app-hebrew-date-field",
-  templateUrl: "./hebrew-date-field.component.html",
-  styleUrls: ["./hebrew-date-field.component.scss"],
-  // providers: [
-  //   { provide: NgbCalendar, useClass: NgbCalendarHebrew },
-  //   { provide: NgbDatepickerI18n, useClass: NgbDatepickerI18nHebrew }
-  // ]
+  selector: 'app-hebrew-date-field',
+  templateUrl: './hebrew-date-field.component.html',
+  styleUrls: ['./hebrew-date-field.component.scss']
 })
-export class HebrewDateFieldComponent implements OnInit, OnDestroy {
-  // model: NgbDateStruct;
-  model: any;
+export class HebrewDateFieldComponent implements OnInit {
   @Input() field: Field;
   @Input() fg: FormGroup;
   @Input() validationText: string;
 
-  value: string;
-  isLoaded: boolean = false;
-  onValueChangeSubscription: Subscription;
-// private calendar: NgbCalendar, public i18n: NgbDatepickerI18n
-  constructor() {
-    // this.dayTemplateData = this.dayTemplateData.bind(this);
+  constructor() {}
+
+  ngOnInit() {}
+
+  getSeparator(): string {
+    return this.field.options.separator &&
+      this.field.options.separator[0] &&
+      this.field.options.separator[0].value
+        ? this.field.options.separator[0].value
+        : 'dash';
   }
 
-  ngOnInit() {
-    if (this.field._id) {
-      this.value = this.fg.get(this.field._id).value;
-      if (!this.field.options.readonly) {
-        this.onValueChangeSubscription = this.fg
-          .get(this.field._id)
-          .valueChanges.subscribe(val => {
-            this.value = val;
-          });
-      }
-
-      if (this.field.options.readonly) {
-        this.fg.controls[this.field._id].disable();
-      }
-    }
-    this.isLoaded = true;
+  getFormat(): string {
+    return this.field.options.dateFormat &&
+      this.field.options.dateFormat[0] &&
+      this.field.options.dateFormat[0].value
+      ? this.field.options.dateFormat[0].value
+      : 'mm-dd-yyyy';
   }
 
-  // dayTemplateData(date: NgbDate) {
-  //   return {
-  //     gregorian: (this.calendar as NgbCalendarHebrew).toGregorian(date)
-  //   };
-  // }
+  getValue(): string {
+    return this.fg.value[this.field._id];
+  }
 
-  // selectToday() {
-  //   this.model = this.calendar.getToday();
-  // }
+  getLabel(): string {
+    return this.field.options.hideLabel ? '' : this.field.name;
+  }
 
-  ngOnDestroy(): void {
-    if (this.onValueChangeSubscription) {
-      this.onValueChangeSubscription.unsubscribe();
-    }
+  isActive(): boolean {
+    return (
+      // !(this.field.options && this.field.options.readonly) &&
+      this.fg.controls[this.field._id].enabled
+    );
+  }
+
+  isRequired(): boolean {
+    return this.field.options.required; // && !this.field.options.readonly;
   }
 }

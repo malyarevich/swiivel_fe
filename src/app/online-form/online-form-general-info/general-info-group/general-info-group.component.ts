@@ -1,11 +1,11 @@
-import { Component, OnInit, Input } from "@angular/core";
-import { Field } from "src/app/models/data-collection/field.model";
-import { FormGroup } from "@angular/forms";
+import { Component, OnInit, Input } from '@angular/core';
+import { Field } from 'src/app/models/data-collection/field.model';
+import { FormGroup } from '@angular/forms';
 
 @Component({
-  selector: "sw-general-info-group",
-  templateUrl: "./general-info-group.component.html",
-  styleUrls: ["./general-info-group.component.scss"]
+  selector: 'sw-general-info-group',
+  templateUrl: './general-info-group.component.html',
+  styleUrls: ['./general-info-group.component.scss']
 })
 export class GeneralInfoGroupComponent implements OnInit {
   @Input() group: Field;
@@ -13,6 +13,7 @@ export class GeneralInfoGroupComponent implements OnInit {
   @Input() fieldNameList: object;
   @Input() fg: FormGroup;
   @Input() groupCaption: string;
+  @Input() isViewOnly: boolean;
 
   groups: Field[];
   fields: Field[];
@@ -29,13 +30,13 @@ export class GeneralInfoGroupComponent implements OnInit {
 
   initNestedGroups() {
     this.groups = this.group.fields.filter(item => {
-      return item.type === 113;
+      return item.type === 113 || item.type === 114;
     });
   }
 
   initFields() {
     this.fields = this.group.fields.filter(item => {
-      return item.type && item.type !== 113;
+      return item.type && item.type !== 113 && item.type !== 114;
     });
   }
 
@@ -65,7 +66,10 @@ export class GeneralInfoGroupComponent implements OnInit {
         targetNode.constructor === Object
       )
     ) {
-      if (this.fg.contains(id)) {
+      if (
+        this.fg.contains(id) ||
+        (this.fg.controls[id] && this.fg.controls[id].disabled)
+      ) {
         errors[id] = targetNode[id];
       } else {
         if (targetNode[id]) {
@@ -86,5 +90,9 @@ export class GeneralInfoGroupComponent implements OnInit {
       }
     }
     return errors;
+  }
+
+  getWidth(field: Field): string {
+    return field.width ? field.width : 'quarter';
   }
 }

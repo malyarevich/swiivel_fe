@@ -5,23 +5,26 @@ import {
   OnDestroy,
   OnInit,
   Output
-} from "@angular/core";
+} from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { Subject, Subscription } from 'rxjs';
+import {
+  ICurrentPosition,
+  IFormNavigationState
+} from '../../../models/online-form.model';
 import {
   GenerateErrorsService,
   ISectionError
-} from "@app/online-form/utils/generate-errors.service";
-import { Subject, Subscription } from "rxjs";
-import { takeUntil } from "rxjs/operators";
-import { FormGroup } from '@angular/forms';
+} from '../../../utils/generate-errors.service';
 
 @Component({
-  selector: "sw-content-nav",
-  templateUrl: "./content-nav.component.html",
-  styleUrls: ["./content-nav.component.scss"]
+  selector: 'sw-content-nav',
+  templateUrl: './content-nav.component.html',
+  styleUrls: ['./content-nav.component.scss']
 })
 export class ContentNavComponent implements OnInit, OnDestroy {
-  @Input() formNavigationState: any;
-  @Input() currentPosition: { page: string; tab: number };
+  @Input() formNavigationState: IFormNavigationState[];
+  @Input() currentPosition: ICurrentPosition;
   @Input() formErrors: object;
   @Input() fieldNameList: object;
   @Input() fg: FormGroup;
@@ -57,11 +60,14 @@ export class ContentNavComponent implements OnInit, OnDestroy {
         targetNode.constructor === Object
       )
     ) {
-      if (this.fg.contains(id)) {
+      if (
+        this.fg.contains(id) ||
+        (this.fg.controls[id] && this.fg.controls[id].disabled)
+      ) {
         errors[id] = targetNode[id];
       } else {
         Object.keys(targetNode[id]).forEach(key => {
-          errors = {...errors, ...this.getErrorByNodeId(key, targetNode[id])};
+          errors = { ...errors, ...this.getErrorByNodeId(key, targetNode[id]) };
         });
       }
     }
@@ -77,7 +83,7 @@ export class ContentNavComponent implements OnInit, OnDestroy {
   }
 
   hasErrors(id) {
-    return typeof this.formErrors[id] !== "undefined";
+    return typeof this.formErrors[id] !== 'undefined';
   }
 
   ngOnDestroy(): void {

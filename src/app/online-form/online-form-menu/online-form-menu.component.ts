@@ -1,12 +1,13 @@
-import {Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { Form } from '@app/models/data-collection/form';
+import { Form, IPagesPercent } from '@app/models/data-collection/form.model';
 import {
-  IMenuItems,
   IMainMenuNames,
-  menuItems,
-  mainMenuNames
-} from "../models/menu.model";
+  IMenuItems,
+  mainMenuNames,
+  menuItems
+} from '../models/menu.model';
+import { ICurrentPosition, IFormNavigationState } from '../models/online-form.model';
 
 @Component({
   selector: 'sw-online-form-menu',
@@ -16,16 +17,16 @@ import {
 })
 export class OnlineFormMenuComponent implements OnInit {
   @Input() form: Form;
-  @Input() pagesPercents: object[];
-  @Input() formNavigationState: object[];
-  @Input() currentPosition: object;
+  @Input() pagesPercents: IPagesPercent[];
+  @Input() formNavigationState: IFormNavigationState[];
+  @Input() currentPosition: ICurrentPosition;
 
   @Output() onGoToPage: EventEmitter<any> = new EventEmitter;
 
   menuItems;
 
   hoveredItems = [];
-  pathIconsFolder = "assets/images/icons/";
+  pathIconsFolder = 'assets/images/icons/';
 
   constructor() {}
 
@@ -35,18 +36,18 @@ export class OnlineFormMenuComponent implements OnInit {
 
   isShowMenuItem(itemName): boolean {
     const page = this.formNavigationState.find(page => {
-      return page['page'] === itemName
+      return page.page === itemName;
     });
     return !!page;
   }
 
   getPercentByPageName(page): number {
     const currentPage = this.pagesPercents.find(item => {
-      return item['page'] === page;
+      return item.page === page;
     });
 
-    if(currentPage) {
-      return currentPage['percent'];
+    if (currentPage) {
+      return currentPage.percent;
     }
     return -1;
   }
@@ -64,7 +65,7 @@ export class OnlineFormMenuComponent implements OnInit {
   }
 
   isActivePage(itemName): boolean {
-    return this.currentPosition['page'] === itemName;
+    return this.currentPosition.page === itemName;
   }
 
   setActiveMenuItem(itemName): void {

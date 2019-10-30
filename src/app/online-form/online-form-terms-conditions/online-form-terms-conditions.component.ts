@@ -1,7 +1,8 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { cloneDeep } from "lodash";
-import { Form } from "@app/models/data-collection/form";
+import { Form } from "@app/models/data-collection/form.model";
+import { ICurrentPosition, IFormNavigationState } from '../models/online-form.model';
 
 @Component({
   selector: "sw-online-form-terms-conditions",
@@ -10,9 +11,9 @@ import { Form } from "@app/models/data-collection/form";
 })
 export class OnlineFormTermsConditionsComponent implements OnInit {
   @Input() form: Form;
-  @Input() formNavigationState: any;
-  @Input() currentPosition: object;
-  @Input() formErrors: any;
+  @Input() formNavigationState: IFormNavigationState[];
+  @Input() currentPosition: ICurrentPosition;
+  @Input() formErrors: object;
   @Input() fg: FormGroup;
 
   termsConditions: any[];
@@ -39,6 +40,6 @@ export class OnlineFormTermsConditionsComponent implements OnInit {
   }
 
   isShowTermsConditions(termsConditionsIndex: number): boolean {
-    return this.currentPosition["tab"] === termsConditionsIndex;
+    return this.currentPosition.tab === termsConditionsIndex;
   }
 }

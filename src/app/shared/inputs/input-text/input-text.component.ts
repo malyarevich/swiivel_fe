@@ -1,5 +1,6 @@
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
@@ -7,10 +8,8 @@ import {
   Input,
   Output,
   Renderer2,
-  ViewChild, 
-  ChangeDetectorRef} from '@angular/core';
+  ViewChild} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { SizesEnum } from '@shared/sizes.enum';
 
 @Component({
   selector: 'sw-input-text',
@@ -43,7 +42,7 @@ export class InputTextComponent implements ControlValueAccessor {
   @Input() set style(styleType: string) {
     this._style = styleType;
   }
-  @Input() readonly: boolean;
+  @Input() readonly = false;
   @Output() blur = new EventEmitter<any>();
 
   onChange: (value: any) => void;
@@ -83,6 +82,11 @@ export class InputTextComponent implements ControlValueAccessor {
   public writeValue(obj: any): void {
     this.renderer.setProperty(this.input.nativeElement, 'value', obj);
     this.cdr.markForCheck();
+  }
+
+  public clear(): void {
+    this.input.nativeElement.value = '';
+    this.onChange('');
   }
 
 }

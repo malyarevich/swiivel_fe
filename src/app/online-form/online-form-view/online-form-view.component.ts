@@ -1,14 +1,23 @@
-import {Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy} from "@angular/core";
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  ChangeDetectionStrategy
+} from "@angular/core";
 import { FormGroup } from "@angular/forms";
-import { Form } from "@app/models/data-collection/form";
-import { Observable, Subscription } from "rxjs";
-import { Location } from "@angular/common";
+import { Form } from "@app/models/data-collection/form.model";
 import {
   IMenuItems,
   IMainMenuNames,
   menuItems,
   mainMenuNames
 } from "../models/menu.model";
+import {
+  ICurrentPosition,
+  IFormNavigationState
+} from "../models/online-form.model";
 
 @Component({
   selector: "sw-online-form-view",
@@ -18,11 +27,12 @@ import {
 })
 export class OnlineFormViewComponent implements OnInit {
   @Input() form: Form;
-  @Input() formNavigationState: any;
-  @Input() currentPosition: object;
+  @Input() formNavigationState: IFormNavigationState[];
+  @Input() currentPosition: ICurrentPosition;
   @Input() formErrors: object;
   @Input() fieldNameList: object;
   @Input() fg: FormGroup;
+  @Input() isViewOnly: boolean;
 
   @Output() onGoToTab: EventEmitter<any> = new EventEmitter();
 
@@ -32,28 +42,27 @@ export class OnlineFormViewComponent implements OnInit {
 
   getPageTitle(): string {
     return menuItems.find(item => {
-      return item.name === this.currentPosition["page"];
-    })["title"];
+      return item.name === this.currentPosition.page;
+    }).title;
   }
 
   getCurrentPage(): string {
-    return this.currentPosition["page"];
+    return this.currentPosition.page;
   }
 
-  getCurrentTab(): string {
-    return this.currentPosition["tab"];
+  getCurrentTab(): number {
+    return this.currentPosition.tab;
   }
 
   getPageTime(): number {
     return menuItems.find(item => {
-      return item.name === this.currentPosition["page"];
-    })["time"];
+      return item.name === this.currentPosition.page;
+    }).time;
   }
 
   isShow(page, tabId): boolean {
     return (
-      this.currentPosition["page"] === page &&
-      this.currentPosition["tab"] === tabId
+      this.currentPosition.page === page && this.currentPosition.tab === tabId
     );
   }
 
