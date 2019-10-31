@@ -93,13 +93,13 @@ export class OnlineFormService {
     return this.fgList[this.formId].hasError;
   }
 
-  getComponentByTypeNumber = (typeNumber: number) => {
+  getComponentByTypeNumber = (typeNumber: number): IFormField => {
     // return {};
     return componentFieldsMap.get(typeNumber);
   }
 
-  setFormValueById(id: string, value: any) {
-    this.formValues.set(id, value);
+  setFormValueById(id: string, value: any): Map<string, any> {
+    return this.formValues.set(id, value);
     // console.log(this.formValues);
   }
 
@@ -109,10 +109,10 @@ export class OnlineFormService {
       : undefined;
   }
 
-  setFormValues(formValues: Map<string, any>) {
-    this.formValues = formValues
+  setFormValues(formValues: Map<string, any>): Map<string, any> {
+    return (this.formValues = formValues
       ? new Map(Object.entries(formValues))
-      : this.formValues;
+      : this.formValues);
   }
 
   getFormValues(): any {
