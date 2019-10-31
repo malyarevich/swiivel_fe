@@ -1,9 +1,9 @@
-import {Component, OnInit, Output, EventEmitter, ChangeDetectionStrategy} from "@angular/core";
+import {ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output} from '@angular/core';
 
 @Component({
-  selector: "sw-online-form-controls",
-  templateUrl: "./online-form-controls.component.html",
-  styleUrls: ["./online-form-controls.component.scss"],
+  selector: 'sw-online-form-controls',
+  templateUrl: './online-form-controls.component.html',
+  styleUrls: ['./online-form-controls.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class OnlineFormControlsComponent implements OnInit {

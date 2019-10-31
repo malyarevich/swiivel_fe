@@ -9,7 +9,11 @@ import {
   Input,
   Output,
   Renderer2,
+<<<<<<< src/app/shared/inputs/input-file/input-file.component.ts
+  ViewChild} from '@angular/core';
+=======
   ViewChild } from '@angular/core';
+>>>>>>> src/app/shared/inputs/input-file/input-file.component.ts
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { HttpService } from '@app/core/http.service';
 
@@ -46,7 +50,7 @@ export class InputFileComponent implements ControlValueAccessor {
   @HostListener('window:drop', ['$event']) public onDrop(event) {
     event.preventDefault();
     event.stopPropagation();
-    this.onFileAdded(event.dataTransfer.files[0])
+    this.onFileAdded(event.dataTransfer.files[0]);
   }
 
   @HostListener('window:dragover', ['$event']) public onDragOver(evt) {
@@ -67,20 +71,20 @@ export class InputFileComponent implements ControlValueAccessor {
     this.file = null;
   }
   onFileAdded(dropped?) {
-    if (this.disabled) return false;
-    let selected_file = null;
+    if (this.disabled) { return false; }
+    let selectedFile = null;
     if (dropped) {
-      selected_file = dropped;
+      selectedFile = dropped;
     } else {
-      selected_file = this.input.nativeElement.files[0];
+      selectedFile = this.input.nativeElement.files[0];
     }
-    if (selected_file) {
-      if (selected_file.size > this.MAX_SIZE * 1024 * 1024) {
+    if (selectedFile) {
+      if (selectedFile.size > this.MAX_SIZE * 1024 * 1024) {
         console.error(`Filesize is too big. Allowed max is ${this.MAX_SIZE} MB`);
         this.resetField();
       } else {
-        this.onFileSelected(selected_file);
-        this.resetField();
+        this.onFileSelected(selectedFile);
+        // ? this.resetField();
       }
     }
   }
@@ -136,7 +140,7 @@ export class InputFileComponent implements ControlValueAccessor {
   }
 
   public writeValue(obj: any): void {
-    if (obj) this.selected.emit(obj);
+    if (obj) { this.selected.emit(obj); }
   }
 
 }

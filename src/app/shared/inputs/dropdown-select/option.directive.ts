@@ -1,5 +1,5 @@
-import { Directive, TemplateRef, HostBinding, Input, ElementRef } from '@angular/core';
 import { Highlightable } from '@angular/cdk/a11y';
+import { Directive, ElementRef, HostBinding, Input, TemplateRef } from '@angular/core';
 import { isString } from 'lodash';
 @Directive({
   selector: '[swSelectOption]'
@@ -11,12 +11,12 @@ export class SelectOptionDirective implements Highlightable  {
 
     @HostBinding('class.active') get isActive() {
       return this._isActive;
-    };
+    }
 
     setActiveStyles() {
       this.element.nativeElement.scrollIntoView(true);
       this._isActive = true;
-    };
+    }
 
     setInactiveStyles() {
       this._isActive = false;

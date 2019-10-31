@@ -1,18 +1,18 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild, Renderer2, ElementRef } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { UtilsService } from '@app/core/utils.service';
+import { FormSearchParams } from '@app/models/form-search-params';
 import { FormModel } from '@models/data-collection/form.model';
 import { IconsEnum } from '@shared/icons.enum';
 import { DialogComponent } from '@shared/popup/dialog.component';
-import { pick } from 'lodash';
+import { get, pick } from 'lodash';
 import { DateTime } from 'luxon';
+import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { DataCollectionService } from './data-collection.service';
 import { FormsDataSource } from './form-table.datasource';
-import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
-import { FormSearchParams } from '@app/models/form-search-params';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-form-table',
@@ -21,6 +21,26 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormTableComponent implements OnInit {
+
+  constructor(
+    public dataCollectionService: DataCollectionService,
+    public router: Router,
+    private cdr: ChangeDetectorRef,
+    private fb: FormBuilder,
+    public utilsService: UtilsService,
+    private sanitizer: DomSanitizer,
+    private renderer: Renderer2) {
+    this.filterForm = this.fb.group({
+      name: [null],
+      type: [null],
+      access: [null],
+      createdBy: [null],
+      updatedAt: [null],
+      status: [null]
+    });
+
+    this.statusArrayOptions.splice(0, 1);
+  }
   @ViewChild('link', { static: false }) link: ElementRef;
   @ViewChild('dialog', { static: true }) dialog: DialogComponent;
 
@@ -65,10 +85,6 @@ export class FormTableComponent implements OnInit {
   public totalAmount = 0;
   totalItems: number;
   showSpinner: boolean;
-
-  static createSharedUrl(id: string) {
-    return `${window.location.origin}/view-form/${id}`;
-  }
   download: {
     url: SafeResourceUrl;
     filename: string;
@@ -81,26 +97,11 @@ export class FormTableComponent implements OnInit {
   currentPage = 1;
 
   statusesOptions: string[] = ['Active', 'Draft', 'In Review', 'Closed', 'Archived'];
+  // tslint:disable-next-line:variable-name
   _sm: SelectionModel<any>;
 
-  constructor(
-    public dataCollectionService: DataCollectionService,
-    public router: Router,
-    private cdr: ChangeDetectorRef,
-    private fb: FormBuilder,
-    public utilsService: UtilsService,
-    private sanitizer: DomSanitizer,
-    private renderer: Renderer2) {
-    this.filterForm = this.fb.group({
-      name: [null],
-      type: [null],
-      access: [null],
-      createdBy: [null],
-      updatedAt: [null],
-      status: [null]
-    });
-
-    this.statusArrayOptions.splice(0, 1);
+  static createSharedUrl(id: string) {
+    return `${window.location.origin}/view-form/${id}`;
   }
 
   ngOnInit() {
@@ -133,8 +134,8 @@ export class FormTableComponent implements OnInit {
   }
 
   getUserInfo(obj: any) {
-    const user = pick(obj, ['full_name', 'role.role_name']);
-    return { name: user['full_name'], role: user['role']['role_name'] };
+    const user = pick(obj, ['full_name', 'role']);
+    return {name: user.full_name, role: get(user, 'role.role_name')};
   }
 
   getStatusColor(status: string): string {
@@ -155,13 +156,13 @@ export class FormTableComponent implements OnInit {
   }
 
   getDate(date: Date) {
-    let dt = DateTime.fromJSDate(date);
-    return dt.setLocale('en-US').toFormat("LL-dd-yyyy");
+    const dt = DateTime.fromJSDate(date);
+    return dt.setLocale('en-US').toFormat('LL-dd-yyyy');
   }
 
   getTime(date: Date) {
-    let dt = DateTime.fromJSDate(date);
-    return dt.setLocale('en-US').toFormat("t").toLowerCase();
+    const dt = DateTime.fromJSDate(date);
+    return dt.setLocale('en-US').toFormat('t').toLowerCase();
   }
 
   sortBy(field: string) {
@@ -201,7 +202,15 @@ export class FormTableComponent implements OnInit {
   }
 
   selectRow(row: any, e: Event) {
-    if (e && e.target && (e.target['tagName'] === 'BUTTON' || e.target['parentElement']['tagName'] === 'BUTTON')) {
+    // @ts-ignore
+    if (
+      e &&
+      e.target &&
+      // tslint:disable-next-line:no-string-literal
+      (e.target['tagName'] === 'BUTTON' ||
+        // tslint:disable-next-line:no-string-literal
+        e.target['parentElement']['tagName'] === 'BUTTON')
+    ) {
       e.stopPropagation();
     } else {
       if (row) {
@@ -389,7 +398,7 @@ export class FormTableComponent implements OnInit {
           filename: `forms.zip`
         };
         this.cdr.detectChanges();
-        this.renderer.selectRootElement(this.link.nativeElement).click()
+        this.renderer.selectRootElement(this.link.nativeElement).click();
         this.clearLink(url);
       });
   }

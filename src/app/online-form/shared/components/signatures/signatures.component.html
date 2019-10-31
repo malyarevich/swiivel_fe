@@ -10,7 +10,7 @@
           [rows]="2"
           [readonly]="isDisabled"
         >
-          <span class="input_label">{{placeholderText['parent']}}</span>
+          <span class="input_label">{{ placeholderText["parent"] }}</span>
         </sw-input-textarea>
       </div>
 
@@ -20,24 +20,15 @@
           [rows]="2"
           [readonly]="isDisabled"
         >
-          <span class="input_label">{{placeholderText['father']}}</span>
+          <span class="input_label">{{ placeholderText["father"] }}</span>
         </sw-input-textarea>
         <sw-input-textarea
           [formControlName]="sourcePage + '__external_mother'"
           [rows]="2"
           [readonly]="isDisabled"
         >
-          <span class="input_label">{{placeholderText['mother']}}</span>
+          <span class="input_label">{{ placeholderText["mother"] }}</span>
         </sw-input-textarea>
-      </div>
-
-      <div class="signature__controls_container">
-        <button
-          class="btn app-btn-primary signature__button"
-          [disabled]="isDisabled"
-        >
-          Accept
-        </button>
       </div>
     </ng-container>
 
@@ -76,15 +67,6 @@
         </ng-container>
       </div>
       <!-- /.signature__inputs_container -->
-
-      <div class="signature__controls_container">
-        <button
-          class="btn app-btn-primary signature__button"
-          [disabled]="isDisabled"
-        >
-          Accept
-        </button>
-      </div>
     </ng-container>
   </ng-container>
 
@@ -99,7 +81,7 @@
         [rows]="2"
         [readonly]="isDisabled"
       >
-        <span class="input_label">WET {{placeholderText['parent']}}</span>
+        <span class="input_label wet_caption">This is system information about the WET {{ placeholderText["parent"] }}</span>
       </sw-input-textarea>
     </div>
 
@@ -112,26 +94,25 @@
         [rows]="2"
         [readonly]="isDisabled"
       >
-        <span class="input_label">WET {{placeholderText['father']}}</span>
+        <span class="input_label wet_caption">This is system information about the WET {{ placeholderText["father"] }}</span>
       </sw-input-textarea>
       <sw-input-textarea
         [formControlName]="sourcePage + '__wet_mother'"
         [rows]="2"
         [readonly]="isDisabled"
       >
-        <span class="input_label">WET {{placeholderText['mother']}}</span>
+        <span class="input_label wet_caption">This is system information about the WET {{ placeholderText["mother"] }}</span>
       </sw-input-textarea>
-      
-    </div>
-
-    <div class="signature__controls_container">
-      <button
-        class="btn app-btn-primary signature__button"
-        [disabled]="isDisabled"
-      >
-        Accept
-      </button>
+      <!-- <p class="wet_caption">this system information about wet signature</p> -->
     </div>
   </ng-container>
+  <div class="signature__controls_container" *ngIf="button.isActive">
+    <button
+      class="btn app-btn-primary signature__button"
+      [disabled]="isDisabled"
+    >
+      {{ button.text ? button.text : "Accept" }}
+    </button>
+  </div>
 </div>
 <!--END SIGNATURE-->

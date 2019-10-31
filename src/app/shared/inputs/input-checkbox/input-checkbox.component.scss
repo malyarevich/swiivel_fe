@@ -20,6 +20,7 @@
     width: 15px;
     height: 15px;
     position: absolute;
+    left: 0;
     color: white;
     cursor: pointer;
     &:disabled {
@@ -62,5 +63,19 @@
     left: 11%;
     top: 42%;
   }
+  }
+}
+
+:host(.online_form) {
+  label {
+    padding-left: 0.5rem;
+  }
+}
+
+:host(.circle) {
+  .checkbox {
+    input[type=checkbox] {
+      border-radius: 50%;
+    }
   }
 }

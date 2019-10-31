@@ -1,12 +1,18 @@
 <div class="date-picker" #holder (click)="openDatepicker()">
-  <sw-input-text [(ngModel)]="value">
-    <span class="placeholder">Hebrew date</span>
+  <sw-input-text
+    [(ngModel)]="value"
+    class="online_form__data_picker"
+    [ngClass]="{
+      'read_only': !isActive
+    }"
+    [readonly]="!isActive"
+  >
+    <span class="placeholder">{{ placeholder }}</span>
     <span class="icon"><i class="far fa-calendar"></i></span>
   </sw-input-text>
 </div>
 
 <ng-template #datepicker>
-
   <div class="date-picker-popup">
     <div class="header">
       <div class="actions left">
@@ -17,14 +23,22 @@
         {{ value }}
       </div>
       <div class="actions right">
-        <sw-icon-button icon="fa-angle-right" (click)="increment()"></sw-icon-button>
+        <sw-icon-button
+          icon="fa-angle-right"
+          (click)="increment()"
+        ></sw-icon-button>
       </div>
     </div>
     <div class="content">
-      <mwl-calendar-month-view style="direction: rtl;" [viewDate]="viewDate" [events]="events" [activeDayIsOpen]="false"
-        (dayClicked)="dayClicked($event.day)" locale='he'>
+      <mwl-calendar-month-view
+        style="direction: rtl;"
+        [viewDate]="viewDate"
+        [events]="events"
+        [activeDayIsOpen]="false"
+        (dayClicked)="dayClicked($event.day)"
+        locale="he"
+      >
       </mwl-calendar-month-view>
     </div>
   </div>
-
 </ng-template>

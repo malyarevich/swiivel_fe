@@ -1,18 +1,19 @@
-import { Component, Input, OnInit } from "@angular/core";
-import { FormGroup } from "@angular/forms";
-import { cloneDeep } from "lodash";
-import { FormModel } from "@models/data-collection/form.model";
+import { Component, Input, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { FormModel } from '@models/data-collection/form.model';
+import { cloneDeep } from 'lodash';
+import { ICurrentPosition, IFormNavigationState } from '../models/online-form.model';
 
 @Component({
-  selector: "sw-online-form-terms-conditions",
-  templateUrl: "./online-form-terms-conditions.component.html",
-  styleUrls: ["./online-form-terms-conditions.component.scss"]
+  selector: 'sw-online-form-terms-conditions',
+  templateUrl: './online-form-terms-conditions.component.html',
+  styleUrls: ['./online-form-terms-conditions.component.scss']
 })
 export class OnlineFormTermsConditionsComponent implements OnInit {
   @Input() form: FormModel;
-  @Input() formNavigationState: any;
-  @Input() currentPosition: object;
-  @Input() formErrors: any;
+  @Input() formNavigationState: IFormNavigationState[];
+  @Input() currentPosition: ICurrentPosition;
+  @Input() formErrors: object;
   @Input() fg: FormGroup;
 
   termsConditions: any[];
@@ -33,12 +34,12 @@ export class OnlineFormTermsConditionsComponent implements OnInit {
 
   isExist(): boolean {
     return (
-      typeof this.form.termsConditions !== "undefined" &&
+      typeof this.form.termsConditions !== 'undefined' &&
       this.form.termsConditions.termsConditionsItems.length > 0
     );
   }
 
   isShowTermsConditions(termsConditionsIndex: number): boolean {
-    return this.currentPosition["tab"] === termsConditionsIndex;
+    return this.currentPosition.tab === termsConditionsIndex;
   }
 }

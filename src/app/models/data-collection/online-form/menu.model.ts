@@ -13,63 +13,63 @@ export const mainMenuNames: IMainMenuNames = {
 export const menuItems: IMenuItems[] = [
   {
     name: mainMenuNames.packetIntroduction,
-    title: "Packet Introduction",
+    title: 'Packet Introduction',
     time: 3,
-    icon: "packet-introduction"
+    icon: 'packet-introduction'
   },
   {
     name: mainMenuNames.generalInfo,
-    title: "General Information",
+    title: 'General Information',
     time: 48,
-    icon: "general-information"
+    icon: 'general-information'
   },
   {
     name: mainMenuNames.documentsForms,
-    title: "Additional documents",
+    title: 'Documents & Forms',
     time: 15,
-    icon: "documents-forms"
+    icon: 'documents-forms'
   },
   {
     name: mainMenuNames.consentInfo,
-    title: "Consent",
+    title: 'Consent',
     time: 12,
-    icon: "consent"
+    icon: 'consent'
   },
   {
     name: mainMenuNames.paymentSettings,
-    title: "Payment Settings",
+    title: 'Payment Settings',
     time: 10,
-    icon: "payment-settings"
+    icon: 'payment-settings'
   },
   {
     name: mainMenuNames.tuitionContract,
-    title: "Tuition Contract",
+    title: 'Tuition Contract',
     time: 6,
-    icon: "tuition-contract"
+    icon: 'tuition-contract'
   },
   {
     name: mainMenuNames.termsConditions,
-    title: "Term & Conditions",
+    title: 'Term & Conditions',
     time: 14,
-    icon: "term-conditions"
+    icon: 'term-conditions'
   },
   {
     name: mainMenuNames.payment,
-    title: "Payment",
+    title: 'Payment',
     time: 18,
-    icon: "payment"
+    icon: 'payment'
   }
 ];
 
 export interface IMainMenuNames {
-  packetIntroduction: string,
-  generalInfo: string,
-  documentsForms: string,
-  consentInfo: string,
-  paymentSettings: string,
-  tuitionContract: string,
-  termsConditions: string,
-  payment: string,
+  packetIntroduction: string;
+  generalInfo: string;
+  documentsForms: string;
+  consentInfo: string;
+  paymentSettings: string;
+  tuitionContract: string;
+  termsConditions: string;
+  payment: string;
 }
 
 export interface IMenuItems {

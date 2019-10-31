@@ -1,40 +1,52 @@
-import { Component, Input, OnInit, AfterViewInit } from "@angular/core";
-import { FormGroup } from "@angular/forms";
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnInit
+} from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { FormModel } from '@models/data-collection/form.model';
 import {
-  menuItems,
-  mainMenuNames,
   IMainMenuNames,
-  IMenuItems
-} from "../models/menu.model";
-import { GenerateErrorsService } from '@app/online-form/utils/generate-errors.service';
+  IMenuItems,
+  mainMenuNames,
+  menuItems
+} from '@models/data-collection/online-form/menu.model';
+import {
+  ICurrentPosition,
+  IFormNavigationState
+} from '../models/online-form.model';
+import { GenerateErrorsService } from '../utils/generate-errors.service';
 
 @Component({
-  selector: "sw-online-form-general-info",
-  templateUrl: "./online-form-general-info.component.html",
-  styleUrls: ["./online-form-general-info.component.scss"]
+  selector: 'sw-online-form-general-info',
+  templateUrl: './online-form-general-info.component.html',
+  styleUrls: ['./online-form-general-info.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class OnlineFormGeneralInfoComponent implements OnInit {
   @Input() form: FormModel;
-  @Input() formNavigationState: any;
-  @Input() currentPosition: { page: string, tab: number };
+  @Input() formNavigationState: IFormNavigationState[];
+  @Input() currentPosition: ICurrentPosition;
   @Input() formErrors: object;
   @Input() fieldNameList: object;
   @Input() fg: FormGroup;
+  @Input() isViewOnly: boolean;
 
   sections: any;
   menuItems: IMenuItems[] = menuItems;
   mainMenuNames: IMainMenuNames = mainMenuNames;
 
-  constructor(
-    private generateErrorService: GenerateErrorsService
-  ) {}
+  constructor(private generateErrorService: GenerateErrorsService) {}
 
   ngOnInit() {
     this.initSections();
     this.fg.valueChanges.subscribe(() => {
-      this.generateErrorService.getFormGroupAndSection(this.sections[this.currentPosition.tab], this.fg);
-    })
+      this.generateErrorService.getFormGroupAndSection(
+        this.sections[this.currentPosition.tab],
+        this.fg
+      );
+    });
   }
 
   initSections() {
@@ -44,13 +56,15 @@ export class OnlineFormGeneralInfoComponent implements OnInit {
       });
     } else {
       this.sections = [
-        { _id: "generalInfo", name: "General Information", type: 114 }
+        { _id: 'generalInfo', name: 'General Information', type: 114 }
       ];
     }
   }
 
   isExist(): boolean {
-    return typeof this.form.fields !== 'undefined' && this.form.fields.length > 0;
+    return (
+      typeof this.form.fields !== 'undefined' && this.form.fields.length > 0
+    );
   }
 
   isShowSectionByIndex(index: number): boolean {

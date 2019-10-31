@@ -3,7 +3,7 @@ import {
   Input,
   OnInit
 } from '@angular/core';
-import { ISectionError } from '@app/online-form/utils/generate-errors.service';
+import { ISectionError } from '../utils/generate-errors.service';
 
 @Component({
   selector: 'sw-errors-list-tooltip',

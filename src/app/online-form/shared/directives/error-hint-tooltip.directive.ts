@@ -12,8 +12,8 @@ import {
   Input,
   OnInit
 } from '@angular/core';
-import { ErrorsListTooltipComponent } from '@app/online-form/errors-list/errors-list-tooltip.component';
-import { ISectionError } from '@app/online-form/utils/generate-errors.service';
+import { ErrorsListTooltipComponent } from '../../errors-list/errors-list-tooltip.component';
+import { ISectionError } from '../../utils/generate-errors.service';
 
 @Directive({
   selector: '[error-hint]'

@@ -4,11 +4,13 @@
   align-items: stretch;
   align-self: stretch;
   display: flex;
+  flex: 1;
   flex-direction: column;
   padding: 0.5rem;
   justify-self: stretch;
   justify-items: stretch;
-  justify-content: stretch;
+  justify-content: center;
+  min-height: 4rem;
 }
 
 .component_error {
