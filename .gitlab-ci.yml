@@ -5,7 +5,7 @@ stages:
 variables:
   DEVELOPMENT_SERVER_USERNAME: devops
   DEVELOPMENT_SERVER_IP: 35.211.160.56
-  
+
 image: alpine
 
 before_script:
@@ -16,8 +16,8 @@ before_script:
   - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
 
 development_build:
-  only: 
-    - master
+  only:
+    - development
   stage: build
   image: trion/ng-cli
   before_script: []
@@ -28,10 +28,10 @@ development_build:
     expire_in: 1 day
     paths:
       - dist/
-        
+
 development_deploy:
-  only: 
-    - master
+  only:
+    - development
   stage: deploy
   script:
     - apk add --no-cache rsync

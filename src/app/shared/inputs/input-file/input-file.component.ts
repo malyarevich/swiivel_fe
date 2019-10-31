@@ -9,9 +9,11 @@ import {
   Input,
   Output,
   Renderer2,
-  ViewChild} from '@angular/core';
+  ViewChild
+} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { HttpService } from '@app/core/http.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'sw-input-file',
@@ -30,6 +32,7 @@ import { HttpService } from '@app/core/http.service';
 
 export class InputFileComponent implements ControlValueAccessor {
   file: File;
+  uploading: Subscription;
   onTouched: () => void;
   onChange: (val: any) => void;
   disabled = false;
@@ -42,7 +45,7 @@ export class InputFileComponent implements ControlValueAccessor {
   @Output('progress') progress = new EventEmitter();
   @Output('selected') selected = new EventEmitter();
   @Output() error = new EventEmitter();
-  @ViewChild('input', {static: true}) input: ElementRef<HTMLInputElement>;
+  @ViewChild('input', { static: true }) input: ElementRef<HTMLInputElement>;
   @HostListener('window:drop', ['$event']) public onDrop(event) {
     event.preventDefault();
     event.stopPropagation();
@@ -85,18 +88,22 @@ export class InputFileComponent implements ControlValueAccessor {
     }
   }
 
+  onUploadCancelled() {
+    if (this.uploading) { this.uploading.unsubscribe(); }
+  }
+
   onFileSelected(file: File) {
     this.selected.emit(file);
     if (this.endpoint) {
       if (this.method) {
-        this.http.upload(this.endpoint, file, this.method, false, this.data).subscribe((response) => {
+        this.uploading = this.http.upload(this.endpoint, file, this.method, false, this.data).subscribe((response) => {
           if (response.type && response.type === 1) {
-            this.progress.emit({loaded: response.loaded, total: response.total});
+            this.progress.emit({ loaded: response.loaded, total: response.total });
           } else if ('file_path' in response) {
-            this.response.emit({...response});
+            this.response.emit({ ...response });
             this.onChange(response);
           } else if (Array.isArray(response) && response.length && response[0].toLowerCase() === 'success') {
-            this.response.emit({...response});
+            this.response.emit({ ...response });
             this.onChange(response);
           }
         }, (error) => {
