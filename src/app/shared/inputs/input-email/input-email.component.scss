@@ -13,12 +13,15 @@
 }
 
 :host(.ng-invalid) {
-  .email {
-    &__input {
-      border: 1px solid $error-color;
-    }
-    &__error_icon {
-      display: block;
+  &:not(.ng-pristine) {
+    .email {
+      &__input {
+        border: 1px solid $error-color;
+      }
+
+      &__error_icon {
+        display: block;
+      }
     }
   }
 }
