@@ -20,6 +20,8 @@ import { DropdownSelectComponent } from './inputs/dropdown-select/dropdown-selec
 
 import { InputFileComponent } from './inputs/input-file/input-file.component';
 
+import { InputSearchComponent } from '@shared/inputs/input-search/input-search.component';
+
 // Headers
 import { BlockHeaderComponent} from './headers/block-header/block-header.component';
 import { PageHeaderComponent} from './headers/page-header/page-header.component';
@@ -87,6 +89,7 @@ registerLocaleData(localHe)
     InputTextareaComponent,
     DialogComponent,
     InputFileComponent,
+    InputSearchComponent,
     // Headers
     PageHeaderComponent,
     BlockHeaderComponent,
@@ -134,6 +137,7 @@ registerLocaleData(localHe)
     InputEnglishDatepickerComponent,
     InputHebrewDatepickerComponent,
     InputFileComponent,
+    InputSearchComponent,
     // Headers
     PageHeaderComponent,
     BlockHeaderComponent,

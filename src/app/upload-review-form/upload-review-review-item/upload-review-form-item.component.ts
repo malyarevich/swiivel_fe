@@ -1,8 +1,8 @@
 import {  Component, EventEmitter, Input, Output } from '@angular/core';
-import { UploadReviewFormStatusesEnum } from '@app/upload-review-form/upload-review-form-statuses.enum';
-import { UploadReviewFormService } from '@app/upload-review-form/upload-review-form.service';
 import { Document } from '@models/upload-review-form/document.model';
 import { IconsEnum } from '@shared/icons.enum';
+import { UploadReviewFormStatusesEnum } from '../upload-review-form-statuses.enum';
+import { UploadReviewFormService } from '../upload-review-form.service';
 
 @Component({
   selector: 'app-upload-review-form-item',
@@ -15,7 +15,7 @@ export class UploadFormReviewItemComponent {
   @Output() selected = new EventEmitter<string>();
   public icons = IconsEnum;
   public uploadReviewFormStatusesEnum = UploadReviewFormStatusesEnum;
-  @Output() downLoadForm = new EventEmitter<string>();
+  @Output() downloadForm = new EventEmitter<string>();
   @Output() deleteForm = new EventEmitter<string>();
 
   constructor(public uploadReviewFormService: UploadReviewFormService) {}
@@ -30,7 +30,7 @@ export class UploadFormReviewItemComponent {
   }
 
   clickDownloadForm(): void {
-    this.downLoadForm.emit(this.document._id);
+    this.downloadForm.emit(this.document._id);
   }
 
   clickDeleteForm(): void {

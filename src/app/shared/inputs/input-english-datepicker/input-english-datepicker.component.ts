@@ -128,19 +128,22 @@ export class InputEnglishDatepickerComponent
     }
   }
 
-  openDatepicker(): void {
-    // if (this.isActive) {
-    this.ref = this.popup.open({
-      origin: this.holder,
-      content: this.datepicker,
-      panelClass: 'dropdown-overlay'
-    });
-    this.ref.afterClosed$.pipe(takeUntil(this.destroyed$)).subscribe(result => {
-      // console.log('Datepiker result:', result)
-      this.ref = null;
-      this.onTouched();
-    });
-    // }
+  openDatepicker(e: any): void {
+    if (e && e.target && e.target.className && e.target.className.includes('fa-times')) {
+      e.preventDefault();
+      this.value = '';
+      this.onChange(this.value);
+    } else {
+      this.ref = this.popup.open({
+        origin: this.holder,
+        content: this.datepicker,
+        panelClass: 'dropdown-overlay'
+      });
+      this.ref.afterClosed$.pipe(takeUntil(this.destroyed$)).subscribe(result => {
+        this.ref = null;
+        this.onTouched();
+      });
+    }
   }
 
   close(): void {

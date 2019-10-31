@@ -11,6 +11,6 @@
     [disabled]="readonly"
   />
   <ng-content></ng-content>
-  <i *ngIf="!isEmpty(input.value)" class="fa fa-times" (click)="clear()"></i>
-  <i class="fas fa-search fa-xs"></i>
+  <i *ngIf="isSearch && !isEmpty(input.value)" class="fa fa-times" (click)="clear()"></i>
+  <i *ngIf="isSearch" class="fas fa-search fa-xs"></i>
 </div>

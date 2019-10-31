@@ -1,11 +1,14 @@
-<div class="date-picker" #holder (click)="openDatepicker()" [ngClass]="{ 'filter' : class == 'filter-field' }">
+<div
+  #holder
+  class="date-picker"
+  [class.filter-field]="class === 'filter-field'"
+  (click)="openDatepicker($event)"
+>
   <sw-input-text
-    [(ngModel)]="value"
     class="{{class}}"
-    [ngClass]="{
-      'read_only': !isActive
-    }"
+    [class.read_only]="!isActive"
     [readonly]="!isActive"
+    [(ngModel)]="value"
   >
     <span class="placeholder">{{ placeholder }}</span>
     <span class="icon"><i class="far fa-calendar"></i></span>

@@ -1,0 +1,82 @@
+@import 'index';
+
+.document-approval-bar {
+  display: flex;
+  min-height: 74px;
+  padding: 12px 10px 12px 0;
+  border-top: 1px solid $dark-grey;
+  border-bottom: 1px solid $dark-grey;
+  background: #fff;
+
+  &--empty {
+    margin: auto 0 auto 10px;
+  }
+
+  &__icon-container {
+    display: flex;
+    width: 50px;
+    height: 50px;
+  }
+
+  &__icon {
+    margin: auto;
+    color: $icon-dark-gray-color;
+    font-size: 30px;
+  }
+
+  &__text {
+    margin: 0 15px 0 0;
+  }
+
+  &__name {
+    margin: 7px 0 0 0;
+    font: 800 14px/20px $nunito-sans;
+  }
+
+  &__document-name {
+    margin: 0;
+    font: 500 12px/13px $nunito-sans;
+    color: $text-gray;
+  }
+
+  &__status {
+    margin: 8px 0 0;
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: flex-end;
+    flex-grow: 2;
+  }
+
+  &__button {
+    margin: 9px 10px 9px 0;
+  }
+}
+
+.document-approval-bar__second {
+  margin: 9px 20px 9px 0;
+}
+
+.document-approval-bar__button-last {
+  margin: 9px 30px 9px 0;
+  position: relative;
+
+  &::after {
+    position: absolute;
+    content: '';
+    width: 1px;
+    height: 33px;
+    background: $gray-color;
+    top: 0;
+    right: -15px;
+  }
+}
+
+.button_icon {
+  margin: 0 5px 0 0;
+}
+
+.spinner {
+  margin: 5px 35px;
+}

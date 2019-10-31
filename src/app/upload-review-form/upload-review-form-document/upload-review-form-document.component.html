@@ -1,43 +1,64 @@
-<div
-  *ngIf="document && document.content_type.includes('image')"
->
-  <img
-    class="image"
-    [src]="document.link"
-    alt="document.entity_name"
-  />
+<div *ngIf="document">
+  <div
+    class="container"
+    [ngClass]="{'loading': isDocumentLoading, 'full-size': !isSideBarShown}"
+  >
+    <div
+      *ngIf="isDocumentLoading || rotatingPicture"
+      [ngClass]="{'loading-spinner': isDocumentLoading, 'rotating-spinner': rotatingPicture}"
+    >
+      <sw-main-spinner [spinnerSize]="sizes.MEDIUM"></sw-main-spinner>
+    </div>
+    <div [ngClass]="{'rotating': rotatingPicture }">
+      <div *ngIf="document && document.content_type && document.content_type.includes('image')">
+        <img
+          #img
+          class="image"
+          [alt]="document.entity_name"
+          [height]="imgDimension.height"
+          [hidden]="isDocumentLoading"
+          [ngStyle]="{'transform' : 'rotate('+document.rotate+'deg)'}"
+          [src]="document.link"
+          [width]="imgDimension.width"
+          (load)="isLoaded($event)"
+        />
+      </div>
+      <div
+        *ngIf="document && document.content_type && document.content_type.includes('pdf')"
+        [ngStyle]="{opacity: isDocumentLoading ? 0 : 1}"
+      >
+        <pdf-viewer
+          style="display: block;"
+          [src]="document.link"
+          [render-text]="true"
+          [rotation]="angle"
+          [zoom]="zoom"
+          (after-load-complete)="isLoaded()"
+        ></pdf-viewer>
+      </div>
+    </div>
+    <div class="controllers" *ngIf="!isDocumentLoading">
+      <div class="controllers-zoom">
+        <sw-icon-button [icon]="icons.ZOOM_OUT" [size]="sizes.LARGE" (click)="clickZoomImg('out')"></sw-icon-button>
+        <sw-icon-button [icon]="icons.ZOOM_IN" [size]="sizes.LARGE" (click)="clickZoomImg('in')"></sw-icon-button>
+      </div>
+      <div class="controllers-rotate">
+        <button class="controllers-rotate-button" (click)="clickRotateImg('left')">
+          <img
+            class="controllers-rotate-icon"
+            [src]="'./assets/images/icons/rotate-right.svg'"
+          />
+        </button>
+        <button class="controllers-rotate-button" (click)="clickRotateImg('right')">
+          <img
+            class="controllers-rotate-icon"
+            [src]="'./assets/images/icons/rotate-left.svg'"
+          />
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
-<div
-  *ngIf="document && document.content_type.includes('pdf')"
->
-  <pdf-viewer
-    [src]="document.link"
-    [render-text]="true"
-    style="display: block;"
-  ></pdf-viewer>
+<div *ngIf="!document && !isDocumentLoading">
+  <h3 class="no-documents-header">No Selected document</h3>
 </div>
-<!--<div class="controllers">-->
-  <!--<div class="zoom">-->
-    <!--<sw-icon-button [icon]="icons.ZOOM_IN"></sw-icon-button>-->
-    <!--<sw-icon-button [icon]="icons.ZOOM_OUT"></sw-icon-button>-->
-  <!--</div>-->
-  <!--<div class="rotate">-->
-    <!--rotate left-->
-    <!--rotate right-->
-  <!--</div>-->
-<!--</div>-->
-
-<!--<form [formGroup]="form">-->
-<!--  <h3>Document settings</h3>-->
-<!--  <sw-input-text formControlName="type">-->
-<!--    <span class="placeholder">Document Type</span>-->
-<!--  </sw-input-text>-->
-<!--  <sw-input-text formControlName="account">-->
-<!--    <span class="placeholder">Account</span>-->
-<!--  </sw-input-text>-->
-<!--  <sw-input-text formControlName="student">-->
-<!--    <span class="placeholder">Student</span>-->
-<!--  </sw-input-text>-->
-<!--</form>-->
-
-

@@ -1,0 +1,55 @@
+<div class="document-approval-bar" *ngIf="document">
+  <div class="document-approval-bar__icon-container">
+    <i class="fas fa-file document-approval-bar__icon"></i>
+  </div>
+  <div class="document-approval-bar__text">
+    <p class="document-approval-bar__name">{{ document.person_name || 'Unassigned' }}</p>
+    <p class="document-approval-bar__document-name">{{ document.entity_name }}</p>
+  </div>
+  <div class="document-approval-bar__status">
+    <sw-status-label [class]="uploadReviewFormService.getStatusColor(document.status)">
+      {{ uploadReviewFormStatusesEnum[document.status] }}
+    </sw-status-label>
+  </div>
+  <div class="document-approval-bar__buttons">
+    <div *ngIf="showSpinner" class="spinner">
+      <sw-main-spinner [spinnerSize]="size.SMALL"></sw-main-spinner>
+    </div>
+    <div class="document-approval-bar__button">
+      <sw-button color="white" (click)="skipDocument.emit()" [disabled]="isLast || disabled">
+        <i class="fas fa-step-forward button_icon"></i> Skip
+      </sw-button>
+    </div>
+    <div class="document-approval-bar__button document-approval-bar__second">
+      <sw-button
+        color="white"
+        (click)="changeStatus.emit(statuses.need_review)"
+        [disabled]="document.status == 'unassigned' || disabled || isSaveActive"
+      >
+        Need Further Review
+      </sw-button>
+    </div>
+    <div class="document-approval-bar__button">
+      <sw-button
+        (click)="changeStatus.emit(statuses.rejected)"
+        [disabled]="document.status == 'unassigned' || disabled || isSaveActive"
+      >
+        Reject
+      </sw-button>
+    </div>
+    <div class="document-approval-bar__button document-approval-bar__button-last">
+      <sw-button
+        (click)="changeStatus.emit(statuses.approved)"
+        [disabled]="document.status == 'unassigned' || disabled || isSaveActive"
+      >
+        Approve
+      </sw-button>
+    </div>
+    <div class="document-approval-bar__button">
+      <sw-button (click)="saveDocument.emit()" [disabled]="!isSaveActive">Save</sw-button>
+    </div>
+  </div>
+</div>
+<div class="document-approval-bar" *ngIf="!document">
+  <h3 class="document-approval-bar--empty">No selected document</h3>
+</div>

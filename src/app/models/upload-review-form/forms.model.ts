@@ -1,6 +1,8 @@
+import { Document } from './document.model';
+
 export interface ExtremeUploadForms {
-  previous_form?: ExtremeUploadForm;
-  next_form?: ExtremeUploadForm;
+  previous_form?: Document;
+  next_form?: Document;
 }
 
 export interface ExtremeUploadForm {

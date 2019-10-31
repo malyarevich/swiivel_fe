@@ -9,7 +9,11 @@ import {
   Input,
   Output,
   Renderer2,
+<<<<<<< src/app/shared/inputs/input-file/input-file.component.ts
   ViewChild} from '@angular/core';
+=======
+  ViewChild } from '@angular/core';
+>>>>>>> src/app/shared/inputs/input-file/input-file.component.ts
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { HttpService } from '@app/core/http.service';
 
@@ -80,7 +84,7 @@ export class InputFileComponent implements ControlValueAccessor {
         this.resetField();
       } else {
         this.onFileSelected(selectedFile);
-        this.resetField();
+        // ? this.resetField();
       }
     }
   }
