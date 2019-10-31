@@ -1,13 +1,14 @@
-import { UploadReviewFormSortEnum } from '@app/upload-review-form/upload-review-form-sort.enum';
-import { UploadReviewFormStatusesEnum } from '@app/upload-review-form/upload-review-form-statuses.enum';
-import { UploadReviewFormSubmissionTypeEnum } from '@app/upload-review-form/upload-review-form-submission-type.enum';
-import { ApiService } from '@core/api.service';
+import { ApiService } from '@app/core/api.service';
 import { FilterDropDownData } from '@models/upload-review-form/filter.model';
 import { SortDropDownData } from '@models/upload-review-form/sort.model';
 import { Observable } from 'rxjs';
 import { first, map } from 'rxjs/operators';
+import { UploadReviewFormSortEnum } from './upload-review-form-sort.enum';
+import { UploadReviewFormStatusesEnum } from './upload-review-form-statuses.enum';
+import { UploadReviewFormSubmissionTypeEnum } from './upload-review-form-submission-type.enum';
 
 export class UploadReviewFormService extends ApiService {
+
   getStatusColor(status: string): string {
     switch (status) {
       case 'approved':
@@ -27,21 +28,28 @@ export class UploadReviewFormService extends ApiService {
     }
   }
 
-  getDocumentList(formId: string, filterParams?: any, sortParam?: any): Observable<any> {
+  getDocumentList(formId: string, filterParams?: any, sortParam?: any, searchParam?: any): Observable<any> {
     let endpoint = '';
-    if (filterParams) {
+    if ((filterParams && filterParams.length) || (sortParam && sortParam.length) || searchParam) {
       let endpointParam = '';
+      if (searchParam) {
+        endpointParam += searchParam;
+      }
       if (filterParams && filterParams.length) {
         filterParams.map((param) =>  {
-          endpointParam += `&filter[${param.param}][]=${param.param === 'documents' ? param.id : param.value}`;
+          if (param.param === 'documents') {
+            endpointParam += `&filter[${param.type}][]=${param.id}`;
+          } else {
+            endpointParam += `&filter[${param.param}][]=${param.value}`;
+          }
         });
       }
       if (sortParam && sortParam.length) {
         endpointParam += `&sort=${sortParam[0].value}`;
       }
-      endpoint = `/proxy/upload-reviews-form/list?form_id=${formId}&search_query=${endpointParam}`;
+      endpoint = `/proxy/upload-reviews-form/list?form_template_id=${formId}&search_query=${endpointParam}`;
     } else {
-      endpoint = `/proxy/upload-reviews-form/list?form_id=${formId}`;
+      endpoint = `/proxy/upload-reviews-form/list?form_template_id=${formId}`;
     }
     return this.http.get(endpoint);
   }
@@ -51,10 +59,15 @@ export class UploadReviewFormService extends ApiService {
     return this.http.get(endpoint);
   }
 
-  downloadForm(id: string) {
-    return this.download(`/proxy/upload-reviews-form/bulk-download/${id}`).pipe(map((response: any) => {
-      return window.URL.createObjectURL(new Blob([response], {type: 'application/pdf'}));
-    }), first());
+  downloadForms(formId: string, ids: string): Observable<any> {
+    const endpoint = `/proxy/upload-reviews-form/bulk-download/${formId}?ids=${ids}`;
+    return this.download(endpoint).pipe(map((response: any) => {
+      return window.URL.createObjectURL(new Blob([response], {type: 'application/zip'}));
+    }));
+  }
+
+  downloadForm(url: string): void {
+    window.location.assign(url);
   }
 
   deleteDocuments(idsData: string[]): Observable<any> {
@@ -68,6 +81,13 @@ export class UploadReviewFormService extends ApiService {
     return this.http.put(`/proxy/upload-reviews-form/change-status/${formId}`, body);
   }
 
+  getFamilyList(): Observable<any> {
+    return this.http.get('/families');
+  }
+
+  updateDocumentSettings(documentId: string, data: any): Observable<any> {
+    return this.http.put(`/proxy/upload-reviews-form/uploaded-document-settings/${documentId}`, data);
+  }
 
   getFilterDropDownData(documents: any): FilterDropDownData | {} {
     const uploadReviewFormStatusesEnum = UploadReviewFormStatusesEnum;
@@ -126,4 +146,30 @@ export class UploadReviewFormService extends ApiService {
     }
     return sortData;
   }
+
+  rotateImg(angle: string, id: string): Observable<any> {
+    const endpoint =  `/proxy/upload-reviews-form/change-rotate/${id}`;
+    const body = { rotate: angle };
+    return this.http.put(endpoint, body);
+  }
+
+  convertToSettingsType(data: any): string[] {
+    const types = [];
+    if (data && data.documents && data.documents.data) {
+      data.documents.data.map((type) => {
+        if (!types.includes(type.name)) {
+          types.push(type.name);
+        }
+      });
+    }
+    return types;
+  }
+
+
+  exportPDFForm(mongoId: string) {
+    return this.download(`/proxy/form-builder/pdf-export/${mongoId}`).pipe(map((response: any)=> {
+      return window.URL.createObjectURL(new Blob([response], {type: 'application/pdf'}))
+    }), first());
+  }
+
 }

@@ -1,15 +1,15 @@
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
   forwardRef,
+  HostListener,
   Input,
   Output,
   Renderer2,
-  ViewChild,
-  ChangeDetectorRef,
-  HostListener} from '@angular/core';
+  ViewChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { HttpService } from '@app/core/http.service';
 
@@ -34,29 +34,31 @@ export class InputFileComponent implements ControlValueAccessor {
   onChange: (val: any) => void;
   disabled = false;
   @Input() method = 'POST';
+  @Input() acceptFileTypes = '*';
   @Input('preupload') endpoint: string;
   @Input('data') data: any = null;
   @Input('maxSize') MAX_SIZE = 100000;
   @Output('response') response = new EventEmitter();
   @Output('progress') progress = new EventEmitter();
   @Output('selected') selected = new EventEmitter();
+  @Output() error = new EventEmitter();
   @ViewChild('input', {static: true}) input: ElementRef<HTMLInputElement>;
   @HostListener('window:drop', ['$event']) public onDrop(event) {
     event.preventDefault();
     event.stopPropagation();
     this.onFileAdded(event.dataTransfer.files[0])
   }
+
   @HostListener('window:dragover', ['$event']) public onDragOver(evt) {
     evt.preventDefault();
     evt.stopPropagation();
-
   }
 
   @HostListener('window:dragleave', ['$event']) public onDragLeave(evt) {
     evt.preventDefault();
     evt.stopPropagation();
-
   }
+
   openDialog() {
     this.input.nativeElement.click();
   }
@@ -78,6 +80,7 @@ export class InputFileComponent implements ControlValueAccessor {
         this.resetField();
       } else {
         this.onFileSelected(selected_file);
+        this.resetField();
       }
     }
   }
@@ -92,11 +95,15 @@ export class InputFileComponent implements ControlValueAccessor {
           } else if ('file_path' in response) {
             this.response.emit({...response});
             this.onChange(response);
+          } else if (Array.isArray(response) && response.length && response[0].toLowerCase() === 'success') {
+            this.response.emit({...response});
+            this.onChange(response);
           }
+        }, (error) => {
+          this.error.emit(error);
         });
       }
     } else {
-      console.log(file);
       this.onChange(file);
     }
   }

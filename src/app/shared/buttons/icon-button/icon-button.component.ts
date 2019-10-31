@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { ButtonColorsEnum } from '../buttonColors.enum';
-import { IconsEnum } from '@shared/icons.enum';
+import { ButtonColorsEnum } from '@shared/buttons/buttonColors.enum';
 import { ButtonSizeEnum } from '@shared/buttons/buttonSize.enum';
+import { IconsEnum } from '@shared/icons.enum';
 
 @Component({
   selector: 'sw-icon-button',

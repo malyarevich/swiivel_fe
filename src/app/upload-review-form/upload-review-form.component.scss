@@ -2,14 +2,42 @@
 
 :host {
   position: relative;
+  min-height: calc(100vh - 39px);
+
+  .overlay {
+    position: absolute;
+    width: calc(100% + 60px);
+    height: calc(100% + 40px);
+    background: rgba(0,0,0,0.4);
+    z-index: 3;
+    top: -40px;
+    left: -60px;
+  }
 
   .content {
     display: flex;
+    position: relative;
+
+    &.pdf-form {
+      position: relative;
+
+      .workarea {
+        position: absolute;
+        max-height: calc(100vh - 200px);
+        width: calc(100vw - 50px);
+        overflow: scroll;
+      }
+
+      .sidebar-container {
+        z-index: 2;
+      }
+    }
   }
 
   .sidebar-opener {
     position: absolute;
     top: 0;
+    left: 0;
     z-index: 2;
     width: 30px;
     height: 44px;
@@ -27,21 +55,53 @@
   }
 
   .sidebar {
-    position: relative;
     width: 295px;
-    height: calc(100vh - 154px);
-    padding: 20px 15px 162px;
+    height: calc(100vh - 159px);
+    padding: 20px 15px 55px;
     border-radius: 3px;
     background: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
 
     .loading {
       position: relative;
       opacity: 0.7;
     }
 
+    .sidebar-list {
+      position: relative;
+      height: calc(100vh - 460px);
+      min-height: 50px;
+      overflow-y: auto;
+      overflow-x: hidden;
+
+      &::-webkit-scrollbar {
+        -webkit-appearance: none;
+        width: 5px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        border-radius: 5px;
+        background-color: rgba(0,0,0,.5);
+        -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+      }
+
+    }
+
+    .sidebar-list-bulk-download {
+      height: calc(100vh - 445px);
+    }
+
     .spinner {
       position: absolute;
-      top: 50%;
+      top: calc(50% - 50px);
       left: 50%;
       transform: translate(-50%, -50%);
       font-size: 30px;
@@ -50,6 +110,10 @@
     .sidebar-controls {
       display: flex;
       margin: 0 0 15px;
+    }
+
+    .sidebar-search {
+      margin: 0 0 10px;
     }
 
     .sidebar-title {
@@ -62,35 +126,46 @@
       position: relative;
       width: 53%;
       min-width: 159px;
-      margin: 0 10px 0 0;
-    }
-
-    .sidebar-filter:after {
-      position: absolute;
-      right: -10px;
-      top: 0;
-      content: '';
-      width: 1px;
-      height: 34px;
-      background: $dark-grey;
+      padding: 0 10px 0 0;
+      border-right: 1px solid $dark-grey;
     }
 
     .sidebar-sort {
       margin: 0 0 0 10px;
+      width: 95px;
+      overflow: hidden;
+
+      sw-dropdown-input::ng-deep .container__input .text {
+        font-size: 10px;
+        line-height: 9px;
+      }
     }
 
-    .items-controls {
+    .sidebar-controls-title {
       position: absolute;
-      width: 100%;
-      bottom: 55px;
-      left: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      top: 9px;
+      transition: all 0.5s ease 0s;
+      font-size: 12px;
+      line-height: 15px;
+      color: $gray-color;
     }
 
-    .items-control {
-      margin: 0 0 5px 0;
+    .sidebar-controls-title-with-value {
+      position: absolute;
+      font-size: 10px;
+      top: 2px;
+    }
+
+    .upload-document-controls-hr {
+      border-top: 1px solid $dark-grey;
+      margin: 5px 0 30px;
+    }
+  }
+
+  .select-all-button {
+    margin: 0 0 15px;
+    &::ng-deep button.small-button .small-button__text {
+      font-size: 10px;
     }
   }
 }
@@ -102,20 +177,35 @@
 }
 
 .footer {
-  position: absolute;
+  position: fixed;
+  z-index: 3;
   right: 0;
   bottom: 0;
   width: 100%;
 }
 
-.box {
-  background-color: #fc5;
-  max-width: 0px;
+.sidebar-container {
+  background-color: #fff;
+  max-width: 0;
   overflow-x: hidden;
   transition: ease-in-out 400ms max-width;
 }
 
-.box.opened {
+.sidebar-container.opened {
   max-width: 294px;
-  transition: ease-in-out 600ms max-width;
+  transition: ease-in-out 400ms max-width;
+}
+
+.sidebar-opener {
+  left: 0;
+  transition: ease-in-out 400ms left;
+}
+
+.sidebar-opener.opened {
+  left: 294px;
+  transition: ease-in-out 400ms left;
+}
+
+.upload-document-error {
+  color: $status-red;
 }

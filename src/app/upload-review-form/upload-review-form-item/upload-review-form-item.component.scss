@@ -1,0 +1,93 @@
+@import 'index';
+
+.upload-review-form-item {
+  display: flex;
+  margin: 0 0 5px 0;
+  background: $gray;
+  border-radius: 3px;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &.selected {
+    border: none;
+
+    .text {
+      padding: 11px 11px 6px 5px;
+      color: #fff;
+      background: $button-color;
+      border: 0;
+    }
+  }
+
+  &.bulk-download {
+    .icon-container {
+      background: $gray-color;
+    }
+    .text {
+      color: $black-text;
+    }
+
+    &.selected {
+      .icon-container {
+        background: $button-color;
+      }
+
+      .text {
+        color: $black-text;
+        background: $light-purple;
+      }
+    }
+  }
+
+  .icon-container {
+    display: flex;
+    width: 30px;
+    border-radius: 3px 0 0 3px;
+    background: $button-color;
+  }
+
+  .document-icon {
+    margin: auto;
+  }
+
+  .text {
+    flex-grow: 2;
+    padding: 10px 10px 5px 5px;
+    border: 1px solid $dark-grey;
+    border-left: 0;
+    border-radius: 0 3px 3px 0;
+    color: $gray-color;
+  }
+
+  .text-row {
+    display: flex;
+  }
+
+  .controls-container {
+    display: flex;
+    justify-content: flex-end;
+    flex-grow: 2;
+  }
+
+  .control-item {
+    margin: 0 5px 0 0;
+  }
+
+  .name {
+    max-width: 93px;
+    margin: 0 0 3px;
+    font: 800 12px/15px $nunito-sans;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .document-name {
+    margin: 0;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+}

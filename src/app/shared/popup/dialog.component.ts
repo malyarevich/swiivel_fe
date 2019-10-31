@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, ViewChild, EventEmitter, Output } from '@angular/core';
-import { Popup } from '@core/popup.service';
-import { isObjectLike, isString } from 'lodash';
+import { Popup } from '@app/core/popup.service';
 
 @Component({
   selector: 'sw-dialog',
@@ -12,8 +11,11 @@ import { isObjectLike, isString } from 'lodash';
 export class DialogComponent {
   private _ref = null;
   @Output() closed = new EventEmitter<boolean>();
-  @Input() title = 'Dialog title';
+
   @Input() action = 'Dialog button';
+  @Input() cancel = 'Cancel';
+  @Input() title = 'Dialog title';
+  @Input() contentAlign: 'center';
 
   @ViewChild('list', { static: false }) list;
   @ViewChild('holder', { static: false, read: ElementRef }) holder: ElementRef;
@@ -21,9 +23,7 @@ export class DialogComponent {
   constructor(
     private popup: Popup,
     private cdr: ChangeDetectorRef
-  ) {
-
-  }
+  ) {}
 
   get isOpened() {
     return this._ref !== null;

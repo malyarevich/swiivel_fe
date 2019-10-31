@@ -20,6 +20,23 @@
       margin: 0 10px 0 0;
       font: 800 14px/20px $nunito-sans;
     }
+
+    &.center {
+      flex-grow: 1;
+      margin: 0 0 0 21px;
+
+      .dialog_title__text {
+        width: 100%;
+        margin: 0;
+        text-align: center;
+      }
+    }
+  }
+
+  .dialog_body {
+    &.center {
+      text-align: center;
+    }
   }
 
   .dialog_close {
