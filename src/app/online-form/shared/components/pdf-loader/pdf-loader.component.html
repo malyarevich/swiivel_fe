@@ -27,8 +27,7 @@
                     <span
                       class="placeholder"
                       *ngIf="!div.linkedField.options.hideLabel"
-                    >{{ div.linkedField.name | titlecase }}</span
-                    >
+                    >{{ div.linkedField.name | titlecase }}</span>
                   </sw-input-text>
                 </div>
               </ng-container>
@@ -62,7 +61,7 @@
                     [ngStyle]="styleObject(div, true)"
                   >
                     <span class="input_label">
-                      Sign Here
+                      {{ ' Sign Here' | titlecase }}
                     </span>
                   </sw-input-textarea>
                 </div>

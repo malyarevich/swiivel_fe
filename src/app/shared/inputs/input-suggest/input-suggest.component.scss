@@ -50,12 +50,15 @@
 }
 
 :host(.ng-invalid) {
-  .input_text {
-    &__input {
-      border: 1px solid $error-color;
-    }
-    &__error_icon {
-      display: block;
+  &:not(.ng-pristine) {
+    .input_text {
+      &__input {
+        border: 1px solid $error-color;
+      }
+
+      &__error_icon {
+        display: block;
+      }
     }
   }
 }

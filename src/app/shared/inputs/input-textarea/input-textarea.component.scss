@@ -35,9 +35,11 @@
 }
 
 :host(.ng-invalid) {
-  .input_textarea__input {
-    width: 100%;
-    border: 1px solid $error-color;
+  &:not(.ng-pristine) {
+    .input_textarea__input {
+      width: 100%;
+      border: 1px solid $error-color;
+    }
   }
 }
 
