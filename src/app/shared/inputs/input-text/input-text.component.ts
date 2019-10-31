@@ -43,6 +43,7 @@ export class InputTextComponent implements ControlValueAccessor {
     this._style = styleType;
   }
   @Input() readonly: boolean;
+  @Input() isSearch = false;
   @Output() blur = new EventEmitter<any>();
 
   onChange: (value: any) => void;
