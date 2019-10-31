@@ -1,0 +1,11 @@
+<div *ngIf="button.isActive" class="accept" [formGroup]="fg">
+
+  <div class="accept__controls_container">
+    <button
+      class="btn app-btn-primary accept__button"
+      [disabled]="isDisabled"
+    >
+      {{ button.text || button.text.trim() !== '' ? button.text : "Accept" }}
+    </button>
+  </div>
+</div>
