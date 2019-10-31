@@ -30,6 +30,16 @@
     }
   }
 
+  &.large {
+    width: 39px;
+    height: 39px;
+    padding: 0;
+
+    .icon-button__icon {
+      font-size: 15px;
+    }
+  }
+
   &.white {
     color: #fff;
 

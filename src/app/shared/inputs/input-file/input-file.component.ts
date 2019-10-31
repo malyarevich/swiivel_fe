@@ -80,7 +80,7 @@ export class InputFileComponent implements ControlValueAccessor {
         this.resetField();
       } else {
         this.onFileSelected(selectedFile);
-        this.resetField();
+        // ? this.resetField();
       }
     }
   }
