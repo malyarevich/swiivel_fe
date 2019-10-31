@@ -56,9 +56,9 @@
           [formControlName]="document['id']"
           #file="upload"
           [preupload]="'/proxy/forms/online/upload/' + form['_id']"
-          (selected)="onUploadSelected($event, document['id'])"
-          (progress)="onUploadProgress($event, document['id'])"
-          (response)="onUploadResponse($event, document['id'])"
+          (selected)="onUploadSelected($event, document)"
+          (progress)="onUploadProgress($event, document)"
+          (response)="onUploadResponse($event, document)"
         >
 <!--          (onFileDropped)="onFileSelected(document, $event)"-->
           <ng-container [ngSwitch]="uploadStatus[document['id']]">
@@ -149,7 +149,7 @@
                     <div
                       class="document_container__uploading_uploaded"
                       [ngStyle]="{
-                        width: (progress.loaded * 100) / progress.total + '%'
+                        width: ( getLoaded(document) * 100) / getTotal(document) + '%'
                       }"
                     ></div>
                   </div>
