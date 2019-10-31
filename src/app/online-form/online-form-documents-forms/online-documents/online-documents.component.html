@@ -138,7 +138,7 @@
                     Filled for {{ getDocumentName(document) }}
                   </label>
                   <button
-                    (click)="onCancelUpload(document)"
+                    (click)="onCancelUpload(document, file)"
                     class="document_container__uploading_cancel"
                   >
                     Cancel
@@ -154,8 +154,8 @@
                     ></div>
                   </div>
                   <label class="document_container__uploading_uploaded_value">
-                    {{ progress.loaded | fileSize }} of
-                    {{ progress.total | fileSize }} uploaded
+                    {{ getLoaded(document) | fileSize }} of
+                    {{ getTotal(document) | fileSize }} uploaded
                   </label>
                 </div>
               </div>
@@ -175,6 +175,9 @@
                   <div class="document_container__uploaded_title">
                     <!-- {{ document.selectedFile.name }} -->
                     {{ getOriginName(document) }}
+                  </div>
+                  <div class="document_container__file_size">
+                    {{ getDocumentPages(document) }}
                   </div>
                   <label class="document_container__uploaded_size">
                     {{ getOriginSize(document) }}

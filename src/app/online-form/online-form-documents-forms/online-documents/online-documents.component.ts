@@ -29,7 +29,7 @@ export class OnlineDocumentsComponent implements OnInit, OnDestroy {
   uploadStatus: object = {};
   UploadStatus = UploadStatus;
 
-  file: object = {};
+  files: object = {};
   progress: object = {};
   response: object = {};
 
@@ -161,10 +161,9 @@ export class OnlineDocumentsComponent implements OnInit, OnDestroy {
   //   }
   // }
 
-  onCancelUpload(document: any) {
+  onCancelUpload(document: any, file: any) {
+    file.onUploadCancelled();
     this.uploadStatus[document.id] = UploadStatus.init;
-    // this.uploadSubscription.unsubscribe();
-    // this.uploadStatus[document.id] = UploadStatus.uploaded;
     this.fg.patchValue({ ...this.fg.value, [document.id]: undefined });
   }
 
@@ -174,20 +173,20 @@ export class OnlineDocumentsComponent implements OnInit, OnDestroy {
     this.fg.patchValue({ ...this.fg.value, [document.id]: undefined });
   }
 
-  getCountPages(document: any) {
-    if (document.selectedFile.type === 'application/pdf') {
-      const reader = new FileReader();
-      reader.readAsBinaryString(document.selectedFile);
-      reader.onloadend = () => {
-        if (typeof reader.result === 'string') {
-          document.countPages = reader.result.match(
-            new RegExp(/\/Type[\s]*\/Page[^s]/g)
-          ).length;
-          this.detectorRef.markForCheck();
-        }
-      };
-    }
-  }
+  // getCountPages(document: any) {
+  //   if (document.selectedFile.type === 'application/pdf') {
+  //     const reader = new FileReader();
+  //     reader.readAsBinaryString(document.selectedFile);
+  //     reader.onloadend = () => {
+  //       if (typeof reader.result === 'string') {
+  //         document.countPages = reader.result.match(
+  //           new RegExp(/\/Type[\s]*\/Page[^s]/g)
+  //         ).length;
+  //         this.detectorRef.markForCheck();
+  //       }
+  //     };
+  //   }
+  // }
 
   getDocumentName(document: any): string {
     if (document.data) {
@@ -197,6 +196,9 @@ export class OnlineDocumentsComponent implements OnInit, OnDestroy {
   }
 
   getDocumentPages(document: any): string {
+    // console.log('files', this.files[document.id]);
+    // console.log('progress', this.progress[document.id]);
+    // console.log('response', this.response[document.id]);
     if (document.data) {
       const pages = this.form.attachments[document.data].numberOfPages;
       return String('(' + pages + ' pages)');
@@ -219,7 +221,7 @@ export class OnlineDocumentsComponent implements OnInit, OnDestroy {
   onUploadSelected(file, document: DocumentsModel) {
     // console.log(file);
     this.uploadStatus[document.id] = UploadStatus.selected;
-    this.file[document.id] = file;
+    this.files[document.id] = file;
 
     // console.log(this.uploadStatus);
     // `File selected: ${file.name} (${file.size})`;
