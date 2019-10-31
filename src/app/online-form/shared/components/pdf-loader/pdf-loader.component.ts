@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { FormModel } from '@app/models/data-collection/form.model';
+import { FormModel } from '@models/data-collection/form.model';
 import { UploadStatus } from '../../../models/upload.model';
 // import { PDFProgressData } from 'pdfjs-dist';
 // import { FormsDivModel } from '../../../../form-constructor/form-builder/documents-forms/model/formsPDF.model';

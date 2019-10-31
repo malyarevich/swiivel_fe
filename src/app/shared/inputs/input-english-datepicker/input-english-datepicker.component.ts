@@ -1,12 +1,12 @@
 import {
+  AfterViewInit,
   ChangeDetectorRef,
   Component,
   forwardRef,
   Input,
   OnDestroy,
   OnInit,
-  ViewChild,
-  AfterViewInit
+  ViewChild
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { PopupRef } from '@app/core/components/popup/popup.ref';

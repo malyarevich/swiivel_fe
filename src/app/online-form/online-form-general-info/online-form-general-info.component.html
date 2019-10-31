@@ -8,10 +8,12 @@
       }"
     >
       <sw-general-info-section
+        [form]="form"
         [section]="section"
         [formErrors]="getFormErrorsById(section['_id'])"
         [fieldNameList]="fieldNameList"
         [fg]="fg"
+        [isViewOnly]="isViewOnly"
       ></sw-general-info-section>
     </div>
   </ng-container>

@@ -1,32 +1,44 @@
-<ng-container *ngIf="true">
+<ng-container *ngIf="!!field">
   <div
     class="form-group app-input-container position-relative"
     [formGroup]="fg"
     [ngClass]="{ 'app-input-fill': !field.options.hideLabel }"
   >
-    <label *ngIf="!field.options.hideLabel" class="app-input-label">
-      {{ field.name | titlecase }}
-    </label>
-
-    <select
+    <sw-dropdown-input
       [formControlName]="field._id"
-      class="app-input form-control"
-      [ngClass]="{ 
-        validation_required: this.field.options.required,
-        validation_error: !!validationText
+      [multiple]="isMultiple(field)"
+      [options]="
+        field.options && field.options.fieldOptions
+          ? field.options.fieldOptions
+          : list
+      "
+      [ngClass]="{
+        validation_required: isRequired(),
+        validation_error: !!validationText,
+        online_form: true,
+        read_only: !isActive()
       }"
+      [isActive]="isActive()"
     >
-      <option [ngValue]="undefined" selected>{{ field.name }}</option>
-      <option *ngFor="let item of field.options.items || list" [ngValue]="item">
-        {{ item }}
-      </option>
-    </select>
-    <span class="error_icon" [ngClass]="{ validation_error: !!validationText }" (click)="validationText = ''">
+      <span *ngIf="!field.options.hideLabel" class="label">
+        {{ getLabel() }}
+      </span>
+    </sw-dropdown-input>
+    <span
+      class="error_icon"
+      [ngClass]="{ validation_error: !!validationText }"
+      (click)="validationText = ''"
+    >
       <i class="fas fa-times fa-xs"> </i>
     </span>
 
-    <span class="validation_icon" [ngClass]="{ validation_required: this.field.options.required }">
-        <i class="fas fa-asterisk fa-xs"></i>
+    <span
+      class="validation_icon"
+      [ngClass]="{
+        validation_required: this.field.options.required && isActive()
+      }"
+    >
+      <i class="fas fa-asterisk fa-xs"></i>
     </span>
 
     <sw-error-list

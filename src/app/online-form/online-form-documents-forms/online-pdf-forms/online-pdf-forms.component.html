@@ -47,7 +47,7 @@
           />
         </label>
         <a
-          href="{{ pdfForm.form.link }}"
+          [href]="pdfForm.form ? pdfForm.form.link : '#'"
           class="form__header_download"
           (click)="$event.stopPropagation()"
         >

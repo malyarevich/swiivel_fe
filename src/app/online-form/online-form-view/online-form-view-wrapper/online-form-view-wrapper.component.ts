@@ -1,4 +1,5 @@
 import {Component, OnInit, Input, ChangeDetectionStrategy} from '@angular/core';
+import { ICurrentPosition, IFormNavigationState } from '../../models/online-form.model';
 
 @Component({
   selector: 'sw-online-form-view-wrapper',
@@ -8,20 +9,20 @@ import {Component, OnInit, Input, ChangeDetectionStrategy} from '@angular/core';
 })
 export class OnlineFormViewWrapperComponent implements OnInit {
   @Input() page: string;
-  @Input() currentPosition: object;
-  @Input() formNavigationState: object[];
+  @Input() currentPosition: ICurrentPosition;
+  @Input() formNavigationState: IFormNavigationState[];
 
   constructor() {}
 
   ngOnInit() {}
 
   isShow(): boolean {
-    return this.currentPosition['page'] === this.page;
+    return this.currentPosition.page === this.page;
   }
 
   isExist(): boolean {
     const item = this.formNavigationState.find(item => {
-      return item['page'] === this.page;
+      return item.page === this.page;
     });
     return undefined !== item;
   }

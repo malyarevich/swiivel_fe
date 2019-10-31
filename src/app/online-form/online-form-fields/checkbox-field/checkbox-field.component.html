@@ -1,0 +1,39 @@
+<ng-container *ngIf="true">
+  <div class="form-group multi-div position-relative" [formGroup]="fg">
+    <sw-input-checkbox
+      class="online_form"
+      [formControlName]="field._id"
+      [ngClass]="{
+        online_form: true,
+        read_only: !isActive()
+      }"
+      [isActive]="isActive()"
+    >
+      <span class="label" *ngIf="!field.options.hideLabel">
+        {{ getLabel() }}</span
+      >
+    </sw-input-checkbox>
+
+    <span
+      class="error_icon"
+      [ngClass]="{ validation_error: !!validationText }"
+      (click)="validationText = ''"
+      ><i class="fas fa-times fa-xs"></i
+    ></span>
+
+    <span
+      class="validation_icon"
+      [ngClass]="{
+        validation_required: isRequired()
+      }"
+    >
+      <i class="fas fa-asterisk fa-xs"></i>
+    </span>
+
+    <sw-error-list
+      [fg]="fg"
+      [field]="field"
+      [validationText]="validationText"
+    ></sw-error-list>
+  </div>
+</ng-container>

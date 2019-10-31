@@ -1,63 +1,72 @@
-import { Component, Input, OnInit } from "@angular/core";
-// import { NgbDateParserFormatter } from "@ng-bootstrap/ng-bootstrap";
-import { FormGroup } from "@angular/forms";
-import { Subscription } from "rxjs";
-import { Field } from "src/app/models/data-collection/field.model";
+import { Component, Input, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { Field } from '@models/data-collection/field.model';
 
 @Component({
-  selector: "app-date-time-field",
-  templateUrl: "./date-time-field.component.html",
-  styleUrls: ["./date-time-field.component.scss"]
+  selector: 'sw-date-time-field',
+  templateUrl: './date-time-field.component.html',
+  styleUrls: ['./date-time-field.component.scss']
 })
 export class DateTimeFieldComponent implements OnInit {
   @Input() field: Field;
   @Input() fg: FormGroup;
   @Input() validationText: string;
 
-  value: string;
-  isLoaded: boolean = false;
-  onValueChangeSubscription: Subscription;
-
-  formatDate;
   constructor() {}
 
-  ngOnInit() {
-    // if (this.field._id) {
-    //   if (!this.fg.get(this.field._id).value) {
-    //     this.fg.patchValue({
-    //       [this.field._id]: { year: 1970, month: 1, day: 1 }
-    //     });
-    //   }
+  ngOnInit() {}
 
-    //   this.value = this.fg.get(this.field._id).value;
+  getSeparator(): string {
+    const title =
+      this.field.options.separator &&
+      this.field.options.separator[0] &&
+      this.field.options.separator[0].value
+        ? this.field.options.separator[0].value
+        : 'dash';
 
-    //   if (!this.field.options.readonly) {
-    //     this.onValueChangeSubscription = this.fg
-    //       .get(this.field._id)
-    //       .valueChanges.subscribe(val => {
-    //         this.value = val;
-    //       });
-    //   }
+    switch (title) {
+      case 'dash':
+        return '-';
+        break;
+      case 'backslash':
+        return '/';
+        break;
+      case 'dot':
+        return '.';
+        break;
 
-    //   if (this.field.options.readonly) {
-    //     this.fg.controls[this.field._id].disable();
-    //   }
-    // }
-    // this.isLoaded = true;
+      default:
+        return '/';
+        break;
+    }
   }
 
-  blurChanges(event) {
-    this.value = this.parseDate(event);
+  getFormat(): string {
+    return this.field.options.dateFormat &&
+      this.field.options.dateFormat[0] &&
+      this.field.options.dateFormat[0].value
+      ? this.field.options.dateFormat[0].value
+      : 'mm-dd-yyyy';
   }
 
-  parseDate(event: any): string {
-    return event;
+  getValue(): string {
+    return (
+      this.fg.value[this.field._id] || this.fg.controls[this.field._id].value
+    );
   }
 
-  getPlaceholder() {
-    return this.field.options.placeholder &&
-      this.field.options.placeholder !== "string"
-      ? this.field.options.placeholder
-      : "12/12/2020";
+  getLabel(): string {
+    return this.field.options.hideLabel ? '' : this.field.name;
+  }
+
+  isActive(): boolean {
+    return (
+      // !(this.field.options && this.field.options.readonly) &&
+      this.fg.controls[this.field._id].enabled
+    );
+  }
+
+  isRequired(): boolean {
+    return this.field.options.required; // && !this.field.options.readonly;
   }
 }

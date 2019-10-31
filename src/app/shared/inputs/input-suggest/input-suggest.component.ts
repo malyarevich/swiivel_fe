@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, ElementRef, forwardRef, Input, Renderer2, ViewChild, ChangeDetectorRef, HostListener } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormControl } from '@angular/forms';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, forwardRef, HostListener, Input, Renderer2, ViewChild } from '@angular/core';
+import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DropdownSelectComponent } from '../dropdown-select/dropdown-select.component';
 
 @Component({
@@ -17,8 +17,32 @@ import { DropdownSelectComponent } from '../dropdown-select/dropdown-select.comp
 })
 
 export class InputSuggestComponent implements ControlValueAccessor {
-  onBlur(e) {
-    this.dropdown.close();
+
+  constructor(
+    private cdr: ChangeDetectorRef
+  ) {
+
+    this.control.valueChanges.subscribe((value) => {
+      if (this.options.length > 0 && value) {
+        if (value.toString().length > 0) {
+          this.filteredOptions = this.options.filter((option) => option.title.toLowerCase().startsWith(value.toString().toLowerCase()));
+        } else {
+          this.filteredOptions = this.options;
+        }
+        if (this.filteredOptions.length > 1) {
+          if (!this.dropdown.isOpened) { this.dropdown.showPopup(); }
+        } else if (this.filteredOptions.length === 1) {
+          if (this.filteredOptions[0].title === value) {
+            this.onChange(this.filteredOptions[0].value);
+          }
+        }
+      } else {
+        this.filteredOptions = this.options;
+        this.dropdown.close();
+      }
+      if (this.onChange) { this.onChange(value); }
+      this.cdr.detectChanges();
+    });
   }
   @ViewChild('dropdown', {static: true}) dropdown: DropdownSelectComponent;
   @Input() readonly: boolean;
@@ -28,36 +52,12 @@ export class InputSuggestComponent implements ControlValueAccessor {
 
   onChange: (value: any) => void;
   onTouched: () => void;
-
-  constructor(
-    private cdr: ChangeDetectorRef
-  ) {
-
-    this.control.valueChanges.subscribe((value) => {
-      if (this.options.length > 0 && value) {
-        if (value.toString().length > 0) {
-          this.filteredOptions = this.options.filter((option) => option['title'].toLowerCase().startsWith(value.toString().toLowerCase()));
-        } else {
-          this.filteredOptions = this.options;
-        }
-        if (this.filteredOptions.length > 1) {
-          if (!this.dropdown.isOpened) this.dropdown.showPopup();
-        } else if (this.filteredOptions.length === 1) {
-          if (this.filteredOptions[0].title === value) {
-            this.onChange(this.filteredOptions[0].value);
-          }
-        }
-      } else {
-        this.filteredOptions = this.options;
-        this.dropdown.close()
-      }
-      if (this.onChange) this.onChange(value);
-      this.cdr.detectChanges()
-    });
+  onBlur(e) {
+    this.dropdown.close();
   }
 
   onSelected(index) {
-    let selectedOption = this.filteredOptions[index];
+    const selectedOption = this.filteredOptions[index];
     this.setValue(selectedOption);
   }
 
@@ -65,7 +65,7 @@ export class InputSuggestComponent implements ControlValueAccessor {
     if (value === null) {
       this.control.reset();
     } else {
-      let selectedOption = this.filteredOptions.find(option => option.title === value || option.value === value);
+      const selectedOption = this.filteredOptions.find(option => option.title === value || option.value === value);
       if (selectedOption) {
         this.setValue(selectedOption);
       }

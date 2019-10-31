@@ -1,37 +1,36 @@
 <ng-container *ngIf="true">
-  DATA TIME FIELD
-  <!-- <div
+  <div
     class="form-group app-input-container position-relative date_controls"
     [formGroup]="fg"
-    [ngClass]="{ 'app-input-fill': !field.options.hideLabel }"
   >
-    <label *ngIf="!field.options.hideLabel" class="app-input-label">
-      {{ field.name | titlecase }}
-    </label>
-    <input
+    <sw-input-english-datepicker
       [formControlName]="field._id"
-      mdInput
-      type="text"
-      aria-describedby="basic-addon2"
-      class="form-control app-input date_controls__wide"
-      [ngClass]="{ 
-        validation_required: this.field.options.required,
-        validation_error: !!validationText
+      [separator]="getSeparator()"
+      [format]="getFormat()"
+      [placeholder]="getLabel()"
+      [value]="getValue()"
+      [ngClass]="{
+        online_form: true,
+        read_only: !isActive()
       }"
-      [placeholder]="getPlaceholder()"
-      name="dp"
-      ngbDatepicker
-      #d="ngbDatepicker"
-      (blur)="blurChanges($event)"
-      (click)="d.toggle()"
-      readonly
-    />
-    <span class="error_icon" [ngClass]="{ validation_error: !!validationText }" (click)="validationText = ''">
+      [isActive]="isActive()"
+    ></sw-input-english-datepicker>
+
+    <span
+      class="error_icon"
+      [ngClass]="{ validation_error: !!validationText }"
+      (click)="validationText = ''"
+    >
       <i class="fas fa-times fa-xs"> </i>
     </span>
 
-    <span class="validation_icon" [ngClass]="{ validation_required: this.field.options.required }">
-        <i class="fas fa-asterisk fa-xs"></i>
+    <span
+      class="validation_icon"
+      [ngClass]="{
+        validation_required: isRequired()
+      }"
+    >
+      <i class="fas fa-asterisk fa-xs"></i>
     </span>
 
     <sw-error-list
@@ -39,15 +38,5 @@
       [field]="field"
       [validationText]="validationText"
     ></sw-error-list>
-
-    <div class="input-group-append date_controls__append">
-      <button
-        class="btn app-btn-outline-primary calendar"
-        (click)="d.toggle()"
-        type="button"
-      >
-        <i class="far fa-calendar"></i>
-      </button>
-    </div>
-  </div> -->
+  </div>
 </ng-container>

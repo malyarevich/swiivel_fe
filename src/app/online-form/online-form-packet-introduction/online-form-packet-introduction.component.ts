@@ -1,24 +1,25 @@
-import { Component, OnInit, Input } from "@angular/core";
-import { FormGroup } from "@angular/forms";
-import { cloneDeep } from "lodash";
+import { Component, Input, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { FormModel, ISectionTab } from '@models/data-collection/form.model';
 import {
-  IMenuItems,
   IMainMenuNames,
-  menuItems,
-  mainMenuNames
-} from "../models/menu.model";
+  IMenuItems,
+  mainMenuNames,
+  menuItems
+} from '@models/data-collection/online-form/menu.model';
+import { cloneDeep } from 'lodash';
+import { ICurrentPosition, IFormNavigationState } from '../models/online-form.model';
 
 @Component({
-  selector: "sw-online-form-packet-introduction",
-  templateUrl: "./online-form-packet-introduction.component.html",
-  styleUrls: ["./online-form-packet-introduction.component.scss"]
+  selector: 'sw-online-form-packet-introduction',
+  templateUrl: './online-form-packet-introduction.component.html',
+  styleUrls: ['./online-form-packet-introduction.component.scss']
 })
 export class OnlineFormPacketIntroductionComponent implements OnInit {
   @Input() form: FormModel;
-  @Input() formNavigationState: any;
-  @Input() currentPosition: object;
-  @Input() formErrors: any;
+  @Input() formNavigationState: IFormNavigationState[];
+  @Input() currentPosition: ICurrentPosition;
+  @Input() formErrors: object;
   @Input() fg: FormGroup;
 
   packets: ISectionTab[];
@@ -47,14 +48,14 @@ export class OnlineFormPacketIntroductionComponent implements OnInit {
     //     return { ...item, _id: item.id, name: item.title };
     //   });
     // }
-    this.form.packetIntroduction
+    this.form.packetIntroduction;
   }
 
   isExist(): boolean {
     return (
-      typeof this.form.packetIntroduction !== "undefined" &&
+      typeof this.form.packetIntroduction !== 'undefined' &&
       this.form.packetIntroduction &&
-      this.form.packetIntroduction.content !== ""
+      this.form.packetIntroduction.content !== ''
     );
     // return (
     //   typeof this.form.packetIntroduction !== "undefined" &&
@@ -64,6 +65,6 @@ export class OnlineFormPacketIntroductionComponent implements OnInit {
   }
 
   isShowPacket(packetIndex: number): boolean {
-    return this.currentPosition["tab"] === packetIndex;
+    return this.currentPosition.tab === packetIndex;
   }
 }
