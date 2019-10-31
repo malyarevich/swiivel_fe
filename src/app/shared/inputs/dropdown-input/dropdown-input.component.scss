@@ -13,14 +13,8 @@
     display: flex;
     align-items: center;
 
-    &.table-header {
-      min-height: 25px;
-      padding: 5px 10px 5px 19px;
-      border: none;
-    }
-
     &.active {
-      border-color: #4350A2;
+      border-color: $button-color;
       .container__icon {
         &_up {
           display: flex;
@@ -49,11 +43,11 @@
       }
       i { display: none; }
       &.many {
-        background: #e4e7ff;
+        background: $lightblue-color;
         padding: 10px;
         margin: 10px 0 0 0;
         border-radius: 3px;
-        color: #4350a2;
+        color: $button-color;
         display: flex;
         align-items: center;
         .text {
@@ -72,11 +66,23 @@
       margin-left: auto;
       &_up {
         display: none;
-        color: #4350A2;
+        color: $button-color;
       }
       &_down {
         display: flex;
-        color: #909090;
+        color: $gray-color;
+      }
+    }
+
+    &.table-header {
+      min-height: 25px;
+      padding: 5px 10px 5px 19px;
+      border: none;
+
+      .item-purpure {
+        &.many {
+          margin: 2px;
+        }
       }
     }
   }
@@ -100,9 +106,8 @@
 
   .item-purpure {
     &.many {
-      background: $lightblue-color;
       padding: 0 0 0 7px;
-      margin: 2px;
+      margin: 10px 2px 0;
 
       .text {
         font: 500 10px $nunito-sans;

@@ -43,10 +43,10 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
   @Input() isDisplaySelected = true;
   @Input() panelClass = 'dropdown-overlay';
   @Input() style = '';
-  @Input() type: 'filter' | 'table-header';
+  @Input() type: 'table-header';
   @Input() typeItem: 'purpure';
 
-  @Input() set selectValue(opt: boolean) {
+  @Input() set selectValue(opt: [any]) {
     if (opt[0] === null) {
       this._sm.clear();
     }

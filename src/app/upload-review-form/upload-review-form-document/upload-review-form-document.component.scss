@@ -2,16 +2,83 @@
 
 :host{
   position: relative;
+  min-height: 150px;
   height: 100%;
-  .controllers {
-    position: absolute;
-    display: flex;
 
-    .zoom,
-    .rotate {
-      display: flex;
-      background: $dark-purple;
+  .container {
+    position: relative;
+    padding: 0;
+    overflow: auto;
+    max-width: calc(100vw - 350px);
+    max-height: calc(100vh - 195px);
+
+
+    &::-webkit-scrollbar {
+      -webkit-appearance: none;
+      width: 5px;
+      height: 5px;
     }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 5px;
+      background-color: rgba(0,0,0,.5);
+      -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+    }
+
+    &.full-size {
+      max-width: calc(100vw - 50px);
+    }
+  }
+
+  .rotating {
+    opacity: 0.8;
+  }
+
+  .controllers {
+    position: fixed;
+    display: flex;
+    bottom: 47px;
+    left: 60%;
+    border-radius: 3px;
+    overflow: hidden;
+
+    &.full-size {
+      left: 45%;
+    }
+  }
+
+  .controllers-zoom,
+  .controllers-rotate {
+    display: flex;
+    background: $dark-purple;
+  }
+
+  .controllers-zoom {
+    position: relative;
+  }
+
+  .controllers-zoom:after {
+    position: absolute;
+    right: 0;
+    content: '';
+    width: 1px;
+    height: 38px;
+    background: $soft-purple;
+  }
+
+  .controllers-rotate-button {
+    background: transparent;
+    border: none;
+  }
+
+  .controllers-rotate-button:hover {
+    opacity: 0.8;
+  }
+
+
+  .controllers-rotate-button:focus,
+  .controllers-rotate-button:active {
+    outline: none;
   }
 
   .image {
@@ -19,4 +86,23 @@
     margin: 0 auto;
   }
 
+  .loading {
+    position: relative;
+    min-height: 150px;
+  }
+
+  .loading-spinner {
+    margin: 25px auto;
+  }
+
+  .rotating-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+  }
+
+  .no-documents-header {
+    text-align: center;
+    margin: 25px 0;
+  }
 }

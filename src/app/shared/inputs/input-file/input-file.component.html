@@ -1,2 +1,2 @@
-<input type="file" (change)="onFileAdded()" #input accept="*"/>
+<input type="file" (change)="onFileAdded()" #input [accept]="acceptFileTypes"/>
 <ng-content></ng-content>
