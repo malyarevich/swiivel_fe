@@ -5,7 +5,6 @@ import { RouterModule } from '@angular/router';
 // Buttons
 import { ButtonComponent } from './buttons/button/button.component';
 import { IconButtonComponent } from './buttons/icon-button/icon-button.component';
-import { SmallButtonComponent } from './buttons/small-button/small-button.component';
 import { DropdownInputComponent } from './inputs/dropdown-input/dropdown-input.component';
 // Inputs
 import { InputButtonGroupComponent } from './inputs/input-button-group/input-button-group.component';
@@ -20,6 +19,8 @@ import { InputToggleComponent } from './inputs/input-toggle/input-toggle.compone
 import { DropdownSelectComponent } from './inputs/dropdown-select/dropdown-select.component';
 
 import { InputFileComponent } from './inputs/input-file/input-file.component';
+
+import { InputSearchComponent } from '@shared/inputs/input-search/input-search.component';
 
 // Headers
 import { BlockHeaderComponent} from './headers/block-header/block-header.component';
@@ -54,8 +55,11 @@ import { InputHebrewDatepickerComponent } from './inputs/input-hebrew-datepicker
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import localHe from '@angular/common/locales/he';
+import { IConfig, NgxMaskModule } from 'ngx-mask';
 
-registerLocaleData(localHe)
+registerLocaleData(localHe);
+
+export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
 
 @NgModule({
   imports: [
@@ -68,13 +72,13 @@ registerLocaleData(localHe)
       provide: DateAdapter,
       useFactory: adapterFactory
     }),
+    NgxMaskModule.forRoot(options),
   ],
   declarations: [
     // Buttons
     ButtonComponent,
     DropdownSelectComponent,
     IconButtonComponent,
-    SmallButtonComponent,
     // Inputs
     InputButtonGroupComponent,
     InputCheckboxComponent,
@@ -89,6 +93,7 @@ registerLocaleData(localHe)
     InputTextareaComponent,
     DialogComponent,
     InputFileComponent,
+    InputSearchComponent,
     // Headers
     PageHeaderComponent,
     BlockHeaderComponent,
@@ -118,7 +123,6 @@ registerLocaleData(localHe)
     // Buttons
     ButtonComponent,
     IconButtonComponent,
-    SmallButtonComponent,
     // Inputs
     InputButtonGroupComponent,
     InputCheckboxComponent,
@@ -137,6 +141,7 @@ registerLocaleData(localHe)
     InputEnglishDatepickerComponent,
     InputHebrewDatepickerComponent,
     InputFileComponent,
+    InputSearchComponent,
     // Headers
     PageHeaderComponent,
     BlockHeaderComponent,

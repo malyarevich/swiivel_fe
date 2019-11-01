@@ -1,12 +1,12 @@
 <div *ngIf="isExist()">
-  <app-online-documents
+  <sw-online-documents
     *ngIf="isDocumentsTab()"
     [form]="form"
     [fg]="fg"
-  ></app-online-documents>
-  <app-online-pdf-forms
+  ></sw-online-documents>
+  <sw-online-pdf-forms
     *ngIf="isExternalTab()"
     [form]="form"
     [fg]="fg"
-  ></app-online-pdf-forms>
+  ></sw-online-pdf-forms>
 </div>

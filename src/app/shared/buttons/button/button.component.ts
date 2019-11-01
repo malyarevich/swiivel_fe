@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
-import {ColorsEnum} from '@shared/colors.enum';
+import { ButtonColorsEnum } from '../buttonColors.enum';
+import { ButtonExpandEnum } from '../buttonExpand.enum';
+import { ButtonSizeEnum } from '../buttonSize.enum';
 
 @Component({
   selector: 'sw-button',
@@ -8,12 +10,17 @@ import {ColorsEnum} from '@shared/colors.enum';
 })
 
 export class ButtonComponent {
-  @Input() disabled: boolean;
+  @Input() color: ButtonColorsEnum = ButtonColorsEnum.PURPLE;
+  @Input() disabled = false;
+  @Input() expand: ButtonExpandEnum = ButtonExpandEnum.DEFAULT;
   @Input() name: string;
+  @Input() size: ButtonSizeEnum = ButtonSizeEnum.DEFAULT;
   @Input() value: any;
-  @Input() style ? = 'purple';
+  @Input() isRound = false;
 
-  public colors = ColorsEnum;
+  public colors = ButtonColorsEnum;
+  public expands = ButtonExpandEnum;
+  public sizes = ButtonSizeEnum;
 
   constructor() { }
 }

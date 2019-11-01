@@ -9,12 +9,17 @@
     >
       {{ document.name }}
     </div>
-    <div
-      class="content_section__article_text"
-      [innerHTML]="document.accompanyingText.data"
-    ></div>
     <div class="containers_line">
       <div class="document_container">
+        <div
+          class="content_section__article_text"
+          [innerHTML]="document.accompanyingText.data"
+        ></div>
+      </div>
+      <div
+        class="document_container document_container__control"
+        *ngIf="!document.isUpload"
+      >
         <img
           class="document_container__file_icon"
           [src]="pathIconsFolder + 'file.svg'"
@@ -41,7 +46,7 @@
         </button>
       </div>
       <div
-        class="document_container document_container__upload"
+        class="document_container document_container__control"
         *ngIf="
           document.isUpload && !document.fileUploading && !document.fileUploaded
         "
@@ -54,76 +59,11 @@
           (selected)="onUploadSelected($event, document)"
           (progress)="onUploadProgress($event, document)"
           (response)="onUploadResponse($event, document)"
-          (onFileDropped)="onFileSelected(document, $event)"
         >
+<!--          (onFileDropped)="onFileSelected(document, $event)"-->
           <ng-container [ngSwitch]="uploadStatus[document['id']]">
             <!-- Selected -->
-            <ng-container *ngSwitchCase="UploadStatus.selected">
-              <!-- {{file | json}} -->
-              <div class="document_container document_container__uploaded">
-                <!-- *ngIf="document.fileUploaded" -->
-                <img
-                  class="document_container__uploaded_icon"
-                  [src]="pathIconsFolder + 'uploaded.svg'"
-                />
-
-                <div class="document_container__uploaded_file_information">
-                  <div class="document_container__uploaded_title">
-                    <!-- {{ document.selectedFile.name }} -->
-                    {{ getOriginName(document) }}
-                  </div>
-                  <label class="document_container__uploaded_size">
-                    {{ getOriginSize(document) }}
-                    <!-- {{ document.selectedFile.size | fileSize }} -->
-                    <ng-container *ngIf="document.countPages">
-                      <!-- ({{ document.countPages }} pages) -->
-                    </ng-container>
-                  </label>
-                </div>
-                <button
-                  class="document_container__uploaded_delete"
-                  (click)="deleteUploadedFile(document)"
-                >
-                  <img
-                    class="document_container__uploaded_delete_icon"
-                    [src]="pathIconsFolder + 'uploaded-delete.svg'"
-                  />
-                </button>
-              </div>
-            </ng-container>
-            <!-- Process -->
-            <ng-container *ngSwitchCase="UploadStatus.process">
-              <div class="document_container document_container__uploading">
-                <!-- *ngIf="document.fileUploading" -->
-                <div class="document_container__uploading_header">
-                  <label class="document_container__uploading_title">
-                    Filled for {{ getDocumentName(document) }}
-                  </label>
-                  <button
-                    (click)="onCancelUpload(document)"
-                    class="document_container__uploading_cancel"
-                  >
-                    Cancel
-                  </button>
-                </div>
-                <div class="document_container__uploading_progress">
-                  <div class="document_container__uploading_total">
-                    <div
-                      class="document_container__uploading_uploaded"
-                      [ngStyle]="{
-                        width: (progress.loaded * 100) / progress.total + '%'
-                      }"
-                    ></div>
-                  </div>
-                  <label class="document_container__uploading_uploaded_value">
-                    {{ progress.loaded | fileSize }} of
-                    {{ progress.total | fileSize }} uploaded
-                  </label>
-                </div>
-              </div>
-            </ng-container>
-            <!-- Default -->
-            <ng-container *ngSwitchDefault>
+            <ng-container *ngSwitchCase="UploadStatus.init">
               <label
                 [for]="document.name"
                 class="document_container__upload_label"
@@ -138,7 +78,7 @@
                 </span>
                 <span
                   class="document_container__upload_text blue"
-                  (click)="file.openDialog($event)"
+                  (click)="file.openDialog($event, document)"
                 >
                   Upload Document
                 </span>
@@ -163,7 +103,7 @@
                         class="document_container__file_icon"
                         [src]="pathIconsFolder + 'file-documents.svg'"
                       />
-                      {{ getAcceptedFormats(document, "documents") }}
+                      {{ getAcceptedFormats(document, 'documents') }}
                     </li>
                     <li
                       class="images"
@@ -173,7 +113,7 @@
                         class="document_container__file_icon"
                         [src]="pathIconsFolder + 'file-images.svg'"
                       />
-                      {{ getAcceptedFormats(document, "images") }}
+                      {{ getAcceptedFormats(document, 'images') }}
                     </li>
                     <li
                       class="media"
@@ -183,20 +123,81 @@
                         class="document_container__file_icon"
                         [src]="pathIconsFolder + 'file-video-audio.svg'"
                       />
-                      {{ getAcceptedFormats(document, "videoAudio") }}
+                      {{ getAcceptedFormats(document, 'videoAudio') }}
                     </li>
                   </ul>
                 </span>
-
-                <!-- <input
-                  type="file"
-                  class="d-none"
-                  [id]="document.name"
-                  [name]="document.name"
-                  [accept]="getAcceptedFormats(document)"
-                  (change)="onFileSelected(document, $event.target.files[0])"
-                /> -->
               </label>
+            </ng-container>
+            <!-- Process -->
+            <ng-container *ngSwitchCase="UploadStatus.process">
+              <div class="document_container document_container__uploading">
+                <!-- *ngIf="document.fileUploading" -->
+                <div class="document_container__uploading_header">
+                  <label class="document_container__uploading_title">
+                    Filled for {{ getDocumentName(document) }}
+                  </label>
+                  <button
+                    (click)="onCancelUpload(document, file)"
+                    class="document_container__uploading_cancel"
+                  >
+                    Cancel
+                  </button>
+                </div>
+                <div class="document_container__uploading_progress">
+                  <div class="document_container__uploading_total">
+                    <div
+                      class="document_container__uploading_uploaded"
+                      [ngStyle]="{
+                        width: ( getLoaded(document) * 100) / getTotal(document) + '%'
+                      }"
+                    ></div>
+                  </div>
+                  <label class="document_container__uploading_uploaded_value">
+                    {{ getLoaded(document) | fileSize }} of
+                    {{ getTotal(document) | fileSize }} uploaded
+                  </label>
+                </div>
+              </div>
+            </ng-container>
+            <!-- Default -->
+            <ng-container *ngSwitchDefault>
+              <!-- {{file | json}} -->
+              <div class="document_container document_container__uploaded">
+                <!-- *ngIf="document.fileUploaded" -->
+                <!-- <div class="row"> -->
+                <img
+                  class="document_container__uploaded_icon"
+                  [src]="pathIconsFolder + 'uploaded.svg'"
+                />
+
+                <div class="document_container__uploaded_file_information">
+                  <div class="document_container__uploaded_title">
+                    <!-- {{ document.selectedFile.name }} -->
+                    {{ getOriginName(document) }}
+                  </div>
+                  <div class="document_container__file_size">
+                    {{ getDocumentPages(document) }}
+                  </div>
+                  <label class="document_container__uploaded_size">
+                    {{ getOriginSize(document) }}
+                    <!-- {{ document.selectedFile.size | fileSize }} -->
+                    <ng-container *ngIf="document.countPages">
+                      <!-- ({{ document.countPages }} pages) -->
+                    </ng-container>
+                  </label>
+                </div>
+                <button
+                  class="document_container__uploaded_delete"
+                  (click)="deleteUploadedFile(document)"
+                >
+                  <img
+                    class="document_container__uploaded_delete_icon"
+                    [src]="pathIconsFolder + 'uploaded-delete.svg'"
+                  />
+                </button>
+                <!-- </div> -->
+              </div>
             </ng-container>
           </ng-container>
         </sw-input-file>

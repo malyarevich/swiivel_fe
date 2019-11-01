@@ -1,18 +1,18 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild, Renderer2, ElementRef } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { UtilsService } from '@core/utils.service';
-import { Form } from '@models/data-collection/form';
+import { UtilsService } from '@app/core/utils.service';
+import { FormSearchParams } from '@app/models/form-search-params';
+import { FormModel } from '@models/data-collection/form.model';
 import { IconsEnum } from '@shared/icons.enum';
 import { DialogComponent } from '@shared/popup/dialog.component';
-import { pick } from 'lodash';
+import { get, pick } from 'lodash';
 import { DateTime } from 'luxon';
+import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { DataCollectionService } from './data-collection.service';
 import { FormsDataSource } from './form-table.datasource';
-import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
-import { FormSearchParams } from '@app/models/form-search-params';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-form-table',
@@ -21,6 +21,26 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormTableComponent implements OnInit {
+
+  constructor(
+    public dataCollectionService: DataCollectionService,
+    public router: Router,
+    private cdr: ChangeDetectorRef,
+    private fb: FormBuilder,
+    public utilsService: UtilsService,
+    private sanitizer: DomSanitizer,
+    private renderer: Renderer2) {
+    this.filterForm = this.fb.group({
+      name: [null],
+      type: [null],
+      access: [null],
+      createdBy: [null],
+      updatedAt: [null],
+      status: [null]
+    });
+
+    this.statusArrayOptions.splice(0, 1);
+  }
   @ViewChild('link', { static: false }) link: ElementRef;
   @ViewChild('dialog', { static: true }) dialog: DialogComponent;
 
@@ -28,11 +48,18 @@ export class FormTableComponent implements OnInit {
   public statusArray = [
     { title: 'All', value: null },
     { title: 'Active', value: 'active' },
-    { title: 'Drafts', value: 'draft' },
+    { title: 'Draft', value: 'draft' },
     { title: 'In Review', value: 'review' },
     { title: 'Closed', value: 'closed' },
     { title: 'Archived', value: 'archived' },
   ];
+  public statusArrayOptions = [...this.statusArray];
+
+  public typeArray = [
+    { title: 'Registration', value: 'registration' },
+    { title: 'Application', value: 'application' },
+  ];
+
   public activeTab = this.statusArray[0];
 
   // BULK BUTTON
@@ -52,48 +79,34 @@ export class FormTableComponent implements OnInit {
   public popupActionBtnText = '';
   public popupContentArray: { title: string, id?: any }[] = [];
   public canLabelsRemove = false;
+  public isPopupOpen = false;
 
   public icons = IconsEnum;
+  public totalAmount = 0;
   totalItems: number;
   showSpinner: boolean;
-
-  static createSharedUrl(id: string) {
-    return `${window.location.href}/online-form/${id}`;
-  }
   download: {
     url: SafeResourceUrl;
     filename: string;
   } = {
-      url: null,
-      filename: null
-    }
+    url: null,
+    filename: null
+  };
   filterForm: FormGroup;
   sort = ['name', true];
   currentPage = 1;
 
-  statusesOptions: string[] = ['Active', 'Drafts', 'In Review', 'Closed', 'Archived'];
+  statusesOptions: string[] = ['Active', 'Draft', 'In Review', 'Closed', 'Archived'];
+  // tslint:disable-next-line:variable-name
   _sm: SelectionModel<any>;
 
-  constructor(
-    public dataCollectionService: DataCollectionService,
-    public router: Router,
-    private cdr: ChangeDetectorRef,
-    private fb: FormBuilder,
-    public utilsService: UtilsService,
-    private sanitizer: DomSanitizer,
-    private renderer: Renderer2) {
-    this.filterForm = this.fb.group({
-      name: [null],
-      type: [null],
-      access: [null],
-      createdBy: [null],
-      updatedAt: [null],
-      status: [null]
-    });
+  static createSharedUrl(id: string) {
+    return `${window.location.origin}/view-form/${id}`;
   }
 
   ngOnInit() {
     this._sm = new SelectionModel(true);
+    this.dataSource.$totalAmount.subscribe(amount => this.totalAmount = amount ? amount : 0);
     this.dataSource.formsListMetadata$.subscribe(metadata => {
       if (metadata.page > metadata.last_page) {
         this.params.page = 1;
@@ -108,13 +121,14 @@ export class FormTableComponent implements OnInit {
       debounceTime(300),
       distinctUntilChanged(),
       map(value => {
-        if (value['status']) value['status'] = this.statusArray.find(status => status.title === value['status']).value
+        if (value.status && !value.status.length) {
+          this.activeTab = this.statusArray[0];
+        }
         Object.keys(value).forEach(key => (value[key] === null || value[key] === '') && delete value[key]);
         return value;
       })
     ).subscribe(value => {
       this.params.filter = { ...value };
-
       this.dataSource.loadFormsList(this.params);
     });
     this.dataSource.$loading.subscribe((loading: boolean) => {
@@ -123,8 +137,8 @@ export class FormTableComponent implements OnInit {
   }
 
   getUserInfo(obj: any) {
-    const user = pick(obj, ['full_name', 'role.role_name']);
-    return { name: user['full_name'], role: user['role']['role_name'] };
+    const user = pick(obj, ['full_name', 'role']);
+    return {name: user.full_name, role: get(user, 'role.role_name')};
   }
 
   getStatusColor(status: string): string {
@@ -134,7 +148,7 @@ export class FormTableComponent implements OnInit {
       case 'active':
         return 'green';
       case 'draft':
-        return 'lite-gray';
+        return 'light-blue';
       case 'review':
         return 'yellow';
       case 'closed':
@@ -145,13 +159,13 @@ export class FormTableComponent implements OnInit {
   }
 
   getDate(date: Date) {
-    let dt = DateTime.fromJSDate(date);
-    return dt.setLocale('en-US').toFormat("LL-dd-yyyy");
+    const dt = DateTime.fromJSDate(date);
+    return dt.setLocale('en-US').toFormat('LL-dd-yyyy');
   }
 
   getTime(date: Date) {
-    let dt = DateTime.fromJSDate(date);
-    return dt.setLocale('en-US').toFormat("t").toLowerCase();
+    const dt = DateTime.fromJSDate(date);
+    return dt.setLocale('en-US').toFormat('t').toLowerCase();
   }
 
   sortBy(field: string) {
@@ -191,7 +205,15 @@ export class FormTableComponent implements OnInit {
   }
 
   selectRow(row: any, e: Event) {
-    if (e && e.target && (e.target['tagName'] === 'BUTTON' || e.target['parentElement']['tagName'] === 'BUTTON')) {
+    // @ts-ignore
+    if (
+      e &&
+      e.target &&
+      // tslint:disable-next-line:no-string-literal
+      (e.target['tagName'] === 'BUTTON' ||
+        // tslint:disable-next-line:no-string-literal
+        e.target['parentElement']['tagName'] === 'BUTTON')
+    ) {
       e.stopPropagation();
     } else {
       if (row) {
@@ -199,15 +221,6 @@ export class FormTableComponent implements OnInit {
       }
       this.disabledBulkBtn = this._sm.selected.length === 0;
     }
-    // if (this.selectedForms.has(row)) {
-    //   this.selectedForms.delete(row);
-    // } else {
-    //   this.selectedForms.add(row);
-    // }
-
-    // this.disabledBulkBtn = this.selectedForms.size ? false : true;
-
-
   }
 
   rowSelected(row: any) {
@@ -217,13 +230,14 @@ export class FormTableComponent implements OnInit {
   clickTab(filter) {
     this.activeTab = filter;
     if (filter.title === 'All') {
-      this.filterForm.get('status').reset();
+      this.filterForm.get('status').setValue(null);
     } else {
-      this.filterForm.get('status').setValue(filter.title, { emitEvent: false});
+      this.filterForm.get('status').setValue([this.statusArray.find(value => value.title === filter.title)], { emitEvent: true});
     }
   }
 
   bulkAction(selectedIndex) {
+    this.isPopupOpen = true;
     switch (this.bulkOptions[selectedIndex]) {
       case 'Share':
         this.openSharePopup();
@@ -254,6 +268,7 @@ export class FormTableComponent implements OnInit {
     }
     this._sm.clear();
     this.disabledBulkBtn = true;
+    this.isPopupOpen = false;
   }
 
   popupSetActionBtnTextAndLogicRemoved(type: string) {
@@ -280,12 +295,13 @@ export class FormTableComponent implements OnInit {
   }
 
   onShareLink(form): void {
+    this.isPopupOpen = true;
     this._sm.clear();
     this.disabledBulkBtn = true;
     this.openSharePopup(form);
   }
 
-  openSharePopup(form?: Form) {
+  openSharePopup(form?: FormModel) {
     this.popupTitle = 'Share';
 
     if (form) {
@@ -293,7 +309,7 @@ export class FormTableComponent implements OnInit {
       this.popupContentArray.push({ title: FormTableComponent.createSharedUrl(form.mongo_id) });
     } else {
       this.popupContentArray = [];
-      this._sm.selected.forEach((item: Form) => {
+      this._sm.selected.forEach((item: FormModel) => {
         this.popupContentArray.push({ title: FormTableComponent.createSharedUrl(item.mongo_id) });
       });
     }
@@ -309,7 +325,7 @@ export class FormTableComponent implements OnInit {
     this.popupTitle = 'Archive';
 
     this.popupContentArray = [];
-    this._sm.selected.forEach((item: Form) => {
+    this._sm.selected.forEach((item: FormModel) => {
       this.popupContentArray.push({ title: item.name, id: item.id });
     });
 
@@ -324,7 +340,7 @@ export class FormTableComponent implements OnInit {
     this.popupTitle = 'Export PDF';
 
     this.popupContentArray = [];
-    this._sm.selected.forEach((item: Form) => {
+    this._sm.selected.forEach((item: FormModel) => {
       this.popupContentArray.push({ title: item.name, id: item.mongo_id });
     });
 
@@ -357,7 +373,7 @@ export class FormTableComponent implements OnInit {
     this.download = {
       url: null,
       filename: null
-    }
+    };
     window.URL.revokeObjectURL(url);
     this.cdr.markForCheck();
   }
@@ -385,7 +401,7 @@ export class FormTableComponent implements OnInit {
           filename: `forms.zip`
         };
         this.cdr.detectChanges();
-        this.renderer.selectRootElement(this.link.nativeElement).click()
+        this.renderer.selectRootElement(this.link.nativeElement).click();
         this.clearLink(url);
       });
   }
@@ -409,4 +425,18 @@ export class FormTableComponent implements OnInit {
       }
     });
   }
+
+  getUserName(permission: any): any {
+    return {
+      name: permission && permission.user && permission.user.full_name ? permission.user.full_name : 'no name',
+      id: permission && permission.user && permission.user.id ? permission.user.id : ''
+    };
+  }
+
+  keyDownFunction(event: any): void {
+    if (event.keyCode === 13) {
+      event.preventDefault();
+    }
+  }
+
 }

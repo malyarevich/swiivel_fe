@@ -9,6 +9,7 @@ import { UserItem } from '@models/user-item';
 
 export class UserItemComponent implements OnInit {
   @Input() userItem: UserItem;
+  @Input() isRoleShown = true;
 
   constructor(
   ) {}

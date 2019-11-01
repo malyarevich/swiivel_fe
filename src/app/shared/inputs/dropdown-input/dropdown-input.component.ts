@@ -3,7 +3,8 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  ElementRef, EventEmitter,
+  ElementRef,
+  EventEmitter,
   forwardRef,
   Input,
   OnInit,
@@ -11,7 +12,7 @@ import {
   ViewChild
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { Popup } from '@core/popup.service';
+import { Popup } from '@app/core/popup.service';
 
 const DROPDOWN_CONTROL_ACCESSOR = {
   provide: NG_VALUE_ACCESSOR,
@@ -27,24 +28,36 @@ const DROPDOWN_CONTROL_ACCESSOR = {
   providers: [DROPDOWN_CONTROL_ACCESSOR]
 })
 export class DropdownInputComponent implements OnInit, ControlValueAccessor {
-
   private _ref;
   private _sm: SelectionModel<any>;
 
   onChange: Function;
   onTouched: Function;
   dropdownList: any[];
-  disable = false;
   _multiple = false;
 
+  @Input() disabled = false;
   @Input() dropdownSubHeader = false;
+  @Input() isActive = true;
+  @Input() isClearable = false;
   @Input() isDisplaySelected = true;
   @Input() panelClass = 'dropdown-overlay';
+  @Input() style = '';
+  @Input() type: 'table-header';
+  @Input() typeItem: 'purpure';
+
+  @Input() set selectValue(opt: [any]) {
+    if (opt[0] === null) {
+      this._sm.clear();
+    }
+  }
+
   @Input()
   set multiple(opt: boolean) {
     this._multiple = !!opt;
     this._sm = new SelectionModel(this._multiple);
   }
+
   @Input()
   set options(opts: any[]) {
     if (opts) {
@@ -57,12 +70,7 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
   @ViewChild('droplist', { static: false }) droplist;
   @ViewChild('holder', { static: false, read: ElementRef }) holder: ElementRef;
 
-  constructor(
-    private popup: Popup,
-    private cdr: ChangeDetectorRef
-  ) {
-
-  }
+  constructor(private popup: Popup, private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this._sm = new SelectionModel(this._multiple);
@@ -77,7 +85,12 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
   }
 
   writeValue(items: any[]): void {
-    if (items && items.length > 0) this._sm.select(...items);
+    this._sm.clear();
+
+    if (items && items.length) {
+      this._sm.select(...items);
+    }
+
     this.cdr.markForCheck();
   }
 
@@ -89,13 +102,8 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
     this.onChange = fn;
   }
 
-  setDisabledState(isDisabled: boolean): void {
-    this.disable = isDisabled;
-  }
-
   isSelected(item) {
-    const selected = this._sm.selected.find(option => option === item);
-    return selected;
+    return this._sm.selected.find(option => option === item);
   }
 
   isEmpty() {
@@ -103,38 +111,57 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
   }
 
   select(item: any): void {
-    this._sm.toggle(item);
-    if (!this._multiple) { this._ref.close(); }
-    this.onChange(this._sm.selected);
-    this.cdr.markForCheck();
+    if (this.isActive) {
+      this._sm.toggle(item);
+
+      if (!this._multiple) {
+        this._ref.close();
+      }
+
+      this.onChange(this._sm.selected);
+      this.cdr.markForCheck();
+    }
   }
 
   remove(item, event?: Event) {
-    if (event) {
-      event.preventDefault();
-      event.stopImmediatePropagation();
-    }
-    this._sm.deselect(item);
-    this.onChange(this._sm.selected);
-    this.cdr.markForCheck();
-    return false;
-  }
+    if (this.isActive) {
+      if (event) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+      }
 
-  showPopup(): void {
-    this.isPopupShown.emit(true);
-    if (!!this.disable) { return ; }
-
-    this._ref = this.popup.open({
-      origin: this.holder,
-      content: this.droplist,
-      panelClass: this.panelClass
-    });
-    this._ref.afterClosed$.subscribe((result) => {
-      this.isPopupShown.emit(false);
-      this._ref = null;
-      this.onTouched();
+      this._sm.deselect(item);
+      this.onChange(this._sm.selected);
       this.cdr.markForCheck();
-    });
+
+      return false;
+    }
   }
 
+  showPopup(e: any): void {
+    if (!(e && e.target && e.target.className && e.target.className.includes('container__icon--clear'))) {
+      this.isPopupShown.emit(true);
+      if (!!this.disabled) {
+        return;
+      }
+
+      this._ref = this.popup.open({
+        origin: this.holder,
+        content: this.droplist,
+        panelClass: this.panelClass
+      });
+
+      this._ref.afterClosed$.subscribe(result => {
+        this.isPopupShown.emit(false);
+        this._ref = null;
+        this.onTouched();
+        this.cdr.markForCheck();
+      });
+    }
+  }
+
+  clear(): void {
+    this._sm.clear();
+    this.onChange(this._sm.selected);
+  }
 }

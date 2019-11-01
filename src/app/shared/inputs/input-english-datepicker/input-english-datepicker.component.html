@@ -1,12 +1,28 @@
-<div class="date-picker" #holder (click)="openDatepicker()">
-  <sw-input-text [(ngModel)]="value">
-    <span class="placeholder">English date</span>
-    <span class="icon"><i class="far fa-calendar"></i></span>
-  </sw-input-text>
+<div
+  #holder
+  class="date-picker"
+  [class.filter-field]="class === 'filter-field'"
+  (click)="openDatepicker($event)"
+>
+
+  <div class="input-date">
+    <input
+      class="input"
+      [(ngModel)]="value"
+      (ngModelChange)="onChange(value)"
+      [class.empty]="isEmpty(value)"
+      [disabled]="!isActive"
+      [dropSpecialCharacters]="false"
+      mask="00/00/0000"
+    />
+    <span class="placeholder">{{ placeholder }}</span>
+    <i class="far fa-calendar"></i>
+    <i *ngIf="!isEmpty(value)" class="fa fa-times" (click)="clear()"></i>
+  </div>
+
 </div>
 
 <ng-template #datepicker>
-
   <div class="date-picker-popup">
     <div class="header">
       <div class="actions left">
@@ -17,13 +33,20 @@
         {{ value }}
       </div>
       <div class="actions right">
-        <sw-icon-button icon="fa-angle-right" (click)="increment()"></sw-icon-button>
+        <sw-icon-button
+          icon="fa-angle-right"
+          (click)="increment()"
+        ></sw-icon-button>
       </div>
     </div>
     <div class="content">
-      <mwl-calendar-month-view [viewDate]="viewDate" [events]="events" [activeDayIsOpen]="false" (dayClicked)="dayClicked($event.day)">
+      <mwl-calendar-month-view
+        [viewDate]="viewDate"
+        [events]="events"
+        [activeDayIsOpen]="false"
+        (dayClicked)="dayClicked($event.day)"
+      >
       </mwl-calendar-month-view>
     </div>
   </div>
-
 </ng-template>

@@ -1,18 +1,35 @@
 <div
-  *ngIf="fg.controls[field._id].errors && !fg.controls[field._id].pristine"
+  *ngIf="this.fg.controls[this.field._id].errors && !fg.controls[field._id].pristine"
   class="error_msg"
 >
-  <div *ngIf="fg.controls[field._id].errors.required">
-    {{ field.name | titlecase }} is required.
-  </div>
-  <div *ngIf="fg.controls[field._id].errors.minlength">
-    {{ field.name | titlecase }} cannot has length less than
-    {{ fg.controls[field._id].errors.minlength.requiredLength }}.
-  </div>
+<!-- {{ this.fg.controls[this.field._id].errors | json }} -->
+  <ng-container *ngFor="let errorKey of getKeys(this.fg.controls[this.field._id].errors)">
+    <!-- {{errorKey | json}}
+    {{fieldValidators.required | json}}
+    {{errorKey === fieldValidators.required | json}} -->
+      <!-- {{ this.fg.controls[this.field._id].errors[errorKey] | json }} -->
+    <div *ngIf="isCustomError(this.fg.controls[this.field._id].errors[errorKey]); else isDefaultErrorTemplate">
+      {{ field.name | titlecase }} {{ this.fg.controls[this.field._id].errors[errorKey] }}.
+    </div>
 
-  <!-- <div *ngIf="fg.controls[field._id].errors">
-      {{ field.name | titlecase }} is invalid.
-    </div> -->
+    <ng-template #isDefaultErrorTemplate>
+      <div *ngIf="errorKey === 'maxlength'">
+        {{ field.name | titlecase }} cannot has length more than
+        {{
+          this.fg.controls[this.field._id].errors[errorKey].requiredLength
+        }}.
+      </div>
+      <div *ngIf="errorKey === 'minlength'">
+        {{ field.name | titlecase }} cannot has length less than
+        {{
+          this.fg.controls[this.field._id].errors[errorKey].requiredLength
+        }}.
+      </div>
+      <div *ngIf="errorKey === fieldValidators.required">
+        {{ field.name | titlecase }} is required.
+      </div>
+    </ng-template>
+  </ng-container>
 </div>
 
 <div *ngIf="validationText" class="error_msg">

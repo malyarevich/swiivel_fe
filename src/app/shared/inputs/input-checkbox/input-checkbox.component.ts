@@ -2,12 +2,12 @@ import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
-  Output,
   Input,
-  Self,
-  Optional
+  Optional,
+  Output,
+  Self
 } from '@angular/core';
-import { NgControl, FormControl } from '@angular/forms';
+import { FormControl, NgControl } from '@angular/forms';
 
 @Component({
   selector: 'sw-input-checkbox',

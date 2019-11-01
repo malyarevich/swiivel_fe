@@ -1,18 +1,19 @@
-import { Component, Input, OnInit } from "@angular/core";
-import { FormGroup, FormControl } from "@angular/forms";
-import { cloneDeep } from "lodash";
-import { Form } from "@app/models/data-collection/form";
+import { Component, Input, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { FormModel } from '@models/data-collection/form.model';
+import { cloneDeep } from 'lodash';
+import { ICurrentPosition, IFormNavigationState } from '../models/online-form.model';
 
 @Component({
-  selector: "sw-online-form-consent",
-  templateUrl: "./online-form-consent.component.html",
-  styleUrls: ["./online-form-consent.component.scss"]
+  selector: 'sw-online-form-consent',
+  templateUrl: './online-form-consent.component.html',
+  styleUrls: ['./online-form-consent.component.scss']
 })
 export class OnlineFormConsentComponent implements OnInit {
-  @Input() form: Form;
-  @Input() formNavigationState: any;
-  @Input() currentPosition: object;
-  @Input() formErrors: any;
+  @Input() form: FormModel;
+  @Input() formNavigationState: IFormNavigationState[];
+  @Input() currentPosition: ICurrentPosition;
+  @Input() formErrors: object;
   @Input() fg: FormGroup;
 
   consents: any[];
@@ -34,7 +35,7 @@ export class OnlineFormConsentComponent implements OnInit {
   }
 
   isShowConsent(consentIndex: number): boolean {
-    return this.currentPosition['tab'] === consentIndex;
+    return this.currentPosition.tab === consentIndex;
   }
 
 }

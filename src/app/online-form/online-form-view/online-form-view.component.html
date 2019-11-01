@@ -16,7 +16,7 @@
       [formErrors]="formErrors"
       [fieldNameList]="fieldNameList"
       [fg]="fg"
-      (onGoToTab)="goToTab($event)"
+      (goToTab)="onGoToTab($event)"
     ></sw-content-nav>
   </div>
 
@@ -28,7 +28,7 @@
     [formNavigationState]="formNavigationState"
   >
     <sw-online-form-packet-introduction
-      *ngIf="currentPosition['page'] === mainMenuNames.packetIntroduction"
+      *ngIf="currentPosition.page === mainMenuNames.packetIntroduction"
       [form]="form"
       [fg]="fg"
       [formErrors]="formErrors"
@@ -43,12 +43,13 @@
     [formNavigationState]="formNavigationState"
   >
     <sw-online-form-general-info
-      *ngIf="currentPosition['page'] === mainMenuNames.generalInfo"
+      *ngIf="currentPosition.page === mainMenuNames.generalInfo"
       [form]="form"
       [fg]="fg"
       [formErrors]="formErrors"
       [fieldNameList]="fieldNameList"
       [currentPosition]="currentPosition"
+      [isViewOnly]="isViewOnly"
     ></sw-online-form-general-info>
   </sw-online-form-view-wrapper>
 
@@ -59,7 +60,7 @@
     [formNavigationState]="formNavigationState"
   >
     <sw-online-form-documents-forms
-      *ngIf="currentPosition['page'] === mainMenuNames.documentsForms"
+      *ngIf="currentPosition.page === mainMenuNames.documentsForms"
       [form]="form"
       [fg]="fg"
       [formErrors]="formErrors"
@@ -74,7 +75,7 @@
     [formNavigationState]="formNavigationState"
   >
     <sw-online-form-consent
-      *ngIf="currentPosition['page'] === mainMenuNames.consentInfo"
+      *ngIf="currentPosition.page === mainMenuNames.consentInfo"
       [form]="form"
       [fg]="fg"
       [formErrors]="formErrors"
@@ -89,7 +90,7 @@
     [formNavigationState]="formNavigationState"
   >
     <sw-online-form-payment-settings
-      *ngIf="currentPosition['page'] === mainMenuNames.paymentSettings"
+      *ngIf="currentPosition.page === mainMenuNames.paymentSettings"
       [form]="form"
       [fg]="fg"
       [formErrors]="formErrors"
@@ -104,7 +105,7 @@
     [formNavigationState]="formNavigationState"
   >
     <sw-online-form-payment
-      *ngIf="currentPosition['page'] === mainMenuNames.payment"
+      *ngIf="currentPosition.page === mainMenuNames.payment"
       [form]="form"
       [fg]="fg"
       [formErrors]="formErrors"
@@ -119,7 +120,7 @@
     [formNavigationState]="formNavigationState"
   >
     <sw-online-form-terms-conditions
-      *ngIf="currentPosition['page'] === mainMenuNames.termsConditions"
+      *ngIf="currentPosition.page === mainMenuNames.termsConditions"
       [form]="form"
       [fg]="fg"
       [formErrors]="formErrors"
@@ -134,7 +135,7 @@
     [formNavigationState]="formNavigationState"
   >
     <sw-online-form-tuition-contract
-      *ngIf="currentPosition['page'] === mainMenuNames.tuitionContract"
+      *ngIf="currentPosition.page === mainMenuNames.tuitionContract"
       [form]="form"
       [fg]="fg"
       [formErrors]="formErrors"

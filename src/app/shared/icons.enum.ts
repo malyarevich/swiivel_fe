@@ -1,6 +1,8 @@
 export enum IconsEnum {
   COPY = 'fa-copy',
   DOWNLOAD = 'fa-download',
+  UPLOAD = 'fa-upload',
+  FILE = 'fa-file',
   EYE = 'fa-eye',
   PEN = 'fa-pen',
   SHARE = 'fa-share-alt',
@@ -12,4 +14,8 @@ export enum IconsEnum {
   ZOOM_IN = 'fa-search-plus',
   ZOOM_OUT = 'fa-search-minus',
   CARET_RIGHT = 'fa-caret-right',
+  CARET_LEFT = 'fa-caret-left',
+  CHEVRON_DOWN = 'fa-chevron-down',
+  CHEVRON_UP = 'fa-chevron-up',
+  PLUS = 'fa-plus',
 }

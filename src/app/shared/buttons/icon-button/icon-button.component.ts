@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { ColorsEnum } from '@shared/colors.enum';
+import { ButtonColorsEnum } from '@shared/buttons/buttonColors.enum';
+import { ButtonSizeEnum } from '@shared/buttons/buttonSize.enum';
 import { IconsEnum } from '@shared/icons.enum';
-import { SizesEnum } from '@shared/sizes.enum';
 
 @Component({
   selector: 'sw-icon-button',
@@ -11,11 +11,11 @@ import { SizesEnum } from '@shared/sizes.enum';
 
 export class IconButtonComponent {
   @Input() icon: IconsEnum;
-  @Input() size ? = SizesEnum.SMALL;
-  @Input() color ? = 'gray';
+  @Input() size: ButtonSizeEnum = ButtonSizeEnum.SMALL;
+  @Input() color: ButtonColorsEnum = ButtonColorsEnum.GRAY;
 
-  public sizes = SizesEnum;
-  public colors = ColorsEnum;
+  public sizes = ButtonSizeEnum;
+  public colors = ButtonColorsEnum;
 
   constructor() {}
 }

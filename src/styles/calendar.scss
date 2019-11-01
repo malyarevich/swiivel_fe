@@ -53,7 +53,7 @@
 }
 @media all and (-ms-high-contrast: none) {
   .cal-month-view .cal-day-cell {
-    display: block; 
+    display: block;
   }
 }
 
@@ -558,7 +558,7 @@
   background-color: #000; }
 
 
-  .cal-day-selected,
-      .cal-day-selected:hover {
-        background-color: deeppink !important;
-      }
+.cal-day-selected,
+.cal-day-selected:hover {
+  background-color: lavender !important;
+}

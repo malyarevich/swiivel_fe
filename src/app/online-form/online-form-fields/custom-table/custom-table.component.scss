@@ -1,0 +1,97 @@
+@import "../../shared/styles/index.scss";
+
+.custom_table {
+  border: 0.1rem solid rgba(199, 202, 223, 0.8);
+  box-sizing: border-box;
+  border-radius: 0.5rem;
+  display: none;
+  // display: grid;
+  // grid-template-rows: repeat(auto-fill);
+  // grid-template-columns: minmax(10rem, 4fr) 8fr;
+  padding: 0.85rem;
+  grid-row-gap: 0.1rem;
+
+  &--mobile {
+    display: grid;
+  }
+
+  @include media-breakpoint-up(xl) {
+    &--mobile {
+      display: none;
+    }
+
+    &--lg {
+      display: grid;
+    }
+  }
+
+  &__header {
+    background: #FFF6D8;
+    border-radius: 0.5rem;
+    box-shadow: inset 0px -1px 0px #FFC244;
+    display: grid;
+    grid-column-gap: 1rem;
+    grid-row-gap: 1rem;
+    grid-template-rows: 3rem;
+    grid-template-columns: minmax(8rem, 3fr) repeat(auto-fit, minmax(6rem, 1fr));
+  }
+
+  &__body {
+    display: grid;
+    flex-direction: column;
+    grid-template-rows: minmax(3rem, auto);
+    // grid-template-rows: repeat(auto-fill, minmax(auto-fill, 3rem));
+  }
+
+  &__row {
+    box-shadow: inset 0px -1px 0px #E8E7EC;
+    // min-height: 3rem;
+    border-radius: 0.5rem;
+    display: grid;
+    grid-column-gap: 1rem;
+    grid-row-gap: 1rem;
+    grid-template-rows: 3rem;
+    grid-template-columns: minmax(8rem, 3fr) repeat(auto-fit, minmax(6rem, 1fr));
+
+    &--error {
+      background: #FFF3F3;
+      box-shadow: inset 0px -1px 0px #FFBBBB;
+    }
+  }
+
+  &__caption {
+    align-self: center;
+    display: grid;
+    justify-self: center;
+  }
+
+  &__field {
+    align-self: center;
+    display: grid;
+    justify-self: center;
+  }
+
+  &__label {
+    align-self: center;
+    display: grid;
+    justify-self: start;
+    padding-left: 1rem;
+  }
+
+  &__text {
+    font-family: "Nunito Sans", "Helvetica";
+    font-style: normal;
+    font-weight: 800;
+    font-size: 0.85rem;
+    line-height: 1.1rem;
+
+    text-align: center;
+    text-transform: uppercase;
+
+    color: #131B33;
+    
+    &--error {
+      color: #FD6969;
+    }
+  }
+}

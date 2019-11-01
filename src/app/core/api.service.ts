@@ -34,11 +34,21 @@ export class ApiService {
   }
 
   getFormsList(requestParams?: FormSearchParams): Observable<any> {
-    if (!requestParams) requestParams = { page: 1, limit: 150 };
+    if (!requestParams) {
+      requestParams = { page: 1, limit: 150 };
+    }
+
     let params = new HttpParams();
+
     if ('filter' in requestParams) {
       for (const filter of Object.keys(requestParams.filter)) {
-        params = params.append(`filter[${filter}]`, requestParams.filter[filter]);
+        if (filter === 'status' || filter === 'type') {
+          requestParams.filter[filter].forEach((item) => {
+            params = params.append(`filter[${filter}][]`, item.value);
+          });
+        } else {
+          params = params.append(`filter[${filter}]`, requestParams.filter[filter]);
+        }
       }
     }
     if ('sort' in requestParams) {
@@ -69,7 +79,9 @@ export class ApiService {
     return this.http.post('/proxy/form-builder/form-template', form);
   }
 
-  updateGeneralForm(form: any, id: string) {
+  updateGeneralForm(form: any, id?: string) {
+    if (!id && !form._id) return throwError(`No id`);
+    else if (!id) id = form._id;
     return this.http.put(`/proxy/form-builder/form-template/${id}`, form);
   }
 

@@ -1,0 +1,39 @@
+<div class="upload-document-controls" *ngIf="!isBulkDownload">
+  <form class="upload-document-form" [formGroup]="formUpload">
+    <div class="upload-document-form-button">
+      <sw-input-file
+        formControlName="upload"
+        preupload="/proxy/upload-reviews-form/upload/{{activeIdForm}}"
+        #file="upload"
+        [acceptFileTypes]="'image/*,.pdf'"
+        [data]="uploadDocumentData"
+        (error)="uploadError($event)"
+        (response)="uploadedData()"
+      >
+        <sw-button
+          [disabled]="disabledButtons"
+          [expand]="buttonExpand.FULL"
+          (click)="file.openDialog()"
+        >
+          Upload Document
+        </sw-button>
+      </sw-input-file>
+    </div>
+  </form>
+  <sw-button
+    *ngIf="showBulkDownload"
+    color="white"
+    [expand]="buttonExpand.FULL"
+    [disabled]="disabledButtons"
+    (click)="clickBulkDownload()"
+  >
+    Bulk Download
+  </sw-button>
+</div>
+
+<div class="upload-document-controls--bulk" *ngIf="isBulkDownload">
+  <sw-button color="white" (click)="clickBulkDownload()">Cancel</sw-button>
+  <sw-button (click)="clickDownload()" [disabled]="selectedCount === 0">
+    Download Forms ({{ selectedCount }})
+  </sw-button>
+</div>

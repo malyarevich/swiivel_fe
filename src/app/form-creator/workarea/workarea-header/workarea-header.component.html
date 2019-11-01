@@ -32,15 +32,15 @@
     <div class="controls-arrow">
       <sw-icon-button
         *ngIf="isContentShown"
+        color="white"
         [icon]="icons.CARET_DOWN"
-        [color]="colors.WHITE"
         (click)="changeIsContentShown()"
       >
       </sw-icon-button>
       <sw-icon-button
         *ngIf="!isContentShown"
+        color="white"
         [icon]="icons.CARET_UP"
-        [color]="colors.WHITE"
         (click)="changeIsContentShown()"
       >
       </sw-icon-button>

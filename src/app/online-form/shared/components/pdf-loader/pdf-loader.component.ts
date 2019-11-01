@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { Form } from '@app/models/data-collection/form';
-import { UploadStatus } from '@app/online-form/models/upload.model';
+import { FormModel } from '@models/data-collection/form.model';
+import { UploadStatus } from '../../../models/upload.model';
 // import { PDFProgressData } from 'pdfjs-dist';
 // import { FormsDivModel } from '../../../../form-constructor/form-builder/documents-forms/model/formsPDF.model';
 
@@ -11,7 +11,7 @@ import { UploadStatus } from '@app/online-form/models/upload.model';
   styleUrls: ['./pdf-loader.component.scss']
 })
 export class PdfLoaderComponent implements OnInit {
-  @Input() form: Form;
+  @Input() form: FormModel;
   @Input() pdf: any;
   @Input() formErrors: object;
   @Input() fg: FormGroup;
@@ -59,12 +59,14 @@ export class PdfLoaderComponent implements OnInit {
     return this.widthPdf / this.defaultWidthPdf;
   }
 
-  styleObject(div: any) {
+  styleObject(div: any, isInput = false) {
+    const ky = this.getKY();
+    const kx = this.getKX();
     return {
-      top: (div.top * this.getKY()) / 12 + 'em',
-      left: (div.left * this.getKX()) / 12 + 'em',
-      width: (div.width * this.getKX()) / 12 + 'em',
-      height: (div.height * this.getKY()) / 12 + 'em'
+      top: (div.top * ky) / 12 + 'em',
+      left: (div.left * kx) / 12 + 'em',
+      width:  isInput ? ((div.width * kx) / 12 - 0.06)  + 'em' : (div.width * kx) / 12 + 'em',
+      height: isInput ? ((div.height * ky) / 12 - 0.06)  + 'em' : (div.height * ky) / 12 + 'em'
     };
   }
   // FIXME: need condition for parse linkedField
@@ -105,7 +107,7 @@ export class PdfLoaderComponent implements OnInit {
     // }
     return div.type === 'signature';
   }
-  
+
   onUploadSelected(file, document: any) {
     this.uploadStatus[document['id']] = UploadStatus.selected;
     this.file[document['id']] = file;

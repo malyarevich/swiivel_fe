@@ -18,13 +18,11 @@ export interface Document {
   objectId: string;
   person_id: string;
   submission_type: string;
-  updated_at: string; 
+  updated_at: string;
   _id: string;
   status?: string;
   isSelected?: boolean;
+  rotate?: string;
   next_form: ExtremeUploadForm;
   previous_form: ExtremeUploadForm;
 }
-
-
-

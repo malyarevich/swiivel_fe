@@ -1,17 +1,19 @@
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
   forwardRef,
+  HostListener,
   Input,
   Output,
   Renderer2,
-  ViewChild,
-  ChangeDetectorRef,
-  HostListener} from '@angular/core';
+  ViewChild
+} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { HttpService } from '@app/core/http.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'sw-input-file',
@@ -30,33 +32,36 @@ import { HttpService } from '@app/core/http.service';
 
 export class InputFileComponent implements ControlValueAccessor {
   file: File;
+  uploading: Subscription;
   onTouched: () => void;
   onChange: (val: any) => void;
   disabled = false;
   @Input() method = 'POST';
+  @Input() acceptFileTypes = '*';
   @Input('preupload') endpoint: string;
   @Input('data') data: any = null;
   @Input('maxSize') MAX_SIZE = 100000;
   @Output('response') response = new EventEmitter();
   @Output('progress') progress = new EventEmitter();
   @Output('selected') selected = new EventEmitter();
-  @ViewChild('input', {static: true}) input: ElementRef<HTMLInputElement>;
+  @Output() error = new EventEmitter();
+  @ViewChild('input', { static: true }) input: ElementRef<HTMLInputElement>;
   @HostListener('window:drop', ['$event']) public onDrop(event) {
     event.preventDefault();
     event.stopPropagation();
-    this.onFileAdded(event.dataTransfer.files[0])
+    this.onFileAdded(event.dataTransfer.files[0]);
   }
+
   @HostListener('window:dragover', ['$event']) public onDragOver(evt) {
     evt.preventDefault();
     evt.stopPropagation();
-
   }
 
   @HostListener('window:dragleave', ['$event']) public onDragLeave(evt) {
     evt.preventDefault();
     evt.stopPropagation();
-
   }
+
   openDialog() {
     this.input.nativeElement.click();
   }
@@ -65,38 +70,47 @@ export class InputFileComponent implements ControlValueAccessor {
     this.file = null;
   }
   onFileAdded(dropped?) {
-    if (this.disabled) return false;
-    let selected_file = null;
+    if (this.disabled) { return false; }
+    let selectedFile = null;
     if (dropped) {
-      selected_file = dropped;
+      selectedFile = dropped;
     } else {
-      selected_file = this.input.nativeElement.files[0];
+      selectedFile = this.input.nativeElement.files[0];
     }
-    if (selected_file) {
-      if (selected_file.size > this.MAX_SIZE * 1024 * 1024) {
+    if (selectedFile) {
+      if (selectedFile.size > this.MAX_SIZE * 1024 * 1024) {
         console.error(`Filesize is too big. Allowed max is ${this.MAX_SIZE} MB`);
         this.resetField();
       } else {
-        this.onFileSelected(selected_file);
+        this.onFileSelected(selectedFile);
+        // ? this.resetField();
       }
     }
+  }
+
+  onUploadCancelled() {
+    if (this.uploading) { this.uploading.unsubscribe(); }
   }
 
   onFileSelected(file: File) {
     this.selected.emit(file);
     if (this.endpoint) {
       if (this.method) {
-        this.http.upload(this.endpoint, file, this.method, false, this.data).subscribe((response) => {
+        this.uploading = this.http.upload(this.endpoint, file, this.method, false, this.data).subscribe((response) => {
           if (response.type && response.type === 1) {
-            this.progress.emit({loaded: response.loaded, total: response.total});
+            this.progress.emit({ loaded: response.loaded, total: response.total });
           } else if ('file_path' in response) {
-            this.response.emit({...response});
+            this.response.emit({ ...response });
+            this.onChange(response);
+          } else if (Array.isArray(response) && response.length && response[0].toLowerCase() === 'success') {
+            this.response.emit({ ...response });
             this.onChange(response);
           }
+        }, (error) => {
+          this.error.emit(error);
         });
       }
     } else {
-      console.log(file);
       this.onChange(file);
     }
   }
@@ -129,7 +143,7 @@ export class InputFileComponent implements ControlValueAccessor {
   }
 
   public writeValue(obj: any): void {
-    if (obj) this.selected.emit(obj);
+    if (obj) { this.selected.emit(obj); }
   }
 
 }

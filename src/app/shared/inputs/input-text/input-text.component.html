@@ -2,12 +2,15 @@
   <input
     [type]="_type"
     class="input_text__input"
-    [ngClass]="{'input_text__button': this._style == 'button_type'}"
+    [ngClass]="{ input_text__button: this._style == 'button_type' }"
     (blur)="onBlur($event)"
     (input)="onChange(input.value)"
     [class.empty]="isEmpty(input.value)"
     [attr.autocomplete]="_autocomplete"
-    #input/>
+    #input
+    [disabled]="readonly"
+  />
   <ng-content></ng-content>
-  <i class="fa fa-times-circle"></i>
+  <i *ngIf="isClearable && !isEmpty(input.value)" class="fa fa-times" (click)="clear()"></i>
+  <i *ngIf="isSearch" class="fas fa-search fa-xs"></i>
 </div>

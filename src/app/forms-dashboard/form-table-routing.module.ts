@@ -6,7 +6,7 @@ import { FormTableComponent } from './form-table.component';
 
 export const routes: Routes = [
   {
-    path: "",
+    path: '',
     component: MainComponent,
     canActivate: [AuthGuard],
     canActivateChild: [AuthGuard],

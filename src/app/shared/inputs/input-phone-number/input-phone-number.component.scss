@@ -30,12 +30,15 @@
 }
 
 :host(.ng-invalid) {
-  .phone_number {
-    &__input {
-      border: 1px solid $error-color;
-    }
-    &__error_icon {
-      display: block;
+  &:not(.ng-pristine) {
+    .phone_number {
+      &__input {
+        border: 1px solid $error-color;
+      }
+
+      &__error_icon {
+        display: block;
+      }
     }
   }
 }

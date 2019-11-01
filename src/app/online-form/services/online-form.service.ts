@@ -1,36 +1,42 @@
-import { Injectable, EventEmitter, Output } from "@angular/core";
-import { Observable } from "rxjs";
-import { map } from "rxjs/operators";
-import { ShortTextFieldComponent } from "../online-form-fields/short-text-field/short-text-field.component";
-import { LongTextFieldComponent } from "../online-form-fields/long-text-field/long-text-field.component";
-import { NumberTextFieldComponent } from "../online-form-fields/number-text-field/number-text-field.component";
-import { MultipleOptionsFieldComponent } from "../online-form-fields/multiple-options-field/multiple-options-field.component";
-import { DropDownListFieldComponent } from "../online-form-fields/drop-down-list-field/drop-down-list-field.component";
-import { DateTimeFieldComponent } from "../online-form-fields/date-time-field/date-time-field.component";
-import { TimeFieldComponent } from "../online-form-fields/time-field/time-field.component";
-import { EmailFieldComponent } from "../online-form-fields/email-field/email-field.component";
-import { PhoneNumberFieldComponent } from "../online-form-fields/phone-number-field/phone-number-field.component";
-import { HebrewDateFieldComponent } from "../online-form-fields/hebrew-date-field/hebrew-date-field.component";
-import { LabelFieldComponent } from "../online-form-fields/label-field/label-field.component";
-import { EmptyLineFieldComponent } from "../online-form-fields/empty-line-field/empty-line-field.component";
-import { FormControl, FormBuilder, FormGroup, AbstractControl } from "@angular/forms";
+import { EventEmitter, Injectable, Output } from '@angular/core';
+import {
+  AbstractControl,
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup
+} from '@angular/forms';
 import { HttpService } from '@app/core/http.service';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { CheckboxFieldComponent } from '../online-form-fields/checkbox-field/checkbox-field.component';
+import { DateTimeFieldComponent } from '../online-form-fields/date-time-field/date-time-field.component';
+import { DropDownListFieldComponent } from '../online-form-fields/drop-down-list-field/drop-down-list-field.component';
+import { EmailFieldComponent } from '../online-form-fields/email-field/email-field.component';
+import { EmptyLineFieldComponent } from '../online-form-fields/empty-line-field/empty-line-field.component';
+import { HebrewDateFieldComponent } from '../online-form-fields/hebrew-date-field/hebrew-date-field.component';
+import { LabelFieldComponent } from '../online-form-fields/label-field/label-field.component';
+import { LongTextFieldComponent } from '../online-form-fields/long-text-field/long-text-field.component';
+import { NumberTextFieldComponent } from '../online-form-fields/number-text-field/number-text-field.component';
+import { PhoneNumberFieldComponent } from '../online-form-fields/phone-number-field/phone-number-field.component';
+import { ShortTextFieldComponent } from '../online-form-fields/short-text-field/short-text-field.component';
+import { TimeFieldComponent } from '../online-form-fields/time-field/time-field.component';
 
-export const hasRequiredField = (abstractControl: AbstractControl): boolean => {
+export const hasRequiredField = (abstractControl: AbstractControl | any): boolean => {
   if (abstractControl.validator) {
-      const validator = abstractControl.validator({}as AbstractControl);
-      if (validator && validator.required) {
-          return true;
-      }
+    const validator = abstractControl.validator({} as AbstractControl);
+    if (validator && validator.required) {
+      return true;
+    }
   }
-  if (abstractControl['controls']) {
-      for (const controlName in abstractControl['controls']) {
-          if (abstractControl['controls'][controlName]) {
-              if (hasRequiredField(abstractControl['controls'][controlName])) {
-                  return true;
-              }
-          }
+  if (abstractControl.controls) {
+    for (const controlName in abstractControl.controls) {
+      if (abstractControl.controls[controlName]) {
+        if (hasRequiredField(abstractControl.controls[controlName])) {
+          return true;
+        }
       }
+    }
   }
   return false;
 };
@@ -40,7 +46,7 @@ export type IFormField =
   | typeof ShortTextFieldComponent
   | typeof LongTextFieldComponent
   | typeof NumberTextFieldComponent
-  | typeof MultipleOptionsFieldComponent
+  | typeof CheckboxFieldComponent
   | typeof DropDownListFieldComponent
   | typeof DateTimeFieldComponent
   | typeof TimeFieldComponent
@@ -50,13 +56,29 @@ export type IFormField =
   | typeof LabelFieldComponent
   | typeof EmptyLineFieldComponent;
 
+export const componentFieldsMap = new Map<number, IFormField>([
+  [101, ShortTextFieldComponent],
+  [102, LongTextFieldComponent],
+  [103, NumberTextFieldComponent],
+  [104, TimeFieldComponent],
+  [105, DropDownListFieldComponent],
+  [106, DateTimeFieldComponent],
+  [107, CheckboxFieldComponent],
+  [108, EmailFieldComponent],
+  [109, PhoneNumberFieldComponent],
+  [110, HebrewDateFieldComponent],
+  [111, LabelFieldComponent],
+  [112, EmptyLineFieldComponent]
+]);
+
 @Injectable()
 export class OnlineFormService {
   formId: string;
   formValues: Map<string, any> = new Map();
   profileForm;
+  fgList: any = {};
   fg: FormGroup;
-  //FIXME: replace 'any' to interface (depend on server data)
+  // FIXME: replace 'any' to interface (depend on server data)
   @Output() onChangeServerValidations: EventEmitter<any> = new EventEmitter();
 
   changeServerValidations(list: any) {
@@ -68,31 +90,16 @@ export class OnlineFormService {
   }
 
   verifyForm() {
-    return this.fg.hasError;
+    return this.fgList[this.formId].hasError;
   }
 
-  componentFieldsMap = new Map<number, IFormField>([
-    [101, ShortTextFieldComponent],
-    [102, LongTextFieldComponent],
-    [103, NumberTextFieldComponent],
-    [104, MultipleOptionsFieldComponent],
-    [105, DropDownListFieldComponent],
-    [106, DateTimeFieldComponent],
-    [107, TimeFieldComponent],
-    [108, EmailFieldComponent],
-    [109, PhoneNumberFieldComponent],
-    [110, HebrewDateFieldComponent],
-    [111, LabelFieldComponent],
-    [112, EmptyLineFieldComponent]
-  ]);
-
-  getComponentByTypeNumber = (typeNumber: number) => {
+  getComponentByTypeNumber = (typeNumber: number): IFormField => {
     // return {};
-    return this.componentFieldsMap.get(typeNumber);
-  };
+    return componentFieldsMap.get(typeNumber);
+  }
 
-  setFormValueById(id: string, value: any) {
-    this.formValues.set(id, value);
+  setFormValueById(id: string, value: any): Map<string, any> {
+    return this.formValues.set(id, value);
     // console.log(this.formValues);
   }
 
@@ -102,12 +109,14 @@ export class OnlineFormService {
       : undefined;
   }
 
-  setFormValues(formValues: Map<string, any>) {
-    this.formValues = formValues ? new Map(Object.entries(formValues)) : this.formValues;
+  setFormValues(formValues: Map<string, any>): Map<string, any> {
+    return (this.formValues = formValues
+      ? new Map(Object.entries(formValues))
+      : this.formValues);
   }
 
   getFormValues(): any {
-    return this.fg.value;
+    return this.fgList[this.formId].value;
   }
 
   getIsFormView(): boolean {
@@ -115,16 +124,20 @@ export class OnlineFormService {
   }
 
   getFormGroup(): FormGroup {
-    return this.fg;
+    return this.fgList[this.formId];
+  }
+
+  setFormGroup(fg: FormGroup): void {
+    this.fgList[this.formId] = fg;
   }
 
   addFormControl(id: string, fc: FormControl) {
-    this.fg.addControl(id, fc);
+    this.fgList[this.formId].addControl(id, fc);
   }
 
   setFormControlValue(id: string, value: string) {
-    this.fg.patchValue({ id, value });
-    // console.log(this.fg.value);
+    this.fgList[this.formId].patchValue({ id, value });
+    // console.log(this.fgList[this.formId].value);
   }
 
   constructor(private http: HttpService, private fb: FormBuilder) {}
@@ -135,27 +148,54 @@ export class OnlineFormService {
 
   getOneForm(id = this.formId): Observable<any> {
     if (id) {
-      return this.http.get(`/proxy/forms/online/${id}`).pipe(map((response) => {
-        // this.setFormValues(response['data']['fieldsData']);
-        this.setFormValues(response['fieldsData']);
-        return response
-      }));
+      // TODO: when /online/link stops returning errors we should use it
+      return this.http.get(`/proxy/forms/online/link/${id}`).pipe(
+        // return this.http.get(`/proxy/forms/online/${id}`).pipe(
+        map(response => {
+          return response;
+        })
+      );
     }
-    console.error("Id of form is undefined");
+    console.error('Id of form is undefined');
     return undefined;
   }
 
-  sendForm(form: object = {}): Observable<any>  {
+  getTemplateForm(id = this.formId): Observable<any> {
+    if (id) {
+      return this.http.get(`/proxy/forms/online/${id}`).pipe(
+        map(response => {
+          return response;
+        })
+      );
+    }
+    console.error('Id of form is undefined');
+    return undefined;
+  }
+
+  sendForm(form: object = {}): Observable<any> {
+    if (this.formId) {
+      return (
+        this.http
+          .put(`/proxy/forms/online/link/${this.formId}`, form)
+          // .put(`/proxy/forms/online/${this.formId}`, form)
+          .pipe(map(response => response))
+      );
+    }
+    console.error('Id of form is undefined');
+    return undefined;
+  }
+
+  sendFormTemplate(form: object = {}): Observable<any> {
     if (this.formId) {
       return this.http
         .put(`/proxy/forms/online/${this.formId}`, form)
         .pipe(map(response => response));
     }
-    console.error("Id of form is undefined");
+    console.error('Id of template is undefined');
     return undefined;
   }
 
   initOneForm() {
-    this.fg = new FormGroup({});
+    this.fgList[this.formId] = new FormGroup({});
   }
 }

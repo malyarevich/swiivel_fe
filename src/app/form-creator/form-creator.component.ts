@@ -1,16 +1,16 @@
-import { Component, OnInit, ChangeDetectionStrategy, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { CdkStepper } from '@angular/cdk/stepper';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { ApiService } from '@app/core/api.service';
+import { StepperService } from '@shared/stepper.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { FormCreatorService } from './form-creator.service';
 import { SidebarConsentComponent } from './sidebar/consent.component';
 import { SidebarDocumentsFormsComponent } from './sidebar/documents-forms.component';
 import { SidebarFieldsComponent } from './sidebar/fields.component';
 import { SidebarIntroComponent } from './sidebar/intro.component';
 import { SidebarTermsConditionsComponent } from './sidebar/terms-conditions.component';
-import { ActivatedRoute } from '@angular/router';
-import { CdkStepper } from '@angular/cdk/stepper';
-import { StepperService } from '@shared/stepper.service';
-import { FormCreatorService } from './form-creator.service';
-import { ApiService } from '@app/core/api.service';
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
 
 @Component({
   selector: 'sw-form-creator',
@@ -20,28 +20,33 @@ import { Subject } from 'rxjs';
 })
 export class FormCreatorComponent implements OnInit {
   defaults = {
-    'packetIntroduction': {
-      'sectionName': 'Packet Introduction',
-      'sectionWidth': 'full'
-    },
-    'documentsForms': {
-      'documents': {
-        'sectionName': 'Documents for Parents',
-        'sectionWidth': 'full'
-      },
-      'formsPDF': {
-        'sectionName': 'School Forms',
-        'sectionWidth': 'full'
-      },
-    },
-    'consent': {
-      'sectionName': 'Parent Consent',
-      'sectionWidth': 'full'
-    },
-    'termsConditions': {
-      'sectionName': 'Terms and Conditions',
-      'sectionWidth': 'full'
-    }
+    fields: [],
+    type: 'registration',
+    name: null
+    // 'packetIntroduction': {
+    //   'sectionName': 'Packet Introduction',
+    //   'sectionWidth': 'full'
+    // },
+    // 'documentsForms': {
+    //   'documents': {
+    //     'sectionName': 'Documents for Parents',
+    //     'sectionWidth': 'full'
+    //   },
+    //   'formsPDF': {
+    //     'sectionName': 'School Forms',
+    //     'sectionWidth': 'full'
+    //   },
+    // },
+    // 'consent': {
+    //   'sectionName': 'Parent Consent',
+    //   'sectionWidth': 'full'
+    // },
+    // 'termsConditions': {
+    //   'sectionName': 'Terms and Conditions',
+    //   'sectionWidth': 'full'
+    // },
+    // 'fields': [],
+    // 'name': null,
   };
   workarea: string;
   sections = [
@@ -83,19 +88,19 @@ export class FormCreatorComponent implements OnInit {
         this.api.getFormTemplate(params.get('mongo_id')).subscribe(form => {
           if (form) {
             this.service.form = form;
-            this.cdr.detectChanges()
+            this.cdr.detectChanges();
           }
           this.sections.forEach((section) => {
             if (section.active === true && section.expanded === true) {
               this.switchWorkarea(section.workarea);
-              return
+              return;
             }
           });
           this.switchWorkarea(this.sections[0].workarea);
           // });
         });
       } else {
-        // this.service.createForm(this.defaults);
+        this.service.form = this.defaults;
         console.info(`Create New Form`);
       }
     });
@@ -105,7 +110,7 @@ export class FormCreatorComponent implements OnInit {
       } else if (step === 'prev') {
         this.steppert.previous();
       }
-    })
+    });
     // console.log(route)
   }
 
@@ -114,7 +119,7 @@ export class FormCreatorComponent implements OnInit {
   }
 
   prevStep() {
-    this.steppert.previous()
+    this.steppert.previous();
   }
 
   nextStep() {
