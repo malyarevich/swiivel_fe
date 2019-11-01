@@ -59,7 +59,7 @@ import { IConfig, NgxMaskModule } from 'ngx-mask';
 
 registerLocaleData(localHe);
 
-export let options: Partial<IConfig> | (() => Partial<IConfig>);
+export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
 
 @NgModule({
   imports: [
