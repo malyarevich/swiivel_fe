@@ -222,5 +222,9 @@ export class FormSendService {
     this.stepperService.stepper = 'next';
   }
 
+  prevStep() {
+    this.stepperService.stepper = 'prev';
+  }
+
 
 }

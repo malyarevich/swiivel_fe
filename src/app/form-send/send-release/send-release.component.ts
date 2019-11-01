@@ -211,4 +211,8 @@ export class SendReleaseComponent implements OnInit {
     this.formSendService.nextStep();
   }
 
+  prevStep() {
+    this.formSendService.prevStep();
+  }
+
 }
