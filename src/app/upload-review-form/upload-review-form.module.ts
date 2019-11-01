@@ -15,7 +15,7 @@ import { UploadReviewFormRoutingModule } from './upload-review-form-routing.modu
 import { UploadReviewFormComponent } from './upload-review-form.component';
 import { UploadReviewFormService } from './upload-review-form.service';
 import { UploadReviewReviewItemComponent } from './upload-review-review-item/upload-review-form-item.component';
-// import { OnlineFormModule } from '../online-form/online-form.module';
+import { OnlineFormModule } from '../online-form/online-form.module';
 // import { FormSendModule } from '../form-send/form-send.module';
 
 @NgModule({
@@ -32,8 +32,8 @@ import { UploadReviewReviewItemComponent } from './upload-review-review-item/upl
   imports: [
     CommonModule,
     FormsModule,
-    //    FormSendModule,
-    //    OnlineFormModule,
+    // FormSendModule,
+    OnlineFormModule,
     PdfViewerModule,
     SharedModule,
     UploadReviewFormRoutingModule

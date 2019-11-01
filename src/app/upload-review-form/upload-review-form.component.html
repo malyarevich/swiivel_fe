@@ -139,14 +139,14 @@
     </div>
 
     <div *ngIf="getSelectForm() && getSelectForm().submission_type === 'onlineForm'">
-      <!--<sw-online-form-->
-        <!--[formId]="getSelectForm().form_id"-->
-        <!--[isViewMode]="true"-->
-        <!--[isMenuShow]="true"-->
-        <!--[isReviewMode]="true"-->
-        <!--(onBack)="onBack($event)"-->
-        <!--(onSaveNext)="onSaveNext($event)"-->
-      <!--&gt;</sw-online-form>-->
+      <sw-online-form
+        [formId]="getSelectForm().form_id"
+        [isViewMode]="true"
+        [isMenuShow]="true"
+        [isReviewMode]="true"
+        (onBack)="onBack($event)"
+        (onSaveNext)="onSaveNext($event)"
+      ></sw-online-form>
     </div>
     <div *ngIf="getSelectForm() && getSelectForm().submission_type === 'pdfForm'">
       <!--<app-preview-form-->
