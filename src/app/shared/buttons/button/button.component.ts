@@ -16,6 +16,7 @@ export class ButtonComponent {
   @Input() name: string;
   @Input() size: ButtonSizeEnum = ButtonSizeEnum.DEFAULT;
   @Input() value: any;
+  @Input() isRound = false;
 
   public colors = ButtonColorsEnum;
   public expands = ButtonExpandEnum;

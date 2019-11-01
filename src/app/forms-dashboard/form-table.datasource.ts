@@ -25,7 +25,7 @@ export class FormsDataSource implements DataSource<any> {
             form.updated_at = new Date(form.updated_at);
           }
           return form;
-        })
+        });
         this.formsSubject.next(data);
       }
     });

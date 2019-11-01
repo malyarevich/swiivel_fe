@@ -160,6 +160,22 @@ select {
   min-height: 1px;
 }
 
+.cdk-overlay-pane {
+  overflow: auto;
+
+  &::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 5px;
+    height: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: rgba(0,0,0,.5);
+    -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+  }
+}
+
 div.centered-panel {
   overflow: auto;
   min-width: 100px;
