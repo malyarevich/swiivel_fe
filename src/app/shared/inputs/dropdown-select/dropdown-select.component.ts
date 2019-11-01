@@ -14,8 +14,7 @@ import {
   ViewChildren
 } from '@angular/core';
 import { Popup } from '@app/core/popup.service';
-import { isObjectLike, isString } from 'lodash';
-import { isNumber } from 'util';
+import { isObjectLike, isString, isNumber } from 'lodash';
 import { SelectOptionDirective } from './option.directive';
 
 @Component({
