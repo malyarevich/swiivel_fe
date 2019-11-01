@@ -1,9 +1,9 @@
 import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef, Renderer2 } from '@angular/core';
-import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
+import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormSendService } from '../form-send.service';
 import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
 import { DataCollectionService } from '@app/forms-dashboard/data-collection.service';
-import { OverlayModule } from '@angular/cdk/overlay';
+import { DateTime } from 'luxon';
 
 @Component({
   selector: 'sw-send-release',
@@ -12,12 +12,14 @@ import { OverlayModule } from '@angular/cdk/overlay';
 })
 export class SendReleaseComponent implements OnInit {
 
+  public roundsList: any = [];
   public periodsList: any = [];
   public selectedPeriods: any = [];
   public accountsList: any[] = [];
   public selectedAccountsList: any[] = [];
   public periodsFilter: FormControl = new FormControl([]);
   public form: FormGroup;
+  public isNew: boolean = false;
   public showForm: boolean = false;
   public selectOptions = Array.from({ length: 30 }).map((_, i) => i);
   public mailingOptions = ['Use Mailing House', 'Self-mail'];
@@ -25,12 +27,12 @@ export class SendReleaseComponent implements OnInit {
     url: SafeResourceUrl;
     filename: string;
   } = {
-    url: null,
-    filename: null
-  };
-
+      url: null,
+      filename: null
+    };
 
   @ViewChild('link', { static: false }) link: ElementRef;
+  roundId: any;
 
   constructor(
     private formSendService: FormSendService,
@@ -55,40 +57,49 @@ export class SendReleaseComponent implements OnInit {
     this.formSendService.$selectedAccounts.subscribe(val => {
       this.selectedAccountsList = val;
       this.cdr.markForCheck();
-    })
+    });
+    this.formSendService.$roundsList.subscribe(val => {
+      this.roundsList = val;
+      this.cdr.markForCheck();
+    });
     this.form = this.fb.group({
-      name: [''],
-      startDate: [''],
-      endDate: [],
-      email: this.fb.group({
-        selected: [false],
-        subject: [''],
-        body: ['']
-      }),
-      mailing: this.fb.group({
-        selected: [false],
-        delay_days: [''],
-        is_self_mail: [false],
-        is_delay_days: [false],
-        mailing_house_id: ['']
+      name: ['', [Validators.required]],
+      start_date: ['', [Validators.required]],
+      end_date: ['', [Validators.required]],
+      types: fb.group({
+        email: this.fb.group({
+          selected: [false],
+          subject: [''],
+          body: ['']
+        }),
+        mailing: this.fb.group({
+          selected: [false],
+          delay_days: [''],
+          is_self_mail: ['Use Mailing House'],
+          is_delay_days: [false],
+          mailing_house_id: ['']
+        })
       })
     });
-
   }
 
   ngOnInit() {
   }
 
   addRound() {
+    this.isNew = true;
     this.showForm = true;
   }
 
   cancelRound() {
+    this.form.reset();
     this.showForm = false;
   }
 
   saveRound() {
-    console.log('ROUND', this.form.value);
+    if (!this.form.valid) { return ; }
+    this.formSendService.saveRound(this.form.value, this.isNew, this.roundId);
+    this.form.reset();
     this.showForm = false;
   }
 
@@ -115,24 +126,34 @@ export class SendReleaseComponent implements OnInit {
     return `(${this.periodsList.length})`;
   }
 
-
   checkboxAction(item, e) {
     this.formSendService.togglePeriods(item, e);
     this.cdr.markForCheck();
   }
 
+  getReleaseType(item) {
+    let res: string = '';
+    if (!!item.types.email) {
+      res = 'Email';
+    }
+    if (!!item.types.email && !!item.types.mailing) {
+      res += ', ';
+    }
+    if (!!item.types.mailing) {
+      res += 'Mailing';
+    }
+    return res;
+  }
+
   onExportZIP() {
-    this.dataCollectionService
-      .exportPDFFormZIP(this.formSendService.formId)
-      .subscribe((url) => {
-        this.download = {
-          url: this.sanitizer.bypassSecurityTrustResourceUrl(url),
-          filename: `forms.zip`
-        };
-        this.cdr.detectChanges();
-        this.renderer.selectRootElement(this.link.nativeElement).click()
-        // this.clearLink(url);
-      });
+    this.dataCollectionService.exportPDFFormZIP(this.formSendService.formId).subscribe((url) => {
+      this.download = {
+        url: this.sanitizer.bypassSecurityTrustResourceUrl(url),
+        filename: `forms.zip`
+      };
+      this.cdr.detectChanges();
+      this.renderer.selectRootElement(this.link.nativeElement).click();
+    });
   }
 
   toggleAccount(item: any, e: boolean) {
@@ -145,11 +166,49 @@ export class SendReleaseComponent implements OnInit {
     }
   }
 
-  isSelectedAccount(i) {
+  isSelectedAccount(i): boolean {
     return this.formSendService.isSelectedAccounts(i);
   }
 
+  allChildrenSelected(i): boolean {
+    return this.formSendService.allChildrenSelected(i);
+  }
 
+  someChildrenSelected(i): boolean {
+    return this.formSendService.someChildrenSelected(i);
+  }
 
+  editRound(i) {
+    this.isNew = false;
+    this.roundId = i.id;
+    this.form.reset();
+    this.form.patchValue({
+      name: i.name,
+      start_date: DateTime.fromString(i.start_date, 'yyyy-MM-dd').toFormat('MM/dd/yyyy'),
+      end_date: DateTime.fromString(i.end_date,'yyyy-MM-dd').toFormat('MM/dd/yyyy'),
+    });
+    if (!!i.types.email) {
+      this.form.get('types.email').patchValue({
+        selected: true,
+        ...i.types.email
+      })
+    }
+    if (!!i.types.mailing) {
+      this.form.get('types.mailing').patchValue({
+        selected: true,
+        ...i.types.mailing
+      })
+    }
+    this.formSendService.selectedAccounts = i.accounts;
+    this.showForm = true;
+  }
+
+  deleteRound(i) {
+    this.formSendService.deleteRound(i);
+  }
+
+  nextStep() {
+    this.formSendService.nextStep();
+  }
 
 }

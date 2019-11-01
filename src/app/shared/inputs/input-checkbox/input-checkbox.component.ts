@@ -24,7 +24,7 @@ export class InputCheckboxComponent {
   }
   @Output() checked = new EventEmitter();
   control = new FormControl();
-  isIndeterminate: boolean = false;
+  @Input() isIndeterminate: boolean = false;
   private onChange: (value: boolean) => void;
   private onTouched: () => void;
 

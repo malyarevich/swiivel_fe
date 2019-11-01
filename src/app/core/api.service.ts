@@ -83,6 +83,14 @@ export class ApiService {
     return this.http.get(`/persons/eligible/${key}`);
   }
 
+  createRound(round) {
+    return this.http.post(`/proxy/form-builder/release/round`, round);
+  }
+
+  update(round, roundId) {
+    return this.http.put(`/proxy/form-builder/release/round/${roundId}`, round);
+  }
+
   // FORM SEND END
 
   public download(url: string) {

@@ -63,8 +63,8 @@ export class InputEnglishDatepickerComponent implements OnInit, OnDestroy, Contr
     return this.format.replace(/m/g, 'M').replace(/-/g, this.separator);
   }
 
-  writeValue(): void {
-
+  writeValue(value: string): void {
+    this.value = value;
   }
 
   registerOnTouched(fn: Function): void {

@@ -148,6 +148,29 @@
       }
     }
     .table-body {
+      .round-item {
+        background: #FFFFFF;
+        box-shadow: inset 0px -1px 0px #E7E7E7;
+        td {
+          padding-top: 15px;
+          padding-bottom: 15px;
+          &:first-of-type {
+            padding-left: 15px;
+          }
+          &:last-of-type {
+            padding-right: 15px;
+          }
+        }
+        &:nth-child(odd) {
+          background: #FAFAFA;
+        }
+      }
+      .table_actions {
+        i {
+          color: #A4A4A4;
+          margin-left: 15px;
+        }
+      }
       .form-table-row {
         background: #FFF3DD;
         box-shadow: inset 0px -1px 0px rgba(67, 80, 162, 0.3);
@@ -240,6 +263,14 @@
   .list-wrap {
     &:not(:last-of-type) {
       border-right: 1px solid #CACACA;
+    }
+  }
+  .stepper-buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+    sw-button:nth-child(1) {
+      margin-right: 10px;
     }
   }
 }
