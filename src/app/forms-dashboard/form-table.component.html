@@ -51,7 +51,7 @@
           <table #table cdk-table [dataSource]="dataSource">
 
             <ng-container cdkColumnDef="name">
-              <th cdk-header-cell *cdkHeaderCellDef width="19%">
+              <th cdk-header-cell *cdkHeaderCellDef width="23%">
                 <div class="header_container" data-e2e="formname">
                   <div class="header_container__title" data-e2e="formnametitle" (click)="sortBy('name')">
                     Form Name
@@ -61,7 +61,7 @@
                     </div>
                   </div>
                   <div class="header_container__filter">
-                    <sw-input-text class="filter-field" formControlName="name" [isSearch]="true" [isClearable]="true"></sw-input-text>
+                    <sw-input-text class="filter-field" formControlName="name" [isSearch]="true" [isClearable]="true" (keydown)="keyDownFunction($event)"></sw-input-text>
                   </div>
                 </div>
               </th>
@@ -74,7 +74,7 @@
 
 
             <ng-container cdkColumnDef="type">
-              <th cdk-header-cell *cdkHeaderCellDef width="10%">
+              <th cdk-header-cell *cdkHeaderCellDef width="13%">
                 <div class="header_container" data-e2e="typename">
                   <div class="header_container__title" data-e2e="typenametitle" (click)="sortBy('type')">
                     type
@@ -104,7 +104,7 @@
 
 
             <ng-container cdkColumnDef="access">
-              <th cdk-header-cell *cdkHeaderCellDef width="16%">
+              <th cdk-header-cell *cdkHeaderCellDef width="19%">
                 <div class="header_container" data-e2e="accessname">
                   <div class="header_container__title" data-e2e="accessnametitle" (click)="sortBy('access')">
                     access
@@ -114,7 +114,7 @@
                     </div>
                   </div>
                   <div class="header_container__filter">
-                    <sw-input-text class="filter-field" formControlName="access" [isSearch]="true" [isClearable]="true"></sw-input-text>
+                    <sw-input-text class="filter-field" formControlName="access" [isSearch]="true" [isClearable]="true" (keydown)="keyDownFunction($event)"></sw-input-text>
                   </div>
                 </div>
               </th>
@@ -137,7 +137,7 @@
 
 
             <ng-container cdkColumnDef="createdBy">
-              <th cdk-header-cell *cdkHeaderCellDef width="13%">
+              <th cdk-header-cell *cdkHeaderCellDef width="16%">
                 <div class="header_container" data-e2e="createdbyname">
                   <div class="header_container__title" data-e2e="createdbynametitle" (click)="sortBy('createdBy')">
                     created by
@@ -147,7 +147,7 @@
                     </div>
                   </div>
                   <div class="header_container__filter">
-                    <sw-input-text class="filter-field" formControlName="createdBy" [isSearch]="true" [isClearable]="true"></sw-input-text>
+                    <sw-input-text class="filter-field" formControlName="createdBy" [isSearch]="true" [isClearable]="true" (keydown)="keyDownFunction($event)"></sw-input-text>
                   </div>
                 </div>
               </th>
@@ -158,7 +158,7 @@
 
 
             <ng-container cdkColumnDef="updatedAt">
-              <th cdk-header-cell *cdkHeaderCellDef width="12%">
+              <th cdk-header-cell *cdkHeaderCellDef width="15%">
                 <div class="header_container" data-e2e="updateddatename">
                   <div class="header_container__title" data-e2e="updateddatenametitle" (click)="sortBy('updated_at')">
                     update date
@@ -185,7 +185,7 @@
 
 
             <ng-container cdkColumnDef="status">
-              <th cdk-header-cell *cdkHeaderCellDef width="10%">
+              <th cdk-header-cell *cdkHeaderCellDef width="13%">
                 <div class="header_container" data-e2e="statusname">
                   <div class="header_container__title" data-e2e="statusnametitle" (click)="sortBy('status')">
                     status
@@ -226,7 +226,7 @@
             </ng-container>
 
             <ng-container cdkColumnDef="actions">
-              <th cdk-header-cell *cdkHeaderCellDef width="20%">
+              <th cdk-header-cell *cdkHeaderCellDef>
               </th>
               <td cdk-cell *cdkCellDef="let form">
                 <div class="item" data-e2e="Editbutton">
