@@ -85,6 +85,26 @@ export class ApiService {
     return this.http.put(`/proxy/form-builder/form-template/${id}`, form);
   }
 
+  // FORM SEND
+
+  getFormSend(form_id: string) {
+    return this.http.get(`/proxy/form-builder/release/${form_id}`);
+  }
+
+  getUsersByRole(key: string) {
+    return this.http.get(`/persons/eligible/${key}`);
+  }
+
+  createRound(round) {
+    return this.http.post(`/proxy/form-builder/release/round`, round);
+  }
+
+  update(round, roundId) {
+    return this.http.put(`/proxy/form-builder/release/round/${roundId}`, round);
+  }
+
+  // FORM SEND END
+
   public download(url: string) {
     return this.http.getFile(url)
   }

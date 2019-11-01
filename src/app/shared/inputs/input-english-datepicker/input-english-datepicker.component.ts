@@ -79,7 +79,9 @@ export class InputEnglishDatepickerComponent
     return this.format.replace(/m/g, 'M').replace(/-/g, this.separator);
   }
 
-  writeValue(): void {}
+  writeValue(value: string): void {
+    this.value = value;
+  }
 
   registerOnTouched(fn: Function): void {
     this.onTouched = fn;
