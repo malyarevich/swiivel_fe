@@ -12,7 +12,7 @@
     [value]="value"
     [disabled]="disabled"
     [(ngModel)]="value"
-    (input)="onChange($event.target.value)"
+    (ngModelChange)="chaneInput()"
     (blur)="onTouched()"
   />
   <div class="input-search-icon"></div>
