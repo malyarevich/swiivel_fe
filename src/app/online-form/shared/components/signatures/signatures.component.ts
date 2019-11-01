@@ -14,7 +14,6 @@ import {
 export class SignaturesComponent implements OnInit {
   @Input() fg: FormGroup;
   @Input() signature: any;
-  @Input() button: any = {};
   @Input() sourcePage: string; // id for FormControl
 
   SIGNATURE_TYPES: object = SIGNATURE_TYPES;

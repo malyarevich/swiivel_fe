@@ -45,9 +45,16 @@
           [fg]="fg"
           [sourcePage]="item._id"
           [signature]="item.signature"
-          [button]="item.button"
         ></sw-online-form-signatures>
         <!--END SIGNATURE-->
+
+        <!--ACCEPT BUTTON-->
+        <sw-accept-button
+          [fg]="fg"
+          [button]="item.button"
+        ></sw-accept-button>
+        <!--END ACCEPT BUTTON-->
+
       </div>
     </ng-container>
   </div>

@@ -50,13 +50,13 @@ import { FilesService } from './services/files.service';
 // Services
 import { OnlineFormService } from './services/online-form.service';
 // UtilsComponents
+import { AcceptButtonComponent } from './shared/components/accept-button/accept-button.component';
 import { ContentNavComponent } from './shared/components/content-nav/content-nav.component';
 import { PdfLoaderComponent } from './shared/components/pdf-loader/pdf-loader.component';
 import { ProgressBarComponent } from './shared/components/progress-bar/progress-bar.component';
 import { SignaturesComponent } from './shared/components/signatures/signatures.component';
 import { ErrorHintTooltipDirective } from './shared/directives/error-hint-tooltip.directive';
 import { GeneralPipesModule } from './utils/pipes/general-pipes.module';
-
 // import { MainComponent } from '@app/shared/main.component';
 
 @NgModule({
@@ -67,6 +67,7 @@ import { GeneralPipesModule } from './utils/pipes/general-pipes.module';
     OnlineFormControlsComponent,
     OnlineFormMenuComponent,
     // SharedOnlineForm
+    AcceptButtonComponent,
     ContentNavComponent,
     PdfLoaderComponent,
     ProgressBarComponent,
