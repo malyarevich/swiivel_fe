@@ -152,7 +152,22 @@ export class InputEnglishDatepickerComponent
     }
   }
 
+  public isEmpty(value: string): boolean {
+    return !(value && value.trim().length > 0);
+  }
+
+  public clear(): void {
+    this.value = '';
+    this.onChange(this.value);
+  }
+
+  public changeValue(value: any): void {
+    this.value = value;
+    this.onChange(this.value);
+  }
+
   ngOnDestroy(): void {
     this.destroyed$.complete();
   }
+
 }
