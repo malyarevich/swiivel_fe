@@ -166,6 +166,44 @@ sw-input-button-group {
   }
 }
 
+sw-input-button-group.preview {
+  .input_button_group {
+    .input_button {
+      background: #EBEEFF;
+      border: 1px solid #CFD4EF;
+      box-sizing: border-box;
+      button {
+        background-color: #EBEEFF !important;
+        border: none !important;
+        padding-top: 3px;
+        padding-bottom: 3px;
+      }
+      &:first-of-type {
+        border-radius: 100px 0 0 100px!important;
+        border-right: none !important;    
+        button {
+          border-radius: 100px 0 0 100px!important;
+        }
+      }
+      &:last-of-type {
+        border-radius: 0 100px 100px 0!important;
+        border-left: none !important;
+        button {
+          border-radius: 0 100px 100px 0!important;
+        }
+      }
+      &.active {
+        button  {
+          border-radius: 100px !important;
+          background-color: #4350A2 !important;
+          color: #fff;
+        }
+      }
+    }
+  }
+}
+
+
 
 sw-dropdown-input,
 sw-input-phone-number,
