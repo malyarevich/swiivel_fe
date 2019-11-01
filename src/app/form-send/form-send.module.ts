@@ -9,6 +9,7 @@ import { FormSendService } from './form-send.service';
 
 import {ScrollingModule} from '@angular/cdk/scrolling';
 import { DataCollectionService } from '@app/forms-dashboard/data-collection.service';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 
 
@@ -23,7 +24,9 @@ import { DataCollectionService } from '@app/forms-dashboard/data-collection.serv
     CommonModule,
     FormSendRoutingModule,
     SharedModule,
-    ScrollingModule
+    ScrollingModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [
     FormSendService,
