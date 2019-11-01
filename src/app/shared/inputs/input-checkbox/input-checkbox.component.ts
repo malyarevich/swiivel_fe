@@ -20,11 +20,11 @@ export class InputCheckboxComponent {
   @Input() isActive = true;
   @Input()
   set check(v: boolean) {
-    if (v !== undefined) { this.control.setValue(v, {emitEvent: false}); }
+    if (v !== undefined) this.control.setValue(v, {emitEvent: false});
   }
   @Output() checked = new EventEmitter();
   control = new FormControl();
-  isIndeterminate = false;
+  @Input() isIndeterminate: boolean = false;
   private onChange: (value: boolean) => void;
   private onTouched: () => void;
 
@@ -73,9 +73,8 @@ export class InputCheckboxComponent {
     }
   }
 
-  public onClick(event: Event | any) {
-    console.log('tagName', event.target.tagName);
-    if (event.target.tagName !== 'INPUT' && this.isActive) {
+  public onClick(event: Event) {
+    if (event.target['tagName'] !== 'INPUT' && this.isActive) {
       this.toggle();
       event.preventDefault();
       event.stopPropagation();

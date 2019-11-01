@@ -19,6 +19,9 @@
       &.active {
         color: #4350A2;
       }
+      &:last-of-type {
+        margin-right: 0;
+      }
     }
   }
   .stepper-content {
