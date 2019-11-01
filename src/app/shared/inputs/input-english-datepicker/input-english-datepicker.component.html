@@ -4,15 +4,22 @@
   [class.filter-field]="class === 'filter-field'"
   (click)="openDatepicker($event)"
 >
-  <sw-input-text
-    class="{{class}}"
-    [class.read_only]="!isActive"
-    [readonly]="!isActive"
-    [(ngModel)]="value"
-  >
+
+  <div class="input-date">
+    <input
+      class="input"
+      [(ngModel)]="value"
+      (ngModelChange)="onChange(value)"
+      [class.empty]="isEmpty(value)"
+      [disabled]="!isActive"
+      [dropSpecialCharacters]="false"
+      mask="00/00/0000"
+    />
     <span class="placeholder">{{ placeholder }}</span>
-    <span class="icon"><i class="far fa-calendar"></i></span>
-  </sw-input-text>
+    <i class="far fa-calendar"></i>
+    <i *ngIf="!isEmpty(value)" class="fa fa-times" (click)="clear()"></i>
+  </div>
+
 </div>
 
 <ng-template #datepicker>

@@ -55,8 +55,11 @@ import { InputHebrewDatepickerComponent } from './inputs/input-hebrew-datepicker
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import localHe from '@angular/common/locales/he';
+import { IConfig, NgxMaskModule } from 'ngx-mask';
 
-registerLocaleData(localHe)
+registerLocaleData(localHe);
+
+export let options: Partial<IConfig> | (() => Partial<IConfig>);
 
 @NgModule({
   imports: [
@@ -69,6 +72,7 @@ registerLocaleData(localHe)
       provide: DateAdapter,
       useFactory: adapterFactory
     }),
+    NgxMaskModule.forRoot(options),
   ],
   declarations: [
     // Buttons

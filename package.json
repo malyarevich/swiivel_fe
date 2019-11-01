@@ -37,6 +37,7 @@
     "map-factory": "^3.8.1",
     "ng-dynamic-component": "^5.0.0",
     "ng2-pdf-viewer": "^5.3.4",
+    "ngx-mask": "^8.1.5",
     "rxjs": "~6.5.2",
     "symbol-tree": "^3.2.4",
     "tslib": "^1.9.0",
