@@ -28,10 +28,13 @@ import {
   urlValidator
 } from '@app/core/validators';
 import { TermsConditionsItem } from '@models/data-collection/form-constructor/form-builder/terms-conditions.model';
-import { E_SIGNATURE_TYPES, SIGNATURE_TYPES } from '@models/data-collection/signature.model';
-import {ConsentItemInfo} from '@models/data-collection/consent.model';
+import {
+  E_SIGNATURE_TYPES,
+  SIGNATURE_TYPES
+} from '@models/data-collection/signature.model';
+import { ConsentItemInfo } from '@models/data-collection/consent.model';
 import { Field, fieldValidators } from '@models/data-collection/field.model';
-import {DocumentsModel} from '@models/data-collection/form-constructor/form-builder/documents.model';
+import { DocumentsModel } from '@models/data-collection/form-constructor/form-builder/documents.model';
 import {
   FormModel,
   IPagesPercent,
@@ -110,9 +113,16 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
     this.getForm();
   }
 
-  ngOnChanges(changes: import ('@angular/core').SimpleChanges): void {
+  ngOnChanges(changes: import('@angular/core').SimpleChanges): void {
     if (changes.formId && changes.formId.previousValue !== undefined) {
       this.isReady$.next(false);
+      this.form$.next(null);
+      this.fg$.next(null);
+      this.formNavigationState$.next(null);
+      this.pagesPercents$.next([]);
+      this.currentPosition$.next(defaultCurrentPosition);
+      this.formErrors$.next({});
+      this.sectionGroupFieldsErrors$.next({});
       this.getForm();
     }
   }
@@ -160,7 +170,6 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
   formSubscriber(form: FormModel) {
     this.form$.next(form);
     console.log('FormModel by BE: ', this.form$.getValue());
-
     if (this.isHaveSense()) {
       this.loadingProcess();
     } else {
@@ -693,9 +702,7 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
       Object.values(fields).forEach((field: Field) => {
         if (field.type) {
           if (field.type === 113 || field.type === 114) {
-            aFields = aFields.concat(
-              this.getFieldsByFormFields(field.fields)
-            );
+            aFields = aFields.concat(this.getFieldsByFormFields(field.fields));
           } else {
             aFields.push(field);
           }
@@ -937,7 +944,8 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
         'termsConditions__wet_mother'
       ];
 
-      const isRequired = this.form$.getValue().termsConditions.signature.isRequire;
+      const isRequired = this.form$.getValue().termsConditions.signature
+        .isRequire;
 
       termsConditionsKeys
         .filter(key => {
@@ -1084,9 +1092,7 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
             this.formErrors$.getValue().fields &&
             this.formErrors$.getValue().fields[field._id]
           ) {
-            oFields[field._id] = this.formErrors$.getValue().fields[
-              field._id
-            ];
+            oFields[field._id] = this.formErrors$.getValue().fields[field._id];
           }
         }
       }
@@ -1104,9 +1110,7 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
           this.formErrors$.getValue().fields &&
           this.formErrors$.getValue().fields[key]
         ) {
-          oFields.documents[key] = this.formErrors$.getValue().fields[
-            key
-          ];
+          oFields.documents[key] = this.formErrors$.getValue().fields[key];
         }
       });
     }
