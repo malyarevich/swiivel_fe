@@ -121,6 +121,9 @@ export class FormTableComponent implements OnInit {
       debounceTime(300),
       distinctUntilChanged(),
       map(value => {
+        if (value.status && !value.status.length) {
+          this.activeTab = this.statusArray[0];
+        }
         Object.keys(value).forEach(key => (value[key] === null || value[key] === '') && delete value[key]);
         return value;
       })
@@ -145,7 +148,7 @@ export class FormTableComponent implements OnInit {
       case 'active':
         return 'green';
       case 'draft':
-        return 'lite-gray';
+        return 'light-blue';
       case 'review':
         return 'yellow';
       case 'closed':
@@ -229,7 +232,7 @@ export class FormTableComponent implements OnInit {
     if (filter.title === 'All') {
       this.filterForm.get('status').setValue(null);
     } else {
-      this.filterForm.get('status').setValue([this.statusArray.find(value => value.title === filter.title)], { emitEvent: false});
+      this.filterForm.get('status').setValue([this.statusArray.find(value => value.title === filter.title)], { emitEvent: true});
     }
   }
 
@@ -362,7 +365,7 @@ export class FormTableComponent implements OnInit {
     this.dataCollectionService
       .duplicateForm(mongoId)
       .subscribe((res) => {
-        this.router.navigate(['form-constructor', res._id]).then();
+        this.router.navigate(['form-creator', res._id]).then();
       });
   }
 
@@ -429,4 +432,11 @@ export class FormTableComponent implements OnInit {
       id: permission && permission.user && permission.user.id ? permission.user.id : ''
     };
   }
+
+  keyDownFunction(event: any): void {
+    if (event.keyCode === 13) {
+      event.preventDefault();
+    }
+  }
+
 }

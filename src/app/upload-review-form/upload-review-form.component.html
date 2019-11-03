@@ -26,6 +26,7 @@
               formControlName="search"
               type="controls"
               [disabled]="isBulkDownload || isSaveActive"
+              [isFistSpaceIgnore]="true"
             ></sw-input-search>
           </div>
           <div class="sidebar-controls">
@@ -139,14 +140,14 @@
     </div>
 
     <div *ngIf="getSelectForm() && getSelectForm().submission_type === 'onlineForm'">
-      <!--<sw-online-form-->
-        <!--[formId]="getSelectForm().form_id"-->
-        <!--[isViewMode]="true"-->
-        <!--[isMenuShow]="true"-->
-        <!--[isReviewMode]="true"-->
-        <!--(onBack)="onBack($event)"-->
-        <!--(onSaveNext)="onSaveNext($event)"-->
-      <!--&gt;</sw-online-form>-->
+      <sw-online-form
+        [formId]="getSelectForm().form_id"
+        [isViewMode]="true"
+        [isMenuShow]="true"
+        [isReviewMode]="true"
+        (onBack)="onBack($event)"
+        (onSaveNext)="onSaveNext($event)"
+      ></sw-online-form>
     </div>
     <div *ngIf="getSelectForm() && getSelectForm().submission_type === 'pdfForm'">
       <!--<app-preview-form-->

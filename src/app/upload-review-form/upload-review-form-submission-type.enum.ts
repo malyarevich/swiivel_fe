@@ -1,4 +1,6 @@
 export enum UploadReviewFormSubmissionTypeEnum {
-  online_form = 'Online',
-  pdf_form = 'PDF'
+  document = 'Document',
+  externalForm = 'External',
+  onlineForm = 'Online',
+  pdfForm = 'PDF',
 }

@@ -116,7 +116,7 @@ sw-input-text.settings-field{
 
 sw-input-toggle {
   span {
-    &.input_label {
+    &.label {
       font-family: "Nunito Sans";
       font-weight: bold;
       font-size: 12px;
@@ -166,6 +166,44 @@ sw-input-button-group {
   }
 }
 
+sw-input-button-group.preview {
+  .input_button_group {
+    .input_button {
+      background: #EBEEFF;
+      border: 1px solid #CFD4EF;
+      box-sizing: border-box;
+      button {
+        background-color: #EBEEFF !important;
+        border: none !important;
+        padding-top: 3px;
+        padding-bottom: 3px;
+      }
+      &:first-of-type {
+        border-radius: 100px 0 0 100px!important;
+        border-right: none !important;    
+        button {
+          border-radius: 100px 0 0 100px!important;
+        }
+      }
+      &:last-of-type {
+        border-radius: 0 100px 100px 0!important;
+        border-left: none !important;
+        button {
+          border-radius: 0 100px 100px 0!important;
+        }
+      }
+      &.active {
+        button  {
+          border-radius: 100px !important;
+          background-color: #4350A2 !important;
+          color: #fff;
+        }
+      }
+    }
+  }
+}
+
+
 
 sw-dropdown-input,
 sw-input-phone-number,
@@ -179,7 +217,7 @@ sw-input-number {
     &.empty {
       &:not(:focus-within) {
         padding: 5px 10px;
-        .input_label {
+        .label {
           position: absolute;
           top: 8px;
           font-size: 12px;
@@ -195,8 +233,8 @@ sw-input-number {
 }
 
 sw-dropdown-input.settings-field {
-  .container {
-    .input_label {
+  .dropdown_input_container {
+    .label {
       display: none;
       width: calc(100% - 28px);
       p {
@@ -207,7 +245,7 @@ sw-dropdown-input.settings-field {
     }
     &.empty {
       &:not(:focus-within) {
-        .input_label {
+        .label {
           display: flex;
           top: 2px;
         }
@@ -219,7 +257,7 @@ sw-dropdown-input.settings-field {
 sw-input-textarea {
   .input_textarea {
     @extend %placeholder;
-    .input_label {
+    .label {
       position: absolute;
       top: 0;
       font-size: 12px;

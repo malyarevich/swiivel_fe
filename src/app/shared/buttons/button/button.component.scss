@@ -1,6 +1,8 @@
 @import 'index';
 
 :host {
+  width: fit-content;
+  display: flex;
   .button {
     border-radius: 3px;
     background: $button-color;
@@ -48,9 +50,8 @@
     background: $status-green;
   }
 
-  .lite-gray {
-    color: $icon-blue;
-    background: $status-lite-gray;
+  .light-blue {
+    background: $status-light-blue;
   }
 
   .transparent {
@@ -89,6 +90,11 @@
         padding: 0 0 0 3px;
       }
     }
+  }
+
+  //shapes
+  .round {
+    border-radius: 100px;
   }
 }
 

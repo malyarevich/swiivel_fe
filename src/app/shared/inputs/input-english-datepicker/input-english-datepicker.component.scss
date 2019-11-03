@@ -2,6 +2,7 @@
 
 .date-picker-popup {
   padding: 10px;
+
   .header {
     display: flex;
     flex-flow: row nowrap;
@@ -24,6 +25,51 @@
       position: absolute;
       top: 4px;
       left: 3px;
+    }
+  }
+
+  .input-date {
+    width: 100%;
+    position: relative;
+    border-color: transparent;
+
+    .input {
+      width: 100%;
+      height: 25px;
+      background: $white;
+      font-size: 12px;
+      line-height: 15px;
+      color: $black;
+      border: none;
+      box-sizing: border-box;
+      border-radius: 3px;
+      outline: none;
+      padding: 5px 10px 5px 19px;
+    }
+
+    i {
+      position: absolute;
+      color: $status-gray;
+    }
+
+    .fa-calendar {
+      top: 0.6rem;
+      left: 5px;
+
+      @media (min-width: 1280px) {
+        top: 0.5rem;
+      }
+    }
+
+    .fa-times {
+      position: absolute;
+      top: 0.75rem;
+      right: 5px;
+      cursor: pointer;
+
+      @media (min-width: 1280px) {
+        top: 0.5rem;
+      }
     }
   }
 }

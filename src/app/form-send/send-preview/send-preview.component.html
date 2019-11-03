@@ -1,0 +1,18 @@
+<div class="row" style="margin-right: 0; margin-left: 0;">
+    <div class="col-3" style="padding-right: 0;padding-left: 0;">
+      <div class="sidebar-wrap">
+        <div class="sidebar-title">
+          List of Accounts
+        </div>
+        <sw-input-button-group class="preview" [options]="buttonOptions" [(ngModel)]="formType"></sw-input-button-group>
+        <div class="search-wrap" data-e2e="search-wrap">
+          <input class="search" data-e2e="search" [formControl]="filter" placeholder="Search" />
+          <i class="icon fas fa-search"></i>
+        </div>
+      </div>
+    </div>
+    <div class="col-9" style="padding-right: 0;padding-left: 0;width: 100%;">
+      <!-- <app-preview-form [formId]='id'></app-preview-form> -->
+    </div>
+  </div>
+  

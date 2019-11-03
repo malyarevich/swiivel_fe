@@ -4,6 +4,11 @@
   padding: 15px;
   position: relative;
 
+  .fa-pen,
+  .fa-eye {
+    color: $icon-gray;
+  }
+
   .overlay {
     position: absolute;
     width: 100vw;
@@ -70,9 +75,13 @@
   }
 
   .filters-row {
-    background: #F2F2F2;
+    background: $dark-grey;
     box-shadow: inset 0px -1px 0px #E7E7E7;
     border-radius: 5px;
+
+    th {
+      border: none;
+    }
 
     .header_container {
       &__title {
@@ -155,7 +164,13 @@
       .item {
         color: #A4A4A4;
         &:not(:last-of-type) {
-          margin-right: 10px;
+          margin-right: 5px;
+        }
+        &:last-of-type {
+          flex-grow: 2;
+          display: flex;
+          justify-content: space-between;
+          padding: 0 2px 0 6px;
         }
       }
     }

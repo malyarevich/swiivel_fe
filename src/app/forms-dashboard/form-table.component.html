@@ -50,8 +50,8 @@
 
           <table #table cdk-table [dataSource]="dataSource">
 
-            <ng-container cdkColumnDef="name" >
-              <th cdk-header-cell *cdkHeaderCellDef>
+            <ng-container cdkColumnDef="name">
+              <th cdk-header-cell *cdkHeaderCellDef width="23%">
                 <div class="header_container" data-e2e="formname">
                   <div class="header_container__title" data-e2e="formnametitle" (click)="sortBy('name')">
                     Form Name
@@ -61,7 +61,7 @@
                     </div>
                   </div>
                   <div class="header_container__filter">
-                    <sw-input-text class="filter-field" formControlName="name" [isSearch]="true"></sw-input-text>
+                    <sw-input-text class="filter-field" formControlName="name" [isSearch]="true" [isClearable]="true" (keydown)="keyDownFunction($event)"></sw-input-text>
                   </div>
                 </div>
               </th>
@@ -74,7 +74,7 @@
 
 
             <ng-container cdkColumnDef="type">
-              <th cdk-header-cell *cdkHeaderCellDef>
+              <th cdk-header-cell *cdkHeaderCellDef width="13%">
                 <div class="header_container" data-e2e="typename">
                   <div class="header_container__title" data-e2e="typenametitle" (click)="sortBy('type')">
                     type
@@ -104,7 +104,7 @@
 
 
             <ng-container cdkColumnDef="access">
-              <th cdk-header-cell *cdkHeaderCellDef>
+              <th cdk-header-cell *cdkHeaderCellDef width="19%">
                 <div class="header_container" data-e2e="accessname">
                   <div class="header_container__title" data-e2e="accessnametitle" (click)="sortBy('access')">
                     access
@@ -114,7 +114,7 @@
                     </div>
                   </div>
                   <div class="header_container__filter">
-                    <sw-input-text class="filter-field" formControlName="access" [isSearch]="true"></sw-input-text>
+                    <sw-input-text class="filter-field" formControlName="access" [isSearch]="true" [isClearable]="true" (keydown)="keyDownFunction($event)"></sw-input-text>
                   </div>
                 </div>
               </th>
@@ -137,7 +137,7 @@
 
 
             <ng-container cdkColumnDef="createdBy">
-              <th cdk-header-cell *cdkHeaderCellDef>
+              <th cdk-header-cell *cdkHeaderCellDef width="16%">
                 <div class="header_container" data-e2e="createdbyname">
                   <div class="header_container__title" data-e2e="createdbynametitle" (click)="sortBy('createdBy')">
                     created by
@@ -147,7 +147,7 @@
                     </div>
                   </div>
                   <div class="header_container__filter">
-                    <sw-input-text class="filter-field" formControlName="createdBy" [isSearch]="true"></sw-input-text>
+                    <sw-input-text class="filter-field" formControlName="createdBy" [isSearch]="true" [isClearable]="true" (keydown)="keyDownFunction($event)"></sw-input-text>
                   </div>
                 </div>
               </th>
@@ -158,7 +158,7 @@
 
 
             <ng-container cdkColumnDef="updatedAt">
-              <th cdk-header-cell *cdkHeaderCellDef>
+              <th cdk-header-cell *cdkHeaderCellDef width="15%">
                 <div class="header_container" data-e2e="updateddatename">
                   <div class="header_container__title" data-e2e="updateddatenametitle" (click)="sortBy('updated_at')">
                     update date
@@ -172,6 +172,7 @@
                       formControlName="updatedAt"
                       [placeholder]="''"
                       [class]="'filter-field'"
+                      (keydown)="keyDownFunction($event)"
                     ></sw-input-english-datepicker>
                   </div>
                 </div>
@@ -184,7 +185,7 @@
 
 
             <ng-container cdkColumnDef="status">
-              <th cdk-header-cell *cdkHeaderCellDef>
+              <th cdk-header-cell *cdkHeaderCellDef width="13%">
                 <div class="header_container" data-e2e="statusname">
                   <div class="header_container__title" data-e2e="statusnametitle" (click)="sortBy('status')">
                     status
@@ -214,6 +215,7 @@
                 >
                   <sw-button
                     size="small"
+                    isRound="true"
                     [color]="getStatusColor(form.status)"
                   >
                     <span>{{form.status}}</span>
@@ -239,17 +241,19 @@
                     <span>View</span>
                   </sw-button>
                 </div>
-                <div class="item" data-e2e="Sharebutton">
-                  <sw-icon-button [icon]="icons.SHARE" (click)="onShareLink(form)">
-                  </sw-icon-button>
-                </div>
-                <div class="item" data-e2e="Downloadbutton">
-                  <sw-icon-button [icon]="icons.DOWNLOAD" (click)="onExportPDF(form.mongo_id)">
-                  </sw-icon-button>
-                </div>
-                <div class="item" data-e2e="Copybutton">
-                  <sw-icon-button [icon]="icons.COPY" (click)="onDuplicateForm(form.mongo_id)">
-                  </sw-icon-button>
+                <div class="item">
+                  <div data-e2e="Sharebutton">
+                    <sw-icon-button [icon]="icons.SHARE" (click)="onShareLink(form)">
+                    </sw-icon-button>
+                  </div>
+                  <div data-e2e="Downloadbutton">
+                    <sw-icon-button [icon]="icons.DOWNLOAD" (click)="onExportPDF(form.mongo_id)">
+                    </sw-icon-button>
+                  </div>
+                  <div data-e2e="Copybutton">
+                    <sw-icon-button [icon]="icons.COPY" (click)="onDuplicateForm(form.mongo_id)">
+                    </sw-icon-button>
+                  </div>
                 </div>
               </td>
             </ng-container>

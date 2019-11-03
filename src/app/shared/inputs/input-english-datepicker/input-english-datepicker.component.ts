@@ -79,7 +79,9 @@ export class InputEnglishDatepickerComponent
     return this.format.replace(/m/g, 'M').replace(/-/g, this.separator);
   }
 
-  writeValue(): void {}
+  writeValue(value: string): void {
+    this.value = value;
+  }
 
   registerOnTouched(fn: Function): void {
     this.onTouched = fn;
@@ -152,7 +154,22 @@ export class InputEnglishDatepickerComponent
     }
   }
 
+  public isEmpty(value: string): boolean {
+    return !(value && value.trim().length > 0);
+  }
+
+  public clear(): void {
+    this.value = '';
+    this.onChange(this.value);
+  }
+
+  public changeValue(value: any): void {
+    this.value = value;
+    this.onChange(this.value);
+  }
+
   ngOnDestroy(): void {
     this.destroyed$.complete();
   }
+
 }

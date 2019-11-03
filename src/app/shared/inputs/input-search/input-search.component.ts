@@ -3,8 +3,7 @@ import {
   Input,
   OnInit,
   Optional,
-  Self,
-} from '@angular/core';
+  Self } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 
 @Component({
@@ -18,6 +17,7 @@ export class InputSearchComponent implements OnInit, ControlValueAccessor {
   @Input() isInvalid = false;
   @Input() placeholder = '';
   @Input() type;
+  @Input() isFistSpaceIgnore = false;
 
   value = '';
 
@@ -51,6 +51,13 @@ export class InputSearchComponent implements OnInit, ControlValueAccessor {
 
   onChange(value: string) {
     return value;
+  }
+
+  chaneInput() {
+    if (this.isFistSpaceIgnore) {
+      this.value = this.value.replace(/^\s+|\s+$/g, '');
+    }
+    this.onChange(this.value);
   }
 
   onTouched() {}
