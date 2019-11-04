@@ -27,14 +27,10 @@ import {
   phoneNumberValidator,
   urlValidator
 } from '@app/core/validators';
-import { TermsConditionsItem } from '@models/data-collection/form-constructor/form-builder/terms-conditions.model';
-import {
-  E_SIGNATURE_TYPES,
-  SIGNATURE_TYPES
-} from '@models/data-collection/signature.model';
 import { ConsentItemInfo } from '@models/data-collection/consent.model';
 import { Field, fieldValidators } from '@models/data-collection/field.model';
 import { DocumentsModel } from '@models/data-collection/form-constructor/form-builder/documents.model';
+import { TermsConditionsItem } from '@models/data-collection/form-constructor/form-builder/terms-conditions.model';
 import {
   FormModel,
   IPagesPercent,
@@ -46,6 +42,10 @@ import {
   mainMenuNames,
   menuItems
 } from '@models/data-collection/online-form/menu.model';
+import {
+  E_SIGNATURE_TYPES,
+  SIGNATURE_TYPES
+} from '@models/data-collection/signature.model';
 import { BehaviorSubject, Observable, pipe, Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { customTable } from './models/custom-table.model';
@@ -64,7 +64,7 @@ import { OnlineFormService } from './services/online-form.service';
 })
 export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
   @Input() formId = '';
-  @Input() isMenuShow = true;
+  @Input() isMenuShow = true; 9;
   @Input() isFormReviewMode = false;
   @Input() isViewMode = false;
   @Input() isReviewMode = false;
@@ -109,11 +109,53 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
     private location: Location
   ) {}
 
+  static getFieldsForSectionByForms(forms: object[]): object {
+    const oFields = {};
+    if (forms && forms.length > 0) {
+      forms.forEach((form: FormModel) => {
+        const key = form.id;
+
+        // if(this.formErrors$.getValue()["fields"][key]) {
+        //   oFields['forms'][key] = this.formErrors$.getValue()["fields"][key];
+        // }
+      });
+    }
+    return oFields;
+  }
+
+  static filterSignatureBySignatureAndKey(signature, key) {
+    if (signature.isBothParents) {
+      if (key.includes('_parent')) {
+        return false;
+      }
+    } else {
+      if (key.includes('_father') || key.includes('_mother')) {
+        return false;
+      }
+    }
+
+    if (signature.type === SIGNATURE_TYPES.WET) {
+      if (key.includes('__external_') || key.includes('__system_')) {
+        return false;
+      }
+    } else if (signature.eType === E_SIGNATURE_TYPES.EXTERNAL) {
+      if (key.includes('__system_') || key.includes('__wet_')) {
+        return false;
+      }
+    } else {
+      // system
+      if (key.includes('__external_') || key.includes('__wet_')) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   ngOnInit() {
     this.getForm();
   }
 
-  ngOnChanges(changes: import('@angular/core').SimpleChanges): void {
+  ngOnChanges(changes: import ('@angular/core').SimpleChanges): void {
     if (changes.formId && changes.formId.previousValue !== undefined) {
       this.isReady$.next(false);
       this.form$.next(null);
@@ -463,7 +505,7 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
         this.form$.getValue().activeSections[page] &&
         this.form$.getValue().activeSections[page].isActive
       ) {
-        activeMenuList.push({ page });
+        activeMenuList.push( Object.create({page}));
       }
     }
     return activeMenuList;
@@ -508,34 +550,6 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
       this.requiredListByPage[name] = [];
       this.fieldListByPage[name] = [];
     });
-  }
-
-  filterSignatureBySignatureAndKey(signature, key) {
-    if (signature.isBothParents) {
-      if (key.includes('_parent')) {
-        return false;
-      }
-    } else {
-      if (key.includes('_father') || key.includes('_mother')) {
-        return false;
-      }
-    }
-
-    if (signature.type === SIGNATURE_TYPES.WET) {
-      if (key.includes('__external_') || key.includes('__system_')) {
-        return false;
-      }
-    } else if (signature.eType === E_SIGNATURE_TYPES.EXTERNAL) {
-      if (key.includes('__system_') || key.includes('__wet_')) {
-        return false;
-      }
-    } else {
-      // system
-      if (key.includes('__external_') || key.includes('__wet_')) {
-        return false;
-      }
-    }
-    return true;
   }
 
   // Make lists with required fields and with control fields by page
@@ -617,7 +631,7 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
           (item: ConsentItemInfo) => {
             if (
               item.id &&
-              this.filterSignatureBySignatureAndKey(item.signature, key)
+              OnlineFormComponent.filterSignatureBySignatureAndKey(item.signature, key)
             ) {
               this.consentKeys.push(item.id + key);
               const isRequired =
@@ -673,9 +687,7 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
                   const isRequired =
                     pdfField.linkedField &&
                     pdfField.linkedField.options &&
-                    pdfField.linkedField.options.required
-                      ? true
-                      : false;
+                    pdfField.linkedField.options.required;
                   const label =
                     pdfField.linkedField && pdfField.linkedField.name
                       ? pdfField.linkedField.name
@@ -949,7 +961,7 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
 
       termsConditionsKeys
         .filter(key => {
-          return this.filterSignatureBySignatureAndKey(
+          return OnlineFormComponent.filterSignatureBySignatureAndKey(
             this.form$.getValue().termsConditions.signature,
             key
           );
@@ -1117,20 +1129,6 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
     return oFields;
   }
 
-  getFieldsForSectionByForms(forms: object[]): object {
-    const oFields = {};
-    if (forms && forms.length > 0) {
-      forms.forEach((form: FormModel) => {
-        const key = form.id;
-
-        // if(this.formErrors$.getValue()["fields"][key]) {
-        //   oFields['forms'][key] = this.formErrors$.getValue()["fields"][key];
-        // }
-      });
-    }
-    return oFields;
-  }
-
   getFieldsForSectionByConsent(consents: object[]): object {
     const oFields = {};
     consents.forEach((section: FormModel) => {
@@ -1191,7 +1189,7 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
     const documents = this.getFieldsForSectionByDocuments(
       this.form$.getValue().documents
     );
-    const forms = this.getFieldsForSectionByForms(this.form$.getValue().forms);
+    const forms = OnlineFormComponent.getFieldsForSectionByForms(this.form$.getValue().forms);
     const consentInfo = this.getFieldsForSectionByConsent(
       this.form$.getValue().consentInfo.consents
     );
