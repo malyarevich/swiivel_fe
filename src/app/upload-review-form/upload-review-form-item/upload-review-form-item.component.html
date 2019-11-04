@@ -15,7 +15,7 @@
       </p>
       <div *ngIf="!isBulkDownload" class="controls-container">
         <div class="control-item">
-          <sw-status-label [class]="uploadReviewFormService.getStatusColor(document.status)">
+          <sw-status-label [class]="uploadReviewFormService.getStatusItemColor(document.status)">
             {{ uploadReviewFormStatusesEnum[document.status] }}
           </sw-status-label>
         </div>

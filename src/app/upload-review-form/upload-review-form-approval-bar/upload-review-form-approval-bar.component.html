@@ -7,7 +7,7 @@
     <p class="document-approval-bar__document-name">{{ document.entity_name }}</p>
   </div>
   <div class="document-approval-bar__status">
-    <sw-status-label [class]="uploadReviewFormService.getStatusColor(document.status)">
+    <sw-status-label [class]="uploadReviewFormService.getStatusItemColor(document.status)">
       {{ uploadReviewFormStatusesEnum[document.status] }}
     </sw-status-label>
   </div>

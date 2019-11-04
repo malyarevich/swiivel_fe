@@ -125,11 +125,12 @@
                   </div>
                 </span>
                 <div *ngIf="!form.permissions || !form.permissions.length" class="button-invite-user">
-                  <sw-button color="transparent">
-                    <span class="button-invite-user-text">
-                      <i class="fas fa-plus icon-invite-user"></i>
-                      Invite users
-                    </span>
+                  <sw-button
+                    size="small"
+                    fill="outline"
+                  >
+                    <i class="fas fa-plus"></i>
+                    <span>Invite users</span>
                   </sw-button>
                 </div>
               </td>
@@ -242,15 +243,15 @@
                   </sw-button>
                 </div>
                 <div class="item">
-                  <div data-e2e="Sharebutton">
+                  <div class="item-icon" data-e2e="Sharebutton">
                     <sw-icon-button [icon]="icons.SHARE" (click)="onShareLink(form)">
                     </sw-icon-button>
                   </div>
-                  <div data-e2e="Downloadbutton">
+                  <div class="item-icon" data-e2e="Downloadbutton">
                     <sw-icon-button [icon]="icons.DOWNLOAD" (click)="onExportPDF(form.mongo_id)">
                     </sw-icon-button>
                   </div>
-                  <div data-e2e="Copybutton">
+                  <div class="item-icon" data-e2e="Copybutton">
                     <sw-icon-button [icon]="icons.COPY" (click)="onDuplicateForm(form.mongo_id)">
                     </sw-icon-button>
                   </div>

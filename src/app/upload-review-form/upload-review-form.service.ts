@@ -28,6 +28,23 @@ export class UploadReviewFormService extends ApiService {
     }
   }
 
+  getStatusItemColor(status: string): string {
+    switch (status) {
+      case 'approved':
+        return 'green';
+      case 'assigned':
+        return 'blue';
+      case 'need_review':
+        return 'light-yellow';
+      case 'rejected':
+        return 'gray';
+      case 'unassigned':
+        return 'red';
+      default:
+        return 'gray';
+    }
+  }
+
   getDocumentList(formId: string, filterParams?: any, sortParam?: any, searchParam?: any): Observable<any> {
     let endpoint = '';
     if ((filterParams && filterParams.length) || (sortParam && sortParam.length) || searchParam) {
