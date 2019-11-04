@@ -111,15 +111,15 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
 
   static getFieldsForSectionByForms(forms: object[]): object {
     const oFields = {};
-    if (forms && forms.length > 0) {
-      forms.forEach((form: FormModel) => {
-        const key = form.id;
+    // if (forms && forms.length > 0) {
+      // forms.forEach((form: FormModel) => {
+        // const key = form.id;
 
         // if(this.formErrors$.getValue()["fields"][key]) {
         //   oFields['forms'][key] = this.formErrors$.getValue()["fields"][key];
         // }
-      });
-    }
+      // });
+    // }
     return oFields;
   }
 
@@ -505,7 +505,7 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
         this.form$.getValue().activeSections[page] &&
         this.form$.getValue().activeSections[page].isActive
       ) {
-        activeMenuList.push( Object.create({page}));
+        activeMenuList.push( Object.create({page}) );
       }
     }
     return activeMenuList;
