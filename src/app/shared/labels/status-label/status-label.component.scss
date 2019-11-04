@@ -19,6 +19,13 @@
   }
 }
 
+:host(.light-yellow) {
+  .label {
+    background: $header-logo-color;
+  }
+}
+
+
 :host(.green) {
   .label {
     background: $status-green;

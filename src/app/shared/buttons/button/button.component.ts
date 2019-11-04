@@ -13,6 +13,7 @@ export class ButtonComponent {
   @Input() color: ButtonColorsEnum = ButtonColorsEnum.PURPLE;
   @Input() disabled = false;
   @Input() expand: ButtonExpandEnum = ButtonExpandEnum.DEFAULT;
+  @Input() fill: 'outline';
   @Input() name: string;
   @Input() size: ButtonSizeEnum = ButtonSizeEnum.DEFAULT;
   @Input() value: any;

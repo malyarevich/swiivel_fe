@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from '@shared/shared.module';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+// import { FormSendModule } from '../form-send/form-send.module';
+import { OnlineFormModule } from '../online-form/online-form.module';
 import { UploadReviewFormApprovalBarComponent } from './upload-review-form-approval-bar/upload-review-form-approval-bar.component';
 import { UploadReviewFormControlsComponent } from './upload-review-form-controls/upload-review-form-controls.component';
 import {
@@ -15,8 +17,6 @@ import { UploadReviewFormRoutingModule } from './upload-review-form-routing.modu
 import { UploadReviewFormComponent } from './upload-review-form.component';
 import { UploadReviewFormService } from './upload-review-form.service';
 import { UploadReviewReviewItemComponent } from './upload-review-review-item/upload-review-form-item.component';
-import { OnlineFormModule } from '../online-form/online-form.module';
-// import { FormSendModule } from '../form-send/form-send.module';
 
 @NgModule({
   declarations: [
