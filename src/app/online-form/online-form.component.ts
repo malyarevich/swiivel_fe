@@ -64,7 +64,7 @@ import { OnlineFormService } from './services/online-form.service';
 })
 export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
   @Input() formId = '';
-  @Input() isMenuShow = true; 9;
+  @Input() isMenuShow = true;
   @Input() isFormReviewMode = false;
   @Input() isViewMode = false;
   @Input() isReviewMode = false;
