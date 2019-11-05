@@ -26,4 +26,15 @@
   &.active {
     border-color: #4350A2;
   }
+
+  &.none-color {
+    .item {
+
+      &:hover, &.active {
+        padding: 10px 8px;
+        font-weight: 800;
+        background: $gray;
+      }
+    }
+  }
 }

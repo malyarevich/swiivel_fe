@@ -18,9 +18,15 @@
           <sw-button routerLink="/form-creator">Create New Form</sw-button>
         </div>
         <div class="app-form-table__controls-bulk" data-e2e ="bulkactions">
-          <sw-dropdown-select [options]="bulkOptions" #bulk="dropdown" (selected)="bulkAction($event)"
-                              [panelClass]="'app-form-table-dropdown-overlay'" [disabled]="disabledBulkBtn">
-            <sw-button [disabled]="disabledBulkBtn">
+          <sw-dropdown-select
+            #bulk="dropdown"
+            panelClass="app-form-table-dropdown-overlay"
+            [disabled]="disabledBulkBtn"
+            [noneColor]="true"
+            [options]="bulkOptions"
+            (selected)="bulkAction($event)"
+          >
+            <sw-button [disabled]="disabledBulkBtn" color="white">
               <span class="app-form-table__controls-bulk-btn-text">Bulk Actions</span>
               <i class="fas fa-chevron-down" [ngClass]="{'fa-chevron-up': bulk.isOpened}"></i>
             </sw-button>
