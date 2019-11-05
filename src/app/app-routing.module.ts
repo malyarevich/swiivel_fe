@@ -52,6 +52,10 @@ const routes: Routes = [
     loadChildren: () => import('./upload-review-form/upload-review-form.module').then(m => m.UploadReviewFormModule)
   },
   {
+    path: 'form',
+    loadChildren: () => import('./form/form.module').then(m => m.FormModule)
+  },
+  {
     path: '**',
     redirectTo: '/dashboard',
   }
