@@ -26,7 +26,7 @@ export class GeneralInfoFieldComponent implements OnInit, OnChanges, OnDestroy {
   value: string | any;
   fc: FormControl;
 
-  validSubscription: Subscription;
+  // validSubscription: Subscription;
 
   fieldComponent: any;
   fieldInputs$: BehaviorSubject<IFieldInput> = new BehaviorSubject(null);
@@ -36,8 +36,8 @@ export class GeneralInfoFieldComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnInit() {
     this.initFormField();
-    this.initFormFieldValue();
-    this.initReactiveFormControl();
+    // this.initFormFieldValue();
+    // this.initReactiveFormControl();
     // this.initListener();
     this.fieldInputs$.next({
       field: this.field,
@@ -63,58 +63,56 @@ export class GeneralInfoFieldComponent implements OnInit, OnChanges, OnDestroy {
     );
   }
 
-  initFormFieldValue() {
-    this.value = this.field._id
-      ? this.onlineFormService.getFormValueById(this.field._id)
-      : 'ID is undefined';
-  }
+  // initFormFieldValue() {
+  //   this.value = this.field._id
+  //     ? this.onlineFormService.getFormValueById(this.field._id)
+  //     : 'ID is undefined';
+  // }
 
-  initReactiveFormControl() {
-    if (this.field._id) {
-      const aValidators = !this.field.options.readonly
-        ? Validators.compose(this.getComposed())
-        : {};
-      this.fc = new FormControl(
-        {
-          value: this.value,
-          disabled: this.field.options.readonly || this.isViewOnly
-        },
-        aValidators
-      );
-      this.onlineFormService.addFormControl(this.field._id, this.fc);
-      // this.onlineFormService.setFormControlValue(this.field._id, this.value);
-    }
-    this.fg = this.onlineFormService.getFormGroup();
-  }
+  // initReactiveFormControl() {
+  //   if (this.field._id) {
+  //     const aValidators = !this.field.options.readonly
+  //       ? Validators.compose(this.getComposed())
+  //       : {};
+  //     this.fc = new FormControl(
+  //       {
+  //         value: this.value,
+  //         disabled: this.field.options.readonly || this.isViewOnly
+  //       },
+  //       aValidators
+  //     );
+  //     this.onlineFormService.addFormControl(this.field._id, this.fc);
+  //     // this.onlineFormService.setFormControlValue(this.field._id, this.value);
+  //   }
+  //   this.fg = this.onlineFormService.getFormGroup();
+  // }
 
-  getComposed() {
-    const arrayValidators = [];
-
-    if (this.field.options.required) {
-      arrayValidators.push(Validators.required);
-    }
-
-    if (this.field.options.minFieldSize) {
-      arrayValidators.push(
-        Validators.minLength(this.field.options.minFieldSize)
-      );
-    }
-
-    if (this.field.options.maxFieldSize) {
-      arrayValidators.push(
-        Validators.maxLength(this.field.options.maxFieldSize)
-      );
-    }
-
-    return arrayValidators;
-  }
+  // getComposed() {
+  //   const arrayValidators = [];
+  //
+  //   if (this.field.options.required) {
+  //     arrayValidators.push(Validators.required);
+  //   }
+  //
+  //   if (this.field.options.minFieldSize) {
+  //     arrayValidators.push(
+  //       Validators.minLength(this.field.options.minFieldSize)
+  //     );
+  //   }
+  //
+  //   if (this.field.options.maxFieldSize) {
+  //     arrayValidators.push(
+  //       Validators.maxLength(this.field.options.maxFieldSize)
+  //     );
+  //   }
+  //
+  //   return arrayValidators;
+  // }
 
   // initListener() {
-
   //   this.validSubscription = this.onlineFormService.onChangeServerValidations.subscribe(
   //     list => {
   //       this.validationText = list[this.field._id];
-
   //       this.fieldInputs = {
   //         field: this.field,
   //         fg: this.fg,
@@ -125,8 +123,8 @@ export class GeneralInfoFieldComponent implements OnInit, OnChanges, OnDestroy {
   // }
 
   ngOnDestroy(): void {
-    if (this.validSubscription) {
-      this.validSubscription.unsubscribe();
-    }
+    // if (this.validSubscription) {
+    //   this.validSubscription.unsubscribe();
+    // }
   }
 }
