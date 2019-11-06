@@ -64,6 +64,7 @@ import { OnlineFormService } from './services/online-form.service';
 })
 export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
   @Input() formId = '';
+  @Input() personId = '';
   @Input() isMenuShow = true;
   @Input() isFormReviewMode = false;
   @Input() isViewMode = false;
@@ -221,20 +222,31 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
 
   getForm(): void {
     this.onlineFormService.setFromId(this.formId);
+    this.onlineFormService.setPersonId(this.personId === '' ? undefined : this.personId);
     // TODO: check if we need formId here
     // this.route.params.subscribe(params => {
     //   this.formId = params.mongo_id;
     // });
     if (this.isViewMode) {
-      // template by id
       if (this.getOneFormSubscription) {
         this.getOneFormSubscription.unsubscribe();
       }
-      this.getOneFormSubscription = this.onlineFormService
+      if(this.personId === '') {
+        // template by id
+        this.getOneFormSubscription = this.onlineFormService
         .getTemplateForm()
         .subscribe((form: FormModel) => {
           this.formSubscriber(form);
         });
+      } else {
+        // by preview for person
+        this.getOneFormSubscription = this.onlineFormService
+        .getTemplateFormByPerson()
+        .subscribe((form: FormModel) => {
+          this.formSubscriber(form);
+        });
+      }
+     
     } else {
       // form by link
       if (this.getOneFormSubscription) {
@@ -1209,7 +1221,8 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
   saveAndNextStep() {
     if (
       this.isFormStatusChanged &&
-      this.currentPosition$.getValue().page !== 'packetIntroduction'
+      this.currentPosition$.getValue().page !== 'packetIntroduction' &&
+      this.personId === ''
     ) {
       const savingObj = {
         pagesPercents: this.pagesPercents$.getValue(),
