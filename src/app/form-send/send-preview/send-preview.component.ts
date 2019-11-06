@@ -42,5 +42,8 @@ export class SendPreviewComponent implements OnInit {
     });
   }
 
+  onBack() {}
+
+  onSaveNext() {}
 
 }
