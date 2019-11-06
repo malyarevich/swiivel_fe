@@ -1,19 +1,21 @@
-<button
-  class="button"
-  data-e2e="button"
-  type="button"
-  [class.gray]="color === colors.GRAY"
-  [class.green]="color === colors.GREEN"
-  [class.light-blue]="color === colors.LIGHT_BLUE"
-  [class.transparent]="color === colors.TRANSPARENT"
-  [class.yellow]="color === colors.YELLOW"
-  [class.white]="color === colors.WHITE"
-  [class.full]="expand === expands.FULL"
-  [class.small]="size === sizes.SMALL"
-  [class.round] = 'isRound'
-  [name]="name"
-  [value]="value"
-  [disabled]="disabled"
->
-  <ng-content></ng-content>
-</button>
+<div class="button-container" [class.full]="expand === expands.FULL">
+  <button
+    class="button"
+    data-e2e="button"
+    type="button"
+    [class.gray]="color === colors.GRAY"
+    [class.green]="color === colors.GREEN"
+    [class.light-blue]="color === colors.LIGHT_BLUE"
+    [class.transparent]="color === colors.TRANSPARENT"
+    [class.yellow]="color === colors.YELLOW"
+    [class.white]="color === colors.WHITE"
+    [class.outline-purpure]="fill === 'outline'"
+    [class.small]="size === sizes.SMALL"
+    [class.round]='isRound'
+    [name]="name"
+    [value]="value"
+    [disabled]="disabled"
+  >
+    <ng-content></ng-content>
+  </button>
+</div>

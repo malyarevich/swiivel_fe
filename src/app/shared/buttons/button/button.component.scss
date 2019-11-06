@@ -1,8 +1,17 @@
 @import 'index';
 
-:host {
+.button-container {
   width: fit-content;
   display: flex;
+
+  &.full {
+    width: 100%;
+
+    .button {
+      width: 100%;
+    }
+  }
+
   .button {
     border-radius: 3px;
     background: $button-color;
@@ -54,6 +63,10 @@
     background: $status-light-blue;
   }
 
+  .purple {
+    background: $status-purple;
+  }
+
   .transparent {
     outline: none;
     border: none;
@@ -63,11 +76,6 @@
 
   .yellow {
     background: $status-yellow;
-  }
-
-  // expends
-  .full {
-    width: 100%;
   }
 
   //sizes
@@ -92,9 +100,21 @@
     }
   }
 
+  // fill
+  .outline-purpure {
+    color: $button-color;
+    border: 1px solid $button-color;
+    background: transparent;
+  }
+
   //shapes
   .round {
     border-radius: 100px;
+  }
+
+  .outline-purpure.small {
+    padding: 2px 3px 1px;
+    border-radius: 3px;
   }
 }
 

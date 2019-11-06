@@ -25,6 +25,7 @@ import { SelectOptionDirective } from './option.directive';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DropdownSelectComponent {
+  @Input() noneColor = false;
   @Input() set value(val: any) {
     let selectedValue;
     if (isString(val)) {

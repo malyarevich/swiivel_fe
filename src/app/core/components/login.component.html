@@ -1,22 +1,22 @@
-<section class="loginFormWrapper">
+<section class="loginFormWrapper" data-e2e="loginFormWrapper">
   <section class="formWrapper">
     <form clrForm class="customForm" [formGroup]="form" (ngSubmit)="onSubmit()" novalidate autocomplete="new-password">
-      <h2 class="text-center">Login</h2>
-      <h5 class="text-center app-text-primary mt-5">Welcome to the ABC School</h5>
-      <h6 class="text-center mb-5">Please login for starting</h6>
+      <h2 class="text-center" data-e2e="logintext">Login</h2>
+      <h5 class="text-center app-text-primary mt-5" data-e2e="wellcometext">Welcome to the ABC School</h5>
+      <h6 class="text-center mb-5" data-e2e="loginstarting">Please login for starting</h6>
       <h6 class="text-center app-text-primary" data-e2e="errorauth">{{form.get('password').getError('incorrect')}}</h6>
-      <sw-input-text formControlName="username" [autofocus]="focusUsername" autocomplete="username">
-        <span class="label">Username</span>
+      <sw-input-text data-e2e="username" formControlName="username"  [autofocus]="focusUsername" autocomplete="username">
+        <span class="label" data-e2e="usernamelabel">Username</span>
       </sw-input-text>
-      <sw-input-text formControlName="password" [type]="inputType" autocomplete="current-password" #password>
-        <span class="label">Password</span>
+      <sw-input-text data-e2e="password" formControlName="password" [type]="inputType" autocomplete="current-password" #password>
+        <span class="label" data-e2e="passwordlabel">Password</span>
         <i class="fa"
           [ngClass]="inputType === 'password' ? 'fa-eye' : 'fa-eye-slash'"
           (click)="toggleInputType($event);password.focus()"
           [attr.title]="iconText"
           *ngIf="form.get('password').valid && form.get('password').dirty"></i>
         </sw-input-text>
-      <a routerLink="/restore-password" class="smallText">
+      <a routerLink="/restore-password" class="smallText" data-e2e="forgetpassword">
         Forgot password?
       </a>
       <button [disabled]="!form.valid" type="submit" class="btn app-btn-warning mt-4" swId="login-button" data-e2e="login-button" >

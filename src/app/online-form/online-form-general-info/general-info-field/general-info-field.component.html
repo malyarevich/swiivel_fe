@@ -1,6 +1,6 @@
 <div class="field">
   <!-- {{ field.type }} -->
-  <ng-container *ngIf="fg && fc; else noComponent">
+  <ng-container *ngIf="true || fg && fc; else noComponent">
     <ndc-dynamic
       [ndcDynamicComponent]="fieldComponent"
       [ndcDynamicInputs]="fieldInputs$ | async"

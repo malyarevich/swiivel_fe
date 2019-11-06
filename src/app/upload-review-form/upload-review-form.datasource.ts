@@ -96,10 +96,10 @@ export class UploadReviewFormDataSource implements DataSource<any> {
                 return {
                   title: `${person.person.first_name} ${person.person.last_name}`,
                   value: person.id_person,
-                }
+                };
               }
             }).filter(student => student),
-          }
+          };
         }).filter(family => family));
       }));
   }

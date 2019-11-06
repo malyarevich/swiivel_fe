@@ -12,7 +12,16 @@
       </div>
     </div>
     <div class="col-9" style="padding-right: 0;padding-left: 0;width: 100%;">
-      <sw-preview-form [formId]="id"></sw-preview-form>
+      <!-- <app-preview-form [formId]='id'></app-preview-form> -->
+      <sw-online-form
+        [formId]="'5d8ddc0e8ffb08460b4c2e02'"
+        [personId]="'83ba48c6b8047d2c37b7ca5f4ba10232'"
+        [isViewMode]="true"
+        [isMenuShow]="true"
+        [isReviewMode]="false"
+        (goBack)="onBack($event)"
+        (saveNext)="onSaveNext($event)"
+      ></sw-online-form>
     </div>
   </div>
   
