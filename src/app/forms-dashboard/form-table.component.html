@@ -57,7 +57,7 @@
           <table #table cdk-table [dataSource]="dataSource">
 
             <ng-container cdkColumnDef="name">
-              <th cdk-header-cell *cdkHeaderCellDef width="23%">
+              <th cdk-header-cell *cdkHeaderCellDef width="20%">
                 <div class="header_container" data-e2e="formname">
                   <div class="header_container__title" data-e2e="formnametitle" (click)="sortBy('name')">
                     Form Name
@@ -67,7 +67,13 @@
                     </div>
                   </div>
                   <div class="header_container__filter">
-                    <sw-input-text class="filter-field" formControlName="name" [isSearch]="true" [isClearable]="true" (keydown)="keyDownFunction($event)"></sw-input-text>
+                    <sw-input-text
+                      class="filter-field"
+                      formControlName="name"
+                      [isSearch]="true"
+                      [isClearable]="true"
+                      (keydown)="keyDownFunction($event)"
+                    ></sw-input-text>
                   </div>
                 </div>
               </th>
@@ -80,7 +86,7 @@
 
 
             <ng-container cdkColumnDef="type">
-              <th cdk-header-cell *cdkHeaderCellDef width="13%">
+              <th cdk-header-cell *cdkHeaderCellDef width="10%">
                 <div class="header_container" data-e2e="typename">
                   <div class="header_container__title" data-e2e="typenametitle" (click)="sortBy('type')">
                     type
@@ -110,7 +116,7 @@
 
 
             <ng-container cdkColumnDef="access">
-              <th cdk-header-cell *cdkHeaderCellDef width="19%">
+              <th cdk-header-cell *cdkHeaderCellDef width="16%">
                 <div class="header_container" data-e2e="accessname">
                   <div class="header_container__title" data-e2e="accessnametitle" (click)="sortBy('access')">
                     access
@@ -134,6 +140,7 @@
                   <sw-button
                     size="small"
                     fill="outline"
+                    (click)="showInvite = true"
                   >
                     <i class="fas fa-plus"></i>
                     <span>Invite users</span>
@@ -144,7 +151,7 @@
 
 
             <ng-container cdkColumnDef="createdBy">
-              <th cdk-header-cell *cdkHeaderCellDef width="16%">
+              <th cdk-header-cell *cdkHeaderCellDef width="13%">
                 <div class="header_container" data-e2e="createdbyname">
                   <div class="header_container__title" data-e2e="createdbynametitle" (click)="sortBy('createdBy')">
                     created by
@@ -165,7 +172,7 @@
 
 
             <ng-container cdkColumnDef="updatedAt">
-              <th cdk-header-cell *cdkHeaderCellDef width="15%">
+              <th cdk-header-cell *cdkHeaderCellDef width="12%">
                 <div class="header_container" data-e2e="updateddatename">
                   <div class="header_container__title" data-e2e="updateddatenametitle" (click)="sortBy('updated_at')">
                     update date
@@ -192,7 +199,7 @@
 
 
             <ng-container cdkColumnDef="status">
-              <th cdk-header-cell *cdkHeaderCellDef width="13%">
+              <th cdk-header-cell *cdkHeaderCellDef width="10%">
                 <div class="header_container" data-e2e="statusname">
                   <div class="header_container__title" data-e2e="statusnametitle" (click)="sortBy('status')">
                     status
@@ -229,11 +236,18 @@
                     <i class="fas fa-caret-down"></i>
                   </sw-button>
                 </sw-dropdown-select>
+
+                <div *ngIf="form.current_round && !isEmptyRound(form.current_round)" class="status-round-name">
+                  {{ form.current_round.name }}
+                  <span class="status-round-date">
+                    ({{getRoundDate(form.current_round.start_date, form.current_round.end_date)}})
+                  </span>
+                </div>
               </td>
             </ng-container>
 
             <ng-container cdkColumnDef="actions">
-              <th cdk-header-cell *cdkHeaderCellDef>
+              <th cdk-header-cell *cdkHeaderCellDef width="19%">
               </th>
               <td cdk-cell *cdkCellDef="let form">
                 <div class="item" data-e2e="Editbutton">
@@ -267,7 +281,7 @@
 
             <ng-container cdkColumnDef="paginator">
               <td cdk-footer-cell *cdkFooterCellDef [attr.colspan]="displayedColumns.length">
-                <div class="wrapper" data-e2e="paginatorname">
+                <div *ngIf="totalAmount > 0" class="wrapper" data-e2e="paginatorname">
                   <p class="paginator-results">{{ this.totalAmount }} Results</p>
                   <sw-paginator [index]="currentPage" [size]="totalItems" (pageChange)="changePage($event)"></sw-paginator>
                 </div>
@@ -295,11 +309,11 @@
             </tr>
             <tr cdk-footer-row *cdkFooterRowDef="['paginator']"></tr>
 
-
           </table>
-
         </form>
-
+        <div *ngIf="totalAmount === 0">
+            No Records Found
+        </div>
       </div>
     </div>
   </div>
