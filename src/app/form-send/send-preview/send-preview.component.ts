@@ -42,8 +42,16 @@ export class SendPreviewComponent implements OnInit {
     });
   }
 
-  onBack() {}
+  onBack(event): void {
+    if (event) {
+      console.log('onBack', event);
+    }
+  }
 
-  onSaveNext() {}
+  onSaveNext(event): void {
+    if (event) {
+      console.log('onSaveNext', event);
+    }
+  }
 
 }
