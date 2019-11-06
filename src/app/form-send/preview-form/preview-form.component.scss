@@ -13,12 +13,12 @@
     width: 100%;
     padding: 15px;
     font: 800 14px/16px $nunito-sans;
-    color: #fff;
-    background: #4350A2;
+    color: $white;
+    background: $element-base-color;
     &.pdf-color {
       position: absolute;
       z-index: 3;
-      background: #36405F;
+      background: $dark-purple;
     }
     &--online {
       padding-left: 30px;
@@ -32,8 +32,8 @@
     margin-top: -12px;
     // padding-top: 55px;
     border-radius: 3px;
-    background: #F3F3F3;
-    border: 1px solid #E3E3E3;
+    background: $gray;
+    border: 1px solid $dark-grey;
     overflow: hidden;
     position: relative;
     display: flex;
@@ -41,19 +41,19 @@
     justify-content: center;
     .no-pdf-text {
       font: 400 12px/15px $nunito-sans;
-      color: #909090;
+      color: $gray-color;
     }
     .title {
       position: absolute;
       top: 0;
       z-index: 2;
-      background: #fff;
+      background: $white;
       padding: 15px;
       width: 100%;
       margin-bottom: 10px;
       .name {
         font: 800 11px/15px $nunito-sans;
-        color: #0D0D0D;
+        color: $black-text;
         letter-spacing: 0.37px;
         text-transform: uppercase;
       }
