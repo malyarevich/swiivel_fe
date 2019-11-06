@@ -75,11 +75,11 @@ export class FormService {
   }
 
   loadForm(formId?: string) {
-    if (formId) {
-      this.api.getFormTemplate(formId).subscribe(form => {
-        console.log('GET form by ID', form)
-        if (form) {
-          this.form = form;
+    if (formId !== 'new') {
+      this.api.getFormTemplate(formId).subscribe(data => {
+        console.log('GET data by ID', data)
+        if (data) {
+          this.form = data;
         }
       });
     } else {

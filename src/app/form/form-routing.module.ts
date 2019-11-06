@@ -6,7 +6,7 @@ import { FormComponent } from './form.component';
 
 const routes: Routes = [
   {
-    path: '',
+    path: ':formId',
     component: FormComponent,
     canActivate: [AuthGuard],
     canActivateChild: [AuthGuard],
@@ -25,6 +25,9 @@ const routes: Routes = [
         redirectTo: 'create'
       }
     ],
+  }, {
+    path: '**',
+    redirectTo: 'new'
   }
 ];
 

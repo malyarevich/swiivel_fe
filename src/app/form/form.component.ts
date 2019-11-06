@@ -21,13 +21,7 @@ export class FormComponent implements OnInit, OnDestroy {
     this.route.paramMap.pipe(
       takeUntil(this.destroyed$)
     ).subscribe(params => {
-      if (params.has('id')) {
-        console.info(`Edit form with ID ${params.get('id')}`);
-        this.formService.loadForm(params.get('id'));
-      } else {
-        console.info(`Create New Form`);
-        this.formService.loadForm();
-      }
+      this.formService.loadForm(params.get('formId'));
     });
   }
 

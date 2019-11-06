@@ -237,7 +237,7 @@
               </th>
               <td cdk-cell *cdkCellDef="let form">
                 <div class="item" data-e2e="Editbutton">
-                  <sw-button size="small" [routerLink]="['/form', { id: form.mongo_id }]">
+                  <sw-button size="small" [routerLink]="['/form', form.mongo_id]">
                     <i class="fas fa-pen"></i>
                     <span>Edit</span>
                   </sw-button>
