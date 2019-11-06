@@ -2,3 +2,6 @@
   <i class="fas fa-chevron-left arrow-back-ico"></i>
 </div>
 <h3 class="title">{{ title }}</h3>
+<div class="search" *ngIf="searchVisible">
+  <sw-input-search [placeholder]="'Search'" type="header"></sw-input-search>
+</div>

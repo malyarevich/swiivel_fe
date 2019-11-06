@@ -14,4 +14,8 @@ export class FormManagmentComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
+
+  backPageClick(): void {
+    console.log('back');
+  }
 }
