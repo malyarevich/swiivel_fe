@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { ActivatedRoute, Params } from '@angular/router';
+import { FormSendService } from '../form-send.service';
 
 @Component({
   selector: 'sw-send-preview',
@@ -24,23 +24,12 @@ export class SendPreviewComponent implements OnInit {
   ]
 
   constructor(
-    private route: ActivatedRoute
+    private formSendService: FormSendService
   ) {
-    this.filter.valueChanges.subscribe((filterValue) => {
-      if (filterValue && filterValue.length > 0) {
-        // this.dataSource.filter(filterValue.toLowerCase())
-      } else {
-        // this.dataSource.filter('');
-      }
-    });
+    this.id = this.formSendService.formId;
   }
 
-  ngOnInit() {
-    this.route.parent.params.subscribe((params: Params) => {
-      this.id = params.hasOwnProperty('id') ? params.id : '';
-      // this.initPage();
-    });
-  }
+  ngOnInit() { }
 
   onBack(event): void {
     if (event) {
