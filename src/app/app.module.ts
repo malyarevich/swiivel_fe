@@ -13,6 +13,7 @@ import { AuthInterceptor } from '@core/auth.interceptor';
 import { AuthService } from '@core/auth.service';
 import { DashboardComponent } from '@core/components/dashboard.component';
 import { LoginComponent } from '@core/components/login.component';
+import { FormManagmentModule } from '@app/form-managment/form-managment.module';
 import { RestorePasswordComponent } from '@core/components/restore-password.component';
 import { FieldService } from '@core/field.service';
 import { HttpService } from '@core/http.service';
@@ -40,6 +41,7 @@ import { ErrorsListTooltipComponent } from '@app/online-form/errors-list/errors-
     BrowserAnimationsModule,
     HttpClientModule,
     ReactiveFormsModule,
+    FormManagmentModule,
     FormsModule,
     SharedModule,
     AppRoutingModule,
