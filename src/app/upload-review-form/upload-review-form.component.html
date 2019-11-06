@@ -40,7 +40,7 @@
                 [options]="filterValue"
                 [disabled]="isEmptyObject(filterValue) || isBulkDownload || isSaveActive"
               >
-                <span class="input_label">
+                <span class="label">
                   Filtered By
                 </span>
               </sw-dropdown-input>
@@ -52,7 +52,7 @@
                 [isClearable]="true"
                 [disabled]="!(sortValue && sortValue.length) || isBulkDownload || isSaveActive"
               >
-                <span class="input_label">
+                <span class="label">
                   Sorted By
                 </span>
               </sw-dropdown-input>
@@ -145,8 +145,8 @@
         [isViewMode]="true"
         [isMenuShow]="true"
         [isReviewMode]="true"
-        (onBack)="onBack($event)"
-        (onSaveNext)="onSaveNext($event)"
+        (goBack)="onBack($event)"
+        (saveNext)="onSaveNext($event)"
       ></sw-online-form>
     </div>
     <div *ngIf="getSelectForm() && getSelectForm().submission_type === 'pdfForm'">

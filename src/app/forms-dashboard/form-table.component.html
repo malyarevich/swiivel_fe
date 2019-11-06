@@ -18,9 +18,15 @@
           <sw-button routerLink="/form-creator">Create New Form</sw-button>
         </div>
         <div class="app-form-table__controls-bulk" data-e2e ="bulkactions">
-          <sw-dropdown-select [options]="bulkOptions" #bulk="dropdown" (selected)="bulkAction($event)"
-                              [panelClass]="'app-form-table-dropdown-overlay'" [disabled]="disabledBulkBtn">
-            <sw-button [disabled]="disabledBulkBtn">
+          <sw-dropdown-select
+            #bulk="dropdown"
+            panelClass="app-form-table-dropdown-overlay"
+            [disabled]="disabledBulkBtn"
+            [noneColor]="true"
+            [options]="bulkOptions"
+            (selected)="bulkAction($event)"
+          >
+            <sw-button [disabled]="disabledBulkBtn" color="white">
               <span class="app-form-table__controls-bulk-btn-text">Bulk Actions</span>
               <i class="fas fa-chevron-down" [ngClass]="{'fa-chevron-up': bulk.isOpened}"></i>
             </sw-button>
@@ -125,11 +131,12 @@
                   </div>
                 </span>
                 <div *ngIf="!form.permissions || !form.permissions.length" class="button-invite-user">
-                  <sw-button color="transparent">
-                    <span class="button-invite-user-text">
-                      <i class="fas fa-plus icon-invite-user"></i>
-                      Invite users
-                    </span>
+                  <sw-button
+                    size="small"
+                    fill="outline"
+                  >
+                    <i class="fas fa-plus"></i>
+                    <span>Invite users</span>
                   </sw-button>
                 </div>
               </td>
@@ -242,15 +249,15 @@
                   </sw-button>
                 </div>
                 <div class="item">
-                  <div data-e2e="Sharebutton">
+                  <div class="item-icon" data-e2e="Sharebutton">
                     <sw-icon-button [icon]="icons.SHARE" (click)="onShareLink(form)">
                     </sw-icon-button>
                   </div>
-                  <div data-e2e="Downloadbutton">
+                  <div class="item-icon" data-e2e="Downloadbutton">
                     <sw-icon-button [icon]="icons.DOWNLOAD" (click)="onExportPDF(form.mongo_id)">
                     </sw-icon-button>
                   </div>
-                  <div data-e2e="Copybutton">
+                  <div class="item-icon" data-e2e="Copybutton">
                     <sw-icon-button [icon]="icons.COPY" (click)="onDuplicateForm(form.mongo_id)">
                     </sw-icon-button>
                   </div>

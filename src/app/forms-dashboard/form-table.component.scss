@@ -4,11 +4,6 @@
   padding: 15px;
   position: relative;
 
-  .fa-pen,
-  .fa-eye {
-    color: $icon-gray;
-  }
-
   .overlay {
     position: absolute;
     width: 100vw;
@@ -150,7 +145,7 @@
     }
     .cdk-column-type {
       .main-text {
-        font: 800 12px/13px $nunito-sans;
+        font: 700 12px/15px $nunito-sans;
         text-transform: capitalize;
       }
 
@@ -167,10 +162,14 @@
           margin-right: 5px;
         }
         &:last-of-type {
-          flex-grow: 2;
-          display: flex;
-          justify-content: space-between;
           padding: 0 2px 0 6px;
+          display: flex;
+          .item-icon {
+            margin: 0 15px 0 0;
+            &:last-of-type {
+              margin: 0;
+            }
+          }
         }
       }
     }
@@ -214,7 +213,7 @@
         margin-top: 7px;
         display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-end;
 
         .paginator-results {
           margin: 0 15px 0 0;
@@ -242,18 +241,10 @@
   }
 
   .icon-invite-user {
-    color: $icon-gray;
-    font-size: 10px;
-    padding: 0 3px 0 0;
+    margin: 0 4px 0 0;
   }
 
   .button-invite-user {
-    padding: 5px 2px;
-  }
-
-  .button-invite-user-text {
-    font-size: 10px;
-    line-height: 13px;
-    color: $button-color;
+    padding: 0 2px;
   }
 }
