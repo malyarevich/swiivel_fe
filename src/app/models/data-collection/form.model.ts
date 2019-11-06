@@ -34,6 +34,7 @@ export interface FormModel {
     online_config: object;
     pdf_config: object;
   };
+  current_round?: FormRoundModel;
   type: string;
   created_at: string;
   updated_at: string;
@@ -67,6 +68,12 @@ export interface FormModel {
 interface FormPermissions {
   id: number;
   user: { id: number; full_name: number };
+}
+
+interface FormRoundModel {
+  name: string;
+  start_date: string;
+  end_date: string;
 }
 
 export interface ISubMenus {

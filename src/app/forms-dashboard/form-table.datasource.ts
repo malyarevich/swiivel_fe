@@ -11,7 +11,6 @@ export class FormsDataSource implements DataSource<any> {
   private totalAmountSubject = new BehaviorSubject<any>({});
   private loadingSubject = new BehaviorSubject<boolean>(false);
   public $loading = this.loadingSubject.asObservable();
-  public $totalAmount = this.totalAmountSubject.asObservable();
 
   private defaultMetadata = {page: 1, last_page: 1, count: 0, limit: 10, total: 0};
   private metadata: BehaviorSubject<any> = new BehaviorSubject<any>(this.defaultMetadata);
@@ -35,7 +34,7 @@ export class FormsDataSource implements DataSource<any> {
     return this.metadata.asObservable();
   }
 
-  get totalAmount() {
+  get getTotalAmount() {
     return this.totalAmountSubject.asObservable();
   }
 
@@ -60,8 +59,8 @@ export class FormsDataSource implements DataSource<any> {
       const { data, ...metadata } = forms;
       this.metadata.next(metadata);
       this.loadingSubject.next(false);
-      this.dataSubject.next(forms.data);
       this.totalAmountSubject.next(forms.total);
+      this.dataSubject.next(forms.data);
     });
   }
 

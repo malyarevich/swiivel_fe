@@ -87,6 +87,9 @@
         text-transform: uppercase;
         letter-spacing: 0.3px;
         font: normal 9px/13px $nunito-sans;
+        white-space: nowrap;
+        overflow: hidden;
+
         &_icons {
           margin-left: 6px;
           display: flex;
@@ -246,5 +249,14 @@
 
   .button-invite-user {
     padding: 0 2px;
+  }
+
+  .status-round-name {
+    font: 500 10px/13px $nunito-sans;
+
+    .status-round-date {
+      color: $gray-color;
+      font: 500 10px/13px $nunito-sans;
+    }
   }
 }

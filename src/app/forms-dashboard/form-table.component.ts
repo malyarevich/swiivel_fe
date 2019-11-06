@@ -21,26 +21,6 @@ import { FormsDataSource } from './form-table.datasource';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormTableComponent implements OnInit {
-
-  constructor(
-    public dataCollectionService: DataCollectionService,
-    public router: Router,
-    private cdr: ChangeDetectorRef,
-    private fb: FormBuilder,
-    public utilsService: UtilsService,
-    private sanitizer: DomSanitizer,
-    private renderer: Renderer2) {
-    this.filterForm = this.fb.group({
-      name: [null],
-      type: [null],
-      access: [null],
-      createdBy: [null],
-      updatedAt: [null],
-      status: [null]
-    });
-
-    this.statusArrayOptions.splice(0, 1);
-  }
   @ViewChild('link', { static: false }) link: ElementRef;
   @ViewChild('dialog', { static: true }) dialog: DialogComponent;
 
@@ -80,33 +60,59 @@ export class FormTableComponent implements OnInit {
   public popupContentArray: { title: string, id?: any }[] = [];
   public canLabelsRemove = false;
   public isPopupOpen = false;
+  public showInvite = false;
 
+  public selectedUsers = [];
   public icons = IconsEnum;
   public totalAmount = 0;
-  totalItems: number;
-  showSpinner: boolean;
-  download: {
+  public totalItems: number;
+  public showSpinner: boolean;
+  public download: {
     url: SafeResourceUrl;
     filename: string;
   } = {
     url: null,
     filename: null
   };
-  filterForm: FormGroup;
-  sort = ['name', true];
-  currentPage = 1;
+  public filterForm: FormGroup;
+  public sort = ['name', true];
+  public currentPage = 1;
 
-  statusesOptions: string[] = ['Active', 'Draft', 'In Review', 'Closed', 'Archived'];
+  public statusesOptions: string[] = ['Active', 'Draft', 'In Review', 'Closed', 'Archived'];
   // tslint:disable-next-line:variable-name
-  _sm: SelectionModel<any>;
+  public _sm: SelectionModel<any>;
 
   static createSharedUrl(id: string) {
     return `${window.location.origin}/view-form/${id}`;
   }
 
+  constructor(
+    public dataCollectionService: DataCollectionService,
+    public router: Router,
+    private cdr: ChangeDetectorRef,
+    private fb: FormBuilder,
+    public utilsService: UtilsService,
+    private sanitizer: DomSanitizer,
+    private renderer: Renderer2
+  ) {
+    this.filterForm = this.fb.group({
+      name: [null],
+      type: [null],
+      access: [null],
+      createdBy: [null],
+      updatedAt: [null],
+      status: [null],
+    });
+
+    this.statusArrayOptions.splice(0, 1);
+  }
+
   ngOnInit() {
     this._sm = new SelectionModel(true);
-    this.dataSource.$totalAmount.subscribe(amount => this.totalAmount = amount ? amount : 0);
+    this.dataSource.getTotalAmount.subscribe(amount => {
+      this.totalAmount = amount;
+      this.cdr.detectChanges();
+    });
     this.dataSource.formsListMetadata$.subscribe(metadata => {
       if (metadata.page > metadata.last_page) {
         this.params.page = 1;
@@ -128,6 +134,8 @@ export class FormTableComponent implements OnInit {
         return value;
       })
     ).subscribe(value => {
+      this.disabledBulkBtn = true;
+      this._sm.clear();
       this.params.filter = { ...value };
       this.dataSource.loadFormsList(this.params);
     });
@@ -152,7 +160,7 @@ export class FormTableComponent implements OnInit {
       case 'review':
         return 'yellow';
       case 'closed':
-        return 'gray';
+        return 'purple';
       default:
         return 'gray';
     }
@@ -169,6 +177,8 @@ export class FormTableComponent implements OnInit {
   }
 
   sortBy(field: string) {
+    this.disabledBulkBtn = true;
+    this._sm.clear();
     if (this.sort[0] === field) {
       switch (this.sort[1]) {
         case true:
@@ -429,7 +439,7 @@ export class FormTableComponent implements OnInit {
   getUserName(permission: any): any {
     return {
       name: permission && permission.user && permission.user.full_name ? permission.user.full_name : 'no name',
-      id: permission && permission.user && permission.user.id ? permission.user.id : ''
+      id: permission && permission.user && permission.user.id ? permission.user.id : '',
     };
   }
 
@@ -437,6 +447,26 @@ export class FormTableComponent implements OnInit {
     if (event.keyCode === 13) {
       event.preventDefault();
     }
+  }
+
+  isEmptyRound(obj: any): boolean {
+    if (Array.isArray(obj)) {
+      return true;
+    }
+
+    return !Object.keys(obj).length;
+  }
+
+  getRoundDate(startDate: string, endDate: string): string {
+    const start = DateTime.fromISO(startDate);
+    const end = DateTime.fromISO(endDate);
+    const returnDate = start.setLocale('en-US').toFormat('LLL dd').concat('-');
+
+    if (start.hasSame(end, 'month')) {
+      return returnDate.concat(end.setLocale('en-US').toFormat('dd'));
+    }
+
+    return returnDate.concat(end.setLocale('en-US').toFormat('LLL dd'));
   }
 
 }
