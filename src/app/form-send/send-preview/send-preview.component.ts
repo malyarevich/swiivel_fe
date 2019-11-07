@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { ActivatedRoute, Params } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { FormSendService } from '../form-send.service';
 import { defaultButtonOptions, IButtonOption, IGroupAccount, IPerson } from '../models/send.model';
@@ -22,12 +23,25 @@ export class SendPreviewComponent implements OnInit {
   onSelectPersonSubscription: Subscription;
 
   constructor(
+    private route: ActivatedRoute,
     private formSendService: FormSendService
   ) {
     this.id = this.formSendService.formId;
+    this.filter.valueChanges.subscribe((filterValue) => {
+      if (filterValue && filterValue.length > 0) {
+        // this.dataSource.filter(filterValue.toLowerCase())
+      } else {
+        // this.dataSource.filter('');
+      }
+    });
   }
 
   ngOnInit() {
+    this.route.parent.params.subscribe((params: Params) => {
+      this.id = params.hasOwnProperty('id') ? params.id : '';
+      // this.initPage();
+    });
+
     this.accountListSubscription = this.formSendService.$accountsList.subscribe((accountList: IGroupAccount[]) => {
       this.accountList = accountList;
       this.filteredAccountList = accountList;

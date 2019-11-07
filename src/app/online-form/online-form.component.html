@@ -51,7 +51,7 @@
   </div>
 </ng-container>
 <ng-container *ngIf="!(isReady$ | async)">
-  <ng-container *ngIf="hasErrors$ | async">Error!</ng-container>
+  <ng-container *ngIf="hasErrors$ | async">Error by server side!</ng-container>
 
   <ng-container *ngIf="!(hasErrors$ | async)">
     <sw-main-spinner class="spinner_box online_form"></sw-main-spinner>
