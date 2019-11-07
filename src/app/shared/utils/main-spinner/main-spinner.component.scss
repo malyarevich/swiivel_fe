@@ -129,3 +129,19 @@
     }
   }
 }
+
+:host(.online_form) {
+  .main_spinner {
+    margin-top: 0;
+    &__spinner {
+      height: 12.5rem;
+      width: 12.5rem;
+    }
+    &__box {
+      margin-top: 10rem;
+    }
+    &__logo {
+      font-size: 4rem;
+    }
+  }
+}
