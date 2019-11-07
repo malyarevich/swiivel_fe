@@ -486,20 +486,6 @@ export class FormService {
     }
   }
 
-  saveForm() {
-    const form = this.form.value;
-    console.log('Save  form', form);
-    if (form._id) {
-      this.api.updateFormTemplate(form._id, form).subscribe(res => {
-        console.log('RESPONSE EDIT  FORM', res);
-      });
-    } else {
-      this.api.saveNewForm(form).subscribe(res => {
-        console.log('RESPONSE NEW  FORM', res);
-      });
-    }
-  }
-
   get form() {
     return this._form.getValue();
   }
