@@ -36,11 +36,9 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
 
   ngOnInit() {
     this.service.form$.subscribe( val => {
-      console.log('FIELDS VAL', val)
       this.treeSource.nodes = val.value.workspace.value;
     })
     this.service.events$.subscribe((event: any) => {
-      console.log('SERVICE EVENT', event);
       if (event.action === 'update') {
         let fields = cloneDeep(this.service.form.workspace);
         if (!!fields && fields.length > 0) {

@@ -53,7 +53,6 @@ export class BuilderComponent implements OnInit, OnDestroy {
   // isActive: [false], showSideInfo: [false]
 
   initForm(form: any): void {
-    console.log('Builder form', form);
     if (!form.get('activeSections')) {
       form.addControl('activeSections', this.fb.group({
         packetIntroduction: this.fb.group({ isActive: [false], showSideInfo: [false] }),
