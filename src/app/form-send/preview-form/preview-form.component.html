@@ -3,8 +3,14 @@
     <div class="title-row title-row--online" [hidden]="isReviewMode">
       Online Form
     </div>
-    <sw-online-form [formId]="formId" [isFormReviewMode]="true" [isMenuShow]="false" [isViewMode]="true"
-      [isReviewMode]="true" (onBack)="onBackOnlineForm($event)" (onSaveNext)="onSaveNextOnlineForm($event)">
+    <sw-online-form
+      [formId]="formId"
+      [isFormReviewMode]="true"
+      [isViewMode]="true"
+      [isMenuShow]="false"
+      [isReviewMode]="true"
+      (goBack)="onBackOnlineForm($event)"
+      (saveNext)="onSaveNextOnlineForm($event)">
     </sw-online-form>
   </div>
   <div class="col-5" style="padding-right: 0;padding-left: 0;height: 100%;">
