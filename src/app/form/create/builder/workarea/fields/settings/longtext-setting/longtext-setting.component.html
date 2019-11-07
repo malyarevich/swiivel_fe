@@ -1,0 +1,58 @@
+<div class="field_settings_container">
+  <form [formGroup]="form">
+    <section>
+      <div class="title">
+        <sw-input-toggle formControlName="showDefaultValue">
+          <span class="input_label">default value</span>
+        </sw-input-toggle>
+      </div>
+      <sw-input-text *ngIf="form.get('showDefaultValue').value" class="settings-field" formControlName="defaultValue">
+      </sw-input-text>
+    </section>
+    <section>
+      <div class="title">
+        Textarea size
+      </div>
+      <div class="row_container">
+        <div class="row_container__input">
+          <sw-input-number formControlName="columnWide">
+            <span class="input_label">Column Wide</span>
+          </sw-input-number>
+        </div>
+        <div class="row_container__input">
+          <sw-input-number formControlName="rowHeigth">
+            <span class="input_label">Row Height</span>
+          </sw-input-number>
+        </div>
+      </div>
+    </section>
+    <section>
+      <div class="title">
+        <sw-input-toggle formControlName="showValidators">
+          <span class="input_label">validate</span>
+        </sw-input-toggle>
+      </div>
+      <ng-container *ngIf="form.get('showValidators').value" formGroupName="validators">
+        <div class="row_container">
+          <div class="row_container__input">
+            <sw-dropdown-input formControlName="validator" [multiple]="false" [options]="validatorsOptions">
+              <span class="input_label">Validate Criteria</span>
+            </sw-dropdown-input>
+          </div>
+        </div>
+        <div class="row_container">
+          <div class="row_container__input">
+            <sw-input-number formControlName="min">
+              <span class="input_label">Min Character</span>
+            </sw-input-number>
+          </div>
+          <div class="row_container__input">
+            <sw-input-number formControlName="max">
+              <span class="input_label">Max Character</span>
+            </sw-input-number>
+          </div>
+        </div>
+      </ng-container>
+    </section>
+  </form>
+</div>

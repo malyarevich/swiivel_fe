@@ -1,0 +1,16 @@
+
+:host {
+  .group_row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+  }
+  .group_col {
+    width: 50%;
+  }
+  .group_col:not(:last-of-type) {
+    padding-right: 10px;
+    margin-right: 10px;
+    border-right: 1px solid #A4A4A4;
+  }
+}

@@ -1,0 +1,128 @@
+
+<div class="header">
+  <div class="bubbles">
+    <i class="fas fa-grip-vertical bubbles-ico"></i>
+  </div>
+  <div class="sections">
+    <div class="section-name">
+      <sw-input-text [(ngModel)]="lform.get('sectionName').value">
+        <span class="placeholder">Section Name</span>
+      </sw-input-text>
+    </div>
+    <div class="section-width">
+      <sw-dropdown-input  [options]="widthOption" [multiple]="false"
+        (isPopupShown)="changePopupDisplay($event)">
+        <span class="input_label">Section Width</span>
+        <span class="input_ico"><i class="fas fa-caret-down" [ngClass]="{' fa-caret-up': popupDisplay}"></i></span>
+      </sw-dropdown-input>
+    </div>
+  </div>
+  <div class="controls">
+    <div class="ico-container">
+      <div class="controls-ico">
+        <sw-icon-button [icon]="icons.SETTINGS"></sw-icon-button>
+      </div>
+    </div>
+    <div class="controls-ico">
+      <sw-icon-button [icon]="icons.CROSS"></sw-icon-button>
+    </div>
+    <div class="controls-arrow-container">
+      <div class="controls-arrow">
+        <sw-icon-button *ngIf="isContentShown" color="white" [icon]="icons.CARET_DOWN" (click)="changeIsContentShown()">
+        </sw-icon-button>
+        <sw-icon-button *ngIf="!isContentShown" color="white" [icon]="icons.CARET_UP" (click)="changeIsContentShown()">
+        </sw-icon-button>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+<!-- <div *ngIf="isShown" cdkDropList (cdkDropListDropped)="drop($event)">
+  <div class="item" data-e2e="item" *ngFor="let form of forms" cdkDrag>
+    <div class="bubbles" data-e2e="bubbles">
+      <i class="fas fa-grip-vertical bubbles-ico"></i>
+    </div>
+    <div class="fields" data-e2e="fields">
+      <div class="fields-name" data-e2e="fields-name">
+        <sw-input-text>
+          <span class="placeholder" data-e2e="placeholder">Document Name</span>
+        </sw-input-text>
+      </div>
+      <div class="fields-text" data-e2e="fields-text">
+        <sw-input-textarea
+          [rows]="textarea.rows"
+          [cols]="textarea.cols"
+          [readonly]="!textarea.editable">
+          <span class="input_label" data-e2e="input_label">Text</span>
+        </sw-input-textarea>
+      </div>
+      <div *ngIf="form.checkBox.isShown" class="fields-checkbox-container" data-e2e="fields-checkbox-container">
+        <div class="fields-checkbox" data-e2e="fields-checkbox">
+          <sw-input-checkbox></sw-input-checkbox>
+        </div>
+        <sw-input-text>
+          <span class="placeholder" data-e2e="checkbox_text">Checkbox Text</span>
+        </sw-input-text>
+      </div>
+      <div *ngIf="form.isBothParentsSignature" class="fields-signatures" data-e2e="fields-signatures">
+        <sw-input-textarea
+          [rows]="textarea.rows"
+          [cols]="textarea.cols"
+          [readonly]="!textarea.editable">
+          <span class="input_label" data-e2e="Parents_signature">Parents's signature</span>
+        </sw-input-textarea>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+
+<div *ngIf="isContentShown" cdkDropList (cdkDropListDropped)="drop($event)">
+  <div class="item" *ngFor="let item of lform?.get('termsConditionsItems').value" cdkDrag>
+    <div class="bubbles">
+      <i class="fas fa-grip-vertical bubbles-ico"></i>
+    </div>
+    <div class="fields">
+      <div class="fields-name">
+        <sw-input-text [(ngModel)]="item.title">
+          <span class="placeholder">Document Name</span>
+        </sw-input-text>
+      </div>
+      <div class="fields-text">
+        <sw-input-textarea [rows]="textarea.rows" [cols]="textarea.cols" [readonly]="!textarea.editable">
+          <span class="label">Text</span>
+        </sw-input-textarea>
+      </div>
+      <div *ngIf="item.checkbox.isActive" class="fields-checkbox-container">
+        <div class="fields-checkbox">
+          <sw-input-checkbox [(ngModel)]="item.checkbox.checked"></sw-input-checkbox>
+        </div>
+        <sw-input-text [(ngModel)]="item.checkbox.text">
+          <span class="placeholder">Checkbox Text</span>
+        </sw-input-text>
+      </div>
+    </div>
+  </div>
+  <div class="item" style="padding-left: 50px;">
+    <div *ngIf="lform?.value?.signature.isBothParents" style="display: flex;" class="fields-signatures">
+      <div class="fields-signature" style="margin-right: 10px;">
+        <sw-input-textarea>
+          <span class="label">Father's signature</span>
+        </sw-input-textarea>
+      </div>
+      <div class="fields-signature">
+        <sw-input-textarea>
+          <span class="label">Mother's signature</span>
+        </sw-input-textarea>
+      </div>
+    </div>
+    <div *ngIf="!lform?.value?.signature.isBothParents" class="fields-signatures">
+      <div class="fields-signature">
+        <sw-input-textarea>
+          <span class="label">Parents's signature</span>
+        </sw-input-textarea>
+      </div>
+    </div>
+  </div>
+</div>

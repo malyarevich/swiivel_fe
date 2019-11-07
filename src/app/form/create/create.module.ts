@@ -10,6 +10,17 @@ import { SharedModule } from '@app/shared/shared.module';
 import { CdkTreeModule } from '@angular/cdk/tree';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { SidebarFieldsComponent } from './builder/sidebar/fields.component';
+import { SidebarTermsConditionsComponent } from './builder/sidebar/terms-conditions.component';
+import { SidebarDocumentsFormsComponent } from './builder/sidebar/documents-forms.component';
+import { SidebarConsentComponent } from './builder/sidebar/consent.component';
+import { WorkareaConsentComponent } from './builder/workarea/consent.component';
+import { WorkareaIntroComponent } from './builder/workarea/intro.component';
+import { WorkareaTermsConditionComponent } from './builder/workarea/terms-and-conditions.component';
+import { WorkareaFieldsComponent } from './builder/workarea/fields/fields.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { SettingsModule } from './builder/workarea/fields/settings/settings.module';
+import { WorkareaHeaderComponent } from './builder/workarea/workarea-header.component';
 
 
 @NgModule({
@@ -17,7 +28,16 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     CreateComponent,
     GeneralComponent,
     BuilderComponent,
-    ReviewComponent
+    ReviewComponent,
+    SidebarFieldsComponent,
+    SidebarTermsConditionsComponent,
+    SidebarDocumentsFormsComponent,
+    SidebarConsentComponent,
+    WorkareaConsentComponent,
+    WorkareaIntroComponent,
+    WorkareaTermsConditionComponent,
+    WorkareaFieldsComponent,
+    WorkareaHeaderComponent
   ],
   imports: [
     CommonModule,
@@ -26,6 +46,9 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     CdkTreeModule,
     ScrollingModule,
     PdfViewerModule,
+    ReactiveFormsModule,
+    FormsModule,
+    SettingsModule
   ]
 })
 export class CreateModule { }
