@@ -88,7 +88,7 @@ export class FormService {
   }
 
   addWrapper(section?, field?) {
-    const form = cloneDeep(this.form);
+    let form = this.form;
     if (!section) {
       section = {
         type: 114,
@@ -104,7 +104,14 @@ export class FormService {
     if (!field) { formGroup.addControl('fields', this.fb.array([])); }
     this.form.form = this.fb.array([{ [section.name]: formGroup }]);
     this.form.workspace = [section];
-    return section;
+    console.log('SECTION TO SET', formGroup)
+    return this.form;
+
+    // if (!field) { formGroup.addControl('fields', this.fb.array([])); }
+    // form = this.fb.array([formGroup]);
+    // this.form.workspace = [section];
+    // console.log('FORM WRAPPER', form);
+    // return section;
   }
 
 
@@ -262,13 +269,18 @@ export class FormService {
     if (!field || !field.name) { return null; }
     if (Array.isArray(ancestors) && ancestors.length === 0) { ancestors = null; }
     console.groupCollapsed(`Adding field ${field.name}`);
-    const form = this.form.form; // this.fb.array([]) as FormArray;
+    const form = this.form.get('form'); // this.fb.array([]) as FormArray;
     const formParent = this.getFieldFormParent(field);
     if (formParent === 0 && field.type !== 114) {
-      const wrapper = this.addWrapper();
-      this.prependPath(field, wrapper.name);
-      console.log(cloneDeep(field));
-      this.addField(field, ancestors, only);
+      const wrapper = this.addWrapper({
+        type: 114,
+        name: 'New section',
+        isActive: true,
+        fields: [],
+        path: ['New section'],
+        pathId: 'New section114'
+      }, this.form.get('form').value);
+      this.addField(wrapper, ancestors, only);
     } else if (!!formParent) {
       formParent.addControl(field.name, this.createField(field));
       let spaceParent = this.getFieldSpaceParent(field);
@@ -319,9 +331,9 @@ export class FormService {
     }
     this.events$.next({ action: 'added', field });
     this.events$.next({ action: 'update' });
+    console.log('set ivents');
     console.groupEnd();
     return form;
-
   }
 
 
@@ -474,6 +486,20 @@ export class FormService {
     }
   }
 
+  saveForm() {
+    const form = this.form.value;
+    console.log('Save  form', form);
+    if (form._id) {
+      this.api.updateFormTemplate(form._id, form).subscribe(res => {
+        console.log('RESPONSE EDIT  FORM', res);
+      });
+    } else {
+      this.api.saveNewForm(form).subscribe(res => {
+        console.log('RESPONSE NEW  FORM', res);
+      });
+    }
+  }
+
   get form() {
     return this._form.getValue();
   }
@@ -481,6 +507,7 @@ export class FormService {
   get form$() {
     return this._form.asObservable();
   }
+
   set form(_form) {
     _form = cloneDeep(_form);
     let fields = cloneDeep(_form.fields);
@@ -515,7 +542,6 @@ export class FormService {
   set formTemplate(data: any) {
     this.formTemplateSubject$.next(data);
   }
-
 
   get formTemplate() {
     return this.formTemplateSubject$.getValue();
@@ -565,6 +591,9 @@ export class FormService {
     return this.sectionsSubject$.asObservable();
   }
 
+  get eventO$()  {
+    return this.eventSubject$.asObservable();
+  }
   get events$() {
     return this.eventSubject$;
   }
