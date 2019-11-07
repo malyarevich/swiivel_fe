@@ -83,12 +83,12 @@ export class FormService {
         }
       });
     } else {
-      this.form = { fields: [], type: 'registration', name: null };
+      this.form = { type: 'registration', name: null };
     }
   }
 
   addWrapper(section?, field?) {
-    const form = cloneDeep(this.form);
+    let form = this.form;
     if (!section) {
       section = {
         type: 114,
@@ -101,10 +101,17 @@ export class FormService {
     }
     if (field) { section.fields = [field]; }
     const formGroup = this.createField(section);
-    if (!field) { formGroup.addControl('fields', this.fb.group({})); }
-    this.form.form = this.fb.group({ [section.name]: formGroup });
+    if (!field) formGroup.addControl('fields', this.fb.array([]))
+    this.form.form = this.fb.array([formGroup]);
     this.form.workspace = [section];
-    return section;
+    console.log('SECTION TO SET', formGroup)
+    return this.form;
+
+    // if (!field) { formGroup.addControl('fields', this.fb.array([])); }
+    // form = this.fb.array([formGroup]);
+    // this.form.workspace = [section];
+    // console.log('FORM WRAPPER', form);
+    // return section;
   }
 
   parentControlPath(paths) {
@@ -261,13 +268,18 @@ export class FormService {
     if (!field || !field.name) { return null; }
     if (Array.isArray(ancestors) && ancestors.length === 0) { ancestors = null; }
     console.groupCollapsed(`Adding field ${field.name}`);
-    const form = this.form.form; // this.fb.array([]) as FormArray;
+    const form = this.form.get('form'); // this.fb.array([]) as FormArray;
     const formParent = this.getFieldFormParent(field);
     if (formParent === 0 && field.type !== 114) {
-      const wrapper = this.addWrapper();
-      this.prependPath(field, wrapper.name);
-      console.log(cloneDeep(field));
-      this.addField(field, ancestors, only);
+      const wrapper = this.addWrapper({
+        type: 114,
+        name: 'New section',
+        isActive: true,
+        fields: [],
+        path: ['New section'],
+        pathId: 'New section114'
+      }, this.form.get('form').value);
+      this.addField(wrapper, ancestors, only);
     } else if (!!formParent) {
       formParent.addControl(field.name, this.createField(field));
       let spaceParent = this.getFieldSpaceParent(field);
@@ -318,9 +330,9 @@ export class FormService {
     }
     this.events$.next({ action: 'added', field });
     this.events$.next({ action: 'update' });
+    console.log('set ivents');
     console.groupEnd();
     return form;
-
   }
 
 
@@ -417,22 +429,21 @@ export class FormService {
         form.addControl(field, this.fb.control(obj[field]));
       }
     }
-    if (field.fields && field.fields.length > 0) {
-      const fields = this.fb.group({});
+    if (field.fields && field.fields.length >= 0) {
+      const fields = this.fb.array([]);
       form.addControl('fields', fields);
-      field.fields.forEach(child => fields.addControl(child.name, this.createField(child)));
+      field.fields.forEach(child => fields.push(this.createField(child)));
     }
     return form;
   }
 
   initForm(fields) {
     console.groupCollapsed(`Creating fields`);
-    console.log(fields);
-    const form = this.fb.group({});
+    const form = this.fb.array([]);
     if (!isArrayLike(fields)) { fields = []; }
     for (const field of fields) {
       field.form = this.createField(field);
-      form.addControl(field.name, field.form);
+      form.push(field.form);
     }
     console.groupEnd();
     return form;
@@ -458,6 +469,20 @@ export class FormService {
   //   return form;
   // }
 
+  saveForm() {
+    const form = this.form.value;
+    console.log('Save  form', form);
+    if (form._id) {
+      this.api.updateFormTemplate(form._id, form).subscribe(res => {
+        console.log('RESPONSE EDIT  FORM', res);
+      });
+    } else {
+      this.api.saveNewForm(form).subscribe(res => {
+        console.log('RESPONSE NEW  FORM', res);
+      });
+    }
+  }
+
   get form() {
     return this._form.getValue();
   }
@@ -465,6 +490,7 @@ export class FormService {
   get form$() {
     return this._form.asObservable();
   }
+
   set form(_form) {
     _form = cloneDeep(_form);
     let fields = cloneDeep(_form.fields);
@@ -475,6 +501,11 @@ export class FormService {
     });
     for (const field in _form) {
       if (isPlainObject(_form[field])) {
+        if (field === 'activeSections') {
+          for (const f in _form[field]) {
+            _form[field][f] = this.fb.group(_form[field][f])
+          }
+        }
         form.addControl(field.toString(), this.fb.group(_form[field]));
       } else {
         form.addControl(field, this.fb.control(_form[field]));
@@ -493,7 +524,6 @@ export class FormService {
   set formTemplate(data: any) {
     this.formTemplateSubject$.next(data);
   }
-
 
   get formTemplate() {
     return this.formTemplateSubject$.getValue();
@@ -542,6 +572,9 @@ export class FormService {
     return this.sectionsSubject$.asObservable();
   }
 
+  get eventO$()  {
+    return this.eventSubject$.asObservable();
+  }
   get events$() {
     return this.eventSubject$;
   }

@@ -1,1 +1,111 @@
-<p>builder works!</p>
+<ng-container [formGroup]="form">
+  <div class="sidebar-wrap" formGroupName="activeSections">
+
+    <!-- PACKET INTRODUCTION SIDEBAR START -->
+    <div class="sidebar_section" [class.expanded]="isExpanded('intro')" formGroupName="packetIntroduction">
+      <div class="sidebar_section__header" (click)="onClick('intro', $event)">
+        <sw-input-toggle formControlName="isActive"></sw-input-toggle>
+        <span>Packet Introduction</span>
+      </div>
+    </div>
+    <!-- [formControl]="sections?.get('intro')" -->
+    <!-- PACKET INTRODUCTION SIDEBAR END -->
+
+
+    <!-- FORM FIELDS SIDEBAR START-->
+    <div class="sidebar_section" [class.expanded]="isExpanded('fields')" [class.open]="isOpen()"
+      formGroupName="formFields">
+      <div class="sidebar_section__header" (click)="onClick('fields', $event)">
+        <sw-input-toggle formControlName="isActive"></sw-input-toggle>
+        <!-- [formControl]="sections?.get('fields')" -->
+        <span>Form Fields</span>
+        <div class="actions">
+          <sw-icon-button [class.blue]="isOpen()" [icon]="getIcon()" (click)="toggleSection()">
+          </sw-icon-button>
+        </div>
+      </div>
+      <div class="sidebar_section__content" data-e2e="sidebar_section__content">
+        <sw-form-create-sidebar-fields [form]="form"></sw-form-create-sidebar-fields>
+      </div>
+    </div>
+    <!-- FORM FIELDS SIDEBAR END -->
+
+    <!-- ADDITIONAL DOCUMENTS SIDEBAR START -->
+    <div class="sidebar_section" [class.expanded]="isExpanded('addDocs')" [class.open]="isOpen()"
+      formGroupName="documentsForms">
+      <div class="sidebar_section__header" (click)="onClick('addDocs', $event)">
+        <sw-input-toggle formControlName="isActive"></sw-input-toggle>
+        <!-- [formControl]="sections?.get('addDocs')" -->
+        <span>Additional Documents</span>
+        <div class="actions">
+          <sw-icon-button [class.blue]="isOpen()" [icon]="getIcon()" (click)="toggleSection()">
+          </sw-icon-button>
+        </div>
+      </div>
+      <div class="sidebar_section__content" data-e2e="sidebar_section__content">
+        <sw-documents-forms></sw-documents-forms>
+      </div>
+    </div>
+    <!-- ADDITIONAL DOCUMENTS SIDEBAR END -->
+
+    <!-- CONSENT SIDEBAR START -->
+    <div class="sidebar_section" [class.expanded]="isExpanded('consent')" [class.open]="isOpen()"
+      formGroupName="consent">
+      <div class="sidebar_section__header" (click)="onClick('consent', $event)">
+        <sw-input-toggle formControlName="isActive"></sw-input-toggle>
+        <!-- [formControl]="sections?.get('consent')" -->
+        <span>CONSENT</span>
+        <div class="actions">
+          <sw-icon-button [class.blue]="isOpen()" [icon]="getIcon()" (click)="toggleSection()">
+          </sw-icon-button>
+        </div>
+      </div>
+      <div class="sidebar_section__content" data-e2e="sidebar_section__content">
+        <sw-consent [form]="form"></sw-consent>
+      </div>
+    </div>
+    <!-- CONSENT SIDEBAR END -->
+
+    <!-- TERMS AND CONDITIONS SIDEBAR START -->
+    <div class="sidebar_section" [class.expanded]="isExpanded('tac')" [class.open]="isOpen()"
+      formGroupName="termsConditionals">
+      <div class="sidebar_section__header" (click)="onClick('tac', $event)">
+        <sw-input-toggle formControlName="isActive"></sw-input-toggle>
+        <!-- [formControl]="sections?.get('tac')" -->
+        <span>TERMS AND CONDITIONS</span>
+        <div class="actions">
+          <sw-icon-button class="blue" style="margin-right: 5px;" icon="fa-plus-square" (click)="addTermsConditionsItem()">
+          </sw-icon-button>
+          <sw-icon-button [class.blue]="isOpen()" [icon]="getIcon()" (click)="toggleSection()">
+          </sw-icon-button>
+        </div>
+      </div>
+
+      <div class="sidebar_section__content" data-e2e="sidebar_section__content">
+        <sw-terms-conditions [form]="form"></sw-terms-conditions>
+      </div>
+    </div>
+    <!-- TERMS AND CONDITIONS SIDEBAR END -->
+
+  </div>
+</ng-container>
+
+<div class="workarea-wrap">
+  <ng-container [ngSwitch]="expandedSection">
+    <sw-form-creator-workarea-intro *ngSwitchCase="'intro'" [form]="form"></sw-form-creator-workarea-intro>
+    <sw-form-creator-workarea-consent *ngSwitchCase="'consent'" [form]="form"></sw-form-creator-workarea-consent>
+    <sw-form-creator-workarea-terms-and-conditions *ngSwitchCase="'tac'" [form]="form">
+    </sw-form-creator-workarea-terms-and-conditions>
+    <sw-form-creator-workarea-fields *ngSwitchCase="'fields'"></sw-form-creator-workarea-fields>
+    <div *ngSwitchDefault>DEFAULT</div>
+  </ng-container>
+  <!-- <div class="stepper-buttons" data-e2e="stepper-buttons">
+    <sw-button class="outline-btn" (click)="prevStep()">
+      Back to Previous Step
+    </sw-button>
+    <sw-button (click)="nextStep()" [disabled]="true">
+      Save & Go Next Step
+    </sw-button>
+  </div> -->
+
+</div>

@@ -34,6 +34,7 @@ export class GeneralComponent implements OnDestroy {
   public sm: SelectionModel<any> = new SelectionModel(false);
 
   private destroyed$ = new Subject();
+  private mainForm: FormGroup;
 
   constructor(
     private router: Router,
@@ -42,20 +43,15 @@ export class GeneralComponent implements OnDestroy {
     private formService: FormService,
     private cdr: ChangeDetectorRef,
     private api: ApiService
-  ) {
+    ) {
+      this.api.getFormsShortList('registration').subscribe((forms) => {
+        this.forms['registration'] = forms;
+        this.forms$.next(forms);
+      });
     this.generalForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       type: [[{title: 'Registration', value: 'registration'}]],
       dublicate: [false]
-    });
-    this.api.getFormsShortList('registration').subscribe((forms) => {
-      this.forms['registration'] = forms;
-      this.forms$.next(forms);
-    });
-    this.generalForm.valueChanges.pipe(
-      takeUntil(this.destroyed$)
-    ).subscribe(v => {
-      this.setValueToForm(v);
     });
     this.formService.form$.pipe(
       takeUntil(this.destroyed$)
@@ -68,7 +64,12 @@ export class GeneralComponent implements OnDestroy {
       this.generalForm.get('dublicate').valueChanges.pipe(
         takeUntil(this.destroyed$)
       ).subscribe(v => {
-        if (!v) { this.sm.clear(); }
+        if (!v) {
+          this.sm.clear();
+          this.generalForm.removeControl('example_form_id');
+        } else {
+          this.generalForm.addControl('example_form_id', this.fb.control(null, { validators: Validators.required }));
+        }
       });
       this.generalForm.get('type').valueChanges.pipe(
         takeUntil(this.destroyed$)
@@ -130,6 +131,7 @@ export class GeneralComponent implements OnDestroy {
 
   initForm(form: FormGroup): void {
     const { name, type } = form.value;
+    this.mainForm = form;
     this.generalForm.patchValue({
       name,
       type: [this.typeOptions.find(i => i.value === type)]
@@ -152,8 +154,16 @@ export class GeneralComponent implements OnDestroy {
     return res;
   }
 
-  setValueToForm(formValue: any) {
-    console.log('FORM VALUE', formValue);
+  setValue() {
+    const val = this.generalForm.value;
+    if (val.dublicate) {
+      this.mainForm.addControl('example_form_id', this.fb.control(null, { validators: Validators.required }));
+      this.mainForm.patchValue({ example_form_id: val.example_form_id });
+    }
+    this.mainForm.patchValue({
+      name: val.name,
+      type: val.type[0].value
+    });
   }
 
   prevStep() {
@@ -161,7 +171,10 @@ export class GeneralComponent implements OnDestroy {
   }
 
   nextStep() {
-    this.router.navigate(['../builder'], { relativeTo: this.route });
+    console.log('GENERAL FORM',  this.generalForm.value)
+    this.setValue();
+    this.formService.saveForm();
+    // this.router.navigate(['../builder'], { relativeTo: this.route });
   }
 
   ngOnDestroy() {
