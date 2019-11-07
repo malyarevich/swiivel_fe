@@ -47,7 +47,7 @@
         display: flex;
         flex-flow: row nowrap;
         justify-content: space-between;
-        box-shadow: inset 0px -1px 0px #E7E7E7;
+        box-shadow: inset 0px -1px 0px $shadow-gray-color;
         &_node {
           display: flex;
           align-items: center;
@@ -98,7 +98,7 @@
               -ms-transform: rotate(-50%, -50%);
               transform: rotate(45deg);
             }
-            
+
             input[type=checkbox]:indeterminate:after {
               content: "\2022";
               color: transparent;
