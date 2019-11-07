@@ -8,7 +8,6 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 export class BackBarComponent {
   @Input() title: string;
-  @Input() searchVisible = false;
   @Output() onBackClick: EventEmitter<any> = new EventEmitter();
 
   constructor() { }

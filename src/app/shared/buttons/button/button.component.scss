@@ -50,6 +50,11 @@
     background: $status-gray;
   }
 
+  .light-gray {
+    background: $lightgray-color;
+    color: $element-base-color;
+  }
+
   .white {
     background: #fff;
     color: $button-color;

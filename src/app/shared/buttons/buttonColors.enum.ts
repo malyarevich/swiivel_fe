@@ -5,5 +5,6 @@ export enum ButtonColorsEnum {
   TRANSPARENT = 'transparent',
   YELLOW = 'yellow',
   WHITE = 'white',
-  LIGHT_BLUE = 'light-blue'
+  LIGHT_BLUE = 'light-blue',
+  LIGHT_GRAY = 'light-gray',
 }

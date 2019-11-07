@@ -5,6 +5,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { UtilsService } from '@app/core/utils.service';
 import { FormSearchParams } from '@app/models/form-search-params';
+import { StatusService } from '@app/utils/status.service';
 import { FormModel } from '@models/data-collection/form.model';
 import { IconsEnum } from '@shared/icons.enum';
 import { DialogComponent } from '@shared/popup/dialog.component';
@@ -29,7 +30,8 @@ export class FormTableComponent implements OnInit {
     private fb: FormBuilder,
     public utilsService: UtilsService,
     private sanitizer: DomSanitizer,
-    private renderer: Renderer2) {
+    private renderer: Renderer2,
+    private statusService: StatusService) {
     this.filterForm = this.fb.group({
       name: [null],
       type: [null],
@@ -139,23 +141,6 @@ export class FormTableComponent implements OnInit {
   getUserInfo(obj: any) {
     const user = pick(obj, ['full_name', 'role']);
     return {name: user.full_name, role: get(user, 'role.role_name')};
-  }
-
-  getStatusColor(status: string): string {
-    switch (status) {
-      case 'archived':
-        return 'gray';
-      case 'active':
-        return 'green';
-      case 'draft':
-        return 'light-blue';
-      case 'review':
-        return 'yellow';
-      case 'closed':
-        return 'gray';
-      default:
-        return 'gray';
-    }
   }
 
   getDate(date: Date) {

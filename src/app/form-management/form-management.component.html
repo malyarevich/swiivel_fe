@@ -1,0 +1,34 @@
+<sw-back-bar
+  [title]="'Forms'"
+  (onBackClick)="backPageClick()"
+></sw-back-bar>
+<sw-form-management-panel
+  [form]="form"
+  [status]="formManagement.status"
+  [statusColors]="formManagement.statusColors"
+  [statusesTitles]="formManagement.statusesTitles"
+  [unassignedDocuments]="formManagement.unassignedDocuments"
+>
+  <sw-form-management-analytics
+    analytics
+    [round]="round"
+    [created]="created"
+    [lastUpdated]="lastUpdated"
+  >
+  </sw-form-management-analytics>
+  <sw-form-management-submissions
+    submissions
+    [dataSource]="submissions.dataSource"
+    [displayedColumns]="submissions.displayedColumns"
+    [filterFormGroup]="submissions.filterFormGroup"
+    [sort]="submissions.sort"
+    [currentPage]="submissions.currentPage"
+    [statusesOptions]="submissions.statusesOptions"
+    [statusesTitles]="submissions.statusesTitles"
+    [formSubmissionsListParams]="submissions.formSubmissionsListParams"
+    [statusColors]="submissions.statusColors"
+    [totalItems]="submissions.totalItems"
+    [showSpinner]="submissions.showSpinner"
+  >
+  </sw-form-management-submissions>
+</sw-form-management-panel>

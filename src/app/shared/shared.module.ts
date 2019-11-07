@@ -35,6 +35,7 @@ import { MainSpinnerComponent } from './utils/main-spinner/main-spinner.componen
 // Bars
 import { BackBarComponent } from '@shared/bars/back-bar/back-bar.component';
 import { DocumentApprovalBarComponent } from '@shared/bars/document-approval-bar/document-approval-bar.component';
+import { ProgressLineBarComponent } from '@shared/bars/progress-line-bar/progress-line-bar.component';
 
 // Others
 import { RadioGroupComponent } from './inputs/radio-group/radio-group.component';
@@ -112,6 +113,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     // Bars
     DocumentApprovalBarComponent,
     BackBarComponent,
+    ProgressLineBarComponent,
     StepperComponent,
     FormComponent,
     InputEnglishDatepickerComponent,
@@ -161,6 +163,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     // Bars
     DocumentApprovalBarComponent,
     BackBarComponent,
+    ProgressLineBarComponent,
     StepperComponent,
   ],
   providers: [

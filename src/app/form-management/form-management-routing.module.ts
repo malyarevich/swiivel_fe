@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from '@app/core/auth.guard';
+import { FormManagementContainer } from '@app/form-management/form-management.component';
+import { AuthGuard } from '@core/auth.guard';
 import { MainComponent } from '@shared/main.component';
-import { FormManagmentComponent } from './form-managment.component';
 
 export const routes: Routes = [
   {
@@ -11,16 +11,14 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
     canActivateChild: [AuthGuard],
     children: [
-      {
-        path: ':id',
-        component: FormManagmentComponent,
-      },
+      { path: ':id',  component: FormManagementContainer },
     ]
   }
 ];
 
+
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
-export class FormManagmentRoutingModule {}
+export class FormManagementRoutingModule { }

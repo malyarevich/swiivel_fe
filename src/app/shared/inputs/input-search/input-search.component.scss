@@ -27,27 +27,6 @@
     }
   }
 
-  &.input-search-header {
-    display: flex;
-    align-items: center;
-    height: 100%;
-
-    input {
-      min-height: 28px;
-      padding: 0 25px 0 10px;
-    }
-
-    .input-search-icon {
-      top: 14px;
-      right: 8px;
-      background-size: 10px;
-      width: 10px;
-      height: 10px;
-    }
-
-  }
-
-
   input {
     border: 1px solid $soft-gray;
     border-radius: 3px;

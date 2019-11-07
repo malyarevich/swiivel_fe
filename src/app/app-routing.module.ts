@@ -46,10 +46,10 @@ const routes: Routes = [
     path: 'forms-dashboard',
     loadChildren: () => import('./forms-dashboard/form-table.module').then(m => m.FormTableModule)
   },
-  // {
-  //   path: 'form-managment',
-  //   loadChildren: () => import('./form-managment/form-managment.module').then(m => m.FormManagmentModule)
-  // },
+  {
+    path: 'form-management',
+    loadChildren: () => import('./form-management/form-management.module').then(m => m.FormManagementModule)
+  },
   {
     path: 'upload-review-form',
     loadChildren: () => import('./upload-review-form/upload-review-form.module').then(m => m.UploadReviewFormModule)

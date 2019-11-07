@@ -223,7 +223,7 @@
                   <sw-button
                     size="small"
                     isRound="true"
-                    [color]="getStatusColor(form.status)"
+                    [color]="statusService.getStatusColor(form.status)"
                   >
                     <span>{{form.status}}</span>
                     <i class="fas fa-caret-down"></i>
