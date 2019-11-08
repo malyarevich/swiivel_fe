@@ -91,4 +91,10 @@ export class InputTextComponent implements ControlValueAccessor {
     this.onChange('');
   }
 
+  onChangeInput(value: any): void {
+    const valueTrim = value.replace(/^\s+/g, '');
+    this.input.nativeElement.value = valueTrim;
+    this.onChange(valueTrim);
+  }
+
 }

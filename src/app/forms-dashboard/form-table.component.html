@@ -109,8 +109,12 @@
                 </div>
               </th>
               <td cdk-cell *cdkCellDef="let form">
-                <span class="main-text">{{form.type}}</span>
-                <span class="second-text"></span>
+                <span class="main-text">{{ form.type }}</span>
+                <p class="second-text" *ngIf="form.submission_type && form.submission_type.length">
+                   <span>
+                    {{form.submission_type.join(', ')}}
+                  </span>
+                </p>
               </td>
             </ng-container>
 
@@ -126,7 +130,13 @@
                     </div>
                   </div>
                   <div class="header_container__filter">
-                    <sw-input-text class="filter-field" formControlName="access" [isSearch]="true" [isClearable]="true" (keydown)="keyDownFunction($event)"></sw-input-text>
+                    <sw-input-text
+                      class="filter-field"
+                      formControlName="access"
+                      [isSearch]="true"
+                      [isClearable]="true"
+                      (keydown)="keyDownFunction($event)"
+                    ></sw-input-text>
                   </div>
                 </div>
               </th>
@@ -140,7 +150,7 @@
                   <sw-button
                     size="small"
                     fill="outline"
-                    (click)="showInvite = true"
+                    (click)="inviteUsers()"
                   >
                     <i class="fas fa-plus"></i>
                     <span>Invite users</span>
@@ -161,7 +171,13 @@
                     </div>
                   </div>
                   <div class="header_container__filter">
-                    <sw-input-text class="filter-field" formControlName="createdBy" [isSearch]="true" [isClearable]="true" (keydown)="keyDownFunction($event)"></sw-input-text>
+                    <sw-input-text
+                      class="filter-field"
+                      formControlName="createdBy"
+                      [isSearch]="true"
+                      [isClearable]="true"
+                      (keydown)="keyDownFunction($event)"
+                    ></sw-input-text>
                   </div>
                 </div>
               </th>
@@ -318,15 +334,20 @@
     </div>
   </div>
   <sw-dialog #dialog [title]="popupTitle" [action]="popupActionBtnText" (closed)="popupClosed($event)">
-    <span *ngFor="let label of popupContentArray; let i = index">
-      <sw-label *ngIf="canLabelsRemove" (deleteLabel)="deleteLabel(i, popupTitle)">
-        {{ label.title }}
-      </sw-label>
-      <sw-label *ngIf="!canLabelsRemove">
-        {{ label.title }}
-      </sw-label>
-    </span>
+    <div *ngIf="!showInvite">
+      <span *ngFor="let label of popupContentArray; let i = index">
+        <sw-label *ngIf="canLabelsRemove" (deleteLabel)="deleteLabel(i, popupTitle)">
+          {{ label.title }}
+        </sw-label>
+        <sw-label *ngIf="!canLabelsRemove">
+          {{ label.title }}
+        </sw-label>
+      </span>
+    </div>
+    <div *ngIf="showInvite">
+    </div>
   </sw-dialog>
+
   <div *ngIf="isPopupOpen" class="overlay">
   </div>
 </div>

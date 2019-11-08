@@ -16,7 +16,7 @@
     .text {
       padding: 11px 11px 6px 5px;
       color: #fff;
-      background: $button-color;
+      background: $element-base-color;
       border: 0;
     }
   }
@@ -26,7 +26,7 @@
   display: flex;
   width: 30px;
   border-radius: 3px 0 0 3px;
-  background: $button-color;
+  background: $element-base-color;
 }
 
 .document-icon {
