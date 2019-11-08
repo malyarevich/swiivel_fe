@@ -154,8 +154,12 @@
 
       .second-text {
         margin: 0;
-        font: 400 10px/13px $nunito-sans;
         text-transform: capitalize;
+        line-height: 0;
+      }
+
+      .second-text-span {
+        font: 400 10px/13px $nunito-sans;
       }
     }
     .cdk-column-actions {
