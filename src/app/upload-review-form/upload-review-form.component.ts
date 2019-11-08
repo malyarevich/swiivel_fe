@@ -441,7 +441,7 @@ export class UploadReviewFormComponent implements OnInit, OnDestroy {
     if (this.isSaveActive) {
       this.onOpenConfirmSavePopup();
     } else {
-      this.router.navigate(['/data-collection/form-info/' + this.activeIdForm]);
+      this.router.navigate(['/form-management/' + this.activeIdForm]);
     }
   }
 

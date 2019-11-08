@@ -78,7 +78,7 @@
                 </div>
               </th>
               <td cdk-cell *cdkCellDef="let form">
-                <a [routerLink]="['/form-management', form.mongo_id]">
+                <a [routerLink]="['/form-management', form.mongo_id]" [state]="{ form: form }">
                   <span class="text">{{form.name}}</span>
                 </a>
               </td>
@@ -245,7 +245,7 @@
                 >
                   <sw-button
                     size="small"
-                    isRound="true"
+                    [isRound]="true"
                     [color]="getStatusColor(form.status)"
                   >
                     <span>{{form.status}}</span>
