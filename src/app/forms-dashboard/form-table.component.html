@@ -109,11 +109,11 @@
                 </div>
               </th>
               <td cdk-cell *cdkCellDef="let form">
-                <span class="main-text">{{ form.type }}</span>
+                <div>
+                  <span class="main-text">{{ form.type }}</span>
+                </div>
                 <p class="second-text" *ngIf="form.submission_type && form.submission_type.length">
-                   <span>
-                    {{form.submission_type.join(', ')}}
-                  </span>
+                  <span class="second-text-span">{{form.submission_type.join(', ')}}</span>
                 </p>
               </td>
             </ng-container>
