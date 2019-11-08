@@ -1,4 +1,3 @@
-
 <div class="header">
   <div class="bubbles">
     <i class="fas fa-grip-vertical bubbles-ico"></i>
@@ -10,8 +9,7 @@
       </sw-input-text>
     </div>
     <div class="section-width">
-      <sw-dropdown-input  [options]="widthOption" [multiple]="false"
-        (isPopupShown)="changePopupDisplay($event)">
+      <sw-dropdown-input [options]="widthOption" [multiple]="false" (isPopupShown)="changePopupDisplay($event)">
         <span class="input_label">Section Width</span>
         <span class="input_ico"><i class="fas fa-caret-down" [ngClass]="{' fa-caret-up': popupDisplay}"></i></span>
       </sw-dropdown-input>

@@ -29,18 +29,20 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
   destroyed$ = new Subject();
   fieldsTree: any[];
   treeSource = new TreeDataSource('Fields');
-  treeControl = new NestedTreeControl<any>(node => node.fields);
+  treeControl = new NestedTreeControl<any>(node => node.value.fields);
 
   constructor(private service: FormService, private api: ApiService, private cdr: ChangeDetectorRef) {
   }
 
   ngOnInit() {
     this.service.form$.subscribe( val => {
-      this.treeSource.nodes = val.value.workspace.value;
+      this.treeSource.nodes = val.value.fields.value;
+      console.log('TREE SOURSE NODES', this.treeSource.nodes, )
     })
     this.service.events$.subscribe((event: any) => {
       if (event.action === 'update') {
-        let fields = cloneDeep(this.service.form.workspace);
+        console.log('FORM VAL', this.service.form);
+        let fields = cloneDeep(this.service.form.fields.value);
         if (!!fields && fields.length > 0) {
           let section = fields.find(field => field.type === 114);
           if (!section) {

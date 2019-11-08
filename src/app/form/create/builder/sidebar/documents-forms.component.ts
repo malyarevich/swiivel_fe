@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { DocumentsModel, documentItemDefault } from '@app/models/data-collection/form-constructor/form-builder/documents.model';
+import { cloneDeep } from 'lodash';
+import { formPDFItemDefault } from '@app/models/data-collection/form-constructor/form-builder/formsPDF.model';
 
 @Component({
   selector: 'sw-documents-forms',
@@ -11,11 +14,11 @@ export class SidebarDocumentsFormsComponent implements OnInit {
   documentBut = [
     {
       label: 'Upload',
-      value: 'Upload'
+      value: true
     },
     {
       label: 'Download',
-      value: 'Download'
+      value: false
     }
   ];
   formBut = [
@@ -28,17 +31,46 @@ export class SidebarDocumentsFormsComponent implements OnInit {
       value: 'new'
     }
   ];
+  isPerFamilyD: any[] = [];
   radioGroup = ['Needed Per Family', 'Needed Per Student'];
   isOpenDocuments: boolean = false;
   isOpenForms: boolean = false;
-  form: FormGroup;
+  lform: FormGroup;
+
+  @Input()
+  set form(_form: any) {
+    if (!_form.get('documentsForms')) {
+      _form.addControl('documentsForms', this.fb.group({
+        documents: this.fb.group({
+          sectionName: ['Documents for Parents'],
+          sectionWidth: ['full'],
+          documentsItems: [[]]
+        }),
+        formsPDF: this.fb.group({
+          sectionName: ['School Forms'],
+          sectionWidth: ['full'],
+          formsPDFItems: [[]]
+        })
+      }));
+    }
+    this.lform = _form.get('documentsForms')
+    console.log('additional docs sidebar', this.lform);
+  }
 
   constructor(
     private fb: FormBuilder
   ) {
-    this.form = this.fb.group({
-      documents: new FormArray([]),
-      forms: new FormArray([])
+    this.lform = this.fb.group({
+      documents: this.fb.group({
+        sectionName: ['Documents for Parents'],
+        sectionWidth: ['full'],
+        documentsItems: [[]]
+      }),
+      formsPDF: this.fb.group({
+        sectionName: ['School Forms'],
+        sectionWidth: ['full'],
+        formsPDFItems: [[]]
+      })
     });
   }
 
@@ -72,40 +104,43 @@ export class SidebarDocumentsFormsComponent implements OnInit {
   addItem(addTo: string): void {
     switch (addTo) {
       case 'documents':
-        if (!this.isOpenDocuments) { this.isOpenDocuments = true; }
-        this.documents.push(
-          new FormGroup({
-            name: new FormControl('', { updateOn: 'blur' }),
-            chooseDocumentAction: new FormControl('Upload'),
-            requirements: new FormControl(null),
-          })
-        );
+        let documentsList = this.lform.get('documents.documentsItems').value;
+        let documentItem: DocumentsModel = cloneDeep(documentItemDefault);
+        documentsList.push(documentItem);
+        this.lform.get('documents.documentsItems').patchValue(documentsList);
         break;
       case 'forms':
-        if (!this.isOpenForms) { this.isOpenForms = true; }
-        this.forms.push(
-          new FormGroup({
-            name: new FormControl('', { updateOn: 'blur' }),
-            chooseForm: new FormControl(null),
-            requirements: new FormControl(null),
-            filledOnline: new FormControl(false),
-            allowUpload: new FormControl(false)
-          })
-        );
+        let formsList = this.lform.get('formsPDF.formsPDFItems').value;
+        let formPDFItem = cloneDeep(formPDFItemDefault);
+        formsList.push(formPDFItem);
+        this.lform.get('formsPDF.formsPDFItems').patchValue(formsList);
         break;
     }
+    console.log(this.lform);
   }
 
   removeItem(from: string, index: number) {
     if (from && from !== '' && index >= 0) {
       switch (from) {
         case 'documents':
-          this.documents.removeAt(index);
+            let documentsList = this.lform.get('documents.documentsItems').value;
+            documentsList.splice(index, 1);
+            this.lform.get('documents.documentsItems').patchValue(documentsList);
           break;
         case 'forms':
-          this.forms.removeAt(index);
+            let formsList = this.lform.get('formsPDF.formsPDFItems').value;
+            formsList.splice(index, 1);
+            this.lform.get('formsPDF.formsPDFItems').patchValue(formsList);
           break;
       }
+    }
+  }
+
+  changeDocRadio(e, form) {
+    if (e === 'Needed Per Family') {
+      form.isPerFamily = true;
+    } else {
+      form.isPerFamily = false;
     }
   }
 

@@ -103,8 +103,7 @@ export class FormService {
     const formGroup = this.createField(section);
     if (!field) { formGroup.addControl('fields', this.fb.array([])); }
     this.form.form = this.fb.array([{ [section.name]: formGroup }]);
-    this.form.workspace = [section];
-    console.log('SECTION TO SET', formGroup)
+    this.form.fields = [section];
     return this.form;
 
     // if (!field) { formGroup.addControl('fields', this.fb.array([])); }
@@ -480,6 +479,8 @@ export class FormService {
         console.log('RESPONSE EDIT  FORM', res);
       });
     } else {
+      delete form.fields;
+      delete form.form;
       this.api.saveNewForm(form).subscribe(res => {
         console.log('RESPONSE NEW  FORM', res);
       });
@@ -499,7 +500,7 @@ export class FormService {
     let fields = cloneDeep(_form.fields);
     delete _form.fields;
     const form = this.fb.group({
-      workspace: [cloneDeep(fields)],
+      fields: [this.initForm(fields)],
       form: [this.initForm(fields)]
     });
     for (const field in _form) {

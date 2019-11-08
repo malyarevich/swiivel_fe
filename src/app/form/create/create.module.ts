@@ -21,6 +21,7 @@ import { WorkareaFieldsComponent } from './builder/workarea/fields/fields.compon
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { SettingsModule } from './builder/workarea/fields/settings/settings.module';
 import { WorkareaHeaderComponent } from './builder/workarea/workarea-header.component';
+import { DocumentsFormsComponent } from './builder/workarea/documents-forms.component';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { WorkareaHeaderComponent } from './builder/workarea/workarea-header.comp
     WorkareaIntroComponent,
     WorkareaTermsConditionComponent,
     WorkareaFieldsComponent,
-    WorkareaHeaderComponent
+    WorkareaHeaderComponent,
+    DocumentsFormsComponent
   ],
   imports: [
     CommonModule,

@@ -43,7 +43,7 @@
         </div>
       </div>
       <div class="sidebar_section__content" data-e2e="sidebar_section__content">
-        <sw-documents-forms></sw-documents-forms>
+        <sw-documents-forms [form]="form"></sw-documents-forms>
       </div>
     </div>
     <!-- ADDITIONAL DOCUMENTS SIDEBAR END -->
@@ -97,6 +97,7 @@
     <sw-form-creator-workarea-terms-and-conditions *ngSwitchCase="'tac'" [form]="form">
     </sw-form-creator-workarea-terms-and-conditions>
     <sw-form-creator-workarea-fields *ngSwitchCase="'fields'"></sw-form-creator-workarea-fields>
+    <sw-documents-forms-workarea *ngSwitchCase="'addDocs'" [form]="form"></sw-documents-forms-workarea>
     <div *ngSwitchDefault>DEFAULT</div>
   </ng-container>
   <!-- <div class="stepper-buttons" data-e2e="stepper-buttons">
