@@ -74,7 +74,7 @@ export const componentFieldsMap = new Map<number, IFormField>([
 @Injectable()
 export class OnlineFormService {
   formId: string;
-  personId: string;
+  accountId: string;
   formValues: Map<string, any> = new Map();
   profileForm;
   fgList: any = {};
@@ -147,8 +147,8 @@ export class OnlineFormService {
     this.formId = id;
   }
 
-  setPersonId(id: string) {
-    this.personId = id;
+  setAccountId(id: string) {
+    this.accountId = id;
   }
 
   getOneForm(id = this.formId): Observable<any> {
@@ -177,15 +177,15 @@ export class OnlineFormService {
     return undefined;
   }
 
-  getTemplateFormByPerson(id = this.formId, personId = this.personId) {
-    if (id && personId) {
-      return this.http.get(`/proxy/form-builder/form-preview-by-account/online/${id}/${personId}/`).pipe(
+  getTemplateFormByAccount(id = this.formId, accountId = this.accountId) {
+    if (id && accountId) {
+      return this.http.get(`/proxy/form-builder/form-preview-by-account/online/${id}/${accountId}/`).pipe(
         map(response => {
           return response;
         })
       );
     }
-    console.error('Id of form or personId is undefined');
+    console.error('Id of form or accountId is undefined');
     return undefined;
   }
 

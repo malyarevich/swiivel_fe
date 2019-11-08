@@ -1,4 +1,4 @@
-$element-base-color: #4350a2;
+$element-base-color: #4350A2;
 $element-second-color: #9fa6cb;
 $element-warning-color: #ffb915;
 $element-danger-color: red;
@@ -14,6 +14,7 @@ $background-semi-wrap-color: #F5F5F7;
 $background-color-main-menu: #FBFBFB;
 $background-color-menu-label: #424242d9;
 $white: #fff;
+$black: #000;
 $background-disabled-color: #ced4da;
 $background-table-color: #F6F6F6;
 
@@ -40,16 +41,17 @@ $modal-header-background-color: #eef1f6;
 $inactive-input-color: #d0dbea;
 $filter-color: #c0cad8;
 
-$icon-light-blue-color: #97CDF4;
+$lightgray-color: #f2f2f2;
+$shadow-gray-color: #E7E7E7;
+$softgray-color: #b6b6b6;
 $icon-dark-gray-color: #A4A8BE;
 $icon-grey-color: #9c9d9d;
 $gray-color: #909090;
-$lightgray-color: #f2f2f2;
-$softgray-color: #b6b6b6;
 $darkgray-color: #151515;
+
 $lightblue-color: #E4E7FF;
+$icon-light-blue-color: #97CDF4;
 $dark-gray-blue-color: #131B33;
-$purple: #4350A2;
 
 $table-header-background-color: #F2F2F2;
 $table-header-input-background-color: #fff;
@@ -88,8 +90,6 @@ $text-gray: #535353;
 
 $soft-red: #FFF3F3;
 $light-red: #FFEDF0;
-
-$button-color: #4350A2;
 
 $status-yellow: #CD690E;
 $status-green: #3CA476;

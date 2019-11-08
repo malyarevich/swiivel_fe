@@ -64,7 +64,7 @@ import { OnlineFormService } from './services/online-form.service';
 })
 export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
   @Input() formId = '';
-  @Input() personId = '';
+  @Input() accountId = '';
   @Input() isMenuShow = true;
   @Input() isFormReviewMode = false;
   @Input() isViewMode = false;
@@ -157,7 +157,10 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges(changes: import ('@angular/core').SimpleChanges): void {
-    if (changes.formId && changes.formId.previousValue !== undefined) {
+    if (
+      changes.formId && changes.formId.previousValue !== undefined ||
+      changes.accountId && changes.accountId.previousValue !== undefined
+    ) {
       this.isReady$.next(false);
       this.form$.next(null);
       this.fg$.next(null);
@@ -222,7 +225,7 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
 
   getForm(): void {
     this.onlineFormService.setFromId(this.formId);
-    this.onlineFormService.setPersonId(this.personId === '' ? undefined : this.personId);
+    this.onlineFormService.setAccountId(this.accountId === '' ? undefined : this.accountId);
     // TODO: check if we need formId here
     // this.route.params.subscribe(params => {
     //   this.formId = params.mongo_id;
@@ -231,7 +234,7 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
       if (this.getOneFormSubscription) {
         this.getOneFormSubscription.unsubscribe();
       }
-      if(this.personId === '') {
+      if (this.accountId === '') {
         // template by id
         this.getOneFormSubscription = this.onlineFormService
         .getTemplateForm()
@@ -241,12 +244,11 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
       } else {
         // by preview for person
         this.getOneFormSubscription = this.onlineFormService
-        .getTemplateFormByPerson()
-        .subscribe((form: FormModel) => {
-          this.formSubscriber(form);
-        });
+          .getTemplateFormByAccount()
+          .subscribe((form: FormModel) => {
+            this.formSubscriber(form);
+          });
       }
-     
     } else {
       // form by link
       if (this.getOneFormSubscription) {
@@ -1222,7 +1224,7 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
     if (
       this.isFormStatusChanged &&
       this.currentPosition$.getValue().page !== 'packetIntroduction' &&
-      this.personId === ''
+      this.accountId === ''
     ) {
       const savingObj = {
         pagesPercents: this.pagesPercents$.getValue(),

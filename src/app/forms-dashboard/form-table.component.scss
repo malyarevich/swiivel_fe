@@ -41,8 +41,8 @@
     background: transparent;
 
     &.app-form-table__tab--activated {
-      border-bottom: 2px solid $button-color;
-      color: $button-color;
+      border-bottom: 2px solid $element-base-color;
+      color: $element-base-color;
     }
 
     &:hover, &:focus, &:active {
@@ -71,7 +71,7 @@
 
   .filters-row {
     background: $dark-grey;
-    box-shadow: inset 0px -1px 0px #E7E7E7;
+    box-shadow: inset 0px -1px 0px $shadow-gray-color;
     border-radius: 5px;
 
     th {
@@ -153,7 +153,9 @@
       }
 
       .second-text {
+        margin: 0;
         font: 400 10px/13px $nunito-sans;
+        text-transform: capitalize;
       }
     }
     .cdk-column-actions {

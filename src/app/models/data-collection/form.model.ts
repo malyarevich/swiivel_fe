@@ -63,6 +63,7 @@ export interface FormModel {
   // FIXME: when back-end will complete
   isOpened?: boolean;
   pagesPercents?: IPagesPercent[];
+  submission_type?: string[];
 }
 
 interface FormPermissions {

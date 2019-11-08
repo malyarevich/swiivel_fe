@@ -22,14 +22,14 @@
       padding: 10px;
       padding-top: 20px;
       &:focus {
-        border: 1px solid $purple;
+        border: 1px solid $element-base-color;
       }
     }
   }
 
   .input_text__button {
     color: white;
-    background: $button-color;
+    background: $element-base-color;
     text-align: center;
   }
 }

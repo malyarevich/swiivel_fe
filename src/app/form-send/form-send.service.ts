@@ -3,6 +3,7 @@ import { ApiService } from '@app/core/api.service';
 import { BehaviorSubject } from 'rxjs';
 import { DateTime } from 'luxon';
 import { StepperService } from '@app/shared/stepper.service';
+import {defaultAccountsList, IPerson} from './models/send.model';
 
 @Injectable()
 export class FormSendService {
@@ -12,34 +13,9 @@ export class FormSendService {
   private currentPeriods: BehaviorSubject<any> = new BehaviorSubject<any>([]);
   private accoutSubject: BehaviorSubject<any> = new BehaviorSubject<any>([]);
   private currentAccounts: BehaviorSubject<any> = new BehaviorSubject<any>([]);
+  private currentPerson: BehaviorSubject<IPerson> = new BehaviorSubject<IPerson>(undefined);
   private roundsSubject: BehaviorSubject<any> = new BehaviorSubject<any>([]);
-  private accountsList = [
-    {
-      name: 'New Students',
-      key: 'newStudents',
-      data: []
-    },
-    {
-      name: 'Specific Grades',
-      key: 'specificGrades',
-      data: []
-    },
-    {
-      name: 'New Families',
-      key: 'newFamilies',
-      data: []
-    },
-    {
-      name: 'Current Families',
-      key: 'currentFamilies',
-      data: []
-    },
-    {
-      name: 'All Parents',
-      key: 'allParents',
-      data: []
-    }
-  ];
+  private accountsList: object[] = defaultAccountsList;
 
   get $periodsList() {
     return this.periodsSubject.asObservable();
@@ -75,6 +51,14 @@ export class FormSendService {
 
   set selectedAccounts(accounts) {
     this.currentAccounts.next(accounts);
+  }
+
+  get $currentPerson() {
+    return this.currentPerson.asObservable();
+  }
+
+  set selectedPerson(accountId) {
+    this.currentPerson.next(accountId);
   }
 
   get formId() {
@@ -124,7 +108,7 @@ export class FormSendService {
   }
 
   loadUsers() {
-    this.accountsList.forEach(async a => {
+    this.accountsList.forEach(async (a: any) => {
       await this.api.getUsersByRole(a.key).subscribe(res => {
         if (res) {
           a.data = res;
@@ -160,6 +144,10 @@ export class FormSendService {
 
   isSelectedAccounts(item): boolean {
     return this.selectedAccounts.findIndex(i => (i === item)) >= 0 ? true : false;
+  }
+
+  selectPerson(person: IPerson): void {
+    this.selectedPerson = person;
   }
 
   allChildrenSelected(item) {

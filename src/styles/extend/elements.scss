@@ -182,7 +182,7 @@ sw-input-button-group.preview {
       }
       &:first-of-type {
         border-radius: 100px 0 0 100px!important;
-        border-right: none !important;    
+        border-right: none !important;
         button {
           border-radius: 100px 0 0 100px!important;
         }
@@ -197,7 +197,7 @@ sw-input-button-group.preview {
       &.active {
         button  {
           border-radius: 100px !important;
-          background-color: $button-color !important;
+          background: $element-base-color !important;
           color: $white;
         }
       }
