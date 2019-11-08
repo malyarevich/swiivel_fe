@@ -74,6 +74,7 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
 
   ngOnInit() {
     this.service.sidebar.subscribe((sidebar) => {
+      console.log('SIDEBAR  FIELDS', sidebar)
       this.treeSource.nodes = sidebar;
       this.cdr.markForCheck();
     });

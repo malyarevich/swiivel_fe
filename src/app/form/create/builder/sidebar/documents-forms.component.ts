@@ -54,7 +54,6 @@ export class SidebarDocumentsFormsComponent implements OnInit {
       }));
     }
     this.lform = _form.get('documentsForms')
-    console.log('additional docs sidebar', this.lform);
   }
 
   constructor(

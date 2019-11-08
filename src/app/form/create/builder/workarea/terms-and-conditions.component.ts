@@ -46,8 +46,13 @@ export class WorkareaTermsConditionComponent {
     this.cdr.markForCheck();
   }
 
-  constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef) {
+  constructor(
+    private fb: FormBuilder,
+    private cdr: ChangeDetectorRef
+  ) {
     this.lform = this.fb.group({
+      sectionName: ["Terms and Conditions"],
+      sectionWidth: ["full"],
       signature: this.fb.group({
         eType: ["system"],
         isBothParents: [false],
@@ -55,7 +60,7 @@ export class WorkareaTermsConditionComponent {
         signed: {parents: false, fathers: false, mothers: false},
         type: "esign",
       }),
-      items: ['']
+      termsConditionsItems: [[]]
     });
   }
 

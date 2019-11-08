@@ -77,7 +77,6 @@ export class FormService {
   loadForm(formId?: string) {
     if (formId !== 'new') {
       this.api.getFormTemplate(formId).subscribe(data => {
-        console.log('GET data by ID', data)
         if (data) {
           this.form = data;
         }
@@ -265,69 +264,63 @@ export class FormService {
     return field;
   }
   addField(field, ancestors?, only?) {
+    console.log('ADD FIELD ARGS', field, ancestors, only)
     if (!field || !field.name) { return null; }
     if (Array.isArray(ancestors) && ancestors.length === 0) { ancestors = null; }
     console.groupCollapsed(`Adding field ${field.name}`);
     const form = this.form.get('form'); // this.fb.array([]) as FormArray;
     const formParent = this.getFieldFormParent(field);
-    if (formParent === 0 && field.type !== 114) {
-      const wrapper = this.addWrapper({
-        type: 114,
-        name: 'New section',
-        isActive: true,
-        fields: [],
-        path: ['New section'],
-        pathId: 'New section114'
-      }, this.form.get('form').value);
-      this.addField(wrapper, ancestors, only);
-    } else if (!!formParent) {
-      formParent.addControl(field.name, this.createField(field));
-      let spaceParent = this.getFieldSpaceParent(field);
-      if (spaceParent) {
-        if (!spaceParent.find(a => a.name === field.name && a.type === field.type)) {
-          if (only) {
-            spaceParent.push({ ...field, fields: [] });
-          } else {
-            spaceParent.push(field);
-          }
-        }
-      } else {
-        if (ancestors) {
-          ancestors = ancestors.slice();
-          ancestors.reverse();
-          let prev;
-          ancestors.forEach((ancestor) => {
-            spaceParent = this.getFieldSpaceParent(ancestor);
-            if (!spaceParent) {
-              const preparent = this.getFieldSpaceParent(prev);
-              preparent.find(pp => pp.name === prev.name && pp.type === prev.type).fields.push({ ...ancestor, fields: [] });
-              prev = ancestor;
-            } else {
-              prev = ancestor;
-            }
-          });
-          spaceParent = this.getFieldSpaceParent(field);
-          spaceParent.push(field);
-        } else {
-          debugger;
-        }
-      }
-    } else {
-      if (ancestors) {
-        ancestors = ancestors.slice();
-        let parent = ancestors.shift();
-        parent = this.addField(parent, ancestors, true);
-        if (parent) {
-          this.addField(field);
-        } else { debugger; }
-      } else {
-        console.error('oops');
-        debugger;
-        console.log(ancestors);
-        return false;
-      }
+    // if (formParent === 0 && field.type !== 114) {
+    //   const wrapper = this.addWrapper();
+    //   this.addField(field, ancestors, only);
+    // } else if (!!formParent) {
+    //   formParent.addControl(field.name, this.createField(field));
+    //   let spaceParent = this.getFieldSpaceParent(field);
+    //   if (spaceParent) {
+    //     if (!spaceParent.find(a => a.name === field.name && a.type === field.type)) {
+    //       if (only) {
+    //         spaceParent.push({ ...field, fields: [] });
+    //       } else {
+    //         spaceParent.push(field);
+    //       }
+    //     }
+    //   } else {
+    //     if (ancestors) {
+    //       ancestors = ancestors.slice();
+    //       ancestors.reverse();
+    //       let prev;
+    //       ancestors.forEach((ancestor) => {
+    //         spaceParent = this.getFieldSpaceParent(ancestor);
+    //         if (!spaceParent) {
+    //           const preparent = this.getFieldSpaceParent(prev);
+    //           preparent.find(pp => pp.name === prev.name && pp.type === prev.type).fields.push({ ...ancestor, fields: [] });
+    //           prev = ancestor;
+    //         } else {
+    //           prev = ancestor;
+    //         }
+    //       });
+    //       spaceParent = this.getFieldSpaceParent(field);
+    //       spaceParent.push(field);
+    //     } else {
+    //       debugger;
+    //     }
+    //   }
+    // } else {
+    //   if (ancestors) {
+    //     ancestors = ancestors.slice();
+    //     let parent = ancestors.shift();
+    //     parent = this.addField(parent, ancestors, true);
+    //     if (parent) {
+    //       this.addField(field);
+    //     } else { debugger; }
+    //   } else {
+    //     console.error('oops');
+    //     debugger;
+    //     console.log(ancestors);
+    //     return false;
+    //   }
 
-    }
+    // }
     this.events$.next({ action: 'added', field });
     this.events$.next({ action: 'update' });
     console.log('set ivents');
@@ -496,11 +489,12 @@ export class FormService {
   }
 
   set form(_form) {
+  console.log('INTIT Form in service', _form);
     _form = cloneDeep(_form);
     let fields = cloneDeep(_form.fields);
     delete _form.fields;
     const form = this.fb.group({
-      fields: [this.initForm(fields)],
+      workspace: [this.initForm(fields)],
       form: [this.initForm(fields)]
     });
     for (const field in _form) {
@@ -521,6 +515,7 @@ export class FormService {
 
     // form.workspace = cloneDeep(fields);
     // form.form = this.initForm(fields);
+    form.updateValueAndValidity()
     this._form.next(form);
     this.events$.next({ action: 'update' });
     console.log('FORM AFTER SET', this._form.getValue());

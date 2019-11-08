@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
@@ -26,7 +26,7 @@ export class SidebarTermsConditionsComponent implements OnInit {
       _form.addControl('termsConditions', this.fb.group({
         sectionName: ["Terms and Conditions"],
         sectionWidth: ["full"],
-        siganature: this.fb.group({
+        signature: this.fb.group({
           eType: ["system"],
           isBothParents: [false],
           isRequire: [true],
@@ -37,13 +37,17 @@ export class SidebarTermsConditionsComponent implements OnInit {
       }));
     }
     this.lform = _form.get('termsConditions');
-    // this.cdr.markForCheck();
+    console.log('SIDEBAR TERMSCONDITION INPUT', this.lform);
+    this.cdr.markForCheck();
   }
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private cdr: ChangeDetectorRef
   ) {
     this.lform = this.fb.group({
+      sectionName: ["Terms and Conditions"],
+      sectionWidth: ["full"],
       signature: this.fb.group({
         eType: ["system"],
         isBothParents: [false],
@@ -51,8 +55,10 @@ export class SidebarTermsConditionsComponent implements OnInit {
         signed: {parents: false, fathers: false, mothers: false},
         type: "esign",
       }),
-      items: new FormArray([])
+      termsConditionsItems: [[]]
     });
+    console.log('SIDEBAR TERMSCONDITION', this.lform);
+    this.cdr.markForCheck();
   }
 
   ngOnInit() {
