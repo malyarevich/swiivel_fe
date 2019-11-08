@@ -16,7 +16,7 @@
       border-radius: 3px;
       outline: none;
       &:focus {
-        border: 1px solid $purple;
+        border: 1px solid $element-base-color;
       }
     }
     &__error {
