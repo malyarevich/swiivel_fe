@@ -68,7 +68,8 @@ export class UploadReviewFormComponent implements OnInit, OnDestroy {
     private cdr: ChangeDetectorRef,
     private fb: FormBuilder,
     private sanitizer: DomSanitizer,
-    private renderer: Renderer2,) {
+    private renderer: Renderer2,
+  ) {
     this.form = this.fb.group({
       filter: new FormControl([], Validators.required),
       sort: new FormControl([], Validators.required),
@@ -213,6 +214,7 @@ export class UploadReviewFormComponent implements OnInit, OnDestroy {
 
   changeForm(id: string) {
     this.selectItem(id);
+    this.scrollToActiveElement();
   }
 
   skipDocument(): void {
