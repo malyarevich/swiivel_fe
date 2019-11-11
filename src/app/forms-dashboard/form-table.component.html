@@ -208,8 +208,8 @@
                 </div>
               </th>
               <td cdk-cell *cdkCellDef="let form">
-                <span class="date">{{getDate(form.updated_at)}}</span>
-                <span class="time">{{getTime(form.updated_at)}}</span>
+                <span class="date">{{ dateService.getDate(form.updated_at) }}</span>
+                <span class="time">{{ dateService.getTime(form.updated_at) }}</span>
               </td>
             </ng-container>
 
@@ -246,17 +246,17 @@
                   <sw-button
                     size="small"
                     [isRound]="true"
-                    [color]="getStatusColor(form.status)"
+                    [color]="statusService.getStatusColor(form.status)"
                   >
                     <span>{{form.status}}</span>
                     <i class="fas fa-caret-down"></i>
                   </sw-button>
                 </sw-dropdown-select>
 
-                <div *ngIf="form.current_round && !isEmptyRound(form.current_round)" class="status-round-name">
+                <div *ngIf="form.current_round && !checkService.isEmptyObject(form.current_round)" class="status-round-name">
                   {{ form.current_round.name }}
                   <span class="status-round-date">
-                    ({{getRoundDate(form.current_round.start_date, form.current_round.end_date)}})
+                    ({{ dateService.getRoundDate(form.current_round.start_date, form.current_round.end_date) }})
                   </span>
                 </div>
               </td>
