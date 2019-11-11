@@ -53,6 +53,7 @@ export class FormTableComponent implements OnInit {
     page: 1,
     limit: 10,
   };
+  public lastPage = 0;
 
   // POPUP
   public popupTitle = '';
@@ -62,7 +63,6 @@ export class FormTableComponent implements OnInit {
   public isPopupOpen = false;
   public showInvite = false;
 
-  public selectedUsers = [];
   public icons = IconsEnum;
   public totalAmount = 0;
   public totalItems: number;
@@ -116,8 +116,10 @@ export class FormTableComponent implements OnInit {
     this.dataSource.formsListMetadata$.subscribe(metadata => {
       if (metadata.page > metadata.last_page) {
         this.params.page = 1;
+        this.lastPage = metadata.last_page;
         this.dataSource.loadFormsList(this.params);
       } else {
+        this.lastPage = metadata.last_page;
         this.totalItems = metadata.total;
         this.currentPage = metadata.page;
       }
@@ -202,7 +204,6 @@ export class FormTableComponent implements OnInit {
     }
     this.params.sort.field = field;
     this.params.sort.order = !!this.sort[1] ? 'asc' : 'desc';
-    this.params.page = 1;
     this.dataSource.loadFormsList(this.params);
   }
 
@@ -278,6 +279,7 @@ export class FormTableComponent implements OnInit {
     }
     this._sm.clear();
     this.disabledBulkBtn = true;
+    this.showInvite = false;
     this.isPopupOpen = false;
   }
 
@@ -292,6 +294,11 @@ export class FormTableComponent implements OnInit {
           this.popupActionBtnText = `Copy Link`;
         }
         break;
+      case 'Invite': {
+        this.popupTitle = 'Access Settings';
+        this.popupActionBtnText = 'Save';
+        break;
+      }
       default:
         if (this.popupContentArray.length > 1) {
           this.canLabelsRemove = true;
@@ -467,6 +474,12 @@ export class FormTableComponent implements OnInit {
     }
 
     return returnDate.concat(end.setLocale('en-US').toFormat('LLL dd'));
+  }
+
+  inviteUsers(): void {
+    this.showInvite = true;
+    this.popupSetActionBtnTextAndLogicRemoved('Invite');
+    this.dialog.open();
   }
 
 }

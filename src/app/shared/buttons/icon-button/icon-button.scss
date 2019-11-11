@@ -73,7 +73,7 @@
 
 :host(.field-creator.blue) {
   .icon-button {
-    color: $button-color;
+    color: $element-base-color;
   }
 }
 
@@ -85,6 +85,6 @@
 
 :host(.blue) {
   .icon-button {
-    color: $button-color;
+    color: $element-base-color;
   }
 }

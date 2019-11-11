@@ -4,7 +4,7 @@
     class="input_text__input"
     [ngClass]="{ input_text__button: this._style == 'button_type' }"
     (blur)="onBlur($event)"
-    (input)="onChange(input.value)"
+    (input)="onChangeInput(input.value)"
     [class.empty]="isEmpty(input.value)"
     [attr.autocomplete]="_autocomplete"
     #input
