@@ -7,6 +7,7 @@ import { FormManagementRoutingModule } from '@app/form-management/form-managemen
 
 import { FormManagementHeaderComponent } from '@app/form-management/form-management-header/form-management-header.component';
 import { FormManagementComponent } from '@app/form-management/form-management.component';
+import { FormManagementService } from '@app/form-management/form-management.service';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,7 @@ import { FormManagementComponent } from '@app/form-management/form-management.co
     SharedModule,
     FormManagementRoutingModule,
   ],
-  providers: [],
+  providers: [FormManagementService],
   entryComponents: [FormManagementComponent]
 })
 export class FormManagementModule { }
