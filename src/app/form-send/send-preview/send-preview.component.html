@@ -12,14 +12,14 @@
       </div>
 
       <div class="filtered_list btn-group-vertical">
-        <ng-container *ngFor="let groupItem of filteredAccountList">
-          <div class="filtered_list__group_title" *ngIf="groupItem.data.length > 0">
-            {{ groupItem.name | titlecase }} ({{ groupItem.data.length }}):
+        <ng-container *ngFor="let groupItem of filteredRoundsList">
+          <div class="filtered_list__group_title" *ngIf="groupItem.accounts.length > 0">
+            {{ groupItem.name | titlecase }} ({{ groupItem.accounts.length }}):
           </div>
 
           <button
             type="button"
-            *ngFor="let personItem of groupItem.data"
+            *ngFor="let personItem of groupItem.accounts"
             class="btn btn-secondary filtered_list__item"
             [class.filtered_list__item--selected]="isSelectedPerson(personItem)"
             (click)="selectPerson(personItem)"
@@ -33,7 +33,7 @@
   </div>
   <div class="col-9" style="padding-right: 0;padding-left: 0;width: 100%;">
     <!-- <app-preview-form [formId]='id'></app-preview-form> -->
-    {{isPreviewByAccount}} {{getFamilyId()}}
+    {{isPreviewByAccount ? 'byAccount' : 'generic (/view-form)'}} : {{isPreviewByAccount ? getFamilyId() : ''}}
     <ng-container *ngIf="isPreviewByAccount && getFamilyId(); else onlineView">
       <sw-online-form
         [formId]="getFormId()"

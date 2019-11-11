@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { FormSendService } from '../form-send.service';
-import { defaultButtonOptions, formType, IButtonOption, IGroupAccount, IPerson } from '../models/send.model';
+import { defaultButtonOptions, formType, IButtonOption, IGroupAccount, IPerson, IRound } from '../models/send.model';
 
 @Component({
   selector: 'sw-send-preview',
@@ -18,12 +18,12 @@ export class SendPreviewComponent implements OnInit, OnDestroy {
   previewType: FormControl = new FormControl(false);
   filter: FormControl = new FormControl('');
   buttonOptions: IButtonOption[] = defaultButtonOptions;
-  accountListSubscription: Subscription;
+  roundsListSubscription: Subscription;
   onChangeFilterSubscription: Subscription;
   onChangePreviewTypeSubscription: Subscription;
   onSelectPersonSubscription: Subscription;
-  accountList: IGroupAccount[];
-  filteredAccountList: IGroupAccount[];
+  roundsList: IRound[];
+  filteredRoundsList: IRound[];
 
   constructor(
     private route: ActivatedRoute,
@@ -47,10 +47,14 @@ export class SendPreviewComponent implements OnInit, OnDestroy {
     //   // this.initPage();
     // });
 
-    this.accountListSubscription = this.formSendService.$accountsList.subscribe((accountList: IGroupAccount[]) => {
-      this.accountList = accountList;
-      this.filteredAccountList = accountList;
+    this.roundsListSubscription = this.formSendService.$roundsList.subscribe((roundsList: IRound[]) => {
+      this.roundsList = roundsList;
+      this.filteredRoundsList = roundsList;
     });
+    // this.accountListSubscription = this.formSendService.$accountsList.subscribe((accountList: IGroupAccount[]) => {
+    //   this.accountList = accountList;
+    //   this.filteredAccountList = accountList;
+    // });
     this.onChangeFilterSubscription = this.filter.valueChanges.subscribe(value => {
       this.onChangeFilter(value);
     });
@@ -69,16 +73,13 @@ export class SendPreviewComponent implements OnInit, OnDestroy {
   }
 
   onChangeFilter(value: string) {
-    this.filteredAccountList = [];
-    this.accountList.forEach((groupList: IGroupAccount) => {
-      const filteredGroupList = {
-        key: groupList.key,
-        name: groupList.name,
-        data: groupList.data.filter((person: IPerson) => {
+    this.filteredRoundsList = this.roundsList.map((round: IRound) => {
+      return {
+        ...round,
+        accounts: round.accounts.filter((person: IPerson) => {
           return this.getComparingCondByDataItem(person, value);
         })
       };
-      this.filteredAccountList.push(filteredGroupList);
     });
   }
 
@@ -117,8 +118,8 @@ export class SendPreviewComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.accountListSubscription) {
-      this.accountListSubscription.unsubscribe();
+    if (this.roundsListSubscription) {
+      this.roundsListSubscription.unsubscribe();
     }
     if (this.onChangeFilterSubscription) {
       this.onChangeFilterSubscription.unsubscribe();

@@ -42,6 +42,32 @@ export interface IGroupAccount {
   data?: IPerson[];
 }
 
+export interface IEmailType {
+  id?: number;
+  release_round_id?: number;
+  subject?: string;
+  body?: string;
+  text_link?: null;
+  created_at?: string;
+  updated_at?: string;
+}
+
+export interface ITypes {
+  email?: IEmailType;
+  mailing?: IEmailType;
+}
+
+export interface IRound {
+  accounts?: IPerson[];
+  end_date?: string;
+  form_id?: number;
+  id?: number;
+  key?: string;
+  name?: string;
+  start_date?: string;
+  types?: ITypes;
+}
+
 export const defaultAccountsList: IGroupAccount[] = [
   {
     name: 'New Students',
