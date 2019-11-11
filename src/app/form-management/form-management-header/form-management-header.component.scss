@@ -1,0 +1,143 @@
+@import 'index';
+
+:host {
+  display: block;
+  margin: 0 0 20px 0;
+}
+
+.up-block {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 0 15px;
+  align-items: center;
+}
+
+.up-block-info {
+  display: flex;
+  align-items: center;
+}
+
+.up-block-name {
+  margin: 0 5px 0 0;
+  max-width: 250px;
+}
+
+.up-block-buttons {
+  display: flex;
+  margin: 0 0 0 10px;
+  list-style: none;
+  padding: 0;
+}
+
+.up-block-button {
+  margin: 0 0 0 10px;
+}
+
+.up-block-button-text {
+  margin: 0 0 0 2px;
+}
+
+.up-block-controls {
+  display: flex;
+}
+
+.up-block-control-button {
+  margin: 0 10px 0 0;
+}
+
+.up-block-view {
+  font: 500 9px/13px $nunito-sans;
+  text-transform: uppercase;
+  color: $gray-color;
+  background: transparent;
+  border: none;
+}
+
+.up-block-icon {
+  font-size: 13px;
+  margin: 0 0 0 5px;
+}
+
+.down-block {
+  display: flex;
+  background: #fff;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+
+.down-block-icon {
+  min-width: 70px;
+  display: flex;
+  background: $light-purple;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+
+.down-block-icon-page {
+  margin: auto;
+  font-size: 30px;
+  color: $element-base-color;
+}
+
+.down-block-file-info {
+  flex-grow: 2;
+  display: flex;
+  background: #fff;
+  justify-content: space-between;
+}
+
+.down-block-col-header {
+  margin: 5px 0 2px;
+  font: 500 9px/13px $nunito-sans;
+  text-transform: uppercase;
+  color: $gray-color;
+}
+
+.down-block-file {
+  display: flex;
+  justify-content: space-between;
+  width: 70%;
+}
+
+.down-block-type {
+  margin: 0 0 0 25px;
+}
+
+.down-block-type-text {
+  margin: 0 0 2px;
+  font: 800 12px/13px $nunito-sans;
+  text-transform: capitalize;
+  color: $element-base-color;
+}
+
+.down-block-name {
+  font: 800 10px/11px $nunito-sans;
+  margin: 0 0 5px;
+}
+
+.down-block-date-text {
+  font: 500 12px/16px $nunito-sans;
+  color: $gray-color;
+}
+
+.down-block-updated {
+  margin: 0 45px 0 0;
+}
+
+.down-block-created {
+  margin: 0 0 0 45px;
+}
+
+.down-block-access {
+  margin: 0 15px 0 50px;
+}
+
+.down-block-status-round-name {
+  margin: 0 0 5px 0;
+  font: 500 12px/16px $nunito-sans;
+}
+
+.down-block-status-round-date {
+  color: $gray-color;
+  font: 500 12px/16px $nunito-sans;
+}
