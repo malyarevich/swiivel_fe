@@ -179,8 +179,11 @@ export class FormSendService {
     round.form_template_mongo_id = this.form_id;
     if (isNew) {
       this.api.createRound(round).subscribe(res => {
-        if (res.status === 1) {
-          this.roundsSubject.next(this.roundList.push(res.data));
+        // console.log('res', res);
+        // console.log('res[]', this.roundList.push(res));
+        if (res.status !== 0) {
+          this.roundList.push(res);
+          this.roundsSubject.next(this.roundList);
         }
       });
     } else {
