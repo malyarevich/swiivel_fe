@@ -1,0 +1,93 @@
+<div class="up-block">
+  <div class="up-block-info">
+    <div class="up-block-name">
+      <sw-page-header>
+        {{ form.name }}
+      </sw-page-header>
+    </div>
+    <div>
+      <sw-dropdown-select
+        #bulk="dropdown"
+        [options]="statusesOptions"
+        (selected)="changeStatus()"
+      >
+        <sw-button
+          size="small"
+          [color]="statusService.getStatusColor(form.status)"
+          [isRound]="true"
+        >
+          <span>{{form.status}}</span>
+          <i class="fas fa-caret-down"></i>
+        </sw-button>
+      </sw-dropdown-select>
+    </div>
+    <ul class="up-block-buttons">
+      <li class="up-block-button">
+        <sw-icon-button [icon]="icons.SETTINGS" [size]="sizes.AUTO">
+          <span class="up-block-button-text">Copy link</span>
+        </sw-icon-button>
+      </li>
+      <li class="up-block-button">
+        <sw-icon-button [icon]="icons.SHARE_ARROW" [size]="sizes.AUTO">
+          <span class="up-block-button-text">Export pdf</span>
+        </sw-icon-button>
+      </li>
+      <li class="up-block-button">
+        <sw-icon-button [icon]="icons.PLUS" [size]="sizes.AUTO">
+          <span class="up-block-button-text">Invite Accounts</span>
+        </sw-icon-button>
+      </li>
+    </ul>
+  </div>
+  <div class="up-block-controls">
+    <div class="up-block-control-button">
+      <sw-button [disabled]="true">
+        Preview Form
+      </sw-button>
+    </div>
+    <div class="up-block-control-button">
+      <sw-button [disabled]="true">
+        Edit Form
+      </sw-button>
+    </div>
+    <button class="up-block-view" (click)="changeDashboardView()">
+      View Dashboard
+      <i class="up-block-icon fas" [ngClass]="{'fa-caret-down':isDashboardShown, 'fa-caret-up':!isDashboardShown}"></i>
+    </button>
+  </div>
+</div>
+
+<div class="down-block">
+  <div class="down-block-icon">
+    <i class="fas fa-file down-block-icon-page"></i>
+  </div>
+  <div class="down-block-file-info">
+    <div class="down-block-type">
+      <h2 class="down-block-col-header">Type</h2>
+      <p class="down-block-type-text">{{ form.type }}</p>
+      <div class="down-block-status-round-name" *ngIf="form.current_round && !checkService.isEmptyObject(form.current_round)">
+        {{ form.current_round.name }}
+        <span class="down-block-status-round-date">
+          ({{ dateService.getRoundDate(form.current_round.start_date, form.current_round.end_date) }})
+        </span>
+      </div>
+    </div>
+    <div class="down-block-updated">
+      <h2 class="down-block-col-header">Last Updated</h2>
+      <div class="down-block-name">Name</div>
+      <div>
+      <span class="down-block-date-text">{{ dateService.getDateTime(form.updated_at) }}</span>
+      </div>
+    </div>
+  </div>
+  <div class="down-block-created">
+    <h2 class="down-block-col-header">Created</h2>
+    <div class="down-block-name">Name</div>
+    <div>
+      <span class="down-block-date-text">{{ dateService.getDateTime(form.created_at) }}</span>
+    </div>
+  </div>
+  <div class="down-block-access">
+    <h2 class="down-block-col-header">Access</h2>
+  </div>
+</div>

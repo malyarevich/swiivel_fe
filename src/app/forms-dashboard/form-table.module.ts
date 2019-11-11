@@ -20,8 +20,6 @@ import { DataCollectionService } from './data-collection.service';
     CdkTableModule,
   ],
   entryComponents: [FormTableComponent],
-  providers: [
-    DataCollectionService,
-  ]
+  providers: [DataCollectionService],
 })
 export class FormTableModule {}
