@@ -4,7 +4,7 @@
       <div class="sidebar-title">
         List of Accounts
       </div>
-      <sw-input-button-group class="preview" [options]="buttonOptions" [(ngModel)]="formType"></sw-input-button-group>
+      <sw-input-button-group class="preview" [formControl]="previewType" [options]="buttonOptions" [(ngModel)]="formType"></sw-input-button-group>
 
       <div class="search-wrap" data-e2e="search-wrap">
         <input class="search" data-e2e="search" [formControl]="filter" placeholder="Search" />
@@ -33,10 +33,10 @@
   </div>
   <div class="col-9" style="padding-right: 0;padding-left: 0;width: 100%;">
     <!-- <app-preview-form [formId]='id'></app-preview-form> -->
-    {{getFamilyId()}}
-    <ng-container *ngIf="getFamilyId()">
+    {{isPreviewByAccount}} {{getFamilyId()}}
+    <ng-container *ngIf="isPreviewByAccount && getFamilyId(); else onlineView">
       <sw-online-form
-        [formId]="'5d8ddc0e8ffb08460b4c2e02'"
+        [formId]="getFormId()"
         [accountId]="getFamilyId()"
         [isViewMode]="true"
         [isMenuShow]="true"
@@ -45,16 +45,16 @@
         (saveNext)="onSaveNext($event)"
       ></sw-online-form>
     </ng-container>
-    <ng-container *ngIf="!getFamilyId()">
+    <ng-template #onlineView>
       <sw-online-form
-        [formId]="'5d8ddc0e8ffb08460b4c2e02'"
+        [formId]="getFormId()"
         [isViewMode]="true"
         [isMenuShow]="true"
         [isReviewMode]="false"
         (goBack)="onBack($event)"
         (saveNext)="onSaveNext($event)"
       ></sw-online-form>
-    </ng-container>
+    </ng-template>
   </div>
 </div>
 

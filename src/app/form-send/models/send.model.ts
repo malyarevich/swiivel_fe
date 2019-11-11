@@ -1,3 +1,8 @@
+export const formType =  {
+  generic: 'generic',
+  account: 'account'
+};
+
 export interface IButtonOption {
   label: string;
   value: string;
@@ -6,11 +11,11 @@ export interface IButtonOption {
 export const defaultButtonOptions: IButtonOption[] = [
   {
     label: 'Generic Form',
-    value: 'generic'
+    value: formType.generic
   },
   {
     label: 'Account Form',
-    value: 'account'
+    value: formType.account
   }
 ];
 
