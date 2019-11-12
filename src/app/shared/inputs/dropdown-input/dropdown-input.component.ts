@@ -154,7 +154,7 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
       this._ref.afterClosed$.subscribe(result => {
         this.isPopupShown.emit(false);
         this._ref = null;
-        this.onTouched();
+        if (this.onTouched) this.onTouched();
         this.cdr.markForCheck();
       });
     }

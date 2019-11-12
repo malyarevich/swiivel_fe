@@ -53,11 +53,16 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
       if (this.formSubscription) this.formSubscription.unsubscribe();
       this.formSubscription = form.valueChanges.subscribe((value) => {
         if (value && value['fields']) {
+          this.treeSource.nodes = [];
+          this.cdr.markForCheck();
+          this.cdr.detectChanges()
           this.treeSource.nodes = (form.get('fields') as FormArray).controls;
         } else {
           this.treeSource.nodes = [];
         }
+        // this.treeControl.dataNodes = this.treeSource.nodes;
         this.cdr.markForCheck();
+        this.cdr.detectChanges()
       });
       
     })
@@ -75,6 +80,15 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
 
   }
 
+  getListsIds() {
+    let listIds = this.service.getListsIds();
+    listIds.push('sidebar-list', 'root-list')
+    return listIds
+  }
+  getListId(node) {
+    let listId = [...this.service.getParentPaths(node), node.get('name').value].join('');
+    return listId;
+  }
   hasChild = (_: number, node: any) => {
     return !!node.get('fields')
   }
@@ -93,17 +107,13 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
     return 'Group type';
   }
 
-  drop(event: CdkDragDrop<any>) {
-    let node = event.item.data;
-    let dc = event.container;
-    if (dc.id !== 'fields-list') {
-      if (node.type === 113 || node.type === 114) {
-        this.closeParentNode(node);
-      } else {
-        this.closeNode(node);
-      }
-    }
+  drop(event) {
+    console.log('field drop', event)
+    // if (event.container.id === 'sidebar-list') {
+      // this.sideBarService.events$.next({ action: 'remove', target: event.item.data });
+    // }
   }
+
 
   settingsToggle(node: any) {
     if (node) {
