@@ -14,7 +14,6 @@ import { FormSendService } from '../form-send.service';
 })
 export class SendReleaseComponent implements OnInit {
 
-  // public roundsList: IRound[] = [];
   public $roundsList: BehaviorSubject<IRound[]> = new BehaviorSubject([]);
   public periodsList: any = [];
   public selectedPeriods: any = [];
@@ -71,7 +70,7 @@ export class SendReleaseComponent implements OnInit {
     });
     this.formSendService.$roundsList.subscribe(val => {
       this.roundsList = val;
-      // console.log(val);
+      console.log(val);
       this.cdr.markForCheck();
     });
     this.form = this.fb.group({

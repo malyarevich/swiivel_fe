@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from '@app/core/api.service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject} from 'rxjs';
 import { DateTime } from 'luxon';
 import { StepperService } from '@app/shared/stepper.service';
-import {defaultAccountsList, IPerson} from './models/send.model';
+import { defaultAccountsList, IPerson } from './models/send.model';
 
 @Injectable()
 export class FormSendService {
@@ -16,6 +16,7 @@ export class FormSendService {
   private currentPerson: BehaviorSubject<IPerson> = new BehaviorSubject<IPerson>(undefined);
   private roundsSubject: BehaviorSubject<any> = new BehaviorSubject<any>([]);
   private accountsList: object[] = defaultAccountsList;
+  private deletedRoundIdList: number[] = [];
 
   get $periodsList() {
     return this.periodsSubject.asObservable();
@@ -76,9 +77,7 @@ export class FormSendService {
   constructor(
     private api: ApiService,
     private stepperService: StepperService
-  ) {
-
-  }
+  ) {}
 
   initFormSend(id: string) {
     this.form_id = id;
@@ -197,10 +196,25 @@ export class FormSendService {
     }
   }
 
-  deleteRound(item: any) {
-    let rounds = this.roundList;
-    rounds.splice(rounds.findIndex(i => i === item), 1);
+  deleteRound(round: any) {
+    // console.log('round', round.id);
+    const rounds = this.roundList;
+    rounds.splice(rounds.findIndex(i => i === round), 1);
     this.roundsSubject.next(rounds);
+    this.deletedRoundIdList.push(round.id);
+  }
+
+  removeAllRounds() {
+    let count = 0;
+    let bs = new BehaviorSubject<boolean>(false);
+    this.deletedRoundIdList.forEach((roundId) => {
+      this.api.deleteRound(roundId).subscribe(() => {
+        if (++count === this.deletedRoundIdList.length) {
+          bs.next(true);
+        }
+      });
+    });
+    return bs;
   }
 
   nextStep() {
@@ -208,9 +222,13 @@ export class FormSendService {
     this.periodsList.forEach(item => {
       data.formPeriods[item.id] = this.selectedPeriods.findIndex(i => (i.id === item.id)) >= 0 ? true : false;
     });
+    // console.log(data);
     this.api.updateFormTemplate(this.formId, data).subscribe(data => {
+      this.removeAllRounds().subscribe(() => {
+        this.stepperService.stepper = 'next';
+        // console.log('removeAllRounds', this.roundsSubject.getValue());
+      });
     });
-    this.stepperService.stepper = 'next';
   }
 
   prevStep() {
