@@ -410,6 +410,8 @@ export class FormService {
   }
   addFieldFromSB(field: object): FormGroup {
     field = cloneDeep(field);
+    field['isExpanded'] = true;
+    
     let parent, parentPath, fieldName, fieldValue;
     fieldName = field['name'] as string;
     fieldValue = field;
@@ -426,6 +428,14 @@ export class FormService {
       let wrapper = this.fb.group({
         type: 114,
         name: 'New section',
+        isExpanded: true,
+        options: this.fb.group({
+          size: 3,
+          required: false,
+          unique: false,
+          hideLabel: false,
+          readonly: false
+        })
       });
       let fields = this.form.get('fields') as FormArray;
       if (!fields) {
@@ -575,6 +585,10 @@ export class FormService {
         parent = this.form.get(parent);
       }
     }
+    if (parent.get(fieldName)) {
+      parent.removeControl(fieldName);
+    }
+    (parent as FormGroup).addControl(fieldName, this.fb.group(fieldValue));
     return parent.get(fieldName);
   }
 
@@ -582,7 +596,6 @@ export class FormService {
     console.groupCollapsed(`Creating formgroup ${data.name || ''}`);
     const form = this.fb.group({});
     if (data) {
-      console.log(data);
       if ('fields' in Object.keys(data)) {
         this.addFields(data.fields, form);
         delete data.fields;
@@ -599,6 +612,15 @@ export class FormService {
         } else {
           this.addField(key, data[key], form);
         }
+      }
+      if (data.path && !data.options) {
+        this.addFieldGroup('options', {
+          size: 3,
+          required: false,
+          unique: false,
+          hideLabel: false,
+          readonly: false
+        }, form);
       }
       form.patchValue(data);
     } else {

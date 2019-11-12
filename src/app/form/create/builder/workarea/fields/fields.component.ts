@@ -10,6 +10,7 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { takeUntil } from 'rxjs/operators';
 import { cloneDeep } from 'lodash';
 import { visitValue } from '@angular/compiler/src/util';
+import { FormArray, FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'sw-form-creator-workarea-fields',
@@ -26,13 +27,25 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
     allowDrop: true,
     allowDrag: true
   };
+  sizeOptions = [
+    {value: 0, title: '1 quarter'},
+    {value: 1, title: 'Half'},
+    {value: 2, title: '3 quarters'},
+    {value: 3, title: 'Full width'},
+  ]
   fields: any[] = [];
   destroyed$ = new Subject();
   fieldsTree: any[];
   treeSource = new TreeDataSource('Fields');
-  treeControl = new NestedTreeControl<any>(node => node.fields);
+  treeControl = new NestedTreeControl<any>(node => {
+    let fields = node.get('fields');
+    if (fields) {
+      return (fields as FormArray).controls
+    }
+    return null;
+  });
   formSubscription: Subscription;
-  constructor(private service: FormService, private api: ApiService, private cdr: ChangeDetectorRef) {
+  constructor(private service: FormService, private api: ApiService, private cdr: ChangeDetectorRef, private fb: FormBuilder) {
   }
 
   ngOnInit() {
@@ -40,7 +53,7 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
       if (this.formSubscription) this.formSubscription.unsubscribe();
       this.formSubscription = form.valueChanges.subscribe((value) => {
         if (value && value['fields']) {
-          this.treeSource.nodes = value['fields'];
+          this.treeSource.nodes = (form.get('fields') as FormArray).controls;
         } else {
           this.treeSource.nodes = [];
         }
@@ -63,7 +76,7 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
   }
 
   hasChild = (_: number, node: any) => {
-    return !!node.fields && node.fields.length > 0;
+    return !!node.get('fields')
   }
 
   getIcon(expanded: boolean): string {
@@ -94,8 +107,15 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
 
   settingsToggle(node: any) {
     if (node) {
-      node.showSettings = !node.showSettings;
+      let showSettingsControl = node.get('showSettings');
+      if (!showSettingsControl) {
+        (node as FormGroup).addControl('showSettings', this.fb.control(true));
+        return true
+      }
+      showSettingsControl.setValue(!showSettingsControl.value);
       this.cdr.markForCheck();
+      return showSettingsControl.value;
+      // node.showSettings = !node.showSettings;
     }
   }
   closeParentNode(node: any): void {

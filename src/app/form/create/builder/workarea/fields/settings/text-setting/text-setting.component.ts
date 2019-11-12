@@ -18,9 +18,9 @@ export class TextSettingComponent implements OnInit {
       this.form.patchValue({
         showDefaultValue: !!obj.defaultValue,
         showValidators: obj.validators && obj.validators.length > 0,
-        allowList: obj.allowList,
+        allowList: obj.allowList || false,
         defaultValue: obj.defaultValue || null,
-        validators: obj.validators
+        validators: obj.validators || {}
       });
     }
   }

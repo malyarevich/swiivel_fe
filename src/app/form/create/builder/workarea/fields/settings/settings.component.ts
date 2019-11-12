@@ -9,6 +9,7 @@ import { NumberSettingComponent } from './number-setting/number-setting.componen
 import { PhoneSettingComponent } from './phone-setting/phone-setting.component';
 import { SectionSettingsComponent } from './section-settings/section-settings.component';
 import { TextSettingComponent } from './text-setting/text-setting.component';
+import { FormGroup, FormControl } from '@angular/forms';
 
 const components = [
   { type: 101, component: TextSettingComponent, title: 'Short Text Field Settings' },
@@ -36,12 +37,14 @@ export class SettingsComponent implements OnInit, AfterViewInit, OnDestroy {
   type: number;
   title: string;
   _field: any;
+  _form: FormGroup;
 
   @Input()
   set field(f: any) {
     if (f) {
-      this._field = f;
-      this.initSettings(this._field);
+      this._form = f;
+      console.log(this._form)
+      this.initSettings(this._form);
     }
   }
   @ViewChild('container', { read: ViewContainerRef, static: false }) container;
@@ -55,8 +58,8 @@ export class SettingsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    if (this._field) {
-      this.initSettings(this._field);
+    if (this._form) {
+      this.initSettings(this._form);
     }
   }
 
@@ -76,7 +79,7 @@ export class SettingsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private initSettings(f: any): void {
-    const c = components.find(c => c.type === f.type);
+    const c = components.find(c => c.type === f.value.type);
     if (c) {
       // console.log('CCCC,', c)
       this.type = c.type;
@@ -87,7 +90,7 @@ export class SettingsComponent implements OnInit, AfterViewInit, OnDestroy {
       const factory: ComponentFactory<any> = this.resolver.resolveComponentFactory(c.component);
       if (this.container) {
         this.component = this.container.createComponent(factory);
-        this.component.instance.settings = f;
+        this.component.instance.settings = f.get('options').value;
         this.component.instance.fieldSettings.subscribe(v => {
           this.updateField(v);
         });
@@ -97,8 +100,18 @@ export class SettingsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   updateField(v) {
-    Object.assign(this._field, v);
-    console.log('object assign', Object.assign(this._field, v))
+    for (const key of Object.keys(v)) {
+      let control = this._form.get(['options', key]);
+      if (!control) {
+        (this._form.get('options') as FormGroup).addControl(key, new FormControl({value: v[key]}));
+        // control = this._form.get(['options', key]);
+      }
+    }
+    console.log('update settings', v);
+    this._form.get('options').patchValue(v)
+
+    // Object.assign(this._field, v);
+    // console.log('object assign', Object.assign(this._field, v))
   }
 
   ngOnDestroy(): void {
