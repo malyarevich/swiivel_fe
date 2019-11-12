@@ -5,10 +5,11 @@ import { FieldService } from '@app/core/field.service';
 import { ApiService } from '@app/core/api.service';
 import { CHILDREN_SYMBOL, TreeDataSource } from '@app/form/create/tree.datasource';
 import { FormService } from '@app/form/form.service';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { takeUntil } from 'rxjs/operators';
 import { cloneDeep } from 'lodash';
+import { visitValue } from '@angular/compiler/src/util';
 
 @Component({
   selector: 'sw-form-creator-workarea-fields',
@@ -29,45 +30,23 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
   destroyed$ = new Subject();
   fieldsTree: any[];
   treeSource = new TreeDataSource('Fields');
-  treeControl = new NestedTreeControl<any>(node => node.value.workspace);
-
+  treeControl = new NestedTreeControl<any>(node => node.fields);
+  formSubscription: Subscription;
   constructor(private service: FormService, private api: ApiService, private cdr: ChangeDetectorRef) {
   }
 
   ngOnInit() {
-    this.service.form$.subscribe( val => {
-      this.treeSource.nodes = val.value.workspace.value;
-      console.log('TREE SOURSE NODES', this.treeSource.nodes, )
-    })
-    this.service.events$.subscribe((event: any) => {
-      if (event.action === 'update') {
-        console.log('FORM VAL', this.service.form);
-        let fields = cloneDeep(this.service.form.value.workspace);
-        if (!!fields && fields.length > 0) {
-          let section = fields.find(field => field.type === 114);
-          if (!section) {
-            console.warn(`No section wrapper, skip fields redraw`);
-          } else {
-            this.fields = fields;
-            this.treeSource.nodes = this.fields;
-            console.log('WORKAREA FIELDS',this.fields);
-          }
-          this.cdr.markForCheck();
+    this.service.form$.subscribe(form => {
+      if (this.formSubscription) this.formSubscription.unsubscribe();
+      this.formSubscription = form.valueChanges.subscribe((value) => {
+        if (value && value['fields']) {
+          this.treeSource.nodes = value['fields'];
         } else {
-          this.fields = [];
           this.treeSource.nodes = [];
-          this.cdr.markForCheck();
         }
-      }
-    })
-
-    this.service.events$.pipe(takeUntil(this.destroyed$)).subscribe(event => {
-      if (event.action === 'expand') {
-        this.treeControl.expand(event.target);
-      } else if (event.action === 'collapse') {
-        this.treeControl.collapse(event.target);
-      }
-      console.log(`events`, event)
+        this.cdr.markForCheck();
+      });
+      
     })
   }
   ngOnDestroy() {

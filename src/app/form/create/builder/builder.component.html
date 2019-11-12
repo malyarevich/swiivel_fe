@@ -1,11 +1,11 @@
-<ng-container [formGroup]="form">
+<ng-container [formGroup]="form" *ngIf="form">
   <div class="sidebar-wrap" formGroupName="activeSections">
 
     <!-- PACKET INTRODUCTION SIDEBAR START -->
-    <div class="sidebar_section" [class.expanded]="isExpanded('intro')" formGroupName="packetIntroduction">
-      <div class="sidebar_section__header" (click)="onClick('intro', $event)">
+    <div class="sidebar_section" [class.expanded]="isExpanded('packetIntroduction')" formGroupName="packetIntroduction">
+      <div class="sidebar_section__header">
         <sw-input-toggle formControlName="isActive"></sw-input-toggle>
-        <span>Packet Introduction</span>
+        <span (click)="onClick('packetIntroduction', $event)">Packet Introduction</span>
       </div>
     </div>
     <!-- [formControl]="sections?.get('intro')" -->
@@ -13,30 +13,30 @@
 
 
     <!-- FORM FIELDS SIDEBAR START-->
-    <div class="sidebar_section" [class.expanded]="isExpanded('fields')" [class.open]="isOpen()"
+    <div class="sidebar_section" [class.expanded]="isExpanded('formFields')" [class.open]="isOpen()"
       formGroupName="formFields">
-      <div class="sidebar_section__header" (click)="onClick('fields', $event)">
+      <div class="sidebar_section__header">
         <sw-input-toggle formControlName="isActive"></sw-input-toggle>
         <!-- [formControl]="sections?.get('fields')" -->
-        <span>Form Fields</span>
+        <span (click)="onClick('formFields', $event)">Form Fields</span>
         <div class="actions">
           <sw-icon-button [class.blue]="isOpen()" [icon]="getIcon()" (click)="toggleSection()">
           </sw-icon-button>
         </div>
       </div>
       <div class="sidebar_section__content" data-e2e="sidebar_section__content">
-        <sw-form-create-sidebar-fields [form]="form"></sw-form-create-sidebar-fields>
+        <sw-form-create-sidebar-fields [form]="form.get('fields')"></sw-form-create-sidebar-fields>
       </div>
     </div>
     <!-- FORM FIELDS SIDEBAR END -->
 
     <!-- ADDITIONAL DOCUMENTS SIDEBAR START -->
-    <div class="sidebar_section" [class.expanded]="isExpanded('addDocs')" [class.open]="isOpen()"
+    <div class="sidebar_section" [class.expanded]="isExpanded('documentsForms')" [class.open]="isOpen()"
       formGroupName="documentsForms">
-      <div class="sidebar_section__header" (click)="onClick('addDocs', $event)">
+      <div class="sidebar_section__header">
         <sw-input-toggle formControlName="isActive"></sw-input-toggle>
         <!-- [formControl]="sections?.get('addDocs')" -->
-        <span>Additional Documents</span>
+        <span (click)="onClick('documentsForms', $event)">Additional Documents</span>
         <div class="actions">
           <sw-icon-button [class.blue]="isOpen()" [icon]="getIcon()" (click)="toggleSection()">
           </sw-icon-button>
@@ -51,10 +51,10 @@
     <!-- CONSENT SIDEBAR START -->
     <div class="sidebar_section" [class.expanded]="isExpanded('consent')" [class.open]="isOpen()"
       formGroupName="consent">
-      <div class="sidebar_section__header" (click)="onClick('consent', $event)">
+      <div class="sidebar_section__header">
         <sw-input-toggle formControlName="isActive"></sw-input-toggle>
         <!-- [formControl]="sections?.get('consent')" -->
-        <span>CONSENT</span>
+        <span (click)="onClick('consent', $event)">CONSENT</span>
         <div class="actions">
           <sw-icon-button [class.blue]="isOpen()" [icon]="getIcon()" (click)="toggleSection()">
           </sw-icon-button>
@@ -67,14 +67,14 @@
     <!-- CONSENT SIDEBAR END -->
 
     <!-- TERMS AND CONDITIONS SIDEBAR START -->
-    <div class="sidebar_section" [class.expanded]="isExpanded('tac')" [class.open]="isOpen()"
+    <div class="sidebar_section" [class.expanded]="isExpanded('termsConditionals')" [class.open]="isOpen()"
       formGroupName="termsConditionals">
-      <div class="sidebar_section__header" (click)="onClick('tac', $event)">
+      <div class="sidebar_section__header">
         <sw-input-toggle formControlName="isActive"></sw-input-toggle>
         <!-- [formControl]="sections?.get('tac')" -->
-        <span>TERMS AND CONDITIONS</span>
+        <span (click)="onClick('termsConditionals', $event)">TERMS AND CONDITIONS</span>
         <div class="actions">
-          <sw-icon-button class="blue" style="margin-right: 5px;" icon="fa-plus-square" (click)="addTermsConditionsItem()">
+          <sw-icon-button class="blue" style="margin-right: 5px;" icon="fa-plus-square">
           </sw-icon-button>
           <sw-icon-button [class.blue]="isOpen()" [icon]="getIcon()" (click)="toggleSection()">
           </sw-icon-button>
@@ -92,12 +92,12 @@
 
 <div class="workarea-wrap">
   <ng-container [ngSwitch]="expandedSection">
-    <sw-form-creator-workarea-intro *ngSwitchCase="'intro'" [form]="form"></sw-form-creator-workarea-intro>
+    <sw-form-creator-workarea-intro *ngSwitchCase="'packetIntroduction'" [form]="form"></sw-form-creator-workarea-intro>
     <sw-form-creator-workarea-consent *ngSwitchCase="'consent'" [form]="form"></sw-form-creator-workarea-consent>
-    <sw-form-creator-workarea-terms-and-conditions *ngSwitchCase="'tac'" [form]="form">
+    <sw-form-creator-workarea-terms-and-conditions *ngSwitchCase="'termsConditionals'" [form]="form">
     </sw-form-creator-workarea-terms-and-conditions>
-    <sw-form-creator-workarea-fields *ngSwitchCase="'fields'"></sw-form-creator-workarea-fields>
-    <sw-documents-forms-workarea *ngSwitchCase="'addDocs'" [form]="form"></sw-documents-forms-workarea>
+    <sw-form-creator-workarea-fields *ngSwitchCase="'formFields'"></sw-form-creator-workarea-fields>
+    <sw-documents-forms-workarea *ngSwitchCase="'documentsForms'" [form]="form"></sw-documents-forms-workarea>
     <div *ngSwitchDefault>DEFAULT</div>
   </ng-container>
   <!-- <div class="stepper-buttons" data-e2e="stepper-buttons">

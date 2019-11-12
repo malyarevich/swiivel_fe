@@ -3,17 +3,20 @@ import { FormService } from '@app/form/form.service';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { DateTime } from 'luxon';
 import { Subject, BehaviorSubject } from 'rxjs';
-import { takeUntil, take } from 'rxjs/operators';
+import { takeUntil, take, tap } from 'rxjs/operators';
 import { ApiService } from '@app/core/api.service';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Router, ActivatedRoute } from '@angular/router';
+import { cloneDeep, flatMap, get, isArrayLike, isPlainObject, isString, set, unset, values } from 'lodash';
 
 @Component({
   selector: 'sw-general',
   templateUrl: './general.component.html',
   styleUrls: ['./general.component.scss']
 })
-export class GeneralComponent implements OnDestroy {
+export class GeneralComponent implements OnInit, OnDestroy {
+
+  
 
   public buttonOptions = [
     {
@@ -26,13 +29,17 @@ export class GeneralComponent implements OnDestroy {
     }
   ];
   public typeOptions = ['Registration', 'Application'].map(v => { return { title: v, value: v.toLocaleLowerCase() } });
-  public newForm: boolean = true;
-  public generalForm: FormGroup;
+  public form: FormGroup;
   public filter: FormControl = new FormControl('');
   public forms = {};
   public forms$ = new BehaviorSubject<any[]>([]);
-  public sm: SelectionModel<any> = new SelectionModel(false);
-
+  // public sm: SelectionModel<any> = new SelectionModel(false);
+  public extendsControl = new FormControl(false);
+  public extendedForm;
+  public get extends() {
+    return this.extendsControl.value;
+  }
+  public saving = false;
   private destroyed$ = new Subject();
   private mainForm: FormGroup;
 
@@ -44,57 +51,53 @@ export class GeneralComponent implements OnDestroy {
     private cdr: ChangeDetectorRef,
     private api: ApiService
     ) {
-      this.api.getFormsShortList('registration').subscribe((forms) => {
-        this.forms['registration'] = forms;
-        this.forms$.next(forms);
-      });
-    this.generalForm = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(3)]],
-      type: [[{title: 'Registration', value: 'registration'}]],
-      dublicate: [false]
-    });
-    this.formService.form$.pipe(
-      takeUntil(this.destroyed$)
-    ).subscribe((form: FormGroup) => {
-      console.log('Form value changes', form);
-      if (form) {
-        if (form.value._id) { this.newForm = false; }
-        this.initForm(form);
+    this.formService.form$.subscribe(form => {
+      if (form !== null) {
+        this.form = form;
+        if (this.isNew && !this.form.get('example_form_id')) {
+          this.form.addControl('example_form_id', this.fb.control({value: null, disabled: true}, Validators.required));
+        }
+        this.form.valueChanges.subscribe((val)=> {
+          if (Array.isArray(val.type)) {
+            this.form.get('type').setValue(val.type[0].value, {emitEvent: false, onlySelf: false, emitModelToViewChange: false})
+          }
+        });
+        this.cdr.markForCheck()
       }
-      this.generalForm.get('dublicate').valueChanges.pipe(
-        takeUntil(this.destroyed$)
-      ).subscribe(v => {
-        if (!v) {
-          this.sm.clear();
-          this.generalForm.removeControl('example_form_id');
-        } else {
-          this.generalForm.addControl('example_form_id', this.fb.control(null, { validators: Validators.required }));
-        }
-      });
-      this.generalForm.get('type').valueChanges.pipe(
-        takeUntil(this.destroyed$)
-      ).subscribe(type => {
-        if (type) type = type[0].value;
-        if (!(type in this.forms)) {
-          this.sm.clear();
-          this.api.getFormsShortList(type).subscribe((forms) => {
-            this.forms[type] = forms;
-            this.forms$.next(forms);
-          });
-        } else {
-          this.forms$.next(this.forms[type]);
-        }
-      });
     });
+    
+  }
+
+  get isNew() {
+    return !this.form.get('_id');
+  }
+
+  loadAndAppendForms(formType = 'registration') {
+    return this.api.getFormsShortList(formType).pipe(
+      tap(forms => {
+        this.forms[formType] = forms;
+        this.forms$.next(forms);
+      }
+    ));
+  }
+
+  ngOnInit(): void {
     this.filter.valueChanges.subscribe((filterValue) => {
-      let selectedType = this.generalForm.get('type').value;
-      if (selectedType) selectedType = selectedType[0].value;
+      let selectedType = this.form.get('type').value;
       if (filterValue && filterValue.length > 0) {
-        let forms = this.forms[selectedType];
         filterValue = filterValue.toLowerCase();
-        this.forms$.next(
-          forms.filter(form => form.name.toLowerCase().startsWith(filterValue))
-        );
+        let forms = this.forms[selectedType];
+        if (!forms) {
+          this.loadAndAppendForms(selectedType).subscribe(() => {
+            this.forms$.next(
+              forms.filter(form => form.name.toLowerCase().startsWith(filterValue))
+            );
+          })
+        } else {
+          this.forms$.next(
+            forms.filter(form => form.name.toLowerCase().startsWith(filterValue))
+          );
+        }
       } else {
         this.forms$.next(
           this.forms[selectedType]
@@ -106,37 +109,51 @@ export class GeneralComponent implements OnDestroy {
     ).subscribe(forms => {
       this.cdr.markForCheck()
     });
+    this.extendsControl.valueChanges.subscribe((extend) => {
+      if (!!extend) {
+        let formType = this.form.get('type').value;
+        if (!(formType in Object.keys(this.forms))) {
+          this.loadAndAppendForms(formType).subscribe(() => {
+            this.form.get('example_form_id').enable();
+          })
+        } else {
+          this.form.get('example_form_id').enable();
+        }
+      } else  {
+        this.form.get('example_form_id').disable();
+      }
+    })
+    
+    this.form = this.formService.form;
   }
 
   get formsList() {
     return this.forms$.asObservable();
   }
 
-  get selectedItem() {
-    return this.sm.selected[0] ? {
-      name: this.sm.selected[0].name,
-      src: `http://34.73.126.99/api/v1/preview-pdf-form/${this.sm.selected[0]._id}?api_token=123`
-    } : null;
+  get extendedFormSrc() {
+    if (this.extendedForm) return `http://34.73.126.99/api/v1/preview-pdf-form/${this.extendedForm._id}?api_token=123`;
+    else return null;
   }
+ 
+  // get selectedItem() {
+  //   return this.sm.selected[0] ? {
+  //     name: this.sm.selected[0].name,
+  //     src: `http://34.73.126.99/api/v1/preview-pdf-form/${this.sm.selected[0]._id}?api_token=123`
+  //   } : null;
+  // }
 
   isSelected(item: any) {
-    return this.sm.isSelected(item);
+    return this.extendedForm === item;
+    // return this.sm.isSelected(item);
   }
 
   selectForm(item: any) {
-    this.sm.select(item);
-    this.generalForm.patchValue({ 'example_form_id': item._id });
+    this.extendedForm = item;
+    this.form.patchValue({ 'example_form_id': item._id });
     this.cdr.markForCheck();
   }
 
-  initForm(form: FormGroup): void {
-    const { name, type } = form.value;
-    this.mainForm = form;
-    this.generalForm.patchValue({
-      name,
-      type: [this.typeOptions.find(i => i.value === type)]
-    });
-  }
 
   getDate(): string {
     const currentTime = DateTime.local().hour;
@@ -154,27 +171,24 @@ export class GeneralComponent implements OnDestroy {
     return res;
   }
 
-  setValue() {
-    const val = this.generalForm.value;
-    if (val.dublicate) {
-      this.mainForm.addControl('example_form_id', this.fb.control(null, { validators: Validators.required }));
-      this.mainForm.patchValue({ example_form_id: val.example_form_id });
-    }
-    this.mainForm.patchValue({
-      name: val.name,
-      type: val.type[0].value
-    });
-  }
+  
 
   prevStep() {
     
   }
 
   nextStep() {
-    console.log('GENERAL FORM',  this.generalForm.value)
-    this.setValue();
-    this.formService.saveForm();
-    // this.router.navigate(['../builder'], { relativeTo: this.route });
+    this.saving = true;
+    this.formService.saveForm().subscribe((saved) => {
+      if (saved) {
+        this.router.navigate(['form', saved._id, 'create', 'builder']);
+      }
+
+    }, (error) => {
+      console.error(error);
+    }, () => {
+      this.saving = false;
+    });
   }
 
   ngOnDestroy() {

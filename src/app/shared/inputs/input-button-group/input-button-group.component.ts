@@ -7,6 +7,8 @@ import {
   Input,
   Renderer2,
   ViewChild,
+  Output,
+  EventEmitter
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
@@ -26,7 +28,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 export class InputButtonGroupComponent implements ControlValueAccessor {
 
   @Input('options') buttons;
-
+  @Output('change') changed = new EventEmitter();
   @ViewChild('input', {static: true}) input: ElementRef;
 
   private onChange: (value: any) => void;
@@ -61,6 +63,7 @@ export class InputButtonGroupComponent implements ControlValueAccessor {
   }
 
   public onInputChange(value: any) {
+    this.changed.emit(value);
     this.onChange(value);
     this.value = value;
     this.cdr.markForCheck();

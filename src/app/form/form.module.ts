@@ -13,7 +13,7 @@ import { FormService } from './form.service';
     FormRoutingModule
   ],
   providers: [
-    FormService
+    // FormService
   ]
 })
 export class FormModule { }

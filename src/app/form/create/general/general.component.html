@@ -1,5 +1,7 @@
+<ng-container  *ngIf="form">
+
 <div class="general-page">
-  <div class="container h-100" [formGroup]="generalForm">
+  <div class="container h-100" [formGroup]="form">
     <div class="row column">
       <div class="header">
         <div class="text gray">
@@ -18,7 +20,7 @@
           <sw-input-text class="input" formControlName="name">
             <span class="placeholder">Form Name</span>
           </sw-input-text>
-          <sw-dropdown-input class="input" formControlName="type" [options]="typeOptions" >
+          <sw-dropdown-input class="input" formControlName="type" [options]="typeOptions">
             <span class="label">Form Type</span>
           </sw-dropdown-input>
         </div>
@@ -26,7 +28,7 @@
 
     </div>
 
-    <div class="row second no-m column" *ngIf="newForm">
+    <div class="row second no-m column" *ngIf="isNew">
       <div class="header">
         <div class="text">
           Choose the way you want to create your form
@@ -34,8 +36,8 @@
       </div>
 
       <div class="content h-100">
-        <sw-input-button-group formControlName="dublicate" [options]="buttonOptions"></sw-input-button-group>
-        <div class="row w-100 h-100 no-m" *ngIf="generalForm.get('dublicate').value">
+        <sw-input-button-group [formControl]="extendsControl" [options]="buttonOptions"></sw-input-button-group>
+        <div class="row w-100 h-100 no-m" *ngIf="extends">
           <div class="col-3" style="padding-left: 8px; padding-right: 8px;">
             <div class="search-wrap">
               <input class="search" [formControl]="filter" placeholder="Search" />
@@ -48,12 +50,12 @@
           </div>
           <div class="col-9" style="padding-left: 8px; padding-right: 8px; height: 100%;">
             <div class="form-preview">
-              <ng-container *ngIf="selectedItem; else noPdf">
+              <ng-container *ngIf="extendedForm; else noPdf">
                 <div class="title">
-                  <div class="name"> {{ selectedItem.name }}</div>
+                  <div class="name"> {{ extendedForm.name }}</div>
                 </div>
                 <div class="pdf-containerx">
-                  <pdf-viewer [src]="selectedItem.src" style="display: block; margin-top: 60px;" zoom="0.7">
+                  <pdf-viewer [src]="extendedFormSrc" style="display: block; margin-top: 60px;" zoom="0.7">
                   </pdf-viewer>
                 </div>
               </ng-container>
@@ -76,7 +78,9 @@
   <sw-button class="outline-btn" style="margin-right: 10px;" (click)="prevStep()">
     Cancel
   </sw-button>
-  <sw-button (click)="nextStep()" [disabled]="generalForm.invalid">
+  <sw-button (click)="nextStep()" [disabled]="form.invalid || saving">
     Save & Go Next Step
   </sw-button>
 </div>
+
+</ng-container>

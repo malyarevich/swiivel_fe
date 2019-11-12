@@ -1,6 +1,6 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { FormService } from '@app/form/form.service';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { takeUntil, takeWhile } from 'rxjs/operators';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { cloneDeep } from 'lodash';
@@ -9,7 +9,8 @@ import { isArray } from 'util';
 @Component({
   selector: 'sw-builder',
   templateUrl: './builder.component.html',
-  styleUrls: ['./builder.component.scss']
+  styleUrls: ['./builder.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BuilderComponent implements OnInit, OnDestroy {
 
@@ -17,6 +18,8 @@ export class BuilderComponent implements OnInit, OnDestroy {
   public expanded: boolean = false;
 
   public form: FormGroup;
+  public formSubscription: Subscription;
+  public sectionsNames = ['packetIntroduction','formFields', 'consent', 'termsConditionals', 'documentsForms'];
 
   private destroyed$ = new Subject();
 
@@ -25,62 +28,69 @@ export class BuilderComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private cdr: ChangeDetectorRef
   ) {
-    this.form = this.fb.group({
-      activeSections: this.fb.group({
-        packetIntroduction: this.fb.group({ isActive: [false], showSideInfo: [false] }),
-        formFields: this.fb.group({ isActive: [false], showSideInfo: [false] }),
-        consent: this.fb.group({ isActive: [false], showSideInfo: [false] }),
-        termsConditionals: this.fb.group({ isActive: [false], showSideInfo: [false] }),
-        documentsForms: this.fb.group({ isActive: [false], showSideInfo: [false] })
-      })
-    });
     this.formService.form$.pipe(
       takeUntil(this.destroyed$)
     ).subscribe((form: FormGroup )=> {
       if (form) {
-        this.initForm(form);
+        this.form = form;
+        let changedForm;
+        if (!this.form.get('packetIntroduction')) {
+          if (!changedForm) changedForm = cloneDeep(form);
+          changedForm.addControl('packetIntroduction', this.fb.group({
+            sectionName: ['Packet Introduction'],
+            sectionWidth: ['full'],
+            content: ['']
+          }));
+        }
+        if (!this.form.get('consentInfo')) {
+          if (!changedForm) changedForm = cloneDeep(form);
+          changedForm.addControl('consentInfo', this.fb.group({
+            sectionName: ['Consent Section'],
+            sectionWidth: ['full'],
+            consents: [[]]
+          }));
+        }
+        if (!this.form.get('activeSections')) {
+          if (!changedForm) changedForm = cloneDeep(form);
+          changedForm.addControl('activeSections', this.fb.group({
+            packetIntroduction: this.fb.group({ isActive: [false], showSideInfo: [false] }),
+            formFields: this.fb.group({ isActive: [false], showSideInfo: [false] }),
+            consent: this.fb.group({ isActive: [false], showSideInfo: [false] }),
+            termsConditionals: this.fb.group({ isActive: [false], showSideInfo: [false] }),
+            documentsForms: this.fb.group({ isActive: [false], showSideInfo: [false] })
+          }));
+        } else {
+          if (!changedForm) changedForm = cloneDeep(form);
+          let changedFields = 0;
+          for (const section of this.sectionsNames) {
+            if (!changedForm.get(['activeSections', section])) {
+              changedFields++;
+              (changedForm.get('activeSections') as FormGroup).addControl(section, this.fb.group({isActive: [false], showSideInfo: [false]}));
+            }
+          }
+          if (changedFields === 0) changedForm = null;
+        }
+        if (changedForm) {
+          this.formService.form = changedForm;
+        } else {
+          this.cdr.markForCheck();
+          if (this.formSubscription) this.formSubscription.unsubscribe();
+          this.formSubscription = this.form.valueChanges.subscribe((value) => {
+            console.groupCollapsed('Form value changed');
+            console.log(value);
+            console.groupEnd();
+          });
+        }
       }
     });
-    this.formService.section$.pipe(
-      takeUntil(this.destroyed$)
-    ).subscribe(section => {
-      this.expandedSection = section;
-    });
+    
   }
 
   ngOnInit() {
   }
   // isActive: [false], showSideInfo: [false]
 
-  initForm(form: any): void {
-    if (!form.get('activeSections')) {
-      form.addControl('activeSections', this.fb.group({
-        packetIntroduction: this.fb.group({ isActive: [false], showSideInfo: [false] }),
-        formFields: this.fb.group({ isActive: [false], showSideInfo: [false] }),
-        consent: this.fb.group({ isActive: [false], showSideInfo: [false] }),
-        termsConditionals: this.fb.group({ isActive: [false], showSideInfo: [false] }),
-        documentsForms: this.fb.group({ isActive: [false], showSideInfo: [false] })
-      }));
-    } else {
-      if (!form.get('activeSections.packetIntroduction')) {
-        form.get('activeSections').addControl('packetIntroduction', this.fb.group({isActive: [false], showSideInfo: [false]}));
-      }
-      if (!form.get('activeSections.formFields')) {
-        form.get('activeSections').addControl('formFields', this.fb.group({isActive: [false], showSideInfo: [false]}));
-      }
-      if (!form.get('activeSections.consent')) {
-        form.get('activeSections').addControl('consent', this.fb.group({isActive: [false], showSideInfo: [false]}));
-      }
-      if (!form.get('activeSections.termsConditionals')) {
-        form.get('activeSections').addControl('termsConditionals', this.fb.group({isActive: [false], showSideInfo: [false]}));
-      }
-      if (!form.get('activeSections.documentsForms')) {
-        form.get('activeSections').addControl('documentsForms', this.fb.group({isActive: [false], showSideInfo: [false]}));
-      }
-    }
-    this.form = form;
-    this.cdr.markForCheck();
-  }
+  
   activeToggle(field) {
     console.log(field, this.form.get('activeSections.formFields'))
   }
@@ -102,29 +112,27 @@ export class BuilderComponent implements OnInit, OnDestroy {
   }
 
   onClick(section: string, event?: MouseEvent): void {
-    if (section !== this.expandedSection) {
-      this.expanded = true;
-      this.formService.section = section;
-    }
-  }
-
-  addTermsConditionsItem() {
-    let termsConditionsItem = {
-      title: "",
-      id: "",
-      text: "",
-      checkbox: {
-        isActive: false,
-        checked: false,
-        text: ""
+    // if (event) {
+    //   if (!(event.target as HTMLElement).classList.contains('sidebar_section')) {
+    //     event.preventDefault();
+    //     event.stopImmediatePropagation();
+    //     console.log('button')
+    //   }
+    // }
+    let showControl = this.form.get(['activeSections', section, 'showSideInfo']);
+    if (showControl.value === false) {
+      let activeSections = {};
+      for (const sectionName of this.sectionsNames) {
+        activeSections[sectionName] = {showSideInfo: false};
       }
-    };
-    if (!isArray(this.form.get('termsConditions.termsConditionsItems').value)) {
-      this.form.get('termsConditions.termsConditionsItems').patchValue([]);
+      activeSections[section]['showSideInfo'] = true;
+      this.form.get('activeSections').patchValue(activeSections);
+      this.expandedSection = section;
+    } else {
+      showControl.setValue(false);
+      this.expandedSection = null;
     }
-    let tmp = this.form.get('termsConditions.termsConditionsItems').value;
-    tmp.push(termsConditionsItem);
-    this.form.get('termsConditions.termsConditionsItems').patchValue(tmp);
+    this.cdr.markForCheck()
   }
 
 

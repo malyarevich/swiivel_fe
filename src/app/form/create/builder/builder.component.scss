@@ -47,6 +47,9 @@
             display: flex;
           }
         }
+        .sidebar_section__content {
+          display: flex;
+        }
       }
       &.expanded.open {
         .sidebar_section__content {

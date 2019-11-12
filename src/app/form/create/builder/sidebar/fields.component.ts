@@ -33,7 +33,7 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
 
   @Input()
   set form(_form) {
-    console.log('Fields INput form', _form);
+    // console.log('Fields INput form', _form);
   }
 
   constructor(
@@ -54,23 +54,7 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
     this.destroyed$.next(true);
     this.destroyed$.complete();
   }
-  toggleNode(node: any): void {
-    this.treeSource.toggle(node);
-    if (!node.isActive) {
-      this.service.removeField(node);
-      let topInactive: any;
-      for (const ancestor of this.treeSource.parentsOf(node)) {
-        if (!ancestor.isActive) {
-          topInactive = ancestor;
-        }
-      }
-      this.treeControl.collapse(topInactive);
-    } else {
-      this.service.addField(node, Array.from(this.treeSource.parentsOf(node)).slice(0, -1));
-    }
-    node.isExpanded = this.treeControl.isExpanded(node);
-    this.cdr.markForCheck();
-  }
+  
 
   ngOnInit() {
     this.service.sidebar.subscribe((sidebar) => {
@@ -207,21 +191,42 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
     }
   }
 
+  toggleNode(node: any): void {
+    this.treeSource.toggle(node);
+    if (!node.isActive) {
+      this.service.removeFieldFromSB({...node});
+      let topInactive: any;
+      for (const ancestor of this.treeSource.parentsOf(node)) {
+        if (!ancestor.isActive) {
+          topInactive = ancestor;
+        }
+      }
+      this.treeControl.collapse(topInactive);
+    } else {
+      this.service.addFieldFromSB({...node});
+    }
+    node.isExpanded = this.treeControl.isExpanded(node);
+    this.cdr.markForCheck();
+  }
+
   toggleParentNode(node: any): void {
     this.treeSource.toggle(node);
     if (node.isActive) {
-      this.service.addField(node);
+      this.service.addFieldFromSB({...node});
       if (!this.treeControl.isExpanded(node)) {
         this.treeControl.expandDescendants(node);
       }
     } else {
-      this.service.removeField(node);
+      this.service.removeFieldFromSB({...node});
       if (this.treeControl.isExpanded(node)) {
         this.treeControl.collapseDescendants(node);
       }
     }
     node.isExpanded = this.treeControl.isExpanded(node);
     this.cdr.markForCheck();
+  }
+  addCustomField(node) {
+    console.log(`custom`, node)
   }
 
   nodeIsChecked(node) {

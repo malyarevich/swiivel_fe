@@ -84,11 +84,11 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
     return !!this._ref;
   }
 
-  writeValue(items: any[]): void {
+  writeValue(items?: any[]): void {
     this._sm.clear();
 
     if (items && items.length) {
-      this._sm.select(...items);
+      this._sm.select(items);
     }
 
     this.cdr.markForCheck();
