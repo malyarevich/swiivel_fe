@@ -24,7 +24,7 @@ export class TextSettingComponent implements OnInit {
           minLength: obj.validators && obj.validators.minLength ? obj.validators.minLength : null,
           maxLength: obj.validators && obj.validators.maxLength ? obj.validators.maxLength : null,
           criteria: obj.validators && obj.validators.criteria && this.validatorsOptions.findIndex(i => i.title === obj.validators.criteria) >= 0 ?
-            [this.validatorsOptions[this.validatorsOptions.findIndex(i => i.title === obj.validators.criteria)], [{title: 'Url'}]] : null
+            [this.validatorsOptions[this.validatorsOptions.findIndex(i => i.title === obj.validators.criteria)]] : null
         }
       }, {emitEvent: false});
     }

@@ -3,10 +3,10 @@
     <section>
       <div class="title">
         <sw-input-toggle formControlName="showDefaultValue">
-          <span class="input_label">default value</span>
+          <span class="label">default value</span>
         </sw-input-toggle>
       </div>
-      <sw-input-text *ngIf="form.get('showDefaultValue').value" class="settings-field" formControlName="defaultValue">
+      <sw-input-text *ngIf="form.get('showDefaultValue').value" class="settings-field" formControlName="default">
       </sw-input-text>
     </section>
     <section>
@@ -14,7 +14,7 @@
         General
       </div>
       <sw-input-toggle class="second" formControlName="askForConfirm">
-        <span class="input_label">Ask for confirmation</span>
+        <span class="label">Ask for confirmation</span>
       </sw-input-toggle>
     </section>
   </form>
