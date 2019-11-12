@@ -146,7 +146,7 @@ export class SendReleaseComponent implements OnInit {
   getReleaseType(item) {
     let res = '';
     if (!!item.types.email) {
-      res = 'Email';
+      res += 'Email';
     }
     if (!!item.types.email && !!item.types.mailing) {
       res += ', ';
