@@ -408,6 +408,32 @@ export class FormService {
       control.parent.removeControl(controlName);
     }
   }
+  getParentPaths(control) {
+    let parent;
+    let paths = [];
+    while (parent = control.parent) {
+      if (parent) {
+        let name = parent.get('name'); 
+        if (name && !parent.get('owner_id')) {
+          paths.unshift(name.value);
+        }
+      }
+      control = parent;
+    }
+    return paths;
+  }
+  getListsIds(ids = [], parent?) {
+    if (!parent) parent = this.form;
+    let fields = parent.get('fields')
+    if (fields) {
+      if (parent !== this.form) {
+        let thisId = [...this.getParentPaths(parent), parent.get('name').value].join('');
+        ids.push(thisId);
+      }
+      (fields as FormArray).controls.slice().map(control => this.getListsIds(ids, control));
+    }
+    return ids;
+  }
   addFieldFromSB(field: object): FormGroup {
     field = cloneDeep(field);
     field['isExpanded'] = true;

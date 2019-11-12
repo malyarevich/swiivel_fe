@@ -1,5 +1,5 @@
-<cdk-tree [dataSource]="treeSource" [treeControl]="treeControl" cdkDropList id="fields-list" cdkDropListSortingDisabled
-  [cdkDropListConnectedTo]="['sidebar-list']">
+<cdk-tree [dataSource]="treeSource" [treeControl]="treeControl" cdkDropList id="root-list"
+  [cdkDropListConnectedTo]="getListsIds()" [cdkDropListData]="treeSource.children">
   <cdk-nested-tree-node *cdkTreeNodeDef="let node" cdkTreeNodePadding cdkDrag [cdkDragData]="node"
     cdkTreeNodePaddingIndent="15px" class="field-workarea-node" (cdkDragDropped)="drop($event)">
     <!-- use a disabled button to provide padding for tree leaf -->
@@ -125,7 +125,8 @@
       <sw-settings [field]="node"></sw-settings>
     </div>
 
-    <div *ngIf="treeControl.isExpanded(node)">
+    <div *ngIf="treeControl.isExpanded(node)" cdkDropList [id]="getListId(node)"
+    [cdkDropListConnectedTo]="getListsIds()" [cdkDropListData]="node.get('fields')">
       <ng-container cdkTreeNodeOutlet></ng-container>
     </div>
 

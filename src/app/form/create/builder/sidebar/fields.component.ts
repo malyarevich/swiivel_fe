@@ -54,6 +54,7 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
     this.destroyed$.next(true);
     this.destroyed$.complete();
   }
+
   
 
   ngOnInit() {
@@ -95,6 +96,11 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
       console.log(this.filterValue);
     });
   }
+
+  getListsIds() {
+    let listIds = this.service.getListsIds();
+    return listIds
+  }
   ngAfterViewChecked(): void {
     this.cdr.detectChanges()
   }
@@ -120,12 +126,14 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
   }
 
   drop(event: CdkDragDrop<any>) {
-    if (event.container.id === 'sidebar-list') {
-      this.service.removeField(event.item.data);
-    } else {
-      this.service.moveField(event);
+    if (event.container.id !== 'sidebar-list') {
+      console.log('drop?', event.item.data)
+      // this.service.removeFieldFromSB(event.item.data);
     }
   }
+
+  
+
 
 
   onExit(event: CdkDragExit<any>) {

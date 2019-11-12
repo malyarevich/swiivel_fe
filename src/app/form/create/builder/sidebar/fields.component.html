@@ -6,8 +6,7 @@
     <i class="icon fas fa-search"></i>
   </div>
 
-  <cdk-tree [dataSource]="treeSource" [treeControl]="treeControl" cdkDropList [cdkDropListData]="treeSource" [cdkDropListConnectedTo]="['fields-list']"  cdkDropListSortingDisabled  id="sidebar-list">
-
+  <cdk-tree [dataSource]="treeSource" [treeControl]="treeControl" cdkDropList [cdkDropListData]="treeSource.children" [cdkDropListConnectedTo]="getListsIds()"  cdkDropListSortingDisabled  id="sidebar-list">
     <cdk-nested-tree-node *cdkTreeNodeDef="let node" class="field-tree-node" cdkDrag [cdkDragDisabled]="node.isActive" (cdkDragDropped)="drop($event)" [cdkDragData]="node" [hidden]="isFiltered(node)">
       <div class="field-tree-node__content">
         <div class="field-tree-node__content_node">
