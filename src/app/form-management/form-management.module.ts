@@ -5,11 +5,14 @@ import { SharedModule } from '@shared/shared.module';
 
 import { FormManagementRoutingModule } from '@app/form-management/form-management.routing.module';
 
+import { FormManagementHeaderComponent } from '@app/form-management/form-management-header/form-management-header.component';
 import { FormManagementComponent } from '@app/form-management/form-management.component';
+import { FormManagementService } from '@app/form-management/form-management.service';
 
 @NgModule({
   declarations: [
     FormManagementComponent,
+    FormManagementHeaderComponent,
   ],
   imports: [
     CommonModule,
@@ -17,7 +20,7 @@ import { FormManagementComponent } from '@app/form-management/form-management.co
     SharedModule,
     FormManagementRoutingModule,
   ],
-  providers: [],
+  providers: [FormManagementService],
   entryComponents: [FormManagementComponent]
 })
 export class FormManagementModule { }

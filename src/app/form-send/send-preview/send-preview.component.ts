@@ -1,32 +1,34 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { FormSendService } from '../form-send.service';
-import { defaultButtonOptions, IButtonOption, IGroupAccount, IPerson } from '../models/send.model';
+import { defaultButtonOptions, formType, IButtonOption, IGroupAccount, IPerson, IRound } from '../models/send.model';
 
 @Component({
   selector: 'sw-send-preview',
   templateUrl: './send-preview.component.html',
   styleUrls: ['./send-preview.component.scss']
 })
-export class SendPreviewComponent implements OnInit {
+export class SendPreviewComponent implements OnInit, OnDestroy {
   id: string;
+  isPreviewByAccount = false;
   selectedPerson: IPerson;
-  formType = 'generic';
+  formType = formType.generic;
+  previewType: FormControl = new FormControl(false);
   filter: FormControl = new FormControl('');
   buttonOptions: IButtonOption[] = defaultButtonOptions;
-  accountListSubscription: Subscription;
+  roundsListSubscription: Subscription;
   onChangeFilterSubscription: Subscription;
-  accountList: IGroupAccount[];
-  filteredAccountList: IGroupAccount[];
+  onChangePreviewTypeSubscription: Subscription;
   onSelectPersonSubscription: Subscription;
+  roundsList: IRound[];
+  filteredRoundsList: IRound[];
 
   constructor(
     private route: ActivatedRoute,
     private formSendService: FormSendService
   ) {
-    this.id = this.formSendService.formId;
     this.filter.valueChanges.subscribe((filterValue) => {
       if (filterValue && filterValue.length > 0) {
         // this.dataSource.filter(filterValue.toLowerCase())
@@ -37,16 +39,28 @@ export class SendPreviewComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.parent.params.subscribe((params: Params) => {
-      this.id = params.hasOwnProperty('id') ? params.id : '';
-      // this.initPage();
-    });
+    this.id = this.formSendService.formId;
+    // this.route.parent.params.subscribe((params: Params) => {
+    //   console.log('this.id', this.id);
+    //   this.id = params.hasOwnProperty('id') ? params.id : '';
+    //   console.log('params', params);
+    //   // this.initPage();
+    // });
 
-    this.accountListSubscription = this.formSendService.$accountsList.subscribe((accountList: IGroupAccount[]) => {
-      this.accountList = accountList;
-      this.filteredAccountList = accountList;
+    this.roundsListSubscription = this.formSendService.$roundsList.subscribe((roundsList: IRound[]) => {
+      this.roundsList = roundsList;
+      this.filteredRoundsList = roundsList;
     });
-    this.onChangeFilterSubscription = this.filter.valueChanges.subscribe(value => { this.onChangeFilter(value); } );
+    // this.accountListSubscription = this.formSendService.$accountsList.subscribe((accountList: IGroupAccount[]) => {
+    //   this.accountList = accountList;
+    //   this.filteredAccountList = accountList;
+    // });
+    this.onChangeFilterSubscription = this.filter.valueChanges.subscribe(value => {
+      this.onChangeFilter(value);
+    });
+    this.onChangePreviewTypeSubscription = this.previewType.valueChanges.subscribe(value => {
+      this.onChangePreviewType(value);
+    });
     this.onSelectPersonSubscription = this.formSendService.$currentPerson.subscribe(person => {
       this.selectedPerson = person;
       console.log('person', person);
@@ -59,17 +73,18 @@ export class SendPreviewComponent implements OnInit {
   }
 
   onChangeFilter(value: string) {
-    this.filteredAccountList = [];
-    this.accountList.forEach((groupList: IGroupAccount) => {
-      const filteredGroupList = {
-        key: groupList.key,
-        name: groupList.name,
-        data: groupList.data.filter((person: IPerson) => {
+    this.filteredRoundsList = this.roundsList.map((round: IRound) => {
+      return {
+        ...round,
+        accounts: round.accounts.filter((person: IPerson) => {
           return this.getComparingCondByDataItem(person, value);
         })
       };
-      this.filteredAccountList.push(filteredGroupList);
     });
+  }
+
+  onChangePreviewType(value: string) {
+    this.isPreviewByAccount = value === formType.account;
   }
 
   isSelectedPerson(person: IPerson): boolean {
@@ -86,6 +101,10 @@ export class SendPreviewComponent implements OnInit {
       : null;
   }
 
+  getFormId(): string {
+    return this.id ? this.id : '5dc868598ffb0857c9137122';
+  }
+
   onBack(event): void {
     if (event) {
       console.log('onBack', event);
@@ -98,4 +117,18 @@ export class SendPreviewComponent implements OnInit {
     }
   }
 
+  ngOnDestroy(): void {
+    if (this.roundsListSubscription) {
+      this.roundsListSubscription.unsubscribe();
+    }
+    if (this.onChangeFilterSubscription) {
+      this.onChangeFilterSubscription.unsubscribe();
+    }
+    if (this.onChangePreviewTypeSubscription) {
+      this.onChangePreviewTypeSubscription.unsubscribe();
+    }
+    if (this.onSelectPersonSubscription) {
+      this.onSelectPersonSubscription.unsubscribe();
+    }
+  }
 }

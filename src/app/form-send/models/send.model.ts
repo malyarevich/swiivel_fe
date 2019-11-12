@@ -1,3 +1,8 @@
+export const formType =  {
+  generic: 'generic',
+  account: 'account'
+};
+
 export interface IButtonOption {
   label: string;
   value: string;
@@ -6,11 +11,11 @@ export interface IButtonOption {
 export const defaultButtonOptions: IButtonOption[] = [
   {
     label: 'Generic Form',
-    value: 'generic'
+    value: formType.generic
   },
   {
     label: 'Account Form',
-    value: 'account'
+    value: formType.account
   }
 ];
 
@@ -35,6 +40,32 @@ export interface IGroupAccount {
   name: string;
   key: string;
   data?: IPerson[];
+}
+
+export interface IEmailType {
+  id?: number;
+  release_round_id?: number;
+  subject?: string;
+  body?: string;
+  text_link?: null;
+  created_at?: string;
+  updated_at?: string;
+}
+
+export interface ITypes {
+  email?: IEmailType;
+  mailing?: IEmailType;
+}
+
+export interface IRound {
+  accounts?: IPerson[];
+  end_date?: string;
+  form_id?: number;
+  id?: number;
+  key?: string;
+  name?: string;
+  start_date?: string;
+  types?: ITypes;
 }
 
 export const defaultAccountsList: IGroupAccount[] = [
