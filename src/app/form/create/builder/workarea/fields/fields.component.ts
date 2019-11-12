@@ -64,7 +64,7 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
         this.cdr.markForCheck();
         this.cdr.detectChanges()
       });
-      
+
     })
   }
   ngOnDestroy() {
