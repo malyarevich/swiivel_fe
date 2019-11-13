@@ -14,9 +14,9 @@ export class PhoneSettingComponent implements OnInit {
   set settings(obj: any) {
     if (obj) {
       this.form.patchValue({
-        showDefaultValue: !!obj.defaultValue,
-        showValidators: !!obj.validators,
-        defaultValue: obj.defaultValue,
+        showDefaultValue: !!obj.showDefaultValue,
+        showValidators: !!obj.showValidators,
+        default: obj.default || null,
         validators: obj.validators || []
       });
     }
@@ -29,7 +29,7 @@ export class PhoneSettingComponent implements OnInit {
     this.form = this.fb.group({
       showDefaultValue: new FormControl(false),
       showValidators: new FormControl(false),
-      defaultValue: new FormControl(null),
+      default: new FormControl(null, {updateOn: 'blur'}),
       validators: new FormGroup({
         phone: new FormControl(false),
         verifyPhone: new FormControl(false),
@@ -39,8 +39,6 @@ export class PhoneSettingComponent implements OnInit {
 
   ngOnInit() {
     this.form.valueChanges.subscribe(v => {
-      delete v.showDefaultValue;
-      delete v.showValidators;
       this.fieldSettings.emit(v);
     });
   }

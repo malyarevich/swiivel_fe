@@ -3,17 +3,17 @@
     <section>
       <div class="title">
         <sw-input-toggle formControlName="showDefaultValue">
-          <span class="input_label">default value</span>
+          <span class="label">default value</span>
         </sw-input-toggle>
       </div>
       <sw-input-phone-number *ngIf="form.get('showDefaultValue').value" class="settings-field"
-        formControlName="defaultValue">
+        formControlName="default">
       </sw-input-phone-number>
     </section>
     <section>
       <div class="title">
         <sw-input-toggle formControlName="showValidators">
-          <span class="input_label">validate</span>
+          <span class="label">validate</span>
         </sw-input-toggle>
       </div>
       <ng-container *ngIf="form.get('showValidators').value" formGroupName="validators">
