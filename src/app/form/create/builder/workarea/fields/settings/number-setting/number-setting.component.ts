@@ -16,13 +16,17 @@ export class NumberSettingComponent implements OnInit {
     if (obj) {
       console.log(obj)
       this.form.patchValue({
-        showDefaultValue: !!obj.defaultValue,
-        showValidators: obj.validators && obj.validators.length > 0,
+        showDefaultValue: !!obj.showDefaultValue,
+        showValidators: !!obj.showValidators,
         allowList: obj.allowList,
-        defaultValue: obj.defaultValue || null,
+        default: obj.default || null,
         places: obj.places || null,
-        format:  obj.format ? [this.validatorsOptions.find(o => o.title === obj.format)] : [],
-        validators: obj.validators
+        format:  obj.format && this.validatorsOptions.findIndex(i => i.title === obj.format) >= 0
+          ? [this.validatorsOptions[this.validatorsOptions.findIndex(i => i.title === obj.format)]] : [],
+        validators: {
+          min: obj.validators && obj.validators.min ? obj.validators.min : null,
+          max: obj.validators && obj.validators.max ? obj.validators.max : null
+        }
       });
     }
   }
@@ -34,20 +38,18 @@ export class NumberSettingComponent implements OnInit {
     this.form = this.fb.group({
       showDefaultValue: new FormControl(false),
       showValidators: new FormControl(false),
-      defaultValue: new FormControl(null),
+      default: new FormControl(null, {updateOn: 'blur'}),
       format: new FormControl([]),
-      places: new FormControl(null),
+      places: new FormControl(null, {updateOn: 'blur'}),
       validators: new FormGroup({
-        min: new FormControl(null),
-        max: new FormControl(null)
+        min: new FormControl(null, {updateOn: 'blur'}),
+        max: new FormControl(null, {updateOn: 'blur'})
       })
     });
   }
 
   ngOnInit() {
     this.form.valueChanges.subscribe(v => {
-      delete v.showDefaultValue;
-      delete v.showValidators;
       if (v.format && v.format[0]) { v.format = v.format[0].title }
       this.fieldSettings.emit(v);
     });
