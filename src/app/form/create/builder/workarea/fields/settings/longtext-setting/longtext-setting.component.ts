@@ -14,7 +14,19 @@ export class LongtextSettingComponent implements OnInit {
   @Input()
   set settings(obj: any) {
     if (obj) {
-      this.form.patchValue(obj);
+      this.form.patchValue({
+        showDefaultValue: !!obj.showDefaultValue,
+        showValidators: obj.showValidators,
+        columnWidth: obj.columnWidth || null,
+        rowHeigth: obj.rowHeigth || null,
+        default: obj.default || null,
+        validators: {
+          minLength: obj.validators && obj.validators.minLength ? obj.validators.minLength : null,
+          maxLength: obj.validators && obj.validators.maxLength ? obj.validators.maxLength : null,
+          criteria: obj.validators && obj.validators.criteria && this.validatorsOptions.findIndex(i => i.title === obj.validators.criteria) >= 0 ?
+            [this.validatorsOptions[this.validatorsOptions.findIndex(i => i.title === obj.validators.criteria)]] : null
+        }
+      }, {emitEvent: false});
     }
   }
   @Output() fieldSettings = new EventEmitter();
@@ -25,25 +37,21 @@ export class LongtextSettingComponent implements OnInit {
     this.form = this.fb.group({
       showDefaultValue: new FormControl(false),
       showValidators: new FormControl(false),
-      defaultValue: new FormControl([]),
-      columnWide: new FormControl([]),
-      rowHeigth: new FormControl([]),
+      default: new FormControl(null, {updateOn: 'blur'}),
+      columnWidth: new FormControl(null, {updateOn: 'blur'}),
+      rowHeigth: new FormControl(null, {updateOn: 'blur'}),
       validators: new FormGroup({
-        min: new FormControl(null),
-        max: new FormControl(null),
-        validator: new FormControl([])
+        minLength: new FormControl(null, {updateOn: 'blur'}),
+        maxLength: new FormControl(null, {updateOn: 'blur'}),
+        criteria: new FormControl([])
       })
     });
   }
 
   ngOnInit() {
     this.form.valueChanges.subscribe(v => {
-      this.fieldSettings.emit({
-        defaultValue: v.defaultValue,
-        columnWide: v.columnWide,
-        rowHeigth: v.rowHeigth,
-        validators: v.validators
-      });
+      if (v.validators.criteria && v.validators.criteria[0]) { v.validators.criteria = v.validators.criteria[0].title }
+      this.fieldSettings.emit(v);
     });
   }
 
