@@ -66,10 +66,13 @@
         <span class="label">Text</span>
       </sw-input-textarea>
     </div>
-    <!-- <div class="row item-row">
+    <div class="row item-row">
       <div class="file" *ngIf="!document?.isUpload">
         <div class="input">
-          <span class="file-name">{{attachments[document.data]?.name}}</span>
+          <span class="file-name">
+              <!-- {{attachments[document.data]?.name}} -->
+              File  name
+          </span>
           <div class="actions" style="margin-left: auto; width: fit-content;">
             <sw-icon-button (click)="openForPreview(document)" icon="fa-eye"></sw-icon-button>
             <sw-icon-button (click)="deleteAttachment(document)" icon="fa-trash"></sw-icon-button>
@@ -91,7 +94,7 @@
           <sw-icon-button icon="fa-file-alt" (click)="openFormatsPop(document)"></sw-icon-button>
         </ng-template>
       </div>
-    </div> -->
+    </div>
   </div>
 
   <ng-template #formatsOptions>

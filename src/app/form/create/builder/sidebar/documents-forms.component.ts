@@ -115,7 +115,7 @@ export class SidebarDocumentsFormsComponent implements OnInit {
         this.lform.get('formsPDF.formsPDFItems').patchValue(formsList);
         break;
     }
-    console.log(this.lform);
+    // console.log(this.lform);
   }
 
   removeItem(from: string, index: number) {
