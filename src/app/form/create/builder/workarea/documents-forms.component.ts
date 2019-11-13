@@ -2,6 +2,7 @@ import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { IconsEnum } from '@app/shared/icons.enum';
 import { DocumentsModel } from '@app/models/data-collection/form-constructor/form-builder/documents.model';
+import { ApiService } from '@app/core/api.service';
 
 @Component({
   selector: 'sw-documents-forms-workarea',
@@ -23,7 +24,8 @@ export class DocumentsFormsComponent implements OnInit {
   @ViewChild('formatsOptions', { static: false }) formatsPop;
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private api: ApiService
   ) {
     this.rootForm = this.fb.group({
 
@@ -58,12 +60,9 @@ export class DocumentsFormsComponent implements OnInit {
       const formData: FormData = new FormData();
       formData.append('attachment', file, file.name);
       console.log('FILE CHANGE', event, document, file, file.name);
-      // this.fileService.uploadFile(this.formId, formData).subscribe(result => {
-      //   this.formService.getOneForm(this.formId).subscribe(form => {
-      //     this.attachments = form.attachments;
-      //     document.data = result.hash;
-      //   });
-      // });
+      this.api.uploadFile(this.rootForm.value._id, formData).subscribe(result => {
+        console.log('UPLOAD FILE', result);
+      });
     }
   }
 
