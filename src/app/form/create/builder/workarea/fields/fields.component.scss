@@ -1,133 +1,256 @@
-@import "index";
-
-#fields-list {
-  display: block;
-  height: calc(100vh - 200px);
-}
-
-.group-tree-node {
-  .field {
-    background: #EBEEFF !important;
-    border: 1px solid rgba(67, 80, 162, 0.2);
+:host {
+  
+  .hidden {
+    display: none;
+  }
+  min-height: 100%;
+  
+  // display: flex;
+  .drag-icon {
+    margin-right: 15px;
+  }
+  box-sizing: border-box;
+  cdk-tree {
+    min-height: 100%;
+    display: block;
+    // width: 100%;
     box-sizing: border-box;
-    .name-container {
-      width: 250px;
-      .main-text {
-        font-style: normal;
-        font: 800 12px/15px $nunito-sans;
-      }
-      .hint {
-        font-style: normal;
-        font: 400 10px/13px $nunito-sans;
-      }
-    }
-    .dragdrop {
-      color: #A4A4A4;
-    }
-    &.active {
-      border: 1px solid #4350A2;
-      border-bottom-left-radius: 0;
-      border-bottom-right-radius: 0;
-    }
-  }
-}
+    
+  
+    
+    cdk-nested-tree-node {
 
-.section-tree-node {
-  .field {
-    background: #50597A;
-    sw-dropdown-input {
-      min-width: 120px;
-    }
-    .dragdrop {
-      color: #fff;
-    }
-  }
-}
-
-.field-workarea-node {
-  .field {
-    background: #fff !important;
-    border: 1px solid rgba(67, 80, 162, 0.2);
-    box-sizing: border-box;
-    padding: 10px 15px;
-    .name-container {
-      width: 300px;
-      .main-text {
-        font-style: normal;
-        font: 800 12px/15px $nunito-sans;
-      }
-      .hint {
-        font-style: normal;
-        font: 400 10px/13px $nunito-sans;
-      }
-    }
-    .dragdrop {
-      color: #A4A4A4;
-    }
-    .input {
-      margin-left: 25px;
-      &:first-of-type {
-        margin-left: 20px;
-      }
-    }
-    &.active {
-      border: 1px solid #4350A2;
-      border-bottom-left-radius: 0;
-      border-bottom-right-radius: 0;
-    }
-  }
-}
-
-.section-tree-node,
-.group-tree-node,
-.field-workarea-node {
-  display: flex;
-  flex-flow: column nowrap;
-  .field {
-    padding-left: 15px;
-    border-radius: 3px;
-    z-index: 5;
-    display: flex;
-    flex-flow: row nowrap;
-    align-items: center;
-    justify-content: space-between;
-    .main-container {
-      display: flex;
-      flex-flow: row nowrap;
-      align-items: center;
-      .drag-icon {
-        width: 25px;
-        text-align: center;
-        margin-right: 10px;
+      box-sizing: border-box;
+      &.section-tree-node {
+        box-sizing: border-box;
+        .main_container {
+          background: #50597A;
+          padding-left: 15px
+        } 
+        sw-dropdown-input {
+          min-width: 120px;
+        }
         .dragdrop {
-          font-size: 18px;
-        }
-      }
-    }
-    .actions {
-      display: flex;
-      align-items: center;
-      flex-flow: row nowrap;
-      .icon {
-        margin-left: 15px;
-        &.dragdrop {
-          padding: 15px;
-          border-left: 1px solid #C9CEEC;
-        }
-        &.active {
           color: #fff;
         }
       }
+      &.group-tree-node {
+        .main_container {
+          padding-left: 15px;
+          background: #EBEEFF !important;
+          border: 1px solid rgba(67, 80, 162, 0.2);
+          box-sizing: border-box;
+          .content {
+            box-sizing: border-box;
+            .name-container {
+              width: 250px;
+              .main-text {
+                font-style: normal;
+                font: 800 12px/15px "Nunito Sans";
+              }
+              .hint {
+                font-style: normal;
+                font: 400 10px/13px "Nunito Sans";
+              }
+            }
+            .dragdrop {
+              color: #A4A4A4;
+            }
+            &.active {
+              box-sizing: border-box;
+              border: 1px solid #4350A2;
+              border-bottom-left-radius: 0;
+              border-bottom-right-radius: 0;
+            }
+          }
+        }
+        .field-tree-node {
+          .main_container {
+            background: #fff !important;
+            // .content {
+              .name-container {
+                width: 300px;
+                .main-text {
+                  font-style: normal;
+                  font: 800 12px/15px "Nunito Sans";
+                }
+                .hint {
+                  font-style: normal;
+                  font: 400 10px/13px "Nunito Sans";
+                }
+              }
+              .dragdrop {
+                color: #A4A4A4;
+              }
+              .input {
+                margin-left: 25px;
+                // &:first-of-type {
+                //   // margin-left: 20px;
+                // }
+              }
+              &.active {
+                box-sizing: border-box;
+                border: 1px solid #4350A2;
+                border-bottom-left-radius: 0;
+                border-bottom-right-radius: 0;
+              }
+            // }
+          }
+          
+        }
+      }
+        // .main-container {
+
+        //   display: flex;
+        //   flex-flow: column nowrap;
+        //   justify-content: left;
+        //   align-items: center;
+        // }
+      .main_container {
+        
+        display: flex;
+        border-radius: 3px;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 15px;
+        box-sizing: border-box;
+        .content {
+          display: flex;
+          flex-flow: row nowrap;
+          justify-content: space-between;
+          align-items: center;
+          box-sizing: border-box;
+        }
+        .actions {
+          display: flex;
+          flex-flow: row nowrap;
+          justify-content: space-between;
+          align-items: center;
+          box-sizing: border-box;
+        }
+      }
+      
     }
   }
-  .field-tree-node,
-  .field-workarea-node {
-    padding-left: 15px;
-  }
-  .field-tree-invisible {
+  .hidden {
     display: none;
   }
-  .settings {
-    margin-top: -5px;
-  }
 }
+
+// .group-tree-node {
+//   .field {
+//     background: #EBEEFF !important;
+//     border: 1px solid rgba(67, 80, 162, 0.2);
+//     box-sizing: border-box;
+//     .name-container {
+//       width: 250px;
+//       .main-text {
+//         font-style: normal;
+//         font: 800 12px/15px "Nunito Sans";
+//       }
+//       .hint {
+//         font-style: normal;
+//         font: 400 10px/13px "Nunito Sans";
+//       }
+//     }
+//     .dragdrop {
+//       color: #A4A4A4;
+//     }
+//     &.active {
+//       border: 1px solid #4350A2;
+//       border-bottom-left-radius: 0;
+//       border-bottom-right-radius: 0;
+//     }
+//   }
+// }
+
+
+
+// .field-workarea-node {
+//   .field {
+//     background: #fff !important;
+//     border: 1px solid rgba(67, 80, 162, 0.2);
+//     box-sizing: border-box;
+//     padding: 10px 15px;
+//     .name-container {
+//       width: 300px;
+//       .main-text {
+//         font-style: normal;
+//         font: 800 12px/15px "Nunito Sans";
+//       }
+//       .hint {
+//         font-style: normal;
+//         font: 400 10px/13px "Nunito Sans";
+//       }
+//     }
+//     .dragdrop {
+//       color: #A4A4A4;
+//     }
+//     .input {
+//       margin-left: 25px;
+//       &:first-of-type {
+//         margin-left: 20px;
+//       }
+//     }
+//     &.active {
+//       border: 1px solid #4350A2;
+//       border-bottom-left-radius: 0;
+//       border-bottom-right-radius: 0;
+//     }
+//   }
+// }
+
+// .section-tree-node,
+// .group-tree-node,
+// .field-workarea-node {
+//   display: flex;
+//   flex-flow: column nowrap;
+//   .field {
+//     padding-left: 15px;
+//     border-radius: 3px;
+//     z-index: 5;
+//     display: flex;
+//     flex-flow: row nowrap;
+//     align-items: center;
+//     justify-content: space-between;
+//     .main-container {
+//       display: flex;
+//       flex-flow: row nowrap;
+//       align-items: center;
+//       .drag-icon {
+//         width: 25px;
+//         text-align: center;
+//         margin-right: 10px;
+//         .dragdrop {
+//           font-size: 18px;
+//         }
+//       }
+//     }
+//     .actions {
+//       display: flex;
+//       align-items: center;
+//       flex-flow: row nowrap;
+//       .icon {
+//         margin-left: 15px;
+//         &.dragdrop {
+//           padding: 15px;
+//           border-left: 1px solid #C9CEEC;
+//         }
+//         &.active {
+//           color: #fff;
+//         }
+//       }
+//     }
+//   }
+//   .field-tree-node,
+//   .field-workarea-node {
+//     padding-left: 15px;
+//   }
+//   .field-tree-invisible {
+//     display: none;
+//   }
+//   .settings {
+//     margin-top: -5px;
+//   }
+// }

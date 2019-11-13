@@ -427,12 +427,69 @@ export class FormService {
     let fields = parent.get('fields')
     if (fields) {
       if (parent !== this.form) {
-        let thisId = [...this.getParentPaths(parent), parent.get('name').value].join('');
+        let thisId = [...this.getParentPaths(parent), parent.get('name').value, parent.get('type').value].join('');
         ids.push(thisId);
       }
       (fields as FormArray).controls.slice().map(control => this.getListsIds(ids, control));
     }
     return ids;
+  }
+  addFieldFromSBToFormGroup(field: object, parent: FormGroup) {
+    field = cloneDeep(field);
+    field['isExpanded'] = true;
+    (parent.get('fields') as FormArray).push(this.initForm(field));
+    return parent;
+  }
+
+  addWrapper(forField?) {
+    let wrapper = this.fb.group({
+      type: 114,
+      name: 'New section',
+      isExpanded: true,
+      path: this.fb.control(['New section']),
+      pathId: 'New section114',
+      options: this.fb.group({
+        size: 3,
+        required: false,
+        unique: false,
+        hideLabel: false,
+        readonly: false
+      })
+    });
+    let fields = this.form.get('fields') as FormArray;
+    if (!fields) {
+      let fieldsArray = this.fb.array([]);
+      if (forField) {
+        this.addFieldArray('fields', [forField], wrapper);
+      } else {
+        this.addFieldArray('fields', [], wrapper);
+      }
+      fieldsArray.push(wrapper);
+      this.form.addControl('fields', fieldsArray);
+    } else {
+      fields.push(wrapper);
+    }
+    if (forField) {
+      return this.findControl(forField['path'], this.form)
+    } else {
+      return this.form.get('fields');
+    }
+  }
+  addFieldFromSBToFormArray(field: object, fa: FormArray) {
+    field = cloneDeep(field);
+    field['isExpanded'] = true;
+    if (fa.parent) {
+      (fa.parent.get('fields') as FormArray).push(this.initForm(field));
+    } else {
+      if (this.form.get('fields') && field['type'] === 114) {
+        (this.form.get('fields') as FormArray).push(this.initForm(field));
+      } else {
+        fa = this.addWrapper(field);
+      }
+      
+    }
+    // parent.push(this.initForm(field));
+    return fa;
   }
   addFieldFromSB(field: object): FormGroup {
     field = cloneDeep(field);
@@ -451,28 +508,7 @@ export class FormService {
       }
     }
     if (!parent) {
-      let wrapper = this.fb.group({
-        type: 114,
-        name: 'New section',
-        isExpanded: true,
-        options: this.fb.group({
-          size: 3,
-          required: false,
-          unique: false,
-          hideLabel: false,
-          readonly: false
-        })
-      });
-      let fields = this.form.get('fields') as FormArray;
-      if (!fields) {
-        let fieldsArray = this.fb.array([]);
-        this.addFieldArray('fields', [field], wrapper);
-        fieldsArray.push(wrapper);
-        console.log(cloneDeep(wrapper))
-        this.form.addControl('fields', fieldsArray);
-      } else {
-        fields.push(wrapper);
-      }
+      this.addWrapper(field);
       parent = this.findControl(field['path'], this.form)
     } else {
       parent.get('fields').push(this.initForm(field));
@@ -567,7 +603,7 @@ export class FormService {
       let fieldFields;
       if ('fields' in Object.keys(field)) {
         if (Array.isArray(field.fields)) {
-          let fieldFields = cloneDeep(field.fields);
+          fieldFields = cloneDeep(field.fields);
           delete field.fields;
         }
       }
@@ -640,6 +676,7 @@ export class FormService {
         }
       }
       if (data.path && !data.options) {
+        this.addField('isExpanded', false, form);
         this.addFieldGroup('options', {
           size: 3,
           required: false,

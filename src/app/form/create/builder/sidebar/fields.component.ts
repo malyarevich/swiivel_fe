@@ -1,8 +1,8 @@
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { Component, OnInit, ChangeDetectionStrategy, ViewChild, ChangeDetectorRef, AfterViewChecked, OnDestroy, Input } from '@angular/core';
-import { FormControl, FormBuilder } from '@angular/forms';
+import { FormControl, FormBuilder, FormArray, FormGroup } from '@angular/forms';
 import { ApiService } from '@app/core/api.service';
-import { FormService } from '../../../form.service';
+import { FormService } from '@app/form/form.service';
 import { CdkDragDrop, moveItemInArray, transferArrayItem, CdkDragExit } from '@angular/cdk/drag-drop';
 import { TreeDataSource, CHILDREN_SYMBOL } from '../../tree.datasource';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -10,6 +10,7 @@ import { Popup } from '@app/core/popup.service';
 import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { cloneDeep } from 'lodash';
 // import fields from '@app/shared/fields';
 
 
@@ -96,10 +97,36 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
       console.log(this.filterValue);
     });
   }
+  getListId(node) {
+    let listId = [...this.service.getParentPaths(node), node.name, node.type].join('');
+    return listId;
+  }
 
-  getListsIds() {
+  clone(node) {
+    return cloneDeep(node);
+  }
+  exit(event) {
+    // if (event.container.id === 'sidebar-list') {
+    //   debugger;
+    // }
+    console.log(event)
+  }
+
+  getListsIds(node?) {
     let listIds = this.service.getListsIds();
-    return listIds
+    if (!node) {
+      listIds = listIds.filter((id) => id.endsWith('114') || id.endsWith('113'));
+      listIds.push('root-list');
+      // listIds.push('sidebar-list')
+      return listIds;
+    }
+    let filterType = node.type;
+    let nodeId = this.getListId(node);
+    if (filterType === 113) {
+      listIds = listIds.filter((id) => id.endsWith('113') || id.endsWith('114'));
+      listIds.push('root-list')
+    }
+    return listIds.filter(id => id !== nodeId);
   }
   ngAfterViewChecked(): void {
     this.cdr.detectChanges()
@@ -127,8 +154,13 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
 
   drop(event: CdkDragDrop<any>) {
     if (event.container.id !== 'sidebar-list') {
-      console.log('drop?', event.item.data)
-      // this.service.removeFieldFromSB(event.item.data);
+      console.log(`${event.item.data.name} to ${event.container.id} at ${event.currentIndex}`, event.container.data);
+      if (event.container.data instanceof FormArray) {
+        console.log(event.currentIndex, event.previousIndex);
+        this.service.addFieldFromSBToFormArray(event.item.data, event.container.data);
+      } else if (event.container.data instanceof FormGroup) {
+        this.service.addFieldFromSBToFormGroup(event.item.data, event.container.data);
+      }
     }
   }
 

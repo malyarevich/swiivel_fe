@@ -6,7 +6,9 @@
     <i class="icon fas fa-search"></i>
   </div>
 
-  <cdk-tree [dataSource]="treeSource" [treeControl]="treeControl" cdkDropList [cdkDropListData]="treeSource.children" [cdkDropListConnectedTo]="getListsIds()"  cdkDropListSortingDisabled  id="sidebar-list">
+  <cdk-tree [dataSource]="treeSource" [treeControl]="treeControl" cdkDropList [cdkDropListData]="treeSource.children" [cdkDropListConnectedTo]="getListsIds()" cdkDropListSortingDisabled id="sidebar-list">
+    
+
     <cdk-nested-tree-node *cdkTreeNodeDef="let node" class="field-tree-node" cdkDrag [cdkDragDisabled]="node.isActive" (cdkDragDropped)="drop($event)" [cdkDragData]="node" [hidden]="isFiltered(node)">
       <div class="field-tree-node__content">
         <div class="field-tree-node__content_node">
@@ -17,62 +19,94 @@
           <span class="node-name">{{node.name}}</span>
         </div>
       </div>
+      <div *cdkDragPlaceholder>
+      <div class="field-tree-node__content">
+        <div class="field-tree-node__content_node">
+          <div class="checkbox">
+            <input type="checkbox" [checked]="treeSource.isSelected(node)">
+          </div>
+          <i class="dragdrop fas fa-ellipsis-v"></i>
+          <span class="node-name">{{node.name}}</span>
+        </div>
+      </div>
+      </div>
     </cdk-nested-tree-node>
 
     <cdk-nested-tree-node *cdkTreeNodeDef="let node; when: hasChild" class="field-tree-node"  cdkDrag [cdkDragDisabled]="node.isActive" (cdkDragDropped)="drop($event)" [cdkDragData]="node">
-      <div class="field-tree-node__content">
-        <div class="field-tree-node__content_node" [class.expanded]="treeControl.isExpanded(node)">
-          <div class="checkbox">
-            <input type="checkbox" [checked]="nodeIsChecked(node)"
-              [indeterminate]="nodeIsIndeterminate(node)" (click)="toggleParentNode(node)">
-          </div>
-          <i class="dragdrop fas fa-ellipsis-v" cdkDragHandle ></i>
-          <span class="node-name">{{node.name}}</span>
-        </div>
-        <sw-icon-button [icon]="getIcon(treeControl.isExpanded(node))" cdkTreeNodeToggle
-        [cdkTreeNodeToggleRecursive]="true"
-          [attr.aria-label]="'toggle ' + node.name">
-        </sw-icon-button>
-      </div>
-      <div *ngIf="treeControl.isExpanded(node)">
-        <ng-container cdkTreeNodeOutlet></ng-container>
-      </div>
-      <ng-container *ngIf="canCreateField(node)">
-        <div class="custom-field" [class.show]="showCreateField(node)">
-          <div class="custom-field__form">
-            <div class="custom-field__form_inputs">
-              <sw-input-text class="settings-field">
-                <span class="placeholder">Name</span>
-              </sw-input-text>
-              <sw-dropdown-input class="settings-field">
-                <span class="input_label">
-                  <p>Type</p>
-                </span>
-              </sw-dropdown-input>
-              <sw-dropdown-input class="settings-field">
-                <span class="input_label">
-                  <p>Width</p>
-                </span>
-              </sw-dropdown-input>
+        <div class="field-tree-node__content">
+          <div class="field-tree-node__content_node" [class.expanded]="treeControl.isExpanded(node)">
+            <div class="checkbox">
+              <input type="checkbox" [checked]="nodeIsChecked(node)"
+                [indeterminate]="nodeIsIndeterminate(node)" (click)="toggleParentNode(node)">
             </div>
-            <div class="custom-field__form_actions">
-              <sw-button class="outline-btn full_width narrow" style="margin-right: 5px;"
-                (click)="customFieldToggle(node)">
-                <span class="text">Cancel</span>
-              </sw-button>
-              <sw-button class="full_width narrow" (click)="addCustomField(node)">
-                <span class="text">Create Field</span>
-              </sw-button>
+            <i class="dragdrop fas fa-ellipsis-v" cdkDragHandle></i>
+            <span class="node-name">{{node.name}}</span>
+          </div>
+          <sw-icon-button [icon]="getIcon(treeControl.isExpanded(node))" cdkTreeNodeToggle
+          [cdkTreeNodeToggleRecursive]="true"
+            [attr.aria-label]="'toggle ' + node.name">
+          </sw-icon-button>
+        </div>
+        <div *cdkDragPreview>
+          <div class="field-tree-node__content">
+            <div class="field-tree-node__content_node">
+              <div class="checkbox">
+                <input type="checkbox" [checked]="nodeIsChecked(node)" [indeterminate]="nodeIsIndeterminate(node)">
+              </div>
+              <i class="dragdrop fas fa-ellipsis-v"></i>
+              <span class="node-name">{{node.name}}</span>
             </div>
           </div>
-          <div class="custom-field__button">
-            <sw-button class="outline-btn full_width narrow" (click)="customFieldToggle(node)">
-              <span class="text">Create New Field</span>
-            </sw-button>
-          </div>
         </div>
-      </ng-container>
-    </cdk-nested-tree-node>
+        <div class="field-tree-node__content" *cdkDragPlaceholder>
+            <div class="field-tree-node__content_node">
+              <div class="checkbox">
+                <input type="checkbox" [checked]="nodeIsChecked(node)" [indeterminate]="nodeIsIndeterminate(node)">
+              </div>
+              <i class="dragdrop fas fa-ellipsis-v"></i>
+              <span class="node-name">{{node.name}}</span>
+            </div>
+          </div>
+        <div [hidden]="!treeControl.isExpanded(node)">
+          <ng-container cdkTreeNodeOutlet></ng-container>
+        </div>
+        <ng-container *ngIf="canCreateField(node)">
+          <div class="custom-field" [class.show]="showCreateField(node)">
+            <div class="custom-field__form">
+              <div class="custom-field__form_inputs">
+                <sw-input-text class="settings-field">
+                  <span class="placeholder">Name</span>
+                </sw-input-text>
+                <sw-dropdown-input class="settings-field">
+                  <span class="input_label">
+                    <p>Type</p>
+                  </span>
+                </sw-dropdown-input>
+                <sw-dropdown-input class="settings-field">
+                  <span class="input_label">
+                    <p>Width</p>
+                  </span>
+                </sw-dropdown-input>
+              </div>
+              <div class="custom-field__form_actions">
+                <sw-button class="outline-btn full_width narrow" style="margin-right: 5px;"
+                  (click)="customFieldToggle(node)">
+                  <span class="text">Cancel</span>
+                </sw-button>
+                <sw-button class="full_width narrow" (click)="addCustomField(node)">
+                  <span class="text">Create Field</span>
+                </sw-button>
+              </div>
+            </div>
+            <div class="custom-field__button">
+              <sw-button class="outline-btn full_width narrow" (click)="customFieldToggle(node)">
+                <span class="text">Create New Field</span>
+              </sw-button>
+            </div>
+          </div>
+        </ng-container>
+      </cdk-nested-tree-node>
+    
   </cdk-tree>
 </div>
 
