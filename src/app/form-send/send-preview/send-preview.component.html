@@ -4,36 +4,60 @@
       <div class="sidebar-title">
         List of Accounts
       </div>
-      <sw-input-button-group class="preview" [formControl]="previewType" [options]="buttonOptions" [(ngModel)]="formType"></sw-input-button-group>
+      <sw-input-button-group
+        class="preview"
+        [formControl]="previewType"
+        [options]="buttonOptions"
+        [(ngModel)]="formType"
+      ></sw-input-button-group>
 
       <div class="search-wrap" data-e2e="search-wrap">
-        <input class="search" data-e2e="search" [formControl]="filter" placeholder="Search" />
+        <input
+          class="search"
+          data-e2e="search"
+          [formControl]="filter"
+          placeholder="Search"
+          [ngClass]="{ 
+            'disabled': !isPreviewByAccount,
+            'search--disabled': !isPreviewByAccount
+          }"
+        />
         <i class="icon fas fa-search"></i>
       </div>
 
-      <div class="filtered_list btn-group-vertical">
+      <div
+        class="filtered_list btn-group-vertical"
+        [ngClass]="{ 'filtered_list--disabled': !isPreviewByAccount }"
+      >
         <ng-container *ngFor="let groupItem of filteredRoundsList">
-          <div class="filtered_list__group_title" *ngIf="groupItem.accounts.length > 0">
+          <div
+            class="filtered_list__group_title"
+            *ngIf="groupItem.accounts.length > 0"
+          >
             {{ groupItem.name | titlecase }} ({{ groupItem.accounts.length }}):
           </div>
 
           <button
             type="button"
-            *ngFor="let personItem of groupItem.accounts"
+            *ngFor="let accountItem of groupItem.accounts"
             class="btn btn-secondary filtered_list__item"
-            [class.filtered_list__item--selected]="isSelectedPerson(personItem)"
-            (click)="selectPerson(personItem)"
+            [disabled]="!isPreviewByAccount"
+            [ngClass]="{
+              'disabled': !isPreviewByAccount,
+              'filtered_list__item--selected': isSelectedAccount(accountItem)
+            }"
+            (click)="selectAccount(accountItem)"
           >
-            {{ personItem.first_name }} {{personItem.last_name}}
+            {{ getAccountTitle(accountItem) }}
           </button>
         </ng-container>
       </div>
-
     </div>
   </div>
   <div class="col-9" style="padding-right: 0;padding-left: 0;width: 100%;">
     <!-- <app-preview-form [formId]='id'></app-preview-form> -->
-    {{isPreviewByAccount ? 'byAccount' : 'generic (/view-form)'}} : {{isPreviewByAccount ? getFamilyId() : ''}}
+    <!-- {{ isPreviewByAccount ? "byAccount" : "generic (/view-form)" }} : -->
+    <!-- {{ isPreviewByAccount ? getFamilyId() : "" }} -->
     <ng-container *ngIf="isPreviewByAccount && getFamilyId(); else onlineView">
       <sw-online-form
         [formId]="getFormId()"
@@ -57,4 +81,3 @@
     </ng-template>
   </div>
 </div>
-

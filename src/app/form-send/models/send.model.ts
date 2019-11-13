@@ -19,6 +19,7 @@ export const defaultButtonOptions: IButtonOption[] = [
   }
 ];
 
+export const hasNoFamily = 'hasNoFamily';
 export interface IPersonFamily {
   adopted?: number;
   family_id?: string;
@@ -32,6 +33,7 @@ export interface IPersonFamily {
 export interface IPerson {
   first_name: string;
   last_name: string;
+  names?: string[];
   id: number;
   person_family?: IPersonFamily;
 }

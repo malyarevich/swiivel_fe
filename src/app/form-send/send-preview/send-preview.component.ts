@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { FormSendService } from '../form-send.service';
-import { defaultButtonOptions, formType, IButtonOption, IGroupAccount, IPerson, IRound } from '../models/send.model';
+import { defaultButtonOptions, formType, IButtonOption, IPerson, IRound, hasNoFamily } from '../models/send.model';
 
 @Component({
   selector: 'sw-send-preview',
@@ -13,7 +13,7 @@ import { defaultButtonOptions, formType, IButtonOption, IGroupAccount, IPerson, 
 export class SendPreviewComponent implements OnInit, OnDestroy {
   id: string;
   isPreviewByAccount = false;
-  selectedPerson: IPerson;
+  selectedAccount: IPerson;
   formType = formType.generic;
   previewType: FormControl = new FormControl(false);
   filter: FormControl = new FormControl('');
@@ -21,21 +21,20 @@ export class SendPreviewComponent implements OnInit, OnDestroy {
   roundsListSubscription: Subscription;
   onChangeFilterSubscription: Subscription;
   onChangePreviewTypeSubscription: Subscription;
-  onSelectPersonSubscription: Subscription;
+  onSelectAccountSubscription: Subscription;
   roundsList: IRound[];
   filteredRoundsList: IRound[];
 
   constructor(
-    private route: ActivatedRoute,
     private formSendService: FormSendService
   ) {
-    this.filter.valueChanges.subscribe((filterValue) => {
-      if (filterValue && filterValue.length > 0) {
-        // this.dataSource.filter(filterValue.toLowerCase())
-      } else {
-        // this.dataSource.filter('');
-      }
-    });
+    // this.filter.valueChanges.subscribe((filterValue) => {
+    //   if (filterValue && filterValue.length > 0) {
+    //     // this.dataSource.filter(filterValue.toLowerCase())
+    //   } else {
+    //     // this.dataSource.filter('');
+    //   }
+    // });
   }
 
   ngOnInit() {
@@ -47,7 +46,7 @@ export class SendPreviewComponent implements OnInit, OnDestroy {
     //   // this.initPage();
     // });
 
-    this.roundsListSubscription = this.formSendService.$roundsList.subscribe((roundsList: IRound[]) => {
+    this.roundsListSubscription = this.formSendService.$previewRoundList.subscribe((roundsList: IRound[]) => {
       this.roundsList = roundsList;
       this.filteredRoundsList = roundsList;
     });
@@ -61,44 +60,81 @@ export class SendPreviewComponent implements OnInit, OnDestroy {
     this.onChangePreviewTypeSubscription = this.previewType.valueChanges.subscribe(value => {
       this.onChangePreviewType(value);
     });
-    this.onSelectPersonSubscription = this.formSendService.$currentPerson.subscribe(person => {
-      this.selectedPerson = person;
-      console.log('person', person);
+    this.onSelectAccountSubscription = this.formSendService.$currentAccount.subscribe(account => {
+      this.selectedAccount = account;
+      // console.log('account', account);
     });
   }
 
-  getComparingCondByDataItem(dataItem: any, value: string) {
-    return dataItem.first_name && dataItem.first_name.includes(value)
-        || dataItem.last_name && dataItem.last_name.includes(value);
+  getComparingConditionByDataItem(dataItem: IPerson, value: string) {
+    return dataItem.names
+        && dataItem.names.length > 0
+        && dataItem.names.find((name) => {
+          return name.toLowerCase().includes(value.toLowerCase());
+        })
+      || dataItem.person_family.family_name
+        && dataItem.person_family.family_name.toLowerCase().includes(value.toLowerCase());
   }
 
   onChangeFilter(value: string) {
     this.filteredRoundsList = this.roundsList.map((round: IRound) => {
       return {
         ...round,
-        accounts: round.accounts.filter((person: IPerson) => {
-          return this.getComparingCondByDataItem(person, value);
+        accounts: round.accounts.filter((account: IPerson) => {
+          return this.getComparingConditionByDataItem(account, value);
         })
       };
     });
   }
 
   onChangePreviewType(value: string) {
-    this.isPreviewByAccount = value === formType.account;
+    // this.isPreviewByAccount = value === formType.account;
+    if(value === formType.account) {
+      this.isPreviewByAccount = true;
+      this.filter.enable();
+    } else {
+      this.isPreviewByAccount = false;
+      this.filter.disable();
+    }
   }
 
-  isSelectedPerson(person: IPerson): boolean {
-    return this.selectedPerson && this.selectedPerson.id === person.id;
+  isSelectedAccount(account: IPerson): boolean {
+    return this.isPreviewByAccount
+      && this.selectedAccount
+      && this.selectedAccount.person_family
+      && account
+      && account.person_family
+      && this.selectedAccount.person_family.family_id === account.person_family.family_id;
   }
 
-  selectPerson(person: IPerson) {
-    this.formSendService.selectPerson(person);
+  selectAccount(account: IPerson) {
+    if (this.isPreviewByAccount) {
+      this.formSendService.selectAccount(account);
+    }
+  }
+
+  getNames(names: string[]): string {
+    let str = '';
+    names.forEach((name, index) => {
+      if(index === (names.length - 1) && names.length > 1) {
+        str += ` and ${name}`;
+      } else {
+        str += `, ${name}`;
+      }
+    })
+    return str;
+  }
+
+  getAccountTitle(account: IPerson): string {
+    return `${account.person_family.family_name}${this.getNames(account.names)}`
   }
 
   getFamilyId(): string {
-    return this.selectedPerson && this.selectedPerson.person_family
-      ? this.selectedPerson.person_family.family_id
-      : null;
+    return this.selectedAccount 
+      && this.selectedAccount.person_family 
+      && this.selectedAccount.person_family.family_id !== hasNoFamily
+        ? this.selectedAccount.person_family.family_id
+        : null;
   }
 
   getFormId(): string {
@@ -127,8 +163,8 @@ export class SendPreviewComponent implements OnInit, OnDestroy {
     if (this.onChangePreviewTypeSubscription) {
       this.onChangePreviewTypeSubscription.unsubscribe();
     }
-    if (this.onSelectPersonSubscription) {
-      this.onSelectPersonSubscription.unsubscribe();
+    if (this.onSelectAccountSubscription) {
+      this.onSelectAccountSubscription.unsubscribe();
     }
   }
 }
