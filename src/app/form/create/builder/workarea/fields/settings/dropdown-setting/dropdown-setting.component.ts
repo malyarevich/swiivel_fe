@@ -10,14 +10,19 @@ export class DropdownSettingComponent implements OnInit {
 
   @Input()
   set settings(obj: any) {
+    console.log
+    if (obj.fieldOptions && obj.fieldOptions.length >= 0) {
+      let fieldOptions = (this.form.get('fieldOptions') as FormArray);
+      fieldOptions.clear();
+      obj.fieldOptions.forEach(i => fieldOptions.push(this.fb.group({title: [i.title, {updateOn: 'blur'}]})));
+    }
     if (obj) {
       this.form.patchValue({
-        showDefaultValue: !!obj.defaultValue,
-        showDefaultOptions: obj.defaultOption && obj.defaultOption.length > 0,
-        defaultOption: obj.defaultOption || null,
+        showDefaultOptions: !!obj.showDefaultOptions,
+        defaultOption: obj.defaultOption  || null,
         multiple: obj.multiple || false,
-        fieldType:  obj.fieldsType ? [this.fieldsType.find(o => o.value === obj.fieldType)] : [],
-        fieldOptions: obj.fieldOptions || []
+        fieldType:  obj.fieldType && this.fieldsType.findIndex(i => i.value === obj.fieldType) >= 0
+          ? [this.fieldsType[this.fieldsType.findIndex(i => i.value === obj.fieldType)]] : [],
       });
     }
   }
@@ -57,6 +62,10 @@ export class DropdownSettingComponent implements OnInit {
         })
       ])
     });
+    this.form.valueChanges.subscribe(v => {
+      if (v.fieldType && v.fieldType[0]) { v.fieldType = v.fieldType[0].value }
+      this.fieldSettings.emit(v);
+    });
   }
 
   ngOnInit() {
@@ -71,18 +80,6 @@ export class DropdownSettingComponent implements OnInit {
 
   get optionsValue() {
     return this.form.get('fieldOptions').value;
-  }
-
-  setFormValue(obj: any) {
-    const { multiple, fieldOpt, type, defaultOption } = obj;
-
-    this.form.patchValue({
-      multiple,
-      fieldOpt: fieldOpt ? fieldOpt : [],
-      type,
-      defaultOption,
-      showDefaultOptions: defaultOption ? true : false
-    });
   }
 
   showOptions() {

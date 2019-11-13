@@ -17,7 +17,7 @@ const components = [
   { type: 103, component: NumberSettingComponent, title: 'Number Field Settings' },
   { type: 104, component: DropdownSettingComponent, title: 'Dropdown Settings' },
   { type: 105, component: DropdownSettingComponent, title: 'Dropdown Settings' },
-  // { type: 106, component: DateSettingComponent, title: 'English Date Settings' },
+  { type: 106, component: DateSettingComponent, title: 'English Date Settings' },
   { type: 107, component: CheckboxSettingComponent, title: 'Checkbox Field Settings' },
   { type: 108, component: EmailSettingComponent, title: 'Email Settings' },
   { type: 109, component: PhoneSettingComponent, title: 'Phone Number Settings' },
