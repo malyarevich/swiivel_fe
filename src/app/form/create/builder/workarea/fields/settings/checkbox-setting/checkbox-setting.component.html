@@ -3,10 +3,10 @@
     <section>
       <div class="title">
         <sw-input-toggle formControlName="showDefaultValue">
-          <span class="input_label">Default value</span>
+          <span class="label">Default value</span>
         </sw-input-toggle>
       </div>
-      <sw-dropdown-input *ngIf="form.get('showDefaultValue').value" class="settings-field" formControlName="defaultValue" [multiple]="false"
+      <sw-dropdown-input *ngIf="form.get('showDefaultValue').value" class="settings-field" formControlName="default" [multiple]="false"
         [options]="options">
       </sw-dropdown-input>
     </section>

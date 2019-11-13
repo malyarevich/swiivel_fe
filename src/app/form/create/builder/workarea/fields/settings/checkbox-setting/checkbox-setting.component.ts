@@ -13,8 +13,9 @@ export class CheckboxSettingComponent implements OnInit {
   set settings(obj: any) {
     if (obj) {
       this.form.patchValue({
-        defaultValue: obj.defaultValue ? [this.options.find(o => o.value === obj.defaultValue)] : [],
-        showDefaultValue: !!obj.defaultValue
+        default: (obj.default || obj.default === false) && this.options.findIndex(i => i.value === obj.default) >= 0
+          ? [this.options[this.options.findIndex(i => i.value === obj.default)]] : [],
+        showDefaultValue: !!obj.showDefaultValue
       });
     }
   }
@@ -29,16 +30,15 @@ export class CheckboxSettingComponent implements OnInit {
     private fb: FormBuilder
   ) {
     this.form = this.fb.group({
-      defaultValue: new FormControl([]),
+      default: new FormControl([]),
       showDefaultValue: new FormControl(false)
     });
   }
 
   ngOnInit() {
     this.form.valueChanges.subscribe(v => {
-      if (v.showDefaultValue && v.defaultValue[0]) {
-        this.fieldSettings.emit({ defaultValue: v.defaultValue[0].value });
-      }
+      if (v.default && v.default[0]) { v.default = v.default[0].value }
+      this.fieldSettings.emit(v);
     });
   }
 
