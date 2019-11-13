@@ -55,14 +55,14 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
         if (value && value['fields']) {
           this.treeSource.nodes = [];
           this.cdr.markForCheck();
-          this.cdr.detectChanges()
+          // this.cdr.detectChanges();
           this.treeSource.nodes = (form.get('fields') as FormArray).controls;
         } else {
           this.treeSource.nodes = [];
         }
         // this.treeControl.dataNodes = this.treeSource.nodes;
         this.cdr.markForCheck();
-        this.cdr.detectChanges()
+        // this.cdr.detectChanges();
       });
 
     })

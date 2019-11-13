@@ -14,7 +14,7 @@ import { isArray } from 'util';
 })
 export class BuilderComponent implements OnInit, OnDestroy {
 
-  public expandedSection: string;
+  public expandedSection: string = 'packetIntroduction';
   public expanded: boolean = false;
 
   public form: FormGroup;
@@ -134,6 +134,26 @@ export class BuilderComponent implements OnInit, OnDestroy {
     }
     this.cdr.markForCheck()
   }
+
+  addTermsConditionsItem() {
+    let termsConditionsItem = {
+      title: "",
+      id: "",
+      text: "",
+      checkbox: {
+        isActive: false,
+        checked: false,
+        text: ""
+      }
+    };
+    if (!isArray(this.form.get('termsConditions.termsConditionsItems').value)) {
+      this.form.get('termsConditions.termsConditionsItems').patchValue([]);
+    }
+    let tmp = this.form.get('termsConditions.termsConditionsItems').value;
+    tmp.push(termsConditionsItem);
+    this.form.get('termsConditions.termsConditionsItems').patchValue(tmp);
+  }
+
 
 
   ngOnDestroy() {
