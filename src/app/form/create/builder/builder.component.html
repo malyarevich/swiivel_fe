@@ -74,7 +74,7 @@
         <!-- [formControl]="sections?.get('tac')" -->
         <span (click)="onClick('termsConditionals', $event)">TERMS AND CONDITIONS</span>
         <div class="actions">
-          <sw-icon-button class="blue" style="margin-right: 5px;" icon="fa-plus-square">
+          <sw-icon-button class="blue" style="margin-right: 5px;" icon="fa-plus-square" (click)="addTermsConditionsItem()">
           </sw-icon-button>
           <sw-icon-button [class.blue]="isOpen()" [icon]="getIcon()" (click)="toggleSection()">
           </sw-icon-button>

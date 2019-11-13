@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ɵConsole } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ɵConsole, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
@@ -14,14 +14,19 @@ export class TextSettingComponent implements OnInit {
   @Input()
   set settings(obj: any) {
     if (obj) {
-      console.log(obj)
+      console.log('ALPA',obj)
       this.form.patchValue({
-        showDefaultValue: !!obj.defaultValue,
-        showValidators: obj.validators && obj.validators.length > 0,
+        showDefaultValue: !!obj.showDefaultValue,
+        showValidators: obj.showValidators,
         allowList: obj.allowList || false,
-        defaultValue: obj.defaultValue || null,
-        validators: obj.validators || {}
-      });
+        default: obj.default || null,
+        validators: {
+          minLength: obj.validators && obj.validators.minLength ? obj.validators.minLength : null,
+          maxLength: obj.validators && obj.validators.maxLength ? obj.validators.maxLength : null,
+          criteria: obj.validators && obj.validators.criteria && this.validatorsOptions.findIndex(i => i.title === obj.validators.criteria) >= 0 ?
+            [this.validatorsOptions[this.validatorsOptions.findIndex(i => i.title === obj.validators.criteria)]] : null
+        }
+      }, {emitEvent: false});
     }
   }
   @Output() fieldSettings = new EventEmitter();
@@ -33,10 +38,10 @@ export class TextSettingComponent implements OnInit {
       showDefaultValue: new FormControl(false),
       showValidators: new FormControl(false),
       allowList: new FormControl(false),
-      defaultValue: new FormControl(null),
+      default: new FormControl(null, { updateOn: 'blur' }),
       validators: new FormGroup({
-        minChar: new FormControl(null),
-        maxChar: new FormControl(null),
+        minLength: new FormControl(null, { updateOn: 'blur' }),
+        maxLength: new FormControl(null, { updateOn: 'blur' }),
         criteria: new FormControl([])
       })
     });
@@ -44,8 +49,6 @@ export class TextSettingComponent implements OnInit {
 
   ngOnInit() {
     this.form.valueChanges.subscribe(v => {
-      delete v.showDefaultValue;
-      delete v.showValidators;
       if (v.validators.criteria && v.validators.criteria[0]) { v.validators.criteria = v.validators.criteria[0].title }
       this.fieldSettings.emit(v);
     });

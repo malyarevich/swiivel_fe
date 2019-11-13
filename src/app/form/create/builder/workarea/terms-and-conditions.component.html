@@ -50,7 +50,7 @@
         </sw-input-text>
       </div>
       <div class="fields-text">
-        <sw-input-textarea [rows]="textarea.rows" [cols]="textarea.cols" [readonly]="!textarea.editable">
+        <sw-input-textarea [rows]="textarea.rows" [cols]="textarea.cols" [readonly]="!textarea.editable" [(ngModel)]="item.text">
           <span class="label">Text</span>
         </sw-input-textarea>
       </div>

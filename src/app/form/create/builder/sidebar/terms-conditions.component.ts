@@ -37,7 +37,6 @@ export class SidebarTermsConditionsComponent implements OnInit {
       }));
     }
     this.lform = _form.get('termsConditions');
-    console.log('SIDEBAR TERMSCONDITION INPUT', this.lform);
     this.cdr.markForCheck();
   }
 
@@ -57,7 +56,6 @@ export class SidebarTermsConditionsComponent implements OnInit {
       }),
       termsConditionsItems: [[]]
     });
-    console.log('SIDEBAR TERMSCONDITION', this.lform);
     this.cdr.markForCheck();
   }
 

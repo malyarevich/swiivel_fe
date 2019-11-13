@@ -7,21 +7,29 @@ import { FormGroup, FormBuilder } from '@angular/forms';
   styleUrls: ['./intro.component.scss']
 })
 export class WorkareaIntroComponent {
-  
+
   lform: FormGroup;
 
-  @Input() 
+  @Input()
   set form(_form: any) {
-    if (!_form.get('packetIntroduction')) {
-      _form.addControl('packetIntroduction', this.fb.group({
-        sectionName: ['Packet Introduction'],
-        sectionWidth: ['full'],
-        content: ['']
-      }));
+    if (_form) {
+      if (!_form.get('packetIntroduction')) {
+        _form.addControl('packetIntroduction', this.fb.group({
+          sectionName: ['Packet Introduction'],
+          sectionWidth: ['full'],
+          content: ['']
+        }));
+      }
+      this.lform = _form.get('packetIntroduction');
     }
-    this.lform = _form.get('packetIntroduction');
   }
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder) {
+    this.lform = this.fb.group({
+      sectionName: ['Packet Introduction'],
+      sectionWidth: ['full'],
+      content: ['']
+    });
+  }
 
 }

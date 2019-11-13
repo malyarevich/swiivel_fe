@@ -342,26 +342,20 @@ div.dropdown_items_container {
   }
 }
 
+.cdk-drag-placeholder {
+  opacity: 0.4;
+}
+.cdk-drag-preview {
+  display: flex;
+  width: 100%;
+  flex-flow: row nowrap;
+  box-sizing: border-box;
+}
 
-  .cdk-drag-placeholder {
-    opacity: 0.4;
-    // display: flex;
-    // width: 100%;
-    // flex-flow: row nowrap;
-    // box-sizing: border-box;
-  }
-  .cdk-drag-preview {
-    display: flex;
-    width: 100%;
-    flex-flow: row nowrap;
-    box-sizing: border-box;
-  }
-  
-  // .cdk-drag-animating {
-  //   transition: transform 250ms cubic-bezier(0, 0, 0.6, 1);
-  // }
-  
-  .cdk-drag-handle	{
-    cursor: move;
-  }
 
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+.cdk-drag-handle	{
+  cursor: move;
+}

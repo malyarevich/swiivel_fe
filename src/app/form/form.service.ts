@@ -669,6 +669,11 @@ export class FormService {
           } else {
             this.addField(key, data[key], form);
           }
+        } else if (key === 'activeSections') {
+          for (const k of Object.keys(data[key])) {
+            form.addControl('activeSections', this.fb.group({}));
+            this.addFieldGroup(k, data[key][k], form.get('activeSections'));
+          }
         } else if (isPlainObject(data[key])) {
           this.addFieldGroup(key, data[key], form);
         } else {
@@ -690,6 +695,7 @@ export class FormService {
       this.addField('name', '', form);
       this.addField('type', 'registration', form);
     }
+    console.log('New FORM', form)
     console.groupEnd();
     return form;
   }

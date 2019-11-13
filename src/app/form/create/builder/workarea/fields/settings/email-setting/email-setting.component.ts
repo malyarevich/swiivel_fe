@@ -15,8 +15,8 @@ export class EmailSettingComponent implements OnInit {
   set settings(obj: any) {
     if (obj) {
       this.form.patchValue({
-        showDefaultValue: !!obj.defaultValue,
-        defaultValue: obj.defaultValue || '',
+        showDefaultValue: !!obj.showDefaultValue,
+        default: obj.default || '',
         askForConfirm: !!obj.askForConfirm
       });
     }
@@ -28,14 +28,13 @@ export class EmailSettingComponent implements OnInit {
   ) {
     this.form = this.fb.group({
       showDefaultValue: new FormControl(false),
-      defaultValue: new FormControl('', { updateOn: 'blur'}),
+      default: new FormControl('', { updateOn: 'blur'}),
       askForConfirm: new FormControl(false),
     });
   }
 
   ngOnInit() {
     this.form.valueChanges.subscribe(v => {
-      delete v.showDefaultValue;
       this.fieldSettings.emit(v);
     });
   }

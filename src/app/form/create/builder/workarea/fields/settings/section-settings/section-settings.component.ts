@@ -15,7 +15,7 @@ export class SectionSettingsComponent implements OnInit {
   set settings(obj: any) {
     if (obj) {
       this.form.patchValue({
-        showHint: !!obj.hint,
+        showHint: !!obj.showHint,
         hint: obj.hint || '',
         displayStrategy: obj.displayStrategy,
       });
@@ -28,7 +28,7 @@ export class SectionSettingsComponent implements OnInit {
   ) {
     this.form = this.fb.group({
       showHint: new FormControl(false),
-      hint: new FormControl(''),
+      hint: new FormControl('', {updateOn: 'blur'}),
       displayStrategy: new FormControl(null),
     });
   }
@@ -40,7 +40,6 @@ export class SectionSettingsComponent implements OnInit {
   }
 
   prepareForm(value) {
-    delete value.showHint;
     this.fieldSettings.emit(value);
   }
 }

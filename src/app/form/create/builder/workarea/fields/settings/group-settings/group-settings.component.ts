@@ -18,15 +18,15 @@ export class GroupSettingsComponent implements OnInit {
       this.form.patchValue({
         required: obj.required,
         hideLabel: obj.hideLabel,
-        showHint: !!obj.hint,
-        hint: obj.hint || '',
+        showHint: !!obj.showHint,
+        hint: obj.hint || null,
         displayStrategy: obj.displayStrategy,
         repeatGroup: obj.repeatGroup,
         repeatStrategy: obj.repeatStrategy,
         prefill: obj.prefill,
-        minRep: obj.minRep,
-        maxRep: obj.maxRep,
-        numOfRep: obj.numOfRep
+        minRep: obj.minRep || null,
+        maxRep: obj.maxRep || null,
+        numOfRep: obj.numOfRep || null
       });
     }
   }
@@ -39,14 +39,14 @@ export class GroupSettingsComponent implements OnInit {
       required: new FormControl(false),
       hideLabel: new FormControl(false),
       showHint: new FormControl(false),
-      hint: new FormControl(''),
+      hint: new FormControl('', {updateOn: 'blur'}),
       displayStrategy: new FormControl(null),
       repeatGroup: new FormControl(false),
       repeatStrategy: new FormControl(null),
       prefill: new FormControl(false),
-      minRep: new FormControl(),
-      maxRep: new FormControl(),
-      numOfRep: new FormControl()
+      minRep: new FormControl(null, {updateOn: 'blur'}),
+      maxRep: new FormControl(null, {updateOn: 'blur'}),
+      numOfRep: new FormControl(null, {updateOn: 'blur'})
     });
   }
 
@@ -69,7 +69,6 @@ export class GroupSettingsComponent implements OnInit {
   }
 
   prepareForm(value) {
-    delete value.showHint;
     this.fieldSettings.emit(value);
   }
 

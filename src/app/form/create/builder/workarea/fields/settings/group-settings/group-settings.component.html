@@ -18,7 +18,7 @@
         <section>
           <div class="title">
             <sw-input-toggle formControlName="showHint">
-              <span class="input_label">Hint</span>
+              <span class="label">Hint</span>
             </sw-input-toggle>
           </div>
           <sw-input-phone-number *ngIf="form.get('showHint').value" class="settings-field" formControlName="hint">
@@ -33,7 +33,7 @@
         <section>
           <div class="title">
             <sw-input-toggle formControlName="repeatGroup">
-              <span class="input_label">Repeat This Group</span>
+              <span class="label">Repeat This Group</span>
             </sw-input-toggle>
           </div>
           <sw-radio-group class="flex-row" *ngIf="form.get('repeatGroup').value" [options]="repeatOptions"
@@ -54,12 +54,12 @@
               <div class="row_container">
                 <div class="row_container__input">
                   <sw-input-number formControlName="minRep">
-                    <span class="input_label">Min Repetitions</span>
+                    <span class="label">Min Repetitions</span>
                   </sw-input-number>
                 </div>
                 <div class="row_container__input">
                   <sw-input-number formControlName="maxRep">
-                    <span class="input_label">Max Repetitions</span>
+                    <span class="label">Max Repetitions</span>
                   </sw-input-number>
                 </div>
               </div>
@@ -71,7 +71,7 @@
               <div class="row_container">
                 <div class="row_container__input small">
                   <sw-input-number formControlName="numOfRep">
-                    <span class="input_label">Number of Repetitions</span>
+                    <span class="label">Number of Repetitions</span>
                   </sw-input-number>
                 </div>
               </div>

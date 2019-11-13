@@ -66,9 +66,9 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
         }
         // this.treeControl.dataNodes = this.treeSource.nodes;
         this.cdr.markForCheck();
-        // this.cdr.detectChanges()
+        // this.cdr.detectChanges();
       });
-      
+
     })
   }
   ngOnDestroy() {
