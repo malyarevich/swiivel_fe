@@ -77,7 +77,7 @@ export class FormTableComponent implements OnInit {
     filename: null
   };
   public filterForm: FormGroup;
-  public sort = ['name', true];
+  public sort = ['updated_at', false];
   public currentPage = 1;
 
   public statusesOptions: string[] = ['Active', 'Draft', 'In Review', 'Closed', 'Archived'];
