@@ -1,19 +1,14 @@
 <div
   class="input-search"
-  [class.input-search-has-error]="isInvalid"
-  [class.input-search-controls]="type === 'controls'"
+  [ngClass]="{'has-control': type === 'controls', 'has-error': control.control.invalid}"
 >
   <input
     class="form-control"
     type="search"
-    [ngClass]="{'input-search__value': value}"
-    [placeholder]="placeholder"
-    [id]="id"
-    [value]="value"
-    [disabled]="disabled"
-    [(ngModel)]="value"
-    (ngModelChange)="chaneInput()"
-    (blur)="onTouched()"
+    [attr.placeholder]="placeholder"
+    [attr.id]="id"
+    [formControl]="control.control"
+    (input)="onInput()"
   />
   <div class="input-search-icon"></div>
 </div>

@@ -7,13 +7,15 @@
         <div class="text gray">
           1. Basic Form Information
         </div>
-        <div class="text">
-          Good {{ getDate() }}, I am the Form Set­up Wizard [name]. I will create your form
-          with you in minutes
-        </div>
-        <div class="text">
-          What would you like to call this form and what type of form do you need?
-        </div>
+        <ng-container *ngIf="isNew">
+          <div class="text">
+            Good {{ getDate() }}, I am the Form Set­up Wizard. I will create your form
+            with you in minutes
+          </div>
+          <div class="text">
+            What would you like to call this form and what type of form do you need?
+          </div>
+        </ng-container>
       </div>
       <div class="content">
         <div class="inputs">
@@ -40,7 +42,7 @@
         <div class="row w-100 h-100 no-m" *ngIf="extends">
           <div class="col-3" style="padding-left: 8px; padding-right: 8px;">
             <div class="search-wrap">
-              <input class="search" [formControl]="filter" placeholder="Search" />
+              <input type="search" class="search" [formControl]="filter" placeholder="Search" />
               <i class="icon fas fa-search"></i>
             </div>
             <cdk-virtual-scroll-viewport itemSize="35" class="forms-viewport">
