@@ -34,6 +34,10 @@ export class BuilderComponent implements OnInit, OnDestroy {
       if (form) {
         this.form = form;
         let changedForm;
+        if (!this.form.get('attachments')) {
+          if (!changedForm) changedForm = cloneDeep(form);
+          changedForm.addControl('attachments', this.fb.group({ }));
+        }
         if (!this.form.get('packetIntroduction')) {
           if (!changedForm) changedForm = cloneDeep(form);
           changedForm.addControl('packetIntroduction', this.fb.group({

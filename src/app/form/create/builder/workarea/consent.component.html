@@ -4,12 +4,12 @@
   </div>
   <div class="sections">
     <div class="section-name">
-      <sw-input-text [(ngModel)]="lform.get('sectionName').value">
+      <sw-input-text [(ngModel)]="lform.value.sectionName">
         <span class="placeholder">Section Name</span>
       </sw-input-text>
     </div>
     <div class="section-width">
-      <sw-dropdown-input [options]="widthOption" [multiple]="false" (isPopupShown)="changePopupDisplay($event)">
+      <sw-dropdown-input [options]="widthOption" [multiple]="false">
         <span class="input_label">Section Width</span>
         <span class="input_ico"><i class="fas fa-caret-down" [ngClass]="{' fa-caret-up': popupDisplay}"></i></span>
       </sw-dropdown-input>
@@ -36,7 +36,7 @@
 
 
 </div>
-<div *ngIf="isShown" cdkDropList (cdkDropListDropped)="drop($event)">
+<div *ngIf="isContentShown" cdkDropList (cdkDropListDropped)="drop($event)">
   <div class="consent-item" *ngFor="let item of lform?.get('consents')?.value; let i = index" cdkDrag>
     <div class="consent-item__bubbles">
       <i class="fas fa-grip-vertical consent-item__bubbles-ico"></i>

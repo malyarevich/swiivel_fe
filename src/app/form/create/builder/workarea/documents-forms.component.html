@@ -8,12 +8,12 @@
   </div>
   <div class="sections">
     <div class="section-name">
-      <sw-input-text [(ngModel)]="lform.get('documents.sectionName').value">
+      <sw-input-text [(ngModel)]="lform.value.documents.sectionName">
         <span class="placeholder">Section Name</span>
       </sw-input-text>
     </div>
     <div class="section-width">
-      <sw-dropdown-input [options]="widthOption" [multiple]="false" (isPopupShown)="changePopupDisplay($event)">
+      <sw-dropdown-input [options]="widthOption" [multiple]="false">
         <span class="input_label">Section Width</span>
         <span class="input_ico"><i class="fas fa-caret-down" [ngClass]="{' fa-caret-up': popupDisplay}"></i></span>
       </sw-dropdown-input>
@@ -40,8 +40,8 @@
 </div>
 
 <div class="app-div-animation app-div-hide" [ngClass]="{
-    'app-div-show': isExpand,
-    'app-div-hide': !isExpand
+    'app-div-show': isContentShown,
+    'app-div-hide': !isContentShown
   }">
 
   <div class="documents-item" *ngFor="let document of lform.get('documents.documentsItems').value">
@@ -66,10 +66,13 @@
         <span class="label">Text</span>
       </sw-input-textarea>
     </div>
-    <!-- <div class="row item-row">
+    <div class="row item-row">
       <div class="file" *ngIf="!document?.isUpload">
         <div class="input">
-          <span class="file-name">{{attachments[document.data]?.name}}</span>
+          <span class="file-name">
+              <!-- {{attachments[document.data]?.name}} -->
+              File  name
+          </span>
           <div class="actions" style="margin-left: auto; width: fit-content;">
             <sw-icon-button (click)="openForPreview(document)" icon="fa-eye"></sw-icon-button>
             <sw-icon-button (click)="deleteAttachment(document)" icon="fa-trash"></sw-icon-button>
@@ -91,7 +94,7 @@
           <sw-icon-button icon="fa-file-alt" (click)="openFormatsPop(document)"></sw-icon-button>
         </ng-template>
       </div>
-    </div> -->
+    </div>
   </div>
 
   <ng-template #formatsOptions>
@@ -157,12 +160,12 @@
   </div>
   <div class="sections">
     <div class="section-name">
-      <sw-input-text [(ngModel)]="lform.get('formsPDF.sectionName').value">
+      <sw-input-text [(ngModel)]="lform.value.formsPDF.sectionName">
         <span class="placeholder">Section Name</span>
       </sw-input-text>
     </div>
     <div class="section-width">
-      <sw-dropdown-input [options]="widthOption" [multiple]="false" (isPopupShown)="changePopupDisplay($event)">
+      <sw-dropdown-input [options]="widthOption" [multiple]="false">
         <span class="input_label">Section Width</span>
         <span class="input_ico"><i class="fas fa-caret-down" [ngClass]="{' fa-caret-up': popupDisplay}"></i></span>
       </sw-dropdown-input>
@@ -179,9 +182,9 @@
     </div>
     <div class="controls-arrow-container">
       <div class="controls-arrow">
-        <sw-icon-button *ngIf="isContentShown" color="white" [icon]="icons.CARET_DOWN" (click)="changeIsContentShown()">
+        <sw-icon-button *ngIf="isContentFShown" color="white" [icon]="icons.CARET_DOWN" (click)="changeIsContentFShown()">
         </sw-icon-button>
-        <sw-icon-button *ngIf="!isContentShown" color="white" [icon]="icons.CARET_UP" (click)="changeIsContentShown()">
+        <sw-icon-button *ngIf="!isContentFShown" color="white" [icon]="icons.CARET_UP" (click)="changeIsContentFShown()">
         </sw-icon-button>
       </div>
     </div>
@@ -189,8 +192,8 @@
 </div>
 
 <div class="app-div-animation app-div-hide" [ngClass]="{
-    'app-div-show': isExpand,
-    'app-div-hide': !isExpand
+    'app-div-show': isContentFShown,
+    'app-div-hide': !isContentFShown
   }">
 
   <div class="documents-item" *ngFor="let forms of lform.get('formsPDF.formsPDFItems').value">

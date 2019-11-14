@@ -39,6 +39,8 @@ export class WorkareaTermsConditionComponent {
     }
   ];
   isContentShown: boolean = true;
+  public widthOption = ['4 columns', '3 columns', '2 columns', '1 column'].map(t => ({ title: t }));
+  public popupDisplay = false;
 
   @Input()
   set form(_form: any) {
