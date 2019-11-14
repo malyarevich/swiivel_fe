@@ -5,6 +5,7 @@ import { takeUntil, takeWhile } from 'rxjs/operators';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { cloneDeep } from 'lodash';
 import { isArray } from 'util';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'sw-builder',
@@ -26,8 +27,10 @@ export class BuilderComponent implements OnInit, OnDestroy {
   constructor(
     private formService: FormService,
     private fb: FormBuilder,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private router: Router
   ) {
+    this.cdr.detach();
     this.formService.form$.pipe(
       takeUntil(this.destroyed$)
     ).subscribe((form: FormGroup )=> {
@@ -85,6 +88,7 @@ export class BuilderComponent implements OnInit, OnDestroy {
             console.groupEnd();
           });
         }
+        this.cdr.reattach();
       }
     });
     
@@ -158,6 +162,16 @@ export class BuilderComponent implements OnInit, OnDestroy {
     this.form.get('termsConditions.termsConditionsItems').patchValue(tmp);
   }
 
+  prevStep() {
+    console.log(this.formService.form);;
+    this.router.navigate(['form', this.form.value._id, 'create', 'general']);
+  }
+
+  nextStep() {
+    this.formService.saveForm().subscribe((res) => {
+      this.router.navigate(['form', res._id, 'create', 'review']);
+    });
+  }
 
 
   ngOnDestroy() {
