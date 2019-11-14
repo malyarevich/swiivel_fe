@@ -669,7 +669,11 @@ export class FormService {
           } else {
             form.addControl(key, this.fb.array([]));
             data[key].forEach((item) => {
-              (form.get(key) as FormArray).push(this.initForm(item));
+              if (typeof item !== 'string') {
+                (form.get(key) as FormArray).push(this.initForm(item));
+              } else {
+                (form.get(key) as FormArray).push(this.fb.control(item));
+              }
             });
           }
         } else if (isPlainObject(data[key])) {
