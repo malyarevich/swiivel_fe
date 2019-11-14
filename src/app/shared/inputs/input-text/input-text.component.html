@@ -2,7 +2,7 @@
   <input
     [type]="_type"
     class="input_text__input"
-    [ngClass]="{ input_text__button: this._style == 'button_type' }"
+    [class.input_text__button]="_style === 'button_type'"
     (blur)="onBlur($event)"
     (input)="onChangeInput(input.value)"
     [class.empty]="isEmpty(input.value)"
