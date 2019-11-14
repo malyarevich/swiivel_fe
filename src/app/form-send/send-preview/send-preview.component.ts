@@ -153,6 +153,10 @@ export class SendPreviewComponent implements OnInit, OnDestroy {
     }
   }
 
+  prevStep() {
+    this.formSendService.prevStep();
+  }
+
   ngOnDestroy(): void {
     if (this.roundsListSubscription) {
       this.roundsListSubscription.unsubscribe();

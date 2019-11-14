@@ -1,14 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { SendService } from './send.service';
+import { FormSendService } from '@form-send/form-send.service';
 import { CdkStepper } from '@angular/cdk/stepper';
 import { StepperService } from '@app/shared/stepper.service';
 import { FormService } from '../form.service';
 
 @Component({
   selector: 'sw-send',
-  templateUrl: './send.component.html',
-  styleUrls: ['./send.component.scss']
+  templateUrl: 'send.component.html',
+  styleUrls: ['send.component.scss']
 })
 export class SendComponent implements OnInit {
 
@@ -16,7 +16,7 @@ export class SendComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private stepperService: StepperService,
-    private formSendService: SendService,
+    private formSendService: FormSendService,
     private formService: FormService,
   ) {}
 

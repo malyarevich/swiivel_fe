@@ -1,9 +1,15 @@
 <div class="row" style="margin-right: 0; margin-left: 0;">
   <div class="col-3" style="padding-right: 0;padding-left: 0;">
     <div class="sidebar-wrap">
-      <div class="sidebar-title">
-        List of Accounts
+      <div class="d-flex flex-direction-row justify-content-between">
+        <sw-button class="outline-btn" (click)="prevStep()">
+          <i class="fas fa-arrow-left"></i>
+        </sw-button>
+        <div class="sidebar-title">
+          List of Accounts
+        </div>
       </div>
+
       <sw-input-button-group
         class="preview"
         [formControl]="previewType"
