@@ -1,0 +1,89 @@
+<div class="header">
+  <div class="bubbles">
+    <i class="fas fa-grip-vertical bubbles-ico"></i>
+  </div>
+  <div class="sections">
+    <div class="section-name">
+      <sw-input-text [(ngModel)]="lform.value.sectionName">
+        <span class="placeholder">Section Name</span>
+      </sw-input-text>
+    </div>
+    <div class="section-width">
+      <sw-dropdown-input [options]="widthOption" [multiple]="false">
+        <span class="input_label">Section Width</span>
+        <span class="input_ico"><i class="fas fa-caret-down" [ngClass]="{' fa-caret-up': popupDisplay}"></i></span>
+      </sw-dropdown-input>
+    </div>
+  </div>
+  <div class="controls">
+    <div class="ico-container">
+      <div class="controls-ico">
+        <sw-icon-button [icon]="icons.SETTINGS"></sw-icon-button>
+      </div>
+    </div>
+    <div class="controls-ico">
+      <sw-icon-button [icon]="icons.CROSS"></sw-icon-button>
+    </div>
+    <div class="controls-arrow-container">
+      <div class="controls-arrow">
+        <sw-icon-button *ngIf="isContentShown" color="white" [icon]="icons.CARET_DOWN" (click)="changeIsContentShown()">
+        </sw-icon-button>
+        <sw-icon-button *ngIf="!isContentShown" color="white" [icon]="icons.CARET_UP" (click)="changeIsContentShown()">
+        </sw-icon-button>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+<div *ngIf="isContentShown" cdkDropList (cdkDropListDropped)="drop($event)">
+  <div class="consent-item" *ngFor="let item of lform?.get('consents')?.value; let i = index" cdkDrag>
+    <div class="consent-item__bubbles">
+      <i class="fas fa-grip-vertical consent-item__bubbles-ico"></i>
+    </div>
+    <div class="consent-item__fields">
+      <div class="consent-item__fields-name">
+        <sw-input-text [(ngModel)]="item.title">
+          <span class="placeholder">Document Name</span>
+        </sw-input-text>
+      </div>
+      <div class="consent-item__fields-text">
+        <sw-input-textarea [(ngModel)]="item.text.value" [rows]="textarea.rows" [cols]="textarea.cols"
+          [readonly]="!textarea.editable">
+          <span class="label">Text</span>
+        </sw-input-textarea>
+      </div>
+      <div *ngIf="item?.checkbox.isActive" class="consent-item__fields-checkbox-container">
+        <div class="consent-item__fields-checkbox">
+          <sw-input-checkbox [(ngModel)]="item?.checkbox.checked"></sw-input-checkbox>
+        </div>
+        <sw-input-text [(ngModel)]="item?.checkbox.text">
+          <span class="placeholder">Checkbox Text</span>
+        </sw-input-text>
+      </div>
+      <div *ngIf="item.signature.isRequire && item.signature.isBothParents" class="consent-item__fields-signatures">
+        <div class="consent-item__fields-signature">
+          <sw-input-textarea [rows]="textarea.rows" [cols]="textarea.cols" [readonly]="!textarea.editable">
+            <span class="label">Father's signature</span>
+          </sw-input-textarea>
+        </div>
+        <div class="consent-item__fields-signature">
+          <sw-input-textarea [rows]="textarea.rows" [cols]="textarea.cols" [readonly]="!textarea.editable">
+            <span class="label">Mother's signature</span>
+          </sw-input-textarea>
+        </div>
+      </div>
+      <div *ngIf="item.signature.isRequire && !item.signature.isBothParents" class="consent-item__fields-signatures">
+        <div class="consent-item__fields-signature">
+          <sw-input-textarea [rows]="textarea.rows" [cols]="textarea.cols" [readonly]="!textarea.editable">
+            <span class="label">Parents's signature</span>
+          </sw-input-textarea>
+        </div>
+      </div>
+      <div *ngIf="item.button.isActive" class="consent-item__fields-button">
+        <sw-input-text [(ngModel)]="item.button.text" [style]="'button_type'"></sw-input-text>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <sw-form-creator-workarea-footer></sw-form-creator-workarea-footer> -->

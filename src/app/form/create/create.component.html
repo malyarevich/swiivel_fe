@@ -1,0 +1,15 @@
+<div class="stepper-header">
+  <div class="item" [routerLink]="['general']" routerLinkActive="active">
+    General
+  </div>
+  <div class="item" [routerLink]="['builder']" routerLinkActive="active">
+    Builder
+  </div>
+  <div class="item" [routerLink]="['review']" routerLinkActive="active">
+    Review
+  </div>
+</div>
+
+<div class="stepper-content">
+  <router-outlet></router-outlet>
+</div>
