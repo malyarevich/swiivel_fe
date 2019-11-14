@@ -106,12 +106,12 @@ export class GeneralComponent implements OnInit, OnDestroy {
         if (!forms) {
           this.loadAndAppendForms(selectedType).subscribe(() => {
             this.forms$.next(
-              forms.filter(form => form.name.toLowerCase().startsWith(filterValue))
+              forms.filter(form => form.name.toLowerCase().includes(filterValue))
             );
           })
         } else {
           this.forms$.next(
-            forms.filter(form => form.name.toLowerCase().startsWith(filterValue))
+            forms.filter(form => form.name.toLowerCase().includes(filterValue))
           );
         }
       } else {

@@ -40,7 +40,7 @@
         <div class="row w-100 h-100 no-m" *ngIf="extends">
           <div class="col-3" style="padding-left: 8px; padding-right: 8px;">
             <div class="search-wrap">
-              <input class="search" [formControl]="filter" placeholder="Search" />
+              <input type="search" class="search" [formControl]="filter" placeholder="Search" />
               <i class="icon fas fa-search"></i>
             </div>
             <cdk-virtual-scroll-viewport itemSize="35" class="forms-viewport">
