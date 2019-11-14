@@ -30,6 +30,9 @@
         &:focus {
           border-color: $element-base-color;
         }
+        &--disabled {
+          background: $lightgray-color;
+        }
       }
       .icon {
         width: 24px;
@@ -52,6 +55,10 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  
+  &--disabled {
+    cursor: auto;
+  }
 
   &__group_title {
     text-transform: uppercase;
