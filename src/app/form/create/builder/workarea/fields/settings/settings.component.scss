@@ -1,0 +1,24 @@
+@import "index";
+
+.settings_container {
+  padding: 15px;
+  padding-right: 30px;
+  background-color: #fff;
+  border: 1px solid #4350A2;
+  box-sizing: border-box;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+  max-width: 1500px;
+  &__row {
+    flex-wrap: nowrap;
+    .section_title {
+      font: 800 14px/20px $nunito-sans;
+      margin-bottom: 10px;
+    }
+    .field_setting_wrap  {
+      background-color: #f3f3f3;
+      border: 1px solid #E3E3E3;
+      border-radius: 3px;
+    }
+  }
+}

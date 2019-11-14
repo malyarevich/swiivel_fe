@@ -1,0 +1,10 @@
+<div class="intro-container" *ngIf="lform">
+  <div class="title">
+    Packet Introduction
+  </div>
+  <div class="text-area">
+    <sw-input-textarea class="h-100" [formControl]="lform.get('content')">
+      <span class="label">Label</span>
+    </sw-input-textarea>
+  </div>
+</div>
