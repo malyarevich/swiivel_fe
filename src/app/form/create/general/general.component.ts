@@ -63,6 +63,9 @@ export class GeneralComponent implements OnInit, OnDestroy {
           name: this.form.get('name').value,
           type: this.typeOptions.filter(i => i.value === this.form.get('type').value)
         });
+        if (!this.isNew) {
+          this.generalForm.get('type').disable();
+        }
         this.form.get('name').setValidators([Validators.required, Validators.minLength(3)]);
         if (this.isNew && !this.form.get('example_form_id')) {
           this.form.addControl('example_form_id', this.fb.control({ value: null, disabled: true }, Validators.required));
@@ -192,6 +195,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
   async prevStep() {
     await this.router.navigate(['forms-dashboard'])
   }
+
 
   nextStep() {
     this.saving = true;

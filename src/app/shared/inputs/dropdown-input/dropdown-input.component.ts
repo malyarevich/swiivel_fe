@@ -35,8 +35,7 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
   onTouched: Function;
   dropdownList: any[];
   _multiple = false;
-
-  @Input() disabled = false;
+  disabled: boolean;
   @Input() dropdownSubHeader = false;
   @Input() isActive = true;
   @Input() isClearable = false;
@@ -100,6 +99,10 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
 
   registerOnChange(fn: Function): void {
     this.onChange = fn;
+  }
+
+  setDisabledState(isDisabled: boolean) {
+    this.disabled = isDisabled;
   }
 
   isSelected(item) {
