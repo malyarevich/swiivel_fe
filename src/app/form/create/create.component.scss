@@ -13,14 +13,17 @@
     .item {
       font: 800 12px/15px $nunito-sans;
       color: #909090;
+      cursor: pointer;
       margin-right: 30px;
       text-transform: capitalize;
-      cursor: pointer;
       &.active {
         color: #4350A2;
       }
       &:last-of-type {
         margin-right: 0;
+      }
+      &.disabled {
+        cursor: not-allowed;
       }
     }
   }

@@ -4,7 +4,7 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { FormBuilder, FormGroup, Validators, FormArray, FormControl, AbstractControl } from '@angular/forms';
 import { ApiService } from '@app/core/api.service';
 import { cloneDeep, flatMap, get, isArrayLike, isPlainObject, isString, set, unset, values } from 'lodash';
-import { BehaviorSubject, Subject, from, throwError } from 'rxjs';
+import { BehaviorSubject, Subject, from, throwError, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 const flatten = (fields = []) => {
@@ -60,7 +60,8 @@ export class FormService {
   private formTemplateSubject$: BehaviorSubject<any> = new BehaviorSubject(null);
   // public form: FormGroup;
   private formData = {};
-  _form = new BehaviorSubject(null);
+  _form: BehaviorSubject<FormGroup> = new BehaviorSubject<FormGroup>(null);
+  private isFormHasIdSubject$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   formsById = {};
   public fieldTypes = {
     schema: [],
@@ -83,11 +84,13 @@ export class FormService {
 
   loadForm(formId?: string) {
     if (formId !== 'new') {
-      this.api.getFormTemplate(formId).subscribe(data => {
+      const getFormTemplate = this.api.getFormTemplate(formId);
+      getFormTemplate.subscribe(data => {
         if (data) {
           this.form = this.initForm(data);
         }
       });
+      return getFormTemplate;
     } else {
       this.form = this.initForm({ type: 'registration', name: null });
     }
@@ -736,6 +739,22 @@ export class FormService {
 
   set form(form: FormGroup) {
     this._form.next(form);
+  }
+
+  set isFormHasId (flag: boolean) {
+    this.isFormHasIdSubject$.next(flag);
+  }
+
+  get isFormHasId (): boolean {
+    return this.isFormHasIdSubject$.getValue();
+  }
+
+  get isFormHasId$ (): Observable<boolean> {
+    return this.isFormHasIdSubject$.asObservable();
+  }
+
+  get isFormHasIdSubject (): BehaviorSubject<boolean> {
+    return this.isFormHasIdSubject$;
   }
 
   set formTemplate(data: any) {

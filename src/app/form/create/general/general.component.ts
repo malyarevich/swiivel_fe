@@ -202,6 +202,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
 
     }, (error) => {
       console.error(error);
+      this.saving = false;
     }, () => {
       this.saving = false;
     });
