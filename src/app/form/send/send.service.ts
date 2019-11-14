@@ -11,7 +11,7 @@ import {
 } from "./models/send.model";
 
 @Injectable()
-export class FormSendService {
+export class SendService {
   private form_id: string;
   private periodsSubject: BehaviorSubject<any> = new BehaviorSubject<any>([]);
   private currentPeriods: BehaviorSubject<any> = new BehaviorSubject<any>([]);

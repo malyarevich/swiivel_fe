@@ -1,0 +1,277 @@
+@import 'index';
+
+:host {
+  width: 100%;
+  .header-line {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    .text {
+      font-style: normal;
+      font: 800 18px/20px $nunito-sans;
+    }
+  }
+  .search-wrap {
+    width: 100%;
+    position: relative;
+    margin-bottom: 15px;
+    .search {
+      width: 100%;
+      border-radius: 100px;
+      height: 30px;
+      padding: 8px 22px 8px 27px;
+      border: 1px solid $soft-gray;
+      box-sizing: border-box;
+      &:focus {
+        border-color: $element-base-color;
+      }
+    }
+    .icon {
+      width: 24px;
+      height: 24px;
+      position: absolute;
+      left: 4px;
+      top: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: $icon-gray;
+      font-size: 14px;
+    }
+  }
+  .section-wrap {
+    padding: 25px;
+    background-color: $white;
+    border-radius: 3px;
+    margin-bottom: 10px;
+    .section-title {
+      text-align: center;
+      letter-spacing: 0.22px;
+      text-transform: uppercase;
+      color: $gray-color;
+      font: 400 13px/15px $nunito-sans;
+      margin-bottom: 15px;
+    }
+    .section-main-text {
+      text-align: center;
+      font: 800 18px/20px $nunito-sans;
+      margin-bottom: 30px;
+    }
+  }
+  div.list-viewport {
+    overflow: auto;
+  }
+  .list-viewport {
+    width: 100%;
+    min-height: 250px;
+    max-height: 380px;
+    border-radius: 3px;
+    .list-item {
+      padding: 10px;
+      font: 800 12px/15px $nunito-sans;
+      cursor: pointer;
+      color: $black-text;
+      background: $white;
+      box-shadow: inset 0px -1px 0px rgba(67, 80, 162, 0.4);
+      .item-title {
+        display: flex;
+        .action {
+          margin-left: auto;
+          i {
+            color: $icon-gray;
+          }
+        }
+      }
+      .splits {
+        margin-top: 3px;
+        font: 400 10px/13px $nunito-sans;
+        color: $gray-color;
+      }
+      &:nth-child(odd) {
+        background: $table-row-odd-background-color;
+      }
+      &.selected {
+        background: $light-purple !important;
+      }
+    }
+  }
+
+  .lists-wrap {
+    display: flex;
+    padding: 15px 0;
+    border: 1px solid $dark-grey;
+    box-sizing: border-box;
+    border-radius: 3px;
+    background: $white;
+    .list-wrap {
+      &:not(:last-of-type) {
+        border-right: 1px solid $soft-gray;
+      }
+      .list-title {
+        font: 800 11px/15px $nunito-sans;
+        letter-spacing: 0.37px;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+      }
+      .period-title {
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+        font: 800 9px/13px $nunito-sans;
+        color: $black-text;
+        margin-bottom: 5px;
+      }
+    }
+  }
+  round-body {
+    padding: 0;
+    .add-button-wrap {
+      margin-bottom: 10px;
+      // display: flex;
+      // flex-direction: row-reverse;
+      // justify-content: flex-end;
+    }
+  }
+  .rounds-table {
+    width: 100%;
+    .table-head {
+      background: $dark-grey;
+      border-radius: 2px;
+      th {
+        padding: 10px;
+        .text {
+          text-transform: uppercase;
+          font: 400 9px/13px $nunito-sans;
+          letter-spacing: 0.3px;
+          margin-right: 5px;
+        }
+      }
+    }
+    .table-body {
+      .round-item {
+        background: $white;
+        box-shadow: inset 0px -1px 0px $shadow-gray-color;
+        td {
+          padding-top: 15px;
+          padding-bottom: 15px;
+          &:first-of-type {
+            padding-left: 15px;
+          }
+          &:last-of-type {
+            padding-right: 15px;
+          }
+        }
+        &:nth-child(odd) {
+          background: $table-row-odd-background-color;
+        }
+      }
+      .table_actions {
+        i {
+          color: $icon-gray;
+          cursor: pointer;
+          margin-left: 15px;
+        }
+      }
+      .form-table-row {
+        background: $light-yellow;
+        box-shadow: inset 0px -1px 0px rgba(67, 80, 162, 0.3);
+        .form-wrap {
+          padding: 25px;
+          .section-title {
+            color: $black;
+            font: 800 11px/15px $nunito-sans;
+            letter-spacing: 0.37px;
+            text-transform: uppercase;
+          }
+          .section-content {
+            margin-bottom: 25px;
+            .input-m {
+              padding-left: 5px;
+              padding-right: 5px;
+            }
+            .input-m-r {
+              padding-right: 5px;
+            }
+            .input-m-l {
+              padding-left: 5px;
+            }
+            .type-wrap {
+              border: 1px solid $dark-grey;
+              background: $white;
+              box-sizing: border-box;
+              border-radius: 3px;
+              padding: 15px;
+              text-align: center;
+              .icon-wrap {
+                margin-bottom: 5px;
+              }
+              .content-mail {
+                display: none;
+                flex-flow: column nowrap;
+                span.label {
+                  text-align: start;
+                }
+                .select {
+                  border: none;
+                  background: inherit;
+                  color: $element-base-color;
+                  font: 800 12px/15px $nunito-sans;
+                  // pointer-events: none;
+                }
+                .select-icon {
+                  color: $icon-gray;
+                }
+              }
+              &.selected {
+                background: #F4F6FE;
+                border: 1px solid $element-base-color;
+                min-height: 100%;
+                .content-mail {
+                  display: flex;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .actions-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .item {
+    padding: 10px;
+    display: flex;
+    flex-flow: row nowrap;
+    box-shadow: inset 0px -1px 0px $shadow-gray-color;
+    sw-icon-button {
+      margin-left: auto;
+    }
+    span.label {
+      display: flex;
+      align-items: center;
+      .count {
+        color: $soft-gray;
+        margin: 0 0 0 5px;
+      }
+    }
+  }
+  .nested {
+    margin-left: 15px;
+  }
+  .list-wrap {
+    &:not(:last-of-type) {
+      border-right: 1px solid $soft-gray;
+    }
+  }
+  .stepper-buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+    sw-button:nth-child(1) {
+      margin-right: 10px;
+    }
+  }
+}

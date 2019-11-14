@@ -1,1 +1,8 @@
-<p>send works!</p>
+<sw-stepper [headerOptions]="['Release', 'Preview']" #stepper>
+  <cdk-step>
+    <sw-send-release></sw-send-release>
+  </cdk-step>
+  <cdk-step>
+    <sw-send-preview></sw-send-preview>
+  </cdk-step>
+</sw-stepper>
