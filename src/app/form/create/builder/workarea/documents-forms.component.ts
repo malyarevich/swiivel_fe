@@ -14,6 +14,10 @@ export class DocumentsFormsComponent implements OnInit {
   public lform: FormGroup;
   public icons = IconsEnum;
   private rootForm: FormGroup;
+  public widthOption = ['4 columns', '3 columns', '2 columns', '1 column'].map(t => ({ title: t }));
+  public popupDisplay = false;
+  public isContentShown: boolean = true;
+  public isContentFShown: boolean = true;
 
   @Input()
   set form(_form) {
@@ -77,5 +81,11 @@ export class DocumentsFormsComponent implements OnInit {
   openForPreview(document: DocumentsModel) {
     if (!document.data) { return; }
     // window.open(this.attachments[document.data].link);
+  }
+  changeIsContentShown(): void {
+    this.isContentShown = !this.isContentShown;
+  }
+  changeIsContentFShown(): void {
+    this.isContentFShown = !this.isContentFShown;
   }
 }

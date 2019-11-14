@@ -4,12 +4,12 @@
   </div>
   <div class="sections">
     <div class="section-name">
-      <sw-input-text [(ngModel)]="lform.get('sectionName').value">
+      <sw-input-text [(ngModel)]="lform.value.sectionName">
         <span class="placeholder">Section Name</span>
       </sw-input-text>
     </div>
     <div class="section-width">
-      <sw-dropdown-input [options]="widthOption" [multiple]="false" (isPopupShown)="changePopupDisplay($event)">
+      <sw-dropdown-input [options]="widthOption" [multiple]="false">
         <span class="input_label">Section Width</span>
         <span class="input_ico"><i class="fas fa-caret-down" [ngClass]="{' fa-caret-up': popupDisplay}"></i></span>
       </sw-dropdown-input>
