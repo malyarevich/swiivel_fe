@@ -108,6 +108,10 @@ export class ApiService {
     return this.http.put(`/proxy/form-builder/release/round/${roundId}`, round);
   }
 
+  deleteRound(roundId) {
+    return this.http.delete(`/proxy/form-builder/release/round/${roundId}`);
+  }
+
   // FORM SEND END
 
   uploadFile(formId, file) {
