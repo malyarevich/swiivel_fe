@@ -1,7 +1,7 @@
 <ng-container  *ngIf="form">
 
 <div class="general-page">
-  <div class="container h-100" [formGroup]="form">
+  <div class="container h-100" [formGroup]="generalForm">
     <div class="row column">
       <div class="header">
         <div class="text gray">
@@ -78,7 +78,7 @@
   <sw-button class="outline-btn" style="margin-right: 10px;" (click)="prevStep()">
     Cancel
   </sw-button>
-  <sw-button (click)="nextStep()" [disabled]="form.invalid || saving">
+  <sw-button (click)="nextStep()" [disabled]="generalForm.invalid || saving">
     Save & Go Next Step
   </sw-button>
 </div>

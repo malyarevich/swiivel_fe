@@ -16,7 +16,7 @@ import { cloneDeep, flatMap, get, isArrayLike, isPlainObject, isString, set, uns
 })
 export class GeneralComponent implements OnInit, OnDestroy {
 
-  
+
 
   public buttonOptions = [
     {
@@ -41,7 +41,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
   }
   public saving = false;
   private destroyed$ = new Subject();
-  private mainForm: FormGroup;
+  private generalForm: FormGroup;
 
   constructor(
     private router: Router,
@@ -50,22 +50,38 @@ export class GeneralComponent implements OnInit, OnDestroy {
     private formService: FormService,
     private cdr: ChangeDetectorRef,
     private api: ApiService
-    ) {
+  ) {
+    this.cdr.detach();
+    this.generalForm = this.fb.group({
+      name: [null, [Validators.required, Validators.minLength(3)]],
+      type: [[]]
+    });
     this.formService.form$.subscribe(form => {
       if (form !== null) {
         this.form = form;
+        this.generalForm.patchValue({
+          name: this.form.get('name').value,
+          type: this.typeOptions.filter(i => i.value === this.form.get('type').value)
+        });
+        this.form.get('name').setValidators([Validators.required, Validators.minLength(3)]);
         if (this.isNew && !this.form.get('example_form_id')) {
-          this.form.addControl('example_form_id', this.fb.control({value: null, disabled: true}, Validators.required));
+          this.form.addControl('example_form_id', this.fb.control({ value: null, disabled: true }, Validators.required));
         }
-        this.form.valueChanges.subscribe((val)=> {
-          if (Array.isArray(val.type)) {
-            this.form.get('type').setValue(val.type[0].value, {emitEvent: false, onlySelf: false, emitModelToViewChange: false})
+        this.form.valueChanges.subscribe((val) => {
+          if (Array.isArray(val.type) && val.type.length > 0) {
+            this.form.get('type').setValue(val.type[0].value)
           }
         });
+        this.generalForm.valueChanges.subscribe((val) => {
+          this.form.get('name').setValue(val.name)
+          if (Array.isArray(val.type) && val.type.length > 0) {
+            this.form.get('type').setValue(val.type[0].value)
+          }
+        });
+        this.cdr.reattach();
         this.cdr.markForCheck()
       }
     });
-    
   }
 
   get isNew() {
@@ -78,7 +94,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
         this.forms[formType] = forms;
         this.forms$.next(forms);
       }
-    ));
+      ));
   }
 
   ngOnInit(): void {
@@ -119,11 +135,11 @@ export class GeneralComponent implements OnInit, OnDestroy {
         } else {
           this.form.get('example_form_id').enable();
         }
-      } else  {
+      } else {
         this.form.get('example_form_id').disable();
       }
     })
-    
+
     this.form = this.formService.form;
   }
 
@@ -135,7 +151,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
     if (this.extendedForm) return `http://34.73.126.99/api/v1/preview-pdf-form/${this.extendedForm._id}?api_token=123`;
     else return null;
   }
- 
+
   // get selectedItem() {
   //   return this.sm.selected[0] ? {
   //     name: this.sm.selected[0].name,
@@ -171,10 +187,10 @@ export class GeneralComponent implements OnInit, OnDestroy {
     return res;
   }
 
-  
+
 
   prevStep() {
-    
+
   }
 
   nextStep() {
