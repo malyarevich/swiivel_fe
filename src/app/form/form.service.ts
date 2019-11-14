@@ -658,10 +658,6 @@ export class FormService {
     console.groupCollapsed(`Creating formgroup ${data.name || ''}`);
     const form = this.fb.group({});
     if (data) {
-      if ('fields' in Object.keys(data)) {
-        this.addFields(data.fields, form);
-        delete data.fields;
-      }
       for (const key of Object.keys(data)) {
         if (Array.isArray(data[key])) {
           if (key === 'fields') {
