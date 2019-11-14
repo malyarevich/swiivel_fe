@@ -24,6 +24,7 @@ export class DocumentsFormsComponent implements OnInit {
     console.log('DOCUMENTS FORM', _form);
     this.rootForm = _form;
     this.lform = _form.get('documentsForms');
+    console.log('DOCUMENTS LFORM', this.lform);
   }
   @ViewChild('formatsOptions', { static: false }) formatsPop;
 

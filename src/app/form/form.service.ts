@@ -663,19 +663,17 @@ export class FormService {
         delete data.fields;
       }
       for (const key of Object.keys(data)) {
-        if (isArrayLike(data[key])) {
+        if (Array.isArray(data[key])) {
           if (key === 'fields') {
             this.addFieldArray(key, data[key], form);
           } else {
-            this.addField(key, data[key], form);
-          }
-        } else if (key === 'activeSections') {
-          for (const k of Object.keys(data[key])) {
-            form.addControl('activeSections', this.fb.group({}));
-            this.addFieldGroup(k, data[key][k], form.get('activeSections'));
+            form.addControl(key, this.fb.array([]));
+            data[key].forEach((item) => {
+              (form.get(key) as FormArray).push(this.initForm(item));
+            });
           }
         } else if (isPlainObject(data[key])) {
-          this.addFieldGroup(key, data[key], form);
+          form.addControl(key, this.initForm(data[key]));
         } else {
           this.addField(key, data[key], form);
         }
