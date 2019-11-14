@@ -1,0 +1,26 @@
+<sw-back-bar
+  title="Forms"
+  (onBackClick)="backPageClick()"
+></sw-back-bar>
+<div class="app-form-management">
+  <div class="info" *ngIf="form">
+    <app-form-management-header [form]="form"></app-form-management-header>
+  </div>
+
+  <div class="app-form-management-block">
+    <div class="tabs-block">
+      <div class="tabs">
+        <button
+          *ngFor="let tab of tabsArray"
+          class="tab"
+          [class.tab-activated]="activeTab === tab"
+          (click)="activeTab = tab"
+        >
+          {{ tab }}
+        </button>
+      </div>
+
+      <sw-button [routerLink]="['//upload-review-form', activeIdForm]">Upload & Review</sw-button>
+    </div>
+  </div>
+</div>

@@ -4,7 +4,9 @@ import { ApiResponse, LoginData } from '@models/api';
 import { FormSearchParams } from '@models/form-search-params';
 import { Observable, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { HttpParams } from '@angular/common/http';
+import { HttpParams, HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +14,10 @@ import { HttpParams } from '@angular/common/http';
 
 export class ApiService {
 
-  constructor(protected http: HttpService) { }
+  constructor(
+    protected http: HttpService,
+    private aHttp: HttpClient
+  ) { }
 
   public login(data: LoginData): any {
     return this.http.post('/login', { ...data });
@@ -103,7 +108,17 @@ export class ApiService {
     return this.http.put(`/proxy/form-builder/release/round/${roundId}`, round);
   }
 
+  deleteRound(roundId) {
+    return this.http.delete(`/proxy/form-builder/release/round/${roundId}`);
+  }
+
   // FORM SEND END
+
+  uploadFile(formId, file) {
+    const fbLibk = environment.apiFB;
+    const params = new HttpParams().set("api_token", environment.api_token); 
+    return this.aHttp.post(`${fbLibk}/forms/attach/${formId}`, file, {params})
+  }
 
   public download(url: string) {
     return this.http.getFile(url)

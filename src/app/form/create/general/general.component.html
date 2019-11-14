@@ -1,0 +1,86 @@
+<ng-container  *ngIf="form">
+
+<div class="general-page">
+  <div class="container h-100" [formGroup]="generalForm">
+    <div class="row column">
+      <div class="header">
+        <div class="text gray">
+          1. Basic Form Information
+        </div>
+        <div class="text">
+          Good {{ getDate() }}, I am the Form Set­up Wizard [name]. I will create your form
+          with you in minutes
+        </div>
+        <div class="text">
+          What would you like to call this form and what type of form do you need?
+        </div>
+      </div>
+      <div class="content">
+        <div class="inputs">
+          <sw-input-text class="input" formControlName="name">
+            <span class="placeholder">Form Name</span>
+          </sw-input-text>
+          <sw-dropdown-input class="input" formControlName="type" [options]="typeOptions">
+            <span class="label">Form Type</span>
+          </sw-dropdown-input>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row second no-m column" *ngIf="isNew">
+      <div class="header">
+        <div class="text">
+          Choose the way you want to create your form
+        </div>
+      </div>
+
+      <div class="content h-100">
+        <sw-input-button-group [formControl]="extendsControl" [options]="buttonOptions"></sw-input-button-group>
+        <div class="row w-100 h-100 no-m" *ngIf="extends">
+          <div class="col-3" style="padding-left: 8px; padding-right: 8px;">
+            <div class="search-wrap">
+              <input class="search" [formControl]="filter" placeholder="Search" />
+              <i class="icon fas fa-search"></i>
+            </div>
+            <cdk-virtual-scroll-viewport itemSize="35" class="forms-viewport">
+              <div *cdkVirtualFor="let item of formsList" class="form-item" [class.selected]="isSelected(item)"
+                (click)="selectForm(item)">{{item.name}}</div>
+            </cdk-virtual-scroll-viewport>
+          </div>
+          <div class="col-9" style="padding-left: 8px; padding-right: 8px; height: 100%;">
+            <div class="form-preview">
+              <ng-container *ngIf="extendedForm; else noPdf">
+                <div class="title">
+                  <div class="name"> {{ extendedForm.name }}</div>
+                </div>
+                <div class="pdf-containerx">
+                  <pdf-viewer [src]="extendedFormSrc" style="display: block; margin-top: 60px;" zoom="0.7">
+                  </pdf-viewer>
+                </div>
+              </ng-container>
+
+              <ng-template #noPdf>
+                <div class="no-pdf-text">
+                  Please select the form you want to use as a duplicate
+                </div>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="stepper-wrap">
+  <sw-button class="outline-btn" style="margin-right: 10px;" (click)="prevStep()">
+    Cancel
+  </sw-button>
+  <sw-button (click)="nextStep()" [disabled]="generalForm.invalid || saving">
+    Save & Go Next Step
+  </sw-button>
+</div>
+
+</ng-container>

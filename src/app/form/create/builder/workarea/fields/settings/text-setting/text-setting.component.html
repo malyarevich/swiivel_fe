@@ -1,0 +1,47 @@
+<div class="field_settings_container">
+  <form [formGroup]="form">
+    <section>
+      <sw-input-checkbox class="settings-field" formControlName="allowList">
+        <span class="label">Allow List of Values</span>
+      </sw-input-checkbox>
+      <span class="hint">This will let the user enter separated items.</span>
+    </section>
+    <section>
+      <div class="title">
+        <sw-input-toggle formControlName="showDefaultValue">
+          <span class="label">default value</span>
+        </sw-input-toggle>
+      </div>
+      <sw-input-text *ngIf="form.get('showDefaultValue').value" class="settings-field" formControlName="default">
+      </sw-input-text>
+    </section>
+    <section>
+      <div class="title">
+        <sw-input-toggle formControlName="showValidators">
+          <span class="label">validate</span>
+        </sw-input-toggle>
+      </div>
+      <ng-container *ngIf="form.get('showValidators').value" formGroupName="validators">
+        <div class="row_container">
+          <div class="row_container__input">
+            <sw-dropdown-input formControlName="criteria" [multiple]="false" [options]="validatorsOptions">
+              <span class="label">Validate Criteria</span>
+            </sw-dropdown-input>
+          </div>
+        </div>
+        <div class="row_container">
+          <div class="row_container__input">
+            <sw-input-number formControlName="minLength">
+              <span class="label">Min Character</span>
+            </sw-input-number>
+          </div>
+          <div class="row_container__input">
+            <sw-input-number formControlName="maxLength">
+              <span class="label">Max Character</span>
+            </sw-input-number>
+          </div>
+        </div>
+      </ng-container>
+    </section>
+  </form>
+</div>

@@ -5,11 +5,13 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { UtilsService } from '@app/core/utils.service';
 import { FormSearchParams } from '@app/models/form-search-params';
+import { CheckService } from '@app/services/check.service';
+import { DateService } from '@app/services/date.service';
+import { StatusService } from '@app/services/status.service';
 import { FormModel } from '@models/data-collection/form.model';
 import { IconsEnum } from '@shared/icons.enum';
 import { DialogComponent } from '@shared/popup/dialog.component';
 import { get, pick } from 'lodash';
-import { DateTime } from 'luxon';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { DataCollectionService } from './data-collection.service';
 import { FormsDataSource } from './form-table.datasource';
@@ -53,6 +55,7 @@ export class FormTableComponent implements OnInit {
     page: 1,
     limit: 10,
   };
+  public lastPage = 0;
 
   // POPUP
   public popupTitle = '';
@@ -62,7 +65,6 @@ export class FormTableComponent implements OnInit {
   public isPopupOpen = false;
   public showInvite = false;
 
-  public selectedUsers = [];
   public icons = IconsEnum;
   public totalAmount = 0;
   public totalItems: number;
@@ -75,7 +77,7 @@ export class FormTableComponent implements OnInit {
     filename: null
   };
   public filterForm: FormGroup;
-  public sort = ['name', true];
+  public sort = ['updated_at', false];
   public currentPage = 1;
 
   public statusesOptions: string[] = ['Active', 'Draft', 'In Review', 'Closed', 'Archived'];
@@ -89,6 +91,9 @@ export class FormTableComponent implements OnInit {
   constructor(
     public dataCollectionService: DataCollectionService,
     public router: Router,
+    public statusService: StatusService,
+    public checkService: CheckService,
+    public dateService: DateService,
     private cdr: ChangeDetectorRef,
     private fb: FormBuilder,
     public utilsService: UtilsService,
@@ -116,8 +121,10 @@ export class FormTableComponent implements OnInit {
     this.dataSource.formsListMetadata$.subscribe(metadata => {
       if (metadata.page > metadata.last_page) {
         this.params.page = 1;
+        this.lastPage = metadata.last_page;
         this.dataSource.loadFormsList(this.params);
       } else {
+        this.lastPage = metadata.last_page;
         this.totalItems = metadata.total;
         this.currentPage = metadata.page;
       }
@@ -149,33 +156,6 @@ export class FormTableComponent implements OnInit {
     return {name: user.full_name, role: get(user, 'role.role_name')};
   }
 
-  getStatusColor(status: string): string {
-    switch (status) {
-      case 'archived':
-        return 'gray';
-      case 'active':
-        return 'green';
-      case 'draft':
-        return 'light-blue';
-      case 'review':
-        return 'yellow';
-      case 'closed':
-        return 'purple';
-      default:
-        return 'gray';
-    }
-  }
-
-  getDate(date: Date) {
-    const dt = DateTime.fromJSDate(date);
-    return dt.setLocale('en-US').toFormat('LL-dd-yyyy');
-  }
-
-  getTime(date: Date) {
-    const dt = DateTime.fromJSDate(date);
-    return dt.setLocale('en-US').toFormat('t').toLowerCase();
-  }
-
   sortBy(field: string) {
     this.disabledBulkBtn = true;
     this._sm.clear();
@@ -202,7 +182,6 @@ export class FormTableComponent implements OnInit {
     }
     this.params.sort.field = field;
     this.params.sort.order = !!this.sort[1] ? 'asc' : 'desc';
-    this.params.page = 1;
     this.dataSource.loadFormsList(this.params);
   }
 
@@ -278,6 +257,7 @@ export class FormTableComponent implements OnInit {
     }
     this._sm.clear();
     this.disabledBulkBtn = true;
+    this.showInvite = false;
     this.isPopupOpen = false;
   }
 
@@ -292,6 +272,11 @@ export class FormTableComponent implements OnInit {
           this.popupActionBtnText = `Copy Link`;
         }
         break;
+      case 'Invite': {
+        this.popupTitle = 'Access Settings';
+        this.popupActionBtnText = 'Save';
+        break;
+      }
       default:
         if (this.popupContentArray.length > 1) {
           this.canLabelsRemove = true;
@@ -449,24 +434,10 @@ export class FormTableComponent implements OnInit {
     }
   }
 
-  isEmptyRound(obj: any): boolean {
-    if (Array.isArray(obj)) {
-      return true;
-    }
-
-    return !Object.keys(obj).length;
-  }
-
-  getRoundDate(startDate: string, endDate: string): string {
-    const start = DateTime.fromISO(startDate);
-    const end = DateTime.fromISO(endDate);
-    const returnDate = start.setLocale('en-US').toFormat('LLL dd').concat('-');
-
-    if (start.hasSame(end, 'month')) {
-      return returnDate.concat(end.setLocale('en-US').toFormat('dd'));
-    }
-
-    return returnDate.concat(end.setLocale('en-US').toFormat('LLL dd'));
+  inviteUsers(): void {
+    this.showInvite = true;
+    this.popupSetActionBtnTextAndLogicRemoved('Invite');
+    this.dialog.open();
   }
 
 }

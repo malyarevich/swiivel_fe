@@ -18,4 +18,5 @@ export enum IconsEnum {
   CHEVRON_DOWN = 'fa-chevron-down',
   CHEVRON_UP = 'fa-chevron-up',
   PLUS = 'fa-plus',
+  SHARE_ARROW = 'fa-share',
 }

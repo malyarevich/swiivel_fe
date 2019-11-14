@@ -61,7 +61,7 @@
   </div>
 </section>
 
-<!-- Rouds table section -->
+<!-- Rounds table section -->
 <section class="section-wrap">
   <div class="section-title">2. Rounds</div>
   <div class="section-main-text">
@@ -108,8 +108,8 @@
             </thead>
             <tbody class="table-body">
               <tr class="round-item" *ngFor="let item of roundsList">
-                <td> {{ item.name }}</td>
-                <td> {{ item.start_date }}</td>
+                <td> {{ item.name }} </td>
+                <td> {{ item.start_date }} </td>
                 <td> {{ item.end_date }} </td>
                 <td> {{ getReleaseType(item) }} </td>
                 <td class="table_actions">
@@ -164,23 +164,7 @@
                               [class.selected]="form.get('types').get('email').get('selected').value">
                               <sw-input-checkbox class="circle" formControlName="selected"></sw-input-checkbox>
                               <div class="icon-wrap">
-                                <svg width="60" height="60" viewBox="0 0 60 60" fill="none"
-                                  xmlns="http://www.w3.org/2000/svg">
-                                  <path
-                                    d="M6 24.4407H55L32.2398 8.2385C31.1984 7.49716 29.8016 7.49716 28.7602 8.2385L6 24.4407Z"
-                                    fill="#888CA0" />
-                                  <rect x="6" y="24.4404" width="49" height="15.7797" fill="#888CA0" />
-                                  <rect x="10.9844" y="11.9834" width="39.0339" height="30.7288" rx="1" fill="white" />
-                                  <path
-                                    d="M6 24.4404L28.91 38.7592C29.8828 39.3672 31.1172 39.3672 32.09 38.7592L55 24.4404V50.5082C55 52.1651 53.6569 53.5082 52 53.5082H9C7.34314 53.5082 6 52.1651 6 50.5082V24.4404Z"
-                                    fill="#C6C9D7" />
-                                  <rect x="16.7969" y="17.7969" width="27.4068" height="2.49153" rx="1.24576"
-                                    fill="#A4A8BE" />
-                                  <rect x="16.7969" y="24.4404" width="27.4068" height="2.49153" rx="1.24576"
-                                    fill="#A4A8BE" />
-                                  <rect x="23.4414" y="31.085" width="14.1186" height="2.49153" rx="1.24576"
-                                    fill="#A4A8BE" />
-                                </svg>
+                                <img [src]="getTypes('email')" alt="types-email">
                               </div>
                               <div class="section-title">
                                 Email
@@ -205,16 +189,7 @@
                               [class.selected]="form.get('types').get('mailing').get('selected').value">
                               <sw-input-checkbox class="circle" formControlName="selected"></sw-input-checkbox>
                               <div class="icon-wrap">
-                                <svg width="60" height="60" viewBox="0 0 60 60" fill="none"
-                                  xmlns="http://www.w3.org/2000/svg">
-                                  <rect x="16.3984" y="7" width="33.6" height="42.4" rx="1" fill="#CACACA" />
-                                  <rect x="10" y="12.5996" width="33.6" height="42.4" rx="1" fill="#F3F3F3" />
-                                  <rect x="15.6016" y="19.7998" width="10.4" height="2.4" rx="1.2" fill="#909090" />
-                                  <rect x="15.6016" y="26.2002" width="22.4" height="2.4" rx="1.2" fill="#909090" />
-                                  <rect x="15.6016" y="39" width="16" height="2.4" rx="1.2" fill="#909090" />
-                                  <rect x="15.6016" y="45.4004" width="22.4" height="2.4" rx="1.2" fill="#909090" />
-                                  <rect x="15.6016" y="32.5996" width="22.4" height="2.4" rx="1.2" fill="#909090" />
-                                </svg>
+                                <img [src]="getTypes('mailing')" alt="types-mailing">
                               </div>
                               <div class="section-title">
                                 Mailing
