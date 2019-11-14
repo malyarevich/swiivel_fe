@@ -12,53 +12,30 @@ import { ControlValueAccessor, NgControl } from '@angular/forms';
   styleUrls: ['./input-search.component.scss']
 })
 export class InputSearchComponent implements OnInit, ControlValueAccessor {
-  @Input() disabled: boolean;
+  writeValue = (value: string) => {};
+  registerOnChange = (fn: any) => {};
+  registerOnTouched = (fn: any) => {};
   @Input() id: string;
-  @Input() isInvalid = false;
-  @Input() placeholder = '';
-  @Input() type;
-  @Input() isFistSpaceIgnore = false;
-
-  value = '';
+  @Input() placeholder: string;
+  @Input('isFistSpaceIgnore') isFirstSpaceIgnore = false;
+  @Input() type: string;
 
   constructor(
     @Self()
     @Optional()
-    private ngControl: NgControl
+    public control: NgControl
   ) {
-    if (this.ngControl) {
-      this.ngControl.valueAccessor = this;
+    if (this.control) {
+      this.control.valueAccessor = this;
     }
   }
 
   ngOnInit() {}
 
-  writeValue(value: string): void {
-    this.value = value;
-  }
-
-  setDisabledState(isDisabled: boolean): void {
-    this.disabled = isDisabled;
-  }
-
-  registerOnChange(fn: any): void {
-    this.onChange = fn;
-  }
-
-  registerOnTouched(fn: any): void {
-    this.onTouched = fn;
-  }
-
-  onChange(value: string) {
-    return value;
-  }
-
-  chaneInput() {
-    if (this.isFistSpaceIgnore) {
-      this.value = this.value.replace(/^\s+|\s+$/g, '');
+  onInput() {
+    if (this.isFirstSpaceIgnore) {
+      this.control.control.setValue(this.control.control.value.trimStart());
     }
-    this.onChange(this.value);
   }
 
-  onTouched() {}
 }
