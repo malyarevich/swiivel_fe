@@ -5,11 +5,13 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { UtilsService } from '@app/core/utils.service';
 import { FormSearchParams } from '@app/models/form-search-params';
+import { CheckService } from '@app/services/check.service';
+import { DateService } from '@app/services/date.service';
+import { StatusService } from '@app/services/status.service';
 import { FormModel } from '@models/data-collection/form.model';
 import { IconsEnum } from '@shared/icons.enum';
 import { DialogComponent } from '@shared/popup/dialog.component';
 import { get, pick } from 'lodash';
-import { DateTime } from 'luxon';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { DataCollectionService } from './data-collection.service';
 import { FormsDataSource } from './form-table.datasource';
@@ -21,26 +23,6 @@ import { FormsDataSource } from './form-table.datasource';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormTableComponent implements OnInit {
-
-  constructor(
-    public dataCollectionService: DataCollectionService,
-    public router: Router,
-    private cdr: ChangeDetectorRef,
-    private fb: FormBuilder,
-    public utilsService: UtilsService,
-    private sanitizer: DomSanitizer,
-    private renderer: Renderer2) {
-    this.filterForm = this.fb.group({
-      name: [null],
-      type: [null],
-      access: [null],
-      createdBy: [null],
-      updatedAt: [null],
-      status: [null]
-    });
-
-    this.statusArrayOptions.splice(0, 1);
-  }
   @ViewChild('link', { static: false }) link: ElementRef;
   @ViewChild('dialog', { static: true }) dialog: DialogComponent;
 
@@ -73,6 +55,7 @@ export class FormTableComponent implements OnInit {
     page: 1,
     limit: 10,
   };
+  public lastPage = 0;
 
   // POPUP
   public popupTitle = '';
@@ -80,38 +63,68 @@ export class FormTableComponent implements OnInit {
   public popupContentArray: { title: string, id?: any }[] = [];
   public canLabelsRemove = false;
   public isPopupOpen = false;
+  public showInvite = false;
 
   public icons = IconsEnum;
   public totalAmount = 0;
-  totalItems: number;
-  showSpinner: boolean;
-  download: {
+  public totalItems: number;
+  public showSpinner: boolean;
+  public download: {
     url: SafeResourceUrl;
     filename: string;
   } = {
     url: null,
     filename: null
   };
-  filterForm: FormGroup;
-  sort = ['name', true];
-  currentPage = 1;
+  public filterForm: FormGroup;
+  public sort = ['name', true];
+  public currentPage = 1;
 
-  statusesOptions: string[] = ['Active', 'Draft', 'In Review', 'Closed', 'Archived'];
+  public statusesOptions: string[] = ['Active', 'Draft', 'In Review', 'Closed', 'Archived'];
   // tslint:disable-next-line:variable-name
-  _sm: SelectionModel<any>;
+  public _sm: SelectionModel<any>;
 
   static createSharedUrl(id: string) {
     return `${window.location.origin}/view-form/${id}`;
   }
 
+  constructor(
+    public dataCollectionService: DataCollectionService,
+    public router: Router,
+    public statusService: StatusService,
+    public checkService: CheckService,
+    public dateService: DateService,
+    private cdr: ChangeDetectorRef,
+    private fb: FormBuilder,
+    public utilsService: UtilsService,
+    private sanitizer: DomSanitizer,
+    private renderer: Renderer2
+  ) {
+    this.filterForm = this.fb.group({
+      name: [null],
+      type: [null],
+      access: [null],
+      createdBy: [null],
+      updatedAt: [null],
+      status: [null],
+    });
+
+    this.statusArrayOptions.splice(0, 1);
+  }
+
   ngOnInit() {
     this._sm = new SelectionModel(true);
-    this.dataSource.$totalAmount.subscribe(amount => this.totalAmount = amount ? amount : 0);
+    this.dataSource.getTotalAmount.subscribe(amount => {
+      this.totalAmount = amount;
+      this.cdr.detectChanges();
+    });
     this.dataSource.formsListMetadata$.subscribe(metadata => {
       if (metadata.page > metadata.last_page) {
         this.params.page = 1;
+        this.lastPage = metadata.last_page;
         this.dataSource.loadFormsList(this.params);
       } else {
+        this.lastPage = metadata.last_page;
         this.totalItems = metadata.total;
         this.currentPage = metadata.page;
       }
@@ -128,6 +141,8 @@ export class FormTableComponent implements OnInit {
         return value;
       })
     ).subscribe(value => {
+      this.disabledBulkBtn = true;
+      this._sm.clear();
       this.params.filter = { ...value };
       this.dataSource.loadFormsList(this.params);
     });
@@ -141,34 +156,9 @@ export class FormTableComponent implements OnInit {
     return {name: user.full_name, role: get(user, 'role.role_name')};
   }
 
-  getStatusColor(status: string): string {
-    switch (status) {
-      case 'archived':
-        return 'gray';
-      case 'active':
-        return 'green';
-      case 'draft':
-        return 'light-blue';
-      case 'review':
-        return 'yellow';
-      case 'closed':
-        return 'gray';
-      default:
-        return 'gray';
-    }
-  }
-
-  getDate(date: Date) {
-    const dt = DateTime.fromJSDate(date);
-    return dt.setLocale('en-US').toFormat('LL-dd-yyyy');
-  }
-
-  getTime(date: Date) {
-    const dt = DateTime.fromJSDate(date);
-    return dt.setLocale('en-US').toFormat('t').toLowerCase();
-  }
-
   sortBy(field: string) {
+    this.disabledBulkBtn = true;
+    this._sm.clear();
     if (this.sort[0] === field) {
       switch (this.sort[1]) {
         case true:
@@ -192,7 +182,6 @@ export class FormTableComponent implements OnInit {
     }
     this.params.sort.field = field;
     this.params.sort.order = !!this.sort[1] ? 'asc' : 'desc';
-    this.params.page = 1;
     this.dataSource.loadFormsList(this.params);
   }
 
@@ -268,6 +257,7 @@ export class FormTableComponent implements OnInit {
     }
     this._sm.clear();
     this.disabledBulkBtn = true;
+    this.showInvite = false;
     this.isPopupOpen = false;
   }
 
@@ -282,6 +272,11 @@ export class FormTableComponent implements OnInit {
           this.popupActionBtnText = `Copy Link`;
         }
         break;
+      case 'Invite': {
+        this.popupTitle = 'Access Settings';
+        this.popupActionBtnText = 'Save';
+        break;
+      }
       default:
         if (this.popupContentArray.length > 1) {
           this.canLabelsRemove = true;
@@ -429,7 +424,7 @@ export class FormTableComponent implements OnInit {
   getUserName(permission: any): any {
     return {
       name: permission && permission.user && permission.user.full_name ? permission.user.full_name : 'no name',
-      id: permission && permission.user && permission.user.id ? permission.user.id : ''
+      id: permission && permission.user && permission.user.id ? permission.user.id : '',
     };
   }
 
@@ -437,6 +432,12 @@ export class FormTableComponent implements OnInit {
     if (event.keyCode === 13) {
       event.preventDefault();
     }
+  }
+
+  inviteUsers(): void {
+    this.showInvite = true;
+    this.popupSetActionBtnTextAndLogicRemoved('Invite');
+    this.dialog.open();
   }
 
 }

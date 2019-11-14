@@ -335,7 +335,7 @@ div.dropdown_items_container {
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
-    box-shadow: inset 0px -1px 0px #E7E7E7;
+    box-shadow: inset 0px -1px 0px $shadow-gray-color;
   }
   .field-tree-invisible {
     display: none;

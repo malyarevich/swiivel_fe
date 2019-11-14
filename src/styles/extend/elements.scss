@@ -1,3 +1,5 @@
+@import '../variables/colors.scss';
+
 %standart-btn {
   text-transform: capitalize;
   border-radius: 4px;
@@ -133,7 +135,7 @@ sw-input-checkbox {
   }
   i.dragdrop {
     margin-right: 10px;
-    color: #A4A4A4;
+    color: $icon-gray;
     font-size: 15px;
   }
   span {
@@ -169,18 +171,18 @@ sw-input-button-group {
 sw-input-button-group.preview {
   .input_button_group {
     .input_button {
-      background: #EBEEFF;
+      background: $light-purple;
       border: 1px solid #CFD4EF;
       box-sizing: border-box;
       button {
-        background-color: #EBEEFF !important;
+        background-color: $light-purple !important;
         border: none !important;
         padding-top: 3px;
         padding-bottom: 3px;
       }
       &:first-of-type {
         border-radius: 100px 0 0 100px!important;
-        border-right: none !important;    
+        border-right: none !important;
         button {
           border-radius: 100px 0 0 100px!important;
         }
@@ -195,8 +197,8 @@ sw-input-button-group.preview {
       &.active {
         button  {
           border-radius: 100px !important;
-          background-color: #4350A2 !important;
-          color: #fff;
+          background: $element-base-color !important;
+          color: $white;
         }
       }
     }
@@ -277,7 +279,7 @@ sw-input-textarea {
     }
     .hint {
       font: 400 10px/13px $nunito-sans;
-      color: #A4A4A4;
+      color: $icon-gray;
     }
     .row_container {
       display: flex;
@@ -307,7 +309,7 @@ sw-input-textarea {
         width: 100%;
         .controls {
           visibility: hidden;
-          color: #A4A4A4;
+          color: $icon-gray;
           margin-left: 5px;
           display: flex;
           flex-direction: row;

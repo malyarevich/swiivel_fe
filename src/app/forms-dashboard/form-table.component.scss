@@ -41,8 +41,8 @@
     background: transparent;
 
     &.app-form-table__tab--activated {
-      border-bottom: 2px solid $button-color;
-      color: $button-color;
+      border-bottom: 2px solid $element-base-color;
+      color: $element-base-color;
     }
 
     &:hover, &:focus, &:active {
@@ -71,7 +71,7 @@
 
   .filters-row {
     background: $dark-grey;
-    box-shadow: inset 0px -1px 0px #E7E7E7;
+    box-shadow: inset 0px -1px 0px $shadow-gray-color;
     border-radius: 5px;
 
     th {
@@ -87,6 +87,9 @@
         text-transform: uppercase;
         letter-spacing: 0.3px;
         font: normal 9px/13px $nunito-sans;
+        white-space: nowrap;
+        overflow: hidden;
+
         &_icons {
           margin-left: 6px;
           display: flex;
@@ -150,6 +153,12 @@
       }
 
       .second-text {
+        margin: 0;
+        text-transform: capitalize;
+        line-height: 0;
+      }
+
+      .second-text-span {
         font: 400 10px/13px $nunito-sans;
       }
     }
@@ -246,5 +255,14 @@
 
   .button-invite-user {
     padding: 0 2px;
+  }
+
+  .status-round-name {
+    font: 500 10px/13px $nunito-sans;
+
+    .status-round-date {
+      color: $gray-color;
+      font: 500 10px/13px $nunito-sans;
+    }
   }
 }

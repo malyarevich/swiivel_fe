@@ -15,6 +15,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 @Component({
   selector: 'sw-input-button-group',
   templateUrl: './input-button-group.component.html',
+  styleUrls: ['./input-button-group.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {

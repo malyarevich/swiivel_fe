@@ -14,7 +14,7 @@
     align-items: center;
 
     &.active {
-      border-color: $button-color;
+      border-color: $element-base-color;
       .container__icon {
         &_up {
           display: flex;
@@ -47,13 +47,13 @@
         padding: 10px;
         margin: 10px 0 0 0;
         border-radius: 3px;
-        color: $button-color;
+        color: $element-base-color;
         display: flex;
         align-items: center;
         .text {
           font: 10px "NunitoSans-Bold";
           margin: 0 6px 0 0;
-          color: $button-color;
+          color: $element-base-color;
         }
         i {
           font-size: 11px;
@@ -66,7 +66,7 @@
       margin-left: auto;
       &_up {
         display: none;
-        color: $button-color;
+        color: $element-base-color;
       }
       &_down {
         display: flex;
@@ -93,7 +93,7 @@
 
   .container__icon--clear {
     margin: 0 2px 0 0;
-    color: $button-color;
+    color: $element-base-color;
 
     &:hover {
       cursor: pointer;

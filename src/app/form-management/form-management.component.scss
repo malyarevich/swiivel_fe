@@ -1,0 +1,41 @@
+@import 'index';
+
+.app-form-management {
+  padding: 15px;
+}
+
+.tabs {
+  display: flex;
+  margin: 0 0 15px 0;
+}
+
+.tabs-block {
+  display: flex;
+  justify-content: space-between;
+}
+
+.tab {
+  margin: 0 25px 0 0;
+  padding: 0;
+  color: $gray-color;
+  font: 700 12px/15px $nunito-sans;
+  border: none;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  background: transparent;
+
+  &:hover, &:focus, &:active {
+    border-bottom: 2px solid $hover-purple;
+    color: $hover-purple;
+  }
+}
+
+.tab-activated {
+  border-bottom: 2px solid $element-base-color;
+  color: $element-base-color;
+}
+
+.app-form-management-block {
+  padding: 15px;
+  background: #fff;
+}

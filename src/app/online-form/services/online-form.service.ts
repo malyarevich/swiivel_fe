@@ -74,6 +74,7 @@ export const componentFieldsMap = new Map<number, IFormField>([
 @Injectable()
 export class OnlineFormService {
   formId: string;
+  accountId: string;
   formValues: Map<string, any> = new Map();
   profileForm;
   fgList: any = {};
@@ -146,6 +147,10 @@ export class OnlineFormService {
     this.formId = id;
   }
 
+  setAccountId(id: string) {
+    this.accountId = id;
+  }
+
   getOneForm(id = this.formId): Observable<any> {
     if (id) {
       // TODO: when /online/link stops returning errors we should use it
@@ -169,6 +174,18 @@ export class OnlineFormService {
       );
     }
     console.error('Id of form is undefined');
+    return undefined;
+  }
+
+  getTemplateFormByAccount(id = this.formId, accountId = this.accountId) {
+    if (id && accountId) {
+      return this.http.get(`/proxy/form-builder/form-preview-by-account/online/${id}/${accountId}/`).pipe(
+        map(response => {
+          return response;
+        })
+      );
+    }
+    console.error('Id of form or accountId is undefined');
     return undefined;
   }
 
