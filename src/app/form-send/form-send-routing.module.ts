@@ -7,11 +7,20 @@ import { FormSendComponent } from './form-send.component';
 const routes: Routes = [
   {
     path: '',
+    component: FormSendComponent,
+    canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
+    // children: [
+    //   { path: ':id',  component: FormSendComponent },
+    // ]
+  },
+  {
+    path: ':id',
     component: FormComponent,
     canActivate: [AuthGuard],
     canActivateChild: [AuthGuard],
     children: [
-      { path: ':id',  component: FormSendComponent },
+      { path: '',  component: FormSendComponent },
     ]
   }
 ];
