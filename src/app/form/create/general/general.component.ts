@@ -189,8 +189,8 @@ export class GeneralComponent implements OnInit, OnDestroy {
 
 
 
-  prevStep() {
-
+  async prevStep() {
+    await this.router.navigate(['forms-dashboard'])
   }
 
   nextStep() {
