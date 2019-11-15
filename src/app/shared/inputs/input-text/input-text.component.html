@@ -6,7 +6,7 @@
     [class.empty]="isEmpty(value)"
     [attr.autocomplete]="_autocomplete"
     [formControl]="control.control"
-    (change)="onChange()"/>
+    (input)="onChange()"/>
   <ng-content></ng-content>
   <i *ngIf="isClearable && !isEmpty(value)" class="fa fa-times clear" (click)="clear()" title="Clear input"></i>
   <i *ngIf="isSearch" class="fas fa-search fa-xs"></i>
