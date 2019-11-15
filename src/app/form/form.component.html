@@ -1,27 +1,36 @@
 <header class="forms-header">
   <div class="title">
     <div class="back-btn">
-      <i class="fas fa-chevron-left" [routerLink]="[ '/forms-dashboard' ]"></i>
+      <i class="fas fa-chevron-left" [routerLink]="['/forms-dashboard']"></i>
     </div>
-    <div class="text" *ngIf="stage < 1">
+    <div class="text">
       NEW DATA COLLECTION FORM
-    </div>
-    <div class="text" *ngIf="stage > 0">
-      EDITING COLLECTION FORM
     </div>
   </div>
   <div class="items-wrap">
-    <div class="item" [routerLink]="stage > 2 ? [ 'create' ] : null" routerLinkActive="active">
+    <div class="item" [routerLink]="['create']" routerLinkActive="active">
       Create
     </div>
     <i class="fas fa-chevron-right"></i>
-    <div class="item" [routerLink]="stage > 2 ? [ 'send' ] : null" routerLinkActive="active">
-      Send
-    </div>
-    <i class="fas fa-chevron-right"></i>
-    <div class="item" [routerLink]="stage > 2 ? [ 'receive' ] : null" routerLinkActive="active">
-      Receive
-    </div>
+
+    <ng-container *ngIf="(isFormHasId$ | async); else elseFormHasId">
+      <div class="item" [routerLink]="['send']" routerLinkActive="active">
+        Send
+      </div>
+      <i class="fas fa-chevron-right"></i>
+      <div class="item" [routerLink]="['receive']" routerLinkActive="active">
+        Receive
+      </div>
+    </ng-container>
+    <ng-template #elseFormHasId>
+      <div class="item disabled">
+        Send
+      </div>
+      <i class="fas fa-chevron-right"></i>
+      <div class="item disabled">
+        Receive
+      </div>
+    </ng-template>
   </div>
   <div class="log-out-btn" (click)="logout()">
     <i class="fas fa-sign-out-alt"></i>

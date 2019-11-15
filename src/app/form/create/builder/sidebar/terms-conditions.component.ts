@@ -64,9 +64,7 @@ export class SidebarTermsConditionsComponent implements OnInit {
 
   removeItem(index: number) {
     if (index >= 0) {
-      let tmp = this.lform.get('termsConditionsItems').value;
-      tmp.splice(index, 1);
-      this.lform.get('termsConditionsItems').patchValue(tmp);
+      (this.lform.get('termsConditionsItems') as FormArray).removeAt(index);
     }
   }
 

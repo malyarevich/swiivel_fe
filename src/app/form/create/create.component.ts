@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormService } from '@app/form/form.service';
+import { FormService } from '../form.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'sw-create',
@@ -7,12 +8,12 @@ import { FormService } from '@app/form/form.service';
   styleUrls: ['./create.component.scss']
 })
 export class CreateComponent implements OnInit {
-  stage: number;
-  constructor(private service: FormService) {
-    this.service.stage$.subscribe(stage => this.stage = stage);
-  }
+  isFormHasId$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
+  constructor(private formService: FormService) { }
 
   ngOnInit() {
+    this.isFormHasId$ = this.formService.isFormHasIdSubject;
   }
 
 }

@@ -1,13 +1,26 @@
 <div class="stepper-header">
-  <div class="item" [routerLink]="stage > 0 ? ['general'] : null" routerLinkActive="active">
+  <div class="item" [routerLink]="['general']" routerLinkActive="active">
     General
   </div>
-  <div class="item" [routerLink]="stage > 0 ? ['builder'] : null" routerLinkActive="active">
-    Builder
-  </div>
-  <div class="item" [routerLink]="stage > 1 ? ['review'] : null" routerLinkActive="active">
-    Review
-  </div>
+
+  <ng-container *ngIf="(isFormHasId$ | async); else formHasNoId">
+    <div class="item" [routerLink]="['builder']" routerLinkActive="active">
+      Builder
+    </div>
+    <div class="item" [routerLink]="['review']" routerLinkActive="active">
+      Review
+    </div>
+  </ng-container>
+
+  <ng-template #formHasNoId>
+    <div class="item disabled">
+      Builder
+    </div>
+    <div class="item disabled">
+      Review
+    </div>
+  </ng-template>
+
 </div>
 
 <div class="stepper-content">
