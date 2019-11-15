@@ -29,6 +29,15 @@ export class HttpService {
     return headers.set('Content-Type', `multipart/form-data;`);
   }
 
+  request(method: string, url: string, options?: object) {
+    this.requestSubject.next('Sending request');
+    return this.http.request(method, url, options).pipe(
+      timeout(this.apiTimeout),
+      catchError(this.handleError),
+      finalize(() => this.endRequest())
+    )
+  }
+
   'post'(url: string, data: object, options?: object): Observable<any> {
     this.requestSubject.next('Saving data');
     return this.http.post(this.apiUrl + url, data, options)
