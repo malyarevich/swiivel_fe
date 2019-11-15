@@ -70,8 +70,11 @@ export class InputTextComponent implements ControlValueAccessor, OnInit {
   public get value() {
     return this.control.control ? this.control.control.value: null;
   }
-  public isEmpty(value: string = ''): boolean {
-    return value && value.length === 0;
+  public isEmpty(value: string): boolean {
+    if (value) {
+      return value.length === 0;
+    }
+    return true;
   }
 
   
@@ -79,12 +82,14 @@ export class InputTextComponent implements ControlValueAccessor, OnInit {
   public clear(): void {
     this.control.control.reset();
     this.input.nativeElement.focus();
+    this.cdr.markForCheck();
   }
 
   onChange(): void {
     if (this.trimStart) {
       this.control.control.setValue(this.value.trimStart());
     }
+    this.cdr.markForCheck();
   }
 
 }
