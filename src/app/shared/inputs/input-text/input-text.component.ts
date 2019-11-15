@@ -8,27 +8,21 @@ import {
   Input,
   Output,
   Renderer2,
-  ViewChild} from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+  ViewChild,
+  Optional,
+  Self,
+  OnInit} from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
 
 @Component({
   selector: 'sw-input-text',
   templateUrl: './input-text.component.html',
   styleUrls: ['./input-text.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => InputTextComponent),
-      multi: true
-    }
-  ]
 })
 
-export class InputTextComponent implements ControlValueAccessor {
-  @Input() set autofocus(_value: boolean) {
-    this.focus();
-  }
+export class InputTextComponent implements ControlValueAccessor, OnInit {
+  @Input() autofocus: boolean;
   @Input() set autocomplete(value: string) {
     this._autocomplete = value;
   }
@@ -42,59 +36,55 @@ export class InputTextComponent implements ControlValueAccessor {
   @Input() set style(styleType: string) {
     this._style = styleType;
   }
-  @Input() readonly: boolean;
+  @Input() set readonly(readOnly: boolean) {
+    this.control.control.disable();
+  }
   @Input() isSearch = false;
   @Input() isClearable = false;
+  @Input() trimStart = true;
   @Output() blur = new EventEmitter<any>();
 
-  onChange: (value: any) => void;
-  onTouched: () => void;
-
+  writeValue = (value: string) => {};
+  registerOnChange = (fn: any) => {};
+  registerOnTouched = (fn: any) => {};
+  
   constructor(
     private renderer: Renderer2,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    @Self() @Optional()  public control: NgControl
   ) {
+    if (control) {
+      control.valueAccessor = this;
+    }
   }
 
-  public focus() {
-    this.renderer.selectRootElement(this.input.nativeElement).focus();
+  ngOnInit(): void {
+    if (this.autofocus) {
+      this.input.nativeElement.focus();
+    }
+    this.control.statusChanges.subscribe(() => {
+      this.cdr.markForCheck();
+    })
   }
 
-  public isEmpty(value: string): boolean {
-    return !(value && value.trim().length > 0);
+  public get value() {
+    return this.control.control ? this.control.control.value: null;
+  }
+  public isEmpty(value: string = ''): boolean {
+    return value && value.length === 0;
   }
 
-  public setDisabledState(isDisabled: boolean): void {
-    this.renderer.setProperty(this.input.nativeElement, 'disabled', isDisabled);
-  }
-
-  public onBlur(event: Event) {
-    this.onTouched();
-    this.blur.emit(event);
-  }
-
-  public registerOnTouched(fn: any): void {
-    this.onTouched = fn;
-  }
-
-  public registerOnChange(fn: any): void {
-    this.onChange = fn;
-  }
-
-  public writeValue(obj: any): void {
-    this.renderer.setProperty(this.input.nativeElement, 'value', obj);
-    this.cdr.markForCheck();
-  }
+  
 
   public clear(): void {
-    this.input.nativeElement.value = '';
-    this.onChange('');
+    this.control.control.reset();
+    this.input.nativeElement.focus();
   }
 
-  onChangeInput(value: any): void {
-    const valueTrim = value.replace(/^\s+/g, '');
-    this.input.nativeElement.value = valueTrim;
-    this.onChange(valueTrim);
+  onChange(): void {
+    if (this.trimStart) {
+      this.control.control.setValue(this.value.trimStart());
+    }
   }
 
 }

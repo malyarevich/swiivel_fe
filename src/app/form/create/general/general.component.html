@@ -19,15 +19,20 @@
       </div>
       <div class="content">
         <div class="inputs">
-          <sw-input-text class="input" formControlName="name">
+          <sw-input-text class="input" formControlName="name" [isClearable]="true">
             <span class="placeholder">Form Name</span>
+            <div class="errors" *ngIf="generalForm.get('name').errors">
+              <span *ngIf="generalForm.get('name').hasError('required')">Please name your form</span>
+              <span *ngIf="generalForm.get('name').hasError('unique')">Your form name must be unique</span>
+              <span *ngIf="generalForm.get('name').hasError('minlength')">Minimum 3 Characters Required for Name Form</span>
+              <span *ngIf="generalForm.get('name').hasError('maxlength')">Maximum 255 Characters Allowed for Name Form</span>
+            </div>
           </sw-input-text>
           <sw-dropdown-input class="input" formControlName="type" [options]="typeOptions">
             <span class="label">Form Type</span>
           </sw-dropdown-input>
         </div>
       </div>
-
     </div>
 
     <div class="row second no-m column" *ngIf="isNew">
