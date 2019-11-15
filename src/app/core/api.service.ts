@@ -3,7 +3,7 @@ import { HttpService } from '@app/core/http.service';
 import { ApiResponse, LoginData } from '@models/api';
 import { FormSearchParams } from '@models/form-search-params';
 import { Observable, throwError } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { first, map } from 'rxjs/operators';
 import { HttpParams, HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
@@ -116,11 +116,23 @@ export class ApiService {
 
   uploadFile(formId, file) {
     const fbLibk = environment.apiFB;
-    const params = new HttpParams().set("api_token", environment.api_token); 
+    const params = new HttpParams().set("api_token", environment.api_token);
     return this.aHttp.post(`${fbLibk}/forms/attach/${formId}`, file, {params})
   }
 
   public download(url: string) {
-    return this.http.getFile(url)
+    return this.http.getFile(url);
+  }
+
+  // FORM
+
+  public changeFormStatus(updatedIds: number[], updatedStatus: string): Observable<any> {
+    return this.http.post(`/proxy/form-builder/form-template/status`, { ids: updatedIds, status: updatedStatus });
+  }
+
+  public exportFormPDF(mongoId: string) {
+    return this.download(`/proxy/form-builder/pdf-export/${mongoId}`).pipe(map((response: any) => {
+      return window.URL.createObjectURL(new Blob([response], { type: 'application/pdf' }));
+    }), first());
   }
 }

@@ -1,0 +1,172 @@
+@import 'index';
+
+.form-management-info {
+  display: flex;
+  justify-content: space-between;
+  background: #fff;
+  border-radius: 3px;
+  min-height: 70px;
+  height: 100%;
+  border: 1px solid $background-table-color;
+  overflow: hidden;
+}
+
+.col-header {
+  margin: 5px 0 0;
+  font: 500 9px/13px $nunito-sans;
+  text-transform: uppercase;
+  color: $gray-color;
+  letter-spacing: 0.3px;
+}
+
+.col-bottom {
+  margin: 0 0 5px 0;
+}
+
+.col-bottom-text {
+  font: 500 12px/16px $nunito-sans;
+}
+
+.type-container {
+  display: flex;
+  width: 58%;
+}
+
+.type {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0 25px 0;
+}
+
+.icon {
+  min-width: 70px;
+  display: flex;
+  background: $light-purple;
+}
+
+.icon-page {
+  margin: auto;
+  font-size: 30px;
+  color: $element-base-color;
+}
+
+.type-text {
+  margin: 0;
+  font: 800 12px/13px $nunito-sans;
+  text-transform: capitalize;
+  color: $element-base-color;
+}
+
+.name {
+  font: 800 10px/11px $nunito-sans;
+  margin: 0 0 5px;
+}
+
+.date-text {
+  font: 500 12px/16px $nunito-sans;
+  color: $gray-color;
+}
+
+.change-info {
+  display: flex;
+}
+
+.updated, .created, .access {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 180px;
+}
+
+.update-create {
+  display: flex;
+}
+
+.access {
+  padding: 0 0 0 46px;
+}
+
+.updated {
+  border-right: 1px solid $background-table-color;
+  padding: 0 46px 0 0;
+}
+
+.created {
+  padding: 0 0 0 46px;
+}
+
+.dashboard-shown {
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 10px 16px;
+
+  .type {
+    padding: 0;
+    justify-content: flex-start;
+  }
+
+  .col-header {
+    margin: 5px 0;
+  }
+
+  .col-header-type {
+    display: none;
+  }
+
+  .col-bottom-text,
+  .date-text {
+    font: 500 10px/13px $nunito-sans;
+  }
+
+  .user-item {
+    margin: 0 0 4px;
+  }
+
+  .type-container {
+    width: 100%;
+    border-bottom: 1px solid $background-table-color;
+  }
+
+  .type-text {
+    margin: 0;
+    font: 800 10px/11px $nunito-sans;
+  }
+
+  .icon {
+    background: transparent;
+    min-width: auto;
+    margin: 0 8px 8px 0;
+  }
+
+  .change-info {
+    flex-direction: column;
+  }
+
+  .update-create {
+    border-bottom: 1px solid $background-table-color;
+  }
+
+  .updated,
+  .created {
+    width: 50%;
+    padding: 0;
+    min-width: auto;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .updated {
+    border: none;
+  }
+
+  .access {
+    width: 100%;
+    padding: 0;
+  }
+
+  .edit-access-btn::ng-deep button.button span {
+    font: 500 10px/13px $nunito-sans;
+  }
+}

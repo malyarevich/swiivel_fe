@@ -1,6 +1,6 @@
 export interface UserItem {
  name: string;
- id: number;
+ id?: number;
  avatar?: string;
  role?: string;
 }

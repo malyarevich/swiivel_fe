@@ -3,6 +3,19 @@
     class="user-item__image" data-e2e="user-item-image"
     [ngStyle]="{'background-image': userItem.avatar ? 'url(' + userItem.avatar + ')' : '' }">
   </div>
-  <p class="user-item__text" data-e2e="user-item-text">{{ userItem.name }}</p>
-  <p class="user-item__role" data-e2e="user-item-role" *ngIf="isRoleShown">{{ userItem.role }}</p>
+  <p
+    class="user-item__text"
+    data-e2e="user-item-text"
+    [class.text-small]="size === 'small'"
+  >
+    {{ userItem.name }}
+  </p>
+  <p
+    *ngIf="isRoleShown"
+    class="user-item__role"
+    data-e2e="user-item-role"
+    [class.role-small]="size === 'small'"
+  >
+    {{ userItem.role }}
+  </p>
 </div>
