@@ -28,6 +28,7 @@ export class BuilderComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private cdr: ChangeDetectorRef
   ) {
+    this.formService.stage$.next(1);
     this.formService.form$.pipe(
       takeUntil(this.destroyed$)
     ).subscribe((form: FormGroup )=> {

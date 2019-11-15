@@ -12,6 +12,7 @@ import { takeUntil } from 'rxjs/operators';
 export class FormComponent implements OnInit, OnDestroy {
 
   private destroyed$ = new Subject();
+  public stage = 0;
 
   constructor(
     private router: Router,
@@ -21,7 +22,11 @@ export class FormComponent implements OnInit, OnDestroy {
     this.route.paramMap.pipe(
       takeUntil(this.destroyed$)
     ).subscribe(params => {
+      if (params.get('formId') !== 'new') this.stage = 1;
       this.formService.loadForm(params.get('formId'));
+      this.formService.stage$.subscribe(stage => {
+        this.stage = stage;
+      })
     });
   }
 

@@ -66,6 +66,7 @@ export class FormService {
     schema: [],
     mapped: []
   };
+  public stage$ = new BehaviorSubject(0);
 
   constructor(private fb: FormBuilder, private api: ApiService) {
     this.api.getSidebarFields().subscribe((fields) => {
@@ -85,6 +86,7 @@ export class FormService {
     if (formId !== 'new') {
       this.api.getFormTemplate(formId).subscribe(data => {
         if (data) {
+          this.stage$.next(1);
           this.form = this.initForm(data);
         }
       });

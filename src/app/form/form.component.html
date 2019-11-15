@@ -3,20 +3,23 @@
     <div class="back-btn">
       <i class="fas fa-chevron-left" [routerLink]="[ '/forms-dashboard' ]"></i>
     </div>
-    <div class="text">
+    <div class="text" *ngIf="stage < 1">
       NEW DATA COLLECTION FORM
+    </div>
+    <div class="text" *ngIf="stage > 0">
+      EDITING COLLECTION FORM
     </div>
   </div>
   <div class="items-wrap">
-    <div class="item" [routerLink]="[ 'create' ]" routerLinkActive="active">
+    <div class="item" [routerLink]="stage > 2 ? [ 'create' ] : null" routerLinkActive="active">
       Create
     </div>
     <i class="fas fa-chevron-right"></i>
-    <div class="item" [routerLink]="[ 'send' ]" routerLinkActive="active">
+    <div class="item" [routerLink]="stage > 2 ? [ 'send' ] : null" routerLinkActive="active">
       Send
     </div>
     <i class="fas fa-chevron-right"></i>
-    <div class="item" [routerLink]="[ 'receive' ]" routerLinkActive="active">
+    <div class="item" [routerLink]="stage > 2 ? [ 'receive' ] : null" routerLinkActive="active">
       Receive
     </div>
   </div>
