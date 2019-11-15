@@ -4,7 +4,7 @@ import { ApiResponse, LoginData } from '@models/api';
 import { FormSearchParams } from '@models/form-search-params';
 import { Observable, throwError } from 'rxjs';
 import { first, map } from 'rxjs/operators';
-import { HttpParams, HttpClient } from '@angular/common/http';
+import { HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
 
@@ -16,7 +16,6 @@ export class ApiService {
 
   constructor(
     protected http: HttpService,
-    private aHttp: HttpClient
   ) { }
 
   public login(data: LoginData): any {
@@ -116,9 +115,17 @@ export class ApiService {
 
   uploadFile(formId, file) {
     const fbLibk = environment.apiFB;
-    const params = new HttpParams().set("api_token", environment.api_token);
-    return this.aHttp.post(`${fbLibk}/forms/attach/${formId}`, file, {params})
+    const params = new HttpParams().set("api_token", environment.api_token); 
+    return this.http.post(`${fbLibk}/forms/attach/${formId}`, file, {params});
   }
+
+  getFormsPDFList():Observable<any>{
+    const fbLibk = environment.apiFB;
+    const params = new HttpParams().set("api_token", environment.api_token);
+    return this.http.get(`${fbLibk}/pdfForms`, {params});
+  }
+
+
 
   public download(url: string) {
     return this.http.getFile(url);

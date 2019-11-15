@@ -2,9 +2,10 @@ import { Component, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrateg
 import { FormService } from '@app/form/form.service';
 import { Subject, Subscription } from 'rxjs';
 import { takeUntil, takeWhile } from 'rxjs/operators';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { cloneDeep } from 'lodash';
 import { isArray } from 'util';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'sw-builder',
@@ -26,8 +27,11 @@ export class BuilderComponent implements OnInit, OnDestroy {
   constructor(
     private formService: FormService,
     private fb: FormBuilder,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private router: Router
   ) {
+    this.cdr.detach();
+
     this.formService.stage$.next(1);
     this.formService.form$.pipe(
       takeUntil(this.destroyed$)
@@ -52,7 +56,7 @@ export class BuilderComponent implements OnInit, OnDestroy {
           changedForm.addControl('consentInfo', this.fb.group({
             sectionName: ['Consent Section'],
             sectionWidth: ['full'],
-            consents: [[]]
+            consents: this.fb.array([])
           }));
         }
         if (!this.form.get('activeSections')) {
@@ -86,6 +90,7 @@ export class BuilderComponent implements OnInit, OnDestroy {
             console.groupEnd();
           });
         }
+        this.cdr.reattach();
       }
     });
     
@@ -141,24 +146,29 @@ export class BuilderComponent implements OnInit, OnDestroy {
   }
 
   addTermsConditionsItem() {
-    let termsConditionsItem = {
-      title: "",
-      id: "",
-      text: "",
-      checkbox: {
+    let termsConditionsItem = this.fb.group({
+      title: [""],
+      id: [""],
+      text: [""],
+      checkbox: this.fb.group({
         isActive: false,
         checked: false,
         text: ""
-      }
-    };
-    if (!isArray(this.form.get('termsConditions.termsConditionsItems').value)) {
-      this.form.get('termsConditions.termsConditionsItems').patchValue([]);
-    }
-    let tmp = this.form.get('termsConditions.termsConditionsItems').value;
-    tmp.push(termsConditionsItem);
-    this.form.get('termsConditions.termsConditionsItems').patchValue(tmp);
+      })
+    });
+    (this.form.get('termsConditions.termsConditionsItems') as FormArray).push(termsConditionsItem);
   }
 
+  prevStep() {
+    console.log(this.formService.form);;
+    this.router.navigate(['form', this.form.value._id, 'create', 'general']);
+  }
+
+  nextStep() {
+    this.formService.saveForm().subscribe((res) => {
+      this.router.navigate(['form', res._id, 'create', 'review']);
+    });
+  }
 
 
   ngOnDestroy() {

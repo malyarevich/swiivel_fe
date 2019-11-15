@@ -1,6 +1,6 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, Input } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { IconsEnum } from '@app/shared/icons.enum';
 
 @Component({
@@ -52,6 +52,7 @@ export class WorkareaConsentComponent {
 
   @Input()
   set form(_form: any) {
+    console.log('INPUT FORM', _form)
     this.lform = _form.get('consentInfo');
   }
 
@@ -59,8 +60,12 @@ export class WorkareaConsentComponent {
     this.lform = this.fb.group({
       sectionName: ["Consent Section"],
       sectionWidth: ["full"],
-      consents: [[]]
+      consents: this.fb.array([])
     });
+  }
+
+  get consents() {
+    return this.lform.get('consents') as FormArray
   }
 
   drop(event: CdkDragDrop<string[]>) {
