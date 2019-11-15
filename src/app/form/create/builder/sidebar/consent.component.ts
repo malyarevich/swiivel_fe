@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { SIGNATURE_TYPES, E_SIGNATURE_TYPES } from '@app/enums/signature-type';
 
@@ -7,7 +7,7 @@ import { SIGNATURE_TYPES, E_SIGNATURE_TYPES } from '@app/enums/signature-type';
   templateUrl: './consent.component.html',
   styleUrls: ['./consent.component.scss']
 })
-export class SidebarConsentComponent implements OnInit {
+export class SidebarConsentComponent {
   lform: FormGroup;
   isOpenItems: boolean[] = [];
   buttonOptions = [
@@ -27,59 +27,65 @@ export class SidebarConsentComponent implements OnInit {
       _form.addControl('consentInfo', this.fb.group({
         sectionName: ["Consent Section"],
         sectionWidth: ["full"],
-        consents: [[]]
+        consents: this.fb.array([])
       }));
     }
     this.lform = _form.get('consentInfo');
   }
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private cdr: ChangeDetectorRef
   ) {
     this.lform = this.fb.group({
       sectionName: ["Consent Section"],
       sectionWidth: ["full"],
-      consents: [[]]
+      consents: this.fb.array([])
     });
+    
   }
 
-  ngOnInit() {
+  isRequireSignature(item) {
+    if (item && item.value) {
+      return item.value.signature.isRequire
+    }
+  }
+  
+  get consents() {
+    return this.lform.get('consents') as FormArray
   }
 
   addConsentItem(): void {
-    let tmp = this.lform.get('consents').value ? this.lform.get('consents').value : [];
-    let newItem = {
-      title: '',
-      id: '',
-      text: {
-        value: '',
-      },
-      checkbox: {
-        isActive: false,
-        checked: false,
-        text: '',
-      },
-      button: {
-        isActive: false,
-        text: ''
-      },
-      signature: {
-        isRequire: false,
-        type: SIGNATURE_TYPES.WET,
-        eType: E_SIGNATURE_TYPES.EXTERNAL,
-        isBothParents: false,
-        signed: { parents: false, fathers: false, mothers: false }
-      }
-    }
-    tmp.push(newItem);
-    this.lform.get('consents').patchValue(tmp);
+    let newItem = this.fb.group({
+      title: [''],
+      id: [''],
+      text: this.fb.group({
+        value: [''],
+      }),
+      checkbox: this.fb.group({
+        isActive: [false],
+        checked: [false],
+        text: [''],
+      }),
+      button: this.fb.group({
+        isActive: [false],
+        text: ['Accept']
+      }),
+      signature: this.fb.group({
+        isRequire: [false],
+        type: [SIGNATURE_TYPES.WET],
+        eType: [E_SIGNATURE_TYPES.EXTERNAL],
+        isBothParents: [false],
+        signed: this.fb.group({ parents: [false], fathers: [false], mothers: [false] })
+      })
+    });
+    this.isOpenItems.push(true);
+    (this.lform.get('consents') as FormArray).push(newItem);
   }
 
   removeItem(index: number) {
     if (index >= 0) {
-     let tmp = this.lform.get('consents').value
-     tmp.splice(index, 1);
-     this.lform.get('consents').patchValue(tmp);
+     this.consents.removeAt(index);
     }
   }
 

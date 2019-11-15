@@ -71,7 +71,7 @@ interface FormPermissions {
   user: { id: number; full_name: number };
 }
 
-interface FormRoundModel {
+export interface FormRoundModel {
   name: string;
   start_date: string;
   end_date: string;

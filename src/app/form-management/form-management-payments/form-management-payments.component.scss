@@ -1,0 +1,58 @@
+@import 'index';
+
+.payments {
+  background: #fff;
+  border-radius: 3px;
+  border: 1px solid $background-table-color;
+  padding: 14px;
+  overflow: hidden;
+  height: 100%;
+}
+
+.headline {
+  margin: 0 0 15px;
+  font: 800 12px/15px $nunito-sans;
+  text-transform: uppercase;
+  letter-spacing: 0.2px;
+}
+
+.item {
+  margin: 0 0 10px;
+}
+
+.info {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 0 9px;
+}
+
+.item-name {
+  margin: 0;
+  font: 500 10px/12px $nunito-sans;
+}
+
+.users {
+  display: flex;
+  align-items: flex-start;
+  margin: 3px 0 -3px;
+}
+
+.item-user {
+  display: flex;
+}
+
+.user-text {
+  font: 500 10px/8px $nunito-sans;
+}
+
+.fa-user {
+  font-size: 14px;
+}
+
+.fa-user-active {
+  color: $element-base-color;
+}
+
+.item-text-all {
+  color: $gray-color;
+}

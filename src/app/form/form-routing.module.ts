@@ -16,7 +16,7 @@ const routes: Routes = [
         loadChildren: () => import('./create/create.module').then(m => m.CreateModule)
       }, {
         path: 'send',
-        loadChildren: () => import('./send/send.module').then(m => m.SendModule)
+        loadChildren: () => import('@form-send/form-send.module').then(m => m.FormSendModule)
       }, {
         path: 'receive',
         loadChildren: () => import('./receive/receive.module').then(m => m.ReceiveModule)
