@@ -1,0 +1,66 @@
+@import 'index';
+
+.analytics {
+  background: #fff;
+  border-radius: 3px;
+  padding: 14px;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid $background-table-color;
+}
+
+.headline {
+  margin: 0 0 15px;
+  font: 800 12px/15px $nunito-sans;
+  text-transform: uppercase;
+  letter-spacing: 0.2px;
+}
+
+.info {
+  display: flex;
+  justify-content: space-between;
+}
+
+.chart {
+  width: 110px;
+}
+
+.chart-label {
+  position: absolute;
+  text-align: center;
+  top: 80px;
+  left: 53px;
+}
+
+.chart-total {
+  margin: 0;
+  font: 800 14px/20px $nunito-sans;
+}
+
+.chart-value {
+  margin: 0;
+  font: 800 17px/20px $nunito-sans;
+  color: $header-logo-color;
+}
+
+.statistics {
+  margin: 0 0 0 10px;
+}
+
+.statistics-value {
+  display: flex;
+  align-items: center;
+  margin: 0 0 5px;
+}
+
+.statistics-value-number {
+  font: 800 17px/15px $nunito-sans;
+}
+
+.statistic-type {
+  padding: 0 0 0 7px;
+  font: 500 12px/15px $nunito-sans;
+  text-transform: uppercase;
+  letter-spacing: 0.2px;
+}

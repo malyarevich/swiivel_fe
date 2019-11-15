@@ -2,6 +2,16 @@
 
 .app-form-management {
   padding: 15px;
+  position: relative;
+}
+
+.overlay {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.4);
+  top: 0;
+  left: -55px;
 }
 
 .tabs {
@@ -12,6 +22,7 @@
 .tabs-block {
   display: flex;
   justify-content: space-between;
+  margin: 0 33% 0 0;
 }
 
 .tab {
@@ -38,4 +49,32 @@
 .app-form-management-block {
   padding: 15px;
   background: #fff;
+}
+
+.control-block {
+  display: flex;
+  align-items: center;
+}
+
+.assign {
+  display: flex;
+  margin: 0 10px 0 0;
+  padding: 5px 5px 6px;
+  background: $gray;
+  border-radius: 3px;
+  border: 1px solid $dark-grey;
+  align-items: center;
+}
+
+.assign-text {
+  margin: 0 5px 0 0;
+  font: 500 10px/12px $nunito-sans;
+}
+
+.review {
+  margin: 0 10px 0 0;
+}
+
+.actions-icon {
+  margin: 0 0 0 26px;
 }

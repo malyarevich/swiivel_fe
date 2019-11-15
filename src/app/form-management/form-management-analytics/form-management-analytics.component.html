@@ -1,0 +1,42 @@
+<div class="analytics">
+  <h2 class="headline">Form Analytics</h2>
+  <div class="info">
+    <div class="chart">
+      <div class="chart-block">
+        <canvas #chartTotalView width="220px" height="220px"></canvas>
+      </div>
+
+      <div class="chart-label">
+        <p class="chart-total">Total</p>
+        <p class="chart-value">{{ formAnalytics.circle_graph.total }}</p>
+      </div>
+    </div>
+    <div class="statistics">
+      <div class="statistics-value">
+        <div class="statistics-value-number">{{ formAnalytics.status_numbers?.send_out }}</div>
+        <div class="statistic-type">Sent Out</div>
+      </div>
+
+      <div class="statistics-value">
+        <div class="statistics-value-number">{{ formAnalytics.status_numbers?.in_progress }}</div>
+        <div class="statistic-type">In Progress</div>
+      </div>
+
+      <div class="statistics-value">
+        <div class="statistics-value-number">{{ formAnalytics.status_numbers?.incomplete }}</div>
+        <div class="statistic-type">Incomplete</div>
+      </div>
+
+      <div class="statistics-value">
+        <div class="statistics-value-number">{{ formAnalytics.status_numbers?.submitted }}</div>
+        <div class="statistic-type">Submitted</div>
+      </div>
+
+      <div class="statistics-value">
+        <div class="statistics-value-number">{{ formAnalytics.status_numbers?.reviewed_completed }}</div>
+        <div class="statistic-type">Reviewed / Completed</div>
+      </div>
+
+    </div>
+  </div>
+</div>
