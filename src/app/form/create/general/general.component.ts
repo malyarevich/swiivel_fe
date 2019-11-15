@@ -1,9 +1,9 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { FormService } from '@app/form/form.service';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { DateTime } from 'luxon';
-import { Subject, BehaviorSubject } from 'rxjs';
-import { takeUntil, take, tap } from 'rxjs/operators';
+import { Subject, BehaviorSubject, timer, of } from 'rxjs';
+import { takeUntil, take, tap, filter, debounceTime, distinctUntilChanged, switchMap, map } from 'rxjs/operators';
 import { ApiService } from '@app/core/api.service';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -41,7 +41,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
   }
   public saving = false;
   private destroyed$ = new Subject();
-  private generalForm: FormGroup;
+  public generalForm: FormGroup;
 
   constructor(
     private router: Router,
@@ -53,8 +53,24 @@ export class GeneralComponent implements OnInit, OnDestroy {
   ) {
     this.cdr.detach();
     this.generalForm = this.fb.group({
-      name: [null, [Validators.required, Validators.minLength(3)]],
-      type: [[]]
+      name: [null, {
+        validators: [Validators.required, Validators.minLength(3), Validators.maxLength(255)],
+        asyncValidators: (control: AbstractControl) => {
+          return timer(400).pipe(
+            switchMap(() => {
+              if (!control.value) {
+                return of(null);
+              }
+              return this.api.getFormsShortList(control.parent.get('type').value.value).pipe(
+                map((forms) => {
+                  return forms.find(search => search.name === control.value.trim()) ? {unique: true} : null;
+                })
+              );
+            })
+          )
+        }
+      }],
+      type: [[], [Validators.required]]
     });
     this.formService.form$.subscribe(form => {
       if (form !== null) {
@@ -66,9 +82,8 @@ export class GeneralComponent implements OnInit, OnDestroy {
         if (!this.isNew) {
           this.generalForm.get('type').disable();
         }
-        this.form.get('name').setValidators([Validators.required, Validators.minLength(3)]);
         if (this.isNew && !this.form.get('example_form_id')) {
-          this.form.addControl('example_form_id', this.fb.control({ value: null, disabled: true }, Validators.required));
+          this.form.addControl('example_form_id', this.fb.control({ value: null, disabled: false}));
         }
         this.form.valueChanges.subscribe((val) => {
           if (Array.isArray(val.type) && val.type.length > 0) {
@@ -205,8 +220,6 @@ export class GeneralComponent implements OnInit, OnDestroy {
       }
 
     }, (error) => {
-      console.error(error);
-    }, () => {
       this.saving = false;
     });
   }
