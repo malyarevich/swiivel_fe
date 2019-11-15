@@ -58,7 +58,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
         asyncValidators: (control: AbstractControl) => {
           return timer(400).pipe(
             switchMap(() => {
-              if (!control.value) {
+              if (!control.value || (!this.isNew && control.value.trim() === this.form.get('name').value)) {
                 return of(null);
               }
               return this.api.getFormsShortList(control.parent.get('type').value.value).pipe(
@@ -91,7 +91,9 @@ export class GeneralComponent implements OnInit, OnDestroy {
           }
         });
         this.generalForm.valueChanges.subscribe((val) => {
-          this.form.get('name').setValue(val.name)
+          if (this.generalForm.get('name').valid) {
+            this.form.get('name').setValue(val.name)
+          }
           if (Array.isArray(val.type) && val.type.length > 0) {
             this.form.get('type').setValue(val.type[0].value)
           }
