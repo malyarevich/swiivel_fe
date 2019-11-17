@@ -15,7 +15,7 @@ export class SendPreviewComponent implements OnInit, OnDestroy {
   isPreviewByAccount = false;
   selectedAccount: IPerson;
   formType = formType.generic;
-  previewType: FormControl = new FormControl(false);
+  previewType: FormControl = new FormControl(this.formType);
   filter: FormControl = new FormControl('');
   buttonOptions: IButtonOption[] = defaultButtonOptions;
   roundsListSubscription: Subscription;
@@ -28,6 +28,9 @@ export class SendPreviewComponent implements OnInit, OnDestroy {
   constructor(
     private formSendService: FormSendService
   ) {
+    this.previewType.valueChanges.subscribe(v => {
+      this.formType = v;
+    })
     // this.filter.valueChanges.subscribe((filterValue) => {
     //   if (filterValue && filterValue.length > 0) {
     //     // this.dataSource.filter(filterValue.toLowerCase())

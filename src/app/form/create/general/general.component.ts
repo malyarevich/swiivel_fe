@@ -1,9 +1,9 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { FormService } from '@app/form/form.service';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { DateTime } from 'luxon';
-import { Subject, BehaviorSubject } from 'rxjs';
-import { takeUntil, take, tap } from 'rxjs/operators';
+import { Subject, BehaviorSubject, timer, of } from 'rxjs';
+import { takeUntil, take, tap, filter, debounceTime, distinctUntilChanged, switchMap, map } from 'rxjs/operators';
 import { ApiService } from '@app/core/api.service';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -41,7 +41,8 @@ export class GeneralComponent implements OnInit, OnDestroy {
   }
   public saving = false;
   private destroyed$ = new Subject();
-  private generalForm: FormGroup;
+  public generalForm: FormGroup;
+  public savedForm: object;
 
   constructor(
     private router: Router,
@@ -53,8 +54,10 @@ export class GeneralComponent implements OnInit, OnDestroy {
   ) {
     this.cdr.detach();
     this.generalForm = this.fb.group({
-      name: [null, [Validators.required, Validators.minLength(3)]],
-      type: [[]]
+      name: [null, {
+        validators: [Validators.required, Validators.minLength(3), Validators.maxLength(255)]
+      }],
+      type: [[], [Validators.required]]
     });
     this.formService.form$.subscribe(form => {
       if (form !== null) {
@@ -65,26 +68,61 @@ export class GeneralComponent implements OnInit, OnDestroy {
         });
         if (!this.isNew) {
           this.generalForm.get('type').disable();
+          this.savedForm = {...form.value};
         }
-        this.form.get('name').setValidators([Validators.required, Validators.minLength(3)]);
         if (this.isNew && !this.form.get('example_form_id')) {
-          this.form.addControl('example_form_id', this.fb.control({ value: null, disabled: true }, Validators.required));
+          this.form.addControl('example_form_id', this.fb.control({ value: null, disabled: true}));
         }
         this.form.valueChanges.subscribe((val) => {
           if (Array.isArray(val.type) && val.type.length > 0) {
             this.form.get('type').setValue(val.type[0].value)
           }
         });
-        this.generalForm.valueChanges.subscribe((val) => {
-          this.form.get('name').setValue(val.name)
-          if (Array.isArray(val.type) && val.type.length > 0) {
-            this.form.get('type').setValue(val.type[0].value)
-          }
+        this.generalForm.valueChanges.pipe(
+          debounceTime(400),
+          distinctUntilChanged(),
+          tap((val) => {
+            let name = this.generalForm.get('name');
+            let type = this.savedForm ? this.savedForm['type'] : this.generalForm.get('type').value[0].value;
+            if (type) {
+              let otherErrors = this.generalForm.get('name').hasError('required') || this.generalForm.get('name').hasError('minlength') || this.generalForm.get('name').hasError('maxlength');
+              if (name && name.value && (this.isNew || (!this.isNew && name.value.trim() !== this.savedForm['name']))) {
+                if (!otherErrors) {
+                  this.api.getFormsShortList(type).subscribe((forms) => {
+                    if (forms.find(search => search.name === val.name.trim())) {
+                      this.generalForm.get('name').setErrors({unique: true});
+                    } else {
+                      this.generalForm.get('name').setErrors(null);
+                    }
+                  });
+                }
+              } else {
+                if (!otherErrors && this.generalForm.get('name').hasError('unique')) {
+                  this.generalForm.get('name').setErrors(null);
+                }
+              }
+            }
+          })
+        ).subscribe((val) => {
+          this.updateForm();
         });
+        this.generalForm.statusChanges.subscribe(() => {
+          this.updateForm();
+        })
         this.cdr.reattach();
         this.cdr.markForCheck()
       }
     });
+  }
+
+  updateForm() {
+    if (this.generalForm.valid) {
+      this.form.get('name').setValue(this.generalForm.value.name)
+      if (Array.isArray(this.generalForm.value.type) && this.generalForm.value.type.length > 0) {
+        this.form.get('type').setValue(this.generalForm.value.type[0].value)
+      }
+    }
+    this.cdr.detectChanges();
   }
 
   get isNew() {
@@ -155,16 +193,8 @@ export class GeneralComponent implements OnInit, OnDestroy {
     else return null;
   }
 
-  // get selectedItem() {
-  //   return this.sm.selected[0] ? {
-  //     name: this.sm.selected[0].name,
-  //     src: `http://34.73.126.99/api/v1/preview-pdf-form/${this.sm.selected[0]._id}?api_token=123`
-  //   } : null;
-  // }
-
   isSelected(item: any) {
     return this.extendedForm === item;
-    // return this.sm.isSelected(item);
   }
 
   selectForm(item: any) {
@@ -190,8 +220,6 @@ export class GeneralComponent implements OnInit, OnDestroy {
     return res;
   }
 
-
-
   async prevStep() {
     await this.router.navigate(['forms-dashboard'])
   }
@@ -199,17 +227,18 @@ export class GeneralComponent implements OnInit, OnDestroy {
 
   nextStep() {
     this.saving = true;
-    this.formService.saveForm().subscribe((saved) => {
-      if (saved) {
-        this.router.navigate(['form', saved._id, 'create', 'builder']);
-      }
-
-    }, (error) => {
-      console.error(error);
-      this.saving = false;
-    }, () => {
-      this.saving = false;
-    });
+    if (this.generalForm.valid) {
+      this.formService.saveForm().subscribe((saved) => {
+        if (saved) {
+          this.router.navigate(['form', saved._id, 'create', 'builder']);
+        }
+  
+      }, (error) => {
+        this.saving = false;
+      });
+    } else {
+      console.log(`Invalid form`, this.generalForm);
+    }
   }
 
   ngOnDestroy() {

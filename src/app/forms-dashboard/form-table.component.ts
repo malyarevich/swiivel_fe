@@ -7,8 +7,11 @@ import { UtilsService } from '@app/core/utils.service';
 import { FormSearchParams } from '@app/models/form-search-params';
 import { CheckService } from '@app/services/check.service';
 import { DateService } from '@app/services/date.service';
+import { FormService } from '@app/services/form.service';
 import { StatusService } from '@app/services/status.service';
 import { FormModel } from '@models/data-collection/form.model';
+import { formStatusOptions } from '@shared/form-status-options';
+import { formStatuses } from '@shared/form-statuses';
 import { IconsEnum } from '@shared/icons.enum';
 import { DialogComponent } from '@shared/popup/dialog.component';
 import { get, pick } from 'lodash';
@@ -27,14 +30,7 @@ export class FormTableComponent implements OnInit {
   @ViewChild('dialog', { static: true }) dialog: DialogComponent;
 
   // TABS
-  public statusArray = [
-    { title: 'All', value: null },
-    { title: 'Active', value: 'active' },
-    { title: 'Draft', value: 'draft' },
-    { title: 'In Review', value: 'review' },
-    { title: 'Closed', value: 'closed' },
-    { title: 'Archived', value: 'archived' },
-  ];
+  public statusArray = formStatuses;
   public statusArrayOptions = [...this.statusArray];
 
   public typeArray = [
@@ -80,13 +76,9 @@ export class FormTableComponent implements OnInit {
   public sort = ['updated_at', false];
   public currentPage = 1;
 
-  public statusesOptions: string[] = ['Active', 'Draft', 'In Review', 'Closed', 'Archived'];
+  public statusesOptions = formStatusOptions;
   // tslint:disable-next-line:variable-name
   public _sm: SelectionModel<any>;
-
-  static createSharedUrl(id: string) {
-    return `${window.location.origin}/view-form/${id}`;
-  }
 
   constructor(
     public dataCollectionService: DataCollectionService,
@@ -94,6 +86,7 @@ export class FormTableComponent implements OnInit {
     public statusService: StatusService,
     public checkService: CheckService,
     public dateService: DateService,
+    public formService: FormService,
     private cdr: ChangeDetectorRef,
     private fb: FormBuilder,
     public utilsService: UtilsService,
@@ -301,11 +294,11 @@ export class FormTableComponent implements OnInit {
 
     if (form) {
       this.popupContentArray = [];
-      this.popupContentArray.push({ title: FormTableComponent.createSharedUrl(form.mongo_id) });
+      this.popupContentArray.push({ title: this.formService.createSharedUrl(form.mongo_id) });
     } else {
       this.popupContentArray = [];
       this._sm.selected.forEach((item: FormModel) => {
-        this.popupContentArray.push({ title: FormTableComponent.createSharedUrl(item.mongo_id) });
+        this.popupContentArray.push({ title: this.formService.createSharedUrl(item.mongo_id) });
       });
     }
 

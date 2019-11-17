@@ -23,6 +23,7 @@ import { SettingsModule } from './builder/workarea/fields/settings/settings.modu
 import { WorkareaHeaderComponent } from './builder/workarea/workarea-header.component';
 import { DocumentsFormsComponent } from './builder/workarea/documents-forms.component';
 import { WidgetComponent } from './builder/workarea/fields/widget/widget.component';
+import { FormDrawingComponent } from './builder/workarea/form-drawing/form-drawing.component';
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import { WidgetComponent } from './builder/workarea/fields/widget/widget.compone
     WorkareaFieldsComponent,
     WorkareaHeaderComponent,
     DocumentsFormsComponent,
-    WidgetComponent
+    WidgetComponent,
+    FormDrawingComponent
   ],
   imports: [
     CommonModule,

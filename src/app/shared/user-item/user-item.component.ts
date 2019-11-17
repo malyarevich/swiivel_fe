@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { UserItem } from '@models/user-item';
+import { ButtonSizeEnum } from '@shared/buttons/buttonSize.enum';
 
 @Component({
   selector: 'sw-user-item',
@@ -7,13 +8,10 @@ import { UserItem } from '@models/user-item';
   styleUrls: ['./user-item.component.scss'],
 })
 
-export class UserItemComponent implements OnInit {
-  @Input() userItem: UserItem;
+export class UserItemComponent {
   @Input() isRoleShown = true;
+  @Input() userItem: UserItem;
+  @Input() size: ButtonSizeEnum = ButtonSizeEnum.DEFAULT;
 
-  constructor(
-  ) {}
-
-  public ngOnInit(): void {
-  }
+  constructor() {}
 }

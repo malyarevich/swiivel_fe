@@ -67,6 +67,7 @@ export class FormService {
     schema: [],
     mapped: []
   };
+  public stage$ = new BehaviorSubject(0);
 
   constructor(private fb: FormBuilder, private api: ApiService) {
     this.api.getSidebarFields().subscribe((fields) => {
@@ -87,184 +88,19 @@ export class FormService {
       const getFormTemplate = this.api.getFormTemplate(formId);
       getFormTemplate.subscribe(data => {
         if (data) {
+          this.stage$.next(1);
           this.form = this.initForm(data);
         }
       });
       return getFormTemplate;
     } else {
-      this.form = this.initForm({ type: 'registration', name: null });
+      this.form = this.initForm();
     }
   }
 
-  // addWrapper(section?, field?) {
-  //   let form = this.form;
-  //   if (!section) {
-  //     section = {
-  //       type: 114,
-  //       name: 'New section',
-  //       isActive: true,
-  //       fields: [],
-  //       path: ['New section'],
-  //       pathId: 'New section114'
-  //     };
-  //   }
-  //   if (field) { section.fields = [field]; }
-  //   const formGroup = this.createField(section);
-  //   if (!field) { formGroup.addControl('fields', this.fb.array([])); }
-  //   this.form.form = this.fb.array([{ [section.name]: formGroup }]);
-  //   this.form.fields = [section];
-  //   return this.form;
-
-  //   // if (!field) { formGroup.addControl('fields', this.fb.array([])); }
-  //   // form = this.fb.array([formGroup]);
-  //   // this.form.workspace = [section];
-  //   // console.log('FORM WRAPPER', form);
-  //   // return section;
-  // }
-
-
-  // parentControlPath(paths) {
-  //   return flatMap(paths.slice(0, -1), (path => [path, 'fields']));
-  // }
-
-  // fieldControlPath(paths) {
-  //   return flatMap(paths, (path => [path, 'fields'])).slice(0, -1);
-  // }
-
-  // getFieldSpace(field) {
-  //   if (!field || !field.path) { return null; }
-  //   const spacePath = this.getFieldSpacePath(field);
-  //   if (spacePath === null) { return null; }
-  //   const space = get(this.form.workspace, spacePath);
-  //   return space;
-  // }
-  // removeFieldSpace(field) {
-  //   const parentPath = field.path.slice(0, -1).reduce((paths, path, idx) => {
-  //     if (paths === null) { return null; }
-  //     let searchArray = get(this.form.workspace, [...paths], false);
-  //     if (searchArray === false && idx === 0) {
-  //       searchArray = this.form.workspace;
-  //     }
-  //     if (searchArray) {
-  //       const foundIdx = searchArray.findIndex(searchField => searchField.name === path);
-  //       if (foundIdx !== -1) {
-  //         paths.push(foundIdx, 'fields');
-  //         return paths;
-  //       } else { return null; }
-  //     } else {
-  //       debugger;
-  //     }
-  //   }, []);
-  //   if (parentPath === null) { return null; }
-  //   let parent = get(this.form.workspace, parentPath);
-  //   unset(this.form.workspace, [...parentPath, field.name]);
-  //   parent = set(this.form.workspace, parentPath, parent.filter(pp => !(pp.name === field.name && pp.type === field.type)));
-  //   return parent;
-  // }
-  // getFieldForm(field) {
-  //   const form = this.form.form;
-  //   if (Object.keys(form.controls).length === 0) { return 0; }
-  //   if (field._id) {
-
-  //   } else {
-  //     if (field.path) {
-  //       const parentPath = this.parentControlPath(field.path);
-  //       let control = form.get([...parentPath, field.name]);
-  //       if (!control) {
-  //         for (const key of Object.keys(form.controls)) {
-  //           control = form.get([key, 'fields', ...parentPath, field.name]);
-  //           if (control) {
-  //             field.path.unshift(key);
-  //             break;
-  //           }
-  //         }
-  //       }
-  //       return control;
-  //     } else {
-  //       return null;
-  //     }
-  //   }
-  // }
-  // getFieldFormParent(field) {
-  //   const form = this.form.get('form');
-  //   if (!form || !form.controls || Object.keys(form.controls).length === 0) { return 0; }
-  //   if (field._id) {
-
-  //   } else {
-  //     if (field.path) {
-  //       const parentPath = this.parentControlPath(field.path);
-  //       let parent = form.get(parentPath);
-  //       if (!parent) {
-  //         for (const key of Object.keys(form.controls)) {
-  //           parent = form.get([key, 'fields', ...parentPath]);
-  //           if (parent) {
-  //             field.path.unshift(key);
-  //             break;
-  //           }
-  //         }
-  //       }
-  //       return parent;
-  //     } else {
-  //       return null;
-  //     }
-  //   }
-  // }
   moveField(event: CdkDragDrop<any>) {
     console.groupCollapsed(`Moving field ${event.item.data.name}`);
-    // if (event.container.id === event.previousContainer.id) {
-    //   const rootNames = this.form.workspace.map((root: any) => root.name);
-    //   const path = event.item.data.path.slice();
-    //   if (!rootNames.includes(path[0])) {
-    //     const wrapper = this.form.workspace.find((section) => section.fields.find((s) => s.name === path[0]));
-    //     if (wrapper) { event.item.data.path.unshift(wrapper.name); }
-    //   }
-    //   const spaceParent = this.getFieldSpaceParent(event.item.data);
-    //   const space = this.getFieldSpace(event.item.data);
-    //   if (spaceParent && space) {
-    //     const position = spaceParent.indexOf(space);
-    //     if (position !== -1) {
-    //       spaceParent.splice(event.currentIndex, 0, spaceParent.splice(position, 1)[0]);
-    //       this.events$.next({ action: 'update' });
-    //     }
-    //   }
-    // } else if (event.container.id !== event.previousContainer.id) {
-    //   const rootNames = this.form.workspace.map((root: any) => root.name);
-    //   const path = event.item.data.path.slice();
-    //   if (!rootNames.includes(path[0])) {
-    //     const wrapper = this.form.workspace.find((section) => section.fields.find((s) => s.name === path[0]));
-    //     if (wrapper) { event.item.data.path.unshift(wrapper.name); }
-    //   }
-    //   const spaceParent = this.getFieldSpaceParent(event.item.data);
-    //   const formParent = this.getFieldFormParent(event.item.data);
-    //   const fieldForm = formParent.get(event.item.data.name);
-    //   const target = this.getFieldSpace(event.container.data);
-    //   const targetForm = this.getFieldForm(event.container.data);
-    //   const space = this.getFieldSpace(event.item.data);
-    //   console.log(cloneDeep(formParent));
-    //   console.log(cloneDeep(fieldForm));
-    //   console.log(cloneDeep(targetForm));
-    //   if (spaceParent && space && target && fieldForm && targetForm) {
-    //     const position = spaceParent.indexOf(space);
-    //     if (position !== -1) {
-    //       // transferArrayItem(spaceParent, target.fields, position, event.currentIndex);
-    //       const moving = spaceParent.splice(position, 1)[0];
-    //       moving.path = [...event.container.data.path, moving.name];
-    //       moving.pathId = moving.path.join('') + moving.type;
-    //       target.fields.splice(event.currentIndex, 0, moving);
-    //       formParent.removeControl(moving.name);
-    //       fieldForm.patchValue({
-    //         path: moving.path,
-    //         pathId: moving.pathId
-    //       });
-    //       targetForm.get('fields').addControl(moving.name, fieldForm);
-    //       fieldForm.setParent(targetForm.get('fields'));
-    //       console.log(cloneDeep(formParent));
-    //       console.log(cloneDeep(fieldForm));
-    //       console.log(cloneDeep(targetForm));
-    //       this.events$.next({ action: 'update' });
-    //     }
-    //   }
-    // }
+
     console.groupEnd();
   }
   prependPath(field, path) {
@@ -275,67 +111,7 @@ export class FormService {
   }
   add2Field(field, ancestors?, only?) {
     console.log('ADD FIELD ARGS', field, ancestors, only)
-    // if (!field || !field.name) { return null; }
-    // if (Array.isArray(ancestors) && ancestors.length === 0) { ancestors = null; }
-    // console.groupCollapsed(`Adding field ${field.name}`);
-    // const form = this.form.get('form'); // this.fb.array([]) as FormArray;
-    // const formParent = this.getFieldFormParent(field);
-    // if (formParent === 0 && field.type !== 114) {
-    //   const wrapper = this.addWrapper();
-    //   this.addField(field, ancestors, only);
-    // } else if (!!formParent) {
-    //   formParent.addControl(field.name, this.createField(field));
-    //   let spaceParent = this.getFieldSpaceParent(field);
-    //   if (spaceParent) {
-    //     if (!spaceParent.find(a => a.name === field.name && a.type === field.type)) {
-    //       if (only) {
-    //         spaceParent.push({ ...field, fields: [] });
-    //       } else {
-    //         spaceParent.push(field);
-    //       }
-    //     }
-    //   } else {
-    //     if (ancestors) {
-    //       ancestors = ancestors.slice();
-    //       ancestors.reverse();
-    //       let prev;
-    //       ancestors.forEach((ancestor) => {
-    //         spaceParent = this.getFieldSpaceParent(ancestor);
-    //         if (!spaceParent) {
-    //           const preparent = this.getFieldSpaceParent(prev);
-    //           preparent.find(pp => pp.name === prev.name && pp.type === prev.type).fields.push({ ...ancestor, fields: [] });
-    //           prev = ancestor;
-    //         } else {
-    //           prev = ancestor;
-    //         }
-    //       });
-    //       spaceParent = this.getFieldSpaceParent(field);
-    //       spaceParent.push(field);
-    //     } else {
-    //       debugger;
-    //     }
-    //   }
-    // } else {
-    //   if (ancestors) {
-    //     ancestors = ancestors.slice();
-    //     let parent = ancestors.shift();
-    //     parent = this.addField(parent, ancestors, true);
-    //     if (parent) {
-    //       this.addField(field);
-    //     } else { debugger; }
-    //   } else {
-    //     console.error('oops');
-    //     debugger;
-    //     console.log(ancestors);
-    //     return false;
-    //   }
-
-    // }
-    // this.events$.next({ action: 'added', field });
-    // this.events$.next({ action: 'update' });
-    // console.log('set ivents');
-    // console.groupEnd();
-    // return form;
+   
   }
 
 
@@ -344,50 +120,13 @@ export class FormService {
   }
 
   getFieldSpaceParentPath(field) {
-    // const parentPath = field.path.slice(0, -1).reduce((paths, path, idx) => {
-    //   if (paths === null) { return null; }
-    //   let searchArray = get(this.form.workspace, [...paths], false);
-    //   if (searchArray === false && idx === 0) {
-    //     searchArray = this.form.workspace;
-    //   }
-    //   if (searchArray) {
-    //     const foundIdx = searchArray.findIndex(searchField => searchField.name === path);
-    //     if (foundIdx !== -1) {
-    //       paths.push(foundIdx, 'fields');
-    //       return paths;
-    //     } else { return null; }
-    //   } else {
-    //     debugger;
-    //   }
-    // }, []);
-    // return parentPath;
+   
   }
   getFieldSpacePath(field) {
-    // const fieldPath = field.path.reduce((paths, path, idx) => {
-    //   if (paths === null) { return null; }
-    //   let searchArray = get(this.form.workspace, [...paths], false);
-    //   if (searchArray === false && idx === 0) {
-    //     searchArray = this.form.workspace;
-    //   }
-    //   if (searchArray) {
-    //     const foundIdx = searchArray.findIndex(searchField => searchField.name === path);
-    //     if (foundIdx !== -1) {
-    //       paths.push(foundIdx, 'fields');
-    //       return paths;
-    //     } else { return null; }
-    //   } else {
-    //     debugger;
-    //   }
-    // }, []);
-    // if (fieldPath) { fieldPath.pop(); }
-    // return fieldPath;
+   
   }
   getFieldSpaceParent(field) {
-    // if (!field || !field.path) { return null; }
-    // const parentPath = this.getFieldSpaceParentPath(field);
-    // if (parentPath === null) { return null; }
-    // const parent = get(this.form.workspace, parentPath);
-    // return parent;
+
   }
 
   removeField(control: AbstractControl) {
@@ -658,7 +397,7 @@ export class FormService {
   }
 
   initForm(data?) {
-    console.groupCollapsed(`Creating formgroup ${data.name || ''}`);
+    console.groupCollapsed(`Creating formgroup ${data && data.name ? data.name : ''}`);
     const form = this.fb.group({});
     if (data) {
       for (const key of Object.keys(data)) {
@@ -693,8 +432,8 @@ export class FormService {
       }
       form.patchValue(data);
     } else {
-      this.addField('name', '', form);
-      this.addField('type', 'registration', form);
+      form.addControl('name', this.fb.control(null, [Validators.required]));
+      form.addControl('type', this.fb.control('registration', [Validators.required]))
     }
     console.log('New FORM', form)
     console.groupEnd();
@@ -703,6 +442,7 @@ export class FormService {
   
   saveForm() {
     console.groupCollapsed('Saving form');
+    this.form.updateValueAndValidity();
     if (this.form.valid) {
       const data = this.form.value;
       if (this.form.get('_id')) {

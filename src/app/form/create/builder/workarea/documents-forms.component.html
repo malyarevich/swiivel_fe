@@ -44,7 +44,7 @@
     'app-div-hide': !isContentShown
   }">
 
-  <div class="documents-item" *ngFor="let document of lform.get('documents.documentsItems').value">
+  <div class="documents-item" *ngFor="let document of lform.value.documents.documentsItems; let i = index;">
     <div class="row item-row justify-content-between">
       <div class="document-info align-items-center">
         <div class="document-name">
@@ -70,16 +70,15 @@
       <div class="file" *ngIf="!document?.isUpload">
         <div class="input">
           <span class="file-name">
-              <!-- {{attachments[document.data]?.name}} -->
-              File  name
+              {{ getAttachments(document.data) }}
           </span>
           <div class="actions" style="margin-left: auto; width: fit-content;">
             <sw-icon-button (click)="openForPreview(document)" icon="fa-eye"></sw-icon-button>
-            <sw-icon-button (click)="deleteAttachment(document)" icon="fa-trash"></sw-icon-button>
+            <sw-icon-button (click)="deleteAttachment(i)" icon="fa-trash"></sw-icon-button>
           </div>
-          <input #fileInput type="file" accept=".pdf,.doc,.docx,.jpg" (change)="fileChange($event, document)" hidden />
+          <input #fileInput type="file" accept=".pdf,.doc,.docx,.jpg" (change)="fileChange($event, i)" hidden />
         </div>
-        <sw-button class="icon-btn full rigth" (click)="focusInput(fileInput)">
+        <sw-button class="icon-btn full rigth" style="width: 35px;" (click)="focusInput(fileInput)">
           <i class="fas fa-sliders-h"></i>
         </sw-button>
       </div>
@@ -251,6 +250,10 @@
       </sw-input-checkbox>
 
     </div>
+
+    <sw-form-drawing [sideBar]="sideBar" [form]="form" [existingFields]="existingFields" *ngIf="forms?.form && forms?.form?.name"
+    [pages]="forms.form.numberOfPages" [formsPDF]="forms"></sw-form-drawing>
+
 
   </div>
 

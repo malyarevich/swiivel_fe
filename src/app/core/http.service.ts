@@ -29,9 +29,18 @@ export class HttpService {
     return headers.set('Content-Type', `multipart/form-data;`);
   }
 
-  'post'(url: string, data: object): Observable<any> {
+  request(method: string, url: string, options?: object) {
+    this.requestSubject.next('Sending request');
+    return this.http.request(method, url, options).pipe(
+      timeout(this.apiTimeout),
+      catchError(this.handleError),
+      finalize(() => this.endRequest())
+    )
+  }
+
+  'post'(url: string, data: object, options?: object): Observable<any> {
     this.requestSubject.next('Saving data');
-    return this.http.post(this.apiUrl + url, data)
+    return this.http.post(this.apiUrl + url, data, options)
       .pipe(
         timeout(this.apiTimeout),
         map((response: ApiResponse) => {
@@ -45,7 +54,7 @@ export class HttpService {
         finalize(() => this.endRequest())
       );
   }
-  'upload'(url: string, file: File, method='POST', showLoader = false, data = null): Observable<any> {
+  'upload'(url: string, file: File, method='POST', showLoader = false, options?: object): Observable<any> {
     if (showLoader) {
       this.requestSubject.next('Saving data');
     }
@@ -53,16 +62,12 @@ export class HttpService {
     formData.append('type', 'document');
     formData.append('original_name', file.name);
     formData.append('file', file, file.name);
-
-    // if (data) {
-    //   console.log(data);
-    // }
-
     return this.http.request(method, this.apiUrl + url, {
       body: formData,
       reportProgress: true,
       observe: 'events',
       responseType: 'json',
+      ...options
     }).pipe(
       map((response: any) => {
         if (response.type === 1) {
@@ -85,14 +90,15 @@ export class HttpService {
       finalize(() => this.endRequest())
     );
   }
-  'postForm'(url: string, data: object, showLoader = false): Observable<any> {
+  'postForm'(url: string, data: object, showLoader = false, options?: object): Observable<any> {
     if (showLoader) {
       this.requestSubject.next('Saving data');
     }
     const formData = this.obj2formData(data);
     return this.http.post(this.apiUrl + url, formData, {
       reportProgress: true,
-      observe: 'events'
+      observe: 'events',
+      ...options
     }).pipe(
       map((response: any) => {
         if (response.status === 1) {
@@ -134,9 +140,9 @@ export class HttpService {
       finalize(() => this.endRequest())
     );
   }
-  'put'(url: string, data: object): Observable<any> {
+  'put'(url: string, data: object, options?: object): Observable<any> {
     this.requestSubject.next('Updating data');
-    return this.http.put(this.apiUrl + url, data)
+    return this.http.put(this.apiUrl + url, data, options)
       .pipe(
         timeout(this.apiTimeout),
         map((response: ApiResponse) => {
@@ -150,12 +156,13 @@ export class HttpService {
         finalize(() => this.endRequest())
       );
   }
-  'putForm'(url: string, data: object): Observable<any> {
+  'putForm'(url: string, data: object, options?: object): Observable<any> {
     this.requestSubject.next('Updating data');
     const formData = this.obj2formData(data);
     return this.http.put(this.apiUrl + url, formData, {
       reportProgress: true,
-      observe: 'events'
+      observe: 'events',
+      ...options
     }).pipe(
       map((response: any) => {
         if (response.status === 1) {
@@ -168,23 +175,13 @@ export class HttpService {
       finalize(() => this.endRequest())
     );
   }
-  'delete'(url: string, data?: object): Observable<any> {
+  'delete'(url: string, options?: object): Observable<any> {
     this.requestSubject.next('Deleting data');
-    if (data) {
-      return this.http.delete(this.apiUrl + url, data)
-        .pipe(
-          timeout(this.apiTimeout),
-          catchError(this.handleError),
-          finalize(() => this.endRequest())
-        );
-    } else {
-      return this.http.delete(this.apiUrl + url)
-        .pipe(
-          timeout(this.apiTimeout),
-          catchError(this.handleError),
-          finalize(() => this.endRequest())
-        );
-    }
+    return this.http.delete(this.apiUrl + url, options).pipe(
+      timeout(this.apiTimeout),
+      catchError(this.handleError),
+      finalize(() => this.endRequest())
+    );
   }
 
 

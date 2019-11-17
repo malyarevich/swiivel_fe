@@ -24,11 +24,11 @@ export class SidebarDocumentsFormsComponent implements OnInit {
   formBut = [
     {
       label: 'Use Existing',
-      value: 'old'
+      value: false
     },
     {
       label: 'Create New',
-      value: 'new'
+      value: true
     }
   ];
   isPerFamilyD: any[] = [];
@@ -103,16 +103,38 @@ export class SidebarDocumentsFormsComponent implements OnInit {
   addItem(addTo: string): void {
     switch (addTo) {
       case 'documents':
-        let documentsList = this.lform.get('documents.documentsItems').value;
-        let documentItem: DocumentsModel = cloneDeep(documentItemDefault);
-        documentsList.push(documentItem);
-        this.lform.get('documents.documentsItems').patchValue(documentsList);
+        (this.lform.get('documents.documentsItems') as FormArray).push(this.fb.group({
+          id: [''],
+          name: [''],
+          isUpload: [true],
+          isPerFamily: [true],
+          accompanyingText: this.fb.group({
+            data: [''],
+            isBold: [false],
+            isItalic: [false]
+          }),
+          data: '',
+          dataTypeAllowed: this.fb.array([])
+        }));
         break;
       case 'forms':
-        let formsList = this.lform.get('formsPDF.formsPDFItems').value;
-        let formPDFItem = cloneDeep(formPDFItemDefault);
-        formsList.push(formPDFItem);
-        this.lform.get('formsPDF.formsPDFItems').patchValue(formsList);
+          (this.lform.get('formsPDF.formsPDFItems') as FormArray).push(this.fb.group({
+            id: [''],
+            name: [''],
+            isNew: [true],
+            isPerFamily: [true],
+            isAllowDownloadUpload: [false],
+            isFillableOnline: [false],
+            accompanyingText: this.fb.group({
+              data: [''],
+              isBold: [false],
+              isItalic: [false]
+            }),
+            form: this.fb.group({
+              name: [null],
+              type: [null]
+            })
+          }))
         break;
     }
     // console.log(this.lform);
@@ -122,14 +144,10 @@ export class SidebarDocumentsFormsComponent implements OnInit {
     if (from && from !== '' && index >= 0) {
       switch (from) {
         case 'documents':
-            let documentsList = this.lform.get('documents.documentsItems').value;
-            documentsList.splice(index, 1);
-            this.lform.get('documents.documentsItems').patchValue(documentsList);
+            (this.lform.get('documents.documentsItems') as FormArray).removeAt(index);
           break;
         case 'forms':
-            let formsList = this.lform.get('formsPDF.formsPDFItems').value;
-            formsList.splice(index, 1);
-            this.lform.get('formsPDF.formsPDFItems').patchValue(formsList);
+            (this.lform.get('formsPDF.formsPDFItems') as FormArray).removeAt(index);
           break;
       }
     }
