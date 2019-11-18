@@ -93,7 +93,7 @@
 
   .container__icon--clear {
     margin: 0 2px 0 0;
-    color: $element-base-color;
+    color: $icon-gray;
 
     &:hover {
       cursor: pointer;
@@ -272,4 +272,15 @@
   &:hover {
     cursor: pointer;
   }
+}
+
+.input-sum {
+  background: $lightblue-color;
+  border: 3px;
+}
+
+.input-sum-text {
+  font: 800 10px/13px $nunito-sans;
+  padding: 1px 5px;
+  color: $element-base-color;
 }
