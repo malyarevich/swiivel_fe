@@ -449,12 +449,14 @@ export class FormService {
         return this.api.updateFormTemplate(data._id, data).pipe(
           tap(res => {
             console.log('RESPONSE EDIT  FORM', res);
+            console.groupEnd();
           })
         );
       } else {
         return this.api.saveNewForm(data).pipe(
           tap(res => {
             console.log('RESPONSE NEW  FORM', res);
+            console.groupEnd();
           })
         );
       }
@@ -462,9 +464,10 @@ export class FormService {
 
     } else {
       console.error(this.form.errors);
+      console.groupEnd();
       return throwError(this.form.errors);
     }
-    console.groupEnd();
+    
   }
 
   get form(): FormGroup {
