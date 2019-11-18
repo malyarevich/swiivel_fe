@@ -283,15 +283,15 @@
                 </div>
                 <div class="item">
                   <div class="item-icon" data-e2e="Sharebutton">
-                    <sw-icon-button [icon]="icons.SHARE" (click)="onShareLink(form)">
+                    <sw-icon-button [icon]="icons.SHARE" text="Share" (click)="onShareLink(form)">
                     </sw-icon-button>
                   </div>
                   <div class="item-icon" data-e2e="Downloadbutton">
-                    <sw-icon-button [icon]="icons.DOWNLOAD" (click)="onExportPDF(form.mongo_id)">
+                    <sw-icon-button [icon]="icons.DOWNLOAD" text="Download" (click)="onExportPDF(form.mongo_id)">
                     </sw-icon-button>
                   </div>
                   <div class="item-icon" data-e2e="Copybutton">
-                    <sw-icon-button [icon]="icons.COPY" (click)="onDuplicateForm(form.mongo_id)">
+                    <sw-icon-button [icon]="icons.COPY" text="Duplicate" (click)="onDuplicateForm(form.mongo_id)">
                     </sw-icon-button>
                   </div>
                 </div>
