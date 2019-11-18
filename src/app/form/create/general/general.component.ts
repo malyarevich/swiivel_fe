@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy, ContentChild, ViewChild } from '@angular/core';
 import { FormService } from '@app/form/form.service';
 import { FormGroup, FormBuilder, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { DateTime } from 'luxon';
@@ -8,6 +8,7 @@ import { ApiService } from '@app/core/api.service';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Router, ActivatedRoute } from '@angular/router';
 import { cloneDeep, flatMap, get, isArrayLike, isPlainObject, isString, set, unset, values } from 'lodash';
+import { InputTextComponent } from '@app/shared/inputs/input-text/input-text.component';
 
 @Component({
   selector: 'sw-general',
@@ -43,7 +44,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
   private destroyed$ = new Subject();
   public generalForm: FormGroup;
   public savedForm: object;
-
+  @ViewChild('name', {static: false, read: InputTextComponent}) nameInput: InputTextComponent;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -78,32 +79,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
             this.form.get('type').setValue(val.type[0].value)
           }
         });
-        this.generalForm.valueChanges.pipe(
-          debounceTime(400),
-          distinctUntilChanged(),
-          tap((val) => {
-            let name = this.generalForm.get('name');
-            let type = this.savedForm ? this.savedForm['type'] : this.generalForm.get('type').value[0].value;
-            if (type) {
-              let otherErrors = this.generalForm.get('name').hasError('required') || this.generalForm.get('name').hasError('minlength') || this.generalForm.get('name').hasError('maxlength');
-              if (name && name.value && (this.isNew || (!this.isNew && name.value.trim() !== this.savedForm['name']))) {
-                if (!otherErrors) {
-                  this.api.getFormsShortList(type).subscribe((forms) => {
-                    if (forms.find(search => search.name === val.name.trim())) {
-                      this.generalForm.get('name').setErrors({unique: true});
-                    } else {
-                      this.generalForm.get('name').setErrors(null);
-                    }
-                  });
-                }
-              } else {
-                if (!otherErrors && this.generalForm.get('name').hasError('unique')) {
-                  this.generalForm.get('name').setErrors(null);
-                }
-              }
-            }
-          })
-        ).subscribe((val) => {
+        this.generalForm.valueChanges.subscribe((val) => {
           this.updateForm();
         });
         this.generalForm.statusChanges.subscribe(() => {
@@ -235,6 +211,13 @@ export class GeneralComponent implements OnInit, OnDestroy {
   
       }, (error) => {
         this.saving = false;
+        if (Array.isArray(error.errors)) {
+          if (error.errors.includes('Form template name already exists!')) {
+            this.nameInput.focus();
+            this.generalForm.get('name').setErrors({unique: true});
+          }
+        }
+        console.log(error)
       });
     } else {
       console.log(`Invalid form`, this.generalForm);

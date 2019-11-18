@@ -4,6 +4,7 @@
   width: 100%;
   height: calc(100vh - 172px);
   .general-page {
+    min-height: calc(100vh - 172px);
     height: 100%;
     background: #fff;
     border-radius: 3px;
@@ -88,13 +89,13 @@
           }
           .form-preview {
             max-width: 100%;
-            max-height: 100%;
+            min-height: 400px;
             height: 100%;
             // padding-top: 55px;
             border-radius: 3px;
             background: #F3F3F3;
             border: 1px solid #E3E3E3;
-            overflow: hidden;
+            // overflow: hidden;
             position: relative;
             display: flex;
             align-items: center;
@@ -119,8 +120,9 @@
               }
             }
             .pdf-container {
-              height: 100%;
-              overflow: auto;
+              max-height: 100%;
+              overflow: scroll;
+
             }
           }
         }
@@ -148,6 +150,7 @@
     display: flex;
     width: fit-content;
     margin-left: auto;
+    margin-bottom: 20px;
   }
   .no-m {
     margin: 0 !important;

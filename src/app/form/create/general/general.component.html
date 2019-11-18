@@ -19,7 +19,7 @@
       </div>
       <div class="content">
         <div class="inputs">
-          <sw-input-text class="input" formControlName="name" [isClearable]="true">
+          <sw-input-text class="input" formControlName="name" [isClearable]="true" [autofocus]="true" #name>
             <span class="placeholder">Form Name</span>
             <div class="errors" *ngIf="generalForm.get('name').errors">
               <span *ngIf="generalForm.get('name').hasError('required')">Please name your form</span>
@@ -61,7 +61,7 @@
                 <div class="title">
                   <div class="name"> {{ extendedForm.name }}</div>
                 </div>
-                <div class="pdf-containerx">
+                <div class="pdf-container">
                   <pdf-viewer [src]="extendedFormSrc" style="display: block; margin-top: 60px;" zoom="0.7">
                   </pdf-viewer>
                 </div>

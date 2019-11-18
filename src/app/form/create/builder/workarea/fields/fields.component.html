@@ -1,6 +1,8 @@
-<cdk-tree [dataSource]="treeSource" [treeControl]="treeControl" cdkDropList id="root-list" [cdkDropListEnterPredicate]="mayEnterRoot" [cdkDropListData]="form">
-  <cdk-nested-tree-node *cdkTreeNodeDef="let node;" cdkDrag [cdkDragData]="node" (cdkDragDropped)="drop($event)" [ngClass]="{'group-tree-node': node.value.type === 113, 'section-tree-node': node.value.type === 114, 'field-tree-node': node.value.type < 113}">
-    <div class="main_container">
+<cdk-tree [dataSource]="treeSource" [treeControl]="treeControl" cdkDropList id="root-list"
+  [cdkDropListEnterPredicate]="mayEnterRoot" [cdkDropListData]="form">
+  <cdk-nested-tree-node *cdkTreeNodeDef="let node;" cdkDrag [cdkDragData]="node" (cdkDragDropped)="drop($event)"
+    [ngClass]="{'group-tree-node': node.value.type === 113, 'section-tree-node': node.value.type === 114, 'field-tree-node': node.value.type < 113}">
+    <div class="main_container field">
       <div class="drag-icon">
         <i class="dragdrop fas fa-ellipsis-v" cdkDragHandle></i>
       </div>
@@ -8,25 +10,28 @@
         <div class="main-text">{{ node.value.name }}</div>
         <div class="hint">Field Type -</div>
       </div>
+      <sw-dropdown-input style="margin-right: 25px;" [formControl]="node.get('options.size')" [options]="sizeOptions">
+        <span class="input_label">Field Width</span>
+      </sw-dropdown-input>
       <div class="input">
-          <sw-input-checkbox [formControl]="node.get('options.required')">
-            <span class="label">Required</span>
-          </sw-input-checkbox>
-        </div>
-        <div class="input">
-          <sw-input-checkbox [formControl]="node.get('options.hideLabel')">
-            <span class="label">Hide Label</span>
-          </sw-input-checkbox>
-        </div>
-        <div class="input">
-          <sw-input-checkbox [formControl]="node.get('options.readonly')">
-            <span class="label">Read–Only</span>
-          </sw-input-checkbox>
-        </div>
-        <div class="input">
-          <sw-input-checkbox [formControl]="node.get('options.unique')">
-            <span class="label">Unique</span>
-          </sw-input-checkbox>
+        <sw-input-checkbox [formControl]="node.get('options.required')">
+          <span class="label">Required</span>
+        </sw-input-checkbox>
+      </div>
+      <div class="input">
+        <sw-input-checkbox [formControl]="node.get('options.hideLabel')">
+          <span class="label">Hide Label</span>
+        </sw-input-checkbox>
+      </div>
+      <div class="input">
+        <sw-input-checkbox [formControl]="node.get('options.readonly')">
+          <span class="label">Read–Only</span>
+        </sw-input-checkbox>
+      </div>
+      <div class="input">
+        <sw-input-checkbox [formControl]="node.get('options.unique')">
+          <span class="label">Unique</span>
+        </sw-input-checkbox>
       </div>
       <div class="actions">
         <div class="icon">
@@ -40,7 +45,7 @@
         </div>
       </div>
     </div>
-  <div class="main_container preview" *cdkDragPreview>
+    <!-- <div class="main_container preview" *cdkDragPreview>
       <div class="drag-icon">
         <i class="dragdrop fas fa-ellipsis-v"></i>
       </div>
@@ -48,27 +53,30 @@
         <div class="main-text">{{ node.value.name }}</div>
         <div class="hint">Field Type -</div>
       </div>
+      <sw-dropdown-input style="margin-right: 25px;" [formControl]="node.get('options.size')" [options]="sizeOptions">
+        <span class="input_label">Field Width</span>
+      </sw-dropdown-input>
       <div class="input">
-          <sw-input-checkbox [formControl]="node.get('options.required')">
-            <span class="label">Required</span>
-          </sw-input-checkbox>
-        </div>
-        <div class="input">
-          <sw-input-checkbox [formControl]="node.get('options.hideLabel')">
-            <span class="label">Hide Label</span>
-          </sw-input-checkbox>
-        </div>
-        <div class="input">
-          <sw-input-checkbox [formControl]="node.get('options.readonly')">
-            <span class="label">Read–Only</span>
-          </sw-input-checkbox>
-        </div>
-        <div class="input">
-          <sw-input-checkbox [formControl]="node.get('options.unique')">
-            <span class="label">Unique</span>
-          </sw-input-checkbox>
+        <sw-input-checkbox [formControl]="node.get('options.required')">
+          <span class="label">Required</span>
+        </sw-input-checkbox>
       </div>
-      <!-- <div class="actions">
+      <div class="input">
+        <sw-input-checkbox [formControl]="node.get('options.hideLabel')">
+          <span class="label">Hide Label</span>
+        </sw-input-checkbox>
+      </div>
+      <div class="input">
+        <sw-input-checkbox [formControl]="node.get('options.readonly')">
+          <span class="label">Read–Only</span>
+        </sw-input-checkbox>
+      </div>
+      <div class="input">
+        <sw-input-checkbox [formControl]="node.get('options.unique')">
+          <span class="label">Unique</span>
+        </sw-input-checkbox>
+      </div>
+      <div class="actions">
         <div class="icon">
           <sw-icon-button icon="fa-cog" class="field-creator blue" [class.active]="node.showSettings"
             (click)="settingsToggle(node)">
@@ -78,14 +86,16 @@
           <sw-icon-button icon="fa-times" class="field-creator blue" (click)="closeNode(node)">
           </sw-icon-button>
         </div>
-      </div> -->
-    </div>    
-  <div class="settings" *ngIf="node.value.showSettings">
-    <sw-settings [field]="node"></sw-settings>
-  </div>
+      </div>
+    </div> -->
+    <div class="settings" *ngIf="node.value.showSettings">
+      <sw-settings [field]="node"></sw-settings>
+    </div>
   </cdk-nested-tree-node>
-    
-  <cdk-nested-tree-node *cdkTreeNodeDef="let node; when: hasChild" cdkDrag [cdkDragData]="node" (cdkDragDropped)="drop($event)" [ngClass]="{'group-tree-node': node.value.type === 113, 'section-tree-node': node.value.type === 114}">
+
+  <cdk-nested-tree-node *cdkTreeNodeDef="let node; when: hasChild" cdkDrag [cdkDragData]="node"
+    (cdkDragDropped)="drop($event)"
+    [ngClass]="{'group-tree-node': node.value.type === 113, 'section-tree-node': node.value.type === 114}">
     <div class="main_container">
       <div class="content">
         <div class="drag-icon">
@@ -95,8 +105,9 @@
           <div class="main-text">{{ node.value.name }}</div>
           <div class="hint">Group Type -</div>
         </div>
-        <sw-input-text [formControl]="node.get('name')" style="margin-right: 10px; width: 450px;" *ngIf="node.value.type === 114">
-            <span class="placeholder">Section Name</span>
+        <sw-input-text [formControl]="node.get('name')" style="margin-right: 10px; width: 450px;"
+          *ngIf="node.value.type === 114">
+          <span class="placeholder">Section Name</span>
         </sw-input-text>
         <sw-dropdown-input style="margin-right: 10px;" [formControl]="node.get('options.size')" [options]="sizeOptions">
           <span class="input_label">Section Width</span>
@@ -111,7 +122,7 @@
         <div class="icon">
           <sw-icon-button icon="fa-times" class="field-creator" [class.blue]="node.value.type === 113"
             (click)="closeNode(node)">
-  
+
           </sw-icon-button>
         </div>
         <div class="icon dragdrop">
@@ -122,7 +133,7 @@
       </div>
     </div>
 
-    <div class="main_container preview" *cdkDragPreview>
+    <!-- <div class="main_container preview" *cdkDragPreview>
       <div class="content">
         <div class="drag-icon">
           <i class="dragdrop fas fa-ellipsis-v"></i>
@@ -131,8 +142,9 @@
           <div class="main-text">{{ node.value.name }}</div>
           <div class="hint">Group Type -</div>
         </div>
-        <sw-input-text [formControl]="node.get('name')" style="margin-right: 10px; width: 450px;" *ngIf="node.value.type === 114">
-            <span class="placeholder">Section Name</span>
+        <sw-input-text [formControl]="node.get('name')" style="margin-right: 10px; width: 450px;"
+          *ngIf="node.value.type === 114">
+          <span class="placeholder">Section Name</span>
         </sw-input-text>
         <sw-dropdown-input style="margin-right: 10px;" [formControl]="node.get('options.size')" [options]="sizeOptions">
           <span class="input_label">Section Width</span>
@@ -147,7 +159,7 @@
         <div class="icon">
           <sw-icon-button icon="fa-times" class="field-creator" [class.blue]="node.value.type === 113"
             (click)="closeNode(node)">
-  
+
           </sw-icon-button>
         </div>
         <div class="icon dragdrop">
@@ -156,12 +168,14 @@
           </sw-icon-button>
         </div>
       </div>
-    </div>
-   
+    </div> -->
+
     <div class="settings" *ngIf="node.value.showSettings">
       <sw-settings [field]="node"></sw-settings>
     </div>
-    <div style="margin-left: 20px;" [class.hidden]="!node.value.isExpanded" cdkDropList [id]="getListId(node)" [cdkDropListConnectedTo]="getListsIds(node)" [cdkDropListEnterPredicate]="mayEnter" [cdkDropListData]="getListData(node)">
+    <div style="margin-left: 20px;" [class.hidden]="!node.value.isExpanded" cdkDropList [id]="getListId(node)"
+      [cdkDropListConnectedTo]="getListsIds(node)" [cdkDropListEnterPredicate]="mayEnter"
+      [cdkDropListData]="getListData(node)">
       <ng-container cdkTreeNodeOutlet></ng-container>
     </div>
   </cdk-nested-tree-node>
