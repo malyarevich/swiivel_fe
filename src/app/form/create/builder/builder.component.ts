@@ -76,6 +76,9 @@ export class BuilderComponent implements OnInit, OnDestroy {
               changedFields++;
               (changedForm.get('activeSections') as FormGroup).addControl(section, this.fb.group({isActive: [false], showSideInfo: [false]}));
             }
+            else {
+              this.form.get(['activeSections', section, 'showSideInfo']).setValue(false);
+            }
           }
           if (changedFields === 0) changedForm = null;
         }
@@ -139,6 +142,7 @@ export class BuilderComponent implements OnInit, OnDestroy {
       this.form.get('activeSections').patchValue(activeSections);
       this.expandedSection = section;
     } else {
+      console.log(this.form.get('activeSections').pristine)
       showControl.setValue(false);
       this.expandedSection = null;
     }

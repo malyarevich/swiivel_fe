@@ -23,7 +23,7 @@ import { cloneDeep } from 'lodash';
 export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestroy {
   filterValue: string = null;
   filterControl = new FormControl();
-  treeSource = new TreeDataSource('Fields');
+  treeSource = new TreeDataSource('Sidebar');
   treeControl = new NestedTreeControl((node: any) => node.fields);
   delFieldName: string;
   delInput: FormControl = new FormControl(null);
@@ -60,30 +60,19 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
 
   ngOnInit() {
     this.service.sidebar.subscribe((sidebar) => {
-      console.log('SIDEBAR  FIELDS', sidebar)
-      this.treeSource.nodes = sidebar;
+      this.treeSource.nodes = cloneDeep(sidebar);
       this.cdr.markForCheck();
     });
     this.treeControl.getDescendants = (dataNode) => {
       return dataNode.fields;
     }
     this.route.paramMap.subscribe(params => {
-      this.treeSource.activeFields$.subscribe((fields) => {
-        this.treeControl.dataNodes = fields;
-      });
-
+      
       if (params.has('mongo_id')) {
         this.treeControl = new NestedTreeControl<any>(node => {
           let children = node[CHILDREN_SYMBOL];
           return children;
         });
-        this.service.formTemplate$.pipe(takeUntil(this.destroyed$)).subscribe(value => {
-          if (value) {
-            this.treeSource.nodes = value.fields;
-            this.service.sidebar = this.treeSource;
-            this.cdr.markForCheck();
-          }
-        })
       }
     });
 
@@ -243,7 +232,7 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
       }
       this.treeControl.collapse(topInactive);
     } else {
-      this.service.addFieldFromSB({...node});
+      this.service.addFieldFromSB({...node}, this.treeSource.indexOf(node));
     }
     node.isExpanded = this.treeControl.isExpanded(node);
     this.cdr.markForCheck();
@@ -252,7 +241,7 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
   toggleParentNode(node: any): void {
     this.treeSource.toggle(node);
     if (node.isActive) {
-      this.service.addFieldFromSB({...node});
+      this.service.addFieldFromSB({...node}, this.treeSource.indexOf(node));
       if (!this.treeControl.isExpanded(node)) {
         this.treeControl.expandDescendants(node);
       }

@@ -53,11 +53,9 @@ export class TreeDataSource implements DataSource<any> {
 
   appendTo(parent: object, node: object) {
     try {
-      this.tree.appendChild(parent, node);
-      return this.tree.lastChild(parent);
-
+      return this.tree.appendChild(parent, node);
     } catch (e) {
-      console.log(e)
+      console.debug(e.message, JSON.stringify(node))
     }
   }
 
@@ -124,8 +122,13 @@ export class TreeDataSource implements DataSource<any> {
   }
 
   clear() {
-    this.remove(this.tree);
-    this.tree = new SymbolTree(this._symbol);
+    let reversed = this.tree.treeIterator(this.tree, {reverse: true});
+    for (let child of reversed) {
+      if (!(child instanceof SymbolTree)) {
+        this.tree.remove(child);
+      }
+    }
+    this.reload();
     return [];
   }
 
@@ -170,11 +173,6 @@ export class TreeDataSource implements DataSource<any> {
   get activeFields$() {
     return this.dataSubject.pipe(
       debounceTime(10),
-      // map((fields) => {
-
-      //   return fields.filter(isActive);
-      // }),
-
       distinctUntilChanged(),
     )
   }
@@ -292,6 +290,12 @@ export class TreeDataSource implements DataSource<any> {
       }
     }
     this.reload();
+  }
+
+  indexOf(node) {
+    let index = this.tree.index(node);
+    let children = this.childrenOf(this.parentOf(node)).slice(0, index);
+    return children.filter((node) => node['isActive']).length;
   }
 
   findNodeByPathId(pathId) {
