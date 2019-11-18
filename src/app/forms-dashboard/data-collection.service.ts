@@ -5,7 +5,7 @@ import { first, map } from 'rxjs/operators';
 export class DataCollectionService extends ApiService {
 
   changeStatus(updatedIds: number[], updatedStatus: string): Observable<any> {
-    return this.http.post(`/proxy/form-builder/form-template/status`, {ids: updatedIds, status: updatedStatus});
+    return this.changeFormStatus(updatedIds, updatedStatus);
   }
 
   duplicateForm(id: string): Observable<any> {
@@ -15,9 +15,7 @@ export class DataCollectionService extends ApiService {
   }
 
   exportPDFForm(mongoId: string) {
-    return this.download(`/proxy/form-builder/pdf-export/${mongoId}`).pipe(map((response: any) => {
-      return window.URL.createObjectURL(new Blob([response], {type: 'application/pdf'}));
-    }), first());
+    return this.exportFormPDF(mongoId);
   }
 
   exportPDFFormZIP(mongoIds: string) {

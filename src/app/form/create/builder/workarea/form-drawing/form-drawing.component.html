@@ -1,0 +1,199 @@
+<section class="form-pdf-section">
+  <div class="edit-container" [class.open]="formsPDF.isEdit">
+    <div class="edit-toggle">
+      <sw-button (click)="editToggle()">
+        Edit Form
+      </sw-button>
+    </div>
+    <div class="edit-fields">
+      <div class="title">
+        Draw Panel
+      </div>
+      <div class="fields">
+        <div class="item">
+          <sw-button class="small gray" [class.yellow]="drawingType === 'system'" (click)="setDrawingType('system')">
+            <span class="text">System Fields</span>
+          </sw-button>
+        </div>
+        <div class="item">
+          <sw-button class="small gray" [class.yellow]="drawingType === 'checkbox'"
+            (click)="setDrawingType('checkbox')">
+            <span class="text">
+              Checkbox
+            </span>
+          </sw-button>
+        </div>
+        <div class="item">
+          <sw-button class="small gray" [class.yellow]="drawingType === 'signature'"
+            (click)="setDrawingType('signature')">
+            <span class="text">
+              Signature
+            </span>
+          </sw-button>
+        </div>
+        <div class="item">
+          <sw-button class="small gray" [class.yellow]="drawingType === 'temporary'"
+            (click)="setDrawingType('temporary')">
+            <span class="text">
+              Temporary Field
+            </span>
+          </sw-button>
+        </div>
+      </div>
+      <div class="actions">
+        <div class="item">
+          <sw-button class="green full_width" (click)="editToggle()">
+            <span class="text">
+              Save Changes
+            </span>
+          </sw-button>
+        </div>
+        <div class="item">
+          <sw-button class="gray full_width" (click)="editToggle()">
+            <span class="text">
+              Cancel
+            </span>
+          </sw-button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="pdf-wrap">
+    <div class="fake">
+      <div class="canvas-wrap">
+        <div class="canvas-overlay"></div>
+        <div [hidden]="!formsPDF.isEdit" id="layer1">
+
+          <canvas style="width: 100%; height: 100%;" #viewer (mousedown)="mouseDown($event)"
+            (mouseup)="mouseUp($event)">
+          </canvas>
+
+        </div>
+
+        <div class="test-c d-flex align-items-center justify-content-center overlay loading-wrap"
+          [class.displaynone]="loading">
+          <span class="loading-font pb-2">Uploading Page</span>
+          <div class="spinner-border loading-font" role="status">
+          </div>
+        </div>
+        <div [hidden]="!loading" class="test-c">
+          <div *ngFor="let div of formsPDF.form.fieldsPdf[page-1]" style="position: absolute;">
+            <div [ngStyle]="styleObject(div)" [ngClass]="[
+                        div.isEdit?'div-inside-active':'div-inside',
+                        div.type==drawingType&&formsPDF.isEdit?'div-active-type':''
+                        ]" class="div" placement="bottom" autoClose="outside" 
+              (click)="editDivChange(div);">
+              <div *ngIf="div.isEdit" class="row no-gutters align-items-center div-inside-wrap settings-wrap"
+                (click)="$event.stopPropagation()">
+                <div class="justify-content-center" style="margin-left: auto">
+                  <span *ngIf="div.type!='checkbox'" id="dropdownBasic1">
+                    <i class="fas fa-pen fa-xs set-icons"></i>
+                  </span>
+                  <span (click)="removeDiv(div.id)"><i class="fas fa-trash fa-xs ml-2 set-icons"></i></span>
+
+
+                </div>
+
+              </div>
+              <div class="field-name">
+                {{div.linkedField?.name}}
+              </div>
+
+              <div *ngIf="div.type === 'system'" class="system-div"  aria-labelledby="dropdownBasic1"
+                (click)="$event.stopPropagation()">
+                <!-- <app-fields-side-bar [sideBar]="sideBar" [form]="form" [displayOnly]="true"
+                  (selectedField)="linkFieldToDiv($event, div)">
+                </app-fields-side-bar> -->
+              </div>
+
+              <div *ngIf="div.type === 'signature'" (click)="$event.stopPropagation()" class="signature-div"
+                 aria-labelledby="dropdownBasic1">
+                <div class="title font-weight-bold">
+                  Signature Settings
+                </div>
+                <div class="row no-gutters">
+                  <sw-input-button-group [options]="signatureOptions" style="width: 100%;"
+                    [(ngModel)]="div.linkedField.isE"></sw-input-button-group>
+                </div>
+              </div>
+
+              <div *ngIf="div.type === 'temporary'" (click)="$event.stopPropagation()" class="temporary-div"
+                 aria-labelledby="dropdownBasic1">
+                <div class="wrap" [class.active]="div.toggle">
+                  <div class="main-cont">
+                    <div class="lable">
+                      Temporary Field
+                    </div>
+                    <div class="text">
+                      {{ div.linkedField?.name }}
+                    </div>
+                    <div class="icon" (click)="div.toggle = !div.toggle">
+                      <div class="icon_up">
+                        <i class="fas fa-caret-up"></i>
+                      </div>
+                      <div class="icon_down">
+                        <i class="fas fa-caret-down"></i>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="drop-cont">
+                    <div class="search-wrap">
+                      <input class="search mb-3 search-input" [(ngModel)]="searchText" placeholder="Search...">
+                      <div class="icon">
+                        <i class="fas fa-search"></i>
+                      </div>
+                    </div>
+                    <div class="add-wrap">
+                      <a class="add-btn" (click)="showAddButtonTemporary=true">
+                        Add New Field Name
+                      </a>
+                      <div class="input-wrap" *ngIf="showAddButtonTemporary">
+                        <input class="add-input" autofocus #newField placeholder="Start Typing...">
+                        <div class="actions">
+                          <sw-button class="outline-btn icon-btn icon-green"
+                            (click)="addTempField(newField.value, div); newField.value='';">
+                            <i class="fas fa-check green"></i>
+                          </sw-button>
+                          <sw-button class="outline-btn icon-btn icon-gray"
+                            (click)="newField.value=''; showAddButtonTemporary=false;">
+                            <i class="fas fa-times gray"></i>
+                          </sw-button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="list-wrap">
+                      <ul class="list-ul">
+                        <li (click)="linkFieldToDiv(field, div)" class="list-ul-item"
+                          [class.active]="div.linkedField?.name==field.name"
+                          *ngFor="let field of div?.fields">
+                          {{field?.name}}
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <div id="layer3" style="width: 100%; height: 100%;">
+
+          <pdf-viewer [original-size]="false" [src]="{ url: formsPDF.form.link}" [render-text-mode]="0"
+            style="width:816px; height: 1056;" [show-all]="false" [page]="page" style="display: block;"
+            (error)="onError($event)" (on-progress)="onProgress($event)" (after-load-complete)="loadComplete($event)">
+          </pdf-viewer>
+
+        </div>
+
+      </div>
+
+      <div *ngIf="pages>1" class="d-flex justify-content-center pt-4">
+        <!-- <ngb-pagination [collectionSize]="pages * 10" [(page)]="page" aria-label="Default pagination"></ngb-pagination> -->
+      </div>
+    </div>
+
+  </div>
+</section>

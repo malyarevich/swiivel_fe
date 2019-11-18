@@ -49,6 +49,7 @@ import { CdkStepperModule } from '@angular/cdk/stepper';
 import { StepperComponent } from './stepper/stepper.component';
 import { StepperService } from './stepper.service';
 import { FormComponent } from './form.component';
+import { ProgressLineBarComponent } from '@shared/bars/progress-line-bar/progress-line-bar.component';
 import { StatusLabelComponent } from '@shared/labels/status-label/status-label.component';
 import { InputEnglishDatepickerComponent } from './inputs/input-english-datepicker/input-english-datepicker.component';
 import { InputHebrewDatepickerComponent } from './inputs/input-hebrew-datepicker/input-hebrew-datepicker.component';
@@ -112,6 +113,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     // Bars
     DocumentApprovalBarComponent,
     BackBarComponent,
+    ProgressLineBarComponent,
     StepperComponent,
     FormComponent,
     InputEnglishDatepickerComponent,
@@ -161,6 +163,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     // Bars
     DocumentApprovalBarComponent,
     BackBarComponent,
+    ProgressLineBarComponent,
     StepperComponent,
   ],
   providers: [

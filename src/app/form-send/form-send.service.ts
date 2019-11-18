@@ -307,7 +307,6 @@ export class FormSendService {
       this.api.createRound(round).subscribe(res => {
         // console.log('res', res);
         // console.log('res[]', this.roundList.push(res));
-        debugger;
         if (!!res) {
           const rounds = this.roundList.concat(res);
           this.roundList = rounds;

@@ -44,6 +44,7 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
   @Input() style = '';
   @Input() type: 'table-header';
   @Input() typeItem: 'purpure';
+  @Input() isSumDisplay = false;
 
   @Input() set selectValue(opt: [any]) {
     if (opt[0] === null) {

@@ -24,17 +24,35 @@
 
 .up-block-buttons {
   display: flex;
-  margin: 0 0 0 10px;
+  margin: 0;
   list-style: none;
   padding: 0;
 }
 
 .up-block-button {
+  display: flex;
+  align-items: center;
   margin: 0 0 0 10px;
+
+  &:hover {
+    .up-block-button-text {
+      color: $icon-gray-hover;
+    }
+  }
+}
+
+.icon-button {
+  padding: 0;
+  background: transparent;
+  border: none;
+  outline: none;
 }
 
 .up-block-button-text {
-  margin: 0 0 0 2px;
+  margin: 2px 0 0 5px;
+  font: 500 9px/13px $nunito-sans;
+  text-transform: uppercase;
+  color: $gray-color;
 }
 
 .up-block-controls {
@@ -46,11 +64,28 @@
 }
 
 .up-block-view {
+  background: transparent;
+  border: none;
+}
+
+.hide-dashboard-text {
   font: 500 9px/13px $nunito-sans;
   text-transform: uppercase;
   color: $gray-color;
-  background: transparent;
-  border: none;
+}
+
+.view-dashboard-text {
+  font: 500 9px/13px $nunito-sans;
+  text-transform: uppercase;
+  color: $element-base-color;
+}
+
+.view-dashboard-icon {
+  color: $element-base-color;
+}
+
+.hide-dashboard-icon {
+  color: $gray-color;
 }
 
 .up-block-icon {
@@ -60,84 +95,48 @@
 
 .down-block {
   display: flex;
-  background: #fff;
-  border-top-left-radius: 3px;
-  border-bottom-left-radius: 3px;
-}
-
-.down-block-icon {
-  min-width: 70px;
-  display: flex;
-  background: $light-purple;
-  border-top-left-radius: 3px;
-  border-bottom-left-radius: 3px;
-}
-
-.down-block-icon-page {
-  margin: auto;
-  font-size: 30px;
-  color: $element-base-color;
-}
-
-.down-block-file-info {
-  flex-grow: 2;
-  display: flex;
-  background: #fff;
   justify-content: space-between;
 }
 
-.down-block-col-header {
-  margin: 5px 0 2px;
-  font: 500 9px/13px $nunito-sans;
-  text-transform: uppercase;
-  color: $gray-color;
+.down-block-info {
+  width: 100%;
+
+  &.dashboard-shown {
+    width: 23%;
+  }
 }
 
-.down-block-file {
+.icon-button-share {
+  display: inline-block;
+  width: 12px;
+  height: 15px;
+  background-size: cover;
+  background: url("/assets/images/icons/share.svg") no-repeat center;
+}
+
+.btn-copy-link::ng-deep {
+  &:hover {
+    button.button  {
+      .up-block-button-text {
+        color: $icon-gray-hover;
+      }
+      .icon-button-share {
+        background-image: url('/assets/images/icons/share-dark.svg');
+      }
+    }
+  }
+}
+
+.down-block-additional {
+  width: 76%;
   display: flex;
   justify-content: space-between;
-  width: 70%;
-}
 
-.down-block-type {
-  margin: 0 0 0 25px;
-}
+  .down-block-analytics {
+    width: 32%;
+  }
 
-.down-block-type-text {
-  margin: 0 0 2px;
-  font: 800 12px/13px $nunito-sans;
-  text-transform: capitalize;
-  color: $element-base-color;
-}
-
-.down-block-name {
-  font: 800 10px/11px $nunito-sans;
-  margin: 0 0 5px;
-}
-
-.down-block-date-text {
-  font: 500 12px/16px $nunito-sans;
-  color: $gray-color;
-}
-
-.down-block-updated {
-  margin: 0 45px 0 0;
-}
-
-.down-block-created {
-  margin: 0 0 0 45px;
-}
-
-.down-block-access {
-  margin: 0 15px 0 50px;
-}
-
-.down-block-status-round-name {
-  margin: 0 0 5px 0;
-  font: 500 12px/16px $nunito-sans;
-}
-
-.down-block-status-round-date {
-  color: $gray-color;
-  font: 500 12px/16px $nunito-sans;
+  .down-block-payments {
+     width: 67%;
+  }
 }

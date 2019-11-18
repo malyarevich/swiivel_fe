@@ -72,6 +72,7 @@
     border: none;
     background: transparent;
     padding: 0;
+    color: $element-base-color;
   }
 
   .yellow {
@@ -146,7 +147,7 @@
 }
 
 :host(.full) {
-  .button {
+  .button,.button-container {
     width: 100%;
     height: 100%;
   }
