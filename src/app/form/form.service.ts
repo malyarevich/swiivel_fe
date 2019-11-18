@@ -26,7 +26,11 @@ const joinForm = (field, path = [], formFields = []) => {
     field.fields = field.fields.map(cfield => joinForm(cfield, path, formFields));
   }
   const found = formFields.find(ffield => {
-    return field.name === ffield.name && field.type === ffield.type;
+    if (field.mapped && field.prefix) {
+      return field.name === ffield.name && field.type === ffield.type && field.mapped === ffield.mapped && field.prefix === ffield.prefix;
+    } else {
+      return field.name === ffield.name && field.type === ffield.type;
+    }
   });
   if (found) {
     if (field.type < 112) {
@@ -70,13 +74,6 @@ export class FormService {
   public stage$ = new BehaviorSubject(0);
 
   constructor(private fb: FormBuilder, private api: ApiService) {
-    this.api.getSidebarFields().subscribe((fields) => {
-      const formFields = (this.form && this.form.get('fields')) ? flatten(this.form.get('fields').value) : [];
-      this.sidebarSubject$.next(fields.map(field => joinForm(field, [], formFields)).slice());
-    });
-    this.sidebarSubject$.subscribe((fields) => {
-      console.log(fields);
-    });
   }
 
   toFormGroup(formData) {
@@ -90,6 +87,10 @@ export class FormService {
         if (data) {
           this.stage$.next(1);
           this.form = this.initForm(data);
+          this.api.getSidebarFields().subscribe((fields) => {
+            const formFields = (this.form && this.form.get('fields')) ? flatten(this.form.get('fields').value) : [];
+            this.sidebar = fields.map(field => joinForm(field, [], formFields)).slice();
+          });
         }
       });
       return getFormTemplate;
@@ -109,10 +110,7 @@ export class FormService {
     if (Array.isArray(field.fields)) { field.fields.forEach(field => this.prependPath(field, path)); }
     return field;
   }
-  add2Field(field, ancestors?, only?) {
-    console.log('ADD FIELD ARGS', field, ancestors, only)
-   
-  }
+ 
 
 
   remove(field) {
@@ -130,23 +128,18 @@ export class FormService {
   }
 
   removeField(control: AbstractControl) {
-    console.groupCollapsed(`Removing field`);
     let controlName = control.get('name').value;
     if (control.parent instanceof FormArray) {
       let parent = control.parent as FormArray;
       let index = 0;
       for (const child of parent.controls) {
         if (child.get('name').value === controlName) {
-          console.log(child);
-          console.groupEnd();
           parent.removeAt(index);
           break;
         }
         index++;
       }
     } else {
-      console.log(cloneDeep(control));
-      console.groupEnd();
       control.parent.removeControl(controlName);
     }
   }
@@ -233,7 +226,7 @@ export class FormService {
     // parent.push(this.initForm(field));
     return fa;
   }
-  addFieldFromSB(field: object): FormGroup {
+  addFieldFromSB(field: object, index?: number): FormGroup {
     field = cloneDeep(field);
     field['isExpanded'] = true;
     
@@ -253,17 +246,18 @@ export class FormService {
       this.addWrapper(field);
       parent = this.findControl(field['path'], this.form)
     } else {
-      parent.get('fields').push(this.initForm(field));
+      if (index) {
+        parent.get('fields').insert(index, this.initForm(field));
+      } else {
+        parent.get('fields').push(this.initForm(field));
+      }
     }
     return parent;
   }
 
   removeFieldFromSB(field) {
     field = cloneDeep(field);
-    console.groupCollapsed(`Removing field ${field.name} from sb`);
     const control = this.findControl(field['path']);
-    console.log(control);
-    console.groupEnd();
     if (control) {
       this.removeField(control);
     }
@@ -397,7 +391,6 @@ export class FormService {
   }
 
   initForm(data?) {
-    console.groupCollapsed(`Creating formgroup ${data && data.name ? data.name : ''}`);
     const form = this.fb.group({});
     if (data) {
       for (const key of Object.keys(data)) {
@@ -430,13 +423,22 @@ export class FormService {
           readonly: false
         }, form);
       }
+      if (data.path && Array.isArray(data.options) && data.options.length === 0) {
+        this.addField('isExpanded', false, form);
+        form.removeControl('options');
+        this.addFieldGroup('options', {
+          size: 3,
+          required: false,
+          unique: false,
+          hideLabel: false,
+          readonly: false
+        }, form);
+      }
       form.patchValue(data);
     } else {
       form.addControl('name', this.fb.control(null, [Validators.required]));
       form.addControl('type', this.fb.control('registration', [Validators.required]))
     }
-    console.log('New FORM', form)
-    console.groupEnd();
     return form;
   }
   

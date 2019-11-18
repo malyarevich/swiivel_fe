@@ -38,7 +38,7 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
   fields: any[] = [];
   destroyed$ = new Subject();
   fieldsTree: any[];
-  treeSource = new TreeDataSource('Fields');
+  treeSource = new TreeDataSource('Workarea');
   treeControl = new NestedTreeControl<any>(node => {
     let fields = node.get('fields');
     if (fields) {
@@ -68,7 +68,10 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
         this.cdr.markForCheck();
         // this.cdr.detectChanges();
       });
-
+      if (form.get('fields')) {
+        this.form = form.get('fields') as FormArray;
+        this.treeSource.nodes = this.form.controls;
+      }
     })
   }
   ngOnDestroy() {
