@@ -37,6 +37,14 @@ export class ApiService {
     return this.http.get('/proxy/sidebar-fields');
   }
 
+  getMappedFields() {
+    return this.http.get('/proxy/mapped');
+  }
+
+  getCustomFields() {
+    return this.http.get('/proxy/schema');
+  }
+
   getFormsList(requestParams?: FormSearchParams): Observable<any> {
     if (!requestParams) {
       requestParams = { page: 1, limit: 150 };

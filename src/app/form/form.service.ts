@@ -18,7 +18,27 @@ const flatten = (fields = []) => {
   }
   return result;
 };
-
+const mapField = (field, mappers = []) => {
+  if (field.fields) {
+    field.fields = field.fields.map(cfield => mapField(cfield, mappers));
+  }
+  const found = mappers.find(ffield => {
+    if (field.mapped) {
+      return field.type === ffield.type && field.mapped === ffield.mapped;
+    }
+    return false;
+  });
+  if (found) {
+    field.textType = found.name;
+    if (!field.options || Array.isArray(field.options)) {
+      field.options = found.options;
+    }
+    
+    return field;
+  } else {
+    return field;
+  }
+}
 const joinForm = (field, path = [], formFields = []) => {
   let result;
   if (field.fields) {
@@ -28,6 +48,8 @@ const joinForm = (field, path = [], formFields = []) => {
   const found = formFields.find(ffield => {
     if (field.mapped && field.prefix) {
       return field.name === ffield.name && field.type === ffield.type && field.mapped === ffield.mapped && field.prefix === ffield.prefix;
+    } else if (field.mapped) {
+      return field.name === ffield.name && field.type === ffield.type && field.mapped === ffield.mapped;
     } else {
       return field.name === ffield.name && field.type === ffield.type;
     }
@@ -74,10 +96,27 @@ export class FormService {
   public stage$ = new BehaviorSubject(0);
 
   constructor(private fb: FormBuilder, private api: ApiService) {
+    this.loadMappedFields();
+    this.loadFieldsSchema();
   }
 
-  toFormGroup(formData) {
-    
+  loadFieldsSchema() {
+    this.api.getCustomFields().subscribe((fields) => {
+      this.fieldTypes.schema = fields;
+    })
+  }
+
+  loadMappedFields() {
+    this.api.getMappedFields().subscribe((mapped) => {
+      this.fieldTypes.mapped = mapped;
+    });
+  }
+
+  getSidebarFields() {
+    this.api.getSidebarFields().subscribe((fields) => {
+      const formFields = (this.form && this.form.get('fields')) ? flatten(this.form.get('fields').value) : [];
+      this.sidebar = fields.map(field => joinForm(field, [], formFields)).slice();
+    });
   }
 
   loadForm(formId?: string) {
@@ -87,10 +126,7 @@ export class FormService {
         if (data) {
           this.stage$.next(1);
           this.form = this.initForm(data);
-          this.api.getSidebarFields().subscribe((fields) => {
-            const formFields = (this.form && this.form.get('fields')) ? flatten(this.form.get('fields').value) : [];
-            this.sidebar = fields.map(field => joinForm(field, [], formFields)).slice();
-          });
+          this.getSidebarFields();
         }
       });
       return getFormTemplate;
@@ -104,27 +140,10 @@ export class FormService {
 
     console.groupEnd();
   }
-  prependPath(field, path) {
-    field.path.splice(0, 0, path);
-    field.pathId = path + field.pathId;
-    if (Array.isArray(field.fields)) { field.fields.forEach(field => this.prependPath(field, path)); }
-    return field;
-  }
- 
 
 
   remove(field) {
     this.events$.next({ action: 'removeit', field });
-  }
-
-  getFieldSpaceParentPath(field) {
-   
-  }
-  getFieldSpacePath(field) {
-   
-  }
-  getFieldSpaceParent(field) {
-
   }
 
   removeField(control: AbstractControl) {
@@ -246,7 +265,7 @@ export class FormService {
       this.addWrapper(field);
       parent = this.findControl(field['path'], this.form)
     } else {
-      if (index) {
+      if (index !== undefined || index !== null) {
         parent.get('fields').insert(index, this.initForm(field));
       } else {
         parent.get('fields').push(this.initForm(field));
@@ -264,28 +283,6 @@ export class FormService {
   }
 
 
-
-
-  createField(field, ctx = this) {
-    let schema = this.fieldTypes.mapped.find(ftype => ftype.type === field.type && ftype.mapped === field.mapped && ftype.name === field.name);
-    if (!schema) { schema = this.fieldTypes.schema.find(ftype => ftype.type === field.type); }
-    const obj = Object.assign({}, schema, field);
-    delete obj.fields;
-    const form = this.fb.group({});
-    for (const field in obj) {
-      if (isPlainObject(obj[field])) {
-        form.addControl(field.toString(), this.fb.group(obj[field]));
-      } else {
-        form.addControl(field, this.fb.control(obj[field]));
-      }
-    }
-    if (field.fields && field.fields.length >= 0) {
-      const fields = this.fb.array([]);
-      form.addControl('fields', fields);
-      field.fields.forEach(child => fields.push(this.fb.control(this.createField(child))));
-    }
-    return form;
-  }
   findControl(path, parent?) {
     path = path.slice();
     if (!parent) parent = this.form;
@@ -328,7 +325,7 @@ export class FormService {
         
       }
     }
-    let field = this.fb.control({value: fieldValue});
+    let field = this.fb.control(fieldValue);
     (parent as FormGroup).addControl(fieldName, field);
     return parent.get(fieldName);
   }
@@ -393,6 +390,13 @@ export class FormService {
   initForm(data?) {
     const form = this.fb.group({});
     if (data) {
+      let options: object = {
+        size: 3,
+        required: false,
+        unique: false,
+        hideLabel: false,
+        readonly: false
+      };
       for (const key of Object.keys(data)) {
         if (Array.isArray(data[key])) {
           if (key === 'fields') {
@@ -413,26 +417,25 @@ export class FormService {
           this.addField(key, data[key], form);
         }
       }
+      let schema = this.fieldTypes.schema.find((field) => field.type == data.type);
+      let mapped = this.fieldTypes.mapped.find((mapped) => mapped.type == data.type && mapped.mapped === data.mapped);
+      if (schema && schema.name) {
+        this.addField('textType', schema.name, form);
+      }
+      if (schema && schema.options && !Array.isArray(schema.options)) {
+        options = schema.options;
+      }
+      if (mapped && mapped.options) {
+        options = {...options, ...mapped.options};
+      }
       if (data.path && !data.options) {
         this.addField('isExpanded', false, form);
-        this.addFieldGroup('options', {
-          size: 3,
-          required: false,
-          unique: false,
-          hideLabel: false,
-          readonly: false
-        }, form);
+        this.addFieldGroup('options', options, form);
       }
       if (data.path && Array.isArray(data.options) && data.options.length === 0) {
         this.addField('isExpanded', false, form);
         form.removeControl('options');
-        this.addFieldGroup('options', {
-          size: 3,
-          required: false,
-          unique: false,
-          hideLabel: false,
-          readonly: false
-        }, form);
+        this.addFieldGroup('options', options, form);
       }
       form.patchValue(data);
     } else {
