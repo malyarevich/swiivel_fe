@@ -35,7 +35,7 @@
       </div>
     </div>
 
-    <div class="row second no-m column" *ngIf="isNew">
+    <div class="row second column" *ngIf="isNew">
       <div class="header">
         <div class="text">
           Choose the way you want to create your form
@@ -45,7 +45,7 @@
       <div class="content h-100">
         <sw-input-button-group [formControl]="extendsControl" [options]="buttonOptions"></sw-input-button-group>
         <div class="row w-100 h-100 no-m" *ngIf="extends">
-          <div class="col-3" style="padding-left: 8px; padding-right: 8px;">
+          <div class="col-3" style="padding-left: 0px; padding-right: 8px;">
             <div class="search-wrap">
               <input type="search" class="search" [formControl]="filter" placeholder="Search" />
               <i class="icon fas fa-search"></i>
@@ -55,7 +55,7 @@
                 (click)="selectForm(item)">{{item.name}}</div>
             </cdk-virtual-scroll-viewport>
           </div>
-          <div class="col-9" style="padding-left: 8px; padding-right: 8px; height: 100%;">
+          <div class="col-9" style="padding-left: 8px; padding-right: 0px; height: 100%;">
             <div class="form-preview">
               <ng-container *ngIf="extendedForm; else noPdf">
                 <div class="title">
