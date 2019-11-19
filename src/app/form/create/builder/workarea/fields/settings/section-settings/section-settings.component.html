@@ -10,7 +10,7 @@
       </sw-input-phone-number>
     </section>
     <section>
-      <sw-radio-group class="flex-row" [options]="displayOptions" formControlName="displayStrategy">
+      <sw-radio-group class="flex-row" [readonly]="form.get('showHint').value === false" [options]="displayOptions" formControlName="displayStrategy">
       </sw-radio-group>
     </section>
   </form>

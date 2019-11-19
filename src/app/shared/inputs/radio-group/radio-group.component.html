@@ -1,4 +1,4 @@
-<div class="radio_group">
+<div class="radio_group" [class.readonly]="readonly">
   <div class="radio_group__item" *ngFor="let item of _options" [class.selected]="isSelected(item)" (click)="select(item)">
     {{ item }}
   </div>
