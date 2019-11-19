@@ -121,6 +121,8 @@ export class HttpService {
         map((response: any) => {
           if (response.status === 1 || response.success === true) {
             return response.data;
+          } else if (!response.status) {
+            return response;
           } else {
             throw new HttpErrorResponse({error: response.errors, status: response.status});
           }
