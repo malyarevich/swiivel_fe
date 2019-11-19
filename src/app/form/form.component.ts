@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { FormService } from "./form.service";
 import { Subject, BehaviorSubject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
+import { FormSendService } from '@app/form-send/form-send.service';
 
 @Component({
   selector: "sw-form",
@@ -16,7 +17,8 @@ export class FormComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private formService: FormService
+    private formService: FormService,
+    private formSendService: FormSendService
   ) {}
 
   ngOnInit() {
@@ -24,10 +26,12 @@ export class FormComponent implements OnInit, OnDestroy {
       const formId = params.get("formId");
 
       let loadFormObservable = this.formService.loadForm(formId);
+      if (formId !== 'new') {
+        this.formSendService.initFormSend(formId);
+      }
 
       if (loadFormObservable) {
         loadFormObservable.pipe(takeUntil(this.destroyed$)).subscribe(data => {
-          // console.log("form.data", data);
           if (data._id) {
             this.formService.isFormHasId = true;
           } else {
@@ -58,6 +62,11 @@ export class FormComponent implements OnInit, OnDestroy {
     window.localStorage.clear();
     window.sessionStorage.clear();
     this.router.navigate(["/login"]);
+  }
+
+  isRoute(path: string) {
+    let url = this.router.url.split('/')
+    return url.length >= 4 ? path === url[3] : false;
   }
 
   ngOnDestroy() {
