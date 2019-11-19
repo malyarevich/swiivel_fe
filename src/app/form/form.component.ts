@@ -24,7 +24,9 @@ export class FormComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.route.paramMap.pipe(takeUntil(this.destroyed$)).subscribe(params => {
       const formId = params.get("formId");
-
+      if (formId === "new") {
+        this.formService.isFormHasId = false;
+      }
       let loadFormObservable = this.formService.loadForm(formId);
       if (formId !== 'new') {
         this.formSendService.initFormSend(formId);
@@ -44,15 +46,7 @@ export class FormComponent implements OnInit, OnDestroy {
           }
         });
       }
-
-      if (formId === "new") {
-        this.formService.form.valueChanges.subscribe(value => {
-          if (value["_id"]) {
-            this.formService.isFormHasId =
-              value["_id"] && value["_id"] !== "new";
-          }
-        });
-      }
+      
     });
 
     this.isFormHasId$ = this.formService.isFormHasIdSubject;
