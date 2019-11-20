@@ -38,6 +38,10 @@ export class FormsDataSource implements DataSource<any> {
     return this.totalAmountSubject.asObservable();
   }
 
+  get getFormsData() {
+    return this.dataSubject.asObservable();
+  }
+
   connect(_collectionViewer: CollectionViewer): Observable<any[]> {
     return this.formsSubject.asObservable();
   }
