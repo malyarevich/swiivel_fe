@@ -33,7 +33,7 @@ import { ErrorsListTooltipComponent } from '@app/online-form/errors-list/errors-
     RestorePasswordComponent,
     DashboardComponent,
     PopupComponent,
-    ErrorsListTooltipComponent
+    ErrorsListTooltipComponent,
   ],
   imports: [
     BrowserModule,

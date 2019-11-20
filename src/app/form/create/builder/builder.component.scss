@@ -30,6 +30,9 @@
         opacity: 0.6;
         text-transform: uppercase;
         font: 800 13px/15px $nunito-sans;
+        span {
+          cursor: pointer;
+        }
         .actions {
           display: none;
           margin-left: auto;
@@ -44,6 +47,9 @@
       &.expanded {
         .sidebar_section__header {
           opacity: 1;
+          span {
+            cursor: pointer;
+          }
           .actions {
             display: flex;
           }

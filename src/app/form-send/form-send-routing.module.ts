@@ -1,28 +1,20 @@
 import { NgModule } from '@angular/core';
-import { FormComponent } from '@app/shared/form.component';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '@app/core/auth.guard';
-import { FormSendComponent } from './form-send.component';
+import { SendReleaseComponent } from './send-release/send-release.component';
+import { SendPreviewComponent } from './send-preview/send-preview.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: FormSendComponent,
-    canActivate: [AuthGuard],
-    canActivateChild: [AuthGuard],
-    // children: [
-    //   { path: ':id',  component: FormSendComponent },
-    // ]
-  },
-  {
-    path: ':id',
-    component: FormComponent,
     canActivate: [AuthGuard],
     canActivateChild: [AuthGuard],
     children: [
-      { path: '',  component: FormSendComponent },
+      { path: 'release', component: SendReleaseComponent },
+      { path: 'preview', component: SendPreviewComponent },
+      { path: '', redirectTo: 'release' }
     ]
-  }
+  },
 ];
 
 @NgModule({
