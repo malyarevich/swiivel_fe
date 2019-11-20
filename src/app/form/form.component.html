@@ -1,26 +1,28 @@
 <header class="forms-header">
   <div class="title">
     <div class="back-btn">
-      <i class="fas fa-chevron-left" [routerLink]="['/forms-dashboard']"></i>
+      <a [routerLink]="['/forms-dashboard']">
+        <i class="fas fa-chevron-left"></i>
+      </a>
     </div>
     <div class="text">
       NEW DATA COLLECTION FORM
     </div>
   </div>
   <div class="items-wrap">
-    <div class="item" [routerLink]="['create']" routerLinkActive="active">
+    <a class="item" [routerLink]="['create']" routerLinkActive="active">
       Create
-    </div>
+    </a>
     <i class="fas fa-chevron-right"></i>
 
     <ng-container *ngIf="(isFormHasId$ | async); else elseFormHasId">
-      <div class="item" [routerLink]="['send']" routerLinkActive="active">
+      <a class="item" [routerLink]="['send']" routerLinkActive="active">
         Send
-      </div>
+      </a>
       <i class="fas fa-chevron-right"></i>
-      <div class="item" [routerLink]="['receive']" routerLinkActive="active">
+      <a class="item" [routerLink]="['receive']" routerLinkActive="active">
         Receive
-      </div>
+      </a>
     </ng-container>
     <ng-template #elseFormHasId>
       <div class="item disabled">
@@ -36,4 +38,40 @@
     <i class="fas fa-sign-out-alt"></i>
   </div>
 </header>
-<router-outlet></router-outlet>
+<div class="stepper-header" *ngIf="isRoute('create')">
+  <a class="item" [routerLink]="['create/general']" routerLinkActive="active">
+    General
+  </a>
+  <ng-container *ngIf="(isFormHasId$ | async); else formHasNoId">
+    <a class="item" [routerLink]="['create/builder']" routerLinkActive="active">
+      Builder
+    </a>
+    <a class="item" [routerLink]="['create/review']" routerLinkActive="active">
+      Review
+    </a>
+  </ng-container>
+
+  <ng-template #formHasNoId>
+    <div class="item disabled">
+      Builder
+    </div>
+    <div class="item disabled">
+      Review
+    </div>
+  </ng-template>
+
+</div>
+
+<div class="stepper-header" *ngIf="isRoute('send')">
+  <a class="item" [routerLink]="['send/release']" routerLinkActive="active">
+    Release
+  </a>
+  <a class="item" [routerLink]="['send/preview']" routerLinkActive="active">
+    Preview
+  </a>
+</div>
+
+<div class="stepper-content">
+  <router-outlet></router-outlet>
+</div>
+

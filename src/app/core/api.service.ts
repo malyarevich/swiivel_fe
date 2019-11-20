@@ -37,6 +37,14 @@ export class ApiService {
     return this.http.get('/proxy/sidebar-fields');
   }
 
+  getMappedFields() {
+    return this.http.get('/proxy/mapped');
+  }
+
+  getCustomFields() {
+    return this.http.get('/proxy/schema');
+  }
+
   getFormsList(requestParams?: FormSearchParams): Observable<any> {
     if (!requestParams) {
       requestParams = { page: 1, limit: 150 };
@@ -115,14 +123,12 @@ export class ApiService {
 
   uploadFile(formId, file) {
     const fbLibk = environment.apiFB;
-    const params = new HttpParams().set("api_token", environment.api_token); 
-    return this.http.post(`${fbLibk}/forms/attach/${formId}`, file, {params});
+    return this.http.request('post', `${fbLibk}/forms/attach/${formId}?api_token=${environment.api_token}`, file);
   }
 
   getFormsPDFList():Observable<any>{
     const fbLibk = environment.apiFB;
-    const params = new HttpParams().set("api_token", environment.api_token);
-    return this.http.get(`${fbLibk}/pdfForms`, {params});
+    return this.http.request('get', `${fbLibk}/pdfForms?api_token=${environment.api_token}`);
   }
 
 

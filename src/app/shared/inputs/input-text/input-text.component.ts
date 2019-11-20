@@ -60,11 +60,15 @@ export class InputTextComponent implements ControlValueAccessor, OnInit {
 
   ngOnInit(): void {
     if (this.autofocus) {
-      this.input.nativeElement.focus();
+      this.focus();
     }
     this.control.statusChanges.subscribe(() => {
       this.cdr.markForCheck();
     })
+  }
+
+  public focus() {
+    this.input.nativeElement.focus();
   }
 
   public get value() {

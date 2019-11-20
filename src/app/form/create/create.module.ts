@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { CreateRoutingModule } from './create-routing.module';
-import { CreateComponent } from './create.component';
 import { GeneralComponent } from './general/general.component';
 import { BuilderComponent } from './builder/builder.component';
 import { ReviewComponent } from './review/review.component';
@@ -28,7 +27,6 @@ import { FormDrawingComponent } from './builder/workarea/form-drawing/form-drawi
 
 @NgModule({
   declarations: [
-    CreateComponent,
     GeneralComponent,
     BuilderComponent,
     ReviewComponent,

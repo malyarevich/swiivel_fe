@@ -121,6 +121,8 @@ export class HttpService {
         map((response: any) => {
           if (response.status === 1 || response.success === true) {
             return response.data;
+          } else if (!response.status) {
+            return response;
           } else {
             throw new HttpErrorResponse({error: response.errors, status: response.status});
           }
@@ -207,15 +209,12 @@ export class HttpService {
       // A client-side or network error occurred. Handle it accordingly.
 
     } else {
-      if ('errors' in error) {
-        console.error(`Bad response`, error);
-      }
       let shouldThrow = true;
       if (!this.errorSubject) { this.errorSubject = new BehaviorSubject(null); }
       if (error.status === 0) {
         this.errorSubject.next(`Backend is down`);
       } else if (error.status === 400) {
-
+        return throwError(error.error)
       } else if (error.status === 404) {
         // return throwError(error);
         this.errorSubject.next(`Not found`);

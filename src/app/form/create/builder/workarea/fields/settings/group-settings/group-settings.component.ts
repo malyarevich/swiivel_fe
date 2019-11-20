@@ -31,6 +31,7 @@ export class GroupSettingsComponent implements OnInit {
     }
   }
   @Output() fieldSettings = new EventEmitter();
+  @Output() setChildren = new EventEmitter();
 
   constructor(
     private fb: FormBuilder
@@ -62,6 +63,17 @@ export class GroupSettingsComponent implements OnInit {
         });
       }
     });
+
+    this.form.get('required').valueChanges.subscribe((value) => {
+      if (value === true) {
+        this.setChildren.emit({key: 'required', value: true});
+      }
+    });
+    this.form.get('hideLabel').valueChanges.subscribe((value) => {
+      if (value === true) {
+        this.setChildren.emit({key: 'hideLabel', value: true});
+      }
+    })
 
     this.form.valueChanges.subscribe(v => {
       this.prepareForm(v);

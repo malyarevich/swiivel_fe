@@ -2,9 +2,9 @@
 
 :host {
   width: 100%;
-  height: calc(100vh - 172px);
+  min-height: calc(100vh - 125px);
   .general-page {
-    height: 100%;
+    min-height: calc(100vh - 172px);
     background: #fff;
     border-radius: 3px;
     margin-bottom: 20px;
@@ -88,9 +88,9 @@
           }
           .form-preview {
             max-width: 100%;
-            max-height: 100%;
+            min-height: 400px;
+            max-height: calc(100vh - 60vh);
             height: 100%;
-            // padding-top: 55px;
             border-radius: 3px;
             background: #F3F3F3;
             border: 1px solid #E3E3E3;
@@ -119,8 +119,9 @@
               }
             }
             .pdf-container {
-              height: 100%;
-              overflow: auto;
+              max-height: 400px;
+              width: 100%;
+              overflow: scroll;
             }
           }
         }
@@ -139,7 +140,7 @@
           }
         }
         &.second {
-          height: calc(100% - 195px);
+          height: calc(100% - 215px);
         }
       }
     }

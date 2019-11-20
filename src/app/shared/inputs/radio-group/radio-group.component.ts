@@ -19,6 +19,7 @@ export class RadioGroupComponent implements OnInit, ControlValueAccessor {
   onChange: Function;
   onTouched: Function;
   private _sm: SelectionModel<any>;
+  @Input() readonly;
 
   @Input()
   set options(opt: any[]) {
@@ -39,9 +40,11 @@ export class RadioGroupComponent implements OnInit, ControlValueAccessor {
   }
 
   select(item: any) {
-    this._sm.select(item);
-    this.onChange(item);
-    this.onTouched();
+    if (!this.readonly) {
+      this._sm.select(item);
+      this.onChange(item);
+      this.onTouched();
+    }
   }
 
   writeValue(item): void {
