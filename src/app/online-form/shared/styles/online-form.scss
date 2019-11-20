@@ -85,7 +85,11 @@
 
 .content_section {
   background-color: $background-semi-wrap-color;
-  padding: 1.7rem 2rem;
+  padding: 0.75rem 1rem;
+
+  @include media-breakpoint-up(lg) {
+    padding: 1.7rem 2rem;
+  }
 
   &__container_page_title {
     align-items: center;
@@ -107,6 +111,10 @@
 
   &__form {
     background-color: $white;
+  }
+
+  &__text {
+    padding: 1rem 0.5rem;
   }
 
   &__page_title {
@@ -174,6 +182,9 @@
     max-width: 55rem;
     margin-top: 1rem;
     padding-bottom: 1.75rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 1rem;
     width: 100%;
   }
 

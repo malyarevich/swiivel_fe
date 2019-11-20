@@ -1,12 +1,12 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { PDFProgressData } from 'ng2-pdf-viewer';
 
 @Component({
-  selector: 'sw-preview-form',
-  templateUrl: './preview-form.component.html',
-  styleUrls: ['./preview-form.component.scss']
+  selector: 'sw-form-pdf',
+  templateUrl: './form-pdf.component.html',
+  styleUrls: ['./form-pdf.component.scss']
 })
-export class PreviewFormComponent {
+export class FormPdfComponent implements OnInit {
 
   @Input() formId;
   @Input() isReviewMode = false;
@@ -16,6 +16,9 @@ export class PreviewFormComponent {
   pdfLoading = true;
 
   constructor() { }
+
+  ngOnInit() {
+  }
 
   getLink() {
     return `http://red.dev.codeblue.ventures/api/v1/proxy/form-builder/preview-pdf-form/${this.formId}?api_token=123`;

@@ -23,11 +23,15 @@
 
   &__inputs_container {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     grid-template-rows: auto;
     grid-column-gap: 0.85rem;
     grid-row-gap: 0.85rem;
     padding: 0;
+
+    @include media-breakpoint-up(lg) {
+      grid-template-columns: 1fr 1fr;
+    }
   }
 
   &__textarea {
