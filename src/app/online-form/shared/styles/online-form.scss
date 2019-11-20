@@ -144,6 +144,17 @@
     text-transform: uppercase;
   }
 
+  &__section_hint {
+    font-family: "Nunito Sans", "Helvetica";
+    font-style: normal;
+    font-weight: normal;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    /* identical to box height, or 150% */
+    text-align: center;
+    color: $black;
+  }
+
   &__nav {
     align-items: stretch;
     display: flex;

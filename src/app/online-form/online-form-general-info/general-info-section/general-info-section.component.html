@@ -1,7 +1,10 @@
 <!--Title-->
-<h2 class="content_section__section_title">
-  {{ section.name }}
+<h2 class="content_section__section_title" *ngIf="isShowTitle()">
+  {{ getSectionTitle() }}
 </h2>
+<h3 class="content_section__section_hint">
+  {{ getSectionHint() }}
+</h3>
 
 <div class="app-of-wrap content_section__main_container section">
   <div class="section__fields">

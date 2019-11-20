@@ -48,4 +48,17 @@ export class GeneralInfoSectionComponent implements OnInit {
   getWidth(field: Field): string {
     return field.width ? field.width : 'quarter';
   }
+
+  isShowTitle(): boolean {
+    return !this.section.options.hideLabel;
+  }
+
+  getSectionTitle(): string {
+    return this.section.name;
+  }
+
+  getSectionHint(): string {
+    return this.section.options.hint;
+  }
+
 }
