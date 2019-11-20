@@ -63,6 +63,7 @@ export interface FormModel {
   // FIXME: when back-end will complete
   isOpened?: boolean;
   pagesPercents?: IPagesPercent[];
+  submission_type?: string[];
 }
 
 interface FormPermissions {
@@ -70,7 +71,7 @@ interface FormPermissions {
   user: { id: number; full_name: number };
 }
 
-interface FormRoundModel {
+export interface FormRoundModel {
   name: string;
   start_date: string;
   end_date: string;

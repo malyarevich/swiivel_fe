@@ -1,0 +1,109 @@
+@import "index";
+
+:host {
+  .forms-header {
+    width: 100%;
+    height: 40px;
+    background: #50597A;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    .title {
+      display: flex;
+      position: absolute;
+      flex-flow: row nowrap;
+      align-items: center;
+      left: 0;
+      .back-btn {
+        padding: 8px 10px;
+        border-right: 1px solid rgba($color: #fff, $alpha: .6);
+        i {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 24px;
+          height: 24px;
+          color: #fff;
+          opacity: 0.6;
+          font-size: 17px;
+        }
+      }
+      .text {
+        color: #fff;
+        font: 400 13px/15px $nunito-sans;
+        margin-left: 15px;
+      }
+    }
+    .items-wrap {
+      display: flex;
+      flex-flow: row nowrap;
+      color: #fff;
+      .item {
+        cursor: pointer;
+        color: #fff;
+        font: 800 12px/15px $nunito-sans;
+        letter-spacing: 0.37px;
+        text-transform: uppercase;
+        text-decoration: none;
+        opacity: 0.6;
+        &.active {
+          cursor: default;
+          opacity: 1;
+        }
+          margin-right: 30px;
+        &.disabled {
+          cursor: not-allowed;
+        }
+      }
+      i {
+        opacity: 0.6;
+        margin-right: 30px;
+      }
+    }
+    .log-out-btn {
+      position: absolute;
+      right: 0;
+      padding: 8px 10px;
+      border-left: 1px solid rgba($color: #fff, $alpha: .6);
+      i {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+        color: #fff;
+        opacity: 0.6;
+        font-size: 17px;
+      }
+    }
+  }
+  .stepper-header {
+    width: 100%;
+    height: 40px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: inset 0px -1px 0px #E3E3E3;
+    .item {
+      font: 800 12px/15px $nunito-sans;
+      color: #909090;
+      cursor: pointer;
+      margin-right: 30px;
+      text-transform: capitalize;
+      text-decoration: none;
+      &.active {
+        color: #4350A2;
+      }
+      &.disabled {
+        cursor: not-allowed;
+      }
+    }
+  }
+  .stepper-content {
+    display: flex;
+    padding: 20px 15px;
+  }
+}

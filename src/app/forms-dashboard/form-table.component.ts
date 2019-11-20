@@ -5,11 +5,16 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { UtilsService } from '@app/core/utils.service';
 import { FormSearchParams } from '@app/models/form-search-params';
+import { CheckService } from '@app/services/check.service';
+import { DateService } from '@app/services/date.service';
+import { FormService } from '@app/services/form.service';
+import { StatusService } from '@app/services/status.service';
 import { FormModel } from '@models/data-collection/form.model';
+import { formStatusOptions } from '@shared/form-status-options';
+import { formStatuses } from '@shared/form-statuses';
 import { IconsEnum } from '@shared/icons.enum';
 import { DialogComponent } from '@shared/popup/dialog.component';
 import { get, pick } from 'lodash';
-import { DateTime } from 'luxon';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { DataCollectionService } from './data-collection.service';
 import { FormsDataSource } from './form-table.datasource';
@@ -25,14 +30,7 @@ export class FormTableComponent implements OnInit {
   @ViewChild('dialog', { static: true }) dialog: DialogComponent;
 
   // TABS
-  public statusArray = [
-    { title: 'All', value: null },
-    { title: 'Active', value: 'active' },
-    { title: 'Draft', value: 'draft' },
-    { title: 'In Review', value: 'review' },
-    { title: 'Closed', value: 'closed' },
-    { title: 'Archived', value: 'archived' },
-  ];
+  public statusArray = formStatuses;
   public statusArrayOptions = [...this.statusArray];
 
   public typeArray = [
@@ -44,15 +42,16 @@ export class FormTableComponent implements OnInit {
 
   // BULK BUTTON
   public bulkOptions = ['Share', 'Export PDF', 'Archive'];
-  public disabledBulkBtn = true;
 
   // TABLE DATA
   public dataSource: FormsDataSource = new FormsDataSource(this.dataCollectionService);
-  public displayedColumns: string[] = ['name', 'type', 'access', 'createdBy', 'updatedAt', 'status', 'actions'];
+  public displayedColumns = ['checkbox', 'name', 'type', 'access', 'createdBy', 'updatedAt', 'status', 'actions'];
   public params: FormSearchParams = {
     page: 1,
     limit: 10,
   };
+  public lastPage = 0;
+  public rows: FormModel[] = [];
 
   // POPUP
   public popupTitle = '';
@@ -62,7 +61,6 @@ export class FormTableComponent implements OnInit {
   public isPopupOpen = false;
   public showInvite = false;
 
-  public selectedUsers = [];
   public icons = IconsEnum;
   public totalAmount = 0;
   public totalItems: number;
@@ -75,20 +73,23 @@ export class FormTableComponent implements OnInit {
     filename: null
   };
   public filterForm: FormGroup;
-  public sort = ['name', true];
+  public sort = ['updated_at', false];
   public currentPage = 1;
 
-  public statusesOptions: string[] = ['Active', 'Draft', 'In Review', 'Closed', 'Archived'];
+  public statusesOptions = formStatusOptions;
   // tslint:disable-next-line:variable-name
-  public _sm: SelectionModel<any>;
-
-  static createSharedUrl(id: string) {
-    return `${window.location.origin}/view-form/${id}`;
-  }
+  public selectedRows: any = {};
+  public _sm: SelectionModel<any> = new SelectionModel(true);
+  public pageSelection: { allSelected: boolean, selectedAnyRow: boolean }[] = [];
+  public selectedAnyRow = false;
 
   constructor(
     public dataCollectionService: DataCollectionService,
     public router: Router,
+    public statusService: StatusService,
+    public checkService: CheckService,
+    public dateService: DateService,
+    public formService: FormService,
     private cdr: ChangeDetectorRef,
     private fb: FormBuilder,
     public utilsService: UtilsService,
@@ -108,18 +109,26 @@ export class FormTableComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._sm = new SelectionModel(true);
     this.dataSource.getTotalAmount.subscribe(amount => {
       this.totalAmount = amount;
       this.cdr.detectChanges();
     });
+
+    this.dataSource.getFormsData.subscribe(data => {
+      this.rows = data;
+    });
     this.dataSource.formsListMetadata$.subscribe(metadata => {
       if (metadata.page > metadata.last_page) {
         this.params.page = 1;
+        this.lastPage = metadata.last_page;
         this.dataSource.loadFormsList(this.params);
       } else {
+        this.lastPage = metadata.last_page;
         this.totalItems = metadata.total;
         this.currentPage = metadata.page;
+      }
+      if (!this.pageSelection[this.params.page - 1]) {
+        this.changePageSelection(this.params.page - 1, false);
       }
     });
     this.dataSource.loadFormsList(this.params);
@@ -134,8 +143,10 @@ export class FormTableComponent implements OnInit {
         return value;
       })
     ).subscribe(value => {
-      this.disabledBulkBtn = true;
       this._sm.clear();
+      this.selectedRows = {};
+      this.pageSelection = [];
+      this.selectedAnyRow = false;
       this.params.filter = { ...value };
       this.dataSource.loadFormsList(this.params);
     });
@@ -149,36 +160,11 @@ export class FormTableComponent implements OnInit {
     return {name: user.full_name, role: get(user, 'role.role_name')};
   }
 
-  getStatusColor(status: string): string {
-    switch (status) {
-      case 'archived':
-        return 'gray';
-      case 'active':
-        return 'green';
-      case 'draft':
-        return 'light-blue';
-      case 'review':
-        return 'yellow';
-      case 'closed':
-        return 'purple';
-      default:
-        return 'gray';
-    }
-  }
-
-  getDate(date: Date) {
-    const dt = DateTime.fromJSDate(date);
-    return dt.setLocale('en-US').toFormat('LL-dd-yyyy');
-  }
-
-  getTime(date: Date) {
-    const dt = DateTime.fromJSDate(date);
-    return dt.setLocale('en-US').toFormat('t').toLowerCase();
-  }
-
   sortBy(field: string) {
-    this.disabledBulkBtn = true;
     this._sm.clear();
+    this.selectedRows = {};
+    this.nullSelectedAllPages();
+
     if (this.sort[0] === field) {
       switch (this.sort[1]) {
         case true:
@@ -202,7 +188,6 @@ export class FormTableComponent implements OnInit {
     }
     this.params.sort.field = field;
     this.params.sort.order = !!this.sort[1] ? 'asc' : 'desc';
-    this.params.page = 1;
     this.dataSource.loadFormsList(this.params);
   }
 
@@ -214,7 +199,7 @@ export class FormTableComponent implements OnInit {
     }
   }
 
-  selectRow(row: any, e: Event) {
+  selectRow(row: FormModel, e: Event) {
     // @ts-ignore
     if (
       e &&
@@ -227,17 +212,38 @@ export class FormTableComponent implements OnInit {
       e.stopPropagation();
     } else {
       if (row) {
-        this._sm.toggle(row);
+        if (this._sm.isSelected(row.id)) {
+          this._sm.deselect(row.id);
+          delete this.selectedRows[row.id];
+        } else {
+          this._sm.select(row.id);
+          this.selectedRows[row.id] = row;
+        }
       }
-      this.disabledBulkBtn = this._sm.selected.length === 0;
+      const selectedPageRows = this.rows.map((rowForm: any) => this._sm.isSelected(rowForm.id)).filter(item => item);
+
+      this.pageSelection[this.params.page - 1].allSelected = selectedPageRows.length === this.rows.length;
+      this.pageSelection[this.params.page - 1].selectedAnyRow = selectedPageRows.length > 0;
+
+      for (let i = 0; i < this.pageSelection.length; i++) {
+        if (this.pageSelection[i].selectedAnyRow) {
+          this.selectedAnyRow = true;
+          break;
+        }
+
+        if (i === this.pageSelection.length - 1) {
+          this.selectedAnyRow = false;
+        }
+      }
     }
   }
 
-  rowSelected(row: any) {
-    return this._sm.isSelected(row);
-  }
-
   clickTab(filter) {
+    this._sm.clear();
+    this.selectedRows = {};
+    this.pageSelection = [];
+    this.selectedAnyRow = false;
+
     this.activeTab = filter;
     if (filter.title === 'All') {
       this.filterForm.get('status').setValue(null);
@@ -277,7 +283,9 @@ export class FormTableComponent implements OnInit {
       }
     }
     this._sm.clear();
-    this.disabledBulkBtn = true;
+    this.selectedRows = {};
+    this.nullSelectedAllPages();
+    this.showInvite = false;
     this.isPopupOpen = false;
   }
 
@@ -292,6 +300,11 @@ export class FormTableComponent implements OnInit {
           this.popupActionBtnText = `Copy Link`;
         }
         break;
+      case 'Invite': {
+        this.popupTitle = 'Access Settings';
+        this.popupActionBtnText = 'Save';
+        break;
+      }
       default:
         if (this.popupContentArray.length > 1) {
           this.canLabelsRemove = true;
@@ -307,7 +320,8 @@ export class FormTableComponent implements OnInit {
   onShareLink(form): void {
     this.isPopupOpen = true;
     this._sm.clear();
-    this.disabledBulkBtn = true;
+    this.selectedRows = {};
+    this.nullSelectedAllPages();
     this.openSharePopup(form);
   }
 
@@ -316,11 +330,11 @@ export class FormTableComponent implements OnInit {
 
     if (form) {
       this.popupContentArray = [];
-      this.popupContentArray.push({ title: FormTableComponent.createSharedUrl(form.mongo_id) });
+      this.popupContentArray.push({ title: this.formService.createSharedUrl(form.mongo_id) });
     } else {
       this.popupContentArray = [];
-      this._sm.selected.forEach((item: FormModel) => {
-        this.popupContentArray.push({ title: FormTableComponent.createSharedUrl(item.mongo_id) });
+      this._sm.selected.forEach((item: number) => {
+        this.popupContentArray.push({ title: this.formService.createSharedUrl(this.selectedRows[item].mongo_id) });
       });
     }
 
@@ -335,8 +349,8 @@ export class FormTableComponent implements OnInit {
     this.popupTitle = 'Archive';
 
     this.popupContentArray = [];
-    this._sm.selected.forEach((item: FormModel) => {
-      this.popupContentArray.push({ title: item.name, id: item.id });
+    this._sm.selected.forEach((item: number) => {
+      this.popupContentArray.push({ title: this.selectedRows[item].name, id: this.selectedRows[item].id });
     });
 
     this.popupSetActionBtnTextAndLogicRemoved(this.popupTitle);
@@ -350,8 +364,8 @@ export class FormTableComponent implements OnInit {
     this.popupTitle = 'Export PDF';
 
     this.popupContentArray = [];
-    this._sm.selected.forEach((item: FormModel) => {
-      this.popupContentArray.push({ title: item.name, id: item.mongo_id });
+    this._sm.selected.forEach((item: number) => {
+      this.popupContentArray.push({ title: this.selectedRows[item].name, id: this.selectedRows[item].mongo_id });
     });
 
     this.popupSetActionBtnTextAndLogicRemoved(this.popupTitle);
@@ -374,8 +388,8 @@ export class FormTableComponent implements OnInit {
   onDuplicateForm(mongoId: string): void {
     this.dataCollectionService
       .duplicateForm(mongoId)
-      .subscribe((res) => {
-        this.router.navigate(['form-creator', res._id]).then();
+      .subscribe(async (res) => {
+        await this.router.navigate(['/form', res._id]);
       });
   }
 
@@ -449,24 +463,39 @@ export class FormTableComponent implements OnInit {
     }
   }
 
-  isEmptyRound(obj: any): boolean {
-    if (Array.isArray(obj)) {
-      return true;
-    }
-
-    return !Object.keys(obj).length;
+  inviteUsers(): void {
+    this.showInvite = true;
+    this.popupSetActionBtnTextAndLogicRemoved('Invite');
+    this.dialog.open();
   }
 
-  getRoundDate(startDate: string, endDate: string): string {
-    const start = DateTime.fromISO(startDate);
-    const end = DateTime.fromISO(endDate);
-    const returnDate = start.setLocale('en-US').toFormat('LLL dd').concat('-');
+  allSelect(): void {
+    if (this.pageSelection[this.params.page - 1].selectedAnyRow) {
+      this.rows.forEach((row: any) => {
+        this._sm.deselect(row.id);
+        delete this.selectedRows[row.id];
+      });
 
-    if (start.hasSame(end, 'month')) {
-      return returnDate.concat(end.setLocale('en-US').toFormat('dd'));
+      this.changePageSelection(this.params.page - 1, false);
+    } else {
+      this.rows.forEach((row: any) => {
+        this._sm.select(row.id);
+        this.selectedRows[row.id] = row;
+      });
+
+      this.changePageSelection(this.params.page - 1, true);
+      this.selectedAnyRow = true;
     }
-
-    return returnDate.concat(end.setLocale('en-US').toFormat('LLL dd'));
   }
 
+  nullSelectedAllPages() {
+    this.pageSelection.forEach((pageData, page) => {
+      this.changePageSelection(page, false);
+      this.selectedAnyRow = false;
+    });
+  }
+
+  changePageSelection(page: number, value = false) {
+    this.pageSelection[page] = { allSelected: value, selectedAnyRow: value };
+  }
 }

@@ -1,0 +1,51 @@
+<div class="field_settings_container">
+  <form [formGroup]="form">
+    <section>
+      <div class="title">
+        <sw-input-toggle formControlName="showDefaultValue">
+          <span class="label">default value</span>
+        </sw-input-toggle>
+      </div>
+      <sw-input-number *ngIf="form.get('showDefaultValue').value" class="settings-field" formControlName="default">
+      </sw-input-number>
+    </section>
+    <section>
+      <div class="title">
+        Number Format
+      </div>
+      <div class="row_container">
+        <div class="row_container__input">
+          <sw-dropdown-input formControlName="format" [multiple]="false" [options]="validatorsOptions">
+            <span class="label">Format</span>
+          </sw-dropdown-input>
+        </div>
+        <div class="row_container__input small">
+          <sw-input-number formControlName="places">
+            <span class="label">Places</span>
+          </sw-input-number>
+        </div>
+      </div>
+    </section>
+    <section>
+      <div class="title">
+        <sw-input-toggle formControlName="showValidators">
+          <span class="label">validate</span>
+        </sw-input-toggle>
+      </div>
+      <ng-container *ngIf="form.get('showValidators').value" formGroupName="validators">
+        <div class="row_container">
+          <div class="row_container__input">
+            <sw-input-number formControlName="min">
+              <span class="label">Min Value</span>
+            </sw-input-number>
+          </div>
+          <div class="row_container__input">
+            <sw-input-number formControlName="max">
+              <span class="label">Max Value</span>
+            </sw-input-number>
+          </div>
+        </div>
+      </ng-container>
+    </section>
+  </form>
+</div>

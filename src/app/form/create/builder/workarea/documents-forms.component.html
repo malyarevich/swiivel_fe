@@ -1,0 +1,260 @@
+<!-- <app-section-header [sectionName]="documentsForms.documents.sectionName"
+  [sectionWidth]="documentsForms.documents.sectionWidth" [isExpand]="isExpand"
+  (onChangeSectionName)="changeSectionName($event)" (onChangeSectionWidth)="changeSectionWidth($event)"
+  (onToggleExpand)="toggleExpand()"></app-section-header> -->
+<div class="header">
+  <div class="bubbles">
+    <i class="fas fa-grip-vertical bubbles-ico"></i>
+  </div>
+  <div class="sections">
+    <div class="section-name">
+      <sw-input-text [(ngModel)]="lform.value.documents.sectionName">
+        <span class="placeholder">Section Name</span>
+      </sw-input-text>
+    </div>
+    <div class="section-width">
+      <sw-dropdown-input [options]="widthOption" [multiple]="false">
+        <span class="input_label">Section Width</span>
+        <span class="input_ico"><i class="fas fa-caret-down" [ngClass]="{' fa-caret-up': popupDisplay}"></i></span>
+      </sw-dropdown-input>
+    </div>
+  </div>
+  <div class="controls">
+    <div class="ico-container">
+      <div class="controls-ico">
+        <sw-icon-button [icon]="icons.SETTINGS"></sw-icon-button>
+      </div>
+    </div>
+    <div class="controls-ico">
+      <sw-icon-button [icon]="icons.CROSS"></sw-icon-button>
+    </div>
+    <div class="controls-arrow-container">
+      <div class="controls-arrow">
+        <sw-icon-button *ngIf="isContentShown" color="white" [icon]="icons.CARET_DOWN" (click)="changeIsContentShown()">
+        </sw-icon-button>
+        <sw-icon-button *ngIf="!isContentShown" color="white" [icon]="icons.CARET_UP" (click)="changeIsContentShown()">
+        </sw-icon-button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="app-div-animation app-div-hide" [ngClass]="{
+    'app-div-show': isContentShown,
+    'app-div-hide': !isContentShown
+  }">
+
+  <div class="documents-item" *ngFor="let document of lform.value.documents.documentsItems; let i = index;">
+    <div class="row item-row justify-content-between">
+      <div class="document-info align-items-center">
+        <div class="document-name">
+          <sw-input-text [(ngModel)]="document.name">
+            <span class="placeholder">Document Name</span>
+          </sw-input-text>
+        </div>
+        <div class="lable green" *ngIf="document.isPerFamily">
+          Family
+        </div>
+        <div class="lable blue" *ngIf="!document.isPerFamily">
+          Student
+        </div>
+      </div>
+      <sw-button class="outline-btn">Add Specific Criteria</sw-button>
+    </div>
+    <div class="row item-row">
+      <sw-input-textarea [(ngModel)]="document.accompanyingText.data">
+        <span class="label">Text</span>
+      </sw-input-textarea>
+    </div>
+    <div class="row item-row">
+      <div class="file" *ngIf="!document?.isUpload">
+        <div class="input">
+          <span class="file-name">
+              {{ getAttachments(document.data) }}
+          </span>
+          <div class="actions" style="margin-left: auto; width: fit-content;">
+            <sw-icon-button (click)="openForPreview(document)" icon="fa-eye"></sw-icon-button>
+            <sw-icon-button (click)="deleteAttachment(i)" icon="fa-trash"></sw-icon-button>
+          </div>
+          <input #fileInput type="file" accept=".pdf,.doc,.docx,.jpg" (change)="fileChange($event, i)" hidden />
+        </div>
+        <sw-button class="icon-btn full rigth" style="width: 35px;" (click)="focusInput(fileInput)">
+          <i class="fas fa-sliders-h"></i>
+        </sw-button>
+      </div>
+      <div class="actions" style="margin-left: auto;">
+        <sw-button *ngIf="!document?.isUpload; else uploadDocument">
+          Download Document
+        </sw-button>
+        <ng-template #uploadDocument>
+          <sw-button>
+            Upload Document
+          </sw-button>
+          <sw-icon-button icon="fa-file-alt" (click)="openFormatsPop(document)"></sw-icon-button>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #formatsOptions>
+    <div class="dialog_container">
+      <div class="dialog_container__header">
+        <span class="text">Delete Confirmation Required</span>
+        <div class="icon" (click)="closePop()">
+          <i class="fas fa-times"></i>
+        </div>
+      </div>
+      <div class="dialog_container__body">
+        <div class="item row">
+          <div class="col-4 lable">
+            <sw-input-toggle [(ngModel)]="docs">
+              <span class="label">Documents</span>
+            </sw-input-toggle>
+          </div>
+          <div class="col-8 inputs" *ngIf="docs">
+            <div class="col-3 input" *ngFor="let item of documentsFormats">
+              <sw-input-checkbox [(ngModel)]="item.value" (ngModelChange)="formatChange(item.title, item.value)">
+                <span class="label">{{item.title}}</span>
+              </sw-input-checkbox>
+            </div>
+          </div>
+        </div>
+        <div class="item row">
+          <div class="col-4 lable">
+            <sw-input-toggle [(ngModel)]="images">
+              <span class="label">Images</span>
+            </sw-input-toggle>
+          </div>
+          <div class="col-8 inputs" *ngIf="images">
+            <div class="col-3 input" *ngFor="let item of imgFormats">
+              <sw-input-checkbox [(ngModel)]="item.value" (ngModelChange)="formatChange(item.title, item.value)">
+                <span class="label">{{item.title}}</span>
+              </sw-input-checkbox>
+            </div>
+          </div>
+        </div>
+        <div class="item row">
+          <div class="col-4 lable">
+            <sw-input-toggle [(ngModel)]="audio">
+              <span class="label">Audio/Video</span>
+            </sw-input-toggle>
+          </div>
+          <div class="col-8 inputs" *ngIf="audio">
+            <div class="col-3 input" *ngFor="let item of audiovideoFormats">
+              <sw-input-checkbox [(ngModel)]="item.value" (ngModelChange)="formatChange(item.title, item.value)">
+                <span class="label">{{item.title}}</span>
+              </sw-input-checkbox>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>
+
+<div class="header">
+  <div class="bubbles">
+    <i class="fas fa-grip-vertical bubbles-ico"></i>
+  </div>
+  <div class="sections">
+    <div class="section-name">
+      <sw-input-text [(ngModel)]="lform.value.formsPDF.sectionName">
+        <span class="placeholder">Section Name</span>
+      </sw-input-text>
+    </div>
+    <div class="section-width">
+      <sw-dropdown-input [options]="widthOption" [multiple]="false">
+        <span class="input_label">Section Width</span>
+        <span class="input_ico"><i class="fas fa-caret-down" [ngClass]="{' fa-caret-up': popupDisplay}"></i></span>
+      </sw-dropdown-input>
+    </div>
+  </div>
+  <div class="controls">
+    <div class="ico-container">
+      <div class="controls-ico">
+        <sw-icon-button [icon]="icons.SETTINGS"></sw-icon-button>
+      </div>
+    </div>
+    <div class="controls-ico">
+      <sw-icon-button [icon]="icons.CROSS"></sw-icon-button>
+    </div>
+    <div class="controls-arrow-container">
+      <div class="controls-arrow">
+        <sw-icon-button *ngIf="isContentFShown" color="white" [icon]="icons.CARET_DOWN" (click)="changeIsContentFShown()">
+        </sw-icon-button>
+        <sw-icon-button *ngIf="!isContentFShown" color="white" [icon]="icons.CARET_UP" (click)="changeIsContentFShown()">
+        </sw-icon-button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="app-div-animation app-div-hide" [ngClass]="{
+    'app-div-show': isContentFShown,
+    'app-div-hide': !isContentFShown
+  }">
+
+  <div class="documents-item" *ngFor="let forms of lform.get('formsPDF.formsPDFItems').value">
+    <div class="row item-row justify-content-between">
+      <div class="document-info align-items-center">
+        <div class="document-name">
+          <sw-input-text [(ngModel)]="forms.name">
+            <span class="placeholder">Form Name</span>
+          </sw-input-text>
+        </div>
+
+        <div class="lable green" *ngIf="forms.isPerFamily">
+          Family
+        </div>
+        <div class="lable blue" *ngIf="!forms.isPerFamily">
+          Student
+        </div>
+      </div>
+
+      <sw-button class="outline-btn">Add Specific Criteria</sw-button>
+
+    </div>
+    <div class="row item-row">
+      <sw-input-textarea [(ngModel)]="forms.accompanyingText.data">
+        <span class="label">Text</span>
+      </sw-input-textarea>
+    </div>
+    <div class="row item-row form-actions">
+      <sw-dropdown-input style="width: 20%; margin-right: 10px;">
+        <span class="label">Fillable Form Type</span>
+      </sw-dropdown-input>
+      <sw-input-text [(ngModel)]="forms.form.formName" style="width: 20%; margin-right: 10px;">
+        <span class="placeholder">Fillable Form Name</span>
+      </sw-input-text>
+      <sw-dropdown-input style="width: 45%; margin-right: 10px;" [(ngModel)]="uploadedForm"
+        (ngModelChange)="upladedFileChange(forms)" *ngIf="!forms.isNew; else new" [options]="existingFormsPDF">
+        <span class="label">Uploaded Form</span>
+      </sw-dropdown-input>
+      <ng-template #new>
+        <div class="file" style="width: 40%;">
+          <div class="input">
+            <span class="file-name">{{forms.form?.name}}</span>
+            <div class="actions" style="margin-left: auto; width: fit-content;">
+              <sw-icon-button style="height: 15px;" (click)="forms.form = null" icon="fa-trash"></sw-icon-button>
+            </div>
+            <input #uploader type="file" accept=".pdf" (change)="fileChange($event, forms)" hidden />
+          </div>
+          <sw-button class="full rigth" (click)="uploader.click()">
+            Upload
+          </sw-button>
+        </div>
+      </ng-template>
+      <sw-input-checkbox [(ngModel)]="forms.publicly">
+        <span class="label">Share Publicly</span>
+      </sw-input-checkbox>
+
+    </div>
+
+    <sw-form-drawing [sideBar]="sideBar" [form]="form" [existingFields]="existingFields" *ngIf="forms?.form && forms?.form?.name"
+    [pages]="forms.form.numberOfPages" [formsPDF]="forms"></sw-form-drawing>
+
+
+  </div>
+
+</div>

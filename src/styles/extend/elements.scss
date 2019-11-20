@@ -1,3 +1,5 @@
+@import '../variables/colors.scss';
+
 %standart-btn {
   text-transform: capitalize;
   border-radius: 4px;
@@ -93,6 +95,12 @@ sw-input-text {
       }
     }
   }
+  .errors {
+    span {
+      color: #E65757;
+      font: 400 10px/13px $nunito-sans;
+    }
+  }
 }
 
 sw-input-text.settings-field{
@@ -133,7 +141,7 @@ sw-input-checkbox {
   }
   i.dragdrop {
     margin-right: 10px;
-    color: #A4A4A4;
+    color: $icon-gray;
     font-size: 15px;
   }
   span {
@@ -169,18 +177,18 @@ sw-input-button-group {
 sw-input-button-group.preview {
   .input_button_group {
     .input_button {
-      background: #EBEEFF;
+      background: $light-purple;
       border: 1px solid #CFD4EF;
       box-sizing: border-box;
       button {
-        background-color: #EBEEFF !important;
+        background-color: $light-purple !important;
         border: none !important;
         padding-top: 3px;
         padding-bottom: 3px;
       }
       &:first-of-type {
         border-radius: 100px 0 0 100px!important;
-        border-right: none !important;    
+        border-right: none !important;
         button {
           border-radius: 100px 0 0 100px!important;
         }
@@ -195,8 +203,8 @@ sw-input-button-group.preview {
       &.active {
         button  {
           border-radius: 100px !important;
-          background-color: #4350A2 !important;
-          color: #fff;
+          background: $element-base-color !important;
+          color: $white;
         }
       }
     }
@@ -277,7 +285,7 @@ sw-input-textarea {
     }
     .hint {
       font: 400 10px/13px $nunito-sans;
-      color: #A4A4A4;
+      color: $icon-gray;
     }
     .row_container {
       display: flex;
@@ -307,7 +315,7 @@ sw-input-textarea {
         width: 100%;
         .controls {
           visibility: hidden;
-          color: #A4A4A4;
+          color: $icon-gray;
           margin-left: 5px;
           display: flex;
           flex-direction: row;
@@ -334,6 +342,117 @@ sw-input-textarea {
     }
     &:last-of-type {
       margin-bottom: 0;
+    }
+  }
+}
+
+sw-send-preview {
+  sw-online-form {
+    
+    @include media-breakpoint-up(lg) {
+      .online_form_container {
+        flex-direction: column !important;
+
+        &__nav {
+          width: 100% !important;
+          padding: 0 !important;
+        }
+
+        &__wrapper {
+          top: 0 !important;
+        }
+      }
+
+      // General Information
+      .field_width {
+
+        &--full {
+          flex-basis: 100% !important;
+        }
+
+        &--three-quarter {
+          flex-basis: 100% !important;
+        }
+
+        &--half {
+          flex-basis: 100% !important;
+        }
+
+        &--third {
+          flex-basis: 50% !important;
+        }
+
+        &--quarter {
+          flex-basis: 50% !important;
+        }
+      }
+
+      .custom_table {
+        &--mobile {
+          display: grid !important;
+        }
+
+        &--lg {
+          top: 1rem !important;
+          display: none !important;
+        }
+      }
+      
+      // Additional Documents
+      .document_container {
+        max-width: 100% !important;
+        min-height: 5rem !important;
+
+        
+        &__control {
+          max-width: 100% !important;
+          margin-top: 0 !important;
+          margin-left: 0 !important;
+        }
+
+        &__file {
+          &_information {
+            align-items: center !important;
+          }
+        }
+      }
+
+      .containers_line {
+        flex-direction: column !important;
+        justify-content: flex-start !important;
+      }
+
+      // Online-form components
+      .online_form_container {
+        flex-direction: column !important;
+
+        &__nav {
+          width: auto !important;
+          width: -webkit-fill-available !important;
+          padding-right: 0 !important;
+
+          &--lower {
+            position: relative !important;
+            top: 0 !important;
+          }
+        }
+
+        &__wrapper {
+          top: 1rem !important;
+
+          &--no_move {
+            top: 1rem !important;
+          }
+        }
+      }
+
+      // Signature 
+      .signature {
+
+        &__inputs_container {
+          grid-template-columns: 1fr !important;
+        }
+      }
     }
   }
 }

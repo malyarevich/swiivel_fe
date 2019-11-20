@@ -1,27 +1,106 @@
-<div class="row" style="margin-right: 0; margin-left: 0;">
-    <div class="col-3" style="padding-right: 0;padding-left: 0;">
-      <div class="sidebar-wrap">
+<div class="row mx-0">
+  <div class="col-2 px-0">
+    <div class="sidebar-wrap">
+      <div class="d-flex flex-direction-row justify-content-between">
+        <sw-button class="outline-btn" (click)="prevStep()">
+          <i class="fas fa-arrow-left"></i>
+        </sw-button>
         <div class="sidebar-title">
           List of Accounts
         </div>
-        <sw-input-button-group class="preview" [options]="buttonOptions" [(ngModel)]="formType"></sw-input-button-group>
-        <div class="search-wrap" data-e2e="search-wrap">
-          <input class="search" data-e2e="search" [formControl]="filter" placeholder="Search" />
-          <i class="icon fas fa-search"></i>
-        </div>
+      </div>
+
+      <sw-input-button-group
+        class="preview"
+        [formControl]="previewType"
+        [options]="buttonOptions"
+      ></sw-input-button-group>
+
+      <div class="search-wrap" data-e2e="search-wrap">
+        <input
+          class="search"
+          data-e2e="search"
+          [formControl]="filter"
+          placeholder="Search"
+          [ngClass]="{ 
+            'disabled': !isPreviewByAccount,
+            'search--disabled': !isPreviewByAccount
+          }"
+        />
+        <i class="icon fas fa-search"></i>
+      </div>
+
+      <div
+        class="filtered_list btn-group-vertical"
+        [ngClass]="{ 'filtered_list--disabled': !isPreviewByAccount }"
+      >
+        <ng-container *ngFor="let groupItem of filteredRoundsList">
+          <div
+            class="filtered_list__group_title"
+            *ngIf="groupItem.accounts.length > 0"
+          >
+            {{ groupItem.name | titlecase }} ({{ groupItem.accounts.length }}):
+          </div>
+
+          <button
+            type="button"
+            *ngFor="let accountItem of groupItem.accounts"
+            class="btn btn-secondary filtered_list__item"
+            [disabled]="!isPreviewByAccount"
+            [ngClass]="{
+              'disabled': !isPreviewByAccount,
+              'filtered_list__item--selected': isSelectedAccount(accountItem)
+            }"
+            (click)="selectAccount(accountItem)"
+          >
+            {{ getAccountTitle(accountItem) }}
+          </button>
+        </ng-container>
       </div>
     </div>
-    <div class="col-9" style="padding-right: 0;padding-left: 0;width: 100%;">
-      <!-- <app-preview-form [formId]='id'></app-preview-form> -->
+  </div>
+  <!-- sw-online-form -->
+  <div class="col-5 px-0 w-100">
+    <!-- <app-preview-form [formId]='id'></app-preview-form> -->
+    <!-- {{ isPreviewByAccount ? "byAccount" : "generic (/view-form)" }} : -->
+    <!-- {{ isPreviewByAccount ? getFamilyId() : "" }} -->
+    <ng-container *ngIf="isPreviewByAccount && getFamilyId(); else onlineView">
       <sw-online-form
-        [formId]="'5d8ddc0e8ffb08460b4c2e02'"
-        [personId]="'83ba48c6b8047d2c37b7ca5f4ba10232'"
+        [formId]="getFormId()"
+        [accountId]="getFamilyId()"
         [isViewMode]="true"
         [isMenuShow]="true"
         [isReviewMode]="false"
         (goBack)="onBack($event)"
         (saveNext)="onSaveNext($event)"
       ></sw-online-form>
-    </div>
+    </ng-container>
+    <ng-template #onlineView>
+      <sw-online-form
+        [formId]="getFormId()"
+        [isViewMode]="true"
+        [isMenuShow]="true"
+        [isReviewMode]="false"
+        (goBack)="onBack($event)"
+        (saveNext)="onSaveNext($event)"
+      ></sw-online-form>
+    </ng-template>
   </div>
-  
+  <!-- pdf -->
+  <div class="col-5 px-0 w-100">
+    <ng-container *ngIf="getFormId()">
+      <sw-form-pdf
+        [formId]='getFormId()'
+        [isReviewMode]="true"
+        (onBack)="onBack($event)"
+        (onSaveNext)="onSaveNext($event)"
+      ></sw-form-pdf>
+      <!-- <sw-preview-form
+        [formId]='getFormId()'
+        [isReviewMode]="true"
+        (onBack)="onBack($event)"
+        (onSaveNext)="onSaveNext($event)"
+      ></sw-preview-form> -->
+    </ng-container>
+  </div>
+</div>

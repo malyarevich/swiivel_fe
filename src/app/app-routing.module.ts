@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { UploadReviewFormComponent } from '@app/upload-review-form/upload-review-form.component';
 import { AuthGuard } from '@core/auth.guard';
 import { DashboardComponent } from '@core/components/dashboard.component';
 import { LoginComponent } from '@core/components/login.component';
@@ -40,6 +39,10 @@ const routes: Routes = [
     loadChildren: () => import('./form-creator/form-creator.module').then(m => m.FormCreatorModule)
   },
   {
+    path: 'form-management',
+    loadChildren: () => import('./form-management/form-management.module').then(m => m.FormManagementModule)
+  },
+  {
     path: 'form-send',
     loadChildren: () => import('./form-send/form-send.module').then(m => m.FormSendModule)
   },
@@ -52,13 +55,17 @@ const routes: Routes = [
     loadChildren: () => import('./upload-review-form/upload-review-form.module').then(m => m.UploadReviewFormModule)
   },
   {
+    path: 'form',
+    loadChildren: () => import('./form/form.module').then(m => m.FormModule)
+  },
+  {
     path: '**',
     redirectTo: '/dashboard',
   }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {enableTracing: !environment.production})],
+  imports: [RouterModule.forRoot(routes, {enableTracing: false})],
   exports: [RouterModule]
 })
 

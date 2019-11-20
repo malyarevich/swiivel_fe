@@ -3,8 +3,10 @@ import { HttpService } from '@app/core/http.service';
 import { ApiResponse, LoginData } from '@models/api';
 import { FormSearchParams } from '@models/form-search-params';
 import { Observable, throwError } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { first, map } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +14,9 @@ import { HttpParams } from '@angular/common/http';
 
 export class ApiService {
 
-  constructor(protected http: HttpService) { }
+  constructor(
+    protected http: HttpService,
+  ) { }
 
   public login(data: LoginData): any {
     return this.http.post('/login', { ...data });
@@ -31,6 +35,14 @@ export class ApiService {
 
   getSidebarFields() {
     return this.http.get('/proxy/sidebar-fields');
+  }
+
+  getMappedFields() {
+    return this.http.get('/proxy/mapped');
+  }
+
+  getCustomFields() {
+    return this.http.get('/proxy/schema');
   }
 
   getFormsList(requestParams?: FormSearchParams): Observable<any> {
@@ -103,9 +115,37 @@ export class ApiService {
     return this.http.put(`/proxy/form-builder/release/round/${roundId}`, round);
   }
 
+  deleteRound(roundId) {
+    return this.http.delete(`/proxy/form-builder/release/round/${roundId}`);
+  }
+
   // FORM SEND END
 
+  uploadFile(formId, file) {
+    const fbLibk = environment.apiFB;
+    return this.http.request('post', `${fbLibk}/forms/attach/${formId}?api_token=${environment.api_token}`, file);
+  }
+
+  getFormsPDFList():Observable<any>{
+    const fbLibk = environment.apiFB;
+    return this.http.request('get', `${fbLibk}/pdfForms?api_token=${environment.api_token}`);
+  }
+
+
+
   public download(url: string) {
-    return this.http.getFile(url)
+    return this.http.getFile(url);
+  }
+
+  // FORM
+
+  public changeFormStatus(updatedIds: number[], updatedStatus: string): Observable<any> {
+    return this.http.post(`/proxy/form-builder/form-template/status`, { ids: updatedIds, status: updatedStatus });
+  }
+
+  public exportFormPDF(mongoId: string) {
+    return this.download(`/proxy/form-builder/pdf-export/${mongoId}`).pipe(map((response: any) => {
+      return window.URL.createObjectURL(new Blob([response], { type: 'application/pdf' }));
+    }), first());
   }
 }

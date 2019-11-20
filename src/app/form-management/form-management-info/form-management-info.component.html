@@ -1,0 +1,76 @@
+<div class="form-management-info" [ngClass]="{'dashboard-shown': mode === 'full'}">
+  <div class="type-container">
+    <div class="icon">
+      <i class="fas fa-file icon-page"></i>
+    </div>
+    <div class="type">
+      <h2 class="col-header col-header-type">Type</h2>
+      <p class="type-text">{{ form.type }}</p>
+      <div class="col-bottom">
+        <span *ngIf="form.dashboard_block && form.dashboard_block.round" class="col-bottom-text">
+          {{ form.dashboard_block.round.name }}
+          <span class="date-text">
+            ({{ dateService.getRoundDate(form.dashboard_block.round.start_date, form.dashboard_block.round.end_date) }})
+          </span>
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="change-info">
+    <div class="update-create">
+      <div class="updated">
+        <h2 class="col-header">Last Updated</h2>
+        <div class="user-item">
+          <sw-user-item
+            *ngIf="form.dashboard_block && form.dashboard_block.last_updated"
+            [userItem]="this.formManagementService.getUser(form.dashboard_block.last_updated)"
+            [size]="mode === 'short' ? 'default' : 'small'"
+          ></sw-user-item>
+        </div>
+        <div class="col-bottom">
+        <span
+          *ngIf="form.dashboard_block && form.dashboard_block.last_updated && form.dashboard_block.last_updated.date"
+          class="date-text"
+        >
+          {{ form.dashboard_block.last_updated.date }}
+        </span>
+        </div>
+      </div>
+      <div class="created">
+        <h2 class="col-header">Created</h2>
+        <div class="user-item">
+          <sw-user-item
+            *ngIf="form.dashboard_block && !checkService.isEmptyObject(form.dashboard_block.created)"
+            [userItem]="this.formManagementService.getUser(form.dashboard_block.created)"
+            [size]="mode === 'short' ? 'default' : 'small'"
+          ></sw-user-item>
+        </div>
+        <div class="col-bottom">
+        <span
+          *ngIf="form.dashboard_block && form.dashboard_block.created && form.dashboard_block.created.date"
+          class="date-text"
+        >
+          {{ form.dashboard_block.created.date }}
+        </span>
+        </div>
+      </div>
+    </div>
+    <div class="access">
+      <h2 class="col-header">Access</h2>
+      <div *ngIf="form.dashboard_block && form.dashboard_block.access && form.dashboard_block.access.length">
+        <sw-user-item
+          [isRoleShown]="false"
+          [size]="mode === 'short' ? 'default' : 'small'"
+          [userItem]="this.formManagementService.getUser(form.dashboard_block.access[0])"
+        ></sw-user-item>
+      </div>
+      <div class="col-bottom edit-access-btn">
+        <sw-button
+          color="transparent"
+        >
+          <span>Edit Access</span>
+        </sw-button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,38 +1,61 @@
-import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef, Renderer2 } from '@angular/core';
-import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { FormSendService } from '../form-send.service';
-import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
-import { DataCollectionService } from '@app/forms-dashboard/data-collection.service';
-import { DateTime } from 'luxon';
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  OnInit,
+  Renderer2,
+  ViewChild,
+  OnDestroy
+} from "@angular/core";
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators
+} from "@angular/forms";
+import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
+import { IRound } from "@app/form-send/models/send.model";
+import { DataCollectionService } from "@app/forms-dashboard/data-collection.service";
+import { DateTime } from "luxon";
+import { BehaviorSubject, Subscription } from "rxjs";
+import { FormSendService } from "../form-send.service";
 
 @Component({
-  selector: 'sw-send-release',
-  templateUrl: './send-release.component.html',
-  styleUrls: ['./send-release.component.scss']
+  selector: "sw-send-release",
+  templateUrl: "./send-release.component.html",
+  styleUrls: ["./send-release.component.scss"]
 })
-export class SendReleaseComponent implements OnInit {
-
-  public roundsList: any = [];
+export class SendReleaseComponent implements OnInit, OnDestroy {
+  public $roundsList: BehaviorSubject<IRound[]> = new BehaviorSubject([]);
+  public roundsListSubscription: Subscription;
   public periodsList: any = [];
   public selectedPeriods: any = [];
   public accountsList: any[] = [];
   public selectedAccountsList: any[] = [];
   public periodsFilter: FormControl = new FormControl([]);
   public form: FormGroup;
-  public isNew: boolean = false;
-  public showForm: boolean = false;
+  public isNew = false;
+  public showForm = false;
   public selectOptions = Array.from({ length: 30 }).map((_, i) => i);
-  public mailingOptions = ['Use Mailing House', 'Self-mail'];
+  public mailingOptions = ["Use Mailing House", "Self-mail"];
   public download: {
     url: SafeResourceUrl;
     filename: string;
   } = {
-      url: null,
-      filename: null
-    };
+    url: null,
+    filename: null
+  };
 
-  @ViewChild('link', { static: false }) link: ElementRef;
+  @ViewChild("link", { static: false }) link: ElementRef;
   roundId: any;
+
+  get roundsList(): IRound[] {
+    return this.$roundsList.getValue() ? this.$roundsList.getValue() : [];
+  }
+
+  set roundsList(value: IRound[]) {
+    this.$roundsList.next(value);
+  }
 
   constructor(
     private formSendService: FormSendService,
@@ -63,27 +86,33 @@ export class SendReleaseComponent implements OnInit {
       this.cdr.markForCheck();
     });
     this.form = this.fb.group({
-      name: ['', [Validators.required]],
-      start_date: ['', [Validators.required]],
-      end_date: ['', [Validators.required]],
+      name: ["", [Validators.required]],
+      start_date: ["", [Validators.required]],
+      end_date: ["", [Validators.required]],
       types: fb.group({
         email: this.fb.group({
           selected: [false],
-          subject: [''],
-          body: ['']
+          subject: [""],
+          body: [""]
         }),
         mailing: this.fb.group({
           selected: [false],
-          delay_days: [''],
-          is_self_mail: ['Use Mailing House'],
+          delay_days: [""],
+          is_self_mail: ["Use Mailing House"],
           is_delay_days: [false],
-          mailing_house_id: ['']
+          mailing_house_id: [""]
         })
       })
     });
   }
 
   ngOnInit() {
+    this.roundsListSubscription = this.$roundsList.subscribe(rounds => {
+      // console.log('$roundsList', rounds);
+      this.formSendService.previewRoundList = this.formSendService.getPreviewRoundsListByRounds(
+        rounds
+      );
+    });
   }
 
   addRound() {
@@ -97,7 +126,9 @@ export class SendReleaseComponent implements OnInit {
   }
 
   saveRound() {
-    if (!this.form.valid) { return ; }
+    if (!this.form.valid) {
+      return;
+    }
     this.formSendService.saveRound(this.form.value, this.isNew, this.roundId);
     this.form.reset();
     this.showForm = false;
@@ -108,15 +139,17 @@ export class SendReleaseComponent implements OnInit {
   }
 
   getIcon(expanded: boolean): string {
-    return expanded ? 'fa-caret-up' : 'fa-caret-down';
+    return expanded ? "fa-caret-up" : "fa-caret-down";
   }
 
   getSplits(item: any) {
-    let res: string = '';
+    let res = "";
     if (item.splits && item.splits.length > 0) {
       item.splits.forEach((s, index) => {
         res += `${s.name}`;
-        if (index < item.splits.length - 1) { res += ', '; }
+        if (index < item.splits.length - 1) {
+          res += ", ";
+        }
       });
     }
     return res;
@@ -132,28 +165,34 @@ export class SendReleaseComponent implements OnInit {
   }
 
   getReleaseType(item) {
-    let res: string = '';
+    let res = "";
     if (!!item.types.email) {
-      res = 'Email';
+      res += "Email";
     }
     if (!!item.types.email && !!item.types.mailing) {
-      res += ', ';
+      res += ", ";
     }
     if (!!item.types.mailing) {
-      res += 'Mailing';
+      res += "Mailing";
     }
     return res;
   }
 
+  getTypes(type: string) {
+    return `/assets/images/icons/types-${type}.svg`;
+  }
+
   onExportZIP() {
-    this.dataCollectionService.exportPDFFormZIP(this.formSendService.formId).subscribe((url) => {
-      this.download = {
-        url: this.sanitizer.bypassSecurityTrustResourceUrl(url),
-        filename: `forms.zip`
-      };
-      this.cdr.detectChanges();
-      this.renderer.selectRootElement(this.link.nativeElement).click();
-    });
+    this.dataCollectionService
+      .exportPDFFormZIP(this.formSendService.formId)
+      .subscribe(url => {
+        this.download = {
+          url: this.sanitizer.bypassSecurityTrustResourceUrl(url),
+          filename: `forms.zip`
+        };
+        this.cdr.detectChanges();
+        this.renderer.selectRootElement(this.link.nativeElement).click();
+      });
   }
 
   toggleAccount(item: any, e: boolean) {
@@ -184,20 +223,24 @@ export class SendReleaseComponent implements OnInit {
     this.form.reset();
     this.form.patchValue({
       name: i.name,
-      start_date: DateTime.fromString(i.start_date, 'yyyy-MM-dd').toFormat('MM/dd/yyyy'),
-      end_date: DateTime.fromString(i.end_date,'yyyy-MM-dd').toFormat('MM/dd/yyyy'),
+      start_date: DateTime.fromString(i.start_date, "yyyy-MM-dd").toFormat(
+        "MM/dd/yyyy"
+      ),
+      end_date: DateTime.fromString(i.end_date, "yyyy-MM-dd").toFormat(
+        "MM/dd/yyyy"
+      )
     });
     if (!!i.types.email) {
-      this.form.get('types.email').patchValue({
+      this.form.get("types.email").patchValue({
         selected: true,
         ...i.types.email
-      })
+      });
     }
     if (!!i.types.mailing) {
-      this.form.get('types.mailing').patchValue({
+      this.form.get("types.mailing").patchValue({
         selected: true,
         ...i.types.mailing
-      })
+      });
     }
     this.formSendService.selectedAccounts = i.accounts;
     this.showForm = true;
@@ -215,4 +258,9 @@ export class SendReleaseComponent implements OnInit {
     this.formSendService.prevStep();
   }
 
+  ngOnDestroy(): void {
+    if (this.roundsListSubscription) {
+      this.roundsListSubscription.unsubscribe();
+    }
+  }
 }

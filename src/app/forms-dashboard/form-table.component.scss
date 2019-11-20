@@ -41,8 +41,8 @@
     background: transparent;
 
     &.app-form-table__tab--activated {
-      border-bottom: 2px solid $button-color;
-      color: $button-color;
+      border-bottom: 2px solid $element-base-color;
+      color: $element-base-color;
     }
 
     &:hover, &:focus, &:active {
@@ -71,7 +71,7 @@
 
   .filters-row {
     background: $dark-grey;
-    box-shadow: inset 0px -1px 0px #E7E7E7;
+    box-shadow: inset 0px -1px 0px $shadow-gray-color;
     border-radius: 5px;
 
     th {
@@ -83,7 +83,7 @@
         width: fit-content;
         display: flex;
         align-items: center;
-        color: #151515;
+        color: $darkgray-color;
         text-transform: uppercase;
         letter-spacing: 0.3px;
         font: normal 9px/13px $nunito-sans;
@@ -153,6 +153,12 @@
       }
 
       .second-text {
+        margin: 0;
+        text-transform: capitalize;
+        line-height: 0;
+      }
+
+      .second-text-span {
         font: 400 10px/13px $nunito-sans;
       }
     }
@@ -162,28 +168,24 @@
       .item {
         color: #A4A4A4;
         &:not(:last-of-type) {
-          margin-right: 5px;
+          margin-right: 2%;
         }
         &:last-of-type {
           padding: 0 2px 0 6px;
           display: flex;
-          .item-icon {
-            margin: 0 15px 0 0;
-            &:last-of-type {
-              margin: 0;
-            }
-          }
+          justify-content: space-between;
+          flex-grow: 2;
         }
       }
     }
     .cdk-column-updatedAt {
       font: 400 12px/15px $nunito-sans;
       .date {
-        color: #151515;
+        color: $darkgray-color;
       }
       .time {
         margin-left: 5px;
-        color: #909090;
+        color: $gray-color;
       }
     }
   }
@@ -215,8 +217,7 @@
       .wrapper {
         margin-top: 7px;
         display: flex;
-        align-items: center;
-        justify-content: flex-end;
+        justify-content: space-between;
 
         .paginator-results {
           margin: 0 15px 0 0;
@@ -259,4 +260,33 @@
       font: 500 10px/13px $nunito-sans;
     }
   }
+}
+
+.app-form-table__controls-bulk {
+  margin: 0 10px 0 0;
+}
+
+.cdk-header-checkbox {
+  width: 15px;
+  margin: 19px 0 0 0;
+}
+
+.cdk-data-checkbox {
+  width: 15px;
+  margin: 2px 0 0;
+}
+
+.cdk-footer-paginator {
+  display: flex;
+  align-items: center;
+}
+
+.cdk-footer-select {
+  color: $gray-color;
+  font: 500 12px/15px $nunito-sans;
+  margin: auto 0;
+}
+
+.cdk-footer-select-value {
+  color: $element-base-color;
 }

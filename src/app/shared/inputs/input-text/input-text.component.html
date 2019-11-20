@@ -1,16 +1,14 @@
 <div class="input_text" data-e2e="input_text">
-  <input
-    [type]="_type"
+  <input #input
     class="input_text__input"
-    [ngClass]="{ input_text__button: this._style == 'button_type' }"
-    (blur)="onBlur($event)"
-    (input)="onChange(input.value)"
-    [class.empty]="isEmpty(input.value)"
+    [type]="_type"
+    [class.input_text__button]="_style === 'button_type'"
+    [class.empty]="isEmpty(value)"
     [attr.autocomplete]="_autocomplete"
-    #input
-    [disabled]="readonly"
-  />
+    [formControl]="control.control"
+    (input)="onChange()"/>
   <ng-content></ng-content>
-  <i *ngIf="isClearable && !isEmpty(input.value)" class="fa fa-times" (click)="clear()"></i>
+  <i *ngIf="isClearable && !isEmpty(value)" class="fa fa-times clear" (click)="clear()" title="Clear input"></i>
   <i *ngIf="isSearch" class="fas fa-search fa-xs"></i>
+  <ng-content select=".errors"></ng-content>
 </div>

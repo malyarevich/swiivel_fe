@@ -1,0 +1,82 @@
+<div class="up-block">
+  <div class="up-block-info">
+    <div class="up-block-name">
+      <sw-page-header>
+        {{ form.name }}
+      </sw-page-header>
+    </div>
+    <div>
+      <sw-dropdown-select
+        #bulk="dropdown"
+        [options]="statusesOptions"
+        (selected)="clickChangeStatus($event)"
+      >
+        <sw-button
+          size="small"
+          [color]="statusService.getStatusColor(form.status)"
+        >
+          <span>{{form.status}}</span>
+          <i class="fas fa-caret-down"></i>
+        </sw-button>
+      </sw-dropdown-select>
+    </div>
+    <ul class="up-block-buttons">
+      <li class="up-block-button btn-copy-link">
+        <sw-button
+          color="transparent"
+          size="small"
+          (click)="clickCopy()"
+        >
+          <span class="icon-button-share"></span>
+          <span class="up-block-button-text">Copy link</span>
+        </sw-button>
+      </li>
+      <li class="up-block-button">
+        <sw-icon-button [icon]="icons.SHARE_ARROW" [size]="sizes.AUTO" (click)="clickExportPdf()">
+          <span class="up-block-button-text">Export pdf</span>
+        </sw-icon-button>
+      </li>
+      <li class="up-block-button">
+        <sw-icon-button [icon]="icons.PLUS" [size]="sizes.AUTO">
+          <span class="up-block-button-text">Invite Accounts</span>
+        </sw-icon-button>
+      </li>
+    </ul>
+  </div>
+  <div class="up-block-controls">
+    <div class="up-block-control-button">
+      <sw-button [disabled]="true">
+        Preview Form
+      </sw-button>
+    </div>
+    <div class="up-block-control-button">
+      <sw-button (click)="clickEditForm()">
+        Edit Form
+      </sw-button>
+    </div>
+    <button class="up-block-view" (click)="changeDashboardView()">
+      <span *ngIf="!isDashboardShown" class="view-dashboard-text">
+        View Dashboard
+      </span>
+      <span *ngIf="isDashboardShown" class="hide-dashboard-text">
+        Hide Dashboard
+      </span>
+      <i class="up-block-icon fas"
+         [ngClass]="{'fa-caret-down hide-dashboard-icon': isDashboardShown, 'fa-caret-up view-dashboard-icon': !isDashboardShown}"></i>
+    </button>
+  </div>
+</div>
+
+<div class="down-block">
+  <div class="down-block-info" [ngClass]="{'dashboard-shown': isDashboardShown}">
+    <app-form-management-info [form]="form" [mode]="isDashboardShown ? 'full' : 'short'"></app-form-management-info>
+  </div>
+  <div class="down-block-additional" *ngIf="isDashboardShown">
+    <div *ngIf="form.analytics" class="down-block-analytics">
+      <app-form-management-analytics [formAnalytics]="form.analytics"></app-form-management-analytics>
+    </div>
+    <div *ngIf="isDashboardShown && form.payments" class="down-block-payments">
+      <app-form-management-payments [formPayments]="form.payments"></app-form-management-payments>
+    </div>
+  </div>
+</div>

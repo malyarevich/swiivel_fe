@@ -35,8 +35,7 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
   onTouched: Function;
   dropdownList: any[];
   _multiple = false;
-
-  @Input() disabled = false;
+  disabled: boolean;
   @Input() dropdownSubHeader = false;
   @Input() isActive = true;
   @Input() isClearable = false;
@@ -45,6 +44,7 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
   @Input() style = '';
   @Input() type: 'table-header';
   @Input() typeItem: 'purpure';
+  @Input() isSumDisplay = false;
 
   @Input() set selectValue(opt: [any]) {
     if (opt[0] === null) {
@@ -84,7 +84,7 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
     return !!this._ref;
   }
 
-  writeValue(items: any[]): void {
+  writeValue(items?: any[]): void {
     this._sm.clear();
 
     if (items && items.length) {
@@ -100,6 +100,10 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
 
   registerOnChange(fn: Function): void {
     this.onChange = fn;
+  }
+
+  setDisabledState(isDisabled: boolean) {
+    this.disabled = isDisabled;
   }
 
   isSelected(item) {
@@ -154,7 +158,7 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
       this._ref.afterClosed$.subscribe(result => {
         this.isPopupShown.emit(false);
         this._ref = null;
-        this.onTouched();
+        if (this.onTouched) this.onTouched();
         this.cdr.markForCheck();
       });
     }

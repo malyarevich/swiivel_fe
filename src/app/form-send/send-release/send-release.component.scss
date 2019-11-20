@@ -21,10 +21,10 @@
       border-radius: 100px;
       height: 30px;
       padding: 8px 22px 8px 27px;
-      border: 1px solid #CACACA;
+      border: 1px solid $soft-gray;
       box-sizing: border-box;
       &:focus {
-        border-color: #4350A2;
+        border-color: $element-base-color;
       }
     }
     .icon {
@@ -36,20 +36,20 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #A4A4A4;
+      color: $icon-gray;
       font-size: 14px;
     }
   }
   .section-wrap {
     padding: 25px;
-    background-color: #fff;
+    background-color: $white;
     border-radius: 3px;
     margin-bottom: 10px;
     .section-title {
       text-align: center;
       letter-spacing: 0.22px;
       text-transform: uppercase;
-      color: #909090;
+      color: $gray-color;
       font: 400 13px/15px $nunito-sans;
       margin-bottom: 15px;
     }
@@ -71,28 +71,28 @@
       padding: 10px;
       font: 800 12px/15px $nunito-sans;
       cursor: pointer;
-      color: #0D0D0D;
-      background: #FFFFFF;
+      color: $black-text;
+      background: $white;
       box-shadow: inset 0px -1px 0px rgba(67, 80, 162, 0.4);
       .item-title {
         display: flex;
         .action {
           margin-left: auto;
           i {
-            color: #A4A4A4;
+            color: $icon-gray;
           }
         }
       }
       .splits {
         margin-top: 3px;
         font: 400 10px/13px $nunito-sans;
-        color: #909090;
+        color: $gray-color;
       }
       &:nth-child(odd) {
-        background: #FAFAFA;
+        background: $table-row-odd-background-color;
       }
       &.selected {
-        background: #EBEEFF !important;
+        background: $light-purple !important;
       }
     }
   }
@@ -100,13 +100,13 @@
   .lists-wrap {
     display: flex;
     padding: 15px 0;
-    border: 1px solid #E3E3E3;
+    border: 1px solid $dark-grey;
     box-sizing: border-box;
     border-radius: 3px;
-    background: #fff;
+    background: $white;
     .list-wrap {
       &:not(:last-of-type) {
-        border-right: 1px solid #CACACA;
+        border-right: 1px solid $soft-gray;
       }
       .list-title {
         font: 800 11px/15px $nunito-sans;
@@ -118,7 +118,7 @@
         text-transform: uppercase;
         letter-spacing: 0.3px;
         font: 800 9px/13px $nunito-sans;
-        color: #0D0D0D;
+        color: $black-text;
         margin-bottom: 5px;
       }
     }
@@ -135,7 +135,7 @@
   .rounds-table {
     width: 100%;
     .table-head {
-      background: #E3E3E3;
+      background: $dark-grey;
       border-radius: 2px;
       th {
         padding: 10px;
@@ -149,8 +149,8 @@
     }
     .table-body {
       .round-item {
-        background: #FFFFFF;
-        box-shadow: inset 0px -1px 0px #E7E7E7;
+        background: $white;
+        box-shadow: inset 0px -1px 0px $shadow-gray-color;
         td {
           padding-top: 15px;
           padding-bottom: 15px;
@@ -162,22 +162,23 @@
           }
         }
         &:nth-child(odd) {
-          background: #FAFAFA;
+          background: $table-row-odd-background-color;
         }
       }
       .table_actions {
         i {
-          color: #A4A4A4;
+          color: $icon-gray;
+          cursor: pointer;
           margin-left: 15px;
         }
       }
       .form-table-row {
-        background: #FFF3DD;
+        background: $light-yellow;
         box-shadow: inset 0px -1px 0px rgba(67, 80, 162, 0.3);
         .form-wrap {
           padding: 25px;
           .section-title {
-            color: #000;
+            color: $black;
             font: 800 11px/15px $nunito-sans;
             letter-spacing: 0.37px;
             text-transform: uppercase;
@@ -195,8 +196,8 @@
               padding-left: 5px;
             }
             .type-wrap {
-              border: 1px solid #E3E3E3;
-              background: #fff;
+              border: 1px solid $dark-grey;
+              background: $white;
               box-sizing: border-box;
               border-radius: 3px;
               padding: 15px;
@@ -213,17 +214,17 @@
                 .select {
                   border: none;
                   background: inherit;
-                  color: #4350A2;
+                  color: $element-base-color;
                   font: 800 12px/15px $nunito-sans;
                   // pointer-events: none;
                 }
                 .select-icon {
-                  color: #A4A4A4;
+                  color: $icon-gray;
                 }
               }
               &.selected {
                 background: #F4F6FE;
-                border: 1px solid #4350A2;
+                border: 1px solid $element-base-color;
                 min-height: 100%;
                 .content-mail {
                   display: flex;
@@ -244,7 +245,7 @@
     padding: 10px;
     display: flex;
     flex-flow: row nowrap;
-    box-shadow: inset 0px -1px 0px #E7E7E7;
+    box-shadow: inset 0px -1px 0px $shadow-gray-color;
     sw-icon-button {
       margin-left: auto;
     }
@@ -252,7 +253,7 @@
       display: flex;
       align-items: center;
       .count {
-        color: #CACACA;
+        color: $soft-gray;
         margin: 0 0 0 5px;
       }
     }
@@ -262,7 +263,7 @@
   }
   .list-wrap {
     &:not(:last-of-type) {
-      border-right: 1px solid #CACACA;
+      border-right: 1px solid $soft-gray;
     }
   }
   .stepper-buttons {

@@ -1,0 +1,72 @@
+<sw-back-bar
+  title="Forms"
+  (onBackClick)="backPageClick()"
+></sw-back-bar>
+<div class="app-form-management">
+  <div class="info" *ngIf="form">
+    <app-form-management-header
+      [form]="form"
+      (changeStatus)="changeFormStatus($event)"
+      (copyLink)="copyLinkPopupOpen()"
+      (exportPDF)="exportPDF()"
+      (editForm)="editForm()"
+    ></app-form-management-header>
+    <a [href]="download.url" [download]="download.filename" #link></a>
+  </div>
+
+  <div class="app-form-management-block">
+    <div class="tabs-block">
+      <div class="tabs">
+        <button
+          *ngFor="let tab of tabsArray"
+          class="tab"
+          [class.tab-activated]="activeTab === tab"
+          (click)="activeTab = tab"
+        >
+          {{ tab }}
+        </button>
+      </div>
+      <div class="control-block">
+        <div class="assign">
+          <span class="assign-text">{{ formSubmissions?.cnt_unassigned }} Forms are unassigned</span>
+          <sw-button
+            size="small"
+            [disabled]="!formSubmissions || !formSubmissions .cnt_unassigned || !formSubmissions.cnt_unassigned"
+          >
+            Assign
+          </sw-button>
+        </div>
+        <div class="review">
+          <sw-button [routerLink]="['/upload-review-form', activeIdForm]">Upload & Review</sw-button>
+        </div>
+        <div class="actions">
+          <sw-dropdown-select
+              #bulk="dropdown"
+              [options]="bulkOptions"
+              (selected)="bulkAction($event)"
+          >
+            <sw-button color="white">
+              <span class="actions-bulk-btn-text">Bulk Actions</span>
+              <span class="actions-icon">
+                <i
+                  class="fas fa-chevron-down"
+                  [class.fa-chevron-down]="!bulk.isOpened"
+                  [class.fa-chevron-up]="bulk.isOpened"
+                ></i>
+              </span>
+            </sw-button>
+          </sw-dropdown-select>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<sw-dialog #dialog title="Copy" action="Copy" (closed)="popupClosed()">
+  <sw-label>
+    {{ copyLink }}
+  </sw-label>
+</sw-dialog>
+
+<div *ngIf="isPopupOpen" class="overlay">
+</div>
