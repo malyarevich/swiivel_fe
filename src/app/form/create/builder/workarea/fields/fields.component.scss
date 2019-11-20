@@ -15,12 +15,13 @@
   }
 }
 cdk-nested-tree-node {
-  display: flex;
-  flex-direction: column;
+  display: block;
+  // flex-direction: column;
   
 }
 .main_container {
   width: 100%;
+  height: 44px;
   display: flex;
   border-radius: 3px;
   flex-flow: row nowrap;

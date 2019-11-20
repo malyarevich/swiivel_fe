@@ -353,9 +353,9 @@ div.dropdown_items_container {
 }
 
 
-.cdk-drag-animating {
-  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
-}
+// .cdk-drag-animating {
+//   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+// }
 .cdk-drag-handle	{
   cursor: move;
 }
