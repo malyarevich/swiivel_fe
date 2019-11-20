@@ -14,12 +14,12 @@
         <span class="label">Field Width</span>
       </sw-dropdown-input>
       <div class="input">
-        <sw-input-checkbox [formControl]="node.get('options.required')">
+        <sw-input-checkbox [formControl]="node.get('options.required')" (checked)="setParent(node, 'required', $event)">
           <span class="label">Required</span>
         </sw-input-checkbox>
       </div>
       <div class="input">
-        <sw-input-checkbox [formControl]="node.get('options.hideLabel')">
+        <sw-input-checkbox [formControl]="node.get('options.hideLabel')" (checked)="setParent(node, 'hideLabel', $event)">
           <span class="label">Hide Label</span>
         </sw-input-checkbox>
       </div>

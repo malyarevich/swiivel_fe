@@ -9,7 +9,8 @@ import { NumberSettingComponent } from './number-setting/number-setting.componen
 import { PhoneSettingComponent } from './phone-setting/phone-setting.component';
 import { SectionSettingsComponent } from './section-settings/section-settings.component';
 import { TextSettingComponent } from './text-setting/text-setting.component';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, FormArray } from '@angular/forms';
+import { cloneDeep } from 'lodash';
 
 const components = [
   { type: 101, component: TextSettingComponent, title: 'Short Text Field Settings' },
@@ -43,7 +44,6 @@ export class SettingsComponent implements OnInit, AfterViewInit, OnDestroy {
   set field(f: any) {
     if (f) {
       this._form = f;
-      console.log(this._form)
       this.initSettings(this._form);
     }
   }
@@ -94,24 +94,38 @@ export class SettingsComponent implements OnInit, AfterViewInit, OnDestroy {
         this.component.instance.fieldSettings.subscribe(v => {
           this.updateField(v);
         });
+        this.component.instance.setChildren.subscribe(value => {
+          this.setChildren((this._form.get('fields') as FormArray).controls, value);
+        });
         this.cdr.detectChanges();
       }
     }
   }
 
-  updateField(v) {
-    for (const key of Object.keys(v)) {
-      let control = this._form.get(['options', key]);
+  setChildren(fields, value) {
+    for (let field of fields) {
+      let control = field.get(['options', value.key]) as FormControl;
       if (!control) {
-        (this._form.get('options') as FormGroup).addControl(key, new FormControl({value: v[key]}));
-        // control = this._form.get(['options', key]);
+        (field.get('options') as FormGroup).registerControl(value.key, new FormControl(value.value));
+      } else {
+        control.setValue(value.value, {emitEvent: false, onlySelf: true, emitModelToViewChange: false, emitViewToModelChange: false});
+
+      }
+      if (field.get('fields')) {
+        this.setChildren((field.get('fields') as FormArray).controls, value);
       }
     }
-    console.log('update settings', v);
-    this._form.get('options').patchValue(v)
+  }
 
-    // Object.assign(this._field, v);
-    // console.log('object assign', Object.assign(this._field, v))
+  updateField(v) {
+    let optionsControl = this._form.get('options') as FormGroup;
+    for (const key of Object.keys(v)) {
+      let control = optionsControl.get(key);
+      if (!control) {
+        optionsControl.registerControl(key, new FormControl(v[key]));
+      }
+    }
+    this._form.get('options').patchValue(v)
   }
 
   ngOnDestroy(): void {
