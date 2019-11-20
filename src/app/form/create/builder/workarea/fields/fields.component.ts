@@ -10,7 +10,7 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { takeUntil } from 'rxjs/operators';
 import { cloneDeep } from 'lodash';
 import { visitValue } from '@angular/compiler/src/util';
-import { FormArray, FormGroup, FormBuilder } from '@angular/forms';
+import { FormArray, FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { notDeepEqual } from 'assert';
 import { FieldType } from '@app/shared/fields.enum';
 
@@ -57,20 +57,17 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
       this.formSubscription = form.valueChanges.subscribe((value) => {
         if (value && value['fields']) {
           this.form = form.get('fields') as FormArray;
-          this.treeSource.nodes = [];
-          // this.cdr.markForCheck();
-          // this.cdr.detectChanges()
-          this.treeSource.nodes = this.form.controls;
+          this.treeSource.nodes = this.form.controls;// (form.get('fields') as FormArray).controls;
         } else {
           this.treeSource.nodes = [];
         }
-        // this.treeControl.dataNodes = this.treeSource.nodes;
         this.cdr.markForCheck();
-        // this.cdr.detectChanges();
       });
+      
       if (form.get('fields')) {
         this.form = form.get('fields') as FormArray;
         this.treeSource.nodes = this.form.controls;
+        this.cdr.markForCheck();
       }
     })
   }
@@ -85,6 +82,40 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
 
   ngAfterViewInit() {
 
+  }
+
+  setParent(node, key, value) {
+    // if (value === false) {
+    //   let changed = [];
+    //   let parent = node.parent.parent;
+    //   while (parent !== node.root) {
+    //     if (parent && parent.value.type !== 114) {
+    //       let control = parent.get(['options', key]) as FormControl;
+    //       if (control && control.value === true) {
+    //         changed.push(control)
+    //         // control.setValue(false, {onlySelf: true, emitEvent: false, emitViewToModelChange: false, emitModelToViewChange: false});
+    //         // changed = true;
+    //         parent = parent.parent.parent;
+    //       // } else if (!control) {
+    //       //   parent.get('options').registerControl(key, new FormControl(false));
+    //       } else {
+    //         parent = node.root;
+    //       }
+    //     } else {
+    //       console.log('l')
+    //       parent = node.root;
+    //     }
+    //   }
+    //   if (changed.length > 0) {
+    //     changed.reverse();
+    //     changed.forEach((control) => {
+    //       control.setValue(false, {onlySelf: true, emitEvent: false, emitViewToModelChange: false, emitModelToViewChange: false});
+    //     });
+    //     (node.root as FormGroup).updateValueAndValidity();
+    //     // this.cdr.markForCheck();
+    //     // this.cdr.detectChanges();
+    //   }
+    // }
   }
 
 

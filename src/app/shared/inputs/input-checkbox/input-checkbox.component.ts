@@ -41,6 +41,7 @@ export class InputCheckboxComponent {
       if (this.onChange) {
         this.onChange(value);
       }
+      this.checked.emit(value);
     });
   }
 
