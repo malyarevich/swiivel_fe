@@ -2,11 +2,11 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { PDFProgressData } from 'ng2-pdf-viewer';
 
 @Component({
-  selector: 'sw-form-pdf',
-  templateUrl: './form-pdf.component.html',
-  styleUrls: ['./form-pdf.component.scss']
+  selector: 'sw-preview-form-pdf',
+  templateUrl: './preview-form-pdf.component.html',
+  styleUrls: ['./preview-form-pdf.component.scss']
 })
-export class FormPdfComponent implements OnInit {
+export class PreviewFormPdfComponent implements OnInit {
 
   @Input() formId;
   @Input() isReviewMode = false;
