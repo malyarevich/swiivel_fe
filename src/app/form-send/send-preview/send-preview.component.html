@@ -88,29 +88,19 @@
   </div>
   <!-- pdf -->
   <div class="col-5 px-0 w-100">
-    <!-- <app-preview-form [formId]='id'></app-preview-form> -->
-    <!-- {{ isPreviewByAccount ? "byAccount" : "generic (/view-form)" }} : -->
-    <!-- {{ isPreviewByAccount ? getFamilyId() : "" }} -->
-    <ng-container *ngIf="isPreviewByAccount && getFamilyId(); else onlineView">
-      <sw-online-form
-        [formId]="getFormId()"
-        [accountId]="getFamilyId()"
-        [isViewMode]="true"
-        [isMenuShow]="true"
-        [isReviewMode]="false"
-        (goBack)="onBack($event)"
-        (saveNext)="onSaveNext($event)"
-      ></sw-online-form>
+    <ng-container *ngIf="getFormId()">
+      <sw-form-pdf
+        [formId]='getFormId()'
+        [isReviewMode]="true"
+        (onBack)="onBack($event)"
+        (onSaveNext)="onSaveNext($event)"
+      ></sw-form-pdf>
+      <!-- <sw-preview-form
+        [formId]='getFormId()'
+        [isReviewMode]="true"
+        (onBack)="onBack($event)"
+        (onSaveNext)="onSaveNext($event)"
+      ></sw-preview-form> -->
     </ng-container>
-    <ng-template #onlineView>
-      <sw-online-form
-        [formId]="getFormId()"
-        [isViewMode]="true"
-        [isMenuShow]="true"
-        [isReviewMode]="false"
-        (goBack)="onBack($event)"
-        (saveNext)="onSaveNext($event)"
-      ></sw-online-form>
-    </ng-template>
   </div>
 </div>

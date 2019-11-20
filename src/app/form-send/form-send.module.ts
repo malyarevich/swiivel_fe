@@ -7,11 +7,12 @@ import { SendPreviewComponent } from './send-preview/send-preview.component';
 import { SendReleaseComponent } from './send-release/send-release.component';
 import { FormSendService } from './form-send.service';
 
-import {ScrollingModule} from '@angular/cdk/scrolling';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import { DataCollectionService } from '@app/forms-dashboard/data-collection.service';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { PreviewFormComponent } from './preview-form/preview-form.component';
 import { OnlineFormModule } from '@app/online-form/online-form.module';
+import { FormPdfModule } from '@app/form-pdf/form-pdf.module';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 
@@ -32,7 +33,8 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     ReactiveFormsModule,
     FormsModule,
     OnlineFormModule,
-    PdfViewerModule
+    FormPdfModule,
+    PdfViewerModule,
   ],
   providers: [
     FormSendService,
