@@ -9,7 +9,6 @@ import { PDFProgressData } from 'ng2-pdf-viewer';
 export class PreviewFormPdfComponent implements OnInit {
 
   @Input() formId;
-  @Input() isReviewMode = false;
   @Output() onBack: EventEmitter<any> = new EventEmitter();
   @Output() onSaveNext: EventEmitter<any> = new EventEmitter();
   pdfError: boolean;
