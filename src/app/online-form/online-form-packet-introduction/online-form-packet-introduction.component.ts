@@ -7,7 +7,6 @@ import {
   mainMenuNames,
   menuItems
 } from '@models/data-collection/online-form/menu.model';
-import { cloneDeep } from 'lodash';
 import { ICurrentPosition, IFormNavigationState } from '../models/online-form.model';
 
 @Component({
