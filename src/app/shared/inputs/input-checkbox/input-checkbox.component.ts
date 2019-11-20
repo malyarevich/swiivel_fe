@@ -18,6 +18,7 @@ import { FormControl, NgControl } from '@angular/forms';
 export class InputCheckboxComponent {
   @Input() target = 'label';
   @Input() isActive = true;
+  @Input() definition = false;
   @Input()
   set check(v: boolean) {
     if (v !== undefined) this.control.setValue(v, {emitEvent: false});

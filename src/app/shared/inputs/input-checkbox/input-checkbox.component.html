@@ -1,6 +1,12 @@
 <label (click)="onClick($event)">
   <div class="checkbox">
-    <input type="checkbox" [formControl]="control" [indeterminate]="isIndeterminate" (blur)="onBlur($event)">
+    <input
+      type="checkbox"
+      [class.definition]="definition"
+      [formControl]="control"
+      [indeterminate]="isIndeterminate"
+      (blur)="onBlur($event)"
+    >
   </div>
   <ng-content select="i"></ng-content>
   <ng-content select=".label"></ng-content>
