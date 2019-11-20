@@ -91,7 +91,6 @@
     <ng-container *ngIf="getFormId()">
       <sw-preview-form-pdf
         [formId]='getFormId()'
-        [isReviewMode]="true"
         (onBack)="onBack($event)"
         (onSaveNext)="onSaveNext($event)"
       ></sw-preview-form-pdf>
