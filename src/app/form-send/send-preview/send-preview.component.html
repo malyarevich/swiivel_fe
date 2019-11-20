@@ -1,5 +1,5 @@
-<div class="row" style="margin-right: 0; margin-left: 0;">
-  <div class="col-3" style="padding-right: 0;padding-left: 0;">
+<div class="row mx-0">
+  <div class="col-2 px-0">
     <div class="sidebar-wrap">
       <div class="d-flex flex-direction-row justify-content-between">
         <sw-button class="outline-btn" (click)="prevStep()">
@@ -59,7 +59,35 @@
       </div>
     </div>
   </div>
-  <div class="col-9" style="padding-right: 0;padding-left: 0;width: 100%;">
+  <!-- sw-online-form -->
+  <div class="col-5 px-0 w-100">
+    <!-- <app-preview-form [formId]='id'></app-preview-form> -->
+    <!-- {{ isPreviewByAccount ? "byAccount" : "generic (/view-form)" }} : -->
+    <!-- {{ isPreviewByAccount ? getFamilyId() : "" }} -->
+    <ng-container *ngIf="isPreviewByAccount && getFamilyId(); else onlineView">
+      <sw-online-form
+        [formId]="getFormId()"
+        [accountId]="getFamilyId()"
+        [isViewMode]="true"
+        [isMenuShow]="true"
+        [isReviewMode]="false"
+        (goBack)="onBack($event)"
+        (saveNext)="onSaveNext($event)"
+      ></sw-online-form>
+    </ng-container>
+    <ng-template #onlineView>
+      <sw-online-form
+        [formId]="getFormId()"
+        [isViewMode]="true"
+        [isMenuShow]="true"
+        [isReviewMode]="false"
+        (goBack)="onBack($event)"
+        (saveNext)="onSaveNext($event)"
+      ></sw-online-form>
+    </ng-template>
+  </div>
+  <!-- pdf -->
+  <div class="col-5 px-0 w-100">
     <!-- <app-preview-form [formId]='id'></app-preview-form> -->
     <!-- {{ isPreviewByAccount ? "byAccount" : "generic (/view-form)" }} : -->
     <!-- {{ isPreviewByAccount ? getFamilyId() : "" }} -->
