@@ -18,44 +18,44 @@ cdk-nested-tree-node {
   display: flex;
   flex-direction: column;
   
-  .main_container {
+}
+.main_container {
+  width: 100%;
+  display: flex;
+  border-radius: 3px;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  .content {
+    margin: 10px 0 10px 20px;
     display: flex;
-    border-radius: 3px;
     flex-flow: row nowrap;
     justify-content: space-between;
     align-items: center;
     box-sizing: border-box;
-    .content {
-      margin: 10px 0 10px 20px;
-      display: flex;
-      flex-flow: row nowrap;
-      justify-content: space-between;
-      align-items: center;
-      box-sizing: border-box;
-    }
-    .drag-icon {
-      margin-right: 20px;
-    }
-    .actions {
-      display: flex;
-      align-items: center;
-      flex-flow: row nowrap;
-      .icon {
-        margin-left: 15px;
-        &.dragdrop {
-          padding: 15px;
-          border-left: 1px solid #C9CEEC;
-        }
-        &.active {
-          color: #fff;
-        }
+  }
+  .drag-icon {
+    margin-right: 20px;
+  }
+  .actions {
+    display: flex;
+    align-items: center;
+    flex-flow: row nowrap;
+    .icon {
+      margin-left: 15px;
+      &.dragdrop {
+        padding: 15px;
+        border-left: 1px solid #C9CEEC;
+      }
+      &.active {
+        color: #fff;
       }
     }
-    &.field {
-      padding: 7px 20px;
-    }
   }
-  
+  &.field {
+    padding: 7px 20px;
+  }
 }
 .section-tree-node {
   box-sizing: border-box;
@@ -127,4 +127,8 @@ cdk-nested-tree-node {
     }
   }
   
+}
+
+.drag-node-workarea {
+  width: 900px;
 }
