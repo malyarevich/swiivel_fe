@@ -477,6 +477,10 @@ export class FormTableComponent implements OnInit {
       });
 
       this.changePageSelection(this.params.page - 1, false);
+
+      if (!this._sm.selected.length) {
+        this.selectedAnyRow = false;
+      }
     } else {
       this.rows.forEach((row: any) => {
         this._sm.select(row.id);
