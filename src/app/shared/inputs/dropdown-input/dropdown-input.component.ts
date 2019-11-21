@@ -35,7 +35,7 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
   onTouched: Function;
   dropdownList: any[];
   _multiple = false;
-  disabled: boolean;
+  @Input() disabled = false;
   @Input() dropdownSubHeader = false;
   @Input() isActive = true;
   @Input() isClearable = false;
@@ -128,17 +128,19 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
   }
 
   remove(item, event?: Event) {
-    if (this.isActive) {
-      if (event) {
-        event.preventDefault();
-        event.stopImmediatePropagation();
+    if (!this.disabled) {
+      if (this.isActive) {
+        if (event) {
+          event.preventDefault();
+          event.stopImmediatePropagation();
+        }
+
+        this._sm.deselect(item);
+        this.onChange(this._sm.selected);
+        this.cdr.markForCheck();
+
+        return false;
       }
-
-      this._sm.deselect(item);
-      this.onChange(this._sm.selected);
-      this.cdr.markForCheck();
-
-      return false;
     }
   }
 
@@ -165,7 +167,9 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
   }
 
   clear(): void {
-    this._sm.clear();
-    this.onChange(this._sm.selected);
+    if (!this.disabled) {
+      this._sm.clear();
+      this.onChange(this._sm.selected);
+    }
   }
 }
