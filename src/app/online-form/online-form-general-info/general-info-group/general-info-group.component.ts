@@ -29,15 +29,19 @@ export class GeneralInfoGroupComponent implements OnInit {
   }
 
   initNestedGroups() {
-    this.groups = this.group.fields.filter(item => {
-      return item.type === 113 || item.type === 114;
-    });
+    if (this.group.fields) {
+      this.groups = this.group.fields.filter(item => {
+        return item.type === 113 || item.type === 114;
+      });
+    }
   }
 
   initFields() {
-    this.fields = this.group.fields.filter(item => {
-      return item.type && item.type !== 113 && item.type !== 114;
-    });
+    if (this.group.fields) {
+      this.fields = this.group.fields.filter(item => {
+        return item.type && item.type !== 113 && item.type !== 114;
+      });
+    }
   }
 
   hasErrors() {
