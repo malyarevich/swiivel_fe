@@ -1,6 +1,8 @@
 <div
   class="input-search"
-  [ngClass]="{'has-control': type === 'controls', 'has-error': control.control.invalid}"
+  [class.dropdown]="type === 'dropdown'"
+  [class.has-control]="type === 'controls'"
+  [class.has-error]="control.control.invalid"
 >
   <input
     class="form-control"

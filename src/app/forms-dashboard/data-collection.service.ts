@@ -1,6 +1,6 @@
 import { ApiService } from '@app/core/api.service';
 import { Observable } from 'rxjs';
-import { first, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 export class DataCollectionService extends ApiService {
 
@@ -12,6 +12,10 @@ export class DataCollectionService extends ApiService {
     return this.http.post(`/proxy/form-builder/form-template/duplicate`, {
       example_form_id: id,
     });
+  }
+
+  getUsers(): Observable<any> {
+    return this.http.get(`/proxy/form-builder/search-access-users`);
   }
 
   exportPDFForm(mongoId: string) {

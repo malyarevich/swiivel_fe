@@ -69,7 +69,7 @@ export class WorkareaConsentComponent {
   }
 
   drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.consentForms, event.previousIndex, event.currentIndex);
+    moveItemInArray((this.lform.get('consents') as FormArray).value, event.previousIndex, event.currentIndex);
   }
 
   changeIsShown(evt: boolean): void {

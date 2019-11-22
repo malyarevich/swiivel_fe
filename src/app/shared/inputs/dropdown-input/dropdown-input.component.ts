@@ -11,7 +11,7 @@ import {
   Output,
   ViewChild
 } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 import { Popup } from '@app/core/popup.service';
 
 const DROPDOWN_CONTROL_ACCESSOR = {
@@ -34,14 +34,19 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
   onChange: Function;
   onTouched: Function;
   dropdownList: any[];
+  dropdownRawList: any[];
   _multiple = false;
-  disabled: boolean;
+  form: FormGroup;
+  @Input() disabled = false;
   @Input() dropdownSubHeader = false;
+  @Input() dropdownUsers = false;
+  @Input() search = false;
   @Input() isActive = true;
   @Input() isClearable = false;
   @Input() isDisplaySelected = true;
   @Input() panelClass = 'dropdown-overlay';
   @Input() style = '';
+  @Input() maxHeight = 'auto';
   @Input() type: 'table-header';
   @Input() typeItem: 'purpure';
   @Input() isSumDisplay = false;
@@ -62,6 +67,7 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
   set options(opts: any[]) {
     if (opts) {
       this.dropdownList = opts;
+      this.dropdownRawList = opts;
     }
   }
 
@@ -70,10 +76,27 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
   @ViewChild('droplist', { static: false }) droplist;
   @ViewChild('holder', { static: false, read: ElementRef }) holder: ElementRef;
 
-  constructor(private popup: Popup, private cdr: ChangeDetectorRef) { }
+  constructor(private popup: Popup, private cdr: ChangeDetectorRef, private fb: FormBuilder) {
+    this.form = this.fb.group({
+      search: new FormControl('', Validators.required)
+    });
+  }
 
   ngOnInit(): void {
     this._sm = new SelectionModel(this._multiple);
+    this.form.valueChanges.subscribe(value => {
+      if (this.dropdownUsers) {
+        if (!value.search.length) {
+          this.dropdownList = this.dropdownRawList;
+        } else {
+          this.dropdownList = this.dropdownRawList.map(item => {
+            if (item.name.toLowerCase().includes(value.search.toLowerCase())) {
+              return item;
+            }
+          }).filter(item => item);
+        }
+      }
+    });
   }
 
   get value() {
@@ -128,17 +151,19 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
   }
 
   remove(item, event?: Event) {
-    if (this.isActive) {
-      if (event) {
-        event.preventDefault();
-        event.stopImmediatePropagation();
+    if (!this.disabled) {
+      if (this.isActive) {
+        if (event) {
+          event.preventDefault();
+          event.stopImmediatePropagation();
+        }
+
+        this._sm.deselect(item);
+        this.onChange(this._sm.selected);
+        this.cdr.markForCheck();
+
+        return false;
       }
-
-      this._sm.deselect(item);
-      this.onChange(this._sm.selected);
-      this.cdr.markForCheck();
-
-      return false;
     }
   }
 
@@ -165,7 +190,9 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
   }
 
   clear(): void {
-    this._sm.clear();
-    this.onChange(this._sm.selected);
+    if (!this.disabled) {
+      this._sm.clear();
+      this.onChange(this._sm.selected);
+    }
   }
 }

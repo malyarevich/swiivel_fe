@@ -199,6 +199,10 @@
   }
 }
 
+.dropdown_items_container {
+  overflow-y: scroll;
+}
+
 .dropdown_items_container__item:hover {
   cursor: pointer;
 }
@@ -283,4 +287,9 @@
   font: 800 10px/13px $nunito-sans;
   padding: 1px 5px;
   color: $element-base-color;
+}
+
+.dropdown-search {
+  height: 36px;
+  margin: 5px 10px 0;
 }

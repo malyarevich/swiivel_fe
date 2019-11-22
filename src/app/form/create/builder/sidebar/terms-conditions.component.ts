@@ -33,7 +33,7 @@ export class SidebarTermsConditionsComponent implements OnInit {
           signed: {parents: false, fathers: false, mothers: false},
           type: "esign",
         }),
-        termsConditionsItems: [[]]
+        termsConditionsItems: this.fb.array([])
       }));
     }
     this.lform = _form.get('termsConditions');
@@ -54,7 +54,7 @@ export class SidebarTermsConditionsComponent implements OnInit {
         signed: {parents: false, fathers: false, mothers: false},
         type: "esign",
       }),
-      termsConditionsItems: [[]]
+      termsConditionsItems: this.fb.array([])
     });
     this.cdr.markForCheck();
   }
