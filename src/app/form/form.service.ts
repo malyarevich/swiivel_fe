@@ -121,6 +121,7 @@ export class FormService {
   }
 
   loadForm(formId?: string) {
+    this.form = null;
     if (formId !== 'new') {
       const getFormTemplate = this.api.getFormTemplate(formId);
       getFormTemplate.subscribe(data => {

@@ -72,7 +72,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
           this.savedForm = {...form.value};
         }
         if (this.isNew && !this.form.get('example_form_id')) {
-          this.form.addControl('example_form_id', this.fb.control({ value: null, disabled: true}));
+          this.form.addControl('example_form_id', this.fb.control({ value: null, disabled: true}, Validators.required));
         }
         this.form.valueChanges.subscribe((val) => {
           if (Array.isArray(val.type) && val.type.length > 0) {
@@ -98,7 +98,9 @@ export class GeneralComponent implements OnInit, OnDestroy {
         this.form.get('type').setValue(this.generalForm.value.type[0].value)
       }
     }
-    this.cdr.detectChanges();
+    if (!this.cdr['destroyed']) {
+      this.cdr.detectChanges();
+    }
   }
 
   get isNew() {
@@ -174,8 +176,12 @@ export class GeneralComponent implements OnInit, OnDestroy {
   }
 
   selectForm(item: any) {
-    this.extendedForm = item;
-    this.form.patchValue({ 'example_form_id': item._id });
+    if (this.extendedForm != item) {
+      this.extendedForm = item
+    } else {
+      this.extendedForm = null
+    }
+    this.form.patchValue({ 'example_form_id': this.extendedForm ? this.extendedForm._id : null });
     this.cdr.markForCheck();
   }
 
