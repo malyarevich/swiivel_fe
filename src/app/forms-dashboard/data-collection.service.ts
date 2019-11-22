@@ -14,6 +14,10 @@ export class DataCollectionService extends ApiService {
     });
   }
 
+  getUsers(): Observable<any> {
+    return this.http.get(`/proxy/form-builder/search-access-users?search_query=fis`);
+  }
+
   exportPDFForm(mongoId: string) {
     return this.exportFormPDF(mongoId);
   }
