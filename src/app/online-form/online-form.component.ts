@@ -779,7 +779,7 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
     // }
 
     if (field.options && field.options.validators) {
-      // console.log("field.options.validators:", field.options.validators);
+      console.log("field.options.validators:", field.options.validators);
       Object.keys(field.options.validators).forEach(key => {
         switch (key) {
           case fieldValidators.CurrencyCanada:
@@ -794,23 +794,24 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
             break;
           case fieldValidators.Criteria:
             if (field.options.validators[key]) {
-              field.options.validators[key].forEach(criteria => {
-                switch (criteria.title) {
-                  case fieldValidators.Alphabetic:
-                    arrayValidators.push(alphabeticValidator());
-                    break;
-                  case fieldValidators.Alphanumeric:
-                    arrayValidators.push(alphanumericValidator());
-                    break;
-                  case fieldValidators.Url:
-                    arrayValidators.push(urlValidator());
-                    break;
+              // field.options.validators[key].forEach(criteria => {
+                // switch (criteria.title) {
+              switch (field.options.validators[key]) {
+                case fieldValidators.Alphabetic:
+                  arrayValidators.push(alphabeticValidator());
+                  break;
+                case fieldValidators.Alphanumeric:
+                  arrayValidators.push(alphanumericValidator());
+                  break;
+                case fieldValidators.Url:
+                  arrayValidators.push(urlValidator());
+                  break;
 
-                  default:
-                    console.log('unhandled criteria', criteria);
-                    break;
+                default:
+                  console.log('unhandled criteria', field.options.validators[key]);
+                  break;
                 }
-              });
+              // });
             }
             break;
           case fieldValidators.DecimalPlace:

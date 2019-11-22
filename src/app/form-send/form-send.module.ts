@@ -12,7 +12,7 @@ import { DataCollectionService } from '@app/forms-dashboard/data-collection.serv
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { PreviewFormComponent } from './preview-form/preview-form.component';
 import { OnlineFormModule } from '@app/online-form/online-form.module';
-import { FormPdfModule } from '@app/form-pdf/form-pdf.module';
+import { PreviewFormPdfModule } from '@app/preview-form-pdf/preview-form-pdf.module';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 
@@ -33,7 +33,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     ReactiveFormsModule,
     FormsModule,
     OnlineFormModule,
-    FormPdfModule,
+    PreviewFormPdfModule,
     PdfViewerModule,
   ],
   providers: [
