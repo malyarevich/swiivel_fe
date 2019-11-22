@@ -58,6 +58,10 @@ export class ApiService {
           requestParams.filter[filter].forEach((item) => {
             params = params.append(`filter[${filter}][]`, item.value);
           });
+        } else if (filter === 'access') {
+          requestParams.filter[filter].forEach((item) => {
+            params = params.append(`filter[${filter}][]`, item.id);
+          });
         } else {
           params = params.append(`filter[${filter}]`, requestParams.filter[filter]);
         }
