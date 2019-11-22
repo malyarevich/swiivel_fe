@@ -6,6 +6,7 @@ import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { cloneDeep } from 'lodash';
 import { isArray } from 'util';
 import { Router, ActivatedRoute } from '@angular/router';
+import { v4 as uuid } from "uuid";
 
 @Component({
   selector: 'sw-builder',
@@ -155,7 +156,7 @@ export class BuilderComponent implements OnInit, OnDestroy {
   addTermsConditionsItem() {
     let termsConditionsItem = this.fb.group({
       title: [""],
-      id: [""],
+      id: [uuid()],
       text: [""],
       checkbox: this.fb.group({
         isActive: false,
