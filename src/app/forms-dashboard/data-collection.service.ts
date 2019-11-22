@@ -1,6 +1,6 @@
 import { ApiService } from '@app/core/api.service';
 import { Observable } from 'rxjs';
-import { first, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 export class DataCollectionService extends ApiService {
 

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from '@app/core/http.service';
+import { DateService } from '@app/services/date.service';
 import { ApiResponse, LoginData } from '@models/api';
 import { FormSearchParams } from '@models/form-search-params';
 import { Observable, throwError } from 'rxjs';
@@ -16,11 +17,13 @@ export class ApiService {
 
   constructor(
     protected http: HttpService,
+    public dateService: DateService
   ) { }
 
   public login(data: LoginData): any {
     return this.http.post('/login', { ...data });
   }
+
   forgotPassword(email: string) {
     return this.http.post('/forgot-password', { email });
   }
@@ -58,6 +61,21 @@ export class ApiService {
           requestParams.filter[filter].forEach((item) => {
             params = params.append(`filter[${filter}][]`, item.value);
           });
+        } else if (filter === 'updatedAt') {
+          if (requestParams.filter[filter]['startDate'] && requestParams.filter[filter]['startDate'].date) {
+            params = params.append(
+              `filter[${filter}][startDate]`,
+              this.dateService.getStandartDate(requestParams.filter[filter]['startDate'].date));
+          }
+          if (requestParams.filter[filter]['endDate'] && requestParams.filter[filter]['endDate'].date) {
+            params = params.append(
+              `filter[${filter}][endDate]`,
+              this.dateService.getStandartDate(requestParams.filter[filter]['endDate'].date));
+          } else {
+            params = params.append(
+              `filter[${filter}][endDate]`,
+              this.dateService.getStandartDate(requestParams.filter[filter]['startDate'].date));
+          }
         } else if (filter === 'access') {
           requestParams.filter[filter].forEach((item) => {
             params = params.append(`filter[${filter}][]`, item.id);
@@ -76,6 +94,7 @@ export class ApiService {
     if ('limit' in requestParams) {
       params = params.append('limit', requestParams.limit.toString());
     }
+
     return this.http.get(`/proxy/form-builder/form-templates`, { params });
   }
 
@@ -134,7 +153,6 @@ export class ApiService {
     const fbLibk = environment.apiFB;
     return this.http.request('get', `${fbLibk}/pdfForms?api_token=${environment.api_token}`);
   }
-
 
 
   public download(url: string) {

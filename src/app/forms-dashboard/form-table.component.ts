@@ -103,7 +103,7 @@ export class FormTableComponent implements OnInit {
       type: [null],
       access: [null],
       createdBy: [null],
-      updatedAt: [null],
+      updatedAt: null,
       status: [null],
     });
 
