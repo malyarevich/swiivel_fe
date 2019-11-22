@@ -14,11 +14,43 @@ import { FormArray, FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { notDeepEqual } from 'assert';
 import { FieldType } from '@app/shared/fields.enum';
 
+interface FoodNode {
+  name: string;
+  children?: FoodNode[];
+}
+
+const TREE_DATA: FoodNode[] = [
+  {
+    name: 'Fruit',
+    children: [
+      {name: 'Apple'},
+      {name: 'Banana'},
+      {name: 'Fruit loops'},
+    ]
+  }, {
+    name: 'Vegetables',
+    children: [
+      {
+        name: 'Green',
+        children: [
+          {name: 'Broccoli'},
+          {name: 'Brussel sprouts'},
+        ]
+      }, {
+        name: 'Orange',
+        children: [
+          {name: 'Pumpkins'},
+          {name: 'Carrots'},
+        ]
+      },
+    ]
+  },
+];
 @Component({
   selector: 'sw-form-creator-workarea-fields',
   templateUrl: './fields.component.html',
   styleUrls: ['./fields.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked, OnInit, OnDestroy {
   options = {
@@ -35,6 +67,19 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
     {value: 2, title: '3 quarters'},
     {value: 3, title: 'Full width'},
   ]
+  movies = [
+    'Episode I - The Phantom Menace',
+    'Episode II - Attack of the Clones',
+    'Episode III - Revenge of the Sith',
+    'Episode IV - A New Hope',
+    'Episode V - The Empire Strikes Back',
+    'Episode VI - Return of the Jedi',
+    'Episode VII - The Force Awakens',
+    'Episode VIII - The Last Jedi'
+  ];
+  trControl = new NestedTreeControl<FoodNode>(node => node.children);
+  treeData = new ArrayDataSource(TREE_DATA);
+  data = [];
   fields: any[] = [];
   destroyed$ = new Subject();
   fieldsTree: any[];
@@ -46,6 +91,11 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
     }
     return null;
   });
+
+
+  
+
+
   form: FormArray = new FormArray([]);
   formSubscription: Subscription;
   constructor(private service: FormService, private api: ApiService, private cdr: ChangeDetectorRef, private fb: FormBuilder) {
@@ -58,6 +108,7 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
         if (value && value['fields']) {
           this.form = form.get('fields') as FormArray;
           this.treeSource.nodes = this.form.controls;// (form.get('fields') as FormArray).controls;
+          console.log(this.treeSource.nodes)
         } else {
           this.treeSource.nodes = [];
         }
@@ -67,9 +118,11 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
       if (form.get('fields')) {
         this.form = form.get('fields') as FormArray;
         this.treeSource.nodes = this.form.controls;
+        console.log(this.treeSource.nodes)
         this.cdr.markForCheck();
       }
-    })
+    });
+    
   }
   ngOnDestroy() {
     this.destroyed$.next(true);
@@ -77,11 +130,11 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
   }
 
   ngAfterViewChecked(): void {
-    // this.cdr.detectChanges()
+    this.cdr.detectChanges()
   }
 
   ngAfterViewInit() {
-
+    this.cdr.detectChanges()
   }
 
   setParent(node, key, value) {
@@ -118,6 +171,18 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
     // }
   }
 
+  
+
+  getList(node) {
+    console.log(node)
+    return node.children;
+  }
+
+  hasChildren(_, node) {
+    // console.log(_, node)
+    return !!node.children && node.children.length > 0;
+  }
+
 
 
   getListsIds(node?) {
@@ -134,7 +199,7 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
       //   listIds = listIds.filter((id) => id.endsWith('114'));
       // }
       // listIds.push('sidebar-list')
-      return listIds.filter(id => id !== nodeId);
+      return listIds//.filter(id => id !== nodeId);
     } else {
 
     }
