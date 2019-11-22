@@ -39,7 +39,7 @@
 <div *ngIf="isContentShown" cdkDropList (cdkDropListDropped)="drop($event)">
   <div class="consent-item" *ngFor="let item of lform?.get('consents')?.value; let i = index" cdkDrag>
     <div class="consent-item__bubbles">
-      <i class="fas fa-grip-vertical consent-item__bubbles-ico"></i>
+      <i class="fas fa-grip-vertical consent-item__bubbles-ico" cdkDragHandle></i>
     </div>
     <div class="consent-item__fields">
       <div class="consent-item__fields-name">
