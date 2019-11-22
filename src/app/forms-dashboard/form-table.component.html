@@ -148,13 +148,19 @@
                     </div>
                   </div>
                   <div class="header_container__filter">
-                    <sw-input-text
+                    <sw-dropdown-input
                       class="filter-field"
                       formControlName="access"
-                      [isSearch]="true"
+                      maxHeight="280px"
+                      type="table-header"
+                      [dropdownUsers]="true"
                       [isClearable]="true"
-                      (keydown)="keyDownFunction($event)"
-                    ></sw-input-text>
+                      [isDisplaySelected]="false"
+                      [isSumDisplay]="true"
+                      [multiple]="true"
+                      [options]="users"
+                      [search]="true"
+                    ></sw-dropdown-input>
                   </div>
                 </div>
               </th>
@@ -217,9 +223,10 @@
                   </div>
                   <div class="header_container__filter">
                     <sw-input-english-datepicker
+                      class="filter-field"
                       formControlName="updatedAt"
-                      [placeholder]="''"
-                      [class]="'filter-field'"
+                      placeholder=""
+                      [range]="true"
                       (keydown)="keyDownFunction($event)"
                     ></sw-input-english-datepicker>
                   </div>
@@ -252,6 +259,7 @@
                       [options]="statusArrayOptions"
                       [isSumDisplay]="true"
                       [isDisplaySelected]="false"
+                      [disabled]="activeTab.value !== null"
                     >
                     </sw-dropdown-input>
                   </div>

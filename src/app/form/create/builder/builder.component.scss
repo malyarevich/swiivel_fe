@@ -55,7 +55,10 @@
           }
         }
         .sidebar_section__content {
-          display: flex;
+          display: none;
+          &.expanded {
+            display: flex;
+          }
         }
       }
       &.expanded.open {

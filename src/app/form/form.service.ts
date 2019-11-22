@@ -6,6 +6,7 @@ import { ApiService } from '@app/core/api.service';
 import { cloneDeep, flatMap, get, isArrayLike, isPlainObject, isString, set, unset, values } from 'lodash';
 import { BehaviorSubject, Subject, from, throwError, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import * as SymbolTree from 'symbol-tree';
 
 const flatten = (fields = []) => {
   const result = [];
@@ -33,7 +34,7 @@ const mapField = (field, mappers = []) => {
     if (!field.options || Array.isArray(field.options)) {
       field.options = found.options;
     }
-    
+
     return field;
   } else {
     return field;
@@ -167,7 +168,7 @@ export class FormService {
     let paths = [];
     while (parent = control.parent) {
       if (parent) {
-        let name = parent.get('name'); 
+        let name = parent.get('name');
         if (name && !parent.get('owner_id')) {
           paths.unshift(name.value);
         }
@@ -240,7 +241,7 @@ export class FormService {
       } else {
         fa = this.addWrapper(field);
       }
-      
+
     }
     // parent.push(this.initForm(field));
     return fa;
@@ -248,30 +249,77 @@ export class FormService {
   addFieldFromSB(field: object, index?: number): FormGroup {
     field = cloneDeep(field);
     field['isExpanded'] = true;
-    
+
     let parent, parentPath, fieldName, fieldValue;
     fieldName = field['name'] as string;
     fieldValue = field;
     parentPath = field['path'].slice(0, -1);
-    if (parentPath.length > 0) {
-      parent = this.findControl(parentPath);
+
+    let fields = this.form.get('fields') as FormArray;
+    if (fields) {
+      parent = fields.at(0);
+      if (parentPath.length > 0) {
+        parent = this.findControl(parentPath, parent);
+        if (!parent) {
+          parent = this.addPathToParent(parentPath, fields.at(0));
+        }
+      }
     } else {
+      this.addWrapper();
       let fields = this.form.get('fields') as FormArray;
-      if (fields) {
-        parent = fields.at(0);
-      }
+      parent = this.addPathToParent(parentPath, fields.at(0))
     }
-    if (!parent) {
-      this.addWrapper(field);
-      parent = this.findControl(field['path'], this.form)
+    if (index !== undefined || index !== null) {
+      parent.get('fields').insert(index, this.initForm(field));
     } else {
-      if (index !== undefined || index !== null) {
-        parent.get('fields').insert(index, this.initForm(field));
-      } else {
-        parent.get('fields').push(this.initForm(field));
-      }
+      parent.get('fields').push(this.initForm(field));
     }
     return parent;
+  }
+
+  addPathToParent(path, parent, fields?: any[]) {
+    path = path.slice();
+    let tmpSidebar: any[] = cloneDeep(this.sidebarSubject$.getValue());
+    if (fields) { tmpSidebar = fields; }
+    if (path.length <= 0) { return parent; }
+    let control = parent.get(path);
+    if (!control) {
+      let children = parent.get('fields') as FormArray;
+      if (children && children.length) {
+        for (const [index, child] of children.controls.entries()) {
+          if (child.get('path') && child.get('path').value[0] === path[0]) {
+            let fields = tmpSidebar.find(i => (i.name === path[0])).fields;
+            path.splice(0, 1);
+            if (path.length === 0) {
+              return child;
+            } else {
+              control = this.addPathToParent(path, child, fields);
+            }
+          } else if (index === children.controls.length - 1) {
+            if (path.length > 0) {
+              let wrap = cloneDeep(tmpSidebar.find(i => (i.name === path[0])));
+              wrap.fields = [];
+              wrap.path = [path[0]];
+              wrap.isExpanded = true;
+              children.push(this.initForm(wrap));
+              control = this.addPathToParent(path, parent, tmpSidebar);
+            }
+          }
+        }
+      } else {
+        if (path.length > 0) {
+          let wrap = cloneDeep(tmpSidebar.find(i => (i.name === path[0])));
+          wrap.fields = [];
+          wrap.path = [path[0]];
+          wrap.isExpanded = true;
+          children.push(this.initForm(wrap));
+          control = this.addPathToParent(path, parent, tmpSidebar);
+        } else {
+          control = this.addPathToParent(path, parent);
+        }
+      }
+    }
+    return control;
   }
 
   removeFieldFromSB(field) {
@@ -306,23 +354,22 @@ export class FormService {
                 control = this.findControl(path, child);
               }
             }
-          } 
-            if (child.get('fields')) {
-              control = this.findControl(path, child);
-            }
+          }
+          if (child.get('fields')) {
+            control = this.findControl(path, child);
+          }
         }
       }
-      
+
     }
     return control;
-  } 
-  
+  }
+
   addField(fieldName: string, fieldValue: any, parent?): FormGroup {
     if (!parent) parent = this.form;
     else {
       if (isArrayLike(parent) || isString(parent)) {
         parent = this.form.get(parent);
-        
       }
     }
     let field = this.fb.control(fieldValue);
@@ -369,7 +416,7 @@ export class FormService {
       parent.removeControl(fieldName);
     }
     (parent as FormGroup).addControl(fieldName, fields);
-    
+
     return parent.get(fieldName);
   }
 
@@ -426,7 +473,7 @@ export class FormService {
         options = schema.options;
       }
       if (mapped && mapped.options) {
-        options = {...options, ...mapped.options};
+        options = { ...options, ...mapped.options };
       }
       if (data.path && !data.options) {
         this.addField('isExpanded', false, form);
@@ -444,7 +491,7 @@ export class FormService {
     }
     return form;
   }
-  
+
   saveForm() {
     console.groupCollapsed('Saving form');
     this.form.updateValueAndValidity();
@@ -472,7 +519,7 @@ export class FormService {
       console.groupEnd();
       return throwError(this.form.errors);
     }
-    
+
   }
 
   get form(): FormGroup {
@@ -487,19 +534,19 @@ export class FormService {
     this._form.next(form);
   }
 
-  set isFormHasId (flag: boolean) {
+  set isFormHasId(flag: boolean) {
     this.isFormHasIdSubject$.next(flag);
   }
 
-  get isFormHasId (): boolean {
+  get isFormHasId(): boolean {
     return this.isFormHasIdSubject$.getValue();
   }
 
-  get isFormHasId$ (): Observable<boolean> {
+  get isFormHasId$(): Observable<boolean> {
     return this.isFormHasIdSubject$.asObservable();
   }
 
-  get isFormHasIdSubject (): BehaviorSubject<boolean> {
+  get isFormHasIdSubject(): BehaviorSubject<boolean> {
     return this.isFormHasIdSubject$;
   }
 
@@ -555,7 +602,7 @@ export class FormService {
     return this.sectionsSubject$.asObservable();
   }
 
-  get eventO$()  {
+  get eventO$() {
     return this.eventSubject$.asObservable();
   }
   get events$() {

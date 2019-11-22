@@ -1,6 +1,6 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, Input, ChangeDetectorRef } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { IconsEnum } from '@app/shared/icons.enum';
 
 @Component({
@@ -62,7 +62,7 @@ export class WorkareaTermsConditionComponent {
         signed: {parents: false, fathers: false, mothers: false},
         type: "esign",
       }),
-      termsConditionsItems: [[]]
+      termsConditionsItems: this.fb.array([])
     });
   }
 
@@ -75,6 +75,6 @@ export class WorkareaTermsConditionComponent {
   }
 
   drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.forms, event.previousIndex, event.currentIndex);
+    moveItemInArray((this.lform.get('termsConditionsItems') as FormArray).value, event.previousIndex, event.currentIndex);
   }
 }

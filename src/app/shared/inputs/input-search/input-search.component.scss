@@ -10,6 +10,18 @@
   width: auto;
   position: relative;
 
+  &.dropdown {
+    height: auto;
+
+    input {
+      padding: 0 30px 0 0;
+      border: none;
+      border-bottom: 1px solid $soft-gray;
+      border-radius: 0;
+      min-height: 20px;
+    }
+  }
+
   .form-control:disabled {
     background: $gray;
     border-color: $soft-gray;

@@ -56,12 +56,12 @@ export class DocumentsFormsComponent implements OnInit {
       documents: this.fb.group({
         sectionName: ['Documents for Parents'],
         sectionWidth: ['full'],
-        documentsItems: [[]]
+        documentsItems: this.fb.array([])
       }),
       formsPDF: this.fb.group({
         sectionName: ['School Forms'],
         sectionWidth: ['full'],
-        formsPDFItems: [[]]
+        formsPDFItems: this.fb.array([])
       })
     });
   }
