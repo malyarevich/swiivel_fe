@@ -64,6 +64,7 @@ export class FormComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.formService.form = null;
     this.destroyed$.next(true);
     this.destroyed$.complete();
   }
