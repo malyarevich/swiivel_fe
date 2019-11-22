@@ -4,17 +4,22 @@
 }
 
 .cal-month-view .cal-header .cal-cell {
-  padding: 10px 0;
-  overflow: hidden;
-  -o-text-overflow: ellipsis;
-  text-overflow: ellipsis;
-  display: block;
-  white-space: nowrap;
-}
 
-.cal-month-view .cal-days {
-  border: 1px solid;
-  border-bottom: 0;
+  &.cal-cell {
+    padding: 10px 0;
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    display: block;
+    white-space: nowrap;
+    text-transform: uppercase;
+    font: 500 11px/15px $nunito-sans;
+  }
+
+  &.cal-cell:nth-of-type(1) {
+    color: $element-base-color;
+  }
+;
 }
 
 .cal-month-view .cal-cell-top {
@@ -22,13 +27,16 @@
   -webkit-box-flex: 1;
   -ms-flex: 1;
   flex: 1;
+  margin: 5px auto;
+  color: $black-text;
 }
 
 .cal-month-view .cal-cell-row {
   display: -webkit-box;
   display: -ms-flexbox;
   -js-display: flex;
-  display: flex; }
+  display: flex;
+}
 
 .cal-month-view .cal-cell {
   float: left;
@@ -48,7 +56,9 @@
   align-items: stretch;
 }
 
-.cal-month-view .cal-day-cell {
+.cal-day-cell {
+  width: 31px;
+  height: 25px;
   // min-height: 100px;
 }
 @media all and (-ms-high-contrast: none) {
@@ -56,12 +66,6 @@
     display: block;
   }
 }
-
-.cal-month-view .cal-day-cell:not(:last-child) {
-  border-right: 1px solid; }
-
-.cal-month-view .cal-days .cal-cell-row {
-  border-bottom: 1px solid; }
 
 .cal-month-view .cal-day-badge {
   margin-top: 18px;
@@ -82,7 +86,7 @@
   // font-size: 1.2em;
   // font-weight: 400;
   opacity: 0.5;
-  margin: 10px;
+  //margin: 10px;
   float: right;
 }
 
@@ -162,8 +166,6 @@
     background-color: #1e90ff;
     border-color: #d1e8ff;
     color: #fff; }
-  .cal-month-view .cal-day-cell.cal-weekend .cal-day-number {
-    color: #8b0000; }
   .cal-month-view .cal-day-cell.cal-today {
     background-color: #e8fde7; }
   .cal-month-view .cal-day-cell.cal-drag-over {
@@ -560,9 +562,15 @@
 
 .cal-day-selected,
 .cal-day-selected:hover {
-  background-color: lavender !important;
+  border-radius: 3px;
+  background-color: $element-base-color !important;
+
+  .cal-cell-top {
+    color: white;
+  }
 }
 
 .cal-day-selected-range {
-  background: lightblue !important;
+  background: $light-purple;
 }
+

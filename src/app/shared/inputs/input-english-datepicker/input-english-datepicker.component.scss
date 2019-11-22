@@ -194,6 +194,16 @@
       background-color: #eee;
     }
   }
+
+}
+
+.select {
+  display: flex;
+  justify-content: center;
+}
+
+.controls-buttons {
+  display: flex;
 }
 
 :host(.settings-field, .filter-field) {

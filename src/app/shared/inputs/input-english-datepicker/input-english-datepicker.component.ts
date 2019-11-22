@@ -10,7 +10,9 @@ import {
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { PopupRef } from '@app/core/components/popup/popup.ref';
 import { Popup } from '@app/core/popup.service';
+import { DateFormatter } from '@shared/inputs/input-english-datepicker/date-formatter.provider';
 import {
+  CalendarDateFormatter,
   CalendarEvent,
   CalendarMonthViewDay,
 } from 'angular-calendar';
@@ -36,7 +38,12 @@ const ENGDATEPICKER_CONTROL_ACCESSOR = {
   selector: 'sw-input-english-datepicker',
   templateUrl: './input-english-datepicker.component.html',
   styleUrls: ['./input-english-datepicker.component.scss'],
-  providers: [ENGDATEPICKER_CONTROL_ACCESSOR]
+  providers: [ENGDATEPICKER_CONTROL_ACCESSOR,
+    {
+      provide: CalendarDateFormatter,
+      useClass: DateFormatter
+    }
+  ]
 })
 export class InputEnglishDatepickerComponent
   implements OnInit, OnDestroy, ControlValueAccessor {
@@ -46,6 +53,7 @@ export class InputEnglishDatepickerComponent
   events: CalendarEvent[] = [];
   selectedMonthViewDay: CalendarMonthViewDay;
   selectedRange: { startDate: CalendarMonthViewDay, endDate: CalendarMonthViewDay } = { startDate: null, endDate: null };
+  mouths = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
   public mask = '00/00/0000';
 
@@ -161,13 +169,13 @@ export class InputEnglishDatepickerComponent
     this.days.forEach(day => {
       if ((this.selectedRange.startDate && day.date.getTime() === this.selectedRange.startDate.date.getTime() ) ||
         (this.selectedRange.endDate && this.selectedRange.endDate.date.getTime() === day.date.getTime())) {
-        day.cssClass = 'cal-day-selected-range';
+        day.cssClass = 'cal-day-selected';
       }
       if (this.selectedRange.startDate &&
         day.date > this.selectedRange.startDate.date &&
         this.selectedRange.endDate &&
         day.date < this.selectedRange.endDate.date) {
-        day.cssClass = 'cal-day-selected';
+        day.cssClass = 'cal-day-selected-range';
       }
     });
   }
