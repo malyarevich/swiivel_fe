@@ -1,10 +1,27 @@
-<!--Title-->
-<h2 class="content_section__section_title" *ngIf="isShowTitle()">
-  {{ getSectionTitle() }}
-</h2>
-<h3 class="content_section__section_hint">
-  {{ getSectionHint() }}
-</h3>
+<!-- Title -->
+<div class="content_section__title_box">
+  <h2 class="content_section__section_title" *ngIf="isShowTitle()">
+    {{ getSectionTitle() }}
+
+    <ng-container *ngIf="isShowHint() && !isShowDirectly() && getSectionHint()">
+        <span class="position-relative p-relative" (mouseenter)="hoverHint()" (mouseleave)="unHoverHint()">
+          <img src="/assets/images/icons/form-hint.svg" alt="Group hint">
+          <span class="pop_up_container" *ngIf="isHintHovered()">
+            <span class="pop_up_container__text">
+                {{ getSectionHint() }}
+            </span> 
+          </span>
+        </span>
+
+      </ng-container>
+  </h2>
+  <h3
+    class="content_section__section_hint"
+    *ngIf="isShowHint() && isShowDirectly() && getSectionHint()"
+  >
+    {{ getSectionHint() }}
+  </h3>
+</div>
 
 <div class="app-of-wrap content_section__main_container section">
   <div class="section__fields">

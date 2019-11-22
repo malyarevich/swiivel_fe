@@ -22,6 +22,8 @@ export class GeneralInfoSectionComponent implements OnInit {
   groups: Field[];
   fields: Field[];
 
+  hoveredPopupHint = false;
+
   constructor() {}
 
   ngOnInit() {
@@ -61,8 +63,28 @@ export class GeneralInfoSectionComponent implements OnInit {
     return this.section.name;
   }
 
+  isShowHint(): boolean {
+    return this.section.options.showHint;
+  }
+
+  isShowDirectly(): boolean {
+    return this.section.options.displayStrategy === "Directly Displayed";
+  }
+
   getSectionHint(): string {
     return this.section.options.hint;
+  }
+
+  hoverHint(): void {
+    this.hoveredPopupHint = true;
+  }
+
+  unHoverHint(): void {
+    this.hoveredPopupHint = false;
+  }
+
+  isHintHovered(): boolean {
+    return this.hoveredPopupHint;
   }
 
 }

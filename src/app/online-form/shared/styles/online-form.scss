@@ -132,12 +132,16 @@
     background: linear-gradient(transparent 50%, #ffc244a6 50%);
   }
 
+  &__title_box {
+    margin-bottom: 0.5rem;
+  }
+
   &__section_title {
     font-family: "Nunito Sans", "Helvetica";
     font-weight: 900;
     font-size: 1rem;
     line-height: 1.75;
-    margin-bottom: 1.25rem;
+    margin: 0;
     padding-left: 0.85rem;
     padding-right: 0.85rem;
     text-align: center;
@@ -145,14 +149,27 @@
   }
 
   &__section_hint {
+    color: $black;
     font-family: "Nunito Sans", "Helvetica";
     font-style: normal;
     font-weight: normal;
     font-size: 1rem;
     line-height: 1.5rem;
+    margin: 0;
     /* identical to box height, or 150% */
     text-align: center;
-    color: $black;
+  }
+
+  &__group_hint {
+    color: $text-gray;
+    font-family: "Nunito Sans", "Helvetica";
+    font-style: normal;
+    font-weight: normal;
+    font-size: 0.9rem;
+    line-height: 1.5rem;
+    margin: 0;
+    /* identical to box height, or 164% */
+    text-align: left;
   }
 
   &__nav {
@@ -287,4 +304,23 @@
   font-size: 0.85rem;
   text-align: center;
   margin-bottom: 0.5rem;
+}
+
+.pop_up_container {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background-color: #374966;
+  border-radius: 0.5rem;
+  padding: 0.8rem;
+  z-index: 999;
+
+  &__text {
+    color: $white;
+    font-family: "Nunito Sans", "Helvetica";
+    font-size: 0.9rem;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1.5rem;
+  }
 }
