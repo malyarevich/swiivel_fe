@@ -62,7 +62,7 @@ export class WorkareaTermsConditionComponent {
         signed: {parents: false, fathers: false, mothers: false},
         type: "esign",
       }),
-      termsConditionsItems: [[]]
+      termsConditionsItems: this.fb.array([])
     });
   }
 
