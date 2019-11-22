@@ -148,6 +148,7 @@ export class BuilderComponent implements OnInit, OnDestroy {
       showControl.setValue(false);
       this.expandedSection = null;
     }
+    this.expanded = true;
     this.cdr.markForCheck()
   }
 
