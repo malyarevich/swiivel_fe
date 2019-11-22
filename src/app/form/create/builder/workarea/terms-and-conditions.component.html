@@ -41,7 +41,7 @@
 <div *ngIf="isContentShown" cdkDropList (cdkDropListDropped)="drop($event)">
   <div class="item" *ngFor="let item of lform?.get('termsConditionsItems').value" cdkDrag>
     <div class="bubbles">
-      <i class="fas fa-grip-vertical bubbles-ico"></i>
+      <i class="fas fa-grip-vertical bubbles-ico" cdkDragHandle></i>
     </div>
     <div class="fields">
       <div class="fields-name">
