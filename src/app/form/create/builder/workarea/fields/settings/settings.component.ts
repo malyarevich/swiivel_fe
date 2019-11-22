@@ -94,9 +94,11 @@ export class SettingsComponent implements OnInit, AfterViewInit, OnDestroy {
         this.component.instance.fieldSettings.subscribe(v => {
           this.updateField(v);
         });
-        this.component.instance.setChildren.subscribe(value => {
-          this.setChildren((this._form.get('fields') as FormArray).controls, value);
-        });
+        if (this.component.instance.setChildren) {
+          this.component.instance.setChildren.subscribe(value => {
+            this.setChildren((this._form.get('fields') as FormArray).controls, value);
+          });
+        }
         this.cdr.detectChanges();
       }
     }
