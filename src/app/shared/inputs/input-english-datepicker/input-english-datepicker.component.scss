@@ -9,6 +9,7 @@
     align-items: center;
     justify-content: space-between;
   }
+
 }
 
 :host {
@@ -39,6 +40,14 @@
       border-radius: 3px;
       outline: none;
       padding: 5px 10px 5px 19px;
+    }
+
+    .input-range {
+      min-height: 25px;
+      height: auto;
+      white-space: normal;
+      font: 500 12px/15px $nunito-sans;
+      padding: 6px 19px 5px 19px;
     }
 
     i {

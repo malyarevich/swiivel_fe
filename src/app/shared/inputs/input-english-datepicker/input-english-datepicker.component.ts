@@ -1,5 +1,4 @@
 import {
-  AfterViewInit,
   ChangeDetectorRef,
   Component,
   forwardRef,
@@ -12,11 +11,8 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { PopupRef } from '@app/core/components/popup/popup.ref';
 import { Popup } from '@app/core/popup.service';
 import {
-  CalendarDateFormatter,
   CalendarEvent,
   CalendarMonthViewDay,
-  CalendarView,
-  DAYS_OF_WEEK
 } from 'angular-calendar';
 import {
   addDays,
@@ -46,11 +42,13 @@ export class InputEnglishDatepickerComponent
   implements OnInit, OnDestroy, ControlValueAccessor {
   // === variables for calendar ===
   view = 'month';
-  clickedDate: Date;
   viewDate = new Date();
   events: CalendarEvent[] = [];
   selectedMonthViewDay: CalendarMonthViewDay;
-  selectedDays: any = [];
+  selectedRange: { startDate: CalendarMonthViewDay, endDate: CalendarMonthViewDay } = { startDate: null, endDate: null };
+
+  public mask = '00/00/0000';
+
   // ===
 
   onChange: Function;
@@ -59,6 +57,7 @@ export class InputEnglishDatepickerComponent
   // value: string = null;
   private destroyed$ = new Subject();
   private ref: PopupRef;
+  public days: CalendarMonthViewDay[];
 
   @Input() isActive = true;
   @Input() value: string = null;
@@ -73,7 +72,9 @@ export class InputEnglishDatepickerComponent
 
   constructor(private popup: Popup, private cdr: ChangeDetectorRef) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.mask = this.range ? '00/00/0000 - 00/00/0000' : '00/00/0000';
+  }
 
   get dateFormat(): string {
     return this.format.replace(/m/g, 'M').replace(/-/g, this.separator);
@@ -111,26 +112,74 @@ export class InputEnglishDatepickerComponent
     this.viewDate = addFn(this.viewDate, 1);
   }
 
-  dayClicked(day: CalendarMonthViewDay): void {
-    if (this.isActive) {
-      if (this.selectedMonthViewDay) {
-        delete this.selectedMonthViewDay.cssClass;
+  dayClicked(day: any): void {
+    if (!this.range) {
+      if (this.isActive) {
+        if (this.selectedMonthViewDay) {
+          delete this.selectedMonthViewDay.cssClass;
+        }
+        if (this.selectedMonthViewDay === day) {
+          this.value = '';
+          this.onChange(this.value);
+          this.selectedMonthViewDay = null;
+        } else {
+          this.value = DateTime.fromJSDate(day.date).toFormat(this.dateFormat);
+          day.cssClass = 'cal-day-selected';
+          this.selectedMonthViewDay = day;
+          this.onChange(this.value);
+        }
+        this.cdr.markForCheck();
       }
-      if (this.selectedMonthViewDay === day) {
-        this.value = '';
-        this.onChange(this.value);
-        this.selectedMonthViewDay = null;
+    } else {
+      if (!this.selectedRange.startDate || !this.selectedRange.endDate) {
+        if (!this.selectedRange.startDate) {
+          this.selectedRange.startDate = day;
+        } else if (day.date.getTime() < this.selectedRange.startDate.date.getTime()) {
+          this.selectedRange.endDate = this.selectedRange.startDate;
+          this.selectedRange.startDate = day;
+        } else {
+          this.selectedRange.endDate = day;
+        }
       } else {
-        this.value = DateTime.fromJSDate(day.date).toFormat(this.dateFormat);
-        day.cssClass = 'cal-day-selected';
-        this.selectedMonthViewDay = day;
-        this.onChange(this.value);
+        this.clearCalendar();
+        this.selectedRange.startDate = day;
+        this.selectedRange.endDate = null;
+      }
+      if (this.selectedRange.startDate) {
+        this.value = DateTime.fromJSDate(this.selectedRange.startDate.date).toFormat(this.dateFormat);
+      }
+      if (this.selectedRange.endDate) {
+        this.value += ' - ' + DateTime.fromJSDate(this.selectedRange.endDate.date).toFormat(this.dateFormat);
       }
       this.cdr.markForCheck();
+      this.colorRange();
+      this.onChange(this.selectedRange);
     }
   }
 
+  colorRange(): void {
+    this.days.forEach(day => {
+      if ((this.selectedRange.startDate && day.date.getTime() === this.selectedRange.startDate.date.getTime() ) ||
+        (this.selectedRange.endDate && this.selectedRange.endDate.date.getTime() === day.date.getTime())) {
+        day.cssClass = 'cal-day-selected-range';
+      }
+      if (this.selectedRange.startDate &&
+        day.date > this.selectedRange.startDate.date &&
+        this.selectedRange.endDate &&
+        day.date < this.selectedRange.endDate.date) {
+        day.cssClass = 'cal-day-selected';
+      }
+    });
+  }
+
+  clearCalendar(): void {
+    this.days.forEach(day => {
+      delete day.cssClass;
+    });
+  }
+
   openDatepicker(e: any): void {
+
     if (e && e.target && e.target.className && e.target.className.includes('fa-times')) {
       e.preventDefault();
       this.value = '';
@@ -159,17 +208,29 @@ export class InputEnglishDatepickerComponent
   }
 
   public clear(): void {
+    this.selectedRange.startDate = null;
+    this.selectedRange.endDate = null;
+    this.clearCalendar();
     this.value = '';
-    this.onChange(this.value);
-  }
-
-  public changeValue(value: any): void {
-    this.value = value;
     this.onChange(this.value);
   }
 
   ngOnDestroy(): void {
     this.destroyed$.complete();
   }
+
+  beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {
+    this.days = body;
+    this.clearCalendar();
+    this.colorRange();
+  }
+
+  public changeValue(value: any): void {
+    if (!this.range) {
+      this.value = value;
+      this.onChange(this.value);
+    }
+  }
+
 
 }

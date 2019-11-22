@@ -8,12 +8,13 @@
   <div class="input-date">
     <input
       class="input"
-      [(ngModel)]="value"
-      (ngModelChange)="onChange(value)"
+      mask="{{mask}}"
       [class.empty]="isEmpty(value)"
-      [disabled]="!isActive"
+      [class.input-range]="range"
+      [disabled]="!isActive || range"
       [dropSpecialCharacters]="false"
-      mask="00/00/0000"
+      [(ngModel)]="value"
+      (ngModelChange)="changeValue(value)"
     />
     <span class="placeholder">{{ placeholder }}</span>
     <i class="far fa-calendar"></i>
@@ -41,9 +42,18 @@
     </div>
     <div class="content">
       <mwl-calendar-month-view
+        *ngIf="!range"
         [viewDate]="viewDate"
         [events]="events"
         [activeDayIsOpen]="false"
+        (dayClicked)="dayClicked($event.day)"
+      >
+      </mwl-calendar-month-view>
+      <mwl-calendar-month-view
+        *ngIf="range"
+        [viewDate]="viewDate"
+        [events]="events"
+        (beforeViewRender)="beforeMonthViewRender($event)"
         (dayClicked)="dayClicked($event.day)"
       >
       </mwl-calendar-month-view>

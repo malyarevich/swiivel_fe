@@ -223,9 +223,10 @@
                   </div>
                   <div class="header_container__filter">
                     <sw-input-english-datepicker
+                      class="filter-field"
                       formControlName="updatedAt"
-                      [placeholder]="''"
-                      [class]="'filter-field'"
+                      placeholder=""
+                      [range]="true"
                       (keydown)="keyDownFunction($event)"
                     ></sw-input-english-datepicker>
                   </div>
