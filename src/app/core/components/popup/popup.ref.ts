@@ -27,7 +27,7 @@ export class PopupRef<T = any> {
     });
     overlay.keydownEvents().subscribe((event: KeyboardEvent) => {
       this.onKeyDown.next(event);
-      if (event.keyCode === ESCAPE) {
+      if (event.key === 'ESCAPE') {
         this._close('escKey', null);
       }
     });

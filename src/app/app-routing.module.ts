@@ -4,7 +4,7 @@ import { AuthGuard } from '@core/auth.guard';
 import { DashboardComponent } from '@core/components/dashboard.component';
 import { LoginComponent } from '@core/components/login.component';
 import { RestorePasswordComponent } from '@core/components/restore-password.component';
-import { environment } from '@env/environment';
+
 import { MainComponent } from './shared/main.component';
 
 const routes: Routes = [
@@ -27,36 +27,38 @@ const routes: Routes = [
   },
   {
     path: 'online-form',
-    loadChildren: () => import('./online-form/online-form-wrapper/online-form-wrapper.module').then(m => m.OnlineFormWrapperModule)
+    loadChildren: (): Promise<any> => import('./online-form/online-form-wrapper/online-form-wrapper.module')
+      .then(m => m.OnlineFormWrapperModule)
   },
   {
     path: 'view-form',
     component: MainComponent,
-    loadChildren: () => import('./online-form/online-form-wrapper/online-form-wrapper.module').then(m => m.OnlineFormWrapperModule)
+    loadChildren: (): Promise<any> => import('./online-form/online-form-wrapper/online-form-wrapper.module')
+      .then(m => m.OnlineFormWrapperModule)
   },
   {
     path: 'form-creator',
-    loadChildren: () => import('./form-creator/form-creator.module').then(m => m.FormCreatorModule)
+    loadChildren: (): Promise<any> => import('./form-creator/form-creator.module').then(m => m.FormCreatorModule)
   },
   {
     path: 'form-management',
-    loadChildren: () => import('./form-management/form-management.module').then(m => m.FormManagementModule)
+    loadChildren: (): Promise<any> => import('./form-management/form-management.module').then(m => m.FormManagementModule)
   },
   {
     path: 'form-send',
-    loadChildren: () => import('./form-send/form-send.module').then(m => m.FormSendModule)
+    loadChildren: (): Promise<any> => import('./form-send/form-send.module').then(m => m.FormSendModule)
   },
   {
     path: 'forms-dashboard',
-    loadChildren: () => import('./forms-dashboard/form-table.module').then(m => m.FormTableModule)
+    loadChildren: (): Promise<any> => import('./forms-dashboard/form-table.module').then(m => m.FormTableModule)
   },
   {
     path: 'upload-review-form',
-    loadChildren: () => import('./upload-review-form/upload-review-form.module').then(m => m.UploadReviewFormModule)
+    loadChildren: (): Promise<any> => import('./upload-review-form/upload-review-form.module').then(m => m.UploadReviewFormModule)
   },
   {
     path: 'form',
-    loadChildren: () => import('./form/form.module').then(m => m.FormModule)
+    loadChildren: (): Promise<any> => import('./form/form.module').then(m => m.FormModule)
   },
   {
     path: '**',

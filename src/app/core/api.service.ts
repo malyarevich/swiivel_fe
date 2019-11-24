@@ -1,3 +1,4 @@
+import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { HttpService } from '@app/core/http.service';
 import { DateService } from '@app/services/date.service';
@@ -5,7 +6,6 @@ import { ApiResponse, LoginData } from '@models/api';
 import { FormSearchParams } from '@models/form-search-params';
 import { Observable, throwError } from 'rxjs';
 import { first, map } from 'rxjs/operators';
-import { HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
 
@@ -28,8 +28,8 @@ export class ApiService {
     return this.http.post('/forgot-password', { email });
   }
 
-  resetPassword(token: string, new_password: object) {
-    return this.http.post('/reset-password', { token, new_password });
+  resetPassword(token: string, newPassword: object) {
+    return this.http.post('/reset-password', { token, newPassword });
   }
 
   signin(email: string, password: string, uuid: string) {
@@ -62,19 +62,19 @@ export class ApiService {
             params = params.append(`filter[${filter}][]`, item.value);
           });
         } else if (filter === 'updatedAt') {
-          if (requestParams.filter[filter]['startDate'] && requestParams.filter[filter]['startDate'].date) {
+          if (requestParams.filter[filter].startDate && requestParams.filter[filter].startDate.date) {
             params = params.append(
               `filter[${filter}][startDate]`,
-              this.dateService.getStandartDate(requestParams.filter[filter]['startDate'].date));
+              this.dateService.getStandartDate(requestParams.filter[filter].startDate.date));
           }
-          if (requestParams.filter[filter]['endDate'] && requestParams.filter[filter]['endDate'].date) {
+          if (requestParams.filter[filter].endDate && requestParams.filter[filter].endDate.date) {
             params = params.append(
               `filter[${filter}][endDate]`,
-              this.dateService.getStandartDate(requestParams.filter[filter]['endDate'].date));
+              this.dateService.getStandartDate(requestParams.filter[filter].endDate.date));
           } else {
             params = params.append(
               `filter[${filter}][endDate]`,
-              this.dateService.getStandartDate(requestParams.filter[filter]['startDate'].date));
+              this.dateService.getStandartDate(requestParams.filter[filter].startDate.date));
           }
         } else if (filter === 'access') {
           requestParams.filter[filter].forEach((item) => {
@@ -115,15 +115,14 @@ export class ApiService {
   }
 
   updateGeneralForm(form: any, id?: string) {
-    if (!id && !form._id) return throwError(`No id`);
-    else if (!id) id = form._id;
+    if (!id && !form._id) { return throwError(`No id`); } else if (!id) { id = form._id; }
     return this.http.put(`/proxy/form-builder/form-template/${id}`, form);
   }
 
   // FORM SEND
 
-  getFormSend(form_id: string) {
-    return this.http.get(`/proxy/form-builder/release/${form_id}`);
+  getFormSend(formId: string) {
+    return this.http.get(`/proxy/form-builder/release/${formId}`);
   }
 
   getUsersByRole(key: string) {
@@ -146,12 +145,12 @@ export class ApiService {
 
   uploadFile(formId, file) {
     const fbLibk = environment.apiFB;
-    return this.http.request('post', `${fbLibk}/forms/attach/${formId}?api_token=${environment.api_token}`, file);
+    return this.http.request('post', `${fbLibk}/forms/attach/${formId}?api_token=${environment.apiToken}`, file);
   }
 
-  getFormsPDFList():Observable<any>{
+  getFormsPDFList(): Observable<any> {
     const fbLibk = environment.apiFB;
-    return this.http.request('get', `${fbLibk}/pdfForms?api_token=${environment.api_token}`);
+    return this.http.request('get', `${fbLibk}/pdfForms?api_token=${environment.apiToken}`);
   }
 
 

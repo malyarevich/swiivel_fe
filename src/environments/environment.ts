@@ -8,7 +8,7 @@ export const environment = {
   avatarUrl: 'http://red.dev.codeblue.ventures/avatar/',
   apiFB: 'http://form-builder.red.dev.codeblue.ventures/api/v1',
   uploadApi: 'http://upload.red.dev.codeblue.ventures/api/v1',
-  api_token: '123',
+  apiToken: '123',
   apiFinanceCore: 'http://fin.red.dev.codeblue.ventures/api/v1',
   apiFinanceToken: 'Bearer 123',
 };

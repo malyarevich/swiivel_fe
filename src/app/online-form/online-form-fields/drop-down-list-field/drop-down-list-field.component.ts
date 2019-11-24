@@ -45,7 +45,7 @@ export class DropDownListFieldComponent implements OnInit {
 
   isMultiple(field: Field = this.field): boolean | null {
     // console.log('field', field);
-    return field.options && field.options.multiple ? true : null
+    return field.options && field.options.multiple ? true : null;
   }
 
   getLabel(): string {

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, DoCheck, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DoCheck, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { FormCreatorService } from '../form-creator.service';
 
@@ -24,7 +24,7 @@ export class SectionComponent implements OnInit, DoCheck {
     });
     this.control.valueChanges.subscribe(value => {
       console.log(value);
-      this.service.section = 'fields'
+      this.service.section = 'fields';
     });
   }
 

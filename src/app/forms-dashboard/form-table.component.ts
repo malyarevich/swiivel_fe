@@ -21,7 +21,7 @@ import { DataCollectionService } from './data-collection.service';
 import { FormsDataSource } from './form-table.datasource';
 
 @Component({
-  selector: 'app-form-table',
+  selector: 'sw-form-table',
   templateUrl: './form-table.component.html',
   styleUrls: ['./form-table.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

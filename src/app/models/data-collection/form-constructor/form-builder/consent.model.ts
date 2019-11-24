@@ -1,5 +1,5 @@
-import {E_SIGNATURE_TYPES, SIGNATURE_TYPES} from "../../../../enums/index";
-import {Section} from "../../section.model";
+import {E_SIGNATURE_TYPES, SIGNATURE_TYPES} from '../../../../enums/index';
+import {Section} from '../../section.model';
 
 export interface ConsentInfo {
   sectionName: string;
@@ -28,8 +28,8 @@ interface ConsentItemInfoCheckbox {
 
 interface ConsentItemInfoSignature {
   isRequire: boolean;
-  type: string; //e|wet
-  eType: string; //external|system
+  type: string; // e|wet
+  eType: string; // external|system
   isBothParents: boolean;
   signed: ConsentSignatureSigned;
 }
@@ -65,7 +65,7 @@ export const consentItemDefault: ConsentItemInfo = {
 };
 
 export const consentInfoDefault: ConsentInfo = {
-  sectionName: "Parent Consent",
+  sectionName: 'Parent Consent',
   sectionWidth: Section.full,
   consents: [],
 };

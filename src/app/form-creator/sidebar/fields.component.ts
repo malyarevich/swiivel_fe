@@ -1,15 +1,15 @@
-import { NestedTreeControl } from '@angular/cdk/tree';
-import { Component, OnInit, ChangeDetectionStrategy, ViewChild, ChangeDetectorRef, AfterViewChecked, OnDestroy } from '@angular/core';
-import { FormControl, FormBuilder } from '@angular/forms';
-import { ApiService } from '@app/core/api.service';
-import { FormCreatorService } from '../form-creator.service';
-import { CdkDragDrop, moveItemInArray, transferArrayItem, CdkDragExit } from '@angular/cdk/drag-drop';
-import { TreeDataSource, CHILDREN_SYMBOL } from '../tree.datasource';
 import { SelectionModel } from '@angular/cdk/collections';
-import { Popup } from '@app/core/popup.service';
+import { CdkDragDrop, CdkDragExit, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { NestedTreeControl } from '@angular/cdk/tree';
+import { AfterViewChecked, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { ApiService } from '@app/core/api.service';
+import { Popup } from '@app/core/popup.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { FormCreatorService } from '../form-creator.service';
+import { CHILDREN_SYMBOL, TreeDataSource } from '../tree.datasource';
 // import fields from '@app/shared/fields';
 
 
@@ -74,7 +74,7 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
     });
     this.treeControl.getDescendants = (dataNode) => {
       return dataNode.fields;
-    }
+    };
     this.route.paramMap.subscribe(params => {
       this.treeSource.activeFields$.subscribe((fields) => {
         this.treeControl.dataNodes = fields;
@@ -82,7 +82,7 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
 
       if (params.has('mongo_id')) {
         this.treeControl = new NestedTreeControl<any>(node => {
-          let children = node[CHILDREN_SYMBOL];
+          const children = node[CHILDREN_SYMBOL];
           return children;
         });
         this.service.formTemplate$.pipe(takeUntil(this.destroyed$)).subscribe(value => {
@@ -91,7 +91,7 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
             this.service.sidebar = this.treeSource;
             this.cdr.markForCheck();
           }
-        })
+        });
       }
     });
 
@@ -106,7 +106,7 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
     });
   }
   ngAfterViewChecked(): void {
-    this.cdr.detectChanges()
+    this.cdr.detectChanges();
   }
 
   hasChild = (_: number, node: any) => !!node[CHILDREN_SYMBOL] && node[CHILDREN_SYMBOL].length > 0;
@@ -139,14 +139,14 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
 
 
   onExit(event: CdkDragExit<any>) {
-    console.log(event)
+    console.log(event);
   }
 
 
 
 
   openDeletePop(node: any) {
-    if (!node && !node.data) return;
+    if (!node && !node.data) { return; }
 
     this.delInput.reset();
     this.delFieldName = node.data.name.toUpperCase();
@@ -173,7 +173,7 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
 
   isFiltered(node) {
     if (this.filterValue) {
-      return !node.name.toLowerCase().startsWith(this.filterValue)
+      return !node.name.toLowerCase().startsWith(this.filterValue);
     } else {
       return !!this.filterValue;
     }
@@ -181,7 +181,7 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
 
 
   shouldRender(node) {
-    if (!this.filterControl.value) return true;
+    if (!this.filterControl.value) { return true; }
     return this.filterControl.value && node.name.toString().toLowerCase().startsWith(this.filterControl.value);
   }
 
@@ -212,7 +212,7 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
   }
 
   nodeIsChecked(node) {
-    if (!node.isActive) return false;
+    if (!node.isActive) { return false; }
     if (node.type === 113 || node.type === 114) {
       const isChecked = node.isActive === true && Array.from(this.treeSource.tree.treeIterator(node)).every((field: any) => field.isActive);
       return isChecked;

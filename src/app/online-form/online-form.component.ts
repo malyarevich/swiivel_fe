@@ -779,7 +779,7 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
     // }
 
     if (field.options && field.options.validators) {
-      console.log("field.options.validators:", field.options.validators);
+      console.log('field.options.validators:', field.options.validators);
       Object.keys(field.options.validators).forEach(key => {
         switch (key) {
           case fieldValidators.CurrencyCanada:

@@ -16,7 +16,7 @@ import { ErrorsListTooltipComponent } from '../../errors-list/errors-list-toolti
 import { ISectionError } from '../../utils/generate-errors.service';
 
 @Directive({
-  selector: '[error-hint]'
+  selector: '[swErrorHint]'
 })
 
 export class ErrorHintTooltipDirective implements OnInit {

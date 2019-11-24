@@ -26,28 +26,7 @@ export class OnlineFormPacketIntroductionComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    // console.log(this.formNavigationState);
-    if (this.formNavigationState) {
-      this.initPackets();
-    }
     this.fg.patchValue({...this.fg.value, [mainMenuNames.packetIntroduction]: ''});
-  }
-
-  initPackets() {
-    // if (this.form.packetIntroduction) {
-    //   this.packets = <ISectionTab[]>cloneDeep(
-    //     this.form.packetIntroduction.packets
-    //   ).map(item => {
-    //     return { ...item, _id: item.id, name: item.title };
-    //   });
-    // } else {
-    //   this.packets = <ISectionTab[]>cloneDeep(
-    //     this.form.packetIntroduction.packets
-    //   ).map(item => {
-    //     return { ...item, _id: item.id, name: item.title };
-    //   });
-    // }
-    this.form.packetIntroduction;
   }
 
   isExist(): boolean {

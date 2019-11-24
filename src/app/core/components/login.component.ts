@@ -1,11 +1,11 @@
-import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '@core/auth.service';
 import { User } from '@models/auth';
 
 @Component({
-  selector: 'app-login',
+  selector: 'sw-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -23,7 +23,7 @@ export class LoginComponent {
   }
 
   toggleInputType(event: Event) {
-    event.stopPropagation()
+    event.stopPropagation();
     event.stopImmediatePropagation();
     event.preventDefault();
     if (this.inputType === 'password') {
@@ -40,19 +40,19 @@ export class LoginComponent {
       const {username, password} = this.form.value;
       this.auth.login(username, password).then((user: User) => {
         if (user) {
-          let redirect = this.auth.redirect;
+          const redirect = this.auth.redirect;
           if (redirect) {
             this.auth.clearRedirect();
             this.router.navigateByUrl(redirect);
           } else {
-            this.router.navigate(['/'])
+            this.router.navigate(['/']);
           }
         }
       }, (error) => {
         if (error.error.status === 0) {
           this.form.get('password').setErrors({incorrect: error.error.errors}, {emitEvent: true});
           this.focusUsername = new Date();
-          this.cdr.markForCheck()
+          this.cdr.markForCheck();
           console.error(error.error.errors);
         }
       });

@@ -1,20 +1,20 @@
 <sw-back-bar
   title="Forms"
-  (onBackClick)="backPageClick()"
+  (backClick)="backPageClick()"
 ></sw-back-bar>
-<div class="app-form-management">
+<div class="sw-form-management">
   <div class="info" *ngIf="form">
-    <app-form-management-header
+    <sw-form-management-header
       [form]="form"
       (changeStatus)="changeFormStatus($event)"
       (copyLink)="copyLinkPopupOpen()"
       (exportPDF)="exportPDF()"
       (editForm)="editForm()"
-    ></app-form-management-header>
+    ></sw-form-management-header>
     <a [href]="download.url" [download]="download.filename" #link></a>
   </div>
 
-  <div class="app-form-management-block">
+  <div class="sw-form-management-block">
     <div class="tabs-block">
       <div class="tabs">
         <button

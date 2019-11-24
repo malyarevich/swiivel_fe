@@ -1,10 +1,11 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders, HttpProgressEvent, HttpSentEvent, HttpResponse, HttpEvent, HttpUploadProgressEvent, HttpDownloadProgressEvent, HttpHeaderResponse } from '@angular/common/http';
+import { HttpClient, HttpDownloadProgressEvent, HttpErrorResponse, HttpHeaderResponse,
+  HttpHeaders, HttpResponse, HttpUploadProgressEvent } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { BehaviorSubject, Observable, throwError } from 'rxjs';
-import { catchError, finalize, timeout, map,  } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
 import { ApiResponse } from '@app/models/api';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { catchError, finalize, map, timeout,  } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({
@@ -35,7 +36,7 @@ export class HttpService {
       timeout(this.apiTimeout),
       catchError(this.handleError),
       finalize(() => this.endRequest())
-    )
+    );
   }
 
   'post'(url: string, data: object, options?: object): Observable<any> {
@@ -54,7 +55,7 @@ export class HttpService {
         finalize(() => this.endRequest())
       );
   }
-  'upload'(url: string, file: File, method='POST', showLoader = false, options?: object): Observable<any> {
+  'upload'(url: string, file: File, method= 'POST', showLoader = false, options?: object): Observable<any> {
     if (showLoader) {
       this.requestSubject.next('Saving data');
     }
@@ -112,7 +113,7 @@ export class HttpService {
     );
   }
   'get'(url: string, options?: any, requestTimeout?: number): Observable<any> {
-    return this.http.get<Object>(this.apiUrl + url, {
+    return this.http.get<object>(this.apiUrl + url, {
       responseType: 'json',
       ...options
     })
@@ -214,7 +215,7 @@ export class HttpService {
       if (error.status === 0) {
         this.errorSubject.next(`Backend is down`);
       } else if (error.status === 400) {
-        return throwError(error.error)
+        return throwError(error.error);
       } else if (error.status === 404) {
         // return throwError(error);
         this.errorSubject.next(`Not found`);

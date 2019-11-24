@@ -1,6 +1,6 @@
-import {DocumentsModel} from "./documents.model";
-import {FormsPDFModel} from "./formsPDF.model";
-import {Section} from "../../section.model";
+import {Section} from '../../section.model';
+import {DocumentsModel} from './documents.model';
+import {FormsPDFModel} from './formsPDF.model';
 
 export interface DocumentsFormsModel {
   documents: DocumentsModal;

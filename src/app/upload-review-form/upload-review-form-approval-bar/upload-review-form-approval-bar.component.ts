@@ -5,7 +5,7 @@ import { UploadReviewFormStatusesEnum } from '../upload-review-form-statuses.enu
 import { UploadReviewFormService } from '../upload-review-form.service';
 
 @Component({
-  selector: 'app-document-approval-bar',
+  selector: 'sw-document-approval-bar',
   templateUrl: './upload-review-form-approval-bar.component.html',
   styleUrls: ['./upload-review-form-approval-bar.component.scss']
 })

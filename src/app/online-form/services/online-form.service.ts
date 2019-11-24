@@ -80,7 +80,7 @@ export class OnlineFormService {
   fgList: any = {};
   fg: FormGroup;
   // FIXME: replace 'any' to interface (depend on server data)
-  @Output() onChangeServerValidations: EventEmitter<any> = new EventEmitter();
+  onChangeServerValidations: EventEmitter<any> = new EventEmitter();
 
   changeServerValidations(list: any) {
     this.onChangeServerValidations.emit(list);

@@ -4,27 +4,27 @@ import { BehaviorSubject, Observable, of, Subject, throwError } from 'rxjs';
 import * as SymbolTree from 'symbol-tree';
 import * as SymbolTreeNode from 'symbol-tree/lib/SymbolTreeNode';
 
-import { catchError, debounceTime, distinctUntilChanged, finalize, retry, tap, timeout, filter, map } from 'rxjs/operators';
+import { catchError, debounceTime, distinctUntilChanged, filter, finalize, map, retry, tap, timeout } from 'rxjs/operators';
 
 export const CHILDREN_SYMBOL = Symbol.for('fields');
 export const isActive = (field: any) => {
-  if (!field.isActive) return false;
+  if (!field.isActive) { return false; }
   if (field.fields && field.fields.length > 0) {
     return field.isActive && field.fields.some(isActive);
   } else {
     return field.isActive;
   }
-}
+};
 export const getActive = (fields: any[]) => {
   return fields.map((field) => {
-    if (!isActive(field)) return null;
+    if (!isActive(field)) { return null; }
     if (Array.isArray(field.fields)) {
       field.fields = getActive(field.fields);
     }
     return field;
   }).filter(field => field !== null);
   // return fields;
-}
+};
 
 export class Node {
   [key: string]: any;
@@ -57,13 +57,13 @@ export class TreeDataSource implements DataSource<any> {
       return this.tree.lastChild(parent);
 
     } catch (e) {
-      console.log(e)
+      console.log(e);
     }
   }
 
   parentOf(node: Node) {
     if (this.tree) {
-      let parent = this.tree.parent(node);
+      const parent = this.tree.parent(node);
       if (parent) {
         return parent;
       }
@@ -73,7 +73,7 @@ export class TreeDataSource implements DataSource<any> {
 
 
   parentsOf(node: Node) {
-    let parents = this.tree.ancestorsIterator(node);
+    const parents = this.tree.ancestorsIterator(node);
     parents.next();
     return parents;
   }
@@ -176,7 +176,7 @@ export class TreeDataSource implements DataSource<any> {
       // }),
 
       distinctUntilChanged(),
-    )
+    );
   }
   get fields$() {
     return this.dataSubject.asObservable();
@@ -188,60 +188,57 @@ export class TreeDataSource implements DataSource<any> {
 
 
   addSection(old?, title = 'New Section', fields = [], isWrapper = false) {
-    let section = {
+    const section = {
       type: 114,
       name: title,
       isActive: true,
       isWrapper,
       fields: []
-    }
-    if (old) this.tree.insertAfter(old, section);
-    else this.tree.appendChild(this.tree, section);
-    this.appendArray(fields, section)
+    };
+    if (old) { this.tree.insertAfter(old, section); } else { this.tree.appendChild(this.tree, section); }
+    this.appendArray(fields, section);
     this.reload();
 
   }
 
   isWrappedBySection(fields: any[]) {
-    let result = fields.every(field => {
+    const result = fields.every(field => {
       return (field.type === 114 || field.type === 112);
     });
     return result;
   }
 
   get wrapper() {
-    let first = this.tree.firstChild(this.tree);
-    if (first && first.isWrapper === true) return first;
-    else return null;
+    const first = this.tree.firstChild(this.tree);
+    if (first && first.isWrapper === true) { return first; } else { return null; }
   }
 
   addWrapperPath(fields: any[], name = 'New section') {
     fields.forEach((field) => {
-      if (field.fields) this.addWrapperPath(field.fields, name);
-      if (field.path[0] !== name) field.path.unshift(name)
-    })
+      if (field.fields) { this.addWrapperPath(field.fields, name); }
+      if (field.path[0] !== name) { field.path.unshift(name); }
+    });
     return fields;
   }
 
   wrapIfNeeded(fields: any[], name = 'New section') {
     if (fields.length > 0) {
-      let wrapped = this.isWrappedBySection(fields);
+      const wrapped = this.isWrappedBySection(fields);
       if (!wrapped) {
-        let wrap = [{
+        const wrap = [{
           type: 114,
-          name: name,
+          name,
           isActive: true,
           isWrapper: true,
           path: name,
           pathId: name + '114',
-          fields: fields
+          fields
         }];
         return wrap;
       } else {
         return fields;
       }
-    }
-    else return [];
+    } else { return []; }
   }
 
   addGroup(old, title = 'New Group', fields = []) {
@@ -264,7 +261,7 @@ export class TreeDataSource implements DataSource<any> {
   }
 
   array(parent = this.tree) {
-    return this.tree.treeToArray(parent)
+    return this.tree.treeToArray(parent);
   }
 
   deActivate(node: Node, recursive = true) {
@@ -281,7 +278,7 @@ export class TreeDataSource implements DataSource<any> {
       }
     }
     if (this.hasChildren(node) && recursive) {
-      let children = this.tree.treeIterator(node);
+      const children = this.tree.treeIterator(node);
       children.next();
       for (const field of children) {
         field.isActive = false;
@@ -307,35 +304,35 @@ export class TreeDataSource implements DataSource<any> {
       if (field.name && field.type) {
         return node.name === field.name && node.type === field.type;
       }
-    })
+    });
   }
 
   findNodeByPath(field) {
     if (field.path) {
-      let path = field.path.slice();
-      let rootPaths = this.nodes.map((root: any) => root.name);
+      const path = field.path.slice();
+      const rootPaths = this.nodes.map((root: any) => root.name);
       let wrapped = false;
       if (!rootPaths.includes(path[0])) {
         wrapped = true;
       }
 
 
-      let node = this.tree.treeToArray(this.tree).find(node => {
-        if (!node.path) return false;
-        if (node.path.join('') === path.join('')) return true;
+      const result = this.tree.treeToArray(this.tree).find(node => {
+        if (!node.path) { return false; }
+        if (node.path.join('') === path.join('')) { return true; }
         if (wrapped) {
-          if (node.path.join('') === path.slice(1).join('')) return true;
-          if (node.path.slice(1).join('') === path.join('')) return true;
+          if (node.path.join('') === path.slice(1).join('')) { return true; }
+          if (node.path.slice(1).join('') === path.join('')) { return true; }
         }
         return false;
       });
-      return node;
+      return result;
     }
 
   }
 
   findNodeByField(field) {
-    if (field._id) return this.findNodeByFieldId;
+    if (field._id) { return this.findNodeByFieldId; }
     // if (field.mapped) {
     //   return this.findNodeByParam('mapped', field.mapped);
     // }
@@ -395,16 +392,16 @@ export class TreeDataSource implements DataSource<any> {
         field.fields = this.addPaths(field.fields, prepend);
       }
       field.path = this.getPath(field);
-      if (prepend) field.path.push(...prepend);
+      if (prepend) { field.path.push(...prepend); }
       field.pathId = field.path.join('') + field.type;
-      console.log(field.path, field.pathId)
+      console.log(field.path, field.pathId);
     });
     return fields;
   }
 
   toForm(parent = this.activeChildren) {
     const nodes = this.addPaths(parent);
-    console.log(nodes.slice())
+    console.log(nodes.slice());
     if (nodes.length > 0) {
       let section = nodes.find((node: any) => node.type === 114);
       if (!section) {
@@ -417,7 +414,7 @@ export class TreeDataSource implements DataSource<any> {
         };
         return [section];
       } else {
-        return nodes
+        return nodes;
       }
     } else {
       return [];
@@ -444,7 +441,7 @@ export class TreeDataSource implements DataSource<any> {
   }
 
   getPath(node) {
-    let path = Array.from(this.tree.ancestorsIterator(node), (parent: any) => {
+    const path = Array.from(this.tree.ancestorsIterator(node), (parent: any) => {
       return parent.name;
     }).slice(0, -1);
     path.reverse();
@@ -500,7 +497,7 @@ export class TreeDataSource implements DataSource<any> {
 
 
   deleteNode(node: any) {
-    let parent = this.parentOf(node);
+    const parent = this.parentOf(node);
     if (parent) {
       parent.fields = parent.fields.filter(field => field !== node);
     }

@@ -25,9 +25,9 @@ import { WorkareaIntroComponent } from './workarea/intro/intro.component';
 import { WorkareaComponent } from './workarea/workarea.component';
 
 import { CdkTreeModule } from '@angular/cdk/tree';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { FormCreatorService } from './form-creator.service';
 import { GeneralComponent } from './general/general.component';
-import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { WidgetComponent } from './workarea/fields/widget/widget.component';
 
 @NgModule({

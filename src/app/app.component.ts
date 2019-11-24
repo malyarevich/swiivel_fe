@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'app-root',
+  selector: 'sw-root',
   template: '<router-outlet></router-outlet>',
   changeDetection: ChangeDetectionStrategy.OnPush
 })

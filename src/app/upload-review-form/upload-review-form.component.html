@@ -1,8 +1,8 @@
 <sw-back-bar
   title="Review Forms"
-  (onBackClick)="backPageClick()"
+  (backClick)="backPageClick()"
 ></sw-back-bar>
-<app-document-approval-bar
+<sw-document-approval-bar
   [document]="getSelectForm()"
   [loading]="updatingDocumentStatus"
   [isLast]="isLastDocument()"
@@ -11,7 +11,7 @@
   (skipDocument)="skipDocument()"
   (changeStatus)="changeStatus($event)"
   (saveDocument)="updateDocumentSettings(true)">
-</app-document-approval-bar>
+</sw-document-approval-bar>
 <div class="content" [ngClass]="{'pdf-form': isOnlineForm()}">
   <div class="sidebar-container" [class.opened]="isSideBarShown">
     <div class="sidebar">
@@ -68,7 +68,7 @@
           <div *ngIf="documents && documents.length" [ngClass]="{ 'loading': showSpinner }">
             <div *ngIf="!isBulkDownload">
               <div *ngFor="let document of documents">
-                <app-upload-review-form-item
+                <sw-upload-review-form-item
                   [document]="document"
                   [isBulkDownload]="isBulkDownload"
                   (selected)="selectItem($event)"
@@ -76,17 +76,17 @@
                   (deleteForm)="openDeleteConfirmPopup($event)"
                   id="{{document._id}}"
                 >
-                </app-upload-review-form-item>
+                </sw-upload-review-form-item>
               </div>
             </div>
             <div *ngIf="isBulkDownload">
               <div *ngFor="let document of uploadDocuments">
-                <app-upload-review-form-item
+                <sw-upload-review-form-item
                   [document]="document"
                   [isBulkDownload]="isBulkDownload"
                   (selected)="selectItem($event)"
                 >
-                </app-upload-review-form-item>
+                </sw-upload-review-form-item>
               </div>
             </div>
           </div>
@@ -103,7 +103,7 @@
         <div *ngIf="showError" class="upload-document-error">
           {{textError}}
         </div>
-        <app-review-form-controls
+        <sw-review-form-controls
           [activeIdForm]="activeIdForm"
           [isBulkDownload]="isBulkDownload"
           [disabledButtons]="isSaveActive"
@@ -113,7 +113,7 @@
           (errorUpload)="uploadFileError($event)"
           (download)="clickDownload()"
           (upload)="clickUpload()">
-        </app-review-form-controls>
+        </sw-review-form-controls>
         <a [href]="download.url" [download]="download.filename" #link></a>
       </div>
     </div>
@@ -131,12 +131,12 @@
   <div class="workarea">
     <div
       *ngIf="getSelectForm() && getSelectForm().submission_type !== 'onlineForm' && getSelectForm().submission_type !== 'pdfForm'">
-      <app-upload-review-form-document
+      <sw-upload-review-form-document
         [isSideBarShown]="isSideBarShown"
         [document]="getSelectForm()"
         (rotateImg)="rotateImg($event)"
         [rotatingPicture]="rotatingPicture"
-      ></app-upload-review-form-document>
+      ></sw-upload-review-form-document>
     </div>
 
     <div *ngIf="getSelectForm() && getSelectForm().submission_type === 'onlineForm'">
@@ -160,25 +160,25 @@
 
     <div
       *ngIf="documentTypes.length && documentFamilies.length && getSelectForm() && getSelectForm().submission_type !== 'onlineForm' && getSelectForm().submission_type !== 'pdfForm'">
-      <app-upload-review-form-document-settings
+      <sw-upload-review-form-document-settings
         [documentTypes]="documentTypes"
         [documentFamilies]="documentFamilies"
         [document]="getSelectForm()"
         [isSave]="isSaveActive"
         (updateDocumentSettings)="changeDocumentSettings($event)"
       >
-      </app-upload-review-form-document-settings>
+      </sw-upload-review-form-document-settings>
     </div>
 
   </div>
 
 </div>
 <div *ngIf="documents && documents.length > 1" class="footer">
-  <app-upload-review-form-footer
+  <sw-upload-review-form-footer
     [documents]="extremeDocuments"
     [disabled]="isBulkDownload"
     (changeForm)="changeForm($event)"
-  ></app-upload-review-form-footer>
+  ></sw-upload-review-form-footer>
 </div>
 <sw-dialog
   #dialog

@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { FormSendService } from '../form-send.service';
-import { defaultButtonOptions, formType, IButtonOption, IPerson, IRound, hasNoFamily } from '../models/send.model';
+import { defaultButtonOptions, formType, hasNoFamily, IButtonOption, IPerson, IRound } from '../models/send.model';
 
 @Component({
   selector: 'sw-send-preview',
@@ -30,7 +30,7 @@ export class SendPreviewComponent implements OnInit, OnDestroy {
   ) {
     this.previewType.valueChanges.subscribe(v => {
       this.formType = v;
-    })
+    });
     // this.filter.valueChanges.subscribe((filterValue) => {
     //   if (filterValue && filterValue.length > 0) {
     //     // this.dataSource.filter(filterValue.toLowerCase())
@@ -92,7 +92,7 @@ export class SendPreviewComponent implements OnInit, OnDestroy {
 
   onChangePreviewType(value: string) {
     // this.isPreviewByAccount = value === formType.account;
-    if(value === formType.account) {
+    if (value === formType.account) {
       this.isPreviewByAccount = true;
       this.filter.enable();
     } else {
@@ -119,22 +119,22 @@ export class SendPreviewComponent implements OnInit, OnDestroy {
   getNames(names: string[]): string {
     let str = '';
     names.forEach((name, index) => {
-      if(index === (names.length - 1) && names.length > 1) {
+      if (index === (names.length - 1) && names.length > 1) {
         str += ` and ${name}`;
       } else {
         str += `, ${name}`;
       }
-    })
+    });
     return str;
   }
 
   getAccountTitle(account: IPerson): string {
-    return `${account.person_family.family_name}${this.getNames(account.names)}`
+    return `${account.person_family.family_name}${this.getNames(account.names)}`;
   }
 
   getFamilyId(): string {
-    return this.selectedAccount 
-      && this.selectedAccount.person_family 
+    return this.selectedAccount
+      && this.selectedAccount.person_family
       && this.selectedAccount.person_family.family_id !== hasNoFamily
         ? this.selectedAccount.person_family.family_id
         : null;

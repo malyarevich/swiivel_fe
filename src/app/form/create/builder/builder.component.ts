@@ -1,12 +1,12 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormService } from '@app/form/form.service';
+import { cloneDeep } from 'lodash';
 import { Subject, Subscription } from 'rxjs';
 import { takeUntil, takeWhile } from 'rxjs/operators';
-import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
-import { cloneDeep } from 'lodash';
 import { isArray } from 'util';
-import { Router, ActivatedRoute } from '@angular/router';
-import { v4 as uuid } from "uuid";
+import { v4 as uuid } from 'uuid';
 
 @Component({
   selector: 'sw-builder',
@@ -16,12 +16,12 @@ import { v4 as uuid } from "uuid";
 })
 export class BuilderComponent implements OnInit, OnDestroy {
 
-  public expandedSection: string = 'packetIntroduction';
-  public expanded: boolean = false;
+  public expandedSection = 'packetIntroduction';
+  public expanded = false;
 
   public form: FormGroup;
   public formSubscription: Subscription;
-  public sectionsNames = ['packetIntroduction','formFields', 'consent', 'termsConditionals', 'documentsForms'];
+  public sectionsNames = ['packetIntroduction', 'formFields', 'consent', 'termsConditionals', 'documentsForms'];
 
   private destroyed$ = new Subject();
 
@@ -35,17 +35,17 @@ export class BuilderComponent implements OnInit, OnDestroy {
       this.formService.stage$.next(1);
       this.formService.form$.pipe(
         takeUntil(this.destroyed$)
-      ).subscribe(async (form: FormGroup )=> {
+      ).subscribe(async (form: FormGroup ) => {
         if (form) {
           if (form.get('_id')) {
             this.form = form;
             let changedForm;
             if (!this.form.get('attachments')) {
-              if (!changedForm) changedForm = cloneDeep(form);
+              if (!changedForm) { changedForm = cloneDeep(form); }
               changedForm.addControl('attachments', this.fb.group({ }));
             }
             if (!this.form.get('packetIntroduction')) {
-              if (!changedForm) changedForm = cloneDeep(form);
+              if (!changedForm) { changedForm = cloneDeep(form); }
               changedForm.addControl('packetIntroduction', this.fb.group({
                 sectionName: ['Packet Introduction'],
                 sectionWidth: ['full'],
@@ -53,7 +53,7 @@ export class BuilderComponent implements OnInit, OnDestroy {
               }));
             }
             if (!this.form.get('consentInfo')) {
-              if (!changedForm) changedForm = cloneDeep(form);
+              if (!changedForm) { changedForm = cloneDeep(form); }
               changedForm.addControl('consentInfo', this.fb.group({
                 sectionName: ['Consent Section'],
                 sectionWidth: ['full'],
@@ -61,7 +61,7 @@ export class BuilderComponent implements OnInit, OnDestroy {
               }));
             }
             if (!this.form.get('activeSections')) {
-              if (!changedForm) changedForm = cloneDeep(form);
+              if (!changedForm) { changedForm = cloneDeep(form); }
               changedForm.addControl('activeSections', this.fb.group({
                 packetIntroduction: this.fb.group({ isActive: [true], showSideInfo: [true] }),
                 formFields: this.fb.group({ isActive: [false], showSideInfo: [false] }),
@@ -70,45 +70,45 @@ export class BuilderComponent implements OnInit, OnDestroy {
                 documentsForms: this.fb.group({ isActive: [false], showSideInfo: [false] })
               }));
             } else {
-              if (!changedForm) changedForm = cloneDeep(form);
+              if (!changedForm) { changedForm = cloneDeep(form); }
               let changedFields = 0;
               for (const section of this.sectionsNames) {
                 if (!changedForm.get(['activeSections', section])) {
                   changedFields++;
-                  (changedForm.get('activeSections') as FormGroup).addControl(section, this.fb.group({isActive: [false], showSideInfo: [false]}));
-                }
-                else {
+                  (changedForm.get('activeSections') as FormGroup)
+                    .addControl(section, this.fb.group({isActive: [false], showSideInfo: [false]}));
+                } else {
                   this.form.get(['activeSections', section, 'showSideInfo']).setValue(false);
                 }
               }
-              if (changedFields === 0) changedForm = null;
+              if (changedFields === 0) { changedForm = null; }
             }
             if (changedForm) {
               this.formService.form = changedForm;
             } else {
               this.cdr.markForCheck();
-              if (this.formSubscription) this.formSubscription.unsubscribe();
+              if (this.formSubscription) { this.formSubscription.unsubscribe(); }
               this.formSubscription = this.form.valueChanges.subscribe((value) => {
                 console.groupCollapsed('Form value changed');
                 console.log(value);
                 console.groupEnd();
               });
             }
-          this.cdr.reattach();
+            this.cdr.reattach();
         } else {
           await this.router.navigate(['form', 'new', 'create', 'general']);
         }
       }
-    }); 
+    });
   }
 
   ngOnInit() {
   }
   // isActive: [false], showSideInfo: [false]
 
-  
+
   activeToggle(field) {
-    console.log(field, this.form.get('activeSections.formFields'))
+    console.log(field, this.form.get('activeSections.formFields'));
   }
 
   isOpen(): boolean {
@@ -135,40 +135,40 @@ export class BuilderComponent implements OnInit, OnDestroy {
     //     console.log('button')
     //   }
     // }
-    let showControl = this.form.get(['activeSections', section, 'showSideInfo']);
+    const showControl = this.form.get(['activeSections', section, 'showSideInfo']);
     if (showControl.value === false) {
-      let activeSections = {};
+      const activeSections = {};
       for (const sectionName of this.sectionsNames) {
         activeSections[sectionName] = {showSideInfo: false};
       }
-      activeSections[section]['showSideInfo'] = true;
+      activeSections[section].showSideInfo = true;
       this.form.get('activeSections').patchValue(activeSections);
       this.expandedSection = section;
     } else {
-      console.log(this.form.get('activeSections').pristine)
+      console.log(this.form.get('activeSections').pristine);
       showControl.setValue(false);
       this.expandedSection = null;
     }
     this.expanded = true;
-    this.cdr.markForCheck()
+    this.cdr.markForCheck();
   }
 
   addTermsConditionsItem() {
-    let termsConditionsItem = this.fb.group({
-      title: [""],
+    const termsConditionsItem = this.fb.group({
+      title: [''],
       id: [uuid()],
-      text: [""],
+      text: [''],
       checkbox: this.fb.group({
         isActive: false,
         checked: false,
-        text: ""
+        text: ''
       })
     });
     (this.form.get('termsConditions.termsConditionsItems') as FormArray).push(termsConditionsItem);
   }
 
   prevStep() {
-    console.log(this.formService.form);;
+    console.log(this.formService.form);
     this.router.navigate(['form', this.form.value._id, 'create', 'general']);
   }
 

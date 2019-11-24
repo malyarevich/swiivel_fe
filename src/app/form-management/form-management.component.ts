@@ -2,20 +2,20 @@ import { ChangeDetectorRef, Component, ElementRef, OnInit, Renderer2, ViewChild 
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { ButtonColorsEnum } from '@shared/buttons/buttonColors.enum';
+import { FormManagementDataSource } from '@app/form-management/form-management.datasource';
+import { FormManagementService } from '@app/form-management/form-management.service';
 import { CheckService } from '@app/services/check.service';
 import { DateService } from '@app/services/date.service';
-import { DialogComponent } from '@shared/popup/dialog.component';
-import { FormManagementDataSource } from '@app/form-management/form-management.datasource';
-import { FormManagementDocumentModel } from '@models/form-management/form-management-document.model';
-import { FormManagementService } from '@app/form-management/form-management.service';
-import { FormManagementSubmissionModel } from '@models/form-management/form-management-submission-model';
-import { FormModel } from '@models/data-collection/form.model';
 import { FormService } from '@app/services/form.service';
 import { UtilsService } from '@core/utils.service';
+import { FormModel } from '@models/data-collection/form.model';
+import { FormManagementDocumentModel } from '@models/form-management/form-management-document.model';
+import { FormManagementSubmissionModel } from '@models/form-management/form-management-submission-model';
+import { ButtonColorsEnum } from '@shared/buttons/buttonColors.enum';
+import { DialogComponent } from '@shared/popup/dialog.component';
 
 @Component({
-  selector: 'app-form-management',
+  selector: 'sw-form-management',
   templateUrl: './form-management.component.html',
   styleUrls: ['./form-management.component.scss'],
 })

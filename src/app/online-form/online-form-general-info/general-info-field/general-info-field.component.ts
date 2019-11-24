@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { BehaviorSubject, Subscription } from 'rxjs';
 import { Field } from '@models/data-collection/field.model';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import {
   IFormField,
   OnlineFormService

@@ -1,4 +1,7 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ComponentFactory, ComponentFactoryResolver, ComponentRef, Input, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ComponentFactory, ComponentFactoryResolver, ComponentRef, Input, OnDestroy, OnInit,
+  ViewChild, ViewContainerRef } from '@angular/core';
+import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { cloneDeep } from 'lodash';
 import { CheckboxSettingComponent } from './checkbox-setting/checkbox-setting.component';
 import { DateSettingComponent } from './date-setting/date-setting.component';
 import { DropdownSettingComponent } from './dropdown-setting/dropdown-setting.component';
@@ -9,8 +12,6 @@ import { NumberSettingComponent } from './number-setting/number-setting.componen
 import { PhoneSettingComponent } from './phone-setting/phone-setting.component';
 import { SectionSettingsComponent } from './section-settings/section-settings.component';
 import { TextSettingComponent } from './text-setting/text-setting.component';
-import { FormGroup, FormControl, FormArray } from '@angular/forms';
-import { cloneDeep } from 'lodash';
 
 const components = [
   { type: 101, component: TextSettingComponent, title: 'Short Text Field Settings' },
@@ -67,25 +68,23 @@ export class SettingsComponent implements OnInit, AfterViewInit, OnDestroy {
     let res: string;
     switch (t) {
       case 'settings':
-        if (this.type === 113) { res = 'col-8'; }
-        else { res = 'col-4'; }
+        if (this.type === 113) { res = 'col-8'; } else { res = 'col-4'; }
         break;
       case 'logic':
-        if (this.type === 113) { res = 'col-4'; }
-        else { res = 'col-8'; }
+        if (this.type === 113) { res = 'col-4'; } else { res = 'col-8'; }
         break;
     }
     return res;
   }
 
   private initSettings(f: any): void {
-    const c = components.find(c => c.type === f.value.type);
+    const c = components.find(comp => comp.type === f.value.type);
     if (c) {
       // console.log('CCCC,', c)
       this.type = c.type;
       this.title = c.title;
       if (c.type === 107) {
-        console.log('Field group', f)
+        console.log('Field group', f);
       }
       const factory: ComponentFactory<any> = this.resolver.resolveComponentFactory(c.component);
       if (this.container) {
@@ -105,8 +104,8 @@ export class SettingsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   setChildren(fields, value) {
-    for (let field of fields) {
-      let control = field.get(['options', value.key]) as FormControl;
+    for (const field of fields) {
+      const control = field.get(['options', value.key]) as FormControl;
       if (!control) {
         (field.get('options') as FormGroup).registerControl(value.key, new FormControl(value.value));
       } else {
@@ -120,14 +119,14 @@ export class SettingsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   updateField(v) {
-    let optionsControl = this._form.get('options') as FormGroup;
+    const optionsControl = this._form.get('options') as FormGroup;
     for (const key of Object.keys(v)) {
-      let control = optionsControl.get(key);
+      const control = optionsControl.get(key);
       if (!control) {
         optionsControl.registerControl(key, new FormControl(v[key]));
       }
     }
-    this._form.get('options').patchValue(v)
+    this._form.get('options').patchValue(v);
   }
 
   ngOnDestroy(): void {

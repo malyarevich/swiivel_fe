@@ -9,6 +9,7 @@ import {
   SimpleChanges,
   ViewChild
 } from '@angular/core';
+import {PDFDocumentProxy, PDFProgressData} from 'pdfjs-dist';
 // import {Field} from "../../../../../model/field.model";
 // import {
 //   FormPDFSignatureModel,
@@ -16,9 +17,8 @@ import {
 //   FormsDivModel,
 //   FormsPDFModel
 // } from "../../model/formsPDF.model";
-import {fromEvent, Subscription} from "rxjs";
-import {PDFDocumentProxy, PDFProgressData} from "pdfjs-dist";
-import {pairwise, switchMap, takeUntil} from "rxjs/operators";
+import {fromEvent, Subscription} from 'rxjs';
+import {pairwise, switchMap, takeUntil} from 'rxjs/operators';
 import {v4 as uuid} from 'uuid';
 
 @Component({
@@ -26,8 +26,8 @@ import {v4 as uuid} from 'uuid';
   templateUrl: './form-drawing.component.html',
   styleUrls: ['./form-drawing.component.scss']
 })
-export class FormDrawingComponent implements AfterViewInit, OnDestroy, OnInit, OnChanges{
-  searchText: string = '';
+export class FormDrawingComponent implements AfterViewInit, OnDestroy, OnInit, OnChanges {
+  searchText = '';
   @Input() width = 816;
   @Input() pages: number;
   @Input() height = 1056;
@@ -37,15 +37,15 @@ export class FormDrawingComponent implements AfterViewInit, OnDestroy, OnInit, O
   @Input() form: any;
   @ViewChild('viewer', { static: true }) canvas: ElementRef;
 
-  showAddButtonTemporary: boolean = false;
+  showAddButtonTemporary = false;
   canvasEl: HTMLCanvasElement;
   cx: CanvasRenderingContext2D;
   drawingSubscription: Subscription;
   lastPos;
   finalPos;
-  loading: boolean = false;
-  page =1;
-  drawingType: string = "system";
+  loading = false;
+  page = 1;
+  drawingType = 'system';
   temporaryField: any[] = [];
   loadingPoc: number;
 
@@ -58,7 +58,7 @@ export class FormDrawingComponent implements AfterViewInit, OnDestroy, OnInit, O
       label: 'Wet Signature',
       value: false
     }
-  ]
+  ];
 
   constructor() {
   }
@@ -68,30 +68,30 @@ export class FormDrawingComponent implements AfterViewInit, OnDestroy, OnInit, O
 
 
 
-  editDivChange(div:any){
-    if(this.formsPDF.isEdit && div.type==this.drawingType)     div.isEdit=!div.isEdit;
+  editDivChange(div: any) {
+    if (this.formsPDF.isEdit && div.type === this.drawingType) {     div.isEdit = !div.isEdit; }
 
   }
 
-  changeTypeDraw(e){
-    this.formsPDF.form.fieldsPdf.forEach( page=>{
-      page.forEach(div=>{
-        div.isEdit=false;
-      })
-    })
+  changeTypeDraw(e) {
+    this.formsPDF.form.fieldsPdf.forEach( page => {
+      page.forEach(div => {
+        div.isEdit = false;
+      });
+    });
   }
 
 
   addTempField(name: string, div: any) {
-    if(name.length<1) return;
+    if (name.length < 1) { return; }
     if (!div.fields) { div.fields = []; }
-    div.fields.push({id: uuid(),name: name});
-    this.temporaryField.push({id: uuid(),name: name});
-    this.showAddButtonTemporary=false;
+    div.fields.push({id: uuid(), name});
+    this.temporaryField.push({id: uuid(), name});
+    this.showAddButtonTemporary = false;
   }
 
-  linkFieldToDiv(field: any, div: any):void{
-    if(div.linkedField == undefined || div.linkedField.mapped == null || field.mapped != div.linkedField.mapped) {
+  linkFieldToDiv(field: any, div: any): void {
+    if (div.linkedField === undefined || div.linkedField.mapped === null || field.mapped !== div.linkedField.mapped) {
       div.linkedField = field;
       return;
     }
@@ -102,17 +102,17 @@ export class FormDrawingComponent implements AfterViewInit, OnDestroy, OnInit, O
     console.log(error, 'error');
   }
 
-  removeDiv(id: string):void{
-    this.formsPDF.form.fieldsPdf[this.page-1]=this.formsPDF.form.fieldsPdf[this.page-1].filter(div=>div.id!=id);
+  removeDiv(id: string): void {
+    this.formsPDF.form.fieldsPdf[this.page - 1] = this.formsPDF.form.fieldsPdf[this.page - 1].filter(div => div.id !== id);
   }
 
 
   onProgress(progressData: PDFProgressData) {
     // do anything with progress data. For example progress indicator)
     this.loadingPoc = progressData.loaded / progressData.total * 100;
-    this.loading=progressData.loaded<=progressData.total;
+    this.loading = progressData.loaded <= progressData.total;
   }
-  logType(){
+  logType() {
     // console.log(this.drawingType);
   }
 
@@ -136,7 +136,7 @@ export class FormDrawingComponent implements AfterViewInit, OnDestroy, OnInit, O
   }
 
   editToggle() {
-    console.log('this.formsPDF.isEdit', this.formsPDF.isEdit)
+    console.log('this.formsPDF.isEdit', this.formsPDF.isEdit);
     this.formsPDF.isEdit = !this.formsPDF.isEdit;
   }
 
@@ -148,60 +148,60 @@ export class FormDrawingComponent implements AfterViewInit, OnDestroy, OnInit, O
   }
 
 
-  mouseDown(e){
+  mouseDown(e) {
     const rect = this.canvasEl.getBoundingClientRect();
-    this.lastPos ={
+    this.lastPos = {
       x: e.clientX - rect.left,
       y: e.clientY - rect.top
-    }
+    };
   }
-  mouseUp(e){
+  mouseUp(e) {
     const rect = this.canvasEl.getBoundingClientRect();
-    this.finalPos ={
+    this.finalPos = {
       x: e.clientX - rect.left,
       y: e.clientY - rect.top
     };
 
-    const div: any={
+    const div: any = {
       id: uuid(),
-      top: Math.min(this.lastPos.y,this.finalPos.y),
-      left: Math.min(this.lastPos.x,this.finalPos.x),
-      width: Math.abs(this.finalPos.x-this.lastPos.x),
-      height: Math.abs(this.finalPos.y-this.lastPos.y),
+      top: Math.min(this.lastPos.y, this.finalPos.y),
+      left: Math.min(this.lastPos.x, this.finalPos.x),
+      width: Math.abs(this.finalPos.x - this.lastPos.x),
+      height: Math.abs(this.finalPos.y - this.lastPos.y),
       isEdit: false,
       type: this.drawingType
     };
-    if(this.drawingType=='signature'){
-      div.linkedField = <any>{
+    if (this.drawingType === 'signature') {
+      div.linkedField = ({
         id: uuid(),
         isE: true,
         isSystem: true,
         isBothParents: false
-      }
+      } as any);
     }
-    if(div.height>5&&div.width>5){
-      if(!this.formsPDF.form.fieldsPdf[this.page-1]) this.formsPDF.form.fieldsPdf[this.page-1]=[];
-      this.formsPDF.form.fieldsPdf[this.page-1].push(div);
+    if (div.height > 5 && div.width > 5) {
+      if (!this.formsPDF.form.fieldsPdf[this.page - 1]) { this.formsPDF.form.fieldsPdf[this.page - 1] = []; }
+      this.formsPDF.form.fieldsPdf[this.page - 1].push(div);
     }
-    this.cx.clearRect(0,0,this.width, this.height);
+    this.cx.clearRect(0, 0, this.width, this.height);
 
 
   }
 
-  loadComplete(pdf: PDFDocumentProxy){
+  loadComplete(pdf: PDFDocumentProxy) {
     let pages = pdf.numPages;
-    while (pages){
-      if(!this.formsPDF.form.fieldsPdf[pages-1]) this.formsPDF.form.fieldsPdf[pages-1]=[];
+    while (pages) {
+      if (!this.formsPDF.form.fieldsPdf[pages - 1]) { this.formsPDF.form.fieldsPdf[pages - 1] = []; }
       pages--;
     }
     this.temporaryField = [];
-    this.formsPDF.form.fieldsPdf.forEach(page=>{
-      page.forEach(field=>{
+    this.formsPDF.form.fieldsPdf.forEach(page => {
+      page.forEach(field => {
         console.log('Pdf field', field);
-        if(field.type=='temporary'&&field.linkedField) this.temporaryField.push( field.linkedField);
-      })
+        if (field.type === 'temporary' && field.linkedField) { this.temporaryField.push( field.linkedField); }
+      });
     });
-    this.page=1;
+    this.page = 1;
   }
 
 
@@ -254,7 +254,7 @@ export class FormDrawingComponent implements AfterViewInit, OnDestroy, OnInit, O
     if (!this.cx) {
       return;
     }
-    this.cx.clearRect(0,0,this.width, this.height);
+    this.cx.clearRect(0, 0, this.width, this.height);
     // start our drawing path
     this.cx.beginPath();
 
@@ -262,20 +262,20 @@ export class FormDrawingComponent implements AfterViewInit, OnDestroy, OnInit, O
     if (prevPos) {
       // sets the start point
       // draws a line from the start pos until the current position
-      this.cx.rect(this.lastPos.x, this.lastPos.y, currentPos.x-this.lastPos.x,currentPos.y-this.lastPos.y);
+      this.cx.rect(this.lastPos.x, this.lastPos.y, currentPos.x - this.lastPos.x, currentPos.y - this.lastPos.y);
       this.cx.fill();
       // strokes the current path with the styles we set earlier
       this.cx.stroke();
     }
   }
 
-  styleObject(div:any){
+  styleObject(div: any) {
     return {
-      'top': div.top +'px',
-      'left': div.left +'px',
-      'width': div.width +'px',
-      'height': div.height +'px'
-    }
+      top: div.top + 'px',
+      left: div.left + 'px',
+      width: div.width + 'px',
+      height: div.height + 'px'
+    };
   }
   ngOnDestroy() {
     // this will remove event lister when this component is destroyed

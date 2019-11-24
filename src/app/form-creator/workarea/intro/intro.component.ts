@@ -1,8 +1,8 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
-import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { FormCreatorService } from '@app/form-creator/form-creator.service';
 import { Subject } from 'rxjs';
-import { takeUntil, filter } from 'rxjs/operators';
+import { filter, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'sw-form-creator-workarea-intro',
@@ -28,7 +28,7 @@ export class WorkareaIntroComponent implements OnInit, OnDestroy {
       filter(form => !!form),
     ).subscribe(form => {
       this.form = form.get('packetIntroduction') || this.fb.group({
-        content: ['',],
+        content: ['', ],
         sectionName: ['Packet Introduction'],
         sectionWidth: ['full']
       });

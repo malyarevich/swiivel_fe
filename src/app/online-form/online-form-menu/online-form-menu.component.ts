@@ -21,7 +21,7 @@ export class OnlineFormMenuComponent implements OnInit {
   @Input() formNavigationState: IFormNavigationState[];
   @Input() currentPosition: ICurrentPosition;
 
-  @Output() onGoToPage: EventEmitter<any> = new EventEmitter;
+  @Output() goToPage: EventEmitter<any> = new EventEmitter();
 
   menuItems;
 
@@ -69,6 +69,6 @@ export class OnlineFormMenuComponent implements OnInit {
   }
 
   setActiveMenuItem(itemName): void {
-    this.onGoToPage.emit(itemName);
+    this.goToPage.emit(itemName);
   }
 }

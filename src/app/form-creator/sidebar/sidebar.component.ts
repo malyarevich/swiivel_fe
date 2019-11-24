@@ -1,17 +1,17 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { FormCreatorService } from '../form-creator.service';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
-import { ApiService } from '@app/core/api.service';
-import { Popup } from '@app/core/popup.service';
-import { NestedTreeControl } from '@angular/cdk/tree';
-import { TreeDataSource } from '../tree.datasource';
 import { SelectionModel } from '@angular/cdk/collections';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { NestedTreeControl } from '@angular/cdk/tree';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { ApiService } from '@app/core/api.service';
+import { Popup } from '@app/core/popup.service';
+import { FormCreatorService } from '../form-creator.service';
+import { TreeDataSource } from '../tree.datasource';
 
-import { SidebarDocumentsFormsComponent } from './documents-forms.component';
 import { SidebarConsentComponent } from './consent.component';
-import { SidebarTermsConditionsComponent } from './terms-conditions.component';
+import { SidebarDocumentsFormsComponent } from './documents-forms.component';
 import { SidebarFieldsComponent } from './fields.component';
+import { SidebarTermsConditionsComponent } from './terms-conditions.component';
 
 @Component({
   selector: 'sw-form-creator-sidebar',
@@ -25,11 +25,11 @@ export class SidebarComponent implements OnInit {
     addDocsComponent: SidebarDocumentsFormsComponent,
     consent: SidebarConsentComponent,
     tac: SidebarTermsConditionsComponent
-  }
+  };
 
   expandedSection: string;
   sections: FormGroup;
-  expanded: boolean = false;
+  expanded = false;
 
   constructor(private service: FormCreatorService, private fb: FormBuilder, private api: ApiService, private popup: Popup) {
     this.service.section$.subscribe(section => {
@@ -64,7 +64,7 @@ export class SidebarComponent implements OnInit {
   }
 
   onCheckBoxClick(node, event) {
-    console.log('cbclick', node, event)
+    console.log('cbclick', node, event);
   }
 
   onStatusChange(node, active?: boolean) {

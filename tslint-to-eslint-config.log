@@ -1,0 +1,17 @@
+component-class-suffix does not yet have an ESLint equivalent.
+directive-class-suffix does not yet have an ESLint equivalent.
+import-blacklist does not yet have an ESLint equivalent.
+import-spacing does not yet have an ESLint equivalent.
+jsdoc-format does not yet have an ESLint equivalent.
+no-host-metadata-property does not yet have an ESLint equivalent.
+no-input-rename does not yet have an ESLint equivalent.
+no-inputs-metadata-property does not yet have an ESLint equivalent.
+no-output-on-prefix does not yet have an ESLint equivalent.
+no-output-rename does not yet have an ESLint equivalent.
+no-outputs-metadata-property does not yet have an ESLint equivalent.
+no-redundant-jsdoc does not yet have an ESLint equivalent.
+no-reference-import does not yet have an ESLint equivalent.
+one-line does not yet have an ESLint equivalent.
+use-lifecycle-interface does not yet have an ESLint equivalent.
+use-pipe-transform-interface does not yet have an ESLint equivalent.
+whitespace does not yet have an ESLint equivalent.

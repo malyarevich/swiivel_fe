@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 
 @Component({
   selector: 'sw-progress-bar',
@@ -7,13 +7,13 @@ import { Component, OnInit, Input, OnChanges } from '@angular/core';
 })
 export class ProgressBarComponent implements OnInit, OnChanges {
   @Input() processPercent: number;
-  
-  radius: number = 8;
-  cx: number = 12;
-  cy: number = 12;
 
-  // const circumference = 2 * Math.PI * this.radius; 
-  circumference = 50.2654824574; 
+  radius = 8;
+  cx = 12;
+  cy = 12;
+
+  // const circumference = 2 * Math.PI * this.radius;
+  circumference = 50.2654824574;
   dashoffset: number;
   constructor() {}
 
@@ -25,7 +25,7 @@ export class ProgressBarComponent implements OnInit, OnChanges {
     this.setStrokeDashOffset();
   }
 
-  setStrokeDashOffset() {   
+  setStrokeDashOffset() {
     this.dashoffset = this.circumference - ((this.processPercent * this.circumference) / 100);
   }
 

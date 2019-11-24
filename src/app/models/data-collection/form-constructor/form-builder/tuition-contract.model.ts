@@ -1,6 +1,6 @@
-import { TUITION_CONTRACT_SPLIT_TYPES } from "../../../../enums/tuition-contract-split-type";
-import { E_SIGNATURE_TYPES, SIGNATURE_TYPES } from "../../../../enums";
-import {Section} from "../../section.model";
+import { E_SIGNATURE_TYPES, SIGNATURE_TYPES } from '../../../../enums';
+import { TUITION_CONTRACT_SPLIT_TYPES } from '../../../../enums/tuition-contract-split-type';
+import {Section} from '../../section.model';
 
 export interface TuitionContract {
   sectionName: string;
@@ -39,7 +39,7 @@ export const tuitionContractDefault: TuitionContract = {
   sectionWidth: Section.full,
   splitBy: TUITION_CONTRACT_SPLIT_TYPES.STUDENT,
   fees: [],
-  text: "",
+  text: '',
   signature: {
     isRequire: false,
     type: SIGNATURE_TYPES.ESIGN,

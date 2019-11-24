@@ -1,4 +1,4 @@
-import { ConnectionPositionPair, Overlay, OverlayConfig, PositionStrategy } from '@angular/cdk/overlay';
+import { ConnectionPositionPair, Overlay, OverlayConfig, PositionStrategy, ScrollStrategy } from '@angular/cdk/overlay';
 import { ComponentPortal, PortalInjector } from '@angular/cdk/portal';
 import { ElementRef, Injectable, Injector } from '@angular/core';
 import { PopupComponent } from '@core/components/popup/popup.component';
@@ -34,28 +34,29 @@ export class Popup {
   }
 
   private getOverlayConfig({ origin, width, height, panelClass, location }): OverlayConfig {
-    let ss, bc;
+    let scrollStrategy: ScrollStrategy;
+    let backdropClass: string| string[];
     if (panelClass === 'fullpage-panel') {
-      ss = this.overlay.scrollStrategies.block();
-      bc = 'fullpage-backdrop';
+      scrollStrategy = this.overlay.scrollStrategies.block();
+      backdropClass = 'fullpage-backdrop';
     } else if (panelClass === 'centered-panel') {
-      ss = this.overlay.scrollStrategies.block();
-      bc = ['fullpage-backdrop', 'transparent-backdrop'];
+      scrollStrategy = this.overlay.scrollStrategies.block();
+      backdropClass = ['fullpage-backdrop', 'transparent-backdrop'];
     } else if (panelClass === 'widget-dropdown') {
-      ss = this.overlay.scrollStrategies.reposition();
-      bc = 'hide-backdrop';
+      scrollStrategy = this.overlay.scrollStrategies.reposition();
+      backdropClass = 'hide-backdrop';
     } else {
-      ss = this.overlay.scrollStrategies.reposition();
-      bc = 'popup-backdrop';
+      scrollStrategy = this.overlay.scrollStrategies.reposition();
+      backdropClass = 'popup-backdrop';
     }
     return new OverlayConfig({
       hasBackdrop: true,
       width,
       height,
-      backdropClass: bc,
+      backdropClass,
       panelClass,
       positionStrategy: this.getOverlayPosition(origin, panelClass, location),
-      scrollStrategy: ss
+      scrollStrategy
     });
   }
 

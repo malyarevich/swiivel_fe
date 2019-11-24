@@ -73,7 +73,7 @@ export class GroupSettingsComponent implements OnInit {
       if (value === true) {
         this.setChildren.emit({key: 'hideLabel', value: true});
       }
-    })
+    });
 
     this.form.valueChanges.subscribe(v => {
       this.prepareForm(v);

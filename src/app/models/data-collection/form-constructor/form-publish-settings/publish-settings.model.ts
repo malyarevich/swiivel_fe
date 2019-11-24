@@ -2,7 +2,7 @@ export abstract class AutomationEntity {
   public static defaultAutomation: IAutomation = {
     automation_list: [
       {
-        name: "New Automation",
+        name: 'New Automation',
         type_id: 1,
         template_id: 1,
         logics: [1, 2, 3]
@@ -32,82 +32,82 @@ export abstract class PublishSettingsEntity {
     is_append_cover_letter: false,
     form_value: {
       ProviderName: null,
-      AccountNumber: "",
+      AccountNumber: '',
       Email: null,
-      EmailSubject: "",
-      EmailBody: "",
-      FormCheckbox: "",
-      CoverLetter: ""
+      EmailSubject: '',
+      EmailBody: '',
+      FormCheckbox: '',
+      CoverLetter: ''
     }
   };
 
-  //Online
+  // Online
   public static onlineStructure: IOnlineStructure = {
-    title: "Online Form",
+    title: 'Online Form',
     checkBoxList: [
       {
-        key: "is_mutable_verified_fields",
+        key: 'is_mutable_verified_fields',
         text:
-          "Verified Fields Where the Information Can Change Will Still be Shown",
-        tipText: "Example: Address, Phone Number"
+          'Verified Fields Where the Information Can Change Will Still be Shown',
+        tipText: 'Example: Address, Phone Number'
       },
       {
-        key: "is_immutable_verified_fields",
-        text: "Verified Fields That Will not Change Will not be Shown",
+        key: 'is_immutable_verified_fields',
+        text: 'Verified Fields That Will not Change Will not be Shown',
         tipText:
-          "Example: Birthday, Social security Number, Mother's Name, Father's Name"
+          'Example: Birthday, Social security Number, Mother\'s Name, Father\'s Name'
       },
       {
-        key: "is_pre_fill_fields",
+        key: 'is_pre_fill_fields',
         text:
-          "Pre-Fill Fields With Data that is Already in the System (Regardless of Verification)",
+          'Pre-Fill Fields With Data that is Already in the System (Regardless of Verification)',
         tipText:
-          "If the system has any information in the system, to show it in the form instead empty fields that need to be completely started from scratch."
+          'If the system has any information in the system, to show it in the form instead empty fields that need to be completely started from scratch.'
       }
     ]
   };
 
-  //PDF
+  // PDF
   public static pdfStructure: IPdfStructure = {
-    title: "PDF Form",
-    subtitle: "General Settings",
+    title: 'PDF Form',
+    subtitle: 'General Settings',
     checkBoxList: {
       general: [
         {
-          key: "is_include_verified_fields",
-          text: "Include Verified Fields in PDF Form"
+          key: 'is_include_verified_fields',
+          text: 'Include Verified Fields in PDF Form'
         },
         {
-          key: "is_display_fields",
-          text: "Display Hidden Fields in PDF Form"
+          key: 'is_display_fields',
+          text: 'Display Hidden Fields in PDF Form'
         }
       ],
       sending: [
         {
-          key: "is_send_mail",
-          text: "Send to a Mailing House Service"
+          key: 'is_send_mail',
+          text: 'Send to a Mailing House Service'
         }
       ],
       form: [
         {
-          key: "is_append_cover_letter",
-          text: "Include Cover Letter for Envelope Window"
+          key: 'is_append_cover_letter',
+          text: 'Include Cover Letter for Envelope Window'
         }
       ]
     },
     inputList: [
       {
-        type: "",
-        placeholder: "",
-        value: ""
+        type: '',
+        placeholder: '',
+        value: ''
       }
     ]
   };
 
   public static providers = [
-    { value: 1, name: "First provider" },
-    { value: 2, name: "Second provider" },
-    { value: 3, name: "Last provider" }
+    { value: 1, name: 'First provider' },
+    { value: 2, name: 'Second provider' },
+    { value: 3, name: 'Last provider' }
   ];
 }
 

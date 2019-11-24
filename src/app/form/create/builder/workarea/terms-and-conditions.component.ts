@@ -1,6 +1,6 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Component, Input, ChangeDetectorRef } from '@angular/core';
-import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
+import { ChangeDetectorRef, Component, Input } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { IconsEnum } from '@app/shared/icons.enum';
 
 @Component({
@@ -38,7 +38,7 @@ export class WorkareaTermsConditionComponent {
       }
     }
   ];
-  isContentShown: boolean = true;
+  isContentShown = true;
   public widthOption = ['4 columns', '3 columns', '2 columns', '1 column'].map(t => ({ title: t }));
   public popupDisplay = false;
 
@@ -53,14 +53,14 @@ export class WorkareaTermsConditionComponent {
     private cdr: ChangeDetectorRef
   ) {
     this.lform = this.fb.group({
-      sectionName: ["Terms and Conditions"],
-      sectionWidth: ["full"],
+      sectionName: ['Terms and Conditions'],
+      sectionWidth: ['full'],
       signature: this.fb.group({
-        eType: ["system"],
+        eType: ['system'],
         isBothParents: [false],
         isRequire: [true],
         signed: {parents: false, fathers: false, mothers: false},
-        type: "esign",
+        type: 'esign',
       }),
       termsConditionsItems: this.fb.array([])
     });

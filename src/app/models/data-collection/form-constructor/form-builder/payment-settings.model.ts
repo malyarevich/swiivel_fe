@@ -1,5 +1,5 @@
-import {E_SIGNATURE_TYPES, SIGNATURE_TYPES} from "../../../../enums";
-import {Section} from "../../section.model";
+import {E_SIGNATURE_TYPES, SIGNATURE_TYPES} from '../../../../enums';
+import {Section} from '../../section.model';
 
 export interface PaymentSettings {
   sectionName: string;

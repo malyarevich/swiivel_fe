@@ -3,7 +3,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ButtonExpandEnum } from '@shared/buttons/buttonExpand.enum';
 
 @Component({
-  selector: 'app-review-form-controls',
+  selector: 'sw-review-form-controls',
   templateUrl: './upload-review-form-controls.component.html',
   styleUrls: ['./upload-review-form-controls.component.scss']
 })
@@ -40,7 +40,7 @@ export class UploadReviewFormControlsComponent implements OnInit  {
   }
 
   uploadError(value): void {
-    this.errorUpload.emit(value)
+    this.errorUpload.emit(value);
   }
 
   clickBulkDownload(): void {

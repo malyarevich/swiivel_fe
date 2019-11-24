@@ -6,12 +6,12 @@ import {
   EventEmitter,
   forwardRef,
   Input,
+  OnInit,
+  Optional,
   Output,
   Renderer2,
-  ViewChild,
-  Optional,
   Self,
-  OnInit} from '@angular/core';
+  ViewChild} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
 
 @Component({
@@ -47,7 +47,7 @@ export class InputTextComponent implements ControlValueAccessor, OnInit {
   writeValue = (value: string) => {};
   registerOnChange = (fn: any) => {};
   registerOnTouched = (fn: any) => {};
-  
+
   constructor(
     private renderer: Renderer2,
     private cdr: ChangeDetectorRef,
@@ -64,7 +64,7 @@ export class InputTextComponent implements ControlValueAccessor, OnInit {
     }
     this.control.statusChanges.subscribe(() => {
       this.cdr.markForCheck();
-    })
+    });
   }
 
   public focus() {
@@ -72,7 +72,7 @@ export class InputTextComponent implements ControlValueAccessor, OnInit {
   }
 
   public get value() {
-    return this.control.control ? this.control.control.value: null;
+    return this.control.control ? this.control.control.value : null;
   }
   public isEmpty(value: string): boolean {
     if (value) {
@@ -81,7 +81,7 @@ export class InputTextComponent implements ControlValueAccessor, OnInit {
     return true;
   }
 
-  
+
 
   public clear(): void {
     this.control.control.reset();

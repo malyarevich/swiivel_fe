@@ -1,5 +1,5 @@
-import { E_SIGNATURE_TYPES, SIGNATURE_TYPES } from "../../../../enums";
-import {Section} from "../../section.model";
+import { E_SIGNATURE_TYPES, SIGNATURE_TYPES } from '../../../../enums';
+import {Section} from '../../section.model';
 
 export interface TermsConditions {
   sectionName: string;
@@ -36,13 +36,13 @@ export interface TermsConditionsSigned {
 }
 
 export const termsConditionsItemDefault: TermsConditionsItem = {
-  title: "",
-  id: "",
-  text: "",
+  title: '',
+  id: '',
+  text: '',
   checkbox: {
     isActive: false,
     checked: false,
-    text: ""
+    text: ''
   }
 };
 

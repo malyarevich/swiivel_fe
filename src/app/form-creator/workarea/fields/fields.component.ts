@@ -1,12 +1,12 @@
 import { ArrayDataSource } from '@angular/cdk/collections';
-import { FlatTreeControl, NestedTreeControl } from '@angular/cdk/tree';
-import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy, AfterViewInit, OnDestroy, ViewChild, AfterViewChecked } from '@angular/core';
-import { FieldService } from '@app/core/field.service';
-import { ApiService } from '@app/core/api.service';
-import { CHILDREN_SYMBOL, TreeDataSource } from '@app/form-creator/tree.datasource';
-import { FormCreatorService } from '@app/form-creator/form-creator.service';
-import { Subject } from 'rxjs';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { FlatTreeControl, NestedTreeControl } from '@angular/cdk/tree';
+import { AfterViewChecked, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ApiService } from '@app/core/api.service';
+import { FieldService } from '@app/core/field.service';
+import { FormCreatorService } from '@app/form-creator/form-creator.service';
+import { CHILDREN_SYMBOL, TreeDataSource } from '@app/form-creator/tree.datasource';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 @Component({
   selector: 'sw-form-creator-workarea-fields',
@@ -39,8 +39,8 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
       } else if (event.action === 'collapse') {
         this.treeControl.collapse(event.target);
       }
-      console.log(`events`, event)
-    })
+      console.log(`events`, event);
+    });
   }
   ngOnDestroy() {
     this.destroyed$.next(true);
@@ -48,7 +48,7 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
   }
 
   ngAfterViewChecked(): void {
-    this.cdr.detectChanges()
+    this.cdr.detectChanges();
   }
 
   ngAfterViewInit() {
@@ -74,8 +74,8 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
   }
 
   drop(event: CdkDragDrop<any>) {
-    let node = event.item.data;
-    let dc = event.container;
+    const node = event.item.data;
+    const dc = event.container;
     if (dc.id !== 'fields-list') {
       if (node.type === 113 || node.type === 114) {
         this.closeParentNode(node);
@@ -95,7 +95,7 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
     const children = this.treeSource.getParentChildren(node);
     node.isActive = false;
     node.showSettings = false;
-    for (let child of children) {
+    for (const child of children) {
       child.isActive = false;
       child.showSettings = false;
     }

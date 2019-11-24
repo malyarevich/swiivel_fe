@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { environment } from '@app/../environments/environment';
 import { Observable } from 'rxjs';
 
@@ -13,7 +13,7 @@ export class FilesService {
     private http: HttpClient
   ) {}
 
-  private token = '?api_token=' + environment.api_token;
+  private token = '?api_token=' + environment.apiToken;
 
   getFileFromServer(url: string) {
     // this.http.get(url+this.token).subscribe(data=>this.downloadFile(data)),

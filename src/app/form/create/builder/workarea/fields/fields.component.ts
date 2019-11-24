@@ -1,18 +1,18 @@
 import { ArrayDataSource } from '@angular/cdk/collections';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { FlatTreeControl, NestedTreeControl } from '@angular/cdk/tree';
-import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy, AfterViewInit, OnDestroy, ViewChild, AfterViewChecked } from '@angular/core';
-import { FieldService } from '@app/core/field.service';
+import { visitValue } from '@angular/compiler/src/util';
+import { AfterViewChecked, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ApiService } from '@app/core/api.service';
+import { FieldService } from '@app/core/field.service';
 import { CHILDREN_SYMBOL, TreeDataSource } from '@app/form/create/tree.datasource';
 import { FormService } from '@app/form/form.service';
-import { Subject, Subscription } from 'rxjs';
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import { takeUntil } from 'rxjs/operators';
-import { cloneDeep } from 'lodash';
-import { visitValue } from '@angular/compiler/src/util';
-import { FormArray, FormGroup, FormBuilder, FormControl } from '@angular/forms';
-import { notDeepEqual } from 'assert';
 import { FieldType } from '@app/shared/fields.enum';
+import { notDeepEqual } from 'assert';
+import { cloneDeep } from 'lodash';
+import { Subject, Subscription } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 interface FoodNode {
   name: string;
@@ -66,7 +66,7 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
     {value: 1, title: 'Half'},
     {value: 2, title: '3 quarters'},
     {value: 3, title: 'Full width'},
-  ]
+  ];
   movies = [
     'Episode I - The Phantom Menace',
     'Episode II - Attack of the Clones',
@@ -85,15 +85,15 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
   fieldsTree: any[];
   treeSource = new TreeDataSource('Workarea');
   treeControl = new NestedTreeControl<any>(node => {
-    let fields = node.get('fields');
+    const fields = node.get('fields');
     if (fields) {
-      return (fields as FormArray).controls
+      return (fields as FormArray).controls;
     }
     return null;
   });
 
 
-  
+
 
 
   form: FormArray = new FormArray([]);
@@ -103,26 +103,26 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
 
   ngOnInit() {
     this.service.form$.subscribe(form => {
-      if (this.formSubscription) this.formSubscription.unsubscribe();
+      if (this.formSubscription) { this.formSubscription.unsubscribe(); }
       this.formSubscription = form.valueChanges.subscribe((value) => {
-        if (value && value['fields']) {
+        if (value && value.fields) {
           this.form = form.get('fields') as FormArray;
-          this.treeSource.nodes = this.form.controls;// (form.get('fields') as FormArray).controls;
-          console.log(this.treeSource.nodes)
+          this.treeSource.nodes = this.form.controls; // (form.get('fields') as FormArray).controls;
+          console.log(this.treeSource.nodes);
         } else {
           this.treeSource.nodes = [];
         }
         this.cdr.markForCheck();
       });
-      
+
       if (form.get('fields')) {
         this.form = form.get('fields') as FormArray;
         this.treeSource.nodes = this.form.controls;
-        console.log(this.treeSource.nodes)
+        console.log(this.treeSource.nodes);
         this.cdr.markForCheck();
       }
     });
-    
+
   }
   ngOnDestroy() {
     this.destroyed$.next(true);
@@ -130,11 +130,11 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
   }
 
   ngAfterViewChecked(): void {
-    this.cdr.detectChanges()
+    this.cdr.detectChanges();
   }
 
   ngAfterViewInit() {
-    this.cdr.detectChanges()
+    this.cdr.detectChanges();
   }
 
   setParent(node, key, value) {
@@ -171,10 +171,10 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
     // }
   }
 
-  
+
 
   getList(node) {
-    console.log(node)
+    console.log(node);
     return node.children;
   }
 
@@ -188,37 +188,35 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
   getListsIds(node?) {
     if (node) {
 
-      let listIds = this.service.getListsIds();
-      
+      const listIds = this.service.getListsIds();
+
       // let filterType = node.get('type').value;
-      let nodeId = this.getListId(node);
-      
+      const nodeId = this.getListId(node);
+
       // if (filterType === 113) {
       //   listIds = listIds.filter((id) => id.endsWith('113') || id.endsWith('114'));
       // } else if (filterType === 114) {
       //   listIds = listIds.filter((id) => id.endsWith('114'));
       // }
       // listIds.push('sidebar-list')
-      return listIds//.filter(id => id !== nodeId);
+      return listIds; // .filter(id => id !== nodeId);
     } else {
 
     }
   }
   getListId(node) {
-    let listId = [...this.service.getParentPaths(node), node.get('name').value, node.get('type').value].join('');
+    const listId = [...this.service.getParentPaths(node), node.get('name').value, node.get('type').value].join('');
     return listId;
   }
   hasChild = (_: number, node: any) => {
-    return !!node.get('fields')
+    return !!node.get('fields');
   }
   mayEnterRoot(drag, list) {
-    let dragType = drag.data.type ? drag.data.type : drag.data.value.type;
-    if (dragType === 114) return true;
-    else if (dragType === 113) return list.data.value.length === 0;
-    else return false;
+    const dragType = drag.data.type ? drag.data.type : drag.data.value.type;
+    if (dragType === 114) { return true; } else if (dragType === 113) { return list.data.value.length === 0; } else { return false; }
   }
   mayEnter(drag, list) {
-    let dragType = drag.data.type ? drag.data.type : drag.data.value.type;
+    const dragType = drag.data.type ? drag.data.type : drag.data.value.type;
     if (dragType < 113) {
       return list.id.endsWith('113');
     } else if (dragType === 113) {
@@ -230,12 +228,12 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
     } else if (dragType === 114) {
       return list.id === 'root-list';
     } else {
-      console.log(dragType)
+      console.log(dragType);
     }
   }
 
   getListData(node?) {
-    if (!node && this.form) return this.form;
+    if (!node && this.form) { return this.form; }
     return node.get('fields');
   }
 
@@ -258,7 +256,7 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
       return false;
     } else {
 
-      console.log('field drop', event)
+      console.log('field drop', event);
     }
 
   }
@@ -266,10 +264,10 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
 
   settingsToggle(node: any) {
     if (node) {
-      let showSettingsControl = node.get('showSettings');
+      const showSettingsControl = node.get('showSettings');
       if (!showSettingsControl) {
         (node as FormGroup).addControl('showSettings', this.fb.control(true));
-        return true
+        return true;
       }
       showSettingsControl.setValue(!showSettingsControl.value);
       this.cdr.markForCheck();
@@ -283,7 +281,7 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
       (node as FormGroup).addControl('isExpanded', this.fb.control(true));
     } else {
       node.get('isExpanded').setValue(!node.value.isExpanded, {onlySelf: false, emitEvent: true});
-      
+
     }
     if (node.value.isExpanded) {
       this.treeControl.expandDescendants(node);

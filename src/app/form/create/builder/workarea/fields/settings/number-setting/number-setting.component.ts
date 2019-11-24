@@ -14,7 +14,7 @@ export class NumberSettingComponent implements OnInit {
   @Input()
   set settings(obj: any) {
     if (obj) {
-      console.log(obj)
+      console.log(obj);
       this.form.patchValue({
         showDefaultValue: !!obj.showDefaultValue,
         showValidators: !!obj.showValidators,
@@ -50,7 +50,7 @@ export class NumberSettingComponent implements OnInit {
 
   ngOnInit() {
     this.form.valueChanges.subscribe(v => {
-      if (v.format && v.format[0]) { v.format = v.format[0].title }
+      if (v.format && v.format[0]) { v.format = v.format[0].title; }
       this.fieldSettings.emit(v);
     });
   }

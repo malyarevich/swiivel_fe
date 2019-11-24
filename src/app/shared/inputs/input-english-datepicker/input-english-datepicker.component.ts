@@ -51,8 +51,8 @@ export class InputEnglishDatepickerComponent
 
   // ===
 
-  onChange: Function;
-  onTouched: Function;
+  onChange: (value: any) => void;
+  onTouched: () => void;
 
   // value: string = null;
   private destroyed$ = new Subject();
@@ -84,11 +84,11 @@ export class InputEnglishDatepickerComponent
     this.value = value;
   }
 
-  registerOnTouched(fn: Function): void {
+  registerOnTouched(fn: any): void {
     this.onTouched = fn;
   }
 
-  registerOnChange(fn: Function): void {
+  registerOnChange(fn: any): void {
     this.onChange = fn;
   }
 

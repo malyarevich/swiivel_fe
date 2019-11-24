@@ -4,7 +4,7 @@ import { IconsEnum } from '@shared/icons.enum';
 import { SizesEnum } from '@shared/sizes.enum';
 
 @Component({
-  selector: 'app-upload-review-form-document',
+  selector: 'sw-upload-review-form-document',
   templateUrl: './upload-review-form-document.component.html',
   styleUrls: ['./upload-review-form-document.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

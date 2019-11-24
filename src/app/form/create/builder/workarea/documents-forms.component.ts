@@ -1,10 +1,10 @@
-import { Component, OnInit, Input, ViewChild, ChangeDetectorRef } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray, FormGroupName } from '@angular/forms';
-import { IconsEnum } from '@app/shared/icons.enum';
-import { DocumentsModel } from '@app/models/data-collection/form-constructor/form-builder/documents.model';
+import { ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, FormGroupName } from '@angular/forms';
 import { ApiService } from '@app/core/api.service';
-import { Popup } from '@app/core/popup.service';
 import { PopupRef } from '@app/core/components/popup/popup.ref';
+import { Popup } from '@app/core/popup.service';
+import { DocumentsModel } from '@app/models/data-collection/form-constructor/form-builder/documents.model';
+import { IconsEnum } from '@app/shared/icons.enum';
 
 @Component({
   selector: 'sw-documents-forms-workarea',
@@ -18,13 +18,13 @@ export class DocumentsFormsComponent implements OnInit {
   private rootForm: FormGroup;
   public widthOption = ['4 columns', '3 columns', '2 columns', '1 column'].map(t => ({ title: t }));
   public popupDisplay = false;
-  public isContentShown: boolean = true;
-  public isContentFShown: boolean = true;
+  public isContentShown = true;
+  public isContentFShown = true;
   public existingFormsPDF: any[] = [];
 
-  docs: boolean = false;
-  images: boolean = false;
-  audio: boolean = false;
+  docs = false;
+  images = false;
+  audio = false;
 
   documentsFormats = ['pdf', 'doc', 'xlsx', 'csv', 'html', 'txt', 'rtf'].map(i => ({ title: i, value: false }));
   imgFormats = ['jpg', 'jpeg', 'png', 'gif'].map(i => ({ title: i, value: false }));
@@ -32,7 +32,7 @@ export class DocumentsFormsComponent implements OnInit {
   uploadedForm: any;
 
   private docFormats: any;
-  private ref: PopupRef
+  private ref: PopupRef;
 
   @Input()
   set form(_form) {
@@ -89,20 +89,20 @@ export class DocumentsFormsComponent implements OnInit {
 
   upladedFileChange(f: any) {
     if (f) {
-      f.form = this.uploadedForm && this.uploadedForm.length > 0 ? this.uploadedForm[0] : { formName: ""};
+      f.form = this.uploadedForm && this.uploadedForm.length > 0 ? this.uploadedForm[0] : { formName: ''};
     }
   }
 
   fileChange(event, index) {
     const fileList: FileList = event.target.files;
-    let document = (this.lform.get('documents.documentsItems') as FormArray).at(index);
+    const document = (this.lform.get('documents.documentsItems') as FormArray).at(index);
     if (fileList.length > 0) {
       const file: File = fileList[0];
       const formData: FormData = new FormData();
       formData.append('attachment', file, file.name);
       this.api.uploadFile(this.rootForm.value._id, formData).subscribe((result: any) => {
         if (result) {
-          (this.rootForm.get('attachments') as FormGroup).addControl(result.hash, this.fb.group({...result}))
+          (this.rootForm.get('attachments') as FormGroup).addControl(result.hash, this.fb.group({...result}));
           document.patchValue({data: result.hash});
           this.cdr.markForCheck();
         }
@@ -165,7 +165,7 @@ export class DocumentsFormsComponent implements OnInit {
   openFormatsPop(doc: any) {
     if (doc) {
       this.docFormats = doc;
-      this.prepareFormats(this.docFormats.dataTypeAllowed)
+      this.prepareFormats(this.docFormats.dataTypeAllowed);
     }
     this.ref = this.popup.open({
       origin: null,
@@ -174,7 +174,7 @@ export class DocumentsFormsComponent implements OnInit {
     });
     this.ref.afterClosed$.subscribe(result => {
       this.ref = null;
-      this.clearFormats()
+      this.clearFormats();
       this.docFormats = null;
     });
   }

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ɵConsole, ChangeDetectorRef } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, ɵConsole } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
@@ -14,7 +14,7 @@ export class TextSettingComponent implements OnInit {
   @Input()
   set settings(obj: any) {
     if (obj) {
-      console.log('ALPA',obj)
+      console.log('ALPA', obj);
       this.form.patchValue({
         showDefaultValue: !!obj.showDefaultValue,
         showValidators: obj.showValidators,
@@ -23,7 +23,8 @@ export class TextSettingComponent implements OnInit {
         validators: {
           minLength: obj.validators && obj.validators.minLength ? obj.validators.minLength : null,
           maxLength: obj.validators && obj.validators.maxLength ? obj.validators.maxLength : null,
-          criteria: obj.validators && obj.validators.criteria && this.validatorsOptions.findIndex(i => i.title === obj.validators.criteria) >= 0 ?
+          criteria: obj.validators && obj.validators.criteria &&
+            this.validatorsOptions.findIndex(i => i.title === obj.validators.criteria) >= 0 ?
             [this.validatorsOptions[this.validatorsOptions.findIndex(i => i.title === obj.validators.criteria)]] : null
         }
       }, {emitEvent: false});
@@ -49,7 +50,7 @@ export class TextSettingComponent implements OnInit {
 
   ngOnInit() {
     this.form.valueChanges.subscribe(v => {
-      if (v.validators.criteria && v.validators.criteria[0]) { v.validators.criteria = v.validators.criteria[0].title }
+      if (v.validators.criteria && v.validators.criteria[0]) { v.validators.criteria = v.validators.criteria[0].title; }
       this.fieldSettings.emit(v);
     });
   }

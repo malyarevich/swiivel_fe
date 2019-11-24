@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit, ChangeDetectorRef } from '@angular/core';
-import { FormCreatorService } from '../form-creator.service';
-import { StepperService } from '@app/shared/stepper.service';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { ApiService } from '@app/core/api.service';
+import { StepperService } from '@app/shared/stepper.service';
+import { FormCreatorService } from '../form-creator.service';
 
 @Component({
   selector: 'sw-form-creator-workarea',

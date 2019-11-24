@@ -1,4 +1,5 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ComponentFactory, ComponentFactoryResolver, ComponentRef, Input, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ComponentFactory, ComponentFactoryResolver,
+  ComponentRef, Input, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { CheckboxSettingComponent } from './checkbox-setting/checkbox-setting.component';
 import { DateSettingComponent } from './date-setting/date-setting.component';
 import { DropdownSettingComponent } from './dropdown-setting/dropdown-setting.component';
@@ -64,25 +65,22 @@ export class SettingsComponent implements OnInit, AfterViewInit, OnDestroy {
     let res: string;
     switch (t) {
       case 'settings':
-        if (this.type === 113) { res = 'col-8'; }
-        else { res = 'col-4'; }
+        if (this.type === 113) { res = 'col-8'; } else { res = 'col-4'; }
         break;
       case 'logic':
-        if (this.type === 113) { res = 'col-4'; }
-        else { res = 'col-8'; }
+        if (this.type === 113) { res = 'col-4'; } else { res = 'col-8'; }
         break;
     }
     return res;
   }
 
   private initSettings(f: any): void {
-    const c = components.find(c => c.type === f.type);
+    const c = components.find(comp => comp.type === f.type);
     if (c) {
-      // console.log('CCCC,', c)
       this.type = c.type;
       this.title = c.title;
       if (c.type === 107) {
-        console.log('Field group', f)
+        console.log('Field group', f);
       }
       const factory: ComponentFactory<any> = this.resolver.resolveComponentFactory(c.component);
       if (this.container) {
@@ -98,7 +96,7 @@ export class SettingsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   updateField(v) {
     Object.assign(this._field, v);
-    console.log('object assign', Object.assign(this._field, v))
+    console.log('object assign', Object.assign(this._field, v));
   }
 
   ngOnDestroy(): void {

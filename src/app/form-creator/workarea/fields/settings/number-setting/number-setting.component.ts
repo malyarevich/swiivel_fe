@@ -14,7 +14,7 @@ export class NumberSettingComponent implements OnInit {
   @Input()
   set settings(obj: any) {
     if (obj) {
-      console.log(obj)
+      console.log(obj);
       this.form.patchValue({
         showDefaultValue: !!obj.defaultValue,
         showValidators: obj.validators && obj.validators.length > 0,
@@ -48,7 +48,7 @@ export class NumberSettingComponent implements OnInit {
     this.form.valueChanges.subscribe(v => {
       delete v.showDefaultValue;
       delete v.showValidators;
-      if (v.format && v.format[0]) { v.format = v.format[0].title }
+      if (v.format && v.format[0]) { v.format = v.format[0].title; }
       this.fieldSettings.emit(v);
     });
   }

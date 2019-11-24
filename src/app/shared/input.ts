@@ -8,13 +8,13 @@ export class Field {
   @Expose({name: 'fields', toClassOnly: true})
   @Transform((childrenTags) => {
     if (childrenTags) {
-      return childrenTags.map(child => plainToClass(FieldClass, child));
+      return childrenTags.map(child => plainToClass(fieldClass, child));
     }
     return childrenTags;
   }, {toClassOnly: true})
-  @Type(() => FieldClass)
+  @Type(() => fieldClass)
   fields: Array<Field> = [];
 
 }
 
-export const FieldClass = Field;
+export const fieldClass = Field;

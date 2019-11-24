@@ -1,14 +1,14 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy, ContentChild, ViewChild } from '@angular/core';
-import { FormService } from '@app/form/form.service';
-import { FormGroup, FormBuilder, Validators, FormControl, AbstractControl } from '@angular/forms';
-import { DateTime } from 'luxon';
-import { Subject, BehaviorSubject, timer, of } from 'rxjs';
-import { takeUntil, take, tap, filter, debounceTime, distinctUntilChanged, switchMap, map } from 'rxjs/operators';
-import { ApiService } from '@app/core/api.service';
 import { SelectionModel } from '@angular/cdk/collections';
-import { Router, ActivatedRoute } from '@angular/router';
-import { cloneDeep, flatMap, get, isArrayLike, isPlainObject, isString, set, unset, values } from 'lodash';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChild, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ApiService } from '@app/core/api.service';
+import { FormService } from '@app/form/form.service';
 import { InputTextComponent } from '@app/shared/inputs/input-text/input-text.component';
+import { cloneDeep, flatMap, get, isArrayLike, isPlainObject, isString, set, unset, values } from 'lodash';
+import { DateTime } from 'luxon';
+import { BehaviorSubject, of, Subject, timer } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, map, switchMap, take, takeUntil, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'sw-general',
@@ -29,7 +29,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
       value: true
     }
   ];
-  public typeOptions = ['Registration', 'Application'].map(v => { return { title: v, value: v.toLocaleLowerCase() } });
+  public typeOptions = ['Registration', 'Application'].map(v => ({ title: v, value: v.toLocaleLowerCase() }));
   public form: FormGroup;
   public filter: FormControl = new FormControl('');
   public forms = {};
@@ -42,6 +42,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
   }
   public saving = false;
   private destroyed$ = new Subject();
+  public destroyed = false;
   public generalForm: FormGroup;
   public savedForm: object;
   @ViewChild('name', {static: false, read: InputTextComponent}) nameInput: InputTextComponent;
@@ -76,7 +77,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
         }
         this.form.valueChanges.subscribe((val) => {
           if (Array.isArray(val.type) && val.type.length > 0) {
-            this.form.get('type').setValue(val.type[0].value)
+            this.form.get('type').setValue(val.type[0].value);
           }
         });
         this.generalForm.valueChanges.subscribe((val) => {
@@ -84,21 +85,21 @@ export class GeneralComponent implements OnInit, OnDestroy {
         });
         this.generalForm.statusChanges.subscribe(() => {
           this.updateForm();
-        })
+        });
         this.cdr.reattach();
-        this.cdr.markForCheck()
+        this.cdr.markForCheck();
       }
     });
   }
 
   updateForm() {
     if (this.generalForm.valid) {
-      this.form.get('name').setValue(this.generalForm.value.name)
+      this.form.get('name').setValue(this.generalForm.value.name);
       if (Array.isArray(this.generalForm.value.type) && this.generalForm.value.type.length > 0) {
-        this.form.get('type').setValue(this.generalForm.value.type[0].value)
+        this.form.get('type').setValue(this.generalForm.value.type[0].value);
       }
     }
-    if (!this.cdr['destroyed']) {
+    if (!this.destroyed) {
       this.cdr.detectChanges();
     }
   }
@@ -117,17 +118,18 @@ export class GeneralComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.destroyed = false;
     this.filter.valueChanges.subscribe((filterValue) => {
-      let selectedType = this.form.get('type').value;
+      const selectedType = this.form.get('type').value;
       if (filterValue && filterValue.length > 0) {
         filterValue = filterValue.toLowerCase();
-        let forms = this.forms[selectedType];
+        const forms = this.forms[selectedType];
         if (!forms) {
           this.loadAndAppendForms(selectedType).subscribe(() => {
             this.forms$.next(
               forms.filter(form => form.name.toLowerCase().includes(filterValue))
             );
-          })
+          });
         } else {
           this.forms$.next(
             forms.filter(form => form.name.toLowerCase().includes(filterValue))
@@ -142,22 +144,22 @@ export class GeneralComponent implements OnInit, OnDestroy {
     this.formsList.pipe(
       takeUntil(this.destroyed$)
     ).subscribe(forms => {
-      this.cdr.markForCheck()
+      this.cdr.markForCheck();
     });
     this.extendsControl.valueChanges.subscribe((extend) => {
       if (!!extend) {
-        let formType = this.form.get('type').value;
+        const formType = this.form.get('type').value;
         if (!(formType in Object.keys(this.forms))) {
           this.loadAndAppendForms(formType).subscribe(() => {
             this.form.get('example_form_id').enable();
-          })
+          });
         } else {
           this.form.get('example_form_id').enable();
         }
       } else {
         this.form.get('example_form_id').disable();
       }
-    })
+    });
 
     this.form = this.formService.form;
   }
@@ -167,8 +169,9 @@ export class GeneralComponent implements OnInit, OnDestroy {
   }
 
   get extendedFormSrc() {
-    if (this.extendedForm) return `http://34.73.126.99/api/v1/preview-pdf-form/${this.extendedForm._id}?api_token=123`;
-    else return null;
+    if (this.extendedForm) {
+      return `http://34.73.126.99/api/v1/preview-pdf-form/${this.extendedForm._id}?api_token=123`;
+    } else { return null; }
   }
 
   isSelected(item: any) {
@@ -176,12 +179,12 @@ export class GeneralComponent implements OnInit, OnDestroy {
   }
 
   selectForm(item: any) {
-    if (this.extendedForm != item) {
-      this.extendedForm = item
+    if (this.extendedForm !== item) {
+      this.extendedForm = item;
     } else {
-      this.extendedForm = null
+      this.extendedForm = null;
     }
-    this.form.patchValue({ 'example_form_id': this.extendedForm ? this.extendedForm._id : null });
+    this.form.patchValue({ example_form_id: this.extendedForm ? this.extendedForm._id : null });
     this.cdr.markForCheck();
   }
 
@@ -203,7 +206,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
   }
 
   async prevStep() {
-    await this.router.navigate(['forms-dashboard'])
+    await this.router.navigate(['forms-dashboard']);
   }
 
 
@@ -214,7 +217,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
         if (saved) {
           this.router.navigate(['form', saved._id, 'create', 'builder']);
         }
-  
+
       }, (error) => {
         this.saving = false;
         if (Array.isArray(error.errors)) {
@@ -223,7 +226,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
             this.generalForm.get('name').setErrors({unique: true});
           }
         }
-        console.log(error)
+        console.log(error);
       });
     } else {
       console.log(`Invalid form`, this.generalForm);
@@ -231,6 +234,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.destroyed = true;
     this.destroyed$.next(true);
     this.destroyed$.complete();
   }

@@ -1,7 +1,7 @@
-import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { SIGNATURE_TYPES, E_SIGNATURE_TYPES } from '@app/enums/signature-type';
-import { v4 as uuid } from "uuid";
+import { E_SIGNATURE_TYPES, SIGNATURE_TYPES } from '@app/enums/signature-type';
+import { v4 as uuid } from 'uuid';
 
 @Component({
   selector: 'sw-consent',
@@ -26,8 +26,8 @@ export class SidebarConsentComponent {
   set form(_form: any) {
     if (!_form.get('consentInfo')) {
       _form.addControl('consentInfo', this.fb.group({
-        sectionName: ["Consent Section"],
-        sectionWidth: ["full"],
+        sectionName: ['Consent Section'],
+        sectionWidth: ['full'],
         consents: this.fb.array([])
       }));
     }
@@ -39,25 +39,25 @@ export class SidebarConsentComponent {
     private cdr: ChangeDetectorRef
   ) {
     this.lform = this.fb.group({
-      sectionName: ["Consent Section"],
-      sectionWidth: ["full"],
+      sectionName: ['Consent Section'],
+      sectionWidth: ['full'],
       consents: this.fb.array([])
     });
-    
+
   }
 
   isRequireSignature(item) {
     if (item && item.value) {
-      return item.value.signature.isRequire
+      return item.value.signature.isRequire;
     }
   }
-  
+
   get consents() {
-    return this.lform.get('consents') as FormArray
+    return this.lform.get('consents') as FormArray;
   }
 
   addConsentItem(): void {
-    let newItem = this.fb.group({
+    const newItem = this.fb.group({
       title: [''],
       id: [uuid()],
       text: this.fb.group({

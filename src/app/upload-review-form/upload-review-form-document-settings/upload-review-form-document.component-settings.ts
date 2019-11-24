@@ -1,10 +1,10 @@
-import { Component, Input, Output, OnChanges, SimpleChanges, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { IconsEnum } from '@shared/icons.enum';
 import { Document } from '@models/upload-review-form/document.model';
+import { IconsEnum } from '@shared/icons.enum';
 
 @Component({
-  selector: 'app-upload-review-form-document-settings',
+  selector: 'sw-upload-review-form-document-settings',
   templateUrl: './upload-review-form-document-settings.component.html',
   styleUrls: ['./upload-review-form-document-settings.component.scss'],
 })
@@ -29,7 +29,7 @@ export class UploadReviewFormDocumentSettingsComponent implements OnChanges {
       student: new FormControl([], Validators.required)
     });
 
-    this.form.controls['account'].valueChanges.subscribe(value => {
+    this.form.controls.account.valueChanges.subscribe(value => {
       if (value.length && value[0]) {
         this.students = value[0].students;
       }
@@ -38,7 +38,7 @@ export class UploadReviewFormDocumentSettingsComponent implements OnChanges {
 
     this.form.valueChanges.subscribe(values => {
       if (values.type[0] && values.type[0].value &&
-        values.account[0] &&values.account[0].value &&
+        values.account[0] && values.account[0].value &&
         values.student[0] && values.student[0].value) {
 
         if (this.document.entity_id !== values.type[0].value ||
@@ -82,7 +82,7 @@ export class UploadReviewFormDocumentSettingsComponent implements OnChanges {
       }
 
       if (document.person_id) {
-        student = account[0]['students'].filter(value => value.value === parseInt(document.person_id, 10));
+        student = account[0].students.filter(value => value.value === parseInt(document.person_id, 10));
       }
     }
 

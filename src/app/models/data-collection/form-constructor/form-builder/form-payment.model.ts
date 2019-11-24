@@ -1,4 +1,4 @@
-export interface FormPayment{
+export interface FormPayment {
   name: string;
   isActive: boolean;
   type: FormPaymentType;

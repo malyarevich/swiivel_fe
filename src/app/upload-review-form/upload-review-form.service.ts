@@ -184,8 +184,8 @@ export class UploadReviewFormService extends ApiService {
 
 
   exportPDFForm(mongoId: string) {
-    return this.download(`/proxy/form-builder/pdf-export/${mongoId}`).pipe(map((response: any)=> {
-      return window.URL.createObjectURL(new Blob([response], {type: 'application/pdf'}))
+    return this.download(`/proxy/form-builder/pdf-export/${mongoId}`).pipe(map((response: any) => {
+      return window.URL.createObjectURL(new Blob([response], {type: 'application/pdf'}));
     }), first());
   }
 

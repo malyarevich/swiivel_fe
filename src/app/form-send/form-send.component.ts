@@ -1,9 +1,9 @@
+import { CdkStepper } from '@angular/cdk/stepper';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormSendService } from './form-send.service';
-import { CdkStepper } from '@angular/cdk/stepper';
-import { StepperService } from '@app/shared/stepper.service';
 import { FormService } from '@app/form/form.service';
+import { StepperService } from '@app/shared/stepper.service';
+import { FormSendService } from './form-send.service';
 
 @Component({
   selector: 'sw-form-send',
@@ -36,7 +36,7 @@ export class FormSendComponent implements OnInit {
             this.formService.form$.subscribe((form) => {
               //  console.log(form);
               const formId = form.value._id;
-              if(formId) {
+              if (formId) {
                 console.log('sendComponent id', formId);
                 this.formSendService.initFormSend(formId);
               }

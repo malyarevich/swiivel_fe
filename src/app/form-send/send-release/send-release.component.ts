@@ -2,28 +2,28 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
+  OnDestroy,
   OnInit,
   Renderer2,
-  ViewChild,
-  OnDestroy
-} from "@angular/core";
+  ViewChild
+} from '@angular/core';
 import {
   FormBuilder,
   FormControl,
   FormGroup,
   Validators
-} from "@angular/forms";
-import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
-import { IRound } from "@app/form-send/models/send.model";
-import { DataCollectionService } from "@app/forms-dashboard/data-collection.service";
-import { DateTime } from "luxon";
-import { BehaviorSubject, Subscription } from "rxjs";
-import { FormSendService } from "../form-send.service";
+} from '@angular/forms';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { IRound } from '@app/form-send/models/send.model';
+import { DataCollectionService } from '@app/forms-dashboard/data-collection.service';
+import { DateTime } from 'luxon';
+import { BehaviorSubject, Subscription } from 'rxjs';
+import { FormSendService } from '../form-send.service';
 
 @Component({
-  selector: "sw-send-release",
-  templateUrl: "./send-release.component.html",
-  styleUrls: ["./send-release.component.scss"]
+  selector: 'sw-send-release',
+  templateUrl: './send-release.component.html',
+  styleUrls: ['./send-release.component.scss']
 })
 export class SendReleaseComponent implements OnInit, OnDestroy {
   public $roundsList: BehaviorSubject<IRound[]> = new BehaviorSubject([]);
@@ -37,7 +37,7 @@ export class SendReleaseComponent implements OnInit, OnDestroy {
   public isNew = false;
   public showForm = false;
   public selectOptions = Array.from({ length: 30 }).map((_, i) => i);
-  public mailingOptions = ["Use Mailing House", "Self-mail"];
+  public mailingOptions = ['Use Mailing House', 'Self-mail'];
   public download: {
     url: SafeResourceUrl;
     filename: string;
@@ -46,7 +46,7 @@ export class SendReleaseComponent implements OnInit, OnDestroy {
     filename: null
   };
 
-  @ViewChild("link", { static: false }) link: ElementRef;
+  @ViewChild('link', { static: false }) link: ElementRef;
   roundId: any;
 
   get roundsList(): IRound[] {
@@ -86,21 +86,21 @@ export class SendReleaseComponent implements OnInit, OnDestroy {
       this.cdr.markForCheck();
     });
     this.form = this.fb.group({
-      name: ["", [Validators.required]],
-      start_date: ["", [Validators.required]],
-      end_date: ["", [Validators.required]],
+      name: ['', [Validators.required]],
+      start_date: ['', [Validators.required]],
+      end_date: ['', [Validators.required]],
       types: fb.group({
         email: this.fb.group({
           selected: [false],
-          subject: [""],
-          body: [""]
+          subject: [''],
+          body: ['']
         }),
         mailing: this.fb.group({
           selected: [false],
-          delay_days: [""],
-          is_self_mail: ["Use Mailing House"],
+          delay_days: [''],
+          is_self_mail: ['Use Mailing House'],
           is_delay_days: [false],
-          mailing_house_id: [""]
+          mailing_house_id: ['']
         })
       })
     });
@@ -139,16 +139,16 @@ export class SendReleaseComponent implements OnInit, OnDestroy {
   }
 
   getIcon(expanded: boolean): string {
-    return expanded ? "fa-caret-up" : "fa-caret-down";
+    return expanded ? 'fa-caret-up' : 'fa-caret-down';
   }
 
   getSplits(item: any) {
-    let res = "";
+    let res = '';
     if (item.splits && item.splits.length > 0) {
       item.splits.forEach((s, index) => {
         res += `${s.name}`;
         if (index < item.splits.length - 1) {
-          res += ", ";
+          res += ', ';
         }
       });
     }
@@ -165,15 +165,15 @@ export class SendReleaseComponent implements OnInit, OnDestroy {
   }
 
   getReleaseType(item) {
-    let res = "";
+    let res = '';
     if (!!item.types.email) {
-      res += "Email";
+      res += 'Email';
     }
     if (!!item.types.email && !!item.types.mailing) {
-      res += ", ";
+      res += ', ';
     }
     if (!!item.types.mailing) {
-      res += "Mailing";
+      res += 'Mailing';
     }
     return res;
   }
@@ -223,21 +223,21 @@ export class SendReleaseComponent implements OnInit, OnDestroy {
     this.form.reset();
     this.form.patchValue({
       name: i.name,
-      start_date: DateTime.fromString(i.start_date, "yyyy-MM-dd").toFormat(
-        "MM/dd/yyyy"
+      start_date: DateTime.fromString(i.start_date, 'yyyy-MM-dd').toFormat(
+        'MM/dd/yyyy'
       ),
-      end_date: DateTime.fromString(i.end_date, "yyyy-MM-dd").toFormat(
-        "MM/dd/yyyy"
+      end_date: DateTime.fromString(i.end_date, 'yyyy-MM-dd').toFormat(
+        'MM/dd/yyyy'
       )
     });
     if (!!i.types.email) {
-      this.form.get("types.email").patchValue({
+      this.form.get('types.email').patchValue({
         selected: true,
         ...i.types.email
       });
     }
     if (!!i.types.mailing) {
-      this.form.get("types.mailing").patchValue({
+      this.form.get('types.mailing').patchValue({
         selected: true,
         ...i.types.mailing
       });

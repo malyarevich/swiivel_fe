@@ -16,8 +16,8 @@ export const EMAIL_CONTROL_ACCESSOR = {
 })
 export class InputEmailComponent implements OnInit, ControlValueAccessor {
 
-  onChange: Function;
-  onTouched: Function;
+  onChange: (value: any) => void;
+  onTouched: () => void;
   focus = false;
 
   @ViewChild('input', {static: true}) input: ElementRef;
@@ -31,11 +31,11 @@ export class InputEmailComponent implements OnInit, ControlValueAccessor {
     this.renderer.setProperty(this.input.nativeElement, 'value', value);
   }
 
-  registerOnChange(fn: Function): void {
+  registerOnChange(fn: any): void {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: Function): void {
+  registerOnTouched(fn: any): void {
     this.onTouched = fn;
   }
 

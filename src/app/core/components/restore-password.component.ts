@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { fadeInOutVoid } from '@core/animations';
 
 @Component({
-  selector: 'app-restore-password',
+  selector: 'sw-restore-password',
   templateUrl: './restore-password.component.html',
   styleUrls: ['./restore-password.component.scss'],
   animations: [fadeInOutVoid()]

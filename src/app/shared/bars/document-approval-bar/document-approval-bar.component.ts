@@ -4,7 +4,7 @@ import { UploadReviewFormService } from '@app/upload-review-form/upload-review-f
 import { Document } from '@models/upload-review-form/document.model';
 
 @Component({
-  selector: 'sw-document-approval-bar',
+  selector: 'sw-shared-document-approval-bar',
   templateUrl: './document-approval-bar.component.html',
   styleUrls: ['./document-approval-bar.component.scss']
 })

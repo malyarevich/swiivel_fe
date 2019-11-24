@@ -5,7 +5,7 @@ import { UploadReviewFormStatusesEnum } from '../upload-review-form-statuses.enu
 import { UploadReviewFormService } from '../upload-review-form.service';
 
 @Component({
-  selector: 'app-upload-review-form-item',
+  selector: 'sw-upload-review-form-item',
   templateUrl: './upload-review-form-item.component.html',
   styleUrls: ['./upload-review-form-item.component.scss']
 })
@@ -23,7 +23,8 @@ export class UploadFormReviewItemComponent {
   constructor(public uploadReviewFormService: UploadReviewFormService) {}
 
   selectItem(e: Event): void {
-    if (e && e.target && (e.target['tagName'] === 'BUTTON' || e.target['parentElement']['tagName'] === 'BUTTON')) {
+    if (e && e.target &&
+      ((e.target as HTMLElement).tagName === 'BUTTON' || (e.target as HTMLElement).parentElement.tagName === 'BUTTON')) {
       e.preventDefault();
     } else {
       this.selected.emit(this.document._id);

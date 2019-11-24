@@ -1,30 +1,30 @@
-<div class="app-form-table">
-  <div class="app-form-table__header">
-    <div class="app-form-table__text">
+<div class="sw-form-table">
+  <div class="sw-form-table__header">
+    <div class="sw-form-table__text">
       <sw-page-header>
         Data Collection
       </sw-page-header>
     </div>
   </div>
-  <div class="app-form-table__table">
-    <div class="app-form-table__header">
-      <div class="app-form-table__text">
+  <div class="sw-form-table__table">
+    <div class="sw-form-table__header">
+      <div class="sw-form-table__text">
         <sw-block-header>
           forms
         </sw-block-header>
       </div>
-      <div class="app-form-table__controls">
-        <div class="app-form-table__controls-bulk" data-e2e="bulkactions">
+      <div class="sw-form-table__controls">
+        <div class="sw-form-table__controls-bulk" data-e2e="bulkactions">
           <sw-dropdown-select
             #bulk="dropdown"
-            panelClass="app-form-table-dropdown-overlay"
+            panelClass="sw-form-table-dropdown-overlay"
             [disabled]="!selectedAnyRow"
             [noneColor]="true"
             [options]="bulkOptions"
             (selected)="bulkAction($event)"
           >
             <sw-button [disabled]="!selectedAnyRow" color="white">
-              <span class="app-form-table__controls-bulk-btn-text">Bulk Actions</span>
+              <span class="sw-form-table__controls-bulk-btn-text">Bulk Actions</span>
               <i class="fas fa-chevron-down" [ngClass]="{'fa-chevron-up': bulk.isOpened}"></i>
             </sw-button>
           </sw-dropdown-select>
@@ -35,11 +35,11 @@
       </div>
     </div>
     <div>
-      <div class="app-form-table__tabs" data-e2e="alltabs">
+      <div class="sw-form-table__tabs" data-e2e="alltabs">
         <button
           *ngFor="let tab of statusArray"
-          class="app-form-table__tab"
-          [class.app-form-table__tab--activated]="activeTab == tab"
+          class="sw-form-table__tab"
+          [class.sw-form-table__tab--activated]="activeTab == tab"
           (click)="clickTab(tab)"
         >
           {{ tab.title }}

@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '@app/core/auth.guard';
+import { FormComponent } from '@app/shared/form.component';
 import { MainComponent } from '@shared/main.component';
 import { FormCreatorComponent } from './form-creator.component';
-import { FormComponent } from '@app/shared/form.component';
 
 
 const routes: Routes = [

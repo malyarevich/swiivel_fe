@@ -1,5 +1,4 @@
 import { ActiveDescendantKeyManager } from '@angular/cdk/a11y';
-import { DOWN_ARROW, ENTER, ESCAPE, UP_ARROW } from '@angular/cdk/keycodes';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -14,7 +13,7 @@ import {
   ViewChildren
 } from '@angular/core';
 import { Popup } from '@app/core/popup.service';
-import { isObjectLike, isString, isNumber } from 'lodash';
+import { isNumber, isObjectLike, isString } from 'lodash';
 import { SelectOptionDirective } from './option.directive';
 
 @Component({
@@ -96,17 +95,17 @@ export class DropdownSelectComponent {
   onKeyDown(event: KeyboardEvent) {
     event.stopImmediatePropagation();
     if (event) {
-      if (event.keyCode === ENTER) {
+      if (event.key === 'Enter') {
         event.preventDefault();
         if (this.keyManager && this.keyManager.activeItem) {
           this.selectedValue.emit(this.keyManager.activeItem.option);
         }
         this.close();
         this.cdr.markForCheck();
-      } else if (this.keyManager && event.keyCode === UP_ARROW) {
+      } else if (this.keyManager && event.key === 'ArrowUp') {
         this.keyManager.setPreviousItemActive();
         this.cdr.markForCheck();
-      } else if (event.keyCode === DOWN_ARROW) {
+      } else if (event.key === 'ArrowDown') {
         if (this.keyManager) {
           if (this._ref) {
             if (this.keyManager.activeItem === null) {
@@ -120,15 +119,11 @@ export class DropdownSelectComponent {
             this.showPopup();
           }
         }
-      } else if (event.keyCode === ESCAPE) {
+      } else if (event.key === 'Escape') {
         this.selectedValue.emit(null);
         this.close();
       }
     }
-
-    // if (event.keyCode === DOWN_ARROW || event.keyCode === UP_ARROW) {
-    //
-    // }
  }
 
   isSelected(i) {

@@ -31,8 +31,8 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
   private _ref;
   private _sm: SelectionModel<any>;
 
-  onChange: Function;
-  onTouched: Function;
+  onChange: (value: any) => void;
+  onTouched: () => void;
   dropdownList: any[];
   dropdownRawList: any[];
   _multiple = false;
@@ -117,11 +117,11 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
     this.cdr.markForCheck();
   }
 
-  registerOnTouched(fn: Function): void {
+  registerOnTouched(fn: any): void {
     this.onTouched = fn;
   }
 
-  registerOnChange(fn: Function): void {
+  registerOnChange(fn: any): void {
     this.onChange = fn;
   }
 
@@ -183,7 +183,7 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
       this._ref.afterClosed$.subscribe(result => {
         this.isPopupShown.emit(false);
         this._ref = null;
-        if (this.onTouched) this.onTouched();
+        if (this.onTouched) { this.onTouched(); }
         this.cdr.markForCheck();
       });
     }

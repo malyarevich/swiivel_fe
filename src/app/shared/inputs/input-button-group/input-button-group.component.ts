@@ -3,12 +3,12 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
+  EventEmitter,
   forwardRef,
   Input,
-  Renderer2,
-  ViewChild,
   Output,
-  EventEmitter
+  Renderer2,
+  ViewChild
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 

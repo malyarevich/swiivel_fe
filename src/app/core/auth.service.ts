@@ -56,9 +56,9 @@ export class AuthService {
     return true;
   }
 
-  load() {
+  load(): Promise<boolean> {
     return new Promise((resolve, _reject) => {
-      let savedUser = this.loadUser();
+      const savedUser = this.loadUser();
       if (savedUser) {
         this.setUser(savedUser);
         return resolve(true);
@@ -111,7 +111,11 @@ export class AuthService {
     }
   }
   public saveUser(user: User, session?: boolean) {
-    if (session) { return sessionStorage.setItem('user', JSON.stringify(user)); } else { return localStorage.setItem('user', JSON.stringify(user)); }
+    if (session) {
+      return sessionStorage.setItem('user', JSON.stringify(user));
+    } else {
+      return localStorage.setItem('user', JSON.stringify(user));
+    }
   }
 
 

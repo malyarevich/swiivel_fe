@@ -1,5 +1,5 @@
-import {AccompanyingText} from "./documents.model";
-import {Field} from "../../field.model";
+import {Field} from '../../field.model';
+import {AccompanyingText} from './documents.model';
 
 export interface FormsDivModel {
   id: string;
@@ -11,11 +11,11 @@ export interface FormsDivModel {
   linkedField?: Field | FormPDFSignatureModel | FormPDFTemporaryField |  any;
   type?: string;
 }
-export interface FormPDFSignatureModel{
+export interface FormPDFSignatureModel {
   id: string;
-  //isE - E - true, Wet - false
+  // isE - E - true, Wet - false
   isE: boolean;
-  //isSystem - System - true, External - false
+  // isSystem - System - true, External - false
   isSystem: boolean;
   isBothParents: boolean;
 }
@@ -26,36 +26,36 @@ export interface FormPDFTemporaryField {
 }
 
 export interface FormsPDFModel {
-  id:string;
+  id: string;
   name: string;
   // isNew: New - true, Existing - false
   isNew: boolean;
-  //isPerFamily: Family - true, Student - false
+  // isPerFamily: Family - true, Student - false
   isPerFamily: boolean;
-  //isFillableOnline: Fillable - true
+  // isFillableOnline: Fillable - true
   isFillableOnline: boolean;
-  //isAllowDownloadUpload: Allow - true
+  // isAllowDownloadUpload: Allow - true
   isAllowDownloadUpload: boolean;
-  //accompanyingText - should contain object with accompanying text and relative info
-  accompanyingText?:AccompanyingText;
-  //form - all info relative pdf form
+  // accompanyingText - should contain object with accompanying text and relative info
+  accompanyingText?: AccompanyingText;
+  // form - all info relative pdf form
   form?: FormPDFDownloadModel | null;
   isEdit?: boolean;
 }
 
 
 export interface FormPDFDownloadModel {
-  created_at?: string,
-  filename?: string,
-  formName?: string,
-  hash?: string,
-  link?: string,
-  name?: string,
-  type?: string,
-  updated_at?: string,
-  _id?: string,
-  fieldsPdf?: FormsDivModel[][] | null
-  numberOfPages?:number
+  created_at?: string;
+  filename?: string;
+  formName?: string;
+  hash?: string;
+  link?: string;
+  name?: string;
+  type?: string;
+  updated_at?: string;
+  _id?: string;
+  fieldsPdf?: FormsDivModel[][] | null;
+  numberOfPages?: number;
 }
 
 export const formPDFItemDefault: FormsPDFModel = {

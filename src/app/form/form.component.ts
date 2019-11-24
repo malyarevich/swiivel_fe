@@ -1,14 +1,14 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
-import { Router, ActivatedRoute } from "@angular/router";
-import { FormService } from "./form.service";
-import { Subject, BehaviorSubject } from "rxjs";
-import { takeUntil } from "rxjs/operators";
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormSendService } from '@app/form-send/form-send.service';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { FormService } from './form.service';
 
 @Component({
-  selector: "sw-form",
-  templateUrl: "./form.component.html",
-  styleUrls: ["./form.component.scss"]
+  selector: 'sw-form',
+  templateUrl: './form.component.html',
+  styleUrls: ['./form.component.scss']
 })
 export class FormComponent implements OnInit, OnDestroy {
   private destroyed$ = new Subject();
@@ -23,11 +23,11 @@ export class FormComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.route.paramMap.pipe(takeUntil(this.destroyed$)).subscribe(params => {
-      const formId = params.get("formId");
-      if (formId === "new") {
+      const formId = params.get('formId');
+      if (formId === 'new') {
         this.formService.isFormHasId = false;
       }
-      let loadFormObservable = this.formService.loadForm(formId);
+      const loadFormObservable = this.formService.loadForm(formId);
       if (formId !== 'new') {
         this.formSendService.initFormSend(formId);
       }
@@ -39,14 +39,14 @@ export class FormComponent implements OnInit, OnDestroy {
           } else {
             this.formService.isFormHasId = false;
             this.formService.form.valueChanges.subscribe(value => {
-              if (value["_id"]) {
-                this.formService.isFormHasId = value && value["_id"] !== "new";
+              if (value._id) {
+                this.formService.isFormHasId = value && value._id !== 'new';
               }
             });
           }
         });
       }
-      
+
     });
 
     this.isFormHasId$ = this.formService.isFormHasIdSubject;
@@ -55,11 +55,11 @@ export class FormComponent implements OnInit, OnDestroy {
   logout() {
     window.localStorage.clear();
     window.sessionStorage.clear();
-    this.router.navigate(["/login"]);
+    this.router.navigate(['/login']);
   }
 
   isRoute(path: string) {
-    let url = this.router.url.split('/')
+    const url = this.router.url.split('/');
     return url.length >= 4 ? path === url[3] : false;
   }
 

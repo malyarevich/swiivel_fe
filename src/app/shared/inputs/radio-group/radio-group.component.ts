@@ -16,8 +16,8 @@ const RADIOGROUP_CONTROL_ACCESSOR = {
 })
 export class RadioGroupComponent implements OnInit, ControlValueAccessor {
   _options: any[];
-  onChange: Function;
-  onTouched: Function;
+  onChange: (value: any) => void;
+  onTouched: () => void;
   private _sm: SelectionModel<any>;
   @Input() readonly;
 
@@ -51,11 +51,11 @@ export class RadioGroupComponent implements OnInit, ControlValueAccessor {
     if (item) { this._sm.select(item); }
   }
 
-  registerOnChange(fn: Function): void {
+  registerOnChange(fn: any): void {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: Function): void {
+  registerOnTouched(fn: any): void {
     this.onTouched = fn;
   }
 }

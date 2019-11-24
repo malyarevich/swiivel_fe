@@ -1,6 +1,6 @@
 @import 'index';
 
-.app-form-table {
+.sw-form-table {
   padding: 15px;
   position: relative;
 
@@ -40,7 +40,7 @@
     border-radius: 0;
     background: transparent;
 
-    &.app-form-table__tab--activated {
+    &.sw-form-table__tab--activated {
       border-bottom: 2px solid $element-base-color;
       color: $element-base-color;
     }
@@ -262,7 +262,7 @@
   }
 }
 
-.app-form-table__controls-bulk {
+.sw-form-table__controls-bulk {
   margin: 0 10px 0 0;
 }
 

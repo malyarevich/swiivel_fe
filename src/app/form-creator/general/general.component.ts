@@ -1,13 +1,13 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
-import { StepperService } from '@app/shared/stepper.service';
-import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ApiService } from '@app/core/api.service';
-import { DateTime } from 'luxon';
-import { GeneralDataSource } from './general.datasource';
-import { takeUntil, filter, withLatestFrom } from 'rxjs/operators';
-import { Subject, BehaviorSubject } from 'rxjs';
 import { SelectionModel } from '@angular/cdk/collections';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ApiService } from '@app/core/api.service';
+import { StepperService } from '@app/shared/stepper.service';
+import { DateTime } from 'luxon';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { filter, takeUntil, withLatestFrom } from 'rxjs/operators';
 import { FormCreatorService } from '../form-creator.service';
+import { GeneralDataSource } from './general.datasource';
 
 
 @Component({
@@ -26,7 +26,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
       value: true
     }
   ];
-  typeOptions = ['Registration', 'Application'].map(v => { return { title: v, value: v.toLocaleLowerCase() } })
+  typeOptions = ['Registration', 'Application'].map(v => ({ title: v, value: v.toLocaleLowerCase() }));
 
   // dataSource: GeneralDataSource = new GeneralDataSource(this.api);
 
@@ -51,9 +51,9 @@ export class GeneralComponent implements OnInit, OnDestroy {
 
     this.filter.valueChanges.subscribe((filterValue) => {
       let selectedType = this.form.get('type').value;
-      if (selectedType) selectedType = selectedType[0].value;
+      if (selectedType) { selectedType = selectedType[0].value; }
       if (filterValue && filterValue.length > 0) {
-        let forms = this.forms[selectedType];
+        const forms = this.forms[selectedType];
         filterValue = filterValue.toLowerCase();
         this.forms$.next(
           forms.filter(form => form.name.toLowerCase().startsWith(filterValue))
@@ -65,7 +65,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
       }
     });
     this.formsList.subscribe(forms => {
-      this.cdr.markForCheck()
+      this.cdr.markForCheck();
     });
     this.formCreatorService.form$.pipe(
       takeUntil(this.destroyed$),
@@ -74,31 +74,31 @@ export class GeneralComponent implements OnInit, OnDestroy {
         name: [null, Validators.required],
         type: [[{ title: 'Registration', value: 'registration' }]]
       });
-      console.log('Form Template', form)
+      console.log('Form Template', form);
 
       this.form.get('type').valueChanges.pipe(
         takeUntil(this.destroyed$)
       ).subscribe(type => {
-        if (type) type = type[0].value;
+        if (type) { type = type[0].value; }
         if (!(type in this.forms)) {
           this.api.getFormsShortList(type).subscribe((forms) => {
             this.forms[type] = forms;
             this.forms$.next(forms);
-          })
+          });
         } else {
-          this.forms$.next(this.forms[type])
+          this.forms$.next(this.forms[type]);
         }
       });
       if (form) {
         this.form.get('type').patchValue([this.typeOptions.find(item => item.value === form.get('type').value)]);
       }
-    })
+    });
   }
 
   ngOnInit() {
     this.dublicate.valueChanges.subscribe((fromExisting) => {
       if (!!fromExisting) {
-        this.form.addControl('example_form_id', this.fb.control(null, { validators: Validators.required }))
+        this.form.addControl('example_form_id', this.fb.control(null, { validators: Validators.required }));
       } else {
         try {
           this.form.removeControl('example_form_id');
@@ -106,7 +106,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
           console.warn(error);
         }
       }
-    })
+    });
   }
 
   get selectedItem() {
@@ -121,7 +121,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
   }
 
   nextStep(): void {
-    if (!this.form.valid) return;
+    if (!this.form.valid) { return; }
     this.saving = true;
     this.saveForm().then((response) => {
       this.saving = false;
@@ -140,13 +140,13 @@ export class GeneralComponent implements OnInit, OnDestroy {
           this.api.updateGeneralForm(this.form.value, this.form.value._id).subscribe(resolve);
         } else {
           this.api.saveNewForm({ name: this.form.value.name, type: this.form.value.type }).subscribe((response) => {
-            resolve(response)
-          })
+            resolve(response);
+          });
         }
       } else {
         reject(this.form.errors);
       }
-    })
+    });
 
 
   }
@@ -173,23 +173,23 @@ export class GeneralComponent implements OnInit, OnDestroy {
 
   selectForm(item: any) {
     this.sm.select(item);
-    this.form.patchValue({ 'example_form_id': item._id });
+    this.form.patchValue({ example_form_id: item._id });
     this.cdr.markForCheck();
   }
 
   afterPdfLoadComplete(event) {
-    console.log('afterr', event)
+    console.log('afterr', event);
   }
   pdfError(error) {
-    console.log(error)
+    console.log(error);
   }
 
   loadComplete(event) {
-    console.log(event)
+    console.log(event);
   }
 
   ngOnDestroy(): void {
-    this.destroyed$.next(true)
+    this.destroyed$.next(true);
     this.destroyed$.complete();
   }
 

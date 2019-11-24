@@ -1,8 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { DocumentsModel, documentItemDefault } from '@app/models/data-collection/form-constructor/form-builder/documents.model';
-import { cloneDeep } from 'lodash';
+import { documentItemDefault, DocumentsModel } from '@app/models/data-collection/form-constructor/form-builder/documents.model';
 import { formPDFItemDefault } from '@app/models/data-collection/form-constructor/form-builder/formsPDF.model';
+import { cloneDeep } from 'lodash';
 
 @Component({
   selector: 'sw-documents-forms',
@@ -33,8 +33,8 @@ export class SidebarDocumentsFormsComponent implements OnInit {
   ];
   isPerFamilyD: any[] = [];
   radioGroup = ['Needed Per Family', 'Needed Per Student'];
-  isOpenDocuments: boolean = false;
-  isOpenForms: boolean = false;
+  isOpenDocuments = false;
+  isOpenForms = false;
   lform: FormGroup;
 
   @Input()
@@ -53,7 +53,7 @@ export class SidebarDocumentsFormsComponent implements OnInit {
         })
       }));
     }
-    this.lform = _form.get('documentsForms')
+    this.lform = _form.get('documentsForms');
   }
 
   constructor(
@@ -134,8 +134,8 @@ export class SidebarDocumentsFormsComponent implements OnInit {
               name: [null],
               type: [null]
             })
-          }))
-        break;
+          }));
+          break;
     }
     // console.log(this.lform);
   }
@@ -145,10 +145,10 @@ export class SidebarDocumentsFormsComponent implements OnInit {
       switch (from) {
         case 'documents':
             (this.lform.get('documents.documentsItems') as FormArray).removeAt(index);
-          break;
+            break;
         case 'forms':
             (this.lform.get('formsPDF.formsPDFItems') as FormArray).removeAt(index);
-          break;
+            break;
       }
     }
   }

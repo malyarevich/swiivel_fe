@@ -4,7 +4,7 @@ import { UploadReviewFormStatusesEnum } from '../upload-review-form-statuses.enu
 import { UploadReviewFormService } from '../upload-review-form.service';
 
 @Component({
-  selector: 'app-upload-review-form-footer',
+  selector: 'sw-upload-review-form-footer',
   templateUrl: './upload-review-form-footer.component.html',
   styleUrls: ['./upload-review-form-footer.component.scss']
 })

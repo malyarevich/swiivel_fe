@@ -109,20 +109,20 @@ export class PdfLoaderComponent implements OnInit {
   }
 
   onUploadSelected(file, document: any) {
-    this.uploadStatus[document['id']] = UploadStatus.selected;
-    this.file[document['id']] = file;
-    //`File selected: ${file.name} (${file.size})`;
+    this.uploadStatus[document.id] = UploadStatus.selected;
+    this.file[document.id] = file;
+    // `File selected: ${file.name} (${file.size})`;
   }
 
   onUploadProgress(progress, document: any) {
-    this.uploadStatus[document['id']] = UploadStatus.process;
-    this.progress[document['id']] = progress;
-    //` Upload progress: ${progress.loaded} of ${progress.total}`;
+    this.uploadStatus[document.id] = UploadStatus.process;
+    this.progress[document.id] = progress;
+    // ` Upload progress: ${progress.loaded} of ${progress.total}`;
   }
 
   onUploadResponse(response, document: any) {
-    this.uploadStatus[document['id']] = UploadStatus.selected;
-    this.response[document['id']] = response;
-    //`Upload complete. File path: ${response.file_path} (${response.file_origin_name})`;
+    this.uploadStatus[document.id] = UploadStatus.selected;
+    this.response[document.id] = response;
+    // `Upload complete. File path: ${response.file_path} (${response.file_origin_name})`;
   }
 }

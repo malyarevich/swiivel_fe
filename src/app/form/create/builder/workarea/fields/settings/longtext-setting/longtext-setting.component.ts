@@ -23,7 +23,8 @@ export class LongtextSettingComponent implements OnInit {
         validators: {
           minLength: obj.validators && obj.validators.minLength ? obj.validators.minLength : null,
           maxLength: obj.validators && obj.validators.maxLength ? obj.validators.maxLength : null,
-          criteria: obj.validators && obj.validators.criteria && this.validatorsOptions.findIndex(i => i.title === obj.validators.criteria) >= 0 ?
+          criteria: obj.validators && obj.validators.criteria &&
+            this.validatorsOptions.findIndex(i => i.title === obj.validators.criteria) >= 0 ?
             [this.validatorsOptions[this.validatorsOptions.findIndex(i => i.title === obj.validators.criteria)]] : null
         }
       }, {emitEvent: false});
@@ -50,7 +51,7 @@ export class LongtextSettingComponent implements OnInit {
 
   ngOnInit() {
     this.form.valueChanges.subscribe(v => {
-      if (v.validators.criteria && v.validators.criteria[0]) { v.validators.criteria = v.validators.criteria[0].title }
+      if (v.validators.criteria && v.validators.criteria[0]) { v.validators.criteria = v.validators.criteria[0].title; }
       this.fieldSettings.emit(v);
     });
   }

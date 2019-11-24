@@ -130,8 +130,6 @@ export class FormCreatorService {
           paths.push(foundIdx, 'fields');
           return paths;
         } else { return null; }
-      } else {
-        debugger;
       }
     }, []);
     if (parentPath === null) { return null; }
@@ -249,7 +247,7 @@ export class FormCreatorService {
   prependPath(field, path) {
     field.path.splice(0, 0, path);
     field.pathId = path + field.pathId;
-    if (Array.isArray(field.fields)) { field.fields.forEach(field => this.prependPath(field, path)); }
+    if (Array.isArray(field.fields)) { field.fields.forEach(cfield => this.prependPath(cfield, path)); }
     return field;
   }
   addField(field, ancestors?, only?) {
@@ -291,8 +289,6 @@ export class FormCreatorService {
           });
           spaceParent = this.getFieldSpaceParent(field);
           spaceParent.push(field);
-        } else {
-          debugger;
         }
       }
     } else {
@@ -302,11 +298,8 @@ export class FormCreatorService {
         parent = this.addField(parent, ancestors, true);
         if (parent) {
           this.addField(field);
-        } else { debugger; }
+        }
       } else {
-        console.error('oops');
-        debugger;
-        console.log(ancestors);
         return false;
       }
 
@@ -336,8 +329,6 @@ export class FormCreatorService {
           paths.push(foundIdx, 'fields');
           return paths;
         } else { return null; }
-      } else {
-        debugger;
       }
     }, []);
     return parentPath;
@@ -355,8 +346,6 @@ export class FormCreatorService {
           paths.push(foundIdx, 'fields');
           return paths;
         } else { return null; }
-      } else {
-        debugger;
       }
     }, []);
     if (fieldPath) { fieldPath.pop(); }
@@ -402,16 +391,17 @@ export class FormCreatorService {
 
 
   createField(field, ctx = this) {
-    let schema = this.fieldTypes.mapped.find(ftype => ftype.type === field.type && ftype.mapped === field.mapped && ftype.name === field.name);
+    let schema = this.fieldTypes.mapped.find(ftype =>
+      ftype.type === field.type && ftype.mapped === field.mapped && ftype.name === field.name);
     if (!schema) { schema = this.fieldTypes.schema.find(ftype => ftype.type === field.type); }
     const obj = Object.assign({}, schema, field);
     delete obj.fields;
     const form = this.fb.group({});
-    for (const field in obj) {
-      if (isPlainObject(obj[field])) {
-        form.addControl(field.toString(), this.fb.group(obj[field]));
+    for (const key in obj) {
+      if (isPlainObject(obj[key])) {
+        form.addControl(key.toString(), this.fb.group(obj[key]));
       } else {
-        form.addControl(field, this.fb.control(obj[field]));
+        form.addControl(key, this.fb.control(obj[key]));
       }
     }
     if (field.fields && field.fields.length > 0) {
@@ -455,12 +445,12 @@ export class FormCreatorService {
   //   return form;
   // }
 
-  get form() {
-    return this._form.getValue();
-  }
 
   get form$() {
     return this._form.asObservable();
+  }
+  get form() {
+    return this._form.getValue();
   }
   set form(_form) {
     _form = cloneDeep(_form);
@@ -480,11 +470,8 @@ export class FormCreatorService {
     if (isPlainObject(fields)) {
       fields = values(fields);
     }
-
-    // form.workspace = cloneDeep(fields);
-    // form.form = this.initForm(fields);
     this._form.next(form);
-    this.events$.next({ action: 'update' });
+    // this.events$.next({ action: 'update' });
   }
 
   set formTemplate(data: any) {

@@ -1,18 +1,18 @@
-import { Injectable } from "@angular/core";
-import { ApiService } from "@app/core/api.service";
-import { BehaviorSubject, Observable } from "rxjs";
-import { DateTime } from "luxon";
-import { StepperService } from "@app/shared/stepper.service";
+import { Injectable } from '@angular/core';
+import { ApiService } from '@app/core/api.service';
+import { StepperService } from '@app/shared/stepper.service';
+import { DateTime } from 'luxon';
+import { BehaviorSubject, Observable } from 'rxjs';
 import {
   defaultAccountsList,
   hasNoFamily,
   IPerson,
   IRound
-} from "./models/send.model";
+} from './models/send.model';
 
 @Injectable()
 export class FormSendService {
-  private form_id: string;
+  public formId: string;
   private periodsSubject: BehaviorSubject<any> = new BehaviorSubject<any>([]);
   private currentPeriods: BehaviorSubject<any> = new BehaviorSubject<any>([]);
   private accoutSubject: BehaviorSubject<any> = new BehaviorSubject<any>([]);
@@ -71,10 +71,6 @@ export class FormSendService {
 
   set selectedAccount(account: IPerson) {
     this.currentAccount.next(account);
-  }
-
-  get formId() {
-    return this.form_id;
   }
 
   get $roundsList() {
@@ -176,13 +172,13 @@ export class FormSendService {
   }
 
   initFormSend(id: string) {
-    this.form_id = id;
+    this.formId = id;
     this.loadFormSend();
     this.loadUsers();
   }
 
   loadFormSend(): void {
-    this.api.getFormSend(this.form_id).subscribe(res => {
+    this.api.getFormSend(this.formId).subscribe(res => {
       if (res) {
         if (res.periods) {
           if (res.periods.list) {
@@ -192,7 +188,7 @@ export class FormSendService {
                     if (
                       Object.keys(res.periods.chosen).filter(key => {
                         if (
-                          item.id == key &&
+                          item.id === key &&
                           res.periods.chosen[key] === true
                         ) {
                           return item;
@@ -226,7 +222,7 @@ export class FormSendService {
   }
 
   togglePeriods(item: any, e: boolean): void {
-    let tmp = this.selectedPeriods;
+    const tmp = this.selectedPeriods;
     if (e === true) {
       tmp.push(item);
     } else if (e === false) {
@@ -243,7 +239,7 @@ export class FormSendService {
   }
 
   toggleAccounts(item: any, e: boolean): void {
-    let tmp = this.selectedAccounts;
+    const tmp = this.selectedAccounts;
     if (
       e === true &&
       !(this.selectedAccounts.findIndex(i => i === item) >= 0)
@@ -296,13 +292,13 @@ export class FormSendService {
     }
     round.start_date = DateTime.fromString(
       round.start_date,
-      "MM/dd/yyyy"
-    ).toFormat("yyyy/MM/dd");
-    round.end_date = DateTime.fromString(round.end_date, "MM/dd/yyyy").toFormat(
-      "yyyy/MM/dd"
+      'MM/dd/yyyy'
+    ).toFormat('yyyy/MM/dd');
+    round.end_date = DateTime.fromString(round.end_date, 'MM/dd/yyyy').toFormat(
+      'yyyy/MM/dd'
     );
     round.accounts = this.selectedAccounts.map(i => i.id);
-    round.form_template_mongo_id = this.form_id;
+    round.form_template_mongo_id = this.formId;
     if (isNew) {
       this.api.createRound(round).subscribe(res => {
         // console.log('res', res);
@@ -336,7 +332,7 @@ export class FormSendService {
 
   removeAllRounds() {
     let count = 0;
-    let bs = new BehaviorSubject<boolean>(false);
+    const bs = new BehaviorSubject<boolean>(false);
     this.deletedRoundIdList.forEach(roundId => {
       this.api.deleteRound(roundId).subscribe(() => {
         if (++count === this.deletedRoundIdList.length) {
@@ -348,7 +344,7 @@ export class FormSendService {
   }
 
   nextStep() {
-    let data: any = { formPeriods: {} };
+    const data: any = { formPeriods: {} };
     this.periodsList.forEach(item => {
       data.formPeriods[item.id] =
         this.selectedPeriods.findIndex(i => i.id === item.id) >= 0
@@ -358,13 +354,13 @@ export class FormSendService {
     // console.log(data);
     this.api.updateFormTemplate(this.formId, data).subscribe(data => {
       this.removeAllRounds().subscribe(() => {
-        this.stepperService.stepper = "next";
+        this.stepperService.stepper = 'next';
         // console.log('removeAllRounds', this.roundsSubject.getValue());
       });
     });
   }
 
   prevStep() {
-    this.stepperService.stepper = "prev";
+    this.stepperService.stepper = 'prev';
   }
 }

@@ -1,5 +1,5 @@
-import { DataSource, CollectionViewer } from '@angular/cdk/collections';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { CollectionViewer, DataSource } from '@angular/cdk/collections';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 import { ApiService } from '@core/api.service';
 
@@ -10,7 +10,7 @@ export class GeneralDataSource extends DataSource<any> {
     super();
     this.dataSubject.subscribe((data) => {
       this.data.next(data);
-    })
+    });
   }
 
   connect(collectionViewer: CollectionViewer): Observable<(any | undefined)> {

@@ -22,7 +22,7 @@ import { UploadReviewFormDataSource } from './upload-review-form.datasource';
 import { UploadReviewFormService } from './upload-review-form.service';
 
 @Component({
-  selector: 'app-upload-review-form',
+  selector: 'sw-upload-review-form',
   templateUrl: './upload-review-form.component.html',
   styleUrls: ['./upload-review-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -34,6 +34,7 @@ export class UploadReviewFormComponent implements OnInit, OnDestroy {
   public activeIdDocument: string;
   public activeIdForm = '';
   public dataSource: UploadReviewFormDataSource = new UploadReviewFormDataSource(this.uploadReviewFormService);
+  public destroyed = false;
   public documents: Document[];
   public download: { url: SafeResourceUrl; filename: string; } = {url: null, filename: null};
   public extremeDocuments: ExtremeUploadForms = {};
@@ -78,6 +79,7 @@ export class UploadReviewFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.destroyed = false;
     this.dataSource.getSelectedFormId()
       .subscribe(id => {
         this.activeIdDocument = id;
@@ -89,7 +91,7 @@ export class UploadReviewFormComponent implements OnInit, OnDestroy {
       this.rotatingPicture = rotating;
     });
     this.activeIdForm = this.route.snapshot.paramMap.get('id');
-    this.dataSource.uploadDocuments(this.activeIdForm).subscribe(() => { this.getDocuments() });
+    this.dataSource.uploadDocuments(this.activeIdForm).subscribe(() => { this.getDocuments(); });
     this.dataSource.uploadFilterList(this.activeIdForm);
     this.dataSource.uploadFamilyList()
       .subscribe(() => {
@@ -110,16 +112,16 @@ export class UploadReviewFormComponent implements OnInit, OnDestroy {
           }
 
           if (!(this.filterValue && this.filterValue)) {
-            this.form.controls['filter'].disable({ emitEvent: false });
+            this.form.controls.filter.disable({ emitEvent: false });
           } else {
-            this.form.controls['filter'].enable({ emitEvent: false });
+            this.form.controls.filter.enable({ emitEvent: false });
           }
           if (data.sort) {
             this.sortValue = this.uploadReviewFormService.convertSortDocumentsData(data);
             if (!(this.sortValue && this.sortValue)) {
-              this.form.controls['sort'].disable({ emitEvent: false });
+              this.form.controls.sort.disable({ emitEvent: false });
             } else {
-              this.form.controls['sort'].enable({ emitEvent: false });
+              this.form.controls.sort.enable({ emitEvent: false });
             }
           }
           this.cdr.detectChanges();
@@ -161,7 +163,7 @@ export class UploadReviewFormComponent implements OnInit, OnDestroy {
         } else {
           this.documents = [];
         }
-        if (!this.cdr['destroyed']) {
+        if (!this.destroyed) {
           this.cdr.detectChanges();
         }
       });
@@ -279,7 +281,7 @@ export class UploadReviewFormComponent implements OnInit, OnDestroy {
   }
 
   openDeleteConfirmPopup(id: string): void {
-    if(!this.isSaveActive) {
+    if (!this.isSaveActive) {
       this.removeDocumentId = id;
       this.dialog.open();
       this.isPopupOpen = true;
@@ -461,6 +463,7 @@ export class UploadReviewFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.destroyed = true;
     this.cdr.detach();
   }
 

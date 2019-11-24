@@ -12,13 +12,6 @@ import { ControlValueAccessor, NgControl } from '@angular/forms';
   styleUrls: ['./input-search.component.scss']
 })
 export class InputSearchComponent implements OnInit, ControlValueAccessor {
-  writeValue = (value: string) => {};
-  registerOnChange = (fn: any) => {};
-  registerOnTouched = (fn: any) => {};
-  @Input() id: string;
-  @Input() placeholder: string;
-  @Input('isFistSpaceIgnore') isFirstSpaceIgnore = false;
-  @Input() type: string;
 
   constructor(
     @Self()
@@ -29,6 +22,13 @@ export class InputSearchComponent implements OnInit, ControlValueAccessor {
       this.control.valueAccessor = this;
     }
   }
+  @Input() id: string;
+  @Input() placeholder: string;
+  @Input('isFistSpaceIgnore') isFirstSpaceIgnore = false;
+  @Input() type: string;
+  writeValue = (value: string) => {};
+  registerOnChange = (fn: any) => {};
+  registerOnTouched = (fn: any) => {};
 
   ngOnInit() {}
 

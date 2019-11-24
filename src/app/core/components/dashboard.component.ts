@@ -8,7 +8,7 @@ import { numericValidator } from '@core/validators';
 const TEST_FIELD_SERVICE = false;
 
 @Component({
-  selector: 'app-dashboard',
+  selector: 'sw-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
@@ -94,7 +94,7 @@ export class DashboardComponent implements OnInit {
   }
 
   onUploadSelected(file) {
-    this.uploadStatus = `File selected: ${file.name} (${file.size})`
+    this.uploadStatus = `File selected: ${file.name} (${file.size})`;
   }
 
   onUploadProgress(progress) {

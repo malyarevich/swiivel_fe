@@ -11,12 +11,12 @@ import { InputButtonGroupComponent } from './inputs/input-button-group/input-but
 import { InputCheckboxComponent } from './inputs/input-checkbox/input-checkbox.component';
 import { InputDynamicComponent } from './inputs/input-dynamic/input-dynamic.component';
 import { InputNumberComponent } from './inputs/input-number/input-number.component';
-import { InputTextComponent } from './inputs/input-text/input-text.component';
 import { InputSuggestComponent } from './inputs/input-suggest/input-suggest.component';
+import { InputTextComponent } from './inputs/input-text/input-text.component';
 
+import { DropdownSelectComponent } from './inputs/dropdown-select/dropdown-select.component';
 import { InputTextareaComponent } from './inputs/input-textarea/input-textarea.component';
 import { InputToggleComponent } from './inputs/input-toggle/input-toggle.component';
-import { DropdownSelectComponent } from './inputs/dropdown-select/dropdown-select.component';
 
 import { InputFileComponent } from './inputs/input-file/input-file.component';
 
@@ -37,26 +37,26 @@ import { BackBarComponent } from '@shared/bars/back-bar/back-bar.component';
 import { DocumentApprovalBarComponent } from '@shared/bars/document-approval-bar/document-approval-bar.component';
 
 // Others
-import { RadioGroupComponent } from './inputs/radio-group/radio-group.component';
-import { LabelComponent } from './labels/label/label.component';
-import { UserItemComponent } from './user-item/user-item.component';
-import { SelectOptionDirective } from './inputs/dropdown-select/option.directive';
-import { MainComponent } from './main.component';
-import { ComponentIdDirective } from './inputs/e2e.directive';
-import { PaginatorComponent } from './paginator/paginator.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CdkStepperModule } from '@angular/cdk/stepper';
-import { StepperComponent } from './stepper/stepper.component';
-import { StepperService } from './stepper.service';
-import { FormComponent } from './form.component';
+import localHe from '@angular/common/locales/he';
 import { ProgressLineBarComponent } from '@shared/bars/progress-line-bar/progress-line-bar.component';
 import { StatusLabelComponent } from '@shared/labels/status-label/status-label.component';
-import { InputEnglishDatepickerComponent } from './inputs/input-english-datepicker/input-english-datepicker.component';
-import { InputHebrewDatepickerComponent } from './inputs/input-hebrew-datepicker/input-hebrew-datepicker.component';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-import localHe from '@angular/common/locales/he';
 import { IConfig, NgxMaskModule } from 'ngx-mask';
+import { FormComponent } from './form.component';
+import { SelectOptionDirective } from './inputs/dropdown-select/option.directive';
+import { ComponentIdDirective } from './inputs/e2e.directive';
+import { InputEnglishDatepickerComponent } from './inputs/input-english-datepicker/input-english-datepicker.component';
+import { InputHebrewDatepickerComponent } from './inputs/input-hebrew-datepicker/input-hebrew-datepicker.component';
+import { RadioGroupComponent } from './inputs/radio-group/radio-group.component';
+import { LabelComponent } from './labels/label/label.component';
+import { MainComponent } from './main.component';
+import { PaginatorComponent } from './paginator/paginator.component';
+import { StepperService } from './stepper.service';
+import { StepperComponent } from './stepper/stepper.component';
+import { UserItemComponent } from './user-item/user-item.component';
 
 registerLocaleData(localHe);
 

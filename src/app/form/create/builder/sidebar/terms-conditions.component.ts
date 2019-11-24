@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
@@ -24,14 +24,14 @@ export class SidebarTermsConditionsComponent implements OnInit {
   set form(_form: any) {
     if (!_form.get('termsConditions')) {
       _form.addControl('termsConditions', this.fb.group({
-        sectionName: ["Terms and Conditions"],
-        sectionWidth: ["full"],
+        sectionName: ['Terms and Conditions'],
+        sectionWidth: ['full'],
         signature: this.fb.group({
-          eType: ["system"],
+          eType: ['system'],
           isBothParents: [false],
           isRequire: [true],
           signed: {parents: false, fathers: false, mothers: false},
-          type: "esign",
+          type: 'esign',
         }),
         termsConditionsItems: this.fb.array([])
       }));
@@ -45,14 +45,14 @@ export class SidebarTermsConditionsComponent implements OnInit {
     private cdr: ChangeDetectorRef
   ) {
     this.lform = this.fb.group({
-      sectionName: ["Terms and Conditions"],
-      sectionWidth: ["full"],
+      sectionName: ['Terms and Conditions'],
+      sectionWidth: ['full'],
       signature: this.fb.group({
-        eType: ["system"],
+        eType: ['system'],
         isBothParents: [false],
         isRequire: [true],
         signed: {parents: false, fathers: false, mothers: false},
-        type: "esign",
+        type: 'esign',
       }),
       termsConditionsItems: this.fb.array([])
     });

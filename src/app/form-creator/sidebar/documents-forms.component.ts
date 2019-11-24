@@ -29,8 +29,8 @@ export class SidebarDocumentsFormsComponent implements OnInit {
     }
   ];
   radioGroup = ['Needed Per Family', 'Needed Per Student'];
-  isOpenDocuments: boolean = false;
-  isOpenForms: boolean = false;
+  isOpenDocuments = false;
+  isOpenForms = false;
   form: FormGroup;
 
   constructor(

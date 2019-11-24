@@ -37,7 +37,7 @@ export class CheckboxSettingComponent implements OnInit {
 
   ngOnInit() {
     this.form.valueChanges.subscribe(v => {
-      if (v.default && v.default[0]) { v.default = v.default[0].value }
+      if (v.default && v.default[0]) { v.default = v.default[0].value; }
       this.fieldSettings.emit(v);
     });
   }

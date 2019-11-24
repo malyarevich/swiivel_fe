@@ -8,7 +8,7 @@ export interface IMenuItems {
 }
 
 @Component({
-  selector: 'app-main',
+  selector: 'sw-main',
   templateUrl: './main.component.html',
   styleUrls : ['./main.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
 import { CdkStepper } from '@angular/cdk/stepper';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'sw-stepper',

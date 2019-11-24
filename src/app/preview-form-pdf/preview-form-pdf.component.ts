@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { PDFProgressData } from 'ng2-pdf-viewer';
 
 @Component({
@@ -8,9 +8,9 @@ import { PDFProgressData } from 'ng2-pdf-viewer';
 })
 export class PreviewFormPdfComponent implements OnInit {
 
-  @Input() formId;
-  @Output() onBack: EventEmitter<any> = new EventEmitter();
-  @Output() onSaveNext: EventEmitter<any> = new EventEmitter();
+  @Input() formId: string;
+  @Output() back: EventEmitter<any> = new EventEmitter();
+  @Output() saveNext: EventEmitter<any> = new EventEmitter();
   pdfError: boolean;
   pdfLoading = true;
 
@@ -21,12 +21,10 @@ export class PreviewFormPdfComponent implements OnInit {
 
   getLink() {
     return `http://red.dev.codeblue.ventures/api/v1/proxy/form-builder/preview-pdf-form/${this.formId}?api_token=123`;
-    // return `http://34.73.126.99/api/v1/preview-pdf-form/${this.formId}?api_token=123`
   }
 
   onProgress(progressData: PDFProgressData) {
-    this.pdfError = false
-    console.log('progressData', progressData);
+    this.pdfError = false;
     if (progressData.loaded === progressData.total) {
       this.pdfLoading = false;
     }
@@ -40,11 +38,11 @@ export class PreviewFormPdfComponent implements OnInit {
   }
 
   onBackOnlineForm(event): void {
-    this.onBack.emit(event);
+    this.back.emit(event);
   }
 
   onSaveNextOnlineForm(event): void {
-    this.onSaveNext.emit(event);
+    this.saveNext.emit(event);
   }
 
 }

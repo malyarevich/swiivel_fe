@@ -1,5 +1,5 @@
 import { CdkStepper } from '@angular/cdk/stepper';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '@app/core/api.service';
 import { StepperService } from '@shared/stepper.service';
@@ -18,7 +18,7 @@ import { SidebarTermsConditionsComponent } from './sidebar/terms-conditions.comp
   styleUrls: ['./form-creator.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FormCreatorComponent implements OnInit {
+export class FormCreatorComponent implements OnInit, OnDestroy {
   defaults = {
     fields: [],
     type: 'registration',
@@ -59,8 +59,6 @@ export class FormCreatorComponent implements OnInit {
     { name: 'TERMS AND CONDITIONS', workarea: 'tac', component: SidebarTermsConditionsComponent, active: false, expanded: false },
     { name: 'FORM PAYMENT', workarea: '', component: null, active: false, expanded: false },
   ];
-  data;
-  form_id;
   action = 'create';
   destroyed$ = new Subject();
 
@@ -84,7 +82,6 @@ export class FormCreatorComponent implements OnInit {
   ngOnInit() {
     this.route.paramMap.pipe(takeUntil(this.destroyed$)).subscribe(params => {
       if (params.has('mongo_id')) {
-        console.info(`Edit form with ID ${params.get('mongo_id')}`);
         this.api.getFormTemplate(params.get('mongo_id')).subscribe(form => {
           if (form) {
             this.service.form = form;
@@ -101,7 +98,6 @@ export class FormCreatorComponent implements OnInit {
         });
       } else {
         this.service.form = this.defaults;
-        console.info(`Create New Form`);
       }
     });
     this.stepperService.stepper$.subscribe((step: string) => {
@@ -111,7 +107,6 @@ export class FormCreatorComponent implements OnInit {
         this.steppert.previous();
       }
     });
-    // console.log(route)
   }
 
   switchWorkarea(workarea: string) {

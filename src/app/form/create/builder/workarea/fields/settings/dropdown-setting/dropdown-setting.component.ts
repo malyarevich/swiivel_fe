@@ -10,9 +10,8 @@ export class DropdownSettingComponent implements OnInit {
 
   @Input()
   set settings(obj: any) {
-    console.log
     if (obj.fieldOptions && obj.fieldOptions.length >= 0) {
-      let fieldOptions = (this.form.get('fieldOptions') as FormArray);
+      const fieldOptions = (this.form.get('fieldOptions') as FormArray);
       fieldOptions.clear();
       obj.fieldOptions.forEach(i => fieldOptions.push(this.fb.group({title: [i.title, {updateOn: 'blur'}]})));
     }
@@ -63,7 +62,7 @@ export class DropdownSettingComponent implements OnInit {
       ])
     });
     this.form.valueChanges.subscribe(v => {
-      if (v.fieldType && v.fieldType[0]) { v.fieldType = v.fieldType[0].value }
+      if (v.fieldType && v.fieldType[0]) { v.fieldType = v.fieldType[0].value; }
       this.fieldSettings.emit(v);
     });
   }

@@ -1,7 +1,7 @@
-import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { catchError, map } from "rxjs/operators";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { environment } from '@app/../environments/environment';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable()
 export class SystemSignatureService {
@@ -13,8 +13,8 @@ export class SystemSignatureService {
     entity: string,
     entityId: string | number | null = null
   ) {
-    let data = {
-      api_token: `${environment.api_token}`,
+    const data = {
+      api_token: `${environment.apiToken}`,
       formId,
       personId,
       entity,

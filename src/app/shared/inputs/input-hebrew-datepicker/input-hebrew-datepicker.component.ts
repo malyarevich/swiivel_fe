@@ -52,8 +52,8 @@ export class InputHebrewDatepickerComponent
   selectedDays: any = [];
   // ===
 
-  onChange: Function;
-  onTouched: Function;
+  onChange: (value: any) => void;
+  onTouched: () => void;
 
   // value: string = null;
   private destroyed$ = new Subject();
@@ -79,11 +79,11 @@ export class InputHebrewDatepickerComponent
 
   writeValue(): void {}
 
-  registerOnTouched(fn: Function): void {
+  registerOnTouched(fn: any): void {
     this.onTouched = fn;
   }
 
-  registerOnChange(fn: Function): void {
+  registerOnChange(fn: any): void {
     this.onChange = fn;
   }
 
