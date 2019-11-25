@@ -10,40 +10,52 @@
       class="input"
       mask="{{mask}}"
       [class.empty]="isEmpty(value)"
-      [class.input-range]="range"
-      [disabled]="!isActive || range"
+      [class.input-range-one-input]="range === 'one-input'"
+      [class.input-range-two-inputs]="range === 'two-inputs'"
+      [disabled]="!isActive || range === 'one-input' || range === 'two-inputs'"
       [dropSpecialCharacters]="false"
       [(ngModel)]="value"
       (ngModelChange)="changeValue(value)"
+      (keyup.enter)="apply()"
     />
-    <span class="placeholder">{{ placeholder }}</span>
+    <span class="placeholder">{{ range === 'two-inputs' ? 'From' : placeholder }}</span>
     <i class="far fa-calendar"></i>
     <i *ngIf="!isEmpty(value)" class="fa fa-times" (click)="clear()"></i>
+  </div>
+  <div class="input-date" *ngIf="range === 'two-inputs'">
+    <input
+      class="input"
+      mask="{{mask}}"
+      [class.empty]="isEmpty(valueTo)"
+      [class.input-two-inputs]="range === 'two-inputs'"
+      [disabled]="!isActive || range === 'two-inputs'"
+      [dropSpecialCharacters]="false"
+      [(ngModel)]="valueTo"
+      (ngModelChange)="changeValueTo(value)"
+      (keyup.enter)="apply()"
+    />
+    <span class="placeholder">To:</span>
+    <i class="far fa-calendar"></i>
+    <i *ngIf="!isEmpty(valueTo)" class="fa fa-times" (click)="clear()"></i>
   </div>
 
 </div>
 
 <ng-template #datepicker>
   <div class="date-picker-popup">
-    <div class="header">
-      <div class="actions left">
-        <sw-icon-button icon="fa-angle-left" (click)="decrement()">
-        </sw-icon-button>
+    <form [formGroup]="form" class="select">
+      <div class="select-month">
+        <sw-dropdown-input [options]="months" formControlName="month" type="month"></sw-dropdown-input>
       </div>
-      <div class="text">
-<!--        {{ value }}-->
+      <div class="select-year">
+        <sw-dropdown-select-year [date]="viewDate">
+          <span class="placeholder">2019</span>
+        </sw-dropdown-select-year>
       </div>
-      <div class="actions right">
-        <sw-icon-button
-          icon="fa-angle-right"
-          (click)="increment()"
-        ></sw-icon-button>
-      </div>
-    </div>
+    </form>
     <div class="select">
       <div class="select-month">
         {{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}
-<!--        <sw-dropdown-input [options]="mouths"></sw-dropdown-input>-->
       </div>
       <div class="select-year">
         {{ viewDate | calendarDate:(view + 'ViewYearTitle'):'en' }}
@@ -51,7 +63,7 @@
     </div>
     <div class="content">
       <mwl-calendar-month-view
-        *ngIf="!range"
+        *ngIf="range === 'none'"
         [viewDate]="viewDate"
         [events]="events"
         [activeDayIsOpen]="false"
@@ -59,7 +71,7 @@
       >
       </mwl-calendar-month-view>
       <mwl-calendar-month-view
-        *ngIf="range"
+        *ngIf="range === 'one-input' || range === 'two-inputs'"
         [viewDate]="viewDate"
         [events]="events"
         (beforeViewRender)="beforeMonthViewRender($event)"
@@ -68,12 +80,16 @@
       </mwl-calendar-month-view>
     </div>
     <div class="controls-buttons">
-      <sw-button>
-        <span class="text" color="white">Reset</span>
-      </sw-button>
-      <sw-button>
-        <span class="text">Apply</span>
-      </sw-button>
+      <div class="controls-button">
+        <sw-button color="white" (click)="clear()" [expand]="buttonExpand.FULL">
+          <span class="text">Reset</span>
+        </sw-button>
+      </div>
+      <div class="controls-button">
+        <sw-button (click)="apply()" [expand]="buttonExpand.FULL">
+          <span class="text">Apply</span>
+        </sw-button>
+      </div>
     </div>
   </div>
 </ng-template>

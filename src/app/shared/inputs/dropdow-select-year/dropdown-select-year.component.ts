@@ -11,45 +11,38 @@ import {
   Output,
   ViewChild
 } from '@angular/core';
-import { ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Popup } from '@app/core/popup.service';
+import { ButtonColorsEnum } from '@shared/buttons/buttonColors.enum';
+import { ButtonSizeEnum } from '@shared/buttons/buttonSize.enum';
 
 const DROPDOWN_CONTROL_ACCESSOR = {
   provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => DropdownInputComponent),
+  useExisting: forwardRef(() => DropdownSelectYearComponent),
   multi: true
 };
 
 @Component({
-  selector: 'sw-dropdown-input',
-  templateUrl: './dropdown-input.component.html',
-  styleUrls: ['dropdown-input.component.scss'],
+  selector: 'sw-dropdown-select-year',
+  templateUrl: './dropdown-select-year.component.html',
+  styleUrls: ['dropdown-select-year.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [DROPDOWN_CONTROL_ACCESSOR]
 })
-export class DropdownInputComponent implements OnInit, ControlValueAccessor {
+export class DropdownSelectYearComponent implements OnInit, ControlValueAccessor {
   private _ref;
   private _sm: SelectionModel<any>;
 
+  dropdownList: any[];
+  _multiple = false;
   onChange: Function;
   onTouched: Function;
-  dropdownList: any[];
-  dropdownRawList: any[];
-  _multiple = false;
-  form: FormGroup;
   @Input() disabled = false;
-  @Input() dropdownSubHeader = false;
-  @Input() dropdownUsers = false;
-  @Input() search = false;
+  @Input() date: Date;
   @Input() isActive = true;
-  @Input() isClearable = false;
-  @Input() isDisplaySelected = true;
   @Input() panelClass = 'dropdown-overlay';
-  @Input() style = '';
-  @Input() maxHeight = 'auto';
-  @Input() type: 'table-header';
-  @Input() typeItem: 'purpure';
-  @Input() isSumDisplay = false;
+  public colors = ButtonColorsEnum;
+  public size = ButtonSizeEnum;
 
   @Input() set selectValue(opt: [any]) {
     if (opt[0] === null) {
@@ -67,7 +60,6 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
   set options(opts: any[]) {
     if (opts) {
       this.dropdownList = opts;
-      this.dropdownRawList = opts;
     }
   }
 
@@ -76,27 +68,21 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
   @ViewChild('droplist', { static: false }) droplist;
   @ViewChild('holder', { static: false, read: ElementRef }) holder: ElementRef;
 
-  constructor(private popup: Popup, private cdr: ChangeDetectorRef, private fb: FormBuilder) {
-    this.form = this.fb.group({
-      search: new FormControl('', Validators.required)
-    });
+  constructor(private popup: Popup, private cdr: ChangeDetectorRef) {
+    console.log(this);
   }
 
   ngOnInit(): void {
     this._sm = new SelectionModel(this._multiple);
-    this.form.valueChanges.subscribe(value => {
-      if (this.dropdownUsers) {
-        if (!value.search.length) {
-          this.dropdownList = this.dropdownRawList;
-        } else {
-          this.dropdownList = this.dropdownRawList.map(item => {
-            if (item.name.toLowerCase().includes(value.search.toLowerCase())) {
-              return item;
-            }
-          }).filter(item => item);
-        }
-      }
-    });
+    this.dropdownList = this.getYears(this.date.getFullYear());
+  }
+
+  getYears(year: number): number[] {
+    const years = [year + 1];
+    for (let i = 0; i < 24; i ++) {
+      years.push(year - i);
+    }
+    return years;
   }
 
   get value() {
@@ -117,11 +103,11 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
     this.cdr.markForCheck();
   }
 
-  registerOnTouched(fn: Function): void {
+  registerOnTouched(fn): void {
     this.onTouched = fn;
   }
 
-  registerOnChange(fn: Function): void {
+  registerOnChange(fn): void {
     this.onChange = fn;
   }
 
@@ -144,7 +130,8 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
       if (!this._multiple) {
         this._ref.close();
       }
-      this.onChange(this._sm.selected);
+
+      this.onChange(2020);
       this.cdr.markForCheck();
     }
   }
@@ -182,8 +169,6 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
       this._ref.afterClosed$.subscribe(result => {
         this.isPopupShown.emit(false);
         this._ref = null;
-        this.form.controls.search.setValue('', {emitEvent: false});
-        this.dropdownList = this.dropdownRawList;
         if (this.onTouched) this.onTouched();
         this.cdr.markForCheck();
       });
@@ -196,4 +181,14 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
       this.onChange(this._sm.selected);
     }
   }
+
+  clickPreviousYears(): void {
+    this.dropdownList = this.getYears(this.dropdownList[0] - 26);
+  }
+
+  clickNextYears(): void {
+    this.dropdownList = this.getYears(this.dropdownList[0] + 24);
+  }
 }
+
+
