@@ -1,316 +1,224 @@
-<ng-template #nodeTemplateRef let-data="data">
-  <div cdkDropList [cdkDropListData]="data" id="">
-    <div *ngFor="let node of data" cdkDrag (cdkDragDropped)="drop($event)"
-      [ngClass]="{'group-tree-node': node.value.type === 113, 'section-tree-node': node.value.type === 114, 'field-tree-node': node.value.type < 113}">
-      <div class="main_container">
-        <div class="content">
-          <div class="drag-icon">
-            <i class="dragdrop fas fa-ellipsis-v" cdkDragHandle></i>
-          </div>
-          <ng-container *ngIf="node.value.type === 113 || node.value.type === 114; else fieldCont">
-            <div class="name-container" *ngIf="node.value.type === 113">
-              <div class="main-text">{{ node.value.name }}</div>
-              <div class="hint" *ngIf="node.get('textType')">Group Type - {{ node.get('textType').value }}</div>
-            </div>
-            <sw-input-text [formControl]="node.get('name')" style="margin-right: 10px; width: 450px;"
-              *ngIf="node.value.type === 114">
-              <span class="placeholder">Section Name</span>
-            </sw-input-text>
-            <sw-dropdown-input style="margin-right: 10px;" [formControl]="node.get('options.size')"
-              [options]="sizeOptions">
-              <span class="label">Section Width</span>
-            </sw-dropdown-input>
-          </ng-container>
-          <ng-template #fieldCont>
-            <div class="name-container">
-              <div class="main-text">{{ node.value.name }}</div>
-              <div class="hint" *ngIf="node.get('textType')">Field Type - {{ node.get('textType').value }}</div>
-            </div>
-            <sw-dropdown-input style="margin-right: 25px;" [formControl]="node.get('options.size')"
-              [options]="sizeOptions">
-              <span class="label">Field Width</span>
-            </sw-dropdown-input>
-            <div class="input">
-              <sw-input-checkbox [formControl]="node.get('options.required')"
-                (checked)="setParent(node, 'required', $event)">
-                <span class="label">Required</span>
-              </sw-input-checkbox>
-            </div>
-            <div class="input">
-              <sw-input-checkbox [formControl]="node.get('options.hideLabel')"
-                (checked)="setParent(node, 'hideLabel', $event)">
-                <span class="label">Hide Label</span>
-              </sw-input-checkbox>
-            </div>
-            <div class="input">
-              <sw-input-checkbox [formControl]="node.get('options.readonly')">
-                <span class="label">Read–Only</span>
-              </sw-input-checkbox>
-            </div>
-            <div class="input">
-              <sw-input-checkbox [formControl]="node.get('options.unique')">
-                <span class="label">Unique</span>
-              </sw-input-checkbox>
-            </div>
-          </ng-template>
-        </div>
-        <div class="actions">
-          <div class="icon">
-            <sw-icon-button icon="fa-cog" class="field-creator" [class.blue]="node.value.type !== 114"
-              [class.active]="node.value.showSettings" (click)="settingsToggle(node)">
-            </sw-icon-button>
-          </div>
-          <div class="icon">
-            <sw-icon-button icon="fa-times" class="field-creator" [class.blue]="node.value.type !== 114"
-              (click)="closeNode(node)">
+<ng-template #sectionsTemplate let-sections>
+    <div cdkDropList id="cdk-drop-list-root" [cdkDropListData]="sections" cdkDropListOrientation="horizontal" #rootList="cdkDropList" class="root" [cdkDropListConnectedTo]="getListsIds()">
+      <ng-container *ngFor="let section of sections;">
+        <ng-container *ngTemplateOutlet="sectionTemplate; context: {$implicit: section}"></ng-container>
 
-            </sw-icon-button>
-          </div>
-          <div class="icon dragdrop" *ngIf="node.value.type === 113 || node.value.type === 114">
-            <sw-icon-button [icon]="getIcon(node.value.isExpanded)" (click)="toggleExpanded(node)"
-              [class.blue]="node.value.type === 113" [attr.aria-label]="'toggle ' + node.value.name">
-            </sw-icon-button>
-          </div>
-        </div>
-      </div>
-      <div class="drag-node-workarea"
-        [ngClass]="{'group-tree-node': node.value.type === 113, 'section-tree-node': node.value.type === 114}"
-        *cdkDragPreview>
-        <div class="main_container">
-          <div class="content">
-            <div class="drag-icon">
-              <i class="dragdrop fas fa-ellipsis-v"></i>
-            </div>
-            <div class="name-container" *ngIf="node.value.type === 113">
-              <div class="main-text">{{ node.value.name }}</div>
-              <div class="hint">Group Type -</div>
-            </div>
-            <sw-input-text [formControl]="node.get('name')" style="margin-right: 10px; width: 450px;"
-              *ngIf="node.value.type === 114">
-              <span class="placeholder">Section Name</span>
-            </sw-input-text>
-            <sw-dropdown-input style="margin-right: 10px;" [formControl]="node.get('options.size')"
-              [options]="sizeOptions">
-              <span class="input_label">Section Width</span>
-            </sw-dropdown-input>
-          </div>
-          <div class="actions">
-            <div class="icon">
-              <sw-icon-button icon="fa-cog" class="field-creator" [class.blue]="node.value.type !== 114"
-                [class.active]="node.value.showSettings" (click)="settingsToggle(node)">
-              </sw-icon-button>
-            </div>
-            <div class="icon">
-              <sw-icon-button icon="fa-times" class="field-creator" [class.blue]="node.value.type !== 114"
-                (click)="closeNode(node)">
-              </sw-icon-button>
-            </div>
-            <div class="icon dragdrop" *ngIf="node.value.type === 113 || node.value.type === 114">
-              <sw-icon-button [icon]="getIcon(node.value.isExpanded)" (click)="toggleExpanded(node)"
-                [class.blue]="node.value.type === 113" [attr.aria-label]="'toggle ' + node.value.name">
-              </sw-icon-button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-
-      <div class="settings" *ngIf="node.value.showSettings">
-        <sw-settings [field]="node"></sw-settings>
-      </div>
-      <ng-container *ngIf="node.value.fields && node.value.fields.length > 0">
-        <div style="padding-left: 10px;" cdkDropList [cdkDropListData]="node.children" [id]="getListId(node)"
-          [cdkDropListConnectedTo]="getListsIds(node)" [cdkDropListData]="getListData(node)"
-          [class.hidden]="!node.value.isExpanded">
-
-          <ng-container [ngTemplateOutlet]="nodeTemplateRef"
-            [ngTemplateOutletContext]="{data: node.get('fields').controls}"></ng-container>
-
-        </div>
-      </ng-container>
+      </ng-container> 
     </div>
-  </div>
-
-
-
-
-
-  <!-- <div class="node" cdkDrag [cdkDragData]="node" *ngFor="let node of data">
-        <a class="node__label" cdkDragHandle>
-            {{ node.name }}
-        </a>
-        <ng-container *ngIf="node.children && node.children.length > 0">
-          <div style="padding-left: 40px;" cdkDropList [cdkDropListConnectedTo]="[parent]" [cdkDropListData]="node.children" *ngIf="node.children && node.children.length > 0">
-
-            <ng-container [ngTemplateOutlet]="nodeTemplateRef" [ngTemplateOutletContext]="{data: node.children}"></ng-container>
-          </div>
-        </ng-container>
-      
-    </div> -->
 </ng-template>
-<!-- <div  cdkDropListGroup> -->
-<!-- {{treeSource.nodes}} -->
-<div cdkDropListGroup>
-  <ng-container [ngTemplateOutlet]="nodeTemplateRef" [ngTemplateOutletContext]="{data: treeSource.nodes}">
-  </ng-container>
 
-</div>
-<!-- </div> -->
-
-<!-- Initiate the recursive template rendering. -->
-<!-- <ng-template ngFor let-node [ngForOf]="data" let-i="index" [ngTemplateOutlet]="nodeTemplateRef">
-</ng-template> -->
-<!-- <ng-template
-    [ngTemplateOutlet]="nodeTemplateRef"
-    [ngTemplateOutletContext]="{ data: data }">
-</ng-template> -->
-<!-- 
-<div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
-    <div class="example-box" *ngFor="let movie of treeData" cdkDrag>{{movie}}</div>
-  </div> -->
-
-
-<!-- <cdk-tree [dataSource]="treeSource" [treeControl]="treeControl" cdkDropList id="root-list"
-  [cdkDropListEnterPredicate]="mayEnterRoot" [cdkDropListData]="form">
-  <cdk-nested-tree-node *cdkTreeNodeDef="let node;" cdkDrag [cdkDragData]="node" (cdkDragDropped)="drop($event)"
-    [ngClass]="{'group-tree-node': node.value.type === 113, 'section-tree-node': node.value.type === 114, 'field-tree-node': node.value.type < 113}">
-    <div class="main_container field">
-      <div class="drag-icon">
-        <i class="dragdrop fas fa-ellipsis-v" cdkDragHandle></i>
-      </div>
-      <div class="name-container">
-        <div class="main-text">{{ node.value.name }}</div>
-        <div class="hint" *ngIf="node.get('textType')">Field Type - {{ node.get('textType').value }}</div>
-      </div>
-      <sw-dropdown-input style="margin-right: 25px;" [formControl]="node.get('options.size')" [options]="sizeOptions">
-        <span class="label">Field Width</span>
-      </sw-dropdown-input>
-      <div class="input">
-        <sw-input-checkbox [formControl]="node.get('options.required')" (checked)="setParent(node, 'required', $event)">
-          <span class="label">Required</span>
-        </sw-input-checkbox>
-      </div>
-      <div class="input">
-        <sw-input-checkbox [formControl]="node.get('options.hideLabel')" (checked)="setParent(node, 'hideLabel', $event)">
-          <span class="label">Hide Label</span>
-        </sw-input-checkbox>
-      </div>
-      <div class="input">
-        <sw-input-checkbox [formControl]="node.get('options.readonly')">
-          <span class="label">Read–Only</span>
-        </sw-input-checkbox>
-      </div>
-      <div class="input">
-        <sw-input-checkbox [formControl]="node.get('options.unique')">
-          <span class="label">Unique</span>
-        </sw-input-checkbox>
-      </div>
-      <div class="actions">
-        <div class="icon">
-          <sw-icon-button icon="fa-cog" class="field-creator blue" [class.active]="node.showSettings"
-            (click)="settingsToggle(node)">
-          </sw-icon-button>
-        </div>
-        <div class="icon">
-          <sw-icon-button icon="fa-times" class="field-creator blue" (click)="closeNode(node)">
-          </sw-icon-button>
-        </div>
-      </div>
-    </div>
-    <div class="settings" *ngIf="node.value.showSettings">
-      <sw-settings [field]="node"></sw-settings>
-    </div>
-  </cdk-nested-tree-node>
-
-  <cdk-nested-tree-node *cdkTreeNodeDef="let node; when: hasChild" cdkDrag [cdkDragData]="node"
-    (cdkDragDropped)="drop($event)"
-    [ngClass]="{'group-tree-node': node.value.type === 113, 'section-tree-node': node.value.type === 114}">
+<ng-template #sectionTemplate let-section let-list="list">
+  <div cdkDrag [cdkDragData]="section" class="section-tree-node">
     <div class="main_container">
       <div class="content">
         <div class="drag-icon">
           <i class="dragdrop fas fa-ellipsis-v" cdkDragHandle></i>
         </div>
-        <div class="name-container" *ngIf="node.value.type === 113">
-          <div class="main-text">{{ node.value.name }}</div>
-          <div class="hint" *ngIf="node.get('textType')">Group Type - {{ node.get('textType').value }}</div>
-        </div>
-        <sw-input-text [formControl]="node.get('name')" style="margin-right: 10px; width: 450px;"
-          *ngIf="node.value.type === 114">
+        <sw-input-text [formControl]="section.get('name')" style="margin-right: 10px; width: 450px;">
           <span class="placeholder">Section Name</span>
         </sw-input-text>
-        <sw-dropdown-input style="margin-right: 10px;" [formControl]="node.get('options.size')" [options]="sizeOptions">
+        <sw-dropdown-input style="margin-right: 10px;" [formControl]="section.get('options.size')" [options]="sizeOptions">
           <span class="label">Section Width</span>
         </sw-dropdown-input>
       </div>
       <div class="actions">
         <div class="icon">
-          <sw-icon-button icon="fa-cog" class="field-creator" [class.blue]="node.value.type === 113"
-            [class.active]="node.value.showSettings" (click)="settingsToggle(node)">
+          <sw-icon-button icon="fa-cog" class="field-creator" [class.active]="section.value.showSettings" (click)="settingsToggle(section)">
           </sw-icon-button>
         </div>
         <div class="icon">
-          <sw-icon-button icon="fa-times" class="field-creator" [class.blue]="node.value.type === 113"
-            (click)="closeNode(node)">
-
+          <sw-icon-button icon="fa-times" class="field-creator" (click)="closeNode(section)">
           </sw-icon-button>
         </div>
         <div class="icon dragdrop">
-          <sw-icon-button [icon]="getIcon(node.value.isExpanded)" (click)="toggleExpanded(node)"
-            [class.blue]="node.value.type === 113" [attr.aria-label]="'toggle ' + node.value.name">
+          <sw-icon-button [icon]="getIcon(section.value.isExpanded)" (click)="toggleExpanded(section)" [attr.aria-label]="'toggle ' + section.value.name">
           </sw-icon-button>
         </div>
       </div>
     </div>
-    <div class="drag-node-workarea" [ngClass]="{'group-tree-node': node.value.type === 113, 'section-tree-node': node.value.type === 114}" *cdkDragPreview>
+
+    <div class="settings" *ngIf="section.value.showSettings">
+      <sw-settings [field]="section"></sw-settings>
+    </div>
+    <div class="drag-field-workarea section-tree-node" *cdkDragPreview>
       <div class="main_container">
         <div class="content">
           <div class="drag-icon">
             <i class="dragdrop fas fa-ellipsis-v"></i>
           </div>
-          <div class="name-container" *ngIf="node.value.type === 113">
-            <div class="main-text">{{ node.value.name }}</div>
-            <div class="hint">Group Type -</div>
-          </div>
-          <sw-input-text [formControl]="node.get('name')" style="margin-right: 10px; width: 450px;"
-            *ngIf="node.value.type === 114">
+          <sw-input-text [formControl]="section.get('name')" style="margin-right: 10px; width: 450px;">
             <span class="placeholder">Section Name</span>
           </sw-input-text>
-          <sw-dropdown-input style="margin-right: 10px;" [formControl]="node.get('options.size')" [options]="sizeOptions">
+          <sw-dropdown-input style="margin-right: 10px;" [formControl]="section.get('options.size')" [options]="sizeOptions">
             <span class="input_label">Section Width</span>
           </sw-dropdown-input>
         </div>
         <div class="actions">
           <div class="icon">
-            <sw-icon-button icon="fa-cog" class="field-creator" [class.blue]="node.value.type === 113"
-              [class.active]="node.value.showSettings" (click)="settingsToggle(node)">
+            <sw-icon-button icon="fa-cog" class="field-creator" [class.active]="section.value.showSettings" (click)="settingsToggle(section)">
             </sw-icon-button>
           </div>
           <div class="icon">
-            <sw-icon-button icon="fa-times" class="field-creator" [class.blue]="node.value.type === 113"
-              (click)="closeNode(node)">
-  
+            <sw-icon-button icon="fa-times" class="field-creator" (click)="closeNode(section)">
             </sw-icon-button>
           </div>
           <div class="icon dragdrop">
-            <sw-icon-button [icon]="getIcon(node.value.isExpanded)" (click)="toggleExpanded(node)"
-              [class.blue]="node.value.type === 113" [attr.aria-label]="'toggle ' + node.value.name">
+            <sw-icon-button [icon]="getIcon(section.value.isExpanded)" (click)="toggleExpanded(section)" [attr.aria-label]="'toggle ' + section.value.name">
             </sw-icon-button>
           </div>
         </div>
       </div>
     </div>
-    
-   
+     
+    <ng-container *ngIf="!!section.get('fields') && section.value.isExpanded">
+      <div cdkDropList [cdkDropListData]="section.get('fields').controls" #rootList="cdkDropList" [id]="getListId(section)" [cdkDropListConnectedTo]="getListsIds()" (cdkDropListDropped)="drop($event)">
+        <ng-container *ngFor="let child of section.get('fields').controls">
+          <ng-container [ngSwitch]="child.get('type').value">
+            <ng-container *ngSwitchCase="114" [ngTemplateOutlet]="sectionTemplate" [ngTemplateOutletContext]="{$implicit: child}"></ng-container>
+            <ng-container *ngSwitchCase="113" [ngTemplateOutlet]="groupTemplate"  [ngTemplateOutletContext]="{$implicit: child}"></ng-container>
+          </ng-container>
+        </ng-container>
+      </div>
+    </ng-container>
+  </div>
+</ng-template>
 
-    <div class="settings" *ngIf="node.value.showSettings">
-      <sw-settings [field]="node"></sw-settings>
+<ng-template #groupTemplate let-group>
+  <div cdkDrag [cdkDragData]="group" class="group-tree-node">
+    <div class="main_container">
+      <div class="content">
+        <div class="drag-icon">
+          <i class="dragdrop fas fa-ellipsis-v" cdkDragHandle></i>
+        </div>
+        <div class="name-container">
+          <div class="main-text">{{ group.value.name }}</div>
+          <div class="hint" *ngIf="group.get('textType')">Group Type - {{ group.get('textType').value }}</div>
+        </div>
+      </div>
+      <div class="actions">
+        <div class="icon">
+          <sw-icon-button icon="fa-cog" class="field-creator blue" [class.active]="group.value.showSettings" (click)="settingsToggle(group)">
+          </sw-icon-button>
+        </div>
+        <div class="icon">
+          <sw-icon-button icon="fa-times" class="field-creator blue" (click)="closeNode(group)">
+          </sw-icon-button>
+        </div>
+        <div class="icon dragdrop">
+          <sw-icon-button [icon]="getIcon(group.value.isExpanded)" class="blue" (click)="toggleExpanded(group)" [attr.aria-label]="'toggle ' + group.value.name">
+          </sw-icon-button>
+        </div>
+      </div>
     </div>
-    <div style="margin-left: 20px;" [class.hidden]="!node.value.isExpanded" cdkDropList [id]="getListId(node)"
-      [cdkDropListConnectedTo]="getListsIds(node)"
-      [cdkDropListData]="getListData(node)">
-      <ng-container cdkTreeNodeOutlet></ng-container>
+    <div class="drag-field-workarea group-tree-node" *cdkDragPreview>
+      <div class="main_container">
+        <div class="content">
+          <div class="drag-icon">
+            <i class="dragdrop fas fa-ellipsis-v"></i>
+          </div>
+          <div class="name-container">
+            <div class="main-text">{{ group.value.name }}</div>
+            <div class="hint" *ngIf="group.get('textType')">Group Type - {{ group.get('textType').value }}</div>
+          </div>
+        </div>
+        <div class="actions">
+          <div class="icon">
+            <sw-icon-button icon="fa-cog" class="field-creator blue" [class.active]="group.value.showSettings" (click)="settingsToggle(group)">
+            </sw-icon-button>
+          </div>
+          <div class="icon">
+            <sw-icon-button icon="fa-times" class="field-creator blue" (click)="closeNode(group)">
+            </sw-icon-button>
+          </div>
+          <div class="icon dragdrop">
+            <sw-icon-button [icon]="getIcon(group.value.isExpanded)" class="blue" (click)="toggleExpanded(group)" [attr.aria-label]="'toggle ' + group.value.name">
+            </sw-icon-button>
+          </div>
+        </div>
+      </div>
     </div>
-  </cdk-nested-tree-node>
+      
 
-</cdk-tree> -->
+    <div class="settings" *ngIf="group.value.showSettings">
+      <sw-settings [field]="group"></sw-settings>
+    </div>
+
+    <ng-container *ngIf="!!group.get('fields') && group.value.isExpanded">
+      <div cdkDropList [cdkDropListData]="group.get('fields').controls" #rootList="cdkDropList" [id]="getListId(group)" [cdkDropListConnectedTo]="getListsIds()" (cdkDropListDropped)="drop($event)">
+        <ng-container *ngFor="let child of group.get('fields').controls">
+          <ng-container [ngSwitch]="child.get('type').value">
+            <ng-container *ngSwitchCase="114" [ngTemplateOutlet]="sectionTemplate"  [ngTemplateOutletContext]="{$implicit: child}"></ng-container>
+            <ng-container *ngSwitchCase="113" [ngTemplateOutlet]="groupTemplate"  [ngTemplateOutletContext]="{$implicit: child}"></ng-container>
+            <ng-container *ngSwitchDefault [ngTemplateOutlet]="fieldTemplate" [ngTemplateOutletContext]="{$implicit: child}"></ng-container>
+          </ng-container>
+        </ng-container>
+      </div>
+    </ng-container>
+
+  </div>
+</ng-template>
+
+<ng-template #fieldTemplate let-field>
+    <div cdkDrag [cdkDragData]="field" class="field-tree-node">
+      <div class="main_container">
+        <div class="content">
+          <div class="drag-icon">
+            <i class="dragdrop fas fa-ellipsis-v" cdkDragHandle></i>
+          </div>
+          <div class="name-container">
+            <div class="main-text">{{ field.value.name }}</div>
+            <div class="hint" *ngIf="field.get('textType')">Field Type - {{ field.get('textType').value }}</div>
+          </div>
+          <sw-dropdown-input style="margin-right: 25px;" [formControl]="field.get('options.size')" [options]="sizeOptions">
+            <span class="label">Field Width</span>
+          </sw-dropdown-input>
+          <div class="input">
+            <sw-input-checkbox [formControl]="field.get('options.required')"
+              (checked)="setParent(field, 'required', $event)">
+              <span class="label">Required</span>
+            </sw-input-checkbox>
+          </div>
+          <div class="input">
+            <sw-input-checkbox [formControl]="field.get('options.hideLabel')"
+              (checked)="setParent(field, 'hideLabel', $event)">
+              <span class="label">Hide Label</span>
+            </sw-input-checkbox>
+          </div>
+          <div class="input">
+            <sw-input-checkbox [formControl]="field.get('options.readonly')">
+              <span class="label">Read–Only</span>
+            </sw-input-checkbox>
+          </div>
+          <div class="input">
+            <sw-input-checkbox [formControl]="field.get('options.unique')">
+              <span class="label">Unique</span>
+            </sw-input-checkbox>
+          </div>
+          <div class="actions">
+            <div class="icon">
+              <sw-icon-button icon="fa-cog" class="field-creator blue" [class.active]="field.value.showSettings" (click)="settingsToggle(field)">
+              </sw-icon-button>
+            </div>
+            <div class="icon">
+              <sw-icon-button icon="fa-times" class="field-creator blue" (click)="closeNode(field)">
+              </sw-icon-button>
+            </div>
+          </div>
+        </div>
+      </div>
+        <div class="settings" *ngIf="field.value.showSettings">
+          <sw-settings [field]="field"></sw-settings>
+        </div>
+      </div>
+</ng-template>
+
+<!-- <div  cdkDropListGroup> -->
+<!-- {{treeSource.nodes}} -->
+  <ng-container [ngTemplateOutlet]="sectionsTemplate" [ngTemplateOutletContext]="{$implicit: treeSource.data}"></ng-container>
+  <!-- <div #root cdkDropList id="cdk-drop-list-1" [cdkDropListConnectedTo]="getListsIds()" [cdkDropListData]="treeSource.data" [cdkDropListEnterPredicate]="isSection">
+
+    <ng-container *ngFor="let field of treeSource.data" [ngTemplateOutlet]="nodeTemplateRef" [ngTemplateOutletContext]="{field: field}">
+    </ng-container>
+   </div> --> 
+
+<!-- </div> -->
