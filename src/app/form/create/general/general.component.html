@@ -85,7 +85,7 @@
   <sw-button class="outline-btn" style="margin-right: 10px;" (click)="prevStep()">
     Cancel
   </sw-button>
-  <sw-button (click)="nextStep()" [disabled]="!generalForm.valid || saving">
+  <sw-button (click)="nextStep()" [disabled]="!generalForm.valid || !form.valid || saving">
     Save & Go Next Step
   </sw-button>
 </div>

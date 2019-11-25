@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { FormBuilder, FormGroup, Validators, FormArray, FormControl, AbstractControl } from '@angular/forms';
 import { ApiService } from '@app/core/api.service';
-import { cloneDeep, flatMap, get, isArrayLike, isPlainObject, isString, set, unset, values } from 'lodash';
+import { cloneDeep, flatMap, flattenDeep, get, isArrayLike, isPlainObject, isString, set, unset, values, flatMapDeep } from 'lodash';
 import { BehaviorSubject, Subject, from, throwError, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import * as SymbolTree from 'symbol-tree';
@@ -19,6 +19,19 @@ const flatten = (fields = []) => {
   }
   return result;
 };
+const flattenLo = function(field) {
+  return [field, flatMapDeep(field.fields, flattenLo)];
+}
+function flattenrec(xs) {
+  return xs.reduce((acc, x) => {
+    acc = acc.concat(x);
+    if (x.type >= 113) {
+      acc = acc.concat(flattenrec(x.fields));
+      // x.fields = [];
+    }
+    return acc;
+  }, []);
+}
 const mapField = (field, mappers = []) => {
   if (field.fields) {
     field.fields = field.fields.map(cfield => mapField(cfield, mappers));
@@ -121,6 +134,7 @@ export class FormService {
   }
 
   loadForm(formId?: string) {
+    this.form = null;
     if (formId !== 'new') {
       const getFormTemplate = this.api.getFormTemplate(formId);
       getFormTemplate.subscribe(data => {
@@ -176,6 +190,11 @@ export class FormService {
       control = parent;
     }
     return paths;
+  }
+  getListLength() {
+    const allFields = flatMapDeep(this.form.get('fields').value, flattenLo);
+    // const allFields = flattenDeep(this.form.get('fields').value);
+    return allFields.filter(field => field.type >= 113).length;
   }
   getListsIds(ids = [], parent?) {
     if (!parent) parent = this.form;
@@ -525,14 +544,15 @@ export class FormService {
   get form(): FormGroup {
     return this._form.getValue();
   }
+  
+  set form(form: FormGroup) {
+    this._form.next(form);
+  }
 
   get form$() {
     return this._form.asObservable();
   }
 
-  set form(form: FormGroup) {
-    this._form.next(form);
-  }
 
   set isFormHasId(flag: boolean) {
     this.isFormHasIdSubject$.next(flag);

@@ -1,12 +1,12 @@
 import { ArrayDataSource } from '@angular/cdk/collections';
 import { FlatTreeControl, NestedTreeControl } from '@angular/cdk/tree';
-import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy, AfterViewInit, OnDestroy, ViewChild, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy, AfterViewInit, OnDestroy, ViewChild, AfterViewChecked, ContentChildren, QueryList, ElementRef, ViewChildren } from '@angular/core';
 import { FieldService } from '@app/core/field.service';
 import { ApiService } from '@app/core/api.service';
 import { CHILDREN_SYMBOL, TreeDataSource } from '@app/form/create/tree.datasource';
 import { FormService } from '@app/form/form.service';
 import { Subject, Subscription } from 'rxjs';
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, CdkDropList, DragDrop, CdkDrag } from '@angular/cdk/drag-drop';
 import { takeUntil } from 'rxjs/operators';
 import { cloneDeep } from 'lodash';
 import { visitValue } from '@angular/compiler/src/util';
@@ -53,6 +53,9 @@ const TREE_DATA: FoodNode[] = [
   // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked, OnInit, OnDestroy {
+  @ViewChild('root', {read: ElementRef, static: true}) rootEl;
+  @ViewChildren('rootList', {read: CdkDropList}) lists: QueryList<CdkDropList>;
+  @ViewChildren(CdkDrag, {read: CdkDrag}) drags: QueryList<CdkDrag>;
   options = {
     idField: 'mongo_id',
     childrenField: 'fields',
@@ -98,7 +101,8 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
 
   form: FormArray = new FormArray([]);
   formSubscription: Subscription;
-  constructor(private service: FormService, private api: ApiService, private cdr: ChangeDetectorRef, private fb: FormBuilder) {
+  constructor(private service: FormService, private api: ApiService, private cdr: ChangeDetectorRef, private fb: FormBuilder,
+    private dd: DragDrop) {
   }
 
   ngOnInit() {
@@ -108,7 +112,6 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
         if (value && value['fields']) {
           this.form = form.get('fields') as FormArray;
           this.treeSource.nodes = this.form.controls;// (form.get('fields') as FormArray).controls;
-          console.log(this.treeSource.nodes)
         } else {
           this.treeSource.nodes = [];
         }
@@ -118,8 +121,15 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
       if (form.get('fields')) {
         this.form = form.get('fields') as FormArray;
         this.treeSource.nodes = this.form.controls;
-        console.log(this.treeSource.nodes)
+        // let dl = this.dd.createDropList(this.rootEl);
+        console.log(this.getListsIds());
+        // dl.connectedTo(this.getListsIds());
         this.cdr.markForCheck();
+        this.cdr.detectChanges()
+
+        // this.rootEl._changeDetectorRef.detectChanges();
+        // let list = (this.rootEl as CdkDropList);
+        // console.log(list)
       }
     });
     
@@ -134,7 +144,15 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
   }
 
   ngAfterViewInit() {
-    this.cdr.detectChanges()
+    this.cdr.detectChanges();
+    this.drags.changes.subscribe(drags => {
+      console.log(drags)
+      this.cdr.detectChanges()
+      // lists.forEach((list: CdkDropList) => {
+        // console.log(list._dropListRef.withDirection)
+        // console.log(list._dropListRef.withItems())
+      // })
+    })
   }
 
   setParent(node, key, value) {
@@ -201,12 +219,24 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
       // listIds.push('sidebar-list')
       return listIds//.filter(id => id !== nodeId);
     } else {
+      // return this.service.getListsIds();
+      return ['cdk-drop-list-root', ...this.service.getListsIds()];
 
+      // let all =  new Array(this.service.getListLength() + 1).fill('cdk-drop-list-');
+      // let result = all.map((v, idx) => {
+      //   return v + (idx+1);
+      // });
+      // return result;
     }
   }
   getListId(node) {
-    let listId = [...this.service.getParentPaths(node), node.get('name').value, node.get('type').value].join('');
-    return listId;
+    // console.log(node)
+    if (node && node.value) {
+      let listId = [...this.service.getParentPaths(node), node.get('name').value, node.get('type').value].join('');
+      return listId;
+    } else {
+      return 'cdk-drop-list-root';
+    }
   }
   hasChild = (_: number, node: any) => {
     return !!node.get('fields')
@@ -222,16 +252,21 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
     if (dragType < 113) {
       return list.id.endsWith('113');
     } else if (dragType === 113) {
-      if (list.id === 'root-list') {
+      if (list.id === 'cdk-drop-list-0') {
         return list.data.value.length === 0;
       } else {
         return (list.id.endsWith('113') || list.id.endsWith('114'));
       }
     } else if (dragType === 114) {
-      return list.id === 'root-list';
+      return list.id === 'cdk-drop-list-0';
     } else {
       console.log(dragType)
     }
+  }
+
+  isSection(drag, list) {
+    console.log(drag, list)
+    return drag.type === 114;
   }
 
   getListData(node?) {

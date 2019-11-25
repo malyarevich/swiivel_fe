@@ -16,6 +16,9 @@ import { SidebarConsentComponent } from './builder/sidebar/consent.component';
 import { WorkareaConsentComponent } from './builder/workarea/consent.component';
 import { WorkareaIntroComponent } from './builder/workarea/intro.component';
 import { WorkareaTermsConditionComponent } from './builder/workarea/terms-and-conditions.component';
+import { WorkareaSectionComponent } from './builder/workarea/fields/section.component';
+import { WorkareaGroupComponent } from './builder/workarea/fields/group.component';
+import { WorkareaFieldComponent } from './builder/workarea/fields/field.component';
 import { WorkareaFieldsComponent } from './builder/workarea/fields/fields.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { SettingsModule } from './builder/workarea/fields/settings/settings.module';
@@ -41,7 +44,10 @@ import { FormDrawingComponent } from './builder/workarea/form-drawing/form-drawi
     WorkareaHeaderComponent,
     DocumentsFormsComponent,
     WidgetComponent,
-    FormDrawingComponent
+    FormDrawingComponent,
+    WorkareaSectionComponent,
+    WorkareaGroupComponent,
+    WorkareaFieldComponent
   ],
   imports: [
     CommonModule,
@@ -53,6 +59,11 @@ import { FormDrawingComponent } from './builder/workarea/form-drawing/form-drawi
     ReactiveFormsModule,
     FormsModule,
     SettingsModule
+  ],
+  entryComponents: [
+    WorkareaSectionComponent,
+    WorkareaGroupComponent,
+    WorkareaFieldComponent
   ]
 })
 export class CreateModule { }

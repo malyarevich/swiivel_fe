@@ -1,0 +1,67 @@
+<div class="main_container" *ngIf="_section">
+  <div class="content">
+    <div class="drag-icon">
+      <i class="dragdrop fas fa-ellipsis-v" cdkDragHandle></i>
+    </div>
+    <sw-input-text [formControl]="_section.get('name')">
+      <span class="placeholder">Section Name</span>
+    </sw-input-text>
+    <sw-dropdown-input [formControl]="_section.get('options.size')" [options]="widthOptions">
+      <span class="label">Section Width</span>
+    </sw-dropdown-input>
+  </div>
+  <div class="actions">
+    <div class="icon">
+      <sw-icon-button icon="fa-cog" class="field-creator" [class.active]="_section.value.showSettings" (click)="toggleSettings()">
+      </sw-icon-button>
+    </div>
+    <div class="icon">
+      <sw-icon-button icon="fa-times" class="field-creator" (click)="removeSection()">
+      </sw-icon-button>
+    </div>
+    <div class="icon dragdrop">
+      <sw-icon-button [icon]="_section.value.isExpanded ? 'fa-caret-up' : 'fa-caret-down'" (click)="toggleExpanded()" [attr.aria-label]="'toggle ' + _section.value.name">
+      </sw-icon-button>
+    </div>
+  </div>
+</div>
+
+<sw-settings *ngIf="showSettings" [field]="_section"></sw-settings>
+
+<div class="drag-field-workarea _section-tree-node" *cdkDragPreview>
+  <div class="main_container">
+    <div class="content">
+      <div class="drag-icon">
+        <i class="dragdrop fas fa-ellipsis-v"></i>
+      </div>
+      <sw-input-text [formControl]="_section.get('name')">
+        <span class="placeholder">Section Name</span>
+      </sw-input-text>
+      <sw-dropdown-input [formControl]="_section.get('options.size')" [options]="widthOptions">
+        <span class="input_label">Section Width</span>
+      </sw-dropdown-input>
+    </div>
+    <div class="actions">
+      <div class="icon">
+        <sw-icon-button icon="fa-cog" class="field-creator" [class.active]="_section.value.showSettings">
+        </sw-icon-button>
+      </div>
+      <div class="icon">
+        <sw-icon-button icon="fa-times" class="field-creator">
+        </sw-icon-button>
+      </div>
+      <div class="icon dragdrop">
+        <sw-icon-button [icon]="_section.value.isExpanded ? 'fa-caret-up' : 'fa-caret-down'" (click)="toggleExpanded()" [attr.aria-label]="'toggle ' + _section.value.name">
+        </sw-icon-button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="children" #drop [class.visible]="_section.value.isExpanded">
+  <ng-container *ngFor="let child of children.controls" [ngSwitch]="child.get('type').value">
+    <sw-section *ngSwitchCase="114" (dragRef)="addDragRef($event)" [section]="child"></sw-section>
+    <sw-group *ngSwitchCase="113" (dragRef)="addDragRef($event)" [group]="child"></sw-group>
+    <sw-field *ngSwitchDefault [field]="child"></sw-field>
+  </ng-container>
+</div>

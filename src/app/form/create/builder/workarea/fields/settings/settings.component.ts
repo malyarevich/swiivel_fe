@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ComponentFactory, ComponentFactoryResolver, ComponentRef, Input, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ComponentFactory, ComponentFactoryResolver, ComponentRef, Input, OnDestroy, OnInit, ViewChild, ViewContainerRef, ViewChildren, QueryList } from '@angular/core';
 import { CheckboxSettingComponent } from './checkbox-setting/checkbox-setting.component';
 import { DateSettingComponent } from './date-setting/date-setting.component';
 import { DropdownSettingComponent } from './dropdown-setting/dropdown-setting.component';
@@ -11,6 +11,7 @@ import { SectionSettingsComponent } from './section-settings/section-settings.co
 import { TextSettingComponent } from './text-setting/text-setting.component';
 import { FormGroup, FormControl, FormArray } from '@angular/forms';
 import { cloneDeep } from 'lodash';
+import { CdkDrag } from '@angular/cdk/drag-drop';
 
 const components = [
   { type: 101, component: TextSettingComponent, title: 'Short Text Field Settings' },
@@ -33,7 +34,7 @@ const components = [
   styleUrls: ['./settings.component.scss']
 })
 export class SettingsComponent implements OnInit, AfterViewInit, OnDestroy {
-
+  @ViewChildren(CdkDrag, {read: CdkDrag}) drags: QueryList<any>;
   component: ComponentRef<any>;
   type: number;
   title: string;
@@ -59,7 +60,7 @@ export class SettingsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
     if (this._form) {
-      this.initSettings(this._form);
+      // this.initSettings(this._form);
     }
   }
 
@@ -81,12 +82,9 @@ export class SettingsComponent implements OnInit, AfterViewInit, OnDestroy {
   private initSettings(f: any): void {
     const c = components.find(c => c.type === f.value.type);
     if (c) {
-      // console.log('CCCC,', c)
       this.type = c.type;
       this.title = c.title;
-      if (c.type === 107) {
-        console.log('Field group', f)
-      }
+     
       const factory: ComponentFactory<any> = this.resolver.resolveComponentFactory(c.component);
       if (this.container) {
         this.component = this.container.createComponent(factory);
