@@ -16,7 +16,12 @@ export class DocumentsFormsComponent implements OnInit {
   public lform: FormGroup;
   public icons = IconsEnum;
   private rootForm: FormGroup;
-  public widthOption = ['4 columns', '3 columns', '2 columns', '1 column'].map(t => ({ title: t }));
+  public widthOption = [
+    {value: 0, title: '1/4 page'},
+    {value: 1, title: '2/4 page'},
+    {value: 2, title: '3/4 page'},
+    {value: 3, title: 'Full page'}
+  ];
   public popupDisplay = false;
   public isContentShown: boolean = true;
   public isContentFShown: boolean = true;
