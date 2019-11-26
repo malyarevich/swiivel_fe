@@ -1,8 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { DocumentsModel, documentItemDefault } from '@app/models/data-collection/form-constructor/form-builder/documents.model';
-import { cloneDeep } from 'lodash';
-import { formPDFItemDefault } from '@app/models/data-collection/form-constructor/form-builder/formsPDF.model';
+import { v4 as uuid } from "uuid";
 
 @Component({
   selector: 'sw-documents-forms',
@@ -32,9 +30,10 @@ export class SidebarDocumentsFormsComponent implements OnInit {
     }
   ];
   isPerFamilyD: any[] = [];
+  isPerFamilyF: any[] = [];
   radioGroup = ['Needed Per Family', 'Needed Per Student'];
-  isOpenDocuments: boolean = false;
-  isOpenForms: boolean = false;
+  isOpenDocuments: boolean = true;
+  isOpenForms: boolean = true;
   lform: FormGroup;
 
   @Input()
@@ -44,16 +43,28 @@ export class SidebarDocumentsFormsComponent implements OnInit {
         documents: this.fb.group({
           sectionName: ['Documents for Parents'],
           sectionWidth: ['full'],
-          documentsItems: [[]]
+          documentsItems: this.fb.array([])
         }),
         formsPDF: this.fb.group({
           sectionName: ['School Forms'],
           sectionWidth: ['full'],
-          formsPDFItems: [[]]
+          formsPDFItems: this.fb.array([])
         })
       }));
     }
     this.lform = _form.get('documentsForms')
+    let arrayD = this.lform.get('documents.documentsItems') as FormArray;
+    let arrayF = this.lform.get('formsPDF.formsPDFItems') as FormArray;
+    if (arrayD.value && arrayD.value.length) {
+      arrayD.value.forEach((element, index) => {
+        this.isPerFamilyD[index] = element.isPerFamily ? 'Needed Per Family' : 'Needed Per Student';
+      });
+    }
+    if (arrayF.value && arrayF.value.length) {
+      arrayF.value.forEach((element, index) => {
+        this.isPerFamilyF[index] = element.isPerFamily ? 'Needed Per Family' : 'Needed Per Student';
+      });
+    }
   }
 
   constructor(
@@ -63,12 +74,12 @@ export class SidebarDocumentsFormsComponent implements OnInit {
       documents: this.fb.group({
         sectionName: ['Documents for Parents'],
         sectionWidth: ['full'],
-        documentsItems: [[]]
+        documentsItems: this.fb.array([])
       }),
       formsPDF: this.fb.group({
         sectionName: ['School Forms'],
         sectionWidth: ['full'],
-        formsPDFItems: [[]]
+        formsPDFItems: this.fb.array([])
       })
     });
   }
@@ -103,9 +114,10 @@ export class SidebarDocumentsFormsComponent implements OnInit {
   addItem(addTo: string): void {
     switch (addTo) {
       case 'documents':
-        (this.lform.get('documents.documentsItems') as FormArray).push(this.fb.group({
-          id: [''],
-          name: [''],
+        let array = this.lform.get('documents.documentsItems') as FormArray
+        array.push(this.fb.group({
+          id: [uuid()],
+          name: ['Document name'],
           isUpload: [true],
           isPerFamily: [true],
           accompanyingText: this.fb.group({
@@ -116,38 +128,48 @@ export class SidebarDocumentsFormsComponent implements OnInit {
           data: '',
           dataTypeAllowed: this.fb.array([])
         }));
+        if (array.value && array.value.length) {
+          array.value.forEach((element, index) => {
+            this.isPerFamilyD[index] = element.isPerFamily ? 'Needed Per Family' : 'Needed Per Student';
+          });
+        }
         break;
       case 'forms':
-          (this.lform.get('formsPDF.formsPDFItems') as FormArray).push(this.fb.group({
-            id: [''],
-            name: [''],
-            isNew: [true],
-            isPerFamily: [true],
-            isAllowDownloadUpload: [false],
-            isFillableOnline: [false],
-            accompanyingText: this.fb.group({
-              data: [''],
-              isBold: [false],
-              isItalic: [false]
-            }),
-            form: this.fb.group({
-              name: [null],
-              type: [null]
-            })
-          }))
+        let arrayF = this.lform.get('formsPDF.formsPDFItems') as FormArray;
+        arrayF.push(this.fb.group({
+          id: [uuid()],
+          name: ['Form name'],
+          isNew: [true],
+          isPerFamily: [true],
+          isAllowDownloadUpload: [false],
+          isFillableOnline: [false],
+          accompanyingText: this.fb.group({
+            data: [''],
+            isBold: [false],
+            isItalic: [false]
+          }),
+          form: this.fb.group({
+            name: [null],
+            type: [null]
+          })
+        }));
+        if (arrayF.value && arrayF.value.length) {
+          arrayF.value.forEach((element, index) => {
+            this.isPerFamilyF[index] = element.isPerFamily ? 'Needed Per Family' : 'Needed Per Student';
+          });
+        }
         break;
     }
-    // console.log(this.lform);
   }
 
   removeItem(from: string, index: number) {
     if (from && from !== '' && index >= 0) {
       switch (from) {
         case 'documents':
-            (this.lform.get('documents.documentsItems') as FormArray).removeAt(index);
+          (this.lform.get('documents.documentsItems') as FormArray).removeAt(index);
           break;
         case 'forms':
-            (this.lform.get('formsPDF.formsPDFItems') as FormArray).removeAt(index);
+          (this.lform.get('formsPDF.formsPDFItems') as FormArray).removeAt(index);
           break;
       }
     }
