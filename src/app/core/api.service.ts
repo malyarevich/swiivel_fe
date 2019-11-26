@@ -146,12 +146,15 @@ export class ApiService {
 
   uploadFile(formId, file) {
     const fbLibk = environment.apiFB;
-    return this.http.request('post', `${fbLibk}/forms/attach/${formId}?api_token=${environment.api_token}`, file);
+    const opt = { 
+      body: file
+    }
+    return this.http.request('POST', `${fbLibk}/forms/attach/${formId}?api_token=${environment.api_token}`, opt);
   }
 
   getFormsPDFList():Observable<any>{
     const fbLibk = environment.apiFB;
-    return this.http.request('get', `${fbLibk}/pdfForms?api_token=${environment.api_token}`);
+    return this.http.request('GET', `${fbLibk}/pdfForms?api_token=${environment.api_token}`);
   }
 
 

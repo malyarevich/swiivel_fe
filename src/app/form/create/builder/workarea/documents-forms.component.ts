@@ -99,7 +99,7 @@ export class DocumentsFormsComponent implements OnInit {
     if (fileList.length > 0) {
       const file: File = fileList[0];
       const formData: FormData = new FormData();
-      formData.append('attachment', file, file.name);
+      formData.append('attachment', file);
       this.api.uploadFile(this.rootForm.value._id, formData).subscribe((result: any) => {
         if (result) {
           (this.rootForm.get('attachments') as FormGroup).addControl(result.hash, this.fb.group({...result}))
