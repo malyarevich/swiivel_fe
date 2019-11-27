@@ -8,6 +8,10 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 export class CheckboxSettingComponent implements OnInit {
 
   form: FormGroup;
+  options = [
+    { title: 'Yes', value: true },
+    { title: 'No', value: false }
+  ];
 
   @Input()
   set settings(obj: any) {
@@ -20,11 +24,6 @@ export class CheckboxSettingComponent implements OnInit {
     }
   }
   @Output() fieldSettings = new EventEmitter();
-
-  options = [
-    { title: 'Yes', value: true },
-    { title: 'No', value: false }
-  ];
 
   constructor(
     private fb: FormBuilder

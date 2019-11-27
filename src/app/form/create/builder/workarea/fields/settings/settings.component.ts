@@ -1,4 +1,5 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ComponentFactory, ComponentFactoryResolver, ComponentRef, Input, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { FormGroup, FormControl, FormArray } from '@angular/forms';
 import { CheckboxSettingComponent } from './checkbox-setting/checkbox-setting.component';
 import { DateSettingComponent } from './date-setting/date-setting.component';
 import { DropdownSettingComponent } from './dropdown-setting/dropdown-setting.component';
@@ -9,7 +10,6 @@ import { NumberSettingComponent } from './number-setting/number-setting.componen
 import { PhoneSettingComponent } from './phone-setting/phone-setting.component';
 import { SectionSettingsComponent } from './section-settings/section-settings.component';
 import { TextSettingComponent } from './text-setting/text-setting.component';
-import { FormGroup, FormControl, FormArray } from '@angular/forms';
 import { cloneDeep } from 'lodash';
 
 const components = [
@@ -87,7 +87,7 @@ export class SettingsComponent implements OnInit, AfterViewInit, OnDestroy {
       if (c.type === 107) {
         console.log('Field group', f)
       }
-      const factory: ComponentFactory<any> = this.resolver.resolveComponentFactory(c.component);
+      const factory: ComponentFactory<any> = this.resolver.resolveComponentFactory<any>(c.component);
       if (this.container) {
         this.component = this.container.createComponent(factory);
         this.component.instance.settings = f.get('options').value;

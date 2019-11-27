@@ -10,7 +10,6 @@ export class DropdownSettingComponent implements OnInit {
 
   @Input()
   set settings(obj: any) {
-    console.log
     if (obj.fieldOptions && obj.fieldOptions.length >= 0) {
       let fieldOptions = (this.form.get('fieldOptions') as FormArray);
       fieldOptions.clear();
@@ -62,15 +61,12 @@ export class DropdownSettingComponent implements OnInit {
         })
       ])
     });
-    this.form.valueChanges.subscribe(v => {
-      if (v.fieldType && v.fieldType[0]) { v.fieldType = v.fieldType[0].value }
-      this.fieldSettings.emit(v);
-    });
   }
 
   ngOnInit() {
     this.form.valueChanges.subscribe(v => {
-      this.prepareForm(v);
+      if (v.fieldType && v.fieldType[0]) { v.fieldType = v.fieldType[0].value }
+      this.fieldSettings.emit(v);
     });
   }
 
@@ -99,11 +95,6 @@ export class DropdownSettingComponent implements OnInit {
       (this.options as FormArray).removeAt(i);
       if (i === 0 && this.options.value.length === 0) { this.addOption(); }
     }
-  }
-
-  prepareForm(value) {
-    const { multiple, fieldOptions, fieldType, defaultOption } = value;
-    this.fieldSettings.emit({multiple, fieldOptions, fieldType, defaultOption});
   }
 
 }

@@ -1,14 +1,12 @@
-<div class="input_text" data-e2e="input_text">
+<div class="input_text" data-e2e="input_text" [class.empty]="isEmpty()" [class.clearable]="isClearable">
   <input #input
     class="input_text__input"
     [type]="_type"
     [class.input_text__button]="_style === 'button_type'"
-    [class.empty]="isEmpty(value)"
     [attr.autocomplete]="_autocomplete"
-    [formControl]="control.control"
-    (input)="onChange()"/>
+    [formControl]="control.control"/>
   <ng-content></ng-content>
-  <i *ngIf="isClearable && !isEmpty(value)" class="fa fa-times clear" (click)="clear()" title="Clear input"></i>
+  <i class="fa fa-times clearBut" (click)="clear()" title="Clear input"></i>
   <i *ngIf="isSearch" class="fas fa-search fa-xs"></i>
   <ng-content select=".errors"></ng-content>
 </div>
