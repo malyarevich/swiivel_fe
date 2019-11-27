@@ -172,5 +172,3 @@ export class DropdownSelectYearComponent implements OnInit, ControlValueAccessor
     return this.dropdownList[0] + 1 > this.nowYear;
   }
 }
-
-

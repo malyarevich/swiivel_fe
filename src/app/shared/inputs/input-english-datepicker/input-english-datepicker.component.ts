@@ -262,6 +262,7 @@ export class InputEnglishDatepickerComponent
     this.value = '';
     this.valueTo = '';
     this.onChange(this.value);
+    this.close();
   }
 
   ngOnDestroy(): void {
