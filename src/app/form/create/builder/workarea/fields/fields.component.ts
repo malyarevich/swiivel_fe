@@ -62,10 +62,10 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
     allowDrag: true
   };
   sizeOptions = [
-    {value: 0, title: '1 quarter'},
-    {value: 1, title: 'Half'},
-    {value: 2, title: '3 quarters'},
-    {value: 3, title: 'Full width'},
+    {value: 0, title: '1/4 page'},
+    {value: 1, title: '2/4 page'},
+    {value: 2, title: '3/4 page'},
+    {value: 3, title: 'Full page'},
   ]
   movies = [
     'Episode I - The Phantom Menace',
