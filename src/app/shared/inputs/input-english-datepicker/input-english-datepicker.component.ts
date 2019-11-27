@@ -24,7 +24,7 @@ import {
   setDate,
   subDays,
   subMonths,
-  subWeeks
+  subWeeks,
 } from 'date-fns';
 import { DateTime } from 'luxon';
 import { Subject } from 'rxjs';
@@ -33,7 +33,7 @@ import { takeUntil } from 'rxjs/operators';
 const ENGDATEPICKER_CONTROL_ACCESSOR = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => InputEnglishDatepickerComponent),
-  multi: true
+  multi: true,
 };
 
 @Component({
@@ -43,7 +43,7 @@ const ENGDATEPICKER_CONTROL_ACCESSOR = {
   providers: [ENGDATEPICKER_CONTROL_ACCESSOR,
     {
       provide: CalendarDateFormatter,
-      useClass: DateFormatter
+      useClass: DateFormatter,
     }
   ]
 })
@@ -84,14 +84,14 @@ export class InputEnglishDatepickerComponent
   public days: CalendarMonthViewDay[];
   public buttonExpand = ButtonExpandEnum;
 
+  @Input() class = 'online_form__data_picker';
+  @Input() format: 'mm-dd-yyyy' | 'dd-mm-yyyy' | 'yyyy-mm-dd' = 'mm-dd-yyyy';
   @Input() isActive = true;
+  @Input() placeholder = 'English date';
+  @Input() range = false;
+  @Input() separator: '-' | '/' | '.' = '/';
   @Input() value: string = null;
   @Input() valueTo: string = null;
-  @Input() placeholder = 'English date';
-  @Input() class = 'online_form__data_picker';
-  @Input() range = 'none';
-  @Input() separator: '-' | '/' | '.' = '/';
-  @Input() format: 'mm-dd-yyyy' | 'dd-mm-yyyy' | 'yyyy-mm-dd' = 'mm-dd-yyyy';
 
   @ViewChild('datepicker', { static: false }) datepicker;
   @ViewChild('holder', { static: false }) holder;
@@ -104,8 +104,7 @@ export class InputEnglishDatepickerComponent
   }
 
   ngOnInit(): void {
-    this.viewDate = new Date();
-    this.mask = this.range === 'one-input' ? '00/00/0000 - 00/00/0000' : '00/00/0000';
+    this.mask = this.range ? '00/00/0000 - 00/00/0000' : '00/00/0000';
     this.form.get('month').setValue([this.months[this.viewDate.getMonth()]], { emitEvent: true});
     this.form.get('year').setValue(this.viewDate.getFullYear(), { emitEvent: true});
     this.form.valueChanges.subscribe(value => {
@@ -150,7 +149,7 @@ export class InputEnglishDatepickerComponent
   }
 
   dayClicked(day: any): void {
-    if (this.range === 'none') {
+    if (!this.range) {
       if (this.isActive) {
         if (this.selectedMonthViewDay) {
           delete this.selectedMonthViewDay.cssClass;
@@ -182,22 +181,22 @@ export class InputEnglishDatepickerComponent
         this.selectedRange.endDate = null;
       }
 
-      if (this.range === 'one-input') {
-        if (this.selectedRange.startDate) {
-          this.value = DateTime.fromJSDate(this.selectedRange.startDate.date).toFormat(this.dateFormat);
-        }
-        if (this.selectedRange.endDate) {
-          this.value += ' - ' + DateTime.fromJSDate(this.selectedRange.endDate.date).toFormat(this.dateFormat);
-        }
-      } else {
-        if (this.selectedRange.startDate) {
-          this.value = DateTime.fromJSDate(this.selectedRange.startDate.date).toFormat(this.dateFormat);
-        }
-        if (this.selectedRange.endDate) {
-          this.valueTo = DateTime.fromJSDate(this.selectedRange.startDate.date).toFormat(this.dateFormat);
-        }
-
-      }
+      // if (this.range === 'one-input') {
+      //   if (this.selectedRange.startDate) {
+      //     this.value = DateTime.fromJSDate(this.selectedRange.startDate.date).toFormat(this.dateFormat);
+      //   }
+      //   if (this.selectedRange.endDate) {
+      //     this.value += ' - ' + DateTime.fromJSDate(this.selectedRange.endDate.date).toFormat(this.dateFormat);
+      //   }
+      // } else {
+      //   if (this.selectedRange.startDate) {
+      //     this.value = DateTime.fromJSDate(this.selectedRange.startDate.date).toFormat(this.dateFormat);
+      //   }
+      //   if (this.selectedRange.endDate) {
+      //     this.valueTo = DateTime.fromJSDate(this.selectedRange.startDate.date).toFormat(this.dateFormat);
+      //   }
+      //
+      // }
       this.cdr.markForCheck();
       this.colorRange();
     }
@@ -276,7 +275,7 @@ export class InputEnglishDatepickerComponent
   }
 
   public changeValue(value: any): void {
-    if (this.range === 'none' || this.range === 'two-inputs') {
+    if (!this.range) {
       this.value = value;
     }
   }

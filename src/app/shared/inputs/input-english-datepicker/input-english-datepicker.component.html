@@ -10,34 +10,33 @@
       class="input"
       mask="{{mask}}"
       [class.empty]="isEmpty(value)"
-      [class.input-range-one-input]="range === 'one-input'"
-      [class.input-range-two-inputs]="range === 'two-inputs'"
-      [disabled]="!isActive || range === 'one-input' || range === 'two-inputs'"
+      [class.input-range]="range"
+      [disabled]="!isActive || range"
       [dropSpecialCharacters]="false"
       [(ngModel)]="value"
       (ngModelChange)="changeValue(value)"
       (keyup.enter)="apply()"
     />
-    <span class="placeholder">{{ range === 'two-inputs' ? 'From' : placeholder }}</span>
+    <span class="placeholder">{{ placeholder }}</span>
     <i class="far fa-calendar"></i>
     <i *ngIf="!isEmpty(value)" class="fa fa-times" (click)="clear()"></i>
   </div>
-  <div class="input-date" *ngIf="range === 'two-inputs'">
-    <input
-      class="input"
-      mask="{{mask}}"
-      [class.empty]="isEmpty(valueTo)"
-      [class.input-two-inputs]="range === 'two-inputs'"
-      [disabled]="!isActive || range === 'two-inputs'"
-      [dropSpecialCharacters]="false"
-      [(ngModel)]="valueTo"
-      (ngModelChange)="changeValueTo(value)"
-      (keyup.enter)="apply()"
-    />
-    <span class="placeholder">To:</span>
-    <i class="far fa-calendar"></i>
-    <i *ngIf="!isEmpty(valueTo)" class="fa fa-times" (click)="clear()"></i>
-  </div>
+  <!--<div class="input-date" *ngIf="range === 'two-inputs'">-->
+    <!--<input-->
+      <!--class="input"-->
+      <!--mask="{{mask}}"-->
+      <!--[class.empty]="isEmpty(valueTo)"-->
+      <!--[class.input-two-inputs]="range === 'two-inputs'"-->
+      <!--[disabled]="!isActive || range === 'two-inputs'"-->
+      <!--[dropSpecialCharacters]="false"-->
+      <!--[(ngModel)]="valueTo"-->
+      <!--(ngModelChange)="changeValueTo(value)"-->
+      <!--(keyup.enter)="apply()"-->
+    <!--/>-->
+    <!--<span class="placeholder">To:</span>-->
+    <!--<i class="far fa-calendar"></i>-->
+    <!--<i *ngIf="!isEmpty(valueTo)" class="fa fa-times" (click)="clear()"></i>-->
+  <!--</div>-->
 
 </div>
 
@@ -62,7 +61,7 @@
     </form>
     <div class="content">
       <mwl-calendar-month-view
-        *ngIf="range === 'none'"
+        *ngIf="!range"
         [viewDate]="viewDate"
         [events]="events"
         [activeDayIsOpen]="false"
@@ -70,7 +69,7 @@
       >
       </mwl-calendar-month-view>
       <mwl-calendar-month-view
-        *ngIf="range === 'one-input' || range === 'two-inputs'"
+        *ngIf="range"
         [viewDate]="viewDate"
         [events]="events"
         (beforeViewRender)="beforeMonthViewRender($event)"
