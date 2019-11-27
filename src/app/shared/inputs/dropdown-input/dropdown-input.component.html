@@ -6,7 +6,7 @@
     [class.disabled]="disabled"
     [class.empty]="isEmpty()"
     [class.table-header]="type === 'table-header'"
-    [class.month]="type === 'month'"
+    [class.outline]="type === 'outline'"
     (click)="showPopup($event)"
 >
   <i *ngIf="type === 'table-header'" class="fas fa-search fa-xs"></i>
@@ -47,10 +47,10 @@
       class="fas fa-times container__icon--clear"
       (click)="clear()"
     ></i>
-    <div class="container__icon_up" *ngIf="!(type === 'month')">
+    <div class="container__icon_up" *ngIf="!(type === 'outline')">
       <i class="fas fa-caret-up"></i>
     </div>
-    <div class="container__icon_down" *ngIf="(active || !isClearable || isEmpty()) && !(type === 'month')">
+    <div class="container__icon_down" *ngIf="(active || !isClearable || isEmpty()) && type !== 'outline'">
       <i class="fas fa-caret-down"></i>
     </div>
   </div>

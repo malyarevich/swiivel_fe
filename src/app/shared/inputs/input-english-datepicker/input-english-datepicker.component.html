@@ -45,22 +45,21 @@
   <div class="date-picker-popup">
     <form [formGroup]="form" class="select">
       <div class="select-month">
-        <sw-dropdown-input [options]="months" formControlName="month" type="month"></sw-dropdown-input>
+        <sw-dropdown-input
+          formControlName="month"
+          type="outline"
+          [canDeselect]="false"
+          [options]="months"
+        ></sw-dropdown-input>
       </div>
       <div class="select-year">
-        <sw-dropdown-select-year [date]="viewDate">
-          <span class="placeholder">2019</span>
+        <sw-dropdown-select-year [date]="viewDate" formControlName="year">
+          <span class="text">
+            {{ viewDate | calendarDate:(view + 'ViewYearTitle'):'en' }}
+          </span>
         </sw-dropdown-select-year>
       </div>
     </form>
-    <div class="select">
-      <div class="select-month">
-        {{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}
-      </div>
-      <div class="select-year">
-        {{ viewDate | calendarDate:(view + 'ViewYearTitle'):'en' }}
-      </div>
-    </div>
     <div class="content">
       <mwl-calendar-month-view
         *ngIf="range === 'none'"

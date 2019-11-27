@@ -99,7 +99,7 @@ export class InputEnglishDatepickerComponent
   constructor(private popup: Popup, private cdr: ChangeDetectorRef, private fb: FormBuilder) {
     this.form = this.fb.group({
       month: new FormControl(this.months[0], Validators.required),
-      year: new FormControl('', Validators.required)
+      year: new FormControl('', Validators.required),
     });
   }
 
@@ -107,11 +107,10 @@ export class InputEnglishDatepickerComponent
     this.viewDate = new Date();
     this.mask = this.range === 'one-input' ? '00/00/0000 - 00/00/0000' : '00/00/0000';
     this.form.get('month').setValue([this.months[this.viewDate.getMonth()]], { emitEvent: true});
+    this.form.get('year').setValue(this.viewDate.getFullYear(), { emitEvent: true});
     this.form.valueChanges.subscribe(value => {
-      console.log(value);
-      this.viewDate = new Date(2019, value.month[0].id, 1);
-      console.log(this.viewDate, this.viewDate.getMonth());
-      });
+      this.viewDate = new Date(value.year, value.month[0].id, 1);
+    });
   }
 
   get dateFormat(): string {

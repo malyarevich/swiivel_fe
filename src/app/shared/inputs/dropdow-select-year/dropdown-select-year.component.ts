@@ -19,7 +19,7 @@ import { ButtonSizeEnum } from '@shared/buttons/buttonSize.enum';
 const DROPDOWN_CONTROL_ACCESSOR = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => DropdownSelectYearComponent),
-  multi: true
+  multi: true,
 };
 
 @Component({
@@ -27,14 +27,13 @@ const DROPDOWN_CONTROL_ACCESSOR = {
   templateUrl: './dropdown-select-year.component.html',
   styleUrls: ['dropdown-select-year.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [DROPDOWN_CONTROL_ACCESSOR]
+  providers: [DROPDOWN_CONTROL_ACCESSOR],
 })
 export class DropdownSelectYearComponent implements OnInit, ControlValueAccessor {
   private _ref;
   private _sm: SelectionModel<any>;
 
   dropdownList: any[];
-  _multiple = false;
   onChange: Function;
   onTouched: Function;
   @Input() disabled = false;
@@ -42,18 +41,13 @@ export class DropdownSelectYearComponent implements OnInit, ControlValueAccessor
   @Input() isActive = true;
   @Input() panelClass = 'dropdown-overlay';
   public colors = ButtonColorsEnum;
+  public nowYear = new Date().getFullYear();
   public size = ButtonSizeEnum;
 
   @Input() set selectValue(opt: [any]) {
     if (opt[0] === null) {
       this._sm.clear();
     }
-  }
-
-  @Input()
-  set multiple(opt: boolean) {
-    this._multiple = !!opt;
-    this._sm = new SelectionModel(this._multiple);
   }
 
   @Input()
@@ -68,13 +62,11 @@ export class DropdownSelectYearComponent implements OnInit, ControlValueAccessor
   @ViewChild('droplist', { static: false }) droplist;
   @ViewChild('holder', { static: false, read: ElementRef }) holder: ElementRef;
 
-  constructor(private popup: Popup, private cdr: ChangeDetectorRef) {
-    console.log(this);
-  }
+  constructor(private popup: Popup, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
-    this._sm = new SelectionModel(this._multiple);
-    this.dropdownList = this.getYears(this.date.getFullYear());
+    this._sm = new SelectionModel(false);
+    this.dropdownList = this.getYears(this.nowYear);
   }
 
   getYears(year: number): number[] {
@@ -93,11 +85,11 @@ export class DropdownSelectYearComponent implements OnInit, ControlValueAccessor
     return !!this._ref;
   }
 
-  writeValue(items?: any[]): void {
+  writeValue(item?: number): void {
     this._sm.clear();
 
-    if (items && items.length) {
-      this._sm.select(...items);
+    if (item) {
+      this._sm.select(item);
     }
 
     this.cdr.markForCheck();
@@ -123,33 +115,13 @@ export class DropdownSelectYearComponent implements OnInit, ControlValueAccessor
     return !this.active && this._sm.isEmpty();
   }
 
-  select(item: any): void {
-    if (this.isActive) {
-      this._sm.toggle(item);
+  select(item: number): void {
+    if (this.isActive && !this.isYearMoreNowYear(item)) {
+      this._sm.select(item);
 
-      if (!this._multiple) {
-        this._ref.close();
-      }
-
-      this.onChange(2020);
+      this.onChange(item);
       this.cdr.markForCheck();
-    }
-  }
-
-  remove(item, event?: Event) {
-    if (!this.disabled) {
-      if (this.isActive) {
-        if (event) {
-          event.preventDefault();
-          event.stopImmediatePropagation();
-        }
-
-        this._sm.deselect(item);
-        this.onChange(this._sm.selected);
-        this.cdr.markForCheck();
-
-        return false;
-      }
+      this._ref.close();
     }
   }
 
@@ -187,7 +159,17 @@ export class DropdownSelectYearComponent implements OnInit, ControlValueAccessor
   }
 
   clickNextYears(): void {
-    this.dropdownList = this.getYears(this.dropdownList[0] + 24);
+    if (!this.isNextYearsMoreNowYear()) {
+      this.dropdownList = this.getYears(this.dropdownList[0] + 24);
+    }
+  }
+
+  isYearMoreNowYear(year: number): boolean {
+    return year > this.nowYear;
+  }
+
+  isNextYearsMoreNowYear(): boolean {
+    return this.dropdownList[0] + 1 > this.nowYear;
   }
 }
 

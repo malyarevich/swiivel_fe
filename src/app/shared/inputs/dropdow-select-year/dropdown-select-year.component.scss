@@ -8,8 +8,18 @@
     position: relative;
     background: #fff;
     display: flex;
-  }
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 3px;
 
+    &:hover {
+      background: $gray-hover;
+
+      .text {
+        font: 800 14px/18px $nunito-sans;
+      }
+    }
+  }
 }
 
 .dropdown_items_container {
@@ -55,4 +65,17 @@
 
 .fa-chevron-right {
   margin: 0 0 0 9.5px;
+}
+
+.disabled-year {
+  color: $gray-color;
+
+  &:hover {
+    background: none;
+    cursor: default;
+
+    .text {
+      color: $gray-color;
+    }
+  }
 }

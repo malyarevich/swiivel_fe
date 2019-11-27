@@ -40,7 +40,6 @@
 
   button:disabled {
     background: $gray;
-
     border: 1px solid $icon-gray;
     color: $icon-gray;
   }
@@ -88,6 +87,18 @@
     &:hover {
       background: $light-purple;
       color: $element-base-color;
+    }
+
+    &:disabled {
+      background: $gray;
+      border: none;
+      color: $icon-gray;
+
+      &:hover {
+        background: $gray;
+        border: none;
+        color: $icon-gray;
+      }
     }
   }
 

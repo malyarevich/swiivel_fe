@@ -1,11 +1,10 @@
 <div
-    #holder
-    class="container"
-    data-e2e="container"
-    [class.active]="active"
-    [class.disabled]="disabled"
-    [class.empty]="isEmpty()"
-    (click)="showPopup($event)"
+  #holder
+  class="container"
+  [class.active]="active"
+  [class.disabled]="disabled"
+  [class.empty]="isEmpty()"
+  (click)="showPopup($event)"
 >
 
   <ng-content select="span" class="span"></ng-content>
@@ -16,18 +15,18 @@
         <i class="fas fa-chevron-left"></i>
         <span>Previous</span>
       </sw-button>
-      <sw-button [color]="colors.GRAY_PURPLE" [size]="size.MEDIUM" (click)="clickNextYears()">
+      <sw-button [color]="colors.GRAY_PURPLE" [size]="size.MEDIUM" (click)="clickNextYears()" [disabled]="isNextYearsMoreNowYear()">
         <span>Next</span>
         <i class="fas fa-chevron-right"></i>
       </sw-button>
     </div>
     <div>
-      <div class="dropdown_items_container" data-e2e="dropdown_items_container">
+      <div class="dropdown_items_container">
         <div
           class="dropdown_items_container__item"
-          data-e2e="dropdown_items_container_item"
           *ngFor="let item of dropdownList"
           [class.selected]="isSelected(item)"
+          [class.disabled-year]="isYearMoreNowYear(item)"
           (click)="select(item)"
         >
           <span class="text">{{ item }}</span>

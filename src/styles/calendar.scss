@@ -87,7 +87,6 @@
   font: 400 12px/15px $nunito-sans;
   // font-size: 1.2em;
   // font-weight: 400;
-  opacity: 0.5;
   //margin: 10px;
   float: right;
 }
@@ -205,7 +204,12 @@
 }
 
 .cal-month-view .cal-day-cell.cal-today {
-  background-color: #e8fde7;
+  background: #4350A2;
+  border-radius: 3px;
+
+  .cal-cell-top {
+    color: #fff;
+  }
 }
 
 .cal-month-view .cal-day-cell.cal-drag-over {
