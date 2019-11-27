@@ -1,4 +1,3 @@
-
 <div cdkDropList [cdkDropListData]="treeSource.data" cdkDropListOrientation="vertical">
   <sw-section *ngFor="let section of treeSource.data" cdkDrag [cdkDragData]="section" [section]="section"></sw-section>
 </div >

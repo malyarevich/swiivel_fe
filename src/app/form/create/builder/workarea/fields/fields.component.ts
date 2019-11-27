@@ -56,30 +56,7 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
   @ViewChild('root', {read: ElementRef, static: true}) rootEl;
   @ViewChildren('rootList', {read: CdkDropList}) lists: QueryList<CdkDropList>;
   @ViewChildren(CdkDrag, {read: CdkDrag}) drags: QueryList<CdkDrag>;
-  options = {
-    idField: 'mongo_id',
-    childrenField: 'fields',
-    displayField: 'name',
-    useCheckbox: true,
-    allowDrop: true,
-    allowDrag: true
-  };
-  sizeOptions = [
-    {value: 0, title: '1 quarter'},
-    {value: 1, title: 'Half'},
-    {value: 2, title: '3 quarters'},
-    {value: 3, title: 'Full width'},
-  ]
-  movies = [
-    'Episode I - The Phantom Menace',
-    'Episode II - Attack of the Clones',
-    'Episode III - Revenge of the Sith',
-    'Episode IV - A New Hope',
-    'Episode V - The Empire Strikes Back',
-    'Episode VI - Return of the Jedi',
-    'Episode VII - The Force Awakens',
-    'Episode VIII - The Last Jedi'
-  ];
+
   trControl = new NestedTreeControl<FoodNode>(node => node.children);
   treeData = new ArrayDataSource(TREE_DATA);
   data = [];
@@ -121,15 +98,11 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
       if (form.get('fields')) {
         this.form = form.get('fields') as FormArray;
         this.treeSource.nodes = this.form.controls;
-        // let dl = this.dd.createDropList(this.rootEl);
         console.log(this.getListsIds());
-        // dl.connectedTo(this.getListsIds());
         this.cdr.markForCheck();
         this.cdr.detectChanges()
 
-        // this.rootEl._changeDetectorRef.detectChanges();
-        // let list = (this.rootEl as CdkDropList);
-        // console.log(list)
+      
       }
     });
     
@@ -148,45 +121,11 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
     this.drags.changes.subscribe(drags => {
       console.log(drags)
       this.cdr.detectChanges()
-      // lists.forEach((list: CdkDropList) => {
-        // console.log(list._dropListRef.withDirection)
-        // console.log(list._dropListRef.withItems())
-      // })
     })
   }
 
   setParent(node, key, value) {
-    // if (value === false) {
-    //   let changed = [];
-    //   let parent = node.parent.parent;
-    //   while (parent !== node.root) {
-    //     if (parent && parent.value.type !== 114) {
-    //       let control = parent.get(['options', key]) as FormControl;
-    //       if (control && control.value === true) {
-    //         changed.push(control)
-    //         // control.setValue(false, {onlySelf: true, emitEvent: false, emitViewToModelChange: false, emitModelToViewChange: false});
-    //         // changed = true;
-    //         parent = parent.parent.parent;
-    //       // } else if (!control) {
-    //       //   parent.get('options').registerControl(key, new FormControl(false));
-    //       } else {
-    //         parent = node.root;
-    //       }
-    //     } else {
-    //       console.log('l')
-    //       parent = node.root;
-    //     }
-    //   }
-    //   if (changed.length > 0) {
-    //     changed.reverse();
-    //     changed.forEach((control) => {
-    //       control.setValue(false, {onlySelf: true, emitEvent: false, emitViewToModelChange: false, emitModelToViewChange: false});
-    //     });
-    //     (node.root as FormGroup).updateValueAndValidity();
-    //     // this.cdr.markForCheck();
-    //     // this.cdr.detectChanges();
-    //   }
-    // }
+   
   }
 
   
@@ -208,29 +147,14 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
 
       let listIds = this.service.getListsIds();
       
-      // let filterType = node.get('type').value;
       let nodeId = this.getListId(node);
-      
-      // if (filterType === 113) {
-      //   listIds = listIds.filter((id) => id.endsWith('113') || id.endsWith('114'));
-      // } else if (filterType === 114) {
-      //   listIds = listIds.filter((id) => id.endsWith('114'));
-      // }
-      // listIds.push('sidebar-list')
       return listIds//.filter(id => id !== nodeId);
     } else {
-      // return this.service.getListsIds();
       return ['cdk-drop-list-root', ...this.service.getListsIds()];
 
-      // let all =  new Array(this.service.getListLength() + 1).fill('cdk-drop-list-');
-      // let result = all.map((v, idx) => {
-      //   return v + (idx+1);
-      // });
-      // return result;
     }
   }
   getListId(node) {
-    // console.log(node)
     if (node && node.value) {
       let listId = [...this.service.getParentPaths(node), node.get('name').value, node.get('type').value].join('');
       return listId;
@@ -309,7 +233,6 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
       showSettingsControl.setValue(!showSettingsControl.value);
       this.cdr.markForCheck();
       return showSettingsControl.value;
-      // node.showSettings = !node.showSettings;
     }
   }
 
@@ -326,7 +249,6 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
       this.treeControl.collapseDescendants(node);
     }
     this.cdr.markForCheck();
-    // this.cdr.detectChanges()
   }
 
   closeNode(node: any): void {
