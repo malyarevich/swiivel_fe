@@ -107,6 +107,7 @@
           [activeIdForm]="activeIdForm"
           [isBulkDownload]="isBulkDownload"
           [disabledButtons]="isSaveActive"
+          [disabledUploadBtn]="documentTypes.length === 0"
           [selectedCount]="getSelectedCount()"
           [showBulkDownload]="documents && documents.length"
           (bulkDownload)="clickBulkDownload()"
