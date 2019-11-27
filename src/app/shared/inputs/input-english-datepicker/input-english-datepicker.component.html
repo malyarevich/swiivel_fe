@@ -1,8 +1,8 @@
 <div
-  #holder
-  class="date-picker"
-  [class.filter-field]="class === 'filter-field'"
-  (click)="openDatepicker($event)"
+    #holder
+    class="date-picker"
+    [class.filter-field]="class === 'filter-field'"
+    (click)="openDatepicker($event)"
 >
 
   <div class="input-date">
@@ -21,42 +21,49 @@
     <i class="far fa-calendar"></i>
     <i *ngIf="!isEmpty(value)" class="fa fa-times" (click)="clear()"></i>
   </div>
-  <!--<div class="input-date" *ngIf="range === 'two-inputs'">-->
-    <!--<input-->
-      <!--class="input"-->
-      <!--mask="{{mask}}"-->
-      <!--[class.empty]="isEmpty(valueTo)"-->
-      <!--[class.input-two-inputs]="range === 'two-inputs'"-->
-      <!--[disabled]="!isActive || range === 'two-inputs'"-->
-      <!--[dropSpecialCharacters]="false"-->
-      <!--[(ngModel)]="valueTo"-->
-      <!--(ngModelChange)="changeValueTo(value)"-->
-      <!--(keyup.enter)="apply()"-->
-    <!--/>-->
-    <!--<span class="placeholder">To:</span>-->
-    <!--<i class="far fa-calendar"></i>-->
-    <!--<i *ngIf="!isEmpty(valueTo)" class="fa fa-times" (click)="clear()"></i>-->
-  <!--</div>-->
 
 </div>
 
 <ng-template #datepicker>
   <div class="date-picker-popup">
-    <form [formGroup]="form" class="select">
-      <div class="select-month">
-        <sw-dropdown-input
-          formControlName="month"
-          type="outline"
-          [canDeselect]="false"
-          [options]="months"
-        ></sw-dropdown-input>
+    <div class="input-date">
+      <form [formGroup]="inputDateForm">
+      <div *ngIf="!this.range">
+        <sw-input-text formControlName="dateFrom" [mask]="'00/00/0000'">
+          <span class="placeholder">Date From</span>
+        </sw-input-text>
       </div>
-      <div class="select-year">
-        <sw-dropdown-select-year [date]="viewDate" formControlName="year">
-          <span class="text">
-            {{ viewDate | calendarDate:(view + 'ViewYearTitle'):'en' }}
-          </span>
-        </sw-dropdown-select-year>
+      <div *ngIf="this.range" class="input-date-range">
+        <div class="input-date-range-item">
+          <sw-input-text formControlName="dateFrom" [mask]="'00/00/0000'">
+            <span class="placeholder">Date From</span>
+          </sw-input-text>
+        </div>
+        <div class="input-date-range-item">
+          <sw-input-text formControlName="dateTo" [mask]="'00/00/0000'">
+            <span class="placeholder">Date To</span>
+          </sw-input-text>
+        </div>
+      </div>
+      </form>
+    </div>
+    <form [formGroup]="selectDateForm">
+      <div class="select">
+        <div class="select-month">
+          <sw-dropdown-input
+            formControlName="month"
+            type="outline"
+            [canDeselect]="false"
+            [options]="months"
+          ></sw-dropdown-input>
+        </div>
+        <div class="select-year">
+          <sw-dropdown-select-year [date]="viewDate" formControlName="year">
+            <span class="text">
+              {{ viewDate | calendarDate:(view + 'ViewYearTitle'):'en' }}
+            </span>
+          </sw-dropdown-select-year>
+        </div>
       </div>
     </form>
     <div class="content">

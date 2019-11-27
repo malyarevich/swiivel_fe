@@ -272,3 +272,16 @@
     }
   }
 }
+
+.input-date-range {
+  display: flex;
+  justify-content: space-between;
+}
+
+.input-date-range-item {
+  width: 47%
+}
+
+.input-date {
+  margin: 0 0 10px;
+}

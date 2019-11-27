@@ -7,7 +7,7 @@ import {
   OnInit,
   ViewChild
 } from '@angular/core';
-import {ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators} from '@angular/forms';
+import { ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 import { PopupRef } from '@app/core/components/popup/popup.ref';
 import { Popup } from '@app/core/popup.service';
 import { ButtonExpandEnum } from '@shared/buttons/buttonExpand.enum';
@@ -17,15 +17,6 @@ import {
   CalendarEvent,
   CalendarMonthViewDay,
 } from 'angular-calendar';
-import {
-  addDays,
-  addMonths,
-  addWeeks,
-  setDate,
-  subDays,
-  subMonths,
-  subWeeks,
-} from 'date-fns';
 import { DateTime } from 'luxon';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -69,7 +60,8 @@ export class InputEnglishDatepickerComponent
     { id: 10, title: 'November' },
     { id: 11, title: 'December'}
     ];
-  form: FormGroup;
+  selectDateForm: FormGroup;
+  inputDateForm: FormGroup;
 
   public mask = '00/00/0000';
 
@@ -91,25 +83,50 @@ export class InputEnglishDatepickerComponent
   @Input() range = false;
   @Input() separator: '-' | '/' | '.' = '/';
   @Input() value: string = null;
-  @Input() valueTo: string = null;
 
   @ViewChild('datepicker', { static: false }) datepicker;
   @ViewChild('holder', { static: false }) holder;
 
   constructor(private popup: Popup, private cdr: ChangeDetectorRef, private fb: FormBuilder) {
-    this.form = this.fb.group({
+    this.selectDateForm = this.fb.group({
       month: new FormControl(this.months[0], Validators.required),
-      year: new FormControl('', Validators.required),
+      year: new FormControl('', Validators.required)
+    });
+    this.inputDateForm = this.fb.group({
+      dateFrom: new FormControl('', Validators.required),
+      dateTo: new FormControl('',  Validators.required),
     });
   }
 
   ngOnInit(): void {
     this.mask = this.range ? '00/00/0000 - 00/00/0000' : '00/00/0000';
-    this.form.get('month').setValue([this.months[this.viewDate.getMonth()]], { emitEvent: true});
-    this.form.get('year').setValue(this.viewDate.getFullYear(), { emitEvent: true});
-    this.form.valueChanges.subscribe(value => {
+    this.changeCalenderViewDate();
+    this.selectDateForm.valueChanges.subscribe(value => {
       this.viewDate = new Date(value.year, value.month[0].id, 1);
     });
+    this.inputDateForm.controls['dateFrom'].valueChanges.subscribe(value => {
+      this.updateCalendarValues(value, 'start');
+    });
+    this.inputDateForm.controls['dateTo'].valueChanges.subscribe(value => {
+      this.updateCalendarValues(value, 'end');
+    });
+  }
+
+  updateCalendarValues(value: string, extreme: string): void {
+    if (value && value.length === 8) {
+      const dateInput =  new Date(value.slice(0, 2) + '/' + value.slice(2, 4) + '/' + value.slice(4, 8));
+      if (!isNaN(dateInput.getTime())) {
+        const monthIndex = parseInt(value.slice(0, 2), 10) - 1;
+        this.selectDateForm.get('month').setValue([this.months[monthIndex]], { emitEvent: true});
+        this.selectDateForm.get('year').setValue([value.slice(4, 8)], { emitEvent: true});
+        setTimeout(() => this.selectInputDay(dateInput, extreme), 100);
+      }
+    }
+  }
+
+  changeCalenderViewDate(): void {
+    this.selectDateForm.get('month').setValue([this.months[this.viewDate.getMonth()]], { emitEvent: true});
+    this.selectDateForm.get('year').setValue(this.viewDate.getFullYear(), { emitEvent: true});
   }
 
   get dateFormat(): string {
@@ -128,26 +145,6 @@ export class InputEnglishDatepickerComponent
     this.onChange = fn;
   }
 
-  decrement(): void {
-    const subFn: any = {
-      day: subDays,
-      week: subWeeks,
-      month: subMonths
-    }[this.view];
-
-    this.viewDate = subFn(this.viewDate, 1);
-  }
-
-  increment(): void {
-    const addFn: any = {
-      day: addDays,
-      week: addWeeks,
-      month: addMonths
-    }[this.view];
-
-    this.viewDate = addFn(this.viewDate, 1);
-  }
-
   dayClicked(day: any): void {
     if (!this.range) {
       if (this.isActive) {
@@ -160,6 +157,10 @@ export class InputEnglishDatepickerComponent
           this.selectedMonthViewDay = null;
         } else {
           this.value = DateTime.fromJSDate(day.date).toFormat(this.dateFormat);
+          this.inputDateForm.get('dateFrom').setValue(
+            DateTime.fromJSDate(this.selectedRange.startDate.date).toFormat(this.dateFormat),
+            { emitEvent: true}
+          );
           day.cssClass = 'cal-day-selected';
           this.selectedMonthViewDay = day;
         }
@@ -181,22 +182,21 @@ export class InputEnglishDatepickerComponent
         this.selectedRange.endDate = null;
       }
 
-      // if (this.range === 'one-input') {
-      //   if (this.selectedRange.startDate) {
-      //     this.value = DateTime.fromJSDate(this.selectedRange.startDate.date).toFormat(this.dateFormat);
-      //   }
-      //   if (this.selectedRange.endDate) {
-      //     this.value += ' - ' + DateTime.fromJSDate(this.selectedRange.endDate.date).toFormat(this.dateFormat);
-      //   }
-      // } else {
-      //   if (this.selectedRange.startDate) {
-      //     this.value = DateTime.fromJSDate(this.selectedRange.startDate.date).toFormat(this.dateFormat);
-      //   }
-      //   if (this.selectedRange.endDate) {
-      //     this.valueTo = DateTime.fromJSDate(this.selectedRange.startDate.date).toFormat(this.dateFormat);
-      //   }
-      //
-      // }
+      if (this.selectedRange.startDate) {
+        this.value = DateTime.fromJSDate(this.selectedRange.startDate.date).toFormat(this.dateFormat);
+        this.inputDateForm.get('dateFrom').setValue(
+          DateTime.fromJSDate(this.selectedRange.startDate.date).toFormat(this.dateFormat),
+          { emitEvent: true}
+        );
+        this.inputDateForm.get('dateTo').setValue('', { emitEvent: true});
+      }
+      if (this.selectedRange.endDate) {
+        this.value += ' - ' + DateTime.fromJSDate(this.selectedRange.endDate.date).toFormat(this.dateFormat);
+        this.inputDateForm.get('dateTo').setValue(
+          DateTime.fromJSDate(this.selectedRange.endDate.date).toFormat(this.dateFormat),
+          { emitEvent: true}
+          );
+      }
       this.cdr.markForCheck();
       this.colorRange();
     }
@@ -223,6 +223,25 @@ export class InputEnglishDatepickerComponent
     this.days.forEach(day => {
       delete day.cssClass;
     });
+  }
+
+  selectInputDay(selectDay: Date, extreme: string): void {
+    // todo: add clean + changes value on top
+    this.days.forEach(day => {
+      if (this.range && day.date.getTime() === selectDay.getTime()) {
+        if (extreme === 'start') {
+          this.selectedRange.startDate = day;
+        } else {
+          this.selectedRange.endDate = day;
+        }
+      }
+    });
+    this.colorRange();
+  }
+
+  clearInputs(): void {
+    this.inputDateForm.get('dateFrom').setValue(null, { emitEvent: true});
+    this.inputDateForm.get('dateTo').setValue( null, { emitEvent: true});
   }
 
   openDatepicker(e: any): void {
@@ -258,8 +277,8 @@ export class InputEnglishDatepickerComponent
     this.selectedRange.startDate = null;
     this.selectedRange.endDate = null;
     this.clearCalendar();
+    this.clearInputs();
     this.value = '';
-    this.valueTo = '';
     this.onChange(this.value);
     this.close();
   }
@@ -278,10 +297,6 @@ export class InputEnglishDatepickerComponent
     if (!this.range) {
       this.value = value;
     }
-  }
-
-  public changeValueTo(value: any): void {
-      this.valueTo = value;
   }
 
   apply(): void {
