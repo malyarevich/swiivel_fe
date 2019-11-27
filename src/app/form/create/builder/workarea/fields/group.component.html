@@ -1,0 +1,64 @@
+<div class="main_container" *ngIf="_group">
+  <div class="content">
+    <div class="drag-icon">
+      <i class="dragdrop fas fa-ellipsis-v" cdkDragHandle></i>
+    </div>
+    <div class="name-container">
+      <div class="main-text">{{ _group.value.name }}</div>
+      <div class="hint" *ngIf="_group.get('textType')">Group Type - {{ _group.get('textType').value }}</div>
+    </div>
+  </div>
+  <div class="actions">
+    <div class="icon">
+      <sw-icon-button icon="fa-cog" class="field-creator blue" [class.active]="_group.value.showSettings" (click)="toggleSettings()">
+      </sw-icon-button>
+    </div>
+    <div class="icon">
+      <sw-icon-button icon="fa-times" class="field-creator blue" (click)="removeGroup()">
+      </sw-icon-button>
+    </div>
+    <div class="icon dragdrop">
+      <sw-icon-button [icon]="_group.value.isExpanded ? 'fa-caret-up' : 'fa-caret-down'" class="blue" (click)="toggleExpanded()" [attr.aria-label]="'toggle ' + _group.value.name">
+      </sw-icon-button>
+    </div>
+  </div>
+</div>
+
+<div class="drag-field-workarea group-tree-node" *cdkDragPreview>
+  <div class="main_container">
+    <div class="content">
+      <div class="drag-icon">
+        <i class="dragdrop fas fa-ellipsis-v"></i>
+      </div>
+      <div class="name-container">
+        <div class="main-text">{{ _group.value.name }}</div>
+        <div class="hint" *ngIf="_group.get('textType')">Group Type - {{ _group.get('textType').value }}</div>
+      </div>
+    </div>
+    <div class="actions">
+      <div class="icon">
+        <sw-icon-button icon="fa-cog" class="field-creator blue" [class.active]="_group.value.showSettings">
+        </sw-icon-button>
+      </div>
+      <div class="icon">
+        <sw-icon-button icon="fa-times" class="field-creator blue">
+        </sw-icon-button>
+      </div>
+      <div class="icon dragdrop">
+        <sw-icon-button [icon]="_group.value.isExpanded ? 'fa-caret-up' : 'fa-caret-down'" class="blue" [attr.aria-label]="'toggle ' + _group.value.name">
+        </sw-icon-button>
+      </div>
+    </div>
+  </div>
+</div>
+      
+
+<sw-settings *ngIf="showSettings" [field]="_group"></sw-settings>
+
+<div cdkDropList [cdkDropListData]="children.controls" *ngIf="hasChildren" [class.visible]="_group.value.isExpanded">
+  <ng-container *ngFor="let child of children.controls" [ngSwitch]="child.get('type').value">
+    <sw-section *ngSwitchCase="114" cdkDrag [cdkDragData]="child" [section]="child"></sw-section>
+    <sw-group *ngSwitchCase="113" cdkDrag [cdkDragData]="child" [group]="child"></sw-group>
+    <sw-field *ngSwitchDefault cdkDrag [cdkDragData]="child" [field]="child"></sw-field>
+  </ng-container>
+</div>

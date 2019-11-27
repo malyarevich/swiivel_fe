@@ -1,19 +1,46 @@
 <!--Title-->
-<h2
-  class="content_section__article_title content_section__article_title--left pt-3 pb-2"
->
-  <span class="compact-caption"
-    >{{ groupCaption }}
-    <ng-container *ngIf="hasErrors()">
-      <span
-        error-hint
-        [errorsList]="getErrorByNodeId(group._id, formErrors)"
-        [fieldNameList]="fieldNameList"
-        class="errors-bullet"
-      ></span>
-    </ng-container>
-  </span>
-</h2>
+<div class="content_section__title_box">
+  <h2
+    class="content_section__article_title content_section__article_title--left pt-3"
+  >
+    <span class="compact-caption">
+      {{ groupCaption }}
+
+      <ng-container *ngIf="hasErrors()">
+        <span
+          error-hint
+          [errorsList]="getErrorByNodeId(group._id, formErrors)"
+          [fieldNameList]="fieldNameList"
+          class="errors-bullet"
+        ></span>
+      </ng-container>
+
+      <ng-container
+        *ngIf="isShowGroupHint() && !isGroupHintDirectly() && getGroupHint()"
+      >
+        <span
+          class="position-relative p-relative"
+          (mouseenter)="hoverHint()"
+          (mouseleave)="unHoverHint()"
+        >
+          <img src="/assets/images/icons/form-hint.svg" alt="Group hint" />
+          <span class="pop_up_container" *ngIf="isHintHovered()">
+            <span class="pop_up_container__text">
+              {{ getGroupHint() }}
+            </span>
+          </span>
+        </span>
+      </ng-container>
+    </span>
+  </h2>
+
+  <h3
+    class="content_section__group_hint"
+    *ngIf="isShowGroupHint() && isGroupHintDirectly() && getGroupHint()"
+  >
+    {{ getGroupHint() }}
+  </h3>
+</div>
 
 <div>
   <!-- Field -->

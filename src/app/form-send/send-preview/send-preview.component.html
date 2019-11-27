@@ -89,12 +89,11 @@
   <!-- pdf -->
   <div class="col-5 px-0 w-100">
     <ng-container *ngIf="getFormId()">
-      <sw-form-pdf
+      <sw-preview-form-pdf
         [formId]='getFormId()'
-        [isReviewMode]="true"
         (onBack)="onBack($event)"
         (onSaveNext)="onSaveNext($event)"
-      ></sw-form-pdf>
+      ></sw-preview-form-pdf>
       <!-- <sw-preview-form
         [formId]='getFormId()'
         [isReviewMode]="true"

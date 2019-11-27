@@ -1,0 +1,37 @@
+:host {
+  display: flex;
+  flex-flow: column;
+  .main_container {
+    background: #50597A;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: space-between;
+    .content {
+      display: flex;
+      flex-flow: row nowrap;
+      align-items: center;
+    }
+    .actions {
+      display: flex;
+      flex-flow: row nowrap;
+    }
+  }
+  sw-input-text {
+    margin-right: 10px;
+    width: 450px;
+  }
+  sw-dropdown-input {
+    min-width: 120px;
+    margin-right: 10px;
+  }
+  div.children {
+    display: none;
+    &.visible {
+      display:block;
+    }
+  }
+  .dragdrop {
+    color: #fff;
+  }
+}

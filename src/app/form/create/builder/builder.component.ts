@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy, AfterViewInit, ViewChildren, QueryList, ContentChildren } from '@angular/core';
 import { FormService } from '@app/form/form.service';
 import { Subject, Subscription } from 'rxjs';
 import { takeUntil, takeWhile } from 'rxjs/operators';
@@ -7,6 +7,7 @@ import { cloneDeep } from 'lodash';
 import { isArray } from 'util';
 import { Router, ActivatedRoute } from '@angular/router';
 import { v4 as uuid } from "uuid";
+import { CdkDrag } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'sw-builder',
@@ -14,8 +15,7 @@ import { v4 as uuid } from "uuid";
   styleUrls: ['./builder.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BuilderComponent implements OnInit, OnDestroy {
-
+export class BuilderComponent implements OnInit, AfterViewInit, OnDestroy {
   public expandedSection: string = 'packetIntroduction';
   public expanded: boolean = false;
 
@@ -101,7 +101,8 @@ export class BuilderComponent implements OnInit, OnDestroy {
       }
     }); 
   }
-
+  ngAfterViewInit() {
+  }
   ngOnInit() {
   }
   // isActive: [false], showSideInfo: [false]
