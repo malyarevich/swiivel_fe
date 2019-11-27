@@ -25,16 +25,21 @@
         border: 1px solid $element-base-color;
       }
     }
-    i.clear {
+    i.clearBut {
+      display: none !important;
       width: 13px;
       height: 13px;
-      display: block;
       position: absolute;
       top: 13px;
       right: 10px;
       color: $gray-color;
-      display: block;
       cursor: pointer;
+    }
+    &.clearable {
+      i.clearBut { display: block !important; }
+    }
+    &.empty {
+      i.clearBut { display: none !important; }
     }
   }
 
@@ -81,6 +86,9 @@
   .input_text__input {
     height: 25px;
     padding: 5px 14px;
+  }
+  i.clearBut {
+    top: 7px !important;
   }
 }
 
