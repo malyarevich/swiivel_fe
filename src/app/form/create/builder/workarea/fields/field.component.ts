@@ -32,7 +32,7 @@ export class WorkareaFieldComponent implements OnInit {
 
   toggleSettings() {
     if (this.field.get('showSettings') === null) {
-      this.field.addControl('showSettings', new FormControl(true));
+      this.field.addControl('showSettings', new FormControl(false));
     } else {
       this.field.get('showSettings').setValue(!this.field.value.showSettings, {onlySelf: false, emitEvent: true});
     }
@@ -50,7 +50,7 @@ export class WorkareaFieldComponent implements OnInit {
   }
 
   get showSettings() {
-    return this.field && this.field.value.options
+    return this.field && this.field.value.showSettings
   }
 
 }

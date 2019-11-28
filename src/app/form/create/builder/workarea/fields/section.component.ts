@@ -33,7 +33,7 @@ export class WorkareaSectionComponent implements OnInit, AfterViewInit {
     {value: 2, title: '3/4 page'},
     {value: 3, title: 'Full page'}
   ];
-  @ViewChild('drop', {read: ElementRef, static: true}) drop: ElementRef;
+  // @ViewChild('drop', {read: ElementRef, static: true}) drop: ElementRef;
   @ViewChildren(CdkDrag) drags: QueryList<any>;
   @Output() dragRef = new EventEmitter();
   constructor(private cdr: ChangeDetectorRef, private dd: DragDrop, private el: ElementRef) {
@@ -58,12 +58,12 @@ export class WorkareaSectionComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.dropRef.withItems(Array.from(this.dragRefs.values()));
-    this.cdr.detectChanges();
-    this.dropRef.dropped.subscribe((item) => {
-      debugger;
-      // return true;
-    });
+    // this.dropRef.withItems(Array.from(this.dragRefs.values()));
+    // this.cdr.detectChanges();
+    // this.dropRef.dropped.subscribe((item) => {
+    //   debugger;
+    //   // return true;
+    // });
     // this.drags.changes.subscribe((drags) => {
     //   if (this.dropRef) {
     //     this.dropRef.withItems(drags);
@@ -74,11 +74,11 @@ export class WorkareaSectionComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.dropRef = this.dd.createDropList(this.drop.nativeElement);
-    this.dropRef..data = this.children.controls;
-    this.dropRef.dropped.subscribe((item) => {
-      console.log(item)
-    })
+    // this.dropRef = this.dd.createDropList(this.drop.nativeElement);
+    // this.dropRef.data = this.children.controls;
+    // this.dropRef.dropped.subscribe((item) => {
+    //   console.log(item)
+    // })
     // debugger;
   }
 
