@@ -63,7 +63,7 @@ export class SendPreviewComponent implements OnInit, OnDestroy {
         if (formId) {
           this.formId = formId;
           this.formSendService.initFormSend(formId);
-          console.log('this.id', this.formId);
+          // console.log('this.formId', this.formId);
 
           this.formSendService.$previewRoundList
             .pipe(takeUntil(this.destroyed$))

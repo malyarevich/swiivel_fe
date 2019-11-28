@@ -25,7 +25,7 @@ export class PreviewFormPdfComponent implements OnInit {
   }
 
   onProgress(progressData: PDFProgressData) {
-    this.pdfError = false
+    this.pdfError = false;
     console.log('progressData', progressData);
     if (progressData.loaded === progressData.total) {
       this.pdfLoading = false;

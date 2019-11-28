@@ -128,7 +128,7 @@ export class SendReleaseComponent implements OnInit, OnDestroy {
       if (formId) {
         this.formId = formId;
         this.formSendService.initFormSend(formId);
-        console.log('this.id', this.formId);
+        // console.log('this.formId', this.formId);
 
         this.roundsList$.pipe(takeUntil(this.destroyed$)).subscribe(rounds => {
           // console.log('roundsList$', rounds);
@@ -138,14 +138,14 @@ export class SendReleaseComponent implements OnInit, OnDestroy {
         });
       }
     });
-    console.log('this.formId', this.formId);
+    // console.log('this.formId', this.formId);
     // this.id = this.formSendService.formId
     //   ? this.formSendService.formId
     //   : this.formService.form.value._id
     //     ? this.formService.form.value._id
     //     : 'no id';
 
-    // console.log('this.id', this.id);
+    // console.log('this.formId', this.formId);
 
   }
 
