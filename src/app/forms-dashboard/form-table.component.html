@@ -18,12 +18,12 @@
           <sw-dropdown-select
             #bulk="dropdown"
             panelClass="app-form-table-dropdown-overlay"
-            [disabled]="!selectedAnyRow"
+            [disabled]="_sm.isEmpty()"
             [noneColor]="true"
             [options]="bulkOptions"
             (selected)="bulkAction($event)"
           >
-            <sw-button [disabled]="!selectedAnyRow" color="white">
+            <sw-button [disabled]="_sm.isEmpty()" color="white">
               <span class="app-form-table__controls-bulk-btn-text">Bulk Actions</span>
               <i class="fas fa-chevron-down" [ngClass]="{'fa-chevron-up': bulk.isOpened}"></i>
             </sw-button>
@@ -330,8 +330,8 @@
                 <div *ngIf="totalAmount > 0" class="wrapper" data-e2e="paginatorname">
                   <div class="cdk-footer-select">
                     Selected
-                    <span [class.cdk-footer-select-value]="!!this._sm.selected.length">
-                      ({{ this._sm.selected.length }})
+                    <span [class.cdk-footer-select-value]="_sm.isEmpty() === false">
+                      ({{ _sm.selected.length }})
                     </span>
                   </div>
                   <div class="cdk-footer-paginator">

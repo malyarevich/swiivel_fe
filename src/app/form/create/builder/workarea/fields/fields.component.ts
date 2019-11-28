@@ -53,10 +53,30 @@ const TREE_DATA: FoodNode[] = [
   // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked, OnInit, OnDestroy {
-  @ViewChild('root', {read: ElementRef, static: true}) rootEl;
-  @ViewChildren('rootList', {read: CdkDropList}) lists: QueryList<CdkDropList>;
-  @ViewChildren(CdkDrag, {read: CdkDrag}) drags: QueryList<CdkDrag>;
-
+  options = {
+    idField: 'mongo_id',
+    childrenField: 'fields',
+    displayField: 'name',
+    useCheckbox: true,
+    allowDrop: true,
+    allowDrag: true
+  };
+  sizeOptions = [
+    {value: 0, title: '1/4 page'},
+    {value: 1, title: '2/4 page'},
+    {value: 2, title: '3/4 page'},
+    {value: 3, title: 'Full page'},
+  ]
+  movies = [
+    'Episode I - The Phantom Menace',
+    'Episode II - Attack of the Clones',
+    'Episode III - Revenge of the Sith',
+    'Episode IV - A New Hope',
+    'Episode V - The Empire Strikes Back',
+    'Episode VI - Return of the Jedi',
+    'Episode VII - The Force Awakens',
+    'Episode VIII - The Last Jedi'
+  ];
   trControl = new NestedTreeControl<FoodNode>(node => node.children);
   treeData = new ArrayDataSource(TREE_DATA);
   data = [];
@@ -117,10 +137,6 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
 
   ngAfterViewInit() {
     this.cdr.detectChanges();
-    this.drags.changes.subscribe(drags => {
-      console.log(drags)
-      this.cdr.detectChanges()
-    })
   }
 
   setParent(node, key, value) {
@@ -211,7 +227,7 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
     return 'Group type';
   }
 
-  drop(event) {form
+  drop(event) {
     if (event.container.id === 'root-list') {
       return false;
     } else {

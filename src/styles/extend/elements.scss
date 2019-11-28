@@ -70,28 +70,32 @@ sw-input-text {
       color: $gray-color;
     }
   }
-  .input_text__input {
-    padding: 15px 10px 5px 10px;
-    position: relative;
-    &.empty {
-      padding: 10px;
+  .input_text {
+    &__input {
+      padding: 15px 10px 5px 10px;
+      position: relative;
       & + span {
         &.placeholder {
+          pointer-events: none;
           position: absolute;
-          top: 9px;
-          font-size: 12px;
+          top: 2px;
+          left: 10px;
+          font-size: 10px;
+          color: $gray-color;
+          transition: all 0.2s ease-in-out;
         }
       }
     }
-    & + span {
-      &.placeholder {
-        pointer-events: none;
-        position: absolute;
-        top: 2px;
-        left: 10px;
-        font-size: 10px;
-        color: $gray-color;
-        transition: all 0.2s ease-in-out;
+    &.empty {
+      .input_text__input {
+        padding: 10px;
+        & + span {
+          &.placeholder {
+            position: absolute;
+            top: 9px;
+            font-size: 12px;
+          }
+        }
       }
     }
   }
@@ -104,19 +108,21 @@ sw-input-text {
 }
 
 sw-input-text.settings-field{
-  .input_text__input {
-    padding: 6px 10px 4px 10px;
-    &.empty {
+  .input_text {
+    &__input {
+      padding: 6px 10px 4px 10px;
       & + span {
+        &.placeholder {
+          display: none;
+        }
+      }
+    }
+    &.empty {
+      .input_text__input + span {
         &.placeholder {
           display: flex;
           top: 4px;
         }
-      }
-    }
-    & + span {
-      &.placeholder {
-        display: none;
       }
     }
   }

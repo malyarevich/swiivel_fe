@@ -40,11 +40,14 @@ export class BuilderComponent implements OnInit, AfterViewInit, OnDestroy {
           if (form.get('_id')) {
             this.form = form;
             let changedForm;
+            let changedFields = 0;
             if (!this.form.get('attachments')) {
+              changedFields++;
               if (!changedForm) changedForm = cloneDeep(form);
               changedForm.addControl('attachments', this.fb.group({ }));
             }
             if (!this.form.get('packetIntroduction')) {
+              changedFields++;
               if (!changedForm) changedForm = cloneDeep(form);
               changedForm.addControl('packetIntroduction', this.fb.group({
                 sectionName: ['Packet Introduction'],
@@ -53,6 +56,7 @@ export class BuilderComponent implements OnInit, AfterViewInit, OnDestroy {
               }));
             }
             if (!this.form.get('consentInfo')) {
+              changedFields++;
               if (!changedForm) changedForm = cloneDeep(form);
               changedForm.addControl('consentInfo', this.fb.group({
                 sectionName: ['Consent Section'],
@@ -61,6 +65,7 @@ export class BuilderComponent implements OnInit, AfterViewInit, OnDestroy {
               }));
             }
             if (!this.form.get('activeSections')) {
+              changedFields++;
               if (!changedForm) changedForm = cloneDeep(form);
               changedForm.addControl('activeSections', this.fb.group({
                 packetIntroduction: this.fb.group({ isActive: [true], showSideInfo: [true] }),
@@ -71,7 +76,6 @@ export class BuilderComponent implements OnInit, AfterViewInit, OnDestroy {
               }));
             } else {
               if (!changedForm) changedForm = cloneDeep(form);
-              let changedFields = 0;
               for (const section of this.sectionsNames) {
                 if (!changedForm.get(['activeSections', section])) {
                   changedFields++;
