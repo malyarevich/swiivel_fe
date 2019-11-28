@@ -1,21 +1,21 @@
-import { Injectable } from "@angular/core";
-import { ApiService } from "@app/core/api.service";
-import { BehaviorSubject, Observable } from "rxjs";
-import { DateTime } from "luxon";
-import { StepperService } from "@app/shared/stepper.service";
+import { Injectable } from '@angular/core';
+import { ApiService } from '@app/core/api.service';
+import { StepperService } from '@app/shared/stepper.service';
+import { DateTime } from 'luxon';
+import { BehaviorSubject, Observable } from 'rxjs';
 import {
   defaultAccountsList,
   hasNoFamily,
   IPerson,
   IRound
-} from "./models/send.model";
+} from './models/send.model';
 
 @Injectable()
 export class FormSendService {
   private form_id: string;
   private periodsSubject: BehaviorSubject<any> = new BehaviorSubject<any>([]);
   private currentPeriods: BehaviorSubject<any> = new BehaviorSubject<any>([]);
-  private accoutSubject: BehaviorSubject<any> = new BehaviorSubject<any>([]);
+  private accountSubject: BehaviorSubject<any> = new BehaviorSubject<any>([]);
   private currentAccounts: BehaviorSubject<any> = new BehaviorSubject<any>([]);
   private currentAccount: BehaviorSubject<IPerson> = new BehaviorSubject<
     IPerson
@@ -50,7 +50,7 @@ export class FormSendService {
   }
 
   get $accountsList() {
-    return this.accoutSubject.asObservable();
+    return this.accountSubject.asObservable();
   }
 
   get $selectedAccounts() {
@@ -222,18 +222,22 @@ export class FormSendService {
         }
       });
     });
-    this.accoutSubject.next(this.accountsList);
+    this.accountSubject.next(this.accountsList);
   }
 
   togglePeriods(item: any, e: boolean): void {
-    let tmp = this.selectedPeriods;
+    const tmp = this.selectedPeriods;
     if (e === true) {
-      tmp.push(item);
+      if (!tmp.find(i => i.id === item.id)) {
+        tmp.push(item);
+      }
     } else if (e === false) {
-      tmp.splice(
-        tmp.findIndex(i => i.id === item.id),
-        1
-      );
+      if (tmp.find(i => i.id === item.id)) {
+        tmp.splice(
+          tmp.findIndex(i => i.id === item.id),
+          1
+        );
+      }
     }
     this.selectedPeriods = tmp;
   }
@@ -243,7 +247,7 @@ export class FormSendService {
   }
 
   toggleAccounts(item: any, e: boolean): void {
-    let tmp = this.selectedAccounts;
+    const tmp = this.selectedAccounts;
     if (
       e === true &&
       !(this.selectedAccounts.findIndex(i => i === item) >= 0)
@@ -296,10 +300,10 @@ export class FormSendService {
     }
     round.start_date = DateTime.fromString(
       round.start_date,
-      "MM/dd/yyyy"
-    ).toFormat("yyyy/MM/dd");
-    round.end_date = DateTime.fromString(round.end_date, "MM/dd/yyyy").toFormat(
-      "yyyy/MM/dd"
+      'MM/dd/yyyy'
+    ).toFormat('yyyy/MM/dd');
+    round.end_date = DateTime.fromString(round.end_date, 'MM/dd/yyyy').toFormat(
+      'yyyy/MM/dd'
     );
     round.accounts = this.selectedAccounts.map(i => i.id);
     round.form_template_mongo_id = this.form_id;
@@ -336,7 +340,7 @@ export class FormSendService {
 
   removeAllRounds() {
     let count = 0;
-    let bs = new BehaviorSubject<boolean>(false);
+    const bs = new BehaviorSubject<boolean>(false);
     this.deletedRoundIdList.forEach(roundId => {
       this.api.deleteRound(roundId).subscribe(() => {
         if (++count === this.deletedRoundIdList.length) {
@@ -348,7 +352,7 @@ export class FormSendService {
   }
 
   nextStep() {
-    let data: any = { formPeriods: {} };
+    const data: any = { formPeriods: {} };
     this.periodsList.forEach(item => {
       data.formPeriods[item.id] =
         this.selectedPeriods.findIndex(i => i.id === item.id) >= 0
@@ -358,13 +362,13 @@ export class FormSendService {
     // console.log(data);
     this.api.updateFormTemplate(this.formId, data).subscribe(data => {
       this.removeAllRounds().subscribe(() => {
-        this.stepperService.stepper = "next";
+        this.stepperService.stepper = 'next';
         // console.log('removeAllRounds', this.roundsSubject.getValue());
       });
     });
   }
 
   prevStep() {
-    this.stepperService.stepper = "prev";
+    this.stepperService.stepper = 'prev';
   }
 }

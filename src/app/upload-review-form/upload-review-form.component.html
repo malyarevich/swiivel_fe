@@ -107,6 +107,7 @@
           [activeIdForm]="activeIdForm"
           [isBulkDownload]="isBulkDownload"
           [disabledButtons]="isSaveActive"
+          [disabledUploadBtn]="documentTypes.length === 0"
           [selectedCount]="getSelectedCount()"
           [showBulkDownload]="documents && documents.length"
           (bulkDownload)="clickBulkDownload()"
@@ -118,7 +119,12 @@
       </div>
     </div>
   </div>
-  <div class="sidebar-opener" [class.opened]="isSideBarShown" (click)="isSideBarShown = !isSideBarShown">
+  <div
+    class="sidebar-opener"
+    [class.opened]="isSideBarShown"
+    (click)="isSideBarShown = !isSideBarShown"
+    [title]="isSideBarShown ? 'Hide documents' : 'Show documents'"
+  >
     <div class="button">
       <sw-icon-button
         color="white"

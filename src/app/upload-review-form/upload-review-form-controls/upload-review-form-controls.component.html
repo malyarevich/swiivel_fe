@@ -11,7 +11,7 @@
         (response)="uploadedData()"
       >
         <sw-button
-          [disabled]="disabledButtons"
+          [disabled]="disabledButtons || disabledUploadBtn"
           [expand]="buttonExpand.FULL"
           (click)="file.openDialog()"
         >

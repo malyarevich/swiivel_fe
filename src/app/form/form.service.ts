@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import { FormBuilder, FormGroup, Validators, FormArray, FormControl, AbstractControl } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '@app/core/api.service';
 import { cloneDeep, flatMap, flattenDeep, get, isArrayLike, isPlainObject, isString, set, unset, values, flatMapDeep } from 'lodash';
 import { BehaviorSubject, Subject, from, throwError, Observable } from 'rxjs';
@@ -101,6 +101,7 @@ export class FormService {
   // public form: FormGroup;
   private formData = {};
   _form: BehaviorSubject<FormGroup> = new BehaviorSubject<FormGroup>(null);
+  _formId: BehaviorSubject<string> = new BehaviorSubject<string>(null);
   private isFormHasIdSubject$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   formsById = {};
   public fieldTypes = {
@@ -559,6 +560,18 @@ export class FormService {
     return this._form.asObservable();
   }
 
+
+  get formId(): string {
+    return this._formId.getValue();
+  }
+
+  get formId$() {
+    return this._formId.asObservable();
+  }
+
+  set formId(formId: string) {
+    this._formId.next(formId);
+  }
 
   set isFormHasId(flag: boolean) {
     this.isFormHasIdSubject$.next(flag);

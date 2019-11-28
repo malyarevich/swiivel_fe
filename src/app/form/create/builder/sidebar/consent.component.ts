@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, ChangeDetectorRef } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { SIGNATURE_TYPES, E_SIGNATURE_TYPES } from '@app/enums/signature-type';
 import { v4 as uuid } from "uuid";
@@ -58,7 +58,7 @@ export class SidebarConsentComponent {
 
   addConsentItem(): void {
     let newItem = this.fb.group({
-      title: [''],
+      title: ['Consent name'],
       id: [uuid()],
       text: this.fb.group({
         value: [''],

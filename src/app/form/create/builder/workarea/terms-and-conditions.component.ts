@@ -39,7 +39,12 @@ export class WorkareaTermsConditionComponent {
     }
   ];
   isContentShown: boolean = true;
-  public widthOption = ['4 columns', '3 columns', '2 columns', '1 column'].map(t => ({ title: t }));
+  public widthOption = [
+    {value: 0, title: '1/4 page'},
+    {value: 1, title: '2/4 page'},
+    {value: 2, title: '3/4 page'},
+    {value: 3, title: 'Full page'}
+  ];
   public popupDisplay = false;
 
   @Input()
