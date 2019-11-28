@@ -77,17 +77,9 @@
     </form>
     <div class="content">
       <mwl-calendar-month-view
-        *ngIf="!range"
         [viewDate]="viewDate"
         [events]="events"
         [activeDayIsOpen]="false"
-        (dayClicked)="dayClicked($event.day)"
-      >
-      </mwl-calendar-month-view>
-      <mwl-calendar-month-view
-        *ngIf="range"
-        [viewDate]="viewDate"
-        [events]="events"
         (beforeViewRender)="beforeMonthViewRender($event)"
         (dayClicked)="dayClicked($event.day)"
       >
