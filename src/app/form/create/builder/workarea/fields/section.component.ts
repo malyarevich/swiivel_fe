@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, AfterViewChecked, OnChanges, ChangeDetectorRef, ViewChildren, ContentChild, ViewChild, ElementRef, QueryList, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder, FormControl } from '@angular/forms';
-import { CdkDropList, DragDrop, CdkDrag, DropListRef, DragRef } from '@angular/cdk/drag-drop';
+import { CdkDropList, DragDrop, CdkDrag, DropListRef, DragRef, moveItemInArray, CdkDragDrop } from '@angular/cdk/drag-drop';
 import { WorkareaGroupComponent } from './group.component';
 import { WorkareaFieldComponent } from './field.component';
 import { FormService } from '@app/form/form.service';
@@ -62,6 +62,10 @@ export class WorkareaSectionComponent implements OnInit, AfterViewInit, AfterVie
     } else {
       console.log(dragType)
     }
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    this.service.moveField(event);
   }
 
   addDragRef(data) {

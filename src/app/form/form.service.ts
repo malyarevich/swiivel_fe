@@ -153,8 +153,21 @@ export class FormService {
 
   moveField(event: CdkDragDrop<any>) {
     console.groupCollapsed(`Moving field ${event.item.data.name}`);
-
+    console.log(event);
     console.groupEnd();
+    if (event.previousContainer === event.container) {
+      let control = event.item.data;
+      let formArray = control.parent as FormArray;
+      formArray.removeAt(event.previousIndex);
+      formArray.insert(event.currentIndex, control);
+    } else {
+      let control = cloneDeep(event.item.data);
+      let formArray = control.parent as FormArray;
+      formArray.removeAt(event.previousIndex);
+      formArray = event.container.data[0].parent;
+      formArray.insert(event.currentIndex, control);
+      //move
+    }
   }
 
 

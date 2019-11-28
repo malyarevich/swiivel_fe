@@ -92,6 +92,7 @@ export class BuilderComponent implements OnInit, AfterViewInit, OnDestroy {
                 console.groupCollapsed('Form value changed');
                 console.log(value);
                 console.groupEnd();
+                this.cdr.detectChanges();
               });
             }
           this.cdr.reattach();

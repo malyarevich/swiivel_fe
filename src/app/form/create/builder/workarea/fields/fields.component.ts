@@ -87,22 +87,21 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
       if (this.formSubscription) this.formSubscription.unsubscribe();
       this.formSubscription = form.valueChanges.subscribe((value) => {
         if (value && value['fields']) {
-          this.form = form.get('fields') as FormArray;
+          this.form = this.service.form.get('fields') as FormArray;
+          console.log(this.form.value)
           this.treeSource.nodes = this.form.controls;// (form.get('fields') as FormArray).controls;
         } else {
           this.treeSource.nodes = [];
         }
-        this.cdr.markForCheck();
+        // this.cdr.markForCheck();
+        this.cdr.detectChanges()
       });
       
       if (form.get('fields')) {
         this.form = form.get('fields') as FormArray;
         this.treeSource.nodes = this.form.controls;
-        console.log(this.service.dropLists);
         this.cdr.markForCheck();
         this.cdr.detectChanges()
-
-      
       }
     });
     
@@ -212,7 +211,7 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
     return 'Group type';
   }
 
-  drop(event) {
+  drop(event) {form
     if (event.container.id === 'root-list') {
       return false;
     } else {

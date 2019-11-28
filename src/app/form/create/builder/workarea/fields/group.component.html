@@ -56,7 +56,8 @@
 <sw-settings *ngIf="showSettings" [field]="_group"></sw-settings>
 
 <div style="margin-left: 10px;" cdkDropList [cdkDropListData]="children.controls" [class.visible]="_group.value.isExpanded" 
-[id]="id" [cdkDropListConnectedTo]="dropListsIds" [cdkDropListEnterPredicate]="mayEnter">
+[id]="id" [cdkDropListConnectedTo]="dropListsIds" [cdkDropListEnterPredicate]="mayEnter"
+(cdkDropListDropped)="drop($event)">
   <div *ngFor="let child of children.controls" cdkDrag [cdkDragData]="child">
       <sw-section *ngIf="child.get('type').value === 114" [section]="child"></sw-section>
       <sw-group *ngIf="child.get('type').value === 113" [group]="child"></sw-group>

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ChangeDetectorRef, ContentChild, ViewChild, ElementRef, ViewChildren, QueryList } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder, FormControl } from '@angular/forms';
-import { CdkDropList, CdkDrag, DragDrop, DropListRef } from '@angular/cdk/drag-drop';
+import { CdkDropList, CdkDrag, DragDrop, DropListRef, CdkDragDrop } from '@angular/cdk/drag-drop';
 import { uniqueId } from 'lodash';
 import { FormService } from '@app/form/form.service';
 
@@ -28,7 +28,7 @@ export class WorkareaGroupComponent implements OnInit {
   ];
 
   @ContentChild('list', {read: CdkDropList, static: false}) list; 
-  @ViewChild('drop', {read: ElementRef, static: true}) drop: ElementRef;
+  // @ViewChild('drop', {read: ElementRef, static: true}) drop: ElementRef;
   @ViewChildren(CdkDrag, {read: CdkDrag}) drags: QueryList<any>;
   constructor(private service: FormService, private cdr: ChangeDetectorRef, private dd: DragDrop) {
     this.service.addDropListId(this.id);
@@ -57,6 +57,11 @@ export class WorkareaGroupComponent implements OnInit {
     } else {
       console.log(dragType)
     }
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    this.service.moveField(event);
+    this.cdr.markForCheck();
   }
 
   ngAfterViewInit() {
