@@ -58,10 +58,10 @@
   </div>
 </div>
 
-<div class="children" #drop [class.visible]="_section.value.isExpanded">
-  <ng-container *ngFor="let child of children.controls" [ngSwitch]="child.get('type').value">
-    <sw-section *ngSwitchCase="114" (dragRef)="addDragRef($event)" [section]="child"></sw-section>
-    <sw-group *ngSwitchCase="113" (dragRef)="addDragRef($event)" [group]="child"></sw-group>
-    <sw-field *ngSwitchDefault [field]="child"></sw-field>
-  </ng-container>
+<div style="margin-left: 10px;" class="children" cdkDropList [cdkDropListData]="children.controls" cdkDropListOrientation="vertical" [class.visible]="_section.value.isExpanded">
+  <div *ngFor="let child of children.controls;" cdkDrag [cdkDragData]="child">
+    <sw-section *ngIf="child.get('type').value === 114" (dragRef)="addDragRef($event)" [section]="child"></sw-section>
+    <sw-group *ngIf="child.get('type').value === 113"  (dragRef)="addDragRef($event)" [group]="child"></sw-group>
+    <sw-field *ngIf="child.get('type').value < 113" [field]="child"></sw-field>
+  </div>
 </div>

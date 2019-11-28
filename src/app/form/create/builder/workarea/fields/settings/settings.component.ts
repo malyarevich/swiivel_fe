@@ -60,7 +60,7 @@ export class SettingsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
     if (this._form) {
-      // this.initSettings(this._form);
+      this.initSettings(this._form);
     }
   }
 
