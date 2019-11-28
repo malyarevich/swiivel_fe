@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '@app/core/auth.guard';
-import { SendReleaseComponent } from './send-release/send-release.component';
 import { SendPreviewComponent } from './send-preview/send-preview.component';
+import { SendReleaseComponent } from './send-release/send-release.component';
 
 const routes: Routes = [
   {
