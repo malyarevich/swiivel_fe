@@ -41,7 +41,7 @@ export class InputTextComponent implements ControlValueAccessor, OnInit {
   }
   @Input() isSearch = false;
   @Input() isClearable = false;
-  @Input() trimStart = true;
+  @Input() trimStart: boolean;
   @Output() blur = new EventEmitter<any>();
 
   writeValue = (value: string) => {};
@@ -49,7 +49,6 @@ export class InputTextComponent implements ControlValueAccessor, OnInit {
   registerOnTouched = (fn: any) => {};
   
   constructor(
-    private renderer: Renderer2,
     private cdr: ChangeDetectorRef,
     @Self() @Optional()  public control: NgControl
   ) {
@@ -64,6 +63,11 @@ export class InputTextComponent implements ControlValueAccessor, OnInit {
     }
     this.control.statusChanges.subscribe(() => {
       this.cdr.markForCheck();
+    });
+    this.control.valueChanges.subscribe((v) => {
+      if (this.trimStart) {
+        this.control.control.setValue(v.trimStart(), {emitEvent: false});
+      }
     })
   }
 
@@ -71,28 +75,20 @@ export class InputTextComponent implements ControlValueAccessor, OnInit {
     this.input.nativeElement.focus();
   }
 
-  public get value() {
-    return this.control.control ? this.control.control.value: null;
-  }
-  public isEmpty(value: string): boolean {
-    if (value) {
-      return value.length === 0;
+  public isEmpty(): boolean {
+    if (this.control.control.value && this.control.control.value.toString()) {
+      return this.control.control.value.length === 0;
     }
     return true;
   }
 
-  
+  public isSearchInput(): boolean {
+    return !!this.isSearch;
+  }
 
   public clear(): void {
     this.control.control.reset();
     this.input.nativeElement.focus();
-    this.cdr.markForCheck();
-  }
-
-  onChange(): void {
-    if (this.trimStart) {
-      this.control.control.setValue(this.value.trimStart());
-    }
     this.cdr.markForCheck();
   }
 

@@ -83,7 +83,6 @@ export class FormTableComponent implements OnInit {
   public selectedRows: any = {};
   public _sm: SelectionModel<any> = new SelectionModel(true);
   public pageSelection: { allSelected: boolean, selectedAnyRow: boolean }[] = [];
-  public selectedAnyRow = false;
 
   constructor(
     public dataCollectionService: DataCollectionService,
@@ -159,7 +158,6 @@ export class FormTableComponent implements OnInit {
       this._sm.clear();
       this.selectedRows = {};
       this.pageSelection = [];
-      this.selectedAnyRow = false;
       this.params.filter = { ...value };
       this.dataSource.loadFormsList(this.params);
     });
@@ -237,17 +235,6 @@ export class FormTableComponent implements OnInit {
 
       this.pageSelection[this.params.page - 1].allSelected = selectedPageRows.length === this.rows.length;
       this.pageSelection[this.params.page - 1].selectedAnyRow = selectedPageRows.length > 0;
-
-      for (let i = 0; i < this.pageSelection.length; i++) {
-        if (this.pageSelection[i].selectedAnyRow) {
-          this.selectedAnyRow = true;
-          break;
-        }
-
-        if (i === this.pageSelection.length - 1) {
-          this.selectedAnyRow = false;
-        }
-      }
     }
   }
 
@@ -255,7 +242,6 @@ export class FormTableComponent implements OnInit {
     this._sm.clear();
     this.selectedRows = {};
     this.pageSelection = [];
-    this.selectedAnyRow = false;
 
     this.activeTab = filter;
     if (filter.title === 'All') {
@@ -490,10 +476,6 @@ export class FormTableComponent implements OnInit {
       });
 
       this.changePageSelection(this.params.page - 1, false);
-
-      if (!this._sm.selected.length) {
-        this.selectedAnyRow = false;
-      }
     } else {
       this.rows.forEach((row: any) => {
         this._sm.select(row.id);
@@ -501,14 +483,12 @@ export class FormTableComponent implements OnInit {
       });
 
       this.changePageSelection(this.params.page - 1, true);
-      this.selectedAnyRow = true;
     }
   }
 
   nullSelectedAllPages() {
     this.pageSelection.forEach((pageData, page) => {
       this.changePageSelection(page, false);
-      this.selectedAnyRow = false;
     });
   }
 

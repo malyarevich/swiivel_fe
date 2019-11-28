@@ -16,7 +16,12 @@ export class DocumentsFormsComponent implements OnInit {
   public lform: FormGroup;
   public icons = IconsEnum;
   private rootForm: FormGroup;
-  public widthOption = ['4 columns', '3 columns', '2 columns', '1 column'].map(t => ({ title: t }));
+  public widthOption = [
+    {value: 0, title: '1/4 page'},
+    {value: 1, title: '2/4 page'},
+    {value: 2, title: '3/4 page'},
+    {value: 3, title: 'Full page'}
+  ];
   public popupDisplay = false;
   public isContentShown: boolean = true;
   public isContentFShown: boolean = true;
@@ -99,7 +104,7 @@ export class DocumentsFormsComponent implements OnInit {
     if (fileList.length > 0) {
       const file: File = fileList[0];
       const formData: FormData = new FormData();
-      formData.append('attachment', file, file.name);
+      formData.append('attachment', file);
       this.api.uploadFile(this.rootForm.value._id, formData).subscribe((result: any) => {
         if (result) {
           (this.rootForm.get('attachments') as FormGroup).addControl(result.hash, this.fb.group({...result}))

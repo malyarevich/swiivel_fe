@@ -1,8 +1,8 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PreviewFormPdfComponent } from './preview-form-pdf.component';
-import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { NgModule } from '@angular/core';
 import { SharedModule } from '@app/shared/shared.module';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { PreviewFormPdfComponent } from './preview-form-pdf.component';
 
 
 @NgModule({

@@ -21,7 +21,7 @@ export class WidgetComponent implements OnInit {
   ngOnInit() {
   }
 
-  isActive(): boolean {
+  get isActive(): boolean {
     return !!this.ref;
   }
 

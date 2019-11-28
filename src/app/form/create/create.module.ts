@@ -29,6 +29,17 @@ import { FormDrawingComponent } from './builder/workarea/form-drawing/form-drawi
 
 
 @NgModule({
+  imports: [
+    CommonModule,
+    CreateRoutingModule,
+    SharedModule,
+    CdkTreeModule,
+    ScrollingModule,
+    PdfViewerModule,
+    ReactiveFormsModule,
+    FormsModule,
+    SettingsModule
+  ],
   declarations: [
     GeneralComponent,
     BuilderComponent,
