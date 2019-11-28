@@ -47,7 +47,8 @@ import { FormDrawingComponent } from './builder/workarea/form-drawing/form-drawi
     FormDrawingComponent,
     WorkareaSectionComponent,
     WorkareaGroupComponent,
-    WorkareaFieldComponent
+    WorkareaFieldComponent,
+    WorkareaFieldsComponent
   ],
   imports: [
     CommonModule,
@@ -63,7 +64,8 @@ import { FormDrawingComponent } from './builder/workarea/form-drawing/form-drawi
   entryComponents: [
     WorkareaSectionComponent,
     WorkareaGroupComponent,
-    WorkareaFieldComponent
+    WorkareaFieldComponent,
+    WorkareaFieldsComponent
   ]
 })
 export class CreateModule { }
