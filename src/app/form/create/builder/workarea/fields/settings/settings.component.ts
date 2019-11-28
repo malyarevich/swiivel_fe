@@ -10,8 +10,6 @@ import { NumberSettingComponent } from './number-setting/number-setting.componen
 import { PhoneSettingComponent } from './phone-setting/phone-setting.component';
 import { SectionSettingsComponent } from './section-settings/section-settings.component';
 import { TextSettingComponent } from './text-setting/text-setting.component';
-import { cloneDeep } from 'lodash';
-import { CdkDrag } from '@angular/cdk/drag-drop';
 
 const components = [
   { type: 101, component: TextSettingComponent, title: 'Short Text Field Settings' },
@@ -34,7 +32,6 @@ const components = [
   styleUrls: ['./settings.component.scss']
 })
 export class SettingsComponent implements OnInit, AfterViewInit, OnDestroy {
-  @ViewChildren(CdkDrag, {read: CdkDrag}) drags: QueryList<any>;
   component: ComponentRef<any>;
   type: number;
   title: string;
@@ -85,7 +82,7 @@ export class SettingsComponent implements OnInit, AfterViewInit, OnDestroy {
       this.type = c.type;
       this.title = c.title;
      
-      const factory: ComponentFactory<any> = this.resolver.resolveComponentFactory(c.component);
+      const factory: ComponentFactory<any> = this.resolver.resolveComponentFactory<any>(c.component);
       if (this.container) {
         this.component = this.container.createComponent(factory);
         this.component.instance.settings = f.get('options').value;
