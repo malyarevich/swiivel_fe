@@ -3,18 +3,22 @@ import { FormGroup, FormArray, FormBuilder, FormControl } from '@angular/forms';
 import { CdkDropList, DragDrop, CdkDrag, DropListRef, DragRef } from '@angular/cdk/drag-drop';
 import { WorkareaGroupComponent } from './group.component';
 import { WorkareaFieldComponent } from './field.component';
+import { FormService } from '@app/form/form.service';
+import { uniqueId } from 'lodash';
 
 @Component({
   selector: 'sw-section',
   templateUrl: './section.component.html',
   styleUrls: ['./section.component.scss']
 })
-export class WorkareaSectionComponent implements OnInit, AfterViewInit {
+export class WorkareaSectionComponent implements OnInit, AfterViewInit, AfterViewChecked {
   dropRef: DropListRef;
   
   children: FormArray;
   _section: FormGroup;
   dragRefs = new Map<any, DragRef>();
+  dropListsIds = [];
+  id = uniqueId('s_');
   @Input() set section(fg: FormGroup) {
     this._section = fg;
     this.children = this._section.get('fields') as FormArray;
@@ -22,6 +26,7 @@ export class WorkareaSectionComponent implements OnInit, AfterViewInit {
       child: fg,
       ref: this.dd.createDrag(this.el.nativeElement)
     })
+    console.log(this.dropListsIds);
     this.cdr.markForCheck();
   }
   @Input() set list(dl: any){
@@ -36,8 +41,27 @@ export class WorkareaSectionComponent implements OnInit, AfterViewInit {
   // @ViewChild('drop', {read: ElementRef, static: true}) drop: ElementRef;
   @ViewChildren(CdkDrag) drags: QueryList<any>;
   @Output() dragRef = new EventEmitter();
-  constructor(private cdr: ChangeDetectorRef, private dd: DragDrop, private el: ElementRef) {
+  constructor(private service: FormService, private cdr: ChangeDetectorRef, private dd: DragDrop, private el: ElementRef) {
+    this.service.addDropListId(this.id);
+    this.service.dropLists$.subscribe((ids) => {
+      this.dropListsIds = Array.from(ids).filter(cid => cid !== this.id);
+      this.cdr.markForCheck();
+    });
     // this.dragRef.emit(this._section,this.dd.createDrag(el));
+  }
+
+  mayEnter(drag, list) {
+    // console.log('s', drag, list);
+    let dragType = drag.data.type ? drag.data.type : drag.data.value.type;
+    if (dragType < 113) {
+      return false
+    } else if (dragType === 113) {
+      return true;
+    } else if (dragType === 114) {
+      return true;
+    } else {
+      console.log(dragType)
+    }
   }
 
   addDragRef(data) {
@@ -71,6 +95,10 @@ export class WorkareaSectionComponent implements OnInit, AfterViewInit {
     //   this.cdr.detectChanges();
     //   console.log(this.dropRef)
     // })
+  }
+
+  ngAfterViewChecked() {
+
   }
 
   ngOnInit() {

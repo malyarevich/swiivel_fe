@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, ChangeDetectorRef, ContentChild, ViewChild, ElementRef, ViewChildren, QueryList } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder, FormControl } from '@angular/forms';
 import { CdkDropList, CdkDrag, DragDrop, DropListRef } from '@angular/cdk/drag-drop';
+import { uniqueId } from 'lodash';
+import { FormService } from '@app/form/form.service';
 
 @Component({
   selector: 'sw-group',
@@ -11,6 +13,8 @@ export class WorkareaGroupComponent implements OnInit {
   dropRef: DropListRef;
   _group: FormGroup;
   children: FormArray;
+  dropListsIds = [];
+  id = uniqueId('g_');
   @Input() set group(fg: FormGroup) {
     this._group = fg;
     this.children = this._group.get('fields') as FormArray;
@@ -26,7 +30,33 @@ export class WorkareaGroupComponent implements OnInit {
   @ContentChild('list', {read: CdkDropList, static: false}) list; 
   @ViewChild('drop', {read: ElementRef, static: true}) drop: ElementRef;
   @ViewChildren(CdkDrag, {read: CdkDrag}) drags: QueryList<any>;
-  constructor(private cdr: ChangeDetectorRef, private dd: DragDrop) { 
+  constructor(private service: FormService, private cdr: ChangeDetectorRef, private dd: DragDrop) {
+    this.service.addDropListId(this.id);
+    this.service.dropLists$.subscribe((ids) => {
+      this.dropListsIds = Array.from(ids).filter((cid: string) => {
+        return true;// cid !== this.id;
+      });
+      this.cdr.markForCheck();
+    });
+  }
+
+  mayEnter(drag, list) {
+    // console.log(drag, list)
+    let dragType = drag.data.type ? drag.data.type : drag.data.value.type;
+    if (dragType < 113) {
+      return list.id.startsWith('g_');
+    } else if (dragType === 113) {
+      return true;
+      // if (list.id === 'cdk-drop-list-0') {
+      //   return list.data.value.length === 0;
+      // } else {
+      //   return (list.id.endsWith('113') || list.id.endsWith('114'));
+      // }
+    } else if (dragType === 114) {
+      return list.id.startsWith('g_') || list.id.startsWith('s_');
+    } else {
+      console.log(dragType)
+    }
   }
 
   ngAfterViewInit() {

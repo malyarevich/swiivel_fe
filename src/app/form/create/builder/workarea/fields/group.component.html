@@ -55,10 +55,11 @@
 
 <sw-settings *ngIf="showSettings" [field]="_group"></sw-settings>
 
-<div style="margin-left: 10px;" cdkDropList [cdkDropListData]="children.controls" *ngIf="hasChildren" [class.visible]="_group.value.isExpanded">
+<div style="margin-left: 10px;" cdkDropList [cdkDropListData]="children.controls" [class.visible]="_group.value.isExpanded" 
+[id]="id" [cdkDropListConnectedTo]="dropListsIds" [cdkDropListEnterPredicate]="mayEnter">
   <div *ngFor="let child of children.controls" cdkDrag [cdkDragData]="child">
-      <sw-section *ngIf="child.get('type').value === 114" (dragRef)="addDragRef($event)" [section]="child"></sw-section>
-      <sw-group *ngIf="child.get('type').value === 113"  (dragRef)="addDragRef($event)" [group]="child"></sw-group>
+      <sw-section *ngIf="child.get('type').value === 114" [section]="child"></sw-section>
+      <sw-group *ngIf="child.get('type').value === 113" [group]="child"></sw-group>
       <sw-field *ngIf="child.get('type').value < 113" [field]="child"></sw-field>
   </div>
 </div>

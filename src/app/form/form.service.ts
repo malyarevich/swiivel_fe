@@ -108,7 +108,8 @@ export class FormService {
     mapped: []
   };
   public stage$ = new BehaviorSubject(0);
-
+  public dropLists = new Set();
+  public dropLists$ = new BehaviorSubject(this.dropLists);
   constructor(private fb: FormBuilder, private api: ApiService) {
     this.loadMappedFields();
     this.loadFieldsSchema();
@@ -195,6 +196,11 @@ export class FormService {
     const allFields = flatMapDeep(this.form.get('fields').value, flattenLo);
     // const allFields = flattenDeep(this.form.get('fields').value);
     return allFields.filter(field => field.type >= 113).length;
+  }
+  addDropListId(id) {
+    this.dropLists.add(id);
+    this.dropLists$.next(this.dropLists);
+    return this.dropLists;
   }
   getListsIds(ids = [], parent?) {
     if (!parent) parent = this.form;
