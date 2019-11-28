@@ -44,12 +44,6 @@ export class DropdownSelectYearComponent implements OnInit, ControlValueAccessor
   public nowYear = new Date().getFullYear();
   public size = ButtonSizeEnum;
 
-  @Input() set selectValue(opt: [any]) {
-    if (opt[0] === null) {
-      this._sm.clear();
-    }
-  }
-
   @Input()
   set options(opts: any[]) {
     if (opts) {

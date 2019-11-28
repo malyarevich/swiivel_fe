@@ -1,8 +1,8 @@
 <div
-    #holder
-    class="date-picker"
-    [class.filter-field]="class === 'filter-field'"
-    (click)="openDatepicker($event)"
+  #holder
+  class="date-picker"
+  [class.filter-field]="class === 'filter-field'"
+  (click)="openDatepicker($event)"
 >
 
   <div class="input-date">
@@ -28,23 +28,32 @@
   <div class="date-picker-popup">
     <div class="input-date">
       <form [formGroup]="inputDateForm">
-      <div *ngIf="!this.range">
-        <sw-input-text formControlName="dateFrom" [mask]="'00/00/0000'">
-          <span class="placeholder">Date From</span>
-        </sw-input-text>
-      </div>
-      <div *ngIf="this.range" class="input-date-range">
-        <div class="input-date-range-item">
-          <sw-input-text formControlName="dateFrom" [mask]="'00/00/0000'">
-            <span class="placeholder">Date From</span>
-          </sw-input-text>
+        <div
+          [class.input-date-range]="this.range"
+        >
+          <div [class.input-date-range-item]="this.range">
+            <sw-input-text
+              formControlName="dateFrom"
+              mask="00/00/0000"
+              (onFocus)="inputStartDateInFocus = true"
+              (onBlur)="inputStartDateInFocus = false"
+            >
+              <span class="placeholder">
+                {{this.range ? 'Date From' : 'Date'}}
+              </span>
+            </sw-input-text>
+          </div>
+          <div *ngIf="this.range" class="input-date-range-item">
+            <sw-input-text
+              formControlName="dateTo"
+              mask="00/00/0000"
+              (onFocus)="inputEndDateInFocus = true"
+              (onBlur)="inputEndDateInFocus = false"
+            >
+              <span class="placeholder">Date To</span>
+            </sw-input-text>
+          </div>
         </div>
-        <div class="input-date-range-item">
-          <sw-input-text formControlName="dateTo" [mask]="'00/00/0000'">
-            <span class="placeholder">Date To</span>
-          </sw-input-text>
-        </div>
-      </div>
       </form>
     </div>
     <form [formGroup]="selectDateForm">
@@ -60,7 +69,7 @@
         <div class="select-year">
           <sw-dropdown-select-year [date]="viewDate" formControlName="year">
             <span class="text">
-              {{ viewDate | calendarDate:(view + 'ViewYearTitle'):'en' }}
+              {{ viewDate | calendarDate:('monthViewYearTitle'):'en' }}
             </span>
           </sw-dropdown-select-year>
         </div>

@@ -44,6 +44,8 @@ export class InputTextComponent implements ControlValueAccessor, OnInit {
   @Input() isClearable = false;
   @Input() trimStart: boolean;
   @Output() blur = new EventEmitter<any>();
+  @Output() onFocus = new EventEmitter<any>();
+  @Output() onBlur = new EventEmitter<any>();
 
   writeValue = (value: string) => {};
   registerOnChange = (fn: any) => {};

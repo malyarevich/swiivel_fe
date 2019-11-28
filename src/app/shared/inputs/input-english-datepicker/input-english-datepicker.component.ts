@@ -41,7 +41,6 @@ const ENGDATEPICKER_CONTROL_ACCESSOR = {
 export class InputEnglishDatepickerComponent
   implements OnInit, OnDestroy, ControlValueAccessor {
   // === variables for calendar ===
-  view = 'month';
   viewDate = new Date();
   events: CalendarEvent[] = [];
   selectedMonthViewDay: CalendarMonthViewDay;
@@ -70,11 +69,12 @@ export class InputEnglishDatepickerComponent
   onChange: Function;
   onTouched: Function;
 
-  // value: string = null;
   private destroyed$ = new Subject();
   private ref: PopupRef;
   public days: CalendarMonthViewDay[];
   public buttonExpand = ButtonExpandEnum;
+  public inputStartDateInFocus = false;
+  public inputEndDateInFocus = false;
 
   @Input() class = 'online_form__data_picker';
   @Input() format: 'mm-dd-yyyy' | 'dd-mm-yyyy' | 'yyyy-mm-dd' = 'mm-dd-yyyy';
@@ -90,11 +90,11 @@ export class InputEnglishDatepickerComponent
   constructor(private popup: Popup, private cdr: ChangeDetectorRef, private fb: FormBuilder) {
     this.selectDateForm = this.fb.group({
       month: new FormControl(this.months[0], Validators.required),
-      year: new FormControl('', Validators.required)
+      year: new FormControl(new Date().getFullYear(), Validators.required)
     });
     this.inputDateForm = this.fb.group({
-      dateFrom: new FormControl('', Validators.required),
-      dateTo: new FormControl('',  Validators.required),
+      dateFrom: new FormControl(''),
+      dateTo: new FormControl(''),
     });
   }
 
@@ -105,10 +105,14 @@ export class InputEnglishDatepickerComponent
       this.viewDate = new Date(value.year, value.month[0].id, 1);
     });
     this.inputDateForm.controls['dateFrom'].valueChanges.subscribe(value => {
-      this.updateCalendarValues(value, 'start');
+      if (this.inputStartDateInFocus) {
+        this.updateCalendarValues(value, 'start');
+      }
     });
     this.inputDateForm.controls['dateTo'].valueChanges.subscribe(value => {
-      this.updateCalendarValues(value, 'end');
+      if (this.inputEndDateInFocus) {
+        this.updateCalendarValues(value, 'end');
+      }
     });
   }
 
@@ -119,7 +123,19 @@ export class InputEnglishDatepickerComponent
         const monthIndex = parseInt(value.slice(0, 2), 10) - 1;
         this.selectDateForm.get('month').setValue([this.months[monthIndex]], { emitEvent: true});
         this.selectDateForm.get('year').setValue([value.slice(4, 8)], { emitEvent: true});
-        setTimeout(() => this.selectInputDay(dateInput, extreme), 100);
+        setTimeout(() => {
+          this.selectInputDay(dateInput, extreme);
+          if (!this.range) {
+            // this.value = DateTime.fromJSDate(dateInput).toFormat(this.dateFormat);
+          } else {
+            if (this.selectedRange.startDate) {
+              this.value = DateTime.fromJSDate(this.selectedRange.startDate.date).toFormat(this.dateFormat);
+            }
+            if (this.selectedRange.endDate) {
+              this.value += ' - ' + DateTime.fromJSDate(this.selectedRange.endDate.date).toFormat(this.dateFormat);
+            }
+          }
+        });
       }
     }
   }
@@ -157,10 +173,7 @@ export class InputEnglishDatepickerComponent
           this.selectedMonthViewDay = null;
         } else {
           this.value = DateTime.fromJSDate(day.date).toFormat(this.dateFormat);
-          this.inputDateForm.get('dateFrom').setValue(
-            DateTime.fromJSDate(this.selectedRange.startDate.date).toFormat(this.dateFormat),
-            { emitEvent: true}
-          );
+          this.inputDateForm.get('dateFrom').setValue(DateTime.fromJSDate(day.date).toFormat(this.dateFormat), { emitEvent: true});
           day.cssClass = 'cal-day-selected';
           this.selectedMonthViewDay = day;
         }
@@ -226,17 +239,19 @@ export class InputEnglishDatepickerComponent
   }
 
   selectInputDay(selectDay: Date, extreme: string): void {
-    // todo: add clean + changes value on top
-    this.days.forEach(day => {
-      if (this.range && day.date.getTime() === selectDay.getTime()) {
-        if (extreme === 'start') {
-          this.selectedRange.startDate = day;
-        } else {
-          this.selectedRange.endDate = day;
+    if (this.range) {
+      this.days.forEach(day => {
+        if (this.range && day.date.getTime() === selectDay.getTime()) {
+          if (extreme === 'start') {
+            this.selectedRange.startDate = day;
+          } else {
+            this.selectedRange.endDate = day;
+          }
         }
-      }
-    });
-    this.colorRange();
+      });
+      this.colorRange();
+    }
+
   }
 
   clearInputs(): void {
@@ -245,7 +260,6 @@ export class InputEnglishDatepickerComponent
   }
 
   openDatepicker(e: any): void {
-
     if (e && e.target && e.target.className && e.target.className.includes('fa-times')) {
       e.preventDefault();
       this.value = '';
@@ -307,5 +321,4 @@ export class InputEnglishDatepickerComponent
     }
     this.close();
   }
-
 }
