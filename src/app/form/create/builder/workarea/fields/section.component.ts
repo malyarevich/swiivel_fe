@@ -26,19 +26,15 @@ export class WorkareaSectionComponent implements OnInit, AfterViewInit, AfterVie
       child: fg,
       ref: this.dd.createDrag(this.el.nativeElement)
     })
-    console.log(this.dropListsIds);
     this.cdr.markForCheck();
   }
-  @Input() set list(dl: any){
-    console.log(dl);
-  }
+
   widthOptions = [
     {value: 0, title: '1/4 page'},
     {value: 1, title: '2/4 page'},
     {value: 2, title: '3/4 page'},
     {value: 3, title: 'Full page'}
   ];
-  // @ViewChild('drop', {read: ElementRef, static: true}) drop: ElementRef;
   @ViewChildren(CdkDrag) drags: QueryList<any>;
   @Output() dragRef = new EventEmitter();
   constructor(private service: FormService, private cdr: ChangeDetectorRef, private dd: DragDrop, private el: ElementRef) {
