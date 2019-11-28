@@ -26,7 +26,7 @@
   </div>
 </div>
 
-<sw-settings *ngIf="showSettings" [field]="_section"></sw-settings>
+<sw-settings class="hide-on-preview" *ngIf="showSettings" [field]="_section"></sw-settings>
 
 <div class="drag-field-workarea _section-tree-node" *cdkDragPreview>
   <div class="main_container">
@@ -58,8 +58,8 @@
   </div>
 </div>
 
-<div style="margin-left: 10px;" class="children" cdkDropList [cdkDropListData]="children.controls" cdkDropListOrientation="vertical" 
-  [class.visible]="_section.value.isExpanded" [id]="id" [cdkDropListEnterPredicate]="mayEnter" [cdkDropListConnectedTo]="dropListsIds"
+<div class="children hide-on-preview" cdkDropList [cdkDropListData]="children.controls" cdkDropListOrientation="vertical" 
+  [class.hidden]="!_section.value.isExpanded" [id]="id" [cdkDropListEnterPredicate]="mayEnter" [cdkDropListConnectedTo]="dropListsIds"
   (cdkDropListDropped)="drop($event)">
   <div *ngFor="let child of children.controls;" cdkDrag [cdkDragData]="child">
     <sw-section *ngIf="child.get('type').value === 114"  [section]="child"></sw-section>

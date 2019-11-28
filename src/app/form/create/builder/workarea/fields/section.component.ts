@@ -65,6 +65,9 @@ export class WorkareaSectionComponent implements OnInit, AfterViewInit, AfterVie
   }
 
   drop(event: CdkDragDrop<string[]>) {
+    if (event.container === event.previousContainer && event.previousIndex === event.currentIndex) {
+      return false;
+    }
     this.service.moveField(event);
   }
 
@@ -106,12 +109,6 @@ export class WorkareaSectionComponent implements OnInit, AfterViewInit, AfterVie
   }
 
   ngOnInit() {
-    // this.dropRef = this.dd.createDropList(this.drop.nativeElement);
-    // this.dropRef.data = this.children.controls;
-    // this.dropRef.dropped.subscribe((item) => {
-    //   console.log(item)
-    // })
-    // debugger;
   }
 
   dragit(ch) {

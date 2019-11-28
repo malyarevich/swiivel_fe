@@ -153,7 +153,7 @@ export class FormService {
   }
 
   moveField(event: CdkDragDrop<any>) {
-    console.groupCollapsed(`Moving field ${event.item.data.name}`);
+    console.groupCollapsed(`Moving field ${event.item.data.value.name}`);
     console.log(event);
     console.groupEnd();
     if (event.previousContainer === event.container) {
@@ -162,12 +162,11 @@ export class FormService {
       formArray.removeAt(event.previousIndex);
       formArray.insert(event.currentIndex, control);
     } else {
-      let control = cloneDeep(event.item.data);
+      let control = event.item.data;
       let formArray = control.parent as FormArray;
       formArray.removeAt(event.previousIndex);
       formArray = event.container.data[0].parent;
       formArray.insert(event.currentIndex, control);
-      //move
     }
   }
 
@@ -177,18 +176,16 @@ export class FormService {
   }
 
   removeField(control: AbstractControl) {
-    let controlName = control.get('name').value;
     if (control.parent instanceof FormArray) {
       let parent = control.parent as FormArray;
-      let index = 0;
-      for (const child of parent.controls) {
-        if (child.get('name').value === controlName) {
-          parent.removeAt(index);
-          break;
+      if (parent) {
+        let idx = parent.value.indexOf(control.value);
+        if (idx !== -1) {
+          parent.removeAt(idx);
         }
-        index++;
       }
     } else {
+      let controlName = control.get('name').value;
       control.parent.removeControl(controlName);
     }
   }

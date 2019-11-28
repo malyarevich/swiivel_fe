@@ -53,9 +53,9 @@
 </div>
       
 
-<sw-settings *ngIf="showSettings" [field]="_group"></sw-settings>
+<sw-settings class="hide-on-preview" *ngIf="showSettings" [field]="_group"></sw-settings>
 
-<div style="margin-left: 10px;" cdkDropList [cdkDropListData]="children.controls" [class.visible]="_group.value.isExpanded" 
+<div class="children hide-on-preview" cdkDropList [cdkDropListData]="children.controls" [class.hidden]="!_group.value.isExpanded" 
 [id]="id" [cdkDropListConnectedTo]="dropListsIds" [cdkDropListEnterPredicate]="mayEnter"
 (cdkDropListDropped)="drop($event)">
   <div *ngFor="let child of children.controls" cdkDrag [cdkDragData]="child">

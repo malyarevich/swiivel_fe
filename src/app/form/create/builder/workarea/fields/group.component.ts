@@ -10,7 +10,6 @@ import { FormService } from '@app/form/form.service';
   styleUrls: ['./group.component.scss']
 })
 export class WorkareaGroupComponent implements OnInit {
-  dropRef: DropListRef;
   _group: FormGroup;
   children: FormArray;
   dropListsIds = [];
@@ -28,7 +27,6 @@ export class WorkareaGroupComponent implements OnInit {
   ];
 
   @ContentChild('list', {read: CdkDropList, static: false}) list; 
-  // @ViewChild('drop', {read: ElementRef, static: true}) drop: ElementRef;
   @ViewChildren(CdkDrag, {read: CdkDrag}) drags: QueryList<any>;
   constructor(private service: FormService, private cdr: ChangeDetectorRef, private dd: DragDrop) {
     this.service.addDropListId(this.id);
@@ -41,17 +39,11 @@ export class WorkareaGroupComponent implements OnInit {
   }
 
   mayEnter(drag, list) {
-    // console.log(drag, list)
     let dragType = drag.data.type ? drag.data.type : drag.data.value.type;
     if (dragType < 113) {
       return list.id.startsWith('g_');
     } else if (dragType === 113) {
       return true;
-      // if (list.id === 'cdk-drop-list-0') {
-      //   return list.data.value.length === 0;
-      // } else {
-      //   return (list.id.endsWith('113') || list.id.endsWith('114'));
-      // }
     } else if (dragType === 114) {
       return list.id.startsWith('g_') || list.id.startsWith('s_');
     } else {
@@ -60,18 +52,13 @@ export class WorkareaGroupComponent implements OnInit {
   }
 
   drop(event: CdkDragDrop<string[]>) {
+    if (event.container === event.previousContainer && event.previousIndex === event.currentIndex) {
+      return false;
+    }
     this.service.moveField(event);
-    this.cdr.markForCheck();
   }
 
   ngAfterViewInit() {
-    this.drags.changes.subscribe((drags) => {
-      if (this.dropRef) {
-        this.dropRef.withItems(drags);
-      }
-      this.cdr.detectChanges();
-      console.log(this.dropRef)
-    })
   }
   ngOnInit() {
   }

@@ -1,6 +1,7 @@
 :host {
   display: flex;
   flex-flow: column;
+  width: 100%;
   .main_container {
     width: 100%;
     background: #50597A;
@@ -50,5 +51,13 @@
       color: #fff;
     }  
   }
-  
+  .children {
+    &.hidden {
+      height: 0px;
+      overflow: hidden;
+    }
+    > * {
+      margin-left: 10px;
+    }
+  }
 }
