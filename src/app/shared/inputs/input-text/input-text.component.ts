@@ -82,6 +82,10 @@ export class InputTextComponent implements ControlValueAccessor, OnInit {
     return true;
   }
 
+  public isSearchInput(): boolean {
+    return !!this.isSearch;
+  }
+
   public clear(): void {
     this.control.control.reset();
     this.input.nativeElement.focus();

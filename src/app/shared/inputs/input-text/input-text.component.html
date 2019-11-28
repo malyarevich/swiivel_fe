@@ -7,6 +7,6 @@
     [formControl]="control.control"/>
   <ng-content></ng-content>
   <i class="fa fa-times clearBut" (click)="clear()" title="Clear input"></i>
-  <i *ngIf="isSearch" class="fas fa-search fa-xs"></i>
+  <i *ngIf="isSearchInput()" class="fas fa-search fa-xs"></i>
   <ng-content select=".errors"></ng-content>
 </div>
