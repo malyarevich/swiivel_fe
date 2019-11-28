@@ -1,12 +1,12 @@
 import { ArrayDataSource } from '@angular/cdk/collections';
 import { FlatTreeControl, NestedTreeControl } from '@angular/cdk/tree';
-import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy, AfterViewInit, OnDestroy, ViewChild, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy, AfterViewInit, OnDestroy, ViewChild, AfterViewChecked, ContentChildren, QueryList, ElementRef, ViewChildren } from '@angular/core';
 import { FieldService } from '@app/core/field.service';
 import { ApiService } from '@app/core/api.service';
 import { CHILDREN_SYMBOL, TreeDataSource } from '@app/form/create/tree.datasource';
 import { FormService } from '@app/form/form.service';
 import { Subject, Subscription } from 'rxjs';
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, CdkDropList, DragDrop, CdkDrag } from '@angular/cdk/drag-drop';
 import { takeUntil } from 'rxjs/operators';
 import { cloneDeep } from 'lodash';
 import { visitValue } from '@angular/compiler/src/util';
@@ -98,7 +98,8 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
 
   form: FormArray = new FormArray([]);
   formSubscription: Subscription;
-  constructor(private service: FormService, private api: ApiService, private cdr: ChangeDetectorRef, private fb: FormBuilder) {
+  constructor(private service: FormService, private api: ApiService, private cdr: ChangeDetectorRef, private fb: FormBuilder,
+    private dd: DragDrop) {
   }
 
   ngOnInit() {
@@ -106,20 +107,21 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
       if (this.formSubscription) this.formSubscription.unsubscribe();
       this.formSubscription = form.valueChanges.subscribe((value) => {
         if (value && value['fields']) {
-          this.form = form.get('fields') as FormArray;
+          this.form = this.service.form.get('fields') as FormArray;
+          console.log(this.form.value)
           this.treeSource.nodes = this.form.controls;// (form.get('fields') as FormArray).controls;
-          console.log(this.treeSource.nodes)
         } else {
           this.treeSource.nodes = [];
         }
-        this.cdr.markForCheck();
+        // this.cdr.markForCheck();
+        this.cdr.detectChanges()
       });
       
       if (form.get('fields')) {
         this.form = form.get('fields') as FormArray;
         this.treeSource.nodes = this.form.controls;
-        console.log(this.treeSource.nodes)
         this.cdr.markForCheck();
+        this.cdr.detectChanges()
       }
     });
     
@@ -134,41 +136,11 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
   }
 
   ngAfterViewInit() {
-    this.cdr.detectChanges()
+    this.cdr.detectChanges();
   }
 
   setParent(node, key, value) {
-    // if (value === false) {
-    //   let changed = [];
-    //   let parent = node.parent.parent;
-    //   while (parent !== node.root) {
-    //     if (parent && parent.value.type !== 114) {
-    //       let control = parent.get(['options', key]) as FormControl;
-    //       if (control && control.value === true) {
-    //         changed.push(control)
-    //         // control.setValue(false, {onlySelf: true, emitEvent: false, emitViewToModelChange: false, emitModelToViewChange: false});
-    //         // changed = true;
-    //         parent = parent.parent.parent;
-    //       // } else if (!control) {
-    //       //   parent.get('options').registerControl(key, new FormControl(false));
-    //       } else {
-    //         parent = node.root;
-    //       }
-    //     } else {
-    //       console.log('l')
-    //       parent = node.root;
-    //     }
-    //   }
-    //   if (changed.length > 0) {
-    //     changed.reverse();
-    //     changed.forEach((control) => {
-    //       control.setValue(false, {onlySelf: true, emitEvent: false, emitViewToModelChange: false, emitModelToViewChange: false});
-    //     });
-    //     (node.root as FormGroup).updateValueAndValidity();
-    //     // this.cdr.markForCheck();
-    //     // this.cdr.detectChanges();
-    //   }
-    // }
+   
   }
 
   
@@ -190,23 +162,20 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
 
       let listIds = this.service.getListsIds();
       
-      // let filterType = node.get('type').value;
       let nodeId = this.getListId(node);
-      
-      // if (filterType === 113) {
-      //   listIds = listIds.filter((id) => id.endsWith('113') || id.endsWith('114'));
-      // } else if (filterType === 114) {
-      //   listIds = listIds.filter((id) => id.endsWith('114'));
-      // }
-      // listIds.push('sidebar-list')
       return listIds//.filter(id => id !== nodeId);
     } else {
+      return ['cdk-drop-list-root', ...this.service.getListsIds()];
 
     }
   }
   getListId(node) {
-    let listId = [...this.service.getParentPaths(node), node.get('name').value, node.get('type').value].join('');
-    return listId;
+    if (node && node.value) {
+      let listId = [...this.service.getParentPaths(node), node.get('name').value, node.get('type').value].join('');
+      return listId;
+    } else {
+      return 'cdk-drop-list-root';
+    }
   }
   hasChild = (_: number, node: any) => {
     return !!node.get('fields')
@@ -222,16 +191,21 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
     if (dragType < 113) {
       return list.id.endsWith('113');
     } else if (dragType === 113) {
-      if (list.id === 'root-list') {
+      if (list.id === 'cdk-drop-list-0') {
         return list.data.value.length === 0;
       } else {
         return (list.id.endsWith('113') || list.id.endsWith('114'));
       }
     } else if (dragType === 114) {
-      return list.id === 'root-list';
+      return list.id === 'cdk-drop-list-0';
     } else {
       console.log(dragType)
     }
+  }
+
+  isSection(drag, list) {
+    console.log(drag, list)
+    return drag.type === 114;
   }
 
   getListData(node?) {
@@ -274,7 +248,6 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
       showSettingsControl.setValue(!showSettingsControl.value);
       this.cdr.markForCheck();
       return showSettingsControl.value;
-      // node.showSettings = !node.showSettings;
     }
   }
 
@@ -291,7 +264,6 @@ export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked,
       this.treeControl.collapseDescendants(node);
     }
     this.cdr.markForCheck();
-    // this.cdr.detectChanges()
   }
 
   closeNode(node: any): void {

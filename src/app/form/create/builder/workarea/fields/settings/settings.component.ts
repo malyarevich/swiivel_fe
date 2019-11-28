@@ -10,7 +10,6 @@ import { NumberSettingComponent } from './number-setting/number-setting.componen
 import { PhoneSettingComponent } from './phone-setting/phone-setting.component';
 import { SectionSettingsComponent } from './section-settings/section-settings.component';
 import { TextSettingComponent } from './text-setting/text-setting.component';
-import { cloneDeep } from 'lodash';
 
 const components = [
   { type: 101, component: TextSettingComponent, title: 'Short Text Field Settings' },
@@ -33,7 +32,6 @@ const components = [
   styleUrls: ['./settings.component.scss']
 })
 export class SettingsComponent implements OnInit, AfterViewInit, OnDestroy {
-
   component: ComponentRef<any>;
   type: number;
   title: string;
@@ -81,12 +79,9 @@ export class SettingsComponent implements OnInit, AfterViewInit, OnDestroy {
   private initSettings(f: any): void {
     const c = components.find(c => c.type === f.value.type);
     if (c) {
-      // console.log('CCCC,', c)
       this.type = c.type;
       this.title = c.title;
-      if (c.type === 107) {
-        console.log('Field group', f)
-      }
+     
       const factory: ComponentFactory<any> = this.resolver.resolveComponentFactory<any>(c.component);
       if (this.container) {
         this.component = this.container.createComponent(factory);

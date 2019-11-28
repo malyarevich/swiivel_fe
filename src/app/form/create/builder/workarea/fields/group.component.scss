@@ -1,0 +1,74 @@
+:host {
+  display: flex;
+  flex-flow: column;
+  .main_container {
+    width: 100%;
+    display: flex;
+    border-radius: 3px;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    background: #EBEEFF !important;
+    border: 1px solid rgba(67, 80, 162, 0.2);
+    box-sizing: border-box;
+    .content {
+      margin: 10px 0 10px 20px;
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-between;
+      align-items: center;
+      box-sizing: border-box;
+      .name-container {
+        width: 250px;
+        .main-text {
+          font-style: normal;
+          font: 800 12px/15px "Nunito Sans";
+        }
+        .hint {
+          font-style: normal;
+          font: 400 10px/13px "Nunito Sans";
+        }
+      }
+      .dragdrop {
+        color: #A4A4A4;
+      }
+      &.active {
+        box-sizing: border-box;
+        border: 1px solid #4350A2;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+    }
+    .drag-icon {
+      margin-right: 20px;
+    }
+    .actions {
+      display: flex;
+      align-items: center;
+      flex-flow: row nowrap;
+      .icon {
+        margin-left: 15px;
+        &.dragdrop {
+          padding: 15px;
+          border-left: 1px solid #C9CEEC;
+        }
+        &.active {
+          color: #fff;
+        }
+      }
+    }
+    &.field {
+      padding: 7px 20px;
+    }
+  }
+  
+
+
+
+  .cdk-drop-list {
+    display: none;
+    &.visible {
+      display:block;
+    }
+  }
+}

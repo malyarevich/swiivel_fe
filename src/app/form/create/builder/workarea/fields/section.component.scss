@@ -1,0 +1,54 @@
+:host {
+  display: flex;
+  flex-flow: column;
+  .main_container {
+    width: 100%;
+    background: #50597A;
+    display: flex;
+    border-radius: 3px;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    .content {
+      margin: 10px 0 10px 20px;
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-between;
+      align-items: center;
+      box-sizing: border-box;
+    }
+    .drag-icon {
+      margin-right: 20px;
+    }
+    .actions {
+      display: flex;
+      align-items: center;
+      flex-flow: row nowrap;
+      .icon {
+        margin-left: 15px;
+        &.dragdrop {
+          padding: 15px;
+          border-left: 1px solid #C9CEEC;
+        }
+        &.active {
+          color: #fff;
+        }
+      }
+    }
+    &.field {
+      padding: 7px 20px;
+    }
+    sw-input-text {
+      margin-right: 10px;
+      width: 450px;
+    }
+    sw-dropdown-input {
+      min-width: 120px;
+    }
+    .dragdrop {
+      color: #fff;
+    }  
+  }
+  
+}

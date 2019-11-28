@@ -7,6 +7,7 @@ import {
   OnInit,
   Renderer2,
   ViewChild,
+  ViewRef,
 } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
@@ -161,7 +162,7 @@ export class UploadReviewFormComponent implements OnInit, OnDestroy {
         } else {
           this.documents = [];
         }
-        if (!this.cdr['destroyed']) {
+        if (!(this.cdr as ViewRef).destroyed) {
           this.cdr.detectChanges();
         }
       });
