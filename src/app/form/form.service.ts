@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '@app/core/api.service';
-import { cloneDeep, flatMap, get, isArrayLike, isPlainObject, isString, set, unset, values } from 'lodash';
-import { BehaviorSubject, Observable, Subject, throwError } from 'rxjs';
+import { cloneDeep, flatMap, flattenDeep, get, isArrayLike, isPlainObject, isString, set, unset, values, flatMapDeep } from 'lodash';
+import { BehaviorSubject, Subject, from, throwError, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import * as SymbolTree from 'symbol-tree';
 
@@ -19,6 +19,19 @@ const flatten = (fields = []) => {
   }
   return result;
 };
+const flattenLo = function(field) {
+  return [field, flatMapDeep(field.fields, flattenLo)];
+}
+function flattenrec(xs) {
+  return xs.reduce((acc, x) => {
+    acc = acc.concat(x);
+    if (x.type >= 113) {
+      acc = acc.concat(flattenrec(x.fields));
+      // x.fields = [];
+    }
+    return acc;
+  }, []);
+}
 const mapField = (field, mappers = []) => {
   if (field.fields) {
     field.fields = field.fields.map(cfield => mapField(cfield, mappers));
@@ -96,7 +109,8 @@ export class FormService {
     mapped: []
   };
   public stage$ = new BehaviorSubject(0);
-
+  public dropLists = new Set();
+  public dropLists$ = new BehaviorSubject(this.dropLists);
   constructor(private fb: FormBuilder, private api: ApiService) {
     this.loadMappedFields();
     this.loadFieldsSchema();
@@ -140,8 +154,21 @@ export class FormService {
 
   moveField(event: CdkDragDrop<any>) {
     console.groupCollapsed(`Moving field ${event.item.data.name}`);
-
+    console.log(event);
     console.groupEnd();
+    if (event.previousContainer === event.container) {
+      let control = event.item.data;
+      let formArray = control.parent as FormArray;
+      formArray.removeAt(event.previousIndex);
+      formArray.insert(event.currentIndex, control);
+    } else {
+      let control = cloneDeep(event.item.data);
+      let formArray = control.parent as FormArray;
+      formArray.removeAt(event.previousIndex);
+      formArray = event.container.data[0].parent;
+      formArray.insert(event.currentIndex, control);
+      //move
+    }
   }
 
 
@@ -178,6 +205,16 @@ export class FormService {
       control = parent;
     }
     return paths;
+  }
+  getListLength() {
+    const allFields = flatMapDeep(this.form.get('fields').value, flattenLo);
+    // const allFields = flattenDeep(this.form.get('fields').value);
+    return allFields.filter(field => field.type >= 113).length;
+  }
+  addDropListId(id) {
+    this.dropLists.add(id);
+    this.dropLists$.next(this.dropLists);
+    return this.dropLists;
   }
   getListsIds(ids = [], parent?) {
     if (!parent) parent = this.form;
@@ -527,14 +564,15 @@ export class FormService {
   get form(): FormGroup {
     return this._form.getValue();
   }
+  
+  set form(form: FormGroup) {
+    this._form.next(form);
+  }
 
   get form$() {
     return this._form.asObservable();
   }
 
-  set form(form: FormGroup) {
-    this._form.next(form);
-  }
 
   get formId(): string {
     return this._formId.getValue();
