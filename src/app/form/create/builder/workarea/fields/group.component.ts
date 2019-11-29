@@ -25,7 +25,13 @@ export class WorkareaGroupComponent implements AfterViewInit, OnDestroy {
     this._group = fg;
     this.children = this._group.get('fields') as FormArray;
     this.subscription = this._group.valueChanges.subscribe((value) => {
-      this.cdr.detectChanges();
+      if (value.fields !== this.children.value) {
+        this.cdr.detectChanges();
+      } else if (value.options !== this._group.value.options){
+        this.cdr.detectChanges();
+      } else {
+        this.cdr.detectChanges();
+      }
     });
     this.cdr.detectChanges();
   }
