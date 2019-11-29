@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, transferArrayItem, moveItemInArray } from '@angular/cdk/drag-drop';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '@app/core/api.service';
 import { cloneDeep, flatMap, flattenDeep, get, isArrayLike, isPlainObject, isString, set, unset, values, flatMapDeep } from 'lodash';
@@ -153,21 +153,28 @@ export class FormService {
   }
 
   moveField(event: CdkDragDrop<any>) {
-    console.groupCollapsed(`Moving field ${event.item.data.name}`);
+    console.groupCollapsed(`Moving field ${event.item.data.value.name}`);
     console.log(event);
     console.groupEnd();
     if (event.previousContainer === event.container) {
       let control = event.item.data;
-      let formArray = control.parent as FormArray;
+      let formArray = event.container.data as FormArray;
+      if (event.container.id === 'root-list') {
+        formArray = this.form.get('fields') as FormArray;
+      }
+      let value = [...formArray.value];
       formArray.removeAt(event.previousIndex);
       formArray.insert(event.currentIndex, control);
     } else {
-      let control = cloneDeep(event.item.data);
-      let formArray = control.parent as FormArray;
-      formArray.removeAt(event.previousIndex);
-      formArray = event.container.data[0].parent;
-      formArray.insert(event.currentIndex, control);
-      //move
+      let control = event.item.data;
+      let oldParent = control.parent as FormArray;
+      let newParent = event.container.data as FormArray;
+      if (oldParent && newParent){
+        oldParent.removeAt(event.previousIndex);
+        newParent.insert(event.currentIndex, control);
+      } else if (oldParent) {
+        console.log(`No parent`, event);
+      }
     }
   }
 
@@ -177,18 +184,16 @@ export class FormService {
   }
 
   removeField(control: AbstractControl) {
-    let controlName = control.get('name').value;
     if (control.parent instanceof FormArray) {
       let parent = control.parent as FormArray;
-      let index = 0;
-      for (const child of parent.controls) {
-        if (child.get('name').value === controlName) {
-          parent.removeAt(index);
-          break;
+      if (parent) {
+        let idx = parent.value.indexOf(control.value);
+        if (idx !== -1) {
+          parent.removeAt(idx);
         }
-        index++;
       }
     } else {
+      let controlName = control.get('name').value;
       control.parent.removeControl(controlName);
     }
   }
@@ -213,6 +218,11 @@ export class FormService {
   }
   addDropListId(id) {
     this.dropLists.add(id);
+    this.dropLists$.next(this.dropLists);
+    return this.dropLists;
+  }
+  removeDropListId(id) {
+    this.dropLists.delete(id);
     this.dropLists$.next(this.dropLists);
     return this.dropLists;
   }
@@ -314,6 +324,16 @@ export class FormService {
       parent.get('fields').push(this.initForm(field));
     }
     return parent;
+  }
+
+  addFieldToWorkarea (event: CdkDragDrop<any>) {
+    let parent = event.container.data as FormArray;
+    if (event.container.id === 'root-list') {
+      parent = this.form.get('fields') as FormArray;
+    }
+    if (parent) {
+      parent.insert(event.currentIndex, this.initForm(event.item.data));
+    }
   }
 
   addPathToParent(path, parent, fields?: any[]) {

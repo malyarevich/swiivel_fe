@@ -1,6 +1,7 @@
 :host {
   display: flex;
   flex-flow: column;
+  width: 100%;
   .main_container {
     width: 100%;
     display: flex;
@@ -61,14 +62,26 @@
       padding: 7px 20px;
     }
   }
+  .children {
+    margin-left: 10px;
+    &.hidden {
+      height: 0px;
+      overflow: hidden;
+      &.cdk-drop-list-dragging {
+        height: 10px;
+      }
+    }
+    // &.cdk-drop-list-receiving {
+    //   background-color: red;
+    // }
+    // &.cdk-drop-list-dragging {
+    //   background-color: orange;
+    // }
+  }
   
 
 
 
-  .cdk-drop-list {
-    display: none;
-    &.visible {
-      display:block;
-    }
-  }
+ 
+  
 }
