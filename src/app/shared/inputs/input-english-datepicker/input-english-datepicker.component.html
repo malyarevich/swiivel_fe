@@ -35,8 +35,8 @@
             <sw-input-text
               formControlName="dateFrom"
               mask="00/00/0000"
-              (onFocus)="inputStartDateInFocus = true"
-              (onBlur)="inputStartDateInFocus = false"
+              (focus)="inputStartDateInFocus = true"
+              (blur)="inputStartDateInFocus = false"
             >
               <span class="placeholder">
                 {{this.range ? 'Date From' : 'Date'}}
@@ -47,8 +47,8 @@
             <sw-input-text
               formControlName="dateTo"
               mask="00/00/0000"
-              (onFocus)="inputEndDateInFocus = true"
-              (onBlur)="inputEndDateInFocus = false"
+              (focus)="inputEndDateInFocus = true"
+              (blur)="inputEndDateInFocus = false"
             >
               <span class="placeholder">Date To</span>
             </sw-input-text>

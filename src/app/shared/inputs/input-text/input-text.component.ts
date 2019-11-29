@@ -44,8 +44,7 @@ export class InputTextComponent implements ControlValueAccessor, OnInit {
   @Input() isClearable = false;
   @Input() trimStart: boolean;
   @Output() blur = new EventEmitter<any>();
-  @Output() onFocus = new EventEmitter<any>();
-  @Output() onBlur = new EventEmitter<any>();
+  @Output() focus = new EventEmitter<any>();
 
   writeValue = (value: string) => {};
   registerOnChange = (fn: any) => {};
@@ -62,7 +61,7 @@ export class InputTextComponent implements ControlValueAccessor, OnInit {
 
   ngOnInit(): void {
     if (this.autofocus) {
-      this.focus();
+      this.setFocus();
     }
     this.control.statusChanges.subscribe(() => {
       this.cdr.markForCheck();
@@ -74,7 +73,7 @@ export class InputTextComponent implements ControlValueAccessor, OnInit {
     })
   }
 
-  public focus() {
+  public setFocus() {
     this.input.nativeElement.focus();
   }
 

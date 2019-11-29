@@ -6,8 +6,8 @@
     [attr.autocomplete]="_autocomplete"
     [formControl]="control.control"
     [mask]="mask"
-    (focus)="onFocus.emit()"
-    (blur)="onBlur.emit()"
+    (focus)="focus.emit()"
+    (blur)="blur.emit()"
   />
   <ng-content></ng-content>
   <i class="fa fa-times clearBut" (click)="clear()" title="Clear input"></i>
