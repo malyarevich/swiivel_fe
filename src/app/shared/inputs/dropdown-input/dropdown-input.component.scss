@@ -85,6 +85,25 @@
         }
       }
     }
+
+    &.outline {
+      margin: 0;
+      min-height: 20px;
+      border: none;
+      padding: 5px;
+
+      &:hover {
+        cursor: pointer;
+        background: $gray-hover;
+      }
+
+      .container__input {
+        .text {
+          margin: 0;
+          font: 800 14px/18px $nunito-sans;
+        }
+      }
+    }
   }
 
   .container__icon {
