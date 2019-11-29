@@ -219,7 +219,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
         this.saving = false;
         if (Array.isArray(error.errors)) {
           if (error.errors.includes('Form template name already exists!')) {
-            this.nameInput.setFocus();
+            this.nameInput.focus();
             this.generalForm.get('name').setErrors({unique: true});
           }
         }

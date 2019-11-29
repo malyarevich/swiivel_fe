@@ -15,10 +15,10 @@
     [class.small]="size === sizes.SMALL"
     [class.medium]="size === sizes.MEDIUM"
     [class.round]='isRound'
-    [name]="name"
-    [value]="value"
-    [disabled]="disabled"
-    [title]="title"
+    [attr.disabled]="disabled"
+    [attr.name]="name"
+    [attr.title]="title"
+    [attr.value]="value"
   >
     <ng-content></ng-content>
   </button>
