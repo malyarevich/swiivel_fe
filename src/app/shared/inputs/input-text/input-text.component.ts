@@ -23,7 +23,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl } from '@angular/for
 
 export class InputTextComponent implements ControlValueAccessor, OnInit {
   @Input() autofocus: boolean;
-  @Input() mask = '';
+  @Input() mask: string;
   @Input() set autocomplete(value: string) {
     this._autocomplete = value;
   }
