@@ -1,0 +1,80 @@
+@import "index";
+
+:host {
+  .container {
+    width: 100%;
+    min-height: 20px;
+    border: none;
+    position: relative;
+    background: #fff;
+    display: flex;
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 3px;
+
+    &:hover {
+      background: $gray-hover;
+
+      .text {
+        font: 800 14px/18px $nunito-sans;
+      }
+    }
+  }
+}
+
+.dropdown_items_container {
+  width: 280px;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 0 15px 15px;
+}
+
+.dropdown_items_container__item {
+  padding: 10px;
+  width: 50px;
+
+  &.selected {
+    background: $element-base-color;
+
+    .text {
+      color: #fff;
+    }
+  }
+
+  &:hover {
+    background: $light-purple;
+    cursor: pointer;
+
+    .text {
+      color: $default-font;
+    }
+  }
+}
+
+.dropdown-buttons {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 15px 0;
+  margin: 0 0 10px 0;
+}
+
+.fa-chevron-left {
+  margin: 0 9.5px 0 0;
+}
+
+.fa-chevron-right {
+  margin: 0 0 0 9.5px;
+}
+
+.disabled-year {
+  color: $gray-color;
+
+  &:hover {
+    background: none;
+    cursor: default;
+
+    .text {
+      color: $gray-color;
+    }
+  }
+}

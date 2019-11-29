@@ -10,7 +10,6 @@ import { NumberSettingComponent } from './number-setting/number-setting.componen
 import { PhoneSettingComponent } from './phone-setting/phone-setting.component';
 import { SectionSettingsComponent } from './section-settings/section-settings.component';
 import { TextSettingComponent } from './text-setting/text-setting.component';
-import { cloneDeep } from 'lodash';
 
 const components = [
   { type: 101, component: TextSettingComponent, title: 'Short Text Field Settings' },
@@ -33,7 +32,6 @@ const components = [
   styleUrls: ['./settings.component.scss']
 })
 export class SettingsComponent implements OnInit, AfterViewInit, OnDestroy {
-
   component: ComponentRef<any>;
   type: number;
   title: string;
@@ -81,12 +79,9 @@ export class SettingsComponent implements OnInit, AfterViewInit, OnDestroy {
   private initSettings(f: any): void {
     const c = components.find(c => c.type === f.value.type);
     if (c) {
-      // console.log('CCCC,', c)
       this.type = c.type;
       this.title = c.title;
-      if (c.type === 107) {
-        console.log('Field group', f)
-      }
+     
       const factory: ComponentFactory<any> = this.resolver.resolveComponentFactory<any>(c.component);
       if (this.container) {
         this.component = this.container.createComponent(factory);
@@ -96,7 +91,10 @@ export class SettingsComponent implements OnInit, AfterViewInit, OnDestroy {
         });
         if (this.component.instance.setChildren) {
           this.component.instance.setChildren.subscribe(value => {
-            this.setChildren((this._form.get('fields') as FormArray).controls, value);
+            this.setChildren(f.get('fields'), value, false);
+            // f.updateValueAndValidity();
+            // console.log(f.get('fields').value);
+            // this.setChildren((this._form.get('fields') as FormArray).controls, value);
           });
         }
         this.cdr.detectChanges();
@@ -104,17 +102,17 @@ export class SettingsComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  setChildren(fields, value) {
-    for (let field of fields) {
+  setChildren(fields, value, recursive?: boolean) {
+    let formArray = fields as FormArray;
+    for (let field of formArray.controls) {
       let control = field.get(['options', value.key]) as FormControl;
       if (!control) {
-        (field.get('options') as FormGroup).registerControl(value.key, new FormControl(value.value));
+        (field.get('options') as FormGroup).addControl(value.key, new FormControl(value.value));
       } else {
-        control.setValue(value.value, {emitEvent: false, onlySelf: true, emitModelToViewChange: false, emitViewToModelChange: false});
-
+        control.setValue(value.value, {emitEvent: false, });
       }
-      if (field.get('fields')) {
-        this.setChildren((field.get('fields') as FormArray).controls, value);
+      if (recursive && field.get('fields')) {
+        this.setChildren(field.get('fields'), value, true);
       }
     }
   }

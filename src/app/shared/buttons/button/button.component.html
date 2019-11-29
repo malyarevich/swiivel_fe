@@ -10,12 +10,15 @@
     [class.yellow]="color === colors.YELLOW"
     [class.white]="color === colors.WHITE"
     [class.purple]="color === colors.PURPLE"
+    [class.gray-purple]="color === colors.GRAY_PURPLE"
     [class.outline-purpure]="fill === 'outline'"
     [class.small]="size === sizes.SMALL"
+    [class.medium]="size === sizes.MEDIUM"
     [class.round]='isRound'
-    [name]="name"
-    [value]="value"
-    [disabled]="disabled"
+    [attr.disabled]="disabled"
+    [attr.name]="name"
+    [attr.title]="title"
+    [attr.value]="value"
   >
     <ng-content></ng-content>
   </button>

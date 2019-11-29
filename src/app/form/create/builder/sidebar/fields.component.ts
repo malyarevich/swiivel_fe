@@ -29,6 +29,8 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
   delInput: FormControl = new FormControl(null);
   ref: any;
   destroyed$ = new Subject();
+  id = 'sidebar-list';
+  dropListsIds = [];
   @ViewChild('filter', { static: false }) filterNames;
   @ViewChild('deletePop', { static: false }) deletePop;
 
@@ -45,7 +47,9 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
     private cdr: ChangeDetectorRef,
     private route: ActivatedRoute,
   ) {
-
+    this.service.dropLists$.subscribe((ids) => {
+      this.dropListsIds = Array.from(ids);
+    });
   }
 
   activate(node, event) {

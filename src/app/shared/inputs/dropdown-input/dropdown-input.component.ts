@@ -37,19 +37,20 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
   dropdownRawList: any[];
   _multiple = false;
   form: FormGroup;
+  @Input() isActive = true;
+  @Input() isClearable = false;
+  @Input() canDeselect = true;
   @Input() disabled = false;
   @Input() dropdownSubHeader = false;
   @Input() dropdownUsers = false;
-  @Input() search = false;
-  @Input() isActive = true;
-  @Input() isClearable = false;
   @Input() isDisplaySelected = true;
-  @Input() panelClass = 'dropdown-overlay';
-  @Input() style = '';
-  @Input() maxHeight = 'auto';
-  @Input() type: 'table-header';
-  @Input() typeItem: 'purpure';
   @Input() isSumDisplay = false;
+  @Input() maxHeight = 'auto';
+  @Input() panelClass = 'dropdown-overlay';
+  @Input() search = false;
+  @Input() style = '';
+  @Input() type: 'outline' | 'table-header';
+  @Input() typeItem: 'purpure';
 
   @Input() set selectValue(opt: [any]) {
     if (opt[0] === null) {
@@ -139,7 +140,11 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
 
   select(item: any): void {
     if (this.isActive) {
-      this._sm.toggle(item);
+      if (this.canDeselect) {
+        this._sm.toggle(item);
+      } else {
+        this._sm.select(item);
+      }
 
       if (!this._multiple) {
         this._ref.close();
@@ -183,6 +188,8 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
       this._ref.afterClosed$.subscribe(result => {
         this.isPopupShown.emit(false);
         this._ref = null;
+        this.form.controls.search.setValue('', {emitEvent: false});
+        this.dropdownList = this.dropdownRawList;
         if (this.onTouched) this.onTouched();
         this.cdr.markForCheck();
       });

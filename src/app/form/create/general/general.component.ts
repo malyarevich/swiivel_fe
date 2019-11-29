@@ -214,7 +214,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
         if (saved) {
           this.router.navigate(['form', saved._id, 'create', 'builder']);
         }
-  
+
       }, (error) => {
         this.saving = false;
         if (Array.isArray(error.errors)) {

@@ -23,10 +23,8 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl } from '@angular/for
 
 export class InputTextComponent implements ControlValueAccessor, OnInit {
   @Input() autofocus: boolean;
-  @Input() set autocomplete(value: string) {
-    this._autocomplete = value;
-  }
-  public _autocomplete: string = null;
+  @Input() mask: string;
+  @Input() autocomplete: string;
   public _type = 'text';
   public _style = 'button';
   @ViewChild('input', {static: true}) input: ElementRef;
@@ -42,12 +40,13 @@ export class InputTextComponent implements ControlValueAccessor, OnInit {
   @Input() isSearch = false;
   @Input() isClearable = false;
   @Input() trimStart: boolean;
-  @Output() blur = new EventEmitter<any>();
+  @Output('blur') onBlur = new EventEmitter<any>();
+  @Output('focus') onFocus = new EventEmitter<any>();
 
   writeValue = (value: string) => {};
   registerOnChange = (fn: any) => {};
   registerOnTouched = (fn: any) => {};
-  
+
   constructor(
     private cdr: ChangeDetectorRef,
     @Self() @Optional()  public control: NgControl

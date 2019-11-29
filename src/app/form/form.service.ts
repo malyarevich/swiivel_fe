@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '@app/core/api.service';
-import { cloneDeep, flatMap, get, isArrayLike, isPlainObject, isString, set, unset, values } from 'lodash';
+import { cloneDeep, flatMapDeep, isArrayLike, isPlainObject, isString } from 'lodash';
 import { BehaviorSubject, Observable, Subject, throwError } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import * as SymbolTree from 'symbol-tree';
 
 const flatten = (fields = []) => {
   const result = [];
@@ -19,6 +18,19 @@ const flatten = (fields = []) => {
   }
   return result;
 };
+const flattenLo = function(field) {
+  return [field, flatMapDeep(field.fields, flattenLo)];
+}
+function flattenrec(xs) {
+  return xs.reduce((acc, x) => {
+    acc = acc.concat(x);
+    if (x.type >= 113) {
+      acc = acc.concat(flattenrec(x.fields));
+      // x.fields = [];
+    }
+    return acc;
+  }, []);
+}
 const mapField = (field, mappers = []) => {
   if (field.fields) {
     field.fields = field.fields.map(cfield => mapField(cfield, mappers));
@@ -96,7 +108,8 @@ export class FormService {
     mapped: []
   };
   public stage$ = new BehaviorSubject(0);
-
+  public dropLists = new Set();
+  public dropLists$ = new BehaviorSubject(this.dropLists);
   constructor(private fb: FormBuilder, private api: ApiService) {
     this.loadMappedFields();
     this.loadFieldsSchema();
@@ -139,9 +152,30 @@ export class FormService {
   }
 
   moveField(event: CdkDragDrop<any>) {
-    console.groupCollapsed(`Moving field ${event.item.data.name}`);
-
+    console.groupCollapsed(`Moving field ${event.item.data.value.name}`);
+    console.log(event);
     console.groupEnd();
+    if (event.previousContainer === event.container) {
+      const control = event.item.data;
+      let formArray = event.container.data as FormArray;
+      if (event.container.id === 'root-list') {
+        formArray = this.form.get('fields') as FormArray;
+      }
+      // TODO: remove not use var
+      const value = [...formArray.value];
+      formArray.removeAt(event.previousIndex);
+      formArray.insert(event.currentIndex, control);
+    } else {
+      const control = event.item.data;
+      const oldParent = control.parent as FormArray;
+      const newParent = event.container.data as FormArray;
+      if (oldParent && newParent){
+        oldParent.removeAt(event.previousIndex);
+        newParent.insert(event.currentIndex, control);
+      } else if (oldParent) {
+        console.log(`No parent`, event);
+      }
+    }
   }
 
 
@@ -150,18 +184,16 @@ export class FormService {
   }
 
   removeField(control: AbstractControl) {
-    let controlName = control.get('name').value;
     if (control.parent instanceof FormArray) {
       let parent = control.parent as FormArray;
-      let index = 0;
-      for (const child of parent.controls) {
-        if (child.get('name').value === controlName) {
-          parent.removeAt(index);
-          break;
+      if (parent) {
+        let idx = parent.value.indexOf(control.value);
+        if (idx !== -1) {
+          parent.removeAt(idx);
         }
-        index++;
       }
     } else {
+      let controlName = control.get('name').value;
       control.parent.removeControl(controlName);
     }
   }
@@ -178,6 +210,21 @@ export class FormService {
       control = parent;
     }
     return paths;
+  }
+  getListLength() {
+    const allFields = flatMapDeep(this.form.get('fields').value, flattenLo);
+    // const allFields = flattenDeep(this.form.get('fields').value);
+    return allFields.filter(field => field.type >= 113).length;
+  }
+  addDropListId(id) {
+    this.dropLists.add(id);
+    this.dropLists$.next(this.dropLists);
+    return this.dropLists;
+  }
+  removeDropListId(id) {
+    this.dropLists.delete(id);
+    this.dropLists$.next(this.dropLists);
+    return this.dropLists;
   }
   getListsIds(ids = [], parent?) {
     if (!parent) parent = this.form;
@@ -277,6 +324,16 @@ export class FormService {
       parent.get('fields').push(this.initForm(field));
     }
     return parent;
+  }
+
+  addFieldToWorkarea (event: CdkDragDrop<any>) {
+    let parent = event.container.data as FormArray;
+    if (event.container.id === 'root-list') {
+      parent = this.form.get('fields') as FormArray;
+    }
+    if (parent) {
+      parent.insert(event.currentIndex, this.initForm(event.item.data));
+    }
   }
 
   addPathToParent(path, parent, fields?: any[]) {
@@ -527,14 +584,15 @@ export class FormService {
   get form(): FormGroup {
     return this._form.getValue();
   }
+  
+  set form(form: FormGroup) {
+    this._form.next(form);
+  }
 
   get form$() {
     return this._form.asObservable();
   }
 
-  set form(form: FormGroup) {
-    this._form.next(form);
-  }
 
   get formId(): string {
     return this._formId.getValue();

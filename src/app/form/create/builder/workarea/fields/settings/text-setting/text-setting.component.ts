@@ -14,7 +14,6 @@ export class TextSettingComponent implements OnInit {
   @Input()
   set settings(obj: any) {
     if (obj) {
-      console.log('ALPA',obj)
       this.form.patchValue({
         showDefaultValue: !!obj.showDefaultValue,
         showValidators: obj.showValidators,
