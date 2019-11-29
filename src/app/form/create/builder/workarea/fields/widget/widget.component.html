@@ -12,19 +12,36 @@
     <div class="widget-body">
       <div class="list">
         <div class="title">Formatting Options</div>
-        <div class="item" cdkDrag>
-          <i class="dragdrop fas fa-ellipsis-v" cdkDragHandle></i>
-          <div class="text">New Section</div>
-        </div>
-        <div class="item" cdkDrag>
-          <i class="dragdrop fas fa-ellipsis-v" cdkDragHandle></i>
-          <div class="text">New Group</div>
-        </div>
+        <cdk-drop-list [cdkDropListData]="dragFormats" [cdkDropListConnectedTo]="dropListsIds" cdkDropListSortingDisabled [id]="id">
+          <div class="item" cdkDrag [cdkDragData]="dragFormats[0]">
+            <i class="dragdrop fas fa-ellipsis-v" cdkDragHandle></i>
+            <div class="text">New Section</div>
+            <div class="item" *cdkDragPreview>
+                <i class="dragdrop fas fa-ellipsis-v"></i>
+                <div class="text">New Section</div>
+              </div>
+            <div class="item" *cdkDragPlaceholder>
+              <i class="dragdrop fas fa-ellipsis-v"></i>
+              <div class="text">New Section</div>
+            </div>
+          </div>
+          
+          <div class="item" cdkDrag [cdkDragData]="dragFormats[1]">
+            <i class="dragdrop fas fa-ellipsis-v" cdkDragHandle></i>
+            <div class="text">New Group</div>
+            <div class="item" *cdkDragPreview>
+                <i class="dragdrop fas fa-ellipsis-v"></i>
+                <div class="text">New Group</div>
+              </div>
+            <div class="item" *cdkDragPlaceholder>
+              <i class="dragdrop fas fa-ellipsis-v"></i>
+              <div class="text">New Group</div>
+            </div>
+          </div>
+        </cdk-drop-list>
       </div>
       <div class="list">
-        <div class="title">
-          Widgets
-        </div>
+        <div class="title">Widgets</div>
         <div class="item" cdkDrag>
           <i class="dragdrop fas fa-ellipsis-v" cdkDragHandle></i>
           <div class="text">Custom Table</div>

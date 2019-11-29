@@ -210,6 +210,7 @@ div.dropdown-overlay {
     border-radius: 5px;
     background-color: rgba(0,0,0,.5);
     -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+    box-shadow: 0 0 1px rgba(255,255,255,.5);
   }
 
 }
@@ -361,8 +362,12 @@ div.dropdown_items_container {
 .cdk-drag-preview {
   display: flex;
   width: 100%;
+  max-width: 500px;
   flex-flow: row nowrap;
   box-sizing: border-box;
+  .hide-on-preview {
+    display: none !important;
+  }
 }
 
 
