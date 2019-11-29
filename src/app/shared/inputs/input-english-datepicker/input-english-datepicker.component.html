@@ -15,6 +15,7 @@
       [dropSpecialCharacters]="false"
       [(ngModel)]="value"
       (ngModelChange)="changeValue(value)"
+      (keyup.enter)="apply()"
     />
     <span class="placeholder">{{ placeholder }}</span>
     <i class="far fa-calendar"></i>
@@ -25,38 +26,76 @@
 
 <ng-template #datepicker>
   <div class="date-picker-popup">
-    <div class="header">
-      <div class="actions left">
-        <sw-icon-button icon="fa-angle-left" (click)="decrement()">
-        </sw-icon-button>
-      </div>
-      <div class="text">
-        {{ value }}
-      </div>
-      <div class="actions right">
-        <sw-icon-button
-          icon="fa-angle-right"
-          (click)="increment()"
-        ></sw-icon-button>
-      </div>
+    <div class="input-date">
+      <form [formGroup]="inputDateForm">
+        <div
+          [class.input-date-range]="this.range"
+        >
+          <div [class.input-date-range-item]="this.range">
+            <sw-input-text
+              formControlName="dateFrom"
+              mask="00/00/0000"
+              (focus)="inputStartDateInFocus = true"
+              (blur)="inputStartDateInFocus = false"
+            >
+              <span class="placeholder">
+                {{this.range ? 'Date From' : 'Date'}}
+              </span>
+            </sw-input-text>
+          </div>
+          <div *ngIf="this.range" class="input-date-range-item">
+            <sw-input-text
+              formControlName="dateTo"
+              mask="00/00/0000"
+              (focus)="inputEndDateInFocus = true"
+              (blur)="inputEndDateInFocus = false"
+            >
+              <span class="placeholder">Date To</span>
+            </sw-input-text>
+          </div>
+        </div>
+      </form>
     </div>
+    <form [formGroup]="selectDateForm">
+      <div class="select">
+        <div class="select-month">
+          <sw-dropdown-input
+            formControlName="month"
+            type="outline"
+            [canDeselect]="false"
+            [options]="months"
+          ></sw-dropdown-input>
+        </div>
+        <div class="select-year">
+          <sw-dropdown-select-year [date]="viewDate" formControlName="year">
+            <span class="text">
+              {{ viewDate | calendarDate:('monthViewYearTitle'):'en' }}
+            </span>
+          </sw-dropdown-select-year>
+        </div>
+      </div>
+    </form>
     <div class="content">
       <mwl-calendar-month-view
-        *ngIf="!range"
         [viewDate]="viewDate"
         [events]="events"
         [activeDayIsOpen]="false"
-        (dayClicked)="dayClicked($event.day)"
-      >
-      </mwl-calendar-month-view>
-      <mwl-calendar-month-view
-        *ngIf="range"
-        [viewDate]="viewDate"
-        [events]="events"
         (beforeViewRender)="beforeMonthViewRender($event)"
         (dayClicked)="dayClicked($event.day)"
       >
       </mwl-calendar-month-view>
+    </div>
+    <div class="controls-buttons">
+      <div class="controls-button">
+        <sw-button color="white" (click)="clear()" [expand]="buttonExpand.FULL">
+          <span class="text">Reset</span>
+        </sw-button>
+      </div>
+      <div class="controls-button">
+        <sw-button (click)="apply()" [expand]="buttonExpand.FULL">
+          <span class="text">Apply</span>
+        </sw-button>
+      </div>
     </div>
   </div>
 </ng-template>

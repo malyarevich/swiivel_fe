@@ -40,7 +40,6 @@
 
   button:disabled {
     background: $gray;
-
     border: 1px solid $icon-gray;
     color: $icon-gray;
   }
@@ -79,6 +78,30 @@
     background: $status-yellow;
   }
 
+  .gray-purple {
+    outline: none;
+    border: none;
+    background: transparent;
+    color: $gray-color;
+
+    &:hover {
+      background: $light-purple;
+      color: $element-base-color;
+    }
+
+    &:disabled {
+      background: $gray;
+      border: none;
+      color: $icon-gray;
+
+      &:hover {
+        background: $gray;
+        border: none;
+        color: $icon-gray;
+      }
+    }
+  }
+
   //sizes
   .small {
     padding: 2px 7px;
@@ -101,7 +124,14 @@
     }
   }
 
-  // fill
+  .medium {
+    padding: 5px 10px;
+    border-radius: 3px;
+    border: none;
+    font: 500 12px/15px $nunito-sans-bold;
+  }
+
+    // fill
   .outline-purpure {
     color: $element-base-color;
     border: 1px solid $element-base-color;

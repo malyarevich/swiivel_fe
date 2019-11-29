@@ -3,8 +3,12 @@
     class="input_text__input"
     [type]="_type"
     [class.input_text__button]="_style === 'button_type'"
-    [attr.autocomplete]="_autocomplete"
-    [formControl]="control.control"/>
+    [attr.autocomplete]="autocomplete"
+    [formControl]="control.control"
+    [mask]="mask"
+    (focus)="onFocus.emit()"
+    (blur)="onBlur.emit()"
+  />
   <ng-content></ng-content>
   <i class="fa fa-times clearBut" (click)="clear()" title="Clear input"></i>
   <i *ngIf="isSearchInput()" class="fas fa-search fa-xs"></i>
