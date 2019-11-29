@@ -58,7 +58,7 @@
   </div>
 </div>
 
-<div class="children hide-on-preview" cdkDropList [cdkDropListData]="children.controls" cdkDropListOrientation="vertical" 
+<div class="children hide-on-preview" cdkDropList [cdkDropListData]="children" cdkDropListOrientation="vertical" 
   [class.hidden]="!_section.value.isExpanded" [id]="id" [cdkDropListEnterPredicate]="mayEnter" [cdkDropListConnectedTo]="dropListsIds"
   (cdkDropListDropped)="drop($event)">
   <div *ngFor="let child of children.controls;" cdkDrag [cdkDragData]="child">

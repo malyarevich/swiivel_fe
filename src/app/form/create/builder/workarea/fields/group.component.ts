@@ -1,23 +1,33 @@
-import { Component, OnInit, Input, ChangeDetectorRef, ContentChild, ViewChild, ElementRef, ViewChildren, QueryList } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef, ContentChild, ViewChild, ElementRef, ViewChildren, QueryList, ChangeDetectionStrategy, OnDestroy, AfterViewInit, HostBinding } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder, FormControl } from '@angular/forms';
-import { CdkDropList, CdkDrag, DragDrop, DropListRef, CdkDragDrop } from '@angular/cdk/drag-drop';
-import { uniqueId } from 'lodash';
+import { CdkDropList, CdkDrag, DragDrop, DropListRef, CdkDragDrop, CdkDragEnter } from '@angular/cdk/drag-drop';
+import { uniqueId, cloneDeep } from 'lodash';
 import { FormService } from '@app/form/form.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'sw-group',
   templateUrl: './group.component.html',
-  styleUrls: ['./group.component.scss']
+  styleUrls: ['./group.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class WorkareaGroupComponent implements OnInit {
+export class WorkareaGroupComponent implements AfterViewInit, OnDestroy {
   _group: FormGroup;
+  subscription: Subscription;
   children: FormArray;
   dropListsIds = [];
-  id = uniqueId('g_');
+  id: string;
   @Input() set group(fg: FormGroup) {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+      this.subscription = null;
+    }
     this._group = fg;
     this.children = this._group.get('fields') as FormArray;
-    this.cdr.markForCheck();
+    this.subscription = this._group.valueChanges.subscribe((value) => {
+      this.cdr.detectChanges();
+    });
+    this.cdr.detectChanges();
   }
   widthOptions = [
     {value: 0, title: '1/4 page'},
@@ -26,49 +36,48 @@ export class WorkareaGroupComponent implements OnInit {
     {value: 3, title: 'Full page'}
   ];
 
-  @ContentChild('list', {read: CdkDropList, static: false}) list; 
+  @ViewChild(CdkDropList, {read: CdkDropList, static: false}) dropList: CdkDropList; 
   @ViewChildren(CdkDrag, {read: CdkDrag}) drags: QueryList<any>;
+  @HostBinding('class.empty') get empty() {
+    return !this.hasChildren;
+  }
   constructor(private service: FormService, private cdr: ChangeDetectorRef, private dd: DragDrop) {
-    this.service.addDropListId(this.id);
     this.service.dropLists$.subscribe((ids) => {
-      this.dropListsIds = Array.from(ids).filter((cid: string) => {
-        return true;// cid !== this.id;
-      });
+      this.dropListsIds = Array.from(ids);
       this.cdr.markForCheck();
     });
-  }
-
-  mayEnter(drag, list) {
-    let dragType = drag.data.type ? drag.data.type : drag.data.value.type;
-    if (dragType < 113) {
-      return list.id.startsWith('g_');
-    } else if (dragType === 113) {
-      return true;
-    } else if (dragType === 114) {
-      return list.id.startsWith('g_') || list.id.startsWith('s_');
-    } else {
-      console.log(dragType)
-    }
+    
+    
   }
 
   drop(event: CdkDragDrop<string[]>) {
-    if (event.container === event.previousContainer && event.previousIndex === event.currentIndex) {
-      return false;
+    if (event.item.data instanceof FormGroup) {
+      if (event.container === event.previousContainer && event.previousIndex === event.currentIndex) {
+        return false;
+      }
+      this.service.moveField(event);
+    } else if (event.item.data instanceof Object) {
+      this.service.addFieldToWorkarea(event);
     }
-    this.service.moveField(event);
+  }
+  ngAfterViewInit() {
+    this.id = uniqueId('g_');
+    this.service.addDropListId(this.id);
+    this.cdr.detectChanges();
   }
 
-  ngAfterViewInit() {
+  ngOnDestroy() {
+    this.service.removeDropListId(this.id);
+    if (this.subscription) this.subscription.unsubscribe();
   }
-  ngOnInit() {
-  }
+
 
   get showSettings() {
     return this._group && this._group.value.showSettings;
   }
 
   get hasChildren() {
-    return this._group && this.children.length > 0;
+    return this._group && this.children && this.children.length > 0;
   }
 
   toggleExpanded() {
@@ -76,6 +85,9 @@ export class WorkareaGroupComponent implements OnInit {
       this._group.addControl('isExpanded', new FormControl(true));
     } else {
       this._group.get('isExpanded').setValue(!this._group.value.isExpanded, {onlySelf: false, emitEvent: true});
+    }
+    if (this._group.value.isExpanded) {
+      this.cdr.detectChanges();
     }
   }
 
@@ -93,6 +105,7 @@ export class WorkareaGroupComponent implements OnInit {
       let idx = parent.value.indexOf(this._group.value);
       if (idx !== -1) {
         parent.removeAt(idx);
+        this.cdr.markForCheck();
       }
     }
   }

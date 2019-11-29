@@ -52,12 +52,17 @@
     }  
   }
   .children {
+    margin-left: 10px;
     &.hidden {
       height: 0px;
       overflow: hidden;
     }
-    > * {
-      margin-left: 10px;
-    }
+  }
+}
+
+:host(.empty) {
+  .children {
+    height: 10px;
+    overflow: visible;
   }
 }

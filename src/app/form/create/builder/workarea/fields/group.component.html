@@ -55,12 +55,17 @@
 
 <sw-settings class="hide-on-preview" *ngIf="showSettings" [field]="_group"></sw-settings>
 
-<div class="children hide-on-preview" cdkDropList [cdkDropListData]="children.controls" [class.hidden]="!_group.value.isExpanded" 
-[id]="id" [cdkDropListConnectedTo]="dropListsIds" [cdkDropListEnterPredicate]="mayEnter"
+<div class="children hide-on-preview" cdkDropList [cdkDropListData]="children" [class.hidden]="!_group.value.isExpanded" 
+[id]="id" [cdkDropListConnectedTo]="dropListsIds"
 (cdkDropListDropped)="drop($event)">
   <div *ngFor="let child of children.controls" cdkDrag [cdkDragData]="child">
       <sw-section *ngIf="child.get('type').value === 114" [section]="child"></sw-section>
       <sw-group *ngIf="child.get('type').value === 113" [group]="child"></sw-group>
       <sw-field *ngIf="child.get('type').value < 113" [field]="child"></sw-field>
+      <!-- <ng-template [ngTemplateOutlet]="placeholder" [ngTemplateOutletContext]="{$implicit: child.value}" *></ng-template> -->
   </div>
 </div>
+
+<ng-template #placeholder let-item>
+  <div>{{item.name}}</div>
+</ng-template>

@@ -1,4 +1,4 @@
-<div cdkDropList [cdkDropListData]="treeSource.data" cdkDropListOrientation="vertical" [id]="id"
+<div class="root-list" cdkDropList [cdkDropListData]="treeSource.data" cdkDropListOrientation="vertical" [id]="id"
   [cdkDropListEnterPredicate]="mayEnter" [cdkDropListConnectedTo]="dropListsIds" (cdkDropListDropped)="drop($event)">
   <sw-section *ngFor="let section of treeSource.data" cdkDrag [cdkDragData]="section" [section]="section"></sw-section>
 </div >

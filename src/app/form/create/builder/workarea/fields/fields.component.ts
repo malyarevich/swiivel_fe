@@ -9,6 +9,7 @@ import { Subject, Subscription } from 'rxjs';
 import { CdkDragDrop, CdkDropList, DragDrop, CdkDrag } from '@angular/cdk/drag-drop';
 import { FormArray, FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { uniqueId } from 'lodash';
+import { takeUntil } from 'rxjs/operators';
 
 interface FoodNode {
   name: string;
@@ -20,82 +21,63 @@ interface FoodNode {
   selector: 'sw-form-creator-workarea-fields',
   templateUrl: './fields.component.html',
   styleUrls: ['./fields.component.scss'],
-  // changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class WorkareaFieldsComponent implements AfterViewInit, AfterViewChecked, OnInit, OnDestroy {
-  trControl = new NestedTreeControl<FoodNode>(node => node.children);
-  data = [];
-  fields: any[] = [];
+export class WorkareaFieldsComponent implements AfterViewInit, OnDestroy {
   destroyed$ = new Subject();
-  fieldsTree: any[];
   treeSource = new TreeDataSource('Workarea');
-  treeControl = new NestedTreeControl<any>(node => {
-    let fields = node.get('fields');
-    if (fields) {
-      return (fields as FormArray).controls
-    }
-    return null;
-  });
-
-
-  
-
-
-  form: FormArray = new FormArray([]);
-  formSubscription: Subscription;
   dropListsIds = [];
-  id = uniqueId('s_');
+  id = 'root-list';
   constructor(private service: FormService, private api: ApiService, private cdr: ChangeDetectorRef, private fb: FormBuilder,
     private dd: DragDrop) {
+      this.service.dropLists$.subscribe((ids) => {
+        this.dropListsIds = Array.from(ids);
+      });
+      this.service.addDropListId(this.id);
   }
 
   mayEnter(drag, list) {
-    let dragType = drag.data.type ? drag.data.type : drag.data.value.type;
-    if (dragType === 114) {
-      return true;
-    } else {
-      return false;
+    let item;
+    if (drag.data instanceof FormGroup) {
+      item = drag.data.value;
+    } else if (drag.data instanceof Object) {
+      item = drag.data;
     }
+    return item.type === 114;// || (item.type === 113 && !this.treeSource) || (item.type === 113 && this.treeSource.nodes.length === 0);
   }
 
   drop(event: CdkDragDrop<string[]>) {
-    if (event.container === event.previousContainer && event.previousIndex === event.currentIndex) {
-      return false;
+    if (event.item.data instanceof FormGroup) {
+      if (event.container === event.previousContainer && event.previousIndex === event.currentIndex) {
+        return false;
+      }
+      this.service.moveField(event);
+    } else if (event.item.data instanceof Object) {
+      this.service.addFieldToWorkarea(event);
     }
-    this.service.moveField(event);
   }
 
-  ngOnInit() {
-    this.service.form$.subscribe(form => {
-      if (this.formSubscription) this.formSubscription.unsubscribe();
-      this.formSubscription = form.valueChanges.subscribe((value) => {
+  ngOnDestroy() {
+    this.destroyed$.next(true);
+    this.destroyed$.complete();
+  }
+
+  ngAfterViewInit() {
+    // this.cdr.detectChanges();
+    this.service.form$.pipe(takeUntil(this.destroyed$)).subscribe(form => {
+      form.valueChanges.pipe(takeUntil(this.destroyed$)).subscribe((value) => {
         if (value && value['fields']) {
-          this.form = this.service.form.get('fields') as FormArray;
-          this.treeSource.nodes = this.form.controls;// (form.get('fields') as FormArray).controls;
+          this.treeSource.nodes = (this.service.form.get('fields') as FormArray).controls;
         } else {
           this.treeSource.nodes = [];
         }
         this.cdr.detectChanges()
       });
       if (form.get('fields')) {
-        this.form = form.get('fields') as FormArray;
-        this.treeSource.nodes = this.form.controls;
-        this.cdr.detectChanges()
+        this.treeSource.nodes = (form.get('fields') as FormArray).controls;
+        this.cdr.detectChanges();
       }
     });
-    
-  }
-  ngOnDestroy() {
-    this.destroyed$.next(true);
-    this.destroyed$.complete();
-  }
-
-  ngAfterViewChecked(): void {
-    this.cdr.detectChanges()
-  }
-
-  ngAfterViewInit() {
-    this.cdr.detectChanges();
   }
 
 }

@@ -63,13 +63,20 @@
     }
   }
   .children {
+    margin-left: 10px;
     &.hidden {
       height: 0px;
       overflow: hidden;
+      &.cdk-drop-list-dragging {
+        height: 10px;
+      }
     }
-    > * {
-      margin-left: 10px;
-    }
+    // &.cdk-drop-list-receiving {
+    //   background-color: red;
+    // }
+    // &.cdk-drop-list-dragging {
+    //   background-color: orange;
+    // }
   }
   
 

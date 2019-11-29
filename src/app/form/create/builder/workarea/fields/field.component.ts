@@ -1,16 +1,26 @@
-import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormControl, FormArray } from '@angular/forms';
 import { FormService } from '@app/form/form.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'sw-field',
   templateUrl: './field.component.html',
-  styleUrls: ['./field.component.scss']
+  styleUrls: ['./field.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WorkareaFieldComponent implements OnInit {
   _field: FormGroup;
+  subscription: Subscription;
   @Input() set field(fg: FormGroup) {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+      this.subscription = null;
+    }
     this._field = fg;
+    this.subscription = this._field.valueChanges.subscribe((value) => {
+      this.cdr.markForCheck();
+    });
     this.cdr.markForCheck();
   }
   widthOptions = [
