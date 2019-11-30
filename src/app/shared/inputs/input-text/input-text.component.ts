@@ -66,11 +66,11 @@ export class InputTextComponent implements ControlValueAccessor, OnInit {
     this.control.statusChanges.subscribe(() => {
       this.cdr.markForCheck();
     });
-    this.control.valueChanges.subscribe(v => {
+    this.control.valueChanges.subscribe((v) => {
       if (this.trimStart) {
-        this.control.control.setValue(v.trimStart(), { emitEvent: false });
+        this.control.control.setValue(v.trimStart(), {emitEvent: false});
       }
-    });
+    })
   }
 
   public focus() {
