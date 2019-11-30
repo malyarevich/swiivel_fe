@@ -18,6 +18,8 @@ export class GeneralInfoGroupComponent implements OnInit {
   groups: Field[];
   fields: Field[];
 
+  hoveredPopupHint = false;
+
   constructor() {}
 
   ngOnInit() {
@@ -29,15 +31,47 @@ export class GeneralInfoGroupComponent implements OnInit {
   }
 
   initNestedGroups() {
-    this.groups = this.group.fields.filter(item => {
-      return item.type === 113 || item.type === 114;
-    });
+    if (this.group.fields) {
+      this.groups = this.group.fields.filter(item => {
+        return item.type === 113 || item.type === 114;
+      });
+    }
   }
 
   initFields() {
-    this.fields = this.group.fields.filter(item => {
-      return item.type && item.type !== 113 && item.type !== 114;
-    });
+    if (this.group.fields) {
+      this.fields = this.group.fields.filter(item => {
+        return item.type && item.type !== 113 && item.type !== 114;
+      });
+    }
+  }
+
+  isShowGroupHint() {
+    return this.group && this.group.options && this.group.options.showHint;
+  }
+
+  isGroupHintDirectly() {
+    return (
+      this.group &&
+      this.group.options &&
+      this.group.options.displayStrategy === 'Directly Displayed'
+    );
+  }
+
+  getGroupHint(): string {
+    return this.group && this.group.options && this.group.options.hint;
+  }
+
+  hoverHint(): void {
+    this.hoveredPopupHint = true;
+  }
+
+  unHoverHint(): void {
+    this.hoveredPopupHint = false;
+  }
+
+  isHintHovered(): boolean {
+    return this.hoveredPopupHint;
   }
 
   hasErrors() {

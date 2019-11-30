@@ -7,16 +7,17 @@ import { ButtonComponent } from './buttons/button/button.component';
 import { IconButtonComponent } from './buttons/icon-button/icon-button.component';
 import { DropdownInputComponent } from './inputs/dropdown-input/dropdown-input.component';
 // Inputs
+import { DropdownSelectComponent } from './inputs/dropdown-select/dropdown-select.component';
 import { InputButtonGroupComponent } from './inputs/input-button-group/input-button-group.component';
 import { InputCheckboxComponent } from './inputs/input-checkbox/input-checkbox.component';
 import { InputDynamicComponent } from './inputs/input-dynamic/input-dynamic.component';
 import { InputNumberComponent } from './inputs/input-number/input-number.component';
-import { InputTextComponent } from './inputs/input-text/input-text.component';
 import { InputSuggestComponent } from './inputs/input-suggest/input-suggest.component';
+import { InputTextComponent } from './inputs/input-text/input-text.component';
+import { DropdownSelectYearComponent } from './inputs/dropdow-select-year/dropdown-select-year.component';
 
 import { InputTextareaComponent } from './inputs/input-textarea/input-textarea.component';
 import { InputToggleComponent } from './inputs/input-toggle/input-toggle.component';
-import { DropdownSelectComponent } from './inputs/dropdown-select/dropdown-select.component';
 
 import { InputFileComponent } from './inputs/input-file/input-file.component';
 
@@ -95,6 +96,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     DialogComponent,
     InputFileComponent,
     InputSearchComponent,
+    DropdownSelectYearComponent,
     // Headers
     PageHeaderComponent,
     BlockHeaderComponent,
@@ -144,6 +146,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     InputHebrewDatepickerComponent,
     InputFileComponent,
     InputSearchComponent,
+    DropdownSelectYearComponent,
     // Headers
     PageHeaderComponent,
     BlockHeaderComponent,

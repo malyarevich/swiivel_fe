@@ -2,7 +2,7 @@
 
 :host {
   width: 100%;
-  height: calc(100vh - 120px);
+  // height: calc(100vh - 120px);
   display: flex;
   .sidebar-wrap {
     flex: 0.25;
@@ -55,7 +55,10 @@
           }
         }
         .sidebar_section__content {
-          display: flex;
+          display: none;
+          &.expanded {
+            display: flex;
+          }
         }
       }
       &.expanded.open {

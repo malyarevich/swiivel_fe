@@ -10,6 +10,7 @@ import { DateService } from '@app/services/date.service';
 import { FormService } from '@app/services/form.service';
 import { StatusService } from '@app/services/status.service';
 import { FormModel } from '@models/data-collection/form.model';
+import { UserItem } from '@models/user-item';
 import { formStatusOptions } from '@shared/form-status-options';
 import { formStatuses } from '@shared/form-statuses';
 import { IconsEnum } from '@shared/icons.enum';
@@ -50,6 +51,7 @@ export class FormTableComponent implements OnInit {
     page: 1,
     limit: 10,
   };
+  public users: UserItem[] = [];
   public lastPage = 0;
   public rows: FormModel[] = [];
 
@@ -81,7 +83,6 @@ export class FormTableComponent implements OnInit {
   public selectedRows: any = {};
   public _sm: SelectionModel<any> = new SelectionModel(true);
   public pageSelection: { allSelected: boolean, selectedAnyRow: boolean }[] = [];
-  public selectedAnyRow = false;
 
   constructor(
     public dataCollectionService: DataCollectionService,
@@ -101,7 +102,7 @@ export class FormTableComponent implements OnInit {
       type: [null],
       access: [null],
       createdBy: [null],
-      updatedAt: [null],
+      updatedAt: null,
       status: [null],
     });
 
@@ -117,6 +118,17 @@ export class FormTableComponent implements OnInit {
     this.dataSource.getFormsData.subscribe(data => {
       this.rows = data;
     });
+
+    this.dataCollectionService.getUsers().subscribe(users => {
+      this.users = users.map(user => {
+        return {
+          name: user.full_name ? user.full_name : null,
+          id: user.id ? user.id : null,
+          avatar: user.avatar ? user.avatar : null,
+        };
+      });
+    });
+
     this.dataSource.formsListMetadata$.subscribe(metadata => {
       if (metadata.page > metadata.last_page) {
         this.params.page = 1;
@@ -146,7 +158,6 @@ export class FormTableComponent implements OnInit {
       this._sm.clear();
       this.selectedRows = {};
       this.pageSelection = [];
-      this.selectedAnyRow = false;
       this.params.filter = { ...value };
       this.dataSource.loadFormsList(this.params);
     });
@@ -224,17 +235,6 @@ export class FormTableComponent implements OnInit {
 
       this.pageSelection[this.params.page - 1].allSelected = selectedPageRows.length === this.rows.length;
       this.pageSelection[this.params.page - 1].selectedAnyRow = selectedPageRows.length > 0;
-
-      for (let i = 0; i < this.pageSelection.length; i++) {
-        if (this.pageSelection[i].selectedAnyRow) {
-          this.selectedAnyRow = true;
-          break;
-        }
-
-        if (i === this.pageSelection.length - 1) {
-          this.selectedAnyRow = false;
-        }
-      }
     }
   }
 
@@ -242,7 +242,6 @@ export class FormTableComponent implements OnInit {
     this._sm.clear();
     this.selectedRows = {};
     this.pageSelection = [];
-    this.selectedAnyRow = false;
 
     this.activeTab = filter;
     if (filter.title === 'All') {
@@ -484,14 +483,12 @@ export class FormTableComponent implements OnInit {
       });
 
       this.changePageSelection(this.params.page - 1, true);
-      this.selectedAnyRow = true;
     }
   }
 
   nullSelectedAllPages() {
     this.pageSelection.forEach((pageData, page) => {
       this.changePageSelection(page, false);
-      this.selectedAnyRow = false;
     });
   }
 

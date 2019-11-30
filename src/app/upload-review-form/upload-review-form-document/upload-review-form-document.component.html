@@ -39,17 +39,27 @@
     </div>
     <div class="controllers" *ngIf="!isDocumentLoading">
       <div class="controllers-zoom">
-        <sw-icon-button [icon]="icons.ZOOM_OUT" [size]="sizes.LARGE" (click)="clickZoomImg('out')"></sw-icon-button>
-        <sw-icon-button [icon]="icons.ZOOM_IN" [size]="sizes.LARGE" (click)="clickZoomImg('in')"></sw-icon-button>
+        <sw-icon-button
+          title="Zoom out"
+          [icon]="icons.ZOOM_OUT"
+          [size]="sizes.LARGE"
+          (click)="clickZoomImg('out')"
+        ></sw-icon-button>
+        <sw-icon-button
+          title="Zoom in"
+          [icon]="icons.ZOOM_IN"
+          [size]="sizes.LARGE"
+          (click)="clickZoomImg('in')"
+        ></sw-icon-button>
       </div>
       <div class="controllers-rotate">
-        <button class="controllers-rotate-button" (click)="clickRotateImg('left')">
+        <button class="controllers-rotate-button" (click)="clickRotateImg('left')" title="Rotate left">
           <img
             class="controllers-rotate-icon"
             [src]="'./assets/images/icons/rotate-right.svg'"
           />
         </button>
-        <button class="controllers-rotate-button" (click)="clickRotateImg('right')">
+        <button class="controllers-rotate-button" (click)="clickRotateImg('right')" title="Rotate right">
           <img
             class="controllers-rotate-icon"
             [src]="'./assets/images/icons/rotate-left.svg'"

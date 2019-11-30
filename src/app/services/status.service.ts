@@ -17,7 +17,7 @@ export class StatusService {
       case 'review':
         return ButtonColorsEnum.YELLOW;
       case 'closed':
-        return ButtonColorsEnum.GRAY;
+        return ButtonColorsEnum.PURPLE;
       default:
         return ButtonColorsEnum.GRAY;
     }

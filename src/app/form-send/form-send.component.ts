@@ -1,9 +1,11 @@
+import { CdkStepper } from '@angular/cdk/stepper';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormSendService } from './form-send.service';
-import { CdkStepper } from '@angular/cdk/stepper';
-import { StepperService } from '@app/shared/stepper.service';
 import { FormService } from '@app/form/form.service';
+import { StepperService } from '@app/shared/stepper.service';
+import { FormSendService } from './form-send.service';
+
+// Useless at the /form/:id case
 
 @Component({
   selector: 'sw-form-send',

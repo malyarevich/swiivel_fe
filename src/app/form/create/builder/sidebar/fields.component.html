@@ -7,11 +7,11 @@
   </div>
 
   <cdk-tree [dataSource]="treeSource" [treeControl]="treeControl" cdkDropList [cdkDropListData]="treeSource.children"
-    [cdkDropListConnectedTo]="getListsIds()" cdkDropListSortingDisabled id="sidebar-list">
+    [cdkDropListConnectedTo]="dropListsIds" cdkDropListSortingDisabled [id]="id">
 
 
     <cdk-nested-tree-node *cdkTreeNodeDef="let node" class="field-tree-node" cdkDrag [cdkDragDisabled]="!node.isActive && node.isActive"
-      (cdkDragDropped)="drop($event)" [cdkDragData]="node" [hidden]="isFiltered(node)">
+      [cdkDragData]="node" [hidden]="isFiltered(node)">
       <div class="field-tree-node__content">
         <div class="field-tree-node__content_node">
           <div class="checkbox">
@@ -46,7 +46,7 @@
     </cdk-nested-tree-node>
 
     <cdk-nested-tree-node *cdkTreeNodeDef="let node; when: hasChild" class="field-tree-node" cdkDrag
-      [cdkDragDisabled]="node.isActive" (cdkDragDropped)="drop($event)" [cdkDragData]="node">
+      [cdkDragDisabled]="node.isActive" [cdkDragData]="node">
       <div class="field-tree-node__content">
         <div class="field-tree-node__content_node" [class.expanded]="treeControl.isExpanded(node)">
           <div class="checkbox">
@@ -158,4 +158,4 @@
 
 </ng-template>
 
-<!-- <sw-widget></sw-widget> -->
+<sw-widget></sw-widget>

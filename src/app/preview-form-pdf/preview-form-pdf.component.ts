@@ -1,17 +1,16 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { PDFProgressData } from 'ng2-pdf-viewer';
 
 @Component({
-  selector: 'sw-form-pdf',
-  templateUrl: './form-pdf.component.html',
-  styleUrls: ['./form-pdf.component.scss']
+  selector: 'sw-preview-form-pdf',
+  templateUrl: './preview-form-pdf.component.html',
+  styleUrls: ['./preview-form-pdf.component.scss']
 })
-export class FormPdfComponent implements OnInit {
+export class PreviewFormPdfComponent implements OnInit {
 
   @Input() formId;
-  @Input() isReviewMode = false;
-  @Output() onBack: EventEmitter<any> = new EventEmitter();
-  @Output() onSaveNext: EventEmitter<any> = new EventEmitter();
+  @Output() back: EventEmitter<any> = new EventEmitter();
+  @Output() saveNext: EventEmitter<any> = new EventEmitter();
   pdfError: boolean;
   pdfLoading = true;
 
@@ -26,7 +25,7 @@ export class FormPdfComponent implements OnInit {
   }
 
   onProgress(progressData: PDFProgressData) {
-    this.pdfError = false
+    this.pdfError = false;
     console.log('progressData', progressData);
     if (progressData.loaded === progressData.total) {
       this.pdfLoading = false;
@@ -41,11 +40,11 @@ export class FormPdfComponent implements OnInit {
   }
 
   onBackOnlineForm(event): void {
-    this.onBack.emit(event);
+    this.back.emit(event);
   }
 
   onSaveNextOnlineForm(event): void {
-    this.onSaveNext.emit(event);
+    this.saveNext.emit(event);
   }
 
 }

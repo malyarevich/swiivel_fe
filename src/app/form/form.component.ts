@@ -26,6 +26,7 @@ export class FormComponent implements OnInit, OnDestroy {
       const formId = params.get("formId");
       if (formId === "new") {
         this.formService.isFormHasId = false;
+        this.formService.formId = null;
       }
       let loadFormObservable = this.formService.loadForm(formId);
       if (formId !== 'new') {
@@ -36,11 +37,14 @@ export class FormComponent implements OnInit, OnDestroy {
         loadFormObservable.pipe(takeUntil(this.destroyed$)).subscribe(data => {
           if (data._id) {
             this.formService.isFormHasId = true;
+            this.formService.formId = data._id;
           } else {
             this.formService.isFormHasId = false;
+            this.formService.formId = null;
             this.formService.form.valueChanges.subscribe(value => {
               if (value["_id"]) {
                 this.formService.isFormHasId = value && value["_id"] !== "new";
+                this.formService.formId = value && value["_id"] !== "new" ? value["_id"] : null;
               }
             });
           }
@@ -64,6 +68,7 @@ export class FormComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.formService.form = null;
     this.destroyed$.next(true);
     this.destroyed$.complete();
   }

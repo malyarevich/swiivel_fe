@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import fields from '@app/shared/fields';
 import { FieldService } from '@core/field.service';
 import * as vs from '@core/validators';
 
@@ -87,6 +86,10 @@ export class DashboardComponent implements OnInit {
         this.form.get('longText').enable();
       }
     });
+  }
+
+  logEvent(event) {
+    this.form.get('longText').setValue(`${new Date().toString()} ${event} event occured \n${this.form.value.longText}`);
   }
 
   onChecked(isChecked: boolean) {

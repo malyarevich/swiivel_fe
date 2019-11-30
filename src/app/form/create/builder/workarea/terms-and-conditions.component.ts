@@ -1,6 +1,6 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, Input, ChangeDetectorRef } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { IconsEnum } from '@app/shared/icons.enum';
 
 @Component({
@@ -39,7 +39,12 @@ export class WorkareaTermsConditionComponent {
     }
   ];
   isContentShown: boolean = true;
-  public widthOption = ['4 columns', '3 columns', '2 columns', '1 column'].map(t => ({ title: t }));
+  public widthOption = [
+    {value: 0, title: '1/4 page'},
+    {value: 1, title: '2/4 page'},
+    {value: 2, title: '3/4 page'},
+    {value: 3, title: 'Full page'}
+  ];
   public popupDisplay = false;
 
   @Input()
@@ -62,7 +67,7 @@ export class WorkareaTermsConditionComponent {
         signed: {parents: false, fathers: false, mothers: false},
         type: "esign",
       }),
-      termsConditionsItems: [[]]
+      termsConditionsItems: this.fb.array([])
     });
   }
 
@@ -75,6 +80,6 @@ export class WorkareaTermsConditionComponent {
   }
 
   drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.forms, event.previousIndex, event.currentIndex);
+    moveItemInArray((this.lform.get('termsConditionsItems') as FormArray).value, event.previousIndex, event.currentIndex);
   }
 }

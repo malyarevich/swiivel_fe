@@ -6,6 +6,7 @@
     [class.disabled]="disabled"
     [class.empty]="isEmpty()"
     [class.table-header]="type === 'table-header'"
+    [class.outline]="type === 'outline'"
     (click)="showPopup($event)"
 >
   <i *ngIf="type === 'table-header'" class="fas fa-search fa-xs"></i>
@@ -46,17 +47,26 @@
       class="fas fa-times container__icon--clear"
       (click)="clear()"
     ></i>
-    <div class="container__icon_up">
+    <div class="container__icon_up" *ngIf="type !== 'outline'">
       <i class="fas fa-caret-up"></i>
     </div>
-    <div class="container__icon_down" *ngIf="active || !isClearable || isEmpty()">
+    <div class="container__icon_down" *ngIf="(active || !isClearable || isEmpty()) && type !== 'outline'">
       <i class="fas fa-caret-down"></i>
     </div>
   </div>
 
   <ng-template #droplist>
+    <div *ngIf="search" class="dropdown-search">
+      <form [formGroup]="form">
+        <sw-input-search
+          placeholder="Search..."
+          formControlName="search"
+          type="dropdown"
+        ></sw-input-search>
+      </form>
+    </div>
     <div *ngIf="!dropdownSubHeader">
-      <div class="dropdown_items_container" data-e2e="dropdown_items_container">
+      <div class="dropdown_items_container" data-e2e="dropdown_items_container" [style.max-height]="maxHeight">
         <div
           class="dropdown_items_container__item"
           data-e2e="dropdown_items_container_item"
@@ -70,7 +80,11 @@
             *ngIf="_multiple"
             [class.selected]="isSelected(item)"
           ></div>
-          <span class="text">{{ item?.title }}</span>
+          <span *ngIf="!dropdownUsers" class="text">{{ item?.title }}</span>
+          <sw-user-item *ngIf="dropdownUsers" [userItem]="item"></sw-user-item>
+        </div>
+        <div *ngIf="!dropdownList.length">
+          No data for display
         </div>
       </div>
     </div>
@@ -113,3 +127,4 @@
       </div>
     </div>
   </ng-template>
+</div>

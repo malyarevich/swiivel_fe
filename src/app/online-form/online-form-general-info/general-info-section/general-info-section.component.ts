@@ -1,8 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { Field } from '@models/data-collection/field.model';
-import { FormGroup, FormControl } from '@angular/forms';
-import { OnlineFormService } from '../../services/online-form.service';
-import { GenerateErrorsService } from '../../utils/generate-errors.service';
 import { FormModel } from '@models/data-collection/form.model';
 
 @Component({
@@ -22,6 +20,8 @@ export class GeneralInfoSectionComponent implements OnInit {
   groups: Field[];
   fields: Field[];
 
+  hoveredPopupHint = false;
+
   constructor() {}
 
   ngOnInit() {
@@ -30,15 +30,19 @@ export class GeneralInfoSectionComponent implements OnInit {
   }
 
   initGroups() {
-    this.groups = this.section.fields.filter(item => {
-      return item.type === 113 || item.type === 114;
-    });
+    if (this.section.fields) {
+      this.groups = this.section.fields.filter(item => {
+        return item.type === 113 || item.type === 114;
+      });
+    }
   }
 
   initFields() {
-    this.fields = this.section.fields.filter(item => {
-      return item.type && item.type !== 113 && item.type !== 114;
-    });
+    if (this.section.fields) {
+      this.fields = this.section.fields.filter(item => {
+        return item.type && item.type !== 113 && item.type !== 114;
+      });
+    }
   }
 
   getFormErrorsById(id) {
@@ -47,5 +51,41 @@ export class GeneralInfoSectionComponent implements OnInit {
 
   getWidth(field: Field): string {
     return field.width ? field.width : 'quarter';
+  }
+
+  isShowTitle(): boolean {
+    return !this.section.options.hideLabel;
+  }
+
+  getSectionTitle(): string {
+    return this.section.name;
+  }
+
+  isShowHint(): boolean {
+    return this.section.options.showHint;
+  }
+
+  isShowDirectly(): boolean {
+    return this.section.options.displayStrategy === 'Directly Displayed';
+  }
+
+  getSectionHint(): string {
+    return this.section.options.hint;
+  }
+
+  hoverHint(): void {
+    this.hoveredPopupHint = true;
+  }
+
+  unHoverHint(): void {
+    this.hoveredPopupHint = false;
+  }
+
+  isHintHovered(): boolean {
+    return this.hoveredPopupHint;
+  }
+
+  hasCustomTable(): boolean {
+    return false;
   }
 }

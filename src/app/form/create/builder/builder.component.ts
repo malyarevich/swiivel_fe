@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy, AfterViewInit, ViewChildren, QueryList, ContentChildren } from '@angular/core';
 import { FormService } from '@app/form/form.service';
 import { Subject, Subscription } from 'rxjs';
 import { takeUntil, takeWhile } from 'rxjs/operators';
@@ -6,6 +6,8 @@ import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { cloneDeep } from 'lodash';
 import { isArray } from 'util';
 import { Router, ActivatedRoute } from '@angular/router';
+import { v4 as uuid } from "uuid";
+import { CdkDrag } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'sw-builder',
@@ -13,8 +15,7 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./builder.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BuilderComponent implements OnInit, OnDestroy {
-
+export class BuilderComponent implements OnInit, AfterViewInit, OnDestroy {
   public expandedSection: string = 'packetIntroduction';
   public expanded: boolean = false;
 
@@ -39,11 +40,14 @@ export class BuilderComponent implements OnInit, OnDestroy {
           if (form.get('_id')) {
             this.form = form;
             let changedForm;
+            let changedFields = 0;
             if (!this.form.get('attachments')) {
+              changedFields++;
               if (!changedForm) changedForm = cloneDeep(form);
               changedForm.addControl('attachments', this.fb.group({ }));
             }
             if (!this.form.get('packetIntroduction')) {
+              changedFields++;
               if (!changedForm) changedForm = cloneDeep(form);
               changedForm.addControl('packetIntroduction', this.fb.group({
                 sectionName: ['Packet Introduction'],
@@ -52,6 +56,7 @@ export class BuilderComponent implements OnInit, OnDestroy {
               }));
             }
             if (!this.form.get('consentInfo')) {
+              changedFields++;
               if (!changedForm) changedForm = cloneDeep(form);
               changedForm.addControl('consentInfo', this.fb.group({
                 sectionName: ['Consent Section'],
@@ -60,6 +65,7 @@ export class BuilderComponent implements OnInit, OnDestroy {
               }));
             }
             if (!this.form.get('activeSections')) {
+              changedFields++;
               if (!changedForm) changedForm = cloneDeep(form);
               changedForm.addControl('activeSections', this.fb.group({
                 packetIntroduction: this.fb.group({ isActive: [true], showSideInfo: [true] }),
@@ -70,7 +76,6 @@ export class BuilderComponent implements OnInit, OnDestroy {
               }));
             } else {
               if (!changedForm) changedForm = cloneDeep(form);
-              let changedFields = 0;
               for (const section of this.sectionsNames) {
                 if (!changedForm.get(['activeSections', section])) {
                   changedFields++;
@@ -91,6 +96,7 @@ export class BuilderComponent implements OnInit, OnDestroy {
                 console.groupCollapsed('Form value changed');
                 console.log(value);
                 console.groupEnd();
+                this.cdr.detectChanges();
               });
             }
           this.cdr.reattach();
@@ -100,7 +106,8 @@ export class BuilderComponent implements OnInit, OnDestroy {
       }
     }); 
   }
-
+  ngAfterViewInit() {
+  }
   ngOnInit() {
   }
   // isActive: [false], showSideInfo: [false]
@@ -148,13 +155,14 @@ export class BuilderComponent implements OnInit, OnDestroy {
       showControl.setValue(false);
       this.expandedSection = null;
     }
+    this.expanded = true;
     this.cdr.markForCheck()
   }
 
   addTermsConditionsItem() {
     let termsConditionsItem = this.fb.group({
       title: [""],
-      id: [""],
+      id: [uuid()],
       text: [""],
       checkbox: this.fb.group({
         isActive: false,

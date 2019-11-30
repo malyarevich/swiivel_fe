@@ -24,6 +24,11 @@ export class DateService {
     return dt.setLocale('en-US').toFormat('LL-dd-yyyy');
   }
 
+  getStandardDate(date: string): string {
+    const dt = DateTime.fromJSDate(date);
+    return dt.setLocale('en-US').toFormat('yyyy-LL-dd');
+  }
+
   getTime(date: string): string {
     const dt = DateTime.fromJSDate(date);
     return dt.setLocale('en-US').toFormat('t').toLowerCase();
