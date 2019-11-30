@@ -3,20 +3,16 @@
     class="form-group app-input-container position-relative"
     [formGroup]="fg"
   >
-    <input
-      [formControlName]="field._id"
-      mdInput
-      type="phone"
-      aria-describedby="basic-addon2"
-      class="app-input form-control"
+    <!-- sw-input-phone-number -->
+    <sw-input-text
+      class="online_form"
       [ngClass]="{
-        validation_required: isRequired(),
-        validation_error: !!validationText,
-        online_form: true,
-        read_only: !isActive()
+        validation_error: !!validationText
       }"
-      [placeholder]="getLabel()"
-    />
+      [formControlName]="field._id"
+    >
+      <span class="placeholder">{{ getLabel() }}</span>
+    </sw-input-text>
     <span
       class="error_icon"
       [ngClass]="{ validation_error: !!validationText }"

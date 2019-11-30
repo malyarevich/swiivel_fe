@@ -63,37 +63,36 @@
 sw-input-text {
   span.icon {
     position: absolute;
-    right: 10px;
-    top: 9px;
-    bottom: 5px;
+    right: 0.85rem;
+    top: 0.75rem;
+    bottom: 0.5rem;
     i {
       color: $gray-color;
     }
   }
   .input_text {
     &__input {
-      padding: 15px 10px 5px 10px;
-      position: relative;
       & + span {
         &.placeholder {
           pointer-events: none;
           position: absolute;
-          top: 2px;
-          left: 10px;
-          font-size: 10px;
+          top: 0.125rem;
+          left: 0.75rem;
+          font-size: 0.75rem;
+          line-height: 0.75rem;
           color: $gray-color;
-          transition: all 0.2s ease-in-out;
+          transition: all 0.4s ease-in-out;
         }
       }
     }
     &.empty {
       .input_text__input {
-        padding: 10px;
         & + span {
           &.placeholder {
-            position: absolute;
-            top: 9px;
-            font-size: 12px;
+            font-size: 1rem;
+            line-height: 1.5rem;
+            top: 0.75rem;
+            left: 1.25rem;
           }
         }
       }
