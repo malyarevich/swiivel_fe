@@ -1,5 +1,11 @@
-<div class="input_text" data-e2e="input_text" [class.empty]="isEmpty()" [class.clearable]="isClearable">
-  <input #input
+<div
+  class="input_text"
+  data-e2e="input_text"
+  [class.empty]="isEmpty()"
+  [class.clearable]="isClearable"
+>
+  <input
+    #input
     class="input_text__input"
     [type]="_type"
     [class.input_text__button]="_style === 'button_type'"

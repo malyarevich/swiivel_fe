@@ -4,22 +4,15 @@
     [formGroup]="fg"
     [ngClass]="{ 'app-input-fill': !field.options.hideLabel }"
   >
-    <label *ngIf="!field.options.hideLabel" class="app-input-label">{{
-      field.name | titlecase
-    }}</label>
-    <input
-      [formControlName]="field._id"
-      mdInput
-      type="time"
-      class="app-input form-control"
+    <sw-input-text
+      class="online_form"
       [ngClass]="{
-        validation_required: isRequired(),
-        validation_error: !!validationText,
-        online_form: true,
-        read_only: !isActive()
+        validation_error: !!validationText
       }"
-      [placeholder]="getLabel()"
-    />
+      [formControlName]="field._id"
+    >
+      <span class="placeholder">{{ getLabel() }}</span>
+    </sw-input-text>
     <span
       class="error_icon"
       [ngClass]="{ validation_error: !!validationText }"

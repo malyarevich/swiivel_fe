@@ -4,30 +4,29 @@ import {
   Component,
   ElementRef,
   EventEmitter,
-  forwardRef,
   Input,
-  Output,
-  Renderer2,
-  ViewChild,
+  OnInit,
   Optional,
+  Output,
   Self,
-  OnInit} from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
+  ViewChild,
+  ViewEncapsulation
+} from '@angular/core';
+import { ControlValueAccessor, NgControl } from '@angular/forms';
 
 @Component({
   selector: 'sw-input-text',
   templateUrl: './input-text.component.html',
   styleUrls: ['./input-text.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-
 export class InputTextComponent implements ControlValueAccessor, OnInit {
   @Input() autofocus: boolean;
   @Input() mask: string;
   @Input() autocomplete: string;
   public _type = 'text';
   public _style = 'button';
-  @ViewChild('input', {static: true}) input: ElementRef;
+  @ViewChild('input', { static: true }) input: ElementRef;
   @Input() set type(inputType: string) {
     this._type = inputType;
   }
@@ -35,7 +34,11 @@ export class InputTextComponent implements ControlValueAccessor, OnInit {
     this._style = styleType;
   }
   @Input() set readonly(readOnly: boolean) {
-    this.control.control.disable();
+    if (readOnly) {
+      this.control.control.disable();
+    } else {
+      this.control.control.enable();
+    }
   }
   @Input() isSearch = false;
   @Input() isClearable = false;
@@ -49,7 +52,7 @@ export class InputTextComponent implements ControlValueAccessor, OnInit {
 
   constructor(
     private cdr: ChangeDetectorRef,
-    @Self() @Optional()  public control: NgControl
+    @Self() @Optional() public control: NgControl
   ) {
     if (control) {
       control.valueAccessor = this;
@@ -63,11 +66,11 @@ export class InputTextComponent implements ControlValueAccessor, OnInit {
     this.control.statusChanges.subscribe(() => {
       this.cdr.markForCheck();
     });
-    this.control.valueChanges.subscribe((v) => {
+    this.control.valueChanges.subscribe(v => {
       if (this.trimStart) {
-        this.control.control.setValue(v.trimStart(), {emitEvent: false});
+        this.control.control.setValue(v.trimStart(), { emitEvent: false });
       }
-    })
+    });
   }
 
   public focus() {
@@ -90,5 +93,4 @@ export class InputTextComponent implements ControlValueAccessor, OnInit {
     this.input.nativeElement.focus();
     this.cdr.markForCheck();
   }
-
 }
