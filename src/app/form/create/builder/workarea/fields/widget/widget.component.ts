@@ -62,12 +62,16 @@ export class WidgetComponent implements OnInit {
     return !!this.ref;
   }
 
-  widgetTogle(): void {
+  widgetToggle(): void {
     if (this.ref) {
       this.ref.close();
     } else {
       this.openWidget();
     }
+  }
+
+  public close() {
+    if (this.ref) this.ref.close();
   }
 
   openWidget() {
