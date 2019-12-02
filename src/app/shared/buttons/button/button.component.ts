@@ -19,6 +19,7 @@ export class ButtonComponent {
   @Input() value: any;
   @Input() isRound = false;
   @Input() title: string;
+  @Input() type: 'button' | 'submit' = 'button';
 
   public colors = ButtonColorsEnum;
   public expands = ButtonExpandEnum;
