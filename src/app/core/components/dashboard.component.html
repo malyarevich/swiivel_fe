@@ -1,11 +1,17 @@
 <form [formGroup]="form">
   <sw-button>Regular</sw-button>
-  <sw-button disabled>Disabled</sw-button>
+  <sw-button [disabled]="true">Disabled</sw-button>
   <sw-button title="Click to focus input below" (click)="testFocus.focus()">With title</sw-button>
   <sw-button title="With tile" name="and Name" value="and Value" disabled="true">All atributes</sw-button>
   <sw-input-dynamic [fields]="fields" *ngIf="!!fields"></sw-input-dynamic>
   <sw-input-text formControlName="short" mask="[00]" #testFocus (focus)="logEvent('focus')" (blur)="logEvent('blur')">
     <span class="placeholder">Placeholder</span>
+  </sw-input-text>
+  <sw-input-text formControlName="short" [disabled]="true">
+    <span class="placeholder">Disabled input</span>
+  </sw-input-text>
+  <sw-input-text formControlName="short" [readonly]="true">
+    <span class="placeholder">Readonly input</span>
   </sw-input-text>
 
   <sw-input-toggle formControlName="toggle">
