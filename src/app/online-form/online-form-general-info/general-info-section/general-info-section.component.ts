@@ -1,8 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { Field } from '@models/data-collection/field.model';
-import { FormGroup, FormControl } from '@angular/forms';
-import { OnlineFormService } from '../../services/online-form.service';
-import { GenerateErrorsService } from '../../utils/generate-errors.service';
 import { FormModel } from '@models/data-collection/form.model';
 
 @Component({
@@ -68,7 +66,7 @@ export class GeneralInfoSectionComponent implements OnInit {
   }
 
   isShowDirectly(): boolean {
-    return this.section.options.displayStrategy === "Directly Displayed";
+    return this.section.options.displayStrategy === 'Directly Displayed';
   }
 
   getSectionHint(): string {
@@ -87,4 +85,7 @@ export class GeneralInfoSectionComponent implements OnInit {
     return this.hoveredPopupHint;
   }
 
+  hasCustomTable(): boolean {
+    return false;
+  }
 }

@@ -4,52 +4,59 @@ import {
   Component,
   ElementRef,
   EventEmitter,
-  forwardRef,
   Input,
-  Output,
-  Renderer2,
-  ViewChild,
+  OnInit,
   Optional,
+  Output,
   Self,
-  OnInit} from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
+  ViewChild,
+  ViewEncapsulation
+} from '@angular/core';
+import { ControlValueAccessor, NgControl } from '@angular/forms';
 
 @Component({
   selector: 'sw-input-text',
   templateUrl: './input-text.component.html',
   styleUrls: ['./input-text.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-
 export class InputTextComponent implements ControlValueAccessor, OnInit {
+  public _type = 'text';
+  public _mode = 'text';
+  public _style = 'button';
   @Input() autofocus: boolean;
   @Input() mask: string;
   @Input() autocomplete: string;
-  public _type = 'text';
-  public _style = 'button';
-  @ViewChild('input', {static: true}) input: ElementRef;
   @Input() set type(inputType: string) {
     this._type = inputType;
+    if (this._type === 'email') this._mode = 'email';
+    else if (this._type === 'numeric') this._mode = 'numeric';
+    else if (this._type === 'tel') this._mode = 'tel';
+    else this._mode = 'text';
+  }
+  @Input() set mode(inputMode: string) {
+    this._mode = inputMode;
   }
   @Input() set style(styleType: string) {
     this._style = styleType;
   }
-  @Input() set readonly(readOnly: boolean) {
-    this.control.control.disable();
-  }
+  @Input() disabled: boolean = null;
+  @Input() readonly: boolean = null;
   @Input() isSearch = false;
   @Input() isClearable = false;
   @Input() trimStart: boolean;
   @Output('blur') onBlur = new EventEmitter<any>();
   @Output('focus') onFocus = new EventEmitter<any>();
-
+  
+  @ViewChild('input', { static: true }) input: ElementRef;
+  
   writeValue = (value: string) => {};
   registerOnChange = (fn: any) => {};
   registerOnTouched = (fn: any) => {};
 
   constructor(
     private cdr: ChangeDetectorRef,
-    @Self() @Optional()  public control: NgControl
+    @Self() @Optional() public control: NgControl
   ) {
     if (control) {
       control.valueAccessor = this;
@@ -64,10 +71,10 @@ export class InputTextComponent implements ControlValueAccessor, OnInit {
       this.cdr.markForCheck();
     });
     this.control.valueChanges.subscribe((v) => {
-      if (this.trimStart) {
-        this.control.control.setValue(v.trimStart(), {emitEvent: false});
+      if (!!v && this.trimStart) {
+        this.control.control.setValue(v.trimStart(), { emitEvent: false });
       }
-    })
+    });
   }
 
   public focus() {
@@ -90,5 +97,4 @@ export class InputTextComponent implements ControlValueAccessor, OnInit {
     this.input.nativeElement.focus();
     this.cdr.markForCheck();
   }
-
 }

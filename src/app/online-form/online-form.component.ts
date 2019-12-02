@@ -10,13 +10,11 @@ import {
   Output
 } from '@angular/core';
 import {
-  AbstractControl,
   FormControl,
   FormGroup,
   ValidatorFn,
   Validators
 } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
 import {
   alphabeticValidator,
   alphanumericValidator,
@@ -36,17 +34,12 @@ import {
   IPagesPercent,
   ISectionTab
 } from '@models/data-collection/form.model';
-import {
-  IMainMenuNames,
-  IMenuItems,
-  mainMenuNames,
-  menuItems
-} from '@models/data-collection/online-form/menu.model';
+import { mainMenuNames } from '@models/data-collection/online-form/menu.model';
 import {
   E_SIGNATURE_TYPES,
   SIGNATURE_TYPES
 } from '@models/data-collection/signature.model';
-import { BehaviorSubject, Observable, pipe, Subject, Subscription } from 'rxjs';
+import { BehaviorSubject, Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { customTable } from './models/custom-table.model';
 import {
@@ -113,13 +106,13 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
   static getFieldsForSectionByForms(forms: object[]): object {
     const oFields = {};
     // if (forms && forms.length > 0) {
-      // forms.forEach((form: FormModel) => {
-        // const key = form.id;
+    // forms.forEach((form: FormModel) => {
+    // const key = form.id;
 
-        // if(this.formErrors$.getValue()["fields"][key]) {
-        //   oFields['forms'][key] = this.formErrors$.getValue()["fields"][key];
-        // }
-      // });
+    // if(this.formErrors$.getValue()["fields"][key]) {
+    //   oFields['forms'][key] = this.formErrors$.getValue()["fields"][key];
+    // }
+    // });
     // }
     return oFields;
   }
@@ -156,10 +149,10 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
     this.getForm();
   }
 
-  ngOnChanges(changes: import ('@angular/core').SimpleChanges): void {
+  ngOnChanges(changes: import('@angular/core').SimpleChanges): void {
     if (
-      changes.formId && changes.formId.previousValue !== undefined ||
-      changes.accountId && changes.accountId.previousValue !== undefined
+      (changes.formId && changes.formId.previousValue !== undefined) ||
+      (changes.accountId && changes.accountId.previousValue !== undefined)
     ) {
       this.isReady$.next(false);
       this.form$.next(null);
@@ -225,7 +218,9 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
 
   getForm(): void {
     this.onlineFormService.setFromId(this.formId);
-    this.onlineFormService.setAccountId(this.accountId === '' ? undefined : this.accountId);
+    this.onlineFormService.setAccountId(
+      this.accountId === '' ? undefined : this.accountId
+    );
     // TODO: check if we need formId here
     // this.route.params.subscribe(params => {
     //   this.formId = params.mongo_id;
@@ -237,10 +232,10 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
       if (this.accountId === '') {
         // template by id
         this.getOneFormSubscription = this.onlineFormService
-        .getTemplateForm()
-        .subscribe((form: FormModel) => {
-          this.formSubscriber(form);
-        });
+          .getTemplateForm()
+          .subscribe((form: FormModel) => {
+            this.formSubscriber(form);
+          });
       } else {
         // by preview for person
         this.getOneFormSubscription = this.onlineFormService
@@ -519,7 +514,7 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
         this.form$.getValue().activeSections[page] &&
         this.form$.getValue().activeSections[page].isActive
       ) {
-        activeMenuList.push( Object.create({page}) );
+        activeMenuList.push(Object.create({ page }));
       }
     }
     return activeMenuList;
@@ -645,7 +640,10 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
           (item: ConsentItemInfo) => {
             if (
               item.id &&
-              OnlineFormComponent.filterSignatureBySignatureAndKey(item.signature, key)
+              OnlineFormComponent.filterSignatureBySignatureAndKey(
+                item.signature,
+                key
+              )
             ) {
               this.consentKeys.push(item.id + key);
               const isRequired =
@@ -795,7 +793,7 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
           case fieldValidators.Criteria:
             if (field.options.validators[key]) {
               // field.options.validators[key].forEach(criteria => {
-                // switch (criteria.title) {
+              // switch (criteria.title) {
               switch (field.options.validators[key]) {
                 case fieldValidators.Alphabetic:
                   arrayValidators.push(alphabeticValidator());
@@ -808,9 +806,12 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
                   break;
 
                 default:
-                  console.log('unhandled criteria', field.options.validators[key]);
+                  console.log(
+                    'unhandled criteria',
+                    field.options.validators[key]
+                  );
                   break;
-                }
+              }
               // });
             }
             break;
@@ -1204,7 +1205,9 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
     const documents = this.getFieldsForSectionByDocuments(
       this.form$.getValue().documents
     );
-    const forms = OnlineFormComponent.getFieldsForSectionByForms(this.form$.getValue().forms);
+    const forms = OnlineFormComponent.getFieldsForSectionByForms(
+      this.form$.getValue().forms
+    );
     const consentInfo = this.getFieldsForSectionByConsent(
       this.form$.getValue().consentInfo.consents
     );
@@ -1252,7 +1255,7 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
               this.isFormStatusChanged = false;
             },
             error => {
-              if (error.error.status === 0) {
+              if (error && error.error && error.error.status === 0) {
                 this.formErrors$.next(error.error.errors);
                 Object.keys(this.fg$.getValue().controls).forEach(controlId => {
                   this.fg$.getValue().controls[controlId].markAsDirty();
@@ -1280,7 +1283,7 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
               this.isFormStatusChanged = false;
             },
             error => {
-              if (error.error.status === 0) {
+              if (error && error.error && error.error.status === 0) {
                 this.formErrors$.next(error.error.errors);
                 Object.keys(this.fg$.getValue().controls).forEach(controlId => {
                   this.fg$.getValue().controls[controlId].markAsDirty();

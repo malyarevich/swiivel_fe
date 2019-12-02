@@ -4,16 +4,19 @@
     {{ getSectionTitle() }}
 
     <ng-container *ngIf="isShowHint() && !isShowDirectly() && getSectionHint()">
-        <span class="position-relative p-relative" (mouseenter)="hoverHint()" (mouseleave)="unHoverHint()">
-          <img src="/assets/images/icons/form-hint.svg" alt="Group hint">
-          <span class="pop_up_container" *ngIf="isHintHovered()">
-            <span class="pop_up_container__text">
-                {{ getSectionHint() }}
-            </span> 
+      <span
+        class="position-relative p-relative"
+        (mouseenter)="hoverHint()"
+        (mouseleave)="unHoverHint()"
+      >
+        <img src="/assets/images/icons/form-hint.svg" alt="Group hint" />
+        <span class="pop_up_container" *ngIf="isHintHovered()">
+          <span class="pop_up_container__text">
+            {{ getSectionHint() }}
           </span>
         </span>
-
-      </ng-container>
+      </span>
+    </ng-container>
   </h2>
   <h3
     class="content_section__section_hint"
@@ -49,6 +52,9 @@
   </div>
 </div>
 
-<div class="app-of-wrap content_section__main_container section">
+<div
+  class="app-of-wrap content_section__main_container section"
+  *ngIf="hasCustomTable()"
+>
   <sw-custom-table [fg]="fg" [form]="form"></sw-custom-table>
 </div>

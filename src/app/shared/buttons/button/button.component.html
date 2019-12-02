@@ -2,7 +2,7 @@
   <button
     class="button"
     data-e2e="button"
-    type="button"
+    [type]="type"
     [class.gray]="color === colors.GRAY"
     [class.green]="color === colors.GREEN"
     [class.light-blue]="color === colors.LIGHT_BLUE"
@@ -15,7 +15,7 @@
     [class.small]="size === sizes.SMALL"
     [class.medium]="size === sizes.MEDIUM"
     [class.round]='isRound'
-    [attr.disabled]="disabled"
+    [disabled]="!!disabled || null"
     [attr.name]="name"
     [attr.title]="title"
     [attr.value]="value"
