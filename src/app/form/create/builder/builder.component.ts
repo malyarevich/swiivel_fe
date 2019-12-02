@@ -92,7 +92,7 @@ export class BuilderComponent implements OnInit, AfterViewInit, OnDestroy {
             } else {
               this.cdr.markForCheck();
               if (this.formSubscription) this.formSubscription.unsubscribe();
-              this.formSubscription = this.form.valueChanges.subscribe((value) => {
+              this.formSubscription = this.form.valueChanges.pipe(takeUntil(this.destroyed$)).subscribe((value) => {
                 console.groupCollapsed('Form value changed');
                 console.log(value);
                 console.groupEnd();
