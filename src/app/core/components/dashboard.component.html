@@ -7,7 +7,6 @@
   <sw-input-text formControlName="short" mask="[00]" #testFocus (focus)="logEvent('focus')" (blur)="logEvent('blur')">
     <span class="placeholder">Placeholder</span>
   </sw-input-text>
-  <fa-icon [icon]="['far','consent']"></fa-icon>
 
   <sw-input-toggle formControlName="toggle">
     <span class="input_label">default value</span>
@@ -56,3 +55,13 @@
 <!--<button [routerLink]="['/upload-review-form', '5d9f0eff8ffb080c090ee232']">Go to Form Upload</button>-->
 
 <pre>{{form.value | json}}</pre>
+
+<fa-stack>
+  <fa-icon [icon]="['fad','consent']"  stackItemSize="1x"></fa-icon>
+  <fa-icon [icon]="['fad','consent2']" stackItemSize="1x"></fa-icon>
+</fa-stack>
+
+<fa-icon [icon]="['fad','documents']"></fa-icon>
+
+
+
