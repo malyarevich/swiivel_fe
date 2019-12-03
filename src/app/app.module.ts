@@ -18,9 +18,16 @@ import { FieldService } from '@core/field.service';
 import { HttpService } from '@core/http.service';
 import { SharedModule } from '@shared/shared.module';
 
-export function onInit(authService: AuthService) {
-  return () => authService.load();
-}
+import { FontAwesomeModule, FaIconLibrary, FaConfig } from '@fortawesome/angular-fontawesome';
+// import { fas } from '@fortawesome/free-solid-svg-icons';
+
+import { sw, consent } from '@app/core/icons.ts';
+
+const onInit: (authService: AuthService) => any = (authService: AuthService) => {
+  return (): Promise<boolean> => {
+    return authService.load();
+  };
+};
 
 import { OverlayModule } from '@angular/cdk/overlay';
 import { PopupComponent } from '@core/components/popup/popup.component';
@@ -38,6 +45,7 @@ import { ErrorsListTooltipComponent } from '@app/online-form/errors-list/errors-
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    FontAwesomeModule,
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
@@ -60,4 +68,9 @@ import { ErrorsListTooltipComponent } from '@app/online-form/errors-list/errors-
   bootstrap: [AppComponent],
 })
 export class AppModule {
+  constructor(library: FaIconLibrary, config: FaConfig) {
+    library.addIconPacks(sw);
+    // library.addIcons(consent)
+    // config.defaultPrefix = 'sw';
+  }
 }
