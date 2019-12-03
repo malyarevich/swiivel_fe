@@ -17,7 +17,7 @@
           [alt]="document.entity_name"
           [height]="imgDimension.height"
           [hidden]="isDocumentLoading"
-          [ngStyle]="{'transform' : 'rotate('+document.rotate+'deg)'}"
+          [ngStyle]="{'transform' : 'rotate('+angle+'deg)'}"
           [src]="document.link"
           [width]="imgDimension.width"
           (load)="isLoaded($event)"
