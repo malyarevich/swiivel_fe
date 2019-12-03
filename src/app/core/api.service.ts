@@ -155,9 +155,19 @@ export class ApiService {
     return this.http.request('POST', `${fbLink}/forms/attach/${formId}?api_token=${environment.api_token}`, opt);
   }
 
-  getFormsPDFList(): Observable<any> {
-    const fbLink = environment.apiFB;
-    return this.http.request('GET', `${fbLink}/pdfForms?api_token=${environment.api_token}`);
+  uploadFormPDF(file) {
+    const fbLibk = environment.apiFB;
+    const params = new HttpParams().set("api_token", environment.api_token).set('formName' , 'first form').set('type' ,'new form');
+    const opt = { 
+      body: file,
+      params
+    }
+    return this.http.request('POST', `${fbLibk}/pdfForms`, opt);
+  }
+
+  getFormsPDFList():Observable<any>{
+    const fbLibk = environment.apiFB;
+    return this.http.request('GET', `${fbLibk}/pdfForms?api_token=${environment.api_token}`);
   }
 
 

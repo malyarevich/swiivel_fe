@@ -216,9 +216,22 @@ sw-input-button-group.preview {
   }
 }
 
+sw-select.empty {
+  .container {
+    &:not(:focus-within) {
+      padding: 5px 10px;
+      .label {
+        position: absolute;
+        top: 8px;
+        font-size: 12px;
+      }
+    }
+  }
+}
 
 
 sw-dropdown-input,
+sw-select,
 sw-input-phone-number,
 sw-input-email,
 sw-input-number {
@@ -226,6 +239,11 @@ sw-input-number {
   .email,
   .container,
   .input_number {
+    span.content-text {
+      font-style: normal;
+      font-size: 12px;
+      margin-top: 10px;
+    }
     @extend %placeholder;
     &.empty {
       &:not(:focus-within) {

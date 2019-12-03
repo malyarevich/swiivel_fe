@@ -1,3 +1,4 @@
+<form [formGroup]="lform">
   <section class="documents_section">
     <div class="documents_section__header">
       <div class="documents_section__header_text">
@@ -11,11 +12,12 @@
         </ng-template>
       </div>
     </div>
-    <ng-container *ngIf="isOpenDocuments">
-      <div class="documents_section__item" *ngFor="let document of lform.get('documents.documentsItems').value; let i = index">
+    <ng-container *ngIf="isOpenDocuments" formArrayName="documents">
+      <div class="documents_section__item"
+        *ngFor="let document of documents.controls; let i = index;" [formGroupName]="i">
         <div class="documents_section__item_header">
           <div class="documents_section__item_header_name">
-            <sw-input-text class="no_styles" [(ngModel)]="document.name"></sw-input-text>
+            <sw-input-text class="no_styles" formControlName="name"></sw-input-text>
           </div>
           <div class="documents_section__item_header_controls">
             <i class="fas fa-trash" (click)="removeItem('documents', i)"></i>
@@ -23,12 +25,11 @@
         </div>
         <div class="documents_section__item_content">
           <div class="documents_section__item_content_input">
-            <sw-input-button-group [options]="documentBut" [(ngModel)]="document.isUpload">
+            <sw-input-button-group [options]="documentBut" formControlName="isUpload">
             </sw-input-button-group>
           </div>
           <div class="documents_section__item_content_input">
-            <sw-radio-group [options]="radioGroup" [(ngModel)]="isPerFamilyD[i]"
-            (ngModelChange)="changeDocRadio($event, document)"></sw-radio-group>
+            <sw-radio-group [options]="radioGroup" formControlName="isPerFamily"></sw-radio-group>
           </div>
         </div>
       </div>
@@ -47,11 +48,11 @@
         </ng-template>
       </div>
     </div>
-    <ng-container *ngIf="isOpenForms">
-      <div class="forms_section__item" *ngFor="let form of lform.get('formsPDF.formsPDFItems').value; let i = index">
+    <ng-container *ngIf="isOpenForms" formArrayName="forms">
+      <div class="forms_section__item" *ngFor="let form of forms.controls; let i = index;" [formGroupName]="i">
         <div class="forms_section__item_header">
           <div class="forms_section__item_header_name">
-            <sw-input-text class="no_styles" [(ngModel)]="form.name"></sw-input-text>
+            <sw-input-text class="no_styles" formControlName="name"></sw-input-text>
           </div>
           <div class="forms_section__item_header_controls">
             <i class="fas fa-trash" (click)="removeItem('forms', i)"></i>
@@ -59,19 +60,18 @@
         </div>
         <div class="forms_section__item_content">
           <div class="forms_section__item_content_input">
-            <sw-input-button-group [options]="formBut" [(ngModel)]="form.isNew"></sw-input-button-group>
+            <sw-input-button-group [options]="formBut" formControlName="isNew"></sw-input-button-group>
           </div>
           <div class="forms_section__item_content_input">
-            <sw-radio-group [options]="radioGroup" [(ngModel)]="isPerFamilyF[i]"
-            (ngModelChange)="changeDocRadio($event, form)"></sw-radio-group>
+            <sw-radio-group [options]="radioGroup" formControlName="isPerFamily"></sw-radio-group>
           </div>
           <div class="forms_section__item_content_input">
-            <sw-input-toggle [(ngModel)]="form.isFillableOnline">
+            <sw-input-toggle formControlName="isFillableOnline">
               <span class="input_label">Fillable Online</span>
             </sw-input-toggle>
           </div>
           <div class="forms_section__item_content_input">
-            <sw-input-toggle [(ngModel)]="form.isAllowDownloadUpload">
+            <sw-input-toggle formControlName="isAllowDownloadUpload">
               <span class="input_label">Allow Download/Upload</span>
             </sw-input-toggle>
           </div>
@@ -79,3 +79,4 @@
       </div>
     </ng-container>
   </section>
+</form>

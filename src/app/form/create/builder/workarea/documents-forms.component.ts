@@ -15,7 +15,7 @@ export class DocumentsFormsComponent implements OnInit {
 
   public lform: FormGroup;
   public icons = IconsEnum;
-  private rootForm: FormGroup;
+  public rootForm: FormGroup;
   public widthOption = [
     {value: 0, title: '1/4 page'},
     {value: 1, title: '2/4 page'},
@@ -75,6 +75,14 @@ export class DocumentsFormsComponent implements OnInit {
     return this.rootForm.get('attachments').value;
   }
 
+  get documents(): FormArray {
+    return this.rootForm.get('documents') as FormArray;
+  }
+
+  get forms(): FormArray {
+    return this.rootForm.get('forms') as FormArray;
+  }
+
   ngOnInit(): void {
     this.getExistingsFormPDFList();
   }
@@ -86,7 +94,6 @@ export class DocumentsFormsComponent implements OnInit {
 
   getExistingsFormPDFList() {
     this.api.getFormsPDFList().subscribe(res => {
-      // res.forEach(res1=>console.log(res1._id));
       res.forEach(i => i.title = i.name);
       this.existingFormsPDF = res;
     });
@@ -100,7 +107,7 @@ export class DocumentsFormsComponent implements OnInit {
 
   fileChange(event, index) {
     const fileList: FileList = event.target.files;
-    let document = (this.lform.get('documents.documentsItems') as FormArray).at(index);
+    let document = (this.documents as FormArray).at(index);
     if (fileList.length > 0) {
       const file: File = fileList[0];
       const formData: FormData = new FormData();
@@ -115,12 +122,31 @@ export class DocumentsFormsComponent implements OnInit {
     }
   }
 
+  formChange(event, index) {
+    const fileList: FileList = event.target.files;
+    let form = (this.forms as FormArray).at(index);
+    if (fileList.length > 0) {
+      const file: File = fileList[0];
+      const formData: FormData = new FormData();
+      formData.append("pdfForm", file, file.name);
+      console.log('FORMDATA', formData)
+      this.api.uploadFormPDF(formData).subscribe(
+        result => {
+          console.log('Upload form', result);
+          form.patchValue({ form: result });
+        },
+        error => console.log(error)
+      );
+    }
+
+  }
+
   focusInput(elementRef) {
     elementRef.click();
   }
 
   deleteAttachment(index) {
-    (this.lform.get('documents.documentsItems') as FormArray).at(index).patchValue({data: ''});
+    (this.documents as FormArray).at(index).patchValue({data: ''});
   }
 
   openForPreview(document: DocumentsModel) {

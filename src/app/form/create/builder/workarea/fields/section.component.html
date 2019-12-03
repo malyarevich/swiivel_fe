@@ -7,7 +7,8 @@
       <span class="placeholder">Section Name</span>
     </sw-input-text>
     <sw-select #select [formControl]="_section.get('options.size')" [values]="widthOptions">
-      <span class="label">{{select.title || 'Section Width'}}</span>
+      <span class="label">Section Width</span>
+      <span class="content-text">{{ select.title }}</span>
     </sw-select>
   </div>
   <div class="actions">
