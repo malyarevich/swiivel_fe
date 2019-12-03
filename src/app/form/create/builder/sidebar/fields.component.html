@@ -5,8 +5,14 @@
     <input class="search" [formControl]="filterControl" placeholder="Search" />
     <i class="icon fas fa-search"></i>
   </div>
+  <div class="breadcrumbs" *ngIf="breadcrumbs">
+    <span (click)="setActiveTree(null)">Home</span>
+    <span *ngFor="let item of breadcrumbs; let i = index;">&nbsp;&gt;&nbsp;
+      <span (click)="onBreadcrumbClick(i)">{{item}}</span>
+    </span>
+  </div>
 
-  <cdk-tree [dataSource]="treeSource" [treeControl]="treeControl" cdkDropList [cdkDropListData]="treeSource.children"
+  <cdk-tree [dataSource]="activeTree" [treeControl]="treeControl" cdkDropList [cdkDropListData]="activeTree"
     [cdkDropListConnectedTo]="dropListsIds" cdkDropListSortingDisabled [id]="id">
 
 
@@ -54,7 +60,7 @@
               (click)="toggleParentNode(node)">
           </div>
           <i class="dragdrop fas fa-ellipsis-v" cdkDragHandle></i>
-          <span class="node-name">{{node.name}}</span>
+          <span class="node-name" (click)="setActiveTree(node)">{{node.name}}</span>
         </div>
         <sw-icon-button [icon]="getIcon(treeControl.isExpanded(node))" cdkTreeNodeToggle
           [cdkTreeNodeToggleRecursive]="true" [attr.aria-label]="'toggle ' + node.name">
@@ -158,4 +164,4 @@
 
 </ng-template>
 
-<sw-widget></sw-widget>
+<sw-widget #widget></sw-widget>

@@ -135,6 +135,17 @@
         padding-left: 15px;
       }
     }
+    .breadcrumbs {
+      span {
+        span {
+          &:hover {
+            text-decoration: underline;
+            cursor: pointer;
+          }
+
+        }
+      }
+    }
   }
   div.custom-field {
     margin-top: 10px;

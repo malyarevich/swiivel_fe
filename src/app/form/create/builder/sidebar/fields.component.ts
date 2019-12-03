@@ -3,9 +3,8 @@ import { Component, OnInit, ChangeDetectionStrategy, ViewChild, ChangeDetectorRe
 import { FormControl, FormBuilder, FormArray, FormGroup } from '@angular/forms';
 import { ApiService } from '@app/core/api.service';
 import { FormService } from '@app/form/form.service';
-import { CdkDragDrop, moveItemInArray, transferArrayItem, CdkDragExit } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, CdkDragExit } from '@angular/cdk/drag-drop';
 import { TreeDataSource, CHILDREN_SYMBOL } from '../../tree.datasource';
-import { SelectionModel } from '@angular/cdk/collections';
 import { Popup } from '@app/core/popup.service';
 import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
@@ -25,6 +24,8 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
   filterControl = new FormControl();
   treeSource = new TreeDataSource('Sidebar');
   treeControl = new NestedTreeControl((node: any) => node.fields);
+  activeTree: any[];
+  breadcrumbs: any[] = [];
   delFieldName: string;
   delInput: FormControl = new FormControl(null);
   ref: any;
@@ -33,7 +34,7 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
   dropListsIds = [];
   @ViewChild('filter', { static: false }) filterNames;
   @ViewChild('deletePop', { static: false }) deletePop;
-
+  @ViewChild('widget', { static: true }) widget;
   @Input()
   set form(_form) {
     // console.log('Fields INput form', _form);
@@ -56,6 +57,7 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
     return event;
   }
   ngOnDestroy() {
+    this.widget.close();
     this.destroyed$.next(true);
     this.destroyed$.complete();
   }
@@ -65,6 +67,9 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
   ngOnInit() {
     this.service.sidebar.subscribe((sidebar) => {
       this.treeSource.nodes = cloneDeep(sidebar);
+      if (!!sidebar && !this.activeTree) {
+        this.activeTree = this.treeSource.nodes;
+      }
       this.cdr.markForCheck();
     });
     this.treeControl.getDescendants = (dataNode) => {
@@ -80,6 +85,8 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
       }
     });
 
+    
+
 
     this.filterControl.valueChanges.pipe(takeUntil(this.destroyed$)).subscribe(value => {
       if (value && value.length > 0) {
@@ -87,9 +94,31 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
       } else {
         this.filterValue = null;
       }
-      console.log(this.filterValue);
     });
   }
+
+  onBreadcrumbClick(idx) {
+    let paths = this.breadcrumbs.slice(0, idx + 1);
+    let fields = this.treeSource.nodes;
+    let next: any;
+    paths.forEach((path) => {
+      next = fields.find(field => field['name'] === path);
+      if (next) fields = next['fields'];
+    });
+    this.setActiveTree(next);
+  }
+
+  setActiveTree(root?) {
+    if (root === null) {
+      this.activeTree = this.treeSource.nodes;
+      this.breadcrumbs = null;
+    } else {
+      this.activeTree = root.fields;
+      this.breadcrumbs = root.path;
+    }
+    this.cdr.markForCheck();
+  }
+
   getListId(node) {
     let listId = [...this.service.getParentPaths(node), node.name, node.type].join('');
     return listId;
