@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import fields from '@app/shared/fields';
 import { FieldService } from '@core/field.service';
 import * as vs from '@core/validators';
 
