@@ -57,14 +57,13 @@ export class AuthService {
   }
 
   load() {
-    return new Promise((resolve, _reject) => {
+    return new Promise<boolean>((resolve, _reject) => {
       let savedUser = this.loadUser();
       if (savedUser) {
         this.setUser(savedUser);
         return resolve(true);
-      } else {
-        resolve(null);
       }
+      resolve(null);
     });
   }
 
