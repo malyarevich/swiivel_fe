@@ -9,8 +9,7 @@ import {
   Optional,
   Output,
   Self,
-  ViewChild,
-  ViewEncapsulation
+  ViewChild
 } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 
@@ -47,9 +46,9 @@ export class InputTextComponent implements ControlValueAccessor, OnInit {
   @Input() trimStart: boolean;
   @Output('blur') onBlur = new EventEmitter<any>();
   @Output('focus') onFocus = new EventEmitter<any>();
-  
+
   @ViewChild('input', { static: true }) input: ElementRef;
-  
+
   writeValue = (value: string) => {};
   registerOnChange = (fn: any) => {};
   registerOnTouched = (fn: any) => {};
