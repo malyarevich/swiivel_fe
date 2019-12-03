@@ -3,11 +3,19 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnChanges,
+  OnInit,
   Optional,
   Output,
-  Self
+  Self,
+  SimpleChanges,
+  ChangeDetectorRef,
+  ElementRef,
+  ViewChild
 } from '@angular/core';
-import { FormControl, NgControl } from '@angular/forms';
+import {coerceBooleanProperty} from '@angular/cdk/coercion';
+
+import { FormControl, NgControl, CheckboxControlValueAccessor, ControlValueAccessor } from '@angular/forms';
 
 @Component({
   selector: 'sw-input-checkbox',
@@ -15,42 +23,60 @@ import { FormControl, NgControl } from '@angular/forms';
   styleUrls: ['./input-checkbox.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class InputCheckboxComponent {
+export class InputCheckboxComponent implements ControlValueAccessor {
   @Input() target = 'label';
   @Input() isActive = true;
   @Input() definition = false;
-  @Input()
-  set check(v: boolean) {
-    if (v !== undefined) this.control.setValue(v, {emitEvent: false});
+  @Input() disabled = false;
+
+  @Input() value: string;
+
+  @Output() readonly change: EventEmitter<any> = new EventEmitter();
+  @Output() readonly _indeterminateChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @ViewChild('input', {static: true}) _inputElement: ElementRef<HTMLInputElement>;
+  @Input() set check(value: boolean) {
+    this.checked = value;
   }
-  @Output() checked = new EventEmitter();
-  control = new FormControl();
-  @Input() isIndeterminate: boolean = false;
+  @Input()
+  get checked(): boolean { return this._checked; }
+  set checked(value: boolean) {
+    if (value != this.checked) {
+      this._checked = value;
+      this.cdr.markForCheck();
+    }
+  }
+  private _checked: boolean = false;
   private onChange: (value: boolean) => void;
   private onTouched: () => void;
+  @Input()
+  get required(): boolean { return this._required; }
+  set required(value: boolean) { this._required = coerceBooleanProperty(value); }
+  private _required: boolean;
 
-  constructor(@Self() @Optional() public ngControl: NgControl) {
-    if (ngControl) {
-      ngControl.valueAccessor = this;
-    } else {
-      this.onChange = value => {
-        this.checked.emit(value);
-      };
+  @Input()
+  get indeterminate(): boolean { return this._indeterminate; }
+  set indeterminate(value: boolean) {
+    const changed = value != this._indeterminate;
+    this._indeterminate = coerceBooleanProperty(value);
+
+    if (changed) {
+      this._indeterminateChange.emit(this._indeterminate);
     }
-    this.control.valueChanges.subscribe(value => {
-      if (this.onChange) {
-        this.onChange(value);
-      }
-      this.checked.emit(value);
-    });
+
+    this._syncIndeterminate(this._indeterminate);
+  }
+  private _indeterminate: boolean = false;
+
+  constructor(@Self() @Optional() public control: NgControl, public cdr: ChangeDetectorRef) {
+    if (control) {
+      control.valueAccessor = this;
+    }
   }
 
-  public setDisabledState(isDisabled: boolean): void {
-    if (!!isDisabled) {
-      this.control.disable();
-    } else {
-      this.control.enable();
-    }
+  
+
+  setDisabledState(isDisabled: boolean) {
+    this.disabled = isDisabled;
   }
 
   public registerOnTouched(fn: any): void {
@@ -61,12 +87,26 @@ export class InputCheckboxComponent {
     this.onChange = fn;
   }
 
-  public writeValue(value: boolean): void {
-    this.control.setValue(value);
+  writeValue(value: any) {
+    this.checked = !!value;
   }
 
-  private toggle(): void {
-    this.control.setValue(!this.control.value);
+  _onInputClick(event: Event) {
+    event.stopPropagation();
+    if (!this.disabled) {
+      if (this.indeterminate) {
+        this._indeterminate = false;
+        this._indeterminateChange.emit(this._indeterminate);
+      }
+    }
+    this.toggle();
+  }
+  _onInteractionEvent(event: Event) {
+    event.stopPropagation();
+  }
+
+  toggle(): void {
+    this.checked = !this.checked;
   }
 
   public onBlur(event) {
@@ -74,9 +114,19 @@ export class InputCheckboxComponent {
       this.onTouched();
     }
   }
+  ngAfterViewInit() {
+    this._syncIndeterminate(this._indeterminate);
+  }
+  private _syncIndeterminate(value: boolean) {
+    const nativeCheckbox = this._inputElement;
 
-  public onClick(event: Event) {
-    if (event.target['tagName'] !== 'INPUT' && this.isActive) {
+    if (nativeCheckbox) {
+      nativeCheckbox.nativeElement.indeterminate = value;
+    }
+  }
+
+  public _onLabelClick(event: Event) {
+    if (event.target['tagName'] !== 'INPUT' && this.isActive && !this.disabled) {
       this.toggle();
       event.preventDefault();
       event.stopPropagation();
