@@ -161,7 +161,7 @@ export class BuilderComponent implements OnInit, AfterViewInit, OnDestroy {
 
   addTermsConditionsItem() {
     let termsConditionsItem = this.fb.group({
-      title: [""],
+      title: ["Terms And Conditions Name"],
       id: [uuid()],
       text: [""],
       checkbox: this.fb.group({

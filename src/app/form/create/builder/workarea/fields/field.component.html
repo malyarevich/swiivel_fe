@@ -8,7 +8,8 @@
       <div class="hint" *ngIf="_field.get('textType')">Field Type - {{ _field.get('textType').value }}</div>
     </div>
     <sw-select #select style="margin-right: 25px;" [formControl]="_field.get('options.size')" [values]="widthOptions">
-      <span class="label">{{select.title || 'Field Width'}}</span>
+      <span class="label">Field Width</span>
+      <span class="content-text"> {{ select.title }} </span>
     </sw-select>
     <div class="input">
       <sw-input-checkbox [formControl]="_field.get('options.required')" (checked)="setParent(_field, 'required', $event)">

@@ -1,24 +1,19 @@
-<div
-  #holder
-  (click)="toggle()"
-  [class.dropdown-disabled]="disabled"
->
+<div #holder (click)="toggle()" class="container">
   <ng-content></ng-content>
+  <div class="container__icon">
+    <div class="container__icon_up">
+      <i class="fas fa-caret-up"></i>
+    </div>
+    <div class="container__icon_down">
+      <i class="fas fa-caret-down"></i>
+    </div>
+  </div>
 </div>
 
 <ng-template #list>
-  <div
-    class="dropdown_items_container"
-    data-e2e="dropdown_items_container"
-  >
-    <div
-      class="item" data-e2e="item"
-      *ngFor="let item of _options; let i = index;"
-      swSelectOption
-      [option]="item"
-      [displayWith]="displayWith"
-      [class.selected]="keyManager.activeItem === item"
-      (click)="onClick(item)">
+  <div class="dropdown_items_container" data-e2e="dropdown_items_container">
+    <div class="item" data-e2e="item" *ngFor="let item of _options; let i = index;" swSelectOption [option]="item"
+      [displayWith]="displayWith" [class.selected]="keyManager.activeItem === item" (click)="onClick(item)">
       {{ item.title }}
     </div>
   </div>

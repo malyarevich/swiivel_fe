@@ -17,7 +17,8 @@ import {
   TemplateRef,
   AfterViewInit,
   AfterContentInit,
-  AfterContentChecked
+  AfterContentChecked,
+  HostBinding
 } from '@angular/core';
 import { Popup } from '@app/core/popup.service';
 import { isObjectLike, isString, isNumber, isArrayLike } from 'lodash';
@@ -66,6 +67,8 @@ export class InputSelectComponent implements ControlValueAccessor, AfterContentI
   
   @ViewChild('list', { static: false }) list: TemplateRef<any>;
   @ViewChild('holder', { static: false, read: ElementRef }) holder: ElementRef;
+  @HostBinding('class.active') get active() { return this.opened; }
+  @HostBinding('class.empty') get isEmpty() { return !this.opened && this.empty; }
   @HostListener('keydown', ['$event'])
   onKeyDown(event: KeyboardEvent) {
     event.stopImmediatePropagation();
@@ -133,6 +136,9 @@ export class InputSelectComponent implements ControlValueAccessor, AfterContentI
     this.onChange = fn;
   }
 
+  get empty(): boolean {
+    return this.selectedIndex < 0;
+  }
 
   get opened() {
     return !!this._ref;

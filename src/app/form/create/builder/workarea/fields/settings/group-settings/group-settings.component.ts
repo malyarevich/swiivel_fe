@@ -16,8 +16,8 @@ export class GroupSettingsComponent implements OnInit {
   set settings(obj: any) {
     if (obj) {
       this.form.patchValue({
-        required: obj.required,
-        hideLabel: obj.hideLabel,
+        required: !!obj.required,
+        hideLabel: !!obj.hideLabel,
         showHint: !!obj.showHint,
         hint: obj.hint || null,
         displayStrategy: obj.displayStrategy,

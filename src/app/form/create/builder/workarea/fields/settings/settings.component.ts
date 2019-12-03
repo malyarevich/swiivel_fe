@@ -76,7 +76,7 @@ export class SettingsComponent implements OnInit, AfterViewInit, OnDestroy {
     return res;
   }
 
-  private initSettings(f: any): void {
+  private initSettings(f: FormGroup): void {
     const c = components.find(c => c.type === f.value.type);
     if (c) {
       this.type = c.type;

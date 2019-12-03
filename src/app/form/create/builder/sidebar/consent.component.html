@@ -1,39 +1,44 @@
-<section class="consent_section">
+<section class="consent_section" [formGroup]="lform">
   <sw-icon-button class="blue" style="margin-right: 5px;" icon="fa-plus-square" (click)="addConsentItem()">
   </sw-icon-button>
-  <div class="consent_section__item" *ngFor="let item of lform?.get('consents')?.value; let i = index">
-    <div class="consent_section__item_header">
-      <div class="consent_section__item_header_name">
-        <sw-input-text class="no_styles" [(ngModel)]="item.title"></sw-input-text>
+  <ng-container formArrayName="consents">
+    <div class="consent_section__item" *ngFor="let item of consents.controls; let i = index" [formGroupName]="i">
+      <div class="consent_section__item_header">
+        <div class="consent_section__item_header_name">
+          <sw-input-text class="no_styles" formControlName="title"></sw-input-text>
+        </div>
+        <div class="consent_section__item_header_controls">
+          <i class="fas fa-trash" (click)="removeItem(i)"></i>
+          <i class="fas fa-caret-down blue" *ngIf="!isOpenItems[i]; else up" (click)="openItem(i)"></i>
+          <ng-template #up>
+            <i class="fas fa-caret-up blue" (click)="hideItem(i)"></i>
+          </ng-template>
+        </div>
       </div>
-      <div class="consent_section__item_header_controls">
-        <i class="fas fa-trash" (click)="removeItem(i)"></i>
-        <i class="fas fa-caret-down blue" *ngIf="!isOpenItems[i]; else up" (click)="openItem(i)"></i>
-        <ng-template #up>
-          <i class="fas fa-caret-up blue" (click)="hideItem(i)"></i>
-        </ng-template>
+      <div class="consent_section__item_content" *ngIf="isOpenItems[i]">
+        <div class="consent_section__item_content_input" formGroupName="checkbox">
+          <sw-input-toggle formControlName="isActive">
+            <span class="label">Checkbox</span>
+          </sw-input-toggle>
+        </div>
+        <div class="consent_section__item_content_input" formGroupName="button">
+          <sw-input-toggle formControlName="isActive">
+            <span class="label">Button</span>
+          </sw-input-toggle>
+        </div>
+        <ng-container formGroupName="signature">
+          <div class="consent_section__item_content_input">
+            <sw-input-toggle formControlName="isRequire">
+              <span class="label">Require Signature</span>
+            </sw-input-toggle>
+          </div>
+          <div class="consent_section__item_content_input" *ngIf="item.value.signature.isRequire">
+            <sw-input-button-group [options]="buttonOptions" formControlName="isBothParents">
+            </sw-input-button-group>
+          </div>
+        </ng-container>
       </div>
     </div>
-    <div class="consent_section__item_content" *ngIf="isOpenItems[i]">
-      <div class="consent_section__item_content_input">
-        <sw-input-toggle [(ngModel)]="item.checkbox.isActive">
-          <span class="label">Checkbox</span>
-        </sw-input-toggle>
-      </div>
-      <div class="consent_section__item_content_input">
-        <sw-input-toggle [(ngModel)]="item.button.isActive">
-          <span class="label">Button</span>
-        </sw-input-toggle>
-      </div>
-      <div class="consent_section__item_content_input">
-        <sw-input-toggle [(ngModel)]="item.signature.isRequire">
-          <span class="label">Require Signature</span>
-        </sw-input-toggle>
-      </div>
-      <div class="consent_section__item_content_input" *ngIf="item.signature.isRequire">
-        <sw-input-button-group [options]="buttonOptions" [(ngModel)]="item.signature.isBothParents">
-        </sw-input-button-group>
-      </div>
-    </div>
-  </div>
+  </ng-container>
+  
 </section>

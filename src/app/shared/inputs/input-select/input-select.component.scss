@@ -1,5 +1,46 @@
 @import 'index';
 
+:host {
+  .container {
+    width: 100%;
+    min-height: 35px;
+    padding: 0 10px;
+    border: 1px solid $soft-gray;
+    box-sizing: border-box;
+    border-radius: 3px;
+    position: relative;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    &__icon {
+      margin-left: auto;
+      &_up {
+        display: none;
+        color: $element-base-color;
+      }
+      &_down {
+        display: flex;
+        color: $gray-color;
+      }
+    }
+
+  }
+}
+
+:host(.active) {
+  .container {
+    border-color: $element-base-color;
+    .container__icon {
+      &_up {
+        display: flex;
+      }
+      &_down {
+        display: none;
+      }
+    }
+  }
+}
+
 .dropdown-disabled {
   pointer-events: none;
 }

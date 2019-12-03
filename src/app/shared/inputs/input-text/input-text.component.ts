@@ -71,7 +71,9 @@ export class InputTextComponent implements ControlValueAccessor, OnInit {
     });
     this.control.valueChanges.subscribe((v) => {
       if (!!v && this.trimStart) {
-        this.control.control.setValue(v.trimStart(), { emitEvent: false });
+        this.control.control.setValue(v.trimStart(), {emitEvent: false});
+      } else {
+        this.control.control.setValue(v, {emitEvent: false});
       }
     });
   }
