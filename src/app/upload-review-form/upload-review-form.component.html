@@ -156,12 +156,11 @@
       ></sw-online-form>
     </div>
     <div *ngIf="getSelectForm() && getSelectForm().submission_type === 'pdfForm'">
-      <!--<app-preview-form-->
-        <!--[formId]='getSelectForm().form_id'-->
-        <!--[isReviewMode]="true"-->
-        <!--(onBack)="onBack($event)"-->
-        <!--(onSaveNext)="onSaveNext($event)"-->
-      <!--&gt;</app-preview-form>-->
+      <sw-preview-form-pdf
+        [formId]="getSelectForm().form_id"
+        (back)="onBack($event)"
+        (saveNext)="onSaveNext($event)"
+      ></sw-preview-form-pdf>
     </div>
 
     <div
