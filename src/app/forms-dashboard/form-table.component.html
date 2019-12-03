@@ -88,6 +88,7 @@
                       formControlName="name"
                       [isSearch]="true"
                       [isClearable]="true"
+                      [trimStart]="true"
                       (keydown)="keyDownFunction($event)"
                     ></sw-input-text>
                   </div>
@@ -200,6 +201,7 @@
                       formControlName="createdBy"
                       [isSearch]="true"
                       [isClearable]="true"
+                      [trimStart]="true"
                       (keydown)="keyDownFunction($event)"
                     ></sw-input-text>
                   </div>
