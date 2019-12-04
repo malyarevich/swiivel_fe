@@ -6,50 +6,41 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
   templateUrl: './text-setting.component.html',
   styleUrls: ['./text-setting.component.scss']
 })
-export class TextSettingComponent implements OnInit {
+export class TextSettingComponent {
 
   form: FormGroup;
   validatorsOptions = ['Alphabetic', 'Alphanumeric', 'Url'].map(t => ({ title: t }));
+  private optionsMap = [
+    'showDefaultValue',
+    'showValidators',
+    'allowList',
+    'default',
+    'validators',
+    'validators.minLength',
+    'validators.maxLength',
+    'validators.criteria'
+  ];
 
   @Input()
   set settings(obj: any) {
     if (obj) {
-      this.form.patchValue({
-        showDefaultValue: !!obj.showDefaultValue,
-        showValidators: obj.showValidators,
-        allowList: obj.allowList || false,
-        default: obj.default || null,
-        validators: {
-          minLength: obj.validators && obj.validators.minLength ? obj.validators.minLength : null,
-          maxLength: obj.validators && obj.validators.maxLength ? obj.validators.maxLength : null,
-          criteria: obj.validators && obj.validators.criteria && this.validatorsOptions.findIndex(i => i.title === obj.validators.criteria) >= 0 ?
-            [this.validatorsOptions[this.validatorsOptions.findIndex(i => i.title === obj.validators.criteria)]] : null
-        }
-      }, {emitEvent: false});
+      if (this.checkOptions(obj).length === 0) {
+        this.form = obj;
+      }
     }
   }
   @Output() fieldSettings = new EventEmitter();
 
   constructor(
     private fb: FormBuilder
-  ) {
-    this.form = this.fb.group({
-      showDefaultValue: new FormControl(false),
-      showValidators: new FormControl(false),
-      allowList: new FormControl(false),
-      default: new FormControl(null, { updateOn: 'blur' }),
-      validators: new FormGroup({
-        minLength: new FormControl(null, { updateOn: 'blur' }),
-        maxLength: new FormControl(null, { updateOn: 'blur' }),
-        criteria: new FormControl([])
-      })
-    });
-  }
+  ) { }
 
-  ngOnInit() {
-    this.form.valueChanges.subscribe(v => {
-      if (v.validators.criteria && v.validators.criteria[0]) { v.validators.criteria = v.validators.criteria[0].title }
-      this.fieldSettings.emit(v);
+  checkOptions(obj: FormGroup) {
+    return this.optionsMap.filter((key) => {
+      if (!obj.get(key)) {
+        console.error(`Does not exist ${key} in options.`);
+        return true;
+      }
     });
   }
 }
