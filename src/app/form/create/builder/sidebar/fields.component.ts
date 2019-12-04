@@ -57,7 +57,7 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
     return event;
   }
   ngOnDestroy() {
-    this.widget.close();
+    if (typeof(this.widget.close) === 'function') this.widget.close();
     this.destroyed$.next(true);
     this.destroyed$.complete();
   }
