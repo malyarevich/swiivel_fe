@@ -2,7 +2,6 @@
 
 .date-picker-popup {
   padding: 10px;
-
 }
 
 :host {
@@ -36,7 +35,10 @@
 
   .input-date {
     width: 100%;
+    min-height: 25px;
     position: relative;
+    background: #fff;
+    border-radius: 3px;
     border-color: transparent;
 
     .input {

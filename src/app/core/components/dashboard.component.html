@@ -4,7 +4,7 @@
   <sw-button title="Click to focus input below" (click)="testFocus.focus()">With title</sw-button>
   <sw-button title="With tile" name="and Name" value="and Value" disabled="true">All atributes</sw-button>
   <sw-input-dynamic [fields]="fields" *ngIf="!!fields"></sw-input-dynamic>
-  <sw-input-text formControlName="short" mask="[00]" #testFocus (focus)="logEvent('focus')" (blur)="logEvent('blur')">
+  <sw-input-text formControlName="short" #testFocus (focus)="logEvent('focus')" (blur)="logEvent('blur')">
     <span class="placeholder">Placeholder</span>
   </sw-input-text>
   <sw-input-text formControlName="short" [disabled]="true">
@@ -42,7 +42,6 @@
   <sw-input-toggle [formControl]="longTextDisabled">
     <span class="input_label">Disabled</span>
   </sw-input-toggle>
-  <sw-input-english-datepicker formControlName="engdate"></sw-input-english-datepicker>
   <sw-input-hebrew-datepicker formControlName="hebrewddate"></sw-input-hebrew-datepicker>
   <sw-input-file formControlName="upload" #file="upload" preupload="/proxy/forms/online/upload/5d8ddc0e8ffb08460b4c2e02" (selected)="onUploadSelected($event)" (progress)="onUploadProgress($event)" (response)="onUploadResponse($event)">
     <button (click)="file.openDialog($event)">Select file to upload</button>

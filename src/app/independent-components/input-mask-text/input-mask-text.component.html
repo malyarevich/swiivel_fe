@@ -14,6 +14,7 @@
     [formControl]="control.control"
     [attr.disabled]="!!disabled || null"
     [readonly]="!!readonly || null"
+    [mask]="mask"
     (focus)="onFocus.emit()"
     (blur)="onBlur.emit()"
   />
