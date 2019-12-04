@@ -165,7 +165,6 @@ export class FormTableComponent implements OnInit {
     });
     this.dataSource.loadFormsList(this.params);
     this.filterForm.valueChanges.pipe(
-      debounceTime(300),
       distinctUntilChanged(),
       map(value => {
         if (value.status && !value.status.length) {
@@ -230,8 +229,7 @@ export class FormTableComponent implements OnInit {
     }
   }
 
-  selectRow(row: FormModel, e: Event) {
-    // @ts-ignore
+  selectRow(row: FormModel, e?: Event) {
     if (
       e &&
       e.target &&
