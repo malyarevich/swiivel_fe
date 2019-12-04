@@ -76,16 +76,16 @@ export class SettingsComponent implements OnInit, AfterViewInit, OnDestroy {
     return res;
   }
 
-  private initSettings(f: any): void {
+  private initSettings(f: FormGroup): void {
     const c = components.find(c => c.type === f.value.type);
     if (c) {
       this.type = c.type;
       this.title = c.title;
-     
+      console.log('INPUT form in Settings', f.get('options'));
       const factory: ComponentFactory<any> = this.resolver.resolveComponentFactory<any>(c.component);
       if (this.container) {
         this.component = this.container.createComponent(factory);
-        this.component.instance.settings = f.get('options').value;
+        this.component.instance.settings = f.get('options');
         this.component.instance.fieldSettings.subscribe(v => {
           this.updateField(v);
         });

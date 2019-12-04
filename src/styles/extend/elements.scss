@@ -216,9 +216,22 @@ sw-input-button-group.preview {
   }
 }
 
+sw-select.empty {
+  .container {
+    &:not(:focus-within) {
+      padding: 5px 10px;
+      .label {
+        position: absolute;
+        top: 8px;
+        font-size: 12px;
+      }
+    }
+  }
+}
 
 
 sw-dropdown-input,
+sw-select,
 sw-input-phone-number,
 sw-input-email,
 sw-input-number {
@@ -226,6 +239,11 @@ sw-input-number {
   .email,
   .container,
   .input_number {
+    span.content-text {
+      font-style: normal;
+      font-size: 12px;
+      margin-top: 10px;
+    }
     @extend %placeholder;
     &.empty {
       &:not(:focus-within) {
@@ -458,6 +476,284 @@ sw-send-preview {
           grid-template-columns: 1fr !important;
         }
       }
+    }
+  }
+}
+
+.no-check {
+  .checkbox-cont {
+    display: none !important;
+  }
+}
+.no-main-cont {
+  display: none !important;
+}
+
+.drag-field-workarea.section-tree-node {
+  width: 100%;
+  .main_container {
+    display: none;
+  }
+}
+
+.children,.root-list {
+  .drag-field-workarea.section-tree-node {
+    .item {
+      display: none !important;
+    }
+    .main_container {
+      width: 100%;
+      background: #50597A;
+      display: flex !important;
+      border-radius: 3px;
+      flex-flow: row nowrap;
+      justify-content: space-between;
+      align-items: center;
+      box-sizing: border-box;
+      .content {
+        margin: 10px 0 10px 20px;
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        align-items: center;
+        box-sizing: border-box;
+      }
+      .drag-icon {
+        margin-right: 20px;
+      }
+      .actions {
+        display: flex;
+        align-items: center;
+        flex-flow: row nowrap;
+        .icon {
+          margin-left: 15px;
+          &.dragdrop {
+            padding: 15px;
+            border-left: 1px solid #C9CEEC;
+          }
+          &.active {
+            color: #fff;
+          }
+        }
+      }
+      &.field {
+        padding: 7px 20px;
+      }
+      sw-input-text {
+        margin-right: 10px;
+        width: 450px;
+      }
+      sw-select {
+        min-width: 120px;
+      }
+      .dragdrop {
+        color: #fff;
+      }  
+    }
+  }
+}
+.group-tree-node.cdk-drag-placeholder,.field-tree-node.cdk-drag-placeholder {
+  width: 100%;
+  display: flex !important;
+  flex-direction: row;
+  align-items: center;
+  padding-left: 0;
+  .checkbox-cont {
+    display: inline-block;
+    width: 15px;
+    height: 17px;
+    position: relative;
+    margin: 2px 0 0 10px;
+    vertical-align: middle;
+    input[type=checkbox] {
+      border: 1px solid #4350A2;
+      box-sizing: border-box;
+      border-radius: 3px;
+      outline: none;
+      margin: 0;
+      -webkit-appearance: initial;
+      width: 15px;
+      height: 15px;
+      position: absolute;
+      color: white;
+      cursor: pointer;
+      &:disabled {
+        border-color: #4350A2;
+        opacity: 1.0;
+        cursor: default;
+      }
+      &:focus {
+        border-color: #4350A2;
+      }
+    }
+    input[type=checkbox]:checked,
+    input[type=checkbox]:indeterminate {
+      background: #4350A2;
+    }
+    input[type=checkbox]:checked:after {
+      content: '';
+      position: absolute;
+      top: 1px;
+      left: 4px;
+      height: 10px;
+      width: 5px;
+      display: inline-block;
+      border-bottom: 2px solid #fff;
+      border-right: 2px solid #fff;
+      -webkit-transform: rotate(-50%, -50%);
+      -moz-transform: rotate(-50%, -50%);
+      -ms-transform: rotate(-50%, -50%);
+      transform: rotate(45deg);
+    }
+    
+    input[type=checkbox]:indeterminate:after {
+      content: "\2022";
+      color: transparent;
+      background-color: #fff;
+      width: 11px;
+      height: 3px;
+      font-family: iwp;
+      position: absolute;
+      left: 11%;
+      top: 42%;
+    }
+  }
+  .main_container {
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    box-sizing: border-box;
+    .input {
+      display: none;
+    }
+    sw-select {
+      display: none;
+    }
+    .content {
+      margin: 10px 0 10px 10px;
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-between;
+      align-items: center;
+      box-sizing: border-box;
+      .name-container {
+        width: auto;
+        .main-text {
+          font-style: normal;
+          font: 800 12px/15px "Nunito Sans";
+        }
+        .hint {
+          display: none;
+          font-style: normal;
+          font: 400 10px/13px "Nunito Sans";
+        }
+      }
+      .dragdrop {
+        color: #A4A4A4;
+      }
+      &.active {
+        box-sizing: border-box;
+        border: 1px solid #4350A2;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+    }
+    .drag-icon {
+      margin-right: 10px;
+    }
+    .actions {
+      // display: flex;
+      display: none;
+      align-items: center;
+      flex-flow: row nowrap;
+      .icon {
+        margin-left: 15px;
+        &.dragdrop {
+          padding: 15px;
+          border-left: 1px solid #C9CEEC;
+        }
+        &.active {
+          color: #fff;
+        }
+      }
+    }
+    &.field {
+      padding: 7px 20px;
+    }
+    
+  }
+}
+
+.children {
+  .no-main-cont {
+    display: flex !important;
+  }
+  .cdk-drag-placeholder.group-tree-node {
+    .item {
+      display: none !important;
+    }
+    .checkbox-cont {
+      display: none !important;
+    }
+    .main_container {
+      display: flex !important;
+      background: #EBEEFF !important;
+      border: 1px solid rgba(67, 80, 162, 0.2);
+      border-radius: 3px;
+      .content {
+        margin: 10px 0 10px 20px !important;
+        .name-container {
+          width: 250px;
+        }
+      }
+      .hint {
+        display: flex !important;
+      }
+      .actions {
+        display: flex !important;
+      }
+    }
+    .drag-icon {
+      margin-right: 20px !important;
+    }
+  }
+}
+
+.children {
+  .cdk-drag-placeholder.field-tree-node {
+    .checkbox-cont {
+      display: none !important;
+    }
+    sw-select {
+      min-width: 120px !important;
+      display: flex !important;
+    }
+    .main_container {
+      border: 1px solid rgba(67, 80, 162, 0.2);
+      border-radius: 3px;
+      padding-right: 10px !important;
+      .content {
+        margin: 10px 0 10px 20px !important;
+        .name-container {
+          width: 300px !important;
+        }
+      }
+      .hint {
+        display: flex !important;
+      }
+      .actions {
+        display: flex !important;
+      }
+      .input {
+        display: flex !important;
+        margin-left: 25px;
+      }
+    }
+    .drag-icon {
+      margin-right: 20px !important;
     }
   }
 }

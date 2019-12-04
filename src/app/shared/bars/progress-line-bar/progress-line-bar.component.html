@@ -1,5 +1,5 @@
 <div
-  class="progress "
+  class="progress"
 >
   <div
     class="progress-bar"
@@ -8,5 +8,9 @@
     [attr.aria-valuenow]="value"
     [attr.aria-valuemin]="0"
     [attr.aria-valuemax]="100"
+    [ngClass]="{
+      purple: color === colors.PURPLE,
+      yellow: color === colors.YELLOW
+    }"
   ></div>
 </div>

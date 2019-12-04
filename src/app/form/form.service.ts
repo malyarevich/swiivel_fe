@@ -142,6 +142,9 @@ export class FormService {
       getFormTemplate.subscribe(data => {
         if (data) {
           this.stage$.next(1);
+          if (!isArrayLike(data['fields'])) {
+            data['fields'] = [];
+          }
           this.form = this.initForm(data);
           this.getSidebarFields();
         }

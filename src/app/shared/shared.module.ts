@@ -42,6 +42,8 @@ import { RadioGroupComponent } from './inputs/radio-group/radio-group.component'
 import { LabelComponent } from './labels/label/label.component';
 import { UserItemComponent } from './user-item/user-item.component';
 import { SelectOptionDirective } from './inputs/dropdown-select/option.directive';
+import { InputSelectComponent } from './inputs/input-select/input-select.component';
+import { OptionDirective } from './inputs/input-select/option.directive';
 import { MainComponent } from './main.component';
 import { ComponentIdDirective } from './inputs/e2e.directive';
 import { PaginatorComponent } from './paginator/paginator.component';
@@ -52,7 +54,6 @@ import { StepperService } from './stepper.service';
 import { FormComponent } from './form.component';
 import { ProgressLineBarComponent } from '@shared/bars/progress-line-bar/progress-line-bar.component';
 import { StatusLabelComponent } from '@shared/labels/status-label/status-label.component';
-import { InputEnglishDatepickerComponent } from './inputs/input-english-datepicker/input-english-datepicker.component';
 import { InputHebrewDatepickerComponent } from './inputs/input-hebrew-datepicker/input-hebrew-datepicker.component';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
@@ -74,7 +75,6 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
       provide: DateAdapter,
       useFactory: adapterFactory
     }),
-    NgxMaskModule.forRoot(options),
   ],
   declarations: [
     // Buttons
@@ -89,6 +89,9 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     InputTextComponent,
     InputSuggestComponent,
     InputToggleComponent,
+
+    InputSelectComponent,
+    OptionDirective,
     DropdownInputComponent,
     InputPhoneNumberComponent,
     InputEmailComponent,
@@ -118,7 +121,6 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     ProgressLineBarComponent,
     StepperComponent,
     FormComponent,
-    InputEnglishDatepickerComponent,
     InputHebrewDatepickerComponent,
   ],
   exports: [
@@ -142,7 +144,6 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     DropdownSelectComponent,
     DialogComponent,
     RadioGroupComponent,
-    InputEnglishDatepickerComponent,
     InputHebrewDatepickerComponent,
     InputFileComponent,
     InputSearchComponent,
@@ -168,6 +169,8 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     BackBarComponent,
     ProgressLineBarComponent,
     StepperComponent,
+    InputSelectComponent,
+    OptionDirective,
   ],
   providers: [
     StepperService

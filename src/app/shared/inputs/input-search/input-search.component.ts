@@ -5,6 +5,7 @@ import {
   Optional,
   Self } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
+import { IconsEnum } from '@shared/icons.enum';
 
 @Component({
   selector: 'sw-input-search',
@@ -12,6 +13,7 @@ import { ControlValueAccessor, NgControl } from '@angular/forms';
   styleUrls: ['./input-search.component.scss']
 })
 export class InputSearchComponent implements OnInit, ControlValueAccessor {
+  public icons = IconsEnum;
   writeValue = (value: string) => {};
   registerOnChange = (fn: any) => {};
   registerOnTouched = (fn: any) => {};
@@ -36,6 +38,10 @@ export class InputSearchComponent implements OnInit, ControlValueAccessor {
     if (this.isFirstSpaceIgnore) {
       this.control.control.setValue(this.control.control.value.trimStart());
     }
+  }
+
+  clear(): void {
+    this.control.control.setValue('');
   }
 
 }

@@ -53,6 +53,10 @@ export class WorkareaTermsConditionComponent {
     this.cdr.markForCheck();
   }
 
+  get termsConditionsItems() {
+    return this.lform.get('termsConditionsItems') as FormArray;
+  }
+
   constructor(
     private fb: FormBuilder,
     private cdr: ChangeDetectorRef

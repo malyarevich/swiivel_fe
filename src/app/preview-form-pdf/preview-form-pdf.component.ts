@@ -21,12 +21,10 @@ export class PreviewFormPdfComponent implements OnInit {
 
   getLink() {
     return `http://red.dev.codeblue.ventures/api/v1/proxy/form-builder/preview-pdf-form/${this.formId}?api_token=123`;
-    // return `http://34.73.126.99/api/v1/preview-pdf-form/${this.formId}?api_token=123`
   }
 
   onProgress(progressData: PDFProgressData) {
     this.pdfError = false;
-    console.log('progressData', progressData);
     if (progressData.loaded === progressData.total) {
       this.pdfLoading = false;
     }

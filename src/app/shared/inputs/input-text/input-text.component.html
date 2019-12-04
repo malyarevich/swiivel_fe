@@ -9,9 +9,11 @@
     class="input_text__input"
     [type]="_type"
     [class.input_text__button]="_style === 'button_type'"
+    [attr.inputmode]="_mode"
     [attr.autocomplete]="autocomplete"
     [formControl]="control.control"
-    [mask]="mask"
+    [attr.disabled]="!!disabled || null"
+    [readonly]="!!readonly || null"
     (focus)="onFocus.emit()"
     (blur)="onBlur.emit()"
   />

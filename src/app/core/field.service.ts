@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FieldType } from '@shared/fields.enum';
 import { flatMapDeep } from 'lodash';
 import { BehaviorSubject } from 'rxjs';
-import { TreeDataSource } from '@app/form-creator/tree.datasource';
+import { TreeDataSource } from '@app/form/create/tree.datasource';
 
 @Injectable({
   providedIn: 'root'

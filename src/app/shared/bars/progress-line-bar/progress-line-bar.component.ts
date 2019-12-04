@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { ButtonColorsEnum } from '@shared/buttons/buttonColors.enum';
 
 @Component({
   selector: 'sw-progress-line-bar',
@@ -8,6 +9,9 @@ import { Component, Input } from '@angular/core';
 
 export class ProgressLineBarComponent {
   @Input() value = 0;
+  @Input() color: ButtonColorsEnum = ButtonColorsEnum.PURPLE;
 
-  constructor() { }
+  public colors = ButtonColorsEnum;
+
+  constructor() {}
 }

@@ -59,6 +59,10 @@ export class SidebarTermsConditionsComponent implements OnInit {
     this.cdr.markForCheck();
   }
 
+  get termsConditionsItems() {
+    return this.lform.get('termsConditionsItems') as FormArray;
+  }
+
   ngOnInit() {
   }
 

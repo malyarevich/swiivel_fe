@@ -1,5 +1,5 @@
 import { NestedTreeControl } from '@angular/cdk/tree';
-import { Component, OnInit, ChangeDetectionStrategy, ViewChild, ChangeDetectorRef, AfterViewChecked, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ViewChild, ChangeDetectorRef, AfterViewChecked, OnDestroy, Input, ElementRef } from '@angular/core';
 import { FormControl, FormBuilder, FormArray, FormGroup } from '@angular/forms';
 import { ApiService } from '@app/core/api.service';
 import { FormService } from '@app/form/form.service';
@@ -25,7 +25,7 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
   treeSource = new TreeDataSource('Sidebar');
   treeControl = new NestedTreeControl((node: any) => node.fields);
   activeTree: any[];
-  breadcrumbs: any[] = [];
+  breadcrumbs: any[] = null;
   delFieldName: string;
   delInput: FormControl = new FormControl(null);
   ref: any;
@@ -37,6 +37,13 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
   @ViewChild('widget', { static: true }) widget;
   @Input()
   set form(_form) {
+    // _form.valueChanges.pipe(takeUntil(this.destroyed$)).subscribe((value) => {
+    //   if (this.firstRun && !!value.activeSections.formFields.showSideIndo) {
+    //     this.treeControl.expandAll();
+    //     console.log('expand');
+    //     this.firstRun = false;
+    //   }
+    // });
     // console.log('Fields INput form', _form);
   }
 
@@ -47,6 +54,7 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
     private popup: Popup,
     private cdr: ChangeDetectorRef,
     private route: ActivatedRoute,
+    private el: ElementRef
   ) {
     this.service.dropLists$.subscribe((ids) => {
       this.dropListsIds = Array.from(ids);
@@ -57,7 +65,7 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
     return event;
   }
   ngOnDestroy() {
-    this.widget.close();
+    if (typeof(this.widget.close) === 'function') this.widget.close();
     this.destroyed$.next(true);
     this.destroyed$.complete();
   }
@@ -69,6 +77,10 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
       this.treeSource.nodes = cloneDeep(sidebar);
       if (!!sidebar && !this.activeTree) {
         this.activeTree = this.treeSource.nodes;
+        if (!this.treeControl.dataNodes) {
+          this.treeControl.dataNodes = this.activeTree;
+          this.treeControl.expandAll();
+        }
       }
       this.cdr.markForCheck();
     });
@@ -230,9 +242,16 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
     this.closePop();
   }
 
+  isExpanded(node) {
+    if (this.filterValue !== null) return true;
+    else {
+      return this.treeControl.isExpanded(node);
+    }
+  }
+
   isFiltered(node) {
     if (this.filterValue) {
-      return !node.name.toLowerCase().startsWith(this.filterValue)
+      return !(node.name as string).toLowerCase().includes(this.filterValue)
     } else {
       return !!this.filterValue;
     }

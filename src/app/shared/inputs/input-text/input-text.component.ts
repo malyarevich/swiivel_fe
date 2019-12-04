@@ -9,8 +9,7 @@ import {
   Optional,
   Output,
   Self,
-  ViewChild,
-  ViewEncapsulation
+  ViewChild
 } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 
@@ -21,14 +20,20 @@ import { ControlValueAccessor, NgControl } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class InputTextComponent implements ControlValueAccessor, OnInit {
-  @Input() autofocus: boolean;
-  @Input() mask: string;
-  @Input() autocomplete: string;
   public _type = 'text';
+  public _mode = 'text';
   public _style = 'button';
-  @ViewChild('input', { static: true }) input: ElementRef;
+  @Input() autofocus: boolean;
+  @Input() autocomplete: string;
   @Input() set type(inputType: string) {
     this._type = inputType;
+    if (this._type === 'email') this._mode = 'email';
+    else if (this._type === 'numeric') this._mode = 'numeric';
+    else if (this._type === 'tel') this._mode = 'tel';
+    else this._mode = 'text';
+  }
+  @Input() set mode(inputMode: string) {
+    this._mode = inputMode;
   }
   @Input() set style(styleType: string) {
     this._style = styleType;
@@ -45,6 +50,8 @@ export class InputTextComponent implements ControlValueAccessor, OnInit {
   @Input() trimStart: boolean;
   @Output('blur') onBlur = new EventEmitter<any>();
   @Output('focus') onFocus = new EventEmitter<any>();
+
+  @ViewChild('input', { static: true }) input: ElementRef;
 
   writeValue = (value: string) => {};
   registerOnChange = (fn: any) => {};
@@ -67,10 +74,12 @@ export class InputTextComponent implements ControlValueAccessor, OnInit {
       this.cdr.markForCheck();
     });
     this.control.valueChanges.subscribe((v) => {
-      if (this.trimStart) {
+      if (!!v && this.trimStart) {
         this.control.control.setValue(v.trimStart(), {emitEvent: false});
+      } else {
+        this.control.control.setValue(v, {emitEvent: false});
       }
-    })
+    });
   }
 
   public focus() {

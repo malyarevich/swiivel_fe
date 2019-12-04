@@ -6,9 +6,10 @@
     <sw-input-text [formControl]="_section.get('name')">
       <span class="placeholder">Section Name</span>
     </sw-input-text>
-    <sw-dropdown-input [formControl]="_section.get('options.size')" [options]="widthOptions">
+    <sw-select #select [formControl]="_section.get('options.size')" [values]="widthOptions">
       <span class="label">Section Width</span>
-    </sw-dropdown-input>
+      <span class="content-text">{{ select.title }}</span>
+    </sw-select>
   </div>
   <div class="actions">
     <div class="icon">

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { Document } from '@models/upload-review-form/document.model';
 import { IconsEnum } from '@shared/icons.enum';
 import { SizesEnum } from '@shared/sizes.enum';
@@ -40,7 +40,7 @@ export class UploadReviewFormDocumentComponent {
     return this._document;
   }
 
-  constructor() {}
+  constructor(private cdr: ChangeDetectorRef) {}
 
   isLoaded(): void {
     this.isDocumentLoading = false;
@@ -54,7 +54,21 @@ export class UploadReviewFormDocumentComponent {
   }
 
   clickRotateImg(evt: string): void {
-    this.rotateImg.emit({ direction: evt, angle: this._document.rotate ?  this._document.rotate : '0' });
+    if (evt === 'left') {
+      if (this.angle + 90 < 361) {
+        this.angle = this.angle + 90;
+      } else {
+        this.angle = 90;
+      }
+    } else {
+      if (this.angle - 90 >= 0) {
+        this.angle = this.angle - 90;
+      } else {
+        this.angle = 270;
+      }
+    }
+    this.cdr.detectChanges();
+    this.rotateImg.emit(this.angle);
   }
 
   clickZoomImg(evt: string): void {

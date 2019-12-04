@@ -6,55 +6,44 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
   templateUrl: './number-setting.component.html',
   styleUrls: ['./number-setting.component.scss']
 })
-export class NumberSettingComponent implements OnInit {
+export class NumberSettingComponent {
 
   form: FormGroup;
   validatorsOptions = ['Decimal Place', 'Percentage', 'Currency US', 'Currency Canada'].map(t => ({ title: t }));
+  private optionsMap = [
+    'showDefaultValue',
+    'showValidators',
+    'allowList',
+    'default',
+    'places',
+    'format',
+    'validators',
+    'validators.min',
+    'validators.max'
+  ];
 
   @Input()
   set settings(obj: any) {
     if (obj) {
-      console.log(obj)
-      this.form.patchValue({
-        showDefaultValue: !!obj.showDefaultValue,
-        showValidators: !!obj.showValidators,
-        allowList: obj.allowList,
-        default: obj.default || null,
-        places: obj.places || null,
-        format:  obj.format && this.validatorsOptions.findIndex(i => i.title === obj.format) >= 0
-          ? [this.validatorsOptions[this.validatorsOptions.findIndex(i => i.title === obj.format)]] : [],
-        validators: {
-          min: obj.validators && obj.validators.min ? obj.validators.min : null,
-          max: obj.validators && obj.validators.max ? obj.validators.max : null
-        }
-      });
+      if (this.checkOptions(obj).length === 0) {
+        this.form = obj;
+      }
     }
   }
   @Output() fieldSettings = new EventEmitter();
 
   constructor(
     private fb: FormBuilder
-  ) {
-    this.form = this.fb.group({
-      showDefaultValue: new FormControl(false),
-      showValidators: new FormControl(false),
-      default: new FormControl(null, {updateOn: 'blur'}),
-      format: new FormControl([]),
-      places: new FormControl(null, {updateOn: 'blur'}),
-      validators: new FormGroup({
-        min: new FormControl(null, {updateOn: 'blur'}),
-        max: new FormControl(null, {updateOn: 'blur'})
-      })
+  ) { }
+
+  checkOptions(obj: FormGroup) {
+    return this.optionsMap.filter((key) => {
+      if (!obj.get(key)) {
+        console.error(`Does not exist ${key} in options.`);
+        return true;
+      }
     });
   }
-
-  ngOnInit() {
-    this.form.valueChanges.subscribe(v => {
-      if (v.format && v.format[0]) { v.format = v.format[0].title }
-      this.fieldSettings.emit(v);
-    });
-  }
-
 
 
 }
