@@ -40,11 +40,11 @@ export class WorkareaFieldComponent implements AfterViewInit {
     this._field.get('options').valueChanges.subscribe((value) => {
       if (value.required === false && this._field.value.options.required !== value.required) {
         if (this._field.parent.parent.get('options.required').value) {
-          this._field.parent.parent.get('options.required').setValue(false), {onlySelf: true};
+          this._field.parent.parent.get('options.required').setValue(false)//, {onlySelf: true});
         }
       } else if (value.hideLabel === false && this._field.value.options.hideLabel !== value.hideLabel) {
-        if (this._field.parent.parent.get('options.hideLabel').value) {
-          this._field.parent.parent.get('options.hideLabel').setValue(false, {onlySelf: true});
+        if (this._field.parent.parent.get('options.hideTitle').value) {
+          this._field.parent.parent.get('options.hideTitle').setValue(false)//, {onlySelf: true});
         }
       }
     })
