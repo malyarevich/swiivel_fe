@@ -74,6 +74,14 @@
     color: $element-base-color;
   }
 
+  .transparent-gray {
+    outline: none;
+    border: none;
+    background: transparent;
+    padding: 0;
+    color: $status-gray;
+  }
+
   .yellow {
     background: $status-yellow;
   }

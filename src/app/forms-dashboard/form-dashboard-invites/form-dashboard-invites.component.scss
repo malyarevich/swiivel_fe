@@ -1,0 +1,43 @@
+@import 'index';
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 0 10px;
+}
+
+.header-text {
+  font: 800 12px/15px $nunito-sans;
+  text-transform: uppercase;
+  letter-spacing: 0.2px;
+}
+
+.info {
+  display: flex;
+  margin: 0 0 6px;
+}
+
+.info-text {
+  margin: 0 13px 0 0;
+  font: 500 10px/12px $nunito-sans;
+}
+
+.info-value-container {
+  display: flex;
+  flex-grow: 1;
+  justify-content: space-between;
+}
+
+.info-value {
+  margin: 0;
+  font: 800 10px/13px $nunito-sans;
+  color: $header-logo-color;
+}
+
+.info-accounts {
+  color: $element-base-color;
+}
+
+.invites {
+  margin: 0 0 10px;
+}

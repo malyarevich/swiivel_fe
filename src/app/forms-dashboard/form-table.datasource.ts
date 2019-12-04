@@ -9,6 +9,7 @@ export class FormsDataSource implements DataSource<any> {
   private formsSubject = new BehaviorSubject<any[]>([]);
   private dataSubject = new BehaviorSubject<any[]>([]);
   private totalAmountSubject = new BehaviorSubject<any>({});
+  private statisticSubject = new BehaviorSubject<any>({});
   private loadingSubject = new BehaviorSubject<boolean>(false);
   public $loading = this.loadingSubject.asObservable();
 
@@ -42,6 +43,10 @@ export class FormsDataSource implements DataSource<any> {
     return this.dataSubject.asObservable();
   }
 
+  get getStatistic() {
+    return this.statisticSubject.asObservable();
+  }
+
   connect(_collectionViewer: CollectionViewer): Observable<any[]> {
     return this.formsSubject.asObservable();
   }
@@ -51,6 +56,7 @@ export class FormsDataSource implements DataSource<any> {
     this.loadingSubject.complete();
     this.metadata.complete();
     this.totalAmountSubject.complete();
+    this.statisticSubject.complete();
   }
 
   loadFormsList(params: FormSearchParams = { page: 0, limit: 10 }) {
@@ -66,6 +72,10 @@ export class FormsDataSource implements DataSource<any> {
       this.totalAmountSubject.next(forms.total);
       this.dataSubject.next(forms.data);
     });
+  }
+
+  loadStatistic(params) {
+    this.dataService.loadStatistic(params).subscribe((value) => { this.statisticSubject.next(value); });
   }
 
   filter(filters: any): void {

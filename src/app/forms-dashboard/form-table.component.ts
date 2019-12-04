@@ -9,8 +9,10 @@ import { CheckService } from '@app/services/check.service';
 import { DateService } from '@app/services/date.service';
 import { FormService } from '@app/services/form.service';
 import { StatusService } from '@app/services/status.service';
+import { FormStatisticModel } from '@models/data-collection/form-statistic.model';
 import { FormModel } from '@models/data-collection/form.model';
 import { UserItem } from '@models/user-item';
+import { ButtonSizeEnum } from '@shared/buttons/buttonSize.enum';
 import { formStatusOptions } from '@shared/form-status-options';
 import { formStatuses } from '@shared/form-statuses';
 import { IconsEnum } from '@shared/icons.enum';
@@ -21,7 +23,7 @@ import { DataCollectionService } from './data-collection.service';
 import { FormsDataSource } from './form-table.datasource';
 
 @Component({
-  selector: 'app-form-table',
+  selector: 'sw-form-table',
   templateUrl: './form-table.component.html',
   styleUrls: ['./form-table.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -84,6 +86,17 @@ export class FormTableComponent implements OnInit {
   public _sm: SelectionModel<any> = new SelectionModel(true);
   public pageSelection: { allSelected: boolean, selectedAnyRow: boolean }[] = [];
 
+  public isDashboardShown = true;
+  public statistic: FormStatisticModel;
+  public statisticsPeriodOptions = ['last week', 'last month', 'current year'];
+  public defaultIndexOption = 2;
+  public statisticParams = {
+    'periods[views]': this.statisticsPeriodOptions[this.defaultIndexOption].replace(/ /g, '_'),
+    'periods[submissions_rate]': this.statisticsPeriodOptions[this.defaultIndexOption].replace(/ /g, '_'),
+    'periods[account_invites]': this.statisticsPeriodOptions[this.defaultIndexOption].replace(/ /g, '_'),
+  };
+  public size = ButtonSizeEnum;
+
   constructor(
     public dataCollectionService: DataCollectionService,
     public router: Router,
@@ -117,6 +130,13 @@ export class FormTableComponent implements OnInit {
 
     this.dataSource.getFormsData.subscribe(data => {
       this.rows = data;
+    });
+
+    this.dataSource.loadStatistic(this.statisticParams);
+
+    this.dataSource.getStatistic.subscribe(data => {
+      this.statistic = data;
+      this.cdr.detectChanges();
     });
 
     this.dataCollectionService.getUsers().subscribe(users => {
@@ -492,5 +512,24 @@ export class FormTableComponent implements OnInit {
 
   changePageSelection(page: number, value = false) {
     this.pageSelection[page] = { allSelected: value, selectedAnyRow: value };
+  }
+
+  changeDashboardView(): void {
+    this.isDashboardShown = !this.isDashboardShown;
+  }
+
+  changePeriod(e: any, param: string): void {
+    switch (param) {
+      case 'view':
+        this.statisticParams['periods[views]'] = this.statisticsPeriodOptions[e].replace(/ /g, '_');
+        break;
+      case 'rate':
+        this.statisticParams['periods[submissions_rate]'] = this.statisticsPeriodOptions[e].replace(/ /g, '_');
+        break;
+      case 'invites':
+        this.statisticParams['periods[account_invites]'] = this.statisticsPeriodOptions[e].replace(/ /g, '_');
+        break;
+    }
+    this.dataSource.loadStatistic(this.statisticParams);
   }
 }

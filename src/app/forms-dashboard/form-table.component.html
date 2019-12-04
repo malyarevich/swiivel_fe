@@ -5,7 +5,68 @@
         Data Collection
       </sw-page-header>
     </div>
+    <div class="app-form-table__controls">
+      <div class="control-edit">
+        <sw-button color="transparent-gray">
+          <i class="fas fa-pen control-icon"></i>
+          <span class="control-button-text">Edit Dashboard</span>
+        </sw-button>
+      </div>
+      <div class="control-share">
+        <sw-button color="transparent-gray">
+          <i class="fas fa-share-alt control-icon"></i>
+          <span class="control-button-text">Share</span>
+        </sw-button>
+      </div>
+      <div class="control-view">
+        <sw-button color="transparent" (click)="changeDashboardView()">
+          <span *ngIf="!isDashboardShown" class="view-dashboard-text">
+            View Dashboard
+          </span>
+          <span *ngIf="isDashboardShown" class="hide-dashboard-text">
+            Hide Dashboard
+          </span>
+          <i
+            class="control-view-icon fas"
+            [ngClass]="{
+              'fa-caret-up hide-dashboard-icon': isDashboardShown,
+              'fa-caret-down view-dashboard-icon': !isDashboardShown
+            }"
+          ></i>
+        </sw-button>
+      </div>
+    </div>
   </div>
+
+  <div *ngIf="isDashboardShown">
+    <form class="app-form-table-statistics">
+      <div class="app-form-table-statistics-view">
+        <sw-form-dashboard-view
+          [statistic]="statistic?.views"
+          [staticsPeriodOptions]="this.statisticsPeriodOptions"
+          [defaultIndexOption]="defaultIndexOption"
+          (changeViewPeriod)="changePeriod($event, 'view')"
+        ></sw-form-dashboard-view>
+      </div>
+      <div class="app-form-table-statistics-rate">
+        <sw-form-dashboard-rate
+          [statistic]="statistic?.submissions_rate"
+          [staticsPeriodOptions]="this.statisticsPeriodOptions"
+          [defaultIndexOption]="defaultIndexOption"
+          (changeRatePeriod)="changePeriod($event, 'rate')"
+        ></sw-form-dashboard-rate>
+      </div>
+      <div class="app-form-table-statistics-invites">
+        <sw-form-dashboard-invites
+          [statistic]="statistic?.account_invites"
+          [staticsPeriodOptions]="this.statisticsPeriodOptions"
+          [defaultIndexOption]="defaultIndexOption"
+          (changeInvitesPeriod)="changePeriod($event, 'invites')"
+        ></sw-form-dashboard-invites>
+      </div>
+    </form>
+  </div>
+
   <div class="app-form-table__table">
     <div class="app-form-table__header">
       <div class="app-form-table__text">

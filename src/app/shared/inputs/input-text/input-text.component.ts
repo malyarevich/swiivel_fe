@@ -24,7 +24,6 @@ export class InputTextComponent implements ControlValueAccessor, OnInit {
   public _mode = 'text';
   public _style = 'button';
   @Input() autofocus: boolean;
-  @Input() mask: string;
   @Input() autocomplete: string;
   @Input() set type(inputType: string) {
     this._type = inputType;

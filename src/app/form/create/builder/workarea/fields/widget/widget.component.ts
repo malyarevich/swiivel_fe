@@ -43,6 +43,7 @@ export class WidgetComponent implements OnInit {
     //   }
     // }
   ];
+  sectionName = 'Section';
   @ViewChild('holder', { static: false }) holder;
   @ViewChild('widgetContent', { static: false }) widgetContent;
 

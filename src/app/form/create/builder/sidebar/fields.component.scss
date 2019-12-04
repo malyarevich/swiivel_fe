@@ -1,7 +1,10 @@
 @import "index";
 
 :host {
-
+  .hidden {
+    height: 0px !important;
+    overflow: hidden !important;
+  }
   .fields-container {
     display: flex;
     flex-flow: column nowrap;

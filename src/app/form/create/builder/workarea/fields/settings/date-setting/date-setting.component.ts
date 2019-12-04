@@ -6,7 +6,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
   templateUrl: './date-setting.component.html',
   styleUrls: ['./date-setting.component.scss']
 })
-export class DateSettingComponent implements OnInit {
+export class DateSettingComponent {
   form: FormGroup;
 
   separators = [
@@ -20,45 +20,34 @@ export class DateSettingComponent implements OnInit {
     { title: 'dd-mm-yyyy', value: 'dd-mm-yyyy' },
     { title: 'yyyy-mm-dd', value: 'yyyy-mm-dd' },
   ];
+  private optionsMap = [
+    'showDefaultValue',
+    'default',
+    'separator',
+    'dateFormat'
+  ];
 
   @Input()
   set settings(obj: any) {
     if (obj) {
-      this.form.patchValue({
-        showDefaultValue: !!obj.showDefaultValue,
-        default: obj.default || '',
-        separator: obj.separator && this.separators.findIndex(i => i.value === obj.separator) >= 0
-          ? [this.separators[this.separators.findIndex(i => i.value === obj.separator)]] : [],
-        dateFormat: obj.dateFormat && this.dateFormats.findIndex(i => i.value === obj.dateFormat) >= 0
-          ? [this.dateFormats[this.dateFormats.findIndex(i => i.value === obj.dateFormat)]] : [],
-      });
+      if (this.checkOptions(obj).length === 0) {
+        this.form = obj;
+      }
     }
   }
   @Output() fieldSettings = new EventEmitter();
 
   constructor(
     private fb: FormBuilder
-  ) {
-    this.form = this.fb.group({
-      showDefaultValue: [false],
-      default: [''],
-      separator: [[]],
-      dateFormat: [[]]
-    });
-  }
+  ) { }
 
-  ngOnInit() {
-    this.form.valueChanges.subscribe(v => {
-      this.updateField(v);
+  checkOptions(obj: FormGroup) {
+    return this.optionsMap.filter((key) => {
+      if (!obj.get(key)) {
+        console.error(`Does not exist ${key} in options.`);
+        return true;
+      }
     });
-  }
-
-  private updateField(v): void {
-    if (v) {
-      if (v.separator && v.separator[0]) { v.separator = v.separator[0].value }
-      if (v.dateFormat && v.dateFormat[0]) { v.dateFormat = v.dateFormat[0].value }
-      this.fieldSettings.emit(v)
-    }
   }
 
 }
