@@ -32,7 +32,7 @@
           [class.input-date-range]="this.range"
         >
           <div [class.input-date-range-item]="this.range">
-            <sw-input-text
+            <sw-input-mask-text
               formControlName="dateFrom"
               mask="00/00/0000"
               (focus)="inputStartDateInFocus = true"
@@ -41,17 +41,17 @@
               <span class="placeholder">
                 {{this.range ? 'Date From' : 'Date'}}
               </span>
-            </sw-input-text>
+            </sw-input-mask-text>
           </div>
           <div *ngIf="this.range" class="input-date-range-item">
-            <sw-input-text
+            <sw-input-mask-text
               formControlName="dateTo"
               mask="00/00/0000"
               (focus)="inputEndDateInFocus = true"
               (blur)="inputEndDateInFocus = false"
             >
               <span class="placeholder">Date To</span>
-            </sw-input-text>
+            </sw-input-mask-text>
           </div>
         </div>
       </form>

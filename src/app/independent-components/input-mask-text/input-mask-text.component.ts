@@ -14,16 +14,17 @@ import {
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 
 @Component({
-  selector: 'sw-input-text',
-  templateUrl: './input-text.component.html',
-  styleUrls: ['./input-text.component.scss'],
+  selector: 'sw-input-mask-text',
+  templateUrl: './input-mask-text.component.html',
+  styleUrls: ['./input-mask-text.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class InputTextComponent implements ControlValueAccessor, OnInit {
+export class InputMaskTextComponent implements ControlValueAccessor, OnInit {
   public _type = 'text';
   public _mode = 'text';
   public _style = 'button';
   @Input() autofocus: boolean;
+  @Input() mask: string;
   @Input() autocomplete: string;
   @Input() set type(inputType: string) {
     this._type = inputType;
@@ -70,9 +71,7 @@ export class InputTextComponent implements ControlValueAccessor, OnInit {
     });
     this.control.valueChanges.subscribe((v) => {
       if (!!v && this.trimStart) {
-        this.control.control.setValue(v.trimStart(), {emitEvent: false});
-      } else {
-        this.control.control.setValue(v, {emitEvent: false});
+        this.control.control.setValue(v.trimStart(), { emitEvent: false });
       }
     });
   }

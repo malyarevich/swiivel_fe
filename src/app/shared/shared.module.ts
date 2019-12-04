@@ -54,7 +54,6 @@ import { StepperService } from './stepper.service';
 import { FormComponent } from './form.component';
 import { ProgressLineBarComponent } from '@shared/bars/progress-line-bar/progress-line-bar.component';
 import { StatusLabelComponent } from '@shared/labels/status-label/status-label.component';
-import { InputEnglishDatepickerComponent } from './inputs/input-english-datepicker/input-english-datepicker.component';
 import { InputHebrewDatepickerComponent } from './inputs/input-hebrew-datepicker/input-hebrew-datepicker.component';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
@@ -76,7 +75,6 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
       provide: DateAdapter,
       useFactory: adapterFactory
     }),
-    NgxMaskModule.forRoot(options),
   ],
   declarations: [
     // Buttons
@@ -123,7 +121,6 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     ProgressLineBarComponent,
     StepperComponent,
     FormComponent,
-    InputEnglishDatepickerComponent,
     InputHebrewDatepickerComponent,
   ],
   exports: [
@@ -147,7 +144,6 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     DropdownSelectComponent,
     DialogComponent,
     RadioGroupComponent,
-    InputEnglishDatepickerComponent,
     InputHebrewDatepickerComponent,
     InputFileComponent,
     InputSearchComponent,
