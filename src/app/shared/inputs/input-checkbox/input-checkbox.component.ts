@@ -49,6 +49,7 @@ export class InputCheckboxComponent implements ControlValueAccessor {
     if (value != this.checked) {
       this._checked = value;
       this.cdr.markForCheck();
+      this.onChange(this._checked);
     }
   }
   private __isActive: boolean;
