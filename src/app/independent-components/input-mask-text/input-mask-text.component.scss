@@ -1,4 +1,5 @@
 @import "index";
+@import "extend/elements";
 
 .fa-search {
   display: none;
@@ -34,6 +35,7 @@
       position: relative;
       // top: 0.5rem;
       transition: all 0.4s ease-in-out;
+
       &:focus-within,
       &:focus,
       &:active,
@@ -209,7 +211,7 @@
 }
 
 :host(
-  .online_form, 
+  .online_form,
   .online_form__data_picker
 ) {
   // ng-content nesting
@@ -231,7 +233,7 @@
     }
 
     // ng-content nesting
-    // &.empty { 
+    // &.empty {
     //   .input_text__input + .placeholder {
     //     font-size: 1rem;
     //     left: 0.5rem;

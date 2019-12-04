@@ -38,14 +38,53 @@
           </div>
         </div>
       </div>
-      <div *cdkDragPlaceholder>
-        <div class="field-tree-node__content">
-          <div class="field-tree-node__content_node">
-            <div class="checkbox">
-              <input type="checkbox" [checked]="treeSource.isSelected(node)">
+      <div class="field-tree-node" *cdkDragPlaceholder>
+        <div class="checkbox-cont">
+          <input type="checkbox" [checked]="nodeIsChecked(node)" [indeterminate]="nodeIsIndeterminate(node)"
+            (click)="toggleParentNode(node)">
+        </div>
+        <div class="main_container">
+          <div class="content">
+            <div class="drag-icon">
+              <i class="dragdrop fas fa-ellipsis-v" cdkDragHandle></i>
             </div>
-            <i class="dragdrop fas fa-ellipsis-v"></i>
-            <span class="node-name">{{node.name}}</span>
+            <div class="name-container">
+              <div class="main-text">{{ node.name }}</div>
+              <div class="hint">Field Type - </div>
+            </div>
+            <sw-select #select style="margin-right: 25px;" [values]="[]">
+              <span class="label">Field Width</span>
+              <span class="content-text"> </span>
+            </sw-select>
+            <div class="input">
+              <sw-input-checkbox>
+                <span class="label">Required</span>
+              </sw-input-checkbox>
+            </div>
+            <div class="input">
+              <sw-input-checkbox>
+                <span class="label">Hide Label</span>
+              </sw-input-checkbox>
+            </div>
+            <div class="input">
+              <sw-input-checkbox>
+                <span class="label">Read–Only</span>
+              </sw-input-checkbox>
+            </div>
+            <div class="input">
+              <sw-input-checkbox>
+                <span class="label">Unique</span>
+              </sw-input-checkbox>
+            </div>
+            <div class="actions">
+              <div class="icon">
+                <sw-icon-button icon="fa-cog" class="field-creator blue" (click)="toggleSettings()">
+                </sw-icon-button>
+              </div>
+              <div class="icon">
+                <sw-icon-button icon="fa-times" class="field-creator blue" (click)="removeField()"></sw-icon-button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -76,21 +115,40 @@
             <span class="node-name">{{node.name}}</span>
           </div>
           <sw-icon-button [icon]="getIcon(treeControl.isExpanded(node))" cdkTreeNodeToggle
-          [cdkTreeNodeToggleRecursive]="true" [attr.aria-label]="'toggle ' + node.name">
-        </sw-icon-button>
+            [cdkTreeNodeToggleRecursive]="true" [attr.aria-label]="'toggle ' + node.name">
+          </sw-icon-button>
         </div>
       </div>
-      <div class="field-tree-node__content" *cdkDragPlaceholder>
-        <div class="field-tree-node__content_node">
-          <div class="checkbox">
-            <input type="checkbox" [checked]="nodeIsChecked(node)" [indeterminate]="nodeIsIndeterminate(node)">
-          </div>
-          <i class="dragdrop fas fa-ellipsis-v"></i>
-          <span class="node-name">{{node.name}}</span>
+      <div class="drag-field-workarea group-tree-node" *cdkDragPlaceholder>
+        <div class="checkbox-cont">
+          <input type="checkbox" [checked]="nodeIsChecked(node)" [indeterminate]="nodeIsIndeterminate(node)"
+            (click)="toggleParentNode(node)">
         </div>
-        <sw-icon-button [icon]="getIcon(treeControl.isExpanded(node))" cdkTreeNodeToggle
-          [cdkTreeNodeToggleRecursive]="true" [attr.aria-label]="'toggle ' + node.name">
-        </sw-icon-button>
+        <div class="main_container">
+          <div class="content">
+            <div class="drag-icon">
+              <i class="dragdrop fas fa-ellipsis-v"></i>
+            </div>
+            <div class="name-container">
+              <div class="main-text">{{ node.name }}</div>
+              <div class="hint">Group Type - Group</div>
+            </div>
+          </div>
+          <div class="actions">
+            <div class="icon">
+              <sw-icon-button icon="fa-cog" class="field-creator blue">
+              </sw-icon-button>
+            </div>
+            <div class="icon">
+              <sw-icon-button icon="fa-times" class="field-creator blue">
+              </sw-icon-button>
+            </div>
+            <div class="icon dragdrop">
+              <sw-icon-button [icon]="'fa-caret-down'" class="blue" [attr.aria-label]="'toggle ' + node.name">
+              </sw-icon-button>
+            </div>
+          </div>
+        </div>
       </div>
       <div [class.hidden]="isFiltered(node)">
         <ng-container cdkTreeNodeOutlet></ng-container>
@@ -99,9 +157,6 @@
         <div class="custom-field" [class.show]="showCreateField(node)">
           <div class="custom-field__form">
             <div class="custom-field__form_inputs">
-              <!-- <sw-input-text class="settings-field">
-                  <span class="placeholder">Name</span>
-                </sw-input-text> -->
               <sw-dropdown-input class="settings-field">
                 <span class="input_label">
                   <p>Type</p>
