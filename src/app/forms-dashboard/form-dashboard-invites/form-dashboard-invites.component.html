@@ -1,0 +1,28 @@
+<sw-form-dashboard-view-header
+  text="Account invites"
+  [options]="staticsPeriodOptions"
+  [defaultIndexOption]="defaultIndexOption"
+  (changeOption)="clickChangeViewPeriod($event)"
+></sw-form-dashboard-view-header>
+<div class="statistics">
+  <div *ngIf="statistic && statistic.invites" class="invites">
+    <div class="info">
+      <p class="info-text">Invites</p>
+      <div class="info-value-container">
+        <p class="info-value">{{ statistic.invites.percent}} %</p>
+        <p class="info-value">{{ statistic.invites.cnt }}</p>
+      </div>
+    </div>
+    <sw-progress-line-bar [value]="statistic.invites.percent" color="yellow"></sw-progress-line-bar>
+  </div>
+  <div *ngIf="statistic && statistic.accounts ">
+    <div class="info">
+      <p class="info-text">Accounts</p>
+      <div class="info-value-container">
+        <p class="info-value info-accounts">{{ statistic.accounts.percent }} %</p>
+        <p class="info-value info-accounts">{{ statistic.accounts.cnt }}</p>
+      </div>
+    </div>
+    <sw-progress-line-bar [value]="statistic.accounts.percent" color="purple"></sw-progress-line-bar>
+  </div>
+</div>

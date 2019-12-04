@@ -9,5 +9,12 @@
 .progress-bar {
   border-radius: 100px;
   transform: matrix(1, 0, 0, -1, 0, 0);
-  background: $element-base-color;
+
+  &.purple {
+    background: $element-base-color;
+  }
+
+  &.yellow {
+    background: $header-logo-color;
+  }
 }
