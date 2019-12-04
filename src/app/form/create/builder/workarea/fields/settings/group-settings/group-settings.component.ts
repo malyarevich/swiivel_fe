@@ -17,7 +17,7 @@ export class GroupSettingsComponent implements OnInit {
     if (obj) {
       this.form.patchValue({
         required: !!obj.required,
-        hideLabel: !!obj.hideLabel,
+        hideTitle: !!obj.hideTitle,
         showHint: !!obj.showHint,
         hint: obj.hint || null,
         displayStrategy: obj.displayStrategy,
@@ -38,7 +38,7 @@ export class GroupSettingsComponent implements OnInit {
   ) {
     this.form = this.fb.group({
       required: new FormControl(false),
-      hideLabel: new FormControl(false),
+      hideTitle: new FormControl(false),
       showHint: new FormControl(false),
       hint: new FormControl('', {updateOn: 'blur'}),
       displayStrategy: new FormControl(null),
@@ -69,7 +69,7 @@ export class GroupSettingsComponent implements OnInit {
         this.setChildren.emit({key: 'required', value: true});
       }
     });
-    this.form.get('hideLabel').valueChanges.subscribe((value) => {
+    this.form.get('hideTitle').valueChanges.subscribe((value) => {
       if (value === true) {
         this.setChildren.emit({key: 'hideLabel', value: true});
       }
