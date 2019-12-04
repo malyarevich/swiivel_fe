@@ -1,0 +1,75 @@
+<section class="section-wrap">
+  <div class="section-title">1. Period</div>
+  <div class="section-main-text">
+    What period is this for? You may select more than one
+  </div>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-10 lists-wrap">
+        <div class="col-6 list-wrap">
+          <div class="list-title">
+            List of Periods
+          </div>
+          <div class="search-wrap" data-e2e="search-wrap">
+            <input
+              class="search"
+              data-e2e="search"
+              [formControl]="periodsFilter"
+              placeholder="Search"
+            />
+            <i class="icon fas fa-search"></i>
+          </div>
+          <div class="period-title">
+            recent periods {{ getPeriodsLength() }}
+          </div>
+          <cdk-virtual-scroll-viewport
+            itemSize="50"
+            class="list-viewport"
+            data-e2e="forms-viewport"
+          >
+            <div
+              *cdkVirtualFor="let item of periodsList"
+              class="list-item"
+              data-e2e="form-item"
+              [class.selected]="isSelectedPeriod(item?.id)"
+            >
+              <div class="item-title">
+                <sw-input-checkbox
+                  [check]="isSelectedPeriod(item?.id)"
+                  (checked)="checkboxAction(item, $event)"
+                >
+                  <span class="label">{{ item.name }}</span>
+                </sw-input-checkbox>
+              </div>
+              <div class="splits">
+                {{ getSplits(item) }}
+              </div>
+            </div>
+          </cdk-virtual-scroll-viewport>
+        </div>
+        <div class="col-6 list-wrap">
+          <div class="list-title">
+            Chosen Periods
+          </div>
+          <div class="list-viewport" data-e2e="forms-viewport">
+            <div
+              *ngFor="let item of selectedPeriods"
+              class="list-item"
+              data-e2e="form-item"
+            >
+              <div class="item-title">
+                {{ item.name }}
+                <div class="action" (click)="checkboxAction(item, false)">
+                  <i class="fas fa-times"></i>
+                </div>
+              </div>
+              <div class="splits">
+                {{ getSplits(item) }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

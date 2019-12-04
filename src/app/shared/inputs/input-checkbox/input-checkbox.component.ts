@@ -21,7 +21,7 @@ export class InputCheckboxComponent {
   @Input() definition = false;
   @Input()
   set check(v: boolean) {
-    if (v !== undefined) this.control.setValue(v, {emitEvent: false});
+    if (v !== undefined) this.control.setValue(v, { emitEvent: false });
   }
   @Output() checked = new EventEmitter();
   control = new FormControl();
@@ -41,7 +41,7 @@ export class InputCheckboxComponent {
       if (this.onChange) {
         this.onChange(value);
       }
-      this.checked.emit(value);
+      // this.checked.emit(value);
     });
   }
 

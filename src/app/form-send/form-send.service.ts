@@ -240,6 +240,7 @@ export class FormSendService {
       }
     }
     this.selectedPeriods = tmp;
+    console.log('this.selectedPeriods', this.selectedPeriods);
   }
 
   isSelectedPeriod(id): boolean {
@@ -361,7 +362,9 @@ export class FormSendService {
     });
     // console.log(data);
     this.api.updateFormTemplate(this.formId, data).subscribe(data => {
-      this.removeAllRounds().subscribe(() => {
+      console.log('data', data);
+      this.removeAllRounds().subscribe(step => {
+        console.log('step', step);
         this.stepperService.stepper = 'next';
         // console.log('removeAllRounds', this.roundsSubject.getValue());
       });

@@ -1036,30 +1036,34 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   goToPreviousStep() {
-    const currentPageIndex = this.formNavigationState$
-      .getValue()
-      .findIndex(page => {
-        return page.page === this.currentPosition$.value.page;
-      });
-    if (this.currentPosition$.value.tab !== 0) {
-      this.currentPosition$.next({
-        ...this.currentPosition$.value,
-        tab: this.currentPosition$.value.tab - 1
-      });
-      this.goBack.emit(false);
-    } else if (currentPageIndex !== 0) {
-      this.currentPosition$.next({
-        ...this.currentPosition$.value,
-        page: this.formNavigationState$.getValue()[currentPageIndex - 1].page,
-        tab:
-          this.formNavigationState$.getValue()[currentPageIndex - 1].tabs
-            .length - 1
-      });
-      this.goBack.emit(false);
+    if (this.formNavigationState$.getValue()) {
+      const currentPageIndex = this.formNavigationState$
+        .getValue()
+        .findIndex(page => {
+          return page.page === this.currentPosition$.value.page;
+        });
+      if (this.currentPosition$.value.tab !== 0) {
+        this.currentPosition$.next({
+          ...this.currentPosition$.value,
+          tab: this.currentPosition$.value.tab - 1
+        });
+        this.goBack.emit(false);
+      } else if (currentPageIndex !== 0) {
+        this.currentPosition$.next({
+          ...this.currentPosition$.value,
+          page: this.formNavigationState$.getValue()[currentPageIndex - 1].page,
+          tab:
+            this.formNavigationState$.getValue()[currentPageIndex - 1].tabs
+              .length - 1
+        });
+        this.goBack.emit(false);
+      } else {
+        // TODO: need business clarification for this branch of code
+        // this.goBackLocation();
+        this.goBack.emit(true);
+      }
     } else {
-      // TODO: need business clarification for this branch of code
-      // this.goBackLocation();
-      this.goBack.emit(true);
+      console.log('Navigation has no sence');
     }
   }
 
@@ -1068,34 +1072,38 @@ export class OnlineFormComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   goToNextStep() {
-    const currentPage = this.formNavigationState$.getValue().find(page => {
-      return page.page === this.currentPosition$.value.page;
-    });
-    const currentPageIndex = this.formNavigationState$
-      .getValue()
-      .findIndex(page => {
+    if (this.formNavigationState$.getValue()) {
+      const currentPage = this.formNavigationState$.getValue().find(page => {
         return page.page === this.currentPosition$.value.page;
       });
-    if (currentPage.tabs.length > this.currentPosition$.value.tab + 1) {
-      this.currentPosition$.next({
-        ...this.currentPosition$.value,
-        tab: this.currentPosition$.value.tab + 1
-      });
-      this.saveNext.emit(false);
-    } else if (
-      currentPageIndex + 1 <
-      this.formNavigationState$.getValue().length
-    ) {
-      this.currentPosition$.next({
-        ...this.currentPosition$.value,
-        page: this.formNavigationState$.getValue()[currentPageIndex + 1].page,
-        tab: 0
-      });
-      this.saveNext.emit(false);
+      const currentPageIndex = this.formNavigationState$
+        .getValue()
+        .findIndex(page => {
+          return page.page === this.currentPosition$.value.page;
+        });
+      if (currentPage.tabs.length > this.currentPosition$.value.tab + 1) {
+        this.currentPosition$.next({
+          ...this.currentPosition$.value,
+          tab: this.currentPosition$.value.tab + 1
+        });
+        this.saveNext.emit(false);
+      } else if (
+        currentPageIndex + 1 <
+        this.formNavigationState$.getValue().length
+      ) {
+        this.currentPosition$.next({
+          ...this.currentPosition$.value,
+          page: this.formNavigationState$.getValue()[currentPageIndex + 1].page,
+          tab: 0
+        });
+        this.saveNext.emit(false);
+      } else {
+        // TODO: goToFinishPage
+        console.log('TODO: goToFinishPage');
+        this.saveNext.emit(true);
+      }
     } else {
-      // TODO: goToFinishPage
-      console.log('TODO: goToFinishPage');
-      this.saveNext.emit(true);
+      console.log('Navigation has no sence');
     }
   }
 
