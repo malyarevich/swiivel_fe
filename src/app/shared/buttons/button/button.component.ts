@@ -11,7 +11,7 @@ import { ButtonSizeEnum } from '../buttonSize.enum';
 
 export class ButtonComponent {
   @Input() color: ButtonColorsEnum = ButtonColorsEnum.PURPLE;
-  @Input() disabled: boolean;
+  @Input() disabled = false;
   @Input() expand: ButtonExpandEnum = ButtonExpandEnum.DEFAULT;
   @Input() fill: 'outline';
   @Input() name: string;

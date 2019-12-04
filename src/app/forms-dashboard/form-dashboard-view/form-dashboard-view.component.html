@@ -1,0 +1,30 @@
+<sw-form-dashboard-view-header
+  text="Views"
+  [options]="staticsPeriodOptions"
+  [defaultIndexOption]="defaultIndexOption"
+  (changeOption)="clickChangeViewPeriod($event)"
+></sw-form-dashboard-view-header>
+<div class="statistics">
+  <div class="total-container">
+    <div class="total">
+      <h3 class="total-text">Total</h3>
+      <p class="total-value">{{ statistic && statistic.cnt ? statistic.cnt : 0 }}</p>
+    </div>
+  </div>
+
+  <div class="users-block" *ngIf="statistic && statistic.list && statistic.list.length">
+    <div class="users">
+      <div *ngFor="let user of statistic.list; let i = index" class="user">
+        <div *ngIf="i < 4">
+          <p class="user-name">{{ user.name }}</p>
+          <p class="user-date">{{ user?.date}}</p>
+        </div>
+      </div>
+    </div>
+
+    <sw-button color='transparent' (click)="viewAll()">
+      <span>View all</span>
+    </sw-button>
+  </div>
+
+</div>
