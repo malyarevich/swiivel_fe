@@ -19,7 +19,11 @@
   </sw-input-toggle>
 
   <sw-input-checkbox formControlName="checkbox">
-    <span class="label">default value</span>
+    <span class="label">FormControl</span>
+  </sw-input-checkbox>
+
+  <sw-input-checkbox (change)="logEvent('change')">
+    <span class="label">Without formControl</span>
   </sw-input-checkbox>
 
   <sw-input-button-group formControlName="buttonGroup" [options]="buttons"></sw-input-button-group>
