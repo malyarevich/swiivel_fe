@@ -3,20 +3,21 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnChanges,
-  OnInit,
   Optional,
   Output,
   Self,
-  SimpleChanges,
   ChangeDetectorRef,
   ElementRef,
   ViewChild
 } from '@angular/core';
 import {coerceBooleanProperty} from '@angular/cdk/coercion';
 
-import { FormControl, NgControl, CheckboxControlValueAccessor, ControlValueAccessor } from '@angular/forms';
+import { NgControl, ControlValueAccessor } from '@angular/forms';
 
+
+const deprecated = function(_this: any, name = ''){
+  console.warn(`Input ${name} is deprecated`, _this);
+}
 @Component({
   selector: 'sw-input-checkbox',
   templateUrl: './input-checkbox.component.html',
@@ -25,7 +26,12 @@ import { FormControl, NgControl, CheckboxControlValueAccessor, ControlValueAcces
 })
 export class InputCheckboxComponent implements ControlValueAccessor {
   @Input() target = 'label';
-  @Input() isActive = true;
+  @Input()
+  get isActive(){ return this.__isActive; }
+  set isActive(value: boolean){
+    deprecated(this, 'isActive');
+    this.__isActive = value;
+  }
   @Input() definition = false;
   @Input() disabled = false;
 
@@ -43,10 +49,13 @@ export class InputCheckboxComponent implements ControlValueAccessor {
     if (value != this.checked) {
       this._checked = value;
       this.cdr.markForCheck();
+      if (this.onChange) this.onChange(this._checked);
+      else this.change.emit(this._checked)
     }
   }
+  private __isActive: boolean;
   private _checked: boolean = false;
-  private onChange: (value: boolean) => void;
+  private onChange: (value: any) => void;
   private onTouched: () => void;
   @Input()
   get required(): boolean { return this._required; }
@@ -73,7 +82,7 @@ export class InputCheckboxComponent implements ControlValueAccessor {
     }
   }
 
-
+  
 
   setDisabledState(isDisabled: boolean) {
     this.disabled = isDisabled;
@@ -99,7 +108,6 @@ export class InputCheckboxComponent implements ControlValueAccessor {
         this._indeterminateChange.emit(this._indeterminate);
       }
     }
-    this.change.emit();
     this.toggle();
   }
   _onInteractionEvent(event: Event) {
@@ -116,6 +124,8 @@ export class InputCheckboxComponent implements ControlValueAccessor {
     }
   }
   ngAfterViewInit() {
+    if (this.__isActive !== undefined) deprecated(this, 'isActive');
+    else this.__isActive = true;
     this._syncIndeterminate(this._indeterminate);
   }
   private _syncIndeterminate(value: boolean) {
@@ -127,7 +137,7 @@ export class InputCheckboxComponent implements ControlValueAccessor {
   }
 
   public _onLabelClick(event: Event) {
-    if (event.target['tagName'] !== 'INPUT' && this.isActive && !this.disabled) {
+    if (event.target['tagName'] !== 'INPUT' && this.__isActive && !this.disabled) {
       this.toggle();
       event.preventDefault();
       event.stopPropagation();
