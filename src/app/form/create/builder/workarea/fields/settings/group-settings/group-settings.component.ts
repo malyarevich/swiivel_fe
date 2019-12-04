@@ -61,6 +61,25 @@ export class GroupSettingsComponent {
         return true;
       }
     });
+
+    this.form.get('required').valueChanges.subscribe((value) => {
+      if (value === true) {
+        this.setChildren.emit({key: 'required', value: true});
+      }
+    });
+    this.form.get('hideTitle').valueChanges.subscribe((value) => {
+      if (value === true) {
+        this.setChildren.emit({key: 'hideLabel', value: true});
+      }
+    })
+
+    this.form.valueChanges.subscribe(v => {
+      this.prepareForm(v);
+    });
+  }
+
+  prepareForm(value) {
+    this.fieldSettings.emit(value);
   }
 
 }
