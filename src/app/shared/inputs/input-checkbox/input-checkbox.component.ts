@@ -3,20 +3,21 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnChanges,
-  OnInit,
   Optional,
   Output,
   Self,
-  SimpleChanges,
   ChangeDetectorRef,
   ElementRef,
   ViewChild
 } from '@angular/core';
 import {coerceBooleanProperty} from '@angular/cdk/coercion';
 
-import { FormControl, NgControl, CheckboxControlValueAccessor, ControlValueAccessor } from '@angular/forms';
+import { NgControl, ControlValueAccessor } from '@angular/forms';
 
+
+const deprecated = function(_this: any, name = ''){
+  console.warn(`Input ${name} is deprecated`, _this);
+}
 @Component({
   selector: 'sw-input-checkbox',
   templateUrl: './input-checkbox.component.html',
@@ -25,7 +26,12 @@ import { FormControl, NgControl, CheckboxControlValueAccessor, ControlValueAcces
 })
 export class InputCheckboxComponent implements ControlValueAccessor {
   @Input() target = 'label';
-  @Input() isActive = true;
+  @Input()
+  get isActive(){ return this.__isActive; }
+  set isActive(value: boolean){
+    deprecated(this, 'isActive');
+    this.__isActive = value;
+  }
   @Input() definition = false;
   @Input() disabled = false;
 
@@ -45,8 +51,9 @@ export class InputCheckboxComponent implements ControlValueAccessor {
       this.cdr.markForCheck();
     }
   }
+  private __isActive: boolean;
   private _checked: boolean = false;
-  private onChange: (value: boolean) => void;
+  private onChange: (value: any) => void;
   private onTouched: () => void;
   @Input()
   get required(): boolean { return this._required; }
@@ -115,6 +122,8 @@ export class InputCheckboxComponent implements ControlValueAccessor {
     }
   }
   ngAfterViewInit() {
+    if (this.__isActive !== undefined) deprecated(this, 'isActive');
+    else this.__isActive = true;
     this._syncIndeterminate(this._indeterminate);
   }
   private _syncIndeterminate(value: boolean) {
@@ -126,7 +135,7 @@ export class InputCheckboxComponent implements ControlValueAccessor {
   }
 
   public _onLabelClick(event: Event) {
-    if (event.target['tagName'] !== 'INPUT' && this.isActive && !this.disabled) {
+    if (event.target['tagName'] !== 'INPUT' && this.__isActive && !this.disabled) {
       this.toggle();
       event.preventDefault();
       event.stopPropagation();
