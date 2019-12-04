@@ -73,7 +73,7 @@ export class InputCheckboxComponent implements ControlValueAccessor {
     }
   }
 
-  
+
 
   setDisabledState(isDisabled: boolean) {
     this.disabled = isDisabled;
@@ -99,6 +99,7 @@ export class InputCheckboxComponent implements ControlValueAccessor {
         this._indeterminateChange.emit(this._indeterminate);
       }
     }
+    this.change.emit();
     this.toggle();
   }
   _onInteractionEvent(event: Event) {

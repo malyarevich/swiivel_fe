@@ -59,15 +59,19 @@
               <th cdk-header-cell *cdkHeaderCellDef width="4%">
                 <div class="cdk-header-checkbox">
                   <sw-input-checkbox
-                    (click)="allSelect()"
+                    (change)="allSelect()"
                     [check]="pageSelection[params.page - 1]?.selectedAnyRow || false"
                     [definition]="!pageSelection[params.page - 1]?.allSelected || false"
+                    [disabled]="showSpinner"
                   ></sw-input-checkbox>
                 </div>
               </th>
               <td cdk-cell *cdkCellDef="let form">
                 <div class="cdk-data-checkbox">
-                  <sw-input-checkbox [check]="_sm.isSelected(form.id)"></sw-input-checkbox>
+                  <sw-input-checkbox
+                    [check]="_sm.isSelected(form.id)"
+                    (change)="selectRow(form)"
+                  ></sw-input-checkbox>
                 </div>
               </td>
             </ng-container>
