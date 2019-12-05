@@ -13,8 +13,8 @@ import { takeUntil } from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WorkareaSectionPlaceholderComponent {  
-  _section: FormGroup;
-  @Input() set section(fg: FormGroup) {
+  _section: any;
+  @Input() set section(fg: any) {
     this._section = fg;
   }
   widthOptions = [

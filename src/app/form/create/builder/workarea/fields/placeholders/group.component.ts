@@ -12,8 +12,8 @@ import { Subscription } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WorkareaGroupPlaceholderComponent {
-  _group: FormGroup;
-  @Input() set group(fg: FormGroup) {
+  _group: any;
+  @Input() set group(fg: any) {
     this._group = fg;
   }
   widthOptions = [
