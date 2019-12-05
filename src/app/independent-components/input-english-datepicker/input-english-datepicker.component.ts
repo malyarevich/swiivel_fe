@@ -327,4 +327,13 @@ export class InputEnglishDatepickerComponent
     }
     this.close();
   }
+
+  disabledApply() {
+    if (!this.range) {
+      return !(this.inputDateForm.get('dateFrom').value && this.inputDateForm.get('dateFrom').value.length === 8);
+    }
+
+    return !(this.inputDateForm.get('dateFrom').value && this.inputDateForm.get('dateFrom').value.length === 8 &&
+      this.inputDateForm.get('dateTo').value && this.inputDateForm.get('dateTo').value.length === 8);
+  }
 }
