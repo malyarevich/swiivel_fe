@@ -229,7 +229,7 @@ export class FormTableComponent implements OnInit {
     }
   }
 
-  selectRow(row: FormModel, e?: Event) {
+  selectRow(row: FormModel, e?: Event, checkbox = false): void {
     if (
       e &&
       e.target &&
@@ -241,12 +241,14 @@ export class FormTableComponent implements OnInit {
       e.stopPropagation();
     } else {
       if (row) {
-        if (this._sm.isSelected(row.id)) {
-          this._sm.deselect(row.id);
-          delete this.selectedRows[row.id];
+        if (!checkbox) {
+          if (this._sm.isSelected(row.id)) {
+           this.deleteRowFromSm(row.id);
+          } else {
+            this.addRowToSm(row);
+          }
         } else {
-          this._sm.select(row.id);
-          this.selectedRows[row.id] = row;
+          e ? this.addRowToSm(row) : this.deleteRowFromSm(row.id);
         }
       }
       const selectedPageRows = this.rows.map((rowForm: any) => this._sm.isSelected(rowForm.id)).filter(item => item);
@@ -254,6 +256,16 @@ export class FormTableComponent implements OnInit {
       this.pageSelection[this.params.page - 1].allSelected = selectedPageRows.length === this.rows.length;
       this.pageSelection[this.params.page - 1].selectedAnyRow = selectedPageRows.length > 0;
     }
+  }
+
+  deleteRowFromSm(id: string): void {
+    this._sm.deselect(id);
+    delete this.selectedRows[id];
+  }
+
+  addRowToSm(row: FormModel): void {
+    this._sm.select(row.id);
+    this.selectedRows[row.id] = row;
   }
 
   clickTab(filter) {
@@ -486,8 +498,8 @@ export class FormTableComponent implements OnInit {
     this.dialog.open();
   }
 
-  allSelect(): void {
-    if (this.pageSelection[this.params.page - 1].selectedAnyRow) {
+  allSelect(e: any): void {
+    if (this.pageSelection[this.params.page - 1].selectedAnyRow && !e) {
       this.rows.forEach((row: any) => {
         this._sm.deselect(row.id);
         delete this.selectedRows[row.id];
