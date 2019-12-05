@@ -88,8 +88,17 @@ export class FormTableComponent implements OnInit {
 
   public isDashboardShown = true;
   public statistic: FormStatisticModel;
-  public statisticsPeriodOptions = ['last week', 'last month', 'current year'];
-  public defaultIndexOption = 2;
+  public statisticsPeriodOptions = [
+    'current week',
+    'last week',
+    'current month',
+    'last month',
+    'this quarter',
+    'last quarter',
+    'current year',
+    'last year',
+  ];
+  public defaultIndexOption = 6;
   public statisticParams = {
     'periods[views]': this.statisticsPeriodOptions[this.defaultIndexOption].replace(/ /g, '_'),
     'periods[submissions_rate]': this.statisticsPeriodOptions[this.defaultIndexOption].replace(/ /g, '_'),
