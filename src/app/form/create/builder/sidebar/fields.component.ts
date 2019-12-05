@@ -1,15 +1,16 @@
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { Component, OnInit, ChangeDetectionStrategy, ViewChild, ChangeDetectorRef, AfterViewChecked, OnDestroy, Input, ElementRef } from '@angular/core';
-import { FormControl, FormBuilder, FormArray, FormGroup } from '@angular/forms';
+import { FormControl, FormBuilder, FormArray, FormGroup, Form, Validators } from '@angular/forms';
 import { ApiService } from '@app/core/api.service';
 import { FormService } from '@app/form/form.service';
-import { CdkDragDrop, CdkDragExit } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, CdkDragExit, CdkDragStart } from '@angular/cdk/drag-drop';
 import { TreeDataSource, CHILDREN_SYMBOL } from '../../tree.datasource';
 import { Popup } from '@app/core/popup.service';
 import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { cloneDeep } from 'lodash';
+import { cloneDeep, flattenDeep, flatMapDeep } from 'lodash';
+import * as icons from '@app/core/icons';
 // import fields from '@app/shared/fields';
 
 
@@ -20,18 +21,28 @@ import { cloneDeep } from 'lodash';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestroy {
+  icons = icons;
   filterValue: string = null;
   filterControl = new FormControl();
   treeSource = new TreeDataSource('Sidebar');
   treeControl = new NestedTreeControl((node: any) => node.fields);
   activeTree: any[];
   breadcrumbs: any[] = null;
+  canCreateField = false;
+  fieldTypes = [];
   delFieldName: string;
   delInput: FormControl = new FormControl(null);
+  customForm: FormGroup;
   ref: any;
   destroyed$ = new Subject();
   id = 'sidebar-list';
   dropListsIds = [];
+  widthOptions = [
+    {value: 0, title: '1/4 page'},
+    {value: 1, title: '2/4 page'},
+    {value: 2, title: '3/4 page'},
+    {value: 3, title: 'Full page'}
+  ];
   @ViewChild('filter', { static: false }) filterNames;
   @ViewChild('deletePop', { static: false }) deletePop;
   @ViewChild('widget', { static: true }) widget;
@@ -59,7 +70,16 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
     this.service.dropLists$.subscribe((ids) => {
       this.dropListsIds = Array.from(ids);
     });
+    this.customForm = this.fb.group({
+      'parent': [null, [Validators.required]],
+      'type': [101, [Validators.required]],
+      'options': this.fb.group({
+        'size': [3, [Validators.required]],
+      }),
+    });
+    // this.customForm
   }
+
 
   activate(node, event) {
     return event;
@@ -82,6 +102,10 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
           this.treeControl.expandAll();
         }
       }
+      this.fieldTypes = this.service.fieldTypes.schema.map((type) => {
+        return {value: type.type, title: type.name}
+      });
+      console.log(this.fieldTypes)
       this.cdr.markForCheck();
     });
     this.treeControl.getDescendants = (dataNode) => {
@@ -98,16 +122,64 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
     });
 
     
+    
 
 
     this.filterControl.valueChanges.pipe(takeUntil(this.destroyed$)).subscribe(value => {
       if (value && value.length > 0) {
         this.filterValue = value.toLowerCase();
+
+        // const filterItem = (item) => {
+        //   if (item.type > 112) {
+        //     // console.log(item.fields)
+        //     item.isFiltered = item.fields.filter(filterItem).length > 0;
+        //     // if (item.isFiltered) item.fields.forEach(filterItem);
+        //   } else {
+        //     item.isFiltered = (item.name as string).toLowerCase().includes(this.filterValue);
+        //   }
+        //   // console.log(item.name, item.isFiltered);
+        //   return item;
+        // };
+        // this.activeTree = flatMapDeep(this.activeTree, filterItem);
+        // console.log(this.activeTree);
+        // this.activeTree.forEach(filterItem);
+        // this.activeTree.forEach((item) => {
+        //   filterByName(item, this.filterValue);
+        //   // this.filterValue;
+        // });
       } else {
         this.filterValue = null;
       }
     });
   }
+
+  get customType() {
+    if (this.customForm.get('type').valid) {
+      let selected = this.customForm.get('type').value;
+      return this.fieldTypes.find(field => {
+        return field.value === selected;
+      });
+    }
+    return null;
+  }
+
+  isHidden(field) {
+    if (!this.filterValue) return false;
+    return !(this.filterValue && field.name.toLowerCase().includes(this.filterValue));
+  }
+
+  isGroupHidden(group) {
+    if (!this.isHidden(group)) return false;
+    else {
+      let childVisible = group.fields.find((field) => {
+        return !this.isHidden(field);
+      });
+      if (!childVisible) return true;
+      else return false;
+    }
+  }
+
+
 
   onBreadcrumbClick(idx) {
     let paths = this.breadcrumbs.slice(0, idx + 1);
@@ -124,9 +196,11 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
     if (root === null) {
       this.activeTree = this.treeSource.nodes;
       this.breadcrumbs = null;
+      this.canCreateField = null;
     } else {
       this.activeTree = root.fields;
       this.breadcrumbs = root.path;
+      this.canCreateField = root;
     }
     this.cdr.markForCheck();
   }
@@ -134,6 +208,19 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
   getListId(node) {
     let listId = [...this.service.getParentPaths(node), node.name, node.type].join('');
     return listId;
+  }
+
+  start(event: CdkDragStart){
+    console.log(event);
+  }
+
+  expandAll(node) {
+    if (!!node.isExpanded) {
+      node.isExpanded = false;
+    } else {
+      node.isExpanded = true;
+    }
+    // this.treeSource.child
   }
 
   clone(node) {
@@ -172,10 +259,6 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
 
   getIcon(expanded: boolean): string {
     return expanded ? 'fa-caret-up' : 'fa-caret-down';
-  }
-
-  canCreateField(node) {
-    return (node.type === 113 || node.type === 114) && this.treeControl.isExpanded(node);
   }
 
   customFieldToggle(node) {
@@ -242,16 +325,48 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
     this.closePop();
   }
 
-  isExpanded(node) {
-    if (this.filterValue !== null) return true;
-    else {
-      return this.treeControl.isExpanded(node);
-    }
-  }
+  // isExpanded()
+
+  // isExpanded(node) {
+  //   if (this.filterValue !== null) return true;
+  //   else {
+  //     return this.treeControl.isExpanded(node);
+  //   }
+  // }
 
   isFiltered(node) {
     if (this.filterValue) {
-      return !(node.name as string).toLowerCase().includes(this.filterValue)
+      // console.log(node.name, node.isFiltered);
+      if (node.type < 113) {
+        let found = (node.name as string).toLowerCase().includes(this.filterValue);
+        if (found) {
+          for (let parent of this.treeSource.tree.ancestorsIterator(node)) {
+            if (parent.type && parent.type > 112) {
+              parent.isFiltered = true;
+            }
+          }
+        }
+        if (!!found) console.log(node.name);
+        return !!found;
+      } else {
+        return !node.isFiltered;
+      }
+      // console.log(Array.from(this.treeSource.parentsOf(node)));
+      // let includes = (node.name as string).toLowerCase().includes(this.filterValue);
+      // if (includes) {                                                                           
+      //   for (let parent of this.treeSource.tree.ancestorsIterator(node)) {
+      //     if (parent.type && parent.type > 112) {
+      //       parent.isFiltered = true;
+      //       console.log(parent);
+      //     }
+      //   }
+      //   // for (let parent of this.treeSource.tree.childrenIterator(node)) {
+      //   //   if (parent.type){// && parent.type > 112) {
+      //   //     parent.isFiltered = true;
+      //   //     console.log(node.name, parent);
+      //   //   }
+      //   // }
+      // }
     } else {
       return !!this.filterValue;
     }
@@ -306,8 +421,11 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
     node.isExpanded = this.treeControl.isExpanded(node);
     this.cdr.markForCheck();
   }
-  addCustomField(node) {
-    console.log(`custom`, node)
+  addCustomField(event) {
+    if (this.customForm.valid) {
+      console.log(`custom`, this.customForm.value);
+      this.canCreateField['fields'].push(this.customForm.value);
+    }
   }
 
   nodeIsChecked(node) {
