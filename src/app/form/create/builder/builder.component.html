@@ -24,7 +24,7 @@
         </div>
       </div>
       <div class="sidebar_section__content" data-e2e="sidebar_section__content">
-        <sw-form-create-sidebar-fields [form]="form.get('fields')"></sw-form-create-sidebar-fields>
+        <sw-form-create-sidebar-fields [form]="form.get('fields')" *ngIf="isExpanded('formFields')"></sw-form-create-sidebar-fields>
       </div>
     </div>
     <!-- FORM FIELDS SIDEBAR END -->

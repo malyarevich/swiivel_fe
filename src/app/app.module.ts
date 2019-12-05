@@ -20,7 +20,6 @@ import { SharedModule } from '@shared/shared.module';
 
 import { FontAwesomeModule, FaIconLibrary, FaConfig } from '@fortawesome/angular-fontawesome';
 
-import { sw, consent } from '@app/core/icons.ts';
 
 const onInit: (authService: AuthService) => any = (authService: AuthService) => {
   return (): Promise<boolean> => {
@@ -68,8 +67,5 @@ import { ErrorsListTooltipComponent } from '@app/online-form/errors-list/errors-
 })
 export class AppModule {
   constructor(library: FaIconLibrary, config: FaConfig) {
-    library.addIconPacks(sw);
-    // library.addIcons(consent)
-    // config.defaultPrefix = 'sw';
   }
 }

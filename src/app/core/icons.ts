@@ -1,6 +1,10 @@
 import { IconDefinition,  IconPack, IconPathData, IconPrefix, IconName } from '@fortawesome/fontawesome-svg-core';
-
+// import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
+import { IconsEnum } from '@app/shared/icons.enum';
 // import { core } from '@angular/compiler';
+import { faEllipsisV as handler,
+faTimes as close
+} from '@fortawesome/free-solid-svg-icons';
 
 export const consent: {
   prefix: IconPrefix,
@@ -82,3 +86,9 @@ export const sw:any = {
   consent2,
   documents
 }
+// const icons = [faEllipsisV];
+export { handler };
+export { close };
+export const icons = [
+  handler, close
+];

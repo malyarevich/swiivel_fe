@@ -1,3 +1,5 @@
+@import "index";
+
 :host {
   display: flex;
   flex-flow: column;
@@ -31,7 +33,7 @@
         }
       }
       .dragdrop {
-        color: #A4A4A4;
+        color:#EBEEFF;
       }
       &.active {
         box-sizing: border-box;
@@ -61,9 +63,6 @@
     &.field {
       padding: 7px 20px;
     }
-    .field {
-      display: none;
-    }
   }
   .children {
     margin-left: 10px;
@@ -87,4 +86,40 @@
 
  
   
+}
+
+:host-context(#sidebar-list) {
+  .main_container {
+    display: none;
+  }
+  .group {
+    display: flex;
+    flex-flow: row nowrap;
+    padding: 10px;
+    box-shadow: inset 0px -1px 0px #E7E7E7;
+    align-items: center;
+    color: #4350A2;
+    font: 800 12px/15px $nunito-sans;
+    .cdk-drag-placeholder {
+      display: none;
+    }
+    .node-name {
+      white-space: nowrap;
+      flex-grow: 1;
+    }
+    i {
+      display: flex;
+      width: 25px;
+      height: 25px;
+      color: #A4A4A4;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  
+}
+:host-context(.root-list) {
+  .group {
+    display: none;
+  }
 }
