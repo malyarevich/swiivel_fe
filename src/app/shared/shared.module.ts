@@ -10,6 +10,7 @@ import { DropdownInputComponent } from './inputs/dropdown-input/dropdown-input.c
 import { DropdownSelectComponent } from './inputs/dropdown-select/dropdown-select.component';
 import { InputButtonGroupComponent } from './inputs/input-button-group/input-button-group.component';
 import { InputCheckboxComponent } from './inputs/input-checkbox/input-checkbox.component';
+import { InputDashCheckboxComponent } from './inputs/input-dash-checkbox/input-dash-checkbox.component';
 import { InputDynamicComponent } from './inputs/input-dynamic/input-dynamic.component';
 import { InputNumberComponent } from './inputs/input-number/input-number.component';
 import { InputSuggestComponent } from './inputs/input-suggest/input-suggest.component';
@@ -85,6 +86,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     InputButtonGroupComponent,
     InputCheckboxComponent,
     InputDynamicComponent,
+    InputDashCheckboxComponent,
     InputNumberComponent,
     InputTextComponent,
     InputSuggestComponent,
@@ -132,6 +134,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     // Inputs
     InputButtonGroupComponent,
     InputCheckboxComponent,
+    InputDashCheckboxComponent,
     InputDynamicComponent,
     InputNumberComponent,
     InputTextComponent,
