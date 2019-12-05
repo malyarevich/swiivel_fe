@@ -27,7 +27,7 @@ export class FormDashboardRateComponent implements OnChanges {
   public  chartTotal: Chart = {};
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes && changes.statistic && changes.statistic.currentValue && changes.statistic.currentValue.percent) {
+    if (changes && changes.statistic && changes.statistic.currentValue && changes.statistic.currentValue.percent !== null) {
       setTimeout(() => {
         this.chartTotal = new Chart(
           this.chartTotalView.nativeElement.getContext('2d'),
