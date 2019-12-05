@@ -60,7 +60,8 @@
   text-transform: uppercase;
 }
 
-sw-input-text {
+sw-input-text,
+sw-input-mask-text {
   span.icon {
     position: absolute;
     right: 0.85rem;
@@ -106,7 +107,8 @@ sw-input-text {
   }
 }
 
-sw-input-text.settings-field{
+sw-input-text.settings-field,
+sw-input-mask-text.settings-field{
   .input_text {
     &__input {
       padding: 6px 10px 4px 10px;
@@ -371,7 +373,7 @@ sw-input-textarea {
 
 sw-send-preview {
   sw-online-form {
-    
+
     @include media-breakpoint-up(lg) {
       .online_form_container {
         flex-direction: column !important;
@@ -420,13 +422,13 @@ sw-send-preview {
           display: none !important;
         }
       }
-      
+
       // Additional Documents
       .document_container {
         max-width: 100% !important;
         min-height: 5rem !important;
 
-        
+
         &__control {
           max-width: 100% !important;
           margin-top: 0 !important;
@@ -469,7 +471,7 @@ sw-send-preview {
         }
       }
 
-      // Signature 
+      // Signature
       .signature {
 
         &__inputs_container {
@@ -539,7 +541,8 @@ sw-send-preview {
       &.field {
         padding: 7px 20px;
       }
-      sw-input-text {
+      sw-input-text,
+      sw-input-mask-text {
         margin-right: 10px;
         width: 450px;
       }
@@ -548,7 +551,7 @@ sw-send-preview {
       }
       .dragdrop {
         color: #fff;
-      }  
+      }
     }
   }
 }
@@ -605,7 +608,7 @@ sw-send-preview {
       -ms-transform: rotate(-50%, -50%);
       transform: rotate(45deg);
     }
-    
+
     input[type=checkbox]:indeterminate:after {
       content: "\2022";
       color: transparent;
@@ -683,7 +686,7 @@ sw-send-preview {
     &.field {
       padding: 7px 20px;
     }
-    
+
   }
 }
 

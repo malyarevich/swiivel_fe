@@ -18,7 +18,7 @@ import { formStatuses } from '@shared/form-statuses';
 import { IconsEnum } from '@shared/icons.enum';
 import { DialogComponent } from '@shared/popup/dialog.component';
 import { get, pick } from 'lodash';
-import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import { distinctUntilChanged, map } from 'rxjs/operators';
 import { DataCollectionService } from './data-collection.service';
 import { FormsDataSource } from './form-table.datasource';
 
@@ -48,7 +48,7 @@ export class FormTableComponent implements OnInit {
 
   // TABLE DATA
   public dataSource: FormsDataSource = new FormsDataSource(this.dataCollectionService);
-  public displayedColumns = ['checkbox', 'name', 'type', 'access', 'createdBy', 'updatedAt', 'status', 'actions'];
+  public displayedColumns = ['checkbox', 'name', 'type', 'access', 'createdBy', 'createdAt', 'status', 'actions'];
   public params: FormSearchParams = {
     page: 1,
     limit: 10,
@@ -77,7 +77,7 @@ export class FormTableComponent implements OnInit {
     filename: null
   };
   public filterForm: FormGroup;
-  public sort = ['updated_at', false];
+  public sort = ['created_at', false];
   public currentPage = 1;
 
   public statusesOptions = formStatusOptions;
@@ -88,8 +88,17 @@ export class FormTableComponent implements OnInit {
 
   public isDashboardShown = true;
   public statistic: FormStatisticModel;
-  public statisticsPeriodOptions = ['last week', 'last month', 'current year'];
-  public defaultIndexOption = 2;
+  public statisticsPeriodOptions = [
+    'current week',
+    'last week',
+    'current month',
+    'last month',
+    'this quarter',
+    'last quarter',
+    'current year',
+    'last year',
+  ];
+  public defaultIndexOption = 6;
   public statisticParams = {
     'periods[views]': this.statisticsPeriodOptions[this.defaultIndexOption].replace(/ /g, '_'),
     'periods[submissions_rate]': this.statisticsPeriodOptions[this.defaultIndexOption].replace(/ /g, '_'),
@@ -115,7 +124,7 @@ export class FormTableComponent implements OnInit {
       type: [null],
       access: [null],
       createdBy: [null],
-      updatedAt: null,
+      createdAt: null,
       status: [null],
     });
 

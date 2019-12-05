@@ -5,7 +5,7 @@
   (click)="openDatepicker($event)"
 >
 
-  <div class="input-date">
+  <div class="input-date" style="margin: 0;">
     <input
       class="input"
       mask="{{mask}}"
@@ -92,8 +92,8 @@
         </sw-button>
       </div>
       <div class="controls-button">
-        <sw-button (click)="apply()" [expand]="buttonExpand.FULL">
-          <span class="text">Apply</span>
+        <sw-button (click)="apply()" [expand]="buttonExpand.FULL" [disabled]="disabledApply()">
+          <span class="text">Apply </span>
         </sw-button>
       </div>
     </div>

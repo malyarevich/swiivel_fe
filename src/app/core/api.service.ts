@@ -61,7 +61,7 @@ export class ApiService {
           requestParams.filter[filter].forEach((item) => {
             params = params.append(`filter[${filter}][]`, item.value);
           });
-        } else if (filter === 'updatedAt') {
+        } else if (filter === 'createdAt') {
           if (requestParams.filter[filter]['startDate'] && requestParams.filter[filter]['startDate'].date) {
             params = params.append(
               `filter[${filter}][startDate]`,
@@ -158,7 +158,7 @@ export class ApiService {
   uploadFormPDF(file) {
     const fbLibk = environment.apiFB;
     const params = new HttpParams().set("api_token", environment.api_token).set('formName' , 'first form').set('type' ,'new form');
-    const opt = { 
+    const opt = {
       body: file,
       params
     }
