@@ -145,7 +145,7 @@ export class FormManagementComponent implements OnInit {
   }
 
   editForm(): void {
-    this.router.navigate(['/form-creator/' + this.form._id]);
+    this.router.navigate(['/form/' + this.form._id]);
   }
 
   bulkAction(evt: any): void {
