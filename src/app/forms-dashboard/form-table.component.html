@@ -278,20 +278,20 @@
             </ng-container>
 
 
-            <ng-container cdkColumnDef="updatedAt">
+            <ng-container cdkColumnDef="createdAt">
               <th cdk-header-cell *cdkHeaderCellDef width="12%">
                 <div class="header_container" data-e2e="updateddatename">
-                  <div class="header_container__title" data-e2e="updateddatenametitle" (click)="sortBy('updated_at')">
-                    update date
+                  <div class="header_container__title" data-e2e="updateddatenametitle" (click)="sortBy('created_at')">
+                    created date
                     <div class="header_container__title_icons">
                       <i class="fas icon"
-                         [ngClass]="{'up': sort[0] === 'updated_at' && sort[1] === false, 'down': sort[0] === 'updated_at' && sort[1] === true}"></i>
+                         [ngClass]="{'up': sort[0] === 'created_at' && sort[1] === false, 'down': sort[0] === 'created_at' && sort[1] === true}"></i>
                     </div>
                   </div>
                   <div class="header_container__filter">
                     <sw-input-english-datepicker
                       class="filter-field"
-                      formControlName="updatedAt"
+                      formControlName="createdAt"
                       placeholder=""
                       [range]="true"
                       (keydown)="keyDownFunction($event)"
@@ -300,8 +300,8 @@
                 </div>
               </th>
               <td cdk-cell *cdkCellDef="let form">
-                <span class="date">{{ dateService.getDate(form.updated_at) }}</span>
-                <span class="time">{{ dateService.getTime(form.updated_at) }}</span>
+                <span class="date">{{ dateService.getDate(form.created_at) }}</span>
+                <span class="time">{{ dateService.getTime(form.created_at) }}</span>
               </td>
             </ng-container>
 
