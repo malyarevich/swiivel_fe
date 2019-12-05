@@ -12,7 +12,7 @@
     [attr.inputmode]="_mode"
     [attr.autocomplete]="autocomplete"
     [formControl]="control.control"
-    [attr.disabled]="!!disabled || null"
+    [disabled]="!!disabled || null"
     [readonly]="!!readonly || null"
     (focus)="onFocus.emit()"
     (blur)="onBlur.emit()"

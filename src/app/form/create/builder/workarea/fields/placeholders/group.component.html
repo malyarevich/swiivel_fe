@@ -1,0 +1,32 @@
+<div class="main_container" *ngIf="_group">
+  <div class="content">
+    <div class="drag-icon">
+      <i class="dragdrop fas fa-ellipsis-v"></i>
+    </div>
+    <div class="name-container">
+      <div class="main-text">{{ _group.name }}</div>
+      <div class="hint" *ngIf="_group.textType">Group Type - {{ _group.textType }}</div>
+    </div>
+  </div>
+  <div class="actions">
+    <div class="icon">
+      <sw-icon-button icon="fa-cog" class="field-creator blue">
+      </sw-icon-button>
+    </div>
+    <div class="icon">
+      <sw-icon-button icon="fa-times" class="field-creator blue">
+      </sw-icon-button>
+    </div>
+    <div class="icon dragdrop">
+      <sw-icon-button [icon]="_group.isExpanded ? 'fa-caret-up' : 'fa-caret-down'" class="blue">
+      </sw-icon-button>
+    </div>
+  </div>
+</div>
+<div class="group">
+    <sw-input-checkbox [(ngModel)]="_group.isActive"></sw-input-checkbox>
+    <i class="dragdrop fas fa-ellipsis-v"></i>
+    <span class="node-name">{{_group.name}}</span>
+    <sw-icon-button [icon]="_group.isExpanded ? 'fa-caret-up' : 'fa-caret-down'">
+    </sw-icon-button>
+  </div>

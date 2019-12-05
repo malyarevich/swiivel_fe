@@ -38,8 +38,14 @@ export class InputTextComponent implements ControlValueAccessor, OnInit {
   @Input() set style(styleType: string) {
     this._style = styleType;
   }
-  @Input() disabled: boolean = null;
-  @Input() readonly: boolean = null;
+  @Input() disabled: boolean;
+  @Input() set readonly(readOnly: boolean) {
+    if (readOnly) {
+      this.control.control.disable();
+    } else {
+      this.control.control.enable();
+    }
+  }
   @Input() isSearch = false;
   @Input() isClearable = false;
   @Input() trimStart: boolean;

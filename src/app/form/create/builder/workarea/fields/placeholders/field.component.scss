@@ -1,0 +1,105 @@
+@import "index";
+
+:host-context(.root-list) {
+    display: flex;
+    flex-flow: column nowrap;
+    sw-select {
+      min-width: 120px;
+    }
+    .main_container {
+        display: flex;
+        align-items: center;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        width: 100%;
+        border-radius: 3px;
+        padding-right: 10px;
+        box-sizing: border-box; 
+        background: #fff !important;
+        .field {
+          display: none;
+        }
+        .content {
+          margin: 10px 0 10px 20px;
+          display: flex;
+          flex-flow: row nowrap;
+          justify-content: space-between;
+          align-items: center;
+          box-sizing: border-box;
+          .name-container {
+            width: 300px;
+            .main-text {
+              font-style: normal;
+              font: 800 12px/15px "Nunito Sans";
+            }
+            .hint {
+              font-style: normal;
+              font: 400 10px/13px "Nunito Sans";
+            }
+          }
+          .dragdrop {
+            color: #A4A4A4;
+          }
+          .input {
+            margin-left: 25px;
+          }
+        }
+        .drag-icon {
+          margin-right: 20px;
+        }
+        &.active {
+          box-sizing: border-box;
+          border: 1px solid #4350A2;
+          border-bottom-left-radius: 0;
+          border-bottom-right-radius: 0;
+        }
+      }
+      .actions {
+        display: flex;
+        align-items: center;
+        flex-flow: row nowrap;
+        .icon {
+          margin-left: 15px;
+          &.dragdrop {
+            padding: 15px;
+            border-left: 1px solid #C9CEEC;
+          }
+          &.active {
+            color: #fff;
+          }
+        }
+      }
+      &.field {
+        padding: 7px 20px;
+      }
+}
+:host-context(#sidebar-list) {
+  .main_container {
+    .content {
+      display: none;
+    }
+    .field {
+      display: flex;
+      flex-flow: row nowrap;
+      padding: 10px;
+      box-shadow: inset 0px -1px 0px #E7E7E7;
+      align-items: center;
+      font: 800 12px/15px $nunito-sans;
+    
+      .cdk-drag-placeholder {
+        display: none;
+      }
+      .node-name {
+        white-space: nowrap;
+      }
+      i {
+        display: flex;
+        width: 25px;
+        height: 25px;
+        color: #A4A4A4;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
+}
