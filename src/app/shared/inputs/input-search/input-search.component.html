@@ -12,7 +12,10 @@
     (input)="onInput()"
   />
   <div class="input-search-icon"></div>
-  <div class="cross-icon" *ngIf="this.control.control.value.length">
+  <div
+    class="cross-icon"
+    *ngIf="this.control.control && this.control.control.value && this.control.control.value.length"
+  >
     <sw-icon-button [icon]="icons.CROSS" (click)="clear()"></sw-icon-button>
   </div>
 </div>
