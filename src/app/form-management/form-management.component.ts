@@ -26,7 +26,7 @@ export class FormManagementComponent implements OnInit {
   public formSubmissions: FormManagementSubmissionModel;
 
   public tabsArray = ['Submissions', 'Log'];
-  public activeTab = this.tabsArray[0];
+  public activeTab = this.tabsArray[1];
   public activeIdForm: string;
   public dataSource: FormManagementDataSource = new FormManagementDataSource(this.formManagementService);
   public showSpinner = false;

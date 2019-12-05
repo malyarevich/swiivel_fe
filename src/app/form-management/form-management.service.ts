@@ -3,6 +3,7 @@ import { ApiService } from '@app/core/api.service';
 import { FormManagementDocumentUserModel } from '@models/form-management/form-management-document.model';
 import { UserItem } from '@models/user-item';
 import { Observable } from 'rxjs';
+import { HttpParams } from '@angular/common/http';
 
 @Injectable()
 export class FormManagementService extends ApiService {
@@ -29,5 +30,47 @@ export class FormManagementService extends ApiService {
       avatar: user.avatar,
       role: user.role_name
     };
+  }
+
+  getLogsList(formId: string, requestParams?): Observable<any> {
+    if (!requestParams) {
+      requestParams = { page: 1, limit: 150 };
+    }
+
+    let params = new HttpParams();
+
+    if ('filter' in requestParams) {
+      for (const filter of Object.keys(requestParams.filter)) {
+       if (filter === 'created_at') {
+          if (requestParams.filter[filter]['startDate'] && requestParams.filter[filter]['startDate'].date) {
+            params = params.append(
+              `filter[${filter}][startDate]`,
+              this.dateService.getStandardDate(requestParams.filter[filter]['startDate'].date));
+          }
+          if (requestParams.filter[filter]['endDate'] && requestParams.filter[filter]['endDate'].date) {
+            params = params.append(
+              `filter[${filter}][endDate]`,
+              this.dateService.getStandardDate(requestParams.filter[filter]['endDate'].date));
+          } else {
+            params = params.append(
+              `filter[${filter}][endDate]`,
+              this.dateService.getStandardDate(requestParams.filter[filter]['startDate'].date));
+          }
+        } else {
+          params = params.append(`filter[${filter}]`, requestParams.filter[filter]);
+        }
+      }
+    }
+    if ('sort' in requestParams) {
+      params = params.append(`sort[${requestParams.sort.field}]`, requestParams.sort.order);
+    }
+    if ('page' in requestParams) {
+      params = params.append('page', requestParams.page.toString());
+    }
+    if ('limit' in requestParams) {
+      params = params.append('limit', requestParams.limit.toString());
+    }
+
+    return this.http.get(`/proxy/form-management/log-list/${formId}`, {params});
   }
 }
