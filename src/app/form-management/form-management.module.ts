@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from '@shared/shared.module';
+import { CdkTableModule } from '@angular/cdk/table';
 
 import { FormManagementRoutingModule } from '@app/form-management/form-management.routing.module';
 
@@ -11,6 +12,8 @@ import { FormManagementInfoComponent } from '@app/form-management/form-managemen
 import { FormManagementPaymentsComponent } from '@app/form-management/form-management-payments/form-management-payments.component';
 import { FormManagementComponent } from '@app/form-management/form-management.component';
 import { FormManagementService } from '@app/form-management/form-management.service';
+import { FormManagementLogsComponent } from './form-management-logs/form-management-logs.component';
+import { IndependentComponentsModule } from '@app/independent-components/independent-components.module';
 
 @NgModule({
   declarations: [
@@ -19,12 +22,15 @@ import { FormManagementService } from '@app/form-management/form-management.serv
     FormManagementAnalyticsComponent,
     FormManagementInfoComponent,
     FormManagementPaymentsComponent,
+    FormManagementLogsComponent,
   ],
   imports: [
     CommonModule,
     FormsModule,
     SharedModule,
     FormManagementRoutingModule,
+    CdkTableModule,
+    IndependentComponentsModule
   ],
   providers: [FormManagementService],
   entryComponents: [FormManagementComponent]
