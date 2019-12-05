@@ -9,7 +9,7 @@ import { Popup } from '@app/core/popup.service';
 import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { cloneDeep, flattenDeep, flatMapDeep } from 'lodash';
+import { cloneDeep, flattenDeep, flatMapDeep, defaultsDeep } from 'lodash';
 import * as icons from '@app/core/icons';
 // import fields from '@app/shared/fields';
 
@@ -71,7 +71,7 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
       this.dropListsIds = Array.from(ids);
     });
     this.customForm = this.fb.group({
-      'parent': [null, [Validators.required]],
+      'name': ['', [Validators.required]],
       'type': [101, [Validators.required]],
       'options': this.fb.group({
         'size': [3, [Validators.required]],
@@ -105,7 +105,6 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
       this.fieldTypes = this.service.fieldTypes.schema.map((type) => {
         return {value: type.type, title: type.name}
       });
-      console.log(this.fieldTypes)
       this.cdr.markForCheck();
     });
     this.treeControl.getDescendants = (dataNode) => {
@@ -421,10 +420,20 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
     node.isExpanded = this.treeControl.isExpanded(node);
     this.cdr.markForCheck();
   }
+  
   addCustomField(event) {
     if (this.customForm.valid) {
-      console.log(`custom`, this.customForm.value);
-      this.canCreateField['fields'].push(this.customForm.value);
+      let newField = cloneDeep(this.customForm.value);
+      defaultsDeep(newField, {textType: this.customType.title}, {options: {
+        required: true,
+        unique: false,
+        hideLabel: false,
+        readonly: false
+      }});
+      this.canCreateField['fields'].push(newField);
+      this.cdr.markForCheck();
+    } else {
+      console.log(this.customForm);
     }
   }
 

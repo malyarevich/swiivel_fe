@@ -260,35 +260,36 @@
       <ng-container *ngIf="canCreateField(node)">
         <div class="custom-field" [class.show]="showCreateField(node)">
           <div class="custom-field__form">
+            <sw-input-text [formControl]="customForm.get('name')">
+              <span class="placeholder">Name</span>
+            </sw-input-text>
             <div class="custom-field__form_inputs">
-              <sw-dropdown-input class="settings-field">
-                <span class="input_label">
-                  <p>Type</p>
-                </span>
-              </sw-dropdown-input>
-              <sw-dropdown-input class="settings-field">
-                <span class="input_label">
-                  <p>Width</p>
-                </span>
-              </sw-dropdown-input>
+              <sw-select class="full" [formControl]="customForm.get('type')" [values]="fieldTypes">
+                <span class="label">Type</span>
+                <span class="content-text" *ngIf="customType"> {{customType.title}} </span>
+              </sw-select>
+              <sw-select class="full" [formControl]="customForm.get('options.size')" [values]="widthOptions">
+                <span class="label">Field Width</span>
+                <span class="content-text" *ngIf="customForm.get('options.size')"> {{ widthOptions[customForm.get('options.size')?.value].title }} </span>
+              </sw-select>
             </div>
             <div class="custom-field__form_actions">
               <sw-button class="outline-btn full_width narrow" style="margin-right: 5px;"
-                (click)="customFieldToggle(node)">
+                (click)="customForm.disable()">
                 <span class="text">Cancel</span>
               </sw-button>
-              <sw-button class="full_width narrow" (click)="addCustomField(node)">
+              <sw-button class="full_width narrow" type="submit">
                 <span class="text">Create Field</span>
               </sw-button>
             </div>
           </div>
           <div class="custom-field__button">
-            <sw-button class="outline-btn full_width narrow" (click)="customFieldToggle(node)">
+            <sw-button class="outline-btn full_width narrow" (click)="customForm.enable()">
               <span class="text">Create New Field</span>
             </sw-button>
           </div>
         </div>
-      </ng-container>
-    </cdk-nested-tree-node>
+      </form>
+  </div>
 
   </cdk-tree> -->
