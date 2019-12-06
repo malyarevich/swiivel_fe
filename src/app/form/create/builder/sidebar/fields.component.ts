@@ -34,8 +34,10 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
   delInput: FormControl = new FormControl(null);
   customForm: FormGroup;
   ref: any;
+  fieldToDelete;
   destroyed$ = new Subject();
   id = 'sidebar-list';
+  showForm = false;
   dropListsIds = [];
   widthOptions = [
     {value: 0, title: '1/4 page'},
@@ -46,18 +48,7 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
   @ViewChild('filter', { static: false }) filterNames;
   @ViewChild('deletePop', { static: false }) deletePop;
   @ViewChild('widget', { static: true }) widget;
-  @Input()
-  set form(_form) {
-    // _form.valueChanges.pipe(takeUntil(this.destroyed$)).subscribe((value) => {
-    //   if (this.firstRun && !!value.activeSections.formFields.showSideIndo) {
-    //     this.treeControl.expandAll();
-    //     console.log('expand');
-    //     this.firstRun = false;
-    //   }
-    // });
-    // console.log('Fields INput form', _form);
-  }
-
+  @Input() form;
   constructor(
     private service: FormService,
     private fb: FormBuilder,
@@ -127,25 +118,6 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
     this.filterControl.valueChanges.pipe(takeUntil(this.destroyed$)).subscribe(value => {
       if (value && value.length > 0) {
         this.filterValue = value.toLowerCase();
-
-        // const filterItem = (item) => {
-        //   if (item.type > 112) {
-        //     // console.log(item.fields)
-        //     item.isFiltered = item.fields.filter(filterItem).length > 0;
-        //     // if (item.isFiltered) item.fields.forEach(filterItem);
-        //   } else {
-        //     item.isFiltered = (item.name as string).toLowerCase().includes(this.filterValue);
-        //   }
-        //   // console.log(item.name, item.isFiltered);
-        //   return item;
-        // };
-        // this.activeTree = flatMapDeep(this.activeTree, filterItem);
-        // console.log(this.activeTree);
-        // this.activeTree.forEach(filterItem);
-        // this.activeTree.forEach((item) => {
-        //   filterByName(item, this.filterValue);
-        //   // this.filterValue;
-        // });
       } else {
         this.filterValue = null;
       }
@@ -297,45 +269,43 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
     return isIndeterminate;
   }
 
+  onDelete(field) {
+    if (field) {
+      this.fieldToDelete = field;
+      this.ref = this.popup.open({
+        origin: null,
+        content: this.deletePop,
+        panelClass: 'centered-panel'
+      });
+      this.ref.afterClosed$.subscribe(confirm => {
+        if (confirm) this.deleteField(field);
+        this.ref = null;
+      });
+    }
+  }
 
-  openDeletePop(node: any) {
-    if (!node && !node.data) return;
+  checkDeleteInput() {
+    let result =  this.delInput.value === this.fieldToDelete.name.toUpperCase();
+    if (result === true) {
+      this.ref.close(true);
+    }
+  }
 
-    this.delInput.reset();
-    this.delFieldName = node.data.name.toUpperCase();
-    this.ref = this.popup.open({
-      origin: null,
-      content: this.deletePop,
-      panelClass: 'centered-panel'
-    });
-    this.ref.afterClosed$.subscribe(result => {
-      this.ref = null;
-    });
+  deleteField(field) {
+    console.log(`delete field`, field);
+    this.treeSource.deleteNode(field);
+    this.service.removeFieldFromSB(field);
+    this.canCreateField['fields'] = this.canCreateField['fields'].filter(cfield => cfield !== field);
+    this.activeTree = this.canCreateField['fields'];
+    this.cdr.detectChanges();
   }
 
   closePop() {
     this.ref.close();
   }
 
-  deleteNode() {
-    if (this.delFieldName === this.delInput.value) {
-      console.log('Delete field', this.delFieldName);
-    }
-    this.closePop();
-  }
-
-  // isExpanded()
-
-  // isExpanded(node) {
-  //   if (this.filterValue !== null) return true;
-  //   else {
-  //     return this.treeControl.isExpanded(node);
-  //   }
-  // }
-
   isFiltered(node) {
     if (this.filterValue) {
-      // console.log(node.name, node.isFiltered);
       if (node.type < 113) {
         let found = (node.name as string).toLowerCase().includes(this.filterValue);
         if (found) {
@@ -350,22 +320,6 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
       } else {
         return !node.isFiltered;
       }
-      // console.log(Array.from(this.treeSource.parentsOf(node)));
-      // let includes = (node.name as string).toLowerCase().includes(this.filterValue);
-      // if (includes) {                                                                           
-      //   for (let parent of this.treeSource.tree.ancestorsIterator(node)) {
-      //     if (parent.type && parent.type > 112) {
-      //       parent.isFiltered = true;
-      //       console.log(parent);
-      //     }
-      //   }
-      //   // for (let parent of this.treeSource.tree.childrenIterator(node)) {
-      //   //   if (parent.type){// && parent.type > 112) {
-      //   //     parent.isFiltered = true;
-      //   //     console.log(node.name, parent);
-      //   //   }
-      //   // }
-      // }
     } else {
       return !!this.filterValue;
     }
@@ -375,6 +329,20 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
   shouldRender(node) {
     if (!this.filterControl.value) return true;
     return this.filterControl.value && node.name.toString().toLowerCase().startsWith(this.filterControl.value);
+  }
+
+  enableForm(){
+    this.showForm = true;
+    this.customForm.enable();
+    this.cdr.detectChanges();
+    this.cdr.markForCheck();
+  }
+
+  disableForm(){
+    this.showForm = false;
+    this.customForm.disable();
+    this.cdr.detectChanges();
+    this.cdr.markForCheck();
   }
 
   toggleExpand(node) {
@@ -424,12 +392,13 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
   addCustomField(event) {
     if (this.customForm.valid) {
       let newField = cloneDeep(this.customForm.value);
-      defaultsDeep(newField, {textType: this.customType.title}, {options: {
+      defaultsDeep(newField, {custom: true, textType: this.customType.title}, {options: {
         required: true,
         unique: false,
         hideLabel: false,
         readonly: false
       }});
+      newField.path = this.canCreateField['path'].concat(newField.name);
       this.canCreateField['fields'].push(newField);
       this.cdr.markForCheck();
     } else {

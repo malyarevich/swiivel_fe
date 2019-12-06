@@ -38,9 +38,9 @@ export class InputTextComponent implements ControlValueAccessor, OnInit {
   @Input() set style(styleType: string) {
     this._style = styleType;
   }
-  @Input() disabled: boolean;
-  @Input() set readonly(readOnly: boolean) {
-    if (readOnly) {
+  @Input() readonly: boolean;
+  @Input() set disabled(isDisabled: any) {
+    if (isDisabled) {
       this.control.control.disable();
     } else {
       this.control.control.enable();
