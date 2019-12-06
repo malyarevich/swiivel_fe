@@ -318,7 +318,7 @@ export class FormSendService {
       round.types.email = null;
     }
     if (round.types.mailing.selected === true) {
-      round.types.mailingis_delay_days =
+      round.types.mailing.is_delay_days =
         round.types.mailing.is_delay_days === true ? 1 : 0;
       delete round.types.mailing.selected;
     } else {
