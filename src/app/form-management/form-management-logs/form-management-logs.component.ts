@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 import { FormManagementService } from '../form-management.service';
 import { LogsDataSource } from './logs.datasource';
 import { pick, get } from 'lodash';
@@ -31,10 +31,6 @@ export class FormManagementLogsComponent implements OnInit {
   public params: any = {
     page: 1,
     limit: 10,
-    sort: {
-      field: 'created_at',
-      order: 'desc'
-    }
   };
   public filterForm: FormGroup;
 
@@ -43,12 +39,13 @@ export class FormManagementLogsComponent implements OnInit {
   constructor(
     private fms: FormManagementService,
     public dateService: DateService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private cdr: ChangeDetectorRef
   ) {
     this.filterForm = this.fb.group({
       created_at: [null],
       user: [null],
-      action: [null],
+      description: [null],
     });
   }
 
@@ -64,6 +61,7 @@ export class FormManagementLogsComponent implements OnInit {
     });
     this.dataSource.$loading.subscribe((loading: boolean) => {
       this.showSpinner = loading;
+      this.cdr.markForCheck();
     });
     this.dataSource.$formsListMetadata.subscribe(metadata => {
       if (metadata.page > metadata.last_page) {

@@ -60,7 +60,7 @@
       </div>
     </div>
     <ng-container [ngSwitch]="activeTab">
-      <div *ngSwitchCase="'Submissions'">output</div>
+      <sw-form-management-submissions *ngSwitchCase="'Submissions'" [formId]="activeIdForm"></sw-form-management-submissions>
       <sw-form-management-logs *ngSwitchCase="'Log'" [formId]="activeIdForm"></sw-form-management-logs>
     </ng-container>
   </div>
