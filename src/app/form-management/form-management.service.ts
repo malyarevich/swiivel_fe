@@ -24,10 +24,6 @@ export class FormManagementService extends ApiService {
     return this.http.get(`/proxy/form-management/submissions-list/${formId}?limit=200&sort[field]=status&sort[direction]=desc`);
   }
 
-  getSubmissionFormDetails(formId: string): Observable<any> {
-    return this.http.get(`/proxy/form-management/form-details/${formId}`);
-  }
-
   getUser(user: FormManagementDocumentUserModel): UserItem {
     return {
       name: user.full_name,

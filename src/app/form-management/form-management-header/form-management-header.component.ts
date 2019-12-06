@@ -7,7 +7,7 @@ import { formStatuses } from '@shared/form-statuses';
 import { IconsEnum } from '@shared/icons.enum';
 
 @Component({
-  selector: 'sw-form-management-header',
+  selector: 'app-form-management-header',
   templateUrl: './form-management-header.component.html',
   styleUrls: ['./form-management-header.component.scss']
 })
