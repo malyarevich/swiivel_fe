@@ -14,6 +14,7 @@ import { FormManagementComponent } from '@app/form-management/form-management.co
 import { FormManagementService } from '@app/form-management/form-management.service';
 import { FormManagementLogsComponent } from './form-management-logs/form-management-logs.component';
 import { IndependentComponentsModule } from '@app/independent-components/independent-components.module';
+import { FormManagementSubmissionsComponent } from './form-management-submissions/form-management-submissions.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { IndependentComponentsModule } from '@app/independent-components/indepen
     FormManagementInfoComponent,
     FormManagementPaymentsComponent,
     FormManagementLogsComponent,
+    FormManagementSubmissionsComponent,
   ],
   imports: [
     CommonModule,

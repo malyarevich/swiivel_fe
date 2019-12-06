@@ -5,10 +5,10 @@ import { FormManagementService } from '../form-management.service';
 import { finalize } from 'rxjs/operators';
 import { pick } from 'lodash';
 
-export class LogsDataSource implements DataSource<any> {
+export class SubmissionDataSource implements DataSource<any> {
 
   private loadingSubject = new BehaviorSubject<boolean>(false);
-  private logsSubject: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
+  private submissionSubject: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   private dataSubject: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
 
   private defaultMetadata = {page: 1, last_page: 1, count: 0, limit: 10, total: 0};
@@ -17,11 +17,11 @@ export class LogsDataSource implements DataSource<any> {
   constructor(private fms: FormManagementService) {
     this.dataSubject.subscribe((data) => {
       if (data) {
-        data = data.map(log => {
-          log.created_at = new Date(log.created_at);
-          return log;
+        data = data.map(sub => {
+          sub.last_updated = new Date(sub.last_updated);
+          return sub;
         });
-        this.logsSubject.next(data);
+        this.submissionSubject.next(data);
       }
     });
   }
@@ -35,27 +35,26 @@ export class LogsDataSource implements DataSource<any> {
   }
 
   connect(collectionViewer: CollectionViewer): Observable<any[]>{
-    return this.logsSubject.asObservable()
+    return this.submissionSubject.asObservable()
   }
 
   disconnect(collectionViewer: CollectionViewer): void {
-    this.logsSubject.complete();
+    this.submissionSubject.complete();
     this.loadingSubject.complete();
     this.dataSubject.complete();
     this.metadata.complete();
   }
 
-  loadLogs(formId: string, params: any = { page: 1, limit: 10 }) {
+  loadSubmission(formId: string, params: any = { page: 1, limit: 10 }) {
     this.loadingSubject.next(true);
-    this.fms.getLogsList(formId, params).pipe(
+    this.fms.getSubmissionList(formId, params).pipe(
       finalize(() => this.loadingSubject.next(false))
-    ).subscribe((logs) => {
-      console.log('RESPONSE', logs)
-      this.loadingSubject.next(false);
-      const md = pick(logs, ['page', 'total', 'last_page', 'limit', 'count']);
+    ).subscribe((sub) => {
+      const md = pick(sub, ['page', 'total', 'last_page', 'limit', 'count']);
       this.metadata.next(md);
-      this.dataSubject.next(logs.data);
-    });
+      this.dataSubject.next(sub.data);
+      this.loadingSubject.next(false);
+    })
   }
 
 
