@@ -2,6 +2,7 @@
   display: flex;
   flex-flow: column;
   width: 100%;
+  position: relative;
   .main_container {
     width: 100%;
     display: flex;
@@ -65,11 +66,25 @@
       display: none;
     }
   }
+  
   .children {
+    &.closed {
+      height: 90px;
+      width: calc(100% - 60px);
+      position: absolute;
+      top: 20px;
+      &.cdk-drop-list-dragging {
+        position: relative;
+        top: 0px;
+        height: 50px;
+        // background-color: red;
+      }
+    }
     margin-left: 10px;
-    &.hidden {
-      height: 0px;
-      overflow: hidden;
+    .hidden {
+      display: none;
+      // height: 0px;
+      // overflow: hidden;
       &.cdk-drop-list-dragging {
         height: 10px;
       }
