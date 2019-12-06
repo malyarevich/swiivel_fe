@@ -22,6 +22,11 @@
           <sw-group-placeholder *ngIf="child.type === 113" [group]="child"></sw-group-placeholder>
           <sw-field-placeholder *ngIf="child.type < 113" [field]="child"></sw-field-placeholder>
         </div>
+        <div class="group" *cdkDragPreview>
+          <sw-input-checkbox [(ngModel)]="child.isActive"></sw-input-checkbox>
+            <i class="dragdrop fas fa-ellipsis-v"></i>
+            <span class="node-name">{{child.name}}</span>
+        </div>
       <ng-container *ngIf="child.type === 113" [ngTemplateOutlet]="groupTemplate" [ngTemplateOutletContext]="{$implicit: child}"></ng-container>
       <ng-container *ngIf="child.type < 113" [ngTemplateOutlet]="fieldTemplate" [ngTemplateOutletContext]="{$implicit: child}"></ng-container>
     </div>
@@ -61,7 +66,6 @@
   </div>
 
 
-  
 
 
 <ng-template #groupTemplate let-group>
@@ -77,6 +81,11 @@
           <sw-section-placeholder *ngIf="child.type === 114" [section]="child"></sw-section-placeholder>
           <sw-group-placeholder *ngIf="child.type === 113" [group]="child"></sw-group-placeholder>
           <sw-field-placeholder *ngIf="child.type < 113" [field]="child"></sw-field-placeholder>
+        </div>
+        <div class="group" *cdkDragPreview>
+          <sw-input-checkbox [(ngModel)]="child.isActive"></sw-input-checkbox>
+            <i class="dragdrop fas fa-ellipsis-v"></i>
+            <span class="node-name">{{child.name}}</span>
         </div>
       <ng-container [ngTemplateOutlet]="child.type === 113 ? groupTemplate: fieldTemplate" [ngTemplateOutletContext]="{$implicit: child}"></ng-container>
     </div>

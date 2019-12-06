@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '@app/core/api.service';
-import { cloneDeep, flatMapDeep, isArrayLike, isPlainObject, isString } from 'lodash';
-import { BehaviorSubject, Observable, Subject, throwError } from 'rxjs';
+import { cloneDeep, flatMap, flattenDeep, get, isArrayLike, isPlainObject, isString, set, unset, values, flatMapDeep, isObjectLike } from 'lodash';
+import { BehaviorSubject, Subject, from, throwError, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 const flatten = (fields = []) => {
@@ -428,7 +428,7 @@ export class FormService {
     return control;
   }
 
-  addField(fieldName: string, fieldValue: any, parent?): FormGroup {
+  addField(fieldName: string, fieldValue: any, parent?, silent = false): FormGroup {
     if (!parent) parent = this.form;
     else {
       if (isArrayLike(parent) || isString(parent)) {
@@ -436,7 +436,11 @@ export class FormService {
       }
     }
     let field = this.fb.control(fieldValue);
-    (parent as FormGroup).addControl(fieldName, field);
+    if (silent) {
+      (parent as FormGroup).registerControl(fieldName, field);
+    } else {
+      (parent as FormGroup).addControl(fieldName, field);
+    }
     return parent.get(fieldName);
   }
 
@@ -496,17 +500,32 @@ export class FormService {
     (parent as FormGroup).addControl(fieldName, this.fb.group(fieldValue));
     return parent.get(fieldName);
   }
+  checkOptions(field) {
+    let proto = this.fieldTypes.schema.find(pfield => pfield.type === field.value.type);
+    for (let key in proto.options) {
+      if (!field.get(['options',key])) {
+        if (isObjectLike(proto.options[key])) {
+          this.addFieldGroup(key, proto.options[key], field.get('options'));
+        } else {
+          this.addField(key, proto.options[key], field.get('options'), true);
+        }
+      }
+    }
+    if (proto.options['validators']) {
+      for (let key in proto.options['validators']) {
+        if (!field.get(['options', 'validators', key])) {
+          this.addField(key, proto.options['validators'][key], field.get(['options', 'validators']), true);
+        }
+      }
+
+    }
+    return field;
+  }
 
   initForm(data?) {
     const form = this.fb.group({});
     if (data) {
-      let options: object = {
-        size: 3,
-        required: false,
-        unique: false,
-        hideLabel: false,
-        readonly: false
-      };
+      let options;
       for (const key of Object.keys(data)) {
         if (Array.isArray(data[key])) {
           if (key === 'fields') {
