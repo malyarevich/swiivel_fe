@@ -3,9 +3,11 @@ import {
   Component,
   ElementRef,
   Input,
+  OnChanges,
   OnDestroy,
   OnInit,
-  Renderer2
+  Renderer2,
+  SimpleChanges
 } from '@angular/core';
 import {
   FormBuilder,
@@ -27,7 +29,7 @@ import { FormSendService } from '../../form-send.service';
   templateUrl: './send-release-rounds.component.html',
   styleUrls: ['./send-release-rounds.component.scss']
 })
-export class SendReleaseRoundsComponent implements OnInit, OnDestroy {
+export class SendReleaseRoundsComponent implements OnInit, OnChanges, OnDestroy {
   @Input() link: ElementRef;
   @Input() mailingHouseList: IMailingHouse[];
   @Input() accountsList: any[];
@@ -36,7 +38,7 @@ export class SendReleaseRoundsComponent implements OnInit, OnDestroy {
 
   public form: FormGroup;
   public isNew = false;
-  public showForm = false;
+  public isShowForm = false;
   roundId: any;
   public mailingOptions = ['Use Mailing House', 'Self-mail'];
   public mailingHouseOptions = [
@@ -76,23 +78,23 @@ export class SendReleaseRoundsComponent implements OnInit, OnDestroy {
     private dataCollectionService: DataCollectionService
   ) {
     this.form = this.fb.group({
-      name: ['', [Validators.required]],
-      start_date: ['', [Validators.required]],
-      end_date: ['', [Validators.required]],
+      name: [null, [Validators.required]],
+      start_date: [null, [Validators.required]],
+      end_date: [null, [Validators.required]],
       types: fb.group({
         email: this.fb.group({
           selected: [false],
-          subject: [''],
-          body: [''],
-          buttonText: ['']
+          subject: [null],
+          body: [null],
+          buttonText: [null]
         }),
         mailing: this.fb.group({
           selected: [false],
           delay_days: [null],
-          is_self_mail: [0],
-          is_delay_days: [0],
+          is_self_mail: [null],
+          is_delay_days: [null],
           mailing_house_id: [null],
-          radio_mailing_type: [this.mailingOptions[0]],
+          radio_mailing_type: [null],
           select_delay_days: [null],
           select_mailing_house: [null]
         })
@@ -100,17 +102,44 @@ export class SendReleaseRoundsComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (this.roundsList.length === 0) {
+      this.addRound();
+    } else {
+      this.cancelRound();
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.roundsList) {
+      if (this.roundsList.length === 0) {
+        this.addRound();
+      } else {
+        this.cancelRound();
+      }
+    }
+  }
+
+  setDefaultFormValues() {
+    this.form.get('types.email.buttonText').setValue('Start Form');
+    this.form.get('types.mailing.delay_days').setValue(0);
+    this.form.get('types.mailing.is_self_mail').setValue(0);
+    this.form.get('types.mailing.is_delay_days').setValue(0);
+    this.form.get('types.mailing.radio_mailing_type').setValue(this.mailingOptions[0]);
+  }
 
   addRound() {
     this.isNew = true;
-    this.showForm = true;
+    this.isShowForm = true;
+    this.form.reset();
+    this.setDefaultFormValues();
+    this.formSendService.selectedAccounts = [];
   }
 
   cancelRound() {
     this.form.reset();
     this.formSendService.selectedAccounts = [];
-    this.showForm = false;
+    this.isShowForm = false;
   }
 
   validateAllFormFields(formGroup: FormGroup) {
@@ -132,7 +161,7 @@ export class SendReleaseRoundsComponent implements OnInit, OnDestroy {
     this.formSendService.saveRound(this.form.value, this.isNew, this.roundId);
     this.form.reset();
     this.formSendService.selectedAccounts = [];
-    this.showForm = false;
+    this.isShowForm = false;
   }
 
   getIcon(expanded: boolean): string {
@@ -288,14 +317,18 @@ export class SendReleaseRoundsComponent implements OnInit, OnDestroy {
     this.isNew = false;
     this.roundId = i.id;
     this.form.reset();
+
+    const start_date = DateTime.fromString(i.start_date, 'yyyy-MM-dd').invalid
+      ? DateTime.fromString(i.start_date, 'yyyy/MM/dd').toFormat('MM/dd/yyyy')
+      : DateTime.fromString(i.start_date, 'yyyy-MM-dd').toFormat('MM/dd/yyyy');
+    const end_date = DateTime.fromString(i.end_date, 'yyyy-MM-dd').invalid
+      ? DateTime.fromString(i.end_date, 'yyyy/MM/dd').toFormat('MM/dd/yyyy')
+      : DateTime.fromString(i.end_date, 'yyyy-MM-dd').toFormat('MM/dd/yyyy');
+
     this.form.patchValue({
       name: i.name,
-      start_date: DateTime.fromString(i.start_date, 'yyyy-MM-dd').toFormat(
-        'MM/dd/yyyy'
-      ),
-      end_date: DateTime.fromString(i.end_date, 'yyyy-MM-dd').toFormat(
-        'MM/dd/yyyy'
-      )
+      start_date,
+      end_date
     });
     if (!!i.types.email) {
       this.form.get('types.email').patchValue({
@@ -324,7 +357,7 @@ export class SendReleaseRoundsComponent implements OnInit, OnDestroy {
       this.changeMailingSelected(true);
     }
     this.formSendService.selectedAccounts = i.accounts;
-    this.showForm = true;
+    this.isShowForm = true;
   }
 
   deleteRound(i) {
