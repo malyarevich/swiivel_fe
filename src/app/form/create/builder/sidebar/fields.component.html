@@ -26,8 +26,8 @@
       <ng-container *ngIf="child.type < 113" [ngTemplateOutlet]="fieldTemplate" [ngTemplateOutletContext]="{$implicit: child}"></ng-container>
     </div>
     <form *ngIf="canCreateField" [formGroup]="customForm" (submit)="addCustomField($event)">
-        <div class="custom-field" [class.show]="customForm.enabled">
-          <div class="custom-field__form">
+        <div class="custom-field">
+          <div class="custom-field__form" *ngIf="showForm">
             <sw-input-text [formControl]="customForm.get('name')">
               <span class="placeholder">Name</span>
             </sw-input-text>
@@ -43,7 +43,7 @@
             </div>
             <div class="custom-field__form_actions">
               <sw-button class="outline-btn full_width narrow" style="margin-right: 5px;"
-                (click)="customForm.disable()">
+                (click)="disableForm()">
                 <span class="text">Cancel</span>
               </sw-button>
               <sw-button class="full_width narrow" type="submit">
@@ -51,8 +51,8 @@
               </sw-button>
             </div>
           </div>
-          <div class="custom-field__button">
-            <sw-button class="outline-btn full_width narrow" (click)="customForm.enable()">
+          <div class="custom-field__button" *ngIf="!showForm">
+            <sw-button class="outline-btn full_width narrow" (click)="enableForm()">
               <span class="text">Create New Field</span>
             </sw-button>
           </div>
@@ -88,6 +88,7 @@
     <sw-input-checkbox [(ngModel)]="field.isActive"></sw-input-checkbox>
     <i class="dragdrop fas fa-ellipsis-v" cdkDragHandle></i>
     <span class="node-name">{{field.name}}</span>
+    <i *ngIf="field.custom" class="trash fas fa-trash-alt" (click)="onDelete(field)" title="Delete field"></i>
   </div>
 </ng-template>
 
@@ -95,24 +96,24 @@
   <div class="dialog_container">
     <div class="dialog_container__header">
       <span class="text">Delete Confirmation Required</span>
-      <div class="icon" (click)="closePop()">
+      <div class="icon" (click)="close()">
         <i class="fas fa-times"></i>
       </div>
     </div>
     <div class="dialog_container__body">
-      <div class="text">You are trying to delete <span class="field-name">{{ delFieldName }}</span> custom field. Once
+      <div class="text">You are trying to delete <span class="field-name">{{ fieldToDelete.name }}</span> custom field. Once
         deleted, all
         data from this field will be lost. Are you sure you want do it?
       </div>
-      <div class="chips">School Information > Main > Parents > General > Personal Information > Father’s Information
+      <div class="chips">{{ fieldToDelete.path.join(' > ') }}
       </div>
-      <div class="confirm-text">Type <span class="field-name">{{ delFieldName }}</span> to confirm</div>
+      <div class="confirm-text">Type <span class="field-name">{{ fieldToDelete.name }}</span> to confirm</div>
       <div class="input">
-        <sw-input-text [formControl]='delInput'></sw-input-text>
+        <sw-input-text class="noplaceholder" [formControl]="delInput"></sw-input-text>
       </div>
     </div>
     <div class="dialog_container__footer">
-      <sw-button class="outline-btn" style="margin-right: 10px;" (click)="closePop()">Cancel</sw-button>
-      <sw-button (click)="deleteNode()">Delete Field</sw-button>
+      <sw-button class="outline-btn" style="margin-right: 10px;" (click)="close()">Cancel</sw-button>
+      <sw-button (click)="checkDeleteInput()">Delete Field</sw-button>
     </div>
   </div>

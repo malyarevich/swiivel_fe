@@ -105,7 +105,8 @@ export class FormService {
   formsById = {};
   public fieldTypes = {
     schema: [],
-    mapped: []
+    mapped: [],
+    defaultOptions: []  
   };
   public stage$ = new BehaviorSubject(0);
   public dropLists = new Set();
