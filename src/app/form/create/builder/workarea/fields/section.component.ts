@@ -123,6 +123,8 @@ export class WorkareaSectionComponent implements OnDestroy, AfterViewInit {
         parent.removeAt(idx);
         this.cdr.markForCheck();
       }
+    } else {
+      console.log(this._section.parent);
     }
   }
 
