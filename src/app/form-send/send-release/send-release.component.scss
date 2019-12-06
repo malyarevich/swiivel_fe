@@ -202,12 +202,18 @@
               border-radius: 3px;
               padding: 15px;
               text-align: center;
+              min-height: 0;
+              transition: all 0.4s ease-in-out 0.3s;
               .icon-wrap {
                 margin-bottom: 5px;
               }
               .content-mail {
-                display: none;
+                align-items: stretch;
+                display: flex;
+                max-height: 0;
+                opacity: 0;
                 flex-flow: column nowrap;
+                transition: all 0.3s ease-in-out 1ms;
                 span.label {
                   text-align: start;
                 }
@@ -226,8 +232,11 @@
                 background: #F4F6FE;
                 border: 1px solid $element-base-color;
                 min-height: 100%;
+                transition: all 0.4s ease-in-out 1ms;
                 .content-mail {
-                  display: flex;
+                  max-height: 100%;
+                  opacity: 1;
+                  transition: all 0.3s ease-in-out 0.3s;
                 }
               }
             }

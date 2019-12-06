@@ -73,6 +73,7 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
   }
 
   @Output() isPopupShown = new EventEmitter();
+  @Output() readonly change: EventEmitter<any> = new EventEmitter();
 
   @ViewChild('droplist', { static: false }) droplist;
   @ViewChild('holder', { static: false, read: ElementRef }) holder: ElementRef;
@@ -150,6 +151,7 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
         this._ref.close();
       }
 
+      this.change.emit(this._sm.selected);
       this.onChange(this._sm.selected);
       this.cdr.markForCheck();
     }
