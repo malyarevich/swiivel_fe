@@ -53,12 +53,11 @@
 </div>
       
 
-<sw-settings class="hide-on-preview" *ngIf="showSettings" [field]="_group"></sw-settings>
+<sw-settings class="" *ngIf="showSettings" [field]="_group"></sw-settings>
 
-<div class="children hide-on-preview" cdkDropList [cdkDropListData]="children" [class.hidden]="!_group.value.isExpanded" 
-[id]="id" [cdkDropListConnectedTo]="dropListsIds"
-(cdkDropListDropped)="drop($event)">
-  <div *ngFor="let child of children.controls" cdkDrag [cdkDragData]="child">
+<div class="children " cdkDropList [cdkDropListData]="children" [id]="id" [cdkDropListConnectedTo]="dropListsIds"
+(cdkDropListDropped)="drop($event)" [class.closed]="!_group.value.isExpanded">
+  <div *ngFor="let child of children.controls" cdkDrag [cdkDragData]="child" [class.hidden]="!_group.value.isExpanded">
       <div *cdkDragPlaceholder>
         <sw-section-placeholder *ngIf="child.get('type').value === 114" [section]="child.value"></sw-section-placeholder>
         <sw-group-placeholder *ngIf="child.get('type').value === 113" [group]="child.value"></sw-group-placeholder>
