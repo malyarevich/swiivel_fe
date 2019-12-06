@@ -109,6 +109,14 @@
   }
 }
 
+:host(.form_send) {
+  .date-picker {
+    .input-date {
+      margin: 0;
+    }
+  }
+}
+
 :host(.online_form) {
   .date-picker {
     align-items: stretch;
@@ -287,4 +295,73 @@
 
 .input-date {
   margin: 0 0 10px;
+}
+
+:host(.settings-field, .filter-field) {
+  .input-date {
+    & .input {
+      height: 23px;
+      padding: 5px 14px;
+    }
+    & i {
+      top: 7px !important;
+    }
+  }
+}
+
+:host(.filter-field) {
+  .date-picker {
+    border-color: transparent;
+  }
+
+  .input-date {
+    position: relative;
+
+    & .input {
+      border-color: transparent;
+      height: 23px;
+      padding: 5px 10px 5px 19px;
+    }
+
+    & .fa-calendar {
+      color: #A4A4A4;
+      cursor: pointer;
+      display: block;
+      position: absolute;
+      top: 0.75rem;
+      left: 0.5rem;
+
+      @media (min-width: 1280px) {
+        top: 0.6rem;
+      }
+    }
+
+    & .fa-times {
+      position: absolute;
+      top: 0.75rem;
+      right: 0.5rem;
+      color: #A4A4A4;
+      cursor: pointer;
+
+      @media (min-width: 1280px) {
+        top: 0.5rem;
+      }
+    }
+  }
+}
+
+:host(.ng-invalid.ng-dirty) {
+  .date-picker {
+    border-color: $error-color;
+  }
+
+  .input-date {
+    & i {
+      color: $error-color;
+    }
+
+    & .placeholder {
+      color: $error-color;
+    }
+  }
 }

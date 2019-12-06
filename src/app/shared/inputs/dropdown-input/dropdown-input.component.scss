@@ -220,6 +220,27 @@
   }
 }
 
+:host(.short) {
+  .container {
+    padding: 0.25rem 0.5rem;
+    min-height: 1.75rem;
+    .container__row {
+      .container__input {
+        .text {
+          line-height: 13px;
+          margin-top: 0;
+        }
+      }
+    }
+  }
+}
+
+:host(.ng-dirty.ng-invalid) {
+  .container {
+    border: 1px solid $error-color;
+  }
+}
+
 :host(.online_form.read_only) {
   .container {
     background-color: #eee;
