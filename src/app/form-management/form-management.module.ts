@@ -10,12 +10,6 @@ import { FormManagementAnalyticsComponent } from '@app/form-management/form-mana
 import { FormManagementHeaderComponent } from '@app/form-management/form-management-header/form-management-header.component';
 import { FormManagementInfoComponent } from '@app/form-management/form-management-info/form-management-info.component';
 import { FormManagementPaymentsComponent } from '@app/form-management/form-management-payments/form-management-payments.component';
-import {
-  FormManagementSubmissionHistoryComponent
-} from '@app/form-management/form-management-submission-history/form-management-submission-history.component';
-import {
-  FormManagementSubmissionSubrowComponent
-} from '@app/form-management/form-management-submission-subrow/form-management-submission-subrow.component';
 import { FormManagementComponent } from '@app/form-management/form-management.component';
 import { FormManagementService } from '@app/form-management/form-management.service';
 import { FormManagementLogsComponent } from './form-management-logs/form-management-logs.component';
@@ -28,8 +22,6 @@ import { IndependentComponentsModule } from '@app/independent-components/indepen
     FormManagementAnalyticsComponent,
     FormManagementInfoComponent,
     FormManagementPaymentsComponent,
-    FormManagementSubmissionSubrowComponent,
-    FormManagementSubmissionHistoryComponent,
     FormManagementLogsComponent,
   ],
   imports: [
