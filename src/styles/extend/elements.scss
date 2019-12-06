@@ -760,3 +760,15 @@ sw-send-preview {
     }
   }
 }
+
+mwl-calendar-month-cell {
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+mwl-calendar-month-view-header {
+  &:hover {
+    cursor: default;
+  }
+}

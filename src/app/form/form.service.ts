@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 
-import { CdkDragDrop, transferArrayItem, moveItemInArray } from '@angular/cdk/drag-drop';
-import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '@app/core/api.service';
-import { cloneDeep, flatMap, flattenDeep, get, isArrayLike, isPlainObject, isString, set, unset, values, flatMapDeep } from 'lodash';
-import { BehaviorSubject, Subject, from, throwError, Observable } from 'rxjs';
+import { cloneDeep, flatMapDeep, isArrayLike, isPlainObject, isString } from 'lodash';
+import { BehaviorSubject, Observable, Subject, throwError } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import * as SymbolTree from 'symbol-tree';
 
 const flatten = (fields = []) => {
   const result = [];
@@ -161,18 +160,19 @@ export class FormService {
     console.log(event);
     console.groupEnd();
     if (event.previousContainer === event.container) {
-      let control = event.item.data;
+      const control = event.item.data;
       let formArray = event.container.data as FormArray;
       if (event.container.id === 'root-list') {
         formArray = this.form.get('fields') as FormArray;
       }
-      let value = [...formArray.value];
+      // TODO: remove not use var
+      const value = [...formArray.value];
       formArray.removeAt(event.previousIndex);
       formArray.insert(event.currentIndex, control);
     } else {
-      let control = event.item.data;
-      let oldParent = control.parent as FormArray;
-      let newParent = event.container.data as FormArray;
+      const control = event.item.data;
+      const oldParent = control.parent as FormArray;
+      const newParent = event.container.data as FormArray;
       if (oldParent && newParent){
         oldParent.removeAt(event.previousIndex);
         newParent.insert(event.currentIndex, control);

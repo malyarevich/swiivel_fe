@@ -129,6 +129,10 @@ export class ApiService {
     return this.http.get(`/proxy/form-builder/release/${formId}`);
   }
 
+  getMailingHouseList() {
+    return this.http.get(`/proxy/form-builder/mailing-house-list`);
+  }
+
   getUsersByRole(key: string) {
     return this.http.get(`/persons/eligible/${key}`);
   }

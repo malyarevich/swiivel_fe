@@ -30,6 +30,12 @@ export interface IPersonFamily {
   role_state?: number;
 }
 
+export interface IMailingHouse {
+  id: number;
+  name: string;
+  title?: string;
+}
+
 export interface IPerson {
   first_name: string;
   last_name: string;
