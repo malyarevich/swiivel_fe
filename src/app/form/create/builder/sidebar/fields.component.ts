@@ -392,12 +392,9 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
   addCustomField(event) {
     if (this.customForm.valid) {
       let newField = cloneDeep(this.customForm.value);
-      defaultsDeep(newField, {custom: true, textType: this.customType.title}, {options: {
-        required: true,
-        unique: false,
-        hideLabel: false,
-        readonly: false
-      }});
+      defaultsDeep(newField, {custom: true, textType: this.customType.title});
+      let proto = this.service.fieldTypes.schema.find(schema => schema.type === newField.type);
+      newField.options = proto.options;
       newField.path = this.canCreateField['path'].concat(newField.name);
       this.canCreateField['fields'].push(newField);
       this.cdr.markForCheck();
