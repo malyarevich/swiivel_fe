@@ -41,7 +41,7 @@ export class FormManagementService extends ApiService {
 
     if ('filter' in requestParams) {
       for (const filter of Object.keys(requestParams.filter)) {
-        if (filter === 'last_updated') {
+        if (filter === 'created_at') {
           if (requestParams.filter[filter]['startDate'] && requestParams.filter[filter]['startDate'].date) {
             params = params.append(
               `filter[${filter}][startDate]`,

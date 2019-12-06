@@ -42,7 +42,7 @@
           </div>
         </th>
         <td cdk-cell *cdkCellDef="let log">
-          <sw-user-item [userItem]="getUserInfo(log.user)"></sw-user-item>
+          <sw-user-item *ngIf="log?.user" [userItem]="getUserInfo(log.user)"></sw-user-item>
         </td>
       </ng-container>
 
