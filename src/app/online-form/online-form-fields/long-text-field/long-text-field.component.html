@@ -3,19 +3,29 @@
     class="form-group app-input-container position-relative"
     [formGroup]="fg"
   >
-    <input
-      [formControlName]="field._id"
-      mdInput
-      type="text"
-      class="app-input form-control"
+    <!-- TODO: after Long-text will be -->
+    <!-- sw-input-textarea -->
+    <!-- <sw-input-textarea
+      class="online_form"
       [ngClass]="{
-        validation_required: isRequired(),
-        validation_error: !!validationText,
-        online_form: true,
-        read_only: !isActive()
+        validation_error: !!validationText
       }"
-      [placeholder]="getLabel()"
-    />
+      [formControlName]="field._id"
+      [rows]="getRows()"
+      [cols]="getCols()"
+    >
+      <span class="input_label">{{ getLabel() }}</span>
+    </sw-input-textarea> -->
+    <sw-input-text
+      class="online_form"
+      [ngClass]="{
+        validation_error: !!validationText
+      }"
+      [formControlName]="field._id"
+    >
+      <span class="placeholder">{{ getLabel() }}</span>
+    </sw-input-text>
+
     <span
       class="error_icon"
       [ngClass]="{ validation_error: !!validationText }"

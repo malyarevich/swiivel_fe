@@ -4,6 +4,7 @@ import {
   ElementRef,
   OnDestroy,
   OnInit,
+<<<<<<< HEAD
   Renderer2,
   ViewChild
 } from '@angular/core';
@@ -18,6 +19,14 @@ import { IRound } from '@app/form-send/models/send.model';
 import { DataCollectionService } from '@app/forms-dashboard/data-collection.service';
 import { DateTime } from 'luxon';
 import { BehaviorSubject, Subscription } from 'rxjs';
+=======
+  ViewChild
+} from '@angular/core';
+import { IMailingHouse, IRound } from '@app/form-send/models/send.model';
+import { FormService } from '@app/form/form.service';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+>>>>>>> development
 import { FormSendService } from '../form-send.service';
 
 @Component({
@@ -26,12 +35,14 @@ import { FormSendService } from '../form-send.service';
   styleUrls: ['./send-release.component.scss']
 })
 export class SendReleaseComponent implements OnInit, OnDestroy {
-  public $roundsList: BehaviorSubject<IRound[]> = new BehaviorSubject([]);
-  public roundsListSubscription: Subscription;
+  public roundsList$: BehaviorSubject<IRound[]> = new BehaviorSubject([]);
+  public formId$: BehaviorSubject<string> = new BehaviorSubject(null);
   public periodsList: any = [];
   public selectedPeriods: any = [];
+  public mailingHouseList: IMailingHouse[] = [];
   public accountsList: any[] = [];
   public selectedAccountsList: any[] = [];
+<<<<<<< HEAD
   public periodsFilter: FormControl = new FormControl([]);
   public form: FormGroup;
   public isNew = false;
@@ -48,12 +59,18 @@ export class SendReleaseComponent implements OnInit, OnDestroy {
 
   @ViewChild('link', { static: false }) link: ElementRef;
   roundId: any;
+=======
+  destroyed$ = new Subject();
+
+  @ViewChild('link', { static: false }) link: ElementRef;
+>>>>>>> development
 
   get roundsList(): IRound[] {
-    return this.$roundsList.getValue() ? this.$roundsList.getValue() : [];
+    return this.roundsList$.getValue() ? this.roundsList$.getValue() : [];
   }
 
   set roundsList(value: IRound[]) {
+<<<<<<< HEAD
     this.$roundsList.next(value);
   }
 
@@ -118,22 +135,20 @@ export class SendReleaseComponent implements OnInit, OnDestroy {
   addRound() {
     this.isNew = true;
     this.showForm = true;
+=======
+    this.roundsList$.next(value);
+>>>>>>> development
   }
 
-  cancelRound() {
-    this.form.reset();
-    this.showForm = false;
+  get formId(): string {
+    return this.formId$.getValue() ? this.formId$.getValue() : null;
   }
 
-  saveRound() {
-    if (!this.form.valid) {
-      return;
-    }
-    this.formSendService.saveRound(this.form.value, this.isNew, this.roundId);
-    this.form.reset();
-    this.showForm = false;
+  set formId(value: string) {
+    this.formId$.next(value);
   }
 
+<<<<<<< HEAD
   isSelectedPeriod(id): boolean {
     return this.formSendService.isSelectedPeriod(id);
   }
@@ -192,14 +207,32 @@ export class SendReleaseComponent implements OnInit, OnDestroy {
         };
         this.cdr.detectChanges();
         this.renderer.selectRootElement(this.link.nativeElement).click();
+=======
+  constructor(
+    private formSendService: FormSendService,
+    private formService: FormService,
+    private cdr: ChangeDetectorRef
+  ) {
+    this.formSendService.$periodsList
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe(val => {
+        this.periodsList = val;
+        this.cdr.markForCheck();
       });
-  }
-
-  toggleAccount(item: any, e: boolean) {
-    if (item.data) {
-      item.data.forEach(i => {
-        this.formSendService.toggleAccounts(i, e);
+    this.formSendService.$selectedPeriods
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe(val => {
+        this.selectedPeriods = val;
+        this.cdr.markForCheck();
+>>>>>>> development
       });
+    this.formSendService.$mailingHouseList
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe(val => {
+        this.mailingHouseList = val;
+        this.cdr.markForCheck();
+      });
+<<<<<<< HEAD
     } else {
       this.formSendService.toggleAccounts(item, e);
     }
@@ -240,14 +273,61 @@ export class SendReleaseComponent implements OnInit, OnDestroy {
       this.form.get('types.mailing').patchValue({
         selected: true,
         ...i.types.mailing
+=======
+    this.formSendService.$accountsList
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe(val => {
+        // console.log('accountsList', val);
+        this.accountsList = val;
+        this.cdr.markForCheck();
       });
-    }
-    this.formSendService.selectedAccounts = i.accounts;
-    this.showForm = true;
+    this.formSendService.$selectedAccounts
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe(val => {
+        // console.log('selectedAccounts', val.length);
+        this.selectedAccountsList = val;
+        this.cdr.markForCheck();
+      });
+    this.formSendService.$roundsList
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe(val => {
+        this.roundsList = val;
+        this.cdr.markForCheck();
+>>>>>>> development
+      });
   }
 
-  deleteRound(i) {
-    this.formSendService.deleteRound(i);
+  ngOnInit() {
+    // if (this.formService.formId) {
+    //   this.formId = this.formService.formId;
+    //   this.formSendService.initFormSend(this.formId);
+    // }
+    this.formService.formId$
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe(formId => {
+        if (formId) {
+          this.formId = formId;
+          this.formSendService.initFormSend(formId);
+          // console.log('this.formId', this.formId);
+
+          this.roundsList$
+            .pipe(takeUntil(this.destroyed$))
+            .subscribe(rounds => {
+              // console.log('roundsList$', rounds);
+              this.formSendService.previewRoundList = this.formSendService.getPreviewRoundsListByRounds(
+                rounds
+              );
+            });
+        }
+      });
+    // console.log('this.formId', this.formId);
+    // this.id = this.formSendService.formId
+    //   ? this.formSendService.formId
+    //   : this.formService.form.value._id
+    //     ? this.formService.form.value._id
+    //     : 'no id';
+
+    // console.log('this.formId', this.formId);
   }
 
   nextStep() {
@@ -259,8 +339,7 @@ export class SendReleaseComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.roundsListSubscription) {
-      this.roundsListSubscription.unsubscribe();
-    }
+    this.destroyed$.next(true);
+    this.destroyed$.complete();
   }
 }

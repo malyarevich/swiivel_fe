@@ -1,6 +1,5 @@
 <ng-container [formGroup]="form" *ngIf="form">
   <div class="sidebar-wrap" formGroupName="activeSections">
-
     <!-- PACKET INTRODUCTION SIDEBAR START -->
     <div class="sidebar_section" [class.expanded]="isExpanded('packetIntroduction')" formGroupName="packetIntroduction">
       <div class="sidebar_section__header">
@@ -25,7 +24,7 @@
         </div>
       </div>
       <div class="sidebar_section__content" data-e2e="sidebar_section__content">
-        <sw-form-create-sidebar-fields [form]="form.get('fields')"></sw-form-create-sidebar-fields>
+        <sw-form-create-sidebar-fields [form]="form.get('fields')" *ngIf="isExpanded('formFields')"></sw-form-create-sidebar-fields>
       </div>
     </div>
     <!-- FORM FIELDS SIDEBAR END -->

@@ -1,0 +1,379 @@
+<section class="section-wrap">
+  <div class="section-title">2. Rounds</div>
+  <div class="section-main-text">
+    What release rounds do you want to include in this form?
+  </div>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-10 round-body">
+        <div class="add-button-wrap">
+          <sw-button
+            (click)="addRound()"
+            style="margin-left: auto;margin-bottom: 10px;"
+            >Add Release Round</sw-button
+          >
+        </div>
+        <div class="table-wrap">
+          <table class="rounds-table">
+            <thead class="table-head">
+              <th>
+                <!-- (click)="sort('name')" -->
+                <div class="text">
+                  RELEASE NAME
+                </div>
+                <!-- <div class="sort-icon">
+                        <i class="fas fa-angle-down"></i>
+                        <i class="fas fa-angle-up"></i>
+                      </div> -->
+              </th>
+              <th>
+                <!-- (click)="sort('start_date')" -->
+                <div class="text">
+                  start date
+                </div>
+              </th>
+              <th>
+                <!-- (click)="sort('end_date')" -->
+                <div class="text">
+                  end date
+                </div>
+              </th>
+              <th>
+                <!-- (click)="sort('release_type')" -->
+                <div class="text">
+                  Release types
+                </div>
+              </th>
+              <th></th>
+            </thead>
+            <tbody class="table-body">
+              <tr class="round-item" *ngFor="let item of roundsList">
+                <td>{{ item.name }}</td>
+                <td>{{ item.start_date }}</td>
+                <td>{{ item.end_date }}</td>
+                <td>{{ getReleaseType(item) }}</td>
+                <td class="table_actions">
+                  <i class="fas fa-pen" (click)="editRound(item)"></i>
+                  <i class="fas fa-trash" (click)="deleteRound(item)"></i>
+                </td>
+              </tr>
+              <tr class="form-table-row" *ngIf="isShowForm">
+                <td class="form-wrap" colspan="5">
+                  <ng-container [formGroup]="form">
+                    <section class="general-info">
+                      <div class="section-title">
+                        1. General Information
+                      </div>
+                      <div class="section-content">
+                        <div class="inputs-wrap">
+                          <div class="row">
+                            <div class="col-6 input-m-r">
+                              <sw-input-text formControlName="name">
+                                <span class="placeholder">
+                                  Release Name
+                                </span>
+                              </sw-input-text>
+                            </div>
+                            <div class="col-6 input-m-l">
+                              <div class="row">
+                                <div class="col-6 input-m-r">
+                                  <sw-input-english-datepicker
+                                    class="form_send"
+                                    formControlName="start_date"
+                                    placeholder="Start date"
+                                  >
+                                  </sw-input-english-datepicker>
+                                </div>
+                                <div class="col-6 input-m-l">
+                                  <sw-input-english-datepicker
+                                    class="form_send"
+                                    formControlName="end_date"
+                                    placeholder="End date"
+                                  >
+                                  </sw-input-english-datepicker>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </section>
+                    <section class="release-type">
+                      <div class="section-title">
+                        2. Release type
+                      </div>
+                      <div class="section-content">
+                        <div class="row" formGroupName="types">
+                          <div class="col-6 input-m-r">
+                            <div
+                              class="type-wrap"
+                              formGroupName="email"
+                              [class.selected]="
+                                form
+                                  .get('types')
+                                  .get('email')
+                                  .get('selected').value
+                              "
+                            >
+                              <sw-input-checkbox
+                                class="circle"
+                                (change)="changeEmailSelected($event)"
+                                formControlName="selected"
+                              ></sw-input-checkbox>
+                              <div class="icon-wrap">
+                                <img
+                                  [src]="getTypes('email')"
+                                  alt="types-email"
+                                />
+                              </div>
+                              <div class="section-title">
+                                Email
+                              </div>
+                              <div class="content-mail">
+                                <sw-input-text
+                                  style="margin-bottom: 5px;"
+                                  formControlName="subject"
+                                >
+                                  <span class="placeholder">
+                                    Email Subject
+                                  </span>
+                                </sw-input-text>
+                                <sw-input-textarea formControlName="body">
+                                  <span class="label">
+                                    Email Body
+                                  </span>
+                                </sw-input-textarea>
+                                <sw-input-text
+                                  formControlName="buttonText"
+                                  [style]="'button_type'"
+                                ></sw-input-text>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-6 input-m-l">
+                            <div
+                              class="type-wrap"
+                              formGroupName="mailing"
+                              [class.selected]="
+                                form
+                                  .get('types')
+                                  .get('mailing')
+                                  .get('selected').value
+                              "
+                            >
+                              <sw-input-checkbox
+                                class="circle"
+                                formControlName="selected"
+                                (change)="changeMailingSelected($event)"
+                              ></sw-input-checkbox>
+                              <div class="icon-wrap">
+                                <img
+                                  [src]="getTypes('mailing')"
+                                  alt="types-mailing"
+                                />
+                              </div>
+                              <div class="section-title">
+                                Mailing
+                              </div>
+                              <div class="content-mail">
+                                <sw-radio-group
+                                  class="flex-row"
+                                  [options]="mailingOptions"
+                                  formControlName="radio_mailing_type"
+                                  (change)="changeMailingType($event)"
+                                  style="margin-bottom: 10px;"
+                                ></sw-radio-group>
+                                <ng-container
+                                  *ngIf="isMailHouse()"
+                                >
+                                  <sw-dropdown-input
+                                    style="width: 50%; margin-bottom: 25px;"
+                                    formControlName="select_mailing_house"
+                                    [options]="mailingHouseList ? mailingHouseList : mailingHouseOptions"
+                                    (change)="changeMailingHouse($event)"
+                                  >
+                                    <span class="label"
+                                      >Mailing House Name</span
+                                    >
+                                  </sw-dropdown-input>
+                                </ng-container>
+                                <ng-container *ngIf=isSelfMail()>
+                                  <sw-button
+                                    style="margin-left: auto; margin-bottom: 25px;"
+                                    (click)="onExportZIP()"
+                                  >
+                                    Download Forms
+                                  </sw-button>
+                                  <a
+                                    [href]="download.url"
+                                    [download]="download.filename"
+                                    #link
+                                  ></a>
+                                </ng-container>
+                                <div class="d-flex flex-row">
+                                  <sw-input-checkbox
+                                    formControlName="is_delay_days"
+                                    (change)=changeIsDelayDays($event)
+                                  >
+                                    <span class="label">
+                                      Delay the mailing after the email send by
+                                      &nbsp;
+                                    </span>
+                                  </sw-input-checkbox>
+                                  <sw-dropdown-input
+                                    formControlName="select_delay_days"
+                                    [options]="selectOptions"
+                                    (change)="changeDelayDays($event)"
+                                    class="short"
+                                  ></sw-dropdown-input>
+                                  <span>
+                                    days
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </section>
+                    <section class="accounts">
+                      <div class="section-title">
+                        3. accounts
+                      </div>
+                      <div class="section-content">
+                        <div class="row">
+                          <div class="col-12 lists-wrap">
+                            <div class="container">
+                              <div class="row">
+                                <div class="col-6 list-wrap">
+                                  <div class="list-title">
+                                    List of Accounts
+                                  </div>
+                                  <div
+                                    class="search-wrap"
+                                    data-e2e="search-wrap"
+                                  >
+                                    <input
+                                      class="search"
+                                      data-e2e="search"
+                                      placeholder="Search"
+                                    />
+                                    <!-- [formControl]="filter" -->
+                                    <i class="icon fas fa-search"></i>
+                                  </div>
+                                  <div class="accounts-list">
+                                    <div
+                                      class="account"
+                                      *ngFor="let item of accountsList"
+                                    >
+                                      <div class="item">
+                                        <sw-input-checkbox
+                                          [check]="allChildrenSelected(item)"
+                                          [indeterminate]="
+                                            someChildrenSelected(item)
+                                          "
+                                          (change)="
+                                            toggleAccount(item, $event)
+                                          "
+                                        >
+                                          <span class="label">
+                                            {{ item.name }}
+                                            <p class="count">
+                                              ({{ item.data.length }})
+                                            </p>
+                                          </span>
+                                        </sw-input-checkbox>
+                                        <sw-icon-button
+                                          [icon]="getIcon(item.isExpanded)"
+                                          (click)="
+                                            item.isExpanded = !item.isExpanded
+                                          "
+                                        >
+                                        </sw-icon-button>
+                                      </div>
+                                      <div
+                                        class="nested"
+                                        *ngIf="item.isExpanded"
+                                      >
+                                        <div
+                                          class="item"
+                                          *ngFor="let i of item.data"
+                                        >
+                                          <div class="label">
+                                            <sw-input-checkbox
+                                              [check]="isSelectedAccount(i)"
+                                              (change)="
+                                                toggleAccount(i, $event)
+                                              "
+                                            >
+                                              <span class="label">
+                                                {{ i.first_name }}
+                                                {{ i.last_name }}
+                                              </span>
+                                            </sw-input-checkbox>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-6 list-wrap">
+                                  <div class="list-title">
+                                    Chosen Accounts
+                                  </div>
+                                  <div
+                                    itemSize="50"
+                                    class="list-viewport"
+                                    data-e2e="forms-viewport"
+                                  >
+                                    <ng-container
+                                      *ngFor="
+                                        let item of selectedAccountsList
+                                      "
+                                    >
+                                      <div
+                                        class=" list-item"
+                                        data-e2e="form-item"
+                                      >
+                                        <div class="item-title">
+                                          {{ item.first_name }}
+                                          {{ item.last_name }}
+                                          <div
+                                            class="action"
+                                            (click)="
+                                              toggleAccount(item, false)
+                                            "
+                                          >
+                                            <i class="fas fa-trash"></i>
+                                          </div>
+                                        </div>
+                                        <div class="splits"></div>
+                                      </div>
+                                    </ng-container>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </section>
+                    <section class="actions-section">
+                      <sw-button
+                        class="outline-btn"
+                        style="margin-right: 10px;"
+                        (click)="cancelRound()"
+                        >Cancel
+                      </sw-button>
+                      <sw-button (click)="saveRound()">Save</sw-button>
+                    </section>
+                  </ng-container>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,4 +1,4 @@
-<div class="field_settings_container">
+<div class="field_settings_container"  *ngIf="form">
   <form [formGroup]="form">
     <section>
       <div class="title">
@@ -6,8 +6,8 @@
           <span class="input_label">Hint</span>
         </sw-input-toggle>
       </div>
-      <sw-input-phone-number *ngIf="form.get('showHint').value" class="settings-field" formControlName="hint">
-      </sw-input-phone-number>
+      <sw-input-text *ngIf="form.get('showHint').value" class="settings-field" formControlName="hint">
+      </sw-input-text>
     </section>
     <section>
       <sw-radio-group class="flex-row" [readonly]="form.get('showHint').value === false" [options]="displayOptions" formControlName="displayStrategy">

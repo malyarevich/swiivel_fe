@@ -6,23 +6,21 @@ import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
   templateUrl: './dropdown-setting.component.html',
   styleUrls: ['./dropdown-setting.component.scss']
 })
-export class DropdownSettingComponent implements OnInit {
+export class DropdownSettingComponent {
+
+  private optionsMap = [
+    'showDefaultOptions',
+    'defaultOption',
+    'multiple',
+    'fieldType'
+  ];
 
   @Input()
   set settings(obj: any) {
-    if (obj.fieldOptions && obj.fieldOptions.length >= 0) {
-      const fieldOptions = (this.form.get('fieldOptions') as FormArray);
-      fieldOptions.clear();
-      obj.fieldOptions.forEach(i => fieldOptions.push(this.fb.group({title: [i.title, {updateOn: 'blur'}]})));
-    }
     if (obj) {
-      this.form.patchValue({
-        showDefaultOptions: !!obj.showDefaultOptions,
-        defaultOption: obj.defaultOption  || null,
-        multiple: obj.multiple || false,
-        fieldType:  obj.fieldType && this.fieldsType.findIndex(i => i.value === obj.fieldType) >= 0
-          ? [this.fieldsType[this.fieldsType.findIndex(i => i.value === obj.fieldType)]] : [],
-      });
+      if (this.checkOptions(obj).length === 0) {
+        this.form = obj;
+      }
     }
   }
   @Output() fieldSettings = new EventEmitter();
@@ -49,29 +47,7 @@ export class DropdownSettingComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder
-  ) {
-    this.form = this.fb.group({
-      showDefaultOptions: new FormControl(false, {updateOn: 'change'}),
-      defaultOption: new FormControl([], {updateOn: 'change'}),
-      fieldType: new FormControl([], {updateOn: 'change'}),
-      multiple: new FormControl(false, {updateOn: 'change'}),
-      fieldOptions: new FormArray([
-        new FormGroup({
-          title: new FormControl('', {updateOn: 'blur'})
-        })
-      ])
-    });
-    this.form.valueChanges.subscribe(v => {
-      if (v.fieldType && v.fieldType[0]) { v.fieldType = v.fieldType[0].value; }
-      this.fieldSettings.emit(v);
-    });
-  }
-
-  ngOnInit() {
-    this.form.valueChanges.subscribe(v => {
-      this.prepareForm(v);
-    });
-  }
+  ) { }
 
   get options() {
     return this.form.get('fieldOptions') as FormArray;
@@ -100,9 +76,13 @@ export class DropdownSettingComponent implements OnInit {
     }
   }
 
-  prepareForm(value) {
-    const { multiple, fieldOptions, fieldType, defaultOption } = value;
-    this.fieldSettings.emit({multiple, fieldOptions, fieldType, defaultOption});
+  checkOptions(obj: FormGroup) {
+    return this.optionsMap.filter((key) => {
+      if (!obj.get(key)) {
+        console.error(`Does not exist ${key} in options.`);
+        return true;
+      }
+    });
   }
 
 }

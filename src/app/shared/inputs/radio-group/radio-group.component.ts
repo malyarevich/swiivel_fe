@@ -1,5 +1,5 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { Component, forwardRef, Input, OnInit } from '@angular/core';
+import { Component, forwardRef, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 const RADIOGROUP_CONTROL_ACCESSOR = {
@@ -27,6 +27,7 @@ export class RadioGroupComponent implements OnInit, ControlValueAccessor {
       this._options = opt;
     }
   }
+  @Output() readonly change: EventEmitter<any> = new EventEmitter();
 
   constructor() { }
 
@@ -44,6 +45,7 @@ export class RadioGroupComponent implements OnInit, ControlValueAccessor {
       this._sm.select(item);
       this.onChange(item);
       this.onTouched();
+      this.change.emit(item);
     }
   }
 

@@ -17,7 +17,21 @@ export class LongTextFieldComponent implements OnInit {
   ngOnInit() {}
 
   getLabel(): string {
-    return this.field.options.hideLabel ? '' : this.field.name;
+    return this.field.options && this.field.options.hideLabel
+      ? ''
+      : this.field.name;
+  }
+
+  getRows(): number | string {
+    return this.field.options && this.field.options.rows
+      ? this.field.options.rows
+      : 2;
+  }
+
+  getCols(): number | string {
+    return this.field.options && this.field.options.cols
+      ? this.field.options.cols
+      : 10;
   }
 
   isActive(): boolean {

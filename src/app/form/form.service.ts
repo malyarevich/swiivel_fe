@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '@app/core/api.service';
-import { cloneDeep, flatMap, get, isArrayLike, isPlainObject, isString, set, unset, values } from 'lodash';
-import { BehaviorSubject, from, Observable, Subject, throwError } from 'rxjs';
+import { cloneDeep, flatMap, flattenDeep, get, isArrayLike, isPlainObject, isString, set, unset, values, flatMapDeep, isObjectLike } from 'lodash';
+import { BehaviorSubject, Subject, from, throwError, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import * as SymbolTree from 'symbol-tree';
 
 const flatten = (fields = []) => {
   const result = [];
@@ -19,6 +18,19 @@ const flatten = (fields = []) => {
   }
   return result;
 };
+const flattenLo = function(field) {
+  return [field, flatMapDeep(field.fields, flattenLo)];
+}
+function flattenrec(xs) {
+  return xs.reduce((acc, x) => {
+    acc = acc.concat(x);
+    if (x.type >= 113) {
+      acc = acc.concat(flattenrec(x.fields));
+      // x.fields = [];
+    }
+    return acc;
+  }, []);
+}
 const mapField = (field, mappers = []) => {
   if (field.fields) {
     field.fields = field.fields.map(cfield => mapField(cfield, mappers));
@@ -96,14 +108,17 @@ export class FormService {
   // public form: FormGroup;
   private formData = {};
   _form: BehaviorSubject<FormGroup> = new BehaviorSubject<FormGroup>(null);
+  _formId: BehaviorSubject<string> = new BehaviorSubject<string>(null);
   private isFormHasIdSubject$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   formsById = {};
   public fieldTypes = {
     schema: [],
-    mapped: []
+    mapped: [],
+    defaultOptions: []  
   };
   public stage$ = new BehaviorSubject(0);
-
+  public dropLists = new Set();
+  public dropLists$ = new BehaviorSubject(this.dropLists);
   constructor(private fb: FormBuilder, private api: ApiService) {
     this.loadMappedFields();
     this.loadFieldsSchema();
@@ -135,6 +150,9 @@ export class FormService {
       getFormTemplate.subscribe(data => {
         if (data) {
           this.stage$.next(1);
+          if (!isArrayLike(data['fields'])) {
+            data['fields'] = [];
+          }
           this.form = this.initForm(data);
           this.getSidebarFields();
         }
@@ -146,9 +164,30 @@ export class FormService {
   }
 
   moveField(event: CdkDragDrop<any>) {
-    console.groupCollapsed(`Moving field ${event.item.data.name}`);
-
+    console.groupCollapsed(`Moving field ${event.item.data.value.name}`);
+    console.log(event);
     console.groupEnd();
+    if (event.previousContainer === event.container) {
+      const control = event.item.data;
+      let formArray = event.container.data as FormArray;
+      if (event.container.id === 'root-list') {
+        formArray = this.form.get('fields') as FormArray;
+      }
+      // TODO: remove not use var
+      const value = [...formArray.value];
+      formArray.removeAt(event.previousIndex);
+      formArray.insert(event.currentIndex, control);
+    } else {
+      const control = event.item.data;
+      const oldParent = control.parent as FormArray;
+      const newParent = event.container.data as FormArray;
+      if (oldParent && newParent){
+        oldParent.removeAt(event.previousIndex);
+        newParent.insert(event.currentIndex, control);
+      } else if (oldParent) {
+        console.log(`No parent`, event);
+      }
+    }
   }
 
 
@@ -157,18 +196,16 @@ export class FormService {
   }
 
   removeField(control: AbstractControl) {
-    const controlName = control.get('name').value;
     if (control.parent instanceof FormArray) {
-      const parent = control.parent as FormArray;
-      let index = 0;
-      for (const child of parent.controls) {
-        if (child.get('name').value === controlName) {
-          parent.removeAt(index);
-          break;
+      let parent = control.parent as FormArray;
+      if (parent) {
+        let idx = parent.value.indexOf(control.value);
+        if (idx !== -1) {
+          parent.removeAt(idx);
         }
-        index++;
       }
     } else {
+      let controlName = control.get('name').value;
       control.parent.removeControl(controlName);
     }
   }
@@ -184,6 +221,21 @@ export class FormService {
         parent = parent.parent;
     }
     return paths;
+  }
+  getListLength() {
+    const allFields = flatMapDeep(this.form.get('fields').value, flattenLo);
+    // const allFields = flattenDeep(this.form.get('fields').value);
+    return allFields.filter(field => field.type >= 113).length;
+  }
+  addDropListId(id) {
+    this.dropLists.add(id);
+    this.dropLists$.next(this.dropLists);
+    return this.dropLists;
+  }
+  removeDropListId(id) {
+    this.dropLists.delete(id);
+    this.dropLists$.next(this.dropLists);
+    return this.dropLists;
   }
   getListsIds(ids = [], parent?) {
     if (!parent) { parent = this.form; }
@@ -288,6 +340,16 @@ export class FormService {
     return parent;
   }
 
+  addFieldToWorkarea (event: CdkDragDrop<any>) {
+    let parent = event.container.data as FormArray;
+    if (event.container.id === 'root-list') {
+      parent = this.form.get('fields') as FormArray;
+    }
+    if (parent) {
+      parent.insert(event.currentIndex, this.initForm(event.item.data));
+    }
+  }
+
   addPathToParent(path, parent, fields?: any[]) {
     path = path.slice();
     let tmpSidebar: any[] = cloneDeep(this.sidebarSubject$.getValue());
@@ -376,14 +438,19 @@ export class FormService {
     return control;
   }
 
-  addField(fieldName: string, fieldValue: any, parent?): FormGroup {
-    if (!parent) { parent = this.form; } else {
+  addField(fieldName: string, fieldValue: any, parent?, silent = false): FormGroup {
+    if (!parent) parent = this.form;
+    else {
       if (isArrayLike(parent) || isString(parent)) {
         parent = this.form.get(parent);
       }
     }
-    const field = this.fb.control(fieldValue);
-    (parent as FormGroup).addControl(fieldName, field);
+    let field = this.fb.control(fieldValue);
+    if (silent) {
+      (parent as FormGroup).registerControl(fieldName, field);
+    } else {
+      (parent as FormGroup).addControl(fieldName, field);
+    }
     return parent.get(fieldName);
   }
 
@@ -441,17 +508,32 @@ export class FormService {
     (parent as FormGroup).addControl(fieldName, this.fb.group(fieldValue));
     return parent.get(fieldName);
   }
+  checkOptions(field) {
+    let proto = this.fieldTypes.schema.find(pfield => pfield.type === field.value.type);
+    for (let key in proto.options) {
+      if (!field.get(['options',key])) {
+        if (isObjectLike(proto.options[key])) {
+          this.addFieldGroup(key, proto.options[key], field.get('options'));
+        } else {
+          this.addField(key, proto.options[key], field.get('options'), true);
+        }
+      }
+    }
+    if (proto.options['validators']) {
+      for (let key in proto.options['validators']) {
+        if (!field.get(['options', 'validators', key])) {
+          this.addField(key, proto.options['validators'][key], field.get(['options', 'validators']), true);
+        }
+      }
+
+    }
+    return field;
+  }
 
   initForm(data?) {
     const form = this.fb.group({});
     if (data) {
-      let options: object = {
-        size: 3,
-        required: false,
-        unique: false,
-        hideLabel: false,
-        readonly: false
-      };
+      let options;
       for (const key of Object.keys(data)) {
         if (Array.isArray(data[key])) {
           if (key === 'fields') {
@@ -530,16 +612,29 @@ export class FormService {
 
   }
 
+  get form(): FormGroup {
+    return this._form.getValue();
+  }
+  
+  set form(form: FormGroup) {
+    this._form.next(form);
+  }
 
   get form$() {
     return this._form.asObservable();
   }
 
-  get form(): FormGroup {
-    return this._form.getValue();
+
+  get formId(): string {
+    return this._formId.getValue();
   }
-  set form(form: FormGroup) {
-    this._form.next(form);
+
+  get formId$() {
+    return this._formId.asObservable();
+  }
+
+  set formId(formId: string) {
+    this._formId.next(formId);
   }
 
   set isFormHasId(flag: boolean) {

@@ -9,14 +9,16 @@ import { CheckService } from '@app/services/check.service';
 import { DateService } from '@app/services/date.service';
 import { FormService } from '@app/services/form.service';
 import { StatusService } from '@app/services/status.service';
+import { FormStatisticModel } from '@models/data-collection/form-statistic.model';
 import { FormModel } from '@models/data-collection/form.model';
 import { UserItem } from '@models/user-item';
+import { ButtonSizeEnum } from '@shared/buttons/buttonSize.enum';
 import { formStatusOptions } from '@shared/form-status-options';
 import { formStatuses } from '@shared/form-statuses';
 import { IconsEnum } from '@shared/icons.enum';
 import { DialogComponent } from '@shared/popup/dialog.component';
 import { get, pick } from 'lodash';
-import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import { distinctUntilChanged, map } from 'rxjs/operators';
 import { DataCollectionService } from './data-collection.service';
 import { FormsDataSource } from './form-table.datasource';
 
@@ -46,7 +48,7 @@ export class FormTableComponent implements OnInit {
 
   // TABLE DATA
   public dataSource: FormsDataSource = new FormsDataSource(this.dataCollectionService);
-  public displayedColumns = ['checkbox', 'name', 'type', 'access', 'createdBy', 'updatedAt', 'status', 'actions'];
+  public displayedColumns = ['checkbox', 'name', 'type', 'access', 'createdBy', 'createdAt', 'status', 'actions'];
   public params: FormSearchParams = {
     page: 1,
     limit: 10,
@@ -75,7 +77,7 @@ export class FormTableComponent implements OnInit {
     filename: null
   };
   public filterForm: FormGroup;
-  public sort = ['updated_at', false];
+  public sort = ['created_at', false];
   public currentPage = 1;
 
   public statusesOptions = formStatusOptions;
@@ -83,7 +85,26 @@ export class FormTableComponent implements OnInit {
   public selectedRows: any = {};
   public _sm: SelectionModel<any> = new SelectionModel(true);
   public pageSelection: { allSelected: boolean, selectedAnyRow: boolean }[] = [];
-  public selectedAnyRow = false;
+
+  public isDashboardShown = true;
+  public statistic: FormStatisticModel;
+  public statisticsPeriodOptions = [
+    'current week',
+    'last week',
+    'current month',
+    'last month',
+    'this quarter',
+    'last quarter',
+    'current year',
+    'last year',
+  ];
+  public defaultIndexOption = 6;
+  public statisticParams = {
+    'periods[views]': this.statisticsPeriodOptions[this.defaultIndexOption].replace(/ /g, '_'),
+    'periods[submissions_rate]': this.statisticsPeriodOptions[this.defaultIndexOption].replace(/ /g, '_'),
+    'periods[account_invites]': this.statisticsPeriodOptions[this.defaultIndexOption].replace(/ /g, '_'),
+  };
+  public size = ButtonSizeEnum;
 
   constructor(
     public dataCollectionService: DataCollectionService,
@@ -103,7 +124,7 @@ export class FormTableComponent implements OnInit {
       type: [null],
       access: [null],
       createdBy: [null],
-      updatedAt: null,
+      createdAt: null,
       status: [null],
     });
 
@@ -118,6 +139,13 @@ export class FormTableComponent implements OnInit {
 
     this.dataSource.getFormsData.subscribe(data => {
       this.rows = data;
+    });
+
+    this.dataSource.loadStatistic(this.statisticParams);
+
+    this.dataSource.getStatistic.subscribe(data => {
+      this.statistic = data;
+      this.cdr.detectChanges();
     });
 
     this.dataCollectionService.getUsers().subscribe(users => {
@@ -146,7 +174,6 @@ export class FormTableComponent implements OnInit {
     });
     this.dataSource.loadFormsList(this.params);
     this.filterForm.valueChanges.pipe(
-      debounceTime(300),
       distinctUntilChanged(),
       map(value => {
         if (value.status && !value.status.length) {
@@ -159,7 +186,6 @@ export class FormTableComponent implements OnInit {
       this._sm.clear();
       this.selectedRows = {};
       this.pageSelection = [];
-      this.selectedAnyRow = false;
       this.params.filter = { ...value };
       this.dataSource.loadFormsList(this.params);
     });
@@ -212,8 +238,7 @@ export class FormTableComponent implements OnInit {
     }
   }
 
-  selectRow(row: FormModel, e: Event) {
-    // @ts-ignore
+  selectRow(row: FormModel, e?: Event, checkbox = false): void {
     if (
       e &&
       e.target &&
@@ -225,37 +250,37 @@ export class FormTableComponent implements OnInit {
       e.stopPropagation();
     } else {
       if (row) {
-        if (this._sm.isSelected(row.id)) {
-          this._sm.deselect(row.id);
-          delete this.selectedRows[row.id];
+        if (!checkbox) {
+          if (this._sm.isSelected(row.id)) {
+           this.deleteRowFromSm(row.id);
+          } else {
+            this.addRowToSm(row);
+          }
         } else {
-          this._sm.select(row.id);
-          this.selectedRows[row.id] = row;
+          e ? this.addRowToSm(row) : this.deleteRowFromSm(row.id);
         }
       }
       const selectedPageRows = this.rows.map((rowForm: any) => this._sm.isSelected(rowForm.id)).filter(item => item);
 
       this.pageSelection[this.params.page - 1].allSelected = selectedPageRows.length === this.rows.length;
       this.pageSelection[this.params.page - 1].selectedAnyRow = selectedPageRows.length > 0;
-
-      for (let i = 0; i < this.pageSelection.length; i++) {
-        if (this.pageSelection[i].selectedAnyRow) {
-          this.selectedAnyRow = true;
-          break;
-        }
-
-        if (i === this.pageSelection.length - 1) {
-          this.selectedAnyRow = false;
-        }
-      }
     }
+  }
+
+  deleteRowFromSm(id: string): void {
+    this._sm.deselect(id);
+    delete this.selectedRows[id];
+  }
+
+  addRowToSm(row: FormModel): void {
+    this._sm.select(row.id);
+    this.selectedRows[row.id] = row;
   }
 
   clickTab(filter) {
     this._sm.clear();
     this.selectedRows = {};
     this.pageSelection = [];
-    this.selectedAnyRow = false;
 
     this.activeTab = filter;
     if (filter.title === 'All') {
@@ -482,18 +507,14 @@ export class FormTableComponent implements OnInit {
     this.dialog.open();
   }
 
-  allSelect(): void {
-    if (this.pageSelection[this.params.page - 1].selectedAnyRow) {
+  allSelect(e: any): void {
+    if (this.pageSelection[this.params.page - 1].selectedAnyRow && !e) {
       this.rows.forEach((row: any) => {
         this._sm.deselect(row.id);
         delete this.selectedRows[row.id];
       });
 
       this.changePageSelection(this.params.page - 1, false);
-
-      if (!this._sm.selected.length) {
-        this.selectedAnyRow = false;
-      }
     } else {
       this.rows.forEach((row: any) => {
         this._sm.select(row.id);
@@ -501,18 +522,35 @@ export class FormTableComponent implements OnInit {
       });
 
       this.changePageSelection(this.params.page - 1, true);
-      this.selectedAnyRow = true;
     }
   }
 
   nullSelectedAllPages() {
     this.pageSelection.forEach((pageData, page) => {
       this.changePageSelection(page, false);
-      this.selectedAnyRow = false;
     });
   }
 
   changePageSelection(page: number, value = false) {
     this.pageSelection[page] = { allSelected: value, selectedAnyRow: value };
+  }
+
+  changeDashboardView(): void {
+    this.isDashboardShown = !this.isDashboardShown;
+  }
+
+  changePeriod(e: any, param: string): void {
+    switch (param) {
+      case 'view':
+        this.statisticParams['periods[views]'] = this.statisticsPeriodOptions[e].replace(/ /g, '_');
+        break;
+      case 'rate':
+        this.statisticParams['periods[submissions_rate]'] = this.statisticsPeriodOptions[e].replace(/ /g, '_');
+        break;
+      case 'invites':
+        this.statisticParams['periods[account_invites]'] = this.statisticsPeriodOptions[e].replace(/ /g, '_');
+        break;
+    }
+    this.dataSource.loadStatistic(this.statisticParams);
   }
 }

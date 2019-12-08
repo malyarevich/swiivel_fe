@@ -9,10 +9,12 @@ import { DropdownInputComponent } from './inputs/dropdown-input/dropdown-input.c
 // Inputs
 import { InputButtonGroupComponent } from './inputs/input-button-group/input-button-group.component';
 import { InputCheckboxComponent } from './inputs/input-checkbox/input-checkbox.component';
+import { InputDashCheckboxComponent } from './inputs/input-dash-checkbox/input-dash-checkbox.component';
 import { InputDynamicComponent } from './inputs/input-dynamic/input-dynamic.component';
 import { InputNumberComponent } from './inputs/input-number/input-number.component';
 import { InputSuggestComponent } from './inputs/input-suggest/input-suggest.component';
 import { InputTextComponent } from './inputs/input-text/input-text.component';
+import { DropdownSelectYearComponent } from './inputs/dropdow-select-year/dropdown-select-year.component';
 
 import { DropdownSelectComponent } from './inputs/dropdown-select/dropdown-select.component';
 import { InputTextareaComponent } from './inputs/input-textarea/input-textarea.component';
@@ -37,6 +39,8 @@ import { BackBarComponent } from '@shared/bars/back-bar/back-bar.component';
 import { DocumentApprovalBarComponent } from '@shared/bars/document-approval-bar/document-approval-bar.component';
 
 // Others
+import { InputSelectComponent } from './inputs/input-select/input-select.component';
+import { OptionDirective } from './inputs/input-select/option.directive';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CdkStepperModule } from '@angular/cdk/stepper';
 import localHe from '@angular/common/locales/he';
@@ -48,7 +52,6 @@ import { IConfig, NgxMaskModule } from 'ngx-mask';
 import { FormComponent } from './form.component';
 import { SelectOptionDirective } from './inputs/dropdown-select/option.directive';
 import { ComponentIdDirective } from './inputs/e2e.directive';
-import { InputEnglishDatepickerComponent } from './inputs/input-english-datepicker/input-english-datepicker.component';
 import { InputHebrewDatepickerComponent } from './inputs/input-hebrew-datepicker/input-hebrew-datepicker.component';
 import { RadioGroupComponent } from './inputs/radio-group/radio-group.component';
 import { LabelComponent } from './labels/label/label.component';
@@ -73,7 +76,6 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
       provide: DateAdapter,
       useFactory: adapterFactory
     }),
-    NgxMaskModule.forRoot(options),
   ],
   declarations: [
     // Buttons
@@ -84,10 +86,14 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     InputButtonGroupComponent,
     InputCheckboxComponent,
     InputDynamicComponent,
+    InputDashCheckboxComponent,
     InputNumberComponent,
     InputTextComponent,
     InputSuggestComponent,
     InputToggleComponent,
+
+    InputSelectComponent,
+    OptionDirective,
     DropdownInputComponent,
     InputPhoneNumberComponent,
     InputEmailComponent,
@@ -95,6 +101,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     DialogComponent,
     InputFileComponent,
     InputSearchComponent,
+    DropdownSelectYearComponent,
     // Headers
     PageHeaderComponent,
     BlockHeaderComponent,
@@ -116,7 +123,6 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     ProgressLineBarComponent,
     StepperComponent,
     FormComponent,
-    InputEnglishDatepickerComponent,
     InputHebrewDatepickerComponent,
   ],
   exports: [
@@ -128,6 +134,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     // Inputs
     InputButtonGroupComponent,
     InputCheckboxComponent,
+    InputDashCheckboxComponent,
     InputDynamicComponent,
     InputNumberComponent,
     InputTextComponent,
@@ -140,10 +147,10 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     DropdownSelectComponent,
     DialogComponent,
     RadioGroupComponent,
-    InputEnglishDatepickerComponent,
     InputHebrewDatepickerComponent,
     InputFileComponent,
     InputSearchComponent,
+    DropdownSelectYearComponent,
     // Headers
     PageHeaderComponent,
     BlockHeaderComponent,
@@ -165,6 +172,8 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     BackBarComponent,
     ProgressLineBarComponent,
     StepperComponent,
+    InputSelectComponent,
+    OptionDirective,
   ],
   providers: [
     StepperService

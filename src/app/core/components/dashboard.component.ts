@@ -88,6 +88,10 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  logEvent(event) {
+    this.form.get('longText').setValue(`${new Date().toString()} ${event} event occured \r\n${this.form.value.longText}`);
+  }
+
   onChecked(isChecked: boolean) {
     this.form.get('checkbox').setValue(!!isChecked);
   }

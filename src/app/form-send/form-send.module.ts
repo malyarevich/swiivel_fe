@@ -1,5 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+<<<<<<< HEAD
+=======
+import { IndependentComponentsModule } from '@app/independent-components/independent-components.module';
+>>>>>>> development
 import { SharedModule } from '@app/shared/shared.module';
 import { FormSendRoutingModule } from './form-send-routing.module';
 import { FormSendComponent } from './form-send.component';
@@ -13,7 +17,12 @@ import { DataCollectionService } from '@app/forms-dashboard/data-collection.serv
 import { OnlineFormModule } from '@app/online-form/online-form.module';
 import { PreviewFormPdfModule } from '@app/preview-form-pdf/preview-form-pdf.module';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+<<<<<<< HEAD
 import { PreviewFormComponent } from './preview-form/preview-form.component';
+=======
+import { SendReleasePeriodsComponent } from './send-release/send-release-periods/send-release-periods.component';
+import { SendReleaseRoundsComponent } from './send-release/send-release-rounds/send-release-rounds.component';
+>>>>>>> development
 
 
 
@@ -23,7 +32,8 @@ import { PreviewFormComponent } from './preview-form/preview-form.component';
     FormSendComponent,
     SendPreviewComponent,
     SendReleaseComponent,
-    PreviewFormComponent
+    SendReleasePeriodsComponent,
+    SendReleaseRoundsComponent
   ],
   imports: [
     CommonModule,
@@ -35,6 +45,7 @@ import { PreviewFormComponent } from './preview-form/preview-form.component';
     OnlineFormModule,
     PreviewFormPdfModule,
     PdfViewerModule,
+    IndependentComponentsModule
   ],
   providers: [
     FormSendService,

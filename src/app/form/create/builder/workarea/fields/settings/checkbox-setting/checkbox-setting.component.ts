@@ -5,40 +5,45 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
   selector: 'sw-checkbox-setting',
   templateUrl: './checkbox-setting.component.html'
 })
-export class CheckboxSettingComponent implements OnInit {
+export class CheckboxSettingComponent {
 
   form: FormGroup;
-
-  @Input()
-  set settings(obj: any) {
-    if (obj) {
-      this.form.patchValue({
-        default: (obj.default || obj.default === false) && this.options.findIndex(i => i.value === obj.default) >= 0
-          ? [this.options[this.options.findIndex(i => i.value === obj.default)]] : [],
-        showDefaultValue: !!obj.showDefaultValue
-      });
-    }
-  }
-  @Output() fieldSettings = new EventEmitter();
-
   options = [
     { title: 'Yes', value: true },
     { title: 'No', value: false }
   ];
+  private optionsMap = [
+    'showDefaultValue',
+    'default'
+  ];
+
+  @Input()
+  set settings(obj: any) {
+    if (obj) {
+      if (this.checkOptions(obj).length === 0) {
+        this.form = obj;
+      }
+    }
+  }
+  @Output() fieldSettings = new EventEmitter();
 
   constructor(
     private fb: FormBuilder
-  ) {
-    this.form = this.fb.group({
-      default: new FormControl([]),
-      showDefaultValue: new FormControl(false)
-    });
-  }
+  ) { }
 
+<<<<<<< HEAD
   ngOnInit() {
     this.form.valueChanges.subscribe(v => {
       if (v.default && v.default[0]) { v.default = v.default[0].value; }
       this.fieldSettings.emit(v);
+=======
+  checkOptions(obj: FormGroup) {
+    return this.optionsMap.filter((key) => {
+      if (!obj.get(key)) {
+        console.error(`Does not exist ${key} in options.`);
+        return true;
+      }
+>>>>>>> development
     });
   }
 

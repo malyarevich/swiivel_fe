@@ -107,6 +107,7 @@
           [activeIdForm]="activeIdForm"
           [isBulkDownload]="isBulkDownload"
           [disabledButtons]="isSaveActive"
+          [disabledUploadBtn]="documentTypes.length === 0"
           [selectedCount]="getSelectedCount()"
           [showBulkDownload]="documents && documents.length"
           (bulkDownload)="clickBulkDownload()"
@@ -118,7 +119,12 @@
       </div>
     </div>
   </div>
-  <div class="sidebar-opener" [class.opened]="isSideBarShown" (click)="isSideBarShown = !isSideBarShown">
+  <div
+    class="sidebar-opener"
+    [class.opened]="isSideBarShown"
+    (click)="isSideBarShown = !isSideBarShown"
+    [title]="isSideBarShown ? 'Hide documents' : 'Show documents'"
+  >
     <div class="button">
       <sw-icon-button
         color="white"
@@ -150,12 +156,11 @@
       ></sw-online-form>
     </div>
     <div *ngIf="getSelectForm() && getSelectForm().submission_type === 'pdfForm'">
-      <!--<app-preview-form-->
-        <!--[formId]='getSelectForm().form_id'-->
-        <!--[isReviewMode]="true"-->
-        <!--(onBack)="onBack($event)"-->
-        <!--(onSaveNext)="onSaveNext($event)"-->
-      <!--&gt;</app-preview-form>-->
+      <sw-preview-form-pdf
+        [formId]="getSelectForm().form_id"
+        (back)="onBack($event)"
+        (saveNext)="onSaveNext($event)"
+      ></sw-preview-form-pdf>
     </div>
 
     <div

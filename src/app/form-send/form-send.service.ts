@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { ApiService } from '@app/core/api.service';
 import { StepperService } from '@app/shared/stepper.service';
 import { DateTime } from 'luxon';
@@ -6,6 +7,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import {
   defaultAccountsList,
   hasNoFamily,
+  IMailingHouse,
   IPerson,
   IRound
 } from './models/send.model';
@@ -15,7 +17,10 @@ export class FormSendService {
   public formId: string;
   private periodsSubject: BehaviorSubject<any> = new BehaviorSubject<any>([]);
   private currentPeriods: BehaviorSubject<any> = new BehaviorSubject<any>([]);
-  private accoutSubject: BehaviorSubject<any> = new BehaviorSubject<any>([]);
+  private mailingHouseListSubject: BehaviorSubject<
+    IMailingHouse[]
+  > = new BehaviorSubject<IMailingHouse[]>([]);
+  private accountSubject: BehaviorSubject<any> = new BehaviorSubject<any>([]);
   private currentAccounts: BehaviorSubject<any> = new BehaviorSubject<any>([]);
   private currentAccount: BehaviorSubject<IPerson> = new BehaviorSubject<
     IPerson
@@ -49,8 +54,20 @@ export class FormSendService {
     this.currentPeriods.next(periods);
   }
 
+  get $mailingHouseList() {
+    return this.mailingHouseListSubject.asObservable();
+  }
+
+  get mailingHouseList(): IMailingHouse[] {
+    return this.mailingHouseListSubject.getValue();
+  }
+
+  set mailingHouseList(value: IMailingHouse[]) {
+    this.mailingHouseListSubject.next(value);
+  }
+
   get $accountsList() {
-    return this.accoutSubject.asObservable();
+    return this.accountSubject.asObservable();
   }
 
   get $selectedAccounts() {
@@ -93,7 +110,11 @@ export class FormSendService {
     this.roundsSubject.next(rounds);
   }
 
-  constructor(private api: ApiService, private stepperService: StepperService) {
+  constructor(
+    private api: ApiService,
+    private stepperService: StepperService,
+    private router: Router
+  ) {
     this.$roundsList.subscribe(rounds => {
       this.previewRoundList = this.getPreviewRoundsListByRounds(rounds);
     });
@@ -132,7 +153,6 @@ export class FormSendService {
               }
             });
           } else {
-            // console.log(hasNoFamily, person);
             combinedAccounts.push({
               ...person,
               first_name: undefined,
@@ -178,6 +198,11 @@ export class FormSendService {
   }
 
   loadFormSend(): void {
+    this.api.getMailingHouseList().subscribe((resList: IMailingHouse[]) => {
+      this.mailingHouseList = resList.map(house => {
+        return { ...house, title: house.name };
+      });
+    });
     this.api.getFormSend(this.formId).subscribe(res => {
       if (res) {
         if (res.periods) {
@@ -188,7 +213,7 @@ export class FormSendService {
                     if (
                       Object.keys(res.periods.chosen).filter(key => {
                         if (
-                          item.id === key &&
+                          item.id.toString() === key &&
                           res.periods.chosen[key] === true
                         ) {
                           return item;
@@ -218,18 +243,23 @@ export class FormSendService {
         }
       });
     });
-    this.accoutSubject.next(this.accountsList);
+    this.accountSubject.next(this.accountsList);
+    // console.log('this.accountsList', this.accountsList);
   }
 
   togglePeriods(item: any, e: boolean): void {
     const tmp = this.selectedPeriods;
     if (e === true) {
-      tmp.push(item);
+      if (!tmp.find(i => i.id === item.id)) {
+        tmp.push(item);
+      }
     } else if (e === false) {
-      tmp.splice(
-        tmp.findIndex(i => i.id === item.id),
-        1
-      );
+      if (tmp.find(i => i.id === item.id)) {
+        tmp.splice(
+          tmp.findIndex(i => i.id === item.id),
+          1
+        );
+      }
     }
     this.selectedPeriods = tmp;
   }
@@ -284,7 +314,7 @@ export class FormSendService {
       round.types.email = null;
     }
     if (round.types.mailing.selected === true) {
-      round.types.mailingis_delay_days =
+      round.types.mailing.is_delay_days =
         round.types.mailing.is_delay_days === true ? 1 : 0;
       delete round.types.mailing.selected;
     } else {
@@ -343,6 +373,11 @@ export class FormSendService {
     return bs;
   }
 
+  isRoute(path: string) {
+    const url = this.router.url.split('/');
+    return url.length >= 3 ? url.find(elem => elem === path) : false;
+  }
+
   nextStep() {
     const data: any = { formPeriods: {} };
     this.periodsList.forEach(item => {
@@ -351,16 +386,26 @@ export class FormSendService {
           ? true
           : false;
     });
-    // console.log(data);
-    this.api.updateFormTemplate(this.formId, data).subscribe(data => {
-      this.removeAllRounds().subscribe(() => {
-        this.stepperService.stepper = 'next';
-        // console.log('removeAllRounds', this.roundsSubject.getValue());
-      });
-    });
+    this.api.updateFormTemplate(this.formId, data).subscribe(
+      saved => {
+        if (saved) {
+          if (this.isRoute('release')) {
+            this.router.navigate(['form', this.formId, 'send', 'preview']);
+          }
+        }
+        this.removeAllRounds().subscribe(step => {
+          this.stepperService.stepper = 'next';
+        });
+      },
+      error => {
+        console.error('savedError', error);
+      }
+    );
   }
 
   prevStep() {
-    this.stepperService.stepper = 'prev';
+    if (this.isRoute('preview')) {
+      this.router.navigate(['form', this.formId, 'send', 'release']);
+    }
   }
 }

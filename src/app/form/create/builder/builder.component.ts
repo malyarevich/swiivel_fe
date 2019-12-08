@@ -1,12 +1,13 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy, AfterViewInit, ViewChildren, QueryList, ContentChildren } from '@angular/core';
 import { FormService } from '@app/form/form.service';
 import { cloneDeep } from 'lodash';
 import { Subject, Subscription } from 'rxjs';
 import { takeUntil, takeWhile } from 'rxjs/operators';
 import { isArray } from 'util';
-import { v4 as uuid } from 'uuid';
+import { Router, ActivatedRoute } from '@angular/router';
+import { v4 as uuid } from "uuid";
+import { CdkDrag } from '@angular/cdk/drag-drop';
+import { FormArray, FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'sw-builder',
@@ -14,10 +15,9 @@ import { v4 as uuid } from 'uuid';
   styleUrls: ['./builder.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BuilderComponent implements OnInit, OnDestroy {
-
-  public expandedSection = 'packetIntroduction';
-  public expanded = false;
+export class BuilderComponent implements OnInit, AfterViewInit, OnDestroy {
+  public expandedSection: string = 'packetIntroduction';
+  public expanded: boolean = false;
 
   public form: FormGroup;
   public formSubscription: Subscription;
@@ -40,12 +40,15 @@ export class BuilderComponent implements OnInit, OnDestroy {
           if (form.get('_id')) {
             this.form = form;
             let changedForm;
+            let changedFields = 0;
             if (!this.form.get('attachments')) {
-              if (!changedForm) { changedForm = cloneDeep(form); }
+              changedFields++;
+              if (!changedForm) changedForm = cloneDeep(form);
               changedForm.addControl('attachments', this.fb.group({ }));
             }
             if (!this.form.get('packetIntroduction')) {
-              if (!changedForm) { changedForm = cloneDeep(form); }
+              changedFields++;
+              if (!changedForm) changedForm = cloneDeep(form);
               changedForm.addControl('packetIntroduction', this.fb.group({
                 sectionName: ['Packet Introduction'],
                 sectionWidth: ['full'],
@@ -53,7 +56,8 @@ export class BuilderComponent implements OnInit, OnDestroy {
               }));
             }
             if (!this.form.get('consentInfo')) {
-              if (!changedForm) { changedForm = cloneDeep(form); }
+              changedFields++;
+              if (!changedForm) changedForm = cloneDeep(form);
               changedForm.addControl('consentInfo', this.fb.group({
                 sectionName: ['Consent Section'],
                 sectionWidth: ['full'],
@@ -61,7 +65,8 @@ export class BuilderComponent implements OnInit, OnDestroy {
               }));
             }
             if (!this.form.get('activeSections')) {
-              if (!changedForm) { changedForm = cloneDeep(form); }
+              changedFields++;
+              if (!changedForm) changedForm = cloneDeep(form);
               changedForm.addControl('activeSections', this.fb.group({
                 packetIntroduction: this.fb.group({ isActive: [true], showSideInfo: [true] }),
                 formFields: this.fb.group({ isActive: [false], showSideInfo: [false] }),
@@ -70,8 +75,7 @@ export class BuilderComponent implements OnInit, OnDestroy {
                 documentsForms: this.fb.group({ isActive: [false], showSideInfo: [false] })
               }));
             } else {
-              if (!changedForm) { changedForm = cloneDeep(form); }
-              let changedFields = 0;
+              if (!changedForm) changedForm = cloneDeep(form);
               for (const section of this.sectionsNames) {
                 if (!changedForm.get(['activeSections', section])) {
                   changedFields++;
@@ -87,11 +91,12 @@ export class BuilderComponent implements OnInit, OnDestroy {
               this.formService.form = changedForm;
             } else {
               this.cdr.markForCheck();
-              if (this.formSubscription) { this.formSubscription.unsubscribe(); }
-              this.formSubscription = this.form.valueChanges.subscribe((value) => {
+              if (this.formSubscription) this.formSubscription.unsubscribe();
+              this.formSubscription = this.form.valueChanges.pipe(takeUntil(this.destroyed$)).subscribe((value) => {
                 console.groupCollapsed('Form value changed');
                 console.log(value);
                 console.groupEnd();
+                this.cdr.detectChanges();
               });
             }
             this.cdr.reattach();
@@ -101,7 +106,8 @@ export class BuilderComponent implements OnInit, OnDestroy {
       }
     });
   }
-
+  ngAfterViewInit() {
+  }
   ngOnInit() {
   }
   // isActive: [false], showSideInfo: [false]
@@ -154,8 +160,8 @@ export class BuilderComponent implements OnInit, OnDestroy {
   }
 
   addTermsConditionsItem() {
-    const termsConditionsItem = this.fb.group({
-      title: [''],
+    let termsConditionsItem = this.fb.group({
+      title: ["Terms And Conditions"],
       id: [uuid()],
       text: [''],
       checkbox: this.fb.group({

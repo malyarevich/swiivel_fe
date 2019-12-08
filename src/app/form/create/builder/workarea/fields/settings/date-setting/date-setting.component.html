@@ -1,1 +1,30 @@
-<p>date-setting works!</p>
+<div class="field_settings_container" *ngIf="form">
+  <form [formGroup]="form">
+    <section>
+      <div class="title">
+        <sw-input-toggle formControlName="showDefaultValue">
+          <span class="input_label">default value</span>
+        </sw-input-toggle>
+      </div>
+      <sw-input-text *ngIf="form.get('showDefaultValue').value" class="settings-field" formControlName="default">
+      </sw-input-text>
+    </section>
+    <section>
+      <div class="title">
+        General
+      </div>
+      <div class="row_container">
+        <div class="row_container__input">
+          <sw-dropdown-input formControlName="separator" [multiple]="false" [options]="separators">
+            <span class="label">Separator</span>
+          </sw-dropdown-input>
+        </div>
+        <div class="row_container__input">
+          <sw-dropdown-input formControlName="dateFormat" [multiple]="false" [options]="dateFormats">
+            <span class="label">Date Format</span>
+          </sw-dropdown-input>
+        </div>
+      </div>
+    </section>
+  </form>
+</div>

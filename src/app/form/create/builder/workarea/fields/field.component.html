@@ -1,0 +1,45 @@
+<div class="main_container" *ngIf="_field">
+  <div class="content">
+    <div class="drag-icon">
+      <i class="dragdrop fas fa-ellipsis-v" cdkDragHandle></i>
+    </div>
+    <div class="name-container">
+      <div class="main-text">{{ _field.value.name }}</div>
+      <div class="hint" *ngIf="_field.get('textType')">Field Type - {{ _field.get('textType').value }}</div>
+    </div>
+    <sw-select #select style="margin-right: 25px;" [formControl]="_field.get('options.size')" [values]="widthOptions">
+      <span class="label">Field Width</span>
+      <span class="content-text"> {{ select.title }} </span>
+    </sw-select>
+    <div class="input">
+      <sw-input-checkbox [formControl]="_field.get('options.required')" (checked)="setParent(_field, 'required', $event)">
+        <span class="label">Required</span>
+      </sw-input-checkbox>
+    </div>
+    <div class="input">
+      <sw-input-checkbox [formControl]="_field.get('options.hideLabel')" (checked)="setParent(_field, 'hideLabel', $event)">
+        <span class="label">Hide Label</span>
+      </sw-input-checkbox>
+    </div>
+    <div class="input">
+        <sw-input-checkbox [formControl]="_field.get('options.readonly')">
+          <span class="label">Read–Only</span>
+        </sw-input-checkbox>
+    </div>
+    <div class="input">
+        <sw-input-checkbox [formControl]="_field.get('options.unique')">
+          <span class="label">Unique</span>
+        </sw-input-checkbox>
+    </div>
+    <div class="actions">
+        <div class="icon">
+        <sw-icon-button icon="fa-cog" class="field-creator blue" [class.active]="_field.value.showSettings" (click)="toggleSettings()">
+        </sw-icon-button>
+        </div>
+        <div class="icon">
+        <sw-icon-button icon="fa-times" class="field-creator blue" (click)="removeField()"></sw-icon-button>
+        </div>
+    </div>
+    </div>
+</div>
+<sw-settings *ngIf="showSettings" [field]="_field" class="hide-on-preview"></sw-settings>

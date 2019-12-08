@@ -1,7 +1,5 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ComponentFactory, ComponentFactoryResolver, ComponentRef, Input, OnDestroy, OnInit,
-  ViewChild, ViewContainerRef } from '@angular/core';
-import { FormArray, FormControl, FormGroup } from '@angular/forms';
-import { cloneDeep } from 'lodash';
+import { AfterViewInit, ChangeDetectorRef, Component, ComponentFactory, ComponentFactoryResolver, ComponentRef, Input, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { FormGroup, FormControl, FormArray } from '@angular/forms';
 import { CheckboxSettingComponent } from './checkbox-setting/checkbox-setting.component';
 import { DateSettingComponent } from './date-setting/date-setting.component';
 import { DropdownSettingComponent } from './dropdown-setting/dropdown-setting.component';
@@ -12,6 +10,7 @@ import { NumberSettingComponent } from './number-setting/number-setting.componen
 import { PhoneSettingComponent } from './phone-setting/phone-setting.component';
 import { SectionSettingsComponent } from './section-settings/section-settings.component';
 import { TextSettingComponent } from './text-setting/text-setting.component';
+import { FormService } from '@app/form/form.service';
 
 const components = [
   { type: 101, component: TextSettingComponent, title: 'Short Text Field Settings' },
@@ -34,7 +33,6 @@ const components = [
   styleUrls: ['./settings.component.scss']
 })
 export class SettingsComponent implements OnInit, AfterViewInit, OnDestroy {
-
   component: ComponentRef<any>;
   type: number;
   title: string;
@@ -52,7 +50,8 @@ export class SettingsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(
     private resolver: ComponentFactoryResolver,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private service: FormService
   ) { }
 
   ngOnInit() {
@@ -77,25 +76,27 @@ export class SettingsComponent implements OnInit, AfterViewInit, OnDestroy {
     return res;
   }
 
-  private initSettings(f: any): void {
-    const c = components.find(comp => comp.type === f.value.type);
+  private initSettings(f: FormGroup): void {
+    const c = components.find(c => c.type === f.value.type);
     if (c) {
-      // console.log('CCCC,', c)
       this.type = c.type;
       this.title = c.title;
-      if (c.type === 107) {
-        console.log('Field group', f);
-      }
-      const factory: ComponentFactory<any> = this.resolver.resolveComponentFactory(c.component);
+      console.log('INPUT form in Settings', f.get('options'));
+      const factory: ComponentFactory<any> = this.resolver.resolveComponentFactory<any>(c.component);
       if (this.container) {
+        this.service.checkOptions(f);
+        f.get('options').updateValueAndValidity();
         this.component = this.container.createComponent(factory);
-        this.component.instance.settings = f.get('options').value;
+        this.component.instance.settings = f.get('options');
         this.component.instance.fieldSettings.subscribe(v => {
           this.updateField(v);
         });
         if (this.component.instance.setChildren) {
           this.component.instance.setChildren.subscribe(value => {
-            this.setChildren((this._form.get('fields') as FormArray).controls, value);
+            this.setChildren(f.get('fields'), value, false);
+            // f.updateValueAndValidity();
+            // console.log(f.get('fields').value);
+            // this.setChildren((this._form.get('fields') as FormArray).controls, value);
           });
         }
         this.cdr.detectChanges();
@@ -103,17 +104,17 @@ export class SettingsComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  setChildren(fields, value) {
-    for (const field of fields) {
-      const control = field.get(['options', value.key]) as FormControl;
+  setChildren(fields, value, recursive?: boolean) {
+    let formArray = fields as FormArray;
+    for (let field of formArray.controls) {
+      let control = field.get(['options', value.key]) as FormControl;
       if (!control) {
-        (field.get('options') as FormGroup).registerControl(value.key, new FormControl(value.value));
+        (field.get('options') as FormGroup).addControl(value.key, new FormControl(value.value));
       } else {
-        control.setValue(value.value, {emitEvent: false, onlySelf: true, emitModelToViewChange: false, emitViewToModelChange: false});
-
+        control.setValue(value.value, {emitEvent: false, });
       }
-      if (field.get('fields')) {
-        this.setChildren((field.get('fields') as FormArray).controls, value);
+      if (recursive && field.get('fields')) {
+        this.setChildren(field.get('fields'), value, true);
       }
     }
   }

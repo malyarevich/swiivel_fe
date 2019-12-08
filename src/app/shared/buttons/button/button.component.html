@@ -2,20 +2,29 @@
   <button
     class="button"
     data-e2e="button"
-    type="button"
+    [type]="type"
     [class.gray]="color === colors.GRAY"
     [class.green]="color === colors.GREEN"
     [class.light-blue]="color === colors.LIGHT_BLUE"
     [class.transparent]="color === colors.TRANSPARENT"
+    [class.transparent-gray]="color === colors.TRANSPARENT_GRAY"
     [class.yellow]="color === colors.YELLOW"
     [class.white]="color === colors.WHITE"
     [class.purple]="color === colors.PURPLE"
+    [class.status-gray-purple]="color === colors.GRAY_PURPLE"
+    [class.status-dark-blue]="color === colors.DARK_BLUE"
+    [class.status-blue]="color === colors.BLUE"
+    [class.status-red]="color === colors.RED"
+    [class.status-light-purple]="color === colors.LIGHT_PURPLE"
+    [class.orange-button]="color === colors.ORANGE"
     [class.outline-purpure]="fill === 'outline'"
     [class.small]="size === sizes.SMALL"
+    [class.medium]="size === sizes.MEDIUM"
     [class.round]='isRound'
-    [name]="name"
-    [value]="value"
-    [disabled]="disabled"
+    [disabled]="!!disabled || null"
+    [attr.name]="name"
+    [attr.title]="title"
+    [attr.value]="value"
   >
     <ng-content></ng-content>
   </button>

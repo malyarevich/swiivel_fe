@@ -11,6 +11,7 @@ import { ButtonExpandEnum } from '@shared/buttons/buttonExpand.enum';
 export class UploadReviewFormControlsComponent implements OnInit  {
   @Input() activeIdForm: string;
   @Input() disabledButtons = false;
+  @Input() disabledUploadBtn = false;
   @Input() isBulkDownload = false;
   @Input() showBulkDownload = false;
   @Input() selectedCount = 0;

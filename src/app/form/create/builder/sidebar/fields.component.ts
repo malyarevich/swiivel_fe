@@ -1,17 +1,17 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { CdkDragDrop, CdkDragExit, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, CdkDragExit, moveItemInArray, transferArrayItem, CdkDragStart } from '@angular/cdk/drag-drop';
 import { NestedTreeControl } from '@angular/cdk/tree';
-import { AfterViewChecked, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit,
-  ViewChild } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, ChangeDetectionStrategy, ViewChild, ChangeDetectorRef, AfterViewChecked, OnDestroy, Input, ElementRef } from '@angular/core';
+import { FormControl, FormBuilder, FormArray, FormGroup, Form, Validators } from '@angular/forms';
 import { ApiService } from '@app/core/api.service';
-import { Popup } from '@app/core/popup.service';
 import { FormService } from '@app/form/form.service';
-import { cloneDeep } from 'lodash';
+import { TreeDataSource, CHILDREN_SYMBOL } from '../../tree.datasource';
+import { Popup } from '@app/core/popup.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { CHILDREN_SYMBOL, TreeDataSource } from '../../tree.datasource';
+import { cloneDeep, flattenDeep, flatMapDeep, defaultsDeep } from 'lodash';
+import * as icons from '@app/core/icons';
+import { ActivatedRoute } from '@angular/router';
 // import fields from '@app/shared/fields';
 
 
@@ -22,22 +22,34 @@ import { CHILDREN_SYMBOL, TreeDataSource } from '../../tree.datasource';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestroy {
+  icons = icons;
   filterValue: string = null;
   filterControl = new FormControl();
   treeSource = new TreeDataSource('Sidebar');
   treeControl = new NestedTreeControl((node: any) => node.fields);
+  activeTree: any[];
+  breadcrumbs: any[] = null;
+  canCreateField = false;
+  fieldTypes = [];
   delFieldName: string;
   delInput: FormControl = new FormControl(null);
+  customForm: FormGroup;
   ref: any;
+  fieldToDelete;
   destroyed$ = new Subject();
+  id = 'sidebar-list';
+  showForm = false;
+  dropListsIds = [];
+  widthOptions = [
+    {value: 0, title: '1/4 page'},
+    {value: 1, title: '2/4 page'},
+    {value: 2, title: '3/4 page'},
+    {value: 3, title: 'Full page'}
+  ];
   @ViewChild('filter', { static: false }) filterNames;
   @ViewChild('deletePop', { static: false }) deletePop;
-
-  @Input()
-  set form(_form) {
-    // console.log('Fields INput form', _form);
-  }
-
+  @ViewChild('widget', { static: true }) widget;
+  @Input() form;
   constructor(
     private service: FormService,
     private fb: FormBuilder,
@@ -45,14 +57,27 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
     private popup: Popup,
     private cdr: ChangeDetectorRef,
     private route: ActivatedRoute,
+    private el: ElementRef
   ) {
-
+    this.service.dropLists$.subscribe((ids) => {
+      this.dropListsIds = Array.from(ids);
+    });
+    this.customForm = this.fb.group({
+      'name': ['', [Validators.required]],
+      'type': [101, [Validators.required]],
+      'options': this.fb.group({
+        'size': [3, [Validators.required]],
+      }),
+    });
+    // this.customForm
   }
+
 
   activate(node, event) {
     return event;
   }
   ngOnDestroy() {
+    if (typeof(this.widget.close) === 'function') this.widget.close();
     this.destroyed$.next(true);
     this.destroyed$.complete();
   }
@@ -62,6 +87,16 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
   ngOnInit() {
     this.service.sidebar.subscribe((sidebar) => {
       this.treeSource.nodes = cloneDeep(sidebar);
+      if (!!sidebar && !this.activeTree) {
+        this.activeTree = this.treeSource.nodes;
+        if (!this.treeControl.dataNodes) {
+          this.treeControl.dataNodes = this.activeTree;
+          this.treeControl.expandAll();
+        }
+      }
+      this.fieldTypes = this.service.fieldTypes.schema.map((type) => {
+        return {value: type.type, title: type.name}
+      });
       this.cdr.markForCheck();
     });
     this.treeControl.getDescendants = (dataNode) => {
@@ -77,6 +112,9 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
       }
     });
 
+    
+    
+
 
     this.filterControl.valueChanges.pipe(takeUntil(this.destroyed$)).subscribe(value => {
       if (value && value.length > 0) {
@@ -84,12 +122,77 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
       } else {
         this.filterValue = null;
       }
-      console.log(this.filterValue);
     });
   }
+
+  get customType() {
+    if (this.customForm.get('type').valid) {
+      let selected = this.customForm.get('type').value;
+      return this.fieldTypes.find(field => {
+        return field.value === selected;
+      });
+    }
+    return null;
+  }
+
+  isHidden(field) {
+    if (!this.filterValue) return false;
+    return !(this.filterValue && field.name.toLowerCase().includes(this.filterValue));
+  }
+
+  isGroupHidden(group) {
+    if (!this.isHidden(group)) return false;
+    else {
+      let childVisible = group.fields.find((field) => {
+        return !this.isHidden(field);
+      });
+      if (!childVisible) return true;
+      else return false;
+    }
+  }
+
+
+
+  onBreadcrumbClick(idx) {
+    let paths = this.breadcrumbs.slice(0, idx + 1);
+    let fields = this.treeSource.nodes;
+    let next: any;
+    paths.forEach((path) => {
+      next = fields.find(field => field['name'] === path);
+      if (next) fields = next['fields'];
+    });
+    this.setActiveTree(next);
+  }
+
+  setActiveTree(root?) {
+    if (root === null) {
+      this.activeTree = this.treeSource.nodes;
+      this.breadcrumbs = null;
+      this.canCreateField = null;
+    } else {
+      this.activeTree = root.fields;
+      this.breadcrumbs = root.path;
+      this.canCreateField = root;
+    }
+    this.cdr.markForCheck();
+  }
+
   getListId(node) {
     const listId = [...this.service.getParentPaths(node), node.name, node.type].join('');
     return listId;
+  }
+
+  start(event: CdkDragStart){
+    console.log(event);
+  }
+
+  expandAll(node) {
+    if (!!node.isExpanded) {
+      node.isExpanded = false;
+    } else {
+      node.isExpanded = true;
+    }
+    // this.treeSource.child
   }
 
   clone(node) {
@@ -130,10 +233,6 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
     return expanded ? 'fa-caret-up' : 'fa-caret-down';
   }
 
-  canCreateField(node) {
-    return (node.type === 113 || node.type === 114) && this.treeControl.isExpanded(node);
-  }
-
   customFieldToggle(node) {
     node.formVisible = !(!!node.formVisible);
   }
@@ -171,36 +270,57 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
     return isIndeterminate;
   }
 
+  onDelete(field) {
+    if (field) {
+      this.fieldToDelete = field;
+      this.ref = this.popup.open({
+        origin: null,
+        content: this.deletePop,
+        panelClass: 'centered-panel'
+      });
+      this.ref.afterClosed$.subscribe(confirm => {
+        if (confirm) this.deleteField(field);
+        this.ref = null;
+      });
+    }
+  }
 
-  openDeletePop(node: any) {
-    if (!node && !node.data) { return; }
+  checkDeleteInput() {
+    let result =  this.delInput.value === this.fieldToDelete.name.toUpperCase();
+    if (result === true) {
+      this.ref.close(true);
+    }
+  }
 
-    this.delInput.reset();
-    this.delFieldName = node.data.name.toUpperCase();
-    this.ref = this.popup.open({
-      origin: null,
-      content: this.deletePop,
-      panelClass: 'centered-panel'
-    });
-    this.ref.afterClosed$.subscribe(result => {
-      this.ref = null;
-    });
+  deleteField(field) {
+    console.log(`delete field`, field);
+    this.treeSource.deleteNode(field);
+    this.service.removeFieldFromSB(field);
+    this.canCreateField['fields'] = this.canCreateField['fields'].filter(cfield => cfield !== field);
+    this.activeTree = this.canCreateField['fields'];
+    this.cdr.detectChanges();
   }
 
   closePop() {
     this.ref.close();
   }
 
-  deleteNode() {
-    if (this.delFieldName === this.delInput.value) {
-      console.log('Delete field', this.delFieldName);
-    }
-    this.closePop();
-  }
-
   isFiltered(node) {
     if (this.filterValue) {
-      return !node.name.toLowerCase().startsWith(this.filterValue);
+      if (node.type < 113) {
+        let found = (node.name as string).toLowerCase().includes(this.filterValue);
+        if (found) {
+          for (let parent of this.treeSource.tree.ancestorsIterator(node)) {
+            if (parent.type && parent.type > 112) {
+              parent.isFiltered = true;
+            }
+          }
+        }
+        if (!!found) console.log(node.name);
+        return !!found;
+      } else {
+        return !node.isFiltered;
+      }
     } else {
       return !!this.filterValue;
     }
@@ -210,6 +330,20 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
   shouldRender(node) {
     if (!this.filterControl.value) { return true; }
     return this.filterControl.value && node.name.toString().toLowerCase().startsWith(this.filterControl.value);
+  }
+
+  enableForm(){
+    this.showForm = true;
+    this.customForm.enable();
+    this.cdr.detectChanges();
+    this.cdr.markForCheck();
+  }
+
+  disableForm(){
+    this.showForm = false;
+    this.customForm.disable();
+    this.cdr.detectChanges();
+    this.cdr.markForCheck();
   }
 
   toggleExpand(node) {
@@ -255,8 +389,19 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
     node.isExpanded = this.treeControl.isExpanded(node);
     this.cdr.markForCheck();
   }
-  addCustomField(node) {
-    console.log(`custom`, node);
+  
+  addCustomField(event) {
+    if (this.customForm.valid) {
+      let newField = cloneDeep(this.customForm.value);
+      defaultsDeep(newField, {custom: true, textType: this.customType.title});
+      let proto = this.service.fieldTypes.schema.find(schema => schema.type === newField.type);
+      newField.options = proto.options;
+      newField.path = this.canCreateField['path'].concat(newField.name);
+      this.canCreateField['fields'].push(newField);
+      this.cdr.markForCheck();
+    } else {
+      console.log(this.customForm);
+    }
   }
 
   nodeIsChecked(node) {

@@ -37,10 +37,6 @@ const routes: Routes = [
       .then(m => m.OnlineFormWrapperModule)
   },
   {
-    path: 'form-creator',
-    loadChildren: (): Promise<any> => import('./form-creator/form-creator.module').then(m => m.FormCreatorModule)
-  },
-  {
     path: 'form-management',
     loadChildren: (): Promise<any> => import('./form-management/form-management.module').then(m => m.FormManagementModule)
   },

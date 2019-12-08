@@ -19,9 +19,6 @@ import { HttpService } from '@core/http.service';
 import { SharedModule } from '@shared/shared.module';
 
 import { FontAwesomeModule, FaIconLibrary, FaConfig } from '@fortawesome/angular-fontawesome';
-// import { fas } from '@fortawesome/free-solid-svg-icons';
-
-import { sw, consent } from '@app/core/icons.ts';
 
 const onInit: (authService: AuthService) => any = (authService: AuthService) => {
   return (): Promise<boolean> => {
@@ -69,8 +66,5 @@ import { PopupComponent } from '@core/components/popup/popup.component';
 })
 export class AppModule {
   constructor(library: FaIconLibrary, config: FaConfig) {
-    // library.addIconPacks(sw);
-    library.addIcons(consent)
-    // config.defaultPrefix = 'sw';
   }
 }

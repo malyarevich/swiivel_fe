@@ -40,7 +40,6 @@
 
   button:disabled {
     background: $gray;
-
     border: 1px solid $icon-gray;
     color: $icon-gray;
   }
@@ -63,6 +62,26 @@
     background: $status-light-blue;
   }
 
+  .status-blue {
+    background: $status-blue;
+  }
+
+  .status-dark-blue {
+    background: $status-dark-blue;
+  }
+
+  .status-red {
+    background: $status-red;
+  }
+
+  .status-light-purple {
+    background: $status-light-purple;
+  }
+
+  .status-gray-purple {
+    background: $gray-color;
+  }
+
   .purple {
     background: $status-purple;
   }
@@ -75,8 +94,40 @@
     color: $element-base-color;
   }
 
+  .transparent-gray {
+    outline: none;
+    border: none;
+    background: transparent;
+    padding: 0;
+    color: $status-gray;
+  }
+
   .yellow {
     background: $status-yellow;
+  }
+
+  .gray-purple {
+    outline: none;
+    border: none;
+    background: transparent;
+    color: $gray-color;
+
+    &:hover {
+      background: $light-purple;
+      color: $element-base-color;
+    }
+
+    &:disabled {
+      background: $gray;
+      border: none;
+      color: $icon-gray;
+
+      &:hover {
+        background: $gray;
+        border: none;
+        color: $icon-gray;
+      }
+    }
   }
 
   //sizes
@@ -101,7 +152,14 @@
     }
   }
 
-  // fill
+  .medium {
+    padding: 5px 10px;
+    border-radius: 3px;
+    border: none;
+    font: 500 12px/15px $nunito-sans-bold;
+  }
+
+    // fill
   .outline-purpure {
     color: $element-base-color;
     border: 1px solid $element-base-color;

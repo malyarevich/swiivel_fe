@@ -31,7 +31,7 @@ export class SidebarTermsConditionsComponent implements OnInit {
           isBothParents: [false],
           isRequire: [true],
           signed: {parents: false, fathers: false, mothers: false},
-          type: 'esign',
+          type: "wet",
         }),
         termsConditionsItems: this.fb.array([])
       }));
@@ -52,11 +52,15 @@ export class SidebarTermsConditionsComponent implements OnInit {
         isBothParents: [false],
         isRequire: [true],
         signed: {parents: false, fathers: false, mothers: false},
-        type: 'esign',
+        type: "wet",
       }),
       termsConditionsItems: this.fb.array([])
     });
     this.cdr.markForCheck();
+  }
+
+  get termsConditionsItems() {
+    return this.lform.get('termsConditionsItems') as FormArray;
   }
 
   ngOnInit() {

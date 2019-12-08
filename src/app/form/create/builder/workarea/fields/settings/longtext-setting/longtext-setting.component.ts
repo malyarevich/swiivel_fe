@@ -6,28 +6,28 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
   templateUrl: './longtext-setting.component.html',
   styleUrls: ['./longtext-setting.component.scss']
 })
-export class LongtextSettingComponent implements OnInit {
+export class LongtextSettingComponent {
 
   form: FormGroup;
   validatorsOptions = ['Alphabetic', 'Alphanumeric'].map(t => ({ title: t }));
+  private optionsMap = [
+    'showDefaultValue',
+    'showValidators',
+    'columnWidth',
+    'rowHeigth',
+    'default',
+    'validators',
+    'validators.minLength',
+    'validators.maxLength',
+    'validators.criteria'
+  ];
 
   @Input()
   set settings(obj: any) {
     if (obj) {
-      this.form.patchValue({
-        showDefaultValue: !!obj.showDefaultValue,
-        showValidators: obj.showValidators,
-        columnWidth: obj.columnWidth || null,
-        rowHeigth: obj.rowHeigth || null,
-        default: obj.default || null,
-        validators: {
-          minLength: obj.validators && obj.validators.minLength ? obj.validators.minLength : null,
-          maxLength: obj.validators && obj.validators.maxLength ? obj.validators.maxLength : null,
-          criteria: obj.validators && obj.validators.criteria &&
-            this.validatorsOptions.findIndex(i => i.title === obj.validators.criteria) >= 0 ?
-            [this.validatorsOptions[this.validatorsOptions.findIndex(i => i.title === obj.validators.criteria)]] : null
-        }
-      }, {emitEvent: false});
+      if (this.checkOptions(obj).length === 0) {
+        this.form = obj;
+      }
     }
   }
   @Output() fieldSettings = new EventEmitter();
@@ -49,10 +49,12 @@ export class LongtextSettingComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-    this.form.valueChanges.subscribe(v => {
-      if (v.validators.criteria && v.validators.criteria[0]) { v.validators.criteria = v.validators.criteria[0].title; }
-      this.fieldSettings.emit(v);
+  checkOptions(obj: FormGroup) {
+    return this.optionsMap.filter((key) => {
+      if (!obj.get(key)) {
+        console.error(`Does not exist ${key} in options.`);
+        return true;
+      }
     });
   }
 

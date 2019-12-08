@@ -47,15 +47,23 @@ export class GeneralInfoGroupComponent implements OnInit {
   }
 
   isShowGroupHint() {
-    return this.group.options.showHint;
+    return this.group && this.group.options && this.group.options.showHint;
   }
 
   isGroupHintDirectly() {
+<<<<<<< HEAD
     return this.group.options.displayStrategy === 'Directly Displayed';
+=======
+    return (
+      this.group &&
+      this.group.options &&
+      this.group.options.displayStrategy === 'Directly Displayed'
+    );
+>>>>>>> development
   }
 
   getGroupHint(): string {
-    return this.group.options.hint;
+    return this.group && this.group.options && this.group.options.hint;
   }
 
   hoverHint(): void {

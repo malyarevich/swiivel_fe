@@ -1,7 +1,20 @@
+<<<<<<< HEAD
 import { Component, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Field } from '@models/data-collection/field.model';
 import { BehaviorSubject, Subscription } from 'rxjs';
+=======
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges
+} from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { Field } from '@models/data-collection/field.model';
+import { BehaviorSubject } from 'rxjs';
+>>>>>>> development
 import {
   IFormField,
   OnlineFormService
@@ -18,17 +31,13 @@ interface IFieldInput {
   templateUrl: './general-info-field.component.html',
   styleUrls: ['./general-info-field.component.scss']
 })
-export class GeneralInfoFieldComponent implements OnInit, OnChanges, OnDestroy {
+export class GeneralInfoFieldComponent implements OnInit, OnChanges {
   @Input() field: Field;
   @Input() formErrors: string;
   @Input() fg: FormGroup;
   @Input() isViewOnly: boolean;
-  value: string | any;
-  fc: FormControl;
 
-  // validSubscription: Subscription;
-
-  fieldComponent: any;
+  fieldComponent: IFormField;
   fieldInputs$: BehaviorSubject<IFieldInput> = new BehaviorSubject(null);
   fieldOutputs: object;
 
@@ -36,9 +45,6 @@ export class GeneralInfoFieldComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnInit() {
     this.initFormField();
-    // this.initFormFieldValue();
-    // this.initReactiveFormControl();
-    // this.initListener();
     this.fieldInputs$.next({
       field: this.field,
       fg: this.fg,
@@ -48,7 +54,8 @@ export class GeneralInfoFieldComponent implements OnInit, OnChanges, OnDestroy {
     this.fieldOutputs = {};
   }
 
-  ngOnChanges() {
+  ngOnChanges(changes: SimpleChanges): void {
+    // console.log('changes', changes);
     this.fieldInputs$.next({
       field: this.field,
       fg: this.fg,
@@ -63,68 +70,7 @@ export class GeneralInfoFieldComponent implements OnInit, OnChanges, OnDestroy {
     );
   }
 
-  // initFormFieldValue() {
-  //   this.value = this.field._id
-  //     ? this.onlineFormService.getFormValueById(this.field._id)
-  //     : 'ID is undefined';
-  // }
-
-  // initReactiveFormControl() {
-  //   if (this.field._id) {
-  //     const aValidators = !this.field.options.readonly
-  //       ? Validators.compose(this.getComposed())
-  //       : {};
-  //     this.fc = new FormControl(
-  //       {
-  //         value: this.value,
-  //         disabled: this.field.options.readonly || this.isViewOnly
-  //       },
-  //       aValidators
-  //     );
-  //     this.onlineFormService.addFormControl(this.field._id, this.fc);
-  //     // this.onlineFormService.setFormControlValue(this.field._id, this.value);
-  //   }
-  //   this.fg = this.onlineFormService.getFormGroup();
-  // }
-
-  // getComposed() {
-  //   const arrayValidators = [];
-  //
-  //   if (this.field.options.required) {
-  //     arrayValidators.push(Validators.required);
-  //   }
-  //
-  //   if (this.field.options.minFieldSize) {
-  //     arrayValidators.push(
-  //       Validators.minLength(this.field.options.minFieldSize)
-  //     );
-  //   }
-  //
-  //   if (this.field.options.maxFieldSize) {
-  //     arrayValidators.push(
-  //       Validators.maxLength(this.field.options.maxFieldSize)
-  //     );
-  //   }
-  //
-  //   return arrayValidators;
-  // }
-
-  // initListener() {
-  //   this.validSubscription = this.onlineFormService.onChangeServerValidations.subscribe(
-  //     list => {
-  //       this.validationText = list[this.field._id];
-  //       this.fieldInputs = {
-  //         field: this.field,
-  //         fg: this.fg,
-  //         validationText: this.validationText
-  //       };
-  //     }
-  //   );
-  // }
-
-  ngOnDestroy(): void {
-    // if (this.validSubscription) {
-    //   this.validSubscription.unsubscribe();
-    // }
+  isRenderable(): boolean {
+    return this.fg && !!this.fieldComponent;
   }
 }

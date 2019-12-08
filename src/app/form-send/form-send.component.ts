@@ -5,6 +5,8 @@ import { FormService } from '@app/form/form.service';
 import { StepperService } from '@app/shared/stepper.service';
 import { FormSendService } from './form-send.service';
 
+// Useless at the /form/:id case
+
 @Component({
   selector: 'sw-form-send',
   templateUrl: './form-send.component.html',

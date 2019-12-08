@@ -62,9 +62,8 @@ export class AuthService {
       if (savedUser) {
         this.setUser(savedUser);
         return resolve(true);
-      } else {
-        resolve(null);
       }
+      resolve(null);
     });
   }
 

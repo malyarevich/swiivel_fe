@@ -61,20 +61,20 @@ export class ApiService {
           requestParams.filter[filter].forEach((item) => {
             params = params.append(`filter[${filter}][]`, item.value);
           });
-        } else if (filter === 'updatedAt') {
-          if (requestParams.filter[filter].startDate && requestParams.filter[filter].startDate.date) {
+        } else if (filter === 'createdAt') {
+          if (requestParams.filter[filter]['startDate'] && requestParams.filter[filter]['startDate'].date) {
             params = params.append(
               `filter[${filter}][startDate]`,
-              this.dateService.getStandartDate(requestParams.filter[filter].startDate.date));
+              this.dateService.getStandardDate(requestParams.filter[filter]['startDate'].date));
           }
           if (requestParams.filter[filter].endDate && requestParams.filter[filter].endDate.date) {
             params = params.append(
               `filter[${filter}][endDate]`,
-              this.dateService.getStandartDate(requestParams.filter[filter].endDate.date));
+              this.dateService.getStandardDate(requestParams.filter[filter]['endDate'].date));
           } else {
             params = params.append(
               `filter[${filter}][endDate]`,
-              this.dateService.getStandartDate(requestParams.filter[filter].startDate.date));
+              this.dateService.getStandardDate(requestParams.filter[filter]['startDate'].date));
           }
         } else if (filter === 'access') {
           requestParams.filter[filter].forEach((item) => {
@@ -115,7 +115,11 @@ export class ApiService {
   }
 
   updateGeneralForm(form: any, id?: string) {
-    if (!id && !form._id) { return throwError(`No id`); } else if (!id) { id = form._id; }
+    if (!id && !form._id) {
+      return throwError(`No id`);
+    } else if (!id) {
+      id = form._id;
+    }
     return this.http.put(`/proxy/form-builder/form-template/${id}`, form);
   }
 
@@ -123,6 +127,10 @@ export class ApiService {
 
   getFormSend(formId: string) {
     return this.http.get(`/proxy/form-builder/release/${formId}`);
+  }
+
+  getMailingHouseList() {
+    return this.http.get(`/proxy/form-builder/mailing-house-list`);
   }
 
   getUsersByRole(key: string) {
@@ -144,8 +152,21 @@ export class ApiService {
   // FORM SEND END
 
   uploadFile(formId, file) {
+    const fbLink = environment.apiFB;
+    const opt = {
+      body: file
+    };
+    return this.http.request('POST', `${fbLink}/forms/attach/${formId}?api_token=${environment.apiToken}`, opt);
+  }
+
+  uploadFormPDF(file) {
     const fbLibk = environment.apiFB;
-    return this.http.request('post', `${fbLibk}/forms/attach/${formId}?api_token=${environment.apiToken}`, file);
+    const params = new HttpParams().set("api_token", environment.apiToken).set('formName' , 'first form').set('type' ,'new form');
+    const opt = {
+      body: file,
+      params
+    }
+    return this.http.request('POST', `${fbLibk}/pdfForms`, opt);
   }
 
   getFormsPDFList(): Observable<any> {
