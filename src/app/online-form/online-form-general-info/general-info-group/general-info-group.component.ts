@@ -51,15 +51,11 @@ export class GeneralInfoGroupComponent implements OnInit {
   }
 
   isGroupHintDirectly() {
-<<<<<<< HEAD
-    return this.group.options.displayStrategy === 'Directly Displayed';
-=======
     return (
       this.group &&
       this.group.options &&
       this.group.options.displayStrategy === 'Directly Displayed'
     );
->>>>>>> development
   }
 
   getGroupHint(): string {

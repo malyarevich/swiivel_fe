@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-import { Component, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Field } from '@models/data-collection/field.model';
-import { BehaviorSubject, Subscription } from 'rxjs';
-=======
 import {
   Component,
   Input,
@@ -14,7 +8,6 @@ import {
 import { FormGroup } from '@angular/forms';
 import { Field } from '@models/data-collection/field.model';
 import { BehaviorSubject } from 'rxjs';
->>>>>>> development
 import {
   IFormField,
   OnlineFormService

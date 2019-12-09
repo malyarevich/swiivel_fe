@@ -8,7 +8,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 export class BackBarComponent {
   @Input() title: string;
-  @Output() backClick: EventEmitter<any> = new EventEmitter();
+  @Output() private backClick: EventEmitter<any> = new EventEmitter();
 
   constructor() { }
 

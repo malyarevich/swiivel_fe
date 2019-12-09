@@ -31,19 +31,12 @@ export class CheckboxSettingComponent {
     private fb: FormBuilder
   ) { }
 
-<<<<<<< HEAD
-  ngOnInit() {
-    this.form.valueChanges.subscribe(v => {
-      if (v.default && v.default[0]) { v.default = v.default[0].value; }
-      this.fieldSettings.emit(v);
-=======
   checkOptions(obj: FormGroup) {
     return this.optionsMap.filter((key) => {
       if (!obj.get(key)) {
         console.error(`Does not exist ${key} in options.`);
         return true;
       }
->>>>>>> development
     });
   }
 

@@ -1,15 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-<<<<<<< HEAD
-import { FormControl, FormGroup } from '@angular/forms';
-import { Field } from '@models/data-collection/field.model';
-import { FormModel } from '@models/data-collection/form.model';
-import { OnlineFormService } from '../../services/online-form.service';
-import { GenerateErrorsService } from '../../utils/generate-errors.service';
-=======
 import { FormGroup } from '@angular/forms';
 import { Field } from '@models/data-collection/field.model';
 import { FormModel } from '@models/data-collection/form.model';
->>>>>>> development
 
 @Component({
   selector: 'sw-general-info-section',

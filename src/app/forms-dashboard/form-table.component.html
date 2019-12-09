@@ -66,16 +66,10 @@
       </div>
     </form>
   </div>
-<<<<<<< HEAD
-  <div class="sw-form-table__table">
-    <div class="sw-form-table__header">
-      <div class="sw-form-table__text">
-=======
 
   <div class="app-form-table__table">
     <div class="app-form-table__header">
       <div class="app-form-table__text">
->>>>>>> development
         <sw-block-header>
           forms
         </sw-block-header>
@@ -84,24 +78,14 @@
         <div class="sw-form-table__controls-bulk" data-e2e="bulkactions">
           <sw-dropdown-select
             #bulk="dropdown"
-<<<<<<< HEAD
-            panelClass="sw-form-table-dropdown-overlay"
-            [disabled]="!selectedAnyRow"
-=======
             panelClass="app-form-table-dropdown-overlay"
             [disabled]="_sm.isEmpty()"
->>>>>>> development
             [noneColor]="true"
             [options]="bulkOptions"
             (selected)="bulkAction($event)"
           >
-<<<<<<< HEAD
-            <sw-button [disabled]="!selectedAnyRow" color="white">
-              <span class="sw-form-table__controls-bulk-btn-text">Bulk Actions</span>
-=======
             <sw-button [disabled]="_sm.isEmpty()" color="white">
               <span class="app-form-table__controls-bulk-btn-text">Bulk Actions</span>
->>>>>>> development
               <i class="fas fa-chevron-down" [ngClass]="{'fa-chevron-up': bulk.isOpened}"></i>
             </sw-button>
           </sw-dropdown-select>
