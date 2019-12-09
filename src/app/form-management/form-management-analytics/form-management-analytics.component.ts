@@ -3,7 +3,7 @@ import { FormManagementDocumentAnalyticsModel } from '@models/form-management/fo
 import { Chart } from 'chart.js';
 
 @Component({
-  selector: 'app-form-management-analytics',
+  selector: 'sw-form-management-analytics',
   templateUrl: './form-management-analytics.component.html',
   styleUrls: ['./form-management-analytics.component.scss']
 })
