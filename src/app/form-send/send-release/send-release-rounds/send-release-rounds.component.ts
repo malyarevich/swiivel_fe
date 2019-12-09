@@ -86,7 +86,7 @@ export class SendReleaseRoundsComponent implements OnInit, OnChanges, OnDestroy 
           selected: [false],
           subject: [null],
           body: [null],
-          buttonText: [null]
+          text_link: [null]
         }),
         mailing: this.fb.group({
           selected: [false],
@@ -121,7 +121,7 @@ export class SendReleaseRoundsComponent implements OnInit, OnChanges, OnDestroy 
   }
 
   setDefaultFormValues() {
-    this.form.get('types.email.buttonText').setValue('Start Form');
+    this.form.get('types.email.text_link').setValue('Start Form');
     this.form.get('types.mailing.delay_days').setValue(0);
     this.form.get('types.mailing.is_self_mail').setValue(0);
     this.form.get('types.mailing.is_delay_days').setValue(0);
@@ -313,7 +313,7 @@ export class SendReleaseRoundsComponent implements OnInit, OnChanges, OnDestroy 
     return this.formSendService.someChildrenSelected(i);
   }
 
-  editRound(i) {
+  editRound(i: IRound) {
     this.isNew = false;
     this.roundId = i.id;
     this.form.reset();

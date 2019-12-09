@@ -311,7 +311,7 @@ export class FormSendService {
     return result && !this.allChildrenSelected(item);
   }
 
-  saveRound(round: any, isNew: boolean = true, roundId?) {
+  saveRound(round: IRound, isNew: boolean = true, roundId?) {
     if (round.types.email.selected === true) {
       delete round.types.email.selected;
     } else {
