@@ -1,0 +1,25 @@
+@import 'index';
+
+.info {
+  display: flex;
+  justify-content: space-between;
+  background: $dark-grey;
+  padding: 15px;
+}
+
+.history,
+.missing-fields {
+  padding: 15px;
+  border-radius: 5px;
+  background: #fff;
+}
+
+.history {
+  padding: 10px 15px 15px;
+  width: 72%;
+}
+
+.missing-fields {
+  width: 24%;
+}
+

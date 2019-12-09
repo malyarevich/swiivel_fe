@@ -4,13 +4,13 @@
 ></sw-back-bar>
 <div class="app-form-management">
   <div class="info" *ngIf="form">
-    <app-form-management-header
+    <sw-form-management-header
       [form]="form"
       (changeStatus)="changeFormStatus($event)"
       (copyLink)="copyLinkPopupOpen()"
       (exportPDF)="exportPDF()"
       (editForm)="editForm()"
-    ></app-form-management-header>
+    ></sw-form-management-header>
     <a [href]="download.url" [download]="download.filename" #link></a>
   </div>
 

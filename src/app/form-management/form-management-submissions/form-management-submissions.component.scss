@@ -7,7 +7,7 @@
       .cdk-table {
         width: 100%;
       }
-    
+
       .filters-row {
         background: $dark-grey;
         box-shadow: inset 0px -1px 0px $shadow-gray-color;
@@ -15,7 +15,7 @@
         th {
           border: none;
         }
-    
+
         .header_container {
           &__title {
             width: fit-content;
@@ -27,7 +27,7 @@
             font: normal 9px/13px $nunito-sans;
             white-space: nowrap;
             overflow: hidden;
-    
+
             &_icons {
               margin-left: 6px;
               display: flex;
@@ -69,7 +69,7 @@
           }
         }
       }
-    
+
       .cdk-row {
         &:nth-child(even) {
           background: #FAFAFA;
@@ -173,23 +173,27 @@
         border-left: 1px solid  #E3E3E3;
         padding: 0;
       }
-    
+
       .cdk-header-cell {
         vertical-align: top;
         padding: 10px 5px;
-    
+
         &:first-of-type {
           padding-left: 15px;
         }
       }
-    
+
       .cdk-cell {
         padding: 6px 3px;
         &:first-of-type {
           padding-left: 15px;
         }
       }
-    
+
+      .cdk-cell.cdk-column-expandedRow {
+        padding: 0;
+      }
+
       .cdk-footer-cell {
         &.cdk-column-paginator {
           padding-bottom: 0;
@@ -198,7 +202,7 @@
             display: flex;
             flex-flow: row nowrap;
             justify-content: flex-end;
-    
+
             .paginator-results {
               margin: 0 15px 0 0;
               font-size: 12px;
@@ -228,11 +232,11 @@
           }
         }
       }
-    
+
       .icon-invite-user {
         margin: 0 4px 0 0;
       }
-    
+
       .button-invite-user {
         padding: 0 2px;
       }

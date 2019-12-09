@@ -1,0 +1,37 @@
+<div class="submission-history">
+  <div class="header">
+    <h3 class="header-text">Form History</h3>
+    <form [formGroup]="searchForm">
+      <sw-input-search placeholder="Search" formControlName="search"></sw-input-search>
+    </form>
+  </div>
+  <div *ngIf="historyList && historyList.length === 0">
+    Form history is raw
+  </div>
+  <div *ngIf="historyList && historyList.length > 1">
+    <div class="list two-row">
+      <div *ngFor="let item of historyList; let i = index" class="item">
+        <div
+          class="item-card"
+          [ngClass]="{
+            'item-card-down': i % 2 === 0,
+            'item-card-up': i % 2 !== 0
+          }"
+        >
+          <div class="user-item">
+            <sw-user-item [userItem]="getUserName(item.person)"></sw-user-item>
+          </div>
+          <div class="item-info">
+            <p class="date">{{ dateService.getFullDateTime(item.created_at) }}</p>
+            <div class="item-description">
+              <p class="item-description-text">{{ item.description }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="icon {{ historyEventsIcons[item.action].class }}">
+          <img class="icon-img" [src]="pathFolder + historyEventsIcons[item.action].icon" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
