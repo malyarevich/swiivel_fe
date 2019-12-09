@@ -12,6 +12,7 @@ import {
   ViewChild
 } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
+import { coerceBooleanProperty } from '@angular/cdk/coercion';
 
 @Component({
   selector: 'sw-input-text',
@@ -23,9 +24,12 @@ export class InputTextComponent implements ControlValueAccessor, OnInit {
   public _type = 'text';
   public _mode = 'text';
   public _style = 'button';
+  private _readonly = false;
+  protected _disabled = false;  
   @Input() autofocus: boolean;
   @Input() autocomplete: string;
-  @Input() set type(inputType: string) {
+  @Input() get type() { return this._type;}
+  set type(inputType: string) {
     this._type = inputType;
     if (this._type === 'email') this._mode = 'email';
     else if (this._type === 'numeric') this._mode = 'numeric';
@@ -38,9 +42,14 @@ export class InputTextComponent implements ControlValueAccessor, OnInit {
   @Input() set style(styleType: string) {
     this._style = styleType;
   }
-  @Input() readonly: boolean;
-  @Input() set disabled(isDisabled: any) {
-    if (isDisabled) {
+  @Input() get readonly() {return this._readonly; }
+  set readonly(isReadonly: any) {
+    this._readonly = coerceBooleanProperty(isReadonly);
+  }
+  @Input() get disabled() { return this._disabled; }
+  set disabled(isDisabled: boolean) {
+    this._disabled = coerceBooleanProperty(isDisabled);
+    if (!!this._disabled) {
       this.control.control.disable();
     } else {
       this.control.control.enable();
