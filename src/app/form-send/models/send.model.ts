@@ -51,6 +51,11 @@ export interface IGroupAccount {
 }
 
 export interface IEmailType {
+  is_self_mail?: any;
+  delay_days?: number;
+  mailing_house_id?: number;
+  selected?: boolean;
+  is_delay_days?: number | boolean;
   id?: number;
   release_round_id?: number;
   subject?: string;
@@ -66,6 +71,7 @@ export interface ITypes {
 }
 
 export interface IRound {
+  form_template_mongo_id: string;
   accounts?: IPerson[];
   end_date?: string;
   form_id?: number;
