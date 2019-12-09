@@ -3,28 +3,24 @@
   <sw-button [disabled]="true">Disabled</sw-button>
   <sw-button title="Click to focus input below" (click)="testFocus.focus()">With title</sw-button>
   <sw-button title="With tile" name="and Name" value="and Value" disabled="true">All atributes</sw-button>
-  <sw-input-dynamic [fields]="fields" *ngIf="!!fields"></sw-input-dynamic>
+  <sw-button class="custom">Custom class</sw-button>
   <sw-input-text formControlName="short" #testFocus (focus)="logEvent('focus')" (blur)="logEvent('blur')">
-    <span class="placeholder">Placeholder</span>
+    Placeholder
   </sw-input-text>
-  <sw-input-text formControlName="short" [disabled]="true">
-    <span class="placeholder">Disabled input</span>
+  <sw-input-text formControlName="disabled_short" disabled>
+    Disabled input
   </sw-input-text>
-  <sw-input-text formControlName="short" [readonly]="true">
-    <span class="placeholder">Readonly input</span>
+  <sw-input-text formControlName="short" readonly>
+    Readonly input
   </sw-input-text>
 
   <sw-input-toggle formControlName="toggle">
     <span class="input_label">default value</span>
   </sw-input-toggle>
 
-  <sw-input-checkbox formControlName="checkbox">
-    <span class="label">FormControl</span>
-  </sw-input-checkbox>
+  <sw-input-checkbox formControlName="checkbox">FormControl</sw-input-checkbox>
 
-  <sw-input-checkbox (change)="logEvent('change')">
-    <span class="label">Without formControl</span>
-  </sw-input-checkbox>
+  <sw-input-checkbox class="cyan" (change)="logEvent('change')">Without formControl</sw-input-checkbox>
 
   <sw-input-button-group formControlName="buttonGroup" [options]="buttons"></sw-input-button-group>
 
@@ -58,19 +54,7 @@
 <button type="button" (click)="changeTextarea()">Change textarea value</button>
 <button type="button" (click)="changeTextarea(true)">Change textarea size</button>
 
-<!--<button [routerLink]="['/upload-review-form', '5dc549068ffb08378b66c415']">Go to Form Upload</button>-->
-<!--<button [routerLink]="['/upload-review-form', '5dc54b2d8ffb08378b66c416']">Go to Form Upload</button>-->
 <button [routerLink]="['/upload-review-form', '5da72bcb8ffb08029d039b82']">Go to Form Upload</button>
 <button [routerLink]="['/upload-review-form', '5d9f0eff8ffb080c090ee232']">Go to Form Upload</button>
 
 <pre>{{form.value | json}}</pre>
-
-<fa-stack>
-  <fa-icon [icon]="['fad','consent']"  stackItemSize="1x"></fa-icon>
-  <fa-icon [icon]="['fad','consent2']" stackItemSize="1x"></fa-icon>
-</fa-stack>
-
-<fa-icon [icon]="['fad','documents']"></fa-icon>
-
-
-

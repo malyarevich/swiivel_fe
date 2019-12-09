@@ -20,7 +20,6 @@ export class DashboardComponent implements OnInit {
   };
   longTextDisabled = new FormControl(false);
   form: FormGroup;
-  fields;
 
   dropdownList = [
     {
@@ -65,6 +64,7 @@ export class DashboardComponent implements OnInit {
   ) {
     this.form = this.fb.group({
       short: new FormControl('short text', Validators.required),
+      disabled_short: this.fb.control('disabled text'),
       toggle: new FormControl(true),
       checkbox: new FormControl(true),
       buttonGroup: new FormControl('upload-value'),

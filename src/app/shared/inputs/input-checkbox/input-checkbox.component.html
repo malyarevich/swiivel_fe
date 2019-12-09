@@ -1,15 +1,15 @@
 <label (click)="_onLabelClick($event)">
   <div class="checkbox">
-    <input #input class="cdk-visually-hidden"
+    <input #input
       [class.definition]="definition"
       type="checkbox"
       [required]="required"
       [checked]="checked"
       [attr.value]="value"
+      [attr.name]="name || null"
       [disabled]="disabled"
       (change)="_onInteractionEvent($event)"
       (click)="_onInputClick($event)">
   </div>
-  <ng-content select="i"></ng-content>
-  <ng-content select=".label"></ng-content>
+  <span class="label"><ng-content></ng-content></span>
 </label>

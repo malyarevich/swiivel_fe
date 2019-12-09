@@ -3,4 +3,18 @@
     overflow: auto;
     max-width: calc(100vw - 55px);
   }
+  .custom {
+    --text-color: red;
+  }
+  sw-button {
+    --text-color: pink;
+  }
+  sw-input-checkbox {
+    
+    --text-weight: 900;
+    color: red;
+  }
+  .cyan {
+    --text-color: cyan;
+  }
 }

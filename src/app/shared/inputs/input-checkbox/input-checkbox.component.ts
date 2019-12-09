@@ -25,6 +25,7 @@ const deprecated = function(_this: any, name = ''){
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class InputCheckboxComponent implements ControlValueAccessor {
+  @Input() name: string;
   @Input() target = 'label';
   @Input()
   get isActive(){ return this.__isActive; }
@@ -79,6 +80,7 @@ export class InputCheckboxComponent implements ControlValueAccessor {
   constructor(@Self() @Optional() public control: NgControl, public cdr: ChangeDetectorRef) {
     if (control) {
       control.valueAccessor = this;
+      if (this.control.name) this.name = this.control.name;
     }
   }
 
@@ -86,6 +88,7 @@ export class InputCheckboxComponent implements ControlValueAccessor {
 
   setDisabledState(isDisabled: boolean) {
     this.disabled = isDisabled;
+
   }
 
   public registerOnTouched(fn: any): void {
