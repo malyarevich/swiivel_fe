@@ -1,9 +1,12 @@
 @import 'index';
 
+.subrow {
+  background: $background-color;
+}
+
 .info {
   display: flex;
   justify-content: space-between;
-  background: $dark-grey;
   padding: 15px;
 }
 

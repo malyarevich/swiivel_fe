@@ -1,7 +1,17 @@
-<div class="info">
-  <div class="history">
-    <sw-form-management-submission-history [historyList]="historyList"></sw-form-management-submission-history>
+<div class="subrow">
+  <div class="info">
+    <div class="history">
+      <sw-form-management-submission-history [historyList]="historyList"></sw-form-management-submission-history>
+    </div>
+    <div class="missing-fields">
+    </div>
   </div>
-  <div class="missing-fields">
+  <div class="online-form">
+    <sw-online-form
+      [formId]="formId"
+      [isViewMode]="true"
+      [isMenuShow]="true"
+      [isReviewMode]="true"
+    ></sw-online-form>
   </div>
 </div>
