@@ -50,7 +50,8 @@ export class GeneralInfoSectionComponent implements OnInit {
   }
 
   getWidth(field: Field): string {
-    return field.width ? field.width : 'quarter';
+    let widths = ['quarter','half', 'three-quarter', 'full'];
+    return widths[field.options.size];
   }
 
   isShowTitle(): boolean {
