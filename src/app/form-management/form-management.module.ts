@@ -18,8 +18,9 @@ import {
 } from '@app/form-management/form-management-submission-subrow/form-management-submission-subrow.component';
 import { FormManagementComponent } from '@app/form-management/form-management.component';
 import { FormManagementService } from '@app/form-management/form-management.service';
-import { FormManagementLogsComponent } from './form-management-logs/form-management-logs.component';
 import { IndependentComponentsModule } from '@app/independent-components/independent-components.module';
+import { OnlineFormModule } from '@app/online-form/online-form.module';
+import { FormManagementLogsComponent } from './form-management-logs/form-management-logs.component';
 import { FormManagementSubmissionsComponent } from './form-management-submissions/form-management-submissions.component';
 
 @NgModule({
@@ -39,6 +40,7 @@ import { FormManagementSubmissionsComponent } from './form-management-submission
     FormsModule,
     SharedModule,
     FormManagementRoutingModule,
+    OnlineFormModule,
     CdkTableModule,
     IndependentComponentsModule
   ],
