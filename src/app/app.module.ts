@@ -27,7 +27,7 @@ const onInit: (authService: AuthService) => any = (authService: AuthService) => 
   };
 };
 
-import { OverlayModule } from '@angular/cdk/overlay';
+import { OverlayModule, OverlayContainer, FullscreenOverlayContainer } from '@angular/cdk/overlay';
 import { PopupComponent } from '@core/components/popup/popup.component';
 import { ErrorsListTooltipComponent } from '@app/online-form/errors-list/errors-list-tooltip.component';
 
@@ -60,6 +60,7 @@ import { ErrorsListTooltipComponent } from '@app/online-form/errors-list/errors-
     AuthGuard,
     AuthService,
     FieldService,
+    {provide: OverlayContainer, useClass: FullscreenOverlayContainer},
     { provide: APP_INITIALIZER, useFactory: onInit, multi: true, deps: [AuthService, HttpService] },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
