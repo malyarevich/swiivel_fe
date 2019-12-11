@@ -50,7 +50,7 @@
 
 
 .cdk-overlay-dark-backdrop {
-//   background: rgba(0,0,0,.32)
+  background: rgba(0,0,0,.32)
 }
 
 .cdk-overlay-transparent-backdrop,.cdk-overlay-transparent-backdrop.cdk-overlay-backdrop-showing {
@@ -71,16 +71,3 @@
 	width: initial;
 	overflow: hidden;
 }
-
-// .cdk-global-scrollblock {
-//     position: fixed;
-//     width: 100%;
-//     overflow-y: scroll
-//   }
-   
-
-// .cdk-global-scrollblock{
-//     position: static !important;
-//     width: initial !important;
-//     overflow-y: inherit !important;
-//   }
