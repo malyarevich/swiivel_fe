@@ -1,0 +1,47 @@
+<div class="header">
+  <h3 class="header-text">
+    <i class="fas fa-exclamation-circle"></i>
+    Missing Fields ({{ missingFields && missingFields.count_missing_fields ? missingFields.count_missing_fields : 0 }})
+  </h3>
+  <form [formGroup]="searchForm" class="search">
+    <sw-input-search placeholder="Search" formControlName="search"></sw-input-search>
+  </form>
+</div>
+<div class="list">
+  <div *ngIf="missingFields && missingFields.sections && !missingFields.sections.length" class="list-text">
+    All fields are filled
+  </div>
+  <div *ngIf="missingFields && missingFields.sections && missingFields.sections.length">
+    <div
+      *ngFor="let section of missingFields.sections; let i = index"
+      class="section-item"
+      [class.item-gray]="i % 2 === 0"
+    >
+      <div class="section-header">
+        <h4 class="section-name">{{ section.name }} ({{ section.count }})</h4>
+        <sw-icon-button
+          [icon]="section.isOpen ? icons.CARET_UP : icons.CARET_DOWN"
+          (click)="changeSectionVisibility(section)"
+        ></sw-icon-button>
+      </div>
+      <div *ngIf="section.isOpen">
+        <div *ngFor="let sectionItem of section | keyvalue">
+          <div *ngIf="sectionItem.key === 'groups'">
+            <div *ngFor="let group of sectionItem.value | keyvalue">
+              <ul class="group-list">
+                <li class="group-item">
+                  <h5 class="group-header">{{ group.key }}</h5>
+                  <ul>
+                    <li *ngFor="let fields of group.value.missing_fields" class="field">
+                      {{ fields }}
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

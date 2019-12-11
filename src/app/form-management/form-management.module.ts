@@ -1,8 +1,8 @@
+import { CdkTableModule } from '@angular/cdk/table';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from '@shared/shared.module';
-import { CdkTableModule } from '@angular/cdk/table';
 
 import { FormManagementRoutingModule } from '@app/form-management/form-management.routing.module';
 
@@ -13,6 +13,9 @@ import { FormManagementPaymentsComponent } from '@app/form-management/form-manag
 import {
   FormManagementSubmissionHistoryComponent
 } from '@app/form-management/form-management-submission-history/form-management-submission-history.component';
+import {
+  FormManagementSubmissionMissingFieldsComponent
+} from '@app/form-management/form-management-submission-missing-fields/form-management-submission-missing-fields.component';
 import {
   FormManagementSubmissionSubrowComponent
 } from '@app/form-management/form-management-submission-subrow/form-management-submission-subrow.component';
@@ -30,6 +33,7 @@ import { FormManagementSubmissionsComponent } from './form-management-submission
     FormManagementAnalyticsComponent,
     FormManagementInfoComponent,
     FormManagementPaymentsComponent,
+    FormManagementSubmissionMissingFieldsComponent,
     FormManagementSubmissionSubrowComponent,
     FormManagementSubmissionHistoryComponent,
     FormManagementLogsComponent,

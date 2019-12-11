@@ -61,10 +61,10 @@ export class FormManagementSubmissionHistoryComponent {
     });
   }
 
-  getUserName(perosn: any): any {
+  getUserName(person: any): any {
     return {
-      name: perosn && perosn.full_name ? perosn.full_name : 'no name',
-      role: perosn && perosn.role ? perosn.role : '',
+      name: person && person.full_name ? person.full_name : 'no name',
+      role: person && person.role ? person.role : '',
     };
   }
 }
