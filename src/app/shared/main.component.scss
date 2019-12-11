@@ -6,6 +6,8 @@
     justify-content: flex-start;
 
     .main_menu {
+        top:0;
+        position: fixed;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -22,7 +24,6 @@
             justify-content: flex-start;
             min-height: 100vh;
             min-width: $main-menu-width;
-            position: fixed;
         }
 
         &__nav_item {
@@ -40,7 +41,7 @@
             margin: 5px;
             padding: 10px;
             position: relative;
-
+            text-decoration: none;
             &:focus {
                 outline: 0 transparent solid;
             }
@@ -124,8 +125,10 @@
 }
 
 .main-container {
-    position: relative;
     flex-grow: 1;
+    box-sizing: border-box;
+    margin-left: 60px;
+    width: 100%;
     .top_menu {
         display: flex;
         flex-direction: row;
@@ -254,10 +257,15 @@
             font-size: 14px;
             font-weight: 500;
         }
-
+        &__control {
+            display: flex;
+        }
         &__user_bar {
             display: flex;
         }
+    .collapse {
+        display: none;
+    }
 
     }
 
