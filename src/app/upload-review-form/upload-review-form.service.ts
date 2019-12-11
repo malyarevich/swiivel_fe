@@ -16,7 +16,7 @@ export class UploadReviewFormService extends ApiService {
       case 'assigned':
         return 'blue';
       case 'need_review':
-        return 'yellow';
+        return 'light-yellow';
       case 'need_further_review':
         return 'gray';
       case 'rejected':
