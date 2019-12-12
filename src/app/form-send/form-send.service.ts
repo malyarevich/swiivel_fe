@@ -7,6 +7,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import {
   defaultAccountsList,
   hasNoFamily,
+  IGroupAccount,
   IMailingHouse,
   IPerson,
   IRound
@@ -31,7 +32,8 @@ export class FormSendService {
   private previewRoundsSubject: BehaviorSubject<IRound[]> = new BehaviorSubject<
     IRound[]
   >([]);
-  private accountsList: object[] = defaultAccountsList;
+  private accountsList: IGroupAccount[] = defaultAccountsList;
+  private filteredAccountsList: IGroupAccount[] = defaultAccountsList;
   private deletedRoundIdList: number[] = [];
 
   get $periodsList() {
@@ -240,14 +242,14 @@ export class FormSendService {
   }
 
   loadUsers() {
-    this.accountsList.forEach(async (a: any) => {
+    this.filteredAccountsList.forEach(async (a: any) => {
       await this.api.getUsersByRole(a.key).subscribe(res => {
         if (res) {
           a.data = res;
         }
       });
     });
-    this.accountSubject.next(this.accountsList);
+    this.accountSubject.next(this.filteredAccountsList);
     // console.log('this.accountsList', this.accountsList);
   }
 
@@ -276,12 +278,12 @@ export class FormSendService {
     const tmp = this.selectedAccounts;
     if (
       e === true &&
-      !(this.selectedAccounts.findIndex(i => i === item) >= 0)
+      !(this.selectedAccounts.findIndex(i => i.id === item.id) >= 0)
     ) {
       tmp.push(item);
     } else if (e === false) {
       tmp.splice(
-        tmp.findIndex(i => i === item),
+        tmp.findIndex(i => i.id === item.id),
         1
       );
     }
@@ -289,24 +291,39 @@ export class FormSendService {
   }
 
   isSelectedAccounts(item): boolean {
-    return this.selectedAccounts.findIndex(i => i === item) >= 0 ? true : false;
+    return this.selectedAccounts.findIndex(i => i.id === item.id) >= 0 ? true : false;
   }
 
   selectAccount(account: IPerson): void {
     this.selectedAccount = account;
   }
 
+  filterAllAccountsByAnything(rawFilter: string) {
+    const filter = !!rawFilter ? rawFilter.trim() : null;
+    this.accountSubject.next(this.accountsList.map((group: IGroupAccount) => {
+      return !!filter
+        ? {...group,
+          data: group.data.filter((account: IPerson) => {
+            return account.first_name && account.first_name.includes(filter)
+              || account.last_name && account.last_name.includes(filter)
+              || account.person_family && account.person_family.family_name && account.person_family.family_name.includes(filter)
+              || account.person_family && account.person_family.person_role && account.person_family.person_role.includes(filter);
+          })}
+        : {...group};
+    }));
+  }
+
   allChildrenSelected(item) {
     const descendants = item.data;
-    return descendants.every(child =>
-      this.selectedAccounts.findIndex(i => i === child) >= 0 ? true : false
+    return descendants.length > 0 && descendants.every(child =>
+      this.selectedAccounts.findIndex(i => i.id === child.id) >= 0 ? true : false
     );
   }
 
   someChildrenSelected(item) {
     const descendants = item.data;
     const result = descendants.some(child =>
-      this.selectedAccounts.findIndex(i => i === child) >= 0 ? true : false
+      this.selectedAccounts.findIndex(i => i.id === child.id) >= 0 ? true : false
     );
     return result && !this.allChildrenSelected(item);
   }
