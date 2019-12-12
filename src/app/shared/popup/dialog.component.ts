@@ -50,7 +50,7 @@ export class DialogComponent {
     this._ref = this.popup.open({
       origin: null,
       content: this.list,
-      panelClass: 'centered-panel'
+      panelClass: 'dark-centered-panel'
     });
     this._ref.afterClosed$.subscribe((result) => {
       let cancelled = true;

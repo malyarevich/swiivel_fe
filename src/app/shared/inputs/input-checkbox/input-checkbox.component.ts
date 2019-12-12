@@ -47,6 +47,7 @@ export class InputCheckboxComponent implements ControlValueAccessor {
   @Input()
   get checked(): boolean { return this._checked; }
   set checked(value: boolean) {
+    value = coerceBooleanProperty(value);
     if (value != this.checked) {
       this._checked = value;
       this.cdr.markForCheck();

@@ -4,14 +4,6 @@
   padding: 15px;
   position: relative;
 
-  .overlay {
-    position: absolute;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0,0,0,0.4);
-    top: -40px;
-    left: -60px;
-  }
 
   &__header {
     display: flex;
