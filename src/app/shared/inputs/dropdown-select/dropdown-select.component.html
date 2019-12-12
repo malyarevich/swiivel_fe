@@ -8,12 +8,12 @@
 
 <ng-template #list>
   <div
-    class="dropdown_items_container"
+    class="select"
     data-e2e="dropdown_items_container"
     [class.none-color]="noneColor"
   >
     <div
-      class="item" data-e2e="item"
+      class="option" data-e2e="item"
       *ngFor="let item of items; let i = index;"
       swSelectOption
       [option]="item"
