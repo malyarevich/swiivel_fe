@@ -13,7 +13,7 @@
     "e2e": "ng e2e",
     "serve-dist": "node_modules/.bin/http-server ./dist/edminify-app-fe -p 4200",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook -c .storybook -o dist/storybook"
   },
   "private": true,
   "dependencies": {
