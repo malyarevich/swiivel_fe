@@ -45,9 +45,9 @@
   </div>
   <div class="up-block-controls">
     <div class="up-block-control-button">
-      <sw-button fill="outline" [routerLink]="['/view-form', form?._id]">
+      <a class="preview-button" [routerLink]="['/view-form', form._id]" target="_blank">
         Preview Form
-      </sw-button>
+      </a>
     </div>
     <div class="up-block-control-button">
       <sw-button (click)="clickEditForm()">
