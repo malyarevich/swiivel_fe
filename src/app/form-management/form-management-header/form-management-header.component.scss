@@ -140,3 +140,24 @@
      width: 67%;
   }
 }
+
+.preview-button {
+  display: block;
+  padding: 6px 15px;
+  background: $background-color;
+  color: $element-base-color;
+  border: 1px solid $element-base-color;
+  border-radius: 3px;
+
+  &:hover {
+    opacity: 0.8;
+    outline: none;
+    text-decoration: none;
+  }
+
+  &:active,
+  &:focus {
+    outline: none;
+    text-decoration: none;
+  }
+}
