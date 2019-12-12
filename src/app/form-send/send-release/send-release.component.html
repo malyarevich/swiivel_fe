@@ -1,36 +1,24 @@
-<ng-container *ngIf="formId$ | async; else loadingTemplate">
-  <div class="header-line">
-    <div class="text">
-      Release
-    </div>
-  </div>
+<ng-container *ngIf="(formId$ | async); else loadingTemplate">
+  <div class="header-line"><div class="text">Release</div></div>
 
   <!--  Periods select section -->
-  <sw-send-release-periods
-    [periodsList]="periodsList"
-    [selectedPeriods]="selectedPeriods"
-  ></sw-send-release-periods>
+  <sw-send-release-periods [periodsList]="periodsList" [selectedPeriods]="selectedPeriods"></sw-send-release-periods>
 
   <!-- Rounds table section -->
   <sw-send-release-rounds
-    *ngIf="formId$ | async"
+    *ngIf="(formId$ | async)"
     [link]="link"
     [mailingHouseList]="mailingHouseList"
-    [accountsList]="accountsList"
+    [groupAccountsList]="groupAccountsList"
     [selectedAccountsList]="selectedAccountsList"
     [roundsList]="roundsList"
-  ></sw-send-release-rounds>
+  >
+  </sw-send-release-rounds>
 
   <div class="stepper-buttons" data-e2e="stepper-buttons">
-    <sw-button class="outline-btn" (click)="prevStep()">
-      Back to Previous Step
-    </sw-button>
-    <sw-button (click)="nextStep()">
-      Save & Go Next Step
-    </sw-button>
+    <sw-button class="outline-btn" (click)="prevStep()"> Back to Previous Step </sw-button>
+    <sw-button (click)="nextStep()"> Save & Go Next Step </sw-button>
   </div>
 </ng-container>
 
-<ng-template #loadingTemplate>
-  <sw-main-spinner class="spinner_box online_form"></sw-main-spinner>
-</ng-template>
+<ng-template #loadingTemplate> <sw-main-spinner class="spinner_box online_form"></sw-main-spinner> </ng-template>

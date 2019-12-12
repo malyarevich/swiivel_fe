@@ -9,20 +9,15 @@ import {
   Renderer2,
   SimpleChanges
 } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  ValidatorFn,
-  Validators
-} from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { IMailingHouse, IRound } from '@app/form-send/models/send.model';
+import { IGroupAccount, IMailingHouse, IPerson, IRound } from '@app/form-send/models/send.model';
 import { DataCollectionService } from '@app/forms-dashboard/data-collection.service';
 import { DateTime } from 'luxon';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { FormSendService } from '../../form-send.service';
+import { string } from 'prop-types';
 
 @Component({
   selector: 'sw-send-release-rounds',
@@ -32,11 +27,12 @@ import { FormSendService } from '../../form-send.service';
 export class SendReleaseRoundsComponent implements OnInit, OnChanges, OnDestroy {
   @Input() link: ElementRef;
   @Input() mailingHouseList: IMailingHouse[];
-  @Input() accountsList: any[];
-  @Input() selectedAccountsList: any[];
+  @Input() groupAccountsList: IGroupAccount[];
+  @Input() selectedAccountsList: IPerson[];
   @Input() roundsList: IRound[];
 
   public form: FormGroup;
+  public utilForm: FormGroup;
   public isNew = false;
   public isShowForm = false;
   roundId: any;
@@ -63,10 +59,11 @@ export class SendReleaseRoundsComponent implements OnInit, OnChanges, OnDestroy 
     url: SafeResourceUrl;
     filename: string;
   } = {
-    url: null,
-    filename: null
-  };
+      url: null,
+      filename: null
+    };
 
+  reloadAccounts$: Subject<boolean> = new Subject<boolean>();
   destroyed$ = new Subject();
 
   constructor(
@@ -100,6 +97,9 @@ export class SendReleaseRoundsComponent implements OnInit, OnChanges, OnDestroy 
         })
       })
     });
+    this.utilForm = this.fb.group({
+      filter: [null]
+    });
   }
 
   ngOnInit() {
@@ -108,6 +108,15 @@ export class SendReleaseRoundsComponent implements OnInit, OnChanges, OnDestroy 
     } else {
       this.cancelRound();
     }
+    this.utilForm.get('filter').valueChanges
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe((filterValue: string) => {
+        this.filterAccountsByAnything(filterValue);
+      });
+  }
+
+  reloadBlockRefresh() {
+    this.reloadAccounts$.next(false);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -117,6 +126,9 @@ export class SendReleaseRoundsComponent implements OnInit, OnChanges, OnDestroy 
       } else {
         this.cancelRound();
       }
+    }
+    if (changes.selectedAccountsList) {
+      this.reloadAccounts$.next(true);
     }
   }
 
@@ -132,12 +144,14 @@ export class SendReleaseRoundsComponent implements OnInit, OnChanges, OnDestroy 
     this.isNew = true;
     this.isShowForm = true;
     this.form.reset();
+    this.utilForm.reset();
     this.setDefaultFormValues();
     this.formSendService.selectedAccounts = [];
   }
 
   cancelRound() {
     this.form.reset();
+    this.utilForm.reset();
     this.formSendService.selectedAccounts = [];
     this.isShowForm = false;
   }
@@ -160,6 +174,7 @@ export class SendReleaseRoundsComponent implements OnInit, OnChanges, OnDestroy 
     }
     this.formSendService.saveRound(this.form.value, this.isNew, this.roundId);
     this.form.reset();
+    this.utilForm.reset();
     this.formSendService.selectedAccounts = [];
     this.isShowForm = false;
   }
@@ -291,12 +306,19 @@ export class SendReleaseRoundsComponent implements OnInit, OnChanges, OnDestroy 
       });
   }
 
-  toggleAccount(item: any, e: boolean) {
-    if (item.data) {
-      item.data.forEach(i => {
-        this.formSendService.toggleAccounts(i, e);
+  toggleAccountGroup(group: any, e: boolean) {
+    // console.log(group);
+    if (group && group.data) {
+      group.data.forEach(i => {
+        this.formSendService.toggleAccounts(i, !!e);
       });
     } else {
+      console.log('bad or empty group', group);
+    }
+  }
+
+  toggleAccount(item: any, e: boolean) {
+    if (item) {
       this.formSendService.toggleAccounts(item, e);
     }
   }
@@ -317,6 +339,7 @@ export class SendReleaseRoundsComponent implements OnInit, OnChanges, OnDestroy 
     this.isNew = false;
     this.roundId = i.id;
     this.form.reset();
+    this.utilForm.reset();
 
     const start_date = DateTime.fromString(i.start_date, 'yyyy-MM-dd').invalid
       ? DateTime.fromString(i.start_date, 'yyyy/MM/dd').toFormat('MM/dd/yyyy')
@@ -342,22 +365,24 @@ export class SendReleaseRoundsComponent implements OnInit, OnChanges, OnDestroy 
         ...i.types.mailing,
         ...{
           radio_mailing_type: this.mailingOptions[i.types.mailing.is_self_mail],
-          select_delay_days: this.selectOptions.filter(
-            elem => i.types.mailing.delay_days === elem.id
-          ),
+          select_delay_days: this.selectOptions.filter(elem => i.types.mailing.delay_days === elem.id),
           select_mailing_house: this.mailingHouseList
-            ? this.mailingHouseList.filter(
-                elem => i.types.mailing.mailing_house_id === elem.id
-              )
-            : this.mailingHouseOptions.filter(
-                elem => i.types.mailing.mailing_house_id === elem.id
-              )
+            ? this.mailingHouseList.filter(elem => i.types.mailing.mailing_house_id === elem.id)
+            : this.mailingHouseOptions.filter(elem => i.types.mailing.mailing_house_id === elem.id)
         }
       });
       this.changeMailingSelected(true);
     }
     this.formSendService.selectedAccounts = i.accounts;
     this.isShowForm = true;
+  }
+
+  filterAccountsByAnything(filter: string) {
+    this.formSendService.filterAllAccountsByAnything(filter);
+  }
+
+  getSelectedAccountsLength(): number {
+    return this.formSendService.selectedAccounts.length;
   }
 
   deleteRound(i) {

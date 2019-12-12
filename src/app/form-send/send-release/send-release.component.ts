@@ -6,7 +6,7 @@ import {
   OnInit,
   ViewChild
 } from '@angular/core';
-import { IMailingHouse, IRound } from '@app/form-send/models/send.model';
+import { IGroupAccount, IMailingHouse, IPerson, IRound } from '@app/form-send/models/send.model';
 import { FormService } from '@app/form/form.service';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -23,8 +23,8 @@ export class SendReleaseComponent implements OnInit, OnDestroy {
   public periodsList: any = [];
   public selectedPeriods: any = [];
   public mailingHouseList: IMailingHouse[] = [];
-  public accountsList: any[] = [];
-  public selectedAccountsList: any[] = [];
+  public groupAccountsList: IGroupAccount[] = [];
+  public selectedAccountsList: IPerson[] = [];
   destroyed$ = new Subject();
 
   @ViewChild('link', { static: false }) link: ElementRef;
@@ -72,7 +72,7 @@ export class SendReleaseComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroyed$))
       .subscribe(val => {
         // console.log('accountsList', val);
-        this.accountsList = val;
+        this.groupAccountsList = val;
         this.cdr.markForCheck();
       });
     this.formSendService.$selectedAccounts
