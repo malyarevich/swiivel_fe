@@ -1,0 +1,38 @@
+@import 'index';
+
+.image {
+  display: flex;
+}
+
+.access-container {
+  display: flex;
+  margin: 0 0 5px;
+}
+
+.user-image {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: no-repeat center center $icon-grey-color;
+  background-size: cover;
+  margin: 0 -6px 0 0;
+  border: 2px solid $white;
+}
+
+.info {
+  margin: 0 0 0 10px;
+  display: flex;
+  align-items: center;
+}
+
+.name,
+.add {
+  margin: 2px 0 0 0;
+  font: 800 10px/11px $nunito-sans;
+}
+
+.add {
+  color: $element-base-color;
+}

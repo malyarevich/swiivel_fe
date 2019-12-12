@@ -58,17 +58,11 @@
     <div class="access">
       <h2 class="col-header">Access</h2>
       <div *ngIf="form.dashboard_block && form.dashboard_block.access && form.dashboard_block.access.length">
-        <sw-user-item
-          [isRoleShown]="false"
-          [size]="mode === 'short' ? 'default' : 'small'"
-          [userItem]="this.formManagementService.getUser(form.dashboard_block.access[0])"
-        ></sw-user-item>
+        <sw-form-management-access [users]="form.dashboard_block.access"></sw-form-management-access>
       </div>
       <div class="col-bottom edit-access-btn">
-        <sw-button
-          color="transparent"
-        >
-          <span>Edit Access</span>
+        <sw-button class="transparent small-font">
+          Edit Access
         </sw-button>
       </div>
     </div>
