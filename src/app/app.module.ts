@@ -19,6 +19,7 @@ import { HttpService } from '@core/http.service';
 import { SharedModule } from '@shared/shared.module';
 
 import { FontAwesomeModule, FaIconLibrary, FaConfig } from '@fortawesome/angular-fontawesome';
+import { fas } from '@fortawesome/free-solid-svg-icons';
 
 
 const onInit: (authService: AuthService) => any = (authService: AuthService) => {
@@ -68,5 +69,6 @@ import { ErrorsListTooltipComponent } from '@app/online-form/errors-list/errors-
 })
 export class AppModule {
   constructor(library: FaIconLibrary, config: FaConfig) {
+    library.addIconPacks(fas);
   }
 }
