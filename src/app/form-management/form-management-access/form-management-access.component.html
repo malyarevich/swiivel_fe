@@ -1,0 +1,14 @@
+<div class="access-container">
+  <div class="image">
+    <div *ngFor="let user of users.slice(0,5); let i = index">
+      <div
+        class="user-image" data-e2e="user-image"
+        [style.background-image]="user.avatar ? 'url(' + user.avatar + ')' : ''">
+      </div>
+    </div>
+  </div>
+  <div class="info">
+    <p class="name">{{ getUserName() }}</p>
+    <p class="add" *ngIf="users.length > 5"> +{{ getAdditionalUsers()}}</p>
+  </div>
+</div>

@@ -7,7 +7,7 @@
   border: none;
   --text-color: #fff;
   --icon-color: #fff;
-  
+
   &.full {
     width: 100%;
     button {
@@ -82,7 +82,11 @@
     border: none;
     background: transparent;
     padding: 0;
-    color: $element-base-color;
+
+      .icon,
+      .text {
+        color: $element-base-color;
+      }
     }
   }
 
@@ -92,7 +96,11 @@
     border: none;
     background: transparent;
     padding: 0;
-    color: $status-gray;
+
+      .icon,
+      .text {
+        color: $status-gray;
+      }
     }
   }
 
@@ -126,8 +134,6 @@
         padding-right: 3px;
       }
     }
-  
-    
 
   }
   &.medium {
@@ -139,8 +145,8 @@
     }
   }
 
-  
-    
+
+
   button {
     background: #4F4DB5;
     outline: none;
@@ -183,11 +189,11 @@
       background: $gray;
 
     }
-    
+
     &:hover {
       opacity: 1;
     }
-  
+
   }
   &.outline-purpure {
     button {
@@ -204,8 +210,16 @@
     }
   }
 
+  &.small-font {
+    button {
+      .text {
+        font: 500 10px/13px $nunito-sans;
+      }
+    }
+  }
+
   //shapes
-  
+
 }
 
 // :host(.btn-with-icon) {
