@@ -40,7 +40,7 @@ export class FormManagementComponent implements OnInit {
     filename: null
   };
   public colors = ButtonColorsEnum;
-  public bulkOptions = ['Export Submissions', 'Export Documents'];
+  public bulkOptions = ['Export Submissions', 'Export Documents', 'Send Reminder', 'Add to Call Campaign'];
 
   constructor(
     private checkService: CheckService,
@@ -149,7 +149,35 @@ export class FormManagementComponent implements OnInit {
   }
 
   bulkAction(evt: any): void {
-    console.log(evt);
+    switch (evt) {
+      case 0:
+        this.exportSubmissions();
+        break;
+      case 1:
+        this.exportDocuments();
+        break;
+      case 2:
+        this.sendReminder();
+        break;
+      case 3:
+        this.addToCallCampaign();
+        break;
+    }
   }
 
+  exportSubmissions(): void {
+    console.log('export submissions');
+  }
+
+  exportDocuments(): void {
+    console.log('export documents');
+  }
+
+  sendReminder(): void {
+    console.log('send reminder');
+  }
+
+  addToCallCampaign(): void {
+    console.log('add to call campaign');
+  }
 }
