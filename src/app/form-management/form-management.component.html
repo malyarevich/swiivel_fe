@@ -43,9 +43,9 @@
         </div>
         <div class="actions">
           <sw-dropdown-select
-              #bulk="dropdown"
-              [options]="bulkOptions"
-              (selected)="bulkAction($event)"
+            #bulk="dropdown"
+            [options]="bulkOptions"
+            (selected)="bulkAction($event)"
           >
             <sw-button class="white" [disabled]="!bulkActive">
               <span class="actions-bulk-btn-text">Bulk Actions</span>
@@ -72,10 +72,267 @@
   </div>
 </div>
 
-<sw-dialog #dialog title="Copy" action="Copy" (closed)="popupClosed()">
-  <sw-label>
-    {{ copyLink }}
-  </sw-label>
+<sw-dialog
+  #dialog
+  [title]="dialogParams[popupMode].title"
+  [action]="dialogParams[popupMode].action"
+  (closed)="popupClosed($event)"
+  contentAlign="center-title"
+  size="large"
+>
+  <div *ngIf="popupMode === popupEnum.COPY">
+    <sw-label>
+      {{ copyLink }}
+    </sw-label>
+  </div>
+  <div *ngIf="popupMode === popupEnum.SUBMISSIONS">
+    <form [formGroup]="dialogForm">
+      <div class="toggle">
+        <sw-input-radio-toggle
+          [optionsArray]="dialogExportViewArray"
+          [chosenOption]="0"
+          (changeOption)="changeDialogView($event)"
+        ></sw-input-radio-toggle>
+      </div>
+      <div *ngIf="dialogExportView === 'CSV'">
+        <h3 class="section-header">Export Options</h3>
+        <div class="import-options">
+          <label class="import-option">
+            <input
+              class="option-input"
+              type="radio"
+              value="all-submission"
+              name="submission_export_options"
+              formControlName="submission_export_options"
+            >
+            <span class="option-text">All Submissions</span>
+            <span class="checkmark"></span>
+          </label>
+          <label class="import-option">
+            <input
+              class="option-input"
+              type="radio"
+              value="filter-list"
+              name="submission_export_options"
+              checked="checked"
+              formControlName="submission_export_options"
+            >
+            <span class="option-text">Filter list</span>
+            <span class="checkmark"></span>
+          </label>
+        </div>
+        <div class="export-submission-section">
+          <div class="export-submission-header">
+            <h3 class="section-header">Submissions to export:</h3>
+            <sw-button>Add List Builder</sw-button>
+          </div>
+          <div class="submissions-list">
+            <div *ngFor="let account of groupAccountsList" class="submissions-item">
+              <div class="submissions-item-text">
+                <p class="submissions-item-name">{{ account.name }}</p>
+                <p class="submissions-item-info">{{ account.key }}</p>
+              </div>
+              <div class="submissions-item-controls">
+                <div class="submissions-item-edit">
+                  <sw-icon-button [icon]="icons.PEN"></sw-icon-button>
+                </div>
+                <sw-icon-button [icon]="icons.TRASH"></sw-icon-button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div>
+        <h3 class="section-header">Data Inclusion Options</h3>
+        <div class="inclusion-options-controls">
+          <sw-input-checkbox
+            [checked]="isAllSubmissionFieldsSelected"
+            (click)="changeSubmissionFieldsSelection()"
+          >
+            <span class="label">Select All</span>
+          </sw-input-checkbox>
+          <div>Search</div>
+          <!--          <sw-input-search placeholder="Search" formControlName="export_pdf_search"></sw-input-search>-->
+        </div>
+        <div *ngIf="!!submissionFields.length">
+          <div class="inclusion-options-list-container" *ngFor="let section of submissionFields">
+            <div class="inclusion-options-list-header">
+              <sw-input-checkbox
+                [checked]="section.isChosen"
+                (click)="changeChosenSection(section._id, section.isChosen)"
+              >
+                <span class="label">{{ section.name }}</span>
+              </sw-input-checkbox>
+              <sw-icon-button
+                [icon]="section.isOpen ? icons.CHEVRON_DOWN : icons.CHEVRON_UP"
+                class="gray"
+                (click)="changeOpenSection(section._id, section.isOpen)"
+              >
+              </sw-icon-button>
+            </div>
+            <div *ngIf="section.isOpen">
+              <div class="inclusion-options-list" *ngFor="let field of section.fields">
+                <div class="inclusion-options-item-container">
+                  <div class="inclusion-options-item-row">
+                    <div class="inclusion-options-item">
+                      <sw-input-checkbox
+                        [checked]="field.isChosen"
+                        (click)="changeChosenField(section._id, field._id, field.isChosen)"
+                      >
+                        <span class="label">{{ field.name }}</span>
+                      </sw-input-checkbox>
+                      <sw-icon-button
+                        [icon]="field.isOpen ? icons.CHEVRON_DOWN : icons.CHEVRON_UP"
+                        class="gray"
+                        (click)="changeOpenField(section._id, field._id, field.isOpen)"
+                      >
+                      </sw-icon-button>
+                    </div>
+                    <div *ngIf="field.isOpen && field.fields && !!field.fields.length">
+                      <div class="inclusion-options-fields-container" *ngFor="let field of field.fields">
+                        {{ field.name }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="dialogExportView === 'CSV'">
+          <div class="recipients-header">
+            <h3 class="section-header">List of Recipients</h3>
+            <sw-button>Add List Builder</sw-button>
+          </div>
+          <div class="recipients-info">
+            <div class="recipients-info-header">
+              <h4 class="recipients-info-title">{{ form.name }}</h4>
+              <div class="recipients-info-controls">
+                <div class="recipients-info-edit">
+                  <sw-icon-button [icon]="icons.PEN"></sw-icon-button>
+                </div>
+                <sw-icon-button [icon]="icons.TRASH"></sw-icon-button>
+              </div>
+            </div>
+            <div class="table-container">
+              <div class="recipients-all-select">
+                <sw-input-checkbox>
+                  <span class="label">Select All</span>
+                </sw-input-checkbox>
+              </div>
+              <div class="table">
+                <form [formGroup]="dialogRecipientsForm">
+                  <table #table cdk-table [dataSource]="users">
+
+                    <ng-container cdkColumnDef="name">
+                      <th cdk-header-cell *cdkHeaderCellDef width="26%">
+                        <div class="header_container">
+                          <div class="header_container__title" (click)="sortBy('name')">
+                            User
+                            <div class="header_container__title_icons">
+      <!--                        <i class="fas icon"-->
+      <!--                           [ngClass]="{'up': sort[0] === 'createdBy' && sort[1] === false, 'down': sort[0] === 'createdBy' && sort[1] === true}"></i>-->
+                            </div>
+                          </div>
+                          <div class="header  _container__filter">
+                            <sw-input-text
+                              class="filter-field"
+                              formControlName="name"
+                              [isSearch]="true"
+                              [isClearable]="true"
+                              [trimStart]="true"
+                            ></sw-input-text>
+                          </div>
+                        </div>
+                      </th>
+                      <td cdk-cell *cdkCellDef="let user">
+                        <div class="user-cell">
+                          <div class="user-checkbox">
+                            <sw-input-checkbox></sw-input-checkbox>
+                          </div>
+                          <p class="user-text">{{ user.full_name }}</p>
+                        </div>
+                      </td>
+                    </ng-container>
+
+                    <ng-container cdkColumnDef="email">
+                      <th cdk-header-cell *cdkHeaderCellDef width="37%">
+                        <div class="header_container">
+                          <div class="header_container__title" (click)="sortBy('email')">
+                            Email
+                            <div class="header_container__title_icons">
+                              <!--                        <i class="fas icon"-->
+                              <!--                           [ngClass]="{'up': sort[0] === 'createdBy' && sort[1] === false, 'down': sort[0] === 'createdBy' && sort[1] === true}"></i>-->
+                            </div>
+                          </div>
+                          <div class="header  _container__filter">
+                            <sw-input-text
+                              class="filter-field"
+                              formControlName="email"
+                              [isSearch]="true"
+                              [isClearable]="true"
+                              [trimStart]="true"
+                            ></sw-input-text>
+                          </div>
+                        </div>
+                      </th>
+                      <td cdk-cell *cdkCellDef="let user">
+                        {{ user.email }}
+                      </td>
+                    </ng-container>
+
+                    <ng-container cdkColumnDef="role">
+                      <th cdk-header-cell *cdkHeaderCellDef width="32%">
+                        <div class="header_container">
+                          <div class="header_container__title" (click)="sortBy('role')">
+                            Role
+                            <div class="header_container__title_icons">
+                              <!--                        <i class="fas icon"-->
+                              <!--                           [ngClass]="{'up': sort[0] === 'createdBy' && sort[1] === false, 'down': sort[0] === 'createdBy' && sort[1] === true}"></i>-->
+                            </div>
+                          </div>
+                          <div class="header  _container__filter">
+                            <sw-input-text
+                              class="filter-field"
+                              formControlName="email"
+                              [isSearch]="true"
+                              [isClearable]="true"
+                              [trimStart]="true"
+                            ></sw-input-text>
+                          </div>
+                        </div>
+                      </th>
+                      <td cdk-cell *cdkCellDef="let user">
+                        {{ user.role?.role_name }}
+                      </td>
+                    </ng-container>
+                    <tr cdk-header-row class="filters-row" *cdkHeaderRowDef="displayedColumns;"></tr>
+                    <tr cdk-row class="table-row"  #data
+                        *cdkRowDef="let form; columns: displayedColumns;" [hidden]="showSpinner"
+                        >
+                    </tr>
+                  </table>
+                </form>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div *ngIf="dialogExportView === 'PDF'" class="download-options">
+          <h3 class="section-header">Download Options</h3>
+          <div class="download-options-controls">
+            <sw-input-checkbox formControlName="export_pdf_split">
+              <span class="label">Split PDF</span>
+            </sw-input-checkbox>
+            <p class="download-options-info">Each account, form type, or grade will be exported as an individual
+              PDF.</p>
+            <sw-dropdown-input [options]="downloadOptions"></sw-dropdown-input>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
 </sw-dialog>
 
 <div *ngIf="isPopupOpen" class="overlay">

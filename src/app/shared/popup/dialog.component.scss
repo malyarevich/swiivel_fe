@@ -4,9 +4,15 @@
   position: relative;
   width: 430px;
   min-height: 144px;
+  max-height: 500px;
   padding: 12px 12px 52px;
   background: #fff;
   border-radius: 3px;
+
+  &.large {
+    width: 673px;
+    max-height: initial;
+  }
 
   .dialog_header {
     display: flex;

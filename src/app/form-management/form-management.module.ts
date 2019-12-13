@@ -2,6 +2,7 @@ import { CdkTableModule } from '@angular/cdk/table';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { FormSendService } from '@form-send/form-send.service';
 import { SharedModule } from '@shared/shared.module';
 
 import { FormManagementRoutingModule } from '@app/form-management/form-management.routing.module';
@@ -50,7 +51,10 @@ import { FormManagementSubmissionsComponent } from './form-management-submission
     CdkTableModule,
     IndependentComponentsModule
   ],
-  providers: [FormManagementService],
+  providers: [
+    FormManagementService,
+    FormSendService,
+  ],
   entryComponents: [FormManagementComponent]
 })
 export class FormManagementModule { }

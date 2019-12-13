@@ -1,12 +1,12 @@
-<div #holder (click)="toggle()">
+<div #holder (click)="toggle()" class="dialog-holder">
 </div>
 
 <ng-template #list>
-  <div class="dialog_container" data-e2e="popupbody">
+  <div class="dialog_container" data-e2e="popupbody" [class.large]="size === 'large'">
     <div class="dialog_header" data-e2e="dialogheader">
       <div
         class="dialog_title"
-        [class.center]="contentAlign === 'center'"
+        [class.center]="contentAlign === 'center' || 'center-title'"
       >
         <div class="dialog_title__text" data-e2e="popuptitle">{{ title }}</div>
       </div>

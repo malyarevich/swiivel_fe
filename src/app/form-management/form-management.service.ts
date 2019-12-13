@@ -78,57 +78,79 @@ export class FormManagementService extends ApiService {
     return this.http.get(`/proxy/form-management/log-list/${formId}`, { params });
   }
 
-  getSubmissionList(formId: string, requestParams): Observable<any> {
+  getSubmissionList(formId: string, requestParams?: any): Observable<any> {
     let params = new HttpParams();
 
-    if ('filter' in requestParams) {
-      for (const filter of Object.keys(requestParams.filter)) {
-        if (filter === 'online_submission') {
-          if (requestParams.filter[filter].toLowerCase() === 'yes') {
-            params = params.append(`filter[submission_type][online]`, 'true');
-          } else if (requestParams.filter[filter].toLowerCase() === 'no') {
-            params = params.append(`filter[submission_type][online]`, 'false');
-          }
-        } else if (filter === 'pdf_submission') {
-          if (requestParams.filter[filter].toLowerCase() === 'yes') {
-            params = params.append(`filter[submission_type][pdf]`, 'true');
-          } else if (requestParams.filter[filter].toLowerCase() === 'no') {
-            params = params.append(`filter[submission_type][pdf]`, 'false');
-          }
-        } else if (filter === 'status') {
-          requestParams.filter[filter].forEach((item) => {
-            params = params.append(`filter[${filter}][]`, item.value);
-          });
-        } else if (filter === 'last_updated') {
-          if (requestParams.filter[filter]['startDate'] && requestParams.filter[filter]['startDate'].date) {
-            params = params.append(
-              `filter[${filter}][startDate]`,
-              this.dateService.getStandardDate(requestParams.filter[filter]['startDate'].date));
-          }
-          if (requestParams.filter[filter]['endDate'] && requestParams.filter[filter]['endDate'].date) {
-            params = params.append(
-              `filter[${filter}][endDate]`,
-              this.dateService.getStandardDate(requestParams.filter[filter]['endDate'].date));
+    if (requestParams) {
+      if ('filter' in requestParams) {
+        for (const filter of Object.keys(requestParams.filter)) {
+          if (filter === 'online_submission') {
+            if (requestParams.filter[filter].toLowerCase() === 'yes') {
+              params = params.append(`filter[submission_type][online]`, 'true');
+            } else if (requestParams.filter[filter].toLowerCase() === 'no') {
+              params = params.append(`filter[submission_type][online]`, 'false');
+            }
+          } else if (filter === 'pdf_submission') {
+            if (requestParams.filter[filter].toLowerCase() === 'yes') {
+              params = params.append(`filter[submission_type][pdf]`, 'true');
+            } else if (requestParams.filter[filter].toLowerCase() === 'no') {
+              params = params.append(`filter[submission_type][pdf]`, 'false');
+            }
+          } else if (filter === 'status') {
+            requestParams.filter[filter].forEach((item) => {
+              params = params.append(`filter[${filter}][]`, item.value);
+            });
+          } else if (filter === 'last_updated') {
+            if (requestParams.filter[filter]['startDate'] && requestParams.filter[filter]['startDate'].date) {
+              params = params.append(
+                `filter[${filter}][startDate]`,
+                this.dateService.getStandardDate(requestParams.filter[filter]['startDate'].date));
+            }
+            if (requestParams.filter[filter]['endDate'] && requestParams.filter[filter]['endDate'].date) {
+              params = params.append(
+                `filter[${filter}][endDate]`,
+                this.dateService.getStandardDate(requestParams.filter[filter]['endDate'].date));
+            } else {
+              params = params.append(
+                `filter[${filter}][endDate]`,
+                this.dateService.getStandardDate(requestParams.filter[filter]['startDate'].date));
+            }
           } else {
-            params = params.append(
-              `filter[${filter}][endDate]`,
-              this.dateService.getStandardDate(requestParams.filter[filter]['startDate'].date));
+            params = params.append(`filter[${filter}]`, requestParams.filter[filter]);
           }
-        } else {
-          params = params.append(`filter[${filter}]`, requestParams.filter[filter]);
         }
       }
+      if ('sort' in requestParams) {
+        params = params.append(`sort[${requestParams.sort.field}]`, requestParams.sort.order);
+      }
+      if ('page' in requestParams) {
+        params = params.append('page', requestParams.page.toString());
+      }
+      if ('limit' in requestParams) {
+        params = params.append('limit', requestParams.limit.toString());
+      }
     }
-    if ('sort' in requestParams) {
-      params = params.append(`sort[${requestParams.sort.field}]`, requestParams.sort.order);
-    }
-    if ('page' in requestParams) {
-      params = params.append('page', requestParams.page.toString());
-    }
-    if ('limit' in requestParams) {
-      params = params.append('limit', requestParams.limit.toString());
-    }
+
     return this.http.get(`/proxy/form-management/submissions-list/${formId}`, { params });
   }
+
+  bulkExportSubmission(formId: string, selectedSections?: string[], splitPdf?: boolean, grouped?: string ): Observable<any> {
+    let endpoint = `/proxy/form-management/bulk-actions/export-submissions/5d8dbd0ffb2cfb17ff130c02/csv?`;
+    if (selectedSections && !!selectedSections.length) {
+      let sections = '';
+      selectedSections.forEach((item) => console.log(item));
+    }
+    const url = `/proxy/form-management/bulk-actions/export-submissions/5d8dbd0ffb2cfb17ff130c02/csv?selected_sections[formFields]=true&selected_sections[consent]=true&split_pdf=document_type`;
+    return this.http.get(url);
+  }
+
+  getUsers(): Observable<any> {
+    return this.http.post('/users');
+  }
+
+  // getActionsFields(formId: string): Observable<any> {
+  //   const url = `/proxy/form-management/bulk-actions/export-submissions/5df0f5ad8ffb081fd972c8f2/csv`;
+  //   return this.http.get(url);
+  // }
 
 }

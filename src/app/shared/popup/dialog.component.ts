@@ -16,6 +16,7 @@ export class DialogComponent {
   @Input() cancel = 'Cancel';
   @Input() title = 'Dialog title';
   @Input() contentAlign: 'center';
+  @Input() size: 'default' | 'large' = 'default';
 
   @ViewChild('list', { static: false }) list;
   @ViewChild('holder', { static: false, read: ElementRef }) holder: ElementRef;

@@ -1,0 +1,17 @@
+<div class="toggle-container">
+  <span class="toggle">
+    <span class="option" *ngFor="let option of optionsArray; let i = index">
+      <label>
+        <input
+          class="option-input"
+          type="radio"
+          [value]="option"
+          [checked]="i === chosenOption"
+          name="option"
+          (change)="onInputChange($event)">
+        <span class="option-text">{{ option }}</span>
+      </label>
+    </span>
+  </span>
+</div>
+

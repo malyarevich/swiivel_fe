@@ -16,6 +16,7 @@ import { InputNumberComponent } from './inputs/input-number/input-number.compone
 import { InputSuggestComponent } from './inputs/input-suggest/input-suggest.component';
 import { InputTextComponent } from './inputs/input-text/input-text.component';
 import { DropdownSelectYearComponent } from './inputs/dropdow-select-year/dropdown-select-year.component';
+import { InputRadioToggleComponent } from './inputs/input-radio-toggle/input-radio-toggle.component';
 
 import { InputTextareaComponent } from './inputs/input-textarea/input-textarea.component';
 import { InputToggleComponent } from './inputs/input-toggle/input-toggle.component';
@@ -100,6 +101,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     InputPhoneNumberComponent,
     InputEmailComponent,
     InputTextareaComponent,
+    InputRadioToggleComponent,
     DialogComponent,
     InputFileComponent,
     InputSearchComponent,
@@ -142,6 +144,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     InputTextComponent,
     InputSuggestComponent,
     InputToggleComponent,
+    InputRadioToggleComponent,
     DropdownInputComponent,
     InputPhoneNumberComponent,
     InputEmailComponent,

@@ -1,0 +1,32 @@
+@import "index";
+
+.toggle-container {
+  display: flex;
+  justify-content: center;
+}
+
+.toggle {
+  display: flex;
+  background: $light-purple;
+  border: 1px solid $border-purple;
+  border-radius: 10px;
+}
+
+.option-text {
+  display: block;
+  padding: 3px 22px;
+  font: 800 10px/13px $nunito-sans;
+  color: $element-base-color;
+  background: $light-purple;
+  border-radius: 10px;
+}
+
+.option-input:checked + .option-text {
+  color: $white;
+  background: $element-base-color;
+  border: 1px solid $element-base-color;
+}
+
+.option-input {
+  display: none;
+}
