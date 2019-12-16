@@ -26,6 +26,7 @@ storiesOf('Elements|Inputs/Checkbox', module).addDecorator(withKnobs)
   .add('Simple', () => {
     return {
       template: `
+        <input type="checkbox" checked disabled/>
         <sw-input-checkbox checked="true" (change)="onChange($event)"></sw-input-checkbox>
         <sw-input-checkbox checked="false" (change)="onChange($event)"></sw-input-checkbox>
         <sw-input-checkbox indeterminate="true" (change)="onChange($event)"></sw-input-checkbox>
