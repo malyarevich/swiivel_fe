@@ -12,7 +12,8 @@ import {
   HostListener,
   Self,
   ViewChild,
-  Renderer2
+  Renderer2,
+  HostBinding
 } from '@angular/core';
 
 import { ControlValueAccessor, NgControl } from '@angular/forms';
@@ -35,6 +36,12 @@ export class InputCheckboxComponent implements ControlValueAccessor {
     if (event.target === event.target) {
       if (event instanceof KeyboardEvent) {
         if (event.code === 'Space') this.toggle();
+        else if (event.code === 'Tab') {
+          let next = this.element.nativeElement.nextElementSibling;
+          if (next) {
+            next.focus();
+          }
+        }
       } else if (event instanceof MouseEvent) {
         this.toggle();
       } else {
@@ -46,19 +53,14 @@ export class InputCheckboxComponent implements ControlValueAccessor {
   @HostListener('blur', ['$event']) onBlur(event: Event) {
     this.onTouched();
   };
-  @Input() target = 'label';
-  @Input()
-  get isActive() { return this.__isActive; }
-  set isActive(value: boolean) {
+  @HostBinding() tabIndex: number = 0;
+  @Input() isActive() {
     deprecated(this, 'isActive');
-    this.__isActive = value;
   }
-  @Input() definition = false;
-
+  @Input() check() {
+    deprecated(this, 'check');
+  }
   @Input() value = 'on';
-  @Input() set check(value: boolean) {
-    this.checked = value;
-  }
 
   @Output() readonly change: EventEmitter<any> = new EventEmitter();
   @Output() readonly blur: EventEmitter<any> = new EventEmitter();
@@ -66,8 +68,6 @@ export class InputCheckboxComponent implements ControlValueAccessor {
   @Output() readonly _indeterminateChange: EventEmitter<boolean> = new EventEmitter<boolean>();
   @ViewChild('input', { static: false }) _inputElement: ElementRef<HTMLInputElement>;
   
-  
-  private __isActive: boolean;
   private _checked = false;
   private _disabled: boolean;
   private _indeterminate: boolean;
@@ -76,7 +76,7 @@ export class InputCheckboxComponent implements ControlValueAccessor {
     this.change.emit(value);
   };
   private onTouched: () => void = () => {
-    this.blur.emit();
+    // this.blur.emit();
   };
   
   @Input() get required(): boolean { return this._required; }
@@ -119,10 +119,13 @@ export class InputCheckboxComponent implements ControlValueAccessor {
   
 
   constructor(@Self() @Optional() public control: NgControl, public cdr: ChangeDetectorRef,
-  public renderer: Renderer2) {
+  public renderer: Renderer2, private _focusMonitor: FocusMonitor, public element: ElementRef) {
     if (control) {
       control.valueAccessor = this;
     }
+    this._focusMonitor.monitor(this.element, true).subscribe((origin) => {
+      console.log(origin);
+    })
   }
 
   setDisabledState(isDisabled: boolean) {
@@ -166,10 +169,5 @@ export class InputCheckboxComponent implements ControlValueAccessor {
         this.toggle()
       }
     }
-  }
-
-  ngAfterViewInit() {
-    if (this.__isActive !== undefined) deprecated(this, 'isActive');
-    else this.__isActive = true;
   }
 }

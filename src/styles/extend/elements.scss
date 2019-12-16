@@ -1,6 +1,7 @@
 @import '../variables/colors.scss';
 @import '../variables/bs.scss';
 @import '../mixins/form-components.scss';
+@import '../colors.scss';
 
 %standart-btn {
   text-transform: capitalize;
@@ -724,6 +725,44 @@ mwl-calendar-month-cell {
 mwl-calendar-month-view-header {
   &:hover {
     cursor: default;
+  }
+}
+
+input[type=checkbox] {
+  appearance: none;
+  background-color: $white;
+  border: 1px solid $primary-color;
+  border-radius: 3px;
+  box-sizing: border-box;
+  color: $primary-color;
+  cursor: inherit;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  width: 15px;
+  height: 15px;
+  &:checked {
+    background-image: url('/assets/images/icons/check.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    &:not(:disabled) {
+      background-color: $primary-color;
+    }
+    
+  }
+  &:not(:checked):indeterminate {
+    border-radius: 2px;
+    border-color: $primary-color;
+    border-width: 3px;
+    border-top-width: 7px;
+    border-bottom-width: 6px;
+  }
+  &:disabled {
+    border-color: $grey;
+    background-color: $white;
+    &:checked {
+      background-color: $grey;
+    }
   }
 }
 
