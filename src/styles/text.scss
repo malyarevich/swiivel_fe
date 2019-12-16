@@ -1,35 +1,30 @@
-$white: #FFFFFF !default;
-$black: #0D0D0D !default;
-$purple: #4350A2 !default;
-$purple-bg: #EBEEFF !default;
-$grey-98: #FAFAFA !default;
-$grey-95: #F3F3F3 !default;
-$grey-91: #E3E3E3 !default;
-$body-text-1-font: normal 400 12px 15px 'Nunito Sans' !default;
-$body-text-2-font: normal 700 12px 15px 'Nunito Sans' !default;
+@import "colors";
 
-$label-text-1-font: normal 400 9px 13px 'Nunito Sans' !default;
-$label-text-2-font: normal 700 9px 13px 'Nunito Sans' !default;
+$body-text-1-font: normal 400 12px/15px 'Nunito Sans' !default;
+$body-text-2-font: normal 700 12px/15px 'Nunito Sans' !default;
 
-$small-text-1-font: normal 400 10px 13px 'Nunito Sans' !default;
-$small-text-2-font: normal 700 10px 13px 'Nunito Sans' !default;
+$label-text-1-font: normal 400 9px/13px 'Nunito Sans' !default;
+$label-text-2-font: normal 700 9px/13px 'Nunito Sans' !default;
 
-$h1-text-1-font: normal 400 18px 20px 'Nunito Sans' !default;
-$h1-text-2-font: normal 800 18px 20px 'Nunito Sans' !default;
+$small-text-1-font: normal 400 10px/13px 'Nunito Sans' !default;
+$small-text-2-font: normal 700 10px/13px 'Nunito Sans' !default;
 
-$h2-text-1-font: normal 400 13px 15px 'Nunito Sans' !default;
-$h2-text-2-font: normal 800 13px 15px 'Nunito Sans' !default;
+$h1-text-1-font: normal 400 18px/20px 'Nunito Sans' !default;
+$h1-text-2-font: normal 800 18px/20px 'Nunito Sans' !default;
 
-$h3-text-1-font: normal 400 14px 20px 'Nunito Sans' !default;
-$h3-text-2-font: normal 800 14px 20px 'Nunito Sans' !default;
+$h2-text-1-font: normal 400 13px/15px 'Nunito Sans' !default;
+$h2-text-2-font: normal 800 13px/15px 'Nunito Sans' !default;
 
-$h4-text-1-font: normal 400 11px 15px 'Nunito Sans' !default;
-$h4-text-2-font: normal 800 11px 15px 'Nunito Sans' !default;
+$h3-text-1-font: normal 400 14px/20px 'Nunito Sans' !default;
+$h3-text-2-font: normal 800 14px/20px 'Nunito Sans' !default;
+
+$h4-text-1-font: normal 400 11px/15px 'Nunito Sans' !default;
+$h4-text-2-font: normal 800 11px/15px 'Nunito Sans' !default;
 
 @mixin body-text-400 {
     font: $body-text-1-font;
     color: $black;
-    letter-spacing: 0;
+    letter-spacing: 0.2px;
 }
 @mixin body-text-700 {
     font: $body-text-2-font;

@@ -1,3 +1,4 @@
+import {FocusableOption, FocusMonitor, FocusOrigin} from '@angular/cdk/a11y';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import {
   ChangeDetectionStrategy,
@@ -8,8 +9,10 @@ import {
   Input,
   Optional,
   Output,
+  HostListener,
   Self,
-  ViewChild
+  ViewChild,
+  Renderer2
 } from '@angular/core';
 
 import { ControlValueAccessor, NgControl } from '@angular/forms';
@@ -25,6 +28,24 @@ const deprecated = (_this: any, name = '') => {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class InputCheckboxComponent implements ControlValueAccessor {
+  @HostListener('click', ['$event'])
+  @HostListener('keydown', ['$event']) onEvent(event: Event) {
+    event.preventDefault();
+    event.stopPropagation();
+    if (event.target === event.target) {
+      if (event instanceof KeyboardEvent) {
+        if (event.code === 'Space') this.toggle();
+      } else if (event instanceof MouseEvent) {
+        this.toggle();
+      } else {
+        console.log(event)
+      }
+
+    }
+  }
+  @HostListener('blur', ['$event']) onBlur(event: Event) {
+    this.onTouched();
+  };
   @Input() target = 'label';
   @Input()
   get isActive() { return this.__isActive; }
@@ -33,58 +54,76 @@ export class InputCheckboxComponent implements ControlValueAccessor {
     this.__isActive = value;
   }
   @Input() definition = false;
-  @Input() disabled = false;
 
-  @Input() value: string;
-
-  @Output() readonly change: EventEmitter<any> = new EventEmitter();
-  @Output() readonly checkedChange: EventEmitter<any> = new EventEmitter();
-  @Output() readonly _indeterminateChange: EventEmitter<boolean> = new EventEmitter<boolean>();
-  @ViewChild('input', { static: true }) _inputElement: ElementRef<HTMLInputElement>;
+  @Input() value = 'on';
   @Input() set check(value: boolean) {
     this.checked = value;
   }
-  @Input()
-  get checked(): boolean { return this._checked; }
+
+  @Output() readonly change: EventEmitter<any> = new EventEmitter();
+  @Output() readonly blur: EventEmitter<any> = new EventEmitter();
+  @Output() readonly checkedChange: EventEmitter<any> = new EventEmitter();
+  @Output() readonly _indeterminateChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @ViewChild('input', { static: false }) _inputElement: ElementRef<HTMLInputElement>;
+  
+  
+  private __isActive: boolean;
+  private _checked = false;
+  private _disabled: boolean;
+  private _indeterminate: boolean;
+  private _required: boolean;
+  private onChange: (value: any) => void = (value: any) => {
+    this.change.emit(value);
+  };
+  private onTouched: () => void = () => {
+    this.blur.emit();
+  };
+  
+  @Input() get required(): boolean { return this._required; }
+  set required(value: boolean) { this._required = coerceBooleanProperty(value); }
+
+  @Input() get checked(): boolean { return this._checked; }
   set checked(value: boolean) {
     value = coerceBooleanProperty(value);
-    if (value != this.checked) {
+    if (this._checked !== value) {
       this._checked = value;
+      this.onChange(this._checked ? this.value : null);
       this.cdr.markForCheck();
-      if (this.onChange) { this.onChange(this._checked); }
-      this.change.emit(this._checked);
     }
   }
-  private __isActive: boolean;
-  private _checked: boolean = false;
-  private onChange: (value: any) => void;
-  private onTouched: () => void;
-  @Input()
-  get required(): boolean { return this._required; }
-  set required(value: boolean) { this._required = coerceBooleanProperty(value); }
-  private _required: boolean;
-
-  @Input()
-  get indeterminate(): boolean { return this._indeterminate; }
+  @Input() get disabled(): boolean { return this._disabled; }
+  set disabled(value: boolean) {
+    value = coerceBooleanProperty(value);
+    if (this._disabled !== value) {
+      this._disabled = value;
+      this.cdr.markForCheck();
+    }
+  }
+  @Input() get indeterminate(): boolean { return this._indeterminate; }
   set indeterminate(value: boolean) {
-    const changed = value != this._indeterminate;
-    this._indeterminate = coerceBooleanProperty(value);
-
-    if (changed) {
-      this._indeterminateChange.emit(this._indeterminate);
+    value = coerceBooleanProperty(value);
+    if (this._indeterminate != value) {
+      this._indeterminate = value;
+      if (this._inputElement) {
+        if (this._indeterminate) {
+          this.checked = false;
+          this.renderer.setAttribute(this._inputElement.nativeElement, 'indeterminate', 'true');
+        } else {
+          this.renderer.removeAttribute(this._inputElement.nativeElement, 'indeterminate');
+        }
+      }
+      this._indeterminateChange.emit(this.indeterminate);
+      this.cdr.markForCheck();
     }
-
-    this._syncIndeterminate(this._indeterminate);
   }
-  private _indeterminate: boolean = false;
+  
 
-  constructor(@Self() @Optional() public control: NgControl, public cdr: ChangeDetectorRef) {
+  constructor(@Self() @Optional() public control: NgControl, public cdr: ChangeDetectorRef,
+  public renderer: Renderer2) {
     if (control) {
       control.valueAccessor = this;
     }
   }
-
-
 
   setDisabledState(isDisabled: boolean) {
     this.disabled = isDisabled;
@@ -98,52 +137,39 @@ export class InputCheckboxComponent implements ControlValueAccessor {
     this.onChange = fn;
   }
 
-  writeValue(value: any) {
+  public writeValue(value: any) {
     this.checked = !!value;
   }
 
-  _onInputClick(event: Event | any) {
-    event.stopPropagation();
+  toggle(): void {
     if (!this.disabled) {
-      if (this.indeterminate) {
+      if (!this.checked && this.indeterminate) {
+        this._inputElement.nativeElement.indeterminate = false;
+        this._inputElement.nativeElement.checked = false;
         this._indeterminate = false;
-        this._indeterminateChange.emit(this._indeterminate);
+        this._checked = false;
+      } else {
+        this.checked = !this.checked;
+      }
+      this.cdr.markForCheck()
+    }
+  }
+  prevent(event) {
+    event.stopPropagation();
+  }
+  onClick(event) {
+    event.stopPropagation();
+    if (this.indeterminate) {
+      this.toggle()
+    } else {
+      if (event.target === this._inputElement.nativeElement) {
+        this.toggle()
       }
     }
-    this.toggle();
-    this.checkedChange.emit(event.target.checked);
-  }
-  _onInteractionEvent(event: Event) {
-    event.stopPropagation();
   }
 
-  toggle(): void {
-    this.checked = !this.checked;
-  }
-
-  public onBlur(event) {
-    if (this.onTouched) {
-      this.onTouched();
-    }
-  }
   ngAfterViewInit() {
     if (this.__isActive !== undefined) deprecated(this, 'isActive');
     else this.__isActive = true;
-    this._syncIndeterminate(this._indeterminate);
-  }
-  private _syncIndeterminate(value: boolean) {
-    const nativeCheckbox = this._inputElement;
-
-    if (nativeCheckbox) {
-      nativeCheckbox.nativeElement.indeterminate = value;
-    }
-  }
-
-  public _onLabelClick(event: Event) {
-    if (event.target['tagName'] !== 'INPUT' && this.__isActive && !this.disabled) {
-      this.toggle();
-      event.preventDefault();
-      event.stopPropagation();
-    }
   }
 }
