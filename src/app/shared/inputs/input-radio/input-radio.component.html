@@ -1,0 +1,10 @@
+<input #input
+  type="radio"
+  [checked]="checked"
+  [value]="value"
+  [disabled]="disabled"
+  (click)="prevent($event)"
+  (change)="onInputChange($event)"/>
+<span [class.checked]="checked">
+  <ng-content></ng-content>
+</span>

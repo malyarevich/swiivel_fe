@@ -1,0 +1,46 @@
+@import "colors.scss";
+@import "text.scss";
+@import "extend/elements.scss";
+
+:host([disabled]) {
+  cursor: default !important;
+  span {
+    color: $grey;
+    &.checked {
+      color: $grey;
+    }
+  }
+}
+
+:host {
+  display: inline-flex;
+  cursor: pointer;
+  height: 15px;
+  user-select: none;
+  
+  
+  span {
+    @include body-text-400;
+    color: $black-2;
+    &:not(:empty) {
+      margin-left: 10px;
+    }
+    &.checked {
+      @include body-text-700;
+    } 
+  }
+}
+
+:host(.online_form) {
+  label {
+    padding-left: 0.5rem;
+  }
+}
+
+:host(.circle) {
+  .checkbox {
+    input[type=checkbox] {
+      border-radius: 50%;
+    }
+  }
+}

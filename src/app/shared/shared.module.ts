@@ -39,7 +39,7 @@ import { BackBarComponent } from '@shared/bars/back-bar/back-bar.component';
 import { DocumentApprovalBarComponent } from '@shared/bars/document-approval-bar/document-approval-bar.component';
 
 // Others
-import { RadioGroupComponent } from './inputs/radio-group/radio-group.component';
+// import { RadioGroupComponent } from './inputs/radio-group/radio-group.component';
 import { LabelComponent } from './labels/label/label.component';
 import { UserItemComponent } from './user-item/user-item.component';
 import { SelectOptionDirective } from './inputs/dropdown-select/option.directive';
@@ -60,7 +60,8 @@ import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import localHe from '@angular/common/locales/he';
 import { IConfig, NgxMaskModule } from 'ngx-mask';
-
+import { InputRadioComponent } from './inputs/input-radio/input-radio.component';
+import { RadioGroupComponent } from './inputs/input-radio/input-group.component';
 registerLocaleData(localHe);
 
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
@@ -102,6 +103,8 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     InputFileComponent,
     InputSearchComponent,
     DropdownSelectYearComponent,
+    InputRadioComponent,
+    RadioGroupComponent,
     // Headers
     PageHeaderComponent,
     BlockHeaderComponent,
@@ -144,6 +147,8 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     InputPhoneNumberComponent,
     InputEmailComponent,
     InputTextareaComponent,
+    InputRadioComponent,
+    RadioGroupComponent,
     DropdownSelectComponent,
     DialogComponent,
     RadioGroupComponent,
