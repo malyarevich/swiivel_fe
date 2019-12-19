@@ -6,14 +6,9 @@
       [options]="options"
       (selected)="changePeriod($event)"
     >
-      <sw-button color="transparent-gray">
-        <p class="select-option">
-          <span class="select-option-text">{{ option }}</span>
-          <i
-            class="fas fa-caret-down"
-            [class.fa-caret-up]="period.isOpened"
-          ></i>
-        </p>
+      <sw-button class="transparent-gray">
+        <span class="text">{{ option }}</span>
+        <i class="fas fa-caret-down" [class.fa-caret-up]="period.isOpened"></i>
       </sw-button>
     </sw-dropdown-select>
   </div>

@@ -1,56 +1,23 @@
 @import 'index';
 
-:host {
-  position: relative;
-}
-
 .statistics {
   display: flex;
+  align-items: center;
 }
 
-.chart {
-  width: 67px;
-  height: 67px;
-  position: relative;
+.total {
+  width: 100%;
 }
 
-.chart-label {
-  min-width: 67px;
-  position: absolute;
+.total-text {
+  font: normal 14px/20px $nunito-sans;
   text-align: center;
-  top: 24px;
-  left: 0;
-}
-
-.chart-value {
-  margin: 0;
-  font: 800 14px/20px $nunito-sans;
-  color: $header-logo-color;
-}
-
-.users-block {
-  width: 77%;
-  margin: 6px 0 0 6%;
-}
-
-.users {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-
-.user {
-  width: 45%;
-  margin: 0 0 7px 0;
-}
-
-.user-name {
-  font: 800 10px/12px $nunito-sans;
-  margin: 0;
-}
-
-.user-date {
-  font: 500 10px/12px $nunito-sans;
   color: $gray-color;
+}
+
+.total-value {
   margin: 0;
+  font: 800 27px/20px $nunito-sans;
+  text-align:center;
+  color: $header-logo-color;
 }
