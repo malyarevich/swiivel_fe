@@ -7,6 +7,7 @@
 .info {
   display: flex;
   justify-content: space-between;
+  margin: 0 0 13px;
   padding: 15px;
 }
 
@@ -26,3 +27,48 @@
   width: 25%;
 }
 
+.tabs {
+  display: flex;
+}
+
+.tabs-block {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 0 9px;
+  padding: 0 15px;
+}
+
+.tabs sw-button.button-tab::ng-deep {
+  button {
+    outline: none;
+    margin: 0 25px 0 0;
+    padding: 0;
+    border: none;
+    border-bottom: 2px solid transparent;
+    border-radius: 0;
+    background: transparent;
+
+    .text {
+      font: 700 12px/15px $nunito-sans;
+      color: $gray-color;
+    }
+
+    &:hover, &:focus, &:active {
+      border-bottom: 2px solid $hover-purple;
+
+      .text {
+        color: $hover-purple;
+      }
+    }
+  }
+}
+
+.tabs sw-button.button-tab.tab-activated::ng-deep {
+  button {
+    border-bottom: 2px solid $element-base-color;
+
+    .text {
+      color: $element-base-color;
+    }
+  }
+}

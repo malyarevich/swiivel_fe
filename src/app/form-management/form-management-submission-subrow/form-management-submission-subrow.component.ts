@@ -12,6 +12,8 @@ import { FormManagementSubmissionMissingFieldModel } from '@models/form-manageme
 
 export class FormManagementSubmissionSubrowComponent implements OnInit {
   @Input() formId: string;
+  public tabsArray = ['Forms', 'Document'];
+  public activeTab = this.tabsArray[0];
 
   public historyList: FormManagementSubmissionHistoryItemModel[];
   public missingFields: FormManagementSubmissionMissingFieldModel;

@@ -36,52 +36,52 @@
 
   &.green {
     button {
-    background: $status-green;
+      background: $status-green;
     }
   }
 
   &.light-blue {
     button {
-    background: $status-light-blue;
+      background: $status-light-blue;
     }
   }
 
   &.status-blue {
     button {
-    background: $status-blue;
+      background: $status-blue;
     }
   }
 
   &.status-dark-blue {
     button {
-    background: $status-dark-blue;
+      background: $status-dark-blue;
     }
   }
 
   &.status-red {
     button {
-    background: $status-red;
+      background: $status-red;
     }
   }
 
   &.status-light-purple {
     button {
-    background: $status-light-purple;
+      background: $status-light-purple;
     }
   }
 
   &.status-gray-purple {
     button {
-    background: $gray-color;
+      background: $gray-color;
     }
   }
 
   &.transparent {
     button {
-    outline: none;
-    border: none;
-    background: transparent;
-    padding: 0;
+      outline: none;
+      border: none;
+      background: transparent;
+      padding: 0;
 
       .icon,
       .text {
@@ -92,10 +92,10 @@
 
   &.transparent-gray {
     button {
-    outline: none;
-    border: none;
-    background: transparent;
-    padding: 0;
+      outline: none;
+      border: none;
+      background: transparent;
+      padding: 0;
 
       .icon,
       .text {
@@ -106,16 +106,16 @@
 
   &.yellow {
     button {
-    background: $status-yellow;
+      background: $status-yellow;
     }
   }
 
   &.gray-purple {
     button {
-    outline: none;
-    border: none;
-    background: transparent;
-    color: $gray-color;
+      outline: none;
+      border: none;
+      background: transparent;
+      color: $gray-color;
     }
   }
   &.small {
@@ -144,7 +144,6 @@
       font: 500 12px/15px $nunito-sans-bold;
     }
   }
-
 
 
   button {
