@@ -1,10 +1,9 @@
-<button
-  data-e2e="button"
-  [type]="type"
-  [disabled]="!!disabled || null"
-  [attr.name]="name"
-  [attr.title]="title"
+<button data-e2e="button" [type]="type" [disabled]="!!disabled || null" [attr.name]="name" [attr.title]="title"
   [attr.value]="value">
-  <span class="icon"><ng-content select="i"></ng-content></span>
-  <span class="text"><ng-content></ng-content></span>
+  <span class="icon">
+    <fa-icon *ngIf="_icon" [icon]="_icon"></fa-icon>
+  </span>
+  <span class="text">
+    <ng-content></ng-content>
+  </span>
 </button>
