@@ -63,6 +63,8 @@ export class UploadReviewFormComponent implements OnInit, OnDestroy {
   public documentTypes = [];
   public documentFamilies = [];
 
+  private gotFilters = false;
+
   constructor(
     public uploadReviewFormService: UploadReviewFormService,
     private route: ActivatedRoute,
@@ -124,15 +126,31 @@ export class UploadReviewFormComponent implements OnInit, OnDestroy {
               this.form.controls['sort'].enable({ emitEvent: false });
             }
           }
+
           this.cdr.detectChanges();
+
+          if (!this.isEmptyObject(this.filterValue) && !this.gotFilters) {
+            this.gotFilters = true;
+
+            this.route.queryParams.subscribe(param => {
+              if (param.status === 'unassigned') {
+                if (this.filterValue && this.filterValue['status'] && this.filterValue['status']['data']) {
+                  const indexUnassignedStatus = this.filterValue['status']['data'].findIndex(x => x.value === 'unassigned');
+                  if (indexUnassignedStatus > -1) {
+                    this.form.controls['filter'].setValue([ this.filterValue['status']['data'][indexUnassignedStatus] ]);
+                  }
+                }
+              }
+            });
+          }
         }
       }, () => {
         this.router.navigate(['/']);
       });
 
     this.form.get('search').valueChanges.subscribe((data) => this.getDocumentslist(false, (data.replace(/^\s+/g, ''))));
-    this.form.get('sort').valueChanges.subscribe(() =>  this.getDocumentslist());
-    this.form.get('filter').valueChanges.subscribe(() =>  this.getDocumentslist());
+    this.form.get('sort').valueChanges.subscribe(() => this.getDocumentslist());
+    this.form.get('filter').valueChanges.subscribe(() => this.getDocumentslist());
   }
 
   getDocumentslist(resetActiveId = false, search = null) {
