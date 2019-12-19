@@ -12,6 +12,8 @@ export interface FormStatisticViewModel {
 export interface FormStatisticRateModel {
   list?: FormStatisticUserModel[];
   percent: number;
+  count_submitted: number;
+  count_all: number;
 }
 
 export interface FormStatisticInvitesModel {

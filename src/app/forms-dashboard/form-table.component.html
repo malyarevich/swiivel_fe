@@ -6,18 +6,6 @@
       </sw-page-header>
     </div>
     <div class="app-form-table__controls">
-      <div class="control-edit">
-        <sw-button color="transparent-gray">
-          <i class="fas fa-pen control-icon"></i>
-          <span class="control-button-text">Edit Dashboard</span>
-        </sw-button>
-      </div>
-      <div class="control-share">
-        <sw-button color="transparent-gray">
-          <i class="fas fa-share-alt control-icon"></i>
-          <span class="control-button-text">Share</span>
-        </sw-button>
-      </div>
       <div class="control-view">
         <sw-button color="transparent" (click)="changeDashboardView()">
           <span *ngIf="!isDashboardShown" class="view-dashboard-text">

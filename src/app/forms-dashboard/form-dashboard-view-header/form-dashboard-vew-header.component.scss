@@ -3,7 +3,6 @@
 .header {
   display: flex;
   justify-content: space-between;
-  margin: 0 0 10px;
 }
 
 .header-text {
@@ -23,13 +22,4 @@
 .select-option {
   position: relative;
   margin: 0;
-}
-
-.fa-caret-down {
-  position: absolute;
-  top: 4px;
-}
-
-.dropdown {
-  margin: -3px 0 0;
 }
