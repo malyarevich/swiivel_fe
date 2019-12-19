@@ -195,6 +195,105 @@
     }
   }
 }
+
+:host(.gray) {
+  button {
+    background: $status-gray;
+  }
+}
+  
+:host(.white) {
+  button {
+    background: #fff;
+    span {
+      color: $element-base-color;
+    }
+  }
+}
+
+:host(.green) {
+  button {
+    background: $status-green;
+  }
+}
+  
+:host(.light-blue) {
+  button {
+    background: $status-light-blue;
+  }
+}
+
+:host(.status-blue) {
+  button {
+    background: $status-blue;
+  }
+}
+  
+:host(.status-dark-blue) {
+  button {
+    background: $status-dark-blue;
+  }
+}
+  
+:host(.status-red) {
+  button {
+    background: $status-red;
+  }
+}
+  
+:host(.status-light-purple) {
+  button {
+    background: $status-light-purple;
+  }
+}
+  
+:host(.status-gray-purple) {
+  button {
+    background: $gray-color;
+  }
+}
+
+:host(.yellow) {
+  button {
+    background: $status-yellow;
+  }
+}
+
+:host(.gray-purple) {
+  button {
+    outline: none;
+    border: none;
+    background: transparent;
+    color: $gray-color;
+  }
+}
+
+:host(.transparent)  {
+  button {
+    outline: none;
+    border: none;
+    background: transparent;
+    padding: 0;
+    .icon,
+    .text {
+      color: $element-base-color;
+    }
+  }
+}
+
+:host(.transparent-gray) {
+  button {
+    outline: none;
+    border: none;
+    background: transparent;
+    padding: 0;
+    .icon,
+    .text {
+      color: $status-gray;
+    }
+  }
+}
+
 // :host {
 //   width: fit-content;
 //   display: inline-flex;
@@ -417,136 +516,136 @@
 
 // }
 
-:host(.btn-with-icon) {
-  .button {
-    padding: 3px 3px 3px 20px;
-    span {
-      margin-right: 3px;
-    }
-    @extend %icon-for-button;
-  }
-}
+// :host(.btn-with-icon) {
+//   .button {
+//     padding: 3px 3px 3px 20px;
+//     span {
+//       margin-right: 3px;
+//     }
+//     @extend %icon-for-button;
+//   }
+// }
 
-:host(.outline-btn) {
-  .button {
-    padding: 6px 16px;
-    background-color: inherit;
-    border: 1px solid $element-base-color;
-    box-sizing: border-box;
-    color: $element-base-color;
-  }
-}
+// :host(.outline-btn) {
+//   .button {
+//     padding: 6px 16px;
+//     background-color: inherit;
+//     border: 1px solid $element-base-color;
+//     box-sizing: border-box;
+//     color: $element-base-color;
+//   }
+// }
 
-:host(.icon-btn) {
-  .button {
-    padding: 3px;
-    @extend %icon-for-button;
-  }
-}
+// :host(.icon-btn) {
+//   .button {
+//     padding: 3px;
+//     @extend %icon-for-button;
+//   }
+// }
 
-:host(.full) {
-  .button,.button-container {
-    width: 100%;
-    height: 100%;
-  }
-}
+// :host(.full) {
+//   .button,.button-container {
+//     width: 100%;
+//     height: 100%;
+//   }
+// }
 
-:host(.rigth) {
-  .button {
-    border-bottom-left-radius: 0;
-    border-top-left-radius: 0;
-  }
-}
+// :host(.rigth) {
+//   .button {
+//     border-bottom-left-radius: 0;
+//     border-top-left-radius: 0;
+//   }
+// }
 
-:host(.input_button) {
-  .button {
-    white-space: nowrap;
-    font-size: 12px;
-    line-height: 15px;
-    color: $black;
-    background: $dark-grey;
-    border: 1px solid $soft-gray;
-    border-radius: 0;
-    margin-left: -1px;
-  }
-  &.active {
-    .button {
-      position: relative;
-      background-color: $light-yellow;
-      border: 1px solid $header-logo-color;
-      z-index: 2;
-    }
-  }
-}
+// :host(.input_button) {
+//   .button {
+//     white-space: nowrap;
+//     font-size: 12px;
+//     line-height: 15px;
+//     color: $black;
+//     background: $dark-grey;
+//     border: 1px solid $soft-gray;
+//     border-radius: 0;
+//     margin-left: -1px;
+//   }
+//   &.active {
+//     .button {
+//       position: relative;
+//       background-color: $light-yellow;
+//       border: 1px solid $header-logo-color;
+//       z-index: 2;
+//     }
+//   }
+// }
 
-:host(.full_width)  {
-  width: 100%;
+// :host(.full_width)  {
+//   width: 100%;
 
-  .button-container {
-    width: 100%;
-  }
+//   .button-container {
+//     width: 100%;
+//   }
 
-  .button {
-    width: 100%;
-  }
-}
+//   .button {
+//     width: 100%;
+//   }
+// }
 
-:host(.widget-icon) {
-  .button {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-  }
-}
+// :host(.widget-icon) {
+//   .button {
+//     width: 40px;
+//     height: 40px;
+//     border-radius: 50%;
+//   }
+// }
 
-:host(.widget-icon.active) {
-  .button {
-    background-color: #fff;
-    border: 1px solid #4350A2;
-    color: #4350A2;
-  }
-}
+// :host(.widget-icon.active) {
+//   .button {
+//     background-color: #fff;
+//     border: 1px solid #4350A2;
+//     color: #4350A2;
+//   }
+// }
 
-:host(.small) {
-  .button {
-    width: 100%;
-    padding: 1px 15px;
-  }
-}
+// :host(.small) {
+//   .button {
+//     width: 100%;
+//     padding: 1px 15px;
+//   }
+// }
 
-:host(.gray) {
-  .button {
-    background: rgba(255, 255, 255, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.7);
-    box-sizing: border-box;
-    border-radius: 3px;
-  }
-}
+// :host(.gray) {
+//   .button {
+//     background: rgba(255, 255, 255, 0.2);
+//     border: 1px solid rgba(255, 255, 255, 0.7);
+//     box-sizing: border-box;
+//     border-radius: 3px;
+//   }
+// }
 
-:host(.yellow) {
-  .button {
-    background: #F8BC45;
-    border: none;
-  }
-}
+// :host(.yellow) {
+//   .button {
+//     background: #F8BC45;
+//     border: none;
+//   }
+// }
 
-:host(.green) {
-  .button {
-    background: #3CA476;
-    border: none;
-  }
-}
+// :host(.green) {
+//   .button {
+//     background: #3CA476;
+//     border: none;
+//   }
+// }
 
-:host(.icon-green) {
-  .button {
-    border: 1px solid #3CA476;
-    padding: 1px;
-  }
-}
+// :host(.icon-green) {
+//   .button {
+//     border: 1px solid #3CA476;
+//     padding: 1px;
+//   }
+// }
 
-:host(.icon-gray) {
-  .button {
-    border: 1px solid #909090;
-    padding: 1px;
-  }
-}
+// :host(.icon-gray) {
+//   .button {
+//     border: 1px solid #909090;
+//     padding: 1px;
+//   }
+// }
