@@ -31,7 +31,10 @@
       ></sw-online-form>
     </div>
     <div *ngIf="activeTab === 'Document'">
-      Document
+      <sw-form-management-documents-table
+        [documents]="documents"
+        [documentsDropdownOptions]="documentsDropdownOptions"
+      ></sw-form-management-documents-table>
     </div>
   </div>
 </div>

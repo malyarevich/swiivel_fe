@@ -4,6 +4,8 @@ import { FormManagementDocumentUserModel } from '@models/form-management/form-ma
 import { UserItem } from '@models/user-item';
 import { Observable } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
+import {UploadReviewFormStatusesEnum} from '@app/upload-review-form/upload-review-form-statuses.enum';
+import {UploadReviewFormSubmissionTypeEnum} from '@app/upload-review-form/upload-review-form-submission-type.enum';
 
 @Injectable()
 export class FormManagementService extends ApiService {
@@ -129,6 +131,11 @@ export class FormManagementService extends ApiService {
       params = params.append('limit', requestParams.limit.toString());
     }
     return this.http.get(`/proxy/form-management/submissions-list/${formId}`, { params });
+  }
+
+  convertFilterParams(data: any): any {
+    const formStatusesEnum = UploadReviewFormStatusesEnum;
+    const formSubmissionTypeEnum = UploadReviewFormSubmissionTypeEnum;
   }
 
 }

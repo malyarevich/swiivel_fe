@@ -1,0 +1,207 @@
+<pre>{{ documents | json }}</pre>
+<pre>{{ documentsDropdownOptions | json }}</pre>
+<div class="table">
+
+  <form [formGroup]="documentsFilter">
+
+    <table #table cdk-table [dataSource]="documents">
+
+      <ng-container cdkColumnDef="documentType">
+        <th cdk-header-cell *cdkHeaderCellDef width="13%">
+          <div class="header_container__title">
+            Document Type
+            <div class="header_container__title_icons">
+              <i class="fas fa-icon fa-chevron-up"></i>
+<!--              <i class="fas icon"-->
+<!--                 [ngClass]="{'up': sort[0] === 'access' && sort[1] === false, 'down': sort[0] === 'access' && sort[1] === true}"></i>-->
+            </div>
+          </div>
+          <div class="header_container__filter">
+            <sw-dropdown-input
+                formControlName="documentType"
+                type="table-header"
+                typeItem="purpure"
+                [multiple]="true"
+                [isClearable]="true"
+                [options]="documentsDropdownOptions.documentTypes"
+                [isDisplaySelected]="true"
+              >
+              </sw-dropdown-input>
+          </div>
+        </th>
+        <td cdk-cell *cdkCellDef="let document">
+          {{  uploadReviewFormSubmissionTypeEnum[document.submission_type] }}
+        </td>
+      </ng-container>
+
+      <ng-container cdkColumnDef="requirement">
+        <th cdk-header-cell *cdkHeaderCellDef width="11%">
+          <div class="header_container__title">
+            Requirement
+            <div class="header_container__title_icons">
+              <i class="fas fa-icon fa-chevron-up"></i>
+              <!--              <i class="fas icon"-->
+              <!--                 [ngClass]="{'up': sort[0] === 'access' && sort[1] === false, 'down': sort[0] === 'access' && sort[1] === true}"></i>-->
+            </div>
+          </div>
+          <div class="header_container__filter">
+            <sw-dropdown-input
+              formControlName="requirement"
+              type="table-header"
+              typeItem="purpure"
+              [multiple]="true"
+              [isClearable]="true"
+              [options]="requirementArray"
+              [isDisplaySelected]="true"
+            >
+            </sw-dropdown-input>
+          </div>
+        </th>
+        <td cdk-cell *cdkCellDef="let document">
+          requirement
+        </td>
+      </ng-container>
+
+      <ng-container cdkColumnDef="requiredFor">
+        <th cdk-header-cell *cdkHeaderCellDef width="11%">
+          <div class="header_container__title">
+            Requirement for
+            <div class="header_container__title_icons">
+              <i class="fas fa-icon fa-chevron-up"></i>
+              <!--              <i class="fas icon"-->
+              <!--                 [ngClass]="{'up': sort[0] === 'access' && sort[1] === false, 'down': sort[0] === 'access' && sort[1] === true}"></i>-->
+            </div>
+          </div>
+          <div class="header_container__filter">
+            <sw-dropdown-input
+              formControlName="requiredFor"
+              type="table-header"
+              typeItem="purpure"
+              [multiple]="true"
+              [isClearable]="true"
+              [options]="requirementForArray"
+              [isDisplaySelected]="true"
+            >
+            </sw-dropdown-input>
+          </div>
+        </th>
+        <td cdk-cell *cdkCellDef="let document">
+          requirement for
+        </td>
+      </ng-container>
+
+      <ng-container cdkColumnDef="required">
+        <th cdk-header-cell *cdkHeaderCellDef width="11%">
+          <div class="header_container__title">
+            Required
+          </div>
+          <div class="header_container__filter">
+            <sw-dropdown-input
+              formControlName="required"
+              type="table-header"
+              typeItem="purpure"
+              [multiple]="true"
+              [isClearable]="true"
+              [options]="requirementForArray"
+              [isDisplaySelected]="true"
+            >
+            </sw-dropdown-input>
+          </div>
+        </th>
+        <td cdk-cell *cdkCellDef="let document">
+          required
+        </td>
+      </ng-container>
+
+      <ng-container cdkColumnDef="status">
+        <th cdk-header-cell *cdkHeaderCellDef width="11%">
+          <div class="header_container__title">
+            Status
+            <div class="header_container__title_icons">
+              <i class="fas fa-icon fa-chevron-up"></i>
+              <!--              <i class="fas icon"-->
+              <!--                 [ngClass]="{'up': sort[0] === 'access' && sort[1] === false, 'down': sort[0] === 'access' && sort[1] === true}"></i>-->
+            </div>
+          </div>
+          <div class="header_container__filter">
+            <sw-dropdown-input
+              formControlName="status"
+              type="table-header"
+              typeItem="purpure"
+              [multiple]="true"
+              [isClearable]="true"
+              [options]="documentsDropdownOptions.status"
+              [isDisplaySelected]="true"
+            >
+            </sw-dropdown-input>
+          </div>
+        </th>
+        <td cdk-cell *cdkCellDef="let document">
+          {{ uploadReviewFormStatusesEnum[document.status] }}
+        </td>
+      </ng-container>
+
+      <ng-container cdkColumnDef="document">
+        <th cdk-header-cell *cdkHeaderCellDef width="15%">
+          <div class="header_container__title">
+            document
+            <div class="header_container__title_icons">
+              <i class="fas fa-icon fa-chevron-up"></i>
+              <!--              <i class="fas icon"-->
+              <!--                 [ngClass]="{'up': sort[0] === 'access' && sort[1] === false, 'down': sort[0] === 'access' && sort[1] === true}"></i>-->
+            </div>
+          </div>
+          <div class="header_container__filter">
+            <sw-dropdown-input
+              formControlName="document"
+              type="table-header"
+              typeItem="purpure"
+              [multiple]="true"
+              [isClearable]="true"
+              [options]="documentsDropdownOptions.documents"
+              [isDisplaySelected]="true"
+            >
+            </sw-dropdown-input>
+          </div>
+        </th>
+        <td cdk-cell *cdkCellDef="let document">
+          document
+        </td>
+      </ng-container>
+
+      <ng-container cdkColumnDef="updateDate">
+        <th cdk-header-cell *cdkHeaderCellDef width="12%">
+          <div class="header_container__title">
+            UpdateDate
+            <div class="header_container__title_icons">
+              <i class="fas fa-icon fa-chevron-up"></i>
+              <!--              <i class="fas icon"-->
+              <!--                 [ngClass]="{'up': sort[0] === 'access' && sort[1] === false, 'down': sort[0] === 'access' && sort[1] === true}"></i>-->
+            </div>
+          </div>
+          <div class="header_container__filter">
+            <sw-dropdown-input
+              formControlName="updateDate"
+              type="table-header"
+              typeItem="purpure"
+              [multiple]="true"
+              [isClearable]="true"
+              [options]="requirementForArray"
+              [isDisplaySelected]="true"
+            >
+            </sw-dropdown-input>
+          </div>
+        </th>
+        <td cdk-cell *cdkCellDef="let document">
+          <span class="date">{{ dateService.getDate(document.updated_at) }}</span>
+          <span class="time">{{ dateService.getTime(document.updated_at) }}</span>
+        </td>
+      </ng-container>
+
+      <tr cdk-header-row class="filters-row" *cdkHeaderRowDef="displayedColumns;"></tr>
+      <tr cdk-row class="table-row" #data *cdkRowDef="let form; columns: displayedColumns;"></tr>
+
+    </table>
+
+  </form>
+</div>

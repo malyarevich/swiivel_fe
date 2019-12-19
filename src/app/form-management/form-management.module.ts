@@ -8,6 +8,9 @@ import { FormManagementRoutingModule } from '@app/form-management/form-managemen
 
 import { FormManagementAccessComponent } from '@app/form-management/form-management-access/form-management-access.component';
 import { FormManagementAnalyticsComponent } from '@app/form-management/form-management-analytics/form-management-analytics.component';
+import {
+  FormManagementDocumentsTableComponent
+} from '@app/form-management/form-management-documents-table/form-management-documents-table.component';
 import { FormManagementHeaderComponent } from '@app/form-management/form-management-header/form-management-header.component';
 import { FormManagementInfoComponent } from '@app/form-management/form-management-info/form-management-info.component';
 import { FormManagementPaymentsComponent } from '@app/form-management/form-management-payments/form-management-payments.component';
@@ -40,6 +43,7 @@ import { FormManagementSubmissionsComponent } from './form-management-submission
     FormManagementLogsComponent,
     FormManagementSubmissionsComponent,
     FormManagementAccessComponent,
+    FormManagementDocumentsTableComponent,
   ],
   imports: [
     CommonModule,
