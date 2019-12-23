@@ -235,7 +235,11 @@
 
       <ng-container cdkColumnDef="expandedRow">
         <td cdk-cell *cdkCellDef="let form; let i = index;" [attr.colspan]="displayedColumns.length">
-          <sw-form-management-submission-subrow [formId]="form.id"></sw-form-management-submission-subrow>
+          <sw-form-management-submission-subrow
+            [formId]="form.id"
+            [isOpen]="isExpanded(form.id)"
+          >
+          </sw-form-management-submission-subrow>
         </td>
       </ng-container>
 
