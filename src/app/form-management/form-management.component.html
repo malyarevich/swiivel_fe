@@ -47,7 +47,7 @@
               [options]="bulkOptions"
               (selected)="bulkAction($event)"
           >
-            <sw-button color="white">
+            <sw-button class="white" [disabled]="!bulkActive">
               <span class="actions-bulk-btn-text">Bulk Actions</span>
               <span class="actions-icon">
                 <i
@@ -62,7 +62,11 @@
       </div>
     </div>
     <ng-container [ngSwitch]="activeTab">
-      <sw-form-management-submissions *ngSwitchCase="'Submissions'" [formId]="activeIdForm"></sw-form-management-submissions>
+      <sw-form-management-submissions
+        *ngSwitchCase="'Submissions'"
+        [formId]="activeIdForm"
+        (bulkActive)="changeBulkActive($event)"
+      ></sw-form-management-submissions>
       <sw-form-management-logs *ngSwitchCase="'Log'" [formId]="activeIdForm"></sw-form-management-logs>
     </ng-container>
   </div>

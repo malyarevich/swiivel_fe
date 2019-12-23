@@ -34,8 +34,12 @@ export class SubmissionDataSource implements DataSource<any> {
     return this.metadata.asObservable();
   }
 
-  connect(collectionViewer: CollectionViewer): Observable<any[]>{
-    return this.submissionSubject.asObservable()
+  get getFormsData() {
+    return this.dataSubject.asObservable();
+  }
+
+  connect(collectionViewer: CollectionViewer): Observable<any[]> {
+    return this.submissionSubject.asObservable();
   }
 
   disconnect(collectionViewer: CollectionViewer): void {
