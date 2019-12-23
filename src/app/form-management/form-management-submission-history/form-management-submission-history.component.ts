@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { DateService } from '@app/services/date.service';
 import { FormManagementSubmissionHistoryItemModel } from '@models/form-management/form-management-submission-history-item.model';
@@ -19,8 +19,9 @@ const enum historyEvents {
   styleUrls: ['./form-management-submission-history.component.scss']
 })
 
-export class FormManagementSubmissionHistoryComponent {
+export class FormManagementSubmissionHistoryComponent implements OnInit, OnChanges {
   @Input() historyList: FormManagementSubmissionHistoryItemModel[];
+  @Input() displayedHistoryList: FormManagementSubmissionHistoryItemModel[] = [];
 
   public pathFolder = './assets/images/icons/';
   public searchForm: FormGroup;
@@ -59,6 +60,26 @@ export class FormManagementSubmissionHistoryComponent {
     this.searchForm = this.fb.group({
       search: new FormControl('')
     });
+  }
+
+  ngOnInit(): void {
+    this.searchForm.valueChanges.subscribe((value) => {
+      if (value.search && value.search.length) {
+        this.displayedHistoryList = this.historyList.filter((historyItem) => {
+          return (historyItem.person.full_name.toLowerCase().includes(value.search.toLowerCase()) ||
+            historyItem.description.toLowerCase().includes(value.search.toLowerCase())
+          );
+        });
+      } else {
+        this.displayedHistoryList = [ ...this.historyList ];
+      }
+    });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes && changes.historyList && changes.historyList.currentValue && changes.historyList.currentValue.length) {
+      this.displayedHistoryList = [ ...this.historyList ];
+    }
   }
 
   getUserName(person: any): any {
