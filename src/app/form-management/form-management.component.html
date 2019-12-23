@@ -65,7 +65,7 @@
       <sw-form-management-submissions
         *ngSwitchCase="'Submissions'"
         [formId]="activeIdForm"
-        (bulkActive)="changeBulkActive($event)"
+        (bulkActive)="bulkAction($event)"
       ></sw-form-management-submissions>
       <sw-form-management-logs *ngSwitchCase="'Log'" [formId]="activeIdForm"></sw-form-management-logs>
     </ng-container>

@@ -301,10 +301,6 @@ export class FormManagementComponent implements OnInit, OnDestroy {
     this.dialogExportView = e;
   }
 
-  changeBulkActive(e: any): void {
-    this.bulkActive = e;
-  }
-
   ngOnDestroy(): void {
     this.destroyed$.next(true);
     this.destroyed$.complete();
