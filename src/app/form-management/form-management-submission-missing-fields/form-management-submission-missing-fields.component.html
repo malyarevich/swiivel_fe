@@ -1,19 +1,19 @@
 <div class="header">
   <h3 class="header-text">
     <i class="fas fa-exclamation-circle"></i>
-    Missing Fields ({{ missingFields && missingFields.count_missing_fields ? missingFields.count_missing_fields : 0 }})
+    Missing Fields ({{ displayedMissingFields && displayedMissingFields.count_missing_fields ? displayedMissingFields.count_missing_fields : 0 }})
   </h3>
   <form [formGroup]="searchForm" class="search">
     <sw-input-search placeholder="Search" formControlName="search"></sw-input-search>
   </form>
 </div>
 <div class="list">
-  <div *ngIf="missingFields && missingFields.sections && !missingFields.sections.length" class="list-text">
+  <div *ngIf="displayedMissingFields && displayedMissingFields.sections && !displayedMissingFields.sections.length" class="list-text">
     All fields are filled
   </div>
-  <div *ngIf="missingFields && missingFields.sections && missingFields.sections.length">
+  <div *ngIf="displayedMissingFields && displayedMissingFields.sections && displayedMissingFields.sections.length">
     <div
-      *ngFor="let section of missingFields.sections; let i = index"
+      *ngFor="let section of displayedMissingFields.sections; let i = index"
       class="section-item"
       [class.item-gray]="i % 2 === 0"
     >
