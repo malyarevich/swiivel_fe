@@ -238,15 +238,8 @@ export class FormTableComponent implements OnInit {
     }
   }
 
-  selectRow(row: FormModel, e?: Event, checkbox = false): void {
-    if (
-      e &&
-      e.target &&
-      // tslint:disable-next-line:no-string-literal
-      (e.target['tagName'] === 'BUTTON' ||
-        // tslint:disable-next-line:no-string-literal
-        e.target['parentElement']['tagName'] === 'BUTTON')
-    ) {
+  selectRow(row: FormModel, e?: any, checkbox = false): void {
+    if (e && e.path && !!e.path.filter(item => item.nodeName === 'BUTTON').length) {
       e.stopPropagation();
     } else {
       if (row) {

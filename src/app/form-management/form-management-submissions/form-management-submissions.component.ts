@@ -1,12 +1,13 @@
-import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { FormManagementService } from '../form-management.service';
-import { SubmissionDataSource } from './submission.datasource';
+import { SelectionModel } from '@angular/cdk/collections';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { DateService } from '@app/services/date.service';
+import { ButtonColorsEnum } from '@app/shared/buttons/buttonColors.enum';
+import { FormModel } from '@models/data-collection/form.model';
 import { pick } from 'lodash';
 import { map } from 'rxjs/operators';
-import { formStatuses } from '@app/shared/form-statuses';
-import { ButtonColorsEnum } from '@app/shared/buttons/buttonColors.enum';
+import { FormManagementService } from '../form-management.service';
+import { SubmissionDataSource } from './submission.datasource';
 
 @Component({
   selector: 'sw-form-management-submissions',
@@ -16,6 +17,7 @@ import { ButtonColorsEnum } from '@app/shared/buttons/buttonColors.enum';
 export class FormManagementSubmissionsComponent implements OnInit {
 
   public displayedColumns = [
+    'checkbox',
     'accounts',
     'students',
     'lastUserActions',
@@ -43,6 +45,7 @@ export class FormManagementSubmissionsComponent implements OnInit {
   public lastPage = 0;
   public currentPage = 1;
 
+  public rows: any = {};
   public params: any = {
     page: 1,
     limit: 10,
@@ -60,6 +63,10 @@ export class FormManagementSubmissionsComponent implements OnInit {
   private _formId: string;
   private expandedSec: any[] = [];
 
+  public selectedRows: any = {};
+  public _sm: SelectionModel<any> = new SelectionModel(true);
+  public pageSelection: { allSelected: boolean, selectedAnyRow: boolean }[] = [];
+  @Output() bulkActive: EventEmitter<boolean> = new EventEmitter();
 
   @Input()
   set formId(id: string) {
@@ -91,7 +98,7 @@ export class FormManagementSubmissionsComponent implements OnInit {
         return value;
       })
     ).subscribe(value => {
-      this.expandedSec = []
+      this.expandedSec = [];
       this.params.filter = { ...value };
       this.dataSource.loadSubmission(this._formId, this.params);
     });
@@ -99,9 +106,15 @@ export class FormManagementSubmissionsComponent implements OnInit {
       this.showSpinner = loading;
       this.cdr.markForCheck();
     });
+
+    this.dataSource.getFormsData.subscribe(data => {
+      this.rows = data;
+    });
+
+
     this.dataSource.$formsListMetadata.subscribe(metadata => {
       if (metadata.page > metadata.last_page) {
-        this.expandedSec = []
+        this.expandedSec = [];
         this.params.page = 1;
         this.lastPage = metadata.last_page;
         this.dataSource.loadSubmission(this._formId, this.params);
@@ -109,6 +122,9 @@ export class FormManagementSubmissionsComponent implements OnInit {
         this.lastPage = metadata.last_page;
         this.totalItems = metadata.total;
         this.currentPage = metadata.page;
+      }
+      if (!this.pageSelection[this.params.page - 1]) {
+        this.changePageSelection(this.params.page - 1, false);
       }
     });
   }
@@ -141,13 +157,13 @@ export class FormManagementSubmissionsComponent implements OnInit {
     } else {
       delete this.params.sort;
     }
-    this.expandedSec = []
+    this.expandedSec = [];
     this.dataSource.loadSubmission(this._formId, this.params);
   }
 
   changePage(event) {
     if (event) {
-      this.expandedSec = []
+      this.expandedSec = [];
       this.params.page = event.page;
       this.params.limit = event.limit;
       this.dataSource.loadSubmission(this._formId, this.params);
@@ -201,7 +217,63 @@ export class FormManagementSubmissionsComponent implements OnInit {
   }
 
   isExpanded(id: string): boolean {
-    return !!this.expandedSec[id]
+    return !!this.expandedSec[id];
+  }
+
+  allSelect(e: any): void {
+    if (this.pageSelection[this.params.page - 1].selectedAnyRow && !e) {
+      this.rows.forEach((row: any) => {
+        this._sm.deselect(row.id);
+        delete this.selectedRows[row.id];
+      });
+
+      this.changePageSelection(this.params.page - 1, false);
+    } else {
+      this.rows.forEach((row: any) => {
+        this._sm.select(row.id);
+        this.selectedRows[row.id] = row;
+      });
+
+      this.changePageSelection(this.params.page - 1, true);
+      this.bulkActive.emit(!this._sm.isEmpty());
+    }
+  }
+
+  changePageSelection(page: number, value = false) {
+    this.pageSelection[page] = { allSelected: value, selectedAnyRow: value };
+  }
+
+  selectRow(row: FormModel, e?: any, checkbox = false): void {
+    if (e && e.path && !!e.path.filter(item => item.nodeName === 'BUTTON').length) {
+      e.stopPropagation();
+    } else {
+      if (row) {
+        if (!checkbox) {
+          if (this._sm.isSelected(row.id)) {
+            this.deleteRowFromSm(row.id);
+          } else {
+            this.addRowToSm(row);
+          }
+        } else {
+          e ? this.addRowToSm(row) : this.deleteRowFromSm(row.id);
+        }
+      }
+      const selectedPageRows = this.rows.map((rowForm: any) => this._sm.isSelected(rowForm.id)).filter(item => item);
+
+      this.pageSelection[this.params.page - 1].allSelected = selectedPageRows.length === this.rows.length;
+      this.pageSelection[this.params.page - 1].selectedAnyRow = selectedPageRows.length > 0;
+    }
+    this.bulkActive.emit(!this._sm.isEmpty());
+  }
+
+  deleteRowFromSm(id: string): void {
+    this._sm.deselect(id);
+    delete this.selectedRows[id];
+  }
+
+  addRowToSm(row: FormModel): void {
+    this._sm.select(row.id);
+    this.selectedRows[row.id] = row;
   }
 
 }

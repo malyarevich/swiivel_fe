@@ -1,6 +1,6 @@
 <div class="header">
   <h2 class="header-text">{{ text }}</h2>
-  <div class="dropdown">
+  <div *ngIf="canChangePeriod" class="dropdown">
     <sw-dropdown-select
       #period="dropdown"
       [options]="options"

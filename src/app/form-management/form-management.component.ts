@@ -48,6 +48,7 @@ export class FormManagementComponent implements OnInit, OnDestroy {
   };
   public colors = ButtonColorsEnum;
   public bulkOptions = ['Export Submissions', 'Export Documents'];
+  public bulkActive = false;
 
   constructor(
     private checkService: CheckService,
@@ -165,6 +166,10 @@ export class FormManagementComponent implements OnInit, OnDestroy {
 
   bulkAction(evt: any): void {
     console.log(evt);
+  }
+
+  changeBulkActive(e: any): void {
+    this.bulkActive = e;
   }
 
   ngOnDestroy(): void {

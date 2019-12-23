@@ -13,6 +13,7 @@ import {
 } from '@angular/core';
 import { ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 import { Popup } from '@app/core/popup.service';
+import { faCaretDown, faCaretUp, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 const DROPDOWN_CONTROL_ACCESSOR = {
   provide: NG_VALUE_ACCESSOR,
@@ -51,6 +52,10 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
   @Input() style = '';
   @Input() type: 'outline' | 'table-header';
   @Input() typeItem: 'purpure';
+
+  public caretUp = faCaretUp;
+  public caretDown = faCaretDown;
+  public times = faTimes;
 
   @Input() set selectValue(opt: [any]) {
     if (opt[0] === null) {
