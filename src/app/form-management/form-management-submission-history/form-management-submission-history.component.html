@@ -5,12 +5,12 @@
       <sw-input-search placeholder="Search" formControlName="search"></sw-input-search>
     </form>
   </div>
-  <div *ngIf="historyList && historyList.length === 0">
+  <div *ngIf="displayedHistoryList && !displayedHistoryList.length">
     Form history is raw
   </div>
-  <div *ngIf="historyList && historyList.length > 1">
+  <div *ngIf="displayedHistoryList && displayedHistoryList.length">
     <div class="list two-row">
-      <div *ngFor="let item of historyList; let i = index" class="item">
+      <div *ngFor="let item of displayedHistoryList; let i = index" class="item">
         <div
           class="item-card"
           [ngClass]="{
