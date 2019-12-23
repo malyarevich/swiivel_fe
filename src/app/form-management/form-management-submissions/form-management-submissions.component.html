@@ -4,6 +4,27 @@
 
     <table cdk-table [dataSource]="dataSource" [formGroup]="filterForm" multiTemplateDataRows>
 
+      <ng-container cdkColumnDef="checkbox">
+        <th cdk-header-cell *cdkHeaderCellDef width="4%">
+          <div class="cdk-header-checkbox">
+            <sw-input-dash-checkbox
+              (change)="allSelect($event)"
+              [check]="pageSelection[params.page - 1]?.selectedAnyRow || false"
+              [definition]="!pageSelection[params.page - 1]?.allSelected || false"
+              [disabled]="showSpinner"
+            ></sw-input-dash-checkbox>
+          </div>
+        </th>
+        <td cdk-cell *cdkCellDef="let sub">
+          <div class="cdk-data-checkbox">
+            <sw-input-checkbox
+              [check]="_sm.isSelected(sub.id)"
+              (change)="selectRow(sub, $event, true)"
+            ></sw-input-checkbox>
+          </div>
+        </td>
+      </ng-container>
+
       <ng-container cdkColumnDef="accounts">
         <th cdk-header-cell *cdkHeaderCellDef width="15%">
           <div class="header_container">
@@ -173,7 +194,7 @@
         </th>
         <td cdk-cell *cdkCellDef="let sub">
           <sw-dropdown-select #bulk="dropdown" [options]="statusesOptions" (selected)="clickChangeStatus($event)">
-            <sw-button size="small" [color]="getStatusColor(sub.status)">
+            <sw-button class="small" [color]="getStatusColor(sub.status)">
               <span>{{ getStatusText(sub.status) }}</span>
               <i class="fas fa-caret-down"></i>
             </sw-button>
@@ -214,7 +235,11 @@
 
       <ng-container cdkColumnDef="expandedRow">
         <td cdk-cell *cdkCellDef="let form; let i = index;" [attr.colspan]="displayedColumns.length">
-          <sw-form-management-submission-subrow [formId]="form.id"></sw-form-management-submission-subrow>
+          <sw-form-management-submission-subrow
+            [formId]="form.id"
+            [isOpen]="isExpanded(form.id)"
+          >
+          </sw-form-management-submission-subrow>
         </td>
       </ng-container>
 
@@ -242,7 +267,9 @@
       </ng-container>
 
       <tr cdk-header-row class="filters-row" *cdkHeaderRowDef="displayedColumns;"></tr>
-      <tr cdk-row class="table-row" #data *cdkRowDef="let sub; columns: displayedColumns;" [hidden]="showSpinner">
+      <tr cdk-row class="table-row" [class.selected]="_sm.isSelected(sub.id)"
+          #data *cdkRowDef="let sub; columns: displayedColumns;" [hidden]="showSpinner"
+          (click)="selectRow(sub, $event)">
       </tr>
       <tr cdk-row class="table-row example-row" *cdkRowDef="let sub; columns: ['expandedRow']"
         [hidden]="showSpinner || !isExpanded(sub.id)">

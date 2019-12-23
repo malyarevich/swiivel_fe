@@ -11,7 +11,7 @@
 >
   <i *ngIf="type === 'table-header'" class="fas fa-search fa-xs"></i>
 
-  <ng-content select="span" class="span"></ng-content>
+  <span class="label"><ng-content select="span"></ng-content></span>
 
   <div class="container__row" *ngIf="isDisplaySelected">
     <div
@@ -25,7 +25,7 @@
         {{ dropdownSubHeader ? item?.name : item?.title }}
       </span>
       <button *ngIf="_multiple" class="remove-btn" (click)="remove(item, $event)">
-        <i class="fas fa-times"></i>
+        <fa-icon [icon]="times"></fa-icon>
       </button>
     </div>
   </div>
@@ -42,16 +42,17 @@
   </div>
 
   <div class="container__icon">
-    <i
+    <fa-icon
       *ngIf="isClearable && !isEmpty() && !active"
-      class="fas fa-times container__icon--clear"
+      [icon]="times"
+      class="container__icon--clear"
       (click)="clear()"
-    ></i>
+    ></fa-icon>
     <div class="container__icon_up" *ngIf="type !== 'outline'">
-      <i class="fas fa-caret-up"></i>
+      <fa-icon [icon]="caretUp"></fa-icon>
     </div>
     <div class="container__icon_down" *ngIf="(active || !isClearable || isEmpty()) && type !== 'outline'">
-      <i class="fas fa-caret-down"></i>
+      <fa-icon [icon]="caretDown"></fa-icon>
     </div>
   </div>
 
