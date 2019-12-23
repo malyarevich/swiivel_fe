@@ -32,7 +32,7 @@ merge_build:
     - npm i
     - npm run build
   artifacts:
-    expire_in: 1 day
+    expire_in: 30 min
     paths:
       - dist/
 
@@ -46,7 +46,7 @@ development_build:
     - npm i
     - npm run build
   artifacts:
-    expire_in: 1 day
+    expire_in: 30 min
     paths:
       - dist/
 
