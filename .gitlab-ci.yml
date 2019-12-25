@@ -15,11 +15,13 @@ storybook_build:
     - rm -rf ./node_modules/
     - df . -h
     - npm i --only=prod
+    - df . -h
     - npm run build-storybook
+    - ls -la
   artifacts:
     expire_in: 10 min
     paths:
-      - storybook/
+      - ./dist/storybook/
 
 storybook_deploy:
   only:
