@@ -7,16 +7,6 @@ variables:
   DEVELOPMENT_SERVER_USERNAME: devops
   DEVELOPMENT_SERVER_IP: 35.211.160.56
 
-image: trion/ng-cli
-
-before_script:
-  - apk add --no-cache openssh
-  - mkdir -p ~/.ssh
-  - echo "$SSH_PRIVATE_KEY" >> ~/.ssh/id_rsa
-  - chmod 600 ~/.ssh/id_rsa
-  - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
-
-
 
 development_build:
   only:
@@ -35,6 +25,13 @@ development_deploy:
   only:
     - development
   stage: deploy
+  image: alpine
+  before_script:
+    - apk add --no-cache openssh
+    - mkdir -p ~/.ssh
+    - echo "$SSH_PRIVATE_KEY" >> ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
   script:
     - apk add --no-cache rsync
     - rsync -rav --delete --rsync-path="sudo rsync" dist/ $DEVELOPMENT_SERVER_USERNAME@$DEVELOPMENT_SERVER_IP:/var/www/app-fe/dist/
