@@ -1,5 +1,4 @@
 stages:
-  - merge
   - build
   - deploy
 
@@ -7,28 +6,12 @@ variables:
   DEVELOPMENT_SERVER_USERNAME: devops
   DEVELOPMENT_SERVER_IP: 35.211.160.56
 
-image: alpine
-
-cache:
-  key: ${CI_COMMIT_REF_SLUG}
-  paths:
-  - node_modules/
-
-before_script:
-  - apk add --no-cache openssh
-  - mkdir -p ~/.ssh
-  - echo "$SSH_PRIVATE_KEY" >> ~/.ssh/id_rsa
-  - chmod 600 ~/.ssh/id_rsa
-  - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
-
-
 
 development_build:
   only:
     - development
   stage: build
   image: trion/ng-cli
-  before_script: []
   script:
     - npm i --only=prod
     - npm run build
@@ -40,7 +23,45 @@ development_build:
 development_deploy:
   only:
     - development
+  image: alpine
   stage: deploy
+  before_script:
+    - apk add --no-cache openssh
+    - mkdir -p ~/.ssh
+    - echo "$SSH_PRIVATE_KEY" >> ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
   script:
     - apk add --no-cache rsync
     - rsync -rav --delete --rsync-path="sudo rsync" dist/ $DEVELOPMENT_SERVER_USERNAME@$DEVELOPMENT_SERVER_IP:/var/www/app-fe/dist/
+
+
+storybook_build:
+  only:
+    - storybook
+  stage: build
+  image: trion/ng-cli
+  script:
+    - rm -rf ./node_modules/
+    - df . -h
+    - npm i --only=prod
+    - npm run build-storybook
+  artifacts:
+    expire_in: 10 min
+    paths:
+      - ./dist/storybook/
+
+storybook_deploy:
+  only:
+    - storybook
+  image: alpine
+  stage: deploy
+  before_script:
+    - apk add --no-cache openssh
+    - mkdir -p ~/.ssh
+    - echo "$SSH_PRIVATE_KEY" >> ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+  script:
+    - apk add --no-cache rsync
+    - rsync -rav --delete --rsync-path="sudo rsync" ./dist/storybook/ $DEVELOPMENT_SERVER_USERNAME@$DEVELOPMENT_SERVER_IP:/var/www/app-fe/storybook/
