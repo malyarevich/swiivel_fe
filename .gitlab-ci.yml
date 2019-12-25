@@ -30,7 +30,7 @@ development_build:
   image: trion/ng-cli
   before_script: []
   script:
-    - npm i
+    - npm i --only=prod
     - npm run build
   artifacts:
     expire_in: 10 min
