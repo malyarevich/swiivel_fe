@@ -1,0 +1,7 @@
+@import "../../../../styles/variables/colors.scss";
+
+.error_list {
+  &__item {
+    color: $status-red;
+  }
+}

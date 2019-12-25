@@ -1,0 +1,4 @@
+<ul class="error_list" *ngIf="!($isValid | async)">
+  <li class="error_list__item" *ngFor="let customError of customErrors">{{ customError }}</li>
+  <li class="error_list__item" *ngFor="let error of ($errorList | async)">{{ error }}</li>
+</ul>
