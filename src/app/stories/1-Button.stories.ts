@@ -1,5 +1,4 @@
 import { action } from '@storybook/addon-actions';
-import { linkTo } from '@storybook/addon-links';
 
 import { Button } from '@storybook/angular/demo';
 
@@ -41,9 +40,8 @@ withSomeEmojiAndAction.story = {
 export const buttonWithLinkToAnotherStory = () => ({
   component: Button,
   props: {
-    text: 'Go to Welcome Story',
-    onClick: linkTo('Welcome'),
-  },
+    text: 'Go to Welcome Story'
+  }
 });
 
 buttonWithLinkToAnotherStory.story = {
