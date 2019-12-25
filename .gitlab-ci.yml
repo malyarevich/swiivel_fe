@@ -7,12 +7,7 @@ variables:
   DEVELOPMENT_SERVER_USERNAME: devops
   DEVELOPMENT_SERVER_IP: 35.211.160.56
 
-image: alpine
-
-cache:
-  key: ${CI_COMMIT_REF_SLUG}
-  paths:
-  - node_modules/
+image: trion/ng-cli
 
 before_script:
   - apk add --no-cache openssh
@@ -27,7 +22,6 @@ development_build:
   only:
     - development
   stage: build
-  image: trion/ng-cli
   before_script: []
   script:
     - npm i --only=prod
