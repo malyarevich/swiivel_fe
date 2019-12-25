@@ -11,8 +11,9 @@ storybook_build:
     - storybook
   stage: build
   image: trion/ng-cli
-  before_script: []
   script:
+    - df . -h
+    - df -i
     - npm i --only=prod
     - npm run build-storybook
   artifacts:
