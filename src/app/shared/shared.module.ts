@@ -60,6 +60,7 @@ import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import localHe from '@angular/common/locales/he';
 import { IConfig, NgxMaskModule } from 'ngx-mask';
+import { FontAwesomeModule, FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 registerLocaleData(localHe);
 
@@ -72,6 +73,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     FormsModule,
     ReactiveFormsModule,
     CdkStepperModule,
+    FontAwesomeModule,
     CalendarModule.forRoot({
       provide: DateAdapter,
       useFactory: adapterFactory
@@ -177,6 +179,9 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
   ],
   providers: [
     StepperService
+  ],
+  entryComponents: [
+    FaIconComponent
   ]
 })
 export class SharedModule { }

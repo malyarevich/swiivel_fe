@@ -2,18 +2,16 @@
 
 .statistics {
   display: flex;
+  align-items: center;
 }
 
 .total {
   width: 100%;
-  min-height: 45px;
-  margin: 6px 0 0;
 }
 
 .total-text {
-  margin: 0 0 4px;
   font: normal 14px/20px $nunito-sans;
-  text-align:center;
+  text-align: center;
   color: $gray-color;
 }
 
@@ -24,37 +22,3 @@
   color: $header-logo-color;
 }
 
-.total-container {
-  width: 90px;
-  display: flex;
-  align-items: center;
-  position: relative;
-  border-right: 1px solid $border-color;
-}
-
-.users-block {
-  width: 77%;
-  margin: 6px 0 0 6%;
-}
-
-.users {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-
-.user {
-  width: 45%;
-  margin: 0 0 7px 0;
-}
-
-.user-name {
- font: 800 10px/12px $nunito-sans;
-  margin: 0;
-}
-
-.user-date {
-  font: 500 10px/12px $nunito-sans;
-  color: $gray-color;
-  margin: 0;
-}

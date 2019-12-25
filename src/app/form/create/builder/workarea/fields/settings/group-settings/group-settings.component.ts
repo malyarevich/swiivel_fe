@@ -13,7 +13,7 @@ export class GroupSettingsComponent {
   repeatOptions = ['For Each Student in Family', 'Other'];
   private optionsMap = [
     'required',
-    'hideTitle',
+    'hideLabel',
     'showHint',
     'hint',
     'displayStrategy',
@@ -30,6 +30,16 @@ export class GroupSettingsComponent {
     if (obj) {
       if (this.checkOptions(obj).length === 0) {
         this.form = obj;
+        this.form.get('required').valueChanges.subscribe((value) => {
+          if (value === true) {
+            this.setChildren.emit({key: 'required', value: true});
+          }
+        });
+        this.form.get('hideLabel').valueChanges.subscribe((value) => {
+          if (value === true) {
+            this.setChildren.emit({key: 'hideLabel', value: true});
+          }
+        })
       }
     }
   }
@@ -39,19 +49,7 @@ export class GroupSettingsComponent {
   constructor(
     private fb: FormBuilder
   ) {
-    this.form = this.fb.group({
-      required: new FormControl(false),
-      hideTitle: new FormControl(false),
-      showHint: new FormControl(false),
-      hint: new FormControl('', {updateOn: 'blur'}),
-      displayStrategy: new FormControl(null),
-      repeatGroup: new FormControl(false),
-      repeatStrategy: new FormControl(null),
-      prefill: new FormControl(false),
-      minRep: new FormControl(null, {updateOn: 'blur'}),
-      maxRep: new FormControl(null, {updateOn: 'blur'}),
-      numOfRep: new FormControl(null, {updateOn: 'blur'})
-    });
+    
   }
 
   checkOptions(obj: FormGroup) {
@@ -60,21 +58,6 @@ export class GroupSettingsComponent {
         console.error(`Does not exist ${key} in options.`);
         return true;
       }
-    });
-
-    this.form.get('required').valueChanges.subscribe((value) => {
-      if (value === true) {
-        this.setChildren.emit({key: 'required', value: true});
-      }
-    });
-    this.form.get('hideTitle').valueChanges.subscribe((value) => {
-      if (value === true) {
-        this.setChildren.emit({key: 'hideLabel', value: true});
-      }
-    })
-
-    this.form.valueChanges.subscribe(v => {
-      this.prepareForm(v);
     });
   }
 

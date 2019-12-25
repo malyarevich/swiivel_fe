@@ -14,6 +14,8 @@ import { DataCollectionService } from '@app/forms-dashboard/data-collection.serv
 import { OnlineFormModule } from '@app/online-form/online-form.module';
 import { PreviewFormPdfModule } from '@app/preview-form-pdf/preview-form-pdf.module';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { SendReleasePeriodsComponent } from './send-release/send-release-periods/send-release-periods.component';
+import { SendReleaseRoundsComponent } from './send-release/send-release-rounds/send-release-rounds.component';
 
 
 
@@ -22,7 +24,9 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
   declarations: [
     FormSendComponent,
     SendPreviewComponent,
-    SendReleaseComponent
+    SendReleaseComponent,
+    SendReleasePeriodsComponent,
+    SendReleaseRoundsComponent
   ],
   imports: [
     CommonModule,

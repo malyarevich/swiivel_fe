@@ -1,26 +1,9 @@
-<div class="button-container" [class.full]="expand === expands.FULL">
-  <button
-    class="button"
-    data-e2e="button"
-    [type]="type"
-    [class.gray]="color === colors.GRAY"
-    [class.green]="color === colors.GREEN"
-    [class.light-blue]="color === colors.LIGHT_BLUE"
-    [class.transparent]="color === colors.TRANSPARENT"
-    [class.transparent-gray]="color === colors.TRANSPARENT_GRAY"
-    [class.yellow]="color === colors.YELLOW"
-    [class.white]="color === colors.WHITE"
-    [class.purple]="color === colors.PURPLE"
-    [class.gray-purple]="color === colors.GRAY_PURPLE"
-    [class.outline-purpure]="fill === 'outline'"
-    [class.small]="size === sizes.SMALL"
-    [class.medium]="size === sizes.MEDIUM"
-    [class.round]='isRound'
-    [disabled]="!!disabled || null"
-    [attr.name]="name"
-    [attr.title]="title"
-    [attr.value]="value"
-  >
+<button data-e2e="button" [type]="type" [disabled]="!!disabled || null" [attr.name]="name" [attr.title]="title"
+  [attr.value]="value">
+  <span class="icon">
+    <fa-icon *ngIf="_icon" [icon]="_icon"></fa-icon>
+  </span>
+  <span class="text">
     <ng-content></ng-content>
-  </button>
-</div>
+  </span>
+</button>

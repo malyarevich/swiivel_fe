@@ -4,14 +4,6 @@
   padding: 15px;
   position: relative;
 
-  .overlay {
-    position: absolute;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0,0,0,0.4);
-    top: -40px;
-    left: -60px;
-  }
 
   &__header {
     display: flex;
@@ -178,7 +170,7 @@
         }
       }
     }
-    .cdk-column-updatedAt {
+    .cdk-column-createdAt {
       font: 400 12px/15px $nunito-sans;
       .date {
         color: $darkgray-color;
@@ -309,10 +301,12 @@
 
 .app-form-table-statistics-view {
   width: 31%;
+  margin: 0 15px 0 0;
 }
 
 .app-form-table-statistics-rate {
   width: 24%;
+  margin: 0 15px 0 0;
 }
 
 .app-form-table-statistics-invites {
@@ -323,11 +317,13 @@
   margin: 0 0 0 4px;
   font: 500 9px/13px $nunito-sans;
   text-transform: uppercase;
+  color: $gray-color;
 }
 
 .control-icon {
   font-size: 11px;
   margin: -3px 0 0;
+  color: $gray-color;
 }
 
 .view-dashboard-text,

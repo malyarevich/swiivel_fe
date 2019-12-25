@@ -8,6 +8,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output
 })
 export class FormDashboardViewHeaderComponent implements OnInit {
   @Input() text: string;
+  @Input() canChangePeriod = true;
   @Input() defaultIndexOption = 0;
   @Input() options: string[] = [];
   @Output() changeOption: EventEmitter<any> = new EventEmitter();

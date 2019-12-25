@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
 })
 export class WorkareaFieldPlaceholderComponent  {
   _field;
-  @Input() set field(fg: FormGroup) {
+  @Input() set field(fg: any) {
     this._field = fg;
   }
   widthOptions = [

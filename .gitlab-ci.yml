@@ -22,19 +22,6 @@ before_script:
   - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
 
 
-merge_build:
-  only:
-    - merge_request
-  stage: merge
-  image: trion/ng-cli
-  before_script: []
-  script:
-    - npm i
-    - npm run build
-  artifacts:
-    expire_in: 1 day
-    paths:
-      - dist/
 
 development_build:
   only:
@@ -46,7 +33,7 @@ development_build:
     - npm i
     - npm run build
   artifacts:
-    expire_in: 1 day
+    expire_in: 10 min
     paths:
       - dist/
 

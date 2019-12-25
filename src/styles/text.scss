@@ -1,0 +1,103 @@
+@import "colors";
+
+$body-text-1-font: normal 400 12px/15px 'Nunito Sans' !default;
+$body-text-2-font: normal 700 12px/15px 'Nunito Sans' !default;
+
+$label-text-1-font: normal 400 9px/13px 'Nunito Sans' !default;
+$label-text-2-font: normal 700 9px/13px 'Nunito Sans' !default;
+
+$small-text-1-font: normal 400 10px/13px 'Nunito Sans' !default;
+$small-text-2-font: normal 700 10px/13px 'Nunito Sans' !default;
+
+$h1-text-1-font: normal 400 18px/20px 'Nunito Sans' !default;
+$h1-text-2-font: normal 800 18px/20px 'Nunito Sans' !default;
+
+$h2-text-1-font: normal 400 13px/15px 'Nunito Sans' !default;
+$h2-text-2-font: normal 800 13px/15px 'Nunito Sans' !default;
+
+$h3-text-1-font: normal 400 14px/20px 'Nunito Sans' !default;
+$h3-text-2-font: normal 800 14px/20px 'Nunito Sans' !default;
+
+$h4-text-1-font: normal 400 11px/15px 'Nunito Sans' !default;
+$h4-text-2-font: normal 800 11px/15px 'Nunito Sans' !default;
+
+@mixin body-text-400 {
+    font: $body-text-1-font;
+    color: $black;
+    letter-spacing: 0.2px;
+}
+@mixin body-text-700 {
+    font: $body-text-2-font;
+    color: $black;
+    letter-spacing: 0;
+}
+
+@mixin small-text-400 {
+    font: $small-text-1-font;
+    color: $black;
+    letter-spacing: 0;
+}
+@mixin small-text-700 {
+    font: $small-text-2-font;
+    color: $black;
+    letter-spacing: 0;
+}
+
+@mixin label-text-400 {
+    font: $label-text-1-font;
+    color: $black;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+}
+@mixin label-text-700 {
+    font: $label-text-2-font;
+    color: $black;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+}
+
+@mixin h1-text-400 {
+    font: $h1-text-1-font;
+    letter-spacing: 0;
+}
+
+@mixin h1-text-800 {
+    font: $h1-text-2-font;
+    letter-spacing: 0;
+}
+
+@mixin h2-text-400 {
+    font: $h2-text-1-font;
+    letter-spacing: 0,22px;
+    text-transform: uppercase;
+}
+
+@mixin h2-text-800 {
+    font: $h2-text-2-font;
+    letter-spacing: 0,22px;
+    text-transform: uppercase;
+}
+
+@mixin h3-text-400 {
+    font: $h3-text-1-font;
+    letter-spacing: 0;
+}
+
+@mixin h3-text-800 {
+    font: $h3-text-2-font;
+    letter-spacing: 0;
+}
+
+@mixin h4-text-400 {
+    font: $h4-text-1-font;
+    letter-spacing: 0.37px;
+    text-transform: uppercase;
+}
+
+@mixin h4-text-800 {
+    font: $h4-text-2-font;
+    letter-spacing: 0.37px;
+    text-transform: uppercase;
+}
+
+

@@ -1,292 +1,651 @@
 @import 'index';
 
-.button-container {
-  width: fit-content;
+
+:host {
   display: flex;
-
-  &.full {
-    width: 100%;
-
-    .button {
-      width: 100%;
-    }
-  }
-
-  .button {
+  width: fit-content;
+  button {
+    padding: 0 20px;
+    height: 30px;
+    background: #4350A2;
     border-radius: 3px;
-    background: $element-base-color;
-    outline: none;
-    border: 1px solid $element-base-color;
     color: #fff;
-    padding: 6px 15px;
+    border: none;
+    position: relative;
     display: flex;
-    flex-direction: row;
+    flex-flow: row nowrap;
     align-items: center;
     justify-content: center;
-    flex-wrap: nowrap;
-  }
-
-  span {
-    font: 400 12px/15px $nunito-sans-bold;
-  }
-
-  &:hover .button {
-    opacity: 0.8;
-  }
-
-  &:hover .button:disabled {
-    opacity: 1;
-  }
-
-  button:disabled {
-    background: $gray;
-    border: 1px solid $icon-gray;
-    color: $icon-gray;
-  }
-
-  // colors
-  .gray {
-    background: $status-gray;
-  }
-
-  .white {
-    background: #fff;
-    color: $element-base-color;
-  }
-
-  .green {
-    background: $status-green;
-  }
-
-  .light-blue {
-    background: $status-light-blue;
-  }
-
-  .purple {
-    background: $status-purple;
-  }
-
-  .transparent {
-    outline: none;
-    border: none;
-    background: transparent;
-    padding: 0;
-    color: $element-base-color;
-  }
-
-  .transparent-gray {
-    outline: none;
-    border: none;
-    background: transparent;
-    padding: 0;
-    color: $status-gray;
-  }
-
-  .yellow {
-    background: $status-yellow;
-  }
-
-  .gray-purple {
-    outline: none;
-    border: none;
-    background: transparent;
-    color: $gray-color;
-
-    &:hover {
-      background: $light-purple;
-      color: $element-base-color;
+    span.text {
+      font: 800 12px/15px $nunito-sans;
     }
-
+    span.icon {
+      display: none;
+      justify-content: center;
+      align-items: center;
+    }
     &:disabled {
-      background: $gray;
-      border: none;
-      color: $icon-gray;
-
-      &:hover {
-        background: $gray;
-        border: none;
-        color: $icon-gray;
-      }
-    }
-  }
-
-  //sizes
-  .small {
-    padding: 2px 7px;
-    border-radius: 5px;
-    border: none;
-    font: 600 10px/13px $nunito-sans-bold;
-    text-transform: capitalize;
-    display: flex;
-    align-items: flex-start;
-
-    &::ng-deep {
-      i {
-        font-size: 11px;
-      }
-
-      i + span,
-      span + i {
-        padding: 0 0 0 3px;
-      }
-    }
-  }
-
-  .medium {
-    padding: 5px 10px;
-    border-radius: 3px;
-    border: none;
-    font: 500 12px/15px $nunito-sans-bold;
-  }
-
-    // fill
-  .outline-purpure {
-    color: $element-base-color;
-    border: 1px solid $element-base-color;
-    background: transparent;
-  }
-
-  //shapes
-  .round {
-    border-radius: 100px;
-  }
-
-  .outline-purpure.small {
-    padding: 2px 3px 1px;
-    border-radius: 3px;
-  }
-}
-
-:host(.btn-with-icon) {
-  .button {
-    padding: 3px 3px 3px 20px;
-    span {
-      margin-right: 3px;
-    }
-    @extend %icon-for-button;
-  }
-}
-
-:host(.outline-btn) {
-  .button {
-    padding: 6px 16px;
-    background-color: inherit;
-    border: 1px solid $element-base-color;
-    box-sizing: border-box;
-    color: $element-base-color;
-  }
-}
-
-:host(.icon-btn) {
-  .button {
-    padding: 3px;
-    @extend %icon-for-button;
-  }
-}
-
-:host(.full) {
-  .button,.button-container {
-    width: 100%;
-    height: 100%;
-  }
-}
-
-:host(.rigth) {
-  .button {
-    border-bottom-left-radius: 0;
-    border-top-left-radius: 0;
-  }
-}
-
-:host(.input_button) {
-  .button {
-    white-space: nowrap;
-    font-size: 12px;
-    line-height: 15px;
-    color: $black;
-    background: $dark-grey;
-    border: 1px solid $soft-gray;
-    border-radius: 0;
-    margin-left: -1px;
-  }
-  &.active {
-    .button {
-      position: relative;
-      background-color: $light-yellow;
-      border: 1px solid $header-logo-color;
-      z-index: 2;
+      background: #E3E3E3;
+      color: #909090;
     }
   }
 }
 
-:host(.full_width)  {
-  width: 100%;
-
-  .button-container {
-    width: 100%;
-  }
-
-  .button {
-    width: 100%;
+:host(.huge) {
+  button {
+    height: 35px;
+    padding: 0 15px;
   }
 }
 
-:host(.widget-icon) {
-  .button {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-  }
-}
-
-:host(.widget-icon.active) {
-  .button {
-    background-color: #fff;
-    border: 1px solid #4350A2;
-    color: #4350A2;
+:host(.middle) {
+  button {
+    height: 25px;
+    padding: 0 15px;
   }
 }
 
 :host(.small) {
-  .button {
-    width: 100%;
-    padding: 1px 15px;
+  button {
+    height: 16px;
+    padding: 0 5px;
+  }
+}
+
+:host(.left-icn) {
+  button {
+    padding-left: 0;
+    span.icon {
+      display: flex;
+      width: 24px;
+      height: 24px;
+      margin: 3px;
+    }
+  }
+}
+
+:host(.left-icn.middle) {
+  button {
+    span.icon {
+      width: 16px;
+      height: 16px;
+    }
+  }
+}
+
+:host(.left-icn.small) {
+  button {
+    span.icon {
+      margin: 0;
+      width: 16px;
+      height: 16px;
+    }
+  }
+}
+
+:host(.right-icn) {
+  button {
+    padding-right: 0;
+    span.icon {
+      order: 1;
+      display: flex;
+      width: 24px;
+      height: 24px;
+      margin: 3px;
+    }
+  }
+}
+:host(.right-icn.middle) {
+  button {
+    span.icon {
+      width: 16px;
+      height: 16px;
+    }
+  }
+}
+
+:host(.right-icn.small) {
+  button {
+    span.icon {
+      margin: 0;
+      width: 16px;
+      height: 16px;
+    }
+  }
+}
+
+:host(.secondary) {
+  button {
+    border: 1px solid #4350A2;
+    color: #4350A2;
+    background: none;
+    &:disabled {
+      border: 1px solid #909090;
+      background: #E3E3E3;
+      color: #909090;
+    }
+  }
+}
+
+:host(.tetriary) {
+  button {
+    background: #EBEEFF;
+    color: #4350A2;
+    &:disabled {
+      background: #E3E3E3;
+      color: #909090;
+    }
+  }
+}
+
+:host(.quaternary) {
+  button {
+    color: #4350A2;
+    background: none;
+    &:disabled {
+      color: #909090;
+    }
+  }
+}
+
+:host(.icon) {
+  button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    span.text {
+      display: none;
+    }
+    span.icon {
+      display: flex;
+      width: 24px;
+      height: 24px;
+    }
+  }
+}
+
+:host(.icon.huge) {
+  button {
+    width: 35px;
+    height: 35px;
+  }
+}
+
+:host(.icon.middle) {
+  button {
+    width: 25px;
+    height: 25px;
+    span.icon {
+      width: 16px;
+      height: 16px;
+    }
+  }
+}
+
+:host(.icon.small) {
+  button {
+    width: 16px;
+    height: 16px;
+    span.icon {
+      width: 16px;
+      height: 16px;
+    }
   }
 }
 
 :host(.gray) {
-  .button {
-    background: rgba(255, 255, 255, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.7);
-    box-sizing: border-box;
-    border-radius: 3px;
+  button {
+    background: $status-gray;
   }
 }
-
-:host(.yellow) {
-  .button {
-    background: #F8BC45;
-    border: none;
+  
+:host(.white) {
+  button {
+    background: #fff;
+    span {
+      color: $element-base-color;
+    }
   }
 }
 
 :host(.green) {
-  .button {
-    background: #3CA476;
+  button {
+    background: $status-green;
+  }
+}
+  
+:host(.light-blue) {
+  button {
+    background: $status-light-blue;
+  }
+}
+
+:host(.status-blue) {
+  button {
+    background: $status-blue;
+  }
+}
+  
+:host(.status-dark-blue) {
+  button {
+    background: $status-dark-blue;
+  }
+}
+  
+:host(.status-red) {
+  button {
+    background: $status-red;
+  }
+}
+  
+:host(.status-light-purple) {
+  button {
+    background: $status-light-purple;
+  }
+}
+  
+:host(.status-gray-purple) {
+  button {
+    background: $gray-color;
+  }
+}
+
+:host(.yellow) {
+  button {
+    background: $status-yellow;
+  }
+}
+
+:host(.gray-purple) {
+  button {
+    outline: none;
     border: none;
+    background: transparent;
+    color: $gray-color;
   }
 }
 
-:host(.icon-green) {
-  .button {
-    border: 1px solid #3CA476;
-    padding: 1px;
+:host(.transparent)  {
+  button {
+    outline: none;
+    border: none;
+    background: transparent;
+    padding: 0;
+    .icon,
+    .text {
+      color: $element-base-color;
+    }
   }
 }
 
-:host(.icon-gray) {
-  .button {
-    border: 1px solid #909090;
-    padding: 1px;
+:host(.transparent-gray) {
+  button {
+    outline: none;
+    border: none;
+    background: transparent;
+    padding: 0;
+    .icon,
+    .text {
+      color: $status-gray;
+    }
   }
 }
+
+// :host {
+//   width: fit-content;
+//   display: inline-flex;
+//   outline: none;
+//   border: none;
+//   --text-color: #fff;
+//   --icon-color: #fff;
+
+//   &.full {
+//     width: 100%;
+//     button {
+//       width: 100%;
+//     }
+//   }
+//   &.round {
+//     button {
+//       border-radius: 100px !important;
+//     }
+//   }
+//   &.gray {
+//     button {
+//       background: $status-gray;
+//     }
+//   }
+
+//   &.white {
+//     button {
+//       background: #fff;
+//       span {
+//         color: $element-base-color;
+//       }
+//     }
+//   }
+
+//   &.green {
+//     button {
+//     background: $status-green;
+//     }
+//   }
+
+//   &.light-blue {
+//     button {
+//     background: $status-light-blue;
+//     }
+//   }
+
+//   &.status-blue {
+//     button {
+//     background: $status-blue;
+//     }
+//   }
+
+//   &.status-dark-blue {
+//     button {
+//     background: $status-dark-blue;
+//     }
+//   }
+
+//   &.status-red {
+//     button {
+//     background: $status-red;
+//     }
+//   }
+
+//   &.status-light-purple {
+//     button {
+//     background: $status-light-purple;
+//     }
+//   }
+
+//   &.status-gray-purple {
+//     button {
+//     background: $gray-color;
+//     }
+//   }
+
+//   &.transparent {
+//     button {
+//     outline: none;
+//     border: none;
+//     background: transparent;
+//     padding: 0;
+
+//       .icon,
+//       .text {
+//         color: $element-base-color;
+//       }
+//     }
+//   }
+
+//   &.transparent-gray {
+//     button {
+//     outline: none;
+//     border: none;
+//     background: transparent;
+//     padding: 0;
+
+//       .icon,
+//       .text {
+//         color: $status-gray;
+//       }
+//     }
+//   }
+
+//   &.yellow {
+//     button {
+//     background: $status-yellow;
+//     }
+//   }
+
+//   &.gray-purple {
+//     button {
+//     outline: none;
+//     border: none;
+//     background: transparent;
+//     color: $gray-color;
+//     }
+//   }
+//   &.small {
+//     .icon {
+//       font-size: var(--icon-size, 11px);
+//     }
+//     button {
+//       padding: 2px 7px;
+//       border-radius: 5px;
+//       border: none;
+//       font: 600 10px/13px $nunito-sans-bold;
+//       text-transform: capitalize;
+//       display: flex;
+//       align-items: flex-start;
+//       span:first-child {
+//         padding-right: 3px;
+//       }
+//     }
+
+//   }
+//   &.medium {
+//     button {
+//       padding: 5px 10px;
+//       border-radius: 3px;
+//       border: none;
+//       font: 500 12px/15px $nunito-sans-bold;
+//     }
+//   }
+
+
+
+//   button {
+//     background: #4F4DB5;
+//     outline: none;
+//     padding: 6px 15px;
+//     display: inline-flex;
+//     flex-direction: row;
+//     align-items: center;
+//     justify-content: center;
+//     flex-wrap: nowrap;
+//     flex-grow: 1;
+//     font: 400 12px/15px $nunito-sans-bold;
+//     border-radius: 3px;
+//     border: 1px solid $element-base-color;
+//     &:disabled {
+//       border: 1px solid $icon-gray;
+//       span {
+//         color: $icon-gray;
+//       }
+//     }
+//     .icon {
+//       color: var(--icon-color, #fff);
+//     }
+//     .text {
+//       color: var(--text-color, #fff);
+//     }
+//   }
+//   &.reverse {
+//     button {
+//       flex-direction: row-reverse;
+//     }
+//   }
+//   &:hover {
+//     opacity: 0.8;
+//     // &.disabled {
+//     //   opacity: 1;
+//     // }
+//   }
+//   &.disabled {
+//     button {
+//       background: $gray;
+
+//     }
+
+//     &:hover {
+//       opacity: 1;
+//     }
+
+//   }
+//   &.outline-purpure {
+//     button {
+//       color: $element-base-color;
+//       border: 1px solid $element-base-color;
+//       background: transparent;
+//     }
+//     &.small {
+//       button {
+//         padding: 2px 3px 1px;
+//         border-radius: 3px;
+
+//       }
+//     }
+//   }
+
+//   &.small-font {
+//     button {
+//       .text {
+//         font: 500 10px/13px $nunito-sans;
+//       }
+//     }
+//   }
+
+//   //shapes
+
+// }
+
+// :host(.btn-with-icon) {
+//   .button {
+//     padding: 3px 3px 3px 20px;
+//     span {
+//       margin-right: 3px;
+//     }
+//     @extend %icon-for-button;
+//   }
+// }
+
+// :host(.outline-btn) {
+//   .button {
+//     padding: 6px 16px;
+//     background-color: inherit;
+//     border: 1px solid $element-base-color;
+//     box-sizing: border-box;
+//     color: $element-base-color;
+//   }
+// }
+
+// :host(.icon-btn) {
+//   .button {
+//     padding: 3px;
+//     @extend %icon-for-button;
+//   }
+// }
+
+// :host(.full) {
+//   .button,.button-container {
+//     width: 100%;
+//     height: 100%;
+//   }
+// }
+
+// :host(.rigth) {
+//   .button {
+//     border-bottom-left-radius: 0;
+//     border-top-left-radius: 0;
+//   }
+// }
+
+// :host(.input_button) {
+//   .button {
+//     white-space: nowrap;
+//     font-size: 12px;
+//     line-height: 15px;
+//     color: $black;
+//     background: $dark-grey;
+//     border: 1px solid $soft-gray;
+//     border-radius: 0;
+//     margin-left: -1px;
+//   }
+//   &.active {
+//     .button {
+//       position: relative;
+//       background-color: $light-yellow;
+//       border: 1px solid $header-logo-color;
+//       z-index: 2;
+//     }
+//   }
+// }
+
+// :host(.full_width)  {
+//   width: 100%;
+
+//   .button-container {
+//     width: 100%;
+//   }
+
+//   .button {
+//     width: 100%;
+//   }
+// }
+
+// :host(.widget-icon) {
+//   .button {
+//     width: 40px;
+//     height: 40px;
+//     border-radius: 50%;
+//   }
+// }
+
+// :host(.widget-icon.active) {
+//   .button {
+//     background-color: #fff;
+//     border: 1px solid #4350A2;
+//     color: #4350A2;
+//   }
+// }
+
+// :host(.small) {
+//   .button {
+//     width: 100%;
+//     padding: 1px 15px;
+//   }
+// }
+
+// :host(.gray) {
+//   .button {
+//     background: rgba(255, 255, 255, 0.2);
+//     border: 1px solid rgba(255, 255, 255, 0.7);
+//     box-sizing: border-box;
+//     border-radius: 3px;
+//   }
+// }
+
+// :host(.yellow) {
+//   .button {
+//     background: #F8BC45;
+//     border: none;
+//   }
+// }
+
+// :host(.green) {
+//   .button {
+//     background: #3CA476;
+//     border: none;
+//   }
+// }
+
+// :host(.icon-green) {
+//   .button {
+//     border: 1px solid #3CA476;
+//     padding: 1px;
+//   }
+// }
+
+// :host(.icon-gray) {
+//   .button {
+//     border: 1px solid #909090;
+//     padding: 1px;
+//   }
+// }

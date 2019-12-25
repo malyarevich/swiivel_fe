@@ -1,4 +1,7 @@
 @import '../variables/colors.scss';
+@import '../variables/bs.scss';
+@import '../mixins/form-components.scss';
+@import '../colors.scss';
 
 %standart-btn {
   text-transform: capitalize;
@@ -26,33 +29,6 @@
   }
 }
 
-%standart-checkbox {
-  height: 28px;
-  line-height: 28px;
-  label {
-    line-height: 20px;
-    font-size: 12px;
-    text-indent: 8px;
-    font-weight: bold;
-    &:before {
-      width: 14px;
-      height: 14px;
-      border: 0px;
-    }
-
-    &:after {
-      width: 8px;
-      height: 5px;
-    }
-  }
-
-  input[type="checkbox"]:checked + label::before,
-  input[type="checkbox"]:checked + label::before {
-    width: 14px;
-    height: 14px;
-    border: 0px;
-  }
-}
 
 %standart-label{
   font-size: 9px;
@@ -60,7 +36,8 @@
   text-transform: uppercase;
 }
 
-sw-input-text {
+sw-input-text,
+sw-input-mask-text {
   span.icon {
     position: absolute;
     right: 0.85rem;
@@ -101,12 +78,13 @@ sw-input-text {
   .errors {
     span {
       color: #E65757;
-      font: 400 10px/13px $nunito-sans;
+      font: 400 10px/13px "Nunito Sans";
     }
   }
 }
 
-sw-input-text.settings-field{
+sw-input-text.settings-field,
+sw-input-mask-text.settings-field{
   .input_text {
     &__input {
       padding: 6px 10px 4px 10px;
@@ -138,27 +116,6 @@ sw-input-toggle {
   }
 }
 
-sw-input-checkbox {
-  label {
-    margin-bottom: 0 !important;
-    display: flex;
-    align-items: center;
-  }
-  i.dragdrop {
-    margin-right: 10px;
-    color: $icon-gray;
-    font-size: 15px;
-  }
-  span {
-    &.label {
-      font-family: "Nunito Sans";
-      font-weight: bold;
-      font-size: 12px;
-      color: $black;
-      margin-left: 5px;
-    }
-  }
-}
 
 sw-input-button-group {
   .input_button_group {
@@ -229,8 +186,6 @@ sw-select.empty {
   }
 }
 
-
-sw-dropdown-input,
 sw-select,
 sw-input-phone-number,
 sw-input-email,
@@ -307,7 +262,7 @@ sw-input-textarea {
       margin-bottom: 10px;
     }
     .hint {
-      font: 400 10px/13px $nunito-sans;
+      font: 400 10px/13px "Nunito Sans";
       color: $icon-gray;
     }
     .row_container {
@@ -371,7 +326,7 @@ sw-input-textarea {
 
 sw-send-preview {
   sw-online-form {
-    
+
     @include media-breakpoint-up(lg) {
       .online_form_container {
         flex-direction: column !important;
@@ -420,13 +375,13 @@ sw-send-preview {
           display: none !important;
         }
       }
-      
+
       // Additional Documents
       .document_container {
         max-width: 100% !important;
         min-height: 5rem !important;
 
-        
+
         &__control {
           max-width: 100% !important;
           margin-top: 0 !important;
@@ -469,7 +424,7 @@ sw-send-preview {
         }
       }
 
-      // Signature 
+      // Signature
       .signature {
 
         &__inputs_container {
@@ -539,7 +494,8 @@ sw-send-preview {
       &.field {
         padding: 7px 20px;
       }
-      sw-input-text {
+      sw-input-text,
+      sw-input-mask-text {
         margin-right: 10px;
         width: 450px;
       }
@@ -548,7 +504,7 @@ sw-send-preview {
       }
       .dragdrop {
         color: #fff;
-      }  
+      }
     }
   }
 }
@@ -605,7 +561,7 @@ sw-send-preview {
       -ms-transform: rotate(-50%, -50%);
       transform: rotate(45deg);
     }
-    
+
     input[type=checkbox]:indeterminate:after {
       content: "\2022";
       color: transparent;
@@ -683,7 +639,7 @@ sw-send-preview {
     &.field {
       padding: 7px 20px;
     }
-    
+
   }
 }
 
@@ -756,4 +712,67 @@ sw-send-preview {
       margin-right: 20px !important;
     }
   }
+}
+
+mwl-calendar-month-cell {
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+mwl-calendar-month-view-header {
+  &:hover {
+    cursor: default;
+  }
+}
+
+input[type=checkbox] {
+  appearance: none;
+  background-color: $white;
+  border: 1px solid $primary-color;
+  border-radius: 3px;
+  box-sizing: border-box;
+  color: $primary-color;
+  cursor: inherit;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  width: 15px;
+  height: 15px;
+  &:checked {
+    background-image: url('/assets/images/icons/check.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    &:not(:disabled) {
+      background-color: $primary-color;
+    }
+
+  }
+  &:not(:checked):indeterminate {
+    border-radius: 2px;
+    border-color: $primary-color;
+    border-width: 3px;
+    border-top-width: 7px;
+    border-bottom-width: 6px;
+  }
+  &:disabled {
+    border-color: $grey;
+    background-color: $white;
+    &:checked {
+      background-color: $grey;
+    }
+  }
+}
+
+%hidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  outline: 0;
+  -webkit-appearance: none;
 }

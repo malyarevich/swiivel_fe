@@ -16,7 +16,7 @@ export class UploadReviewFormService extends ApiService {
       case 'assigned':
         return 'blue';
       case 'need_review':
-        return 'yellow';
+        return 'light-yellow';
       case 'need_further_review':
         return 'gray';
       case 'rejected':
@@ -110,7 +110,7 @@ export class UploadReviewFormService extends ApiService {
     const uploadReviewFormStatusesEnum = UploadReviewFormStatusesEnum;
     const uploadReviewFormSubmissionTypeEnum = UploadReviewFormSubmissionTypeEnum;
     const dropDownData = {};
-    Object.keys(documents).map((key) => {
+    Object.keys(documents).forEach((key) => {
       switch (key) {
         case 'documents':
           const docs = [];

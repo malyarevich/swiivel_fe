@@ -38,9 +38,15 @@ export class Popup {
     if (panelClass === 'fullpage-panel') {
       ss = this.overlay.scrollStrategies.block();
       bc = 'fullpage-backdrop';
-    } else if (panelClass === 'centered-panel') {
+    } else if (panelClass.includes('centered-panel')) {
+      bc = ['fullpage-backdrop'];
+      if (panelClass.includes('dark')) {
+        bc.push('cdk-overlay-dark-backdrop')
+      // } else {
+      //   bc.push('transparent-backdrop');
+      }
       ss = this.overlay.scrollStrategies.block();
-      bc = ['fullpage-backdrop', 'transparent-backdrop'];
+
     } else if (panelClass === 'widget-dropdown') {
       ss = this.overlay.scrollStrategies.reposition();
       bc = 'hide-backdrop';
@@ -60,7 +66,7 @@ export class Popup {
   }
 
   private getOverlayPosition(origin: HTMLElement, panelClass, location): PositionStrategy {
-    if (panelClass === 'fullpage-panel' || panelClass === 'centered-panel') {
+    if (panelClass === 'fullpage-panel' || panelClass.includes('centered-panel')) {
       const positionStrategy = this.overlay.position().global()
         .centerHorizontally().centerVertically();
       return positionStrategy;

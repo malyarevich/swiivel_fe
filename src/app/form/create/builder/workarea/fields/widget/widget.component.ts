@@ -51,6 +51,10 @@ export class WidgetComponent implements OnInit {
     private popup: Popup,
     private service: FormService
   ) {
+    this.dragFormats = [
+      this.service.fieldTypes.schema.find(schema => schema.type === 114),
+      this.service.fieldTypes.schema.find(schema => schema.type === 113),
+    ]
     this.service.dropLists$.subscribe((ids) => {
       this.dropListsIds = Array.from(ids);
     });
