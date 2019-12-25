@@ -4,10 +4,8 @@ import { Subject, Subscription } from 'rxjs';
 import { takeUntil, takeWhile } from 'rxjs/operators';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { cloneDeep } from 'lodash';
-import { isArray } from 'util';
 import { Router, ActivatedRoute } from '@angular/router';
 import { v4 as uuid } from "uuid";
-import { CdkDrag } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'sw-builder',
