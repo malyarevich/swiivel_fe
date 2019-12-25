@@ -118,6 +118,25 @@ export class SidebarFieldsComponent implements OnInit, AfterViewChecked, OnDestr
     this.filterControl.valueChanges.pipe(takeUntil(this.destroyed$)).subscribe(value => {
       if (value && value.length > 0) {
         this.filterValue = value.toLowerCase();
+
+        // const filterItem = (item) => {
+        //   if (item.type > 112) {
+        //     // console.log(item.fields)
+        //     item.isFiltered = item.fields.filter(filterItem).length > 0;
+        //     // if (item.isFiltered) item.fields.forEach(filterItem);
+        //   } else {
+        //     item.isFiltered = (item.name as string).toLowerCase().includes(this.filterValue);
+        //   }
+        //   // console.log(item.name, item.isFiltered);
+        //   return item;
+        // };
+        // this.activeTree = flatMapDeep(this.activeTree, filterItem);
+        // console.log(this.activeTree);
+        // this.activeTree.forEach(filterItem);
+        // this.activeTree.forEach((item) => {
+        //   filterByName(item, this.filterValue);
+        //   // this.filterValue;
+        // });
       } else {
         this.filterValue = null;
       }
