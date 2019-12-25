@@ -61,7 +61,7 @@
   display: flex;
   margin: 0 10px 0 0;
   padding: 5px 5px 6px;
-  background: $gray;
+  background: $grey-95;
   border-radius: 3px;
   border: 1px solid $dark-grey;
   align-items: center;
@@ -77,5 +77,9 @@
 }
 
 .actions-icon {
-  margin: 0 0 0 26px;
+  margin: 0 0 0 8px;
+}
+
+.fa-chevron-down {
+  color: $icon-gray;
 }

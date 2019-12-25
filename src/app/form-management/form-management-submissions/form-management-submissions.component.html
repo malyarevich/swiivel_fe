@@ -80,8 +80,12 @@
               </div>
             </div>
             <div class="header_container__filter">
-              <sw-input-english-datepicker class="filter-field" formControlName="last_updated_date" placeholder=""
-                [range]="true"></sw-input-english-datepicker>
+              <sw-input-english-datepicker
+                class="filter-field"
+                formControlName="last_updated_date"
+                placeholder=""
+                [range]="true"
+              ></sw-input-english-datepicker>
             </div>
           </div>
         </th>
@@ -194,7 +198,7 @@
         </th>
         <td cdk-cell *cdkCellDef="let sub">
           <sw-dropdown-select #bulk="dropdown" [options]="statusesOptions" (selected)="clickChangeStatus($event)">
-            <sw-button class="small" [color]="getStatusColor(sub.status)">
+            <sw-button class="small-with-padding" [ngClass]="getStatusColor(sub.status)">
               <span>{{ getStatusText(sub.status) }}</span>
               <i class="fas fa-caret-down"></i>
             </sw-button>

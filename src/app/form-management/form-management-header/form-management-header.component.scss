@@ -148,6 +148,7 @@
   color: $element-base-color;
   border: 1px solid $element-base-color;
   border-radius: 3px;
+  text-decoration: none;
 
   &:hover {
     opacity: 0.8;
@@ -160,4 +161,8 @@
     outline: none;
     text-decoration: none;
   }
+}
+
+.share-content {
+  display: flex;
 }

@@ -12,8 +12,8 @@
         (selected)="clickChangeStatus($event)"
       >
         <sw-button
-          size="small"
-          [color]="statusService.getStatusColor(form.status)"
+          class="small"
+          [ngClass]="statusService.getStatusColor(form.status)"
         >
           <span>{{form.status}}</span>
           <i class="fas fa-caret-down"></i>
@@ -23,12 +23,13 @@
     <ul class="up-block-buttons">
       <li class="up-block-button btn-copy-link">
         <sw-button
-          color="transparent"
-          size="small"
+          class="small transparent"
           (click)="clickCopy()"
         >
-          <span class="icon-button-share"></span>
-          <span class="up-block-button-text">Copy link</span>
+          <span class="share-content">
+            <span class="icon-button-share"></span>
+            <span class="up-block-button-text">Copy link</span>
+          </span>
         </sw-button>
       </li>
       <li class="up-block-button">

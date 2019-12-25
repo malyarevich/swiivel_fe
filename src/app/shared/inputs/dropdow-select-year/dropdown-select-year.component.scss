@@ -2,7 +2,7 @@
 
 :host {
   .container {
-    width: 100%;
+    width: 255px;
     min-height: 20px;
     border: none;
     position: relative;
@@ -54,7 +54,7 @@
 .dropdown-buttons {
   display: flex;
   justify-content: space-between;
-  padding: 15px 15px 0;
+  padding: 15px 16px 0 11px;
   margin: 0 0 10px 0;
 }
 
