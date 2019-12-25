@@ -1,4 +1,3 @@
-import { APP_INITIALIZER } from '@angular/core';
 import { FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormControl } from '@angular/forms';
 import { InputTextComponent } from '@app/shared/inputs/input-text/input-text.component';
@@ -7,7 +6,6 @@ import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontaweso
 // import { SharedModule } from '@app/shared/shared.module';
 import { withKnobs } from '@storybook/addon-knobs';
 import { moduleMetadata, storiesOf } from '@storybook/angular';
-import figmaDecorator from 'storybook-addon-figma';
 
 storiesOf('Elements|Inputs/Text', module).addDecorator(withKnobs)
   // .addParameters({
@@ -28,12 +26,12 @@ storiesOf('Elements|Inputs/Text', module).addDecorator(withKnobs)
       ],
     })
   )
-  .addDecorator(
-    figmaDecorator({
-      embedHost: 'localhost',
-      url: 'https://www.figma.com/file/RTfgqP4XAlyiNs0CIypGWhxF/Edminify-Design-Components-Library?node-id=2608%3A5'
-    })
-  )
+  // .addDecorator(
+  //   figmaDecorator({
+  //     embedHost: 'localhost',
+  //     url: 'https://www.figma.com/file/RTfgqP4XAlyiNs0CIypGWhxF/Edminify-Design-Components-Library?node-id=2608%3A5'
+  //   })
+  // )
   .add('Search', () => {
     return {
       component: [InputTextComponent],
