@@ -25,13 +25,14 @@ import { InputFileComponent } from './inputs/input-file/input-file.component';
 import { InputSearchComponent } from '@shared/inputs/input-search/input-search.component';
 
 // Headers
-import { BlockHeaderComponent} from './headers/block-header/block-header.component';
-import { PageHeaderComponent} from './headers/page-header/page-header.component';
+import { BlockHeaderComponent } from './headers/block-header/block-header.component';
+import { PageHeaderComponent } from './headers/page-header/page-header.component';
 import { InputEmailComponent } from './inputs/input-email/input-email.component';
 import { InputPhoneNumberComponent } from './inputs/input-phone-number/input-phone-number.component';
 import { DialogComponent } from './popup/dialog.component';
 
 // Utils
+import { ErrorsComponent } from './utils/errors/errors.component';
 import { MainSpinnerComponent } from './utils/main-spinner/main-spinner.component';
 
 // Bars
@@ -108,6 +109,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     PageHeaderComponent,
     BlockHeaderComponent,
     // Utils
+    ErrorsComponent,
     MainSpinnerComponent,
     // Others
     LabelComponent,
@@ -157,6 +159,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     PageHeaderComponent,
     BlockHeaderComponent,
     // Utils
+    ErrorsComponent,
     MainSpinnerComponent,
     // Others
     LabelComponent,

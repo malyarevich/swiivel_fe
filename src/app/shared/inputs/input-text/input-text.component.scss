@@ -1,110 +1,246 @@
 @import "index";
 
-.fa-search {
-  display: none;
+// .fa-search {
+//   display: none;
+// }
+
+// .input_text__input:not(:placeholder-shown)~.input_text__placeholder {
+//   left: 0.5rem;
+//   height: 1;
+// }
+
+.input_text__input:focus()~.input_text__close {
+  background-color: red;
 }
 
 :host {
-  span.icon {
-    position: absolute;
-    right: 10px;
-    top: 9px;
-    bottom: 5px;
-    i {
-      color: $gray-color;
-    }
+  & * {
+    padding: 0;
+    margin: 0;
   }
 
   .input_text {
-    width: 100%;
+    cursor: text;
+
+    background: $white;
+    border: 1px solid $soft-gray;
+    box-sizing: border-box;
+    border-radius: 0.25rem;
+
+    display: flex;
     position: relative;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    min-height: 2.5rem;
+
+    align-items: stretch;
+    flex-direction: row;
+    justify-content: space-between;
+
+    &__column {
+      display: flex;
+      align-items: stretch;
+      flex-direction: column;
+      justify-content: center;
+
+      &--flex_1 {
+        flex: 1;
+      }
+    }
+
+    &__row {
+      display: flex;
+      align-items: stretch;
+      flex-direction: row;
+      justify-content: flex-start;
+    }
+
+    &__clickable_area {
+      cursor: pointer;
+      max-width: 2rem;
+      min-width: 0;
+    }
+
+    &__icon {
+      cursor: inherit;
+      display: flex;
+      min-height: 1.5rem;
+
+      &--search {
+        display: none;
+      }
+    }
+
+    &__local_wrapper {
+      cursor: inherit;
+      align-items: stretch;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+    }
+
+    // &__placeholder {
+    //   &+.input_text__input:not(:placeholder-shown) {
+    //     height: 10px;
+    //   }
+    // }
 
     &__input {
-      width: 100%;
-      height: 35px;
-      background: $white;
+      cursor: inherit;
+      border: 0 solid transparent;
+      font-family: $nunito-sans-regular;
+      font-style: normal;
+      font-weight: normal;
       font-size: 1rem;
-      line-height: 1.5rem;
-      color: $black;
-      border: 1px solid $soft-gray;
-      box-sizing: border-box;
-      border-radius: 0.25rem;
-      outline: none;
-      padding: 1.25rem 0.85rem 0.5rem 0.85rem;
-      position: relative;
-      // top: 0.5rem;
-      transition: all 0.4s ease-in-out;
-      &:focus-within,
-      &:focus,
-      &:active,
-      &:target {
-        background-color: $white;
-        border: 1px solid $element-base-color;
-        box-shadow: inset 0 0 10px 0 rgba(85, 85, 85, 0.1);
-        outline: 0;
-      }
-
-      // ng-content nesting
-      // & + span {
-      //   &.placeholder {
-      //     pointer-events: none;
-      //     position: absolute;
-      //     top: 2px;
-      //     left: 0.85rem;
-      //     font-size: 0.75rem;
-      //     color: $gray-color;
-      //     transition: all 0.2s ease-in-out;
-      //   }
-      // }
+      line-height: 1.25rem;
+      color: $black-text;
+      padding-left: 0.5rem;
     }
 
-    &__button {
-      color: white;
-      background: $element-base-color;
-      border-radius: 0.25rem;
-      text-align: center;
-      padding-top: 10px;
-      transition: all 0.4s ease-in-out;
+    &__label {
+      cursor: inherit;
 
-      &:focus-within,
-      &:focus,
-      &:active,
-      &:target {
-        background-color: $hover-purple;
-        border: 1px solid $dark-purple;
-        box-shadow: inset 0 0 10px 0 rgba(85, 85, 85, 0.1);
-        outline: 0;
-      }
-    }
-
-    i.clearBut {
-      display: none !important;
-      width: 13px;
-      height: 13px;
-      position: absolute;
-      top: 13px;
-      right: 10px;
       color: $gray-color;
-      cursor: pointer;
+      font-family: $nunito-sans-regular;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 0.85rem;
+      line-height: 1.1rem;
+
+      padding-left: 0.5rem;
     }
-    &.clearable {
-      i.clearBut { display: block !important; }
+
+    &__close {
+      display: none;
     }
-    &.empty {
-      i.clearBut { display: none !important; }
-      .input_text__input {
-        padding: 0 1.25rem;
-        // ng-content nesting
-        // & + span {
-        //   &.placeholder {
-        //     position: absolute;
-        //     top: 0.75rem;
-        //     font-size: 1rem;
-        //   }
-        // }
-      }
+
+    &__close_row {
+      display: flex;
+    }
+
+    &__errors {
+      display: none;
+      font-family: $nunito-sans-regular;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 0.85rem;
+      line-height: 1.1rem;
+      color: $status-red;
     }
   }
+
+
+
+  // span.icon {
+  //   position: absolute;
+  //   right: 10px;
+  //   top: 9px;
+  //   bottom: 5px;
+
+  //   i {
+  //     color: $gray-color;
+  //   }
+  // }
+
+  // .input_text {
+  //   width: 100%;
+  //   position: relative;
+
+  //   &__input {
+  //     width: 100%;
+  //     height: 35px;
+  //     background: $white;
+  //     font-size: 1rem;
+  //     line-height: 1.5rem;
+  //     color: $black;
+  //     border: 1px solid $soft-gray;
+  //     box-sizing: border-box;
+  //     border-radius: 0.25rem;
+  //     outline: none;
+  //     padding: 1.25rem 0.85rem 0.5rem 0.85rem;
+  //     position: relative;
+  //     // top: 0.5rem;
+  //     transition: all 0.4s ease-in-out;
+
+  //     &:focus-within,
+  //     &:focus,
+  //     &:active,
+  //     &:target {
+  //       background-color: $white;
+  //       border: 1px solid $element-base-color;
+  //       box-shadow: inset 0 0 10px 0 rgba(85, 85, 85, 0.1);
+  //       outline: 0;
+  //     }
+
+  //     // ng-content nesting
+  //     // & + span {
+  //     //   &.placeholder {
+  //     //     pointer-events: none;
+  //     //     position: absolute;
+  //     //     top: 2px;
+  //     //     left: 0.85rem;
+  //     //     font-size: 0.75rem;
+  //     //     color: $gray-color;
+  //     //     transition: all 0.2s ease-in-out;
+  //     //   }
+  //     // }
+  //   }
+
+  //   &__button {
+  //     color: white;
+  //     background: $element-base-color;
+  //     border-radius: 0.25rem;
+  //     text-align: center;
+  //     padding-top: 10px;
+  //     transition: all 0.4s ease-in-out;
+
+  //     &:focus-within,
+  //     &:focus,
+  //     &:active,
+  //     &:target {
+  //       background-color: $hover-purple;
+  //       border: 1px solid $dark-purple;
+  //       box-shadow: inset 0 0 10px 0 rgba(85, 85, 85, 0.1);
+  //       outline: 0;
+  //     }
+  //   }
+
+  //   i.clearBut {
+  //     display: none !important;
+  //     width: 13px;
+  //     height: 13px;
+  //     position: absolute;
+  //     top: 13px;
+  //     right: 10px;
+  //     color: $gray-color;
+  //     cursor: pointer;
+  //   }
+
+  //   &.clearable {
+  //     i.clearBut {
+  //       display: block !important;
+  //     }
+  //   }
+
+  //   &.empty {
+  //     i.clearBut {
+  //       display: none !important;
+  //     }
+
+  //     .input_text__input {
+  //       padding: 0 1.25rem;
+  //       // ng-content nesting
+  //       // & + span {
+  //       //   &.placeholder {
+  //       //     position: absolute;
+  //       //     top: 0.75rem;
+  //       //     font-size: 1rem;
+  //       //   }
+  //       // }
+  //     }
+  //   }
+  // }
+
   // ng-content nesting
   // .errors {
   //   span {
@@ -116,9 +252,8 @@
 
 :host(.ng-invalid.ng-dirty, .validation_error) {
   .input_text {
-    &__input {
-      border: 1px solid $error-color;
-    }
+    border-color: $status-red;
+
     i {
       width: 13px;
       height: 13px;
@@ -126,123 +261,198 @@
       position: absolute;
       top: 13px;
       right: 10px;
-      // color: $gray-color;
+      color: $status-red;
       display: block;
-      color: $error-color;
+    }
+
+    &__errors {
+      display: flex;
     }
   }
 }
 
-:host(.active) {
-  .input_text .input_text__input {
-    border: 1px solid $element-base-color;
-  }
+.input_text__input:focus()~.input_text__close {
+  background-color: $black;
+  padding: 2rem;
 }
 
-:host(.pdf-form) {
-  .input_text .input_text__input {
-    height: calc(100% - 0.25em);
-  }
-}
+:host(.standard) {
 
-:host(.settings-field,.filter-field) {
-  .input_text__input {
-    height: 25px;
-    padding: 5px 14px;
-  }
-  i.clearBut {
-    top: 7px !important;
-  }
-}
-
-:host(.filter-field) {
   .input_text {
-    position: relative;
+    cursor: pointer;
 
-    &__input {
-      border-color: transparent;
-      height: 25px;
-      padding: 5px 10px 5px 19px;
-    }
+    &__close {
+      display: flex;
+      opacity: 0;
+      min-width: 1rem;
+      transition: all 0.4s ease-in-out;
+      visibility: hidden;
 
-    .fa-search {
-      color: #A4A4A4;
-      cursor: pointer;
-      display: block;
-      position: absolute;
-      top: 0.75rem;
-      left: 5px;
-
-      @media (min-width: 1280px) {
-        top: 0.6rem;
+      &--show {
+        opacity: 1;
+        min-width: 0;
+        visibility: visible;
       }
     }
 
-    .fa-times {
-      position: absolute;
-      top: 0.75rem;
-      right: 5px;
-      color: #A4A4A4;
-      cursor: pointer;
-
-      @media (min-width: 1280px) {
-        top: 0.5rem;
-      }
+    &__close_row {
+      display: none;
     }
   }
 }
 
-:host(.no_styles) {
-  .input_text__input {
-    border: none;
-    background-color: inherit;
-    height: 100%;
-    padding: 0;
-    font: 800 14px/20px $nunito-sans;
-  }
-}
-
-:host(.no_styles.small) {
-  .input_text__input {
-    font: 800 12px/15px $nunito-sans;
-  }
-}
-
-:host(
-  .online_form, 
-  .online_form__data_picker
-) {
-  // ng-content nesting
-  // span.placeholder {
-  //   padding-left: 0.5rem;
-  //   padding-right: 0.5rem;
-  // }
+:host(.search) {
 
   .input_text {
+    cursor: pointer;
+    border-radius: 100px;
+
+    &__icon {
+      display: none;
+
+      &--search {
+        display: flex;
+      }
+    }
+
+
     &__input {
+      font-family: $nunito-sans-regular;
+      font-style: normal;
+      font-weight: normal;
       font-size: 1rem;
-      min-height: 3rem;
-      padding: 0.5rem 1.25rem;
+      line-height: 1.25rem;
+      color: $black-text;
+    }
 
-      &:focus {
-        background-color: $light-orange-color;
-        border-color: $orange-fill-color;
+
+    &__close {
+      display: flex;
+      opacity: 0;
+      min-width: 1rem;
+      transition: all 0.4s ease-in-out;
+
+      &--show {
+        opacity: 1;
+        min-width: 0;
       }
     }
 
-    // ng-content nesting
-    // &.empty { 
-    //   .input_text__input + .placeholder {
-    //     font-size: 1rem;
-    //     left: 0.5rem;
-    //     top: 0.75rem;
-    //   }
-    // }
+    &__close_row {
+      display: none;
+    }
   }
 }
 
-:host(.read_only) {
-  .input_text__input {
-    background-color: #eee;
-  }
-}
+// :host(.active) {
+//   .input_text .input_text__input {
+//     border: 1px solid $element-base-color;
+//   }
+// }
+
+// :host(.pdf-form) {
+//   .input_text .input_text__input {
+//     height: calc(100% - 0.25em);
+//   }
+// }
+
+// :host(.settings-field, .filter-field) {
+//   .input_text__input {
+//     height: 25px;
+//     padding: 5px 14px;
+//   }
+
+//   i.clearBut {
+//     top: 7px !important;
+//   }
+// }
+
+// :host(.filter-field) {
+//   .input_text {
+//     position: relative;
+
+//     &__input {
+//       border-color: transparent;
+//       height: 25px;
+//       padding: 5px 10px 5px 19px;
+//     }
+
+//     .fa-search {
+//       color: #A4A4A4;
+//       cursor: pointer;
+//       display: block;
+//       position: absolute;
+//       top: 0.75rem;
+//       left: 5px;
+
+//       @media (min-width: 1280px) {
+//         top: 0.6rem;
+//       }
+//     }
+
+//     .fa-times {
+//       position: absolute;
+//       top: 0.75rem;
+//       right: 5px;
+//       color: #A4A4A4;
+//       cursor: pointer;
+
+//       @media (min-width: 1280px) {
+//         top: 0.5rem;
+//       }
+//     }
+//   }
+// }
+
+// :host(.no_styles) {
+//   .input_text__input {
+//     border: none;
+//     background-color: inherit;
+//     height: 100%;
+//     padding: 0;
+//     font: 800 14px/20px $nunito-sans;
+//   }
+// }
+
+// :host(.no_styles.small) {
+//   .input_text__input {
+//     font: 800 12px/15px $nunito-sans;
+//   }
+// }
+
+// :host(.online_form,
+//   .online_form__data_picker) {
+//   // ng-content nesting
+//   // span.placeholder {
+//   //   padding-left: 0.5rem;
+//   //   padding-right: 0.5rem;
+//   // }
+
+//   .input_text {
+//     &__input {
+//       font-size: 1rem;
+//       min-height: 3rem;
+//       padding: 0.5rem 1.25rem;
+
+//       &:focus {
+//         background-color: $light-orange-color;
+//         border-color: $orange-fill-color;
+//       }
+//     }
+
+//     // ng-content nesting
+//     // &.empty { 
+//     //   .input_text__input + .placeholder {
+//     //     font-size: 1rem;
+//     //     left: 0.5rem;
+//     //     top: 0.75rem;
+//     //   }
+//     // }
+//   }
+// }
+
+// :host(.read_only) {
+//   .input_text__input {
+//     background-color: #eee;
+//   }
+// }
