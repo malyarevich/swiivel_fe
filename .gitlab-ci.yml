@@ -12,6 +12,7 @@ storybook_build:
   stage: build
   image: trion/ng-cli
   script:
+    - rm -rf /builds/edminify/app-fe/node_modules/
     - df . -h
     - df -i
     - npm i --only=prod
