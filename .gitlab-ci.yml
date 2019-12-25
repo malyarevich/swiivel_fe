@@ -22,29 +22,6 @@ before_script:
   - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
 
 
-
-development_build:
-  only:
-    - development
-  stage: build
-  image: trion/ng-cli
-  before_script: []
-  script:
-    - npm i
-    - npm run build
-  artifacts:
-    expire_in: 10 min
-    paths:
-      - dist/
-
-development_deploy:
-  only:
-    - development
-  stage: deploy
-  script:
-    - apk add --no-cache rsync
-    - rsync -rav --delete --rsync-path="sudo rsync" dist/ $DEVELOPMENT_SERVER_USERNAME@$DEVELOPMENT_SERVER_IP:/var/www/app-fe/dist/
-
 storybook_build:
   only:
     - storybook
@@ -52,7 +29,7 @@ storybook_build:
   image: trion/ng-cli
   before_script: []
   script:
-    - npm i
+    - npm i --only=prod
     - npm run build-storybook
   artifacts:
     expire_in: 1 day
