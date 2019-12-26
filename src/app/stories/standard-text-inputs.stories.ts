@@ -3,16 +3,10 @@ import { FormControl } from '@angular/forms';
 import { InputTextComponent } from '@app/shared/inputs/input-text/input-text.component';
 import { ErrorsComponent } from '@app/shared/utils/errors/errors.component';
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-// import { SharedModule } from '@app/shared/shared.module';
 import { withKnobs } from '@storybook/addon-knobs';
 import { moduleMetadata, storiesOf } from '@storybook/angular';
 
 storiesOf('Elements|Inputs/Text', module).addDecorator(withKnobs)
-  // .addParameters({
-  //   options: {
-  //     selectedPanel: 'actions'
-  //   }
-  // })
   .addDecorator(
     moduleMetadata({
       declarations: [
@@ -26,12 +20,6 @@ storiesOf('Elements|Inputs/Text', module).addDecorator(withKnobs)
       ],
     })
   )
-  // .addDecorator(
-  //   figmaDecorator({
-  //     embedHost: 'localhost',
-  //     url: 'https://www.figma.com/file/RTfgqP4XAlyiNs0CIypGWhxF/Edminify-Design-Components-Library?node-id=2608%3A5'
-  //   })
-  // )
   .add('Search', () => {
     return {
       component: [InputTextComponent],

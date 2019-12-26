@@ -91,9 +91,10 @@ storiesOf('Elements|Buttons', module).addDecorator(withKnobs)
         </div>
       </div>`,
       props: {
-        text: text('text', 'Button text'),
-        icon: object('icon', fasStar)
-      }
+        text: text('text', 'Button Text'),
+        icon: fasStar
+      },
+      
     }
   })
   .add('Default', () => {
@@ -171,8 +172,8 @@ storiesOf('Elements|Buttons', module).addDecorator(withKnobs)
           </div>
         </div>`,
       props: {
-        text: text('text', 'Button text'),
-        icon: object('icon', 'fasStar')
+        text: text('text', 'Button Text'),
+        icon: fasStar
       }
     }
   })
@@ -251,8 +252,8 @@ storiesOf('Elements|Buttons', module).addDecorator(withKnobs)
         </div>
       </div>`,
       props: {
-        text: text('text', 'Button text'),
-        icon: object('icon', fasStar)
+        text: text('text', 'Button Text'),
+        icon: fasStar
       }
     }
   })
@@ -331,8 +332,8 @@ storiesOf('Elements|Buttons', module).addDecorator(withKnobs)
         </div>
       </div>`,
       props: {
-        text: text('text', 'Button text'),
-        icon: object('icon', fasStar)
+        text: text('text', 'Button Text'),
+        icon: fasStar
       }
     }
   })
@@ -411,8 +412,8 @@ storiesOf('Elements|Buttons', module).addDecorator(withKnobs)
         </div>
       </div>`,
       props: {
-        text: text('text', 'Button text'),
-        icon: object('icon', fasStar)
+        text: text('text', 'Button Text'),
+        icon: fasStar
       }
     }
   })
@@ -421,7 +422,7 @@ storiesOf('Elements|Buttons', module).addDecorator(withKnobs)
       component: ButtonComponent,
       template: `<sw-button>{{text}}</sw-button>`,
       props: {
-        text: text('text', 'Button text')
+        text: text('text', 'Button Text')
       }
     }
   })
