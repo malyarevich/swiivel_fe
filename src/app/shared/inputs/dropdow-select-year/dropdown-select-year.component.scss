@@ -2,7 +2,7 @@
 
 :host {
   .container {
-    width: 255px;
+    width:100%;
     min-height: 20px;
     border: none;
     position: relative;
@@ -11,6 +11,8 @@
     padding: 5px;
     cursor: pointer;
     border-radius: 3px;
+    align-items: center;
+    justify-content: center;
 
     &:hover {
       background: $gray-hover;
@@ -23,7 +25,7 @@
 }
 
 .dropdown_items_container {
-  width: 280px;
+  width: 250px;
   flex-direction: row;
   flex-wrap: wrap;
   padding: 0 15px 15px;
@@ -56,14 +58,6 @@
   justify-content: space-between;
   padding: 15px 16px 0 11px;
   margin: 0 0 10px 0;
-}
-
-.fa-chevron-left {
-  margin: 0 9.5px 0 0;
-}
-
-.fa-chevron-right {
-  margin: 0 0 0 9.5px;
 }
 
 .disabled-year {
