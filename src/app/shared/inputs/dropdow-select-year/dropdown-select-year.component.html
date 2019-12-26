@@ -12,21 +12,21 @@
   <ng-template #droplist>
     <div class="dropdown-buttons">
       <sw-button
-        class="small-padding"
+        class="middle quaternary left-icn"
         [ngClass]="colors.GRAY_PURPLE + ' ' + size.MEDIUM"
+        [icon]="chevronLeft"
         (click)="clickPreviousYears()"
       >
-        <i class="fas fa-chevron-left"></i>
-        <span>Previous</span>
+        Previous
       </sw-button>
       <sw-button
-        class="small-padding"
+        class="middle quaternary right-icn"
         [ngClass]="colors.GRAY_PURPLE + ' ' + size.MEDIUM"
-        (click)="clickNextYears()"
         [disabled]="isNextYearsMoreNowYear()"
+        [icon]="chevronRight"
+        (click)="clickNextYears()"
       >
-        <span>Next</span>
-        <i class="fas fa-chevron-right"></i>
+        Next
       </sw-button>
     </div>
     <div>
