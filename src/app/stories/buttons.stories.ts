@@ -3,21 +3,19 @@ import { text, withKnobs, object } from '@storybook/addon-knobs';
 import { ButtonComponent } from '@app/shared/buttons/button/button.component';
 import { FontAwesomeModule, FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { faStar as fasStar } from '@fortawesome/free-solid-svg-icons';
+import { FigmaDirective } from './figma.directive';
+import { HttpService } from '@app/core/http.service';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 storiesOf('Elements|Buttons', module).addDecorator(withKnobs)
   .addDecorator(
     moduleMetadata({
-      declarations: [ButtonComponent],
-      imports: [FontAwesomeModule],
-      entryComponents: [FaIconComponent]
+      declarations: [ButtonComponent, FigmaDirective],
+      imports: [FontAwesomeModule, HttpClientModule],      
+      entryComponents: [FaIconComponent],
+      providers: [HttpService]
     })
   )
-  // .addDecorator(
-  //   figmaDecorator({
-  //     embedHost: 'localhost',
-  //     url: 'https://www.figma.com/file/RTfgqP4XAlyiNs0CIypGWhxF/Edminify-Design-Components-Library?node-id=86%3A0'
-  //   })
-  // )
   .add('Huge', () => {
     return {
       component: ButtonComponent,
@@ -27,16 +25,16 @@ storiesOf('Elements|Buttons', module).addDecorator(withKnobs)
           <div class="title">Default</div>
           <div class="content">
             <div class="col-xs">
-              <sw-button class="huge">{{text}}</sw-button>
+              <sw-button class="huge" swFigmaId="206:477">{{text}}</sw-button>
             </div>
             <div class="col-xs">
-              <sw-button [icon]="icon" class="huge left-icn" icon="fa-file">{{text}}</sw-button>
+              <sw-button [icon]="icon" class="huge left-icn" icon="fa-file" swFigmaId="206:483">{{text}}</sw-button>
             </div>
             <div class="col-xs">
-              <sw-button [icon]="icon" class="huge right-icn">{{text}}</sw-button>
+              <sw-button [icon]="icon" class="huge right-icn" swFigmaId="206:500">{{text}}</sw-button>
             </div>
             <div class="col-xs">
-              <sw-button class="huge" [disabled]="true">{{text}}</sw-button>
+              <sw-button class="huge" [disabled]="true"  swFigmaId="3575:43">{{text}}</sw-button>
             </div>
           </div>
         </div>

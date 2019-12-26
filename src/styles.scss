@@ -310,3 +310,19 @@ i.dragdrop {
     margin: 20px 0;
   }
 }
+
+.hasFigma {
+  position: relative;
+  &::after {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top:0;
+    left:0;
+    content: ' ';
+    background-size: auto auto;
+    background-repeat: no-repeat;
+    background-image: var(--background-url);
+    mix-blend-mode: difference;
+  }
+}
