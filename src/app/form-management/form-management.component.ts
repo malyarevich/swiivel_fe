@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, Renderer2, ViewChild, ViewRef } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -13,17 +13,24 @@ import { FormManagementDocumentModel } from '@models/form-management/form-manage
 import { FormManagementSubmissionModel } from '@models/form-management/form-management-submission-model';
 import { ButtonColorsEnum } from '@shared/buttons/buttonColors.enum';
 import { DialogComponent } from '@shared/popup/dialog.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-form-management',
   templateUrl: './form-management.component.html',
   styleUrls: ['./form-management.component.scss'],
 })
-export class FormManagementComponent implements OnInit {
+export class FormManagementComponent implements OnInit, OnDestroy {
   @ViewChild('dialog', { static: true }) dialog: DialogComponent;
   @ViewChild('link', { static: false }) link: ElementRef;
   public form: FormManagementDocumentModel;
   public formSubmissions: FormManagementSubmissionModel;
+
+  public uploadDocumentSubscription: Subscription;
+  public submissionsSubscription: Subscription;
+  public loadingSubscription: Subscription;
+  public documentSubscription: Subscription;
+  public documentSubmissionSubscription: Subscription;
 
   public tabsArray = ['Submissions', 'Log'];
   public activeTab = this.tabsArray[0];
@@ -41,6 +48,7 @@ export class FormManagementComponent implements OnInit {
   };
   public colors = ButtonColorsEnum;
   public bulkOptions = ['Export Submissions', 'Export Documents'];
+  public bulkActive = false;
 
   constructor(
     private checkService: CheckService,
@@ -63,20 +71,28 @@ export class FormManagementComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.dataSource.uploadDocument(this.activeIdForm).subscribe();
-    this.dataSource.uploadSubmission(this.activeIdForm).subscribe();
-    this.dataSource.$loading.subscribe((loading: boolean) => {
+    this.uploadDocumentSubscription = this.dataSource.uploadDocument(this.activeIdForm).subscribe();
+    this.submissionsSubscription = this.dataSource.uploadSubmission(this.activeIdForm).subscribe();
+    this.loadingSubscription = this.dataSource.$loading.subscribe((loading: boolean) => {
       this.showSpinner = loading;
     });
-    this.dataSource.getDocument().subscribe((data) => {
+    this.documentSubscription = this.dataSource.getDocument().subscribe((data) => {
       if (!this.router.getCurrentNavigation() && !this.checkService.isEmptyObject(data)) {
         this.form = data;
-        this.cdr.detectChanges();
+        this.detectChanges();
       }
     });
-    this.dataSource.getDocumentSubmission().subscribe((data) => {
+    this.documentSubmissionSubscription = this.dataSource.getDocumentSubmission().subscribe((data) => {
       this.formSubmissions = data;
-      this.cdr.detectChanges();
+      this.detectChanges();
+    });
+  }
+
+  detectChanges(): void {
+    setTimeout(() => {
+      if (this.cdr && !(this.cdr as ViewRef).destroyed) {
+        this.cdr.detectChanges();
+      }
     });
   }
 
@@ -103,7 +119,7 @@ export class FormManagementComponent implements OnInit {
   changeFormStatus(evt: {ids: number[], status: string}): void {
     this.formManagementService.changeStatus(evt.ids, evt.status).subscribe((item) => {
       this.form.status = item[evt.ids[0]];
-      this.cdr.detectChanges();
+      this.detectChanges();
     });
   }
 
@@ -129,7 +145,7 @@ export class FormManagementComponent implements OnInit {
           url: this.sanitizer.bypassSecurityTrustResourceUrl(url),
           filename: `form-${this.form._id}.pdf`
         };
-        this.cdr.detectChanges();
+        this.detectChanges();
         this.renderer.selectRootElement(this.link.nativeElement).click();
         this.clearLink(url);
       });
@@ -141,7 +157,7 @@ export class FormManagementComponent implements OnInit {
       filename: null
     };
     window.URL.revokeObjectURL(url);
-    this.cdr.markForCheck();
+    this.detectChanges();
   }
 
   editForm(): void {
@@ -152,4 +168,15 @@ export class FormManagementComponent implements OnInit {
     console.log(evt);
   }
 
+  changeBulkActive(e: any): void {
+    this.bulkActive = e;
+  }
+
+  ngOnDestroy(): void {
+    this.uploadDocumentSubscription.unsubscribe();
+    this.submissionsSubscription.unsubscribe();
+    this.loadingSubscription.unsubscribe();
+    this.documentSubscription.unsubscribe();
+    this.documentSubmissionSubscription.unsubscribe();
+  }
 }

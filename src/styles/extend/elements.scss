@@ -186,8 +186,6 @@ sw-select.empty {
   }
 }
 
-
-sw-dropdown-input,
 sw-select,
 sw-input-phone-number,
 sw-input-email,
@@ -793,7 +791,7 @@ input[type=checkbox] {
     &:not(:disabled) {
       background-color: $primary-color;
     }
-    
+
   }
   &:not(:checked):indeterminate {
     border-radius: 2px;

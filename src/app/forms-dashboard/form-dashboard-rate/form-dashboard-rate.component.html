@@ -5,27 +5,8 @@
   (changeOption)="clickChangeRatePeriod($event)"
 ></sw-form-dashboard-view-header>
 <div class="statistics">
-  <div class="chart">
-    <div class="chart-block">
-      <canvas #chartTotalView width="133" height="133" class="chart-scheme"></canvas>
-    </div>
-    <div class="chart-label">
-      <p class="chart-value">+{{ statistic?.percent }}%</p>
-    </div>
-  </div>
-
-  <div class="users-block" *ngIf="statistic && statistic.list && statistic.list.length">
-    <div class="users">
-      <div *ngFor="let user of statistic.list; let i = index" class="user">
-        <div *ngIf="i < 4">
-          <p class="user-name">{{ user.name }}</p>
-          <p class="user-date">{{ user?.date}}</p>
-        </div>
-      </div>
-    </div>
-
-    <sw-button color='transparent' (click)="viewAll()">
-      <span>View all</span>
-    </sw-button>
+  <div class="total">
+    <h3 class="total-text">Total</h3>
+    <p class="total-value">{{ statistic?.count_submitted  }}</p>
   </div>
 </div>

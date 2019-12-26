@@ -16,7 +16,6 @@ import { UploadFormReviewItemComponent } from './upload-review-form-item/upload-
 import { UploadReviewFormRoutingModule } from './upload-review-form-routing.module';
 import { UploadReviewFormComponent } from './upload-review-form.component';
 import { UploadReviewFormService } from './upload-review-form.service';
-import { UploadReviewReviewItemComponent } from './upload-review-review-item/upload-review-form-item.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +26,6 @@ import { UploadReviewReviewItemComponent } from './upload-review-review-item/upl
     UploadReviewFormControlsComponent,
     UploadReviewFormDocumentComponent,
     UploadReviewFormDocumentSettingsComponent,
-    UploadReviewReviewItemComponent
   ],
   imports: [
     CommonModule,

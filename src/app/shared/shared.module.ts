@@ -25,13 +25,14 @@ import { InputFileComponent } from './inputs/input-file/input-file.component';
 import { InputSearchComponent } from '@shared/inputs/input-search/input-search.component';
 
 // Headers
-import { BlockHeaderComponent} from './headers/block-header/block-header.component';
-import { PageHeaderComponent} from './headers/page-header/page-header.component';
+import { BlockHeaderComponent } from './headers/block-header/block-header.component';
+import { PageHeaderComponent } from './headers/page-header/page-header.component';
 import { InputEmailComponent } from './inputs/input-email/input-email.component';
 import { InputPhoneNumberComponent } from './inputs/input-phone-number/input-phone-number.component';
 import { DialogComponent } from './popup/dialog.component';
 
 // Utils
+import { ErrorsComponent } from './utils/errors/errors.component';
 import { MainSpinnerComponent } from './utils/main-spinner/main-spinner.component';
 
 // Bars
@@ -62,6 +63,8 @@ import localHe from '@angular/common/locales/he';
 import { IConfig, NgxMaskModule } from 'ngx-mask';
 import { InputRadioComponent } from './inputs/input-radio/input-radio.component';
 import { RadioGroupComponent } from './inputs/input-radio/input-group.component';
+import { FontAwesomeModule, FaIconComponent } from '@fortawesome/angular-fontawesome';
+
 registerLocaleData(localHe);
 
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
@@ -73,6 +76,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     FormsModule,
     ReactiveFormsModule,
     CdkStepperModule,
+    FontAwesomeModule,
     CalendarModule.forRoot({
       provide: DateAdapter,
       useFactory: adapterFactory
@@ -109,6 +113,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     PageHeaderComponent,
     BlockHeaderComponent,
     // Utils
+    ErrorsComponent,
     MainSpinnerComponent,
     // Others
     LabelComponent,
@@ -160,6 +165,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     PageHeaderComponent,
     BlockHeaderComponent,
     // Utils
+    ErrorsComponent,
     MainSpinnerComponent,
     // Others
     LabelComponent,
@@ -182,6 +188,9 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
   ],
   providers: [
     StepperService
+  ],
+  entryComponents: [
+    FaIconComponent
   ]
 })
 export class SharedModule { }

@@ -9,12 +9,29 @@
       ></sw-form-management-submission-missing-fields>
     </div>
   </div>
-  <div class="online-form">
-    <sw-online-form
-      [formId]="formId"
-      [isViewMode]="true"
-      [isMenuShow]="true"
-      [isReviewMode]="true"
-    ></sw-online-form>
+  <div *ngIf="isOpen" class="form">
+    <div class="tabs-block">
+      <div class="tabs">
+        <sw-button
+          *ngFor="let tab of tabsArray"
+          class="button-tab"
+          [class.tab-activated]="activeTab === tab"
+          (click)="activeTab = tab"
+        >
+          {{ tab }}
+        </sw-button>
+      </div>
+    </div>
+    <div class="online-form" *ngIf="activeTab === 'Forms'">
+      <sw-online-form
+        [formId]="formId"
+        [isViewMode]="true"
+        [isMenuShow]="true"
+        [isReviewMode]="true"
+      ></sw-online-form>
+    </div>
+    <div *ngIf="activeTab === 'Document'">
+      Document
+    </div>
   </div>
 </div>

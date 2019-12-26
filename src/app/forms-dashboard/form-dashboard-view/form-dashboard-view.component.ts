@@ -13,10 +13,6 @@ export class FormDashboardViewComponent {
   @Input() defaultIndexOption = 0;
   @Output() changeViewPeriod: EventEmitter<any> = new EventEmitter();
 
-  viewAll(): void {
-    console.log('view all');
-  }
-
   clickChangeViewPeriod(e: any): void {
     this.changeViewPeriod.emit(e);
   }

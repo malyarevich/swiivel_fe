@@ -283,3 +283,46 @@ i.dragdrop {
 .cdk-drag-handle	{
   cursor: move;
 }
+
+.story {
+  width: 100%;
+  height: 100%;
+  padding: 25px;
+  .row {
+    margin: 25px;
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+  }
+  .col {
+    margin: 25px;
+    width: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+  }
+  .content {
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+  }
+  .title {
+    margin: 20px 0;
+  }
+}
+
+.hasFigma {
+  position: relative;
+  &::after {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top:0;
+    left:0;
+    content: ' ';
+    background-size: auto auto;
+    background-repeat: no-repeat;
+    background-image: var(--background-url);
+    mix-blend-mode: difference;
+  }
+}

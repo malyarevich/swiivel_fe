@@ -17,7 +17,6 @@ import { DateTime } from 'luxon';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { FormSendService } from '../../form-send.service';
-import { string } from 'prop-types';
 
 @Component({
   selector: 'sw-send-release-rounds',

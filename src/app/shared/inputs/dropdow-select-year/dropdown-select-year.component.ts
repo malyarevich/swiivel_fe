@@ -13,6 +13,7 @@ import {
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Popup } from '@app/core/popup.service';
+import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { ButtonColorsEnum } from '@shared/buttons/buttonColors.enum';
 import { ButtonSizeEnum } from '@shared/buttons/buttonSize.enum';
 
@@ -43,6 +44,9 @@ export class DropdownSelectYearComponent implements OnInit, ControlValueAccessor
   public colors = ButtonColorsEnum;
   public nowYear = new Date().getFullYear();
   public size = ButtonSizeEnum;
+
+  public chevronLeft = faChevronLeft;
+  public chevronRight = faChevronRight;
 
   @Input()
   set options(opts: any[]) {

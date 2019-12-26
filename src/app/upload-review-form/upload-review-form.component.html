@@ -67,17 +67,16 @@
         <div class="sidebar-list" [ngClass]="{'sidebar-list-bulk-download': isBulkDownload}">
           <div *ngIf="documents && documents.length" [ngClass]="{ 'loading': showSpinner }">
             <div *ngIf="!isBulkDownload">
-              <div *ngFor="let document of documents">
-                <app-upload-review-form-item
-                  [document]="document"
-                  [isBulkDownload]="isBulkDownload"
-                  (selected)="selectItem($event)"
-                  (downloadForm)="downloadForm($event)"
-                  (deleteForm)="openDeleteConfirmPopup($event)"
-                  id="{{document._id}}"
-                >
-                </app-upload-review-form-item>
-              </div>
+              <app-upload-review-form-item
+                *ngFor="let document of documents"
+                [document]="document"
+                [isBulkDownload]="isBulkDownload"
+                (selected)="selectItem($event)"
+                (downloadForm)="downloadForm($event)"
+                (deleteForm)="openDeleteConfirmPopup($event)"
+                id="{{document._id}}"
+              >
+              </app-upload-review-form-item>
             </div>
             <div *ngIf="isBulkDownload">
               <div *ngFor="let document of uploadDocuments">
