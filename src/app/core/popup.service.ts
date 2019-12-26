@@ -73,8 +73,21 @@ export class Popup {
     } else {
       const positionStrategy = this.overlay.position()
         .flexibleConnectedTo(origin)
-        .withPositions(this.getPositions(location))
-        .withFlexibleDimensions()
+        .withPositions([
+          {
+            originX: 'start',
+            originY: 'bottom',
+            overlayX: 'start',
+            overlayY: 'top',
+          },
+          {
+            originX: 'start',
+            originY: 'bottom',
+            overlayX: 'start',
+            overlayY: 'bottom',
+          }
+        ])
+        .withFlexibleDimensions(false)
         .withViewportMargin(5)
         .withPush(false);
       return positionStrategy;
@@ -90,6 +103,8 @@ export class Popup {
     let result: ConnectionPositionPair[] = [{
       originX: 'start',
       originY: 'bottom',
+      offsetX: 20,
+      offsetY: 20,
       overlayX: 'start',
       overlayY: 'top',
     }];
@@ -98,6 +113,8 @@ export class Popup {
         result = [{
           originX: 'start',
           originY: 'bottom',
+          offsetX: 20,
+          offsetY: 20,
           overlayX: 'start',
           overlayY: 'top',
         }];
@@ -106,14 +123,18 @@ export class Popup {
         result = [{
           originX: 'start',
           originY: 'bottom',
+          offsetX: 20,
+          offsetY: 20,
           overlayX: 'center',
           overlayY: 'top',
         }];
         break;
       case 'center-down-left':
         result = [{
-          originX: 'center',
-          originY: 'center',
+          originX: 'start',
+          originY: 'bottom',
+          offsetX: 20,
+          offsetY: 20,
           overlayX: 'end',
           overlayY: 'top',
         }];
