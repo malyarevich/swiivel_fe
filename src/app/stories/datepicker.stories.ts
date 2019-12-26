@@ -53,7 +53,7 @@ storiesOf('Elements|Inputs/Datepicker', module).addDecorator(withKnobs)
         <div class="story">
           <div style="width: 20%">
             <div class="title">Date</div>
-            <sw-input-english-datepickerdeds></sw-input-english-datepickerdeds>
+            <sw-input-english-datepicker></sw-input-english-datepicker>
           </div>
           <div style="width: 20%">
             <div class="title">Date from - Date To</div>
