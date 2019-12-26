@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, Renderer2 } from "@angular/core";
+import { Directive, ElementRef, Input, Renderer2, HostListener } from "@angular/core";
 import { HttpService } from '@app/core/http.service';
 
 const config = {
@@ -21,9 +21,13 @@ export class FigmaDirective {
   private imageUrl: string;
   @Input('swFigmaId') set figmaId(nodeId: string) {
     this.nodeId = nodeId;
-    this.renderer.addClass(this.el.nativeElement, 'hasFigma');
+    // this.renderer.addClass(this.el.nativeElement, 'hasFigma');
     this.getUrl();
     
+  }
+  @HostListener('contextmenu', ['$event']) onClick(event) {
+    if (event) event.preventDefault();
+    this.el.nativeElement.classList.toggle('hasFigma');
   }
   constructor(private el: ElementRef, private http: HttpService, private renderer: Renderer2) {
   }
