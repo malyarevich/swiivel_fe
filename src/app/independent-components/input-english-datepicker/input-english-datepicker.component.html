@@ -87,13 +87,13 @@
     </div>
     <div class="controls-buttons">
       <div class="controls-button">
-        <sw-button color="white" (click)="clear()" [expand]="buttonExpand.FULL">
+        <sw-button class="transparent-border full" (click)="clear()">
           <span class="text">Reset</span>
         </sw-button>
       </div>
       <div class="controls-button">
-        <sw-button (click)="apply()" [expand]="buttonExpand.FULL" [disabled]="disabledApply()">
-          <span class="text">Apply </span>
+        <sw-button class="full" (click)="apply()" [disabled]="disabledApply()">
+          <span class="text">Apply</span>
         </sw-button>
       </div>
     </div>
