@@ -10,7 +10,7 @@ import { DropdownSelectComponent } from '@shared/inputs/dropdown-select/dropdown
 import { OptionDirective } from '@shared/inputs/input-select/option.directive';
 import { action } from '@storybook/addon-actions';
 
-storiesOf('Elements|Inputs/Dropdown', module).addDecorator(withKnobs)
+storiesOf('Elements|Dropdowns', module).addDecorator(withKnobs)
   .addDecorator(
     moduleMetadata({
       declarations: [

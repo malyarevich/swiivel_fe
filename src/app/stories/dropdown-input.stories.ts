@@ -23,12 +23,7 @@ const usersOptions = [
   }
 ];
 
-storiesOf('Elements|Inputs/Dropdown', module).addDecorator(withKnobs)
-  .addParameters({
-    options: {
-      selectedPanel: 'actions'
-    }
-  })
+storiesOf('Elements|Dropdowns', module).addDecorator(withKnobs)
   .addDecorator(
     moduleMetadata({
       declarations: [DropdownInputComponent, UserItemComponent, InputSearchComponent, IconButtonComponent, PopupComponent],
