@@ -1,7 +1,7 @@
 import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { text, withKnobs, array, knob, object } from '@storybook/addon-knobs';
 import { ButtonComponent } from '@app/shared/buttons/button/button.component';
-import figmaDecorator from 'storybook-addon-figma';
+// import figmaDecorator from 'storybook-addon-figma';
 import { FontAwesomeModule, FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { faStar as fasStar } from '@fortawesome/free-solid-svg-icons';
 
@@ -13,12 +13,12 @@ storiesOf('Elements|Buttons', module).addDecorator(withKnobs)
       entryComponents: [FaIconComponent]
     })
   )
-  .addDecorator(
-    figmaDecorator({
-      embedHost: 'localhost',
-      url: 'https://www.figma.com/file/RTfgqP4XAlyiNs0CIypGWhxF/Edminify-Design-Components-Library?node-id=86%3A0'
-    })
-  )
+  // .addDecorator(
+  //   figmaDecorator({
+  //     embedHost: 'localhost',
+  //     url: 'https://www.figma.com/file/RTfgqP4XAlyiNs0CIypGWhxF/Edminify-Design-Components-Library?node-id=86%3A0'
+  //   })
+  // )
   .add('Huge', () => {
     return {
       component: ButtonComponent,

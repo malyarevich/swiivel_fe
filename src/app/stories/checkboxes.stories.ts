@@ -2,7 +2,7 @@ import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { text, withKnobs, boolean } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 
-import figmaDecorator from 'storybook-addon-figma'
+// import figmaDecorator from 'storybook-addon-figma'
 import { InputCheckboxComponent } from '@app/shared/inputs/input-checkbox/input-checkbox.component';
 
 
@@ -17,12 +17,12 @@ storiesOf('Elements|Inputs/Checkbox', module).addDecorator(withKnobs)
       declarations: [InputCheckboxComponent]
     })
   )
-  .addDecorator(
-    figmaDecorator({
-      embedHost: 'localhost',
-      url: 'https://www.figma.com/file/RTfgqP4XAlyiNs0CIypGWhxF/Edminify-Design-Components-Library?node-id=2608%3A5'
-    })
-  )
+  // .addDecorator(
+  //   figmaDecorator({
+  //     embedHost: 'localhost',
+  //     url: 'https://www.figma.com/file/RTfgqP4XAlyiNs0CIypGWhxF/Edminify-Design-Components-Library?node-id=2608%3A5'
+  //   })
+  // )
   .add('Simple', () => {
     return {
       template: `

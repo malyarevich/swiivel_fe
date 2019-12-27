@@ -1,4 +1,4 @@
-@import "index";
+@import 'index';
 
 // .fa-search {
 //   display: none;
@@ -9,7 +9,7 @@
 //   height: 1;
 // }
 
-.input_text__input:focus()~.input_text__close {
+.input_text__input:focus() ~ .input_text__close {
   background-color: red;
 }
 
@@ -42,6 +42,7 @@
       align-items: stretch;
       flex-direction: column;
       justify-content: center;
+      flex: auto;
 
       &--flex_1 {
         flex: 1;
@@ -128,8 +129,6 @@
       color: $status-red;
     }
   }
-
-
 
   // span.icon {
   //   position: absolute;
@@ -271,13 +270,12 @@
   }
 }
 
-.input_text__input:focus()~.input_text__close {
+.input_text__input:focus() ~ .input_text__close {
   background-color: $black;
   padding: 2rem;
 }
 
 :host(.standard) {
-
   .input_text {
     cursor: pointer;
 
@@ -302,7 +300,6 @@
 }
 
 :host(.search) {
-
   .input_text {
     cursor: pointer;
     border-radius: 100px;
@@ -315,7 +312,6 @@
       }
     }
 
-
     &__input {
       font-family: $nunito-sans-regular;
       font-style: normal;
@@ -324,7 +320,6 @@
       line-height: 1.25rem;
       color: $black-text;
     }
-
 
     &__close {
       display: flex;
@@ -441,7 +436,7 @@
 //     }
 
 //     // ng-content nesting
-//     // &.empty { 
+//     // &.empty {
 //     //   .input_text__input + .placeholder {
 //     //     font-size: 1rem;
 //     //     left: 0.5rem;
