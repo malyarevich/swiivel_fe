@@ -1,0 +1,42 @@
+<div class="range-picker" #holder (click)="openRange($event)">
+  <div class="range-picker-value">
+    <span class="range-picker-text" *ngIf="inputValue.length">
+      {{ inputValue }}
+    </span>
+  </div>
+
+  <div class="icon">
+    <fa-icon *ngIf="!inputValue.length" [icon]="searchIcon"></fa-icon>
+    <fa-icon *ngIf="inputValue.length" [icon]="timesIcon" (click)="clear()" class="times"></fa-icon>
+  </div>
+</div>
+
+<ng-template #range>
+  <div class="range">
+    <div class="range-input-container">
+      <label>
+        <span class="label-text">From</span>
+        <input [(ngModel)]="fromValue" class="range-input"/>
+      </label>
+      <label class="input-to">
+        <span class="label-text">To</span>
+        <input [(ngModel)]="toValue" class="range-input">
+      </label>
+    </div>
+    <div class="range-slider">
+      <ng5-slider [(value)]="fromValue" [(highValue)]="toValue" [options]="options"></ng5-slider>
+    </div>
+    <div class="controls-buttons">
+      <div class="controls-button">
+        <sw-button class="transparent-border full full" (click)="clear()">
+          <span class="text">Reset</span>
+        </sw-button>
+      </div>
+      <div class="controls-button">
+        <sw-button class="full" (click)="apply()">
+          <span class="text">Apply </span>
+        </sw-button>
+      </div>
+    </div>
+  </div>
+</ng-template>

@@ -42,6 +42,7 @@
     "luxon": "^1.17.3",
     "ng-dynamic-component": "^5.0.0",
     "ng2-pdf-viewer": "^5.3.4",
+    "ng5-slider": "^1.2.4",
     "ngx-mask": "^8.1.5",
     "rxjs": "~6.5.2",
     "symbol-tree": "^3.2.4",

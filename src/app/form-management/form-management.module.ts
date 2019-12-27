@@ -42,13 +42,13 @@ import { FormManagementSubmissionsComponent } from './form-management-submission
     FormManagementAccessComponent,
   ],
   imports: [
-    CommonModule,
-    FormsModule,
-    SharedModule,
-    FormManagementRoutingModule,
-    OnlineFormModule,
     CdkTableModule,
-    IndependentComponentsModule
+    CommonModule,
+    FormManagementRoutingModule,
+    FormsModule,
+    IndependentComponentsModule,
+    OnlineFormModule,
+    SharedModule
   ],
   providers: [FormManagementService],
   entryComponents: [FormManagementComponent]
