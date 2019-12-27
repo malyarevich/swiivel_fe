@@ -57,6 +57,7 @@ import { ProgressBarComponent } from './shared/components/progress-bar/progress-
 import { SignaturesComponent } from './shared/components/signatures/signatures.component';
 import { ErrorHintTooltipDirective } from './shared/directives/error-hint-tooltip.directive';
 import { GeneralPipesModule } from './utils/pipes/general-pipes.module';
+import {IndependentComponentsModule} from '@app/independent-components/independent-components.module';
 // import { MainComponent } from '@app/shared/main.component';
 
 @NgModule({
@@ -129,7 +130,8 @@ import { GeneralPipesModule } from './utils/pipes/general-pipes.module';
       DateTimeFieldComponent,
       TimeFieldComponent
     ]),
-    GeneralPipesModule
+    GeneralPipesModule,
+    IndependentComponentsModule,
   ],
   exports: [OnlineFormComponent, OnlineFormNavComponent],
   providers: [OnlineFormService, FilesService]

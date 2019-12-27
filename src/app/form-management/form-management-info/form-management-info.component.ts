@@ -5,7 +5,7 @@ import { DateService } from '@app/services/date.service';
 import { FormManagementDocumentModel } from '@models/form-management/form-management-document.model';
 
 @Component({
-  selector: 'app-form-management-info',
+  selector: 'sw-form-management-info',
   templateUrl: './form-management-info.component.html',
   styleUrls: ['./form-management-info.component.scss']
 })

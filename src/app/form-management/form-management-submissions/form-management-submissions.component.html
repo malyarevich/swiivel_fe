@@ -1,0 +1,285 @@
+<div class="table-container">
+
+  <div class="table">
+
+    <table cdk-table [dataSource]="dataSource" [formGroup]="filterForm" multiTemplateDataRows>
+
+      <ng-container cdkColumnDef="checkbox">
+        <th cdk-header-cell *cdkHeaderCellDef width="4%">
+          <div class="cdk-header-checkbox">
+            <sw-input-dash-checkbox
+              (change)="allSelect($event)"
+              [check]="pageSelection[params.page - 1]?.selectedAnyRow || false"
+              [definition]="!pageSelection[params.page - 1]?.allSelected || false"
+              [disabled]="showSpinner"
+            ></sw-input-dash-checkbox>
+          </div>
+        </th>
+        <td cdk-cell *cdkCellDef="let sub">
+          <div class="cdk-data-checkbox">
+            <sw-input-checkbox
+              [check]="_sm.isSelected(sub.id)"
+              (change)="selectRow(sub, $event, true)"
+            ></sw-input-checkbox>
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container cdkColumnDef="accounts">
+        <th cdk-header-cell *cdkHeaderCellDef width="15%">
+          <div class="header_container">
+            <div class="header_container__title" (click)="sortBy('account_name')">
+              accounts
+              <div class="header_container__title_icons">
+                <i class="fas icon"
+                  [ngClass]="{'up': sort[0] === 'account_name' && sort[1] === false, 'down': sort[0] === 'account_name' && sort[1] === true}"></i>
+              </div>
+            </div>
+            <div class="header_container__filter">
+              <sw-input-text class="filter-field" formControlName="account_name" [isSearch]="true" [isClearable]="true"
+                [trimStart]="true"></sw-input-text>
+            </div>
+          </div>
+        </th>
+        <td cdk-cell *cdkCellDef="let sub">
+          {{ sub.account }}
+        </td>
+      </ng-container>
+
+      <ng-container cdkColumnDef="students">
+        <th cdk-header-cell *cdkHeaderCellDef width="15%">
+          <div class="header_container">
+            <div class="header_container__title" (click)="sortBy('student_name')">
+              students
+              <div class="header_container__title_icons">
+                <i class="fas icon"
+                  [ngClass]="{'up': sort[0] === 'student_name' && sort[1] === false, 'down': sort[0] === 'student_name' && sort[1] === true}"></i>
+              </div>
+            </div>
+            <div class="header_container__filter">
+              <sw-input-text class="filter-field" formControlName="student_name" [isSearch]="true" [isClearable]="true"
+                [trimStart]="true"></sw-input-text>
+            </div>
+          </div>
+        </th>
+        <td cdk-cell *cdkCellDef="let sub">
+          <div class="user-wrap" *ngFor="let item of sub.students">
+            <sw-user-item [userItem]="getUserInfo(item)"></sw-user-item>
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container cdkColumnDef="lastUserActions">
+        <th cdk-header-cell *cdkHeaderCellDef width="11%">
+          <div class="header_container">
+            <div class="header_container__title" (click)="sortBy('last_updated_date')">
+              last user actions
+              <div class="header_container__title_icons">
+                <i class="fas icon"
+                  [ngClass]="{'up': sort[0] === 'last_updated_date' && sort[1] === false, 'down': sort[0] === 'last_updated_date' && sort[1] === true}"></i>
+              </div>
+            </div>
+            <div class="header_container__filter">
+              <sw-input-english-datepicker
+                class="filter-field"
+                formControlName="last_updated_date"
+                placeholder=""
+                [range]="true"
+              ></sw-input-english-datepicker>
+            </div>
+          </div>
+        </th>
+        <td cdk-cell *cdkCellDef="let sub">
+          <span class="date">{{ dateService.getDate(sub.last_updated) }}</span>
+          <span class="time">{{ dateService.getTime(sub.last_updated) }}</span>
+        </td>
+      </ng-container>
+
+      <ng-container cdkColumnDef="completion">
+        <th cdk-header-cell *cdkHeaderCellDef width="11%">
+          <div class="header_container">
+            <div class="header_container__title" (click)="sortBy('completion')">
+              completion
+              <div class="header_container__title_icons">
+                <i class="fas icon"
+                  [ngClass]="{'up': sort[0] === 'completion' && sort[1] === false, 'down': sort[0] === 'completion' && sort[1] === true}"></i>
+              </div>
+            </div>
+            <div class="header_container__filter">
+              <sw-dropdown-range-percent formControlName="completion"></sw-dropdown-range-percent>
+            </div>
+          </div>
+        </th>
+        <td cdk-cell *cdkCellDef="let sub">
+          <div class="cell-wrap">
+            <div class="custom-progress-bar">
+              <div class="custom-progress" [style.width.%]="sub.completion_percentage"></div>
+            </div>
+            <div class="text">
+              {{ sub.completion_percentage}}%
+            </div>
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container cdkColumnDef="onlineSubmissions">
+        <th cdk-header-cell *cdkHeaderCellDef width="11%">
+          <div class="header_container">
+            <div class="header_container__title" (click)="sortBy('online_submission')">
+              online submissions
+              <div class="header_container__title_icons">
+                <i class="fas icon"
+                  [ngClass]="{'up': sort[0] === 'online_submission' && sort[1] === false, 'down': sort[0] === 'online_submission' && sort[1] === true}"></i>
+              </div>
+            </div>
+            <div class="header_container__filter">
+              <sw-input-text class="filter-field" formControlName="online_submission" [isSearch]="true"
+                [isClearable]="true" [trimStart]="true"></sw-input-text>
+            </div>
+          </div>
+        </th>
+        <td cdk-cell *cdkCellDef="let sub">
+          <div class="cell-wrap">
+            <div class="icon green" *ngIf="sub.online_submission">
+              <i class="fas fa-check"></i>
+            </div>
+            <div class="icon gray" *ngIf="!sub.online_submission">
+              <i class="fas fa-times"></i>
+            </div>
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container cdkColumnDef="pdfSubmissions">
+        <th cdk-header-cell *cdkHeaderCellDef width="11%">
+          <div class="header_container">
+            <div class="header_container__title" (click)="sortBy('pdf_submission')">
+              pdf submissions
+              <div class="header_container__title_icons">
+                <i class="fas icon"
+                  [ngClass]="{'up': sort[0] === 'pdf_submission' && sort[1] === false, 'down': sort[0] === 'pdf_submission' && sort[1] === true}"></i>
+              </div>
+            </div>
+            <div class="header_container__filter">
+              <sw-input-text class="filter-field" formControlName="pdf_submission" [isSearch]="true"
+                [isClearable]="true" [trimStart]="true"></sw-input-text>
+            </div>
+          </div>
+        </th>
+        <td cdk-cell *cdkCellDef="let sub">
+          <div class="cell-wrap">
+            <div class="icon green" *ngIf="sub.pdf_submission">
+              <i class="fas fa-check"></i>
+            </div>
+            <div #cross class="icon gray" *ngIf="!sub.pdf_submission">
+              <i class="fas fa-times"></i>
+            </div>
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container cdkColumnDef="formStatus">
+        <th cdk-header-cell *cdkHeaderCellDef width="11%">
+          <div class="header_container">
+            <div class="header_container__title" (click)="sortBy('status')">
+              form status
+              <div class="header_container__title_icons">
+                <i class="fas icon"
+                  [ngClass]="{'up': sort[0] === 'status' && sort[1] === false, 'down': sort[0] === 'status' && sort[1] === true}"></i>
+              </div>
+            </div>
+            <div class="header_container__filter">
+              <sw-dropdown-input formControlName="status" type="table-header" typeItem="purpure" [multiple]="true"
+                [isClearable]="true" [options]="statusArrayOptions" [isSumDisplay]="true" [isDisplaySelected]="false">
+              </sw-dropdown-input>
+            </div>
+          </div>
+        </th>
+        <td cdk-cell *cdkCellDef="let sub">
+          <sw-dropdown-select #bulk="dropdown" [options]="statusesOptions" (selected)="clickChangeStatus($event)">
+            <sw-button class="small-with-padding" [ngClass]="getStatusColor(sub.status)">
+              <span>{{ getStatusText(sub.status) }}</span>
+              <i class="fas fa-caret-down"></i>
+            </sw-button>
+          </sw-dropdown-select>
+        </td>
+      </ng-container>
+
+
+      <ng-container cdkColumnDef="actions">
+        <th cdk-header-cell *cdkHeaderCellDef width="10%">
+        </th>
+        <td cdk-cell *cdkCellDef="let form">
+          <!-- <div class="item">
+            <div class="item-icon" data-e2e="Sharebutton">
+              <sw-icon-button [icon]="icons.SHARE" text="Share" (click)="onShareLink(form)">
+              </sw-icon-button>
+            </div>
+            <div class="item-icon" data-e2e="Downloadbutton">
+              <sw-icon-button [icon]="icons.DOWNLOAD" text="Download" (click)="onExportPDF(form.mongo_id)">
+              </sw-icon-button>
+            </div>
+            <div class="item-icon" data-e2e="Copybutton">
+              <sw-icon-button [icon]="icons.COPY" text="Duplicate" (click)="onDuplicateForm(form.mongo_id)">
+              </sw-icon-button>
+            </div>
+          </div> -->
+        </td>
+      </ng-container>
+
+      <ng-container cdkColumnDef="expandButton">
+        <th cdk-header-cell *cdkHeaderCellDef width="7%">
+        </th>
+        <td cdk-cell *cdkCellDef="let sub; let i = index;">
+          <sw-icon-button [icon]="getIcon(isExpanded(sub.id))" (click)="toggleExpanded(sub.id)" style="writing-mode: tb">
+          </sw-icon-button>
+        </td>
+      </ng-container>
+
+      <ng-container cdkColumnDef="expandedRow">
+        <td cdk-cell *cdkCellDef="let form; let i = index;" [attr.colspan]="displayedColumns.length">
+          <sw-form-management-submission-subrow
+            [formId]="form.id"
+            [isOpen]="isExpanded(form.id)"
+          >
+          </sw-form-management-submission-subrow>
+        </td>
+      </ng-container>
+
+      <ng-container cdkColumnDef="paginator">
+        <td cdk-footer-cell *cdkFooterCellDef [attr.colspan]="displayedColumns.length">
+          <div *ngIf="totalItems >= 0" class="wrapper" data-e2e="paginatorname">
+            <div class="cdk-footer-paginator">
+              <p class="paginator-results">{{ totalItems }} Results</p>
+              <sw-paginator [index]="currentPage" [size]="totalItems" (pageChange)="changePage($event)"></sw-paginator>
+            </div>
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container cdkColumnDef="spinner">
+        <td cdk-footer-cell *cdkFooterCellDef [attr.colspan]="displayedColumns.length">
+          <div class="app_loading">
+            <div class="app_loading__logo">i!</div>
+            <svg class="app_loading__spinner" viewBox="25 25 50 50">
+              <circle class="app_loading__path" cx="50" cy="50" r="20" fill="none" stroke-width="2"
+                stroke-miterlimit="10" />
+            </svg>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr cdk-header-row class="filters-row" *cdkHeaderRowDef="displayedColumns;"></tr>
+      <tr cdk-row class="table-row" [class.selected]="_sm.isSelected(sub.id)"
+          #data *cdkRowDef="let sub; columns: displayedColumns;" [hidden]="showSpinner"
+          (click)="selectRow(sub, $event)">
+      </tr>
+      <tr cdk-row class="table-row example-row" *cdkRowDef="let sub; columns: ['expandedRow']"
+        [hidden]="showSpinner || !isExpanded(sub.id)">
+      </tr>
+      <tr cdk-footer-row *cdkFooterRowDef="['spinner']" [hidden]="!showSpinner"></tr>
+      <tr cdk-footer-row *cdkFooterRowDef="['paginator']"></tr>
+
+    </table>
+  </div>
+</div>

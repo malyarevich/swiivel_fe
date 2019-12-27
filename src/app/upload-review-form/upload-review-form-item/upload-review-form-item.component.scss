@@ -3,8 +3,9 @@
 .upload-review-form-item {
   display: flex;
   margin: 0 0 5px 0;
-  background: $gray;
+  background: $grey-95;
   border-radius: 3px;
+  width: 275px;
 
   &:hover {
     cursor: pointer;

@@ -1,0 +1,12 @@
+<sw-form-dashboard-view-header
+  text="Submission rate"
+  [options]="staticsPeriodOptions"
+  [defaultIndexOption]="defaultIndexOption"
+  (changeOption)="clickChangeRatePeriod($event)"
+></sw-form-dashboard-view-header>
+<div class="statistics">
+  <div class="total">
+    <h3 class="total-text">Total</h3>
+    <p class="total-value">{{ statistic?.count_submitted  }}</p>
+  </div>
+</div>

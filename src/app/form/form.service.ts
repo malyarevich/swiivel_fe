@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '@app/core/api.service';
-import { cloneDeep, flatMapDeep, isArrayLike, isPlainObject, isString } from 'lodash';
+import { cloneDeep, flatMapDeep, isArrayLike, isObjectLike, isPlainObject, isString } from 'lodash';
 import { BehaviorSubject, Observable, Subject, throwError } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
@@ -18,18 +18,8 @@ const flatten = (fields = []) => {
   }
   return result;
 };
-const flattenLo = function(field) {
+const flattenLo = (field: any) => {
   return [field, flatMapDeep(field.fields, flattenLo)];
-}
-function flattenrec(xs) {
-  return xs.reduce((acc, x) => {
-    acc = acc.concat(x);
-    if (x.type >= 113) {
-      acc = acc.concat(flattenrec(x.fields));
-      // x.fields = [];
-    }
-    return acc;
-  }, []);
 }
 const mapField = (field, mappers = []) => {
   if (field.fields) {
@@ -89,23 +79,20 @@ const joinForm = (field, path = [], formFields = []) => {
   providedIn: 'root'
 })
 export class FormService {
-  private _savedFields;
-  private mongoId: string;
   private fieldSubject$: BehaviorSubject<any> = new BehaviorSubject(null);
   private sectionSubject$: BehaviorSubject<any> = new BehaviorSubject('intro');
   private sectionsSubject$: BehaviorSubject<any> = new BehaviorSubject(null);
   private eventSubject$: Subject<any> = new Subject();
   private sidebarSubject$: BehaviorSubject<any> = new BehaviorSubject(null);
   private formTemplateSubject$: BehaviorSubject<any> = new BehaviorSubject(null);
-  // public form: FormGroup;
-  private formData = {};
   _form: BehaviorSubject<FormGroup> = new BehaviorSubject<FormGroup>(null);
   _formId: BehaviorSubject<string> = new BehaviorSubject<string>(null);
   private isFormHasIdSubject$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   formsById = {};
   public fieldTypes = {
     schema: [],
-    mapped: []
+    mapped: [],
+    defaultOptions: []
   };
   public stage$ = new BehaviorSubject(0);
   public dropLists = new Set();
@@ -141,6 +128,9 @@ export class FormService {
       getFormTemplate.subscribe(data => {
         if (data) {
           this.stage$.next(1);
+          if (!isArrayLike(data['fields'])) {
+            data['fields'] = [];
+          }
           this.form = this.initForm(data);
           this.getSidebarFields();
         }
@@ -161,15 +151,13 @@ export class FormService {
       if (event.container.id === 'root-list') {
         formArray = this.form.get('fields') as FormArray;
       }
-      // TODO: remove not use var
-      const value = [...formArray.value];
       formArray.removeAt(event.previousIndex);
       formArray.insert(event.currentIndex, control);
     } else {
       const control = event.item.data;
       const oldParent = control.parent as FormArray;
       const newParent = event.container.data as FormArray;
-      if (oldParent && newParent){
+      if (oldParent && newParent) {
         oldParent.removeAt(event.previousIndex);
         newParent.insert(event.currentIndex, control);
       } else if (oldParent) {
@@ -326,7 +314,7 @@ export class FormService {
     return parent;
   }
 
-  addFieldToWorkarea (event: CdkDragDrop<any>) {
+  addFieldToWorkarea(event: CdkDragDrop<any>) {
     let parent = event.container.data as FormArray;
     if (event.container.id === 'root-list') {
       parent = this.form.get('fields') as FormArray;
@@ -424,7 +412,7 @@ export class FormService {
     return control;
   }
 
-  addField(fieldName: string, fieldValue: any, parent?): FormGroup {
+  addField(fieldName: string, fieldValue: any, parent?, silent = false): FormGroup {
     if (!parent) parent = this.form;
     else {
       if (isArrayLike(parent) || isString(parent)) {
@@ -432,7 +420,11 @@ export class FormService {
       }
     }
     let field = this.fb.control(fieldValue);
-    (parent as FormGroup).addControl(fieldName, field);
+    if (silent) {
+      (parent as FormGroup).registerControl(fieldName, field);
+    } else {
+      (parent as FormGroup).addControl(fieldName, field);
+    }
     return parent.get(fieldName);
   }
 
@@ -492,17 +484,32 @@ export class FormService {
     (parent as FormGroup).addControl(fieldName, this.fb.group(fieldValue));
     return parent.get(fieldName);
   }
+  checkOptions(field) {
+    let proto = this.fieldTypes.schema.find(pfield => pfield.type === field.value.type);
+    for (let key in proto.options) {
+      if (!field.get(['options', key])) {
+        if (isObjectLike(proto.options[key])) {
+          this.addFieldGroup(key, proto.options[key], field.get('options'));
+        } else {
+          this.addField(key, proto.options[key], field.get('options'), true);
+        }
+      }
+    }
+    if (proto.options['validators']) {
+      for (let key in proto.options['validators']) {
+        if (!field.get(['options', 'validators', key])) {
+          this.addField(key, proto.options['validators'][key], field.get(['options', 'validators']), true);
+        }
+      }
+
+    }
+    return field;
+  }
 
   initForm(data?) {
     const form = this.fb.group({});
     if (data) {
-      let options: object = {
-        size: 3,
-        required: false,
-        unique: false,
-        hideLabel: false,
-        readonly: false
-      };
+      let options;
       for (const key of Object.keys(data)) {
         if (Array.isArray(data[key])) {
           if (key === 'fields') {
@@ -584,7 +591,7 @@ export class FormService {
   get form(): FormGroup {
     return this._form.getValue();
   }
-  
+
   set form(form: FormGroup) {
     this._form.next(form);
   }

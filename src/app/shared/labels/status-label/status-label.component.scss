@@ -7,6 +7,8 @@
   font: 500 10px/13px "Nunito Sans";
   white-space: nowrap;
   color: #fff;
+  display: flex;
+  align-items: center;
 
   &:hover {
     cursor: default;

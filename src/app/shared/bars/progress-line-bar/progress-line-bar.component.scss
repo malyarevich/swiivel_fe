@@ -3,11 +3,19 @@
 .progress {
   border-radius: 100px;
   height: 4px;
-  background: $gray;
+  background: $grey-95;
 }
 
 .progress-bar {
+  height: 4px;
   border-radius: 100px;
   transform: matrix(1, 0, 0, -1, 0, 0);
-  background: $element-base-color;
+
+  &.purple {
+    background: $element-base-color;
+  }
+
+  &.yellow {
+    background: $header-logo-color;
+  }
 }

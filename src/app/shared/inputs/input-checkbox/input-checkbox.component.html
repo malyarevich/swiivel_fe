@@ -1,13 +1,12 @@
-<label (click)="onClick($event)">
-  <div class="checkbox">
-    <input
-      type="checkbox"
-      [class.definition]="definition"
-      [formControl]="control"
-      [indeterminate]="isIndeterminate"
-      (blur)="onBlur($event)"
-    >
-  </div>
-  <ng-content select="i"></ng-content>
-  <ng-content select=".label"></ng-content>
-</label>
+<input #input
+  type="checkbox"
+  [required]="required"
+  [checked]="checked"
+  [value]="value"
+  [indeterminate]="indeterminate"
+  [disabled]="disabled"
+  (click)="onClick($event)"
+  (change)="prevent($event)"/>
+<span [class.checked]="checked">
+  <ng-content></ng-content>
+</span>

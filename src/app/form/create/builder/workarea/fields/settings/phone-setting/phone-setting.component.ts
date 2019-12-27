@@ -6,40 +6,40 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
   templateUrl: './phone-setting.component.html',
   styleUrls: ['./phone-setting.component.scss']
 })
-export class PhoneSettingComponent implements OnInit {
+export class PhoneSettingComponent {
 
   form: FormGroup;
+  private optionsMap = [
+    'showDefaultValue',
+    'showValidators',
+    'default',
+    'validators',
+    'validators.phone',
+    'validators.verifyPhone',
+  ];
 
   @Input()
   set settings(obj: any) {
     if (obj) {
-      this.form.patchValue({
-        showDefaultValue: !!obj.showDefaultValue,
-        showValidators: !!obj.showValidators,
-        default: obj.default || null,
-        validators: obj.validators || []
-      });
+      if (obj) {
+        if (this.checkOptions(obj).length === 0) {
+          this.form = obj;
+        }
+      }
     }
   }
   @Output() fieldSettings = new EventEmitter();
 
   constructor(
     private fb: FormBuilder
-  ) {
-    this.form = this.fb.group({
-      showDefaultValue: new FormControl(false),
-      showValidators: new FormControl(false),
-      default: new FormControl(null, {updateOn: 'blur'}),
-      validators: new FormGroup({
-        phone: new FormControl(false),
-        verifyPhone: new FormControl(false),
-      })
-    });
-  }
+  ) { }
 
-  ngOnInit() {
-    this.form.valueChanges.subscribe(v => {
-      this.fieldSettings.emit(v);
+  checkOptions(obj: FormGroup) {
+    return this.optionsMap.filter((key) => {
+      if (!obj.get(key)) {
+        console.error(`Does not exist ${key} in options.`);
+        return true;
+      }
     });
   }
 

@@ -4,20 +4,10 @@ import {
   ElementRef,
   OnDestroy,
   OnInit,
-  Renderer2,
   ViewChild
 } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators
-} from '@angular/forms';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { IRound } from '@app/form-send/models/send.model';
+import { IGroupAccount, IMailingHouse, IPerson, IRound } from '@app/form-send/models/send.model';
 import { FormService } from '@app/form/form.service';
-import { DataCollectionService } from '@app/forms-dashboard/data-collection.service';
-import { DateTime } from 'luxon';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { FormSendService } from '../form-send.service';
@@ -32,20 +22,9 @@ export class SendReleaseComponent implements OnInit, OnDestroy {
   public formId$: BehaviorSubject<string> = new BehaviorSubject(null);
   public periodsList: any = [];
   public selectedPeriods: any = [];
-  public accountsList: any[] = [];
-  public selectedAccountsList: any[] = [];
-  public form: FormGroup;
-  public isNew = false;
-  public showForm = false;
-  public selectOptions = Array.from({ length: 30 }).map((_, i) => i);
-  public mailingOptions = ['Use Mailing House', 'Self-mail'];
-  public download: {
-    url: SafeResourceUrl;
-    filename: string;
-  } = {
-    url: null,
-    filename: null
-  };
+  public mailingHouseList: IMailingHouse[] = [];
+  public groupAccountsList: IGroupAccount[] = [];
+  public selectedAccountsList: IPerson[] = [];
   destroyed$ = new Subject();
 
   @ViewChild('link', { static: false }) link: ElementRef;
@@ -83,15 +62,23 @@ export class SendReleaseComponent implements OnInit, OnDestroy {
         this.selectedPeriods = val;
         this.cdr.markForCheck();
       });
+    this.formSendService.$mailingHouseList
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe(val => {
+        this.mailingHouseList = val;
+        this.cdr.markForCheck();
+      });
     this.formSendService.$accountsList
       .pipe(takeUntil(this.destroyed$))
       .subscribe(val => {
-        this.accountsList = val;
+        // console.log('accountsList', val);
+        this.groupAccountsList = val;
         this.cdr.markForCheck();
       });
     this.formSendService.$selectedAccounts
       .pipe(takeUntil(this.destroyed$))
       .subscribe(val => {
+        // console.log('selectedAccounts', val.length);
         this.selectedAccountsList = val;
         this.cdr.markForCheck();
       });

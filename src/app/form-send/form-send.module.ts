@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { IndependentComponentsModule } from '@app/independent-components/independent-components.module';
 import { SharedModule } from '@app/shared/shared.module';
 import { FormSendRoutingModule } from './form-send-routing.module';
 import { FormSendComponent } from './form-send.component';
@@ -37,6 +38,7 @@ import { SendReleaseRoundsComponent } from './send-release/send-release-rounds/s
     OnlineFormModule,
     PreviewFormPdfModule,
     PdfViewerModule,
+    IndependentComponentsModule
   ],
   providers: [
     FormSendService,

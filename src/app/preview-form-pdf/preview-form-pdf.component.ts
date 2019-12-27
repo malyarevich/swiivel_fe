@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { HttpService } from '@app/core/http.service';
 import { PDFProgressData } from 'ng2-pdf-viewer';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'sw-preview-form-pdf',
@@ -14,19 +16,27 @@ export class PreviewFormPdfComponent implements OnInit {
   pdfError: boolean;
   pdfLoading = true;
 
-  constructor() { }
+  constructor(private http: HttpService) { }
 
   ngOnInit() {
   }
 
   getLink() {
-    return `http://red.dev.codeblue.ventures/api/v1/proxy/form-builder/preview-pdf-form/${this.formId}?api_token=123`;
-    // return `http://34.73.126.99/api/v1/preview-pdf-form/${this.formId}?api_token=123`
+    if (this.formId) {
+      return this.http.get(`/proxy/form-builder/preview-pdf-form/${this.formId}`).pipe(
+        // return this.http.get(`/proxy/forms/online/${id}`).pipe(
+        map(response => {
+          console.log(response);
+          return response;
+        })
+      );
+    }
+    console.error('Id of form is undefined');
+    return undefined;
   }
 
   onProgress(progressData: PDFProgressData) {
     this.pdfError = false;
-    console.log('progressData', progressData);
     if (progressData.loaded === progressData.total) {
       this.pdfLoading = false;
     }

@@ -1,0 +1,23 @@
+@import 'index';
+
+.statistics {
+  display: flex;
+  align-items: center;
+}
+
+.total {
+  width: 100%;
+}
+
+.total-text {
+  font: normal 14px/20px $nunito-sans;
+  text-align: center;
+  color: $gray-color;
+}
+
+.total-value {
+  margin: 0;
+  font: 800 27px/20px $nunito-sans;
+  text-align:center;
+  color: $header-logo-color;
+}

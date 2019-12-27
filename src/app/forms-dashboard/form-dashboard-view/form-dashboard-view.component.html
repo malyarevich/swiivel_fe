@@ -1,0 +1,12 @@
+<sw-form-dashboard-view-header
+  text="Views"
+  [options]="staticsPeriodOptions"
+  [defaultIndexOption]="defaultIndexOption"
+  (changeOption)="clickChangeViewPeriod($event)"
+></sw-form-dashboard-view-header>
+<div class="statistics">
+  <div class="total">
+    <h3 class="total-text">Total</h3>
+    <p class="total-value">{{ statistic && statistic.cnt ? statistic.cnt : 0 }}</p>
+  </div>
+</div>

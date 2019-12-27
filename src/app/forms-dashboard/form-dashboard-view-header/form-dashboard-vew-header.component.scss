@@ -1,0 +1,25 @@
+@import 'index';
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.header-text {
+  font: 800 12px/15px $nunito-sans;
+  text-transform: uppercase;
+  letter-spacing: 0.2px;
+}
+
+.select-option-text {
+  margin: 0 5px 0 0;
+  font: 500 9px/13px $nunito-sans;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  color: $black-text;
+}
+
+.select-option {
+  position: relative;
+  margin: 0;
+}

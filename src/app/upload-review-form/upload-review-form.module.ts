@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { PreviewFormPdfModule } from '@app/preview-form-pdf/preview-form-pdf.module';
 import { SharedModule } from '@shared/shared.module';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
-// import { FormSendModule } from '../form-send/form-send.module';
 import { OnlineFormModule } from '../online-form/online-form.module';
 import { UploadReviewFormApprovalBarComponent } from './upload-review-form-approval-bar/upload-review-form-approval-bar.component';
 import { UploadReviewFormControlsComponent } from './upload-review-form-controls/upload-review-form-controls.component';
@@ -16,7 +16,6 @@ import { UploadFormReviewItemComponent } from './upload-review-form-item/upload-
 import { UploadReviewFormRoutingModule } from './upload-review-form-routing.module';
 import { UploadReviewFormComponent } from './upload-review-form.component';
 import { UploadReviewFormService } from './upload-review-form.service';
-import { UploadReviewReviewItemComponent } from './upload-review-review-item/upload-review-form-item.component';
 
 @NgModule({
   declarations: [
@@ -27,14 +26,13 @@ import { UploadReviewReviewItemComponent } from './upload-review-review-item/upl
     UploadReviewFormControlsComponent,
     UploadReviewFormDocumentComponent,
     UploadReviewFormDocumentSettingsComponent,
-    UploadReviewReviewItemComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
-    // FormSendModule,
     OnlineFormModule,
     PdfViewerModule,
+    PreviewFormPdfModule,
     SharedModule,
     UploadReviewFormRoutingModule
   ],

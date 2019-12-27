@@ -1,5 +1,5 @@
 <div #holder class="widget" cdkDragLockAxis="y" cdkDrag cdkDragBoundary=".stepper-content" [cdkDragDisabled]="isActive">
-  <sw-button class="widget-icon" [class.active]="isActive" (click)="widgetTogle()">
+  <sw-button class="widget-icon" [class.active]="isActive" (click)="widgetToggle()">
     <i class="fas fa-plus"></i>
   </sw-button>
 </div>
@@ -12,30 +12,91 @@
     <div class="widget-body">
       <div class="list">
         <div class="title">Formatting Options</div>
-        <cdk-drop-list [cdkDropListData]="dragFormats" [cdkDropListConnectedTo]="dropListsIds" cdkDropListSortingDisabled [id]="id">
+        <cdk-drop-list [cdkDropListData]="dragFormats" [cdkDropListConnectedTo]="dropListsIds"
+          cdkDropListSortingDisabled [id]="id">
           <div class="item" cdkDrag [cdkDragData]="dragFormats[0]">
             <i class="dragdrop fas fa-ellipsis-v" cdkDragHandle></i>
             <div class="text">New Section</div>
             <div class="item" *cdkDragPreview>
-                <i class="dragdrop fas fa-ellipsis-v"></i>
-                <div class="text">New Section</div>
-              </div>
-            <div class="item" *cdkDragPlaceholder>
               <i class="dragdrop fas fa-ellipsis-v"></i>
               <div class="text">New Section</div>
             </div>
+            <div class="drag-field-workarea section-tree-node" *cdkDragPlaceholder>
+              <div class="item">
+                <i class="dragdrop fas fa-ellipsis-v"></i>
+                <div class="text">New Section</div>
+              </div>
+              <div class="main_container">
+                <div class="content">
+                  <div class="drag-icon">
+                    <i class="dragdrop fas fa-ellipsis-v"></i>
+                  </div>
+                  <sw-input-text [(ngModel)]="sectionName">
+                    <span class="placeholder">Section Name</span>
+                  </sw-input-text>
+                  <sw-dropdown-input [options]="[]">
+                    <span class="input_label">Section Width</span>
+                  </sw-dropdown-input>
+                </div>
+                <div class="actions">
+                  <div class="icon">
+                    <sw-icon-button icon="fa-cog" class="field-creator">
+                    </sw-icon-button>
+                  </div>
+                  <div class="icon">
+                    <sw-icon-button icon="fa-times" class="field-creator">
+                    </sw-icon-button>
+                  </div>
+                  <div class="icon dragdrop">
+                    <sw-icon-button [icon]="'fa-caret-down'" (click)="toggleExpanded()"
+                      [attr.aria-label]="'toggle New section'">
+                    </sw-icon-button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          
+
           <div class="item" cdkDrag [cdkDragData]="dragFormats[1]">
             <i class="dragdrop fas fa-ellipsis-v" cdkDragHandle></i>
             <div class="text">New Group</div>
             <div class="item" *cdkDragPreview>
+              <i class="dragdrop fas fa-ellipsis-v"></i>
+              <div class="text">New Group</div>
+            </div>
+            <div class="drag-field-workarea group-tree-node no-check" *cdkDragPlaceholder>
+              <div class="item" style="width: 100%;">
                 <i class="dragdrop fas fa-ellipsis-v"></i>
                 <div class="text">New Group</div>
               </div>
-            <div class="item" *cdkDragPlaceholder>
-              <i class="dragdrop fas fa-ellipsis-v"></i>
-              <div class="text">New Group</div>
+              <div class="checkbox-cont">
+                <input type="checkbox">
+              </div>
+              <div class="main_container no-main-cont">
+                <div class="content">
+                  <div class="drag-icon">
+                    <i class="dragdrop fas fa-ellipsis-v"></i>
+                  </div>
+                  <div class="name-container">
+                    <div class="main-text">New Group</div>
+                    <div class="hint">Group Type - Group</div>
+                  </div>
+                </div>
+                <div class="actions">
+                  <div class="icon">
+                    <sw-icon-button icon="fa-cog" class="field-creator blue">
+                    </sw-icon-button>
+                  </div>
+                  <div class="icon">
+                    <sw-icon-button icon="fa-times" class="field-creator blue">
+                    </sw-icon-button>
+                  </div>
+                  <div class="icon dragdrop">
+                    <sw-icon-button [icon]="'fa-caret-down'" class="blue" [attr.aria-label]="'toggle Group'">
+                    </sw-icon-button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </cdk-drop-list>

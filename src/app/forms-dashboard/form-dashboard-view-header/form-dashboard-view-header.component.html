@@ -1,0 +1,15 @@
+<div class="header">
+  <h2 class="header-text">{{ text }}</h2>
+  <div *ngIf="canChangePeriod" class="dropdown">
+    <sw-dropdown-select
+      #period="dropdown"
+      [options]="options"
+      (selected)="changePeriod($event)"
+    >
+      <sw-button class="transparent-gray">
+        <span class="text">{{ option }}</span>
+        <i class="fas fa-caret-down" [class.fa-caret-up]="period.isOpened"></i>
+      </sw-button>
+    </sw-dropdown-select>
+  </div>
+</div>

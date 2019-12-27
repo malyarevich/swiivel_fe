@@ -1,25 +1,46 @@
-<div
-  class="input_text"
-  data-e2e="input_text"
-  [class.empty]="isEmpty()"
-  [class.clearable]="isClearable"
->
-  <input
-    #input
-    class="input_text__input"
-    [type]="_type"
-    [class.input_text__button]="_style === 'button_type'"
-    [attr.inputmode]="_mode"
-    [attr.autocomplete]="autocomplete"
-    [formControl]="control.control"
-    [attr.disabled]="!!disabled || null"
-    [readonly]="!!readonly || null"
-    [mask]="mask"
-    (focus)="onFocus.emit()"
-    (blur)="onBlur.emit()"
-  />
-  <ng-content></ng-content>
-  <i class="fa fa-times clearBut" (click)="clear()" title="Clear input"></i>
-  <i *ngIf="isSearchInput()" class="fas fa-search fa-xs"></i>
-  <ng-content select=".errors"></ng-content>
+<div class="input_text" data-e2e="input_text" [class.empty]="isEmpty()" [class.clearable]="isClearable">
+  <!-- <i class="fas fa-search input_text__search" title="search input"></i> -->
+  <label class="input_text__column input_text__column--flex_1" [for]="inputId">
+    <div class="input_text__row">
+      <!-- Search Icon -->
+      <img class="input_text__icon input_text__icon--search" *ngIf="!iconName" src="/assets/images/icons/search.svg" title="Search" />
+      <img class="input_text__icon" *ngIf="iconName" src="/assets/images/icons/{{ iconName }}.svg" [title]="iconName" />
+      <div class="input_text__column">
+        <!-- Label -->
+        <div *ngIf="label" class="input_text__label">{{ label }}</div>
+        <!-- Input Text -->
+        <input
+          class="input_text__input"
+          [placeholder]="placeholder ? placeholder : ''"
+          #input
+          [id]="inputId"
+          [attr.inputmode]="_mode"
+          [attr.autocomplete]="autocomplete"
+          [attr.readonly]="readonly || null"
+          [type]="_type"
+          [class.input_text__button]="_style === 'button_type'"
+          [formControl]="control.control"
+          (focus)="onFocusInput($event)"
+          (blur)="onBlurInput($event)"
+        />
+      </div>
+    </div>
+  </label>
+  <div class="input_text__column input_text__clickable_area">
+    <!-- Clear Icon -->
+    <img
+      class="input_text__close"
+      [ngClass]="{ 'input_text__close--show': $isShowClearIcon | async }"
+      src="/assets/images/icons/close.svg"
+      title="Clear"
+      (click)="clear($event)"
+    />
+    <!-- Arrow Icon -->
+    <img class="input_text__close_row" src="/assets/images/icons/close-row.svg" title="Close Row" />
+  </div>
+</div>
+<!-- Only when invalid -->
+<div class="input_text__errors">
+  <!-- <ng-content select=".errors"></ng-content> -->
+  <sw-errors [fieldControl]="getControl()" [customErrors]="getCustomErrors()"></sw-errors>
 </div>

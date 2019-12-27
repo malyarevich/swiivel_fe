@@ -4,10 +4,8 @@ import { Subject, Subscription } from 'rxjs';
 import { takeUntil, takeWhile } from 'rxjs/operators';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { cloneDeep } from 'lodash';
-import { isArray } from 'util';
 import { Router, ActivatedRoute } from '@angular/router';
 import { v4 as uuid } from "uuid";
-import { CdkDrag } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'sw-builder',
@@ -92,7 +90,7 @@ export class BuilderComponent implements OnInit, AfterViewInit, OnDestroy {
             } else {
               this.cdr.markForCheck();
               if (this.formSubscription) this.formSubscription.unsubscribe();
-              this.formSubscription = this.form.valueChanges.subscribe((value) => {
+              this.formSubscription = this.form.valueChanges.pipe(takeUntil(this.destroyed$)).subscribe((value) => {
                 console.groupCollapsed('Form value changed');
                 console.log(value);
                 console.groupEnd();
@@ -161,7 +159,7 @@ export class BuilderComponent implements OnInit, AfterViewInit, OnDestroy {
 
   addTermsConditionsItem() {
     let termsConditionsItem = this.fb.group({
-      title: [""],
+      title: ["Terms And Conditions Name"],
       id: [uuid()],
       text: [""],
       checkbox: this.fb.group({

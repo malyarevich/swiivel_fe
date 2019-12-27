@@ -8,7 +8,30 @@
       "sourceRoot": "src",
       "projectType": "application",
       "prefix": "sw",
-      "schematics": {},
+      "schematics": {
+        "@schematics/angular:component": {
+          "styleext": "scss",
+          "spec": false
+        },
+        "@schematics/angular:class": {
+          "spec": false
+        },
+        "@schematics/angular:directive": {
+          "spec": false
+        },
+        "@schematics/angular:guard": {
+          "spec": false
+        },
+        "@schematics/angular:module": {
+          "spec": false
+        },
+        "@schematics/angular:pipe": {
+          "spec": false
+        },
+        "@schematics/angular:service": {
+          "spec": false
+        }
+      },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -30,8 +53,7 @@
                 "src/styles"
               ]
             },
-            "scripts": [
-            ],
+            "scripts": [],
             "es5BrowserSupport": false
           },
           "configurations": {
@@ -137,29 +159,5 @@
       }
     }
   },
-  "defaultProject": "edminify-app-fe",
-  "schematics": {
-    "@schematics/angular:component": {
-      "styleext": "scss",
-      "spec": false
-    },
-    "@schematics/angular:class": {
-      "spec": false
-    },
-    "@schematics/angular:directive": {
-      "spec": false
-    },
-    "@schematics/angular:guard": {
-      "spec": false
-    },
-    "@schematics/angular:module": {
-      "spec": false
-    },
-    "@schematics/angular:pipe": {
-      "spec": false
-    },
-    "@schematics/angular:service": {
-      "spec": false
-    }
-  }
+  "defaultProject": "edminify-app-fe"
 }

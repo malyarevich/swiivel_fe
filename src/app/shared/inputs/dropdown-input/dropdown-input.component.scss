@@ -13,12 +13,42 @@
     display: flex;
     align-items: center;
 
+    .label {
+      pointer-events: none;
+      z-index: 3;
+      position: absolute;
+      top: 2px;
+      left: 10px;
+      font-size: 10px;
+      color: $gray-color;
+      transition: all 0.2s ease-in-out;
+    }
+
+    &.empty {
+      &:not(:focus-within) {
+        padding: 5px 10px;
+        span.label {
+          position: absolute;
+          top: 8px;
+          font-size: 12px;
+        }
+      }
+    }
+
+    .input_ico {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+    }
+
     &.active {
       border-color: $element-base-color;
+
       .container__icon {
         &_up {
           display: flex;
         }
+
         &_down {
           display: none;
         }
@@ -34,6 +64,7 @@
     &__input {
       display: flex;
       align-items: center;
+
       .text {
         font-style: normal;
         font-size: 12px;
@@ -41,7 +72,11 @@
         margin-right: 4px;
         margin-top: 12px;
       }
-      i { display: none; }
+
+      i {
+        display: none;
+      }
+
       &.many {
         background: $lightblue-color;
         padding: 10px;
@@ -50,11 +85,13 @@
         color: $element-base-color;
         display: flex;
         align-items: center;
+
         .text {
           font: 10px "NunitoSans-Bold";
           margin: 0 6px 0 0;
           color: $element-base-color;
         }
+
         i {
           font-size: 11px;
           display: inline-block;
@@ -62,12 +99,15 @@
         }
       }
     }
+
     &__icon {
       margin-left: auto;
+
       &_up {
         display: none;
         color: $element-base-color;
       }
+
       &_down {
         display: flex;
         color: $gray-color;
@@ -180,7 +220,10 @@
   .container {
     min-height: 25px;
     padding: 4px 10px;
-    .text { margin: 0; }
+
+    .text {
+      margin: 0;
+    }
   }
 }
 
@@ -220,6 +263,28 @@
   }
 }
 
+:host(.short) {
+  .container {
+    padding: 0.25rem 0.5rem;
+    min-height: 1.75rem;
+
+    .container__row {
+      .container__input {
+        .text {
+          line-height: 13px;
+          margin-top: 0;
+        }
+      }
+    }
+  }
+}
+
+:host(.ng-dirty.ng-invalid) {
+  .container {
+    border: 1px solid $error-color;
+  }
+}
+
 :host(.online_form.read_only) {
   .container {
     background-color: #eee;
@@ -239,10 +304,6 @@
   }
 }
 
-.dropdown_items_container {
-  overflow-y: auto;
-}
-
 .dropdown_items_container__item:hover {
   cursor: pointer;
 }
@@ -258,7 +319,7 @@
   .dropdown_items_sub-container {
     position: relative;
     width: 100%;
-    margin: 0 0 35px;
+    margin: 0 0 25px;
 
     &:last-of-type {
       margin: 0;
@@ -267,9 +328,9 @@
     &:after {
       position: absolute;
       content: '';
-      width: 137px;
+      width: calc(100% - 20px);
       height: 1px;
-      bottom: -25px;
+      bottom: -15px;
       left: 10px;
       background: $gray-color;
     }
@@ -280,7 +341,7 @@
 
     .dropdown_items_sub-header {
       padding: 0 10px;
-      margin: 0 0 20px;
+      margin: 0 0 10px;
       font: 800 9px/13px $nunito-sans;
       text-transform: uppercase;
 
@@ -312,6 +373,7 @@
   border: none;
   background: transparent;
   border-left: 1px solid $soft-gray;
+  color: $element-base-color;
 
   &:hover {
     cursor: pointer;

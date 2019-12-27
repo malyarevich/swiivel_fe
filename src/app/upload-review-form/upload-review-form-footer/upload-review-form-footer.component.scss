@@ -3,7 +3,7 @@
 .upload-review-form-footer {
   display: flex;
   justify-content: space-between;
-  height: 42px;
+  height: 30px;
   padding: 6px 15px;
   background: $table-row-odd-background-color;
 }
@@ -56,8 +56,8 @@
 }
 
 .next {
+  justify-content: flex-end;
   .container {
-    justify-content: flex-end;
     margin: 0 10px 0 0;
   }
 }

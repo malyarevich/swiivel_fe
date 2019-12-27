@@ -7,35 +7,35 @@ import { emailValidator } from '@app/core/validators';
   templateUrl: './email-setting.component.html',
   styleUrls: ['./email-setting.component.scss']
 })
-export class EmailSettingComponent implements OnInit {
+export class EmailSettingComponent {
 
   form: FormGroup;
+  private optionsMap = [
+    'showDefaultValue',
+    'default',
+    'askForConfirm',
+  ];
 
   @Input()
   set settings(obj: any) {
     if (obj) {
-      this.form.patchValue({
-        showDefaultValue: !!obj.showDefaultValue,
-        default: obj.default || '',
-        askForConfirm: !!obj.askForConfirm
-      });
+      if (this.checkOptions(obj).length === 0) {
+        this.form = obj;
+      }
     }
   }
   @Output() fieldSettings = new EventEmitter();
 
   constructor(
     private fb: FormBuilder
-  ) {
-    this.form = this.fb.group({
-      showDefaultValue: new FormControl(false),
-      default: new FormControl('', { updateOn: 'blur'}),
-      askForConfirm: new FormControl(false),
-    });
-  }
+  ) { }
 
-  ngOnInit() {
-    this.form.valueChanges.subscribe(v => {
-      this.fieldSettings.emit(v);
+  checkOptions(obj: FormGroup) {
+    return this.optionsMap.filter((key) => {
+      if (!obj.get(key)) {
+        console.error(`Does not exist ${key} in options.`);
+        return true;
+      }
     });
   }
 

@@ -12,8 +12,8 @@
         (selected)="clickChangeStatus($event)"
       >
         <sw-button
-          size="small"
-          [color]="statusService.getStatusColor(form.status)"
+          class="small"
+          [ngClass]="statusService.getStatusColor(form.status)"
         >
           <span>{{form.status}}</span>
           <i class="fas fa-caret-down"></i>
@@ -23,12 +23,13 @@
     <ul class="up-block-buttons">
       <li class="up-block-button btn-copy-link">
         <sw-button
-          color="transparent"
-          size="small"
+          class="small transparent"
           (click)="clickCopy()"
         >
-          <span class="icon-button-share"></span>
-          <span class="up-block-button-text">Copy link</span>
+          <span class="share-content">
+            <span class="icon-button-share"></span>
+            <span class="up-block-button-text">Copy link</span>
+          </span>
         </sw-button>
       </li>
       <li class="up-block-button">
@@ -45,9 +46,9 @@
   </div>
   <div class="up-block-controls">
     <div class="up-block-control-button">
-      <sw-button [disabled]="true">
+      <a class="preview-button" [routerLink]="['/view-form', form._id]" target="_blank">
         Preview Form
-      </sw-button>
+      </a>
     </div>
     <div class="up-block-control-button">
       <sw-button (click)="clickEditForm()">
@@ -69,14 +70,14 @@
 
 <div class="down-block">
   <div class="down-block-info" [ngClass]="{'dashboard-shown': isDashboardShown}">
-    <app-form-management-info [form]="form" [mode]="isDashboardShown ? 'full' : 'short'"></app-form-management-info>
+    <sw-form-management-info [form]="form" [mode]="isDashboardShown ? 'full' : 'short'"></sw-form-management-info>
   </div>
   <div class="down-block-additional" *ngIf="isDashboardShown">
     <div *ngIf="form.analytics" class="down-block-analytics">
-      <app-form-management-analytics [formAnalytics]="form.analytics"></app-form-management-analytics>
+      <sw-form-management-analytics [formAnalytics]="form.analytics"></sw-form-management-analytics>
     </div>
     <div *ngIf="isDashboardShown && form.payments" class="down-block-payments">
-      <app-form-management-payments [formPayments]="form.payments"></app-form-management-payments>
+      <sw-form-management-payments [formPayments]="form.payments"></sw-form-management-payments>
     </div>
   </div>
 </div>

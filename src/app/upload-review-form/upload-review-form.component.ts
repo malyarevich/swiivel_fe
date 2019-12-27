@@ -55,12 +55,15 @@ export class UploadReviewFormComponent implements OnInit, OnDestroy {
   public uploadDocuments: Document[];
   public rotatingPicture: boolean;
   public isSaveActive = false;
+  public rotateParam: string = null;
   public isPopupOpen = false;
   public dataSettings = {};
   public isBackAction = false;
 
   public documentTypes = [];
   public documentFamilies = [];
+
+  private gotFilters = false;
 
   constructor(
     public uploadReviewFormService: UploadReviewFormService,
@@ -123,15 +126,31 @@ export class UploadReviewFormComponent implements OnInit, OnDestroy {
               this.form.controls['sort'].enable({ emitEvent: false });
             }
           }
+
           this.cdr.detectChanges();
+
+          if (!this.isEmptyObject(this.filterValue) && !this.gotFilters) {
+            this.gotFilters = true;
+
+            this.route.queryParams.subscribe(param => {
+              if (param.status === 'unassigned') {
+                if (this.filterValue && this.filterValue['status'] && this.filterValue['status']['data']) {
+                  const indexUnassignedStatus = this.filterValue['status']['data'].findIndex(x => x.value === 'unassigned');
+                  if (indexUnassignedStatus > -1) {
+                    this.form.controls['filter'].setValue([ this.filterValue['status']['data'][indexUnassignedStatus] ]);
+                  }
+                }
+              }
+            });
+          }
         }
       }, () => {
         this.router.navigate(['/']);
       });
 
     this.form.get('search').valueChanges.subscribe((data) => this.getDocumentslist(false, (data.replace(/^\s+/g, ''))));
-    this.form.get('sort').valueChanges.subscribe(() =>  this.getDocumentslist());
-    this.form.get('filter').valueChanges.subscribe(() =>  this.getDocumentslist());
+    this.form.get('sort').valueChanges.subscribe(() => this.getDocumentslist());
+    this.form.get('filter').valueChanges.subscribe(() => this.getDocumentslist());
   }
 
   getDocumentslist(resetActiveId = false, search = null) {
@@ -181,6 +200,7 @@ export class UploadReviewFormComponent implements OnInit, OnDestroy {
         this.uploadDocuments[index].isSelected = !this.uploadDocuments[index].isSelected;
       } else {
         this.isSaveActive = false;
+        this.rotateParam = null;
         this.documents.map(document => document._id === id ? document.isSelected = true : document.isSelected = false);
         this.dataSource.selectFormId(id);
         this.getExtremeDocuments(id);
@@ -385,30 +405,22 @@ export class UploadReviewFormComponent implements OnInit, OnDestroy {
   }
 
   rotateImg(evt: any): void {
-    if (evt.angle) {
-      if (evt.direction === 'left') {
-        if (parseInt(evt.angle, 10) + 90 < 361) {
-          this.updateImg((parseInt(evt.angle, 10)  + 90).toString());
-        } else {
-          this.updateImg('90');
-        }
-      } else {
-        if (parseInt(evt.angle, 10) - 90 >= 0) {
-          this.updateImg((parseInt(evt.angle, 10)  - 90).toString());
-        } else {
-          this.updateImg('270');
-        }
-      }
-    }
+    this.isSaveActive = true;
+    this.rotateParam = evt;
   }
 
   updateDocumentSettings(action) {
     if (action) {
-      this.dataSource.updateDocumentSettings(this.activeIdDocument, this.dataSettings).subscribe( () => this.getDocumentslist());
+      if (this.rotateParam !== null) {
+        this.updateImg(this.rotateParam);
+      } else {
+        this.dataSource.updateDocumentSettings(this.activeIdDocument, this.dataSettings).subscribe( () => this.getDocumentslist());
+      }
     } else {
       this.getDocumentslist();
     }
     this.isSaveActive = false;
+    this.rotateParam = null;
   }
 
   changeDocumentSettings(data: any) {

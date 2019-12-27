@@ -43,6 +43,7 @@ export class WidgetComponent implements OnInit {
     //   }
     // }
   ];
+  sectionName = 'Section';
   @ViewChild('holder', { static: false }) holder;
   @ViewChild('widgetContent', { static: false }) widgetContent;
 
@@ -50,6 +51,10 @@ export class WidgetComponent implements OnInit {
     private popup: Popup,
     private service: FormService
   ) {
+    this.dragFormats = [
+      this.service.fieldTypes.schema.find(schema => schema.type === 114),
+      this.service.fieldTypes.schema.find(schema => schema.type === 113),
+    ]
     this.service.dropLists$.subscribe((ids) => {
       this.dropListsIds = Array.from(ids);
     });
@@ -62,12 +67,16 @@ export class WidgetComponent implements OnInit {
     return !!this.ref;
   }
 
-  widgetTogle(): void {
+  widgetToggle(): void {
     if (this.ref) {
       this.ref.close();
     } else {
       this.openWidget();
     }
+  }
+
+  public close() {
+    if (this.ref) this.ref.close();
   }
 
   openWidget() {

@@ -1,0 +1,28 @@
+<div class="main_container" *ngIf="_section">
+  <div class="content">
+    <div class="drag-icon">
+      <i class="dragdrop fas fa-ellipsis-v"></i>
+    </div>
+    <sw-input-text [ngModel]="_section.name">
+      <span class="placeholder">Section Name</span>
+    </sw-input-text>
+    <sw-select [ngModel]="_section.options.size" [values]="widthOptions">
+      <span class="label">Section Width</span>
+      <span class="content-text">{{ widthOptions[_section.option.size] }}</span>
+    </sw-select>
+  </div>
+  <div class="actions">
+    <div class="icon">
+      <sw-icon-button icon="fa-cog" class="field-creator">
+      </sw-icon-button>
+    </div>
+    <div class="icon">
+      <sw-icon-button icon="fa-times" class="field-creator">
+      </sw-icon-button>
+    </div>
+    <div class="icon dragdrop">
+      <sw-icon-button [icon]="_section.isExpanded ? 'fa-caret-up' : 'fa-caret-down'">
+      </sw-icon-button>
+    </div>
+  </div>
+</div>

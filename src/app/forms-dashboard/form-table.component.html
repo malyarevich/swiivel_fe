@@ -5,7 +5,56 @@
         Data Collection
       </sw-page-header>
     </div>
+    <div class="app-form-table__controls">
+      <div class="control-view">
+        <sw-button color="transparent" (click)="changeDashboardView()">
+          <span *ngIf="!isDashboardShown" class="view-dashboard-text">
+            View Dashboard
+          </span>
+          <span *ngIf="isDashboardShown" class="hide-dashboard-text">
+            Hide Dashboard
+          </span>
+          <i
+            class="control-view-icon fas"
+            [ngClass]="{
+              'fa-caret-up hide-dashboard-icon': isDashboardShown,
+              'fa-caret-down view-dashboard-icon': !isDashboardShown
+            }"
+          ></i>
+        </sw-button>
+      </div>
+    </div>
   </div>
+
+  <div *ngIf="isDashboardShown">
+    <form class="app-form-table-statistics">
+      <div class="app-form-table-statistics-view">
+        <sw-form-dashboard-view
+          [statistic]="statistic?.views"
+          [staticsPeriodOptions]="this.statisticsPeriodOptions"
+          [defaultIndexOption]="defaultIndexOption"
+          (changeViewPeriod)="changePeriod($event, 'view')"
+        ></sw-form-dashboard-view>
+      </div>
+      <div class="app-form-table-statistics-rate">
+        <sw-form-dashboard-rate
+          [statistic]="statistic?.submissions_rate"
+          [staticsPeriodOptions]="this.statisticsPeriodOptions"
+          [defaultIndexOption]="defaultIndexOption"
+          (changeRatePeriod)="changePeriod($event, 'rate')"
+        ></sw-form-dashboard-rate>
+      </div>
+      <div class="app-form-table-statistics-invites">
+        <sw-form-dashboard-invites
+          [statistic]="statistic?.account_invites"
+          [staticsPeriodOptions]="this.statisticsPeriodOptions"
+          [defaultIndexOption]="defaultIndexOption"
+          (changeInvitesPeriod)="changePeriod($event, 'invites')"
+        ></sw-form-dashboard-invites>
+      </div>
+    </form>
+  </div>
+
   <div class="app-form-table__table">
     <div class="app-form-table__header">
       <div class="app-form-table__text">
@@ -58,16 +107,20 @@
             <ng-container cdkColumnDef="checkbox">
               <th cdk-header-cell *cdkHeaderCellDef width="4%">
                 <div class="cdk-header-checkbox">
-                  <sw-input-checkbox
-                    (click)="allSelect()"
+                  <sw-input-dash-checkbox
+                    (change)="allSelect($event)"
                     [check]="pageSelection[params.page - 1]?.selectedAnyRow || false"
                     [definition]="!pageSelection[params.page - 1]?.allSelected || false"
-                  ></sw-input-checkbox>
+                    [disabled]="showSpinner"
+                  ></sw-input-dash-checkbox>
                 </div>
               </th>
               <td cdk-cell *cdkCellDef="let form">
                 <div class="cdk-data-checkbox">
-                  <sw-input-checkbox [check]="_sm.isSelected(form.id)"></sw-input-checkbox>
+                  <sw-input-checkbox
+                    [check]="_sm.isSelected(form.id)"
+                    (change)="selectRow(form, $event, true)"
+                  ></sw-input-checkbox>
                 </div>
               </td>
             </ng-container>
@@ -88,6 +141,7 @@
                       formControlName="name"
                       [isSearch]="true"
                       [isClearable]="true"
+                      [trimStart]="true"
                       (keydown)="keyDownFunction($event)"
                     ></sw-input-text>
                   </div>
@@ -200,6 +254,7 @@
                       formControlName="createdBy"
                       [isSearch]="true"
                       [isClearable]="true"
+                      [trimStart]="true"
                       (keydown)="keyDownFunction($event)"
                     ></sw-input-text>
                   </div>
@@ -211,20 +266,20 @@
             </ng-container>
 
 
-            <ng-container cdkColumnDef="updatedAt">
+            <ng-container cdkColumnDef="createdAt">
               <th cdk-header-cell *cdkHeaderCellDef width="12%">
                 <div class="header_container" data-e2e="updateddatename">
-                  <div class="header_container__title" data-e2e="updateddatenametitle" (click)="sortBy('updated_at')">
-                    update date
+                  <div class="header_container__title" data-e2e="updateddatenametitle" (click)="sortBy('created_at')">
+                    created date
                     <div class="header_container__title_icons">
                       <i class="fas icon"
-                         [ngClass]="{'up': sort[0] === 'updated_at' && sort[1] === false, 'down': sort[0] === 'updated_at' && sort[1] === true}"></i>
+                         [ngClass]="{'up': sort[0] === 'created_at' && sort[1] === false, 'down': sort[0] === 'created_at' && sort[1] === true}"></i>
                     </div>
                   </div>
                   <div class="header_container__filter">
                     <sw-input-english-datepicker
                       class="filter-field"
-                      formControlName="updatedAt"
+                      formControlName="createdAt"
                       placeholder=""
                       [range]="true"
                       (keydown)="keyDownFunction($event)"
@@ -233,8 +288,8 @@
                 </div>
               </th>
               <td cdk-cell *cdkCellDef="let form">
-                <span class="date">{{ dateService.getDate(form.updated_at) }}</span>
-                <span class="time">{{ dateService.getTime(form.updated_at) }}</span>
+                <span class="date">{{ dateService.getDate(form.created_at) }}</span>
+                <span class="time">{{ dateService.getTime(form.created_at) }}</span>
               </td>
             </ng-container>
 

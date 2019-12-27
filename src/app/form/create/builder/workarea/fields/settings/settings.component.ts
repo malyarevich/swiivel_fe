@@ -10,6 +10,7 @@ import { NumberSettingComponent } from './number-setting/number-setting.componen
 import { PhoneSettingComponent } from './phone-setting/phone-setting.component';
 import { SectionSettingsComponent } from './section-settings/section-settings.component';
 import { TextSettingComponent } from './text-setting/text-setting.component';
+import { FormService } from '@app/form/form.service';
 
 const components = [
   { type: 101, component: TextSettingComponent, title: 'Short Text Field Settings' },
@@ -49,7 +50,8 @@ export class SettingsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(
     private resolver: ComponentFactoryResolver,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private service: FormService
   ) { }
 
   ngOnInit() {
@@ -76,16 +78,18 @@ export class SettingsComponent implements OnInit, AfterViewInit, OnDestroy {
     return res;
   }
 
-  private initSettings(f: any): void {
+  private initSettings(f: FormGroup): void {
     const c = components.find(c => c.type === f.value.type);
     if (c) {
       this.type = c.type;
       this.title = c.title;
-     
+      console.log('INPUT form in Settings', f.get('options'));
       const factory: ComponentFactory<any> = this.resolver.resolveComponentFactory<any>(c.component);
       if (this.container) {
+        this.service.checkOptions(f);
+        f.get('options').updateValueAndValidity();
         this.component = this.container.createComponent(factory);
-        this.component.instance.settings = f.get('options').value;
+        this.component.instance.settings = f.get('options');
         this.component.instance.fieldSettings.subscribe(v => {
           this.updateField(v);
         });

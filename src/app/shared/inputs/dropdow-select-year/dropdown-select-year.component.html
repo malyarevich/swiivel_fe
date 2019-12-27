@@ -11,13 +11,22 @@
 
   <ng-template #droplist>
     <div class="dropdown-buttons">
-      <sw-button [color]="colors.GRAY_PURPLE" [size]="size.MEDIUM" (click)="clickPreviousYears()">
-        <i class="fas fa-chevron-left"></i>
-        <span>Previous</span>
+      <sw-button
+        class="middle quaternary left-icn"
+        [ngClass]="colors.GRAY_PURPLE + ' ' + size.MEDIUM"
+        [icon]="chevronLeft"
+        (click)="clickPreviousYears()"
+      >
+        Previous
       </sw-button>
-      <sw-button [color]="colors.GRAY_PURPLE" [size]="size.MEDIUM" (click)="clickNextYears()" [disabled]="isNextYearsMoreNowYear()">
-        <span>Next</span>
-        <i class="fas fa-chevron-right"></i>
+      <sw-button
+        class="middle quaternary right-icn"
+        [ngClass]="colors.GRAY_PURPLE + ' ' + size.MEDIUM"
+        [disabled]="isNextYearsMoreNowYear()"
+        [icon]="chevronRight"
+        (click)="clickNextYears()"
+      >
+        Next
       </sw-button>
     </div>
     <div>

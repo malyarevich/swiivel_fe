@@ -6,9 +6,10 @@
     <sw-input-text [formControl]="_section.get('name')">
       <span class="placeholder">Section Name</span>
     </sw-input-text>
-    <sw-dropdown-input [formControl]="_section.get('options.size')" [options]="widthOptions">
+    <sw-select #select [formControl]="_section.get('options.size')" [values]="widthOptions">
       <span class="label">Section Width</span>
-    </sw-dropdown-input>
+      <span class="content-text">{{ select.title }}</span>
+    </sw-select>
   </div>
   <div class="actions">
     <div class="icon">
@@ -62,6 +63,11 @@
   [class.hidden]="!_section.value.isExpanded" [id]="id" [cdkDropListEnterPredicate]="mayEnter" [cdkDropListConnectedTo]="dropListsIds"
   (cdkDropListDropped)="drop($event)">
   <div *ngFor="let child of children.controls;" cdkDrag [cdkDragData]="child">
+    <div *cdkDragPlaceholder>
+      <sw-section-placeholder *ngIf="child.get('type').value === 114" [section]="child.value"></sw-section-placeholder>
+      <sw-group-placeholder *ngIf="child.get('type').value === 113" [group]="child.value"></sw-group-placeholder>
+      <sw-field-placeholder *ngIf="child.get('type').value < 113" [field]="child.value"></sw-field-placeholder>
+    </div>
     <sw-section *ngIf="child.get('type').value === 114"  [section]="child"></sw-section>
     <sw-group *ngIf="child.get('type').value === 113"   [group]="child"></sw-group>
     <sw-field *ngIf="child.get('type').value < 113" [field]="child"></sw-field>

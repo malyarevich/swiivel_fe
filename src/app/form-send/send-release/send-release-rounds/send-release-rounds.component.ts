@@ -3,19 +3,19 @@ import {
   Component,
   ElementRef,
   Input,
+  OnChanges,
+  OnDestroy,
   OnInit,
-  Renderer2
+  Renderer2,
+  SimpleChanges
 } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators
-} from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { IRound } from '@app/form-send/models/send.model';
+import { IGroupAccount, IMailingHouse, IPerson, IRound } from '@app/form-send/models/send.model';
 import { DataCollectionService } from '@app/forms-dashboard/data-collection.service';
 import { DateTime } from 'luxon';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { FormSendService } from '../../form-send.service';
 
 @Component({
@@ -23,20 +23,47 @@ import { FormSendService } from '../../form-send.service';
   templateUrl: './send-release-rounds.component.html',
   styleUrls: ['./send-release-rounds.component.scss']
 })
-export class SendReleaseRoundsComponent implements OnInit {
+export class SendReleaseRoundsComponent implements OnInit, OnChanges, OnDestroy {
   @Input() link: ElementRef;
+  @Input() mailingHouseList: IMailingHouse[];
+  @Input() groupAccountsList: IGroupAccount[];
+  @Input() selectedAccountsList: IPerson[];
   @Input() roundsList: IRound[];
+
   public form: FormGroup;
+  public utilForm: FormGroup;
   public isNew = false;
-  public showForm = false;
+  public isShowForm = false;
   roundId: any;
+  public mailingOptions = ['Use Mailing House', 'Self-mail'];
+  public mailingHouseOptions = [
+    {
+      id: 0,
+      title: 'Has no choose'
+    },
+    {
+      id: 1,
+      title: 'Fake Mailing House 1'
+    },
+    {
+      id: 2,
+      title: 'Fake Mailing House 2'
+    }
+  ];
+  public selectOptions = Array.from({ length: 30 }).map((_, i) => ({
+    id: i,
+    title: i
+  }));
   public download: {
     url: SafeResourceUrl;
     filename: string;
   } = {
-    url: null,
-    filename: null
-  };
+      url: null,
+      filename: null
+    };
+
+  reloadAccounts$: Subject<boolean> = new Subject<boolean>();
+  destroyed$ = new Subject();
 
   constructor(
     private formSendService: FormSendService,
@@ -47,37 +74,85 @@ export class SendReleaseRoundsComponent implements OnInit {
     private dataCollectionService: DataCollectionService
   ) {
     this.form = this.fb.group({
-      name: ['', [Validators.required]],
-      start_date: ['', [Validators.required]],
-      end_date: ['', [Validators.required]],
+      name: [null, [Validators.required]],
+      start_date: [null, [Validators.required]],
+      end_date: [null, [Validators.required]],
       types: fb.group({
         email: this.fb.group({
           selected: [false],
-          subject: ['', [Validators.required]],
-          body: ['', [Validators.required]],
-          buttonText: ['']
+          subject: [null],
+          body: [null],
+          text_link: [null]
         }),
         mailing: this.fb.group({
           selected: [false],
-          delay_days: [''],
-          is_self_mail: ['Use Mailing House'],
-          is_delay_days: [false],
-          mailing_house_id: ['']
+          delay_days: [null],
+          is_self_mail: [null],
+          is_delay_days: [null],
+          mailing_house_id: [null],
+          radio_mailing_type: [null],
+          select_delay_days: [null],
+          select_mailing_house: [null]
         })
       })
     });
+    this.utilForm = this.fb.group({
+      filter: [null]
+    });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (this.roundsList.length === 0) {
+      this.addRound();
+    } else {
+      this.cancelRound();
+    }
+    this.utilForm.get('filter').valueChanges
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe((filterValue: string) => {
+        this.filterAccountsByAnything(filterValue);
+      });
+  }
+
+  reloadBlockRefresh() {
+    this.reloadAccounts$.next(false);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.roundsList) {
+      if (this.roundsList.length === 0) {
+        this.addRound();
+      } else {
+        this.cancelRound();
+      }
+    }
+    if (changes.selectedAccountsList) {
+      this.reloadAccounts$.next(true);
+    }
+  }
+
+  setDefaultFormValues() {
+    this.form.get('types.email.text_link').setValue('Start Form');
+    this.form.get('types.mailing.delay_days').setValue(0);
+    this.form.get('types.mailing.is_self_mail').setValue(0);
+    this.form.get('types.mailing.is_delay_days').setValue(0);
+    this.form.get('types.mailing.radio_mailing_type').setValue(this.mailingOptions[0]);
+  }
 
   addRound() {
     this.isNew = true;
-    this.showForm = true;
+    this.isShowForm = true;
+    this.form.reset();
+    this.utilForm.reset();
+    this.setDefaultFormValues();
+    this.formSendService.selectedAccounts = [];
   }
 
   cancelRound() {
     this.form.reset();
-    this.showForm = false;
+    this.utilForm.reset();
+    this.formSendService.selectedAccounts = [];
+    this.isShowForm = false;
   }
 
   validateAllFormFields(formGroup: FormGroup) {
@@ -98,12 +173,106 @@ export class SendReleaseRoundsComponent implements OnInit {
     }
     this.formSendService.saveRound(this.form.value, this.isNew, this.roundId);
     this.form.reset();
-    this.showForm = false;
+    this.utilForm.reset();
+    this.formSendService.selectedAccounts = [];
+    this.isShowForm = false;
   }
 
   getIcon(expanded: boolean): string {
     return expanded ? 'fa-caret-up' : 'fa-caret-down';
   }
+
+  refreshFormValidationBySelector(selector: string, newValidator: ValidatorFn | ValidatorFn[]) {
+    this.form.get(selector).setValidators(newValidator);
+    this.form.get(selector).updateValueAndValidity();
+  }
+
+  changeEmailSelected(event) {
+    if (event) {
+      this.refreshFormValidationBySelector('types.email.subject', [Validators.required]);
+      this.refreshFormValidationBySelector('types.email.body', [Validators.required]);
+    } else {
+      this.refreshFormValidationBySelector('types.email.subject', []);
+      this.refreshFormValidationBySelector('types.email.body', []);
+    }
+  }
+
+  changeMailingSelected(event) {
+    if (event && this.form.get('types.mailing.is_self_mail').value === 0) {
+      this.refreshFormValidationBySelector('types.mailing.select_mailing_house', [Validators.required]);
+      this.refreshFormValidationBySelector('types.mailing.mailing_house_id', [Validators.required]);
+    } else {
+      this.refreshFormValidationBySelector('types.mailing.select_mailing_house', []);
+      this.refreshFormValidationBySelector('types.mailing.mailing_house_id', []);
+    }
+  }
+
+  isSelfMail(): boolean {
+    return (
+      this.form
+        .get('types')
+        .get('mailing')
+        .get('is_self_mail').value === 1
+    );
+  }
+
+  isMailHouse(): boolean {
+    return !(
+      this.form
+        .get('types')
+        .get('mailing')
+        .get('is_self_mail').value === 1
+    );
+  }
+
+  changeMailingType(event: string) {
+    this.form
+      .get('types')
+      .get('mailing')
+      .get('is_self_mail')
+      .setValue(this.mailingOptions[1] === event ? 1 : 0);
+    this.changeMailingSelected(true);
+  }
+
+  changeMailingHouse(event) {
+    this.form
+      .get('types')
+      .get('mailing')
+      .get('mailing_house_id')
+      .setValue(event && event[0] && event[0].id ? event[0].id : null);
+    this.form
+      .get('types')
+      .get('mailing')
+      .get('select_mailing_house')
+      .setValue(
+        event && event.length > 0 ? event : null
+        // : this.mailingHouseList
+        //   ? [this.mailingHouseList[0]]
+        //   : [this.mailingHouseOptions[0]]
+      );
+  }
+
+  changeDelayDays(event) {
+    this.form
+      .get('types')
+      .get('mailing')
+      .get('delay_days')
+      .setValue(event && event[0] && event[0].id ? event[0].id : 0);
+    this.form
+      .get('types')
+      .get('mailing')
+      .get('select_delay_days')
+      .setValue(event && event.length > 0 ? event : [this.selectOptions[0]]);
+  }
+
+  changeIsDelayDays(event) {
+    this.form
+      .get('types')
+      .get('mailing')
+      .get('is_delay_days')
+      .setValue(event ? 1 : 0);
+  }
+
   getReleaseType(item) {
     let res = '';
     if (!!item.types.email) {
@@ -125,6 +294,7 @@ export class SendReleaseRoundsComponent implements OnInit {
   onExportZIP() {
     this.dataCollectionService
       .exportPDFFormZIP(this.formSendService.formId)
+      .pipe(takeUntil(this.destroyed$))
       .subscribe(url => {
         this.download = {
           url: this.sanitizer.bypassSecurityTrustResourceUrl(url),
@@ -135,12 +305,19 @@ export class SendReleaseRoundsComponent implements OnInit {
       });
   }
 
-  toggleAccount(item: any, e: boolean) {
-    if (item.data) {
-      item.data.forEach(i => {
-        this.formSendService.toggleAccounts(i, e);
+  toggleAccountGroup(group: any, e: boolean) {
+    // console.log(group);
+    if (group && group.data) {
+      group.data.forEach(i => {
+        this.formSendService.toggleAccounts(i, !!e);
       });
     } else {
+      console.log('bad or empty group', group);
+    }
+  }
+
+  toggleAccount(item: any, e: boolean) {
+    if (item) {
       this.formSendService.toggleAccounts(item, e);
     }
   }
@@ -157,18 +334,23 @@ export class SendReleaseRoundsComponent implements OnInit {
     return this.formSendService.someChildrenSelected(i);
   }
 
-  editRound(i) {
+  editRound(i: IRound) {
     this.isNew = false;
     this.roundId = i.id;
     this.form.reset();
+    this.utilForm.reset();
+
+    const start_date = DateTime.fromString(i.start_date, 'yyyy-MM-dd').invalid
+      ? DateTime.fromString(i.start_date, 'yyyy/MM/dd').toFormat('MM/dd/yyyy')
+      : DateTime.fromString(i.start_date, 'yyyy-MM-dd').toFormat('MM/dd/yyyy');
+    const end_date = DateTime.fromString(i.end_date, 'yyyy-MM-dd').invalid
+      ? DateTime.fromString(i.end_date, 'yyyy/MM/dd').toFormat('MM/dd/yyyy')
+      : DateTime.fromString(i.end_date, 'yyyy-MM-dd').toFormat('MM/dd/yyyy');
+
     this.form.patchValue({
       name: i.name,
-      start_date: DateTime.fromString(i.start_date, 'yyyy-MM-dd').toFormat(
-        'MM/dd/yyyy'
-      ),
-      end_date: DateTime.fromString(i.end_date, 'yyyy-MM-dd').toFormat(
-        'MM/dd/yyyy'
-      )
+      start_date,
+      end_date
     });
     if (!!i.types.email) {
       this.form.get('types.email').patchValue({
@@ -179,14 +361,35 @@ export class SendReleaseRoundsComponent implements OnInit {
     if (!!i.types.mailing) {
       this.form.get('types.mailing').patchValue({
         selected: true,
-        ...i.types.mailing
+        ...i.types.mailing,
+        ...{
+          radio_mailing_type: this.mailingOptions[i.types.mailing.is_self_mail],
+          select_delay_days: this.selectOptions.filter(elem => i.types.mailing.delay_days === elem.id),
+          select_mailing_house: this.mailingHouseList
+            ? this.mailingHouseList.filter(elem => i.types.mailing.mailing_house_id === elem.id)
+            : this.mailingHouseOptions.filter(elem => i.types.mailing.mailing_house_id === elem.id)
+        }
       });
+      this.changeMailingSelected(true);
     }
     this.formSendService.selectedAccounts = i.accounts;
-    this.showForm = true;
+    this.isShowForm = true;
+  }
+
+  filterAccountsByAnything(filter: string) {
+    this.formSendService.filterAllAccountsByAnything(filter);
+  }
+
+  getSelectedAccountsLength(): number {
+    return this.formSendService.selectedAccounts.length;
   }
 
   deleteRound(i) {
     this.formSendService.deleteRound(i);
+  }
+
+  ngOnDestroy(): void {
+    this.destroyed$.next(true);
+    this.destroyed$.complete();
   }
 }

@@ -26,6 +26,11 @@ import { WorkareaHeaderComponent } from './builder/workarea/workarea-header.comp
 import { DocumentsFormsComponent } from './builder/workarea/documents-forms.component';
 import { WidgetComponent } from './builder/workarea/fields/widget/widget.component';
 import { FormDrawingComponent } from './builder/workarea/form-drawing/form-drawing.component';
+import { CdkDragPlaceholder } from '@angular/cdk/drag-drop';
+import { WorkareaFieldPlaceholderComponent } from './builder/workarea/fields/placeholders/field.component';
+
+import { WorkareaGroupPlaceholderComponent } from './builder/workarea/fields/placeholders/group.component';
+import { WorkareaSectionPlaceholderComponent } from './builder/workarea/fields/placeholders/section.component';
 
 
 @NgModule({
@@ -59,13 +64,19 @@ import { FormDrawingComponent } from './builder/workarea/form-drawing/form-drawi
     WorkareaSectionComponent,
     WorkareaGroupComponent,
     WorkareaFieldComponent,
-    WorkareaFieldsComponent
+    WorkareaFieldsComponent,
+    WorkareaFieldPlaceholderComponent,
+    WorkareaGroupPlaceholderComponent,
+    WorkareaSectionPlaceholderComponent,
   ],
   entryComponents: [
     WorkareaSectionComponent,
     WorkareaGroupComponent,
     WorkareaFieldComponent,
-    WorkareaFieldsComponent
+    WorkareaFieldsComponent,
+    WorkareaFieldPlaceholderComponent,
+    WorkareaGroupPlaceholderComponent,
+    WorkareaSectionPlaceholderComponent,
   ]
 })
 export class CreateModule { }

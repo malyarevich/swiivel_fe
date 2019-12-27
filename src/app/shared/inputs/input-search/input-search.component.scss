@@ -10,15 +10,33 @@
   width: auto;
   position: relative;
 
+  .cross-icon {
+    position: absolute;
+    color: $icon-grey-color;
+    top: 7px;
+    right: 8px;
+  }
+
   &.dropdown {
     height: auto;
 
     input {
-      padding: 0 30px 0 0;
       border: none;
       border-bottom: 1px solid $soft-gray;
       border-radius: 0;
       min-height: 20px;
+
+      &::-webkit-search-cancel-button {
+        -webkit-appearance: none;
+        background: url('./assets/icon-cross.svg') center no-repeat transparent;
+        background-size: 12px;
+        height: 12px;
+        width: 12px;
+      }
+    }
+
+    .cross-icon{
+      right: 3px;
     }
   }
 
@@ -41,10 +59,10 @@
 
   input {
     border: 1px solid $soft-gray;
-    border-radius: 3px;
+    border-radius: 100px;
     width: 100%;
     min-height: 26px;
-    padding: 0 30px 0 10px;
+    padding: 0 10px 0 30px;
     font-size: 12px;
 
     &:focus {
@@ -61,7 +79,7 @@
     height: 18px;
     position: absolute;
     top: 5px;
-    right: 8px;
+    left: 8px;
   }
 
   &.input-search-has-error {

@@ -4,13 +4,13 @@
 ></sw-back-bar>
 <div class="app-form-management">
   <div class="info" *ngIf="form">
-    <app-form-management-header
+    <sw-form-management-header
       [form]="form"
       (changeStatus)="changeFormStatus($event)"
       (copyLink)="copyLinkPopupOpen()"
       (exportPDF)="exportPDF()"
       (editForm)="editForm()"
-    ></app-form-management-header>
+    ></sw-form-management-header>
     <a [href]="download.url" [download]="download.filename" #link></a>
   </div>
 
@@ -26,12 +26,14 @@
           {{ tab }}
         </button>
       </div>
-      <div class="control-block">
+      <div class="control-block" *ngIf="activeTab === 'Submissions'">
         <div class="assign">
           <span class="assign-text">{{ formSubmissions?.cnt_unassigned }} Forms are unassigned</span>
           <sw-button
-            size="small"
+            class="small"
             [disabled]="!formSubmissions || !formSubmissions .cnt_unassigned || !formSubmissions.cnt_unassigned"
+            [routerLink]="['/upload-review-form', activeIdForm]"
+            [queryParams]="{status: 'unassigned'}"
           >
             Assign
           </sw-button>
@@ -45,7 +47,7 @@
               [options]="bulkOptions"
               (selected)="bulkAction($event)"
           >
-            <sw-button color="white">
+            <sw-button class="white" [disabled]="!bulkActive">
               <span class="actions-bulk-btn-text">Bulk Actions</span>
               <span class="actions-icon">
                 <i
@@ -59,6 +61,14 @@
         </div>
       </div>
     </div>
+    <ng-container [ngSwitch]="activeTab">
+      <sw-form-management-submissions
+        *ngSwitchCase="'Submissions'"
+        [formId]="activeIdForm"
+        (bulkActive)="changeBulkActive($event)"
+      ></sw-form-management-submissions>
+      <sw-form-management-logs *ngSwitchCase="'Log'" [formId]="activeIdForm"></sw-form-management-logs>
+    </ng-container>
   </div>
 </div>
 
