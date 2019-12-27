@@ -5,7 +5,7 @@ import { DropdownSelectComponent } from '@shared/inputs/dropdown-select/dropdown
 import { OptionDirective } from '@shared/inputs/input-select/option.directive';
 import { PaginatorComponent } from '@shared/paginator/paginator.component';
 import { action } from '@storybook/addon-actions';
-import { number, withKnobs } from '@storybook/addon-knobs';
+import { number, object, withKnobs } from '@storybook/addon-knobs';
 import { moduleMetadata, storiesOf } from '@storybook/angular';
 
 storiesOf('Elements', module).addDecorator(withKnobs)
@@ -28,12 +28,14 @@ storiesOf('Elements', module).addDecorator(withKnobs)
           <sw-paginator
             [index]="index"
             [size]="size"
+            [sizeOptions]="sizeOptions"
           ></sw-paginator>
         </div>
       `,
       props: {
         index: number('index', 1),
         size: number('size', 250),
+        sizeOptions: object('sizeOptions', [10, 20, 50, 100]),
         pageChange: action('onChange'),
       },
     };
