@@ -2,13 +2,12 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PopupComponent } from '@core/components/popup/popup.component';
 import { FaIconComponent, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { boolean, object, text, withKnobs } from '@storybook/addon-knobs';
-import { moduleMetadata, storiesOf } from '@storybook/angular';
-
 import { IconButtonComponent } from '@shared/buttons/icon-button/icon-button.component';
 import { DropdownInputComponent } from '@shared/inputs/dropdown-input/dropdown-input.component';
 import { InputSearchComponent } from '@shared/inputs/input-search/input-search.component';
 import { UserItemComponent } from '@shared/user-item/user-item.component';
+import { boolean, object, text, withKnobs } from '@storybook/addon-knobs';
+import { moduleMetadata, storiesOf } from '@storybook/angular';
 
 const usersOptions = [
   {
