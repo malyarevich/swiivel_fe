@@ -40,28 +40,28 @@ import { BackBarComponent } from '@shared/bars/back-bar/back-bar.component';
 import { DocumentApprovalBarComponent } from '@shared/bars/document-approval-bar/document-approval-bar.component';
 
 // Others
-import { RadioGroupComponent } from './inputs/radio-group/radio-group.component';
-import { LabelComponent } from './labels/label/label.component';
-import { UserItemComponent } from './user-item/user-item.component';
-import { SelectOptionDirective } from './inputs/dropdown-select/option.directive';
-import { InputSelectComponent } from './inputs/input-select/input-select.component';
-import { OptionDirective } from './inputs/input-select/option.directive';
-import { MainComponent } from './main.component';
-import { ComponentIdDirective } from './inputs/e2e.directive';
-import { PaginatorComponent } from './paginator/paginator.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CdkStepperModule } from '@angular/cdk/stepper';
-import { StepperComponent } from './stepper/stepper.component';
-import { StepperService } from './stepper.service';
-import { FormComponent } from './form.component';
+import localHe from '@angular/common/locales/he';
+import { FaIconComponent, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ProgressLineBarComponent } from '@shared/bars/progress-line-bar/progress-line-bar.component';
 import { StatusLabelComponent } from '@shared/labels/status-label/status-label.component';
-import { InputHebrewDatepickerComponent } from './inputs/input-hebrew-datepicker/input-hebrew-datepicker.component';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-import localHe from '@angular/common/locales/he';
 import { IConfig, NgxMaskModule } from 'ngx-mask';
-import { FontAwesomeModule, FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { FormComponent } from './form.component';
+import { SelectOptionDirective } from './inputs/dropdown-select/option.directive';
+import { ComponentIdDirective } from './inputs/e2e.directive';
+import { InputHebrewDatepickerComponent } from './inputs/input-hebrew-datepicker/input-hebrew-datepicker.component';
+import { InputSelectComponent } from './inputs/input-select/input-select.component';
+import { OptionDirective } from './inputs/input-select/option.directive';
+import { RadioGroupComponent } from './inputs/radio-group/radio-group.component';
+import { LabelComponent } from './labels/label/label.component';
+import { MainComponent } from './main.component';
+import { PaginatorComponent } from './paginator/paginator.component';
+import { StepperService } from './stepper.service';
+import { StepperComponent } from './stepper/stepper.component';
+import { UserItemComponent } from './user-item/user-item.component';
 
 registerLocaleData(localHe);
 

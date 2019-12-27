@@ -114,6 +114,11 @@ export class FormManagementService extends ApiService {
               `filter[${filter}][endDate]`,
               this.dateService.getStandardDate(requestParams.filter[filter]['startDate'].date));
           }
+        } else if (filter === 'completion') {
+          if (requestParams.filter[filter] && requestParams.filter[filter].from && requestParams.filter[filter].to) {
+            params = params.append(`filter[${filter}][from]`, requestParams.filter[filter].from);
+            params = params.append(`filter[${filter}][to]`, requestParams.filter[filter].to);
+          }
         } else {
           params = params.append(`filter[${filter}]`, requestParams.filter[filter]);
         }
