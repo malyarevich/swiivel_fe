@@ -32,6 +32,7 @@ const deprecated = (_this: any, name = '') => {
   styleUrls: ['./input-radio.component.scss'],
   host: {
     '[class.checked]': 'checked',
+    '[attr.tabindex]': '-1',
     '(focus)': '_inputElement.nativeElement.focus()',
   },
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -94,26 +95,11 @@ export class InputRadioComponent implements OnInit, AfterViewInit {
   @ViewChild('input', { static: false }) _inputElement: ElementRef<HTMLInputElement>;
 
 
-  @HostListener('click', ['$event'])
-  @HostListener('keydown', ['$event']) onEvent(event: Event) {
+  @HostListener('click', ['$event']) onEvent(event: Event) {
     event.preventDefault();
     event.stopPropagation();
     if (event.target === event.target) {
-      if (event instanceof KeyboardEvent) {
-        if (event.code === 'Space') {
-          if (!this.disabled) {
-            this.group.value = this._value;
-            this.group._change(this.value)
-            this.onChange(this.value);
-          }
-        } 
-        else if (event.code === 'Tab') {
-          let next = this.element.nativeElement.nextElementSibling;
-          if (next) {
-            next.focus();
-          }
-        }
-      } else if (event instanceof MouseEvent) {
+      if (event instanceof MouseEvent) {
         if (!this.disabled) {
           this.group.value = this._value;
           this.group._change(this.value)

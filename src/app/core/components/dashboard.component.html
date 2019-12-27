@@ -55,6 +55,8 @@
 <sw-input-toggle [(ngModel)]="textarea.editable">
   <span class="input_label">Editable</span>
 </sw-input-toggle>
+<sw-radio-group [formControl]="enabledControl" name="enabled" (change)="onChange($event)">
+  <sw-input-radio checked [value]="true" style="margin-right: 15px" swFigmaId="164:156">true</sw-input-radio>
 <button type="button" (click)="changeTextarea()">Change textarea value</button>
 <button type="button" (click)="changeTextarea(true)">Change textarea size</button>
 
@@ -72,8 +74,9 @@
 
 <fa-icon [icon]="['fad','documents']"></fa-icon>
 
-<sw-radio-group [formControl]="enabledControl" name="enabled" (change)="onChange($event)">
-  <sw-input-radio checked [value]="true" style="margin-right: 15px" swFigmaId="164:156">true</sw-input-radio>
+<!-- <sw-radio-group [formControl]="enabledControl" name="enabled" (change)="onChange($event)">
+  <sw-input-radio checked [value]="true" style="margin-right: 15px" swFigmaId="164:156">true</sw-input-radio> -->
+
   <sw-input-radio [value]="false" swFigmaId="164:171">false</sw-input-radio>
 </sw-radio-group>
 
