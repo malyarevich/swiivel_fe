@@ -1,0 +1,126 @@
+@import "index";
+
+.range {
+  width: 270px;
+  padding: 15px;
+}
+
+.range-picker-value {
+  display: flex;
+  height: 16px;
+  padding: 3px 16px 3px 3px;
+  border-radius: 3px;
+  border: none;
+  background: $white;
+}
+
+.range-picker-text {
+  padding: 1px 4px;
+  color: $element-base-color;
+  border-radius: 3px;
+  background: $purple-bg;
+}
+
+.range-input-container {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 0 10px;
+}
+
+.range-picker {
+  position: relative;
+  width: 100%;
+}
+
+.icon {
+  position: absolute;
+  top: 3px;
+  right: 8px;
+  color: $icon-gray;
+  font-size: 10px;
+
+  .times:hover {
+    cursor: pointer;
+  }
+}
+
+.label-text {
+  font: 800 12px/15px $nunito-sans;
+  color: $darkest-gray;
+}
+
+.range-slider {
+  margin: 0 0 15px;
+  padding: 0 10px;
+}
+
+::ng-deep {
+  .range-slider {
+    .ng5-slider {
+      margin: 20px 0 0;
+
+      .ng5-slider-bar {
+        border-radius: 10px;
+      }
+
+      .ng5-slider-selection {
+        background: $element-base-color;
+      }
+
+      .ng5-slider-pointer {
+        width: 0;
+        height: 0;
+        background: transparent;
+      }
+
+      .ng5-slider-pointer:after {
+        background: transparent;
+        top: -3px;
+        left: -11px;
+        position: absolute;
+        content: '';
+        width: 0;
+        height: 0;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-top: 15px solid $element-base-color;
+      }
+
+      .ng5-slider-pointer.ng5-slider-pointer:after {
+        background: transparent;
+      }
+    }
+  }
+}
+
+.controls-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.controls-button {
+  width: 47%;
+}
+
+.range-input {
+  width: 100px;
+  border: 1px solid $soft-gray;
+  border-radius: 3px;
+  padding: 6px 6px 4px 10px;
+  margin: 3px 0 0;
+}
+
+.input-to {
+  padding: 0 0 0 15px;
+  position: relative;
+
+  &:after {
+    content: '';
+    width: 20px;
+    height: 1px;
+    background: $soft-gray;
+    position: absolute;
+    top: 33px;
+    left: -11px;
+  }
+}
