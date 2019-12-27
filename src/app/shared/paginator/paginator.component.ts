@@ -1,6 +1,7 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { Observable, range } from 'rxjs';
-import { map, toArray, filter } from 'rxjs/operators';
+import { filter, map, toArray } from 'rxjs/operators';
 
 @Component({
   selector: 'sw-paginator',
@@ -9,18 +10,20 @@ import { map, toArray, filter } from 'rxjs/operators';
 })
 export class PaginatorComponent implements OnInit, OnChanges {
 
-  public range: number = 2;
-  public currentPage: number = 1;
+  public range = 2;
+  public currentPage = 1;
   public totalPages: number;
   public pages: Observable<number[]>;
-  public limit: number = 10;
+  public limit = 10;
+
+  public caretDown = faCaretDown;
 
   @Input() set index(i: number) {
     if (i) {
       this.currentPage = i;
-    } 
+    }
   }
-  @Input() size: number = 200;
+  @Input() size = 200;
   @Input() sizeOptions = [10, 20, 50, 100];
   @Output() pageChange: EventEmitter<any> = new EventEmitter<any>();
 
@@ -43,10 +46,6 @@ export class PaginatorComponent implements OnInit, OnChanges {
     );
   }
 
-  getCurrentPage(index: number, limit: number): number {
-    return Math.floor(index / limit) + 1;
-  }
-  
   getTotalPages(limit: number, size: number): number {
     return Math.ceil(Math.max(size, 1) / Math.max(limit, 1));
   }
