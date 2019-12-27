@@ -1,10 +1,12 @@
 import {
   ChangeDetectorRef,
   Component,
+  EventEmitter,
   forwardRef,
   Input,
   OnDestroy,
   OnInit,
+  Output,
   ViewChild
 } from '@angular/core';
 import { ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
@@ -40,6 +42,21 @@ const ENGDATEPICKER_CONTROL_ACCESSOR = {
 })
 export class InputEnglishDatepickerComponent
   implements OnInit, OnDestroy, ControlValueAccessor {
+
+  constructor(private popup: Popup, private cdr: ChangeDetectorRef, private fb: FormBuilder) {
+    this.selectDateForm = this.fb.group({
+      month: new FormControl(this.months[0], Validators.required),
+      year: new FormControl(new Date().getFullYear(), Validators.required)
+    });
+    this.inputDateForm = this.fb.group({
+      dateFrom: new FormControl(''),
+      dateTo: new FormControl(''),
+    });
+  }
+
+  get dateFormat(): string {
+    return this.format.replace(/m/g, 'M').replace(/-/g, this.separator);
+  }
   // === variables for calendar ===
   viewDate = new Date();
   events: CalendarEvent[] = [];
@@ -58,16 +75,11 @@ export class InputEnglishDatepickerComponent
     { id: 9, title: 'October' },
     { id: 10, title: 'November' },
     { id: 11, title: 'December'}
-    ];
+  ];
   selectDateForm: FormGroup;
   inputDateForm: FormGroup;
 
   public mask = '00/00/0000';
-
-  // ===
-
-  onChange: Function;
-  onTouched: Function;
 
   private destroyed$ = new Subject();
   private ref: PopupRef;
@@ -84,19 +96,17 @@ export class InputEnglishDatepickerComponent
   @Input() separator: '-' | '/' | '.' = '/';
   @Input() value: string = null;
 
+  @Output() readonly change: EventEmitter<any> = new EventEmitter();
+
   @ViewChild('datepicker', { static: false }) datepicker;
   @ViewChild('holder', { static: false }) holder;
 
-  constructor(private popup: Popup, private cdr: ChangeDetectorRef, private fb: FormBuilder) {
-    this.selectDateForm = this.fb.group({
-      month: new FormControl(this.months[0], Validators.required),
-      year: new FormControl(new Date().getFullYear(), Validators.required)
-    });
-    this.inputDateForm = this.fb.group({
-      dateFrom: new FormControl(''),
-      dateTo: new FormControl(''),
-    });
-  }
+  // ===
+
+  private onChange: (value: any) => void = (value: any) => {
+    this.change.emit(value);
+  };
+  private onTouched: () => void = () => {};
 
   ngOnInit(): void {
     this.mask = this.range ? '00/00/0000 - 00/00/0000' : '00/00/0000';
@@ -104,12 +114,12 @@ export class InputEnglishDatepickerComponent
     this.selectDateForm.valueChanges.subscribe(value => {
       this.viewDate = new Date(value.year, value.month[0].id, 1);
     });
-    this.inputDateForm.controls['dateFrom'].valueChanges.subscribe(value => {
+    this.inputDateForm.controls.dateFrom.valueChanges.subscribe(value => {
       if (this.inputStartDateInFocus) {
         this.updateCalendarValues(value, 'start');
       }
     });
-    this.inputDateForm.controls['dateTo'].valueChanges.subscribe(value => {
+    this.inputDateForm.controls.dateTo.valueChanges.subscribe(value => {
       if (this.inputEndDateInFocus) {
         this.updateCalendarValues(value, 'end');
       }
@@ -139,13 +149,13 @@ export class InputEnglishDatepickerComponent
         });
       }
     } else if (value.length === 0) {
-        if (extreme === 'start') {
-          this.selectedRange.startDate = null;
-        } else {
-          this.selectedRange.endDate = null;
-        }
-        this.clearCalendar();
-        this.colorRange();
+      if (extreme === 'start') {
+        this.selectedRange.startDate = null;
+      } else {
+        this.selectedRange.endDate = null;
+      }
+      this.clearCalendar();
+      this.colorRange();
     }
   }
 
@@ -154,19 +164,15 @@ export class InputEnglishDatepickerComponent
     this.selectDateForm.get('year').setValue(this.viewDate.getFullYear(), { emitEvent: true});
   }
 
-  get dateFormat(): string {
-    return this.format.replace(/m/g, 'M').replace(/-/g, this.separator);
-  }
-
   writeValue(value: string): void {
     this.value = value;
   }
 
-  registerOnTouched(fn: Function): void {
+  registerOnTouched(fn: any): void {
     this.onTouched = fn;
   }
 
-  registerOnChange(fn: Function): void {
+  registerOnChange(fn: any): void {
     this.onChange = fn;
   }
 
@@ -217,7 +223,7 @@ export class InputEnglishDatepickerComponent
         this.inputDateForm.get('dateTo').setValue(
           DateTime.fromJSDate(this.selectedRange.endDate.date).toFormat(this.dateFormat),
           { emitEvent: true}
-          );
+        );
       }
       this.cdr.markForCheck();
       this.colorRange();
