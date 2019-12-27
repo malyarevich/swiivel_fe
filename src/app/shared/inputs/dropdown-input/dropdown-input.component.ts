@@ -29,11 +29,44 @@ const DROPDOWN_CONTROL_ACCESSOR = {
   providers: [DROPDOWN_CONTROL_ACCESSOR]
 })
 export class DropdownInputComponent implements OnInit, ControlValueAccessor {
+
+  @Input() set selectValue(opt: [any]) {
+    if (opt[0] === null) {
+      this._sm.clear();
+    }
+  }
+
+  @Input()
+  set multiple(opt: boolean) {
+    this._multiple = !!opt;
+    this._sm = new SelectionModel(this._multiple);
+  }
+
+  @Input()
+  set options(opts: any[]) {
+    if (opts) {
+      this.dropdownList = opts;
+      this.dropdownRawList = opts;
+    }
+  }
+
+  constructor(private popup: Popup, private cdr: ChangeDetectorRef, private fb: FormBuilder) {
+    this.form = this.fb.group({
+      search: new FormControl('', Validators.required)
+    });
+  }
+
+  get value() {
+    return this._sm.selected;
+  }
+
+  get active() {
+    return !!this._ref;
+  }
+
   private _ref;
   private _sm: SelectionModel<any>;
 
-  onChange: Function;
-  onTouched: Function;
   dropdownList: any[];
   dropdownRawList: any[];
   _multiple = false;
@@ -57,37 +90,16 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
   public caretDown = faCaretDown;
   public times = faTimes;
 
-  @Input() set selectValue(opt: [any]) {
-    if (opt[0] === null) {
-      this._sm.clear();
-    }
-  }
-
-  @Input()
-  set multiple(opt: boolean) {
-    this._multiple = !!opt;
-    this._sm = new SelectionModel(this._multiple);
-  }
-
-  @Input()
-  set options(opts: any[]) {
-    if (opts) {
-      this.dropdownList = opts;
-      this.dropdownRawList = opts;
-    }
-  }
-
   @Output() isPopupShown = new EventEmitter();
   @Output() readonly change: EventEmitter<any> = new EventEmitter();
 
   @ViewChild('droplist', { static: false }) droplist;
   @ViewChild('holder', { static: false, read: ElementRef }) holder: ElementRef;
 
-  constructor(private popup: Popup, private cdr: ChangeDetectorRef, private fb: FormBuilder) {
-    this.form = this.fb.group({
-      search: new FormControl('', Validators.required)
-    });
-  }
+  private onChange: (value: any) => void = (value: any) => {
+    this.change.emit(value);
+  };
+  private onTouched: () => void = () => {};
 
   ngOnInit(): void {
     this._sm = new SelectionModel(this._multiple);
@@ -106,14 +118,6 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
     });
   }
 
-  get value() {
-    return this._sm.selected;
-  }
-
-  get active() {
-    return !!this._ref;
-  }
-
   writeValue(items?: any[]): void {
     this._sm.clear();
 
@@ -124,11 +128,11 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
     this.cdr.markForCheck();
   }
 
-  registerOnTouched(fn: Function): void {
+  registerOnTouched(fn: any): void {
     this.onTouched = fn;
   }
 
-  registerOnChange(fn: Function): void {
+  registerOnChange(fn: any): void {
     this.onChange = fn;
   }
 
@@ -180,7 +184,11 @@ export class DropdownInputComponent implements OnInit, ControlValueAccessor {
   }
 
   showPopup(e: any): void {
-    if (!(e && e.target && e.target.className && e.target.className.includes('container__icon--clear'))) {
+    if (!(e && e.target && (
+      (e.target.parentNode && e.target.parentNode.dataset && e.target.parentNode.dataset.icon &&
+        e.target.parentNode.dataset.icon === 'times') ||
+      (e.target.className && typeof e.target.className === 'string' && e.target.className.includes('container__icon--clear'))
+    ))) {
       this.isPopupShown.emit(true);
       if (!!this.disabled) {
         return;
