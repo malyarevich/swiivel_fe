@@ -86,8 +86,11 @@ export class RadioGroupComponent implements ControlValueAccessor, AfterViewInit 
     // this.blur.emit();
   };
 
+  _change(val) {
+    this.onChange(val)
+  }
+
   _touch() {
-    console.log('Touched group');
     if (this.onTouched) {
       this.onTouched();
     }
@@ -130,7 +133,6 @@ export class RadioGroupComponent implements ControlValueAccessor, AfterViewInit 
   set disabled(value) {
     this._disabled = coerceBooleanProperty(value);
     this._markInputsForCheck();
-    console.log('Set disable state', this._disabled)
   }
   
   constructor(public cdr: ChangeDetectorRef, ){}

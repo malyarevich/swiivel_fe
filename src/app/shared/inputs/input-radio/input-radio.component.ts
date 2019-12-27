@@ -32,14 +32,12 @@ const deprecated = (_this: any, name = '') => {
   styleUrls: ['./input-radio.component.scss'],
   host: {
     '[class.checked]': 'checked',
-    // Note: under normal conditions focus shouldn't land on this element, however it may be
-    // programmatically set, for example inside of a focus trap, in this case we want to forward
-    // the focus to the native element.
     '(focus)': '_inputElement.nativeElement.focus()',
   },
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class InputRadioComponent implements OnInit, AfterViewInit {
+  _isActive: boolean;
 
   
   @Input() get checked(): boolean { return this._checked; }
@@ -105,8 +103,10 @@ export class InputRadioComponent implements OnInit, AfterViewInit {
         if (event.code === 'Space') {
           if (!this.disabled) {
             this.group.value = this._value;
+            this.group._change(this.value)
+            this.onChange(this.value);
           }
-        }
+        } 
         else if (event.code === 'Tab') {
           let next = this.element.nativeElement.nextElementSibling;
           if (next) {
@@ -116,6 +116,8 @@ export class InputRadioComponent implements OnInit, AfterViewInit {
       } else if (event instanceof MouseEvent) {
         if (!this.disabled) {
           this.group.value = this._value;
+          this.group._change(this.value)
+          this.onChange(this.value);
         }
       } else {
         console.log(event)
@@ -135,7 +137,13 @@ export class InputRadioComponent implements OnInit, AfterViewInit {
     // this.blur.emit();
   };
   
-  
+  setActiveStyles() {
+    this._isActive = true;
+  };
+
+  setInactiveStyles() {
+    this._isActive = false;
+  }
 
   constructor(@Optional() group: RadioGroupComponent,
     public cdr: ChangeDetectorRef,
@@ -184,7 +192,8 @@ export class InputRadioComponent implements OnInit, AfterViewInit {
     event.stopPropagation();
     this.checked = true;
     if (this.group) {
-      this.group.value = this._value;
+      this.group.value = this.value;
+      this.group._change(this.value)
       this.onChange(this.value);
     }
   }

@@ -21,6 +21,8 @@ export class DashboardComponent implements OnInit {
   longTextDisabled = new FormControl(false);
   form: FormGroup;
   fields;
+  enabledControl = new FormControl(false);
+  
 
   dropdownList = [
     {
@@ -85,6 +87,9 @@ export class DashboardComponent implements OnInit {
       } else {
         this.form.get('longText').enable();
       }
+    });
+    this.enabledControl.valueChanges.subscribe((val) => {
+      console.log('control value chaneg', val);
     });
   }
 
