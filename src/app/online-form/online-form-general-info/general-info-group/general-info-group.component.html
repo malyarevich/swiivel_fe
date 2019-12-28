@@ -1,28 +1,16 @@
 <!--Title-->
 <div class="content_section__title_box">
-  <h2
-    class="content_section__article_title content_section__article_title--left pt-3"
-  >
+  <h2 class="content_section__article_title content_section__article_title--left">
     <span class="compact-caption">
       {{ groupCaption }}
 
       <ng-container *ngIf="hasErrors()">
-        <span
-          error-hint
-          [errorsList]="getErrorByNodeId(group._id, formErrors)"
-          [fieldNameList]="fieldNameList"
-          class="errors-bullet"
-        ></span>
+        <span error-hint [errorsList]="getErrorByNodeId(group._id, formErrors)" [fieldNameList]="fieldNameList"
+          class="errors-bullet"></span>
       </ng-container>
 
-      <ng-container
-        *ngIf="isShowGroupHint() && !isGroupHintDirectly() && getGroupHint()"
-      >
-        <span
-          class="position-relative p-relative"
-          (mouseenter)="hoverHint()"
-          (mouseleave)="unHoverHint()"
-        >
+      <ng-container *ngIf="isShowGroupHint() && !isGroupHintDirectly() && getGroupHint()">
+        <span class="position-relative p-relative" (mouseenter)="hoverHint()" (mouseleave)="unHoverHint()">
           <img src="/assets/images/icons/form-hint.svg" alt="Group hint" />
           <span class="pop_up_container" *ngIf="isHintHovered()">
             <span class="pop_up_container__text">
@@ -34,10 +22,7 @@
     </span>
   </h2>
 
-  <h3
-    class="content_section__group_hint"
-    *ngIf="isShowGroupHint() && isGroupHintDirectly() && getGroupHint()"
-  >
+  <h3 class="content_section__group_hint" *ngIf="isShowGroupHint() && isGroupHintDirectly() && getGroupHint()">
     {{ getGroupHint() }}
   </h3>
 </div>
@@ -47,12 +32,8 @@
   <div class="section__fields">
     <ng-container *ngFor="let field of fields">
       <div class="field_width--{{ getWidth(field) }}">
-        <sw-general-info-field
-          [field]="field"
-          [formErrors]="getFormErrorsById(field['_id'])"
-          [isViewOnly]="isViewOnly"
-          [fg]="fg"
-        ></sw-general-info-field>
+        <sw-general-info-field [field]="field" [formErrors]="getFormErrorsById(field['_id'])" [isViewOnly]="isViewOnly"
+          [fg]="fg"></sw-general-info-field>
       </div>
     </ng-container>
   </div>
@@ -60,14 +41,9 @@
   <!-- Group -->
   <div class="section__groups">
     <ng-container *ngFor="let groupItem of groups">
-      <sw-general-info-group
-        [group]="groupItem"
-        [groupCaption]="groupCaption"
-        [formErrors]="getFormErrorsById(groupItem['_id'])"
-        [fieldNameList]="fieldNameList"
-        [fg]="fg"
-        [isViewOnly]="isViewOnly"
-      ></sw-general-info-group>
+      <sw-general-info-group [group]="groupItem" [groupCaption]="groupCaption"
+        [formErrors]="getFormErrorsById(groupItem['_id'])" [fieldNameList]="fieldNameList" [fg]="fg"
+        [isViewOnly]="isViewOnly"></sw-general-info-group>
     </ng-container>
   </div>
 </div>

@@ -6,6 +6,11 @@
   flex-direction: row;
 }
 
+// TODO: ask designers about this rule
+.content_section__article_title {
+  padding-top: 0.75rem;
+}
+
 .errors-bullet {
   cursor: pointer;
   position: absolute;
@@ -14,7 +19,7 @@
   display: block;
   width: 0.5rem;
   height: 0.5rem;
-  border-radius: 9999px;
+  border-radius: 50%;
   background-color: #fd6969;
 }
 

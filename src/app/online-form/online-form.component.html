@@ -1,51 +1,29 @@
 <ng-container *ngIf="isReady$ | async">
-  <sw-online-form-nav
-    *ngIf="!isReviewMode"
-    [formName]="(form$ | async)?.name"
-    (actionEmitter)="onMainNavAction($event)"
-  ></sw-online-form-nav>
+  <sw-online-form-nav *ngIf="!isReviewMode" [formName]="(form$ | async)?.name"
+    (actionEmitter)="onMainNavAction($event)"></sw-online-form-nav>
 
-  <div class="container-fluid app-of-background online_form_container">
-    <div
-      class="online_form_container__nav app-div-animation"
-      [ngClass]="{
+  <div class="app-of-background online_form_container">
+    <div class="online_form_container__nav app-div-animation" [ngClass]="{
         'online_form_container__nav--lower': isReviewMode,
         'app-div-show': isMenuShow,
         'app-div-hide': !isMenuShow
-      }"
-    >
-      <sw-online-form-menu
-        [form]="form$ | async"
-        [pagesPercents]="pagesPercents$ | async"
-        [formNavigationState]="formNavigationState$ | async"
-        [currentPosition]="currentPosition$ | async"
-        (onGoToPage)="goToPage($event)"
-      ></sw-online-form-menu>
+      }">
+      <sw-online-form-menu [form]="form$ | async" [pagesPercents]="pagesPercents$ | async"
+        [formNavigationState]="formNavigationState$ | async" [currentPosition]="currentPosition$ | async"
+        (onGoToPage)="goToPage($event)"></sw-online-form-menu>
     </div>
 
-    <div
-      class="online_form_container__wrapper"
-      [ngClass]="{ 'online_form_container__wrapper--no_move': isReviewMode }"
-    >
+    <div class="online_form_container__wrapper" [ngClass]="{ 'online_form_container__wrapper--no_move': isReviewMode }">
       <div class="online_form_container__content">
-        <sw-online-form-view
-          [form]="form$ | async"
-          [fg]="fg$ | async"
-          [formNavigationState]="formNavigationState$ | async"
-          [currentPosition]="currentPosition$ | async"
-          [formErrors]="sectionGroupFieldsErrors$ | async"
-          [fieldNameList]="fieldNameList"
-          [isViewOnly]="isViewOnly$ | async"
-          (goToTab)="goToTab($event)"
-        ></sw-online-form-view>
-        <!-- [formErrors]="(formErrors$ | async)" -->
+        <sw-online-form-view [form]="form$ | async" [fg]="fg$ | async"
+          [formNavigationState]="formNavigationState$ | async" [currentPosition]="currentPosition$ | async"
+          [formErrors]="sectionGroupFieldsErrors$ | async" [fieldNameList]="fieldNameList"
+          [isViewOnly]="isViewOnly$ | async" (goToTab)="goToTab($event)"></sw-online-form-view>
       </div>
 
       <div class="online_form_container__control_block">
-        <sw-online-form-controls
-          (previousStepEmitter)="goPreviousStep()"
-          (saveAndNextStepEmitter)="saveAndNextStep()"
-        ></sw-online-form-controls>
+        <sw-online-form-controls (previousStepEmitter)="goPreviousStep()" (saveAndNextStepEmitter)="saveAndNextStep()">
+        </sw-online-form-controls>
       </div>
     </div>
   </div>

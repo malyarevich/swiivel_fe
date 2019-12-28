@@ -1,5 +1,11 @@
 @import "./shared/styles/index.scss";
 
+:host {
+  height: inherit;
+  display: grid;
+  grid-template-rows: max-content;
+}
+
 .app-of-background {
   background-color: $background-color;
 }
@@ -24,7 +30,7 @@
       padding-right: 1rem;
       width: 32rem;
     }
-    
+
     &--lower {
       @include media-breakpoint-up(lg) {
         position: relative;
@@ -42,14 +48,16 @@
     position: relative;
     top: 1rem;
     width: auto;
-    width: -webkit-fill-available;
+    // width: -webkit-fill-available;
+    flex: 1 auto;
+    padding-bottom: 1rem;
 
     @include media-breakpoint-up(lg) {
       top: -5.5rem;
     }
 
     &--no_move {
-      
+
       @include media-breakpoint-up(lg) {
         top: 0;
       }

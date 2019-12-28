@@ -1,114 +1,77 @@
-<div class="app_layout_container">
-  <div class="main_menu d-none d-md-flex">
-    <ul class="navbar-nav flex-column main_menu__navbar_nav">
-      <li class="nav-item main_menu__nav_item">
-        <a class="nav-link main_menu__nav_link" routerLink="/" (click)="toggleMenu()" rel="noopener" name="Logo">
-          <div class="main_menu__icon_box">
-            <span class="main_menu__icon_text">A</span>
-          </div>
+<div class="app_layout_container" [ngClass]="{'app_layout_container--open_menu': isLeftMenuOpened}">
+  <div class="main_menu">
+    <ul class="main_menu__navbar_nav">
+      <li class="main_menu__nav_item">
+        <a class="main_menu__nav_link" routerLink="/" rel="noopener" [attr.name]="'Logo'">
+          <img class="main_menu__icon" [src]="pathIconsFolder + 'menu-logo.svg'" alt="Logo">
         </a>
       </li>
 
-      <li class="nav-item main_menu__nav_item" *ngFor="let item of menuItems;">
-        <a class="nav-link main_menu__nav_link main_menu__nav_link--show_label"
-          [routerLink]="[item.route]"
-          [routerLinkActive]="['main_menu__nav_link--active_page']"
-          rel="noopener"
-          [attr.name]="item.label">
-          <i class="fas {{item.icon}} main_menu__icon"></i>
+      <li class="main_menu__nav_item" [ngClass]="{'main_menu__nav_item--hr': !item.route}"
+        *ngFor="let item of menuItems">
+        <a *ngIf="item.route" class="main_menu__nav_link main_menu__nav_link--show_label" [routerLink]="item.route"
+          [routerLinkActive]="['main_menu__nav_link--active_page']" rel="noopener" [attr.name]="item.label"
+          (click)="!isLogout(item) || logOut()">
+          <img class="main_menu__icon" [src]="pathIconsFolder + item.icon + '.svg'" [alt]="item.label">
         </a>
       </li>
-
-      <li class="nav-item main_menu__nav_item">
-        <a
-          class="nav-link main_menu__nav_link main_menu__nav_link--show_label"
-          routerLink="/"
-          (click)="logOut()"
-          rel="noopener"
-          name="Log Out">
-          <i class="fas fa-sign-out-alt main_menu__icon"></i>
-        </a>
-      </li>
-
-      </ul>
+    </ul>
   </div> <!-- .main_menu -->
-  <div class="main-container">
-    <div class="top_menu d-flex d-md-flex">
-        <!--Navbar-->
-        <nav class="navbar navbar-light top_menu__navbar">
-            <div class="top_menu__nav_line">
-                <div class="top_menu__control d-flex d-md-none">
-                    <!-- Navbar brand -->
-                    <a class="navbar-brand m-0" href="#"></a>
+  <div class="top_menu">
+    <div class="top_menu__nav_line">
+      <div class="top_menu__control">
+        <!-- Collapse button -->
+        <button tabindex="-3"
+          class="top_menu__navbar_button top_menu__navbar_button--show_label top_menu__navbar_button--show_label_left"
+          name="Toggle Left Menu" (click)="toggleLeftMenu()">
+          <div class="top_menu__menu_toggle" [ngClass]="{'top_menu__menu_toggle--opened_menu': isLeftMenuOpened}">
+            <span></span>
+            <span></span>
+          </div>
+        </button>
+        <!-- Layer Group Button -->
+        <button tabindex="-2" class="top_menu__navbar_button top_menu__navbar_button--show_label"
+          name="Layer Group Button" (click)="toggleCollapse()">
+          <i class="fas fa-layer-group fa-1x top_menu__navbar_icon"></i>
+        </button>
 
-                    <!-- Collapse button -->
-                    <button
-                        class="navbar-toggler top_menu__navbar_button"
-                        type="button"
-                        data-toggle="collapse"
-                        data-target="#navbarMainMenu" aria-controls="navbarMainMenu"
-                        aria-expanded="false"
-                        aria-label="Toggle navigation">
-                        <span>
-                            <i class="fas fa-bars fa-1x top_menu__navbar_icon"></i>
-                        </span>
-                    </button>
-
-                </div>
-                <div class="top_menu__user_bar">
-                    <!-- Layer Group Button -->
-                    <a
-                        tabindex="-2"
-                        class="top_menu__navbar_button
-                        top_menu__navbar_button--show_label"
-                        name="Layer Group Button">
-                            <i class="fas fa-layer-group fa-1x top_menu__navbar_icon"></i>
-                    </a>
-                    <!-- User Avatar -->
-                    <a
-                        tabindex="-1"
-                        class="top_menu__navbar_button
-                        top_menu__navbar_button--show_label"
-                        name="User">
-                        <div class="top_menu__navbar_user_image">
-                            <i class="fas fa-user-tie"></i>
-                        </div>
-                        <!-- <img src="" alt="" class="top_menu__navbar_user_image"> -->
-                    </a>
-                </div>
-            </div>
-
-            <!-- Collapsible content -->
-            <div class="collapse d-md-none navbar-collapse" id="navbarMainMenu">
-
-                <!-- Links -->
-                <ul class="navbar-nav mr-auto">
-
-                    <li class="nav-item top_menu__nav_item" *ngFor="let item of menuItems; let i = index;">
-                        <a class="nav-link top_menu__nav_link" routerLink={{item.route}} rel="noopener" name={{item.label}}>
-                            <!-- <i class="fas {{item.icon}} top_menu__icon"></i>  -->
-                            <span class="top_menu__nav_link_text">{{item.label}}</span>
-                        </a>
-                    </li>
-
-                    <li class="nav-item top_menu__nav_item">
-                        <a class="nav-link top_menu__nav_link" routerLink="/" (click)="logOut()" rel="noopener" name="Log Out">
-                            <!-- <i class="fas fa-sign-out-alt top_menu__icon"></i>  -->
-                            <span class="top_menu__nav_link_text">Log Out</span>
-                        </a>
-                    </li>
-                </ul>
-                <!-- Links -->
-
-            </div>
-            <!-- Collapsible content -->
-
-        </nav>
-        <!--/.Navbar-->
+      </div>
+      <div class="top_menu__user_bar">
+        <!-- User Avatar -->
+        <a tabindex="-1" class="top_menu__navbar_button
+                        top_menu__navbar_button--show_label" name="User">
+          <div class="top_menu__navbar_user_image">
+            <i class="fas fa-user-tie"></i>
+          </div>
+          <!-- <img src="" alt="" class="top_menu__navbar_user_image"> -->
+        </a>
+      </div>
     </div>
 
-    <div class="content-area">
-      <router-outlet></router-outlet>
-    </div> <!-- .content-area -->
-  </div> <!-- .main-container -->
+    <!-- Collapsible content -->
+    <div class="top_menu__collapse" [ngClass]="{'top_menu__collapse--open': !isCollapsed}">
+
+      <!-- Links list .top_menu__nav_list -->
+      <ul class="top_menu__nav_list">
+
+        <li class="top_menu__nav_item" [ngClass]="{'top_menu__nav_item--hr': !item.route}"
+          *ngFor="let item of menuItems">
+          <a *ngIf="item.route" class="top_menu__nav_link" [routerLink]="item.route" ngc
+            [routerLinkActive]="['top_menu__nav_link--active_page']" rel="noopener" [attr.name]="item.label"
+            (click)="!isLogout(item) || logOut()">
+            <span class="top_menu__nav_link_text">{{item.label}}</span>
+          </a>
+        </li>
+      </ul>
+      <!-- Links list .top_menu__nav_list -->
+
+    </div>
+    <!-- Collapsible content -->
+
+  </div> <!-- .top_menu -->
+
+  <div class="content_area">
+    <router-outlet></router-outlet>
+  </div> <!-- .content-area -->
+
 </div> <!-- .app_layout_container -->

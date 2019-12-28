@@ -319,3 +319,30 @@ i.dragdrop {
     margin: 20px 0;
   }
 }
+
+// https://www.figma.com/file/RTfgqP4XAlyiNs0CIypGWhxF/Edminify-Design-Components-Library?node-id=256%3A2669
+// FIXME: bugs with 4K resolutions...
+html {
+  --scrollbarBG: hsl(0, 0%, 90%);
+  --thumbBG: hsl(0, 0%, 79%);
+  overflow: visible;
+}
+
+body::-webkit-scrollbar {
+  background: var(--thumbBG);
+  border-radius: 8.75rem;
+  width: 0.75rem;
+  height: 0.75rem;
+}
+body {
+  scrollbar-width: thin;
+  scrollbar-color: var(--thumbBG) var(--scrollbarBG);
+}
+body::-webkit-scrollbar-track {
+  background: var(--scrollbarBG);
+}
+body::-webkit-scrollbar-thumb {
+  background-color: var(--thumbBG) ;
+  border-radius: 8.75rem;
+  border: 0.25rem solid var(--scrollbarBG);
+}
