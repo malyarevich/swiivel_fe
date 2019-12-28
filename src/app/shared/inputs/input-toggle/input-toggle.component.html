@@ -1,5 +1,7 @@
 <label class="input_toggle">
-  <input type="checkbox" (change)="onInputChange()" #input />
+  <input class="input_toggle__input" type="checkbox" (change)="onInputChange()" #input />
   <div class="input_toggle__slider round"></div>
-  <ng-content select="span"></ng-content>
+  <span class="input_toggle__span">
+    <ng-content select="span"></ng-content>
+  </span>
 </label>
