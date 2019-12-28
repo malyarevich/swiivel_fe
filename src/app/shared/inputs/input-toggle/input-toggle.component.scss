@@ -3,12 +3,14 @@
 :host {
   .input_toggle {
     align-items: stretch;
+    cursor: pointer;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: flex-start;
     margin: 0;
-    cursor: pointer;
+    min-height: 1.35rem;
+    position: relative;
 
     input[type='checkbox'] {
       display: none;
@@ -18,34 +20,42 @@
           &:before {
             background-color: $element-base-color;
             border: 1px solid $element-base-color;
-            transform: translateX(16px);
+            left: 1.36rem;
+            right: -0.1rem;
           }
+        }
+
+        & ~ .input_toggle__span {
+          font-weight: bold;
         }
       }
     }
     &__slider {
-      width: 30px;
-      height: 12px;
-      display: inline-block;
-      position: relative;
+      background-color: $light-purple;
       border: 1px solid $medium-purple;
       box-sizing: border-box;
       cursor: pointer;
-      transition: 0.4s;
-      margin-right: 10px;
+      display: inline-block;
+      height: 1rem;
+      margin-right: 0.85rem;
+      position: relative;
+      top: 0.1rem; // webkit visual bug fix for nested slider of label
+      transition: all 0.4s ease-in-out;
+      width: 2.5rem;
       &:before {
         content: '';
-        width: 14px;
-        height: 14px;
-        position: absolute;
-        top: -2px;
-        left: -1px;
-        background-color: $white;
         border: 1px solid $medium-purple;
-        transition: 0.4s;
+        background-color: $white;
+        height: 1.15rem;
+        left: -0.1rem;
+        position: absolute;
+        right: 1.36rem;
+        top: -0.15rem;
+        transition: all 0.4s ease-in-out;
+        width: 1.15rem;
       }
       &.round {
-        border-radius: 100px;
+        border-radius: 85rem;
         &:before {
           border-radius: 50%;
         }
@@ -62,9 +72,5 @@
       line-height: 1.25rem;
       transition: all 0.4s ease-in-out;
     }
-  }
-
-  .input_toggle__input:checked ~ .input_toggle__span {
-    font-weight: bold;
   }
 }

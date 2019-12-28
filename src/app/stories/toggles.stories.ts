@@ -1,7 +1,6 @@
-import { FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { FormControl } from '@angular/forms';
 import { InputToggleComponent } from '@app/shared/inputs/input-toggle/input-toggle.component';
-// import { SharedModule } from '@app/shared/shared.module';
 import { withKnobs } from '@storybook/addon-knobs';
 import { moduleMetadata, storiesOf } from '@storybook/angular';
 // import figmaDecorator from 'storybook-addon-figma';
@@ -26,7 +25,7 @@ storiesOf('Elements|Inputs/Toggles', module).addDecorator(withKnobs)
   // .addDecorator(
   //   figmaDecorator({
   //     embedHost: 'localhost',
-  //     url: 'https://www.figma.com/file/RTfgqP4XAlyiNs0CIypGWhxF/Edminify-Design-Components-Library?node-id=2608%3A5'
+  //     url: 'https://www.figma.com/file/RTfgqP4XAlyiNs0CIypGWhxF/Edminify-Design-Components-Library?node-id=2138%3A293'
   //   })
   // )
   .add('Simple', () => {
@@ -63,7 +62,7 @@ storiesOf('Elements|Inputs/Toggles', module).addDecorator(withKnobs)
       template: `
         <form [formGroup]="fg">
           <h3>Active</h3>
-          <sw-input-toggle formControlName="inputToggle1" (click)="onClick('packetIntroduction', $event)">
+          <sw-input-toggle formControlName="inputToggle1">
             <span span>{{ text1 }}</span>
           </sw-input-toggle>
           <span>Params:</span>
