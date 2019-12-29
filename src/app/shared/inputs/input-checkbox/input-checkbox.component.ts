@@ -29,7 +29,55 @@ const deprecated = (_this: any, name = '') => {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class InputCheckboxComponent implements ControlValueAccessor {
+  @HostListener('click', ['$event'])
+  @HostListener('keydown', ['$event']) onEvent(event: Event) {
+    event.preventDefault();
+    event.stopPropagation();
+    if (event.target === event.target) {
+      if (event instanceof KeyboardEvent) {
+        if (event.code === 'Space') this.toggle();
+        else if (event.code === 'Tab') {
+          let next = this.element.nativeElement.nextElementSibling;
+          if (next) {
+            next.focus();
+          }
+        }
+      } else if (event instanceof MouseEvent) {
+        this.toggle();
+      } else {
+        console.log(event)
+      }
 
+    }
+  }
+  @HostListener('blur', ['$event']) onBlur(event: Event) {
+    this.onTouched();
+  };
+  @HostBinding() tabIndex: number = 0;
+  @Input() isActive() {
+    deprecated(this, 'isActive');
+  }
+  @Input() check() {
+    deprecated(this, 'check');
+  }
+  @Input() value = 'on';
+
+  @Output() readonly change: EventEmitter<any> = new EventEmitter();
+  @Output() readonly blur: EventEmitter<any> = new EventEmitter();
+  @Output() readonly checkedChange: EventEmitter<any> = new EventEmitter();
+  @Output() readonly _indeterminateChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @ViewChild('input', { static: false }) _inputElement: ElementRef<HTMLInputElement>;
+  
+  private _checked = false;
+  private _disabled: boolean;
+  private _indeterminate: boolean;
+  private _required: boolean;
+  private onChange: (value: any) => void = (value: any) => {
+    this.change.emit(value);
+  };
+  private onTouched: () => void = () => {
+    // this.blur.emit();
+  };
 
   @Input() get required(): boolean { return this._required; }
   set required(value: boolean) { this._required = coerceBooleanProperty(value); }
@@ -75,57 +123,8 @@ export class InputCheckboxComponent implements ControlValueAccessor {
       control.valueAccessor = this;
     }
     this._focusMonitor.monitor(this.element, true).subscribe((origin) => {
-      // console.log(origin);
+      console.log(origin);
     });
-  }
-  @HostBinding() tabIndex = 0;
-  @Input() value = 'on';
-
-  @Output() readonly change: EventEmitter<any> = new EventEmitter();
-  @Output() readonly blur: EventEmitter<any> = new EventEmitter();
-  @Output() readonly checkedChange: EventEmitter<any> = new EventEmitter();
-  @Output() readonly _indeterminateChange: EventEmitter<boolean> = new EventEmitter<boolean>();
-  @ViewChild('input', { static: false }) _inputElement: ElementRef<HTMLInputElement>;
-
-  private _checked = false;
-  private _disabled: boolean;
-  private _indeterminate: boolean;
-  private _required: boolean;
-  @HostListener('click', ['$event'])
-  @HostListener('keydown', ['$event']) onEvent(event: Event) {
-    event.preventDefault();
-    event.stopPropagation();
-    if (event.target === event.target) {
-      if (event instanceof KeyboardEvent) {
-        if (event.code === 'Space') {
-          this.toggle();
-        } else if (event.code === 'Tab') {
-          const next = this.element.nativeElement.nextElementSibling;
-          if (next) {
-            next.focus();
-          }
-        }
-      } else if (event instanceof MouseEvent) {
-        this.toggle();
-      } else {
-        console.log(event);
-      }
-
-    }
-  }
-  @HostListener('blur', ['$event']) onBlur() {
-    this.onTouched();
-  } @Input() isActive() {
-    deprecated(this, 'isActive');
-  }
-  @Input() check() {
-    deprecated(this, 'check');
-  }
-  private onChange: (value: any) => void = (value: any) => {
-    this.change.emit(value);
-  }
-  private onTouched: () => void = () => {
-    // this.blur.emit();
   }
 
   setDisabledState(isDisabled: boolean) {
