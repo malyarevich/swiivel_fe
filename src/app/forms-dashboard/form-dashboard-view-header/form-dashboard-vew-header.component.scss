@@ -23,3 +23,13 @@
   position: relative;
   margin: 0;
 }
+
+.text {
+  font: 500 9px/13px $nunito-sans;
+  color: $black-text;
+  margin: 0 5px 0 0;
+}
+
+.fa-caret-down {
+  font-size: 10px;
+}

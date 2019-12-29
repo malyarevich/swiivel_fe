@@ -6,23 +6,19 @@
       </sw-page-header>
     </div>
     <div class="app-form-table__controls">
-      <div class="control-view">
-        <sw-button color="transparent" (click)="changeDashboardView()">
+      <button class="control-view" (click)="changeDashboardView()">
           <span *ngIf="!isDashboardShown" class="view-dashboard-text">
             View Dashboard
           </span>
-          <span *ngIf="isDashboardShown" class="hide-dashboard-text">
+        <span *ngIf="isDashboardShown" class="hide-dashboard-text">
             Hide Dashboard
           </span>
-          <i
-            class="control-view-icon fas"
-            [ngClass]="{
-              'fa-caret-up hide-dashboard-icon': isDashboardShown,
-              'fa-caret-down view-dashboard-icon': !isDashboardShown
-            }"
-          ></i>
-        </sw-button>
-      </div>
+        <i class="control-view-icon fas"
+           [ngClass]="{
+               'fa-caret-down hide-dashboard-icon': isDashboardShown,
+               'fa-caret-up view-dashboard-icon': !isDashboardShown}"
+        ></i>
+      </button>
     </div>
   </div>
 
@@ -65,14 +61,14 @@
       <div class="app-form-table__controls">
         <div class="app-form-table__controls-bulk" data-e2e="bulkactions">
           <sw-dropdown-select
-            #bulk="dropdown"
-            panelClass="app-form-table-dropdown-overlay"
-            [disabled]="_sm.isEmpty()"
-            [noneColor]="true"
-            [options]="bulkOptions"
-            (selected)="bulkAction($event)"
+              #bulk="dropdown"
+              panelClass="app-form-table-dropdown-overlay"
+              [disabled]="_sm.isEmpty()"
+              [noneColor]="true"
+              [options]="bulkOptions"
+              (selected)="bulkAction($event)"
           >
-            <sw-button [disabled]="_sm.isEmpty()" color="white">
+            <sw-button [disabled]="_sm.isEmpty()" class="secondary">
               <span class="app-form-table__controls-bulk-btn-text">Bulk Actions</span>
               <i class="fas fa-chevron-down" [ngClass]="{'fa-chevron-up': bulk.isOpened}"></i>
             </sw-button>
@@ -148,7 +144,7 @@
                 </div>
               </th>
               <td cdk-cell *cdkCellDef="let form">
-                <a [routerLink]="['/form-management', form.mongo_id]" [state]="{ form: form }">
+                <a class="form-link" [routerLink]="['/form-management', form.mongo_id]" [state]="{ form: form }">
                   <span class="text">{{form.name}}</span>
                 </a>
               </td>
@@ -327,12 +323,12 @@
                   (selected)="changeStatus($event, [form.id])"
                 >
                   <sw-button
-                    size="small"
+                    class="small round small-text"
                     [isRound]="true"
-                    [color]="statusService.getStatusColor(form.status)"
+                    [ngClass]="statusService.getStatusColor(form.status)"
                   >
-                    <span>{{form.status}}</span>
-                    <i class="fas fa-caret-down"></i>
+                    <span class="button-label status-label">{{form.status}}</span>
+                    <i class="fas fa-caret-down status-icon"></i>
                   </sw-button>
                 </sw-dropdown-select>
 
@@ -352,18 +348,18 @@
               </th>
               <td cdk-cell *cdkCellDef="let form">
                 <div class="item" data-e2e="Editbutton">
-                  <sw-button size="small" [routerLink]="['/form', form.mongo_id]">
-                    <i class="fas fa-pen"></i>
-                    <span>Edit</span>
+                  <sw-button class="small small-text" [routerLink]="['/form', form.mongo_id]">
+                    <i class="fas fa-pen button-icon"></i>
+                    <span class="button-label">Edit</span>
                   </sw-button>
                 </div>
                 <div class="item" data-e2e="Viewbutton">
-                  <sw-button size="small" [routerLink]="['/view-form', form.mongo_id]">
-                    <i class="fas fa-eye"></i>
-                    <span>View</span>
+                  <sw-button class="small" [routerLink]="['/view-form', form.mongo_id]">
+                    <i class="fas fa-eye button-icon"></i>
+                    <span class="button-label">View</span>
                   </sw-button>
                 </div>
-                <div class="item">
+                <div class="item item-icons">
                   <div class="item-icon" data-e2e="Sharebutton">
                     <sw-icon-button [icon]="icons.SHARE" text="Share" (click)="onShareLink(form)">
                     </sw-icon-button>

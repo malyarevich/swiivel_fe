@@ -159,6 +159,7 @@
       flex-flow: row nowrap;
       .item {
         color: #A4A4A4;
+        min-width: 48px;
         &:not(:last-of-type) {
           margin-right: 2%;
         }
@@ -167,6 +168,12 @@
           display: flex;
           justify-content: space-between;
           flex-grow: 2;
+        }
+
+        &.item-icons {
+          flex-grow: 1;
+          display: flex;
+          justify-content: space-around;
         }
       }
     }
@@ -207,7 +214,7 @@
   .cdk-footer-cell {
     &.cdk-column-paginator {
       .wrapper {
-        margin-top: 7px;
+        margin-top: 50px;
         display: flex;
         justify-content: space-between;
 
@@ -360,3 +367,32 @@
 .view-dashboard-icon {
   color: $element-base-color;
 }
+
+.control-view {
+  background: transparent;
+  border: none;
+}
+
+.status-label {
+  margin: 0 4px 0 5px;
+  text-transform: capitalize;
+}
+
+.status-icon {
+  margin: 0 5px 0 0;
+}
+
+.button-label,
+.status-icon {
+  font-size: 10px;
+}
+
+.button-icon {
+  font-size: 9px;
+  margin: 0 4px 0 0;
+}
+
+.form-link {
+  text-decoration: none;
+}
+

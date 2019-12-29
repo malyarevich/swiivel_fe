@@ -337,6 +337,14 @@
   }
 }
 
+:host(.small-text) {
+  button {
+    .text {
+      font: 800 10px/13px $nunito-sans;
+    }
+  }
+}
+
 // :host {
 //   width: fit-content;
 //   display: inline-flex;
