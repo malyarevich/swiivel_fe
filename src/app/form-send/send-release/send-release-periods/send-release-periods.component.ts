@@ -15,9 +15,9 @@ export class SendReleasePeriodsComponent implements OnInit {
   constructor(
     private formSendService: FormSendService,
     private cdr: ChangeDetectorRef
-  ) {}
+  ) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   isSelectedPeriod(id): boolean {
     return this.formSendService.isSelectedPeriod(id);
@@ -41,7 +41,7 @@ export class SendReleasePeriodsComponent implements OnInit {
   }
 
   checkboxAction(item, e) {
-    this.formSendService.togglePeriods(item, e);
+    this.formSendService.togglePeriods(item, !!e);
     this.cdr.markForCheck();
   }
 }

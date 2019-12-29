@@ -163,7 +163,7 @@
                                     <div class="accounts-list">
                                       <div class="account" *ngFor="let item of groupAccountsList">
                                         <div class="item">
-                                          <sw-input-checkbox [check]="allChildrenSelected(item)"
+                                          <sw-input-checkbox [checked]="allChildrenSelected(item)"
                                             [indeterminate]="someChildrenSelected(item)"
                                             (checkedChange)="toggleAccountGroup(item, $event)">
                                             <span class="label">
@@ -178,7 +178,7 @@
                                         <div class="nested" *ngIf="item.isExpanded">
                                           <div class="item" *ngFor="let i of item.data">
                                             <div class="label">
-                                              <sw-input-checkbox [check]="isSelectedAccount(i)"
+                                              <sw-input-checkbox [checked]="isSelectedAccount(i)"
                                                 (change)="toggleAccount(i, $event)">
                                                 <span class="label"> {{ i.first_name }} {{ i.last_name }} </span>
                                               </sw-input-checkbox>

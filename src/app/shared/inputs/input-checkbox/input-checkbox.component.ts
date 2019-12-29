@@ -75,7 +75,7 @@ export class InputCheckboxComponent implements ControlValueAccessor {
       control.valueAccessor = this;
     }
     this._focusMonitor.monitor(this.element, true).subscribe((origin) => {
-      console.log(origin);
+      // console.log(origin);
     });
   }
   @HostBinding() tabIndex = 0;
@@ -154,6 +154,7 @@ export class InputCheckboxComponent implements ControlValueAccessor {
       } else {
         this.checked = !this.checked;
       }
+      this.checkedChange.emit(this.checked);
       this.cdr.markForCheck();
     }
   }

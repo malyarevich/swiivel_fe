@@ -306,19 +306,22 @@ export class SendReleaseRoundsComponent implements OnInit, OnChanges, OnDestroy 
   }
 
   toggleAccountGroup(group: any, e: boolean) {
-    // console.log(group);
+    // console.log('group', group);
+    // console.log('group.data', group.data);
+    // console.log('event', e);
+
     if (group && group.data) {
       group.data.forEach(i => {
-        this.formSendService.toggleAccounts(i, !!e);
+        this.formSendService.toggleAccounts(i, e);
       });
     } else {
       console.log('bad or empty group', group);
     }
   }
 
-  toggleAccount(item: any, e: boolean) {
+  toggleAccount(item: any, e: any) {
     if (item) {
-      this.formSendService.toggleAccounts(item, e);
+      this.formSendService.toggleAccounts(item, !!e);
     }
   }
 
