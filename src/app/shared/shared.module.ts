@@ -108,7 +108,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     InputSearchComponent,
     DropdownSelectYearComponent,
     InputRadioComponent,
-    RadioGroupComponent,
+    // RadioGroupComponent,
     // Headers
     PageHeaderComponent,
     BlockHeaderComponent,
@@ -156,7 +156,6 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     RadioGroupComponent,
     DropdownSelectComponent,
     DialogComponent,
-    RadioGroupComponent,
     InputHebrewDatepickerComponent,
     InputFileComponent,
     InputSearchComponent,
